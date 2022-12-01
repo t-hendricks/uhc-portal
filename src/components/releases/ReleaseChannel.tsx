@@ -2,7 +2,7 @@ import React from 'react';
 import semver from 'semver';
 import { Divider, LevelItem } from '@patternfly/react-core';
 
-import getOCPReleaseChannel from '../../services/releaseChannelService';
+import { useOCPLatestVersionInChannel } from './hooks';
 import ExternalLink from '../common/ExternalLink';
 import PopoverHint from '../common/PopoverHint';
 import getCandidateChannelLink from './getCandidateChannelLink';
@@ -14,18 +14,7 @@ import ReleaseChannelDescription from './ReleaseChannelDescription';
 type Props = { channel: string; status?: string };
 
 const ReleaseChannel = ({ channel, status }: Props) => {
-  const [latestVersion, setLatestVersion] = React.useState<string>();
-  React.useEffect(() => {
-    const fetchChannelData = async () => {
-      const result = await getOCPReleaseChannel(channel);
-      const sortedVersions = result.data.nodes?.sort(({ version: left }, { version: right }) =>
-        semver.rcompare(left, right),
-      );
-      setLatestVersion(sortedVersions?.[0]?.version);
-    };
-
-    fetchChannelData();
-  }, [channel]);
+  const [latestVersion] = useOCPLatestVersionInChannel(channel);
   const isCandidate = channel.includes('candidate');
   const candidateChannelLink = getCandidateChannelLink(latestVersion);
   const { major, minor } = semver.coerce(latestVersion) ?? { major: '4', minor: '7' };
