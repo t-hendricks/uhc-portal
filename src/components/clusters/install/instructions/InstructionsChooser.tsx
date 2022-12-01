@@ -13,9 +13,9 @@ interface InstructionsChooserProps {
   upiPageLink: string;
   aiPageLink?: string;
   providerSpecificFeatures?: {
-    ai?: string[];
-    ipi?: string[];
-    upi?: string[];
+    ai?: React.ReactNode[];
+    ipi?: React.ReactNode[];
+    upi?: React.ReactNode[];
   };
 }
 
