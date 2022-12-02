@@ -6314,6 +6314,7 @@ exports[`<OCMRolesSection /> should render 1`] = `
                                                                 </DropdownItem>,
                                                               ]
                                                             }
+                                                            isFlipEnabled={true}
                                                             isGrouped={false}
                                                             isOpen={false}
                                                             isPlain={true}
@@ -6321,12 +6322,14 @@ exports[`<OCMRolesSection /> should render 1`] = `
                                                             menuAppendTo="inline"
                                                             onSelect={[Function]}
                                                             position="right"
+                                                            removeFindDomNode={false}
                                                             toggle={
                                                               <KebabToggle
                                                                 isDisabled={false}
                                                                 onToggle={[Function]}
                                                               />
                                                             }
+                                                            zIndex={9999}
                                                           >
                                                             <div
                                                               className="pf-c-dropdown pf-m-align-right"
@@ -7287,6 +7290,7 @@ exports[`<OCMRolesSection /> should render 1`] = `
                                                                 </DropdownItem>,
                                                               ]
                                                             }
+                                                            isFlipEnabled={true}
                                                             isGrouped={false}
                                                             isOpen={false}
                                                             isPlain={true}
@@ -7294,12 +7298,14 @@ exports[`<OCMRolesSection /> should render 1`] = `
                                                             menuAppendTo="inline"
                                                             onSelect={[Function]}
                                                             position="right"
+                                                            removeFindDomNode={false}
                                                             toggle={
                                                               <KebabToggle
                                                                 isDisabled={false}
                                                                 onToggle={[Function]}
                                                               />
                                                             }
+                                                            zIndex={9999}
                                                           >
                                                             <div
                                                               className="pf-c-dropdown pf-m-align-right"
@@ -8260,6 +8266,7 @@ exports[`<OCMRolesSection /> should render 1`] = `
                                                                 </DropdownItem>,
                                                               ]
                                                             }
+                                                            isFlipEnabled={true}
                                                             isGrouped={false}
                                                             isOpen={false}
                                                             isPlain={true}
@@ -8267,12 +8274,14 @@ exports[`<OCMRolesSection /> should render 1`] = `
                                                             menuAppendTo="inline"
                                                             onSelect={[Function]}
                                                             position="right"
+                                                            removeFindDomNode={false}
                                                             toggle={
                                                               <KebabToggle
                                                                 isDisabled={false}
                                                                 onToggle={[Function]}
                                                               />
                                                             }
+                                                            zIndex={9999}
                                                           >
                                                             <div
                                                               className="pf-c-dropdown pf-m-align-right"

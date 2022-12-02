@@ -61,6 +61,7 @@ exports[`<AvailabilityZoneSelection /> should render 1`] = `
     validated="default"
     variant="single"
     width=""
+    zIndex={9999}
   >
     <SelectOption
       className=""

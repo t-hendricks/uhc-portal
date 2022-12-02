@@ -84,6 +84,7 @@ exports[`<MachineTypeSelection /> when the machine types list contains unknown c
     validated="default"
     variant="single"
     width=""
+    zIndex={9999}
   >
     <SelectGroup
       key="General purpose"
@@ -216,6 +217,7 @@ exports[`<MachineTypeSelection /> when the machine types list is available byoc 
     validated="default"
     variant="single"
     width=""
+    zIndex={9999}
   >
     <SelectGroup
       key="General purpose"
@@ -348,6 +350,7 @@ exports[`<MachineTypeSelection /> when the machine types list is available with 
     validated="default"
     variant="single"
     width=""
+    zIndex={9999}
   >
     <SelectGroup
       key="General purpose"
@@ -521,6 +524,7 @@ exports[`<MachineTypeSelection /> when the machine types list is available with 
     validated="default"
     variant="single"
     width=""
+    zIndex={9999}
   >
     <SelectGroup
       key="General purpose"
@@ -694,6 +698,7 @@ exports[`<MachineTypeSelection /> when the machine types list is available with 
     validated="default"
     variant="single"
     width=""
+    zIndex={9999}
   >
     <SelectGroup
       key="General purpose"
