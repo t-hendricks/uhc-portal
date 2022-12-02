@@ -2,10 +2,13 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Field } from 'redux-form';
 import { Form, Alert, Grid, GridItem } from '@patternfly/react-core';
-
+import { Link } from 'react-router-dom';
 import NodeCountInput from '../NodeCountInput';
 import { ReduxFormDropdown } from '../../../common/ReduxFormComponents';
 import { normalizedProducts, billingModels } from '../../../../common/subscriptionTypes';
+import links from '../../../../common/installLinks.mjs';
+import ExternalLink from '../../../common/ExternalLink';
+
 import {
   SpotInstanceInfoAlert,
   isMachinePoolUsingSpotInstances,
@@ -119,6 +122,7 @@ class EditNodeCountModal extends Component {
       billingModel,
       shouldDisplayClusterName,
       clusterDisplayName,
+      clusterID,
     } = this.props;
 
     const error = editNodeCountResponse.error ? (
@@ -129,16 +133,31 @@ class EditNodeCountModal extends Component {
       <Alert
         variant="warning"
         isInline
-        title={`Scaling to more than ${nodes} nodes may take 24 hours`}
+        title={
+          autoscalingEnabled
+            ? `Autoscaling to a maximum node count of more than ${nodes} nodes may trigger manual Red Hat SRE intervention`
+            : `Scaling node count to more than ${nodes} nodes may trigger manual Red Hat SRE intervention`
+        }
       >
         <div>
           <p>
-            In order to scale to more than {nodes} nodes, the cluster&apos;s control plane nodes
-            have to be manually resized by a Red Hat SRE. This process will take about 24 hours.
+            Node scaling is automatic and will be performed immediately. Scaling node count beyond
+            Red Hat&apos;s{' '}
+            <ExternalLink href={links.ROSA_AWS_LIMITS_SCALE} noIcon>
+              documented thresholds
+            </ExternalLink>{' '}
+            may trigger manual Red Hat SRE intervention to vertically scale your Infrastructure and
+            Control Plane instances.{' '}
+            {autoScaleMaxNodesValue
+              ? 'Autoscaling nodes will not trigger manual intervention until the actual node count crosses the threshold. '
+              : null}
+            To request that Red Hat SRE proactively increase your Infrastructure and Control Plane
+            instances, please open a <Link to={`/details/${clusterID}#support`}>support case</Link>.
           </p>
         </div>
       </Alert>
     );
+
     const pending =
       editNodeCountResponse.pending || organization.pending || machinePoolsList.pending;
 
