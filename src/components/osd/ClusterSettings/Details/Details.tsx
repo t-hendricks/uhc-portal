@@ -288,20 +288,20 @@ export const Details = () => {
           </div>
 
           <GridItem>
-            <Title headingLevel="h3">Encryption</Title>
+            <Title headingLevel="h3" className="pf-u-mb-sm">
+              Encryption
+            </Title>
+
+            <Alert
+              isInline
+              variant="info"
+              title="The cloud storage for your cluster is encrypted at rest."
+            >
+              <ExternalLink href={cloudProviderLearnLink}>Learn more</ExternalLink>
+            </Alert>
           </GridItem>
 
           <Grid hasGutter>
-            <GridItem>
-              <Alert
-                isInline
-                variant="info"
-                title="The cloud storage for your cluster is encrypted at rest."
-              >
-                <ExternalLink href={cloudProviderLearnLink}>Learn more</ExternalLink>
-              </Alert>
-            </GridItem>
-
             <GridItem>
               <Split hasGutter>
                 <SplitItem>

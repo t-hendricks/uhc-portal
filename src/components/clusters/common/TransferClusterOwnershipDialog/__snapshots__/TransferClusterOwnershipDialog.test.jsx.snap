@@ -141,17 +141,14 @@ exports[`<TransferClusterOwnershipDialog /> should not crash when subscription i
                       </p>
                       <ol
                         class=""
-                        data-pf-content="true"
                       >
                         <li
                           class=""
-                          data-pf-content="true"
                         >
                           Initiate transfer
                         </li>
                         <li
                           class=""
-                          data-pf-content="true"
                         >
                           <a
                             href="https://access.redhat.com/solutions/4902871"
@@ -454,12 +451,10 @@ exports[`<TransferClusterOwnershipDialog /> should not crash when subscription i
                                 >
                                   <ol
                                     className=""
-                                    data-pf-content={true}
                                   >
                                     <TextListItem>
                                       <li
                                         className=""
-                                        data-pf-content={true}
                                       >
                                         Initiate transfer
                                       </li>
@@ -467,7 +462,6 @@ exports[`<TransferClusterOwnershipDialog /> should not crash when subscription i
                                     <TextListItem>
                                       <li
                                         className=""
-                                        data-pf-content={true}
                                       >
                                         <ExternalLink
                                           href="https://access.redhat.com/solutions/4902871"
@@ -774,17 +768,14 @@ exports[`<TransferClusterOwnershipDialog /> should release clusters 1`] = `
                       </p>
                       <ol
                         class=""
-                        data-pf-content="true"
                       >
                         <li
                           class=""
-                          data-pf-content="true"
                         >
                           Initiate transfer
                         </li>
                         <li
                           class=""
-                          data-pf-content="true"
                         >
                           <a
                             href="https://access.redhat.com/solutions/4902871"
@@ -1087,12 +1078,10 @@ exports[`<TransferClusterOwnershipDialog /> should release clusters 1`] = `
                                 >
                                   <ol
                                     className=""
-                                    data-pf-content={true}
                                   >
                                     <TextListItem>
                                       <li
                                         className=""
-                                        data-pf-content={true}
                                       >
                                         Initiate transfer
                                       </li>
@@ -1100,7 +1089,6 @@ exports[`<TransferClusterOwnershipDialog /> should release clusters 1`] = `
                                     <TextListItem>
                                       <li
                                         className=""
-                                        data-pf-content={true}
                                       >
                                         <ExternalLink
                                           href="https://access.redhat.com/solutions/4902871"
@@ -1407,17 +1395,14 @@ exports[`<TransferClusterOwnershipDialog /> should show dialog for transferring 
                       </p>
                       <ol
                         class=""
-                        data-pf-content="true"
                       >
                         <li
                           class=""
-                          data-pf-content="true"
                         >
                           Initiate transfer
                         </li>
                         <li
                           class=""
-                          data-pf-content="true"
                         >
                           <a
                             href="/openshift/register"
@@ -1711,12 +1696,10 @@ exports[`<TransferClusterOwnershipDialog /> should show dialog for transferring 
                                 >
                                   <ol
                                     className=""
-                                    data-pf-content={true}
                                   >
                                     <TextListItem>
                                       <li
                                         className=""
-                                        data-pf-content={true}
                                       >
                                         Initiate transfer
                                       </li>
@@ -1724,7 +1707,6 @@ exports[`<TransferClusterOwnershipDialog /> should show dialog for transferring 
                                     <TextListItem>
                                       <li
                                         className=""
-                                        data-pf-content={true}
                                       >
                                         <ExternalLink
                                           href="/openshift/register"
@@ -2062,17 +2044,14 @@ exports[`<TransferClusterOwnershipDialog /> should show error 1`] = `
                       </p>
                       <ol
                         class=""
-                        data-pf-content="true"
                       >
                         <li
                           class=""
-                          data-pf-content="true"
                         >
                           Initiate transfer
                         </li>
                         <li
                           class=""
-                          data-pf-content="true"
                         >
                           <a
                             href="https://access.redhat.com/solutions/4902871"
@@ -2455,12 +2434,10 @@ exports[`<TransferClusterOwnershipDialog /> should show error 1`] = `
                                 >
                                   <ol
                                     className=""
-                                    data-pf-content={true}
                                   >
                                     <TextListItem>
                                       <li
                                         className=""
-                                        data-pf-content={true}
                                       >
                                         Initiate transfer
                                       </li>
@@ -2468,7 +2445,6 @@ exports[`<TransferClusterOwnershipDialog /> should show error 1`] = `
                                     <TextListItem>
                                       <li
                                         className=""
-                                        data-pf-content={true}
                                       >
                                         <ExternalLink
                                           href="https://access.redhat.com/solutions/4902871"

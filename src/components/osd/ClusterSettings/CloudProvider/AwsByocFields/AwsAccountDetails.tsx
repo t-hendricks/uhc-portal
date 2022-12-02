@@ -12,8 +12,9 @@ import {
 import { TextInputField, CheckboxField } from '~/components/osd/common/form';
 import InstructionCommand from '~/components/common/InstructionCommand';
 import ExternalLink from '~/components/common/ExternalLink';
+import { FieldId } from '~/components/osd/constants';
 
-export const AwsAccountDetailsSection = () => {
+export const AwsAccountDetails = () => {
   const { ccsCredentialsValidity } = useGlobalState((state) => state.ccsInquiries);
   const { pending: isValidating } = ccsCredentialsValidity;
 
@@ -22,7 +23,7 @@ export const AwsAccountDetailsSection = () => {
       <Flex direction={{ default: 'column' }} spaceItems={{ default: 'spaceItemsLg' }}>
         <GridItem md={6}>
           <TextInputField
-            name="account_id"
+            name={FieldId.AccountId}
             label="AWS account ID"
             validate={awsNumericAccountID}
             isDisabled={isValidating}
@@ -58,7 +59,7 @@ export const AwsAccountDetailsSection = () => {
         </GridItem>
         <GridItem md={6}>
           <TextInputField
-            name="access_key_id"
+            name={FieldId.AccessKeyId}
             label="AWS access key ID"
             validate={required}
             isDisabled={isValidating}
@@ -68,7 +69,7 @@ export const AwsAccountDetailsSection = () => {
         <GridItem md={6} />
         <GridItem md={6}>
           <TextInputField
-            name="secret_access_key"
+            name={FieldId.SecretAccessKey}
             label="AWS secret access key"
             validate={required}
             isDisabled={isValidating}
@@ -79,7 +80,7 @@ export const AwsAccountDetailsSection = () => {
         <GridItem md={6} />
         <GridItem>
           <CheckboxField
-            name="disable_scp_checks"
+            name={FieldId.DisableScpChecks}
             label="Bypass AWS service control policy (SCP) checks"
             tooltip={constants.bypassSCPChecksHint}
           />
