@@ -31,6 +31,9 @@ class InstallBareMetal extends Component {
             showAI
             ipiPageLink="/install/metal/installer-provisioned"
             upiPageLink="/install/metal/user-provisioned"
+            providerSpecificFeatures={{
+              ipi: ['Hosts controlled with baseboard management controller (BMC)'],
+            }}
           />
         </PageSection>
       </>

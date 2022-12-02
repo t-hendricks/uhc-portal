@@ -26,6 +26,13 @@ exports[`BareMetal install renders correctly 1`] = `
   <PageSection>
     <InstructionsChooser
       ipiPageLink="/install/metal/installer-provisioned"
+      providerSpecificFeatures={
+        Object {
+          "ipi": Array [
+            "Hosts controlled with baseboard management controller (BMC)",
+          ],
+        }
+      }
       showAI={true}
       upiPageLink="/install/metal/user-provisioned"
     />
