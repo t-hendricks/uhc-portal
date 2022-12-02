@@ -781,7 +781,7 @@ exports[`CreateRosaGetStarted matches snapshot 1`] = `
                                     id="text-input-8"
                                     readonly=""
                                     type="text"
-                                    value="rosa create account-roles -mode auto"
+                                    value="rosa create account-roles --mode auto"
                                   />
                                   <button
                                     aria-disabled="false"
