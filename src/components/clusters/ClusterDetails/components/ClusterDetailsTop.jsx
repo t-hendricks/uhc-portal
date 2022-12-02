@@ -16,11 +16,15 @@ import {
   normalizedProducts,
   billingModels,
 } from '../../../../common/subscriptionTypes';
-import { isUninstalledAICluster } from '../../../../common/isAssistedInstallerCluster';
+import {
+  isAvailableAssistedInstallCluster,
+  isUninstalledAICluster,
+} from '../../../../common/isAssistedInstallerCluster';
 import ExpirationAlert from './ExpirationAlert';
 import LimitedSupportAlert from './LimitedSupportAlert';
 import Breadcrumbs from '../../../common/Breadcrumbs';
 import SubscriptionCompliancy from './SubscriptionCompliancy';
+import ClusterNonEditableAlert from './ClusterNonEditableAlert';
 import TransferClusterOwnershipInfo from './TransferClusterOwnershipInfo';
 import TermsAlert from './TermsAlert';
 import ButtonWithTooltip from '../../../common/ButtonWithTooltip';
@@ -240,6 +244,9 @@ function ClusterDetailsTop(props) {
         openModal={openModal}
         canSubscribeOCP={canSubscribeOCP}
       />
+      {!cluster.canEdit && isAvailableAssistedInstallCluster(cluster) && (
+        <ClusterNonEditableAlert />
+      )}
       <TransferClusterOwnershipInfo subscription={cluster.subscription} />
       <TermsAlert subscription={cluster.subscription} />
       {children}
