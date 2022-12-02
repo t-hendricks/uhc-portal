@@ -1,9 +1,15 @@
+import get from 'lodash/get';
 import type { Subscription } from '../types/accounts_mgmt.v1';
 import { normalizedProducts, subscriptionStatuses } from './subscriptionTypes';
-import { ClusterFromSubscription } from '../types/types';
+import { AugmentedCluster, ClusterFromSubscription } from '../types/types';
 
 const isAssistedInstallSubscription = (subscription?: Subscription): boolean =>
   subscription?.plan?.id === normalizedProducts.OCP_Assisted_Install;
+
+export const isAvailableAssistedInstallCluster = (cluster: AugmentedCluster): boolean => {
+  const isArchived = get(cluster, 'subscription.status', false) === subscriptionStatuses.ARCHIVED;
+  return !isArchived && !!cluster.aiCluster && isAssistedInstallSubscription(cluster.subscription);
+};
 
 export const isAssistedInstallCluster = (cluster: ClusterFromSubscription): boolean =>
   isAssistedInstallSubscription(cluster.subscription);

@@ -25,6 +25,7 @@ import UninstallProgress from '../../../common/UninstallProgress';
 import InsightsAdvisor from './InsightsAdvisor/InsightsAdvisor';
 import CostBreakdownCard from './CostBreakdownCard';
 import isAssistedInstallSubscription, {
+  isAvailableAssistedInstallCluster,
   isUninstalledAICluster,
 } from '../../../../../common/isAssistedInstallerCluster';
 import withFeatureGate from '../../../../features/with-feature-gate';
@@ -104,8 +105,7 @@ class Overview extends React.Component {
       !isDeprovisioned &&
       !isArchived;
     const showSidePanel = showInsightsAdvisor || showCostBreakdown;
-    const showAssistedInstallerDetailCard =
-      cluster.aiCluster && !isArchived && isAssistedInstallSubscription(cluster.subscription);
+    const showAssistedInstallerDetailCard = isAvailableAssistedInstallCluster(cluster);
     const showDetailsCard = !cluster.aiCluster || !isUninstalledAICluster(cluster);
     const showSubscriptionSettings = !isDeprovisioned && !isArchived;
 
