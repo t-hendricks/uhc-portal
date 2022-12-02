@@ -25,7 +25,12 @@ import {
   ClusterSettingsMachinePool,
   CloudProviderStepFooter,
 } from './ClusterSettings';
-import { NetworkingConfiguration, NetworkingCidrRanges } from './Networking';
+import {
+  NetworkingConfiguration,
+  NetworkingCidrRanges,
+  NetworkingVpcSettings,
+  NetworkingClusterProxy,
+} from './Networking';
 import { ClusterUpdates } from './ClusterUpdates';
 import { ReviewAndCreate } from './ReviewAndCreate';
 import { CreateOsdWizardFooter } from './CreateOsdWizardFooter';
@@ -107,6 +112,20 @@ const CreateOsdWizardInternal = () => {
           steps={[
             <WizardStep name={StepName.Configuration} id={StepId.NetworkingConfiguration}>
               <NetworkingConfiguration />
+            </WizardStep>,
+            <WizardStep
+              name={StepName.VpcSettings}
+              id={StepId.NetworkingVpcSettings}
+              isHidden={!values[FieldId.InstallToVpc]}
+            >
+              <NetworkingVpcSettings />
+            </WizardStep>,
+            <WizardStep
+              name={StepName.ClusterProxy}
+              id={StepId.NetworkingClusterProxy}
+              isHidden={!values[FieldId.ConfigureProxy]}
+            >
+              <NetworkingClusterProxy />
             </WizardStep>,
             <WizardStep name={StepName.CidrRanges} id={StepId.NetworkingCidrRanges}>
               <NetworkingCidrRanges />

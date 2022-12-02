@@ -16,7 +16,7 @@ interface FileUploadFieldProps {
   tooltip?: React.ReactNode;
   field?: FieldConfig;
   formGroup?: FormGroupProps;
-  input?: FileUploadProps;
+  input?: Partial<FileUploadProps>;
 }
 
 export const FileUploadField = ({
