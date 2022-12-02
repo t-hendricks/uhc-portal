@@ -26,6 +26,13 @@ exports[`InstallOSP renders correctly 1`] = `
   <PageSection>
     <InstructionsChooser
       ipiPageLink="/install/openstack/installer-provisioned"
+      providerSpecificFeatures={
+        Object {
+          "ipi": Array [
+            "Hosts controlled with OpenStack Provider",
+          ],
+        }
+      }
       upiPageLink="/install/openstack/user-provisioned"
     />
   </PageSection>
