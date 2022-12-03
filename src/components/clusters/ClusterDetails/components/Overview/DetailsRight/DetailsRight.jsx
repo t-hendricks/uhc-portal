@@ -76,6 +76,18 @@ function DetailsRight({
                 />{' '}
                 {cluster.state.description}
                 {limitedSupport ? ' - Limited support' : null}
+                {cluster?.status?.provision_error_code && (
+                  <DescriptionList>
+                    {' '}
+                    <DescriptionListGroup>
+                      <DescriptionListTerm>Details:</DescriptionListTerm>
+                      <DescriptionListDescription>
+                        {cluster.status.provision_error_code}{' '}
+                        {cluster.status?.provision_error_message}
+                      </DescriptionListDescription>
+                    </DescriptionListGroup>
+                  </DescriptionList>
+                )}
               </>
             )}
           </DescriptionListDescription>
