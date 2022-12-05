@@ -1,6 +1,15 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { Title, Grid, GridItem, FormGroup, Form, Alert } from '@patternfly/react-core';
+import {
+  Title,
+  Grid,
+  GridItem,
+  FormGroup,
+  Form,
+  ExpandableSection,
+  // Text,
+  // TextVariants,
+} from '@patternfly/react-core';
 import { Field } from 'redux-form';
 
 import PopoverHint from '../../../../common/PopoverHint';
@@ -28,11 +37,17 @@ function ClusterSettingsScreen({
   billingModel,
   change,
 }) {
+  const [isExpanded, setIsExpanded] = useState(false);
+
+  const onToggle = () => {
+    setIsExpanded(!isExpanded);
+  };
+
   const isRosa = product === normalizedProducts.ROSA;
-  const cloudProviderLearnLink =
-    cloudProviderID === 'aws'
-      ? 'https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/data-protection.html'
-      : 'https://cloud.google.com/storage/docs/encryption/default-keys';
+  // const cloudProviderLearnLink =
+  //   cloudProviderID === 'aws'
+  //     ? 'https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/data-protection.html'
+  //     : 'https://cloud.google.com/storage/docs/encryption/default-keys';
 
   return (
     <Form
@@ -98,49 +113,46 @@ function ClusterSettingsScreen({
           </>
         )}
         <UserWorkloadMonitoringSection parent="create" disableUVM={false} planType={product} />
-        <GridItem>
-          <Title headingLevel="h3">Encryption</Title>
-        </GridItem>
-        <FormGroup fieldId="etcd_encryption" id="etcdEncryption">
-          <Grid hasGutter>
-            <GridItem>
-              <Alert
-                isInline
-                variant="info"
-                title="The cloud storage for your cluster is encrypted at rest."
-              >
-                <ExternalLink href={cloudProviderLearnLink}>Learn more</ExternalLink>
-              </Alert>
-            </GridItem>
-            <GridItem>
-              <Field
-                component={ReduxCheckbox}
-                name="etcd_encryption"
-                label="Enable additional etcd encryption"
-                extendedHelpText={
-                  <>
-                    {constants.enableAdditionalEtcdHint}{' '}
-                    <ExternalLink
-                      href={isRosa ? links.ROSA_SERVICE_ETCD_ENCRYPTION : links.OSD_ETCD_ENCRYPTION}
-                    >
-                      Learn more about etcd encryption
-                    </ExternalLink>
-                  </>
-                }
-              />
-              <div className="ocm-c--reduxcheckbox-description">
-                Additional encryption of OpenShift and Kubernetes API resources.
-              </div>
-            </GridItem>
-          </Grid>
-        </FormGroup>
-        {isByoc && (
-          <CustomerManagedEncryptionSection
-            customerManagedEncryptionSelected={customerManagedEncryptionSelected}
-            selectedRegion={selectedRegion}
-            cloudProviderID={cloudProviderID}
-          />
-        )}
+        <ExpandableSection
+          toggleText="Advanced Encryption"
+          onToggle={onToggle}
+          isExpanded={isExpanded}
+        >
+          {isByoc && (
+            <CustomerManagedEncryptionSection
+              customerManagedEncryptionSelected={customerManagedEncryptionSelected}
+              selectedRegion={selectedRegion}
+              cloudProviderID={cloudProviderID}
+            />
+          )}
+          <FormGroup fieldId="etcd_encryption" id="etcdEncryption" label="etcd encryption">
+            <Grid hasGutter>
+              <GridItem>
+                <Field
+                  component={ReduxCheckbox}
+                  name="etcd_encryption"
+                  label="Enable additional etcd encryption"
+                  extendedHelpText={
+                    <>
+                      {constants.enableAdditionalEtcdHint}{' '}
+                      <ExternalLink
+                        href={
+                          isRosa ? links.ROSA_SERVICE_ETCD_ENCRYPTION : links.OSD_ETCD_ENCRYPTION
+                        }
+                      >
+                        Learn more about etcd encryption
+                      </ExternalLink>
+                    </>
+                  }
+                />
+
+                <div className="ocm-c--reduxcheckbox-description">
+                  Add more encryption for OpenShift and Kubernetes API resources.
+                </div>
+              </GridItem>
+            </Grid>
+          </FormGroup>
+        </ExpandableSection>
       </Grid>
     </Form>
   );
