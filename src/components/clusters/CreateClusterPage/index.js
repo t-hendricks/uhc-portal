@@ -8,7 +8,6 @@ import { tollboothActions } from '../../../redux/actions';
 import {
   OSD_TRIAL_FEATURE,
   ASSISTED_INSTALLER_FEATURE,
-  ROSA_CREATION_WIZARD_FEATURE,
 } from '../../../redux/constants/featureConstants';
 
 const mapStateToProps = (state) => ({
@@ -17,7 +16,6 @@ const mapStateToProps = (state) => ({
   organization: state.userProfile.organization,
   token: state.tollbooth.token,
   osdTrialFeature: state.features[OSD_TRIAL_FEATURE],
-  rosaCreationWizardFeature: state.features[ROSA_CREATION_WIZARD_FEATURE],
   assistedInstallerFeature: state.features[ASSISTED_INSTALLER_FEATURE],
 });
 
