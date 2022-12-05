@@ -26,6 +26,13 @@ exports[`InstallASH renders correctly 1`] = `
   <PageSection>
     <InstructionsChooser
       ipiPageLink="/install/azure-stack-hub/installer-provisioned"
+      providerSpecificFeatures={
+        Object {
+          "ipi": Array [
+            "Hosts controlled with Azure Provider",
+          ],
+        }
+      }
       upiPageLink="/install/azure-stack-hub/user-provisioned"
     />
   </PageSection>

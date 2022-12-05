@@ -6,6 +6,6 @@ export enum RosaCliCommand {
   LinkOcmRole = 'rosa link ocm-role <arn>',
   VerifyQuota = 'rosa verify quota',
   WhoAmI = 'rosa whoami',
-  CreateAccountRoles = 'rosa create account-roles -mode auto',
+  CreateAccountRoles = 'rosa create account-roles --mode auto',
   CreateCluster = 'rosa create cluster',
 }

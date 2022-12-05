@@ -30,6 +30,9 @@ class InstallASH extends Component {
           <InstructionsChooser
             ipiPageLink="/install/azure-stack-hub/installer-provisioned"
             upiPageLink="/install/azure-stack-hub/user-provisioned"
+            providerSpecificFeatures={{
+              ipi: ['Hosts controlled with Azure Provider'],
+            }}
           />
         </PageSection>
       </>

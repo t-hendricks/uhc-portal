@@ -30,6 +30,10 @@ exports[`BareMetal install renders correctly 1`] = `
         Object {
           "ipi": Array [
             "Hosts controlled with baseboard management controller (BMC)",
+            "For air-gapped/restricted networks",
+          ],
+          "upi": Array [
+            "For air-gapped/restricted networks",
           ],
         }
       }

@@ -32,7 +32,11 @@ class InstallBareMetal extends Component {
             ipiPageLink="/install/metal/installer-provisioned"
             upiPageLink="/install/metal/user-provisioned"
             providerSpecificFeatures={{
-              ipi: ['Hosts controlled with baseboard management controller (BMC)'],
+              ipi: [
+                'Hosts controlled with baseboard management controller (BMC)',
+                'For air-gapped/restricted networks',
+              ],
+              upi: ['For air-gapped/restricted networks'],
             }}
           />
         </PageSection>
