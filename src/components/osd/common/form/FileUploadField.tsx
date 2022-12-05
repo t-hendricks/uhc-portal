@@ -68,7 +68,6 @@ export const FileUploadField = ({
         >
           <FileUpload
             allowEditingUploadedText
-            draggable
             isDisabled={isDisabled}
             id={field.name}
             name={field.name}

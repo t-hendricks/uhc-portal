@@ -29,7 +29,7 @@ import {
   TRUST_BUNDLE_PLACEHOLDER,
 } from '~/components/clusters/CreateOSDPage/CreateOSDForm/FormSections/NetworkingSection/networkingConstants';
 import ExternalLink from '~/components/common/ExternalLink';
-import { FieldId } from '../constants';
+import { FieldId, StepName } from '../constants';
 import { useFormState } from '../hooks';
 import { FileUploadField, TextInputField } from '../common/form';
 
@@ -40,16 +40,21 @@ export const ClusterProxy = () => {
       [FieldId.HttpsProxyUrl]: httpsProxyUrl,
       [FieldId.AdditionalTrustBundle]: additionalTrustBundle,
     },
+    touched,
     setFieldValue,
   } = useFormState();
-  const { goToStepByName } = useWizardContext();
-  const [anyTouched, setAnyTouched] = React.useState(false);
+  const { activeStep, goToStepByName } = useWizardContext();
   const noValues = !httpProxyUrl && !httpsProxyUrl && !additionalTrustBundle;
-  const validateAtLeastOne = noValues
-    ? 'Configure at least one of the cluster-wide proxy fields.'
-    : undefined;
+  const validateAtLeastOne =
+    activeStep.name === StepName.ClusterProxy && noValues
+      ? 'Configure at least one of the cluster-wide proxy fields.'
+      : undefined;
+  const showAlert =
+    (touched[FieldId.HttpProxyUrl] ||
+      touched[FieldId.HttpsProxyUrl] ||
+      touched[FieldId.AdditionalTrustBundle]) &&
+    noValues;
 
-  const onTouched = () => !anyTouched && setAnyTouched(true);
   const validateHttpProxyUrl = (value: string) => validateUrl(value, 'http') || validateAtLeastOne;
   const validateHttpsProxyUrl = (value: string) =>
     validateUrl(value, ['http', 'https']) || validateAtLeastOne;
@@ -82,7 +87,7 @@ export const ClusterProxy = () => {
               label="HTTP proxy URL"
               validate={validateHttpProxyUrl}
               helperText="Specify a proxy URL to use for HTTP connections outside the cluster."
-              input={{ placeholder: HTTP_PROXY_PLACEHOLDER, onBlur: onTouched }}
+              input={{ placeholder: HTTP_PROXY_PLACEHOLDER }}
             />
           </GridItem>
 
@@ -92,7 +97,7 @@ export const ClusterProxy = () => {
               label="HTTPS proxy URL"
               validate={validateHttpsProxyUrl}
               helperText="Specify a proxy URL to use for HTTPS connections outside the cluster."
-              input={{ placeholder: HTTPS_PROXY_PLACEHOLDER, onBlur: onTouched }}
+              input={{ placeholder: HTTPS_PROXY_PLACEHOLDER }}
             />
           </GridItem>
 
@@ -131,19 +136,17 @@ export const ClusterProxy = () => {
               validate={validateAdditionalTrustBundle}
               helperText="Upload or paste a PEM encoded X.509 certificate."
               input={{
-                onBlur: onTouched,
                 placeholder: TRUST_BUNDLE_PLACEHOLDER,
                 dropzoneProps: {
                   accept: ACCEPT,
                   maxSize: MAX_FILE_SIZE,
-                  onDropRejected: () => setFieldValue('additional_trust_bundle', 'invalid file'),
                 },
               }}
             />
           </GridItem>
 
           <GridItem>
-            {anyTouched && noValues && (
+            {showAlert && (
               <Alert
                 isInline
                 variant="warning"

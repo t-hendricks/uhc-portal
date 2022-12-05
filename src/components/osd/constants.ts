@@ -1,4 +1,9 @@
 import { billingModels } from '~/common/subscriptionTypes';
+import {
+  HOST_PREFIX_DEFAULT,
+  MACHINE_CIDR_DEFAULT,
+  SERVICE_CIDR_DEFAULT,
+} from '../clusters/CreateOSDPage/CreateOSDForm/FormSections/NetworkingSection/networkingConstants';
 import { CloudProviderType } from './ClusterSettings/CloudProvider/types';
 import { ClusterPrivacyType } from './Networking/constants';
 
@@ -51,6 +56,13 @@ export enum FieldId {
   AdditionalTrustBundle = 'additional_trust_bundle',
   DisableScpChecks = 'disable_scp_checks',
   NoProxy = 'no_proxy',
+  CidrDefaultValuesEnabled = 'cidr_default_values_enabled',
+  NetworkMachineCidr = 'network_machine_cidr',
+  NetworkServiceCidr = 'network_service_cidr',
+  NetworkPodCidr = 'network_pod_cidr',
+  NetworkHostPrefix = 'network_host_prefix',
+  NetworkMachineCidrSingleAz = 'network_machine_cidr_single_az',
+  NetworkMachineCidrMultiAz = 'network_machine_cidr_multi_az',
 }
 
 export enum StepName {
@@ -105,6 +117,10 @@ export const initialValues = {
   [FieldId.EnableUserWorkloadMonitoring]: true,
   [FieldId.NodeLabels]: [{ key: '', value: '' }],
   [FieldId.ClusterPrivacy]: ClusterPrivacyType.External,
+  [FieldId.CidrDefaultValuesEnabled]: true,
+  [FieldId.NetworkMachineCidr]: MACHINE_CIDR_DEFAULT,
+  [FieldId.NetworkServiceCidr]: SERVICE_CIDR_DEFAULT,
+  [FieldId.NetworkHostPrefix]: HOST_PREFIX_DEFAULT,
 };
 
 export const clusterNameHint =
