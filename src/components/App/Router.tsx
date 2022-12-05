@@ -316,7 +316,7 @@ const Router: React.FC<RouterProps> = ({ history, planType, clusterId, externalC
               render={(props) => <CreateClusterPage activeTab="local" {...props} />}
             />
 
-            <Redirect from="/create/rosa/welcome" to="/create/rosa/wizard" />
+            <Redirect from="/create/rosa/welcome" to="/create/rosa/getstarted" />
             <Route path="/create/rosa/getstarted" component={GetStartedWithROSA} />
             <TermsGuardedRoute
               path="/create/rosa/wizard"
