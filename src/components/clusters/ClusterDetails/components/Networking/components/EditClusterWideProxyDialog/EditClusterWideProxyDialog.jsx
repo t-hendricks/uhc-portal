@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { Field } from 'redux-form';
-import { Form, Grid, GridItem, Text, Alert, Button, Title } from '@patternfly/react-core';
+import { Form, Grid, GridItem, Text, Alert, Button } from '@patternfly/react-core';
 
 import links from '~/common/installLinks.mjs';
 import { validateUrl, validateCA, checkNoProxyDomains } from '~/common/validators';
@@ -49,15 +49,12 @@ const EditClusterWideProxyDialog = (props) => {
   // sets trust bundle file upload depending on whether or not a trust bundle is already uploaded
   const [openFileUpload, setOpenFileUpload] = useState(!additionalTrustBundle);
 
-  const validateAtLeastOne = useCallback(
-    (value, allValues) => {
-      if (!allValues.httpProxyUrl && !allValues.httpsProxyUrl && !additionalTrustBundle) {
-        return 'Configure at least one of the cluster-wide proxy fields.';
-      }
-      return undefined;
-    },
-    [additionalTrustBundle],
-  );
+  const validateAtLeastOne = useCallback((value, allValues) => {
+    if (!allValues.http_proxy_url && !allValues.https_proxy_url && !additionalTrustBundle) {
+      return 'Configure at least one of the cluster-wide proxy fields.';
+    }
+    return undefined;
+  }, []);
 
   const handleClose = useCallback(() => {
     reset();
@@ -68,7 +65,7 @@ const EditClusterWideProxyDialog = (props) => {
 
   useEffect(() => {
     if (noUrlValues) {
-      change('noProxyDomains', '');
+      change('no_proxy_domains', '');
     }
   }, [noUrlValues]);
 
@@ -128,7 +125,7 @@ const EditClusterWideProxyDialog = (props) => {
             <GridItem sm={12} md={10} xl2={11}>
               <Field
                 component={ReduxVerticalFormGroup}
-                name="httpProxyUrl"
+                name="http_proxy_url"
                 label="HTTP Proxy URL"
                 placeholder={HTTP_PROXY_PLACEHOLDER}
                 type="text"
@@ -141,7 +138,7 @@ const EditClusterWideProxyDialog = (props) => {
             <GridItem sm={12} md={10} xl2={11}>
               <Field
                 component={ReduxVerticalFormGroup}
-                name="httpsProxyUrl"
+                name="https_proxy_url"
                 label="HTTPS Proxy URL"
                 placeholder={HTTPS_PROXY_PLACEHOLDER}
                 type="text"
@@ -153,12 +150,12 @@ const EditClusterWideProxyDialog = (props) => {
             <GridItem sm={12} md={10} xl2={11}>
               <Field
                 component={ReduxVerticalFormGroup}
-                name="noProxyDomains"
+                name="no_proxy_domains"
                 label="No Proxy domains"
                 placeholder={noUrlValues ? DISABLED_NO_PROXY_PLACEHOLDER : NO_PROXY_PLACEHOLDER}
                 type="text"
                 normalize={(value) => stringToArray(value)}
-                validate={checkDNSDomain}
+                validate={checkNoProxyDomains}
                 helpText={NO_PROXY_HELPER_TEXT}
                 showHelpTextOnError={false}
                 isDisabled={noUrlValues}
@@ -190,7 +187,7 @@ const EditClusterWideProxyDialog = (props) => {
               ) : (
                 <Field
                   component={ReduxFileUpload}
-                  name="additionalTrustBundle"
+                  name="additional_trust_bundle"
                   label="Additional trust bundle"
                   placeholder={TRUST_BUNDLE_PLACEHOLDER}
                   extendedHelpTitle="Additional trust bundle"
