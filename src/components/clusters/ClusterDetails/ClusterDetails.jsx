@@ -198,7 +198,6 @@ class ClusterDetails extends Component {
       fetchClusterInsights,
       fetchUpgradeGates,
     } = this.props;
-    const manualRefresh = clicked === 'clicked';
     const clusterID = get(clusterDetails, 'cluster.id');
     const isManaged = get(clusterDetails, 'cluster.managed', false);
 
@@ -209,9 +208,6 @@ class ClusterDetails extends Component {
     if (externalClusterID) {
       fetchClusterInsights(externalClusterID);
       this.fetchSupportData();
-    }
-
-    if (externalClusterID && manualRefresh) {
       getClusterHistory(externalClusterID, clusterLogsViewOptions);
     }
 

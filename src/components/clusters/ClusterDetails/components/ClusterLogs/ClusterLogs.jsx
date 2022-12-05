@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {
   EmptyState,
+  EmptyStateIcon,
   PageSection,
   Card,
   CardBody,
@@ -13,7 +14,7 @@ import {
 import size from 'lodash/size';
 import isEmpty from 'lodash/isEmpty';
 import isEqual from 'lodash/isEqual';
-
+import SearchIcon from '@patternfly/react-icons/dist/esm/icons/search-icon';
 import { viewPropsChanged, getQueryParam } from '../../../../../common/queryHelpers';
 import ClusterLogsToolbar from './toolbar';
 import LogTable from './LogTable';
@@ -84,7 +85,7 @@ class ClusterLogs extends React.Component {
   render() {
     const {
       clusterLogs: {
-        requestState: { error, pending, errorMessage, operationID },
+        requestState: { error, errorCode, pending, errorMessage, operationID },
         logs,
         fetchedClusterLogsAt,
       },
@@ -93,6 +94,10 @@ class ClusterLogs extends React.Component {
       setSorting,
       externalClusterID,
     } = this.props;
+
+    // These errors are present during cluster install
+    // Instead of showing an error, display "No cluster log entries found"
+    const ignoreErrors = errorCode === 403 || errorCode === 404;
 
     const hasNoFilters =
       isEmpty(viewOptions.filter) && helpers.nestedIsEmpty(viewOptions.flags.severityTypes);
@@ -124,13 +129,22 @@ class ClusterLogs extends React.Component {
               <>
                 <PageSection>
                   <EmptyState>
-                    <ErrorBox
-                      message="Error retrieving cluster logs"
-                      response={{
-                        errorMessage,
-                        operationID,
-                      }}
-                    />
+                    {ignoreErrors ? (
+                      <>
+                        <EmptyStateIcon icon={SearchIcon} />
+                        <Title size="lg" headingLevel="h4">
+                          No cluster log entries found
+                        </Title>
+                      </>
+                    ) : (
+                      <ErrorBox
+                        message="Error retrieving cluster logs"
+                        response={{
+                          errorMessage,
+                          operationID,
+                        }}
+                      />
+                    )}
                   </EmptyState>
                 </PageSection>
               </>
