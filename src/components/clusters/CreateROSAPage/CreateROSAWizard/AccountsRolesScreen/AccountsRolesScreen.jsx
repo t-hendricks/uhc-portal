@@ -15,6 +15,7 @@ import {
   Title,
 } from '@patternfly/react-core';
 import { Field } from 'redux-form';
+import { Link } from 'react-router-dom';
 
 import AWSLogo from '../../../../../styles/images/AWS.png';
 import RedHat from '../../../../../styles/images/Logo-RedHat-Hat-Color-RGB.png';
@@ -30,7 +31,8 @@ import { AssociateAwsAccountModal } from './AssociateAWSAccountModal';
 import { RosaCliCommand } from './constants/cliCommands';
 import { trackEvents } from '~/common/analytics';
 import useAnalytics from '~/hooks/useAnalytics';
-import { loadOfflineToken, doOffline } from '~/components/tokens/TokenUtils';
+import { loadOfflineToken } from '~/components/tokens/TokenUtils';
+import { productName } from '../CreateRosaGetStarted/CreateRosaGetStarted';
 
 export const isUserRoleForSelectedAWSAccount = (users, awsAcctId) =>
   users.some((user) => user.aws_id === awsAcctId);
@@ -92,8 +94,10 @@ function AccountsRolesScreen({
     // Inside the iframe, this same wizard step is loaded, and the loadOfflineToken function is called again
     // This time it will succeed, and the iframe child sends the token to the parent
     // Once the parent receives the token, it executes a function callback to pass the token into local state
-    if (!offlineToken || offlineToken instanceof Error) {
-      loadOfflineToken(onTokenError);
+    if (!offlineToken) {
+      loadOfflineToken((tokenOrError, errorReason) => {
+        setOfflineToken(errorReason || tokenOrError);
+      }, window.location.origin);
     }
   }, []);
 
@@ -105,11 +109,9 @@ function AccountsRolesScreen({
     }
   }, [getUserRoleResponse.fulfilled, selectedAWSAccountID]);
 
-  // if no aws acct ids then clear selectedAWSAccountID, else default to first available aws account
+  // if aws acct ids default to first available aws account
   useEffect(() => {
-    if (!hasAWSAccounts) {
-      change('associated_aws_id', '');
-    } else if (!selectedAWSAccountID) {
+    if (hasAWSAccounts && !selectedAWSAccountID) {
       change('associated_aws_id', AWSAccountIDs[0]);
     }
   }, [hasAWSAccounts, selectedAWSAccountID]);
@@ -120,6 +122,9 @@ function AccountsRolesScreen({
     } else if (getAWSAccountIDsResponse.fulfilled) {
       const awsIDs = get(getAWSAccountIDsResponse, 'data', []);
       setAWSAccountIDs(awsIDs);
+      if (!awsIDs.includes(selectedAWSAccountID)) {
+        change('associated_aws_id', '');
+      }
       setAwsIDsErrorBox(null);
     } else if (getAWSAccountIDsResponse.error) {
       // display error
@@ -145,51 +150,33 @@ function AccountsRolesScreen({
     clearGetAWSAccountIDsResponse();
   };
 
-  const onTokenError = (reason) => {
-    if (reason === 'not available') {
-      doOffline((token) => {
-        setOfflineToken(token);
-      });
-    } else {
-      setOfflineToken(reason);
-    }
-  };
-
   return (
     <Form onSubmit={() => false}>
+      {/* these images use fixed positioning */}
+      <img src={RedHat} className="ocm-c-wizard-intro-image-top" aria-hidden="true" alt="" />
+      <img src={AWSLogo} className="ocm-c-wizard-intro-image-bottom" aria-hidden="true" alt="" />
       <Grid hasGutter className="pf-u-mt-md">
-        <GridItem span={9}>
+        <GridItem span={12}>
           <Title headingLevel="h2">{title}</Title>
-          <br />
+        </GridItem>
+        <GridItem span={12}>
           <Text component={TextVariants.p}>
             Create a managed OpenShift cluster on an existing Amazon Web Services (AWS) account.
           </Text>
-          <GridItem span={4}>
-            <img src={RedHat} className="ocm-c-wizard-intro-image-top" aria-hidden="true" alt="" />
-            <img
-              src={AWSLogo}
-              className="ocm-c-wizard-intro-image-bottom"
-              aria-hidden="true"
-              alt=""
-            />
-          </GridItem>
+        </GridItem>
+        <GridItem span={9}>
+          <Title headingLevel="h3">Prerequisites</Title>
+          <Text component={TextVariants.p}>
+            To use the web interface to create a ROSA cluster you will need to have already
+            completed the perquisite steps to prepare your AWS account on the{' '}
+            <Link to="getstarted">{`Get started with a ${productName} (ROSA) page.`}</Link>
+          </Text>
         </GridItem>
         <GridItem span={8}>
           <Title headingLevel="h3">AWS account</Title>
           <Text component={TextVariants.p}>
-            Select an AWS account that is associated with your Red Hat account, or{' '}
-            <Button
-              variant="link"
-              isInline
-              onClick={() => {
-                track(trackEvents.AssociateAWS);
-                openAssociateAWSAccountModal();
-                setIsAssocAwsAccountModalOpen(true);
-              }}
-            >
-              associate an AWS account
-            </Button>
-            .
+            Select an AWS account that is associated with your Red Hat account, or associate a new
+            AWS account.
           </Text>
         </GridItem>
         <GridItem span={4} />
@@ -219,6 +206,17 @@ function AccountsRolesScreen({
             isLoading={refreshButtonClicked && getAWSAccountIDsResponse.pending}
             isDisabled={getAWSAccountIDsResponse.pending}
           />
+          <Button
+            variant="secondary"
+            className="pf-u-mt-md"
+            onClick={() => {
+              track(trackEvents.AssociateAWS);
+              openAssociateAWSAccountModal();
+              setIsAssocAwsAccountModalOpen(true);
+            }}
+          >
+            Associate a new AWS account
+          </Button>
         </GridItem>
         <GridItem span={7} />
         {selectedAWSAccountID && hasAWSAccounts && (

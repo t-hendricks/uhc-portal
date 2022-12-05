@@ -26,7 +26,7 @@ export class InstallArmPreRelease extends Component {
       <Breadcrumbs
         path={[
           { label: 'Clusters' },
-          { label: 'Create', path: '/create' },
+          { label: 'Cluster Type', path: '/create' },
           { label: 'ARM Pre-Release Builds' },
         ]}
       />

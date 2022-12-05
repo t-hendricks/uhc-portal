@@ -206,6 +206,16 @@ const trackEvents: { [key: string]: TrackEvent } = {
     link_name: 'associate-aws',
     ocm_resource_type: ocmResourceType.MOA,
   },
+  ROSAWhoAmI: {
+    event: eventNames.BUTTON_CLICKED,
+    link_name: 'copy-rosa-whoami',
+    ocm_resource_type: ocmResourceType.MOA,
+  },
+  ROSAVerifyQuota: {
+    event: eventNames.BUTTON_CLICKED,
+    link_name: 'copy-rosa-verify-quota',
+    ocm_resource_type: ocmResourceType.MOA,
+  },
   ROSALogin: {
     event: eventNames.BUTTON_CLICKED,
     link_name: 'copy-rosa-login',
@@ -214,6 +224,11 @@ const trackEvents: { [key: string]: TrackEvent } = {
   CopyOCMRoleCreateBasic: {
     event: eventNames.BUTTON_CLICKED,
     link_name: 'copy-ocm-role-create-basic',
+    ocm_resource_type: ocmResourceType.MOA,
+  },
+  CopyCreateAccountRoles: {
+    event: eventNames.BUTTON_CLICKED,
+    link_name: 'copy-ocm-create-rosa-account-roles',
     ocm_resource_type: ocmResourceType.MOA,
   },
   CopyOCMRoleCreateAdmin: {
@@ -287,6 +302,11 @@ const trackEvents: { [key: string]: TrackEvent } = {
   ExternalLink: {
     event: eventNames.LINK_CLICKED,
     link_name: 'external-link',
+  },
+  CopyRosaCreateCluster: {
+    event: eventNames.BUTTON_CLICKED,
+    link_name: 'copy-rosa-create-cluster',
+    ocm_resource_type: ocmResourceType.MOA,
   },
 };
 

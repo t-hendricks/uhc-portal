@@ -10,6 +10,8 @@ exports[`<AddOnsMetaDataItem /> renders correctly 1`] = `
    
   <ExternalLink
     href="https://example.com/veryfakedocs"
+    isButton={false}
+    variant="secondary"
   >
     View Documentation
   </ExternalLink>

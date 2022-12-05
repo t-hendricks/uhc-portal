@@ -27,7 +27,6 @@ import {
   Card,
   CardBody,
   CardTitle,
-  ClipboardCopy,
   List,
   ListItem,
   Stack,
@@ -41,8 +40,9 @@ import Breadcrumbs from '../common/Breadcrumbs';
 import ExternalLink from '../common/ExternalLink';
 import DevPreviewBadge from '../common/DevPreviewBadge';
 import DownloadAndOSSelection from '../clusters/install/instructions/components/DownloadAndOSSelection';
-import { doOffline, loadOfflineToken } from './TokenUtils';
+import { loadOfflineToken } from './TokenUtils';
 import TokenBox from './TokenBox';
+import RevokeTokensInstructions from './RevokeTokensInstructions';
 
 import './Tokens.scss';
 
@@ -71,7 +71,7 @@ type Props = {
   commandTool?: string;
   docsLink?: React.ReactNode;
   leadingInfo?: React.ReactNode;
-  offlineToken?: string | Error;
+  offlineToken?: string;
   setOfflineToken: (token: string) => void;
   show?: boolean;
   showPath?: string;
@@ -90,31 +90,16 @@ const Tokens = (props: Props) => {
     blockedByTerms,
   } = props;
 
-  const onError = React.useCallback(
-    (reason: string) => {
-      if (reason === 'not available') {
-        // eslint-disable-next-line no-console
-        console.log('Tokens: getOfflineToken failed => "not available", running doOffline()');
-        doOffline((token) => {
-          setOfflineToken(token);
-        });
-      } else {
-        // eslint-disable-next-line no-console
-        console.log('Tokens: getOfflineToken failed =>', reason);
-        setOfflineToken(reason);
-      }
-    },
-    [setOfflineToken],
-  );
-
   React.useEffect(() => {
     // After requesting token, we might need to reload page doing stronger auth;
     // after that we want the token to show, but we just loaded.
     document.title = 'API Token | OpenShift Cluster Manager';
-    if (!blockedByTerms && show && (!offlineToken || offlineToken instanceof Error)) {
+    if (!blockedByTerms && show && !offlineToken) {
       // eslint-disable-next-line no-console
       console.log('Tokens: componentDidMount, props =', props);
-      loadOfflineToken(onError);
+      loadOfflineToken((tokenOrError, errorReason) => {
+        setOfflineToken(errorReason || tokenOrError);
+      }, window.location.origin);
     }
     // No dependencies because this effect should only be run once on mount
   }, []);
@@ -134,11 +119,11 @@ const Tokens = (props: Props) => {
                 <Title headingLevel="h2">Connect with offline tokens</Title>
               </CardTitle>
               <CardBody className="ocm-c-api-token__card--body">
-                <TextContent>
-                  {leadingInfo}
-                  {show || (offlineToken && !(offlineToken instanceof Error)) ? (
-                    <>
-                      <TokenBox token={offlineToken} limitWidth={false} />
+                <TextContent>{leadingInfo}</TextContent>
+                {show || offlineToken ? (
+                  <>
+                    <TokenBox token={offlineToken} />
+                    <TextContent className="pf-u-mt-lg">
                       <Title headingLevel="h3">Using your token in the command line</Title>
                       <List component="ol">
                         <ListItem>
@@ -154,16 +139,12 @@ const Tokens = (props: Props) => {
                           {offlineToken == null ? (
                             <Skeleton size="md" />
                           ) : (
-                            <Text component="pre">
-                              <ClipboardCopy
-                                isReadOnly
-                                className="ocm-c-api-token-limit-width"
-                                variant="expansion"
-                                textAriaLabel="Copyable command"
-                              >
-                                {`${commandName} login --token="${offlineToken}"`}
-                              </ClipboardCopy>
-                            </Text>
+                            <TokenBox
+                              token={offlineToken}
+                              command={`${commandName} login --token="{{TOKEN}}"`}
+                              showCommandOnError
+                              showInstructionsOnError={false}
+                            />
                           )}
                         </ListItem>
                       </List>
@@ -174,15 +155,23 @@ const Tokens = (props: Props) => {
                         {docsLink} for more information about setting up the{' '}
                         <code>{commandName}</code> CLI.
                       </Text>
-                    </>
-                  ) : (
-                    <Link to={showPath}>
-                      <Button variant="primary" onClick={() => loadOfflineToken(onError)}>
-                        Load token
-                      </Button>
-                    </Link>
-                  )}
-                </TextContent>
+                    </TextContent>
+                  </>
+                ) : (
+                  <Link to={showPath}>
+                    <Button
+                      variant="primary"
+                      className="pf-u-mt-md"
+                      onClick={() =>
+                        loadOfflineToken((tokenOrError, errorReason) => {
+                          setOfflineToken(errorReason || tokenOrError);
+                        }, window.location.origin)
+                      }
+                    >
+                      Load token
+                    </Button>
+                  </Link>
+                )}
               </CardBody>
             </Card>
           </StackItem>
@@ -192,29 +181,7 @@ const Tokens = (props: Props) => {
                 <Title headingLevel="h2">Revoke previous tokens</Title>
               </CardTitle>
               <CardBody className="ocm-c-api-token__card--body">
-                <TextContent>
-                  <Text>To manage and revoke previous tokens:</Text>
-                  <List component="ol">
-                    <ListItem>
-                      Navigate to the{' '}
-                      <ExternalLink href="https://sso.redhat.com/auth/realms/redhat-external/account/applications">
-                        <b>offline API token management</b>
-                      </ExternalLink>{' '}
-                      page.
-                    </ListItem>
-                    <ListItem>
-                      Locate the <b>cloud-services</b> application.
-                    </ListItem>
-                    <ListItem>
-                      Select <b>Revoke grant</b>.
-                    </ListItem>
-                  </List>
-                  <Text>
-                    Refresh tokens will stop working immediately after you revoke them, but existing
-                    access tokens may take up to 15 minutes to expire.
-                  </Text>
-                  <Text>Refreshing this page will generate a new token.</Text>
-                </TextContent>
+                <RevokeTokensInstructions />
               </CardBody>
             </Card>
           </StackItem>

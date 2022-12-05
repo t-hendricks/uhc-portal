@@ -78,11 +78,6 @@ exports[`DownloadAndOSSelection aarch64-openshift-install renders correctly 1`] 
       md={5}
     >
       <DownloadButton
-        auths={
-          Object {
-            "foo": "bar",
-          }
-        }
         tool="aarch64-openshift-install"
         url="https://mirror.openshift.com/pub/openshift-v4/aarch64/clients/ocp/stable/openshift-install-linux-amd64.tar.gz"
       />
@@ -169,11 +164,6 @@ exports[`DownloadAndOSSelection crc renders correctly 1`] = `
       md={5}
     >
       <DownloadButton
-        auths={
-          Object {
-            "foo": "bar",
-          }
-        }
         tool="crc"
         url="https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/crc/latest/crc-linux-amd64.tar.xz"
       />
@@ -260,11 +250,6 @@ exports[`DownloadAndOSSelection multi-openshift-install renders correctly 1`] = 
       md={5}
     >
       <DownloadButton
-        auths={
-          Object {
-            "foo": "bar",
-          }
-        }
         tool="multi-openshift-install"
         url="https://mirror.openshift.com/pub/openshift-v4/multi/clients/ocp/latest/amd64/openshift-install-linux.tar.gz"
       />
@@ -366,11 +351,6 @@ exports[`DownloadAndOSSelection oc renders correctly 1`] = `
       md={5}
     >
       <DownloadButton
-        auths={
-          Object {
-            "foo": "bar",
-          }
-        }
         tool="oc"
         url="https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp/stable/openshift-client-linux.tar.gz"
       />
@@ -472,11 +452,6 @@ exports[`DownloadAndOSSelection ocm renders correctly 1`] = `
       md={5}
     >
       <DownloadButton
-        auths={
-          Object {
-            "foo": "bar",
-          }
-        }
         tool="ocm"
         url="https://github.com/openshift-online/ocm-cli/releases/download/v0.1.60/ocm-linux-amd64"
       />
@@ -563,11 +538,6 @@ exports[`DownloadAndOSSelection ppc64le-openshift-install renders correctly 1`] 
       md={5}
     >
       <DownloadButton
-        auths={
-          Object {
-            "foo": "bar",
-          }
-        }
         tool="ppc64le-openshift-install"
         url="https://mirror.openshift.com/pub/openshift-v4/ppc64le/clients/ocp/stable/openshift-install-linux-amd64.tar.gz"
       />
@@ -654,11 +624,6 @@ exports[`DownloadAndOSSelection rosa renders correctly 1`] = `
       md={5}
     >
       <DownloadButton
-        auths={
-          Object {
-            "foo": "bar",
-          }
-        }
         tool="rosa"
         url="https://mirror.openshift.com/pub/openshift-v4/clients/rosa/latest/rosa-linux.tar.gz"
       />
@@ -745,11 +710,6 @@ exports[`DownloadAndOSSelection s390x-openshift-install renders correctly 1`] = 
       md={5}
     >
       <DownloadButton
-        auths={
-          Object {
-            "foo": "bar",
-          }
-        }
         tool="s390x-openshift-install"
         url="https://mirror.openshift.com/pub/openshift-v4/s390x/clients/ocp/stable/openshift-install-linux-amd64.tar.gz"
       />
@@ -758,7 +718,7 @@ exports[`DownloadAndOSSelection s390x-openshift-install renders correctly 1`] = 
 </Fragment>
 `;
 
-exports[`DownloadAndOSSelection with error should render 1`] = `
+exports[`DownloadAndOSSelection with pendoId should render 1`] = `
 <Fragment>
   <Grid
     className="os-based-download"
@@ -831,7 +791,7 @@ exports[`DownloadAndOSSelection with error should render 1`] = `
       md={5}
     >
       <DownloadButton
-        error="my error"
+        pendoID="some-id"
         tool="x86_64-openshift-install"
         url="https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp/stable/openshift-install-linux.tar.gz"
       />
@@ -913,11 +873,6 @@ exports[`DownloadAndOSSelection x86_64-openshift-install renders correctly 1`] =
       md={5}
     >
       <DownloadButton
-        auths={
-          Object {
-            "foo": "bar",
-          }
-        }
         tool="x86_64-openshift-install"
         url="https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp/stable/openshift-install-linux.tar.gz"
       />

@@ -30,7 +30,7 @@ export const CustomerManagedEncryption = ({
   return (
     <>
       <CheckboxField
-        name="customer_managed_key"
+        name={FieldId.CustomerManagedKey}
         label="Encrypt persistent volumes with customer keys"
         tooltip={
           <>

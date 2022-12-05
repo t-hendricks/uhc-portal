@@ -42,7 +42,7 @@ const CreateROSAWelcome = ({ getAuthToken, token }) => {
 
   const breadcrumbs = (
     <Breadcrumbs
-      path={[{ label: 'Clusters' }, { label: 'Create', path: '/create' }, { label: name }]}
+      path={[{ label: 'Clusters' }, { label: 'Cluster Type', path: '/create' }, { label: name }]}
     />
   );
   const pendoID = window.location.pathname;
@@ -126,7 +126,6 @@ const CreateROSAWelcome = ({ getAuthToken, token }) => {
                     </Text>
                     <Text component={TextVariants.p}>
                       <DownloadAndOSSelection
-                        token={token}
                         tool={tools.ROSA}
                         channel={channels.STABLE}
                         pendoID={pendoID}

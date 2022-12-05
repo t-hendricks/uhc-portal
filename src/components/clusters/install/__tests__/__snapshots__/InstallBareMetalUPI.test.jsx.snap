@@ -11,7 +11,7 @@ exports[`BareMetal UPI install renders correctly 1`] = `
               "label": "Clusters",
             },
             Object {
-              "label": "Create",
+              "label": "Cluster Type",
               "path": "/create",
             },
             Object {
@@ -37,7 +37,7 @@ exports[`BareMetal UPI install renders correctly 1`] = `
                 "label": "Clusters",
               },
               Object {
-                "label": "Create",
+                "label": "Cluster Type",
                 "path": "/create",
               },
               Object {

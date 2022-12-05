@@ -18,7 +18,7 @@ class InstallPlatformAgnostic extends Component {
       <Breadcrumbs
         path={[
           { label: 'Clusters' },
-          { label: 'Create', path: '/create' },
+          { label: 'Cluster Type', path: '/create' },
           { label: 'Platform agnostic (x86_64)' },
         ]}
       />

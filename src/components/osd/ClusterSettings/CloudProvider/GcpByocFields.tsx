@@ -17,12 +17,13 @@ import { required, validateGCPServiceAccount } from '~/common/validators';
 import ExternalLink from '~/components/common/ExternalLink';
 import { Prerequisites } from '../../common/Prerequisites';
 import { FileUploadField } from '../../common/form';
+import { FieldId } from '../../constants';
 
 export const GcpByocFields = () => {
   const { ccsCredentialsValidity } = useGlobalState((state) => state.ccsInquiries);
 
   return (
-    <Flex direction={{ default: 'column' }} spaceItems={{ default: 'spaceItemsLg' }}>
+    <Grid hasGutter>
       <GridItem>
         <Alert variant="info" isInline title="Customer cloud subscription">
           Provision your cluster in a Google Cloud Platform account owned by you or your company to
@@ -30,86 +31,91 @@ export const GcpByocFields = () => {
           cloud costs.
         </Alert>
       </GridItem>
-      <GridItem>
-        <Title headingLevel="h3">GCP service account</Title>
-      </GridItem>
-      <GridItem>
-        <Prerequisites acknowledgementRequired initiallyExpanded>
-          <TextContent>
-            <Text component={TextVariants.p} className="ocm-secondary-text">
-              Successful cluster provisioning requires that:
-            </Text>
-            <ul>
-              <li>
-                <Text component={TextVariants.p} className="ocm-secondary-text">
-                  Your Google Cloud account has the necessary resource quotas and limits to support
-                  your desired cluster size according to the{' '}
-                  <ExternalLink noIcon href={links.OSD_CCS_GCP_LIMITS}>
-                    cluster resource requirements
-                  </ExternalLink>
-                </Text>
-              </li>
-              <li>
-                <Text component={TextVariants.p} className="ocm-secondary-text">
-                  An IAM Service account called osd-ccs-admin exists with the following roles
-                  attached:
-                </Text>
-                <ul>
-                  <li>
-                    <Text component={TextVariants.p} className="ocm-secondary-text">
-                      DNS Administrator
-                    </Text>
-                  </li>
-                  <li>
-                    <Text component={TextVariants.p} className="ocm-secondary-text">
-                      Organization Policy Viewer
-                    </Text>
-                  </li>
-                  <li>
-                    <Text component={TextVariants.p} className="ocm-secondary-text">
-                      Owner
-                    </Text>
-                  </li>
-                  <li>
-                    <Text component={TextVariants.p} className="ocm-secondary-text">
-                      Project IAM Admin
-                    </Text>
-                  </li>
-                  <li>
-                    <Text component={TextVariants.p} className="ocm-secondary-text">
-                      Service Management Administrator
-                    </Text>
-                  </li>
-                  <li>
-                    <Text component={TextVariants.p} className="ocm-secondary-text">
-                      Service Usage Admin
-                    </Text>
-                  </li>
-                  <li>
-                    <Text component={TextVariants.p} className="ocm-secondary-text">
-                      Storage Admin
-                    </Text>
-                  </li>
-                </ul>
-              </li>
-            </ul>
-            <Text component={TextVariants.p} className="ocm-secondary-text">
-              Production Support from GCP is also recommended. To prevent potential conflicts, we
-              recommend that you have no other resources provisioned in the project prior to
-              provisioning OpenShift Dedicated. For more guidance, see the{' '}
-              <ExternalLink noIcon href={links.OSD_CCS_GCP}>
-                Customer Cloud Subscription requirements
-              </ExternalLink>
-              .
-            </Text>
-          </TextContent>
-        </Prerequisites>
-      </GridItem>
-      <Grid hasGutter md={6}>
+
+      <Flex direction={{ default: 'column' }} spaceItems={{ default: 'spaceItemsLg' }}>
         <GridItem>
+          <Title headingLevel="h3" className="pf-u-mb-sm">
+            GCP service account
+          </Title>
+
+          <Prerequisites acknowledgementRequired initiallyExpanded>
+            <TextContent>
+              <Text component={TextVariants.p} className="ocm-secondary-text">
+                Successful cluster provisioning requires that:
+              </Text>
+
+              <ul>
+                <li>
+                  <Text component={TextVariants.p} className="ocm-secondary-text">
+                    Your Google Cloud account has the necessary resource quotas and limits to
+                    support your desired cluster size according to the{' '}
+                    <ExternalLink noIcon href={links.OSD_CCS_GCP_LIMITS}>
+                      cluster resource requirements
+                    </ExternalLink>
+                  </Text>
+                </li>
+                <li>
+                  <Text component={TextVariants.p} className="ocm-secondary-text">
+                    An IAM Service account called osd-ccs-admin exists with the following roles
+                    attached:
+                  </Text>
+                  <ul>
+                    <li>
+                      <Text component={TextVariants.p} className="ocm-secondary-text">
+                        DNS Administrator
+                      </Text>
+                    </li>
+                    <li>
+                      <Text component={TextVariants.p} className="ocm-secondary-text">
+                        Organization Policy Viewer
+                      </Text>
+                    </li>
+                    <li>
+                      <Text component={TextVariants.p} className="ocm-secondary-text">
+                        Owner
+                      </Text>
+                    </li>
+                    <li>
+                      <Text component={TextVariants.p} className="ocm-secondary-text">
+                        Project IAM Admin
+                      </Text>
+                    </li>
+                    <li>
+                      <Text component={TextVariants.p} className="ocm-secondary-text">
+                        Service Management Administrator
+                      </Text>
+                    </li>
+                    <li>
+                      <Text component={TextVariants.p} className="ocm-secondary-text">
+                        Service Usage Admin
+                      </Text>
+                    </li>
+                    <li>
+                      <Text component={TextVariants.p} className="ocm-secondary-text">
+                        Storage Admin
+                      </Text>
+                    </li>
+                  </ul>
+                </li>
+              </ul>
+
+              <Text component={TextVariants.p} className="ocm-secondary-text">
+                Production Support from GCP is also recommended. To prevent potential conflicts, we
+                recommend that you have no other resources provisioned in the project prior to
+                provisioning OpenShift Dedicated. For more guidance, see the{' '}
+                <ExternalLink noIcon href={links.OSD_CCS_GCP}>
+                  Customer Cloud Subscription requirements
+                </ExternalLink>
+                .
+              </Text>
+            </TextContent>
+          </Prerequisites>
+        </GridItem>
+
+        <GridItem span={6}>
           <FileUploadField
             validate={(value) => required(value) || validateGCPServiceAccount(value)}
-            name="gcp_service_account"
+            name={FieldId.GcpServiceAccount}
             label="Service account JSON"
             helperText="Upload a JSON file or type to add"
             tooltip={
@@ -124,9 +130,9 @@ export const GcpByocFields = () => {
               </>
             }
           />
-          <div className="pf-u-mt-md">{ccsCredentialsValidity.pending && 'Validating...'}</div>
+          <p className="pf-u-mt-md">{ccsCredentialsValidity.pending && 'Validating...'}</p>
         </GridItem>
-      </Grid>
-    </Flex>
+      </Flex>
+    </Grid>
   );
 };
