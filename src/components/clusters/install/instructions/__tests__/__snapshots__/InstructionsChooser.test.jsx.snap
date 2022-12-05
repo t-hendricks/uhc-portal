@@ -10,7 +10,7 @@ exports[`InstructionsChooser renders correctly with AI and UPI 1`] = `
       Array [
         "Preflight validations",
         "Smart defaults",
-        "For connected environments",
+        "For connected networks",
       ]
     }
     footerLinkHref="#"
@@ -46,7 +46,6 @@ exports[`InstructionsChooser renders correctly with AI and UPI 1`] = `
       Array [
         "User Provisioned Infrastructure",
         "Highly customizable",
-        "For air-gapped/disconnected environments",
       ]
     }
     footerLinkHref="#"
@@ -75,7 +74,7 @@ exports[`InstructionsChooser renders correctly with AI enabled 1`] = `
       Array [
         "Preflight validations",
         "Smart defaults",
-        "For connected environments",
+        "For connected networks",
       ]
     }
     footerLinkHref="#"
@@ -110,7 +109,6 @@ exports[`InstructionsChooser renders correctly with AI enabled 1`] = `
     featureListItems={
       Array [
         "Installer Provisioned Infrastructure",
-        "For air-gapped/disconnected environments",
       ]
     }
     footerLinkHref="#"
@@ -132,7 +130,6 @@ exports[`InstructionsChooser renders correctly with AI enabled 1`] = `
       Array [
         "User Provisioned Infrastructure",
         "Highly customizable",
-        "For air-gapped/disconnected environments",
       ]
     }
     footerLinkHref="#"
@@ -160,7 +157,6 @@ exports[`InstructionsChooser renders correctly with default settings 1`] = `
     featureListItems={
       Array [
         "Installer Provisioned Infrastructure",
-        "For air-gapped/disconnected environments",
       ]
     }
     footerLinkHref="#"
@@ -182,7 +178,6 @@ exports[`InstructionsChooser renders correctly with default settings 1`] = `
       Array [
         "User Provisioned Infrastructure",
         "Highly customizable",
-        "For air-gapped/disconnected environments",
       ]
     }
     footerLinkHref="#"
