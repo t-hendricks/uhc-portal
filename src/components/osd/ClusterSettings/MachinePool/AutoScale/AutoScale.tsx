@@ -62,7 +62,15 @@ export const AutoScale = ({
         isMultiAz ? (minAllowed / 3).toString() : minAllowed.toString(),
       );
     }
-  }, [autoscalingEnabled]);
+  }, [
+    autoScaleMinNodesValue,
+    autoscalingEnabled,
+    isBYOC,
+    isDefaultMachinePool,
+    isMultiAz,
+    product,
+    setFieldValue,
+  ]);
 
   const minNodes = () => {
     const minNodesAllowed = getMinNodesAllowed({
@@ -101,7 +109,7 @@ export const AutoScale = ({
   const minField = (
     <Field
       component={NodesInput}
-      name="min_replicas"
+      name={FieldId.MinReplicas}
       type="text"
       ariaLabel="Minimum nodes"
       validate={[validateMinNodes, validateMaxNodes, required]}
@@ -116,7 +124,7 @@ export const AutoScale = ({
   const maxField = (
     <Field
       component={NodesInput}
-      name="max_replicas"
+      name={FieldId.MaxReplicas}
       type="text"
       ariaLabel="Maximum nodes"
       validate={[validateMinNodes, validateMaxLessMinNodes, validateMaxNodes, required]}
@@ -218,7 +226,11 @@ export const AutoScale = ({
           }
         />
 
-        <CheckboxField name="autoscalingEnabled" label="Enable autoscaling" input={{ onChange }} />
+        <CheckboxField
+          name={FieldId.AutoscalingEnabled}
+          label="Enable autoscaling"
+          input={{ onChange }}
+        />
         {autoscalingEnabled && azFormGroups}
       </GridItem>
     </>

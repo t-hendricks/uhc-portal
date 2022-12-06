@@ -12,6 +12,11 @@ interface InstructionsChooserProps {
   hideUPI?: boolean;
   upiPageLink: string;
   aiPageLink?: string;
+  providerSpecificFeatures?: {
+    ai?: React.ReactNode[];
+    ipi?: React.ReactNode[];
+    upi?: React.ReactNode[];
+  };
 }
 
 export const InstructionsChooser = ({
@@ -21,6 +26,7 @@ export const InstructionsChooser = ({
   hideUPI = false,
   upiPageLink,
   aiPageLink = '/assisted-installer/clusters/~new',
+  providerSpecificFeatures = {},
 }: InstructionsChooserProps) => (
   <div className="pf-c-content ocm-page instructions-chooser">
     {showAI && (
@@ -37,7 +43,12 @@ export const InstructionsChooser = ({
           </>
         }
         body="Runs Assisted Installer with standard configuration settings to create your cluster."
-        featureListItems={['Preflight validations', 'Smart defaults', 'For connected environments']}
+        featureListItems={[
+          'Preflight validations',
+          'Smart defaults',
+          'For connected networks',
+          ...(providerSpecificFeatures.ai || []),
+        ]}
         footerLinkHref="#" // TODO URL here
         footerLinkText="Learn more about interactive"
       />
@@ -51,8 +62,7 @@ export const InstructionsChooser = ({
         body="Auto-provision your infrastructure with minimal configuration to create your cluster."
         featureListItems={[
           'Installer Provisioned Infrastructure',
-          'Hosts controlled with baseboard management controller (BMC)',
-          'For air-gapped/disconnected environments',
+          ...(providerSpecificFeatures.ipi || []),
         ]}
         footerLinkHref="#" // TODO URL here
         footerLinkText="Learn more about automated"
@@ -68,7 +78,7 @@ export const InstructionsChooser = ({
         featureListItems={[
           'User Provisioned Infrastructure',
           'Highly customizable',
-          'For air-gapped/disconnected environments',
+          ...(providerSpecificFeatures.upi || []),
         ]}
         footerLinkHref="#" // TODO URL here
         footerLinkText="Learn more about full control"

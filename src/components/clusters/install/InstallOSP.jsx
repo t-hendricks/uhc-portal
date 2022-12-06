@@ -17,7 +17,7 @@ class InstallOSP extends Component {
       <Breadcrumbs
         path={[
           { label: 'Clusters' },
-          { label: 'Create', path: '/create' },
+          { label: 'Cluster Type', path: '/create' },
           { label: 'Red Hat OpenStack Platform' },
         ]}
       />
@@ -30,6 +30,9 @@ class InstallOSP extends Component {
           <InstructionsChooser
             ipiPageLink="/install/openstack/installer-provisioned"
             upiPageLink="/install/openstack/user-provisioned"
+            providerSpecificFeatures={{
+              ipi: ['Hosts controlled with OpenStack Provider'],
+            }}
           />
         </PageSection>
       </>

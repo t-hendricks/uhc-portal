@@ -11,10 +11,8 @@ import {
 } from '@patternfly/react-core/dist/esm/next';
 
 import { scrollToFirstError } from '~/common/helpers';
-import AuthenticateScreen from './AuthenticateScreen';
 import { OcmRoleScreen } from './OcmRoleScreen';
 import { UserRoleScreen } from './UserRoleScreen';
-import { RosaServiceScreen } from './RosaServiceScreen';
 
 import './associateAwsAccountModal.scss';
 
@@ -47,24 +45,12 @@ export const AssociateAwsAccountModal = ({ isOpen, onClose }: Props) => (
           />
         }
       >
-        <WizardStep name="Enable ROSA service" id="enable-rosa-service">
-          <RosaServiceScreen />
+        <WizardStep name="OCM role" id="ocm-role">
+          <OcmRoleScreen />
         </WizardStep>
-        <WizardStep name="Authenticate" id="auth">
-          <AuthenticateScreen />
+        <WizardStep name="User role" id="user-role">
+          <UserRoleScreen />
         </WizardStep>
-        <WizardStep
-          name="AWS account association"
-          id="associate-aws-account"
-          steps={[
-            <WizardStep name="OCM role" id="ocm-role">
-              <OcmRoleScreen />
-            </WizardStep>,
-            <WizardStep name="User role" id="user-role">
-              <UserRoleScreen />
-            </WizardStep>,
-          ]}
-        />
       </Wizard>
     </Formik>
   </Modal>

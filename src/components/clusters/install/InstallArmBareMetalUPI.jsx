@@ -26,7 +26,7 @@ export class InstallArmBareMetalUPI extends Component {
       <Breadcrumbs
         path={[
           { label: 'Clusters' },
-          { label: 'Create', path: '/create' },
+          { label: 'Cluster Type', path: '/create' },
           { label: 'ARM Bare Metal', path: '/install/arm' },
           { label: 'User-provisioned infrastructure' },
         ]}

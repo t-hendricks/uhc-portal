@@ -11,7 +11,7 @@ exports[`ARM Bare Metal install renders correctly 1`] = `
               "label": "Clusters",
             },
             Object {
-              "label": "Create",
+              "label": "Cluster Type",
               "path": "/create",
             },
             Object {
@@ -27,6 +27,17 @@ exports[`ARM Bare Metal install renders correctly 1`] = `
     <InstructionsChooser
       aiPageLink="/assisted-installer/clusters/~new?useArm=true"
       ipiPageLink="/install/arm/installer-provisioned"
+      providerSpecificFeatures={
+        Object {
+          "ipi": Array [
+            "Hosts controlled with baseboard management controller (BMC)",
+            "For air-gapped/restricted networks",
+          ],
+          "upi": Array [
+            "For air-gapped/restricted networks",
+          ],
+        }
+      }
       showAI={true}
       upiPageLink="/install/arm/user-provisioned"
     />

@@ -20,7 +20,9 @@ exports[`<AddOnsFailedBox /> should render 1`] = `
     <FlexItem>
       <ExternalLink
         href="https://access.redhat.com/support/cases/#/case/new"
+        isButton={false}
         noIcon={true}
+        variant="secondary"
       >
         Contact support
       </ExternalLink>

@@ -357,13 +357,7 @@ exports[`<CloudTab /> should render correctly with OSD Trial quota 1`] = `
                   "Amazon Web Services",
                   "Flexible hourly billing",
                   <React.Fragment>
-                    <Button
-                      className="get-started-button"
-                      component={[Function]}
-                      variant="primary"
-                    >
-                      Create cluster
-                    </Button>
+                    <CreateClusterDropDown />
                   </React.Fragment>,
                 ],
                 "isOpen": false,
@@ -914,13 +908,7 @@ exports[`<CloudTab /> should render correctly with quota 1`] = `
                   "Amazon Web Services",
                   "Flexible hourly billing",
                   <React.Fragment>
-                    <Button
-                      className="get-started-button"
-                      component={[Function]}
-                      variant="primary"
-                    >
-                      Create cluster
-                    </Button>
+                    <CreateClusterDropDown />
                   </React.Fragment>,
                 ],
                 "isOpen": false,
@@ -1406,13 +1394,7 @@ exports[`<CloudTab /> should render correctly without quota 1`] = `
                   "Amazon Web Services",
                   "Flexible hourly billing",
                   <React.Fragment>
-                    <Button
-                      className="get-started-button"
-                      component={[Function]}
-                      variant="primary"
-                    >
-                      Create cluster
-                    </Button>
+                    <CreateClusterDropDown />
                   </React.Fragment>,
                 ],
                 "isOpen": false,

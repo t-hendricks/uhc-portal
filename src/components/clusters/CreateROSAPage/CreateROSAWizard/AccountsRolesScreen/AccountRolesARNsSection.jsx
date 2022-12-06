@@ -1,21 +1,28 @@
 import React, { useState, useEffect } from 'react';
-import semver from 'semver';
 import PropTypes from 'prop-types';
 import get from 'lodash/get';
 import { Field } from 'redux-form';
+import { Link } from 'react-router-dom';
 import {
   Alert,
   Button,
   ExpandableSection,
   Grid,
   GridItem,
+  TextContent,
   Text,
   TextVariants,
+  TextList,
+  TextListItem,
+  TextListVariants,
   Title,
 } from '@patternfly/react-core';
+import spacing from '@patternfly/react-styles/css/utilities/Spacing/spacing';
 import { Spinner } from '@redhat-cloud-services/frontend-components/Spinner';
 import useAnalytics from '~/hooks/useAnalytics';
 import { trackEvents } from '~/common/analytics';
+import { isSupportedMinorVersion, formatMinorVersion } from '~/common/helpers';
+import { useOCPLatestVersion } from '~/components/releases/hooks';
 import links from '../../../../../common/installLinks.mjs';
 
 import ReduxVerticalFormGroup from '../../../../common/ReduxFormComponents/ReduxVerticalFormGroup';
@@ -176,6 +183,10 @@ function AccountRolesARNsSection({
     setSelectedInstallerRole('');
     getAWSAccountRolesARNs(selectedAWSAccountID);
   };
+
+  const [latestOCPVersion, latestVersionLoaded] = useOCPLatestVersion('stable');
+  const rolesOutOfDate =
+    latestVersionLoaded && !isSupportedMinorVersion(latestOCPVersion, rosaMaxOSVersion);
 
   return (
     <>
@@ -340,13 +351,47 @@ function AccountRolesARNsSection({
                   <Alert
                     variant="info"
                     isInline
-                    isPlain
-                    title={`The selected account-wide roles are compatible with OpenShift version 
-                    ${semver.major(semver.coerce(rosaMaxOSVersion))}.${semver.minor(
-                      semver.coerce(rosaMaxOSVersion),
-                    )} 
-                    and earlier.`}
-                  />
+                    isPlain={!rolesOutOfDate}
+                    title={`The selected account-wide roles are compatible with OpenShift version ${formatMinorVersion(
+                      rosaMaxOSVersion,
+                    )} and earlier.`}
+                  >
+                    {rolesOutOfDate && (
+                      <TextContent>
+                        <Text component={TextVariants.p} className={spacing.mtSm}>
+                          <strong>
+                            To update account roles to the latest OpenShift version (
+                            {formatMinorVersion(latestOCPVersion)}):
+                          </strong>
+                        </Text>
+                        <TextList component={TextListVariants.ol}>
+                          <TextListItem>
+                            <Text component={TextVariants.p}>
+                              Download latest ({formatMinorVersion(latestOCPVersion)}){' '}
+                              <Link to="/downloads#tool-ocm">ocm</Link> and{' '}
+                              <Link to="/downloads#tool-rosa">rosa</Link> CLIs
+                            </Text>
+                          </TextListItem>
+                          <TextListItem className="pf-u-mb-sm">
+                            <Text component={TextVariants.p}>Recreate ARNs using</Text>
+                            <Text component={TextVariants.p}>
+                              <InstructionCommand textAriaLabel="Copyable ROSA create account-roles command">
+                                rosa create account-roles
+                              </InstructionCommand>
+                            </Text>
+                          </TextListItem>
+                        </TextList>
+                        {/*
+                        // TODO restore this when we have a doc URL (see https://issues.redhat.com/browse/OSDOCS-4138)
+                        <Text component={TextVariants.p}>
+                          <ExternalLink href="#">
+                            Learn more about account-role version compatibility
+                          </ExternalLink>
+                        </Text>
+                        */}
+                      </TextContent>
+                    )}
+                  </Alert>
                 </GridItem>
               )}
             </Grid>

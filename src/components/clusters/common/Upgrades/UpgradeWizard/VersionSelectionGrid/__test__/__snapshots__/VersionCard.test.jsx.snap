@@ -44,6 +44,8 @@ exports[`<VersionCard> should render correctly when recommended 1`] = `
     >
       <ExternalLink
         href="https://docs.openshift.com/container-platform/4.5/release_notes/ocp-4-5-release-notes.html#ocp-4-5-20"
+        isButton={false}
+        variant="secondary"
       >
         View release notes
       </ExternalLink>
@@ -83,6 +85,8 @@ exports[`<VersionCard> should render correctly when selected & not recommended 1
     >
       <ExternalLink
         href="https://docs.openshift.com/container-platform/4.5/release_notes/ocp-4-5-release-notes.html#ocp-4-5-16"
+        isButton={false}
+        variant="secondary"
       >
         View release notes
       </ExternalLink>
@@ -149,6 +153,8 @@ exports[`<VersionCard> should render tooltip when has unmet cluster acknowledgem
     >
       <ExternalLink
         href="https://docs.openshift.com/container-platform/4.5/release_notes/ocp-4-5-release-notes.html#ocp-4-5-20"
+        isButton={false}
+        variant="secondary"
       >
         View release notes
       </ExternalLink>

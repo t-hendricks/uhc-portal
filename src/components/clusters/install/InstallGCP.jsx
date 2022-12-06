@@ -17,7 +17,7 @@ class InstallGCP extends Component {
       <Breadcrumbs
         path={[
           { label: 'Clusters' },
-          { label: 'Create', path: '/create' },
+          { label: 'Cluster Type', path: '/create' },
           { label: 'Google Cloud Platform' },
         ]}
       />
@@ -30,6 +30,9 @@ class InstallGCP extends Component {
           <InstructionsChooser
             ipiPageLink="/install/gcp/installer-provisioned"
             upiPageLink="/install/gcp/user-provisioned"
+            providerSpecificFeatures={{
+              ipi: ['Hosts controlled with Google Cloud Provider'],
+            }}
           />
         </PageSection>
       </>

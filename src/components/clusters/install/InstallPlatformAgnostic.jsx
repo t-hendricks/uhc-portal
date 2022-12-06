@@ -18,7 +18,7 @@ class InstallPlatformAgnostic extends Component {
       <Breadcrumbs
         path={[
           { label: 'Clusters' },
-          { label: 'Create', path: '/create' },
+          { label: 'Cluster Type', path: '/create' },
           { label: 'Platform agnostic (x86_64)' },
         ]}
       />
@@ -35,6 +35,25 @@ class InstallPlatformAgnostic extends Component {
             showAI
             hideIPI
             upiPageLink="/install/platform-agnostic/user-provisioned"
+            /*
+            providerSpecificFeatures={{
+              ai: [
+                <>
+                  For <ExternalLink href="#">non-tested platforms</ExternalLink>
+                </>,
+              ],
+              upi: [
+                <>
+                  For <ExternalLink href="#">non-tested platforms</ExternalLink>
+                </>,
+              ],
+            }}
+            */
+            // TODO replace the below string versions with the above JSX versions when we have docs URLs for "non-tested platforms". See https://issues.redhat.com/browse/HAC-2403
+            providerSpecificFeatures={{
+              ai: ['For non-tested platforms'],
+              upi: ['For non-tested platforms'],
+            }}
           />
         </PageSection>
       </>

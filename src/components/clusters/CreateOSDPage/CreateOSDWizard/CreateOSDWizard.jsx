@@ -420,7 +420,7 @@ class CreateOSDWizardInternal extends React.Component {
 
     const breadcrumbs = [
       { label: 'Clusters' },
-      { label: 'Create', path: '/create' },
+      { label: 'Cluster Type', path: '/create' },
       { label: 'OpenShift Dedicated', path: '/create/osd' },
     ];
 

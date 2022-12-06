@@ -16,6 +16,8 @@ exports[`<AutoScaleSection /> renders correctly for multiAz 1`] = `
                
               <ExternalLink
                 href="https://docs.openshift.com/container-platform/4.11/machine_management/applying-autoscaling.html"
+                isButton={false}
+                variant="secondary"
               >
                 Learn more about autoscaling
               </ExternalLink>
@@ -89,6 +91,8 @@ exports[`<AutoScaleSection /> renders correctly for multiAz 1`] = `
                   <br />
                   <ExternalLink
                     href="https://docs.openshift.com/container-platform/4.11/machine_management/applying-autoscaling.html"
+                    isButton={false}
+                    variant="secondary"
                   >
                     Learn more about autoscaling
                     
@@ -140,6 +144,8 @@ exports[`<AutoScaleSection /> renders correctly when autoscale disabled 1`] = `
                
               <ExternalLink
                 href="https://docs.openshift.com/container-platform/4.11/machine_management/applying-autoscaling.html"
+                isButton={false}
+                variant="secondary"
               >
                 Learn more about autoscaling
               </ExternalLink>
@@ -174,6 +180,8 @@ exports[`<AutoScaleSection /> renders correctly when autoscale enabled 1`] = `
                
               <ExternalLink
                 href="https://docs.openshift.com/container-platform/4.11/machine_management/applying-autoscaling.html"
+                isButton={false}
+                variant="secondary"
               >
                 Learn more about autoscaling
               </ExternalLink>
@@ -235,6 +243,8 @@ exports[`<AutoScaleSection /> renders correctly when autoscale enabled 1`] = `
                   <br />
                   <ExternalLink
                     href="https://docs.openshift.com/container-platform/4.11/machine_management/applying-autoscaling.html"
+                    isButton={false}
+                    variant="secondary"
                   >
                     Learn more about autoscaling
                     

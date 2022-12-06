@@ -576,7 +576,7 @@ const getCIDRSubnetLength = (value: string): number | undefined => {
   return parseInt(value.split('/').pop() ?? '', 10);
 };
 
-const awsMachineCidr = (value: string, formData: { ['multi_az']: string }): string | undefined => {
+const awsMachineCidr = (value: string, formData: Record<string, string>): string | undefined => {
   if (!value) {
     return undefined;
   }
@@ -648,10 +648,7 @@ const serviceCidr = (value: string): string | undefined => {
   return undefined;
 };
 
-const podCidr = (
-  value: string,
-  formData: { ['network_host_prefix']: string },
-): string | undefined => {
+const podCidr = (value: string, formData: Record<string, string>): string | undefined => {
   if (!value) {
     return undefined;
   }

@@ -88,7 +88,6 @@ import Insights from './Insights';
 import withFeatureGate from '../features/with-feature-gate';
 import {
   ASSISTED_INSTALLER_FEATURE,
-  ROSA_CREATION_WIZARD_FEATURE,
   OSD_WIZARD_V2_FEATURE,
 } from '../../redux/constants/featureConstants';
 import InstallBMUPI from '../clusters/install/InstallBareMetalUPI';
@@ -99,7 +98,7 @@ import InstallArmBMUPI from '../clusters/install/InstallArmBareMetalUPI';
 import { normalizedProducts } from '../../common/subscriptionTypes';
 import Releases from '../releases/index';
 import IdentityProvidersPage from '../clusters/ClusterDetails/components/IdentityProvidersPage';
-import CreateROSAWelcome from '../clusters/CreateROSAPage/CreateROSAWelcome';
+import GetStartedWithROSA from '../clusters/CreateROSAPage/CreateROSAWizard/CreateRosaGetStarted';
 import EntitlementConfig from '../common/EntitlementConfig/index';
 import InsightsAdvisorRedirector from '../clusters/InsightsAdvisorRedirector';
 import ClusterDetailsSubscriptionId from '../clusters/ClusterDetails/ClusterDetailsSubscriptionId';
@@ -114,19 +113,10 @@ const GatedAssistedUiRouter = withFeatureGate(AssistedUiRouter, ASSISTED_INSTALL
 const GatedMetalInstall = withFeatureGate(
   InstallBareMetal,
   ASSISTED_INSTALLER_FEATURE,
-  // TODO remove ts-ignore when `withFeatureGate` is converted to typescript
+  // TODO remove ts-ignore when `withFeatureGate` and InstallBMUPI are converted to typescript
   // @ts-ignore
   InstallBMUPI, // InstallBMIPI,
 );
-
-const GatedRosaCreationWizard = withFeatureGate(
-  CreateROSAWizard,
-  ROSA_CREATION_WIZARD_FEATURE,
-  // TODO remove ts-ignore when `withFeatureGate` is converted to typescript
-  // @ts-ignore
-  CreateROSAWelcome,
-);
-
 interface RouterProps extends RouteComponentProps {
   planType: string;
   clusterId: string;
@@ -315,13 +305,16 @@ const Router: React.FC<RouterProps> = ({ history, planType, clusterId, externalC
               render={(props) => <CreateClusterPage activeTab="local" {...props} />}
             />
 
-            <Redirect from="/create/rosa/welcome" to="/create/rosa/wizard" />
+            <Redirect from="/create/rosa/welcome" to="/create/rosa/getstarted" />
+            <Route path="/create/rosa/getstarted" component={GetStartedWithROSA} />
             <TermsGuardedRoute
               path="/create/rosa/wizard"
               history={history}
-              component={GatedRosaCreationWizard}
+              component={CreateROSAWizard}
             />
+
             <Route path="/create" component={CreateClusterPage} />
+
             <Route
               path="/details/s/:id/insights/:reportId/:errorKey"
               component={InsightsAdvisorRedirector}
@@ -338,11 +331,8 @@ const Router: React.FC<RouterProps> = ({ history, planType, clusterId, externalC
             />
             <Route path="/details/:id" component={ClusterDetailsClusterOrExternalId} />
             <Route path="/register" component={RegisterCluster} />
-            <Route
-              path="/quota/resource-limits"
-              render={(props) => <Quota marketplace {...props} />}
-            />
-            <Route path="/quota" render={(props) => <Quota {...props} />} />
+            <Route path="/quota/resource-limits" render={() => <Quota marketplace />} />
+            <Route path="/quota" component={Quota} />
             <Route path="/archived" component={ArchivedClusterList} />
             <Route path="/overview" exact component={Overview} />
             <Route path="/releases" exact component={Releases} />

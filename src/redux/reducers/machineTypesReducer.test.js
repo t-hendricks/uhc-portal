@@ -55,8 +55,6 @@ describe('clusterMachineTypesReducer', () => {
       expect(result).toEqual({
         types: action.payload,
         typesByID: {},
-        errorMessage: '',
-        errorDetails: null,
         fulfilled: true,
         pending: false,
         error: false,
@@ -91,8 +89,6 @@ describe('clusterMachineTypesReducer', () => {
           foo: { id: 'foo' },
           bar: { id: 'bar' },
         },
-        errorMessage: '',
-        errorDetails: null,
         fulfilled: true,
         pending: false,
         error: false,

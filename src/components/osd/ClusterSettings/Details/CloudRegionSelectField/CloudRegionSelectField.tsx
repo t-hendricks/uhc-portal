@@ -38,7 +38,7 @@ export const CloudRegionSelectField = ({
     if (!selectedRegionData?.supports_multi_az) {
       setFieldValue(field.name, cloudProviderID === 'aws' ? 'us-east-1' : 'us-east1');
     }
-  }, [isMultiAz, cloudProviders, cloudProviderID, field.value]);
+  }, [isMultiAz, cloudProviders, setFieldValue, field.name, cloudProviderID]);
 
   if (cloudProviders.fulfilled) {
     return (
