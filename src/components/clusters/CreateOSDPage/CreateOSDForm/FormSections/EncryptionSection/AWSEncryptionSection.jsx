@@ -1,5 +1,5 @@
 import React from 'react';
-import { GridItem } from '@patternfly/react-core';
+import { GridItem, Alert } from '@patternfly/react-core';
 import { Field } from 'redux-form';
 import ReduxVerticalFormGroup from '../../../../../common/ReduxFormComponents/ReduxVerticalFormGroup';
 import ExternalLink from '../../../../../common/ExternalLink';
@@ -7,6 +7,9 @@ import { validateAWSKMSKeyARN } from '../../../../../../common/validators';
 import { constants } from '../../CreateOSDFormConstants';
 
 function AWSCustomerManagedEncryption() {
+  const cloudProviderLearnLink =
+    'https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/data-protection.html';
+
   return (
     <>
       <GridItem md={6}>
@@ -18,7 +21,7 @@ function AWSCustomerManagedEncryption() {
           placeholder="Key ARN"
           validate={validateAWSKMSKeyARN}
           isRequired
-          helpText="Unique, fully qualified identifier (Amazon Resource Name (ARN)) for your KMS Key."
+          helpText="Provide a custom key ARN"
           extendedHelpText={
             <>
               <p className="pf-u-mb-sm">{constants.awsKeyARN}</p>
@@ -30,6 +33,17 @@ function AWSCustomerManagedEncryption() {
           showHelpTextOnError={false}
         />
       </GridItem>
+      <GridItem>
+        <Alert
+          className="key-arn-alert"
+          isInline
+          variant="info"
+          title="If you delete the ARN key, the cluster will no longer be available."
+        >
+          <ExternalLink href={cloudProviderLearnLink}>Learn more about encryption</ExternalLink>
+        </Alert>
+      </GridItem>
+
       <GridItem md={6} />
     </>
   );

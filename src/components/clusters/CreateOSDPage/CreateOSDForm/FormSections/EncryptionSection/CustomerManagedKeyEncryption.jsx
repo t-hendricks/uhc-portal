@@ -3,11 +3,9 @@ import PropTypes from 'prop-types';
 import { FormGroup, Grid, GridItem, Text, TextVariants } from '@patternfly/react-core';
 import { Field } from 'redux-form';
 import RadioButtons from '~/components/common/ReduxFormComponents/RadioButtons';
-// import ExternalLink from '../../../../../common/ExternalLink';
-
-// import { constants } from '../../CreateOSDFormConstants';
 import GCPClusterEncryption from './GCPEncryptionSection';
 import AWSCustomerManagedEncryption from './AWSEncryptionSection';
+import './encryptionSection.scss';
 
 function CustomerManagedEncryption({
   customerManagedEncryptionSelected,
@@ -15,25 +13,19 @@ function CustomerManagedEncryption({
   cloudProviderID,
 }) {
   const isGCP = cloudProviderID === 'gcp';
-  // const gcpDesc =
-  //   'Managed via Google Cloud Key Management Service. Used to store and generate encryption keys and encrypt your data.';
-  // const awsDesc =
-  //   'Use a custom AWS KMS key for AWS EBS volume encryption instead of your default AWS KMS key.';
 
   return (
     <Grid hasGutter>
-      <GridItem rowSpan={1}>
+      <GridItem rowSpan={2}>
         <FormGroup
           fieldId="customer_managed_key"
           id="customerManagedKey"
           label="Encryption Keys"
           isInline
         >
-          <br />
-          <br />
-          <Text component={TextVariants.p}>
-            The cloud storage for your cluster is encrypted at rest
-          </Text>
+          <div className="encryptionkeys-description">
+            The cloud storage for your cluster is encrypted at rest.
+          </div>
 
           <Field
             component={RadioButtons}
@@ -50,7 +42,6 @@ function CustomerManagedEncryption({
               },
             ]}
           />
-          {/* <div className="ocm-c--reduxcheckbox-description">{isGCP ? gcpDesc : awsDesc}</div> */}
         </FormGroup>
       </GridItem>
       <GridItem>

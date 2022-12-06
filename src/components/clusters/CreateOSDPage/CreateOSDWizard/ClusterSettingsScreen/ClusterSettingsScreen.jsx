@@ -1,15 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import {
-  Title,
-  Grid,
-  GridItem,
-  FormGroup,
-  Form,
-  ExpandableSection,
-  // Text,
-  // TextVariants,
-} from '@patternfly/react-core';
+import { Title, Grid, GridItem, FormGroup, Form, ExpandableSection } from '@patternfly/react-core';
 import { Field } from 'redux-form';
 
 import PopoverHint from '../../../../common/PopoverHint';
@@ -44,10 +35,6 @@ function ClusterSettingsScreen({
   };
 
   const isRosa = product === normalizedProducts.ROSA;
-  // const cloudProviderLearnLink =
-  //   cloudProviderID === 'aws'
-  //     ? 'https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/data-protection.html'
-  //     : 'https://cloud.google.com/storage/docs/encryption/default-keys';
 
   return (
     <Form
