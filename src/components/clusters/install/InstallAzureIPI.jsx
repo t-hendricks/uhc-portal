@@ -25,7 +25,7 @@ export class InstallAzureIPI extends Component {
       <Breadcrumbs
         path={[
           { label: 'Clusters' },
-          { label: 'Create', path: '/create' },
+          { label: 'Cluster Type', path: '/create' },
           { label: 'Microsoft Azure', path: '/install/azure' },
           { label: 'Installer-provisioned infrastructure' },
         ]}

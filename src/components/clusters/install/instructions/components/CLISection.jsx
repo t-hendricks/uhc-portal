@@ -5,13 +5,13 @@ import PropTypes from 'prop-types';
 import DownloadAndOSSelection from './DownloadAndOSSelection';
 import { tools, channels } from '../../../../../common/installLinks.mjs';
 
-const CLISection = ({ token, pendoID, channel, isBMIPI = false }) => (
+const CLISection = ({ pendoID, channel, isBMIPI = false }) => (
   <>
     <Text component="p">
       Download the OpenShift command-line tools and add them to your <code>PATH</code>.
     </Text>
     <div>
-      <DownloadAndOSSelection token={token} pendoID={pendoID} tool={tools.OC} channel={channel} />
+      <DownloadAndOSSelection pendoID={pendoID} tool={tools.OC} channel={channel} />
     </div>
     <Text component="p" />
     {!isBMIPI && (
@@ -25,7 +25,6 @@ const CLISection = ({ token, pendoID, channel, isBMIPI = false }) => (
 );
 CLISection.propTypes = {
   pendoID: PropTypes.string,
-  token: PropTypes.object.isRequired,
   channel: PropTypes.oneOf(Object.values(channels)).isRequired,
   isBMIPI: PropTypes.bool,
 };

@@ -18,7 +18,7 @@ class InstallRHV extends Component {
       <Breadcrumbs
         path={[
           { label: 'Clusters' },
-          { label: 'Create', path: '/create' },
+          { label: 'Cluster Type', path: '/create' },
           { label: 'Red Hat Virtualization' },
         ]}
       />
@@ -34,6 +34,9 @@ class InstallRHV extends Component {
           <InstructionsChooser
             ipiPageLink="/install/rhv/installer-provisioned"
             upiPageLink="/install/rhv/user-provisioned"
+            providerSpecificFeatures={{
+              ipi: ['Hosts controlled with Red Hat Virtualization Provider'],
+            }}
           />
         </PageSection>
       </>

@@ -17,7 +17,7 @@ class InstallBareMetal extends Component {
       <Breadcrumbs
         path={[
           { label: 'Clusters' },
-          { label: 'Create', path: '/create' },
+          { label: 'Cluster Type', path: '/create' },
           { label: 'Bare Metal' },
         ]}
       />
@@ -31,6 +31,13 @@ class InstallBareMetal extends Component {
             showAI
             ipiPageLink="/install/metal/installer-provisioned"
             upiPageLink="/install/metal/user-provisioned"
+            providerSpecificFeatures={{
+              ipi: [
+                'Hosts controlled with baseboard management controller (BMC)',
+                'For air-gapped/restricted networks',
+              ],
+              upi: ['For air-gapped/restricted networks'],
+            }}
           />
         </PageSection>
       </>

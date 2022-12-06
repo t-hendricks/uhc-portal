@@ -17,7 +17,7 @@ class InstallASH extends Component {
       <Breadcrumbs
         path={[
           { label: 'Clusters' },
-          { label: 'Create', path: '/create' },
+          { label: 'Cluster Type', path: '/create' },
           { label: 'Microsoft Azure Stack Hub' },
         ]}
       />
@@ -30,6 +30,9 @@ class InstallASH extends Component {
           <InstructionsChooser
             ipiPageLink="/install/azure-stack-hub/installer-provisioned"
             upiPageLink="/install/azure-stack-hub/user-provisioned"
+            providerSpecificFeatures={{
+              ipi: ['Hosts controlled with Azure Provider'],
+            }}
           />
         </PageSection>
       </>

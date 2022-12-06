@@ -11,7 +11,7 @@ exports[`BareMetal install renders correctly 1`] = `
               "label": "Clusters",
             },
             Object {
-              "label": "Create",
+              "label": "Cluster Type",
               "path": "/create",
             },
             Object {
@@ -26,6 +26,17 @@ exports[`BareMetal install renders correctly 1`] = `
   <PageSection>
     <InstructionsChooser
       ipiPageLink="/install/metal/installer-provisioned"
+      providerSpecificFeatures={
+        Object {
+          "ipi": Array [
+            "Hosts controlled with baseboard management controller (BMC)",
+            "For air-gapped/restricted networks",
+          ],
+          "upi": Array [
+            "For air-gapped/restricted networks",
+          ],
+        }
+      }
       showAI={true}
       upiPageLink="/install/metal/user-provisioned"
     />

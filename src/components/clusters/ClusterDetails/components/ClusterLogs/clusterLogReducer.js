@@ -46,6 +46,7 @@ function clusterLogReducer(state = initialState, action) {
       case REJECTED_ACTION(GET_CLUSTER_LOGS):
         draft.logs = [];
         draft.requestState = { ...getErrorState(action) };
+        draft.fetchedClusterLogsAt = new Date();
         break;
 
       case viewPaginationConstants.VIEW_CLEAR_FILTERS_AND_FLAGS:

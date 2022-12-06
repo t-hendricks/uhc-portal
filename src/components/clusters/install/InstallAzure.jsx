@@ -17,7 +17,7 @@ class InstallAzure extends Component {
       <Breadcrumbs
         path={[
           { label: 'Clusters' },
-          { label: 'Create', path: '/create' },
+          { label: 'Cluster Type', path: '/create' },
           { label: 'Microsoft Azure' },
         ]}
       />
@@ -30,6 +30,9 @@ class InstallAzure extends Component {
           <InstructionsChooser
             ipiPageLink="/install/azure/installer-provisioned"
             upiPageLink="/install/azure/user-provisioned"
+            providerSpecificFeatures={{
+              ipi: ['Hosts controlled with Azure Provider'],
+            }}
           />
         </PageSection>
       </>

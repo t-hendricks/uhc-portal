@@ -25,7 +25,7 @@ const marketplaceLinks: {
   };
 } = {
   'managed-odh': {
-    aws: 'https://aws.amazon.com/marketplace/pp/prodview-co7uaxdm7qnkq',
+    aws: 'https://aws.amazon.com/marketplace/search/results?searchTerms=OpenShift+Data+Science+enables',
   },
 };
 
@@ -78,7 +78,7 @@ const AddOnsSubscriptionCard = ({
   return (
     <Card
       id={billingModel}
-      isSelectableRaised={hasCloudAccounts}
+      isSelectableRaised
       isSelected={activeSubscription?.billingModel === billingModel}
       isDisabledRaised={!hasCloudAccounts || !hasQuota || !isReady}
       onClick={() => {
@@ -97,7 +97,7 @@ const AddOnsSubscriptionCard = ({
     >
       <CardTitle>{name}</CardTitle>
       <CardBody>Flexible usage. Pay only for the services you use.</CardBody>
-      {!hasCloudAccounts ? (
+      {!hasCloudAccounts || !hasQuota ? (
         <CardFooter>
           <small>Not available.</small>{' '}
           {marketplaceLinks[activeCardId] && marketplaceLinks[activeCardId][cloudProvider] && (

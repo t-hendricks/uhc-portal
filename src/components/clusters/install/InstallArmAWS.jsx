@@ -17,7 +17,7 @@ class InstallArmAWS extends Component {
       <Breadcrumbs
         path={[
           { label: 'Clusters' },
-          { label: 'Create', path: '/create' },
+          { label: 'Cluster Type', path: '/create' },
           { label: 'Amazon Web Services (ARM)' },
         ]}
       />
@@ -30,6 +30,9 @@ class InstallArmAWS extends Component {
           <InstructionsChooser
             ipiPageLink="/install/aws/arm/installer-provisioned"
             upiPageLink="/install/aws/arm/user-provisioned"
+            providerSpecificFeatures={{
+              ipi: ['Hosts controlled with AWS Provider'],
+            }}
           />
         </PageSection>
       </>

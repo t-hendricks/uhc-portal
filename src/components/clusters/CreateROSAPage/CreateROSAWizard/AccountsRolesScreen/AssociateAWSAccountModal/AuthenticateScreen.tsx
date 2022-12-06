@@ -9,7 +9,7 @@ import { useGlobalState } from '~/redux/hooks/useGlobalState';
 
 const AuthenticateScreen = () => {
   const token = useGlobalState((state) => state.rosaReducer.offlineToken);
-  const loginCommand = `rosa login --token="${token}"`;
+  const loginCommand = `rosa login --token="{{TOKEN}}"`;
 
   return (
     <Card isCompact isPlain isFullHeight>
@@ -21,12 +21,7 @@ const AuthenticateScreen = () => {
             <ExternalLink href={links.ROSA_CLI_DOCS}>Help</ExternalLink>
           </Text>
           <Text component="p">
-            <DownloadAndOSSelection
-              token={{}}
-              tool={tools.ROSA}
-              channel={channels.STABLE}
-              pendoID={{}}
-            />
+            <DownloadAndOSSelection tool={tools.ROSA} channel={channels.STABLE} pendoID="" />
           </Text>
           <Text component={TextVariants.p} className="ocm-secondary-text">
             Note: If you haven’t done so already, also{' '}
@@ -49,6 +44,8 @@ const AuthenticateScreen = () => {
           command={loginCommand}
           textAriaLabel="Copyable ROSA login command"
           trackEvent={trackEvents.ROSALogin}
+          showCommandOnError
+          outerClassName="ocm-instructions__command"
         />
       </CardBody>
     </Card>

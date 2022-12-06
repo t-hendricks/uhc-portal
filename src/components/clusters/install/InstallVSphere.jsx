@@ -17,7 +17,7 @@ class InstallVSphere extends Component {
       <Breadcrumbs
         path={[
           { label: 'Clusters' },
-          { label: 'Create', path: '/create' },
+          { label: 'Cluster Type', path: '/create' },
           { label: 'VMware vSphere' },
         ]}
       />
@@ -31,6 +31,13 @@ class InstallVSphere extends Component {
             showAI
             ipiPageLink="/install/vsphere/installer-provisioned"
             upiPageLink="/install/vsphere/user-provisioned"
+            providerSpecificFeatures={{
+              ipi: [
+                'Hosts controlled with vSphere Cloud Provider',
+                'For connected or air-gapped/restricted networks',
+              ],
+              upi: ['For connected or air-gapped/restricted networks'],
+            }}
           />
         </PageSection>
       </>

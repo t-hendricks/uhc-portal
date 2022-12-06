@@ -10,7 +10,7 @@ interface InstructionsChooserCardProps {
   title: React.ReactNode;
   labels: React.ReactNode;
   body: React.ReactNode;
-  featureListItems: string[];
+  featureListItems: React.ReactNode[];
   footerLinkHref: string;
   footerLinkText: React.ReactNode;
 }
@@ -44,9 +44,11 @@ export const InstructionsChooserCard = ({
       <CardBody id={`${id}-description`}>
         {body}
         <List isPlain className={`${spacing.mtLg} ${spacing.ml_0} ${spacing.pl_0}`}>
-          {featureListItems.map((item) => (
+          {featureListItems.map((item, index) => (
             <ListItem
-              key={item}
+              // These can be arbitrary JSX (no easy string key to use) and they will never change order once the page is rendered, so it is safe to use the array index as the key
+              // eslint-disable-next-line react/no-array-index-key
+              key={index}
               icon={<CheckIcon color="var(--pf-global--palette--green-400)" size="md" />}
             >
               {item}

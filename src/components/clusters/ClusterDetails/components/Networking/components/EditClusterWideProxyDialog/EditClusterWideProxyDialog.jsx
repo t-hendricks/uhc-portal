@@ -119,7 +119,7 @@ const EditClusterWideProxyDialog = (props) => {
               <Field
                 component={ReduxVerticalFormGroup}
                 name="httpProxyUrl"
-                label="HTTP proxy URL"
+                label="HTTP Proxy URL"
                 placeholder={HTTP_PROXY_PLACEHOLDER}
                 type="text"
                 validate={[validateUrlHttp, validateAtLeastOne]}
@@ -132,7 +132,7 @@ const EditClusterWideProxyDialog = (props) => {
               <Field
                 component={ReduxVerticalFormGroup}
                 name="httpsProxyUrl"
-                label="HTTPS proxy URL"
+                label="HTTPS Proxy URL"
                 placeholder={HTTPS_PROXY_PLACEHOLDER}
                 type="text"
                 validate={[validateUrlHttps, validateAtLeastOne]}

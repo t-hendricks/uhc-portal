@@ -28,7 +28,9 @@ exports[`Customer Cloud Subscription modal; should render for AWS 1`] = `
          
         <ExternalLink
           href="https://docs.openshift.com/dedicated/osd_planning/aws-ccs.html#aws-limits_aws-ccs"
+          isButton={false}
           noIcon={true}
+          variant="secondary"
         >
           See resource requirements.
         </ExternalLink>
@@ -42,7 +44,9 @@ exports[`Customer Cloud Subscription modal; should render for AWS 1`] = `
          
         <ExternalLink
           href="https://docs.openshift.com/dedicated/osd_planning/aws-ccs.html#ccs-aws-scp_aws-ccs"
+          isButton={false}
           noIcon={true}
+          variant="secondary"
         >
           documentation
         </ExternalLink>
@@ -55,7 +59,9 @@ exports[`Customer Cloud Subscription modal; should render for AWS 1`] = `
      
     <ExternalLink
       href="https://docs.openshift.com/dedicated/osd_planning/aws-ccs.html"
+      isButton={false}
       noIcon={true}
+      variant="secondary"
     >
       documentation
     </ExternalLink>
@@ -93,6 +99,8 @@ exports[`Customer Cloud Subscription modal; should render for GCP 1`] = `
          
         <ExternalLink
           href="https://docs.openshift.com/dedicated/osd_planning/gcp-ccs.html#gcp-limits_gcp-ccs"
+          isButton={false}
+          variant="secondary"
         >
           See resource requirements.
         </ExternalLink>
@@ -133,7 +141,9 @@ exports[`Customer Cloud Subscription modal; should render for GCP 1`] = `
      
     <ExternalLink
       href="https://docs.openshift.com/dedicated/osd_planning/gcp-ccs.html"
+      isButton={false}
       noIcon={true}
+      variant="secondary"
     >
       the documentation
     </ExternalLink>

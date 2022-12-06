@@ -17,7 +17,7 @@ class InstallAWS extends Component {
       <Breadcrumbs
         path={[
           { label: 'Clusters' },
-          { label: 'Create', path: '/create' },
+          { label: 'Cluster Type', path: '/create' },
           { label: 'Amazon Web Services' },
         ]}
       />
@@ -30,6 +30,9 @@ class InstallAWS extends Component {
           <InstructionsChooser
             ipiPageLink="/install/aws/installer-provisioned"
             upiPageLink="/install/aws/user-provisioned"
+            providerSpecificFeatures={{
+              ipi: ['Hosts controlled with AWS Provider'],
+            }}
           />
         </PageSection>
       </>

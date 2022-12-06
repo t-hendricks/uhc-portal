@@ -5,6 +5,7 @@ import { acknowledgePrerequisites } from '~/common/validators';
 import { CheckboxField } from '../form';
 
 import './Prerequisites.scss';
+import { FieldId } from '../../constants';
 
 interface PrerequisitesProps extends ExpandableSectionProps {
   children: React.ReactNode | React.ReactNode[];
@@ -45,7 +46,7 @@ export const Prerequisites = ({
       </ExpandableSection>
       {acknowledgementRequired && (
         <CheckboxField
-          name="acknowledge_prerequisites"
+          name={FieldId.AcknowledgePrereq}
           label="I've read and completed all the prerequisites and am ready to continue creating my cluster."
           validate={acknowledgePrerequisites}
         />

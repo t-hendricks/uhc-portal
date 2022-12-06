@@ -11,7 +11,7 @@ exports[`InstallVSphere renders correctly 1`] = `
               "label": "Clusters",
             },
             Object {
-              "label": "Create",
+              "label": "Cluster Type",
               "path": "/create",
             },
             Object {
@@ -26,6 +26,17 @@ exports[`InstallVSphere renders correctly 1`] = `
   <PageSection>
     <InstructionsChooser
       ipiPageLink="/install/vsphere/installer-provisioned"
+      providerSpecificFeatures={
+        Object {
+          "ipi": Array [
+            "Hosts controlled with vSphere Cloud Provider",
+            "For connected or air-gapped/restricted networks",
+          ],
+          "upi": Array [
+            "For connected or air-gapped/restricted networks",
+          ],
+        }
+      }
       showAI={true}
       upiPageLink="/install/vsphere/user-provisioned"
     />

@@ -51,7 +51,7 @@ class DownloadAndOSSelection extends React.Component {
   };
 
   render() {
-    const { token, pendoID, tool, channel, githubReleases } = this.props;
+    const { pendoID, tool, channel, githubReleases } = this.props;
     const { selections } = this.state;
 
     const urls = urlsSelector(githubReleases);
@@ -59,7 +59,7 @@ class DownloadAndOSSelection extends React.Component {
     const OS = selections[tool]?.OS || detectOS();
     const isCRC = tool === tools.CRC;
 
-    const chooser = downloadChoice(selections, this.setSelections, urls, tool, channel, token, {
+    const chooser = downloadChoice(selections, this.setSelections, urls, tool, channel, {
       pendoID,
     });
 
@@ -77,7 +77,6 @@ class DownloadAndOSSelection extends React.Component {
 }
 
 DownloadAndOSSelection.propTypes = {
-  token: PropTypes.object.isRequired,
   pendoID: PropTypes.string,
   tool: PropTypes.oneOf(Object.values(tools)).isRequired,
   channel: PropTypes.oneOf(Object.values(channels)).isRequired,

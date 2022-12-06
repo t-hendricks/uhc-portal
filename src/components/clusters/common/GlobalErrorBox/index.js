@@ -8,7 +8,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = {
-  clearGlobalError,
+  clearGlobalError: () => clearGlobalError(),
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(GlobalErrorBox);

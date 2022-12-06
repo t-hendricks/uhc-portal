@@ -31,10 +31,10 @@ import { Account } from '../../types/accounts_mgmt.v1/models/Account';
 import { Subscription } from '../../types/accounts_mgmt.v1/models/Subscription';
 import { QuotaCost } from '../../types/accounts_mgmt.v1/models/QuotaCost';
 
-type State = {
+export type State = {
   account: PromiseReducerState<{
     valid: boolean;
-    data: Account | {};
+    data: Account;
   }>;
   subscriptions: PromiseReducerState<{
     valid: boolean;
@@ -57,7 +57,7 @@ const initialState: State = {
   account: {
     ...baseRequestState,
     valid: false,
-    data: {},
+    data: {} as Account,
   },
   subscriptions: {
     ...baseRequestState,

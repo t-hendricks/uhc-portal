@@ -7,7 +7,9 @@ exports[`<TokensROSA /> Renders screen with button 1`] = `
   docsLink={
     <ExternalLink
       href="https://docs.openshift.com/rosa/rosa_cli/rosa-get-started-cli.html"
+      isButton={false}
       noIcon={true}
+      variant="secondary"
     >
       read more about setting up the rosa CLI
     </ExternalLink>
@@ -43,7 +45,9 @@ exports[`<TokensROSA /> Renders token 1`] = `
   docsLink={
     <ExternalLink
       href="https://docs.openshift.com/rosa/rosa_cli/rosa-get-started-cli.html"
+      isButton={false}
       noIcon={true}
+      variant="secondary"
     >
       read more about setting up the rosa CLI
     </ExternalLink>

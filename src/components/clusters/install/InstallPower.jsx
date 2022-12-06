@@ -23,7 +23,11 @@ export class InstallPower extends Component {
     const { token } = this.props;
     const breadcrumbs = (
       <Breadcrumbs
-        path={[{ label: 'Clusters' }, { label: 'Create', path: '/create' }, { label: 'Power' }]}
+        path={[
+          { label: 'Clusters' },
+          { label: 'Cluster Type', path: '/create' },
+          { label: 'Power' },
+        ]}
       />
     );
 
