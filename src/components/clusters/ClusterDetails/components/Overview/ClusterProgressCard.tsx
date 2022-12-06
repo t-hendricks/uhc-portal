@@ -26,15 +26,16 @@ interface ClusterProgressCardProps {
 
 const ClusterProgressCard = ({ cluster = {}, history, refresh }: ClusterProgressCardProps) => {
   const isError = cluster.state === clusterStates.ERROR;
+  const isPending = cluster.state === clusterStates.PENDING;
   const isInstalling = cluster.state === clusterStates.INSTALLING;
   const isUninstalling = cluster.state === clusterStates.UNINSTALLING;
   const isWaitingROSAManual = isWaitingROSAManualMode(cluster);
-  const inProgress = isInstalling || isUninstalling;
+  const inProgress = isPending || isInstalling || isUninstalling;
 
   let titleText;
   if (isError) {
     titleText = 'Installation error';
-  } else if (isInstalling) {
+  } else if (isPending || isInstalling) {
     titleText = 'Installing cluster';
   } else if (isUninstalling) {
     titleText = 'Cluster uninstallation';
