@@ -21,7 +21,7 @@ export const AwsAccountDetails = () => {
   return (
     <Grid hasGutter md={6}>
       <Flex direction={{ default: 'column' }} spaceItems={{ default: 'spaceItemsLg' }}>
-        <GridItem md={6}>
+        <GridItem>
           <TextInputField
             name={FieldId.AccountId}
             label="AWS account ID"
@@ -45,10 +45,11 @@ export const AwsAccountDetails = () => {
             }
           />
         </GridItem>
-        <GridItem md={6} />
-        <GridItem md={6}>
+
+        <GridItem>
           <Title headingLevel="h4">AWS IAM user credentials</Title>
         </GridItem>
+
         <GridItem>
           <Alert
             className="bottom-alert pf-u-mt-0"
@@ -57,7 +58,8 @@ export const AwsAccountDetails = () => {
             isInline
           />
         </GridItem>
-        <GridItem md={6}>
+
+        <GridItem>
           <TextInputField
             name={FieldId.AccessKeyId}
             label="AWS access key ID"
@@ -66,8 +68,8 @@ export const AwsAccountDetails = () => {
             helperText={isValidating ? 'Validating...' : ''}
           />
         </GridItem>
-        <GridItem md={6} />
-        <GridItem md={6}>
+
+        <GridItem>
           <TextInputField
             name={FieldId.SecretAccessKey}
             label="AWS secret access key"
@@ -77,7 +79,7 @@ export const AwsAccountDetails = () => {
             isPassword
           />
         </GridItem>
-        <GridItem md={6} />
+
         <GridItem>
           <CheckboxField
             name={FieldId.DisableScpChecks}
