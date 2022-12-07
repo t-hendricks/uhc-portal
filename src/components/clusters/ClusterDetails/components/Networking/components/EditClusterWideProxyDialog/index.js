@@ -57,9 +57,9 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch(editCluster(formData.clusterID, clusterProxyBody));
   },
   sendError: () => {
-    // 'invalid file' is a magic string that triggers a validation error
+    // 'Invalid file' is a magic string that triggers a validation error
     // in src/common/validators.js validateCA function
-    dispatch(change('EditClusterWideProxy', 'additional_trust_bundle', 'invalid file'));
+    dispatch(change('EditClusterWideProxy', 'additional_trust_bundle', 'Invalid file'));
   },
 });
 
