@@ -500,7 +500,7 @@ const validateCA = (value: string): string | undefined => {
   if (!value) {
     return undefined;
   }
-  if (value === 'invalid file') {
+  if (value === 'Invalid file') {
     return 'Must be a PEM encoded X.509 file (.pem, .crt, .ca, .cert) and no larger than 4 MB';
   }
   return undefined;

@@ -1,5 +1,4 @@
 import React from 'react';
-import { RadioButtonField } from 'formik-pf';
 
 import { Form, Grid, GridItem, Title, Text, FormGroup, Alert } from '@patternfly/react-core';
 
@@ -14,7 +13,7 @@ import { CloudProviderType } from '../ClusterSettings/CloudProvider/types';
 import { FieldId } from '../constants';
 import { useFormState } from '../hooks';
 import { ClusterPrivacyType } from './constants';
-import { CheckboxField } from '../common/form';
+import { CheckboxField, RadioGroupField } from '../common/form';
 
 export const Configuration = () => {
   const track = useAnalytics();
@@ -51,9 +50,7 @@ export const Configuration = () => {
       },
     });
 
-  const onClusterPrivacyChange = (event: React.ChangeEvent<any>) => {
-    const { value } = event.target;
-
+  const onClusterPrivacyChange = (value: string) => {
     if (value === ClusterPrivacyType.External) {
       setFieldValue(FieldId.UsePrivateLink, false);
 
@@ -136,17 +133,11 @@ export const Configuration = () => {
             </GridItem>
 
             <GridItem span={6}>
-              <div onChange={onClusterPrivacyChange}>
-                {clusterPrivacyOptions.map((option) => (
-                  <RadioButtonField
-                    name={FieldId.ClusterPrivacy}
-                    label={option.label}
-                    value={option.value}
-                    className="pf-u-mb-md"
-                    description={option.description}
-                  />
-                ))}
-              </div>
+              <RadioGroupField
+                name={FieldId.ClusterPrivacy}
+                options={clusterPrivacyOptions}
+                onChange={onClusterPrivacyChange}
+              />
             </GridItem>
 
             {isPrivateCluster && (

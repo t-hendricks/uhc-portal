@@ -63,6 +63,9 @@ export enum FieldId {
   NetworkHostPrefix = 'network_host_prefix',
   NetworkMachineCidrSingleAz = 'network_machine_cidr_single_az',
   NetworkMachineCidrMultiAz = 'network_machine_cidr_multi_az',
+  UpgradePolicy = 'upgrade_policy',
+  AutomaticUpgradeSchedule = 'automatic_upgrade_schedule',
+  NodeDrainGracePeriod = 'node_drain_grace_period',
 }
 
 export enum StepName {
@@ -121,6 +124,8 @@ export const initialValues = {
   [FieldId.NetworkMachineCidr]: MACHINE_CIDR_DEFAULT,
   [FieldId.NetworkServiceCidr]: SERVICE_CIDR_DEFAULT,
   [FieldId.NetworkHostPrefix]: HOST_PREFIX_DEFAULT,
+  [FieldId.UpgradePolicy]: 'manual',
+  [FieldId.AutomaticUpgradeSchedule]: '0 0 * * 0',
 };
 
 export const clusterNameHint =
