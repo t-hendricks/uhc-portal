@@ -4,6 +4,7 @@ import { ValidationError, Validator } from 'jsonschema';
 import { clusterService } from '~/services';
 import type { GCP } from '../types/clusters_mgmt.v1';
 import type { AugmentedSubnetwork, SubnetFormProps } from '../types/types';
+import { sqlString } from './queryHelpers';
 
 type Networks = Parameters<typeof cidrTools['overlap']>[0];
 
@@ -185,7 +186,8 @@ const checkObjectNameAsyncValidation = (value: string) => [
       if (!value?.length) {
         return false;
       }
-      const { data } = await clusterService.getCluster(`name = '${value}'`);
+      const search = `name = ${sqlString(value)}`;
+      const { data } = await clusterService.getCluster(search);
       return !data?.size;
     },
   },
