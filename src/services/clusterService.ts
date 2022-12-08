@@ -30,8 +30,6 @@ import type {
 } from '../types/clusters_mgmt.v1';
 import type { Subscription } from '../types/accounts_mgmt.v1';
 
-const getCluster = (search: string) => getClusters(search, 1);
-
 const getClusters = (search: string, size: number = -1) =>
   apiRequest.post<{
     /**
@@ -717,7 +715,6 @@ const getLimitedSupportReasons = (clusterId: string) =>
   }>(`/api/clusters_mgmt/v1/clusters/${clusterId}/limited_support_reasons`);
 
 const clusterService = {
-  getCluster,
   getClusters,
   postNewCluster,
   getClusterDetails,
