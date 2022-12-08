@@ -116,15 +116,15 @@ export const Details = () => {
       value: 'false',
       label: 'Single zone',
       disabled: !hasSingleAzResources,
-      extendedHelpText: constants.availabilityHintSingleZone,
-      ...(!hasSingleAzResources && { tooltipText: noQuotaTooltip }),
+      popoverHint: constants.availabilityHintSingleZone,
+      ...(!hasSingleAzResources && { tooltip: noQuotaTooltip }),
     },
     {
       value: 'true',
       label: 'Multi-zone',
       disabled: !hasMultiAzResources,
-      extendedHelpText: constants.availabilityHintMultiZone,
-      ...(!hasMultiAzResources && { tooltipText: noQuotaTooltip }),
+      popoverHint: constants.availabilityHintMultiZone,
+      ...(!hasMultiAzResources && { tooltip: noQuotaTooltip }),
     },
   ];
 
@@ -207,8 +207,8 @@ export const Details = () => {
               name={FieldId.MultiAz}
               options={availabilityZoneOptions}
               onChange={handleMultiAzChange}
+              direction="row"
               isRequired
-              isInline
             />
           </GridItem>
 

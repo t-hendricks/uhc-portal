@@ -42,6 +42,7 @@ export const ClusterProxy = () => {
     },
     touched,
     setFieldValue,
+    setFieldTouched,
   } = useFormState();
   const { activeStep, goToStepByName } = useWizardContext();
   const noValues = !httpProxyUrl && !httpsProxyUrl && !additionalTrustBundle;
@@ -136,10 +137,14 @@ export const ClusterProxy = () => {
               validate={validateAdditionalTrustBundle}
               helperText="Upload or paste a PEM encoded X.509 certificate."
               input={{
-                placeholder: TRUST_BUNDLE_PLACEHOLDER,
+                textAreaPlaceholder: TRUST_BUNDLE_PLACEHOLDER,
                 dropzoneProps: {
                   accept: ACCEPT,
                   maxSize: MAX_FILE_SIZE,
+                  onDropRejected: () => {
+                    setFieldTouched(FieldId.AdditionalTrustBundle, true);
+                    setFieldValue(FieldId.AdditionalTrustBundle, 'Invalid file');
+                  },
                 },
               }}
             />
