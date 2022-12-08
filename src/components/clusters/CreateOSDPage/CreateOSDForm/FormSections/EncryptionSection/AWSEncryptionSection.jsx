@@ -7,9 +7,6 @@ import { validateAWSKMSKeyARN } from '../../../../../../common/validators';
 import { constants } from '../../CreateOSDFormConstants';
 
 function AWSCustomerManagedEncryption() {
-  const cloudProviderLearnLink =
-    'https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/data-protection.html';
-
   return (
     <>
       <GridItem md={6}>
@@ -33,18 +30,18 @@ function AWSCustomerManagedEncryption() {
           showHelpTextOnError={false}
         />
       </GridItem>
+
       <GridItem>
         <Alert
           className="key-arn-alert"
           isInline
+          isLiveRegion
           variant="info"
           title="If you delete the ARN key, the cluster will no longer be available."
-        >
-          <ExternalLink href={cloudProviderLearnLink}>Learn more about encryption</ExternalLink>
-        </Alert>
+        />
       </GridItem>
 
-      <GridItem md={6} />
+      <GridItem md={6} rowSpan={2} />
     </>
   );
 }

@@ -112,34 +112,31 @@ function ClusterSettingsScreen({
               cloudProviderID={cloudProviderID}
             />
           )}
-          <FormGroup fieldId="etcd_encryption" id="etcdEncryption" label="etcd encryption">
-            <Grid hasGutter>
-              <GridItem>
-                <Field
-                  component={ReduxCheckbox}
-                  name="etcd_encryption"
-                  label="Enable additional etcd encryption"
-                  extendedHelpText={
-                    <>
-                      {constants.enableAdditionalEtcdHint}{' '}
-                      <ExternalLink
-                        href={
-                          isRosa ? links.ROSA_SERVICE_ETCD_ENCRYPTION : links.OSD_ETCD_ENCRYPTION
-                        }
-                      >
-                        Learn more about etcd encryption
-                      </ExternalLink>
-                    </>
-                  }
-                />
+          <GridItem md={6}>
+            <FormGroup fieldId="etcd_encryption" id="etcdEncryption" label="etcd encryption">
+              <Field
+                component={ReduxCheckbox}
+                name="etcd_encryption"
+                label="Enable additional etcd encryption"
+                extendedHelpText={
+                  <>
+                    {constants.enableAdditionalEtcdHint}{' '}
+                    <ExternalLink
+                      href={isRosa ? links.ROSA_SERVICE_ETCD_ENCRYPTION : links.OSD_ETCD_ENCRYPTION}
+                    >
+                      Learn more about etcd encryption
+                    </ExternalLink>
+                  </>
+                }
+              />
 
-                <div className="ocm-c--reduxcheckbox-description">
-                  Add more encryption for OpenShift and Kubernetes API resources.
-                </div>
-              </GridItem>
-            </Grid>
-          </FormGroup>
+              <div className="ocm-c--reduxcheckbox-description">
+                Add more encryption for OpenShift and Kubernetes API resources.
+              </div>
+            </FormGroup>
+          </GridItem>
         </ExpandableSection>
+        <GridItem md={6} />
       </Grid>
     </Form>
   );
