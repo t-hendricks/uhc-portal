@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { FormGroup, Grid, GridItem, Text, TextVariants } from '@patternfly/react-core';
+import { FormGroup, Grid, GridItem } from '@patternfly/react-core';
 import { Field } from 'redux-form';
 import RadioButtons from '~/components/common/ReduxFormComponents/RadioButtons';
 import ExternalLink from '~/components/common/ExternalLink';
