@@ -1,9 +1,17 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { Alert, ExpandableSection } from '@patternfly/react-core';
 import { formatErrorDetails } from '../../common/errors';
+import { ErrorState } from '~/types/types';
 
-function ErrorBox({ message, variant = 'danger', response, children, isExpandable }) {
+type Props<R extends Response = Response> = {
+  message: string;
+  response: ErrorState;
+  variant?: 'danger' | 'warning';
+  children?: React.ReactNode;
+  isExpandable?: boolean;
+};
+
+const ErrorBox = ({ message, variant = 'danger', response, children, isExpandable }: Props) => {
   const errorDetails = formatErrorDetails(response.errorDetails);
   const detailsDisplay = (
     <>
@@ -30,18 +38,6 @@ function ErrorBox({ message, variant = 'danger', response, children, isExpandabl
       )}
     </Alert>
   );
-}
-
-ErrorBox.propTypes = {
-  message: PropTypes.string.isRequired,
-  response: PropTypes.shape({
-    errorMessage: PropTypes.oneOfType([PropTypes.string, PropTypes.node, PropTypes.element]),
-    errorDetails: PropTypes.array,
-    operationID: PropTypes.string,
-  }),
-  variant: PropTypes.oneOf(['danger', 'warning']),
-  children: PropTypes.node,
-  isExpandable: PropTypes.bool,
 };
 
 export default ErrorBox;

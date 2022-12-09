@@ -1,7 +1,12 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 
 import { Button, Tooltip } from '@patternfly/react-core';
+
+type Props = {
+  disableReason?: React.ComponentProps<typeof Tooltip>['content'];
+  isAriaDisabled?: boolean;
+  tooltipProps?: Omit<React.ComponentProps<typeof Tooltip>, 'content'>;
+} & React.ComponentProps<typeof Button>;
 
 /**
  * Helper using reason why button is disabled as source-of-truth for whether it should be disabled.
@@ -16,20 +21,20 @@ import { Button, Tooltip } from '@patternfly/react-core';
  * Can optionally specify `tooltipProps` to pass to Tooltip;
  * all other props (including children) passed down to Button.
  */
-function ButtonWithTooltip({ disableReason, isAriaDisabled, tooltipProps = {}, ...buttonProps }) {
+const ButtonWithTooltip = ({
+  disableReason,
+  isAriaDisabled,
+  tooltipProps = {},
+  ...buttonProps
+}: Props) => {
   if (disableReason) {
     return (
-      <Tooltip content={disableReason} {...tooltipProps}>
+      <Tooltip {...tooltipProps} content={disableReason}>
         <Button isAriaDisabled {...buttonProps} />
       </Tooltip>
     );
   }
   return <Button isAriaDisabled={isAriaDisabled} {...buttonProps} />;
-}
-ButtonWithTooltip.propTypes = {
-  disableReason: PropTypes.node,
-  isAriaDisabled: PropTypes.bool,
-  tooltipProps: PropTypes.object,
 };
 
 export default ButtonWithTooltip;

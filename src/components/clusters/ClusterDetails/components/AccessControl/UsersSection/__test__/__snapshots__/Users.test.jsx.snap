@@ -15,8 +15,6 @@ exports[`<Users /> should render without users 1`] = `
        
       <ExternalLink
         href="https://docs.openshift.com/dedicated/osd_cluster_admin/osd-admin-roles.html"
-        isButton={false}
-        variant="secondary"
       >
         Learn more.
       </ExternalLink>
@@ -63,8 +61,6 @@ exports[`<Users /> with users should render 1`] = `
        
       <ExternalLink
         href="https://docs.openshift.com/dedicated/osd_cluster_admin/osd-admin-roles.html"
-        isButton={false}
-        variant="secondary"
       >
         Learn more.
       </ExternalLink>

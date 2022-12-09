@@ -19,8 +19,6 @@ exports[`<InstallToVPC> renders correctly when checkbox is selected 1`] = `
              
             <ExternalLink
               href="https://docs.openshift.com/container-platform/4.11/installing/installing_gcp/installing-gcp-vpc.html"
-              isButton={false}
-              variant="secondary"
             >
               Learn more about installing into an existing VPC
             </ExternalLink>
@@ -50,8 +48,6 @@ exports[`<InstallToVPC> renders correctly when selected for multi AZ 1`] = `
              
             <ExternalLink
               href="https://docs.openshift.com/container-platform/4.11/installing/installing_aws/installing-aws-vpc.html"
-              isButton={false}
-              variant="secondary"
             >
               Learn more about installing into an existing VPC
             </ExternalLink>
@@ -64,8 +60,6 @@ exports[`<InstallToVPC> renders correctly when selected for multi AZ 1`] = `
      
     <ExternalLink
       href="https://docs.openshift.com/container-platform/4.11/installing/installing_aws/installing-aws-vpc.html#installation-custom-aws-vpc-requirements_installing-aws-vpc"
-      isButton={false}
-      variant="secondary"
     >
       Learn all about VPC
     </ExternalLink>
@@ -102,8 +96,6 @@ exports[`<InstallToVPC> renders correctly when selected for single AZ 1`] = `
              
             <ExternalLink
               href="https://docs.openshift.com/container-platform/4.11/installing/installing_aws/installing-aws-vpc.html"
-              isButton={false}
-              variant="secondary"
             >
               Learn more about installing into an existing VPC
             </ExternalLink>
@@ -116,8 +108,6 @@ exports[`<InstallToVPC> renders correctly when selected for single AZ 1`] = `
      
     <ExternalLink
       href="https://docs.openshift.com/container-platform/4.11/installing/installing_aws/installing-aws-vpc.html#installation-custom-aws-vpc-requirements_installing-aws-vpc"
-      isButton={false}
-      variant="secondary"
     >
       Learn all about VPC
     </ExternalLink>
