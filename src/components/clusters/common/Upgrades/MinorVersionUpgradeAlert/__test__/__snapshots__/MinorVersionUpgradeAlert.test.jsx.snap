@@ -61,8 +61,6 @@ exports[`<MinorVersionUpgradeAlert > Correct data is shown for unapproved minor 
      
     <ExternalLink
       href="https://docs.openshift.com/dedicated/upgrading/osd-upgrades.html"
-      isButton={false}
-      variant="secondary"
     >
       Learn more about updates
     </ExternalLink>

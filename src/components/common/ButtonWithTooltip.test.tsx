@@ -1,7 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 import { Link } from 'react-router-dom';
-import { Text } from '@patternfly/react-core';
+import { Button, Text, Tooltip } from '@patternfly/react-core';
 
 import ButtonWithTooltip from './ButtonWithTooltip';
 
@@ -10,7 +10,7 @@ describe('<ButtonWithTooltip>', () => {
     it('renders', () => {
       const button = shallow(<ButtonWithTooltip className="foo">Press me</ButtonWithTooltip>);
       expect(button).toMatchSnapshot();
-      expect(button.find('Button').at(0).props().isAriaDisabled).toBeFalsy();
+      expect(button.find(Button).at(0).props().isAriaDisabled).toBeFalsy();
     });
   });
 
@@ -38,8 +38,8 @@ describe('<ButtonWithTooltip>', () => {
         </ButtonWithTooltip>,
       );
       expect(button).toMatchSnapshot();
-      expect(button.find('Tooltip').at(0).props().content).toEqual('Unsafe in hyperspace');
-      expect(button.find('Button').at(0).props().isAriaDisabled).toBeTruthy();
+      expect(button.find(Tooltip).at(0).props().content).toEqual('Unsafe in hyperspace');
+      expect(button.find(Button).at(0).props().isAriaDisabled).toBeTruthy();
     });
   });
 
@@ -67,8 +67,8 @@ describe('<ButtonWithTooltip>', () => {
         </ButtonWithTooltip>,
       );
       expect(button).toMatchSnapshot();
-      expect(button.find('Tooltip').at(0).props().content).toEqual('Parachute required');
-      expect(button.find('Button').at(0).props().isAriaDisabled).toBeTruthy();
+      expect(button.find(Tooltip).at(0).props().content).toEqual('Parachute required');
+      expect(button.find(Button).at(0).props().isAriaDisabled).toBeTruthy();
     });
   });
 
@@ -80,8 +80,8 @@ describe('<ButtonWithTooltip>', () => {
         </ButtonWithTooltip>,
       );
       expect(button).toMatchSnapshot();
-      expect(button.find('Tooltip')).toHaveLength(0);
-      expect(button.find('Button').at(0).props().isAriaDisabled).toBeTruthy();
+      expect(button.find(Tooltip)).toHaveLength(0);
+      expect(button.find(Button).at(0).props().isAriaDisabled).toBeTruthy();
     });
   });
 });

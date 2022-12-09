@@ -2,7 +2,7 @@ import React from 'react';
 import { AxiosError, AxiosResponse } from 'axios';
 import { clustersConstants } from '../redux/constants';
 import { ExcessResource } from '../types/accounts_mgmt.v1';
-import { ErrorState } from '../types/types';
+import { ErrorDetail, ErrorState } from '../types/types';
 
 const BANNED_USER_CODE = 'ACCT-MGMT-22';
 const TERMS_REQUIRED_CODE = 'CLUSTERS-MGMT-451';
@@ -121,18 +121,14 @@ const getErrorState = (action: {
         operationID: action.payload?.response?.data?.operation_id,
       };
 
-const formatErrorDetails = (
-  errorDetails?: (
-    | {
-        kind: 'ExcessResources';
-        items?: ExcessResource[];
-      }
-    | {
-        kind: 'AddOnParameterOptionList' | 'AddOnRequirementData';
-        items?: any;
-      }
-  )[],
-): React.ReactNode[] => {
+const isExcessResourcesErrorDetail = (
+  e: ErrorDetail,
+): e is {
+  kind: 'ExcessResources';
+  items?: ExcessResource[];
+} => e.kind === 'ExcessResources';
+
+const formatErrorDetails = (errorDetails?: ErrorDetail[]): React.ReactNode[] => {
   const customErrors: React.ReactNode[] = [];
 
   if (!errorDetails || !errorDetails.length) {
@@ -140,66 +136,59 @@ const formatErrorDetails = (
   }
 
   errorDetails.forEach((details) => {
-    switch (details.kind) {
-      case 'ExcessResources': {
-        // Resource map: singular and plural
-        const resourceMap: { [key: string]: string[] } = {
-          addon: ['addon', 'addons'],
-          'cluster.aws': ['cluster', 'clusters'],
-          'cluster.gcp': ['cluster', 'clusters'],
-          'compute.node.aws': ['node', 'nodes'],
-          'compute.node.gcp': ['node', 'nodes'],
-          'pv.storage.aws': ['GiB of storage', 'GiB of storage'],
-          'pv.storage.gcp': ['GiB of storage', 'GiB of storage'],
-          'network.loadbalancer.aws': ['load balancers', 'load balancers'],
-          'network-gcp.loadbalancer.gcp': ['load balancers', 'load balancers'],
-        };
+    if (isExcessResourcesErrorDetail(details)) {
+      // Resource map: singular and plural
+      const resourceMap: { [key: string]: string[] } = {
+        addon: ['addon', 'addons'],
+        'cluster.aws': ['cluster', 'clusters'],
+        'cluster.gcp': ['cluster', 'clusters'],
+        'compute.node.aws': ['node', 'nodes'],
+        'compute.node.gcp': ['node', 'nodes'],
+        'pv.storage.aws': ['GiB of storage', 'GiB of storage'],
+        'pv.storage.gcp': ['GiB of storage', 'GiB of storage'],
+        'network.loadbalancer.aws': ['load balancers', 'load balancers'],
+        'network-gcp.loadbalancer.gcp': ['load balancers', 'load balancers'],
+      };
 
-        const getName = (type: string, count: number | undefined) => {
-          if (resourceMap[type]) {
-            return resourceMap[type][count === 1 ? 0 : 1];
-          }
-          return type;
-        };
+      const getName = (type: string, count: number | undefined) => {
+        if (resourceMap[type]) {
+          return resourceMap[type][count === 1 ? 0 : 1];
+        }
+        return type;
+      };
 
-        // Add extra error details
-        if (details && details.items) {
-          customErrors.push(
-            <ul>
-              {details.items.map((excessResource) => {
-                if (excessResource.resource_type === 'addon') {
-                  return (
-                    <li>{`${excessResource.resource_type}: ${excessResource.resource_name}`}</li>
-                  );
-                }
-                if (excessResource.resource_type && resourceMap[excessResource.resource_type]) {
-                  return (
-                    <li>
-                      {`${excessResource.count} additional
+      // Add extra error details
+      if (details.items) {
+        customErrors.push(
+          <ul>
+            {details.items.map((excessResource) => {
+              if (excessResource.resource_type === 'addon') {
+                return (
+                  <li>{`${excessResource.resource_type}: ${excessResource.resource_name}`}</li>
+                );
+              }
+              if (excessResource.resource_type && resourceMap[excessResource.resource_type]) {
+                return (
+                  <li>
+                    {`${excessResource.count} additional
                   ${getName(excessResource.resource_type, excessResource.count)} of type
                   ${excessResource.availability_zone_type} availability zone, instance size
                   ${excessResource.resource_name}.`}
-                    </li>
-                  );
-                }
-                return 'An error occurred';
-              })}
-            </ul>,
-          );
-        } else {
-          customErrors.push('Unknown resource');
-        }
-        break;
+                  </li>
+                );
+              }
+              return 'An error occurred';
+            })}
+          </ul>,
+        );
+      } else {
+        customErrors.push('Unknown resource');
       }
-      case 'AddOnParameterOptionList':
-      case 'AddOnRequirementData': {
-        if (details && details.items) {
-          customErrors.push(<pre>{JSON.stringify(details.items, undefined, 2)}</pre>);
-        }
-        break;
-      }
-      default:
-        break;
+    } else if (
+      details?.items &&
+      ['AddOnParameterOptionList', 'AddOnRequirementData'].includes(details.kind)
+    ) {
+      customErrors.push(<pre>{JSON.stringify(details.items, undefined, 2)}</pre>);
     }
   });
 

@@ -366,7 +366,6 @@ exports[`<IDPSection /> should render (with IDPs) 1`] = `
                   Object {
                     "title": <ClipboardCopyLinkButton
                       className="access-control-tables-copy"
-                      isDisabled={false}
                       text="https://oauth-openshift.com/oauth2callback/hello"
                     >
                       Copy URL to clipboard
@@ -384,7 +383,6 @@ exports[`<IDPSection /> should render (with IDPs) 1`] = `
                   Object {
                     "title": <ClipboardCopyLinkButton
                       className="access-control-tables-copy"
-                      isDisabled={false}
                       text="https://oauth-openshift.com/oauth2callback/hi"
                     >
                       Copy URL to clipboard

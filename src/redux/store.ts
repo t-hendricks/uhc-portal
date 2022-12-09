@@ -36,7 +36,10 @@ const store = createStore(
   ),
 );
 
-export type GlobalState = Omit<ReturnType<typeof store.getState>, 'rosaReducer'> & {
+export type GlobalState = Omit<
+  ReturnType<typeof store.getState>,
+  'rosaReducer' | 'ccsInquiries'
+> & {
   // TODO temporary overrides for reducers that aren't written in typescript
   rosaReducer: {
     getAWSAccountIDsResponse: {
@@ -44,6 +47,8 @@ export type GlobalState = Omit<ReturnType<typeof store.getState>, 'rosaReducer'>
     };
     offlineToken?: string;
   };
+  // TODO remove once ccsInquiriesReducer.js is converted to typescript
+  ccsInquiries: any;
 };
 
 export { store as default, store, history };

@@ -15,7 +15,10 @@ limitations under the License.
 */
 
 import React from 'react';
-import PropTypes from 'prop-types';
+
+type Props = {
+  value: string;
+};
 
 /**
  * This component renders a timestamp returned by the API in a human readable format. For example,
@@ -27,8 +30,7 @@ import PropTypes from 'prop-types';
  * If the given date is not in the expected format (RFC 3339) or the date can't be parsed because of
  * any other reason, then a error message is sent to the console, and `N/A` is displayed.
  */
-function Timestamp(props) {
-  const { value } = props;
+const Timestamp = ({ value }: Props) => {
   let text = 'N/A';
   if (value) {
     const date = new Date(value);
@@ -41,13 +43,6 @@ function Timestamp(props) {
     }
   }
   return <span>{text}</span>;
-}
-
-Timestamp.propTypes = {
-  /**
-   * String containing the date to render, using the format described in RFC 3339.
-   */
-  value: PropTypes.string.isRequired,
 };
 
 export default Timestamp;

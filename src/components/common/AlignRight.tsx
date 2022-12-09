@@ -1,16 +1,16 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+
+type Props = {
+  children?: React.ReactNode;
+};
 
 /**
  * Places children to the right side of the available space.
  */
-const AlignRight = ({ children }) => (
+const AlignRight = ({ children }: Props) => (
   <div style={{ textAlign: 'right' }}>
     <span style={{ display: 'inline-block' }}>{children}</span>
   </div>
 );
-AlignRight.propTypes = {
-  children: PropTypes.node.isRequired,
-};
 
 export default AlignRight;

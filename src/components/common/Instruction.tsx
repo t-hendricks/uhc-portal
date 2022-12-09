@@ -1,20 +1,19 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { TextListItem } from '@patternfly/react-core';
 
 import './Instruction.scss';
 
-const Instruction = ({ children, simple }) => (
+type Props = {
+  children?: React.ReactNode;
+  simple?: boolean;
+};
+
+const Instruction = ({ children, simple }: Props) => (
   <TextListItem
     className={simple ? 'ocm-instructions__list-item-simple' : 'ocm-instructions__list-item'}
   >
     <div className="ocm-instructions__list-item-contents">{children}</div>
   </TextListItem>
 );
-
-Instruction.propTypes = {
-  children: PropTypes.node,
-  simple: PropTypes.bool,
-};
 
 export default Instruction;
