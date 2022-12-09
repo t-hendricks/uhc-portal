@@ -116,15 +116,15 @@ export const Details = () => {
       value: 'false',
       label: 'Single zone',
       disabled: !hasSingleAzResources,
-      extendedHelpText: constants.availabilityHintSingleZone,
-      ...(!hasSingleAzResources && { tooltipText: noQuotaTooltip }),
+      popoverHint: constants.availabilityHintSingleZone,
+      ...(!hasSingleAzResources && { tooltip: noQuotaTooltip }),
     },
     {
       value: 'true',
       label: 'Multi-zone',
       disabled: !hasMultiAzResources,
-      extendedHelpText: constants.availabilityHintMultiZone,
-      ...(!hasMultiAzResources && { tooltipText: noQuotaTooltip }),
+      popoverHint: constants.availabilityHintMultiZone,
+      ...(!hasMultiAzResources && { tooltip: noQuotaTooltip }),
     },
   ];
 
@@ -207,8 +207,8 @@ export const Details = () => {
               name={FieldId.MultiAz}
               options={availabilityZoneOptions}
               onChange={handleMultiAzChange}
+              direction="row"
               isRequired
-              isInline
             />
           </GridItem>
 
@@ -288,20 +288,20 @@ export const Details = () => {
           </div>
 
           <GridItem>
-            <Title headingLevel="h3">Encryption</Title>
+            <Title headingLevel="h3" className="pf-u-mb-sm">
+              Encryption
+            </Title>
+
+            <Alert
+              isInline
+              variant="info"
+              title="The cloud storage for your cluster is encrypted at rest."
+            >
+              <ExternalLink href={cloudProviderLearnLink}>Learn more</ExternalLink>
+            </Alert>
           </GridItem>
 
           <Grid hasGutter>
-            <GridItem>
-              <Alert
-                isInline
-                variant="info"
-                title="The cloud storage for your cluster is encrypted at rest."
-              >
-                <ExternalLink href={cloudProviderLearnLink}>Learn more</ExternalLink>
-              </Alert>
-            </GridItem>
-
             <GridItem>
               <Split hasGutter>
                 <SplitItem>

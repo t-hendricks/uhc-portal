@@ -112,7 +112,8 @@ const AddOnsSubscriptionCard = ({
             isOpen={isOpen}
             selections={account}
             onToggle={() => setIsOpen(!isOpen)}
-            onSelect={(_, selection) => {
+            onSelect={(event, selection) => {
+              event.stopPropagation();
               setSubscriptionModel({
                 ...subscriptionModels,
                 [activeCardId]: {

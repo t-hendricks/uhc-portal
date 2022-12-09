@@ -25,7 +25,7 @@ export class InstallASHIPI extends Component {
       <Breadcrumbs
         path={[
           { label: 'Clusters' },
-          { label: 'Create', path: '/create' },
+          { label: 'Cluster Type', path: '/create' },
           { label: 'Microsoft Azure Stack Hub', path: '/install/azure-stack-hub' },
           { label: 'Installer-provisioned infrastructure' },
         ]}

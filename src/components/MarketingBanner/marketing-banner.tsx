@@ -3,7 +3,17 @@ import './marketing-banner.scss';
 import { PageSection } from '@patternfly/react-core';
 import React from 'react';
 import classNames from 'classnames';
-import propTypes from 'prop-types';
+
+type Props = {
+  children: React.ReactNode;
+  className?: string;
+  style?: React.CSSProperties;
+  graphicRight?: boolean;
+  hasGraphic?: boolean;
+  dark1000?: boolean;
+  fullBleed?: boolean;
+  isWidthLimited?: boolean;
+};
 
 const MarketingBanner = ({
   className,
@@ -14,7 +24,7 @@ const MarketingBanner = ({
   style,
   children,
   isWidthLimited,
-}) => {
+}: Props) => {
   const MarketingBannerSectionClasses = classNames(
     className,
     'ocm-c-marketing-banner',
@@ -36,14 +46,3 @@ const MarketingBanner = ({
 };
 
 export default MarketingBanner;
-
-MarketingBanner.propTypes = {
-  children: propTypes.any.isRequired,
-  className: propTypes.string,
-  style: propTypes.any,
-  graphicRight: propTypes.bool,
-  hasGraphic: propTypes.bool,
-  dark1000: propTypes.bool,
-  fullBleed: propTypes.bool,
-  isWidthLimited: propTypes.bool,
-};

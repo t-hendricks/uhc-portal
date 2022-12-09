@@ -26,7 +26,7 @@ export class InstallPreRelease extends Component {
       <Breadcrumbs
         path={[
           { label: 'Clusters' },
-          { label: 'Create', path: '/create' },
+          { label: 'Cluster Type', path: '/create' },
           { label: 'Pre-Release Builds' },
         ]}
       />

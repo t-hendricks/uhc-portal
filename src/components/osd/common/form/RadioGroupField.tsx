@@ -1,26 +1,33 @@
 import React from 'react';
+import classNames from 'classnames';
 import { RadioButtonField } from 'formik-pf';
 
-import { FormGroup, Split, SplitItem, Tooltip } from '@patternfly/react-core';
+import { FormGroup, Flex, Tooltip } from '@patternfly/react-core';
 
 import PopoverHint from '~/components/common/PopoverHint';
 import { useFormState } from '../../hooks';
 
+enum RadioGroupDirection {
+  Row = 'row',
+  Column = 'column',
+}
+
 interface RadioGroupOption {
   value: string;
-  label: string;
+  label: React.ReactNode;
+  description?: React.ReactNode;
   disabled?: boolean;
-  tooltipText?: string;
-  extendedHelpText?: string;
+  tooltip?: React.ReactNode;
+  popoverHint?: React.ReactNode;
 }
 
 interface RadioGroupFieldProps {
   name: string;
-  label: string;
   options: RadioGroupOption[];
-  onChange?(value: string): void;
-  isInline?: boolean;
+  label?: React.ReactNode;
   isRequired?: boolean;
+  direction?: 'row' | 'column';
+  onChange?(value: string): void;
 }
 
 export const RadioGroupField = ({
@@ -28,48 +35,49 @@ export const RadioGroupField = ({
   label,
   options,
   onChange,
-  isInline,
   isRequired,
+  direction = RadioGroupDirection.Column,
 }: RadioGroupFieldProps) => {
   const { setFieldValue } = useFormState();
 
   return (
-    <FormGroup label={label} fieldId={name} isRequired={isRequired} isInline={isInline}>
-      <Split hasGutter>
+    <FormGroup label={label} fieldId={name} isRequired={isRequired}>
+      <Flex
+        direction={{ default: direction }}
+        spaceItems={{
+          default: `spaceItems${direction === RadioGroupDirection.Column ? 'Md' : 'Lg'}`,
+        }}
+      >
         {options.map((option) => {
           const radioButton = (
-            <SplitItem>
-              <RadioButtonField
-                name={name}
-                label={option.label}
-                value={option.value}
-                className="pf-u-mb-md"
-                onChange={(value) => {
-                  setFieldValue(name, value);
-                  onChange?.(value?.toString());
-                }}
-              />
-            </SplitItem>
+            <RadioButtonField
+              name={name}
+              label={option.label}
+              value={option.value}
+              description={option.description}
+              className={classNames('pf-u-mb-md', { 'pf-u-mr-sm': !!option.popoverHint })}
+              onChange={(value) => {
+                setFieldValue(name, value);
+                onChange?.(value?.toString());
+              }}
+            />
           );
 
           return (
-            <React.Fragment key={option.value}>
-              {option.tooltipText ? (
-                <Tooltip content={option.tooltipText} position="right">
+            <Flex alignItems={{ default: 'alignItemsFlexStart' }} key={option.value}>
+              {option.tooltip ? (
+                <Tooltip content={option.tooltip} position="right">
                   {radioButton}
                 </Tooltip>
               ) : (
                 radioButton
               )}
-              {option.extendedHelpText && (
-                <SplitItem>
-                  <PopoverHint hint={option.extendedHelpText} />
-                </SplitItem>
-              )}
-            </React.Fragment>
+
+              {option.popoverHint && <PopoverHint hint={option.popoverHint} />}
+            </Flex>
           );
         })}
-      </Split>
+      </Flex>
     </FormGroup>
   );
 };

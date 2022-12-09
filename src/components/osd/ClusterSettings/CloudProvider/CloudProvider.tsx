@@ -8,7 +8,7 @@ import { clearCcsCredientialsInquiry } from '~/components/clusters/CreateOSDPage
 import { FieldId } from '../../constants';
 import { useFormState } from '../../hooks';
 import { CloudProviderType } from './types';
-import { CloudProviderSelectionField } from './CloudProviderSelectionField';
+import { CloudProviderTileField } from './CloudProviderTileField';
 import { AwsByocFields } from './AwsByocFields';
 import { GcpByocFields } from './GcpByocFields';
 
@@ -44,12 +44,14 @@ export const CloudProvider = () => {
     secretAccessKey,
     gcpServiceAccount,
     ccsCredentialsValidity.fulfilled,
+    dispatch,
+    showValidationAlert,
   ]);
 
   return (
     <Form>
       <Title headingLevel="h3">Select a cloud provider</Title>
-      <CloudProviderSelectionField />
+      <CloudProviderTileField />
       {isByoc && (
         <>
           {cloudProvider === CloudProviderType.Aws ? <AwsByocFields /> : <GcpByocFields />}

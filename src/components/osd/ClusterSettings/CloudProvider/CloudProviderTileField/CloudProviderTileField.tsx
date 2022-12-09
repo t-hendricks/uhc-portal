@@ -13,9 +13,9 @@ import { FieldId } from '../../../constants';
 import { quotaParams, hasAvailableQuota } from '../../../utils';
 import { CloudProviderType } from '../types';
 
-import './CloudProviderSelectionField.scss';
+import './cloudProviderTileField.scss';
 
-export const CloudProviderSelectionField = () => {
+export const CloudProviderTileField = () => {
   const {
     values: {
       [FieldId.CloudProvider]: cloudProvider,

@@ -11,7 +11,7 @@ exports[`<CreateROSAWelcome> renders 1`] = `
               "label": "Clusters",
             },
             Object {
-              "label": "Create",
+              "label": "Cluster Type",
               "path": "/create",
             },
             Object {
@@ -95,6 +95,8 @@ exports[`<CreateROSAWelcome> renders 1`] = `
                  
                 <ExternalLink
                   href="https://docs.openshift.com/rosa/rosa_install_access_delete_clusters/rosa_getting_started_iam/rosa-aws-prereqs.html"
+                  isButton={false}
+                  variant="secondary"
                 >
                   AWS Prerequisites for ROSA
                 </ExternalLink>
@@ -118,6 +120,8 @@ exports[`<CreateROSAWelcome> renders 1`] = `
                    
                   <ExternalLink
                     href="https://console.aws.amazon.com/rosa/home"
+                    isButton={false}
+                    variant="secondary"
                   >
                     https://console.aws.amazon.com/rosa/home
                   </ExternalLink>
@@ -126,6 +130,8 @@ exports[`<CreateROSAWelcome> renders 1`] = `
                    
                   <ExternalLink
                     href="https://www.rosaworkshop.io/rosa/1-account_setup/#3-enable-rosa"
+                    isButton={false}
+                    variant="secondary"
                   >
                     Help
                   </ExternalLink>
@@ -149,6 +155,8 @@ exports[`<CreateROSAWelcome> renders 1`] = `
                    
                   <ExternalLink
                     href="https://docs.openshift.com/rosa/rosa_cli/rosa-get-started-cli.html"
+                    isButton={false}
+                    variant="secondary"
                   >
                     Help
                   </ExternalLink>
@@ -159,13 +167,6 @@ exports[`<CreateROSAWelcome> renders 1`] = `
                   <Connect(DownloadAndOSSelection)
                     channel="stable"
                     pendoID="/"
-                    token={
-                      Object {
-                        "auths": Object {
-                          "foo": "bar",
-                        },
-                      }
-                    }
                     tool="rosa"
                   />
                 </Text>
@@ -177,6 +178,8 @@ exports[`<CreateROSAWelcome> renders 1`] = `
                    
                   <ExternalLink
                     href="https://aws.amazon.com/cli/"
+                    isButton={false}
+                    variant="secondary"
                   >
                     install and configure the AWS CLI
                   </ExternalLink>
@@ -220,6 +223,8 @@ exports[`<CreateROSAWelcome> renders 1`] = `
                    
                   <ExternalLink
                     href="https://www.rosaworkshop.io/rosa/1-account_setup/#verify-credentials"
+                    isButton={false}
+                    variant="secondary"
                   >
                     Help
                   </ExternalLink>
@@ -236,6 +241,8 @@ exports[`<CreateROSAWelcome> renders 1`] = `
                    
                   <ExternalLink
                     href="https://www.rosaworkshop.io/rosa/1-account_setup/#verify-quota"
+                    isButton={false}
+                    variant="secondary"
                   >
                     Help
                   </ExternalLink>
@@ -298,6 +305,8 @@ exports[`<CreateROSAWelcome> renders 1`] = `
                    
                   <ExternalLink
                     href="https://www.rosaworkshop.io/rosa/6-access_cluster/"
+                    isButton={false}
+                    variant="secondary"
                   >
                     access your cluster
                   </ExternalLink>
@@ -318,6 +327,8 @@ exports[`<CreateROSAWelcome> renders 1`] = `
                    
                   <ExternalLink
                     href="https://support.redhat.com/"
+                    isButton={false}
+                    variant="secondary"
                   >
                     Contact Red Hat Support
                   </ExternalLink>
@@ -337,6 +348,8 @@ exports[`<CreateROSAWelcome> renders 1`] = `
                    
                   <ExternalLink
                     href="https://www.rosaworkshop.io/"
+                    isButton={false}
+                    variant="secondary"
                   >
                     ROSA workshop
                   </ExternalLink>
@@ -344,6 +357,8 @@ exports[`<CreateROSAWelcome> renders 1`] = `
                    
                   <ExternalLink
                     href="https://docs.openshift.com/rosa/welcome/index.html"
+                    isButton={false}
+                    variant="secondary"
                   >
                     ROSA documentation
                   </ExternalLink>
@@ -351,6 +366,8 @@ exports[`<CreateROSAWelcome> renders 1`] = `
                    
                   <ExternalLink
                     href="https://docs.openshift.com/rosa/rosa_architecture/rosa_policy_service_definition/rosa-service-definition.html"
+                    isButton={false}
+                    variant="secondary"
                   >
                     ROSA Service Definition
                   </ExternalLink>
@@ -359,6 +376,8 @@ exports[`<CreateROSAWelcome> renders 1`] = `
                    
                   <ExternalLink
                     href="https://docs.openshift.com/rosa/rosa_architecture/rosa_policy_service_definition/rosa-policy-responsibility-matrix.html"
+                    isButton={false}
+                    variant="secondary"
                   >
                     Responsibility Assignment Matrix
                   </ExternalLink>

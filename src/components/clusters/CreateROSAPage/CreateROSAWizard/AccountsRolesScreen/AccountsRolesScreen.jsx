@@ -15,6 +15,7 @@ import {
   Title,
 } from '@patternfly/react-core';
 import { Field } from 'redux-form';
+import { Link } from 'react-router-dom';
 
 import AWSLogo from '../../../../../styles/images/AWS.png';
 import RedHat from '../../../../../styles/images/Logo-RedHat-Hat-Color-RGB.png';
@@ -31,6 +32,7 @@ import { RosaCliCommand } from './constants/cliCommands';
 import { trackEvents } from '~/common/analytics';
 import useAnalytics from '~/hooks/useAnalytics';
 import { loadOfflineToken } from '~/components/tokens/TokenUtils';
+import { productName } from '../CreateRosaGetStarted/CreateRosaGetStarted';
 
 export const isUserRoleForSelectedAWSAccount = (users, awsAcctId) =>
   users.some((user) => user.aws_id === awsAcctId);
@@ -137,6 +139,12 @@ function AccountsRolesScreen({
     }
   }, [getAWSAccountIDsResponse]);
 
+  useEffect(() => {
+    if (getUserRoleResponse?.error || noUserForSelectedAWSAcct) {
+      track(trackEvents.MissingUserRole);
+    }
+  }, [getUserRoleResponse?.error, noUserForSelectedAWSAcct]);
+
   const onAssociateAwsAccountModalClose = () => {
     setIsAssocAwsAccountModalOpen(false);
     clearGetAWSAccountIDsResponse();
@@ -156,22 +164,19 @@ function AccountsRolesScreen({
             Create a managed OpenShift cluster on an existing Amazon Web Services (AWS) account.
           </Text>
         </GridItem>
+        <GridItem span={9}>
+          <Title headingLevel="h3">Prerequisites</Title>
+          <Text component={TextVariants.p}>
+            To use the web interface to create a ROSA cluster you will need to have already
+            completed the perquisite steps to prepare your AWS account on the{' '}
+            <Link to="getstarted">{`Get started with a ${productName} (ROSA) page.`}</Link>
+          </Text>
+        </GridItem>
         <GridItem span={8}>
           <Title headingLevel="h3">AWS account</Title>
           <Text component={TextVariants.p}>
-            Select an AWS account that is associated with your Red Hat account, or{' '}
-            <Button
-              variant="link"
-              isInline
-              onClick={() => {
-                track(trackEvents.AssociateAWS);
-                openAssociateAWSAccountModal();
-                setIsAssocAwsAccountModalOpen(true);
-              }}
-            >
-              associate an AWS account
-            </Button>
-            .
+            Select an AWS account that is associated with your Red Hat account, or associate a new
+            AWS account.
           </Text>
         </GridItem>
         <GridItem span={4} />
@@ -201,6 +206,17 @@ function AccountsRolesScreen({
             isLoading={refreshButtonClicked && getAWSAccountIDsResponse.pending}
             isDisabled={getAWSAccountIDsResponse.pending}
           />
+          <Button
+            variant="secondary"
+            className="pf-u-mt-md"
+            onClick={() => {
+              track(trackEvents.AssociateAWS);
+              openAssociateAWSAccountModal();
+              setIsAssocAwsAccountModalOpen(true);
+            }}
+          >
+            Associate a new AWS account
+          </Button>
         </GridItem>
         <GridItem span={7} />
         {selectedAWSAccountID && hasAWSAccounts && (

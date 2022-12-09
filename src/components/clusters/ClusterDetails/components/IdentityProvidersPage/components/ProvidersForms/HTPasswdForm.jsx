@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { Field } from 'redux-form';
 import {
   GridItem,
@@ -77,20 +77,26 @@ class HTPasswdForm extends React.Component {
   }
 
   radioControlledInputGroup = ({
-    isPassword = false,
     suggestedValueRadioLabel,
     createOwnRadioLabel,
     label,
     helpText,
     input,
     isPending,
-    ...additionalProps
+    ...extraProps
   }) => {
     const { useSuggestedPassword, useSuggestedUsername, suggestedPassword, suggestedUsername } =
       this.state;
 
+    const isPassword = extraProps.type === 'password';
     const suggestedValue = isPassword ? suggestedPassword : suggestedUsername;
     const useSuggestionIsChecked = isPassword ? useSuggestedPassword : useSuggestedUsername;
+
+    const validatePasswordsMatch = useCallback(
+      (value, allValues) =>
+        allValues[input.name] !== value ? 'Passwords do not match' : undefined,
+      [input.name],
+    );
 
     return (
       <>
@@ -101,7 +107,7 @@ class HTPasswdForm extends React.Component {
               <span className="pf-c-form__label-required">*</span>
             </p>
           </StackItem>
-          <StackItem className="field-radio-control">
+          <StackItem className="pf-u-mb-sm">
             <Radio
               label={suggestedValueRadioLabel}
               id={`use-suggested-${label.toLowerCase()}`}
@@ -114,7 +120,7 @@ class HTPasswdForm extends React.Component {
               }}
             />
           </StackItem>
-          <StackItem className="field-radio-control">
+          <StackItem className="pf-u-mb-sm">
             <Radio
               label={createOwnRadioLabel}
               id={`create-own-${label.toLowerCase()}`}
@@ -128,16 +134,27 @@ class HTPasswdForm extends React.Component {
             />
           </StackItem>
           {!useSuggestionIsChecked && (
-            <StackItem>
+            <StackItem className="pf-u-mb-sm">
               <ReduxVerticalFormGroup
                 name={input.name}
-                type="text"
                 disabled={isPending}
                 validate={required}
                 helpText={helpText}
                 input={input}
-                isPassword={isPassword}
-                {...additionalProps}
+                {...extraProps}
+              />
+            </StackItem>
+          )}
+          {!useSuggestionIsChecked && isPassword && (
+            <StackItem className="pf-u-mt-sm pf-u-mb-sm">
+              <Field
+                component={ReduxVerticalFormGroup}
+                name={`${input.name}_confirmation`}
+                label="Confirm password"
+                type="password"
+                disabled={isPending}
+                isRequired={extraProps.isRequired}
+                validate={[required, validatePasswordsMatch]}
               />
             </StackItem>
           )}
@@ -152,7 +169,7 @@ class HTPasswdForm extends React.Component {
     const { suggestedUsername, suggestedPassword } = this.state;
 
     const helpTextItemVariant = (errName) => {
-      const emptyPassword = HTPasswdPasswordErrors?.emptyPassword || false;
+      const emptyPassword = HTPasswdPasswordErrors?.emptyPassword;
       if (emptyPassword) {
         return 'default';
       }
@@ -231,7 +248,6 @@ class HTPasswdForm extends React.Component {
         <GridItem span={8} className="htpasswd-form">
           <Field
             component={this.radioControlledInputGroup}
-            isPassword
             hasOtherValidation
             suggestedValueRadioLabel={
               <span>
@@ -241,7 +257,7 @@ class HTPasswdForm extends React.Component {
             createOwnRadioLabel="Create your own password"
             name="htpasswd_password"
             label="Password"
-            type="text"
+            type="password"
             validate={validateHTPasswdPassword}
             isRequired
             disabled={isPending}

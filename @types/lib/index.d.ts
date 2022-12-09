@@ -1,11 +1,15 @@
 interface Insights {
   ocm?: {
-    on: Function;
+    on: (event: string, callback: () => void) => () => void;
   };
-  chrome: any;
+  chrome: import('@redhat-cloud-services/types').ChromeAPI;
 }
 
 declare const insights: Insights;
+
+interface Window {
+  insights: Insights;
+}
 
 // See webpack config DefinePlugin
 declare const APP_BETA: boolean;
