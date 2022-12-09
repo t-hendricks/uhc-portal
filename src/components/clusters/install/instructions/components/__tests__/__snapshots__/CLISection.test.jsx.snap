@@ -14,13 +14,6 @@ exports[`CLISection renders correctly 1`] = `
   <div>
     <Connect(DownloadAndOSSelection)
       channel="stable"
-      token={
-        Object {
-          "auths": Object {
-            "foo": "bar",
-          },
-        }
-      }
       tool="oc"
     />
   </div>

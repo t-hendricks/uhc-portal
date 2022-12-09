@@ -232,7 +232,7 @@ const fakeClusterFromSubscription = (subscription: Subscription): FakeCluster =>
   return cluster;
 };
 
-const fakeAIClusterFromSubscription = (
+const fakeClusterFromAISubscription = (
   subscription: Subscription,
   aiCluster?: OCM.Cluster,
 ): FakeCluster => {
@@ -301,7 +301,7 @@ export {
   normalizeProductID,
   normalizeCluster,
   fakeClusterFromSubscription,
-  fakeAIClusterFromSubscription,
+  fakeClusterFromAISubscription,
   normalizeSubscription,
   normalizeQuotaCost,
   mapListResponse,

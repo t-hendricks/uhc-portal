@@ -66,24 +66,20 @@ export const MachinePool = () => {
 
   React.useEffect(() => {
     dispatch(getMachineTypes());
-  }, []);
+  }, [dispatch]);
 
   return (
     <Form>
+      <GridItem>
+        <Title headingLevel="h3">Default machine pool</Title>
+        <Text component="p" className="pf-u-mt-sm">
+          Select a compute node instance type and count for your default machine pool. After cluster
+          creation, your selected default machine pool instance type is permanent.
+        </Text>
+      </GridItem>
+
       <Grid hasGutter md={6}>
         <Flex direction={{ default: 'column' }} spaceItems={{ default: 'spaceItemsLg' }}>
-          <GridItem>
-            <Title headingLevel="h3">Default machine pool</Title>
-          </GridItem>
-          <GridItem>
-            <Text component="p">
-              Select a compute node instance type and count for your default machine pool.
-            </Text>
-            <Text component="p">
-              After cluster creation, your selected default machine pool instance type is permanent.
-            </Text>
-          </GridItem>
-
           <GridItem>
             <Field
               component={MachineTypeSelection}

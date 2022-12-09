@@ -3,6 +3,7 @@ import { getFormValues } from 'redux-form';
 
 import { openModal } from '~/components/common/Modal/ModalActions';
 import VPCDetailsCard from './VPCDetailsCard';
+import { stringToArray } from '~/common/helpers';
 
 const mapStateToProps = (state) => {
   const { cluster } = state.clusters.details;
@@ -11,6 +12,7 @@ const mapStateToProps = (state) => {
     formValues: getFormValues('EditClusterWideProxy')(state),
     httpProxyUrl: cluster.proxy?.http_proxy,
     httpsProxyUrl: cluster.proxy?.https_proxy,
+    noProxyDomains: stringToArray(cluster.proxy?.no_proxy),
     additionalTrustBundle: cluster.additional_trust_bundle,
     gcpVPCName: cluster.gcp_network?.vpc_name,
   };

@@ -86,7 +86,7 @@ function AWSAccountSelection({
           launchModal(event);
         }}
       >
-        Associate AWS account
+        Associate a new AWS account
       </Button>
     </>
   );

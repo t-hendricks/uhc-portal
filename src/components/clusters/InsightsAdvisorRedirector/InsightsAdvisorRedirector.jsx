@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { matchPath, Redirect } from 'react-router';
 import { Spinner } from '@redhat-cloud-services/frontend-components/Spinner';
-import { Bullseye } from '@patternfly/react-core/dist/js/layouts/Bullseye/Bullseye';
+import { Bullseye } from '@patternfly/react-core';
 import { validate as isUuid } from 'uuid';
 import ExternalRedirect from './ExternalRedirect';
 

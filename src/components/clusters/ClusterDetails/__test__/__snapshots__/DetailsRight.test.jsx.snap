@@ -2751,6 +2751,8 @@ exports[`<DetailsRight /> should render when autoscale enabled 1`] = `
                
               <ExternalLink
                 href="https://docs.openshift.com/container-platform/4.11/machine_management/applying-autoscaling.html"
+                isButton={false}
+                variant="secondary"
               >
                 Learn more about autoscaling
               </ExternalLink>

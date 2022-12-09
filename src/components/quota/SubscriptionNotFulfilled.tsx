@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Spinner } from '@redhat-cloud-services/frontend-components/Spinner';
@@ -7,8 +6,26 @@ import { overrideErrorMessage, BANNED_USER_CODE } from '../../common/errors';
 import links from '../../common/installLinks.mjs';
 import ExternalLink from '../common/ExternalLink';
 
-function SubscriptionNotFulfilled({ data, refresh, marketplace }) {
-  const getEmptyState = (title, text, button) => (
+type Props = {
+  data: {
+    error: boolean;
+    pending: boolean;
+    internalErrorCode?: string;
+    type: string;
+    empty?: boolean;
+    errorMessage?: NonNullable<React.ReactNode>;
+    operationID?: string;
+  };
+  refresh: () => void;
+  marketplace?: boolean;
+};
+
+const SubscriptionNotFulfilled = ({ data, refresh, marketplace }: Props) => {
+  const getEmptyState = (
+    title: React.ReactNode,
+    text: React.ReactNode,
+    button?: React.ReactNode,
+  ) => (
     <PageSection className="subscriptions-empty-state">
       <EmptyState>
         <Title headingLevel="h4" size="2xl">
@@ -20,7 +37,8 @@ function SubscriptionNotFulfilled({ data, refresh, marketplace }) {
     </PageSection>
   );
 
-  const getErrorText = ({ errorMessage, operationID, internalErrorCode }) => {
+  const getErrorText = () => {
+    const { internalErrorCode, errorMessage, operationID } = data;
     const payload = { code: internalErrorCode };
     const text =
       BANNED_USER_CODE === payload.code ? (
@@ -40,6 +58,7 @@ function SubscriptionNotFulfilled({ data, refresh, marketplace }) {
       emptyTitle: 'Unable to retrieve account information',
       errorTitle: 'Unable to retrieve account information',
       text: 'Contact support to verify your account is valid',
+      emptyButton: undefined,
     },
     ocp: {
       emptyTitle: 'You do not have any clusters',
@@ -66,6 +85,7 @@ function SubscriptionNotFulfilled({ data, refresh, marketplace }) {
           to get started with OpenShift Dedicated.
         </p>
       ),
+      emptyButton: undefined,
     },
     osdmarketplace: {
       emptyTitle: 'Marketplace On-Demand subscriptions not detected',
@@ -92,16 +112,17 @@ function SubscriptionNotFulfilled({ data, refresh, marketplace }) {
           <ExternalLink href={links.OCM_DOCS_SUBSCRIPTIONS}>Learn more</ExternalLink>
         </p>
       ),
+      emptyButton: undefined,
     },
   };
-  let configType = config[data.type];
-  if (marketplace) {
-    configType = config[`${data.type}marketplace`];
+  let configType = config[data.type as keyof typeof config];
+  if (marketplace && data.type === 'osd') {
+    configType = config.osdmarketplace;
   }
 
   let content = null;
   if (data.error) {
-    const errorText = getErrorText(data);
+    const errorText = getErrorText();
     const errorButton = <Button onClick={refresh}>Try again</Button>;
     content = getEmptyState(configType.errorTitle, errorText, errorButton);
   } else if (data.pending) {
@@ -114,12 +135,6 @@ function SubscriptionNotFulfilled({ data, refresh, marketplace }) {
     content = getEmptyState(configType.emptyTitle, configType.text, configType.emptyButton);
   }
   return content;
-}
-
-SubscriptionNotFulfilled.propTypes = {
-  data: PropTypes.object.isRequired,
-  refresh: PropTypes.func.isRequired,
-  marketplace: PropTypes.bool,
 };
 
 export default SubscriptionNotFulfilled;

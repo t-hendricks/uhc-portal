@@ -1,4 +1,5 @@
 import isEmpty from 'lodash/isEmpty';
+import semver from 'semver';
 
 const noop = Function.prototype;
 
@@ -208,6 +209,32 @@ const goZeroTime2Null = (timeStr: string): string | null => {
   return timeStr;
 };
 
+/**
+ * determine if a version's major.minor level is <= maxMinorVerison's major.minor level.
+ * we exclude the patch version of maxMinorVersion here even though ocpVersion can have a patch version.
+ * this works because a <=major.minor semver range ignores patch versions, e.g. 4.11.13 satisfies the range <=4.11.
+ * @param {string} version version to test (major.minor.patch or major.minor)
+ * @param {string} maxMinorVersion version to compare with (major.minor.patch or major.minor)
+ */
+const isSupportedMinorVersion = (version: string, maxMinorVersion: string) => {
+  const parsedMaxMinorVersion = maxMinorVersion ? semver.coerce(maxMinorVersion) : null;
+  return parsedMaxMinorVersion
+    ? semver.satisfies(
+        version,
+        `<=${semver.major(parsedMaxMinorVersion)}.${semver.minor(parsedMaxMinorVersion)}`,
+      )
+    : false;
+};
+
+/**
+ * render only the major.minor portion of a major.minor.patch version string.
+ * @param {string} version
+ */
+const formatMinorVersion = (version: string) => {
+  const parsedVersion = semver.coerce(version);
+  return parsedVersion ? `${semver.major(parsedVersion)}.${semver.minor(parsedVersion)}` : version;
+};
+
 export {
   noop,
   isValid,
@@ -227,6 +254,8 @@ export {
   goZeroTime2Null,
   stringToArray,
   arrayToString,
+  isSupportedMinorVersion,
+  formatMinorVersion,
 };
 
 export default helpers;

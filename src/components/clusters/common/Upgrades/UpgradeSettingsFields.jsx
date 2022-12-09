@@ -3,7 +3,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Field } from 'redux-form';
-import { Divider, Title, GridItem, TextContent, TextVariants, Text } from '@patternfly/react-core';
+import {
+  Divider,
+  Title,
+  Grid,
+  GridItem,
+  TextContent,
+  TextVariants,
+  Text,
+} from '@patternfly/react-core';
 
 import ExternalLink from '../../../common/ExternalLink';
 import RadioButtons from '../../../common/ReduxFormComponents/RadioButtons';
@@ -75,13 +83,15 @@ function UpgradeSettingsFields({
                 </>
               ),
               extraField: isAutomatic && (
-                <>
-                  <Field
-                    component={UpgradeScheduleSelection}
-                    name="automatic_upgrade_schedule"
-                    isDisabled={isDisabled}
-                  />
-                </>
+                <Grid>
+                  <GridItem md={6}>
+                    <Field
+                      component={UpgradeScheduleSelection}
+                      name="automatic_upgrade_schedule"
+                      isDisabled={isDisabled}
+                    />
+                  </GridItem>
+                </Grid>
               ),
             },
           ]}

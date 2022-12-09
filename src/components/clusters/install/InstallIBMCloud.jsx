@@ -23,7 +23,11 @@ export class InstallIBMCloud extends Component {
     const { token } = this.props;
     const breadcrumbs = (
       <Breadcrumbs
-        path={[{ label: 'Clusters' }, { label: 'Create', path: '/create' }, { label: 'IBM Cloud' }]}
+        path={[
+          { label: 'Clusters' },
+          { label: 'Cluster Type', path: '/create' },
+          { label: 'IBM Cloud' },
+        ]}
       />
     );
 

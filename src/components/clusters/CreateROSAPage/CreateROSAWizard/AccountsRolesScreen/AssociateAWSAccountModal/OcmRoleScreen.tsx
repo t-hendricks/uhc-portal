@@ -57,13 +57,14 @@ export const OcmRoleScreen = () => {
         {hasAwsAccounts && isAlertShown && (
           <MultipleAccountsInfoBox setIsAlertShown={setIsAlertShown} ocmRole />
         )}
-        <Title headingLevel="h3">Create and link OCM role</Title>
+
         <TextContent>
           <Text component={TextVariants.p}>
-            Run one of the following two commands to create an OCM role. View the required AWS
-            policy permissions for the{' '}
+            Run one of the following two commands to create an OCM role and link it to your Red Hat
+            organization. The link creates a trust policy between the role and the cluster
+            installer.{' '}
             <ExternalLink noIcon href={links.ROSA_AWS_ACCOUNT_ROLES}>
-              basic OCM role and the admin OCM role
+              Review the AWS policy permissions for the basic and admin OCM roles
             </ExternalLink>
             .
           </Text>
@@ -80,8 +81,11 @@ export const OcmRoleScreen = () => {
                 >
                   {RosaCliCommand.OcmRole}
                 </InstructionCommand>
+                <Text component={TextVariants.p} className="pf-u-color-200">
+                  Using basic will require additional actions after cluster creation.
+                </Text>
               </GridItem>
-              <GridItem sm={12} md={1} className="ocm-wizard-or-container">
+              <GridItem sm={12} md={1} className="pf-u-text-align-center pf-u-pt-xl">
                 <p>OR</p>
               </GridItem>
               <GridItem sm={12} md={6}>
@@ -92,6 +96,9 @@ export const OcmRoleScreen = () => {
                 >
                   {RosaCliCommand.AdminOcmRole}
                 </InstructionCommand>
+                <Text component={TextVariants.p} className="pf-u-color-200">
+                  Use admin OCM role for automated deployment and additional role privileges.
+                </Text>
               </GridItem>
               <PopoverHintWithTitle
                 title="Understand the OCM role types"

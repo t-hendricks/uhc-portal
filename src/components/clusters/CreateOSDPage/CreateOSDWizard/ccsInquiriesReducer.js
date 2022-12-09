@@ -48,6 +48,7 @@ export const initialState = {
     region: undefined,
     data: {
       bySubnetID: {},
+      items: [],
     },
   },
 };

@@ -48,6 +48,7 @@ const eventNames = {
   ARNS_REFRESHED: 'ARNs Refreshed',
   CHECKBOX_CLICKED: 'Checkbox Clicked',
   RADIOBUTTON_CLICKED: 'Radiobutton Clicked',
+  MISSING_INFORMATION: 'Missing Information',
 };
 
 /**
@@ -205,6 +206,16 @@ const trackEvents: { [key: string]: TrackEvent } = {
     link_name: 'associate-aws',
     ocm_resource_type: ocmResourceType.MOA,
   },
+  ROSAWhoAmI: {
+    event: eventNames.BUTTON_CLICKED,
+    link_name: 'copy-rosa-whoami',
+    ocm_resource_type: ocmResourceType.MOA,
+  },
+  ROSAVerifyQuota: {
+    event: eventNames.BUTTON_CLICKED,
+    link_name: 'copy-rosa-verify-quota',
+    ocm_resource_type: ocmResourceType.MOA,
+  },
   ROSALogin: {
     event: eventNames.BUTTON_CLICKED,
     link_name: 'copy-rosa-login',
@@ -213,6 +224,11 @@ const trackEvents: { [key: string]: TrackEvent } = {
   CopyOCMRoleCreateBasic: {
     event: eventNames.BUTTON_CLICKED,
     link_name: 'copy-ocm-role-create-basic',
+    ocm_resource_type: ocmResourceType.MOA,
+  },
+  CopyCreateAccountRoles: {
+    event: eventNames.BUTTON_CLICKED,
+    link_name: 'copy-ocm-create-rosa-account-roles',
     ocm_resource_type: ocmResourceType.MOA,
   },
   CopyOCMRoleCreateAdmin: {
@@ -258,6 +274,11 @@ const trackEvents: { [key: string]: TrackEvent } = {
     link_name: 'refresh-to-enable-auto-mode',
     ocm_resource_type: ocmResourceType.MOA,
   },
+  MissingUserRole: {
+    event: eventNames.MISSING_INFORMATION,
+    link_name: 'missing-user-role',
+    ocm_resource_type: ocmResourceType.MOA,
+  },
   WizardNext: {
     event: eventNames.BUTTON_CLICKED,
     link_name: 'wizard-next',
@@ -277,6 +298,15 @@ const trackEvents: { [key: string]: TrackEvent } = {
   WizardLinkNav: {
     event: eventNames.BUTTON_CLICKED,
     link_name: 'wizard-nav',
+  },
+  ExternalLink: {
+    event: eventNames.LINK_CLICKED,
+    link_name: 'external-link',
+  },
+  CopyRosaCreateCluster: {
+    event: eventNames.BUTTON_CLICKED,
+    link_name: 'copy-rosa-create-cluster',
+    ocm_resource_type: ocmResourceType.MOA,
   },
 };
 

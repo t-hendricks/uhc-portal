@@ -53,12 +53,7 @@ function DownloadsAndPullSecretSection({
                     .
                   </Text>
                 )}
-                <DownloadAndOSSelection
-                  token={token}
-                  tool={tool}
-                  channel={channel}
-                  pendoID={pendoID}
-                />
+                <DownloadAndOSSelection tool={tool} channel={channel} pendoID={pendoID} />
                 {showPreReleasePageLink && (
                   <div>
                     <DeveloperPreviewSection devPreviewLink={preReleasePageLink} />
@@ -77,7 +72,7 @@ function DownloadsAndPullSecretSection({
         <StackItem key="cli">
           <TextContent>
             <Text component="h3">Command line interface</Text>
-            <CLISection token={token} pendoID={pendoID} channel={channel} isBMIPI={isBMIPI} />
+            <CLISection pendoID={pendoID} channel={channel} isBMIPI={isBMIPI} />
           </TextContent>
         </StackItem>
         {rhcos && (

@@ -4,9 +4,12 @@ import { TextContent, TextList, TextListVariants } from '@patternfly/react-core'
 
 import './Instructions.scss';
 
-const Instructions = ({ children }) => (
+const Instructions = ({ children, wide }) => (
   <TextContent className="ocm-instructions">
-    <TextList component={TextListVariants.ol} className="ocm-instructions__list">
+    <TextList
+      component={TextListVariants.ol}
+      className={`ocm-instructions__list ${wide ? 'pf-u-max-width' : ''}`}
+    >
       {children}
     </TextList>
   </TextContent>
@@ -14,6 +17,7 @@ const Instructions = ({ children }) => (
 
 Instructions.propTypes = {
   children: PropTypes.node,
+  wide: PropTypes.bool,
 };
 
 export default Instructions;

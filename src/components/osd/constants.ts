@@ -1,5 +1,11 @@
 import { billingModels } from '~/common/subscriptionTypes';
+import {
+  HOST_PREFIX_DEFAULT,
+  MACHINE_CIDR_DEFAULT,
+  SERVICE_CIDR_DEFAULT,
+} from '../clusters/CreateOSDPage/CreateOSDForm/FormSections/NetworkingSection/networkingConstants';
 import { CloudProviderType } from './ClusterSettings/CloudProvider/types';
+import { ClusterPrivacyType } from './Networking/constants';
 
 export enum FieldId {
   BillingModel = 'billing_model',
@@ -30,7 +36,6 @@ export enum FieldId {
   NodeLabels = 'node_labels',
   ClusterPrivacy = 'cluster_privacy',
   ConfigureProxy = 'configure_proxy',
-  ConfigureClusterProxy = 'configure_cluster_proxy',
   InstallToVpc = 'install_to_vpc',
   UsePrivateLink = 'use_privatelink',
   PublicSubnetId = 'public_subnet_id',
@@ -40,6 +45,27 @@ export enum FieldId {
   KeyName = 'key_name',
   KmsKeyArn = 'kms_key_arn',
   KmsServiceAccount = 'kms_service_account',
+  VpcName = 'vpc_name',
+  ComputeSubnet = 'compute_subnet',
+  ControlPlaneSubnet = 'control_plane_subnet',
+  FirstAvailabilityZone = 'az_0',
+  SecondAvailabilityZone = 'az_1',
+  ThirdAvailabilityZone = 'az_2',
+  HttpProxyUrl = 'http_proxy_url',
+  HttpsProxyUrl = 'https_proxy_url',
+  AdditionalTrustBundle = 'additional_trust_bundle',
+  DisableScpChecks = 'disable_scp_checks',
+  NoProxy = 'no_proxy',
+  CidrDefaultValuesEnabled = 'cidr_default_values_enabled',
+  NetworkMachineCidr = 'network_machine_cidr',
+  NetworkServiceCidr = 'network_service_cidr',
+  NetworkPodCidr = 'network_pod_cidr',
+  NetworkHostPrefix = 'network_host_prefix',
+  NetworkMachineCidrSingleAz = 'network_machine_cidr_single_az',
+  NetworkMachineCidrMultiAz = 'network_machine_cidr_multi_az',
+  UpgradePolicy = 'upgrade_policy',
+  AutomaticUpgradeSchedule = 'automatic_upgrade_schedule',
+  NodeDrainGracePeriod = 'node_drain_grace_period',
 }
 
 export enum StepName {
@@ -50,6 +76,8 @@ export enum StepName {
   MachinePool = 'Machine pool',
   Networking = 'Networking',
   Configuration = 'Configuration',
+  VpcSettings = 'VPC settings',
+  ClusterProxy = 'Cluster-wide proxy',
   CidrRanges = 'CIDR ranges',
   ClusterUpdates = 'Cluster updates',
   Review = 'Review and create',
@@ -63,6 +91,8 @@ export enum StepId {
   ClusterSettingsMachinePool = 'cluster-settings-machine-pool',
   Networking = 'networking',
   NetworkingConfiguration = 'networking-config',
+  NetworkingVpcSettings = 'networking-vpc-settings',
+  NetworkingClusterProxy = 'networking-cluster-proxy',
   NetworkingCidrRanges = 'networking-cidr-ranges',
   ClusterUpdates = 'cluster-updates',
   Review = 'review',
@@ -76,7 +106,7 @@ export enum UrlPath {
 
 export const breadcrumbs = [
   { label: 'Clusters' },
-  { label: 'Create', path: UrlPath.Create },
+  { label: 'Cluster Type', path: UrlPath.Create },
   { label: 'OpenShift Dedicated', path: UrlPath.CreateOsd },
 ];
 
@@ -89,6 +119,13 @@ export const initialValues = {
   [FieldId.MultiAz]: 'false',
   [FieldId.EnableUserWorkloadMonitoring]: true,
   [FieldId.NodeLabels]: [{ key: '', value: '' }],
+  [FieldId.ClusterPrivacy]: ClusterPrivacyType.External,
+  [FieldId.CidrDefaultValuesEnabled]: true,
+  [FieldId.NetworkMachineCidr]: MACHINE_CIDR_DEFAULT,
+  [FieldId.NetworkServiceCidr]: SERVICE_CIDR_DEFAULT,
+  [FieldId.NetworkHostPrefix]: HOST_PREFIX_DEFAULT,
+  [FieldId.UpgradePolicy]: 'manual',
+  [FieldId.AutomaticUpgradeSchedule]: '0 0 * * 0',
 };
 
 export const clusterNameHint =

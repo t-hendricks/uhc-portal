@@ -27,7 +27,9 @@ exports[`<ReleaseChannel /> should render 1`] = `
                
               <ExternalLink
                 href="https://docs.openshift.com/container-platform/4.6/release_notes/ocp-4-6-release-notes.html#ocp-4-6-12"
+                isButton={false}
                 noIcon={true}
+                variant="secondary"
               >
                 <a
                   href="https://docs.openshift.com/container-platform/4.6/release_notes/ocp-4-6-release-notes.html#ocp-4-6-12"
