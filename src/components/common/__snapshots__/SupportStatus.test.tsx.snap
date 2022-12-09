@@ -11,9 +11,7 @@ exports[`<SupportStatus /> should render for every possible support status rende
        
       <ExternalLink
         href="https://access.redhat.com/support/policy/updates/openshift"
-        isButton={false}
         noIcon={true}
-        variant="secondary"
       >
         this resource
       </ExternalLink>
@@ -44,9 +42,7 @@ exports[`<SupportStatus /> should render for every possible support status rende
        
       <ExternalLink
         href="https://access.redhat.com/support/policy/updates/openshift"
-        isButton={false}
         noIcon={true}
-        variant="secondary"
       >
         this resource
       </ExternalLink>
@@ -77,9 +73,7 @@ exports[`<SupportStatus /> should render for every possible support status rende
        
       <ExternalLink
         href="https://access.redhat.com/support/policy/updates/openshift"
-        isButton={false}
         noIcon={true}
-        variant="secondary"
       >
         this resource
       </ExternalLink>
@@ -110,9 +104,7 @@ exports[`<SupportStatus /> should render for every possible support status rende
        
       <ExternalLink
         href="https://access.redhat.com/support/policy/updates/openshift"
-        isButton={false}
         noIcon={true}
-        variant="secondary"
       >
         this resource
       </ExternalLink>

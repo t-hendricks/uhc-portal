@@ -1134,8 +1134,6 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly 1`] = `
                                                 >
                                                   <ExternalLink
                                                     href="https://access.redhat.com/support/"
-                                                    isButton={false}
-                                                    variant="secondary"
                                                   >
                                                     Production Support Terms of Service
                                                   </ExternalLink>
@@ -1174,8 +1172,6 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly 1`] = `
                                                   >
                                                     <ExternalLink
                                                       href="https://access.redhat.com/support/"
-                                                      isButton={false}
-                                                      variant="secondary"
                                                     >
                                                       Production Support Terms of Service
                                                     </ExternalLink>
@@ -1223,8 +1219,6 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly 1`] = `
                                                         >
                                                           <ExternalLink
                                                             href="https://access.redhat.com/support/"
-                                                            isButton={false}
-                                                            variant="secondary"
                                                           >
                                                             Production Support Terms of Service
                                                           </ExternalLink>
@@ -1249,8 +1243,6 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly 1`] = `
                                                           >
                                                             <ExternalLink
                                                               href="https://access.redhat.com/support/"
-                                                              isButton={false}
-                                                              variant="secondary"
                                                             >
                                                               Production Support Terms of Service
                                                             </ExternalLink>
@@ -1344,8 +1336,6 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly 1`] = `
                                                                   >
                                                                     <ExternalLink
                                                                       href="https://access.redhat.com/support/"
-                                                                      isButton={false}
-                                                                      variant="secondary"
                                                                     >
                                                                       Production Support Terms of Service
                                                                     </ExternalLink>
@@ -4314,8 +4304,6 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly when an erorr occu
                                                 >
                                                   <ExternalLink
                                                     href="https://access.redhat.com/support/"
-                                                    isButton={false}
-                                                    variant="secondary"
                                                   >
                                                     Production Support Terms of Service
                                                   </ExternalLink>
@@ -4354,8 +4342,6 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly when an erorr occu
                                                   >
                                                     <ExternalLink
                                                       href="https://access.redhat.com/support/"
-                                                      isButton={false}
-                                                      variant="secondary"
                                                     >
                                                       Production Support Terms of Service
                                                     </ExternalLink>
@@ -4403,8 +4389,6 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly when an erorr occu
                                                         >
                                                           <ExternalLink
                                                             href="https://access.redhat.com/support/"
-                                                            isButton={false}
-                                                            variant="secondary"
                                                           >
                                                             Production Support Terms of Service
                                                           </ExternalLink>
@@ -4429,8 +4413,6 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly when an erorr occu
                                                           >
                                                             <ExternalLink
                                                               href="https://access.redhat.com/support/"
-                                                              isButton={false}
-                                                              variant="secondary"
                                                             >
                                                               Production Support Terms of Service
                                                             </ExternalLink>
@@ -4524,8 +4506,6 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly when an erorr occu
                                                                   >
                                                                     <ExternalLink
                                                                       href="https://access.redhat.com/support/"
-                                                                      isButton={false}
-                                                                      variant="secondary"
                                                                     >
                                                                       Production Support Terms of Service
                                                                     </ExternalLink>
@@ -7622,8 +7602,6 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly with billing_model
                                                 >
                                                   <ExternalLink
                                                     href="https://access.redhat.com/support/"
-                                                    isButton={false}
-                                                    variant="secondary"
                                                   >
                                                     Production Support Terms of Service
                                                   </ExternalLink>
@@ -7662,8 +7640,6 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly with billing_model
                                                   >
                                                     <ExternalLink
                                                       href="https://access.redhat.com/support/"
-                                                      isButton={false}
-                                                      variant="secondary"
                                                     >
                                                       Production Support Terms of Service
                                                     </ExternalLink>
@@ -7711,8 +7687,6 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly with billing_model
                                                         >
                                                           <ExternalLink
                                                             href="https://access.redhat.com/support/"
-                                                            isButton={false}
-                                                            variant="secondary"
                                                           >
                                                             Production Support Terms of Service
                                                           </ExternalLink>
@@ -7737,8 +7711,6 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly with billing_model
                                                           >
                                                             <ExternalLink
                                                               href="https://access.redhat.com/support/"
-                                                              isButton={false}
-                                                              variant="secondary"
                                                             >
                                                               Production Support Terms of Service
                                                             </ExternalLink>
@@ -7832,8 +7804,6 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly with billing_model
                                                                   >
                                                                     <ExternalLink
                                                                       href="https://access.redhat.com/support/"
-                                                                      isButton={false}
-                                                                      variant="secondary"
                                                                     >
                                                                       Production Support Terms of Service
                                                                     </ExternalLink>
@@ -10748,8 +10718,6 @@ exports[`<EditSubscriptionSettingsDialog /> renders eval support correctly 1`] =
                                                 >
                                                   <ExternalLink
                                                     href="https://access.redhat.com/support/"
-                                                    isButton={false}
-                                                    variant="secondary"
                                                   >
                                                     Production Support Terms of Service
                                                   </ExternalLink>
@@ -10788,8 +10756,6 @@ exports[`<EditSubscriptionSettingsDialog /> renders eval support correctly 1`] =
                                                   >
                                                     <ExternalLink
                                                       href="https://access.redhat.com/support/"
-                                                      isButton={false}
-                                                      variant="secondary"
                                                     >
                                                       Production Support Terms of Service
                                                     </ExternalLink>
@@ -10837,8 +10803,6 @@ exports[`<EditSubscriptionSettingsDialog /> renders eval support correctly 1`] =
                                                         >
                                                           <ExternalLink
                                                             href="https://access.redhat.com/support/"
-                                                            isButton={false}
-                                                            variant="secondary"
                                                           >
                                                             Production Support Terms of Service
                                                           </ExternalLink>
@@ -10863,8 +10827,6 @@ exports[`<EditSubscriptionSettingsDialog /> renders eval support correctly 1`] =
                                                           >
                                                             <ExternalLink
                                                               href="https://access.redhat.com/support/"
-                                                              isButton={false}
-                                                              variant="secondary"
                                                             >
                                                               Production Support Terms of Service
                                                             </ExternalLink>
@@ -10958,8 +10920,6 @@ exports[`<EditSubscriptionSettingsDialog /> renders eval support correctly 1`] =
                                                                   >
                                                                     <ExternalLink
                                                                       href="https://access.redhat.com/support/"
-                                                                      isButton={false}
-                                                                      variant="secondary"
                                                                     >
                                                                       Production Support Terms of Service
                                                                     </ExternalLink>

@@ -9,7 +9,11 @@ import React from 'react';
 
 import Skeleton from '@redhat-cloud-services/frontend-components/Skeleton';
 
-function skeletonRows(count = 10, colSpan = 6, size = 'lg') {
+const skeletonRows = (
+  count = 10,
+  colSpan = 6,
+  size: React.ComponentProps<typeof Skeleton>['size'] = 'lg',
+) => {
   const row = {
     cells: [
       {
@@ -23,6 +27,6 @@ function skeletonRows(count = 10, colSpan = 6, size = 'lg') {
     ret.push(row);
   }
   return ret;
-}
+};
 
 export default skeletonRows;

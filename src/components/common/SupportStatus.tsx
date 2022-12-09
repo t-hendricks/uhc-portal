@@ -1,12 +1,15 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { Label, Popover } from '@patternfly/react-core';
 
 import ExternalLink from './ExternalLink';
 import './SupportStatus.scss';
 
-const SupportStatus = ({ status }) => {
-  let labelColor = 'blue';
+type Props = {
+  status: string;
+};
+
+const SupportStatus = ({ status }: Props) => {
+  let labelColor: React.ComponentProps<typeof Label>['color'] = 'blue';
   let labelText;
   let popoverBodyContent;
   let popoverID;
@@ -70,10 +73,6 @@ const SupportStatus = ({ status }) => {
       </Label>
     </Popover>
   );
-};
-
-SupportStatus.propTypes = {
-  status: PropTypes.string.isRequired,
 };
 
 export default SupportStatus;

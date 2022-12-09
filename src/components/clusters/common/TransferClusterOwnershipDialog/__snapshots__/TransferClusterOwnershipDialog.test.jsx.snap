@@ -465,8 +465,6 @@ exports[`<TransferClusterOwnershipDialog /> should not crash when subscription i
                                       >
                                         <ExternalLink
                                           href="https://access.redhat.com/solutions/4902871"
-                                          isButton={false}
-                                          variant="secondary"
                                         >
                                           <a
                                             href="https://access.redhat.com/solutions/4902871"
@@ -1092,8 +1090,6 @@ exports[`<TransferClusterOwnershipDialog /> should release clusters 1`] = `
                                       >
                                         <ExternalLink
                                           href="https://access.redhat.com/solutions/4902871"
-                                          isButton={false}
-                                          variant="secondary"
                                         >
                                           <a
                                             href="https://access.redhat.com/solutions/4902871"
@@ -1710,8 +1706,6 @@ exports[`<TransferClusterOwnershipDialog /> should show dialog for transferring 
                                       >
                                         <ExternalLink
                                           href="/openshift/register"
-                                          isButton={false}
-                                          variant="secondary"
                                         >
                                           <a
                                             href="/openshift/register"
@@ -2448,8 +2442,6 @@ exports[`<TransferClusterOwnershipDialog /> should show error 1`] = `
                                       >
                                         <ExternalLink
                                           href="https://access.redhat.com/solutions/4902871"
-                                          isButton={false}
-                                          variant="secondary"
                                         >
                                           <a
                                             href="https://access.redhat.com/solutions/4902871"
