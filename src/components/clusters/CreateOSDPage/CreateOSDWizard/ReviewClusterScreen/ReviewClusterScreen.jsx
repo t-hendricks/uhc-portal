@@ -179,6 +179,9 @@ function ReviewClusterScreen({
           ReviewItem({ name: 'https_proxy_url', formValues })}
         {installToVPCSelected &&
           configureProxySelected &&
+          ReviewItem({ name: 'no_proxy', formValues })}
+        {installToVPCSelected &&
+          configureProxySelected &&
           ReviewItem({ name: 'additional_trust_bundle', formValues })}
         {ReviewItem({ name: 'network_machine_cidr', formValues })}
         {ReviewItem({ name: 'network_service_cidr', formValues })}

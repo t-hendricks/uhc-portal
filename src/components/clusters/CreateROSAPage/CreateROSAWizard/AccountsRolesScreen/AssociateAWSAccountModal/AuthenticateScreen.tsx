@@ -21,12 +21,7 @@ const AuthenticateScreen = () => {
             <ExternalLink href={links.ROSA_CLI_DOCS}>Help</ExternalLink>
           </Text>
           <Text component="p">
-            <DownloadAndOSSelection
-              token={{}}
-              tool={tools.ROSA}
-              channel={channels.STABLE}
-              pendoID={{}}
-            />
+            <DownloadAndOSSelection tool={tools.ROSA} channel={channels.STABLE} pendoID="" />
           </Text>
           <Text component={TextVariants.p} className="ocm-secondary-text">
             Note: If you haven’t done so already, also{' '}

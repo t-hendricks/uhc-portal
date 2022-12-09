@@ -19,25 +19,16 @@ import semver from 'semver';
 
 import getReleaseNotesLink from './getReleaseNotesLink';
 import ExternalLink from '../common/ExternalLink';
-import getOCPLifeCycleStatus from '../../services/productLifeCycleService';
 import ReleaseChannel from './ReleaseChannel';
 import ReleaseChannelName from './ReleaseChannelName';
 import ReleaseChannelDescription from './ReleaseChannelDescription';
-import { ProductLifeCycle } from '~/types/product-life-cycles';
+import { useOCPLifeCycleStatusData } from './hooks';
 
 import './Releases.scss';
 
 const Releases = () => {
-  const [statusData, setStatusData] = React.useState<ProductLifeCycle[]>();
-  React.useEffect(() => {
-    const fetchStatusData = async () => {
-      const result = await getOCPLifeCycleStatus();
+  const [statusData] = useOCPLifeCycleStatusData();
 
-      setStatusData(result.data.data);
-    };
-
-    fetchStatusData();
-  }, []);
   React.useEffect(() => {
     document.title = 'Releases | Red Hat OpenShift Cluster Manager';
   }, []);

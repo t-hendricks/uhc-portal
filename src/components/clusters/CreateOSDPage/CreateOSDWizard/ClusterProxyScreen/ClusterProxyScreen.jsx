@@ -13,17 +13,21 @@ import {
 } from '@patternfly/react-core';
 
 import { constants } from '../../CreateOSDForm/CreateOSDFormConstants';
-import { validateUrl, validateCA } from '../../../../../common/validators';
+import { validateUrl, validateCA, checkDNSDomain } from '../../../../../common/validators';
 import ReduxVerticalFormGroup from '../../../../common/ReduxFormComponents/ReduxVerticalFormGroup';
 import ReduxFileUpload from '../../../../common/ReduxFormComponents/ReduxFileUpload';
 import ExternalLink from '../../../../common/ExternalLink';
 import links from '../../../../../common/installLinks.mjs';
 import { normalizedProducts } from '../../../../../common/subscriptionTypes';
-
+import { stringToArray } from '~/common/helpers';
 import {
   HTTP_PROXY_PLACEHOLDER,
   HTTPS_PROXY_PLACEHOLDER,
+  DISABLED_NO_PROXY_PLACEHOLDER,
+  NO_PROXY_PLACEHOLDER,
+  NO_PROXY_HELPER_TEXT,
   TRUST_BUNDLE_PLACEHOLDER,
+  TRUST_BUNDLE_HELPER_TEXT,
 } from '../../CreateOSDForm/FormSections/NetworkingSection/networkingConstants';
 
 import {
@@ -152,12 +156,29 @@ function ClusterProxyScreen({
         <GridItem sm={0} md={2} xl2={4} />
         <GridItem sm={12} md={10} xl2={8}>
           <Field
+            component={ReduxVerticalFormGroup}
+            name="no_proxy"
+            label="No Proxy domains"
+            placeholder={
+              !httpProxyUrl && !httpsProxyUrl ? DISABLED_NO_PROXY_PLACEHOLDER : NO_PROXY_PLACEHOLDER
+            }
+            type="text"
+            validate={checkDNSDomain}
+            helpText={NO_PROXY_HELPER_TEXT}
+            showHelpTextOnError={false}
+            parse={stringToArray}
+            isDisabled={!httpProxyUrl && !httpsProxyUrl}
+          />
+        </GridItem>
+        <GridItem sm={0} md={2} xl2={4} />
+        <GridItem sm={12} md={10} xl2={8}>
+          <Field
             component={ReduxFileUpload}
             name="additional_trust_bundle"
             label="Additional trust bundle"
             placeholder={TRUST_BUNDLE_PLACEHOLDER}
             extendedHelpTitle="Additional trust bundle"
-            extendedHelpText="An additional trust bundle is a PEM encoded X.509 certificate bundle that will be added to the nodes' trusted certificate store."
+            extendedHelpText={TRUST_BUNDLE_HELPER_TEXT}
             validate={[validateCA, validateAtLeastOne]}
             onBlur={onTouched}
             dropzoneProps={{

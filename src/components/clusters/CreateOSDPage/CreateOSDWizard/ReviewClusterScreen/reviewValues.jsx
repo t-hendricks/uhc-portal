@@ -10,7 +10,7 @@ import parseUpdateSchedule from '../../../common/Upgrades/parseUpdateSchedule';
  *  title - human readable title
  *  values - map from values to human readable strings. optional.
  *           when both `values` and `valueTransform` are unspecified, actual value is shown.
- *  valueTransfrom - function to transform current value to human readable string,
+ *  valueTransform - function to transform current value to human readable string,
  *                   gets two parameters: value (current value), allValues (all form values)
  *                   executed when `values` is not defined,
  *                   or when `values` has no entry for the provided value. optional.
@@ -285,6 +285,20 @@ const reviewValues = {
   https_proxy_url: {
     title: 'HTTPS proxy URL',
     isOptional: true,
+  },
+  no_proxy: {
+    title: 'No Proxy domains',
+    isOptional: true,
+    valueTransform: (noProxyDomains) => (
+      <LabelGroup>
+        {/* eslint-disable-next-line react/destructuring-assignment */}
+        {noProxyDomains.map((domain) => (
+          <Label isCompact color="blue">
+            {domain}
+          </Label>
+        ))}
+      </LabelGroup>
+    ),
   },
   additional_trust_bundle: {
     title: 'Additional trust bundle',

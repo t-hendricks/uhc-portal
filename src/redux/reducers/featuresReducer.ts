@@ -2,7 +2,7 @@ import { SET_FEATURE } from '../constants/featureConstants';
 import { FeatureAction, features } from '../actions/featureActions';
 
 type State = {
-  [feature: string]: boolean;
+  [feature: string]: boolean | undefined;
 };
 
 const initialState: State = {};

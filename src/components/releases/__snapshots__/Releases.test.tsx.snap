@@ -327,7 +327,9 @@ exports[`<Releases /> should render 1`] = `
                                           >
                                             <ExternalLink
                                               href="https://docs.openshift.com/container-platform/4.8/release_notes/ocp-4-8-release-notes.html"
+                                              isButton={false}
                                               noIcon={true}
+                                              variant="secondary"
                                             >
                                               <a
                                                 href="https://docs.openshift.com/container-platform/4.8/release_notes/ocp-4-8-release-notes.html"
@@ -436,7 +438,9 @@ exports[`<Releases /> should render 1`] = `
                                           >
                                             <ExternalLink
                                               href="https://docs.openshift.com/container-platform/4.7/release_notes/ocp-4-7-release-notes.html"
+                                              isButton={false}
                                               noIcon={true}
+                                              variant="secondary"
                                             >
                                               <a
                                                 href="https://docs.openshift.com/container-platform/4.7/release_notes/ocp-4-7-release-notes.html"
@@ -557,7 +561,9 @@ exports[`<Releases /> should render 1`] = `
                                           >
                                             <ExternalLink
                                               href="https://docs.openshift.com/container-platform/4.6/release_notes/ocp-4-6-release-notes.html"
+                                              isButton={false}
                                               noIcon={true}
+                                              variant="secondary"
                                             >
                                               <a
                                                 href="https://docs.openshift.com/container-platform/4.6/release_notes/ocp-4-6-release-notes.html"
@@ -666,7 +672,9 @@ exports[`<Releases /> should render 1`] = `
                                           >
                                             <ExternalLink
                                               href="https://docs.openshift.com/container-platform/4.5/release_notes/ocp-4-5-release-notes.html"
+                                              isButton={false}
                                               noIcon={true}
+                                              variant="secondary"
                                             >
                                               <a
                                                 href="https://docs.openshift.com/container-platform/4.5/release_notes/ocp-4-5-release-notes.html"
@@ -787,7 +795,9 @@ exports[`<Releases /> should render 1`] = `
                                           >
                                             <ExternalLink
                                               href="https://docs.openshift.com/container-platform/4.4/release_notes/ocp-4-4-release-notes.html"
+                                              isButton={false}
                                               noIcon={true}
+                                              variant="secondary"
                                             >
                                               <a
                                                 href="https://docs.openshift.com/container-platform/4.4/release_notes/ocp-4-4-release-notes.html"
@@ -908,7 +918,9 @@ exports[`<Releases /> should render 1`] = `
                                           >
                                             <ExternalLink
                                               href="https://docs.openshift.com/container-platform/4.3/release_notes/ocp-4-3-release-notes.html"
+                                              isButton={false}
                                               noIcon={true}
+                                              variant="secondary"
                                             >
                                               <a
                                                 href="https://docs.openshift.com/container-platform/4.3/release_notes/ocp-4-3-release-notes.html"
@@ -1062,7 +1074,9 @@ exports[`<Releases /> should render 1`] = `
                             >
                               <ExternalLink
                                 href="https://docs.openshift.com/container-platform/4.8/updating/understanding-upgrade-channels-release.html"
+                                isButton={false}
                                 noIcon={true}
+                                variant="secondary"
                               >
                                 <a
                                   href="https://docs.openshift.com/container-platform/4.8/updating/understanding-upgrade-channels-release.html"

@@ -11,13 +11,13 @@ exports[`<CreateClusterPage /> Quota not fetched yet should render 1`] = `
               "label": "Clusters",
             },
             Object {
-              "label": "Create",
+              "label": "Cluster Type",
             },
           ]
         }
       />
     }
-    title="Create an OpenShift cluster"
+    title="Select an OpenShift cluster type to create"
   />
   <PageSection
     variant="light"
@@ -40,13 +40,13 @@ exports[`<CreateClusterPage /> User with no quota should render 1`] = `
               "label": "Clusters",
             },
             Object {
-              "label": "Create",
+              "label": "Cluster Type",
             },
           ]
         }
       />
     }
-    title="Create an OpenShift cluster"
+    title="Select an OpenShift cluster type to create"
   />
   <PageSection
     className="cluster-create-page"
@@ -147,13 +147,13 @@ exports[`<CreateClusterPage /> renders correctly 1`] = `
               "label": "Clusters",
             },
             Object {
-              "label": "Create",
+              "label": "Cluster Type",
             },
           ]
         }
       />
     }
-    title="Create an OpenShift cluster"
+    title="Select an OpenShift cluster type to create"
   />
   <PageSection
     className="cluster-create-page"
@@ -254,13 +254,13 @@ exports[`<CreateClusterPage /> renders correctly for specific tabs cloud tab 1`]
               "label": "Clusters",
             },
             Object {
-              "label": "Create",
+              "label": "Cluster Type",
             },
           ]
         }
       />
     }
-    title="Create an OpenShift cluster"
+    title="Select an OpenShift cluster type to create"
   />
   <PageSection
     className="cluster-create-page"
@@ -361,13 +361,13 @@ exports[`<CreateClusterPage /> renders correctly for specific tabs datacenter ta
               "label": "Clusters",
             },
             Object {
-              "label": "Create",
+              "label": "Cluster Type",
             },
           ]
         }
       />
     }
-    title="Create an OpenShift cluster"
+    title="Select an OpenShift cluster type to create"
   />
   <PageSection
     className="cluster-create-page"
@@ -468,13 +468,13 @@ exports[`<CreateClusterPage /> renders correctly for specific tabs local tab 1`]
               "label": "Clusters",
             },
             Object {
-              "label": "Create",
+              "label": "Cluster Type",
             },
           ]
         }
       />
     }
-    title="Create an OpenShift cluster"
+    title="Select an OpenShift cluster type to create"
   />
   <PageSection
     className="cluster-create-page"
