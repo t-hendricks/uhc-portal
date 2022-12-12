@@ -30,8 +30,8 @@ const ClusterProgressCard = ({ cluster = {}, history, refresh }: ClusterProgress
   const isInstalling = cluster.state === clusterStates.INSTALLING;
   const isUninstalling = cluster.state === clusterStates.UNINSTALLING;
   const isWaitingROSAManual = isWaitingROSAManualMode(cluster);
-  const inProgress =
-    isPending || isInstalling || isUninstalling || (isWaiting && !isWaitingROSAManual);
+  const installationInProgress = isPending || isInstalling || (isWaiting && !isWaitingROSAManual);
+  const inProgress = installationInProgress || isUninstalling;
 
   let titleText;
   if (isError) {
@@ -40,7 +40,7 @@ const ClusterProgressCard = ({ cluster = {}, history, refresh }: ClusterProgress
     titleText = 'Cluster uninstallation';
   } else if (isWaitingROSAManual) {
     titleText = 'Action required to continue installation';
-  } else if (isWaiting || isPending || isInstalling) {
+  } else if (installationInProgress) {
     titleText = 'Installing cluster';
   }
 
@@ -55,8 +55,8 @@ const ClusterProgressCard = ({ cluster = {}, history, refresh }: ClusterProgress
           {inProgress && <Spinner size="sm" className="progressing-icon pf-u-mr-md" />}
           {titleText}
         </Title>
-        {(isInstalling || isWaitingROSAManual) && <DownloadOcCliButton />}
-        {isInstalling && (
+        {(installationInProgress || isWaitingROSAManual) && <DownloadOcCliButton />}
+        {installationInProgress && (
           <Text component={TextVariants.p} className="expected-cluster-installation-text">
             Cluster creation usually takes 30 to 60 minutes to complete.
           </Text>
