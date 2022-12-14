@@ -1,11 +1,25 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { ClipboardCopy, clipboardCopyFunc, Text } from '@patternfly/react-core';
 import useAnalytics from '~/hooks/useAnalytics';
+import { TrackEvent } from '~/common/analytics';
 
 import './InstructionCommand.scss';
 
-const InstructionCommand = ({ children, textAriaLabel, trackEvent, className, outerClassName }) => {
+type Props = {
+  children?: React.ReactNode;
+  textAriaLabel?: string;
+  trackEvent?: TrackEvent;
+  className?: string;
+  outerClassName?: string;
+};
+
+const InstructionCommand = ({
+  children,
+  textAriaLabel,
+  trackEvent,
+  className,
+  outerClassName,
+}: Props) => {
   const track = useAnalytics();
   return (
     <Text component="pre" className={outerClassName}>
@@ -24,14 +38,6 @@ const InstructionCommand = ({ children, textAriaLabel, trackEvent, className, ou
       </ClipboardCopy>
     </Text>
   );
-};
-
-InstructionCommand.propTypes = {
-  children: PropTypes.node,
-  textAriaLabel: PropTypes.string,
-  trackEvent: PropTypes.object,
-  className: PropTypes.string,
-  outerClassName: PropTypes.string,
 };
 
 export default InstructionCommand;

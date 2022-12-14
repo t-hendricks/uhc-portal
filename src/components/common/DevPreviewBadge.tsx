@@ -5,7 +5,7 @@ import { InfoCircleIcon } from '@patternfly/react-icons';
 import links from '../../common/installLinks.mjs';
 import ExternalLink from './ExternalLink';
 
-function DevPreviewBadge() {
+const DevPreviewBadge = () => {
   const info = (
     <>
       <div style={{ marginBottom: 'var(--pf-global--spacer--sm)' }}>
@@ -31,6 +31,6 @@ function DevPreviewBadge() {
       </Label>
     </Popover>
   );
-}
+};
 
 export default DevPreviewBadge;
