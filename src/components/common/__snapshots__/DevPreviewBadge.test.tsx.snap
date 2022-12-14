@@ -15,8 +15,6 @@ exports[`<DevPreviewBadge> renders 1`] = `
       </div>
       <ExternalLink
         href="https://access.redhat.com/support/offerings/devpreview"
-        isButton={false}
-        variant="secondary"
       >
         Learn more
       </ExternalLink>

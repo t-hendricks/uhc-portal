@@ -9,9 +9,7 @@ exports[`DeveloperPreviewStatements renders correctly 1`] = `
      
     <ExternalLink
       href="https://access.redhat.com/support/offerings/devpreview"
-      isButton={false}
       noIcon={true}
-      variant="secondary"
     >
       developer preview
     </ExternalLink>
