@@ -42,6 +42,7 @@ const CreateClusterDropDown = () => {
             ref={dropDownRef}
             toggleVariant={ButtonVariant.primary}
             onToggle={setOpen}
+            className="create-button"
           >
             Create cluster
           </DropdownToggle>
@@ -52,6 +53,7 @@ const CreateClusterDropDown = () => {
       <br />
       <Button
         variant="link"
+        className="create-button"
         component={(props: any) => <Link {...props} to="/create/rosa/getstarted" />}
       >
         Prerequisites
