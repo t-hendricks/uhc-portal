@@ -164,7 +164,7 @@ const instructionsMapping = {
       abi: {
         title: 'Install OpenShift on Bare Metal locally with Agent',
         installer: tools.X86INSTALLER,
-        channel: channels.CANDIDATE, // TODO revert this to STABLE after 4.12 GA
+        channel: channels.STABLE,
         docURL: links.INSTALL_BAREMETAL_ABI_GETTING_STARTED,
       },
       ipi: {
@@ -356,7 +356,7 @@ const instructionsMapping = {
     abi: {
       title: 'Install OpenShift on any x86_64 platform locally with Agent',
       installer: tools.X86INSTALLER,
-      channel: channels.CANDIDATE, // TODO revert this to STABLE after 4.12 GA
+      channel: channels.STABLE,
       docURL: links.INSTALL_GENERIC_ABI_GETTING_STARTED,
     },
     upi: {
@@ -408,8 +408,8 @@ const instructionsMapping = {
     abi: {
       title: 'Install OpenShift on vSphere locally with Agent',
       installer: tools.X86INSTALLER,
-      channel: channels.CANDIDATE, // TODO revert this to STABLE after 4.12 GA
-      docURL: links.INSTALL_BAREMETAL_ABI_GETTING_STARTED,
+      channel: channels.STABLE,
+      docURL: links.INSTALL_VSPHEREABI_GETTING_STARTED,
     },
     upi: {
       title: 'Install OpenShift on vSphere with user-provisioned infrastructure',

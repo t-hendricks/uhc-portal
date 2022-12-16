@@ -61,7 +61,6 @@ export const InstructionsChooser = ({
         title="Local Agent-based"
         labels={
           <>
-            <Label color="gold">Developer preview</Label>
             <Label color="purple">CLI-based</Label>
           </>
         }
