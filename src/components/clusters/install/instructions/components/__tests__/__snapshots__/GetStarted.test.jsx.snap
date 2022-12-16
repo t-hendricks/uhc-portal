@@ -96,8 +96,6 @@ exports[`<GetStarted /> GetStarted w/ customizations should render 1`] = `
            
           <ExternalLink
             href="example.doc.link"
-            isButton={false}
-            variant="secondary"
           >
             install with customizations
           </ExternalLink>

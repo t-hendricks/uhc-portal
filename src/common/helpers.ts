@@ -162,7 +162,7 @@ const parseReduxFormKeyValueList = (
 } =>
   Object.fromEntries(
     labelsFormData
-      .filter(({ key }) => typeof key !== 'undefined')
+      .filter(({ key }) => typeof key !== 'undefined' && key !== '')
       .map(({ key, value }) => [key, value ?? '']),
   );
 

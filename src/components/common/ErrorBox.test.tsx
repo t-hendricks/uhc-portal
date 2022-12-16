@@ -1,9 +1,12 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-
+import { ErrorState } from '~/types/types';
 import ErrorBox from './ErrorBox';
 
-const baseResponse = {
+const baseResponse: ErrorState = {
+  fulfilled: false,
+  pending: false,
+  error: true,
   errorMessage: 'this is some error message',
 };
 

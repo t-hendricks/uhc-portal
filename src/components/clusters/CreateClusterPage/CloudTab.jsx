@@ -1,6 +1,13 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { PageSection, Title, Button, Stack, StackItem } from '@patternfly/react-core';
+import {
+  PageSection,
+  Title,
+  Button,
+  Stack,
+  StackItem,
+  ButtonVariant,
+} from '@patternfly/react-core';
 import { Table, TableHeader, TableBody, expandable, cellWidth } from '@patternfly/react-table';
 import { Link } from 'react-router-dom';
 import { ArrowRightIcon } from '@patternfly/react-icons';
@@ -12,6 +19,7 @@ import MicrosoftLogo from '../../../styles/images/Microsoft_logo.svg';
 import AWSLogo from '../../../styles/images/AWS.png';
 import links from './CreateClusterConsts';
 import CreateClusterDropDown from './CreateClusterDropDown';
+import ExternalLink from '~/components/common/ExternalLink';
 
 const { TechnologyPreview, PreviewBadgePosition } = OCM;
 
@@ -38,29 +46,35 @@ const getColumns = () => [
   },
 ];
 
-const osdRow = (shouldExpand = true, isOpen = true, hasQuota = true, hasTrial = false) => {
+const osdRow = (shouldExpand = true, isOpen = true, hasQuota = true, rowKey = 0) => {
   let contents = (
-    <Button
-      component="a"
+    <ExternalLink
       href={links.OSD_LEARN_MORE}
-      variant="secondary"
-      rel="noopener noreferrer"
-      target="_blank"
+      isButton
+      variant={ButtonVariant.secondary}
+      className="create-button"
+      noIcon
     >
-      Learn more
-    </Button>
+      <span data-testid="osd-learn-more-button">Learn more</span>
+    </ExternalLink>
   );
 
-  let buttonWidth = '';
-
   if (hasQuota) {
-    if (hasTrial) {
-      buttonWidth = 'create-cluster';
-    }
     contents = (
-      <Link id="create-cluster" to="/create/osd">
-        <Button className={buttonWidth}>Create cluster</Button>
-      </Link>
+      <Button
+        className="create-button"
+        variant={ButtonVariant.primary}
+        component={(props) => (
+          <Link
+            {...props}
+            id="create-cluster"
+            to="/create/osd"
+            data-testid="osd-create-cluster-button"
+          />
+        )}
+      >
+        Create cluster
+      </Button>
     );
   }
 
@@ -74,9 +88,9 @@ const osdRow = (shouldExpand = true, isOpen = true, hasQuota = true, hasTrial = 
         ),
       },
       <>
-        <a href={links.OSD_LEARN_MORE} rel="noopener noreferrer" target="_blank">
+        <ExternalLink href={links.OSD_LEARN_MORE} noIcon>
           Red Hat OpenShift Dedicated
-        </a>
+        </ExternalLink>
       </>,
       'Red Hat',
       'Available on AWS and GCP',
@@ -84,7 +98,7 @@ const osdRow = (shouldExpand = true, isOpen = true, hasQuota = true, hasTrial = 
     ],
   };
   const descriptionRow = {
-    parent: 0,
+    parent: rowKey,
     fullWidth: true,
     cells: [
       {
@@ -98,9 +112,9 @@ const osdRow = (shouldExpand = true, isOpen = true, hasQuota = true, hasTrial = 
               Hosted on Amazon Web Services (AWS) and Google Cloud.
             </StackItem>
             <StackItem>
-              <a href={links.OSD_LEARN_MORE} rel="noopener noreferrer" target="_blank">
-                Learn more about Red Hat OpenShift Dedicated <ArrowRightIcon />
-              </a>
+              <ExternalLink href={links.OSD_LEARN_MORE}>
+                Learn more about Red Hat OpenShift Dedicated
+              </ExternalLink>
             </StackItem>
           </Stack>
         ),
@@ -116,9 +130,20 @@ const osdRow = (shouldExpand = true, isOpen = true, hasQuota = true, hasTrial = 
 
 const osdTrialRow = () => {
   const contents = (
-    <Link id="create-trial-cluster" to="/create/osdtrial?trial=osd">
-      <Button className="create-trial-cluster">Create trial cluster</Button>
-    </Link>
+    <Button
+      className="create-button"
+      variant={ButtonVariant.primary}
+      component={(props) => (
+        <Link
+          {...props}
+          id="create-trial-cluster"
+          to="/create/osdtrial?trial=osd"
+          data-testid="osd-create-trial-cluster"
+        />
+      )}
+    >
+      Create trial cluster
+    </Button>
   );
 
   const offeringRow = {
@@ -131,9 +156,9 @@ const osdTrialRow = () => {
         ),
       },
       <>
-        <a href={links.OSD_LEARN_MORE} rel="noopener noreferrer" target="_blank">
+        <ExternalLink href={links.OSD_LEARN_MORE} noIcon>
           Red Hat OpenShift Dedicated Trial
-        </a>
+        </ExternalLink>
       </>,
       'Red Hat',
       'Available on AWS and GCP',
@@ -141,30 +166,6 @@ const osdTrialRow = () => {
     ],
   };
   return offeringRow;
-};
-
-const activeSubscriptionsTable = (hasOSDQuota, osdTrialEnabled) => {
-  const columns = getColumns();
-  let rows = [];
-
-  if (hasOSDQuota) {
-    rows = osdRow(false, true, true, osdTrialEnabled);
-  }
-  if (osdTrialEnabled) {
-    rows.unshift(osdTrialRow(false));
-  }
-
-  return (
-    <Table
-      className="managed-subscriptions"
-      aria-label="Managed subscriptions"
-      cells={columns}
-      rows={rows}
-    >
-      <TableHeader />
-      <TableBody />
-    </Table>
-  );
 };
 
 const managedServices = (hasQuota, trialEnabled) => {
@@ -177,19 +178,20 @@ const managedServices = (hasQuota, trialEnabled) => {
     }
   };
 
-  const rowKeys =
-    hasQuota || trialEnabled
-      ? {
-          azure: 0,
-          ibm: 2,
-          aws: 4,
-        }
-      : {
-          osd: 0,
-          azure: 2,
-          ibm: 4,
-          aws: 6,
-        };
+  const rowKeys = trialEnabled
+    ? {
+        osdTrial: 0,
+        osd: 1,
+        azure: 3,
+        ibm: 5,
+        aws: 7,
+      }
+    : {
+        osd: 0,
+        azure: 2,
+        ibm: 4,
+        aws: 6,
+      };
 
   const defaultRows = [
     {
@@ -199,23 +201,22 @@ const managedServices = (hasQuota, trialEnabled) => {
           <img className="partner-logo" src={MicrosoftLogo} alt="Microsoft" />
         </>,
         <>
-          <a href={links.AZURE} target="_blank" rel="noopener noreferrer">
+          <ExternalLink href={links.AZURE} noIcon>
             Azure Red Hat OpenShift
-          </a>
+          </ExternalLink>
         </>,
         'Microsoft Azure',
         'Flexible hourly billing',
         <>
-          <Button
-            component="a"
+          <ExternalLink
+            isButton
+            noIcon
+            variant={ButtonVariant.secondary}
             href={links.AZURE}
-            variant="secondary"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="get-started-button"
+            className="create-button"
           >
             Try it on Azure
-          </Button>
+          </ExternalLink>
         </>,
       ],
     },
@@ -233,9 +234,9 @@ const managedServices = (hasQuota, trialEnabled) => {
                 Hosted on Microsoft Azure.
               </StackItem>
               <StackItem>
-                <a href={links.AZURE} target="_blank" rel="noopener noreferrer">
-                  Learn more about Azure Red Hat OpenShift <ArrowRightIcon />
-                </a>
+                <ExternalLink href={links.AZURE}>
+                  Learn more about Azure Red Hat OpenShift
+                </ExternalLink>
               </StackItem>
             </Stack>
           ),
@@ -249,23 +250,22 @@ const managedServices = (hasQuota, trialEnabled) => {
           <img className="partner-logo" src={IBMCloudLogo} alt="IBM Cloud" />
         </>,
         <>
-          <a href={links.IBM_CLOUD_LEARN_MORE} target="_blank" rel="noopener noreferrer">
+          <ExternalLink href={links.IBM_CLOUD_LEARN_MORE} noIcon>
             Red Hat OpenShift on IBM Cloud
-          </a>
+          </ExternalLink>
         </>,
         'IBM',
         'Flexible hourly billing',
         <>
-          <Button
-            component="a"
+          <ExternalLink
+            isButton
+            noIcon
             href={links.IBM_CLOUD}
-            variant="secondary"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="get-started-button"
+            variant={ButtonVariant.secondary}
+            className="create-button"
           >
             Try it on IBM
-          </Button>
+          </ExternalLink>
         </>,
       ],
     },
@@ -283,9 +283,9 @@ const managedServices = (hasQuota, trialEnabled) => {
                 Hosted on IBM Cloud.
               </StackItem>
               <StackItem>
-                <a href={links.IBM_CLOUD_LEARN_MORE} target="_blank" rel="noopener noreferrer">
-                  Learn more about Red Hat OpenShift on IBM Cloud <ArrowRightIcon />
-                </a>
+                <ExternalLink href={links.IBM_CLOUD_LEARN_MORE}>
+                  Learn more about Red Hat OpenShift on IBM Cloud
+                </ExternalLink>
               </StackItem>
             </Stack>
           ),
@@ -299,9 +299,9 @@ const managedServices = (hasQuota, trialEnabled) => {
           <img className="partner-logo" src={AWSLogo} alt="AWS" />
         </>,
         <>
-          <a href={links.AWS} target="_blank" rel="noopener noreferrer">
+          <ExternalLink noIcon href={links.AWS}>
             Red Hat OpenShift Service on AWS (ROSA)
-          </a>
+          </ExternalLink>
         </>,
         'Amazon Web Services',
         'Flexible hourly billing',
@@ -324,9 +324,9 @@ const managedServices = (hasQuota, trialEnabled) => {
                 Hosted on AWS.
               </StackItem>
               <StackItem>
-                <a href={links.AWS} target="_blank" rel="noopener noreferrer">
-                  Learn more about Red Hat OpenShift Service on AWS <ArrowRightIcon />
-                </a>
+                <ExternalLink href={links.AWS}>
+                  Learn more about Red Hat OpenShift Service on AWS
+                </ExternalLink>
               </StackItem>
             </Stack>
           ),
@@ -335,10 +335,12 @@ const managedServices = (hasQuota, trialEnabled) => {
     },
   ];
 
-  const rows =
-    hasQuota || trialEnabled
-      ? defaultRows
-      : osdRow(true, openRows.includes(rowKeys.osd), hasQuota).concat(defaultRows);
+  const rows = osdRow(true, openRows.includes(rowKeys.osd), hasQuota, rowKeys.osd).concat(
+    defaultRows,
+  );
+  if (trialEnabled) {
+    rows.unshift(osdTrialRow());
+  }
 
   return (
     <Table
@@ -424,23 +426,6 @@ const runItYourself = () => {
 
 const CloudTab = ({ hasOSDQuota, trialEnabled }) => (
   <>
-    {(hasOSDQuota || trialEnabled) && (
-      <PageSection variant="light">
-        <Stack hasGutter>
-          <StackItem>
-            <Title headingLevel="h2">Active subscriptions</Title>
-          </StackItem>
-          <StackItem>
-            {activeSubscriptionsTable(hasOSDQuota, trialEnabled)}
-            <Link to="/quota">
-              <Button id="subscriptions" variant="link">
-                View your available quota <ArrowRightIcon />
-              </Button>
-            </Link>
-          </StackItem>
-        </Stack>
-      </PageSection>
-    )}
     <PageSection>
       <Stack hasGutter>
         <StackItem>
@@ -449,6 +434,17 @@ const CloudTab = ({ hasOSDQuota, trialEnabled }) => (
         <StackItem>
           Create clusters in the cloud using a managed service.
           {managedServices(hasOSDQuota, trialEnabled)}
+          {hasOSDQuota || trialEnabled ? (
+            <Button
+              variant={ButtonVariant.link}
+              id="subscriptions"
+              component={(props) => (
+                <Link {...props} to="/quota" data-testid="osd-view-available-quota-link" />
+              )}
+            >
+              View your available OpenShift Dedicated quota <ArrowRightIcon />
+            </Button>
+          ) : null}
         </StackItem>
       </Stack>
     </PageSection>

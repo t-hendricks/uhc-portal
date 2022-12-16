@@ -1,9 +1,19 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import { Button, ButtonVariant } from '@patternfly/react-core';
+import { Button, ButtonProps, ButtonVariant } from '@patternfly/react-core';
 import { ExternalLinkAltIcon } from '@patternfly/react-icons';
 import { trackEvents } from '~/common/analytics';
 import useAnalytics from '~/hooks/useAnalytics';
+
+type Props = {
+  href: string;
+  children?: React.ReactNode;
+  noIcon?: boolean;
+  noTarget?: boolean;
+  className?: string;
+  stopClickPropagation?: boolean;
+  isButton?: boolean;
+  variant?: ButtonProps['variant'];
+};
 
 const ExternalLink = ({
   href,
@@ -13,8 +23,8 @@ const ExternalLink = ({
   className,
   stopClickPropagation,
   isButton,
-  variant,
-}) => {
+  variant = ButtonVariant.secondary,
+}: Props) => {
   const track = useAnalytics();
 
   const trackExternalLink = () => {
@@ -41,7 +51,7 @@ const ExternalLink = ({
     });
   };
 
-  const handleClick = (event) => {
+  const handleClick: React.MouseEventHandler = (event) => {
     if (stopClickPropagation) {
       trackExternalLink();
       event.stopPropagation();
@@ -72,22 +82,6 @@ const ExternalLink = ({
   ) : (
     <a {...linkProps}>{childrenComp}</a>
   );
-};
-
-ExternalLink.propTypes = {
-  href: PropTypes.string.isRequired,
-  children: PropTypes.node,
-  noIcon: PropTypes.bool,
-  noTarget: PropTypes.bool,
-  className: PropTypes.string,
-  stopClickPropagation: PropTypes.bool,
-  isButton: PropTypes.bool,
-  variant: PropTypes.string,
-};
-
-ExternalLink.defaultProps = {
-  isButton: false,
-  variant: ButtonVariant.secondary,
 };
 
 export default ExternalLink;

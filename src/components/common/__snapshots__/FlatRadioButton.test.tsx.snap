@@ -1,5 +1,22 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`<FlatRadioButton /> should pass through extra props to the Button 1`] = `
+<ButtonWithTooltip
+  className="ocm-flat-radio-button"
+  onClick={[Function]}
+  title="hello world!"
+  variant="tertiary"
+>
+  <Title
+    headingLevel="h4"
+    size="lg"
+  >
+    hello
+  </Title>
+  test
+</ButtonWithTooltip>
+`;
+
 exports[`<FlatRadioButton /> should render normally 1`] = `
 <ButtonWithTooltip
   className="ocm-flat-radio-button"
@@ -37,23 +54,6 @@ exports[`<FlatRadioButton /> should render when selected 1`] = `
 <ButtonWithTooltip
   className="ocm-flat-radio-button selected"
   onClick={[Function]}
-  variant="tertiary"
->
-  <Title
-    headingLevel="h4"
-    size="lg"
-  >
-    hello
-  </Title>
-  test
-</ButtonWithTooltip>
-`;
-
-exports[`<FlatRadioButton /> should render with tooltip 1`] = `
-<ButtonWithTooltip
-  className="ocm-flat-radio-button"
-  onClick={[Function]}
-  tooltip="hello world!"
   variant="tertiary"
 >
   <Title

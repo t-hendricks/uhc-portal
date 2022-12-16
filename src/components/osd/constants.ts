@@ -63,6 +63,9 @@ export enum FieldId {
   NetworkHostPrefix = 'network_host_prefix',
   NetworkMachineCidrSingleAz = 'network_machine_cidr_single_az',
   NetworkMachineCidrMultiAz = 'network_machine_cidr_multi_az',
+  UpgradePolicy = 'upgrade_policy',
+  AutomaticUpgradeSchedule = 'automatic_upgrade_schedule',
+  NodeDrainGracePeriod = 'node_drain_grace_period',
 }
 
 export enum StepName {
@@ -121,7 +124,16 @@ export const initialValues = {
   [FieldId.NetworkMachineCidr]: MACHINE_CIDR_DEFAULT,
   [FieldId.NetworkServiceCidr]: SERVICE_CIDR_DEFAULT,
   [FieldId.NetworkHostPrefix]: HOST_PREFIX_DEFAULT,
+  [FieldId.UpgradePolicy]: 'manual',
+  [FieldId.AutomaticUpgradeSchedule]: '0 0 * * 0',
+  [FieldId.NodeDrainGracePeriod]: 60,
+  [FieldId.PersistentStorage]: '107374182400',
+  [FieldId.LoadBalancers]: 0,
+  [FieldId.DisableScpChecks]: false,
 };
 
 export const clusterNameHint =
   'This name identifies your cluster in OpenShift Cluster Manager and forms part of the cluster console subdomain.';
+export const documentTitle =
+  'Create an OpenShift Dedicated cluster | Red Hat OpenShift Cluster Manager';
+export const ariaLabel = 'Create OpenShift Dedicated cluster wizard';

@@ -10,14 +10,12 @@ import { normalizedProducts } from '../../../common/subscriptionTypes';
 import '../CreateOSDPage/CreateOSDForm/CreateOSDForm.scss';
 
 function UserWorkloadMonitoringSection({ parent, disableUVM, planType }) {
-  const createTitle = <Title headingLevel="h6">Monitoring</Title>;
-  const detailsTitle = <Title headingLevel="h3">Monitoring</Title>;
+  const title = <Title headingLevel="h4"> Monitoring </Title>;
   const isROSA = planType === normalizedProducts.ROSA;
   const isOSD = planType === normalizedProducts.OSD || planType === normalizedProducts.OSDTrial;
-
   return (
     <>
-      {parent === 'create' ? <GridItem>{createTitle}</GridItem> : detailsTitle}
+      {parent === 'create' ? <GridItem>{title}</GridItem> : title}
       <Field
         component={ReduxCheckbox}
         name="enable_user_workload_monitoring"

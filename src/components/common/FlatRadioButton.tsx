@@ -1,14 +1,23 @@
 import React from 'react';
 import cx from 'classnames';
 import { Title } from '@patternfly/react-core';
-import PropTypes from 'prop-types';
+import ButtonWithTooltip from './ButtonWithTooltip';
 
 import './FlatRadioButton.scss';
-import ButtonWithTooltip from './ButtonWithTooltip';
 
 const BASE_CLASS_NAME = 'ocm-flat-radio-button';
 
-function FlatRadioButton({
+type Props = {
+  isSelected?: boolean;
+  onChange: (value: string) => void;
+  secondaryText?: React.ReactNode;
+  titleText: React.ReactNode;
+  value: string;
+  extraClass?: string;
+  disableReason?: React.ReactNode;
+} & React.ComponentProps<typeof ButtonWithTooltip>;
+
+const FlatRadioButton = ({
   isSelected = false,
   disableReason = undefined,
   value = '',
@@ -17,9 +26,8 @@ function FlatRadioButton({
   secondaryText,
   extraClass,
   ...extraProps
-}) {
-  const isSelectedClass = isSelected ? 'selected' : '';
-  const className = cx(BASE_CLASS_NAME, isSelectedClass, extraClass);
+}: Props) => {
+  const className = cx(BASE_CLASS_NAME, { selected: isSelected }, extraClass);
 
   const onClick = () => {
     onChange(value);
@@ -39,16 +47,6 @@ function FlatRadioButton({
       {secondaryText && secondaryText}
     </ButtonWithTooltip>
   );
-}
-
-FlatRadioButton.propTypes = {
-  isSelected: PropTypes.bool,
-  onChange: PropTypes.func.isRequired,
-  secondaryText: PropTypes.oneOfType([PropTypes.node, PropTypes.string]),
-  titleText: PropTypes.oneOfType([PropTypes.node, PropTypes.string]).isRequired,
-  value: PropTypes.string.isRequired,
-  extraClass: PropTypes.string,
-  disableReason: PropTypes.node,
 };
 
 export default FlatRadioButton;

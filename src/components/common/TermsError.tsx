@@ -1,6 +1,5 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import get from 'lodash/get';
+import { AxiosResponse } from 'axios';
 import {
   Title,
   Button,
@@ -16,8 +15,13 @@ import { global_danger_color_100 } from '@patternfly/react-tokens';
 
 import getTermsAppLink from '../../common/getTermsAppLink';
 
-function TermsError({ error, restore }) {
-  const tncBaseURL = get(error, 'data.details[0].legal_terms_url');
+type Props = {
+  error: AxiosResponse<{ details?: { ['legal_terms_url']?: string }[] }>;
+  restore: () => void;
+};
+
+const TermsError = ({ error, restore }: Props) => {
+  const tncBaseURL = error.data?.details?.[0]?.legal_terms_url;
   const currentHref = window.location.href;
   const tncAppURL = getTermsAppLink(tncBaseURL, currentHref, currentHref);
   return (
@@ -41,11 +45,6 @@ function TermsError({ error, restore }) {
       </EmptyStateSecondaryActions>
     </EmptyState>
   );
-}
-
-TermsError.propTypes = {
-  error: PropTypes.object.isRequired,
-  restore: PropTypes.func.isRequired,
 };
 
 export default TermsError;

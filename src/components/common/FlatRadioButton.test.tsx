@@ -3,7 +3,7 @@ import { shallow } from 'enzyme';
 
 import FlatRadioButton from './FlatRadioButton';
 
-const props = {
+const props: React.ComponentProps<typeof FlatRadioButton> = {
   titleText: 'hello',
   secondaryText: 'test',
   value: 'valuable',
@@ -28,8 +28,8 @@ describe('<FlatRadioButton />', () => {
     wrapper.simulate('click');
     expect(props.onChange).toBeCalledWith(props.value);
   });
-  it('should render with tooltip', () => {
-    const wrapper = shallow(<FlatRadioButton {...props} tooltip="hello world!" />);
+  it('should pass through extra props to the Button', () => {
+    const wrapper = shallow(<FlatRadioButton {...props} title="hello world!" />);
     expect(wrapper).toMatchSnapshot();
   });
 });

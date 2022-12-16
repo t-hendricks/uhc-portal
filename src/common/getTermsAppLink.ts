@@ -4,7 +4,11 @@ import { buildUrlParams } from './queryHelpers';
 // - baseURL is the base URL of TnC UX app;
 // - redirectURL is the return URL if the user clicks "Accept", "Deny", or "Defer";
 // - cancelURL is the return URL if the user clicks "Cancel".
-const getTermsAppURL = (baseURL: string, redirectURL: string, cancelURL: string): string => {
+const getTermsAppURL = (
+  baseURL: string | undefined,
+  redirectURL: string,
+  cancelURL: string,
+): string => {
   const params = {
     redirect: redirectURL,
     cancelRedirect: cancelURL,

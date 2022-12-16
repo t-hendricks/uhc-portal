@@ -40,8 +40,6 @@ function AWSCustomerManagedEncryption() {
           title="If you delete the ARN key, the cluster will no longer be available."
         />
       </GridItem>
-
-      <GridItem md={6} rowSpan={2} />
     </>
   );
 }

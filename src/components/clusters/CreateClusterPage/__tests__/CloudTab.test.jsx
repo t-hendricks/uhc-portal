@@ -1,26 +1,123 @@
 import React from 'react';
-import { shallow } from 'enzyme';
-import { Table } from '@patternfly/react-table';
+import { render, screen } from '@testUtils';
+import { MemoryRouter } from 'react-router';
+import { axe, toHaveNoViolations } from 'jest-axe';
 
 import CloudTab from '../CloudTab';
 
+expect.extend(toHaveNoViolations);
+
 describe('<CloudTab />', () => {
   it('should render correctly with quota', () => {
-    const wrapper = shallow(<CloudTab hasOSDQuota trialEnabled={false} osdTrialFeature />);
+    const { container } = render(
+      <MemoryRouter>
+        <CloudTab hasOSDQuota trialEnabled={false} />
+      </MemoryRouter>,
+    );
 
-    expect(wrapper.find(Table).length).toEqual(3);
-    expect(wrapper).toMatchSnapshot();
+    // PF manually changes the role from table to "grid"
+    expect(screen.getAllByRole('grid')).toHaveLength(2);
+
+    expect(screen.getByTestId('osd-create-cluster-button')).toBeInTheDocument();
+    expect(screen.queryByTestId('osd-learn-more-button')).not.toBeInTheDocument();
+    expect(screen.queryByTestId('osd-create-trial-cluster')).not.toBeInTheDocument();
+    expect(screen.getByTestId('osd-view-available-quota-link')).toBeInTheDocument();
+
+    expect(container).toMatchSnapshot();
+  });
+  it('is accessible with with quota', async () => {
+    const { container } = render(
+      <MemoryRouter>
+        <CloudTab hasOSDQuota trialEnabled={false} />
+      </MemoryRouter>,
+    );
+
+    const results = await axe(container);
+    expect(results).toHaveNoViolations();
   });
 
   it('should render correctly without quota', () => {
-    const wrapper = shallow(<CloudTab hasOSDQuota={false} trialEnabled={false} />);
+    const { container } = render(
+      <MemoryRouter>
+        <CloudTab hasOSDQuota={false} trialEnabled={false} />
+      </MemoryRouter>,
+    );
 
-    expect(wrapper.find(Table).length).toEqual(2);
-    expect(wrapper).toMatchSnapshot();
+    // PF manually changes the role from table to "grid"
+    expect(screen.getAllByRole('grid')).toHaveLength(2);
+
+    expect(screen.queryByTestId('osd-create-cluster-button')).not.toBeInTheDocument();
+    expect(screen.getByTestId('osd-learn-more-button')).toBeInTheDocument();
+    expect(screen.queryByTestId('osd-create-trial-cluster')).not.toBeInTheDocument();
+    expect(screen.queryByTestId('osd-view-available-quota-link')).not.toBeInTheDocument();
+
+    expect(container).toMatchSnapshot();
+  });
+
+  it('is accessible without quota', async () => {
+    const { container } = render(
+      <MemoryRouter>
+        <CloudTab hasOSDQuota={false} trialEnabled={false} />
+      </MemoryRouter>,
+    );
+
+    const results = await axe(container);
+    expect(results).toHaveNoViolations();
   });
 
   it('should render correctly with OSD Trial quota', () => {
-    const wrapper = shallow(<CloudTab hasOSDQuota={false} trialEnabled />);
-    expect(wrapper).toMatchSnapshot();
+    const { container } = render(
+      <MemoryRouter>
+        <CloudTab hasOSDQuota={false} trialEnabled />
+      </MemoryRouter>,
+    );
+
+    // PF manually changes the role from table to "grid"
+    expect(screen.getAllByRole('grid')).toHaveLength(2);
+
+    expect(screen.queryByTestId('osd-create-cluster-button')).not.toBeInTheDocument();
+    expect(screen.getByTestId('osd-learn-more-button')).toBeInTheDocument();
+    expect(screen.getByTestId('osd-create-trial-cluster')).toBeInTheDocument();
+    expect(screen.getByTestId('osd-view-available-quota-link')).toBeInTheDocument();
+
+    expect(container).toMatchSnapshot();
+  });
+
+  it('is accessible with OSD trial quota', async () => {
+    const { container } = render(
+      <MemoryRouter>
+        <CloudTab hasOSDQuota={false} trialEnabled />
+      </MemoryRouter>,
+    );
+    const results = await axe(container);
+    expect(results).toHaveNoViolations();
+  });
+
+  it('should render correctly with both trial and quota', () => {
+    const { container } = render(
+      <MemoryRouter>
+        <CloudTab hasOSDQuota trialEnabled />
+      </MemoryRouter>,
+    );
+
+    // PF manually changes the role from table to "grid"
+    expect(screen.getAllByRole('grid')).toHaveLength(2);
+
+    expect(screen.getByTestId('osd-create-cluster-button')).toBeInTheDocument();
+    expect(screen.queryByTestId('osd-learn-more-button')).not.toBeInTheDocument();
+    expect(screen.getByTestId('osd-create-trial-cluster')).toBeInTheDocument();
+    expect(screen.getByTestId('osd-view-available-quota-link')).toBeInTheDocument();
+
+    expect(container).toMatchSnapshot();
+  });
+
+  it('is accessible with both trial and quota', async () => {
+    const { container } = render(
+      <MemoryRouter>
+        <CloudTab hasOSDQuota trialEnabled />
+      </MemoryRouter>,
+    );
+    const results = await axe(container);
+    expect(results).toHaveNoViolations();
   });
 });

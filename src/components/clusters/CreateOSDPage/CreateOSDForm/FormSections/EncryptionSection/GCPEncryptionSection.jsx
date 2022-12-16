@@ -14,7 +14,7 @@ import KMSKeySelect from './KMSKeySelect';
 
 function GCPCustomerManagedEncryption({ selectedRegion }) {
   return (
-    <Grid hasGutter>
+    <Grid className="gcp-grid" hasGutter>
       <GridItem md={6}>
         <FormGroup
           label="Key ring location"
@@ -111,7 +111,6 @@ function GCPCustomerManagedEncryption({ selectedRegion }) {
           showHelpTextOnError={false}
         />
       </GridItem>
-      <GridItem md={6} rowSpan={2} />
     </Grid>
   );
 }

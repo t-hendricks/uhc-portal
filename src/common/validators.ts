@@ -4,6 +4,7 @@ import { ValidationError, Validator } from 'jsonschema';
 import { clusterService } from '~/services';
 import type { GCP } from '../types/clusters_mgmt.v1';
 import type { AugmentedSubnetwork, SubnetFormProps } from '../types/types';
+import { sqlString } from './queryHelpers';
 
 type Networks = Parameters<typeof cidrTools['overlap']>[0];
 
@@ -185,8 +186,12 @@ const checkObjectNameAsyncValidation = (value: string) => [
       if (!value?.length) {
         return false;
       }
-      const { data } = await clusterService.getCluster(`name = '${value}'`);
-      return !data?.size;
+      const search = `name = ${sqlString(value)}`;
+      const { data } = await clusterService.getClusters(search, 1);
+      // Normally, we get 0 or 1 items, 1 meaning a cluster of that name already exists.
+      // But dumb mockserver ignores `search` and `size`, always returns full static list;
+      // checking the returned name(s) allows this validation to work in ?env=mockdata UI.
+      return !data?.items?.some((cluster) => cluster.name === value);
     },
   },
 ];
@@ -500,7 +505,7 @@ const validateCA = (value: string): string | undefined => {
   if (!value) {
     return undefined;
   }
-  if (value === 'invalid file') {
+  if (value === 'Invalid file') {
     return 'Must be a PEM encoded X.509 file (.pem, .crt, .ca, .cert) and no larger than 4 MB';
   }
   return undefined;

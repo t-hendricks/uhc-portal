@@ -1,10 +1,14 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { TextContent, TextList, TextListVariants } from '@patternfly/react-core';
 
 import './Instructions.scss';
 
-const Instructions = ({ children, wide }) => (
+type Props = {
+  children?: React.ReactNode;
+  wide?: boolean;
+};
+
+const Instructions = ({ children, wide }: Props) => (
   <TextContent className="ocm-instructions">
     <TextList
       component={TextListVariants.ol}
@@ -14,10 +18,5 @@ const Instructions = ({ children, wide }) => (
     </TextList>
   </TextContent>
 );
-
-Instructions.propTypes = {
-  children: PropTypes.node,
-  wide: PropTypes.bool,
-};
 
 export default Instructions;

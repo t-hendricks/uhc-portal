@@ -117,7 +117,7 @@ class UpgradeScheduleSelection extends React.Component {
         />
         <FormGroup label="Select a day and start time" className="ocm-upgrade-schedule-selection">
           <Grid hasGutter>
-            <GridItem sm={6} md={4}>
+            <GridItem sm={6} md={6}>
               <Select
                 isOpen={daySelectOpen}
                 selections={selectedDay}
@@ -137,7 +137,7 @@ class UpgradeScheduleSelection extends React.Component {
                 )}
               </Select>
             </GridItem>
-            <GridItem sm={6} md={4}>
+            <GridItem sm={6} md={6}>
               <Select
                 isOpen={timeSelectOpen}
                 selections={selectedHour}

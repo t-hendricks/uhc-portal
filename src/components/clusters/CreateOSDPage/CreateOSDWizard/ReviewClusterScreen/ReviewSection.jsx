@@ -103,7 +103,7 @@ export const ReviewRoleItem = ({ name, getRoleResponse, content }) => (
   </DescriptionListGroup>
 );
 
-function ReviewSection({ initiallyExpanded, title, children = null }) {
+function ReviewSection({ initiallyExpanded, title, children }) {
   const [isExpanded, setIsExpanded] = useState(true);
 
   useEffect(() => {

@@ -1,5 +1,4 @@
 import React from 'react';
-import { RadioButtonField } from 'formik-pf';
 
 import {
   Title,
@@ -25,6 +24,7 @@ import {
 } from '~/components/clusters/CreateOSDPage/CreateOSDForm/FormSections/ScaleSection/AutoScaleSection/AutoScaleHelper';
 import { FieldId } from '../constants';
 import { useFormState } from '../hooks';
+import { RadioGroupField } from '../common/form';
 import { useGetBillingQuotas } from './useGetBillingQuotas';
 
 import './BillingModel.scss';
@@ -157,8 +157,7 @@ export const BillingModel = () => {
     },
   ];
 
-  const onBillingModelChange = (event: React.ChangeEvent<any>) => {
-    const { value } = event.target;
+  const onBillingModelChange = (value: string) => {
     let selectedProduct = normalizedProducts.OSD;
 
     if (value !== billingModels.STANDARD) {
@@ -172,8 +171,7 @@ export const BillingModel = () => {
     setFieldValue(FieldId.Product, selectedProduct);
   };
 
-  const onByocChange = (event: React.ChangeEvent<any>) => {
-    const { value } = event.target;
+  const onByocChange = (value: string) => {
     const isBYOC = value === 'true';
     const isMultiAz = values[FieldId.MultiAz] === 'true';
 
@@ -186,7 +184,7 @@ export const BillingModel = () => {
     <Flex alignItems={{ default: 'alignItemsFlexStart' }}>
       <FlexItem flex={{ default: 'flex_3' }}>
         <Stack hasGutter>
-          <StackItem>
+          <StackItem className="pf-u-mb-0">
             <Title headingLevel="h2" className="pf-u-pb-md">
               Welcome to Red Hat OpenShift Dedicated
             </Title>
@@ -201,32 +199,19 @@ export const BillingModel = () => {
             <Title headingLevel="h3" className="pf-u-mb-sm">
               Subscription type
             </Title>
-            <div onChange={onBillingModelChange}>
-              {subOptions.map((option) => (
-                <RadioButtonField
-                  {...option}
-                  key={option.value}
-                  name={FieldId.BillingModel}
-                  className="pf-u-mb-md"
-                />
-              ))}
-            </div>
+            <RadioGroupField
+              name={FieldId.BillingModel}
+              options={subOptions}
+              onChange={onBillingModelChange}
+            />
           </StackItem>
 
           <StackItem>
             <Title headingLevel="h3" className="pf-u-mb-sm">
               Infrastructure type
             </Title>
-            <div onChange={onByocChange}>
-              {infraOptions.map((option) => (
-                <RadioButtonField
-                  {...option}
-                  key={option.value}
-                  name={FieldId.Byoc}
-                  className="pf-u-mb-md"
-                />
-              ))}
-            </div>
+
+            <RadioGroupField name={FieldId.Byoc} options={infraOptions} onChange={onByocChange} />
           </StackItem>
         </Stack>
       </FlexItem>
