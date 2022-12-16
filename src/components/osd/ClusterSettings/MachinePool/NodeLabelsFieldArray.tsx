@@ -10,7 +10,7 @@ import { FieldId } from '../../constants';
 import { useFormState } from '../../hooks';
 import { TextInputField } from '../../common/form';
 
-interface NodeLabel {
+export interface NodeLabel {
   key: string;
   value: string;
 }
