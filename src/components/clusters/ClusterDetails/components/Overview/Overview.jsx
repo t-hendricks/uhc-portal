@@ -15,21 +15,20 @@ import DetailsRight from './DetailsRight';
 import DetailsLeft from './DetailsLeft';
 import SubscriptionSettings from './SubscriptionSettings';
 import HibernatingClusterCard from '../../../common/HibernatingClusterCard/HibernatingClusterCard';
-import InstallationLogView, { shouldShowLogs } from './InstallationLogView';
+import { shouldShowLogs } from './InstallationLogView';
 import ClusterStatusMonitor from './ClusterStatusMonitor';
 import { metricsStatusMessages } from '../../../common/ResourceUsage/ResourceUsage.consts';
 import { hasResourceUsageMetrics } from '../Monitoring/monitoringHelper';
-import { subscriptionStatuses } from '../../../../../common/subscriptionTypes';
-import InstallProgress from '../../../common/InstallProgress/InstallProgress';
-import UninstallProgress from '../../../common/UninstallProgress';
+import { subscriptionStatuses } from '~/common/subscriptionTypes';
 import InsightsAdvisor from './InsightsAdvisor/InsightsAdvisor';
 import CostBreakdownCard from './CostBreakdownCard';
+import ClusterProgressCard from './ClusterProgressCard';
 import isAssistedInstallSubscription, {
   isAvailableAssistedInstallCluster,
   isUninstalledAICluster,
 } from '../../../../../common/isAssistedInstallerCluster';
 import withFeatureGate from '../../../../features/with-feature-gate';
-import { ASSISTED_INSTALLER_FEATURE } from '../../../../../redux/constants/featureConstants';
+import { ASSISTED_INSTALLER_FEATURE } from '~/redux/constants/featureConstants';
 
 import './Overview.scss';
 
@@ -111,24 +110,8 @@ class Overview extends React.Component {
 
     if (isHibernating(cluster.state)) {
       topCard = <HibernatingClusterCard cluster={cluster} openModal={openModal} />;
-    } else if (cluster.state === clusterStates.UNINSTALLING) {
-      topCard = !isAssistedInstallSubscription(cluster.subscription) && shouldShowLogs(cluster) && (
-        <>
-          <UninstallProgress cluster={cluster}>
-            <ClusterStatusMonitor cluster={cluster} refresh={refresh} history={history} />
-            <InstallationLogView cluster={cluster} />
-          </UninstallProgress>
-        </>
-      );
-    } else {
-      topCard = !isAssistedInstallSubscription(cluster.subscription) && shouldShowLogs(cluster) && (
-        <>
-          <InstallProgress cluster={cluster}>
-            <ClusterStatusMonitor cluster={cluster} refresh={refresh} history={history} />
-            <InstallationLogView isExpandable cluster={cluster} />
-          </InstallProgress>
-        </>
-      );
+    } else if (!isAssistedInstallSubscription(cluster.subscription) && shouldShowLogs(cluster)) {
+      topCard = <ClusterProgressCard cluster={cluster} refresh={refresh} history={history} />;
     }
 
     const resourceUsage = (
