@@ -16,6 +16,7 @@ exports[`<ExternalLink /> should render with basic options 1`] = `
     <svg
       aria-hidden="true"
       class="pf-u-ml-sm"
+      data-testid="openInNewWindowIcon"
       fill="#0066cc"
       height="1em"
       role="img"
