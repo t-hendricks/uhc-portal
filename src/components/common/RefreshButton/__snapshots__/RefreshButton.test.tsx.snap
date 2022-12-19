@@ -7,7 +7,6 @@ exports[`<RefreshButton /> renders correctly 1`] = `
 >
   <Button
     aria-label="Refresh"
-    className=""
     onClick={[MockFunction]}
     variant="plain"
   >
@@ -27,7 +26,6 @@ exports[`<RefreshButton autoRefresh /> renders correctly 1`] = `
 >
   <Button
     aria-label="Refresh"
-    className=""
     onClick={[MockFunction]}
     variant="plain"
   >
