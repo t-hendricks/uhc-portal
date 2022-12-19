@@ -72,11 +72,18 @@ const ExternalLink = ({
     <>
       {children}
       {noTarget ? null : <span className="pf-u-screen-reader"> (new window or tab)</span>}
-      {!noIcon && <ExternalLinkAltIcon color="#0066cc" size="sm" className="pf-u-ml-sm" />}
+      {!noIcon && (
+        <ExternalLinkAltIcon
+          color="#0066cc"
+          size="sm"
+          className="pf-u-ml-sm"
+          data-testid="openInNewWindowIcon"
+        />
+      )}
     </>
   );
   return isButton ? (
-    <Button component="a" {...linkProps} variant={variant}>
+    <Button component="a" {...linkProps} variant={variant} data-testid="externalLinkAsButton">
       {childrenComp}
     </Button>
   ) : (
