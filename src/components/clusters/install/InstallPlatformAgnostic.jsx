@@ -32,9 +32,10 @@ class InstallPlatformAgnostic extends Component {
         />
         <PageSection>
           <InstructionsChooser
-            showAI
+            aiPageLink="/assisted-installer/clusters/~new"
             hideIPI
             upiPageLink="/install/platform-agnostic/user-provisioned"
+            agentBasedPageLink="/install/platform-agnostic/agent-based"
             /*
             providerSpecificFeatures={{
               ai: [

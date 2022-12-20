@@ -924,7 +924,7 @@ exports[`Every OCP instruction page should render:  Nutanix AOS-ipi 1`] = `
 </Fragment>
 `;
 
-exports[`Every OCP instruction page should render:  Platform Agnostic 1`] = `
+exports[`Every OCP instruction page should render:  Platform Agnostic-upi 1`] = `
 <Fragment>
   <Card>
     <CardBody>
@@ -978,7 +978,7 @@ exports[`Every OCP instruction page should render:  Platform Agnostic 1`] = `
             customizations=""
             docURL="https://docs.openshift.com/container-platform/4.11/installing/installing_platform_agnostic/installing-platform-agnostic.html"
             isBMIPI={false}
-            isUPI={false}
+            isUPI={true}
             pendoID="/"
           />
         </Instruction>

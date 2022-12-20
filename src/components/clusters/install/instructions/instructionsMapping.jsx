@@ -161,6 +161,12 @@ const instructionsMapping = {
     cloudProvider: 'Bare Metal',
     customizations: links.INSTALL_BAREMETAL_CUSTOMIZATIONS,
     x86: {
+      abi: {
+        title: 'Install OpenShift on Bare Metal locally with Agent',
+        installer: tools.X86INSTALLER,
+        channel: channels.CANDIDATE, // TODO revert this to STABLE after 4.12 GA
+        docURL: links.INSTALL_BAREMETAL_ABI_GETTING_STARTED,
+      },
       ipi: {
         title: 'Install OpenShift on Bare Metal with installer-provisioned infrastructure',
         installer: tools.X86INSTALLER,
@@ -347,37 +353,45 @@ const instructionsMapping = {
   },
   generic: {
     cloudProvider: 'Platform Agnostic',
-    title: 'Install OpenShift on any x86_64 platform with user-provisioned infrastructure',
-    rhcos: {
-      learnMoreURL: links.INSTALL_GENERIC_RHCOS_LEARN_MORE,
-      downloads: [
-        {
-          buttonText: 'Download RHCOS ISO',
-          name: 'OCP-Download-RHCOS-ISO',
-          url: links.RHCOS_GENERIC_ISO_X86,
-        },
-        {
-          buttonText: 'Download RHCOS kernel',
-          name: 'OCP-Download-RHCOS-kernel',
-          url: links.RHCOS_GENERIC_KERNEL_X86,
-        },
-        {
-          buttonText: 'Download RHCOS initramfs',
-          name: 'OCP-Download-RHCOS-initramfs',
-          url: links.RHCOS_GENERIC_INITRAMFS_X86,
-        },
-        {
-          buttonText: 'Download RHCOS rootfs',
-          name: 'OCP-Download-RHCOS-rootfs',
-          url: links.RHCOS_GENERIC_ROOTFS_X86,
-        },
-      ],
-      additionalInstructions:
-        'Download the installer ISO image, or the kernel, initramfs, and rootfs.',
+    abi: {
+      title: 'Install OpenShift on any x86_64 platform locally with Agent',
+      installer: tools.X86INSTALLER,
+      channel: channels.CANDIDATE, // TODO revert this to STABLE after 4.12 GA
+      docURL: links.INSTALL_GENERIC_ABI_GETTING_STARTED,
     },
-    installer: tools.X86INSTALLER,
-    channel: channels.STABLE,
-    docURL: links.INSTALL_GENERIC_GETTING_STARTED,
+    upi: {
+      title: 'Install OpenShift on any x86_64 platform with user-provisioned infrastructure',
+      rhcos: {
+        learnMoreURL: links.INSTALL_GENERIC_RHCOS_LEARN_MORE,
+        downloads: [
+          {
+            buttonText: 'Download RHCOS ISO',
+            name: 'OCP-Download-RHCOS-ISO',
+            url: links.RHCOS_GENERIC_ISO_X86,
+          },
+          {
+            buttonText: 'Download RHCOS kernel',
+            name: 'OCP-Download-RHCOS-kernel',
+            url: links.RHCOS_GENERIC_KERNEL_X86,
+          },
+          {
+            buttonText: 'Download RHCOS initramfs',
+            name: 'OCP-Download-RHCOS-initramfs',
+            url: links.RHCOS_GENERIC_INITRAMFS_X86,
+          },
+          {
+            buttonText: 'Download RHCOS rootfs',
+            name: 'OCP-Download-RHCOS-rootfs',
+            url: links.RHCOS_GENERIC_ROOTFS_X86,
+          },
+        ],
+        additionalInstructions:
+          'Download the installer ISO image, or the kernel, initramfs, and rootfs.',
+      },
+      installer: tools.X86INSTALLER,
+      channel: channels.STABLE,
+      docURL: links.INSTALL_GENERIC_GETTING_STARTED,
+    },
   },
   nutanix: {
     cloudProvider: 'Nutanix AOS',
@@ -391,6 +405,12 @@ const instructionsMapping = {
   vsphere: {
     cloudProvider: 'VMware vSphere',
     customizations: links.INSTALL_VSPHERE_CUSTOMIZATIONS,
+    abi: {
+      title: 'Install OpenShift on vSphere locally with Agent',
+      installer: tools.X86INSTALLER,
+      channel: channels.CANDIDATE, // TODO revert this to STABLE after 4.12 GA
+      docURL: links.INSTALL_VSPHEREIPI_GETTING_STARTED,
+    },
     upi: {
       title: 'Install OpenShift on vSphere with user-provisioned infrastructure',
       docURL: links.INSTALL_VSPHEREUPI_GETTING_STARTED,
