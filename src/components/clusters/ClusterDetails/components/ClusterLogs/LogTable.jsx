@@ -1,11 +1,8 @@
 import React from 'react';
 import moment from 'moment';
 import PropTypes from 'prop-types';
-import isEqual from 'lodash/isEqual';
-import flatten from 'lodash/flatten';
 import ReactMarkdown from 'react-markdown';
 
-import Spinner from '@redhat-cloud-services/frontend-components/Spinner';
 import {
   Bullseye,
   EmptyState,
@@ -13,15 +10,18 @@ import {
   EmptyStateIcon,
   EmptyStateVariant,
   Title,
+  Spinner,
 } from '@patternfly/react-core';
 import {
-  expandable,
-  sortable,
   SortByDirection,
-  Table,
-  TableBody,
-  TableHeader,
   TableVariant,
+  TableComposable,
+  Thead,
+  Tr,
+  Th,
+  Tbody,
+  Td,
+  ExpandableRowContent,
 } from '@patternfly/react-table';
 import { SearchIcon } from '@patternfly/react-icons';
 import './LogTable.scss';
@@ -29,175 +29,147 @@ import './LogTable.scss';
 const columns = [
   {
     title: 'Description',
-    transforms: [sortable],
-    cellFormatters: [expandable],
+    sortTitle: 'summary',
   },
   {
     title: 'Severity',
-    transforms: [sortable],
+    sortTitle: 'severity',
   },
   {
     title: 'Logged by',
-    transforms: [sortable],
+    sortTitle: 'username||created_by',
   },
   {
     title: 'Date',
-    transforms: [sortable],
+    sortTitle: 'timestamp',
   },
 ];
 
-const sortColumns = {
-  Description: 'summary',
-  Date: 'timestamp',
-  Severity: 'severity',
-  'Logged by': 'username||created_by',
-};
+const emptyState = (colSpan) => (
+  <Td colSpan={colSpan}>
+    <Bullseye>
+      <EmptyState variant={EmptyStateVariant.small}>
+        <EmptyStateIcon icon={SearchIcon} />
+        <Title headingLevel="h2" size="lg">
+          No results found
+        </Title>
+        <EmptyStateBody>
+          No results match the filter criteria. Remove all filters or clear all filters to show
+          results.
+        </EmptyStateBody>
+      </EmptyState>
+    </Bullseye>
+  </Td>
+);
 
-const emptyState = [
-  {
-    heightAuto: true,
-    cells: [
-      {
-        props: { colSpan: 8, dataLabel: null },
-        title: (
-          <Bullseye>
-            <EmptyState variant={EmptyStateVariant.small}>
-              <EmptyStateIcon icon={SearchIcon} />
-              <Title headingLevel="h2" size="lg">
-                No results found
-              </Title>
-              <EmptyStateBody>
-                No results match the filter criteria. Remove all filters or clear all filters to
-                show results.
-              </EmptyStateBody>
-            </EmptyState>
-          </Bullseye>
-        ),
-      },
-    ],
-  },
-];
+const LogTable = ({ logs, setSorting, pending }) => {
+  const [expandedLogs, setExpandedLogs] = React.useState([]);
 
-const mapLog = (log, index) => {
-  const { id, summary, severity, timestamp, description, username, created_by: createdBy } = log;
-
-  const day = moment.utc(timestamp).format('D MMM YYYY, HH:mm UTC');
-
-  const md = (
-    <ReactMarkdown
-      className="markdown"
-      source={description}
-      linkTarget="_blank"
-      renderers={{
-        // eslint-disable-next-line react/prop-types
-        linkReference: ({ href, $ref, children }) => {
-          if (!href) {
-            // eslint-disable-next-line react/prop-types
-            return `[${children[0].props.value}]`;
-          }
-
-          return <a href={$ref}>{children}</a>;
-        },
-      }}
-    />
+  // initially sorted by Date descending
+  const [sortColIndex, setSortColIndex] = React.useState(
+    columns.findIndex((col) => col.sortTitle === 'timestamp') + 1,
   );
+  const [sortDirection, setSortDirection] = React.useState(SortByDirection.desc);
 
-  return [
-    {
-      // parent
-      isOpen: false,
-      cells: [summary, severity, username || createdBy, day],
-      expandId: id,
-    },
-    {
-      // child
-      parent: index * 2,
-      fullWidth: true,
-      cells: [{ title: md }],
-    },
-  ];
-};
+  const setLogExpanded = (log, isExpanding = true) => {
+    const otherExpandedLogs = expandedLogs.filter((r) => r !== log.id);
+    const newLogs = isExpanding ? [...otherExpandedLogs, log.id] : otherExpandedLogs;
 
-class LogTable extends React.Component {
-  constructor(props) {
-    super(props);
-    this.onCollapse = this.onCollapse.bind(this);
-    this.onSort = this.onSort.bind(this);
-  }
-
-  state = {
-    rows: emptyState,
-    // initially sorted by Date descending
-    sortBy: {
-      index: 4,
-      direction: SortByDirection.desc,
-    },
+    setExpandedLogs(newLogs);
   };
 
-  static getDerivedStateFromProps(nextProps, state) {
-    const { logs: newRows } = nextProps;
-    if (typeof newRows === 'undefined') {
-      return { rows: emptyState };
-    }
-    const { rows: oldRows } = state;
-    const oldIds = oldRows.map((row) => row.expandId).filter((x) => x !== undefined);
-    const newIds = newRows.map((row) => row.id);
-    if (!isEqual(oldIds, newIds)) {
-      const rows = newRows.length === 0 ? emptyState : flatten(newRows.map(mapLog));
-      return { rows };
-    }
-    return null;
-  }
+  const isLogExpanded = (log) => expandedLogs.includes(log.id);
 
-  onCollapse(event, rowKey, isOpen) {
-    const { rows } = this.state;
-    rows[rowKey].isOpen = isOpen;
-    this.setState({
-      rows,
-    });
-  }
+  const mapLog = (log, rowIndex) => {
+    const { id, summary, severity, timestamp, description, username, created_by: createdBy } = log;
 
-  onSort(_event, index, direction) {
-    const { setSorting } = this.props;
-    const sorting = {
-      isAscending: direction === SortByDirection.asc,
-      sortField: sortColumns[columns[index - 1].title],
-    };
-    setSorting(sorting);
-    this.setState({
-      sortBy: {
-        index,
-        direction: sorting.isAscending ? SortByDirection.asc : SortByDirection.desc,
-      },
-    });
-  }
+    const day = moment.utc(timestamp).format('D MMM YYYY, HH:mm UTC');
 
-  render() {
-    const { rows, sortBy } = this.state;
-    const { pending } = this.props;
-    return (
-      <Bullseye>
-        {pending ? (
-          <Spinner centered className="cluster-list-spinner" />
-        ) : (
-          <Table
-            className="cluster-log"
-            variant={TableVariant.compact}
-            cells={columns}
-            rows={rows}
-            onCollapse={this.onCollapse}
-            aria-label="Table of Logs"
-            onSort={this.onSort}
-            sortBy={sortBy}
-          >
-            <TableHeader />
-            <TableBody />
-          </Table>
-        )}
-      </Bullseye>
+    const md = (
+      <ReactMarkdown
+        className="markdown"
+        source={description}
+        linkTarget="_blank"
+        renderers={{
+          // eslint-disable-next-line react/prop-types
+          linkReference: ({ href, $ref, children }) => {
+            if (!href) {
+              // eslint-disable-next-line react/prop-types
+              return `[${children[0].props.value}]`;
+            }
+
+            return <a href={$ref}>{children}</a>;
+          },
+        }}
+      />
     );
-  }
-}
+
+    return (
+      <Tbody>
+        <Tr>
+          <Td
+            expand={{
+              rowIndex,
+              isExpanded: isLogExpanded(log),
+              onToggle: () => {
+                setLogExpanded(log, !isLogExpanded(log));
+              },
+              expandId: id,
+            }}
+          />
+          <Td>{summary}</Td>
+          <Td>{severity}</Td>
+          <Td>{username || createdBy}</Td>
+          <Td>{day}</Td>
+        </Tr>
+        <Tr isExpanded={isLogExpanded(log)}>
+          <Td colSpan={columns.length + 1}>
+            <ExpandableRowContent>{md}</ExpandableRowContent>
+          </Td>
+        </Tr>
+      </Tbody>
+    );
+  };
+
+  const getSortParams = (columnIndex) => ({
+    sortBy: {
+      index: sortColIndex,
+      direction: sortDirection,
+    },
+    onSort: (_event, index, direction) => {
+      const sorting = {
+        isAscending: direction === SortByDirection.asc,
+        sortField: columns[index - 1].sortTitle,
+      };
+      setSorting(sorting);
+      setSortColIndex(index);
+      setSortDirection(sorting.isAscending ? SortByDirection.asc : SortByDirection.desc);
+    },
+    columnIndex,
+  });
+
+  return (
+    <Bullseye>
+      {pending ? (
+        <Spinner size="lg" />
+      ) : (
+        <TableComposable aria-label="Expandable table" variant={TableVariant.compact}>
+          <Thead>
+            <Tr>
+              <Th />
+              {columns.map((column, index) => (
+                <Th sort={getSortParams(index + 1)}>{column.title}</Th>
+              ))}
+            </Tr>
+          </Thead>
+          {logs && logs.length > 0
+            ? logs.map((log, index) => mapLog(log, index))
+            : emptyState(columns.length + 1)}
+        </TableComposable>
+      )}
+    </Bullseye>
+  );
+};
 
 LogTable.propTypes = {
   logs: PropTypes.array,
