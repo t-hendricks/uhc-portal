@@ -36,22 +36,22 @@ exports[`<TransferClusterOwnershipDialog /> should not crash when subscription i
           >
             Initiate transfer
           </Button>,
-          null,
+          undefined,
           <Button
             onClick={[Function]}
             variant="secondary"
           >
             Cancel
           </Button>,
-          null,
-          false,
+          undefined,
+          undefined,
         ]
       }
       appendTo={[Function]}
       aria-describedby=""
       aria-label="Transfer cluster ownership"
       aria-labelledby=""
-      className={null}
+      className=""
       hasNoBodyWrapper={false}
       isOpen={true}
       onClose={[Function]}
@@ -241,22 +241,22 @@ exports[`<TransferClusterOwnershipDialog /> should not crash when subscription i
               >
                 Initiate transfer
               </Button>,
-              null,
+              undefined,
               <Button
                 onClick={[Function]}
                 variant="secondary"
               >
                 Cancel
               </Button>,
-              null,
-              false,
+              undefined,
+              undefined,
             ]
           }
           aria-describedby=""
           aria-label="Transfer cluster ownership"
           aria-labelledby=""
           boxId="pf-modal-part-4"
-          className={null}
+          className=""
           descriptorId="pf-modal-part-6"
           hasNoBodyWrapper={false}
           isOpen={true}
@@ -661,22 +661,22 @@ exports[`<TransferClusterOwnershipDialog /> should release clusters 1`] = `
           >
             Initiate transfer
           </Button>,
-          null,
+          undefined,
           <Button
             onClick={[Function]}
             variant="secondary"
           >
             Cancel
           </Button>,
-          null,
-          false,
+          undefined,
+          undefined,
         ]
       }
       appendTo={[Function]}
       aria-describedby=""
       aria-label="Transfer cluster ownership"
       aria-labelledby=""
-      className={null}
+      className=""
       hasNoBodyWrapper={false}
       isOpen={true}
       onClose={[Function]}
@@ -866,22 +866,22 @@ exports[`<TransferClusterOwnershipDialog /> should release clusters 1`] = `
               >
                 Initiate transfer
               </Button>,
-              null,
+              undefined,
               <Button
                 onClick={[Function]}
                 variant="secondary"
               >
                 Cancel
               </Button>,
-              null,
-              false,
+              undefined,
+              undefined,
             ]
           }
           aria-describedby=""
           aria-label="Transfer cluster ownership"
           aria-labelledby=""
           boxId="pf-modal-part-0"
-          className={null}
+          className=""
           descriptorId="pf-modal-part-2"
           hasNoBodyWrapper={false}
           isOpen={true}
@@ -1286,22 +1286,22 @@ exports[`<TransferClusterOwnershipDialog /> should show dialog for transferring 
           >
             Initiate transfer
           </Button>,
-          null,
+          undefined,
           <Button
             onClick={[Function]}
             variant="secondary"
           >
             Cancel
           </Button>,
-          null,
-          false,
+          undefined,
+          undefined,
         ]
       }
       appendTo={[Function]}
       aria-describedby=""
       aria-label="Transfer cluster ownership"
       aria-labelledby=""
-      className={null}
+      className=""
       hasNoBodyWrapper={false}
       isOpen={true}
       onClose={[Function]}
@@ -1482,22 +1482,22 @@ exports[`<TransferClusterOwnershipDialog /> should show dialog for transferring 
               >
                 Initiate transfer
               </Button>,
-              null,
+              undefined,
               <Button
                 onClick={[Function]}
                 variant="secondary"
               >
                 Cancel
               </Button>,
-              null,
-              false,
+              undefined,
+              undefined,
             ]
           }
           aria-describedby=""
           aria-label="Transfer cluster ownership"
           aria-labelledby=""
           boxId="pf-modal-part-2"
-          className={null}
+          className=""
           descriptorId="pf-modal-part-4"
           hasNoBodyWrapper={false}
           isOpen={true}
@@ -1880,29 +1880,28 @@ exports[`<TransferClusterOwnershipDialog /> should show error 1`] = `
       actions={
         Array [
           <Button
-            isDisabled={false}
             onClick={[Function]}
             type="submit"
             variant="primary"
           >
             Initiate transfer
           </Button>,
-          null,
+          undefined,
           <Button
             onClick={[Function]}
             variant="secondary"
           >
             Cancel
           </Button>,
-          null,
-          false,
+          undefined,
+          undefined,
         ]
       }
       appendTo={[Function]}
       aria-describedby=""
       aria-label="Transfer cluster ownership"
       aria-labelledby=""
-      className={null}
+      className=""
       hasNoBodyWrapper={false}
       isOpen={true}
       onClose={[Function]}
@@ -2131,29 +2130,28 @@ exports[`<TransferClusterOwnershipDialog /> should show error 1`] = `
           actions={
             Array [
               <Button
-                isDisabled={false}
                 onClick={[Function]}
                 type="submit"
                 variant="primary"
               >
                 Initiate transfer
               </Button>,
-              null,
+              undefined,
               <Button
                 onClick={[Function]}
                 variant="secondary"
               >
                 Cancel
               </Button>,
-              null,
-              false,
+              undefined,
+              undefined,
             ]
           }
           aria-describedby=""
           aria-label="Transfer cluster ownership"
           aria-labelledby=""
           boxId="pf-modal-part-3"
-          className={null}
+          className=""
           descriptorId="pf-modal-part-5"
           hasNoBodyWrapper={false}
           isOpen={true}
@@ -2524,7 +2522,6 @@ exports[`<TransferClusterOwnershipDialog /> should show error 1`] = `
                             className="pf-c-modal-box__footer"
                           >
                             <Button
-                              isDisabled={false}
                               key="confirm"
                               onClick={[Function]}
                               type="submit"
@@ -2532,7 +2529,6 @@ exports[`<TransferClusterOwnershipDialog /> should show error 1`] = `
                             >
                               <ButtonBase
                                 innerRef={null}
-                                isDisabled={false}
                                 onClick={[Function]}
                                 type="submit"
                                 variant="primary"

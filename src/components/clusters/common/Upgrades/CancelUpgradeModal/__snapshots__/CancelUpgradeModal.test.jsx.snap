@@ -28,29 +28,28 @@ exports[`<CancelUpgradeModal /> renders correctly 1`] = `
       actions={
         Array [
           <Button
-            isDisabled={false}
             onClick={[Function]}
             type="submit"
             variant="primary"
           >
             Cancel this update
           </Button>,
-          null,
+          undefined,
           <Button
             onClick={[Function]}
             variant="secondary"
           >
             Close
           </Button>,
-          null,
-          false,
+          undefined,
+          undefined,
         ]
       }
       appendTo={[Function]}
       aria-describedby=""
       aria-label="Cancel update"
       aria-labelledby=""
-      className={null}
+      className=""
       hasNoBodyWrapper={false}
       isOpen={true}
       onClose={[Function]}
@@ -173,29 +172,28 @@ exports[`<CancelUpgradeModal /> renders correctly 1`] = `
           actions={
             Array [
               <Button
-                isDisabled={false}
                 onClick={[Function]}
                 type="submit"
                 variant="primary"
               >
                 Cancel this update
               </Button>,
-              null,
+              undefined,
               <Button
                 onClick={[Function]}
                 variant="secondary"
               >
                 Close
               </Button>,
-              null,
-              false,
+              undefined,
+              undefined,
             ]
           }
           aria-describedby=""
           aria-label="Cancel update"
           aria-labelledby=""
           boxId="pf-modal-part-0"
-          className={null}
+          className=""
           descriptorId="pf-modal-part-2"
           hasNoBodyWrapper={false}
           isOpen={true}
@@ -395,7 +393,6 @@ exports[`<CancelUpgradeModal /> renders correctly 1`] = `
                             className="pf-c-modal-box__footer"
                           >
                             <Button
-                              isDisabled={false}
                               key="confirm"
                               onClick={[Function]}
                               type="submit"
@@ -403,7 +400,6 @@ exports[`<CancelUpgradeModal /> renders correctly 1`] = `
                             >
                               <ButtonBase
                                 innerRef={null}
-                                isDisabled={false}
                                 onClick={[Function]}
                                 type="submit"
                                 variant="primary"
