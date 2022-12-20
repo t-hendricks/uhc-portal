@@ -38,7 +38,6 @@ exports[`ARM Bare Metal install renders correctly 1`] = `
           ],
         }
       }
-      showAI={true}
       upiPageLink="/install/arm/user-provisioned"
     />
   </PageSection>

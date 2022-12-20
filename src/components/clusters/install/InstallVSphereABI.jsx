@@ -10,11 +10,11 @@ import instructionsMapping from './instructions/instructionsMapping';
 import OCPInstructions from './instructions/OCPInstructions';
 import PageTitle from '../../common/PageTitle';
 
-export class InstallPlatformAgnosticUPI extends Component {
+export class InstallVSphereABI extends Component {
   componentDidMount() {
     scrollToTop();
     document.title =
-      'Install OpenShift 4 | Red Hat OpenShift Cluster Manager | x86_64 User-Provisioned Infrastructure';
+      'Install OpenShift 4 | Red Hat OpenShift Cluster Manager | vSphere Agent-based installer';
 
     const { dispatch } = this.props;
     dispatch(tollboothActions.createAuthToken());
@@ -27,22 +27,22 @@ export class InstallPlatformAgnosticUPI extends Component {
         path={[
           { label: 'Clusters' },
           { label: 'Cluster Type', path: '/create' },
-          { label: 'Platform agnostic (x86_64)', path: '/install/platform-agnostic' },
-          { label: 'x86_64 User-provisioned infrastructure' },
+          { label: 'VMware vSphere', path: '/install/vsphere' },
+          { label: 'Local Agent-based' },
         ]}
       />
     );
 
     return (
       <>
-        <PageTitle title={instructionsMapping.generic.upi.title} breadcrumbs={breadcrumbs} />
+        <PageTitle title={instructionsMapping.vsphere.abi.title} breadcrumbs={breadcrumbs} />
         <PageSection>
           <OCPInstructions
             token={token}
             breadcrumbs={breadcrumbs}
-            cloudProviderID="generic"
+            cloudProviderID="vsphere"
+            {...instructionsMapping.vsphere.abi}
             isUPI
-            {...instructionsMapping.generic.upi}
           />
         </PageSection>
       </>
@@ -50,11 +50,11 @@ export class InstallPlatformAgnosticUPI extends Component {
   }
 }
 
-InstallPlatformAgnosticUPI.propTypes = {
+InstallVSphereABI.propTypes = {
   token: PropTypes.object.isRequired,
   dispatch: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({ token: state.tollbooth.token });
 
-export default connect(mapStateToProps)(InstallPlatformAgnosticUPI);
+export default connect(mapStateToProps)(InstallVSphereABI);

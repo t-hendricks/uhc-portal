@@ -10,11 +10,11 @@ import instructionsMapping from './instructions/instructionsMapping';
 import OCPInstructions from './instructions/OCPInstructions';
 import PageTitle from '../../common/PageTitle';
 
-export class InstallPlatformAgnosticUPI extends Component {
+export class InstallPlatformAgnosticABI extends Component {
   componentDidMount() {
     scrollToTop();
     document.title =
-      'Install OpenShift 4 | Red Hat OpenShift Cluster Manager | x86_64 User-Provisioned Infrastructure';
+      'Install OpenShift 4 | Red Hat OpenShift Cluster Manager | x86_64 Agent-based installer';
 
     const { dispatch } = this.props;
     dispatch(tollboothActions.createAuthToken());
@@ -28,21 +28,21 @@ export class InstallPlatformAgnosticUPI extends Component {
           { label: 'Clusters' },
           { label: 'Cluster Type', path: '/create' },
           { label: 'Platform agnostic (x86_64)', path: '/install/platform-agnostic' },
-          { label: 'x86_64 User-provisioned infrastructure' },
+          { label: 'Local Agent-based' },
         ]}
       />
     );
 
     return (
       <>
-        <PageTitle title={instructionsMapping.generic.upi.title} breadcrumbs={breadcrumbs} />
+        <PageTitle title={instructionsMapping.generic.abi.title} breadcrumbs={breadcrumbs} />
         <PageSection>
           <OCPInstructions
             token={token}
             breadcrumbs={breadcrumbs}
             cloudProviderID="generic"
+            {...instructionsMapping.generic.abi}
             isUPI
-            {...instructionsMapping.generic.upi}
           />
         </PageSection>
       </>
@@ -50,11 +50,11 @@ export class InstallPlatformAgnosticUPI extends Component {
   }
 }
 
-InstallPlatformAgnosticUPI.propTypes = {
+InstallPlatformAgnosticABI.propTypes = {
   token: PropTypes.object.isRequired,
   dispatch: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({ token: state.tollbooth.token });
 
-export default connect(mapStateToProps)(InstallPlatformAgnosticUPI);
+export default connect(mapStateToProps)(InstallPlatformAgnosticABI);
