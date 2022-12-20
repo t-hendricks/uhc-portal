@@ -1,14 +1,19 @@
 import produce from 'immer';
+import { ModalActions } from './ModalActions';
 
 import { OPEN_MODAL, CLOSE_MODAL } from './ModalConstants';
 
-const initialState = {
+export type State = {
+  modalName: string | null;
+  data: unknown;
+};
+
+const initialState: State = {
   modalName: null,
   data: {},
 };
 
-function modalReducer(state = initialState, action) {
-  // eslint-disable-next-line consistent-return
+function modalReducer(state = initialState, action: ModalActions) {
   return produce(state, (draft) => {
     // eslint-disable-next-line default-case
     switch (action.type) {
@@ -20,6 +25,7 @@ function modalReducer(state = initialState, action) {
       case CLOSE_MODAL:
         return initialState;
     }
+    return draft;
   });
 }
 

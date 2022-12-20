@@ -46,15 +46,15 @@ exports[`<UpgradeAcknowledgeModal > Error is shown for failed y-stream approval 
           >
             Approve and continue
           </Button>,
-          null,
+          undefined,
           <Button
             onClick={[Function]}
             variant="secondary"
           >
             Cancel
           </Button>,
-          null,
-          false,
+          undefined,
+          undefined,
         ]
       }
       appendTo={[Function]}
@@ -224,15 +224,15 @@ exports[`<UpgradeAcknowledgeModal > Error is shown for failed y-stream approval 
               >
                 Approve and continue
               </Button>,
-              null,
+              undefined,
               <Button
                 onClick={[Function]}
                 variant="secondary"
               >
                 Cancel
               </Button>,
-              null,
-              false,
+              undefined,
+              undefined,
             ]
           }
           aria-describedby=""
@@ -630,15 +630,15 @@ exports[`<UpgradeAcknowledgeModal > Errors are shown for failed gates action 1`]
           >
             Approve and continue
           </Button>,
-          null,
+          undefined,
           <Button
             onClick={[Function]}
             variant="secondary"
           >
             Cancel
           </Button>,
-          null,
-          false,
+          undefined,
+          undefined,
         ]
       }
       appendTo={[Function]}
@@ -854,15 +854,15 @@ exports[`<UpgradeAcknowledgeModal > Errors are shown for failed gates action 1`]
               >
                 Approve and continue
               </Button>,
-              null,
+              undefined,
               <Button
                 onClick={[Function]}
                 variant="secondary"
               >
                 Cancel
               </Button>,
-              null,
-              false,
+              undefined,
+              undefined,
             ]
           }
           aria-describedby=""
