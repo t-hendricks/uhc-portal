@@ -15,6 +15,7 @@ const mapStateToProps = (state) => {
     noProxyDomains: stringToArray(cluster.proxy?.no_proxy),
     additionalTrustBundle: cluster.additional_trust_bundle,
     gcpVPCName: cluster.gcp_network?.vpc_name,
+    isBYOVPC: cluster.aws?.subnet_ids || cluster.gcp_network,
   };
 };
 

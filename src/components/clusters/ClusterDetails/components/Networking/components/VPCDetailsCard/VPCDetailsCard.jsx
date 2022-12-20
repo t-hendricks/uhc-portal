@@ -29,6 +29,7 @@ const VPCDetailsCard = (props) => {
     additionalTrustBundle,
     openModal,
     gcpVPCName,
+    isBYOVPC,
   } = props;
 
   const isPrivateLinkInitialized = typeof privateLink !== 'undefined';
@@ -44,6 +45,8 @@ const VPCDetailsCard = (props) => {
         </Label>
       ))
     : 'N/A';
+
+  if (!isBYOVPC) return null;
 
   return (
     <Card className="ocm-c-networking-vpc-details__card">
@@ -123,6 +126,7 @@ VPCDetailsCard.propTypes = {
   noProxyDomains: PropTypes.string,
   additionalTrustBundle: PropTypes.string,
   gcpVPCName: PropTypes.string,
+  isBYOVPC: PropTypes.bool,
 };
 
 export default VPCDetailsCard;
