@@ -156,13 +156,12 @@ const addOnBillingQuota = (quotaList, { resourceType, resourceName }) => {
  */
 const hasPotentialQuota = (
   quotaList,
-  { resourceType, product, cloudProviderID, isBYOC, isMultiAz, resourceName },
+  { resourceType, product, billingModel, cloudProviderID, isBYOC, isMultiAz, resourceName },
 ) => {
   const query = {
     resource_type: resourceType,
     product,
-    // the billing_model field for addon's is addon specific and should not be a filter criteria against the cluster
-    billing_model: any,
+    billing_model: billingModel || any,
     cloud_provider: cloudProviderID || any,
     byoc: { [true]: 'byoc', [false]: 'rhinfra', [undefined]: any }[isBYOC],
     availability_zone_type: { [true]: 'multi', [false]: 'single', [undefined]: any }[isMultiAz],
