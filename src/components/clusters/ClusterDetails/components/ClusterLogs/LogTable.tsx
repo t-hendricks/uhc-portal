@@ -1,6 +1,5 @@
 import React from 'react';
 import moment from 'moment';
-import PropTypes from 'prop-types';
 import ReactMarkdown from 'react-markdown';
 
 import {
@@ -12,6 +11,7 @@ import {
   Title,
   Spinner,
 } from '@patternfly/react-core';
+
 import {
   SortByDirection,
   TableVariant,
@@ -19,11 +19,14 @@ import {
   Thead,
   Tr,
   Th,
+  ThProps,
   Tbody,
   Td,
   ExpandableRowContent,
 } from '@patternfly/react-table';
+
 import { SearchIcon } from '@patternfly/react-icons';
+import { ClusterLog } from '~/types/service_logs.v1/index';
 import './LogTable.scss';
 
 const columns = [
@@ -45,7 +48,7 @@ const columns = [
   },
 ];
 
-const emptyState = (colSpan) => (
+const emptyState = (colSpan: number) => (
   <Td colSpan={colSpan}>
     <Bullseye>
       <EmptyState variant={EmptyStateVariant.small}>
@@ -62,8 +65,21 @@ const emptyState = (colSpan) => (
   </Td>
 );
 
-const LogTable = ({ logs, setSorting, pending }) => {
-  const [expandedLogs, setExpandedLogs] = React.useState([]);
+type LogType = ClusterLog & { id: string };
+
+type SortParams = {
+  isAscending: boolean;
+  sortField: string;
+};
+
+type LogTableParams = {
+  pending: boolean;
+  logs: any[];
+  setSorting: (sort: SortParams) => void;
+};
+
+const LogTable = ({ logs, setSorting, pending }: LogTableParams) => {
+  const [expandedLogs, setExpandedLogs] = React.useState<string[]>([]);
 
   // initially sorted by Date descending
   const [sortColIndex, setSortColIndex] = React.useState(
@@ -71,17 +87,17 @@ const LogTable = ({ logs, setSorting, pending }) => {
   );
   const [sortDirection, setSortDirection] = React.useState(SortByDirection.desc);
 
-  const setLogExpanded = (log, isExpanding = true) => {
+  const setLogExpanded = (log: LogType, isExpanding = true) => {
     const otherExpandedLogs = expandedLogs.filter((r) => r !== log.id);
     const newLogs = isExpanding ? [...otherExpandedLogs, log.id] : otherExpandedLogs;
 
     setExpandedLogs(newLogs);
   };
 
-  const isLogExpanded = (log) => expandedLogs.includes(log.id);
+  const isLogExpanded = (log: LogType) => expandedLogs.includes(log.id);
 
-  const mapLog = (log, rowIndex) => {
-    const { id, summary, severity, timestamp, description, username, created_by: createdBy } = log;
+  const mapLog = (log: LogType, rowIndex: number) => {
+    const { summary, severity, timestamp, description, username, created_by: createdBy } = log;
 
     const day = moment.utc(timestamp).format('D MMM YYYY, HH:mm UTC');
 
@@ -91,13 +107,11 @@ const LogTable = ({ logs, setSorting, pending }) => {
         source={description}
         linkTarget="_blank"
         renderers={{
-          // eslint-disable-next-line react/prop-types
+          // @ts-ignore
           linkReference: ({ href, $ref, children }) => {
             if (!href) {
-              // eslint-disable-next-line react/prop-types
               return `[${children[0].props.value}]`;
             }
-
             return <a href={$ref}>{children}</a>;
           },
         }}
@@ -114,7 +128,7 @@ const LogTable = ({ logs, setSorting, pending }) => {
               onToggle: () => {
                 setLogExpanded(log, !isLogExpanded(log));
               },
-              expandId: id,
+              // expandId: id,
             }}
           />
           <Td>{summary}</Td>
@@ -131,7 +145,7 @@ const LogTable = ({ logs, setSorting, pending }) => {
     );
   };
 
-  const getSortParams = (columnIndex) => ({
+  const getSortParams = (columnIndex: number): ThProps['sort'] => ({
     sortBy: {
       index: sortColIndex,
       direction: sortDirection,
@@ -169,12 +183,6 @@ const LogTable = ({ logs, setSorting, pending }) => {
       )}
     </Bullseye>
   );
-};
-
-LogTable.propTypes = {
-  logs: PropTypes.array,
-  setSorting: PropTypes.func.isRequired,
-  pending: PropTypes.bool,
 };
 
 export default LogTable;
