@@ -196,11 +196,12 @@ const main = async () => {
         'env', 'GIT_PAGER=', 'git', 'log', ...envs.map(e => e.name),
         // Limit graph scope by omitting everything including 2 prod deploys ago.
         '--not', 'live_stable~2', '--graph',
-        // Want MR merges, not internal merge commits done while working on MR content.
-        // But allow .* suffixes to incude merges to deploy-related branches like
-        // 'candidate-changes-9-aug-22' or 'stable-assisted-ui-lib-v2.8.2'.
+        // TODO: want MR merges, not internal merge commits done while working on MR content.
+        //   `[Mm]erge .* into '?(master|candidate|stable).*` captures most of those.
+        //   BUT must show all merges FROM master, even if done locally with edited message -
+        //   these tell us which content is already deployed.
         // Also include cherry-picks (not using --merges flag which would omit them).
-        '--extended-regexp', "--grep=[Mm]erge .* into '?(master|candidate|stable).*|[Cc]herry",
+        '--extended-regexp', "--grep=[Mm]erge|[Cc]herry",
         // %C: color, %h: hash, %d: (decorations).
         // %s subject "Merge branch ...", start %b body on same line to conserve vertical space.
         // %w: indents following lines of body.
