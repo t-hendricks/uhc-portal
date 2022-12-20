@@ -23,6 +23,8 @@ const isAvailable = (addOn, cluster, organization, quotaList) => {
       ...queryFromCluster(cluster),
       resourceType: quotaTypes.ADD_ON,
       resourceName: addOn.resource_name,
+      // the billing_model field for addon's is addon specific and should not be a filter criteria against the cluster
+      billingModel: 'any',
     }) >= 1
   );
 };
@@ -143,6 +145,8 @@ const hasQuota = (addOn, cluster, organization, quotaList) => {
     ...queryFromCluster(cluster),
     resourceType: quotaTypes.ADD_ON,
     resourceName: addOn.resource_name,
+    // the billing_model field for addon's is addon specific and should not be a filter criteria against the cluster
+    billingModel: 'any',
   });
   return available >= minCount;
 };
@@ -161,6 +165,8 @@ const quotaCostOptions = (resourceName, cluster, quotaList, allOptions, currentV
     ...queryFromCluster(cluster),
     resourceType: quotaTypes.ADD_ON,
     resourceName,
+    // the billing_model field for addon's is addon specific and should not be a filter criteria against the cluster
+    billingModel: 'any',
   };
 
   if (!hasPotentialQuota(quotaList, query)) {
