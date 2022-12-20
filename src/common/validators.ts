@@ -1224,16 +1224,24 @@ const validateGCPKMSServiceAccount = (value: string): string | undefined => {
   return undefined;
 };
 
-const validateAWSKMSKeyARN = (value: string): string | undefined => {
+const validateAWSKMSKeyARN = (value: string, region: string): string | undefined => {
   if (!value) {
     return 'Field is required.';
   }
+
   if (/\s/.test(value)) {
     return 'Value must not contain whitespaces.';
   }
+
   if (!AWS_KMS_SERVICE_ACCOUNT_REGEX.test(value)) {
     return 'Key provided is not a valid ARN. It should be in the format "arn:aws:kms:<region>:<accountid>:key/<keyid>".';
   }
+
+  const kmsRegion = value.split('kms:')?.pop()?.split(':')[0];
+  if (kmsRegion !== region) {
+    return 'Your KMS key must contain your selected region.';
+  }
+
   return undefined;
 };
 

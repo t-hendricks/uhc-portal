@@ -52,7 +52,7 @@ function CustomerManagedEncryption({
         (isGCP ? (
           <GCPClusterEncryption selectedRegion={selectedRegion} />
         ) : (
-          <AWSCustomerManagedEncryption />
+          <AWSCustomerManagedEncryption region={selectedRegion} />
         ))}
     </>
   );
