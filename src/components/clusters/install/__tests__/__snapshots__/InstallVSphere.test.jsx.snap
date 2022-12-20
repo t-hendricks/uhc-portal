@@ -25,9 +25,14 @@ exports[`InstallVSphere renders correctly 1`] = `
   />
   <PageSection>
     <InstructionsChooser
+      agentBasedPageLink="/install/vsphere/agent-based"
+      aiPageLink="/assisted-installer/clusters/~new"
       ipiPageLink="/install/vsphere/installer-provisioned"
       providerSpecificFeatures={
         Object {
+          "abi": Array [
+            "For connected or air-gapped/restricted networks",
+          ],
           "ipi": Array [
             "Hosts controlled with vSphere Cloud Provider",
             "For connected or air-gapped/restricted networks",
@@ -37,7 +42,6 @@ exports[`InstallVSphere renders correctly 1`] = `
           ],
         }
       }
-      showAI={true}
       upiPageLink="/install/vsphere/user-provisioned"
     />
   </PageSection>
