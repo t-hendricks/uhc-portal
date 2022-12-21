@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import {
+  Button,
   DescriptionList,
   DescriptionListDescription,
   DescriptionListGroup,
@@ -103,7 +104,7 @@ export const ReviewRoleItem = ({ name, getRoleResponse, content }) => (
   </DescriptionListGroup>
 );
 
-function ReviewSection({ initiallyExpanded, title, children }) {
+const ReviewSection = ({ initiallyExpanded, title, children, onGoToStep }) => {
   const [isExpanded, setIsExpanded] = useState(true);
 
   useEffect(() => {
@@ -127,7 +128,22 @@ function ReviewSection({ initiallyExpanded, title, children }) {
         className="review-screen-expandable-section"
         isExpanded={isExpanded}
         onToggle={onToggle}
-        toggleText={title}
+        toggleContent={
+          <div>
+            <span>{title}</span>
+            <Button
+              variant="link"
+              isInline
+              className="pf-u-font-size-sm pf-u-ml-sm"
+              onClick={(event) => {
+                event.stopPropagation();
+                onGoToStep();
+              }}
+            >
+              Edit <span className="pf-u-screen-reader">{title}</span> step
+            </Button>
+          </div>
+        }
       >
         <DescriptionList isHorizontal {...listOptions}>
           {children}
@@ -135,7 +151,7 @@ function ReviewSection({ initiallyExpanded, title, children }) {
       </ExpandableSection>
     </GridItem>
   );
-}
+};
 
 ReviewItem.propTypes = {
   name: PropTypes.string,
@@ -152,8 +168,9 @@ ReviewRoleItem.propTypes = {
 
 ReviewSection.propTypes = {
   initiallyExpanded: PropTypes.bool,
-  title: PropTypes.string,
-  children: PropTypes.node,
+  title: PropTypes.string.isRequired,
+  children: PropTypes.node.isRequired,
+  onGoToStep: PropTypes.func.isRequired,
 };
 
 export default ReviewSection;
