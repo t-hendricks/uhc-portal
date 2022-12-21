@@ -1,7 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Stack, StackItem, Text, TextContent } from '@patternfly/react-core';
+import { Stack, StackItem, Text, TextContent, Label } from '@patternfly/react-core';
 import { ExternalLinkAltIcon } from '@patternfly/react-icons';
+import spacing from '@patternfly/react-styles/css/utilities/Spacing/spacing';
 
 import PullSecretSection from './PullSecretSection';
 import DownloadAndOSSelection from './DownloadAndOSSelection';
@@ -52,6 +53,19 @@ function DownloadsAndPullSecretSection({
                     </Text>
                     .
                   </Text>
+                )}
+                {channel === channels.CANDIDATE && (
+                  <div className={spacing.mbSm}>
+                    <Text component="h4">
+                      Download release candidate build{' '}
+                      <Label color="gold" className={spacing.mlSm}>
+                        Developer preview
+                      </Label>
+                    </Text>
+                    <Text component="p">
+                      This feature is currently only available in a release candidate build.
+                    </Text>
+                  </div>
                 )}
                 <DownloadAndOSSelection tool={tool} channel={channel} pendoID={pendoID} />
                 {showPreReleasePageLink && (

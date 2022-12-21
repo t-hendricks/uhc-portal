@@ -4,7 +4,7 @@ import * as Sentry from '@sentry/browser';
 import type { AnyAction, Middleware } from 'redux';
 import { LOCATION_CHANGE } from 'connected-react-router';
 import { actionTypes } from 'redux-form';
-import { modalConstants } from '~/components/common/Modal/ModalConstants';
+import { OPEN_MODAL } from '~/components/common/Modal/ModalConstants';
 
 const sentryMiddleware: Middleware = () => (next) => (action: AnyAction) => {
   // for some actions, we want to keep some of the parameters in the breadcrumb
@@ -16,7 +16,7 @@ const sentryMiddleware: Middleware = () => (next) => (action: AnyAction) => {
     case actionTypes.DESTROY:
       data.form = action.meta.form;
       break;
-    case modalConstants.OPEN_MODAL:
+    case OPEN_MODAL:
       data.modalName = action.payload.name;
       break;
     default:

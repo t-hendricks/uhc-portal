@@ -3,7 +3,6 @@
 exports[`<LiveDateFormat /> renders correctly 1`] = `
 <DateFormat
   date={1609459200000}
-  now={1609459200000}
   type="relative"
 />
 `;

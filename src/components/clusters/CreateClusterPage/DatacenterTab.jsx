@@ -1,8 +1,18 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { PageSection, Title, Button, Stack, StackItem } from '@patternfly/react-core';
+import {
+  PageSection,
+  Title,
+  Button,
+  Stack,
+  StackItem,
+  Popover,
+  SplitItem,
+  Split,
+} from '@patternfly/react-core';
 import { Table, TableHeader, TableBody } from '@patternfly/react-table';
 import { Link } from 'react-router-dom';
+import OutlinedQuestionCircleIcon from '@patternfly/react-icons/dist/esm/icons/outlined-question-circle-icon';
 
 const ocpTableColumns = ['Infrastructure provider', 'Installation options'];
 const ocpTableRows = [
@@ -84,9 +94,21 @@ const DatacenterTab = ({ assistedInstallerFeature }) => (
             and arm64 CPU architectures.
           </StackItem>
           <StackItem>
-            <Button component={Link} to="/assisted-installer/clusters/~new">
-              Create cluster
-            </Button>
+            <Split hasGutter>
+              <SplitItem>
+                <Button component={Link} to="/assisted-installer/clusters/~new">
+                  Create cluster
+                </Button>
+              </SplitItem>
+              <SplitItem className="pf-u-align-self-center">
+                <Link to="/install/metal/agent-based">Run Agent-based Installer locally</Link>
+                <Popover bodyContent="Runs Assisted Installer securely and locally to create clusters in disconnected or air-gapped environments.">
+                  <Button variant="plain" onClick={(e) => e.preventDefault()}>
+                    <OutlinedQuestionCircleIcon />
+                  </Button>
+                </Popover>
+              </SplitItem>
+            </Split>
           </StackItem>
         </Stack>
       </PageSection>

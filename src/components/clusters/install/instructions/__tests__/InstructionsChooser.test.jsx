@@ -16,7 +16,7 @@ describe('InstructionsChooser', () => {
   it('renders correctly with AI enabled', () => {
     const wrapper = shallow(
       <InstructionsChooser
-        showAI
+        aiPageLink="/assisted-installer/clusters/~new"
         ipiPageLink="/install/metal/installer-provisioned"
         upiPageLink="/install/metal/user-provisioned"
       />,
@@ -25,7 +25,11 @@ describe('InstructionsChooser', () => {
   });
   it('renders correctly with AI and UPI', () => {
     const wrapper = shallow(
-      <InstructionsChooser showAI hideIPI upiPageLink="/install/arm/user-provisioned" />,
+      <InstructionsChooser
+        aiPageLink="/assisted-installer/clusters/~new"
+        hideIPI
+        upiPageLink="/install/arm/user-provisioned"
+      />,
     );
     expect(wrapper).toMatchSnapshot();
   });

@@ -1,16 +1,24 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-
 import { RedoIcon } from '@patternfly/react-icons';
 import { Tooltip, TooltipPosition, Button } from '@patternfly/react-core';
+
+type Props = {
+  classOptions?: string;
+  refreshFunc: () => void;
+  clickRefreshFunc?: () => void;
+  autoRefresh?: boolean;
+  isDisabled?: boolean;
+  ouiaId?: string | number;
+  useShortTimer?: boolean;
+};
 
 const shortTimerSeconds = 10;
 const longTimerSeconds = 60;
 const numberOfShortTries = 3;
 
 // See https://overreacted.io/making-setinterval-declarative-with-react-hooks/
-const useInterval = (callback, delay) => {
-  const savedCallback = React.useRef();
+const useInterval = (callback: () => void, delay: number) => {
+  const savedCallback = React.useRef(callback);
 
   // Remember the latest callback.
   React.useEffect(() => {
@@ -22,12 +30,8 @@ const useInterval = (callback, delay) => {
     function tick() {
       savedCallback.current();
     }
-    if (delay !== null) {
-      const id = setInterval(tick, delay);
-      return () => clearInterval(id);
-    }
-
-    return null;
+    const id = setInterval(tick, delay);
+    return () => clearInterval(id);
   }, [delay]);
 };
 
@@ -39,13 +43,11 @@ const RefreshBtn = ({
   isDisabled,
   ouiaId,
   useShortTimer,
-}) => {
-  const timerRef = React.useRef(null);
+}: Props) => {
   const [shortTimerTries, setShortTimerTries] = React.useState(0);
-  const [interValTime, setInterValTime] = React.useState(null);
+  const [interValTime, setInterValTime] = React.useState(0);
 
-  // Why use ref? See https://felixgerschau.com/react-hooks-settimeout/
-  timerRef.current = useInterval(() => {
+  useInterval(() => {
     if (interValTime === shortTimerSeconds) {
       if (shortTimerTries < numberOfShortTries - 1) {
         // there is a -1 because we are setting the interval after this attempt
@@ -56,28 +58,17 @@ const RefreshBtn = ({
       }
     }
 
-    refreshTimer();
-  }, interValTime * 1000);
-
-  React.useEffect(
-    () => () => {
-      clearTimeout(timerRef.current);
-    },
-    [],
-  );
-
-  React.useEffect(() => {
-    setInterValTime(useShortTimer ? shortTimerSeconds : longTimerSeconds);
-  }, [useShortTimer]);
-
-  const refreshTimer = () => {
     // autoRefresh check allows refresh to be turned off or on during the lifetime of the component
     // visibilityState checks allows avoiding refreshes when the tab is not visible
     // "online" state check allows to avoid refreshes when the network is offline.
     if (autoRefresh && document.visibilityState === 'visible' && navigator.onLine && !isDisabled) {
       refreshFunc();
     }
-  };
+  }, interValTime * 1000);
+
+  React.useEffect(() => {
+    setInterValTime(useShortTimer ? shortTimerSeconds : longTimerSeconds);
+  }, [useShortTimer]);
 
   return (
     <Tooltip position={TooltipPosition.bottom} content="Refresh">
@@ -93,21 +84,6 @@ const RefreshBtn = ({
       </Button>
     </Tooltip>
   );
-};
-
-RefreshBtn.propTypes = {
-  classOptions: PropTypes.string,
-  refreshFunc: PropTypes.func.isRequired,
-  clickRefreshFunc: PropTypes.func,
-  autoRefresh: PropTypes.bool,
-  isDisabled: PropTypes.bool,
-  ouiaId: PropTypes.string,
-  useShortTimer: PropTypes.bool,
-};
-
-RefreshBtn.defaultProps = {
-  classOptions: '',
-  useShortTimer: false,
 };
 
 export default RefreshBtn;

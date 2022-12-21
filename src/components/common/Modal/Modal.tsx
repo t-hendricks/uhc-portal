@@ -1,9 +1,8 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-
 import {
   Button,
   Modal as PfModal,
+  ModalProps,
   ModalVariant,
   StackItem,
   Stack,
@@ -13,32 +12,56 @@ import {
 } from '@patternfly/react-core';
 import { Spinner } from '@redhat-cloud-services/frontend-components/Spinner';
 import './Modal.scss';
-import { noop } from '../../../common/helpers';
 
-function Modal({
+type Props = Omit<
+  ModalProps,
+  // exclude props which are supplied
+  'ref' | 'aria-label'
+> & {
+  secondaryTitle?: string;
+  showPrimary?: boolean;
+  primaryText?: string;
+  showSecondary?: boolean;
+  secondaryText?: string;
+  showTertiary?: boolean;
+  tertiaryText?: string;
+  onPrimaryClick?: () => void;
+  onSecondaryClick?: () => void;
+  onTertiaryClick?: () => void;
+  isSmall?: boolean;
+  modalSize?: ModalProps['variant'];
+  isPrimaryDisabled?: boolean;
+  isSecondaryDisabled?: boolean;
+  isPending?: boolean;
+  primaryVariant?: React.ComponentProps<typeof Button>['variant'];
+  primaryLink?: string;
+  secondaryLink?: string;
+};
+
+const Modal = ({
   title = '',
   secondaryTitle = '',
-  onClose = noop,
+  onClose,
   showPrimary = true,
   primaryText = 'Confirm',
   showSecondary = true,
   secondaryText = 'Cancel',
-  showTertiary = false,
-  tertiaryText = null,
-  onPrimaryClick = noop,
-  onSecondaryClick = noop,
-  onTertiaryClick = noop,
+  showTertiary,
+  tertiaryText,
+  onPrimaryClick,
+  onSecondaryClick,
+  onTertiaryClick,
   isSmall = true,
   modalSize = ModalVariant.default,
-  isPrimaryDisabled = false,
-  isSecondaryDisabled = false,
-  isPending = false,
+  isPrimaryDisabled,
+  isSecondaryDisabled,
+  isPending,
   children,
   primaryVariant = 'primary',
-  primaryLink = null,
-  secondaryLink = null,
+  primaryLink,
+  secondaryLink,
   ...extraProps
-}) {
+}: Props) => {
   const header = secondaryTitle ? (
     <Stack>
       <StackItem>
@@ -57,7 +80,7 @@ function Modal({
     <PfModal
       // For a medium size modal use variant="large".
       // For a full screen modal use isSmall=false.
-      className={isPending ? 'pending-modal' : null}
+      className={isPending ? 'pending-modal' : undefined}
       aria-label={title}
       variant={isSmall ? ModalVariant.small : modalSize}
       title={title}
@@ -120,31 +143,6 @@ function Modal({
       {isPending ? <Spinner centered /> : children}
     </PfModal>
   );
-}
-
-Modal.propTypes = {
-  isSmall: PropTypes.bool,
-  modalSize: PropTypes.string,
-  title: PropTypes.string,
-  secondaryTitle: PropTypes.string,
-  onClose: PropTypes.func,
-  primaryLink: PropTypes.string,
-  secondaryLink: PropTypes.string,
-  primaryText: PropTypes.string,
-  secondaryText: PropTypes.string,
-  tertiaryText: PropTypes.string,
-  onPrimaryClick: PropTypes.func,
-  onSecondaryClick: PropTypes.func,
-  onTertiaryClick: PropTypes.func,
-  isPrimaryDisabled: PropTypes.bool,
-  isSecondaryDisabled: PropTypes.bool,
-  isTertiaryDisabled: PropTypes.bool,
-  children: PropTypes.node,
-  showPrimary: PropTypes.bool,
-  showSecondary: PropTypes.bool,
-  showTertiary: PropTypes.bool,
-  isPending: PropTypes.bool,
-  primaryVariant: PropTypes.string,
 };
 
 export default Modal;

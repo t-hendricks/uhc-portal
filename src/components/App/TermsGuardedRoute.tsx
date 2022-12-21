@@ -6,7 +6,8 @@ import TermsGuard from '../common/TermsGuard';
 type Props = {
   history: RouteComponentProps['history'];
   gobackPath?: string;
-} & RouteProps;
+  render?: (props: RouteComponentProps) => React.ReactElement;
+} & Omit<RouteProps, 'render'>;
 
 const TermsGuardedRoute = ({
   component: WrappedComponent,

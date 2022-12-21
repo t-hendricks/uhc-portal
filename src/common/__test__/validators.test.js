@@ -29,6 +29,7 @@ import validators, {
   clusterNameAsyncValidation,
   checkCustomOperatorRolesPrefix,
   createPessimisticValidator,
+  validateAWSKMSKeyARN,
 } from '../validators';
 import fixtures from './validators.fixtures';
 import awsVPCs from '../../../mockdata/api/clusters_mgmt/v1/aws_inquiries/vpcs.json';
@@ -1004,5 +1005,42 @@ describe('createPessimisticValidator', () => {
   test('returns undefined when validationProvider is missing', () => {
     const validatorFunction = createPessimisticValidator();
     expect(validatorFunction()).toBeUndefined();
+  });
+});
+
+describe('validateAWSKMSKeyARN', () => {
+  test('returns undefined when the value passes validation', () => {
+    const result = validateAWSKMSKeyARN(
+      'arn:aws:kms:us-east-1:111111111111:key/1470a953-a261-4350-850d-2d8d1ef6e82b',
+      'us-east-1',
+    );
+    expect(result).toBeUndefined();
+  });
+
+  test('returns error message when the value is empty', () => {
+    const result = validateAWSKMSKeyARN('', 'some-region');
+    expect(result).toEqual('Field is required.');
+  });
+
+  test('returns error message when the value contains whitespace', () => {
+    const result = validateAWSKMSKeyARN('arn:with whitespace', 'some-region');
+    expect(result).toEqual('Value must not contain whitespaces.');
+  });
+
+  test('returns error message when the value is not formatted correctly', () => {
+    const result = validateAWSKMSKeyARN('arn:with:wrong:format', 'some-region');
+    expect(result).toContain('Key provided is not a valid ARN.');
+  });
+
+  test('returns error message when the value does not contain the provided region', () => {
+    const region = 'us-east-1';
+    const kmsRegion = 'us-west-1';
+
+    const result = validateAWSKMSKeyARN(
+      `arn:aws:kms:${kmsRegion}:111111111111:key/1470a953-a261-4350-850d-2d8d1ef6e82b`,
+      region,
+    );
+
+    expect(result).toEqual('Your KMS key must contain your selected region.');
   });
 });

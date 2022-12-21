@@ -3,13 +3,9 @@ import PropTypes from 'prop-types';
 
 import {
   Button,
-  Card,
-  CardTitle,
-  CardBody,
   List,
   ListItem,
   Popover,
-  Title,
   ProgressStepper,
   ProgressStep,
 } from '@patternfly/react-core';
@@ -46,7 +42,7 @@ class UninstallProgress extends React.Component {
   };
 
   render() {
-    const { clusterAddOns, addOns, children } = this.props;
+    const { clusterAddOns, addOns } = this.props;
 
     const { showPopover } = this.state;
 
@@ -201,46 +197,34 @@ class UninstallProgress extends React.Component {
     const progressData = getProgressData();
 
     return (
-      <Card>
-        <CardTitle>
-          <Title headingLevel="h2" size="lg" className="card-title logview-title">
-            Cluster Uninstallation
-          </Title>
-        </CardTitle>
-        <CardBody>
-          {children && children[0]}
-          <ProgressStepper>
-            <ProgressStep
-              variant={progressData.addOnCleanUp.variant}
-              icon={progressData.addOnCleanUp.icon}
-              isCurrent={progressData.addOnCleanUp.isCurrent}
-              description={progressData.addOnCleanUp.text}
-              id="addOnCleanUp"
-              titleId="addOnCleanUp-title"
-            >
-              Add-on uninstallation
-            </ProgressStep>
-            <ProgressStep
-              variant={progressData.clusterUninstall.variant}
-              icon={progressData.clusterUninstall.icon}
-              isCurrent={progressData.clusterUninstall.isCurrent}
-              description={progressData.clusterUninstall.text}
-              id="clusterUninstall"
-              titleId="clusterUninstall-title"
-            >
-              Cluster uninstallation
-            </ProgressStep>
-          </ProgressStepper>
-          {children && children[1]}
-        </CardBody>
-      </Card>
+      <ProgressStepper>
+        <ProgressStep
+          variant={progressData.addOnCleanUp.variant}
+          icon={progressData.addOnCleanUp.icon}
+          isCurrent={progressData.addOnCleanUp.isCurrent}
+          description={progressData.addOnCleanUp.text}
+          id="addOnCleanUp"
+          titleId="addOnCleanUp-title"
+        >
+          Add-on uninstallation
+        </ProgressStep>
+        <ProgressStep
+          variant={progressData.clusterUninstall.variant}
+          icon={progressData.clusterUninstall.icon}
+          isCurrent={progressData.clusterUninstall.isCurrent}
+          description={progressData.clusterUninstall.text}
+          id="clusterUninstall"
+          titleId="clusterUninstall-title"
+        >
+          Cluster uninstallation
+        </ProgressStep>
+      </ProgressStepper>
     );
   }
 }
 
 UninstallProgress.propTypes = {
   cluster: PropTypes.object.isRequired,
-  children: PropTypes.arrayOf(PropTypes.node),
   getClusterAddOns: PropTypes.func.isRequired,
   clusterAddOns: PropTypes.object,
   addOns: PropTypes.object,

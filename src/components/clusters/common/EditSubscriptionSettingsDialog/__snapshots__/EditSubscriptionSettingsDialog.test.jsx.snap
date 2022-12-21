@@ -53,22 +53,22 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly 1`] = `
           >
             Save
           </Button>,
-          null,
+          undefined,
           <Button
             onClick={[Function]}
             variant="secondary"
           >
             Cancel
           </Button>,
-          null,
-          false,
+          undefined,
+          undefined,
         ]
       }
       appendTo={[Function]}
       aria-describedby=""
       aria-label="Subscription settings"
       aria-labelledby=""
-      className={null}
+      className=""
       hasNoBodyWrapper={false}
       isOpen={true}
       onClose={[Function]}
@@ -745,22 +745,22 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly 1`] = `
               >
                 Save
               </Button>,
-              null,
+              undefined,
               <Button
                 onClick={[Function]}
                 variant="secondary"
               >
                 Cancel
               </Button>,
-              null,
-              false,
+              undefined,
+              undefined,
             ]
           }
           aria-describedby=""
           aria-label="Subscription settings"
           aria-labelledby=""
           boxId="pf-modal-part-0"
-          className={null}
+          className=""
           descriptorId="pf-modal-part-2"
           hasNoBodyWrapper={false}
           isOpen={true}
@@ -3097,22 +3097,22 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly when an erorr occu
           >
             Save
           </Button>,
-          null,
+          undefined,
           <Button
             onClick={[Function]}
             variant="secondary"
           >
             Cancel
           </Button>,
-          null,
-          false,
+          undefined,
+          undefined,
         ]
       }
       appendTo={[Function]}
       aria-describedby=""
       aria-label="Subscription settings"
       aria-labelledby=""
-      className={null}
+      className=""
       hasNoBodyWrapper={false}
       isOpen={true}
       onClose={[Function]}
@@ -3835,22 +3835,22 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly when an erorr occu
               >
                 Save
               </Button>,
-              null,
+              undefined,
               <Button
                 onClick={[Function]}
                 variant="secondary"
               >
                 Cancel
               </Button>,
-              null,
-              false,
+              undefined,
+              undefined,
             ]
           }
           aria-describedby=""
           aria-label="Subscription settings"
           aria-labelledby=""
           boxId="pf-modal-part-7"
-          className={null}
+          className=""
           descriptorId="pf-modal-part-9"
           hasNoBodyWrapper={false}
           isOpen={true}
@@ -6272,22 +6272,22 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly with billing_model
           >
             Save
           </Button>,
-          null,
+          undefined,
           <Button
             onClick={[Function]}
             variant="secondary"
           >
             Cancel
           </Button>,
-          null,
-          false,
+          undefined,
+          undefined,
         ]
       }
       appendTo={[Function]}
       aria-describedby=""
       aria-label="Subscription settings"
       aria-labelledby=""
-      className={null}
+      className=""
       hasNoBodyWrapper={false}
       isOpen={true}
       onClose={[Function]}
@@ -7067,22 +7067,22 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly with billing_model
               >
                 Save
               </Button>,
-              null,
+              undefined,
               <Button
                 onClick={[Function]}
                 variant="secondary"
               >
                 Cancel
               </Button>,
-              null,
-              false,
+              undefined,
+              undefined,
             ]
           }
           aria-describedby=""
           aria-label="Subscription settings"
           aria-labelledby=""
           boxId="pf-modal-part-4"
-          className={null}
+          className=""
           descriptorId="pf-modal-part-6"
           hasNoBodyWrapper={false}
           isOpen={true}
@@ -9604,22 +9604,22 @@ exports[`<EditSubscriptionSettingsDialog /> renders eval support correctly 1`] =
           >
             Save
           </Button>,
-          null,
+          undefined,
           <Button
             onClick={[Function]}
             variant="secondary"
           >
             Cancel
           </Button>,
-          null,
-          false,
+          undefined,
+          undefined,
         ]
       }
       appendTo={[Function]}
       aria-describedby=""
       aria-label="Subscription settings"
       aria-labelledby=""
-      className={null}
+      className=""
       hasNoBodyWrapper={false}
       isOpen={true}
       onClose={[Function]}
@@ -10325,22 +10325,22 @@ exports[`<EditSubscriptionSettingsDialog /> renders eval support correctly 1`] =
               >
                 Save
               </Button>,
-              null,
+              undefined,
               <Button
                 onClick={[Function]}
                 variant="secondary"
               >
                 Cancel
               </Button>,
-              null,
-              false,
+              undefined,
+              undefined,
             ]
           }
           aria-describedby=""
           aria-label="Subscription settings"
           aria-labelledby=""
           boxId="pf-modal-part-1"
-          className={null}
+          className=""
           descriptorId="pf-modal-part-3"
           hasNoBodyWrapper={false}
           isOpen={true}

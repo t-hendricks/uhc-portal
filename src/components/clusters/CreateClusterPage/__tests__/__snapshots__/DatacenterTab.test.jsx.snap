@@ -20,24 +20,53 @@ exports[`<DatacenterTab /> renders correctly with assisted installer 1`] = `
         The easiest way to install OpenShift on your own infrastructure with step-by-step guidance, preflight validations, and smart defaults. This method supports both x86-64 and arm64 CPU architectures.
       </StackItem>
       <StackItem>
-        <Button
-          component={
-            Object {
-              "$$typeof": Symbol(react.forward_ref),
-              "propTypes": Object {
-                "innerRef": [Function],
-                "onClick": [Function],
-                "replace": [Function],
-                "target": [Function],
-                "to": [Function],
-              },
-              "render": [Function],
-            }
-          }
-          to="/assisted-installer/clusters/~new"
+        <Split
+          hasGutter={true}
         >
-          Create cluster
-        </Button>
+          <SplitItem>
+            <Button
+              component={
+                Object {
+                  "$$typeof": Symbol(react.forward_ref),
+                  "propTypes": Object {
+                    "innerRef": [Function],
+                    "onClick": [Function],
+                    "replace": [Function],
+                    "target": [Function],
+                    "to": [Function],
+                  },
+                  "render": [Function],
+                }
+              }
+              to="/assisted-installer/clusters/~new"
+            >
+              Create cluster
+            </Button>
+          </SplitItem>
+          <SplitItem
+            className="pf-u-align-self-center"
+          >
+            <Link
+              to="/install/metal/agent-based"
+            >
+              Run Agent-based Installer locally
+            </Link>
+            <Popover
+              bodyContent="Runs Assisted Installer securely and locally to create clusters in disconnected or air-gapped environments."
+            >
+              <Button
+                onClick={[Function]}
+                variant="plain"
+              >
+                <OutlinedQuestionCircleIcon
+                  color="currentColor"
+                  noVerticalAlign={false}
+                  size="sm"
+                />
+              </Button>
+            </Popover>
+          </SplitItem>
+        </Split>
       </StackItem>
     </Stack>
   </PageSection>
