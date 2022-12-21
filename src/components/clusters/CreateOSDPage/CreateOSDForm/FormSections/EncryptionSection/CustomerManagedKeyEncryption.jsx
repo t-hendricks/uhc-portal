@@ -40,9 +40,7 @@ function CustomerManagedEncryption({
           <Field
             component={RadioButtons}
             name="customer_managed_key"
-            defaultValue={
-              customerManagedEncryptionSelected ? customerManagedEncryptionSelected : 'false'
-            }
+            defaultValue={customerManagedEncryptionSelected || 'false'}
             options={[
               {
                 value: 'false',
