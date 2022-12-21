@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Redirect } from 'react-router';
-import { Banner, Wizard, PageSection } from '@patternfly/react-core';
+import { Banner, Wizard, PageSection, WizardContext } from '@patternfly/react-core';
 import { Spinner } from '@redhat-cloud-services/frontend-components';
 
 import config from '~/config';
@@ -322,10 +322,15 @@ class CreateROSAWizardInternal extends React.Component {
         name: stepNameById[stepId.REVIEW_AND_CREATE],
         component: (
           <ErrorBoundary>
-            <ReviewClusterScreen
-              isCreateClusterPending={createClusterResponse.pending}
-              clusterRequestParams={{ isWizard: true }}
-            />
+            <WizardContext.Consumer>
+              {({ goToStepById }) => (
+                <ReviewClusterScreen
+                  isCreateClusterPending={createClusterResponse.pending}
+                  clusterRequestParams={{ isWizard: true }}
+                  goToStepById={goToStepById}
+                />
+              )}
+            </WizardContext.Consumer>
           </ErrorBoundary>
         ),
         canJumpTo: this.canJumpTo(stepId.REVIEW_AND_CREATE),

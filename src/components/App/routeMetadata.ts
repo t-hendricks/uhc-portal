@@ -1,10 +1,21 @@
-import { ocmResourceType } from '~/common/analytics';
+import { getOCMResourceType, ocmResourceType } from '~/common/analytics';
 
 /**
  * match pathname to analytics metadata
  * https://docs.google.com/spreadsheets/d/1C_WJWPy3sgE2ICaYHgWpWngj0A3Z3zl5GcstWySG9WE/edit#gid=0
  */
-export const metadataByRoute = (pathname, planType, clusterId, externalClusterId) => {
+export const metadataByRoute = (
+  pathname: string,
+  planType: string,
+  clusterId: string,
+  externalClusterId?: string,
+): {
+  ['ocm_cluster_id']?: string;
+  ['ocm_resource_type']: string | undefined;
+  title?: string;
+  path?: string;
+  ['resource_id']?: string;
+} => {
   /**
    * Note: Order matters here
    * Statements are sorted by the matcher clause, from more specific to less specific
@@ -36,7 +47,7 @@ export const metadataByRoute = (pathname, planType, clusterId, externalClusterId
   }
   if (pathname.match(/\/details\/s\/.*\/add-idp/)) {
     return {
-      ocm_resource_type: ocmResourceType[planType],
+      ocm_resource_type: getOCMResourceType(planType),
       title: 'Add IdP',
       path: '/openshift/details/s/add-idp',
       ...clusterDetails,
@@ -44,7 +55,7 @@ export const metadataByRoute = (pathname, planType, clusterId, externalClusterId
   }
   if (pathname.match(/\/details\/s\/.*\/edit-idp/)) {
     return {
-      ocm_resource_type: ocmResourceType[planType],
+      ocm_resource_type: getOCMResourceType(planType),
       title: 'Edit IdP',
       path: '/openshift/details/s/edit-idp',
       ...clusterDetails,
@@ -52,7 +63,7 @@ export const metadataByRoute = (pathname, planType, clusterId, externalClusterId
   }
   if (pathname.startsWith('/details/s/')) {
     return {
-      ocm_resource_type: ocmResourceType[planType],
+      ocm_resource_type: getOCMResourceType(planType),
       title: 'View Cluster',
       path: '/openshift/details/s',
       ...clusterDetails,
@@ -92,7 +103,7 @@ export const metadataByRoute = (pathname, planType, clusterId, externalClusterId
 // TODO: Better way to determine this?
 export const is404 = () => {
   const el = document.querySelector('#not-found h1');
-  if (el && el.innerText === 'We lost that page') {
+  if (el instanceof HTMLElement && el.innerText === 'We lost that page') {
     return true;
   }
   return false;
