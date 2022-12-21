@@ -41,6 +41,9 @@ const ocmResourceType = {
   ALL: 'all',
 };
 
+const getOCMResourceType = (type: string) =>
+  type in ocmResourceType ? ocmResourceType[type as keyof typeof ocmResourceType] : undefined;
+
 const eventNames = {
   FILE_DOWNLOADED: 'File Downloaded',
   BUTTON_CLICKED: 'Button Clicked',
@@ -333,4 +336,11 @@ const getTrackEvent = (trackEvent: TrackEvent, options: TrackEventOptions = {}) 
   },
 });
 
-export { eventNames, trackEvents, getTrackEvent, ocmResourceType, ocmResourceTypeByProduct };
+export {
+  eventNames,
+  trackEvents,
+  getTrackEvent,
+  ocmResourceType,
+  getOCMResourceType,
+  ocmResourceTypeByProduct,
+};

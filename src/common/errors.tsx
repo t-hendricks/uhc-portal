@@ -91,8 +91,9 @@ const getErrorMessage = (action: { type?: string; payload?: AxiosError<any> }) =
  * and it can be presented by ApiError.
  * @param {*} response The error response.
  */
-const hasOwnErrorPage = (response: AxiosResponse | undefined) =>
-  response?.data?.code === TERMS_REQUIRED_CODE;
+const hasOwnErrorPage = (response: AxiosResponse) => response?.data?.code === TERMS_REQUIRED_CODE;
+
+const getInternalErrorCode = (response: AxiosResponse): string | undefined => response?.data?.code;
 
 /**
  * getErrorState returns the standard error state for a rejected redux action.
@@ -103,7 +104,7 @@ const getErrorState = (action: {
   error?: boolean;
   payload?: AxiosError<any>;
 }): ErrorState | { pending: false; fulfilled: false; error: false } =>
-  hasOwnErrorPage(action.payload?.response)
+  action.payload?.response && hasOwnErrorPage(action.payload?.response)
     ? {
         // drop this error if already handled by its own error page.
         fulfilled: false,
@@ -115,7 +116,9 @@ const getErrorState = (action: {
         pending: false,
         error: true,
         errorCode: action.payload?.response?.status,
-        internalErrorCode: action.payload?.response?.data?.code,
+        internalErrorCode: action.payload?.response
+          ? getInternalErrorCode(action.payload?.response)
+          : undefined,
         errorMessage: getErrorMessage(action),
         errorDetails: action.payload?.response?.data?.details,
         operationID: action.payload?.response?.data?.operation_id,
@@ -196,6 +199,7 @@ const formatErrorDetails = (errorDetails?: ErrorDetail[]): React.ReactNode[] => 
 };
 
 export {
+  getInternalErrorCode,
   getErrorState,
   formatErrorDetails,
   hasOwnErrorPage,

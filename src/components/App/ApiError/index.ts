@@ -1,9 +1,10 @@
 import { connect } from 'react-redux';
+import { GlobalState } from '~/redux/store';
 
 import ApiError from './ApiError';
 import { apiErrorActions } from './ApiErrorActions';
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = (state: GlobalState) => ({
   apiError: state.apiError,
 });
 
