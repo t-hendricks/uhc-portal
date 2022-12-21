@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 import React from 'react';
 import moment from 'moment';
 import ReactMarkdown from 'react-markdown';
@@ -25,7 +26,7 @@ import {
   ExpandableRowContent,
 } from '@patternfly/react-table';
 
-import { SearchIcon } from '@patternfly/react-icons';
+import { SearchIcon, WrenchIcon } from '@patternfly/react-icons';
 import { ClusterLog } from '~/types/service_logs.v1/index';
 import './LogTable.scss';
 
@@ -97,7 +98,15 @@ const LogTable = ({ logs, setSorting, pending }: LogTableParams) => {
   const isLogExpanded = (log: LogType) => expandedLogs.includes(log.id);
 
   const mapLog = (log: LogType, rowIndex: number) => {
-    const { summary, severity, timestamp, description, username, created_by: createdBy } = log;
+    const {
+      summary,
+      severity,
+      timestamp,
+      description,
+      username,
+      created_by: createdBy,
+      internal_only,
+    } = log;
 
     const day = moment.utc(timestamp).format('D MMM YYYY, HH:mm UTC');
 
@@ -118,8 +127,10 @@ const LogTable = ({ logs, setSorting, pending }: LogTableParams) => {
       />
     );
 
+    const isInternal = internal_only; // summary.trim() === 'INTERNAL';
+
     return (
-      <Tbody>
+      <Tbody className={isInternal ? 'pf-u-background-color-danger' : undefined}>
         <Tr>
           <Td
             expand={{
@@ -128,10 +139,11 @@ const LogTable = ({ logs, setSorting, pending }: LogTableParams) => {
               onToggle: () => {
                 setLogExpanded(log, !isLogExpanded(log));
               },
-              // expandId: id,
             }}
           />
-          <Td>{summary}</Td>
+          <Td>
+            {summary} {isInternal ? <WrenchIcon /> : null}
+          </Td>
           <Td>{severity}</Td>
           <Td>{username || createdBy}</Td>
           <Td>{day}</Td>
