@@ -16,7 +16,7 @@ limitations under the License.
 import * as Sentry from '@sentry/browser';
 import isEmpty from 'lodash/isEmpty';
 import { action, ActionType } from 'typesafe-actions';
-import type { AxiosError, AxiosResponse } from 'axios';
+import axios, { AxiosResponse } from 'axios';
 import type { OCM } from 'openshift-assisted-ui-lib';
 
 import { clustersConstants } from '../constants';
@@ -375,7 +375,7 @@ const fetchClustersAndPermissions = async (
             total: subscriptions.data.total || 0,
             queryParams: { ...clusterRequestParams },
             meta: {
-              clustersServiceError: e as AxiosError,
+              clustersServiceError: e,
             },
           },
         };
@@ -517,7 +517,7 @@ const fetchSingleClusterAndPermissions = async (
       cluster = fakeClusterFromAISubscription(subscription.data, aiCluster?.data || null);
       cluster.aiCluster = aiCluster.data;
     } catch (e) {
-      if ((e as AxiosError)?.response?.status === 404) {
+      if (axios.isAxiosError(e) && e.response?.status === 404) {
         // The cluster is garbage collected or the user does not have privileges
         // eslint-disable-next-line no-console
         console.info(
@@ -535,9 +535,9 @@ const fetchSingleClusterAndPermissions = async (
     } catch (e) {
       Sentry.captureException(
         new Error(
-          `Failed to query feature support levels: ${JSON.stringify(
-            (e as AxiosError).response?.data,
-          )}`,
+          `Failed to query feature support levels: ${
+            axios.isAxiosError(e) ? JSON.stringify(e.response?.data) : ''
+          }`,
         ),
       );
     }

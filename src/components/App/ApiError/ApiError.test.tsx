@@ -1,12 +1,13 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 import { createMemoryHistory } from 'history';
-
+import type { AxiosResponse } from 'axios';
 import apiRequest from '../../../services/apiRequest';
 import ApiError from './ApiError';
 import TermsError from '../../common/TermsError';
 
 jest.mock('../../../services/apiRequest');
+
 const fixtures = {
   history: createMemoryHistory(),
   children: <div>ApiErrorChildren</div>,
@@ -38,7 +39,7 @@ describe('ApiError', () => {
           },
         ],
       },
-    };
+    } as AxiosResponse;
     const wrapper = shallow(
       <ApiError {...fixtures} apiError={apiError}>
         {fixtures.children}

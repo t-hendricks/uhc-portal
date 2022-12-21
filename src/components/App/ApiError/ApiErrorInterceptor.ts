@@ -1,14 +1,16 @@
-import get from 'lodash/get';
-
+import axios, { AxiosResponse, AxiosInstance } from 'axios';
 import { hasOwnErrorPage } from '../../../common/errors';
 
-const apiErrorInterceptor = (apiRequest, showApiError) => {
+const apiErrorInterceptor = (
+  apiRequest: AxiosInstance,
+  showApiError: (error: AxiosResponse) => void,
+) => {
   const interceptorID = apiRequest.interceptors.response.use(
     (response) => response,
     (error) => {
       // watch only errors that have their own error pages
-      if (hasOwnErrorPage(get(error, 'response'))) {
-        // show the error page and hanle error there
+      if (axios.isAxiosError(error) && error.response && hasOwnErrorPage(error.response)) {
+        // show the error page and handle error there
         showApiError(error.response);
       }
       return Promise.reject(error);

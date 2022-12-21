@@ -143,9 +143,9 @@ const Router: React.FC<RouterProps> = ({ history, planType, clusterId, externalC
 
   return (
     <>
-      <Insights history={history} />
+      <Insights />
       <ConnectedRouter history={history}>
-        <ApiError history={history} apiRequest={apiRequest}>
+        <ApiError apiRequest={apiRequest}>
           <Switch>
             {/*
               IMPORTANT!
