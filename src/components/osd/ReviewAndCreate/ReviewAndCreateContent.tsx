@@ -2,6 +2,7 @@ import React from 'react';
 import isEmpty from 'lodash/isEmpty';
 
 import { Bullseye, Spinner, Stack, StackItem, Title } from '@patternfly/react-core';
+import { useWizardContext } from '@patternfly/react-core/dist/esm/next';
 
 import config from '~/config';
 import ReviewSection, {
@@ -9,7 +10,7 @@ import ReviewSection, {
 } from '~/components/clusters/CreateOSDPage/CreateOSDWizard/ReviewClusterScreen/ReviewSection';
 import { useGlobalState } from '~/redux/hooks/useGlobalState';
 import { CloudProviderType } from '../ClusterSettings/CloudProvider/types';
-import { FieldId } from '../constants';
+import { FieldId, StepId } from '../constants';
 import { useFormState } from '../hooks';
 import { DebugClusterRequest } from './DebugClusterRequest';
 
@@ -18,6 +19,7 @@ interface ReviewAndCreateContentProps {
 }
 
 export const ReviewAndCreateContent = ({ isPending }: ReviewAndCreateContentProps) => {
+  const { goToStepById } = useWizardContext();
   const {
     values: {
       [FieldId.Product]: product,
@@ -81,16 +83,22 @@ export const ReviewAndCreateContent = ({ isPending }: ReviewAndCreateContentProp
     <div className="ocm-create-osd-review-screen">
       <Title headingLevel="h2">Review your dedicated cluster</Title>
 
-      <ReviewSection title="Billing model">
+      <ReviewSection title="Billing model" onGoToStep={() => goToStepById(StepId.BillingModel)}>
         {ReviewItem({ name: FieldId.BillingModel, formValues })}
         {ReviewItem({ name: FieldId.Byoc, formValues })}
       </ReviewSection>
 
-      <ReviewSection title="Cluster settings">
+      <ReviewSection
+        title="Cluster settings"
+        onGoToStep={() => goToStepById(StepId.ClusterSettingsCloudProvider)}
+      >
         {clusterSettingsFields.map((name) => ReviewItem({ name, formValues }))}
       </ReviewSection>
 
-      <ReviewSection title="Default machine pool">
+      <ReviewSection
+        title="Default machine pool"
+        onGoToStep={() => goToStepById(StepId.ClusterSettingsMachinePool)}
+      >
         {ReviewItem({ name: FieldId.MachineType, formValues })}
         {canAutoScale && ReviewItem({ name: FieldId.AutoscalingEnabled, formValues })}
         {autoscalingEnabled
@@ -100,7 +108,10 @@ export const ReviewAndCreateContent = ({ isPending }: ReviewAndCreateContentProp
           ReviewItem({ name: FieldId.NodeLabels, formValues })}
       </ReviewSection>
 
-      <ReviewSection title="Networking">
+      <ReviewSection
+        title="Networking"
+        onGoToStep={() => goToStepById(StepId.NetworkingConfiguration)}
+      >
         {ReviewItem({ name: FieldId.ClusterPrivacy, formValues })}
         {isByoc && ReviewItem({ name: FieldId.InstallToVpc, formValues })}
         {isByoc &&
@@ -121,7 +132,7 @@ export const ReviewAndCreateContent = ({ isPending }: ReviewAndCreateContentProp
         {ReviewItem({ name: FieldId.NetworkHostPrefix, formValues })}
       </ReviewSection>
 
-      <ReviewSection title="Updates">
+      <ReviewSection title="Updates" onGoToStep={() => goToStepById(StepId.ClusterUpdates)}>
         {ReviewItem({ name: FieldId.UpgradePolicy, formValues })}
         {formValues[FieldId.UpgradePolicy] === 'automatic' &&
           ReviewItem({ name: FieldId.AutomaticUpgradeSchedule, formValues })}

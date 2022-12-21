@@ -9,8 +9,13 @@ import './ReviewClusterScreen.scss';
 import ReviewSection, { ReviewItem, ReviewRoleItem } from './ReviewSection';
 import ReduxHiddenCheckbox from '../../../../common/ReduxFormComponents/ReduxHiddenCheckbox';
 import { getUserRoleForSelectedAWSAccount } from '~/components/clusters/CreateROSAPage/CreateROSAWizard/AccountsRolesScreen/AccountsRolesScreen';
+import { stepId, stepNameById } from '../osdWizardConstants';
+import {
+  stepId as rosaStepId,
+  stepNameById as rosaStepNameById,
+} from '~/components/clusters/CreateROSAPage/CreateROSAWizard/rosaWizardConstants';
 
-function ReviewClusterScreen({
+const ReviewClusterScreen = ({
   change,
   clusterRequestParams,
   formValues,
@@ -25,7 +30,8 @@ function ReviewClusterScreen({
   getOCMRoleResponse,
   clearGetUserRoleResponse,
   clearGetOcmRoleResponse,
-}) {
+  goToStepById,
+}) => {
   const isByoc = formValues.byoc === 'true';
   const isAWS = formValues.cloud_provider === 'aws';
   const isGCP = formValues.cloud_provider === 'gcp';
@@ -110,6 +116,21 @@ function ReviewClusterScreen({
   // setting hidden form field for field level validation
   change('detected_ocm_and_user_roles', !errorWithAWSAccountRoles);
 
+  const getStepId = (stepKey) => {
+    let step = stepKey;
+    if (stepKey === 'CLUSTER_SETTINGS') {
+      // choose a different sub-step for ROSA and OSD
+      if (isROSA) {
+        step = 'CLUSTER_SETTINGS__DETAILS';
+      } else {
+        step = 'CLUSTER_SETTINGS__CLOUD_PROVIDER';
+      }
+    }
+    return isROSA ? rosaStepId[step] : stepId[step];
+  };
+  const getStepName = (stepKey) =>
+    isROSA ? rosaStepNameById[rosaStepId[stepKey]] : stepNameById[stepId[stepKey]];
+
   return (
     <div className="ocm-create-osd-review-screen">
       <Title headingLevel="h2" className="pf-u-pb-md">
@@ -118,7 +139,11 @@ function ReviewClusterScreen({
       {isROSA && (
         <>
           <ReduxHiddenCheckbox name="detected_ocm_and_user_roles" />
-          <ReviewSection title="Accounts and roles" initiallyExpanded={errorWithAWSAccountRoles}>
+          <ReviewSection
+            title={getStepName('ACCOUNTS_AND_ROLES')}
+            onGoToStep={() => goToStepById(getStepId('ACCOUNTS_AND_ROLES'))}
+            initiallyExpanded={errorWithAWSAccountRoles}
+          >
             {ReviewItem({ name: 'associated_aws_id', formValues })}
             {ReviewRoleItem({
               name: 'ocm-role',
@@ -138,15 +163,24 @@ function ReviewClusterScreen({
         </>
       )}
       {!isROSA && (
-        <ReviewSection title="Billing Model">
+        <ReviewSection
+          title={getStepName('BILLING_MODEL')}
+          onGoToStep={() => goToStepById(getStepId('BILLING_MODEL'))}
+        >
           {ReviewItem({ name: 'billing_model', formValues })}
           {ReviewItem({ name: 'byoc', formValues })}
         </ReviewSection>
       )}
-      <ReviewSection title="Cluster settings">
+      <ReviewSection
+        title={getStepName('CLUSTER_SETTINGS')}
+        onGoToStep={() => goToStepById(getStepId('CLUSTER_SETTINGS'))}
+      >
         {clusterSettingsFields.map((name) => ReviewItem({ name, formValues }))}
       </ReviewSection>
-      <ReviewSection title="Default machine pool">
+      <ReviewSection
+        title="Default machine pool"
+        onGoToStep={() => goToStepById(getStepId('CLUSTER_SETTINGS__MACHINE_POOL'))}
+      >
         {ReviewItem({ name: 'machine_type', formValues })}
         {canAutoScale && ReviewItem({ name: 'autoscalingEnabled', formValues })}
         {autoscalingEnabled
@@ -155,7 +189,10 @@ function ReviewClusterScreen({
         {!(formValues.node_labels.length === 1 && isEmpty(formValues.node_labels[0])) &&
           ReviewItem({ name: 'node_labels', formValues })}
       </ReviewSection>
-      <ReviewSection title="Networking">
+      <ReviewSection
+        title={getStepName('NETWORKING')}
+        onGoToStep={() => goToStepById(getStepId('NETWORKING__CONFIGURATION'))}
+      >
         {ReviewItem({ name: 'cluster_privacy', formValues })}
         {showVPCCheckbox && ReviewItem({ name: 'install_to_vpc', formValues })}
         {showVPCCheckbox &&
@@ -189,12 +226,15 @@ function ReviewClusterScreen({
         {ReviewItem({ name: 'network_host_prefix', formValues })}
       </ReviewSection>
       {isROSA && (
-        <ReviewSection title="Cluster roles and policies">
+        <ReviewSection
+          title={getStepName('CLUSTER_ROLES_AND_POLICIES')}
+          onGoToStep={() => goToStepById(getStepId('CLUSTER_ROLES_AND_POLICIES'))}
+        >
           {ReviewItem({ name: 'rosa_roles_provider_creation_mode', formValues })}
           {ReviewItem({ name: 'custom_operator_roles_prefix', formValues })}
         </ReviewSection>
       )}
-      <ReviewSection title="Updates">
+      <ReviewSection title="Updates" onGoToStep={() => goToStepById(getStepId('CLUSTER_UPDATES'))}>
         {ReviewItem({ name: 'upgrade_policy', formValues })}
         {formValues.upgrade_policy === 'automatic' &&
           ReviewItem({ name: 'automatic_upgrade_schedule', formValues })}
@@ -204,7 +244,7 @@ function ReviewClusterScreen({
       {config.fakeOSD && <DebugClusterRequest {...clusterRequestParams} />}
     </div>
   );
-}
+};
 ReviewClusterScreen.propTypes = {
   change: PropTypes.func,
   clusterRequestParams: PropTypes.object.isRequired,
@@ -222,6 +262,7 @@ ReviewClusterScreen.propTypes = {
   getUserRoleResponse: PropTypes.object.isRequired,
   clearGetUserRoleResponse: PropTypes.func.isRequired,
   clearGetOcmRoleResponse: PropTypes.func.isRequired,
+  goToStepById: PropTypes.func.isRequired,
 };
 
 export default ReviewClusterScreen;
