@@ -21,7 +21,7 @@ const AWSCustomerManagedEncryption = ({ region }: Props) => (
         placeholder="Key ARN"
         validate={(value: string) => validateAWSKMSKeyARN(value, region)}
         isRequired
-        helpText="Unique, fully qualified identifier (Amazon Resource Name (ARN)) for your KMS Key."
+        helpText="Provide a custom key ARN"
         extendedHelpText={
           <>
             <p className="pf-u-mb-sm">{constants.awsKeyARN}</p>
