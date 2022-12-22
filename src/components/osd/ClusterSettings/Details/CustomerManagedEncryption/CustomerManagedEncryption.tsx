@@ -1,13 +1,13 @@
 import React from 'react';
 
-import { GridItem, Title } from '@patternfly/react-core';
+import { Grid, GridItem, Alert, FormGroup } from '@patternfly/react-core';
 
 import { validateAWSKMSKeyARN } from '~/common/validators';
 import ExternalLink from '~/components/common/ExternalLink';
 import { constants } from '~/components/clusters/CreateOSDPage/CreateOSDForm/CreateOSDFormConstants';
 import { CloudProviderType } from '../../CloudProvider/types';
 import { GcpEncryption } from './GcpEncryption';
-import { CheckboxField, TextInputField } from '~/components/osd/common/form';
+import { TextInputField, RadioGroupField } from '~/components/osd/common/form';
 import { FieldId } from '~/components/osd/constants';
 
 interface CustomerManagedEncryptionProps {
@@ -22,37 +22,48 @@ export const CustomerManagedEncryption = ({
   cloudProvider,
 }: CustomerManagedEncryptionProps) => {
   const isGCP = cloudProvider === CloudProviderType.Gcp;
-  const gcpDesc =
-    'Managed via Google Cloud Key Management Service. Used to store and generate encryption keys and encrypt your data.';
-  const awsDesc =
-    'Use a custom AWS KMS key for AWS EBS volume encryption instead of your default AWS KMS key.';
+
+  const cloudProviderLearnLink = isGCP
+    ? 'https://cloud.google.com/storage/docs/encryption/default-keys'
+    : 'https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/data-protection.html';
+
+  const helpText = isGCP
+    ? 'Managed via Google Cloud Key Management Service. Used to store and generate encryption keys and encrypt your data.'
+    : 'Use a custom AWS KMS key for AWS EBS volume encryption instead of your default AWS KMS key.';
 
   return (
-    <>
-      <CheckboxField
-        name={FieldId.CustomerManagedKey}
-        label="Encrypt persistent volumes with customer keys"
-        tooltip={
-          <>
-            <Title headingLevel="h6" className="pf-u-mb-sm">
-              {isGCP ? constants.cloudKMSTitle : constants.amazonEBSTitle}
-            </Title>
-            <p className="pf-u-mb-sm">{isGCP ? constants.cloudKMS : constants.amazonEBS}</p>
-            <ExternalLink
-              href={
-                isGCP
-                  ? 'https://cloud.google.com/kms/docs/resource-hierarchy'
-                  : 'https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/EBSEncryption.html'
-              }
-            >
-              {isGCP ? 'Learn all about Cloud KMS' : 'Learn more about AWS EBS encryption'}
-            </ExternalLink>
-          </>
-        }
-        input={{ description: isGCP ? gcpDesc : awsDesc }}
-      />
+    <Grid hasGutter>
+      <GridItem>
+        <FormGroup
+          fieldId={FieldId.CustomerManagedKey}
+          id="customerManagedKey"
+          label="Encryption Keys"
+          isInline
+        >
+          <div className="pf-u-font-size-sm pf-u-pb-md">
+            The cloud storage for your cluster is encrypted at rest.{' '}
+            <ExternalLink href={cloudProviderLearnLink}>Learn more</ExternalLink>
+          </div>
 
-      {hasCustomerManagedKey &&
+          <RadioGroupField
+            name={FieldId.CustomerManagedKey}
+            direction="row"
+            options={[
+              {
+                value: 'false',
+                label: 'Use default KMS Keys',
+              },
+              {
+                value: 'true',
+                label: 'Use custom KMS keys',
+                popoverHint: helpText,
+              },
+            ]}
+          />
+        </FormGroup>
+      </GridItem>
+
+      {hasCustomerManagedKey?.toString() === 'true' &&
         (isGCP ? (
           <GcpEncryption region={region} />
         ) : (
@@ -61,7 +72,7 @@ export const CustomerManagedEncryption = ({
               name={FieldId.KmsKeyArn}
               label="Key ARN"
               validate={(value) => validateAWSKMSKeyARN(value, region)}
-              helperText="Unique, fully qualified identifier (Amazon Resource Name (ARN)) for your KMS Key."
+              helperText="Provide a custom key ARN"
               tooltip={
                 <>
                   <p className="pf-u-mb-sm">{constants.awsKeyARN}</p>
@@ -71,8 +82,16 @@ export const CustomerManagedEncryption = ({
                 </>
               }
             />
+            <GridItem md={6}>
+              <Alert
+                isInline
+                isLiveRegion
+                variant="info"
+                title="If you delete the ARN key, the cluster will no longer be available."
+              />
+            </GridItem>
           </GridItem>
         ))}
-    </>
+    </Grid>
   );
 };
