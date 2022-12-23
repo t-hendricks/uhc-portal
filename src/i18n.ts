@@ -1,8 +1,9 @@
 import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
+// @ts-ignore
 import enTranslation from 'openshift-assisted-ui-lib/locales/en/translation.json';
 
-const dateTimeFormatter = new Intl.DateTimeFormat({
+const dateTimeFormatter = new Intl.DateTimeFormat('default', {
   month: 'short',
   day: 'numeric',
   hour: 'numeric',
@@ -43,9 +44,10 @@ i18n.use(initReactI18next).init({
     transSupportBasicHtmlNodes: true, // allow <br/> and simple html elements in translations
   },
   missingKeyHandler(lng, ns, key) {
-    window.windowError = `Missing i18n key '${key}' in namespace '${ns}' and language '${lng}.'`;
+    const error = `Missing i18n key '${key}' in namespace '${ns}' and language '${lng}.'`;
+    (window as any).windowError = error;
     // eslint-disable-next-line no-console
-    console.error(window.windowError);
+    console.error(error);
   },
 });
 
