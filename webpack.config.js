@@ -52,7 +52,7 @@ module.exports = async (_env, argv) => {
     bundleAnalyzer = new BundleAnalyzerPlugin({ analyzerPort: '5000', openAnalyzer: true });
   }
   const publicPath = `/${appDeployment}/${insights.appname}/`;
-  const entry = path.resolve(srcDir, 'bootstrap.js');
+  const entry = path.resolve(srcDir, 'bootstrap.ts');
 
   const noInsightsProxy = argv.env.noproxy;
 
@@ -115,7 +115,7 @@ module.exports = async (_env, argv) => {
         root: __dirname,
         moduleName,
         exposes: {
-          './RootApp': path.resolve(srcDir, 'chrome-main.jsx'),
+          './RootApp': path.resolve(srcDir, 'chrome-main.tsx'),
         },
         shared: [
           {
@@ -224,7 +224,7 @@ module.exports = async (_env, argv) => {
       },
       alias: {
         '~': path.resolve(__dirname, 'src/'),
-        '@testUtils': path.resolve(__dirname, 'src/testUtils.jsx'),
+        '@testUtils': path.resolve(__dirname, 'src/testUtils.tsx'),
       },
     },
 
