@@ -10,7 +10,7 @@ import { normalizedProducts } from '../../../common/subscriptionTypes';
 import '../CreateOSDPage/CreateOSDForm/CreateOSDForm.scss';
 
 function UserWorkloadMonitoringSection({ parent, disableUVM, planType }) {
-  const title = <Title headingLevel="h3"> Monitoring </Title>;
+  const title = <Title headingLevel="h4"> Monitoring </Title>;
   const isROSA = planType === normalizedProducts.ROSA;
   const isOSD = planType === normalizedProducts.OSD || planType === normalizedProducts.OSDTrial;
   return (

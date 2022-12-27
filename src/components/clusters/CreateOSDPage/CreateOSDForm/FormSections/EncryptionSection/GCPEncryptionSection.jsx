@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { GridItem, FormGroup, Text } from '@patternfly/react-core';
+import { Grid, GridItem, FormGroup, Text } from '@patternfly/react-core';
 import { Field } from 'redux-form';
 import ReduxVerticalFormGroup from '~/components/common/ReduxFormComponents/ReduxVerticalFormGroup';
 import { required, validateGCPKMSServiceAccount } from '~/common/validators';
@@ -14,7 +14,7 @@ import KMSKeySelect from './KMSKeySelect';
 
 function GCPCustomerManagedEncryption({ selectedRegion }) {
   return (
-    <>
+    <Grid className="gcp-grid" hasGutter>
       <GridItem md={6}>
         <FormGroup
           label="Key ring location"
@@ -111,8 +111,7 @@ function GCPCustomerManagedEncryption({ selectedRegion }) {
           showHelpTextOnError={false}
         />
       </GridItem>
-      <GridItem md={6} />
-    </>
+    </Grid>
   );
 }
 
