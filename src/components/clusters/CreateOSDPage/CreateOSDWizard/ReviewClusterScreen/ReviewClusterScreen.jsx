@@ -41,8 +41,8 @@ function ReviewClusterScreen({
     !isByoc && isROSA && 'load_balancers',
     isByoc && isAWS && !isROSA && 'disable_scp_checks',
     'enable_user_workload_monitoring',
-    'etcd_encryption',
     isByoc && 'customer_managed_key',
+    'etcd_encryption',
   ].filter(Boolean);
   if (isCreateClusterPending) {
     return (
