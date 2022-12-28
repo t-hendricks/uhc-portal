@@ -185,7 +185,7 @@ const ReduxRichInputField = (props) => {
 
   const triggerAsyncValidation = async (blurEvent) => {
     // triggers the form async validation (to prevent "next" navigation if field is invalid)
-    input.onBlur(blurEvent);
+    input.onBlur(blurEvent ?? inputValue);
     // recalculates the component data for rendering
     await evaluateAsyncValidation(blurEvent?.target.value ?? inputValue);
   };
