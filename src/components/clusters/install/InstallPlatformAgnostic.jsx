@@ -52,6 +52,7 @@ class InstallPlatformAgnostic extends Component {
             */
             // TODO replace the below string versions with the above JSX versions when we have docs URLs for "non-tested platforms". See https://issues.redhat.com/browse/HAC-2403
             providerSpecificFeatures={{
+              abi: ['For non-tested platforms', 'For air-gapped/restricted networks'],
               ai: ['For non-tested platforms'],
               upi: ['For non-tested platforms'],
             }}
