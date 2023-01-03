@@ -20,7 +20,7 @@ const RevokeTokensInstructions = ({ reason }: Props) => (
     <List component="ol">
       <ListItem>
         Navigate to the{' '}
-        <ExternalLink href="https://sso.redhat.com/auth/realms/redhat-external/account/applications">
+        <ExternalLink href="https://sso.redhat.com/auth/realms/redhat-external/account/#/applications">
           <b>offline API token management</b>
         </ExternalLink>{' '}
         page.

@@ -23,8 +23,9 @@
     "@redhat-cloud-services/frontend-components-notifications": "^3.1.0",
     "@redhat-cloud-services/frontend-components-utilities": "^3.1.1",
     "@redhat-cloud-services/rule-components": "^3.1.1",
+    "@redhat-cloud-services/types": "^0.0.16",
     "@reduxjs/toolkit": "^1.6.2",
-    "@sentry/browser": "5.19.1",
+    "@sentry/browser": "^5.19.1",
     "@sentry/integrations": "^5.19.1",
     "@wojtekmaj/enzyme-adapter-react-17": "^0.6.3",
     "axios": ">=0.22.0 <1.0.0",
@@ -49,7 +50,7 @@
     "lodash": "^4.17.19",
     "moment": "^2.24.0",
     "object.fromentries": "^2.0.5",
-    "openshift-assisted-ui-lib": "2.13.0",
+    "openshift-assisted-ui-lib": "2.13.1",
     "path-browserify": "^1.0.1",
     "process": "^0.11.10",
     "prop-types": "^15.7.2",
@@ -186,7 +187,7 @@
       "enzyme-to-json/serializer"
     ],
     "setupFiles": [
-      "<rootDir>/src/setupTests.js"
+      "<rootDir>/src/setupTests.ts"
     ],
     "preset": "ts-jest",
     "transform": {
@@ -199,7 +200,7 @@
     "moduleNameMapper": {
       "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/__mocks__/fileMock.js",
       "\\.(css|less|scss)$": "<rootDir>/__mocks__/styleMock.js",
-      "^@testUtils": "<rootDir>/src/testUtils.jsx",
+      "^@testUtils": "<rootDir>/src/testUtils.tsx",
       "^~/(.*)$": "<rootDir>/src/$1"
     },
     "globals": {

@@ -30,6 +30,10 @@ exports[`Platform agnostic install renders correctly 1`] = `
       hideIPI={true}
       providerSpecificFeatures={
         Object {
+          "abi": Array [
+            "For non-tested platforms",
+            "For air-gapped/restricted networks",
+          ],
           "ai": Array [
             "For non-tested platforms",
           ],

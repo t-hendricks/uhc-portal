@@ -31,6 +31,18 @@ export const CustomerManagedEncryption = ({
     ? 'Managed via Google Cloud Key Management Service. Used to store and generate encryption keys and encrypt your data.'
     : 'Use a custom AWS KMS key for AWS EBS volume encryption instead of your default AWS KMS key.';
 
+  const customerManagedKeyOptions = [
+    {
+      value: 'false',
+      label: 'Use default KMS Keys',
+    },
+    {
+      value: 'true',
+      label: 'Use custom KMS keys',
+      popoverHint: helpText,
+    },
+  ];
+
   return (
     <Grid hasGutter>
       <GridItem>
@@ -38,6 +50,7 @@ export const CustomerManagedEncryption = ({
           fieldId={FieldId.CustomerManagedKey}
           id="customerManagedKey"
           label="Encryption Keys"
+          isRequired
           isInline
         >
           <div className="pf-u-font-size-sm pf-u-pb-md">
@@ -47,18 +60,9 @@ export const CustomerManagedEncryption = ({
 
           <RadioGroupField
             name={FieldId.CustomerManagedKey}
+            options={customerManagedKeyOptions}
             direction="row"
-            options={[
-              {
-                value: 'false',
-                label: 'Use default KMS Keys',
-              },
-              {
-                value: 'true',
-                label: 'Use custom KMS keys',
-                popoverHint: helpText,
-              },
-            ]}
+            isRequired
           />
         </FormGroup>
       </GridItem>
@@ -84,6 +88,7 @@ export const CustomerManagedEncryption = ({
             />
             <GridItem md={6}>
               <Alert
+                className="pf-u-mt-sm"
                 isInline
                 isLiveRegion
                 variant="info"

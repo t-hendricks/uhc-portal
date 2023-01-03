@@ -56,8 +56,8 @@ export const ReviewAndCreateContent = ({ isPending }: ReviewAndCreateContentProp
     ...(!isByoc ? [FieldId.PersistentStorage] : []),
     ...(isByoc && isAWS ? [FieldId.DisableScpChecks] : []),
     FieldId.EnableUserWorkloadMonitoring,
-    FieldId.EtcdEncryption,
     ...(isByoc ? [FieldId.CustomerManagedKey] : []),
+    FieldId.EtcdEncryption,
   ];
 
   if (isPending) {
