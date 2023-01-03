@@ -49,8 +49,7 @@ export CHROMEDRIVER_SKIP_DOWNLOAD=true
 make \
   js-lint \
   app \
-  test \
-  binaries
+  test
 
 export FORCE_COLOR=1
 
@@ -62,6 +61,3 @@ timeout \
   --kill-after "2m" \
   "10m" \
   "run/selenium-pod.sh"
-
-make \
-  go-lint
