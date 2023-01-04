@@ -30,6 +30,7 @@ import {
   breadcrumbs,
   documentTitle,
   FieldId,
+  initialTouched,
   initialValues,
   StepId,
   StepName,
@@ -97,7 +98,7 @@ export const CreateOsdWizard = () => {
   };
 
   return (
-    <Formik initialValues={initialValues} onSubmit={onSubmit}>
+    <Formik initialValues={initialValues} initialTouched={initialTouched} onSubmit={onSubmit}>
       <>
         <PageTitle
           title="Create an OpenShift Dedicated Cluster"
