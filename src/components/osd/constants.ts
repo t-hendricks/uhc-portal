@@ -132,6 +132,10 @@ export const initialValues = {
   [FieldId.DisableScpChecks]: false,
 };
 
+export const initialTouched = {
+  [FieldId.AcknowledgePrereq]: true,
+};
+
 export const clusterNameHint =
   'This name identifies your cluster in OpenShift Cluster Manager and forms part of the cluster console subdomain.';
 export const documentTitle =
