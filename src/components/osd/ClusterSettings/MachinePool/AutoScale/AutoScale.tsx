@@ -30,7 +30,6 @@ interface AutoScaleProps {
   product: string;
   isBYOC: boolean;
   isDefaultMachinePool: boolean;
-  onChange?(): void;
 }
 
 export const AutoScale = ({
@@ -41,9 +40,13 @@ export const AutoScale = ({
   isMultiAz,
   autoScaleMinNodesValue = '0',
   autoScaleMaxNodesValue = '0',
-  onChange,
 }: AutoScaleProps) => {
-  const { setFieldValue } = useFormState();
+  const {
+    setFieldValue,
+    getFieldProps,
+    getFieldMeta,
+    values: { [FieldId.MinReplicas]: minReplicas },
+  } = useFormState();
   const [minErrorMessage, setMinErrorMessage] = React.useState<string>();
   const [maxErrorMessage, setMaxErrorMessage] = React.useState<string>();
 
@@ -78,7 +81,7 @@ export const AutoScale = ({
       product,
       isBYOC,
       isMultiAz,
-      autoScaleMinNodesValue,
+      autoScaleMinNodesValue: undefined,
     });
 
     if (minNodesAllowed) {
@@ -88,23 +91,30 @@ export const AutoScale = ({
     return undefined;
   };
 
-  const validateMinNodes = (value: string) => {
-    const minNodesAllowed = minNodes();
-    return validateNumericInput(value, { min: minNodesAllowed, allowZero: true });
-  };
-
-  const validateMaxLessMinNodes = (value: string, allValues: Record<string, any>) => {
-    if (parseInt(value, 10) < parseInt(allValues.min_replicas, 10)) {
-      return 'Max nodes cannot be less than min nodes.';
-    }
-    return undefined;
-  };
-
-  const validateMaxNodes = (val: string) =>
-    validateNumericInput(val, {
+  const validateNodes = (value: string) => {
+    const requiredError = required(value?.toString());
+    const minNodesError = validateNumericInput(value, { min: minNodes(), allowZero: true });
+    const maxNodesError = validateNumericInput(value, {
       max: isMultiAz ? MAX_NODES / 3 : MAX_NODES,
       allowZero: true,
     });
+
+    return requiredError || minNodesError || maxNodesError || undefined;
+  };
+
+  const validateMaxNodes = (value: string) => {
+    const nodesError = validateNodes(value);
+
+    if (nodesError) {
+      return nodesError;
+    }
+
+    if (minReplicas && parseInt(value, 10) < parseInt(minReplicas, 10)) {
+      return 'Max nodes cannot be less than min nodes.';
+    }
+
+    return undefined;
+  };
 
   const minField = (
     <Field
@@ -112,12 +122,17 @@ export const AutoScale = ({
       name={FieldId.MinReplicas}
       type="text"
       ariaLabel="Minimum nodes"
-      validate={[validateMinNodes, validateMaxNodes, required]}
+      validate={validateNodes}
       displayError={(_: string, error: string) => setMinErrorMessage(error)}
       hideError={() => setMinErrorMessage(undefined)}
       limit="min"
       min={minNodes()}
       max={isMultiAz ? MAX_NODES / 3 : MAX_NODES}
+      input={{
+        ...getFieldProps(FieldId.MinReplicas),
+        onChange: (value: string) => setFieldValue(FieldId.MinReplicas, value),
+      }}
+      meta={getFieldMeta(FieldId.MinReplicas)}
     />
   );
 
@@ -127,12 +142,17 @@ export const AutoScale = ({
       name={FieldId.MaxReplicas}
       type="text"
       ariaLabel="Maximum nodes"
-      validate={[validateMinNodes, validateMaxLessMinNodes, validateMaxNodes, required]}
+      validate={validateMaxNodes}
       displayError={(_: string, error: string) => setMaxErrorMessage(error)}
       hideError={() => setMaxErrorMessage(undefined)}
       limit="max"
       min={minNodes()}
       max={isMultiAz ? MAX_NODES / 3 : MAX_NODES}
+      input={{
+        ...getFieldProps(FieldId.MaxReplicas),
+        onChange: (value: string) => setFieldValue(FieldId.MaxReplicas, value),
+      }}
+      meta={getFieldMeta(FieldId.MaxReplicas)}
     />
   );
 
@@ -226,11 +246,7 @@ export const AutoScale = ({
           }
         />
 
-        <CheckboxField
-          name={FieldId.AutoscalingEnabled}
-          label="Enable autoscaling"
-          input={{ onChange }}
-        />
+        <CheckboxField name={FieldId.AutoscalingEnabled} label="Enable autoscaling" />
         {autoscalingEnabled && azFormGroups}
       </GridItem>
     </>
