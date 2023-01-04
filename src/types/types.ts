@@ -14,7 +14,9 @@ export type ViewOptions = {
   pageSize: number;
   totalCount: number;
   totalPages: number;
-  filter: string | { description?: string; timestampFrom?: string; timestampTo?: string };
+  filter:
+    | string
+    | { description?: string; loggedBy?: string; timestampFrom?: string; timestampTo?: string };
   sorting: {
     sortField: string;
     isAscending: boolean;
