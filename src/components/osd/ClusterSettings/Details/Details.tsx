@@ -314,7 +314,7 @@ export const Details = () => {
                       <PopoverHint
                         hint={
                           <>
-                            {constants.enableAdditionalEtcdHint}
+                            {constants.enableAdditionalEtcdHint}{' '}
                             <ExternalLink href={links.OSD_ETCD_ENCRYPTION}>
                               Learn more about etcd encryption
                             </ExternalLink>
