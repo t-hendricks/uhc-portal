@@ -195,7 +195,7 @@ function AccountRolesARNsSection({
         <Title headingLevel="h3">Account roles</Title>
       </GridItem>
       {hasARNsError && (
-        <GridItem>
+        <GridItem span={8}>
           <ErrorBox
             message={resolveARNsErrorTitle(getAWSAccountRolesARNsResponse)}
             response={getAWSAccountRolesARNsResponse}
@@ -207,7 +207,7 @@ function AccountRolesARNsSection({
         </GridItem>
       )}
       {!getAWSAccountRolesARNsResponse.pending && !allARNsFound && !hasARNsError && (
-        <GridItem>
+        <GridItem span={8}>
           <Alert isInline variant="warning" title="Some account roles ARNs were not detected.">
             <br />
             Create the account roles using the following command in the ROSA CLI
