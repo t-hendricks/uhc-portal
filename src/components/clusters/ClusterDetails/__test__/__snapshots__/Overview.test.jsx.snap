@@ -1328,6 +1328,7 @@ exports[`<Overview /> for an ARO cluster should render 1`] = `
                     },
                   }
                 }
+                showAssistedId={false}
               />
             </GridItem>
             <GridItem
@@ -1920,6 +1921,7 @@ exports[`<Overview /> for an OCP cluster should render 1`] = `
                     },
                   }
                 }
+                showAssistedId={false}
               />
             </GridItem>
             <GridItem
@@ -2836,6 +2838,7 @@ exports[`<Overview /> for an OSD cluster should render 1`] = `
                     },
                   }
                 }
+                showAssistedId={false}
               />
             </GridItem>
             <GridItem

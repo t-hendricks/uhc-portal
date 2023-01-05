@@ -14,53 +14,13 @@
 # limitations under the License.
 #
 
-# Binaries to build:
-binaries:=$(shell ls cmd)
-
 # Default target
 .PHONY: setup
-setup: binaries node_modules insights-proxy-check
-
-# These are declared phony so `make binaries` always rebuilds them:
-.PHONY: binaries
-binaries:
-	for binary in $(binaries); do \
-		go build -o "$${binary}" "./cmd/$${binary}" || exit 1; \
-	done
-
-.PHONY: lint
-lint: js-lint go-lint
+setup: node_modules insights-proxy-check
 
 .PHONY: js-lint
 js-lint: node_modules
 	yarn lint
-
-.PHONY: go-lint
-go-lint:
-	golangci-lint \
-		run \
-		--no-config \
-		--issues-exit-code=1 \
-		--deadline=15m \
-		--disable-all \
-		--enable=deadcode \
-		--enable=gas \
-		--enable=goconst \
-		--enable=gocyclo \
-		--enable=gofmt \
-		--enable=golint \
-		--enable=ineffassign \
-		--enable=lll \
-		--enable=megacheck \
-		--enable=misspell \
-		--enable=structcheck \
-		--enable=unconvert \
-		--enable=varcheck \
-		$(NULL)
-
-.PHONY: fmt
-fmt:
-	gofmt -s -l -w ./cmd/ ./pkg/.
 
 .PHONY: test
 test: node_modules
@@ -109,7 +69,7 @@ openapi: run/ocm-api-model run/ocm-api-metamodel
 	run/ocm-api-metamodel/metamodel generate openapi --model=run/ocm-api-model/model --output=run/ocm-api-model/openapi
 	cat run/ocm-api-model/openapi/clusters_mgmt/v1/openapi.json | jq . > openapi/clusters_mgmt.v1.json
 
-# Patching /etc/hosts is needed (once) for using insights-proxy with local browser;
+# Patching /etc/hosts is needed (once) for development with local server;
 # NOT needed for selenium tests where we arrange it in the container running the browser.
 .PHONY: insights-proxy-check
 .SILENT: insights-proxy-check

@@ -184,7 +184,7 @@ export const BillingModel = () => {
     <Flex alignItems={{ default: 'alignItemsFlexStart' }}>
       <FlexItem flex={{ default: 'flex_3' }}>
         <Stack hasGutter>
-          <StackItem>
+          <StackItem className="pf-u-mb-0">
             <Title headingLevel="h2" className="pf-u-pb-md">
               Welcome to Red Hat OpenShift Dedicated
             </Title>

@@ -11,6 +11,7 @@ import { UserAction } from '../actions/userActions';
 import { PromiseActionType, PromiseReducerState } from '../types';
 import { Organization, QuotaCost } from '../../types/accounts_mgmt.v1';
 import { UserInfo } from '../../types/types';
+import { TermsReviewResponse } from '~/types/authorizations.v1';
 
 export type OrganizationState = {
   details: Organization;
@@ -23,11 +24,7 @@ export type OrganizationState = {
 export type State = {
   keycloakProfile: Partial<UserInfo>;
   organization: PromiseReducerState<OrganizationState>;
-  selfTermsReviewResult: PromiseReducerState<{
-    ['terms_available']: boolean;
-    ['terms_required']: boolean;
-    ['redirect_url']: string;
-  }>;
+  selfTermsReviewResult: PromiseReducerState<TermsReviewResponse>;
 };
 
 const initialState: State = {

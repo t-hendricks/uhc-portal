@@ -2,7 +2,12 @@ interface Insights {
   ocm?: {
     on: (event: string, callback: () => void) => () => void;
   };
-  chrome: import('@redhat-cloud-services/types').ChromeAPI;
+  chrome: import('@redhat-cloud-services/types').ChromeAPI & {
+    enable: {
+      // missing debug function types
+      segmentDev: () => void;
+    };
+  };
 }
 
 declare const insights: Insights;
@@ -36,4 +41,8 @@ interface ObjectConstructor {
    * @param entries An iterable object that contains key-value entries for properties and methods.
    */
   fromEntries(entries: Iterable<readonly any[]>): any;
+}
+
+declare module 'object.fromentries' {
+  function shim(): void;
 }

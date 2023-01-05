@@ -66,10 +66,12 @@ import ConnectedInstallOSPUPI from '../clusters/install/InstallOSPUPI';
 import InstallRHV from '../clusters/install/InstallRHV';
 import ConnectedInstallRHVIPI from '../clusters/install/InstallRHVIPI';
 import ConnectedInstallRHVUPI from '../clusters/install/InstallRHVUPI';
+import ConnectedInstallVSphereABI from '../clusters/install/InstallVSphereABI';
 import ConnectedInstallVSphereUPI from '../clusters/install/InstallVSphereUPI';
 import ConnectedInstallVSphereIPI from '../clusters/install/InstallVSphereIPI';
 import InstallVSphere from '../clusters/install/InstallVSphere';
 import InstallPlatformAgnostic from '../clusters/install/InstallPlatformAgnostic';
+import ConnectedInstallPlatformAgnosticABI from '../clusters/install/InstallPlatformAgnosticABI';
 import ConnectedInstallPlatformAgnosticUPI from '../clusters/install/InstallPlatformAgnosticUPI';
 import ConnectedInstallPreRelease from '../clusters/install/InstallPreRelease';
 import ConnectedInstallPullSecret from '../clusters/install/InstallPullSecret';
@@ -90,6 +92,7 @@ import {
   ASSISTED_INSTALLER_FEATURE,
   OSD_WIZARD_V2_FEATURE,
 } from '../../redux/constants/featureConstants';
+import InstallBMABI from '../clusters/install/InstallBareMetalABI';
 import InstallBMUPI from '../clusters/install/InstallBareMetalUPI';
 import InstallBMIPI from '../clusters/install/InstallBareMetalIPI';
 import InstallArmBareMetal from '../clusters/install/InstallArmBareMetal';
@@ -140,9 +143,9 @@ const Router: React.FC<RouterProps> = ({ history, planType, clusterId, externalC
 
   return (
     <>
-      <Insights history={history} />
+      <Insights />
       <ConnectedRouter history={history}>
-        <ApiError history={history} apiRequest={apiRequest}>
+        <ApiError apiRequest={apiRequest}>
           <Switch>
             {/*
               IMPORTANT!
@@ -242,9 +245,11 @@ const Router: React.FC<RouterProps> = ({ history, planType, clusterId, externalC
             <Route path="/install/azure-stack-hub" exact component={InstallASH} />
             <Route path="/install/metal/user-provisioned" component={InstallBMUPI} />
             <Route path="/install/metal/installer-provisioned" component={InstallBMIPI} />
+            <Route path="/install/metal/agent-based" component={InstallBMABI} />
             <Route path="/install/metal" component={GatedMetalInstall} />
             <Route path="/install/multi/pre-release" component={ConnectedInstallMultiPreRelease} />
             <Route path="/install/vsphere" exact component={InstallVSphere} />
+            <Route path="/install/vsphere/agent-based" component={ConnectedInstallVSphereABI} />
             <Route
               path="/install/vsphere/user-provisioned"
               component={ConnectedInstallVSphereUPI}
@@ -258,6 +263,10 @@ const Router: React.FC<RouterProps> = ({ history, planType, clusterId, externalC
             <Route path="/install/ibmz/pre-release" component={ConnectedInstallIBMPreRelease} />
             <Route path="/install/power/user-provisioned" component={ConnectedInstallPower} />
             <Route path="/install/power/pre-release" component={ConnectedInstallPowerPreRelease} />
+            <Route
+              path="/install/platform-agnostic/agent-based"
+              component={ConnectedInstallPlatformAgnosticABI}
+            />
             <Route
               path="/install/platform-agnostic/user-provisioned"
               component={ConnectedInstallPlatformAgnosticUPI}

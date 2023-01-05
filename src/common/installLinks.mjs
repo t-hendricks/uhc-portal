@@ -3,6 +3,8 @@
 const MIRROR_BUTANE_LATEST = 'https://mirror.openshift.com/pub/openshift-v4/clients/butane/latest';
 const MIRROR_CLIENTS_STABLE_X86 =
   'https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp/stable/';
+const MIRROR_CLIENTS_CANDIDATE_X86 =
+  'https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp/candidate/';
 const MIRROR_CLIENTS_STABLE_IBMZ =
   'https://mirror.openshift.com/pub/openshift-v4/s390x/clients/ocp/stable/';
 const MIRROR_CLIENTS_STABLE_PPC =
@@ -135,6 +137,10 @@ const links = {
   INSTALL_ASH_CUSTOMIZATIONS: `${DOCS_BASE}/installing/installing_azure_stack_hub/installing-azure-stack-hub-network-customizations.html`,
   RHCOS_ASHUPI_VHD_X86: `${MIRROR_RHCOS_LATEST_X86}/rhcos-azurestack.x86_64.vhd.gz`,
 
+  // TODO restore this doc after 4.12 GA
+  // INSTALL_BAREMETAL_ABI_GETTING_STARTED: `${DOCS_BASE}/installing/installing_with_agent_based_installer/preparing-to-install-with-agent-based-installer.html`,
+  INSTALL_BAREMETAL_ABI_GETTING_STARTED:
+    'https://cloud.redhat.com/blog/meet-the-new-agent-based-openshift-installer-1',
   INSTALL_BAREMETAL_UPI_GETTING_STARTED: `${DOCS_BASE}/installing/installing_bare_metal/installing-bare-metal.html`,
   INSTALL_BAREMETAL_IPI_GETTING_STARTED: `${DOCS_BASE}/installing/installing_bare_metal_ipi/ipi-install-installation-workflow.html`,
   INSTALL_BAREMETAL_RHCOS_LEARN_MORE: `${DOCS_BASE}/installing/installing_bare_metal/installing-bare-metal.html#creating-machines-bare-metal`,
@@ -161,6 +167,10 @@ const links = {
   RHCOS_OSPUPI_QCOW_X86: `${MIRROR_RHCOS_LATEST_X86}/rhcos-openstack.x86_64.qcow2.gz`,
   RHCOS_OSPUPI_QCOW_PPC: `${MIRROR_RHCOS_LATEST_PPC}/rhcos-openstack.ppc64le.qcow2.gz`,
 
+  // TODO restore this doc after 4.12 GA
+  // INSTALL_VSPHEREABI_GETTING_STARTED: `${DOCS_BASE}/installing/installing_with_agent_based_installer/preparing-to-install-with-agent-based-installer.html`,
+  INSTALL_VSPHEREABI_GETTING_STARTED:
+    'https://cloud.redhat.com/blog/meet-the-new-agent-based-openshift-installer-1',
   INSTALL_VSPHEREUPI_GETTING_STARTED: `${DOCS_BASE}/installing/installing_vsphere/installing-vsphere.html`,
   INSTALL_VSPHEREIPI_GETTING_STARTED: `${DOCS_BASE}/installing/installing_vsphere/installing-vsphere-installer-provisioned.html`,
   INSTALL_VSPHERE_RHCOS_LEARN_MORE: `${DOCS_BASE}/installing/installing_vsphere/installing-vsphere.html#installation-vsphere-machines_installing-vsphere`,
@@ -181,6 +191,10 @@ const links = {
   INSTALL_RHV_CUSTOMIZATIONS: `${DOCS_BASE}/installing/installing_rhv/installing-rhv-customizations.html`,
   INSTALL_RHVUPI_GETTING_STARTED: `${DOCS_BASE}/installing/installing_rhv/installing-rhv-user-infra.html`,
 
+  // TODO restore this doc after 4.12 GA
+  // INSTALL_GENERIC_ABI_GETTING_STARTED: `${DOCS_BASE}/installing/installing_with_agent_based_installer/preparing-to-install-with-agent-based-installer.html`,
+  INSTALL_GENERIC_ABI_GETTING_STARTED:
+    'https://cloud.redhat.com/blog/meet-the-new-agent-based-openshift-installer-1',
   INSTALL_GENERIC_GETTING_STARTED: `${DOCS_BASE}/installing/installing_platform_agnostic/installing-platform-agnostic.html`,
   INSTALL_GENERIC_RHCOS_LEARN_MORE: `${DOCS_BASE}/installing/installing_platform_agnostic/installing-platform-agnostic.html#creating-machines-platform-agnostic`,
   RHCOS_GENERIC_ISO_X86: `${MIRROR_RHCOS_LATEST_X86}/rhcos-live.x86_64.iso`,
@@ -252,6 +266,7 @@ const links = {
   ROSA_AWS_ACCOUNT_ASSOCIATION: `${ROSA_DOCS_BASE}/rosa_planning/rosa-sts-aws-prereqs.html#rosa-associating-account_rosa-sts-aws-prereqs`,
   ROSA_AWS_MULTIPLE_ACCOUNT_ASSOCIATION: `${ROSA_DOCS_BASE}/rosa_planning/rosa-sts-aws-prereqs.html#rosa-associating-multiple-account_rosa-sts-aws-prereqs`,
   ROSA_AWS_SERVICE_QUOTAS: `${ROSA_DOCS_BASE}/rosa_planning/rosa-sts-required-aws-service-quotas.html`,
+  ROSA_AWS_LIMITS_SCALE: `${ROSA_DOCS_BASE}/rosa_planning/rosa-limits-scalability.html#node-scaling-after-installation_rosa-limits-scalability`,
   ROSA_AWS_IAM_RESOURCES: `${ROSA_DOCS_BASE}/rosa_architecture/rosa-sts-about-iam-resources.html`,
   ROSA_AWS_IAM_ROLES: `${ROSA_DOCS_BASE}/rosa_architecture/rosa-sts-about-iam-resources.html#rosa-sts-account-wide-roles-and-policies_rosa-sts-about-iam-resources`,
   ROSA_AWS_ACCOUNT_ROLES: `${ROSA_DOCS_BASE}/rosa_architecture/rosa-sts-about-iam-resources.html#rosa-sts-understanding-ocm-role_rosa-sts-about-iam-resources`,
@@ -310,6 +325,7 @@ const tools = {
 
 const channels = {
   PRE_RELEASE: 'preRelease',
+  CANDIDATE: 'candidate',
   STABLE: 'stable',
 };
 
@@ -356,6 +372,17 @@ const urls = {
       },
       [architectures.ppc]: {
         [operatingSystems.linux]: `${MIRROR_CLIENTS_STABLE_PPC}openshift-client-linux.tar.gz`,
+      },
+      [architectures.arm]: {
+        [operatingSystems.linux]: `${MIRROR_CLIENTS_STABLE_ARM}openshift-client-linux.tar.gz`,
+        [operatingSystems.mac]: `${MIRROR_CLIENTS_STABLE_ARM}openshift-client-mac-arm64.tar.gz`,
+      },
+    },
+    [channels.CANDIDATE]: {
+      [architectures.x86]: {
+        [operatingSystems.windows]: `${MIRROR_CLIENTS_CANDIDATE_X86}openshift-client-windows.zip`,
+        [operatingSystems.linux]: `${MIRROR_CLIENTS_CANDIDATE_X86}openshift-client-linux.tar.gz`,
+        [operatingSystems.mac]: `${MIRROR_CLIENTS_CANDIDATE_X86}openshift-client-mac.tar.gz`,
       },
       [architectures.arm]: {
         [operatingSystems.linux]: `${MIRROR_CLIENTS_STABLE_ARM}openshift-client-linux.tar.gz`,
@@ -481,7 +508,22 @@ const urls = {
         [operatingSystems.mac]: `${MIRROR_CLIENTS_STABLE_X86}openshift-install-mac.tar.gz`,
       },
       [architectures.arm]: {
+        /* 4.13
+        [operatingSystems.linux]: `${MIRROR_CLIENTS_STABLE_X86}openshift-install-linux-arm64.tar.gz`,
+        */
         [operatingSystems.mac]: `${MIRROR_CLIENTS_STABLE_X86}openshift-install-mac-arm64.tar.gz`,
+      },
+    },
+    [channels.CANDIDATE]: {
+      [architectures.x86]: {
+        [operatingSystems.linux]: `${MIRROR_CLIENTS_CANDIDATE_X86}openshift-install-linux.tar.gz`,
+        [operatingSystems.mac]: `${MIRROR_CLIENTS_CANDIDATE_X86}openshift-install-mac.tar.gz`,
+      },
+      [architectures.arm]: {
+        /* 4.13
+        [operatingSystems.linux]: `${MIRROR_CLIENTS_CANDIDATE_X86}openshift-install-linux-arm64.tar.gz`,
+        */
+        [operatingSystems.mac]: `${MIRROR_CLIENTS_CANDIDATE_X86}openshift-install-mac-arm64.tar.gz`,
       },
     },
     [channels.PRE_RELEASE]: {
@@ -490,10 +532,12 @@ const urls = {
         [operatingSystems.mac]: `${MIRROR_CLIENTS_LATEST_PRE_X86}openshift-install-mac.tar.gz`,
       },
       [architectures.arm]: {
+        [operatingSystems.linux]: `${MIRROR_CLIENTS_LATEST_PRE_X86}openshift-install-linux-arm64.tar.gz`,
         [operatingSystems.mac]: `${MIRROR_CLIENTS_LATEST_PRE_X86}openshift-install-mac-arm64.tar.gz`,
       },
     },
   },
+
   [tools.IBMZINSTALLER]: {
     [channels.STABLE]: {
       [architectures.x86]: {
@@ -504,6 +548,9 @@ const urls = {
         [operatingSystems.linux]: `${MIRROR_CLIENTS_STABLE_IBMZ}openshift-install-linux.tar.gz`,
       },
       [architectures.arm]: {
+        /* 4.13
+        [operatingSystems.linux]: `${MIRROR_CLIENTS_STABLE_IBMZ}openshift-install-linux-arm64.tar.gz`,
+        */
         [operatingSystems.mac]: `${MIRROR_CLIENTS_STABLE_IBMZ}openshift-install-mac-arm64.tar.gz`,
       },
     },
@@ -516,6 +563,7 @@ const urls = {
         [operatingSystems.linux]: `${MIRROR_CLIENTS_LATEST_PRE_IBMZ}openshift-install-linux.tar.gz`,
       },
       [architectures.arm]: {
+        [operatingSystems.linux]: `${MIRROR_CLIENTS_LATEST_PRE_IBMZ}openshift-install-linux-arm64.tar.gz`,
         [operatingSystems.mac]: `${MIRROR_CLIENTS_LATEST_PRE_IBMZ}openshift-install-mac-arm64.tar.gz`,
       },
     },
@@ -530,6 +578,9 @@ const urls = {
         [operatingSystems.linux]: `${MIRROR_CLIENTS_STABLE_PPC}openshift-install-linux.tar.gz`,
       },
       [architectures.arm]: {
+        /* 4.13
+        [operatingSystems.linux]: `${MIRROR_CLIENTS_STABLE_PPC}openshift-install-linux-arm64.tar.gz`,
+        */
         [operatingSystems.mac]: `${MIRROR_CLIENTS_STABLE_PPC}openshift-install-mac-arm64.tar.gz`,
       },
     },
@@ -542,6 +593,7 @@ const urls = {
         [operatingSystems.linux]: `${MIRROR_CLIENTS_LATEST_PRE_PPC}openshift-install-linux.tar.gz`,
       },
       [architectures.arm]: {
+        [operatingSystems.linux]: `${MIRROR_CLIENTS_LATEST_PRE_PPC}openshift-install-linux-arm64.tar.gz`,
         [operatingSystems.mac]: `${MIRROR_CLIENTS_LATEST_PRE_PPC}openshift-install-mac-arm64.tar.gz`,
       },
     },

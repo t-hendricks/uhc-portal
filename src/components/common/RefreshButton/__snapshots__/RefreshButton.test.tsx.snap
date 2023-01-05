@@ -1,0 +1,39 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<RefreshButton /> renders correctly 1`] = `
+<Tooltip
+  content="Refresh"
+  position="bottom"
+>
+  <Button
+    aria-label="Refresh"
+    onClick={[MockFunction]}
+    variant="plain"
+  >
+    <RedoIcon
+      color="currentColor"
+      noVerticalAlign={false}
+      size="sm"
+    />
+  </Button>
+</Tooltip>
+`;
+
+exports[`<RefreshButton autoRefresh /> renders correctly 1`] = `
+<Tooltip
+  content="Refresh"
+  position="bottom"
+>
+  <Button
+    aria-label="Refresh"
+    onClick={[MockFunction]}
+    variant="plain"
+  >
+    <RedoIcon
+      color="currentColor"
+      noVerticalAlign={false}
+      size="sm"
+    />
+  </Button>
+</Tooltip>
+`;

@@ -39,6 +39,7 @@ export const ClusterProxy = () => {
       [FieldId.HttpProxyUrl]: httpProxyUrl,
       [FieldId.HttpsProxyUrl]: httpsProxyUrl,
       [FieldId.AdditionalTrustBundle]: additionalTrustBundle,
+      [FieldId.NoProxy]: noProxyDomains,
     },
     touched,
     setFieldValue,
@@ -60,6 +61,12 @@ export const ClusterProxy = () => {
   const validateHttpsProxyUrl = (value: string) =>
     validateUrl(value, ['http', 'https']) || validateAtLeastOne;
   const validateAdditionalTrustBundle = (value: string) => validateCA(value) || validateAtLeastOne;
+
+  React.useEffect(() => {
+    if (noProxyDomains && !httpProxyUrl && !httpsProxyUrl) {
+      setFieldValue(FieldId.NoProxy, '');
+    }
+  }, [noProxyDomains, httpProxyUrl, httpsProxyUrl]);
 
   return (
     <Form>

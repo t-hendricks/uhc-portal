@@ -74,7 +74,7 @@ export const Details = () => {
 
   React.useEffect(() => {
     dispatch(getCloudProviders());
-  }, []);
+  }, [dispatch]);
 
   const azQuotaParams = {
     product,

@@ -149,6 +149,7 @@ exports[`<UpgradeAcknowledgeStep> should render correctly on load 1`] = `
                         <ExternalLinkAltIcon
                           className="pf-u-ml-sm"
                           color="#0066cc"
+                          data-testid="openInNewWindowIcon"
                           noVerticalAlign={false}
                           size="sm"
                         >
@@ -156,6 +157,7 @@ exports[`<UpgradeAcknowledgeStep> should render correctly on load 1`] = `
                             aria-hidden={true}
                             aria-labelledby={null}
                             className="pf-u-ml-sm"
+                            data-testid="openInNewWindowIcon"
                             fill="#0066cc"
                             height="1em"
                             role="img"
@@ -264,6 +266,7 @@ exports[`<UpgradeAcknowledgeStep> should render correctly on load 1`] = `
                         <ExternalLinkAltIcon
                           className="pf-u-ml-sm"
                           color="#0066cc"
+                          data-testid="openInNewWindowIcon"
                           noVerticalAlign={false}
                           size="sm"
                         >
@@ -271,6 +274,7 @@ exports[`<UpgradeAcknowledgeStep> should render correctly on load 1`] = `
                             aria-hidden={true}
                             aria-labelledby={null}
                             className="pf-u-ml-sm"
+                            data-testid="openInNewWindowIcon"
                             fill="#0066cc"
                             height="1em"
                             role="img"
