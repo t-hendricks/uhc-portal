@@ -6,7 +6,7 @@ const getMinNodesAllowed = ({
   product,
   isBYOC,
   isMultiAz,
-  autoScaleMinNodesValue,
+  autoScaleMinNodesValue = null,
 }) => {
   let currMinNodes = parseInt(autoScaleMinNodesValue, 10) || 0;
   if (isMultiAz) {
