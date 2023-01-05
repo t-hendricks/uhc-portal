@@ -27,7 +27,17 @@ exports[`ARM Bare Metal install renders correctly 1`] = `
     <InstructionsChooser
       aiPageLink="/assisted-installer/clusters/~new?useArm=true"
       ipiPageLink="/install/arm/installer-provisioned"
-      showAI={true}
+      providerSpecificFeatures={
+        Object {
+          "ipi": Array [
+            "Hosts controlled with baseboard management controller (BMC)",
+            "For air-gapped/restricted networks",
+          ],
+          "upi": Array [
+            "For air-gapped/restricted networks",
+          ],
+        }
+      }
       upiPageLink="/install/arm/user-provisioned"
     />
   </PageSection>

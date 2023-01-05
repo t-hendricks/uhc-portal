@@ -4,6 +4,7 @@ import { ValidationError, Validator } from 'jsonschema';
 import { clusterService } from '~/services';
 import type { GCP } from '../types/clusters_mgmt.v1';
 import type { AugmentedSubnetwork, SubnetFormProps } from '../types/types';
+import { sqlString } from './queryHelpers';
 
 type Networks = Parameters<typeof cidrTools['overlap']>[0];
 
@@ -185,8 +186,12 @@ const checkObjectNameAsyncValidation = (value: string) => [
       if (!value?.length) {
         return false;
       }
-      const { data } = await clusterService.getCluster(`name = '${value}'`);
-      return !data?.size;
+      const search = `name = ${sqlString(value)}`;
+      const { data } = await clusterService.getClusters(search, 1);
+      // Normally, we get 0 or 1 items, 1 meaning a cluster of that name already exists.
+      // But dumb mockserver ignores `search` and `size`, always returns full static list;
+      // checking the returned name(s) allows this validation to work in ?env=mockdata UI.
+      return !data?.items?.some((cluster) => cluster.name === value);
     },
   },
 ];
@@ -1224,16 +1229,24 @@ const validateGCPKMSServiceAccount = (value: string): string | undefined => {
   return undefined;
 };
 
-const validateAWSKMSKeyARN = (value: string): string | undefined => {
+const validateAWSKMSKeyARN = (value: string, region: string): string | undefined => {
   if (!value) {
     return 'Field is required.';
   }
+
   if (/\s/.test(value)) {
     return 'Value must not contain whitespaces.';
   }
+
   if (!AWS_KMS_SERVICE_ACCOUNT_REGEX.test(value)) {
     return 'Key provided is not a valid ARN. It should be in the format "arn:aws:kms:<region>:<accountid>:key/<keyid>".';
   }
+
+  const kmsRegion = value.split('kms:')?.pop()?.split(':')[0];
+  if (kmsRegion !== region) {
+    return 'Your KMS key must contain your selected region.';
+  }
+
   return undefined;
 };
 

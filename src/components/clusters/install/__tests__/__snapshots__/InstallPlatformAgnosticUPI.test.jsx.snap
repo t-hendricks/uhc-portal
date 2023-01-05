@@ -52,7 +52,6 @@ exports[`Platform agnostic UPI install renders correctly 1`] = `
         />
       }
       channel="stable"
-      cloudProvider="Platform Agnostic"
       cloudProviderID="generic"
       docURL="https://docs.openshift.com/container-platform/4.11/installing/installing_platform_agnostic/installing-platform-agnostic.html"
       installer="x86_64-openshift-install"

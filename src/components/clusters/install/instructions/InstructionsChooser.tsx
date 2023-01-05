@@ -6,24 +6,31 @@ import { InstructionsChooserCard } from './InstructionsChooserCard';
 import './InstructionsChooser.scss';
 
 interface InstructionsChooserProps {
-  showAI?: boolean;
+  aiPageLink: string;
+  agentBasedPageLink: string;
   hideIPI?: boolean;
-  ipiPageLink: string;
   hideUPI?: boolean;
+  ipiPageLink: string;
   upiPageLink: string;
-  aiPageLink?: string;
+  providerSpecificFeatures?: {
+    ai?: React.ReactNode[];
+    abi?: React.ReactNode[];
+    ipi?: React.ReactNode[];
+    upi?: React.ReactNode[];
+  };
 }
 
 export const InstructionsChooser = ({
-  showAI = false,
+  aiPageLink,
+  agentBasedPageLink,
   hideIPI = false,
   ipiPageLink,
   hideUPI = false,
   upiPageLink,
-  aiPageLink = '/assisted-installer/clusters/~new',
+  providerSpecificFeatures = {},
 }: InstructionsChooserProps) => (
   <div className="pf-c-content ocm-page instructions-chooser">
-    {showAI && (
+    {aiPageLink && (
       <InstructionsChooserCard
         id="select-interactive"
         href={aiPageLink}
@@ -37,9 +44,35 @@ export const InstructionsChooser = ({
           </>
         }
         body="Runs Assisted Installer with standard configuration settings to create your cluster."
-        featureListItems={['Preflight validations', 'Smart defaults', 'For connected environments']}
+        featureListItems={[
+          'Preflight validations',
+          'Smart defaults',
+          'For connected networks',
+          ...(providerSpecificFeatures.ai || []),
+        ]}
         footerLinkHref="#" // TODO URL here
         footerLinkText="Learn more about interactive"
+      />
+    )}
+    {agentBasedPageLink && (
+      <InstructionsChooserCard
+        id="select-agent-based"
+        href={agentBasedPageLink}
+        title="Local Agent-based"
+        labels={
+          <>
+            <Label color="gold">Developer preview</Label>
+            <Label color="purple">CLI-based</Label>
+          </>
+        }
+        body="Runs Assisted Installer securely and locally to create your cluster."
+        featureListItems={[
+          'Installable ISO',
+          'Preflight validations',
+          ...(providerSpecificFeatures.abi || []),
+        ]}
+        footerLinkHref="#" // TODO URL here
+        footerLinkText="Learn more about local agent-based"
       />
     )}
     {!hideIPI && (
@@ -51,8 +84,7 @@ export const InstructionsChooser = ({
         body="Auto-provision your infrastructure with minimal configuration to create your cluster."
         featureListItems={[
           'Installer Provisioned Infrastructure',
-          'Hosts controlled with baseboard management controller (BMC)',
-          'For air-gapped/disconnected environments',
+          ...(providerSpecificFeatures.ipi || []),
         ]}
         footerLinkHref="#" // TODO URL here
         footerLinkText="Learn more about automated"
@@ -68,7 +100,7 @@ export const InstructionsChooser = ({
         featureListItems={[
           'User Provisioned Infrastructure',
           'Highly customizable',
-          'For air-gapped/disconnected environments',
+          ...(providerSpecificFeatures.upi || []),
         ]}
         footerLinkHref="#" // TODO URL here
         footerLinkText="Learn more about full control"

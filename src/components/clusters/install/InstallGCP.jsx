@@ -30,6 +30,9 @@ class InstallGCP extends Component {
           <InstructionsChooser
             ipiPageLink="/install/gcp/installer-provisioned"
             upiPageLink="/install/gcp/user-provisioned"
+            providerSpecificFeatures={{
+              ipi: ['Hosts controlled with Google Cloud Provider'],
+            }}
           />
         </PageSection>
       </>

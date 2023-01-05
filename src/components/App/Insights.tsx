@@ -1,25 +1,13 @@
 import React from 'react';
-import type { RouterProps } from 'react-router-dom';
-import { matchPath } from 'react-router-dom';
-
+import { matchPath, useHistory } from 'react-router-dom';
 import getNavClickParams from '../../common/getNavClickParams';
 import { removeBaseName } from '../../common/getBaseName';
 
-type History = RouterProps['history'];
-type Listener = Parameters<History['listen']>[0];
-type Location = Parameters<Listener>[0];
+const Insights = () => {
+  const history = useHistory();
 
-type Props = {
-  history: History;
-};
-
-const Insights = ({ history }: Props) => {
   const ocmListeners = React.useRef<{ [event: string]: (() => void)[] }>({ APP_REFRESH: [] });
   React.useEffect(() => {
-    const highlightNavItem = (location: Location) => {
-      insights.chrome.appNavClick(getNavClickParams(location.pathname));
-    };
-
     const navigateToApp = (event: any) => {
       const { location } = history;
       // update route only when it's clicked by the user and can have route change
@@ -57,7 +45,9 @@ const Insights = ({ history }: Props) => {
     };
 
     const cleanupInsightsListener = insights.chrome.on('APP_NAVIGATION', navigateToApp);
-    const cleanupRouteListener = history.listen(highlightNavItem);
+    const cleanupRouteListener = history.listen((location) => {
+      insights.chrome.appNavClick(getNavClickParams(location.pathname));
+    });
 
     insights.ocm = {
       on: (event: string, callback: () => void) => {

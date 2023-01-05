@@ -28,9 +28,18 @@ class InstallVSphere extends Component {
         <InstructionsChooserPageTitle cloudName="VMware vSphere" breadcrumbs={breadcrumbs} />
         <PageSection>
           <InstructionsChooser
-            showAI
+            aiPageLink="/assisted-installer/clusters/~new"
             ipiPageLink="/install/vsphere/installer-provisioned"
             upiPageLink="/install/vsphere/user-provisioned"
+            agentBasedPageLink="/install/vsphere/agent-based"
+            providerSpecificFeatures={{
+              abi: ['For connected or air-gapped/restricted networks'],
+              ipi: [
+                'Hosts controlled with vSphere Cloud Provider',
+                'For connected or air-gapped/restricted networks',
+              ],
+              upi: ['For connected or air-gapped/restricted networks'],
+            }}
           />
         </PageSection>
       </>

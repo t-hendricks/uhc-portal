@@ -48,19 +48,22 @@ const EditClusterWideProxyDialog = (props) => {
   // sets trust bundle file upload depending on whether or not a trust bundle is already uploaded
   const [openFileUpload, setOpenFileUpload] = useState(!additionalTrustBundle);
 
-  const validateAtLeastOne = useCallback((value, allValues) => {
-    if (!allValues.httpProxyUrl && !allValues.httpsProxyUrl && !additionalTrustBundle) {
-      return 'Configure at least one of the cluster-wide proxy fields.';
-    }
-    return undefined;
-  }, []);
+  const validateAtLeastOne = useCallback(
+    (value, allValues) => {
+      if (!allValues.httpProxyUrl && !allValues.httpsProxyUrl && !additionalTrustBundle) {
+        return 'Configure at least one of the cluster-wide proxy fields.';
+      }
+      return undefined;
+    },
+    [additionalTrustBundle],
+  );
 
-  const handleClose = () => {
-    closeModal();
+  const handleClose = useCallback(() => {
     reset();
     setOpenFileUpload(!additionalTrustBundle);
     clearClusterProxyResponse();
-  };
+    closeModal();
+  }, []);
 
   useEffect(() => {
     if (

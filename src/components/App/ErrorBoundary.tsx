@@ -17,7 +17,9 @@ class ErrorBoundary extends React.Component<Props, State> {
   componentDidCatch(error: Error, info: React.ErrorInfo): void {
     this.setState({ error: error.toString(), componentStack: info.componentStack });
     Sentry.withScope((scope) => {
-      scope.setExtras(info);
+      scope.setExtras({
+        componentStack: info.componentStack,
+      });
       Sentry.captureException(error);
     });
   }

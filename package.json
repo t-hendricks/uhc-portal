@@ -23,8 +23,9 @@
     "@redhat-cloud-services/frontend-components-notifications": "^3.1.0",
     "@redhat-cloud-services/frontend-components-utilities": "^3.1.1",
     "@redhat-cloud-services/rule-components": "^3.1.1",
+    "@redhat-cloud-services/types": "^0.0.16",
     "@reduxjs/toolkit": "^1.6.2",
-    "@sentry/browser": "5.19.1",
+    "@sentry/browser": "^5.19.1",
     "@sentry/integrations": "^5.19.1",
     "@wojtekmaj/enzyme-adapter-react-17": "^0.6.3",
     "axios": ">=0.22.0 <1.0.0",
@@ -100,7 +101,7 @@
     "@testing-library/react-hooks": "^7.0.2",
     "@testing-library/user-event": "^14.0.4",
     "@types/enzyme": "3.10.12",
-    "@types/history": "^5.0.0",
+    "@types/history": "^4.7.2",
     "@types/jest-axe": "^3.5.5",
     "@types/react": "17.0.x",
     "@types/react-copy-to-clipboard": "^5.0.1",
@@ -186,7 +187,7 @@
       "enzyme-to-json/serializer"
     ],
     "setupFiles": [
-      "<rootDir>/src/setupTests.js"
+      "<rootDir>/src/setupTests.ts"
     ],
     "preset": "ts-jest",
     "transform": {
@@ -199,7 +200,7 @@
     "moduleNameMapper": {
       "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/__mocks__/fileMock.js",
       "\\.(css|less|scss)$": "<rootDir>/__mocks__/styleMock.js",
-      "^@testUtils": "<rootDir>/src/testUtils.jsx",
+      "^@testUtils": "<rootDir>/src/testUtils.tsx",
       "^~/(.*)$": "<rootDir>/src/$1"
     },
     "globals": {
@@ -228,6 +229,7 @@
     "insights-proxy": "make insights-proxy-check && run/insights-proxy.sh",
     "stop-insights-proxy": "run/podman-or-docker.sh kill insightsproxy; run/podman-or-docker.sh rm --force insightsproxy; true",
     "lint": "eslint src --ext js,jsx,ts,tsx && yarn  prettier",
+    "lint-staged": "lint-staged",
     "prettier": "prettier --check 'src/**/*.{js,ts,mjs,jsx,tsx}'",
     "prettier:fix": "prettier --write 'src/**/*.{js,ts,mjs,jsx,tsx}'",
     "test": "TZ=America/New_York jest --env=jsdom",

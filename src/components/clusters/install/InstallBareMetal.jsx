@@ -28,9 +28,18 @@ class InstallBareMetal extends Component {
         <InstructionsChooserPageTitle cloudName="Bare Metal" breadcrumbs={breadcrumbs} />
         <PageSection>
           <InstructionsChooser
-            showAI
+            aiPageLink="/assisted-installer/clusters/~new"
             ipiPageLink="/install/metal/installer-provisioned"
             upiPageLink="/install/metal/user-provisioned"
+            agentBasedPageLink="/install/metal/agent-based"
+            providerSpecificFeatures={{
+              abi: ['For air-gapped/restricted networks'],
+              ipi: [
+                'Hosts controlled with baseboard management controller (BMC)',
+                'For air-gapped/restricted networks',
+              ],
+              upi: ['For air-gapped/restricted networks'],
+            }}
           />
         </PageSection>
       </>

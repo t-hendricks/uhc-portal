@@ -35,14 +35,14 @@ export class InstallPlatformAgnosticUPI extends Component {
 
     return (
       <>
-        <PageTitle title={instructionsMapping.generic.title} breadcrumbs={breadcrumbs} />
+        <PageTitle title={instructionsMapping.generic.upi.title} breadcrumbs={breadcrumbs} />
         <PageSection>
           <OCPInstructions
             token={token}
             breadcrumbs={breadcrumbs}
             cloudProviderID="generic"
             isUPI
-            {...instructionsMapping.generic}
+            {...instructionsMapping.generic.upi}
           />
         </PageSection>
       </>

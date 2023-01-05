@@ -15,6 +15,7 @@ limitations under the License.
 */
 import merge from 'lodash/merge';
 import { produce } from 'immer';
+import axios from 'axios';
 import {
   REJECTED_ACTION,
   PENDING_ACTION,
@@ -182,7 +183,11 @@ const clustersReducer = (
         const { data } = action.payload;
         const clustersServiceError =
           'meta' in data && !!data.meta?.clustersServiceError
-            ? getErrorState({ payload: data.meta.clustersServiceError })
+            ? getErrorState({
+                payload: axios.isAxiosError(data.meta.clustersServiceError)
+                  ? data.meta.clustersServiceError
+                  : undefined,
+              })
             : undefined;
         draft.clusters = {
           ...baseState,

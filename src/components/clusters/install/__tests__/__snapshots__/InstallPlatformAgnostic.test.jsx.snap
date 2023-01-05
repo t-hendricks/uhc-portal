@@ -25,8 +25,23 @@ exports[`Platform agnostic install renders correctly 1`] = `
   />
   <PageSection>
     <InstructionsChooser
+      agentBasedPageLink="/install/platform-agnostic/agent-based"
+      aiPageLink="/assisted-installer/clusters/~new"
       hideIPI={true}
-      showAI={true}
+      providerSpecificFeatures={
+        Object {
+          "abi": Array [
+            "For non-tested platforms",
+            "For air-gapped/restricted networks",
+          ],
+          "ai": Array [
+            "For non-tested platforms",
+          ],
+          "upi": Array [
+            "For non-tested platforms",
+          ],
+        }
+      }
       upiPageLink="/install/platform-agnostic/user-provisioned"
     />
   </PageSection>

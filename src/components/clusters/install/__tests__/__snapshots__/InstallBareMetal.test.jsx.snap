@@ -25,8 +25,23 @@ exports[`BareMetal install renders correctly 1`] = `
   />
   <PageSection>
     <InstructionsChooser
+      agentBasedPageLink="/install/metal/agent-based"
+      aiPageLink="/assisted-installer/clusters/~new"
       ipiPageLink="/install/metal/installer-provisioned"
-      showAI={true}
+      providerSpecificFeatures={
+        Object {
+          "abi": Array [
+            "For air-gapped/restricted networks",
+          ],
+          "ipi": Array [
+            "Hosts controlled with baseboard management controller (BMC)",
+            "For air-gapped/restricted networks",
+          ],
+          "upi": Array [
+            "For air-gapped/restricted networks",
+          ],
+        }
+      }
       upiPageLink="/install/metal/user-provisioned"
     />
   </PageSection>

@@ -26,6 +26,13 @@ exports[`InstallAzure renders correctly 1`] = `
   <PageSection>
     <InstructionsChooser
       ipiPageLink="/install/azure/installer-provisioned"
+      providerSpecificFeatures={
+        Object {
+          "ipi": Array [
+            "Hosts controlled with Azure Provider",
+          ],
+        }
+      }
       upiPageLink="/install/azure/user-provisioned"
     />
   </PageSection>

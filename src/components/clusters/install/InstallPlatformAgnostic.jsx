@@ -32,9 +32,30 @@ class InstallPlatformAgnostic extends Component {
         />
         <PageSection>
           <InstructionsChooser
-            showAI
+            aiPageLink="/assisted-installer/clusters/~new"
             hideIPI
             upiPageLink="/install/platform-agnostic/user-provisioned"
+            agentBasedPageLink="/install/platform-agnostic/agent-based"
+            /*
+            providerSpecificFeatures={{
+              ai: [
+                <>
+                  For <ExternalLink href="#">non-tested platforms</ExternalLink>
+                </>,
+              ],
+              upi: [
+                <>
+                  For <ExternalLink href="#">non-tested platforms</ExternalLink>
+                </>,
+              ],
+            }}
+            */
+            // TODO replace the below string versions with the above JSX versions when we have docs URLs for "non-tested platforms". See https://issues.redhat.com/browse/HAC-2403
+            providerSpecificFeatures={{
+              abi: ['For non-tested platforms', 'For air-gapped/restricted networks'],
+              ai: ['For non-tested platforms'],
+              upi: ['For non-tested platforms'],
+            }}
           />
         </PageSection>
       </>

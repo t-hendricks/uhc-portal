@@ -26,6 +26,13 @@ exports[`InstallArmAWS renders correctly 1`] = `
   <PageSection>
     <InstructionsChooser
       ipiPageLink="/install/aws/arm/installer-provisioned"
+      providerSpecificFeatures={
+        Object {
+          "ipi": Array [
+            "Hosts controlled with AWS Provider",
+          ],
+        }
+      }
       upiPageLink="/install/aws/arm/user-provisioned"
     />
   </PageSection>

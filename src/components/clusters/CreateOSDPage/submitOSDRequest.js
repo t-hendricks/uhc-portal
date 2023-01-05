@@ -7,7 +7,7 @@ import { DEFAULT_FLAVOUR_ID } from '../../../redux/actions/flavourActions';
 import { createCluster } from '../../../redux/actions/clustersActions';
 import { parseReduxFormKeyValueList } from '../../../common/helpers';
 
-export const createClusterRequest = ({ isWizard, cloudProviderID, product }, formData) => {
+export const createClusterRequest = ({ isWizard = true, cloudProviderID, product }, formData) => {
   const isMultiAz = formData.multi_az === 'true';
   // See submitOSDRequest.test.js for when we get fields vs side params.
   // But to avoid bugs where we ignore user's choices, when both are present, the field should win.

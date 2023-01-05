@@ -60,7 +60,7 @@ export const CustomerManagedEncryption = ({
             <TextInputField
               name={FieldId.KmsKeyArn}
               label="Key ARN"
-              validate={validateAWSKMSKeyARN}
+              validate={(value) => validateAWSKMSKeyARN(value, region)}
               helperText="Unique, fully qualified identifier (Amazon Resource Name (ARN)) for your KMS Key."
               tooltip={
                 <>
