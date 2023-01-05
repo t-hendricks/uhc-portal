@@ -22,6 +22,8 @@ class ClusterLogsConditionalFilter extends Component {
 
     // flags
     severityTypes: [],
+
+    loggedBy: '',
   };
 
   componentDidMount() {
@@ -47,11 +49,12 @@ class ClusterLogsConditionalFilter extends Component {
 
   updateFilter() {
     const { currentFilter, setFilter } = this.props;
-    const { description } = this.state;
+    const { description, loggedBy } = this.state;
 
     setFilter({
       ...currentFilter,
       description,
+      loggedBy,
     });
   }
 
@@ -79,7 +82,7 @@ class ClusterLogsConditionalFilter extends Component {
   }
 
   render() {
-    const { description, severityTypes } = this.state;
+    const { description, severityTypes, loggedBy } = this.state;
 
     const descriptionFilter = {
       type: conditionalFilterType.text,
@@ -106,13 +109,25 @@ class ClusterLogsConditionalFilter extends Component {
       },
     };
 
-    return <ConditionalFilter items={[descriptionFilter, severityTypesCheckbox]} />;
+    const loggedByFilter = {
+      type: conditionalFilterType.text,
+      value: 'Logged by',
+      label: 'Logged by',
+      filterValues: {
+        'aria-label': 'Logged by Filter Input',
+        onChange: (event, value) => this.updateCurrentValue(value, 'loggedBy'),
+        value: loggedBy,
+      },
+    };
+
+    return <ConditionalFilter items={[descriptionFilter, severityTypesCheckbox, loggedByFilter]} />;
   }
 }
 
 ClusterLogsConditionalFilter.propTypes = {
   currentFilter: PropTypes.shape({
     description: PropTypes.string,
+    loggedBy: PropTypes.string,
     timestampFrom: PropTypes.string,
     timestampTo: PropTypes.string,
   }).isRequired,

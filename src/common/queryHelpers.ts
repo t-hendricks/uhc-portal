@@ -121,10 +121,14 @@ const createServiceLogQueryObject = (
 
     // If we got a search string from the user, format it as an ILIKE query.
     if (viewOptions.filter && typeof viewOptions.filter !== 'string') {
-      const { description, timestampFrom, timestampTo } = viewOptions.filter;
+      const { description, loggedBy, timestampFrom, timestampTo } = viewOptions.filter;
       if (description) {
         const likePattern = sqlString(`%${description}%`);
         clauses.push(`(description ILIKE ${likePattern} OR summary ILIKE ${likePattern})`);
+      }
+      if (loggedBy) {
+        const likePattern = sqlString(`%${loggedBy}%`);
+        clauses.push(`(created_by ILIKE ${likePattern} OR username ILIKE ${likePattern})`);
       }
       if (timestampFrom) {
         clauses.push(`timestamp ${timestampFrom}`);
