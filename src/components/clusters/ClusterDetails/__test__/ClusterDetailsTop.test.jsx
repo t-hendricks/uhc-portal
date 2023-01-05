@@ -107,4 +107,20 @@ describe('<ClusterDetailsTop />', () => {
       expect(alert.length).toEqual(1);
     });
   });
+
+  it('should show non-editable alert for AI clusters', () => {
+    const { cluster } = fixtures.AIClusterDetails;
+    wrapper.setProps({ cluster }, () => {
+      const alert = wrapper.find('ClusterNonEditableAlert');
+      expect(alert.length).toEqual(1);
+    });
+  });
+
+  it('should not show non-editable alert for non-AI clusters', () => {
+    const { cluster } = fixtures.clusterDetails;
+    wrapper.setProps({ cluster }, () => {
+      const alert = wrapper.find('ClusterNonEditableAlert');
+      expect(alert.length).toEqual(0);
+    });
+  });
 });

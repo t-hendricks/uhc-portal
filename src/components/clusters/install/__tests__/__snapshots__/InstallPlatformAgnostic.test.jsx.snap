@@ -26,6 +26,16 @@ exports[`Platform agnostic install renders correctly 1`] = `
   <PageSection>
     <InstructionsChooser
       hideIPI={true}
+      providerSpecificFeatures={
+        Object {
+          "ai": Array [
+            "For non-tested platforms",
+          ],
+          "upi": Array [
+            "For non-tested platforms",
+          ],
+        }
+      }
       showAI={true}
       upiPageLink="/install/platform-agnostic/user-provisioned"
     />

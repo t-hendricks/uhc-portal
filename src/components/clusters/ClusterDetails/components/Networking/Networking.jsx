@@ -29,16 +29,16 @@ class Networking extends React.Component {
 
     return (
       <Grid hasGutter>
-        <GridItem lg={9} md={12}>
+        <GridItem lg={9} md={12} className="networking-grid-item">
           <ClusterIngressCard refreshCluster={refreshCluster} provider={provider} />
         </GridItem>
-        <GridItem lg={3} md={12}>
+        <GridItem lg={3} md={12} className="networking-grid-item">
           <NetworkConfigurationCard network={network} />
         </GridItem>
-        <GridItem lg={9} md={12}>
+        <GridItem lg={9} md={12} className="networking-grid-item">
           <VPCDetailsCard />
         </GridItem>
-        <GridItem lg={3} md={12}>
+        <GridItem lg={3} md={12} className="networking-grid-item">
           <VPCSubnetsCard />
         </GridItem>
       </Grid>

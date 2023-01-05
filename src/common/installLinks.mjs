@@ -252,6 +252,7 @@ const links = {
   ROSA_AWS_ACCOUNT_ASSOCIATION: `${ROSA_DOCS_BASE}/rosa_planning/rosa-sts-aws-prereqs.html#rosa-associating-account_rosa-sts-aws-prereqs`,
   ROSA_AWS_MULTIPLE_ACCOUNT_ASSOCIATION: `${ROSA_DOCS_BASE}/rosa_planning/rosa-sts-aws-prereqs.html#rosa-associating-multiple-account_rosa-sts-aws-prereqs`,
   ROSA_AWS_SERVICE_QUOTAS: `${ROSA_DOCS_BASE}/rosa_planning/rosa-sts-required-aws-service-quotas.html`,
+  ROSA_AWS_LIMITS_SCALE: `${ROSA_DOCS_BASE}/rosa_planning/rosa-limits-scalability.html#node-scaling-after-installation_rosa-limits-scalability`,
   ROSA_AWS_IAM_RESOURCES: `${ROSA_DOCS_BASE}/rosa_architecture/rosa-sts-about-iam-resources.html`,
   ROSA_AWS_IAM_ROLES: `${ROSA_DOCS_BASE}/rosa_architecture/rosa-sts-about-iam-resources.html#rosa-sts-account-wide-roles-and-policies_rosa-sts-about-iam-resources`,
   ROSA_AWS_ACCOUNT_ROLES: `${ROSA_DOCS_BASE}/rosa_architecture/rosa-sts-about-iam-resources.html#rosa-sts-understanding-ocm-role_rosa-sts-about-iam-resources`,
@@ -481,6 +482,9 @@ const urls = {
         [operatingSystems.mac]: `${MIRROR_CLIENTS_STABLE_X86}openshift-install-mac.tar.gz`,
       },
       [architectures.arm]: {
+        /* 4.13
+        [operatingSystems.linux]: `${MIRROR_CLIENTS_STABLE_X86}openshift-install-linux-arm64.tar.gz`,
+        */
         [operatingSystems.mac]: `${MIRROR_CLIENTS_STABLE_X86}openshift-install-mac-arm64.tar.gz`,
       },
     },
@@ -490,6 +494,7 @@ const urls = {
         [operatingSystems.mac]: `${MIRROR_CLIENTS_LATEST_PRE_X86}openshift-install-mac.tar.gz`,
       },
       [architectures.arm]: {
+        [operatingSystems.linux]: `${MIRROR_CLIENTS_LATEST_PRE_X86}openshift-install-linux-arm64.tar.gz`,
         [operatingSystems.mac]: `${MIRROR_CLIENTS_LATEST_PRE_X86}openshift-install-mac-arm64.tar.gz`,
       },
     },
@@ -504,6 +509,9 @@ const urls = {
         [operatingSystems.linux]: `${MIRROR_CLIENTS_STABLE_IBMZ}openshift-install-linux.tar.gz`,
       },
       [architectures.arm]: {
+        /* 4.13
+        [operatingSystems.linux]: `${MIRROR_CLIENTS_STABLE_IBMZ}openshift-install-linux-arm64.tar.gz`,
+        */
         [operatingSystems.mac]: `${MIRROR_CLIENTS_STABLE_IBMZ}openshift-install-mac-arm64.tar.gz`,
       },
     },
@@ -516,6 +524,7 @@ const urls = {
         [operatingSystems.linux]: `${MIRROR_CLIENTS_LATEST_PRE_IBMZ}openshift-install-linux.tar.gz`,
       },
       [architectures.arm]: {
+        [operatingSystems.linux]: `${MIRROR_CLIENTS_LATEST_PRE_IBMZ}openshift-install-linux-arm64.tar.gz`,
         [operatingSystems.mac]: `${MIRROR_CLIENTS_LATEST_PRE_IBMZ}openshift-install-mac-arm64.tar.gz`,
       },
     },
@@ -530,6 +539,9 @@ const urls = {
         [operatingSystems.linux]: `${MIRROR_CLIENTS_STABLE_PPC}openshift-install-linux.tar.gz`,
       },
       [architectures.arm]: {
+        /* 4.13
+        [operatingSystems.linux]: `${MIRROR_CLIENTS_STABLE_PPC}openshift-install-linux-arm64.tar.gz`,
+        */
         [operatingSystems.mac]: `${MIRROR_CLIENTS_STABLE_PPC}openshift-install-mac-arm64.tar.gz`,
       },
     },
@@ -542,6 +554,7 @@ const urls = {
         [operatingSystems.linux]: `${MIRROR_CLIENTS_LATEST_PRE_PPC}openshift-install-linux.tar.gz`,
       },
       [architectures.arm]: {
+        [operatingSystems.linux]: `${MIRROR_CLIENTS_LATEST_PRE_PPC}openshift-install-linux-arm64.tar.gz`,
         [operatingSystems.mac]: `${MIRROR_CLIENTS_LATEST_PRE_PPC}openshift-install-mac-arm64.tar.gz`,
       },
     },

@@ -32,6 +32,13 @@ class InstallArmBareMetal extends Component {
             ipiPageLink="/install/arm/installer-provisioned"
             upiPageLink="/install/arm/user-provisioned"
             aiPageLink="/assisted-installer/clusters/~new?useArm=true"
+            providerSpecificFeatures={{
+              ipi: [
+                'Hosts controlled with baseboard management controller (BMC)',
+                'For air-gapped/restricted networks',
+              ],
+              upi: ['For air-gapped/restricted networks'],
+            }}
           />
         </PageSection>
       </>
