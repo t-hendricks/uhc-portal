@@ -128,7 +128,9 @@ const createServiceLogQueryObject = (
       }
       if (loggedBy) {
         const likePattern = sqlString(`%${loggedBy}%`);
-        clauses.push(`(created_by ILIKE ${likePattern} OR username ILIKE ${likePattern})`);
+        clauses.push(
+          `(username ILIKE ${likePattern} OR (username = '' AND created_by ILIKE ${likePattern}))`,
+        );
       }
       if (timestampFrom) {
         clauses.push(`timestamp ${timestampFrom}`);
