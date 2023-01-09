@@ -49,7 +49,7 @@ describe('<CloudTab />', () => {
     expect(screen.queryByTestId('osd-create-cluster-button')).not.toBeInTheDocument();
     expect(screen.getByTestId('osd-learn-more-button')).toBeInTheDocument();
     expect(screen.queryByTestId('osd-create-trial-cluster')).not.toBeInTheDocument();
-    expect(screen.queryByTestId('osd-view-available-quota-link')).not.toBeInTheDocument();
+    expect(screen.queryByTestId('osd-view-available-quota-link')).toBeInTheDocument();
 
     expect(container).toMatchSnapshot();
   });
