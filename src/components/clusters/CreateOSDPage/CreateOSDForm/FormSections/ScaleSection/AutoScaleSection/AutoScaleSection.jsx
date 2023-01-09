@@ -291,11 +291,6 @@ class AutoScaleSection extends React.Component {
                           <br />
                         </>
                       ) : null}
-
-                      <ExternalLink href={autoScalingUrl}>
-                        Learn more about autoscaling
-                        {isRosa ? ' with ROSA' : ''}
-                      </ExternalLink>
                     </>
                   }
                 />
@@ -319,7 +314,10 @@ class AutoScaleSection extends React.Component {
                 hint={
                   <>
                     {constants.autoscaleHint}{' '}
-                    <ExternalLink href={autoScalingUrl}>Learn more about autoscaling</ExternalLink>
+                    <ExternalLink href={autoScalingUrl}>
+                      Learn more about autoscaling
+                      {isRosa ? ' with ROSA' : ''}
+                    </ExternalLink>
                   </>
                 }
               />
