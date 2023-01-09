@@ -3,7 +3,8 @@ import PropTypes from 'prop-types';
 
 import { FormGroup, TextInput, InputGroup, Popover, HelperText } from '@patternfly/react-core';
 
-import { evaluateClusterNameAsyncValidation } from '~/common/validators';
+import { useFormState } from '../../../hooks';
+
 import PopoverHint from '~/components/common/PopoverHint';
 import { ValidationItem } from '../../ValidationItem';
 import { ValidationIconButton } from '../../ValidationIconButton';
@@ -61,6 +62,12 @@ export const RichInputField = (props) => {
     value,
     onChange,
   } = props;
+
+  const {
+    isValidating: isFormValidating,
+    errors: { [name]: error },
+  } = useFormState();
+
   const inputValue = input ? input.value : value;
   const inputName = input ? input.name : name;
   const inputOnChange = input ? input.onChange : onChange;
@@ -88,6 +95,13 @@ export const RichInputField = (props) => {
     inputClassName = isValid ? 'rich-input-field_valid' : 'rich-input-field_not-valid';
   }
 
+  const setAsyncValidating = (isAsyncValidating) => {
+    validationDispatch({
+      type: 'set-async-validating',
+      value: isAsyncValidating,
+    });
+  };
+
   const populateValidation = (term) => {
     const populatedValidation = validation(term);
     validationDispatch({
@@ -106,19 +120,26 @@ export const RichInputField = (props) => {
     return populatedValidation;
   };
 
-  const evaluateAsyncValidation = async (term) => {
-    validationDispatch({ type: 'set-async-validating', value: true });
-    const evaluatedAsyncValidation = await evaluateClusterNameAsyncValidation(term);
-    validationDispatch({ type: 'set-async-validation', payload: evaluatedAsyncValidation });
-    validationDispatch({ type: 'set-async-validating', value: false });
+  const evaluateAsyncValidation = (formError) => {
+    validationDispatch({
+      type: 'set-async-validation',
+      payload: validationState.asyncValidation.map((v) => ({
+        ...v,
+        validated: v.text !== formError,
+      })),
+    });
   };
 
-  const triggerAsyncValidation = async (blurEvent) => {
-    // triggers the form async validation (to prevent "next" navigation if field is invalid)
-    input.onBlur(blurEvent ?? inputValue);
-    // recalculates the component data for rendering
-    await evaluateAsyncValidation(blurEvent?.target.value ?? inputValue);
-  };
+  useEffect(() => {
+    // `false` means the form validation execution has ended (as opposed to `undefined`)
+    if (isFormValidating === false) {
+      evaluateAsyncValidation(error);
+    }
+  }, [error, isFormValidating]);
+
+  useEffect(() => {
+    setAsyncValidating(!!isFormValidating);
+  }, [isFormValidating]);
 
   useEffect(() => {
     if (inputValue?.length) {
@@ -138,7 +159,7 @@ export const RichInputField = (props) => {
   }, [inputValue]);
 
   useEffect(() => {
-    triggerAsyncValidation();
+    input.onBlur({ target: { value: inputValue } });
   }, []);
 
   return (
@@ -192,10 +213,10 @@ export const RichInputField = (props) => {
             type={type}
             autocomplete="off"
             aria-invalid={!isValid}
-            onBlur={async (e) => {
+            onBlur={(e) => {
               setIsFocused(false);
               setShowPopover(false);
-              await triggerAsyncValidation(e);
+              input.onBlur(e);
               setTouched(true);
             }}
             onClick={() => {
