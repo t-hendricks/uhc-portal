@@ -434,17 +434,15 @@ const CloudTab = ({ hasOSDQuota, trialEnabled }) => (
         <StackItem>
           Create clusters in the cloud using a managed service.
           {managedServices(hasOSDQuota, trialEnabled)}
-          {hasOSDQuota || trialEnabled ? (
-            <Button
-              variant={ButtonVariant.link}
-              id="subscriptions"
-              component={(props) => (
-                <Link {...props} to="/quota" data-testid="osd-view-available-quota-link" />
-              )}
-            >
-              View your available OpenShift Dedicated quota <ArrowRightIcon />
-            </Button>
-          ) : null}
+          <Button
+            variant={ButtonVariant.link}
+            id="subscriptions"
+            component={(props) => (
+              <Link {...props} to="/quota" data-testid="osd-view-available-quota-link" />
+            )}
+          >
+            View your available OpenShift Dedicated quota <ArrowRightIcon />
+          </Button>
         </StackItem>
       </Stack>
     </PageSection>
