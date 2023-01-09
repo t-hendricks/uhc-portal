@@ -130,6 +130,11 @@ export const initialValues = {
   [FieldId.PersistentStorage]: '107374182400',
   [FieldId.LoadBalancers]: 0,
   [FieldId.DisableScpChecks]: false,
+  [FieldId.CustomerManagedKey]: 'false',
+};
+
+export const initialTouched = {
+  [FieldId.AcknowledgePrereq]: true,
 };
 
 export const clusterNameHint =

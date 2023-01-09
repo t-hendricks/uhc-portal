@@ -14,7 +14,7 @@ interface ValidationIconButtonProps {
   isValid: boolean;
   isValidating: boolean;
   touched: boolean;
-  onClick(): void;
+  onClick: React.ComponentProps<typeof Button>['onClick'];
 }
 
 export const ValidationIconButton = ({

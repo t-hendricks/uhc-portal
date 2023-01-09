@@ -13,7 +13,7 @@ import {
 import { useWizardContext } from '@patternfly/react-core/dist/esm/next';
 
 import links from '~/common/installLinks.mjs';
-import { checkDNSDomain, validateCA, validateUrl } from '~/common/validators';
+import { checkNoProxyDomains, validateCA, validateUrl } from '~/common/validators';
 import { stringToArray } from '~/common/helpers';
 import {
   ACCEPT,
@@ -113,7 +113,7 @@ export const ClusterProxy = () => {
             <TextInputField
               name={FieldId.NoProxy}
               label="No Proxy domains"
-              validate={checkDNSDomain}
+              validate={checkNoProxyDomains}
               helperText={NO_PROXY_HELPER_TEXT}
               isDisabled={!httpProxyUrl && !httpsProxyUrl}
               input={{

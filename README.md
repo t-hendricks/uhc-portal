@@ -123,9 +123,8 @@ For this purpose we’ve created a basic mock server that sends mock
 data. It doesn’t support all actions the real backend supports, but it
 should allow you to run the UI and test basic read-only functionality.
 
-Both `yarn start` and `yarn start-with-proxy` run `mockdata/mockserver.py`
-in the background and arrange its proxying such that UI will access if given
-`?env=mockdata` (synonim `?env=mockserver`) URL param.
+`yarn start` runs `mockdata/mockserver.py` in the background and arranges webpack proxying
+such that UI will access if given `?env=mockdata` (synonim `?env=mockserver`) URL param.
 
 ### Preparing Data for Mock Backend
 
@@ -278,96 +277,15 @@ Now you need to choose which WebDriver server to use:
 
 The yarn commands are defined in package.json "scripts" section, some running scripts from run/ directory.
 
-# Alternative option for running locally: insights-proxy
+# Deprecated option for running locally: insights-proxy
 
-## The backend proxy
-
-You will need to start the backend proxy server, which acts as a
-proxy for the _OpenID_ and API services that are required by the
-application.
-
-To build the `backend` proxy server run the `binaries` target of the
-_Makefile_:
-
-```
-make binaries
-```
-
-Before starting it make sure to have an offline access
-token, either in the `UHC_TOKEN` environment variable or in the `token`
-parameter of the configuration file:
-
-    $ export UHC_TOKEN="eyJ..."
-    $ ./backend
-
-To obtain the access token go to the [token
-page](https://console.redhat.com/openshift/token) and copy the _offline
-access token_.
-
-By default the backend proxy server will be available at
-<http://localhost:8010>, and the default configuration of the
-application is already prepared to use it.
-
-If you need to change the configuration used by this backend proxy, then
-create a YAML file.
-
-By default, if nothing else is specified, the backend proxy will attempt to load the config file from the default location: `backend-config.yml`.
-
-You can alsoand specify the config file with the `--config` command line
-option:
-
-    $ ./backend --config=my.yml
-
-Or with the `BACKEND_CONFIG` environment variable:
-
-    $ BACKEND_CONFIG="my.yml" ./backend
-
-The content of this file should be something like this (or any subset of
-it):
-
-```yaml
-listener:
-  address: localhost:8010
-
-keycloak:
-  url: https://sso.redhat.com/auth/realms/redhat-external/protocol/openid-connect/token
-  client_id: cloud-services
-  client_secret: # empty by default
-
-proxies:
-  - prefix: /api/
-    target: https://api.stage.openshift.com
-
-token: eyJ... # default token for any user. Optional.
-token_map: # map specific user names (in QA auth server) to access tokens. Optional.
-  user1: eyJ...
-  user2: eyJ...
-```
-
-Note that this `--config` option and the configuration file are
-optional, the default configuration already uses `localhost`,
-`sso.redhat.com` and port `8002`, and already forwards all API requests
-to the staging environment.
-
-If you need to use a service located in some other place, for example if
-you need to use the clusters service deployed in your local environment,
-you can add an additional proxy configuration:
-
-```yaml
-proxies:
-  - prefix: /api/clusters_mgmt/
-    target: https://api.127.0.0.1.nip.io
-```
-
-That will forward requests starting with `/api/clusters_mgmt/` to your
-local clusters service, and the rest to the staging environment.
-
-## Running insights-proxy
+* This has been unused for a while for development, might be broken?
+  A similar setup is still used in CI run/selenium-pod.sh...
 
 `make insights-proxy-setup` will autimatically clone/pull insights-proxy
 under `run/insights-proxy` subdirectory and perform its setup
-instructions (`patch-etc-hosts.sh`, `update.sh`). . Note that this
-includes using `sudo` to patch you /etc/hosts.
+instructions (`patch-etc-hosts.sh`, `update.sh`).
+Note that this includes using `sudo` to patch you /etc/hosts.
 
 This is a one-time setup process but safe to repeat if you want to
 update the proxy.
@@ -376,19 +294,10 @@ Now you can use
 
     $ yarn insights-proxy
 
-which waits for a backend to be serving (might not work otherwise), then
-runs an `insightsproxy` container with our `profiles/local-frontend.js`
-config, passing API requests to the backend (or mock server) described
-above.
-
-But more conveniently, use this to launch webpack-dev-server, mockserver.py,
-and insights-proxy together:
-
-    $ yarn start-with-proxy
-
-This behaves similarly to `yarn start` — by default you'll access
-real staging backed, but can override by appending `?env=staging` /
-`?env=production` / `?env=mockdata` URL param.
+which waits for API backend (specifically, mockserver) to be serving on port 8010,
+then runs an `insightsproxy` container with our `profiles/local-frontend.js` config.
+Similar to `yarn start`, by default you'll access real staging backed,
+but can override by appending `?env=staging` / `?env=production` / `?env=mockdata` URL param.
 
 You may set `RUNNER=podman` or `RUNNER=docker` env var to choose with
 which tool containers will be updated/run.

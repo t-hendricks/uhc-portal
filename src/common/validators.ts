@@ -548,7 +548,7 @@ const checkBaseDNSDomain = (value: string): string | undefined => {
   return undefined;
 };
 
-const checkDNSDomain = (value?: string[]) => {
+const checkNoProxyDomains = (value?: string[]) => {
   if (value && value.length > 0) {
     const invalidDomains = value.filter(
       (domain) =>
@@ -1388,7 +1388,7 @@ export {
   validateRHITUsername,
   validateUrl,
   validateCA,
-  checkDNSDomain,
+  checkNoProxyDomains,
   checkClusterConsoleURL,
   checkOpenIDIssuer,
   validateNumericInput,
