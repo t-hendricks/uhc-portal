@@ -203,11 +203,6 @@ export const AutoScale = ({
                         <br />
                       </>
                     ) : null}
-
-                    <ExternalLink href={autoScalingUrl}>
-                      Learn more about autoscaling
-                      {isRosa ? ' with ROSA' : ''}
-                    </ExternalLink>
                   </>
                 }
               />
@@ -231,7 +226,10 @@ export const AutoScale = ({
               hint={
                 <>
                   {constants.autoscaleHint}{' '}
-                  <ExternalLink href={autoScalingUrl}>Learn more about autoscaling</ExternalLink>
+                  <ExternalLink href={autoScalingUrl}>
+                    Learn more about autoscaling
+                    {isRosa ? ' with ROSA' : ''}
+                  </ExternalLink>
                 </>
               }
             />
