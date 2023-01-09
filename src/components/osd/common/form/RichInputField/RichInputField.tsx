@@ -1,4 +1,5 @@
 import React, { createRef, useState, useEffect, useReducer } from 'react';
+import { FormikErrors } from 'formik';
 import { WrappedFieldInputProps } from 'redux-form';
 import { FormGroup, TextInput, InputGroup, Popover, HelperText } from '@patternfly/react-core';
 
@@ -118,16 +119,16 @@ export const RichInputField = ({
   value = '',
   onChange = () => {},
 }: Props) => {
-  const {
-    isValidating: isFormValidating,
-    errors: { [name]: error },
-  } = useFormState();
-
   const inputValue = input ? input.value : value;
   const inputName = input ? input.name : name;
   const inputOnChange = input ? input.onChange : onChange;
 
   const textInputRef = createRef<HTMLInputElement>();
+
+  const {
+    isValidating: isFormValidating,
+    errors: { [inputName ?? '']: error },
+  } = useFormState();
 
   const [touched, setTouched] = useState(false);
   const [isFocused, setIsFocused] = useState(false);
@@ -150,7 +151,7 @@ export const RichInputField = ({
     inputClassName = isValid ? 'rich-input-field_valid' : 'rich-input-field_not-valid';
   }
 
-  const setAsyncValidating = (isAsyncValidating) => {
+  const setAsyncValidating = (isAsyncValidating: boolean) => {
     validationDispatch({
       type: 'set-async-validating',
       value: isAsyncValidating,
@@ -175,7 +176,9 @@ export const RichInputField = ({
     return populatedValidation;
   };
 
-  const evaluateAsyncValidation = (formError) => {
+  const evaluateAsyncValidation = (
+    formError: string | string[] | FormikErrors<any> | FormikErrors<any>[] | undefined,
+  ) => {
     validationDispatch({
       type: 'set-async-validation',
       payload: validationState.asyncValidation.map((v) => ({
@@ -214,7 +217,7 @@ export const RichInputField = ({
   }, [inputValue]);
 
   useEffect(() => {
-    input.onBlur({ target: { value: inputValue } });
+    input?.onBlur({ target: { value: inputValue } });
   }, []);
 
   return (
@@ -271,7 +274,7 @@ export const RichInputField = ({
             onBlur={(e) => {
               setIsFocused(false);
               setShowPopover(false);
-              input.onBlur(e);
+              input?.onBlur(e);
               setTouched(true);
             }}
             onClick={() => {
