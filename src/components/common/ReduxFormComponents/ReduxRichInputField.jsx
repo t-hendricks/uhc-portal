@@ -362,6 +362,10 @@ ReduxRichInputField.propTypes = {
 
   // props passed by redux-form
   input: PropTypes.object.isRequired,
+  meta: PropTypes.shape({
+    error: PropTypes.string,
+    asyncValidating: PropTypes.bool,
+  }),
 };
 
 export default ReduxRichInputField;
