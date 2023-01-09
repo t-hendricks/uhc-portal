@@ -134,9 +134,7 @@ export const Details = () => {
     if (value) {
       const clusterNameAsyncError = await asyncValidateClusterName(value);
 
-      if (clusterNameAsyncError) {
-        setFieldError(FieldId.ClusterName, clusterNameAsyncError);
-      }
+      setFieldError(FieldId.ClusterName, clusterNameAsyncError);
     }
   };
 
