@@ -823,7 +823,7 @@ exports[`<CloudTab /> should render correctly with OSD Trial quota 1`] = `
                 <a
                   aria-disabled="false"
                   class="pf-c-button pf-m-link create-button"
-                  data-ouia-component-id="OUIA-Generated-Button-link-7"
+                  data-ouia-component-id="OUIA-Generated-Button-link-9"
                   data-ouia-component-type="PF4/Button"
                   data-ouia-safe="true"
                   href="/create/rosa/getstarted"
@@ -898,7 +898,7 @@ exports[`<CloudTab /> should render correctly with OSD Trial quota 1`] = `
         <a
           aria-disabled="false"
           class="pf-c-button pf-m-link"
-          data-ouia-component-id="OUIA-Generated-Button-link-8"
+          data-ouia-component-id="OUIA-Generated-Button-link-10"
           data-ouia-component-type="PF4/Button"
           data-ouia-safe="true"
           data-testid="osd-view-available-quota-link"
@@ -2092,7 +2092,7 @@ exports[`<CloudTab /> should render correctly with both trial and quota 1`] = `
                 <a
                   aria-disabled="false"
                   class="pf-c-button pf-m-link create-button"
-                  data-ouia-component-id="OUIA-Generated-Button-link-11"
+                  data-ouia-component-id="OUIA-Generated-Button-link-13"
                   data-ouia-component-type="PF4/Button"
                   data-ouia-safe="true"
                   href="/create/rosa/getstarted"
@@ -2167,7 +2167,7 @@ exports[`<CloudTab /> should render correctly with both trial and quota 1`] = `
         <a
           aria-disabled="false"
           class="pf-c-button pf-m-link"
-          data-ouia-component-id="OUIA-Generated-Button-link-12"
+          data-ouia-component-id="OUIA-Generated-Button-link-14"
           data-ouia-component-type="PF4/Button"
           data-ouia-safe="true"
           data-testid="osd-view-available-quota-link"
@@ -4560,6 +4560,31 @@ exports[`<CloudTab /> should render correctly without quota 1`] = `
             </tr>
           </tbody>
         </table>
+        <a
+          aria-disabled="false"
+          class="pf-c-button pf-m-link"
+          data-ouia-component-id="OUIA-Generated-Button-link-6"
+          data-ouia-component-type="PF4/Button"
+          data-ouia-safe="true"
+          data-testid="osd-view-available-quota-link"
+          href="/quota"
+          id="subscriptions"
+        >
+          View your available OpenShift Dedicated quota 
+          <svg
+            aria-hidden="true"
+            fill="currentColor"
+            height="1em"
+            role="img"
+            style="vertical-align: -0.125em;"
+            viewBox="0 0 448 512"
+            width="1em"
+          >
+            <path
+              d="M190.5 66.9l22.2-22.2c9.4-9.4 24.6-9.4 33.9 0L441 239c9.4 9.4 9.4 24.6 0 33.9L246.6 467.3c-9.4 9.4-24.6 9.4-33.9 0l-22.2-22.2c-9.5-9.5-9.3-25 .4-34.3L311.4 296H24c-13.3 0-24-10.7-24-24v-32c0-13.3 10.7-24 24-24h287.4L190.9 101.2c-9.8-9.3-10-24.8-.4-34.3z"
+            />
+          </svg>
+        </a>
       </div>
     </div>
   </section>
