@@ -36,7 +36,7 @@ import PersistentStorageDropdown from '~/components/clusters/common/PersistentSt
 import LoadBalancersDropdown from '~/components/clusters/common/LoadBalancersDropdown';
 import { PLACEHOLDER_VALUE as AvailabilityZonePlaceholder } from '~/components/clusters/CreateOSDPage/CreateOSDForm/FormSections/NetworkingSection/AvailabilityZoneSelection';
 
-import { RadioGroupField, RichInputField } from '../../common/form';
+import { RadioGroupField, RadioGroupOption, RichInputField } from '../../common/form';
 import { hasAvailableQuota, quotaParams, QuotaParams } from '../../utils';
 import { FieldId } from '../../constants';
 import { useFormState } from '../../hooks';
@@ -111,7 +111,7 @@ export const Details = () => {
     setFieldValue(FieldId.MaxReplicas, '');
   };
 
-  const availabilityZoneOptions = [
+  const availabilityZoneOptions: RadioGroupOption[] = [
     {
       value: 'false',
       label: 'Single zone',

@@ -13,7 +13,7 @@ import { CloudProviderType } from '../ClusterSettings/CloudProvider/types';
 import { FieldId } from '../constants';
 import { useFormState } from '../hooks';
 import { ClusterPrivacyType } from './constants';
-import { CheckboxField, RadioGroupField } from '../common/form';
+import { CheckboxField, RadioGroupField, RadioGroupOption } from '../common/form';
 
 export const Configuration = () => {
   const track = useAnalytics();
@@ -98,7 +98,7 @@ export const Configuration = () => {
     trackCheckedState(trackEvents.InstallIntoVPC, checked);
   };
 
-  const clusterPrivacyOptions = [
+  const clusterPrivacyOptions: RadioGroupOption[] = [
     {
       value: ClusterPrivacyType.External,
       label: 'Public',
