@@ -1,8 +1,14 @@
 import { connect } from 'react-redux';
+import { GlobalState } from '~/redux/store';
 
 import { CloudRegionSelectField } from './CloudRegionSelectField';
 
-const mapStateToProps = (state, ownProps) => {
+type OwnProps = {
+  cloudProviderID: string;
+  isBYOC?: boolean;
+};
+
+const mapStateToProps = (state: GlobalState, ownProps: OwnProps) => {
   const { cloudProviders } = state;
   const regions = cloudProviders.providers?.[ownProps.cloudProviderID]?.regions || {};
   const enabledRegions = Object.values(regions)?.filter((region) => region.enabled);
@@ -15,4 +21,6 @@ const mapStateToProps = (state, ownProps) => {
   };
 };
 
-export default connect(mapStateToProps, null)(CloudRegionSelectField);
+export default connect<ReturnType<typeof mapStateToProps>, {}, OwnProps, GlobalState>(
+  mapStateToProps,
+)(CloudRegionSelectField);

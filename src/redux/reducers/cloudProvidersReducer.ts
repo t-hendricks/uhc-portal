@@ -27,7 +27,7 @@ const initialState: State = {
 };
 
 const cloudProvidersReducer = (
-  state = initialState,
+  state: State = initialState,
   action: PromiseActionType<CloudProviderAction>,
 ): State => {
   switch (action.type) {

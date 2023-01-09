@@ -6,19 +6,18 @@ import { Spinner } from '@redhat-cloud-services/frontend-components/Spinner';
 
 import ErrorBox from '~/components/common/ErrorBox';
 import { useFormState } from '~/components/osd/hooks';
+import { CloudRegion } from '~/types/clusters_mgmt.v1';
+import { GlobalState } from '~/redux/store';
 
 interface CloudRegionSelectFieldProps {
   field: FieldInputProps<FormSelectProps>;
   cloudProviderID: string;
-  availableRegions: AvailableRegion[]; // TODO, Update with generated API type when available
-  cloudProviders: any; // TODO, Update with generated API type when available
+  availableRegions: CloudRegion[];
+  cloudProviders: GlobalState['cloudProviders'];
   isMultiAz?: boolean;
   isDisabled?: boolean;
   handleCloudRegionChange?(): void;
 }
-
-// eslint-disable-next-line camelcase
-type AvailableRegion = { id: string; display_name: string; supports_multi_az: boolean };
 
 export const CloudRegionSelectField = ({
   field,
