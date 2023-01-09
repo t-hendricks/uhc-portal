@@ -10,9 +10,9 @@ import {
   Title,
   Flex,
   FormGroup,
-  Alert,
   SplitItem,
   Split,
+  ExpandableSection,
 } from '@patternfly/react-core';
 
 import { getCloudProviders } from '~/redux/actions/cloudProviderActions';
@@ -40,7 +40,6 @@ import { RadioGroupField, RadioGroupOption, RichInputField } from '../../common/
 import { hasAvailableQuota, quotaParams, QuotaParams } from '../../utils';
 import { FieldId } from '../../constants';
 import { useFormState } from '../../hooks';
-import { CloudProviderType } from '../CloudProvider/types';
 import { VersionSelectField } from './VersionSelectField';
 import CloudRegionSelectField from './CloudRegionSelectField';
 import { CustomerManagedEncryption } from './CustomerManagedEncryption';
@@ -61,12 +60,11 @@ export const Details = () => {
     getFieldProps,
     setFieldError,
   } = useFormState();
+
+  const [isExpanded, setIsExpanded] = React.useState(false);
+
   const isByoc = byoc === 'true';
   const isMultiAz = multiAz === 'true';
-  const cloudProviderLearnLink =
-    cloudProvider === CloudProviderType.Aws
-      ? 'https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/data-protection.html'
-      : 'https://cloud.google.com/storage/docs/encryption/default-keys';
 
   const {
     organization: { quotaList },
@@ -152,6 +150,10 @@ export const Details = () => {
     }
 
     return undefined;
+  };
+
+  const onToggle = () => {
+    setIsExpanded(!isExpanded);
   };
 
   return (
@@ -262,7 +264,7 @@ export const Details = () => {
           )}
 
           <GridItem>
-            <Title headingLevel="h3">Monitoring</Title>
+            <Title headingLevel="h4">Monitoring</Title>
           </GridItem>
 
           <Split hasGutter className="pf-u-mb-0">
@@ -286,56 +288,48 @@ export const Details = () => {
           <div className="pf-u-font-size-sm pf-u-color-200 pf-u-ml-lg pf-u-mt-xs">
             {constants.enableUserWorkloadMonitoringHint}
           </div>
-
-          <GridItem>
-            <Title headingLevel="h3" className="pf-u-mb-sm">
-              Encryption
-            </Title>
-
-            <Alert
-              isInline
-              variant="info"
-              title="The cloud storage for your cluster is encrypted at rest."
-            >
-              <ExternalLink href={cloudProviderLearnLink}>Learn more</ExternalLink>
-            </Alert>
-          </GridItem>
-
-          <Grid hasGutter>
-            <GridItem>
-              <Split hasGutter>
-                <SplitItem>
-                  <CheckboxField
-                    name={FieldId.EtcdEncryption}
-                    label="Enable additional etcd encryption"
-                  />
-                </SplitItem>
-                <SplitItem>
-                  <PopoverHint
-                    hint={
-                      <>
-                        {constants.enableAdditionalEtcdHint}
-                        <ExternalLink href={links.OSD_ETCD_ENCRYPTION}>
-                          Learn more about etcd encryption
-                        </ExternalLink>
-                      </>
-                    }
-                  />
-                </SplitItem>
-              </Split>
-              <div className="pf-u-font-size-sm pf-u-color-200 pf-u-ml-lg pf-u-mt-xs">
-                Additional encryption of OpenShift and Kubernetes API resources.
-              </div>
-            </GridItem>
-          </Grid>
-
-          {isByoc && (
-            <CustomerManagedEncryption
-              hasCustomerManagedKey={hasCustomerManagedKey}
-              region={region}
-              cloudProvider={cloudProvider}
-            />
-          )}
+          <ExpandableSection
+            toggleText="Advanced Encryption"
+            onToggle={onToggle}
+            isExpanded={isExpanded}
+          >
+            {isByoc && (
+              <CustomerManagedEncryption
+                hasCustomerManagedKey={hasCustomerManagedKey}
+                region={region}
+                cloudProvider={cloudProvider}
+              />
+            )}
+            <Grid hasGutter>
+              <FormGroup label="etcd encryption" className="pf-u-mt-md">
+                <GridItem>
+                  <Split hasGutter>
+                    <SplitItem>
+                      <CheckboxField
+                        name={FieldId.EtcdEncryption}
+                        label="Enable additional etcd encryption"
+                      />
+                    </SplitItem>
+                    <SplitItem>
+                      <PopoverHint
+                        hint={
+                          <>
+                            {constants.enableAdditionalEtcdHint}{' '}
+                            <ExternalLink href={links.OSD_ETCD_ENCRYPTION}>
+                              Learn more about etcd encryption
+                            </ExternalLink>
+                          </>
+                        }
+                      />
+                    </SplitItem>
+                  </Split>
+                  <div className="pf-u-font-size-sm pf-u-color-200 pf-u-ml-lg pf-u-mt-xs">
+                    Add more encryption for OpenShift and Kubernetes API resources.
+                  </div>
+                </GridItem>
+              </FormGroup>
+            </Grid>
+          </ExpandableSection>
         </Flex>
       </Grid>
     </Form>

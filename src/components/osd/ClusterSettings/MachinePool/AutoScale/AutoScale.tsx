@@ -38,8 +38,8 @@ export const AutoScale = ({
   product,
   isBYOC,
   isMultiAz,
-  autoScaleMinNodesValue,
-  autoScaleMaxNodesValue,
+  autoScaleMinNodesValue = '0',
+  autoScaleMaxNodesValue = '0',
 }: AutoScaleProps) => {
   const {
     setFieldValue,
@@ -56,6 +56,7 @@ export const AutoScale = ({
       product,
       isBYOC,
       isMultiAz,
+      autoScaleMinNodesValue,
     });
 
     if (minAllowed) {
@@ -64,7 +65,15 @@ export const AutoScale = ({
         isMultiAz ? (minAllowed / 3).toString() : minAllowed.toString(),
       );
     }
-  }, [autoscalingEnabled, isBYOC, isDefaultMachinePool, isMultiAz, product, setFieldValue]);
+  }, [
+    autoScaleMinNodesValue,
+    autoscalingEnabled,
+    isBYOC,
+    isDefaultMachinePool,
+    isMultiAz,
+    product,
+    setFieldValue,
+  ]);
 
   const minNodes = () => {
     const minNodesAllowed = getMinNodesAllowed({
@@ -72,6 +81,7 @@ export const AutoScale = ({
       product,
       isBYOC,
       isMultiAz,
+      autoScaleMinNodesValue: undefined,
     });
 
     if (minNodesAllowed) {
@@ -167,8 +177,7 @@ export const AutoScale = ({
             className="autoscaling__nodes-formGroup"
             helperText={
               <HelperText>
-                {isMultiAz &&
-                  helpText(`x 3 zones = ${parseInt(autoScaleMinNodesValue, 10) || 0 * 3}`)}
+                {isMultiAz && helpText(`x 3 zones = ${parseInt(autoScaleMinNodesValue, 10) * 3}`)}
                 {minErrorMessage && errorText(minErrorMessage)}
               </HelperText>
             }
@@ -184,8 +193,7 @@ export const AutoScale = ({
             className="autoscaling__nodes-formGroup"
             helperText={
               <HelperText>
-                {isMultiAz &&
-                  helpText(`x 3 zones = ${parseInt(autoScaleMaxNodesValue, 10) || 0 * 3}`)}
+                {isMultiAz && helpText(`x 3 zones = ${parseInt(autoScaleMaxNodesValue, 10) * 3}`)}
                 {maxErrorMessage && errorText(maxErrorMessage)}
               </HelperText>
             }
@@ -203,6 +211,11 @@ export const AutoScale = ({
                         <br />
                       </>
                     ) : null}
+
+                    <ExternalLink href={autoScalingUrl}>
+                      Learn more about autoscaling
+                      {isRosa ? ' with ROSA' : ''}
+                    </ExternalLink>
                   </>
                 }
               />
@@ -226,10 +239,7 @@ export const AutoScale = ({
               hint={
                 <>
                   {constants.autoscaleHint}{' '}
-                  <ExternalLink href={autoScalingUrl}>
-                    Learn more about autoscaling
-                    {isRosa ? ' with ROSA' : ''}
-                  </ExternalLink>
+                  <ExternalLink href={autoScalingUrl}>Learn more about autoscaling</ExternalLink>
                 </>
               }
             />
