@@ -38,8 +38,8 @@ export const AutoScale = ({
   product,
   isBYOC,
   isMultiAz,
-  autoScaleMinNodesValue = '0',
-  autoScaleMaxNodesValue = '0',
+  autoScaleMinNodesValue,
+  autoScaleMaxNodesValue,
 }: AutoScaleProps) => {
   const {
     setFieldValue,
@@ -56,7 +56,6 @@ export const AutoScale = ({
       product,
       isBYOC,
       isMultiAz,
-      autoScaleMinNodesValue,
     });
 
     if (minAllowed) {
@@ -65,15 +64,7 @@ export const AutoScale = ({
         isMultiAz ? (minAllowed / 3).toString() : minAllowed.toString(),
       );
     }
-  }, [
-    autoScaleMinNodesValue,
-    autoscalingEnabled,
-    isBYOC,
-    isDefaultMachinePool,
-    isMultiAz,
-    product,
-    setFieldValue,
-  ]);
+  }, [autoscalingEnabled, isBYOC, isDefaultMachinePool, isMultiAz, product, setFieldValue]);
 
   const minNodes = () => {
     const minNodesAllowed = getMinNodesAllowed({
@@ -81,7 +72,6 @@ export const AutoScale = ({
       product,
       isBYOC,
       isMultiAz,
-      autoScaleMinNodesValue: undefined,
     });
 
     if (minNodesAllowed) {
@@ -177,7 +167,8 @@ export const AutoScale = ({
             className="autoscaling__nodes-formGroup"
             helperText={
               <HelperText>
-                {isMultiAz && helpText(`x 3 zones = ${parseInt(autoScaleMinNodesValue, 10) * 3}`)}
+                {isMultiAz &&
+                  helpText(`x 3 zones = ${parseInt(autoScaleMinNodesValue, 10) || 0 * 3}`)}
                 {minErrorMessage && errorText(minErrorMessage)}
               </HelperText>
             }
@@ -193,7 +184,8 @@ export const AutoScale = ({
             className="autoscaling__nodes-formGroup"
             helperText={
               <HelperText>
-                {isMultiAz && helpText(`x 3 zones = ${parseInt(autoScaleMaxNodesValue, 10) * 3}`)}
+                {isMultiAz &&
+                  helpText(`x 3 zones = ${parseInt(autoScaleMaxNodesValue, 10) || 0 * 3}`)}
                 {maxErrorMessage && errorText(maxErrorMessage)}
               </HelperText>
             }

@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 import isEqual from 'lodash/isEqual';
 import { Field } from 'formik';
 
-import { GridItem } from '@patternfly/react-core';
+import { GridItem, Text } from '@patternfly/react-core';
 
 import { useGlobalState } from '~/redux/hooks/useGlobalState';
 import { required } from '~/common/validators';
@@ -14,6 +14,7 @@ import { getGCPKeys } from '~/components/clusters/CreateOSDPage/CreateOSDWizard/
 import { constants } from '~/components/clusters/CreateOSDPage/CreateOSDForm/CreateOSDFormConstants';
 import PopoverHint from '~/components/common/PopoverHint';
 import DynamicSelect from '~/components/common/DynamicSelect';
+import ExternalLink from '~/components/common/ExternalLink';
 
 export const KmsKeySelect = () => {
   const dispatch = useDispatch();
@@ -37,9 +38,24 @@ export const KmsKeySelect = () => {
         label="Key name"
         labelIcon={<PopoverHint hint={constants.keyName} />}
         helperText="Name of the key in the keyring."
-        emptyPlaceholder="No keys"
         placeholder="Select key"
         requestErrorTitle="Error listing keys using your GCP credentials"
+        emptyAlertTitle="No keys found for this location and key ring"
+        emptyAlertBody={
+          <>
+            <Text>
+              If available, change the Key ring location / Key ring. Or go to your{' '}
+              <ExternalLink href="https://console.cloud.google.com/security/kms">
+                Google Cloud Console
+              </ExternalLink>{' '}
+              and create the key.
+            </Text>
+            <Text>
+              Once created, refresh using the <strong>Refresh custom keys</strong> button.
+            </Text>
+          </>
+        }
+        refreshButtonText="Refresh custom keys"
         validate={required}
         isRequired
         input={{

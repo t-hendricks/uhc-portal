@@ -7,7 +7,7 @@ import ExternalLink from '~/components/common/ExternalLink';
 import { constants } from '~/components/clusters/CreateOSDPage/CreateOSDForm/CreateOSDFormConstants';
 import { CloudProviderType } from '../../CloudProvider/types';
 import { GcpEncryption } from './GcpEncryption';
-import { TextInputField, RadioGroupField } from '~/components/osd/common/form';
+import { TextInputField, RadioGroupField, RadioGroupOption } from '~/components/osd/common/form';
 import { FieldId } from '~/components/osd/constants';
 
 interface CustomerManagedEncryptionProps {
@@ -31,7 +31,7 @@ export const CustomerManagedEncryption = ({
     ? 'Managed via Google Cloud Key Management Service. Used to store and generate encryption keys and encrypt your data.'
     : 'Use a custom AWS KMS key for AWS EBS volume encryption instead of your default AWS KMS key.';
 
-  const customerManagedKeyOptions = [
+  const customerManagedKeyOptions: RadioGroupOption[] = [
     {
       value: 'false',
       label: 'Use default KMS Keys',
