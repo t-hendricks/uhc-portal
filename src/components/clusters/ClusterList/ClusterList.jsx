@@ -136,7 +136,10 @@ class ClusterList extends Component {
   componentWillUnmount() {
     const { closeModal, clearGlobalError } = this.props;
     closeModal();
-    clearGlobalError('clusterList');
+    // Clear errors coming from any component.
+    // E.g. when ClusterDetails can't find a cluster, it sets globalError and redirects here;
+    // that error should "show once" but disappear when navigating away.
+    clearGlobalError();
   }
 
   refresh = () => {
