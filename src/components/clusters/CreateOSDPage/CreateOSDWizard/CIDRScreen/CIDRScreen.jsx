@@ -10,6 +10,8 @@ function CIDRScreen({
   installToVpcSelected,
   isDefaultValuesChecked,
   change,
+  isOSD,
+  isROSA,
 }) {
   return (
     <Form
@@ -29,6 +31,8 @@ function CIDRScreen({
           installToVpcSelected={installToVpcSelected}
           isDefaultValuesChecked={isDefaultValuesChecked}
           change={change}
+          isOSD={isOSD}
+          isROSA={isROSA}
         />
       </Grid>
     </Form>
@@ -41,6 +45,8 @@ CIDRScreen.propTypes = {
   installToVpcSelected: PropTypes.bool,
   isDefaultValuesChecked: PropTypes.bool,
   change: PropTypes.func,
+  isROSA: PropTypes.bool,
+  isOSD: PropTypes.bool,
 };
 
 export default CIDRScreen;
