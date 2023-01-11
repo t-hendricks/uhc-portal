@@ -290,7 +290,7 @@ class CreateROSAWizardInternal extends React.Component {
             name: stepNameById[stepId.NETWORKING__CIDR_RANGES],
             component: (
               <ErrorBoundary>
-                <CIDRScreen />
+                <CIDRScreen isROSA />
               </ErrorBoundary>
             ),
             canJumpTo: this.canJumpTo(stepId.NETWORKING__CIDR_RANGES),
