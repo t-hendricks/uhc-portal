@@ -116,11 +116,13 @@ exports[`InstructionsChooser renders correctly with AI enabled 1`] = `
     href="/install/metal/installer-provisioned"
     id="select-automated"
     labels={
-      <Label
-        color="purple"
-      >
-        CLI-based
-      </Label>
+      <React.Fragment>
+        <Label
+          color="purple"
+        >
+          CLI-based
+        </Label>
+      </React.Fragment>
     }
     title="Automated"
   />
@@ -164,11 +166,13 @@ exports[`InstructionsChooser renders correctly with default settings 1`] = `
     href="/install/aws/installer-provisioned"
     id="select-automated"
     labels={
-      <Label
-        color="purple"
-      >
-        CLI-based
-      </Label>
+      <React.Fragment>
+        <Label
+          color="purple"
+        >
+          CLI-based
+        </Label>
+      </React.Fragment>
     }
     title="Automated"
   />
