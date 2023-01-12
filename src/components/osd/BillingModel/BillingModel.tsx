@@ -24,7 +24,7 @@ import {
 } from '~/components/clusters/CreateOSDPage/CreateOSDForm/FormSections/ScaleSection/AutoScaleSection/AutoScaleHelper';
 import { FieldId } from '../constants';
 import { useFormState } from '../hooks';
-import { RadioGroupField } from '../common/form';
+import { RadioGroupField, RadioGroupOption } from '../common/form';
 import { useGetBillingQuotas } from './useGetBillingQuotas';
 
 import './BillingModel.scss';
@@ -142,18 +142,18 @@ export const BillingModel = () => {
     isByocQuotaDisabled = !quotas.byoc;
   }
 
-  const infraOptions = [
+  const infraOptions: RadioGroupOption[] = [
     {
       label: 'Customer cloud subscription',
       description: 'Leverage your existing cloud provider account (AWS or Google Cloud)',
       value: 'true',
-      isDisabled: isByocQuotaDisabled,
+      disabled: isByocQuotaDisabled,
     },
     {
       label: 'Red Hat cloud account',
       description: 'Deploy in cloud provider accounts owned by Red Hat',
       value: 'false',
-      isDisabled: isRhInfraQuotaDisabled,
+      disabled: isRhInfraQuotaDisabled,
     },
   ];
 

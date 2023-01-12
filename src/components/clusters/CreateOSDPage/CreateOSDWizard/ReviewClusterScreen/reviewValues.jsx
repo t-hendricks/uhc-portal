@@ -286,7 +286,7 @@ const reviewValues = {
     title: 'HTTPS proxy URL',
     isOptional: true,
   },
-  no_proxy: {
+  no_proxy_domains: {
     title: 'No Proxy domains',
     isOptional: true,
     valueTransform: (noProxyDomains) => (

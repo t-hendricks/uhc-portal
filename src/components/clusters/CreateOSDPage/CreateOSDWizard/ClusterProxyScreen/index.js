@@ -24,6 +24,7 @@ const mapDispatchToProps = (dispatch) => ({
     // in src/common/validators.js validateCA function
     dispatch(change('CreateCluster', 'additional_trust_bundle', 'Invalid file'));
   },
+  change,
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(wizardConnector(ClusterProxyScreen));

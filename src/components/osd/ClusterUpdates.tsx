@@ -7,7 +7,7 @@ import links from '~/common/installLinks.mjs';
 import ExternalLink from '../common/ExternalLink';
 import { FieldId, initialValues } from './constants';
 import { useFormState } from './hooks';
-import { RadioGroupField } from './common/form';
+import { RadioGroupField, RadioGroupOption } from './common/form';
 import UpgradeScheduleSelection from '../clusters/common/Upgrades/UpgradeScheduleSelection';
 import PodDistruptionBudgetGraceSelect from '../clusters/common/Upgrades/PodDistruptionBudgetGraceSelect';
 
@@ -18,7 +18,7 @@ export const ClusterUpdates = () => {
     getFieldProps,
   } = useFormState();
 
-  const upgradePolicyOptions = [
+  const upgradePolicyOptions: RadioGroupOption[] = [
     {
       value: 'manual',
       label: 'Individual updates',

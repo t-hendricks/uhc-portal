@@ -208,8 +208,8 @@ export const createClusterRequest = ({ isWizard = true, cloudProviderID, product
         proxy.https_proxy = formData.https_proxy_url;
       }
       // return no-proxy back to a string
-      if (formData.no_proxy) {
-        proxy.no_proxy = formData.no_proxy.join(',');
+      if (formData.no_proxy_domains) {
+        proxy.no_proxy = formData.no_proxy_domains.join(',');
       }
       if (Object.keys(proxy).length !== 0) {
         clusterRequest.proxy = proxy;

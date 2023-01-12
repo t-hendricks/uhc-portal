@@ -1,21 +1,56 @@
 import React, { createRef, useState, useEffect, useReducer } from 'react';
-import PropTypes from 'prop-types';
-
+import { FormikErrors } from 'formik';
+import { WrappedFieldInputProps } from 'redux-form';
 import { FormGroup, TextInput, InputGroup, Popover, HelperText } from '@patternfly/react-core';
 
-import { evaluateClusterNameAsyncValidation } from '~/common/validators';
+import { useFormState } from '../../../hooks';
+
 import PopoverHint from '~/components/common/PopoverHint';
 import { ValidationItem } from '../../ValidationItem';
 import { ValidationIconButton } from '../../ValidationIconButton';
 
 import './RichInputField.scss';
 
-const validationInitialState = {
+type State = {
+  syncValidation: {
+    text: string;
+    validated: boolean;
+    validating?: boolean;
+  }[];
+  asyncValidation: {
+    text: string;
+    validated?: boolean;
+    validating?: boolean;
+  }[];
+};
+
+const validationInitialState: State = {
   syncValidation: [],
   asyncValidation: [],
 };
 
-const validationReducer = (state, action) => {
+type Action =
+  | {
+      type: 'set-sync-validation';
+      payload: {
+        validated: boolean;
+        text: string;
+      }[];
+    }
+  | {
+      type: 'set-async-validation';
+      payload: {
+        validating?: boolean;
+        validated?: boolean;
+        text: string;
+      }[];
+    }
+  | {
+      type: 'set-async-validating';
+      value: boolean;
+    };
+
+const validationReducer = (state = validationInitialState, action: Action): State => {
   switch (action.type) {
     case 'set-sync-validation':
       return {
@@ -43,29 +78,57 @@ const validationReducer = (state, action) => {
   }
 };
 
-export const RichInputField = (props) => {
-  const {
-    label,
-    extendedHelpText,
-    isRequired,
-    input,
-    disabled,
-    formGroupClass,
-    type,
-    validation,
-    asyncValidation,
-    helpTitle,
-    helpExample,
-    helpText,
-    name,
-    value,
-    onChange,
-  } = props;
+type Props = {
+  label?: string;
+  helpText?: string;
+  extendedHelpText?: React.ReactNode;
+  disabled?: boolean;
+  isRequired?: boolean;
+  formGroupClass?: string;
+  type?: React.ComponentProps<typeof TextInput>['type'];
+  validation?: (value: string) => {
+    text: string;
+    validated: boolean;
+  }[];
+  asyncValidation?: (value: string) => {
+    text: string;
+    validator: () => Promise<boolean>;
+  }[];
+  helpTitle?: string;
+  helpExample?: React.ReactNode;
+  value?: string;
+  name?: string;
+  onChange?: (value: string) => void;
+  input?: WrappedFieldInputProps;
+};
+
+export const RichInputField = ({
+  label,
+  extendedHelpText,
+  isRequired,
+  input,
+  disabled,
+  formGroupClass,
+  type = 'text',
+  validation = () => [],
+  asyncValidation = () => [],
+  helpTitle,
+  helpExample = '',
+  helpText = '',
+  name,
+  value = '',
+  onChange = () => {},
+}: Props) => {
   const inputValue = input ? input.value : value;
   const inputName = input ? input.name : name;
   const inputOnChange = input ? input.onChange : onChange;
 
-  const textInputRef = createRef();
+  const textInputRef = createRef<HTMLInputElement>();
+
+  const {
+    isValidating: isFormValidating,
+    errors: { [inputName ?? '']: error },
+  } = useFormState();
 
   const [touched, setTouched] = useState(false);
   const [isFocused, setIsFocused] = useState(false);
@@ -76,10 +139,10 @@ export const RichInputField = (props) => {
     validationInitialState,
   );
 
-  const evaluatedValidation = [].concat(
-    validationState.syncValidation,
-    validationState.asyncValidation,
-  );
+  const evaluatedValidation = [
+    ...validationState.syncValidation,
+    ...validationState.asyncValidation,
+  ];
   const isValid = !touched || !evaluatedValidation.some((item) => item.validated === false);
   const isValidating = touched && validationState.asyncValidation.some((item) => item.validating);
 
@@ -88,7 +151,14 @@ export const RichInputField = (props) => {
     inputClassName = isValid ? 'rich-input-field_valid' : 'rich-input-field_not-valid';
   }
 
-  const populateValidation = (term) => {
+  const setAsyncValidating = (isAsyncValidating: boolean) => {
+    validationDispatch({
+      type: 'set-async-validating',
+      value: isAsyncValidating,
+    });
+  };
+
+  const populateValidation = (term: string) => {
     const populatedValidation = validation(term);
     validationDispatch({
       type: 'set-sync-validation',
@@ -97,7 +167,7 @@ export const RichInputField = (props) => {
     return populatedValidation;
   };
 
-  const populateAsyncValidation = (term) => {
+  const populateAsyncValidation = (term: string) => {
     const populatedValidation = asyncValidation(term);
     validationDispatch({
       type: 'set-async-validation',
@@ -106,19 +176,28 @@ export const RichInputField = (props) => {
     return populatedValidation;
   };
 
-  const evaluateAsyncValidation = async (term) => {
-    validationDispatch({ type: 'set-async-validating', value: true });
-    const evaluatedAsyncValidation = await evaluateClusterNameAsyncValidation(term);
-    validationDispatch({ type: 'set-async-validation', payload: evaluatedAsyncValidation });
-    validationDispatch({ type: 'set-async-validating', value: false });
+  const evaluateAsyncValidation = (
+    formError: string | string[] | FormikErrors<any> | FormikErrors<any>[] | undefined,
+  ) => {
+    validationDispatch({
+      type: 'set-async-validation',
+      payload: validationState.asyncValidation.map((v) => ({
+        ...v,
+        validated: v.text !== formError,
+      })),
+    });
   };
 
-  const triggerAsyncValidation = async (blurEvent) => {
-    // triggers the form async validation (to prevent "next" navigation if field is invalid)
-    input.onBlur(blurEvent);
-    // recalculates the component data for rendering
-    await evaluateAsyncValidation(blurEvent?.target.value ?? inputValue);
-  };
+  useEffect(() => {
+    // `false` means the form validation execution has ended (as opposed to `undefined`)
+    if (isFormValidating === false) {
+      evaluateAsyncValidation(error);
+    }
+  }, [error, isFormValidating]);
+
+  useEffect(() => {
+    setAsyncValidating(!!isFormValidating);
+  }, [isFormValidating]);
 
   useEffect(() => {
     if (inputValue?.length) {
@@ -138,7 +217,7 @@ export const RichInputField = (props) => {
   }, [inputValue]);
 
   useEffect(() => {
-    triggerAsyncValidation();
+    input?.onBlur({ target: { value: inputValue } });
   }, []);
 
   return (
@@ -147,7 +226,7 @@ export const RichInputField = (props) => {
       validated={isValid ? 'default' : 'error'}
       label={label}
       isRequired={isRequired}
-      labelIcon={extendedHelpText && <PopoverHint hint={extendedHelpText} />}
+      labelIcon={extendedHelpText ? <PopoverHint hint={extendedHelpText} /> : undefined}
       className={`${formGroupClass || ''}`}
       helperText={helpText}
       helperTextInvalid={helpText}
@@ -171,8 +250,8 @@ export const RichInputField = (props) => {
                 <ValidationItem
                   touched={touched}
                   text={item.text}
-                  isValid={item.validated}
-                  isValidating={item.validating}
+                  isValid={!!item.validated}
+                  isValidating={!!item.validating}
                   isInitialized={typeof item.validated !== 'undefined'}
                 />
               ))}
@@ -190,12 +269,12 @@ export const RichInputField = (props) => {
             validated={isValid ? 'default' : 'error'}
             isDisabled={disabled}
             type={type}
-            autocomplete="off"
+            autoComplete="off"
             aria-invalid={!isValid}
-            onBlur={async (e) => {
+            onBlur={(e) => {
               setIsFocused(false);
               setShowPopover(false);
-              await triggerAsyncValidation(e);
+              input?.onBlur(e);
               setTouched(true);
             }}
             onClick={() => {
@@ -223,39 +302,11 @@ export const RichInputField = (props) => {
             onClick={(e) => {
               e.stopPropagation();
               setShowPopover(true);
-              textInputRef.current.focus();
+              textInputRef.current?.focus();
             }}
           />
         </InputGroup>
       </Popover>
     </FormGroup>
   );
-};
-
-RichInputField.defaultProps = {
-  type: 'text',
-  validation: () => [],
-  helpText: '',
-  helpTitle: '',
-  helpExample: '',
-  value: '',
-  onChange: () => {},
-};
-
-RichInputField.propTypes = {
-  label: PropTypes.string,
-  helpText: PropTypes.string,
-  extendedHelpText: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
-  disabled: PropTypes.bool,
-  isRequired: PropTypes.bool,
-  formGroupClass: PropTypes.string,
-  type: PropTypes.string,
-  validation: PropTypes.func,
-  asyncValidation: PropTypes.func,
-  helpTitle: PropTypes.string,
-  helpExample: PropTypes.node,
-  value: PropTypes.string,
-  name: PropTypes.string,
-  onChange: PropTypes.func,
-  input: PropTypes.object.isRequired,
 };

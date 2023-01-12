@@ -44,6 +44,7 @@ const INITIAL_OSL_VIEW_STATE: ViewState = {
   totalPages: 0,
   filter: {
     description: '',
+    loggedBy: '',
   },
   sorting: {
     sortField: 'timestamp',

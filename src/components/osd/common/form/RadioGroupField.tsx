@@ -12,7 +12,7 @@ enum RadioGroupDirection {
   Column = 'column',
 }
 
-interface RadioGroupOption {
+export interface RadioGroupOption {
   value: string;
   label: React.ReactNode;
   description?: React.ReactNode;
@@ -54,6 +54,7 @@ export const RadioGroupField = ({
               name={name}
               label={option.label}
               value={option.value}
+              isDisabled={option.disabled}
               description={option.description}
               className={classNames('pf-u-mb-md', { 'pf-u-mr-sm': !!option.popoverHint })}
               onChange={(value) => {
