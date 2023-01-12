@@ -259,6 +259,7 @@ exports[`<CloudTab /> should render correctly with OSD Trial quota 1`] = `
                   data-ouia-component-id="OUIA-Generated-Button-secondary-11"
                   data-ouia-component-type="PF4/Button"
                   data-ouia-safe="true"
+                  data-testid="externalLinkAsButton"
                   href="https://cloud.redhat.com/products/dedicated/"
                   rel="noreferrer noopener"
                   target="_blank"
@@ -319,6 +320,7 @@ exports[`<CloudTab /> should render correctly with OSD Trial quota 1`] = `
                         <svg
                           aria-hidden="true"
                           class="pf-u-ml-sm"
+                          data-testid="openInNewWindowIcon"
                           fill="#0066cc"
                           height="1em"
                           role="img"
@@ -435,6 +437,7 @@ exports[`<CloudTab /> should render correctly with OSD Trial quota 1`] = `
                   data-ouia-component-id="OUIA-Generated-Button-secondary-12"
                   data-ouia-component-type="PF4/Button"
                   data-ouia-safe="true"
+                  data-testid="externalLinkAsButton"
                   href="https://azure.microsoft.com/en-us/services/openshift"
                   rel="noreferrer noopener"
                   target="_blank"
@@ -491,6 +494,7 @@ exports[`<CloudTab /> should render correctly with OSD Trial quota 1`] = `
                         <svg
                           aria-hidden="true"
                           class="pf-u-ml-sm"
+                          data-testid="openInNewWindowIcon"
                           fill="#0066cc"
                           height="1em"
                           role="img"
@@ -607,6 +611,7 @@ exports[`<CloudTab /> should render correctly with OSD Trial quota 1`] = `
                   data-ouia-component-id="OUIA-Generated-Button-secondary-13"
                   data-ouia-component-type="PF4/Button"
                   data-ouia-safe="true"
+                  data-testid="externalLinkAsButton"
                   href="https://cloud.ibm.com/kubernetes/catalog/create?platformType=openshift"
                   rel="noreferrer noopener"
                   target="_blank"
@@ -663,6 +668,7 @@ exports[`<CloudTab /> should render correctly with OSD Trial quota 1`] = `
                         <svg
                           aria-hidden="true"
                           class="pf-u-ml-sm"
+                          data-testid="openInNewWindowIcon"
                           fill="#0066cc"
                           height="1em"
                           role="img"
@@ -869,6 +875,7 @@ exports[`<CloudTab /> should render correctly with OSD Trial quota 1`] = `
                         <svg
                           aria-hidden="true"
                           class="pf-u-ml-sm"
+                          data-testid="openInNewWindowIcon"
                           fill="#0066cc"
                           height="1em"
                           role="img"
@@ -1582,6 +1589,7 @@ exports[`<CloudTab /> should render correctly with both trial and quota 1`] = `
                         <svg
                           aria-hidden="true"
                           class="pf-u-ml-sm"
+                          data-testid="openInNewWindowIcon"
                           fill="#0066cc"
                           height="1em"
                           role="img"
@@ -1698,6 +1706,7 @@ exports[`<CloudTab /> should render correctly with both trial and quota 1`] = `
                   data-ouia-component-id="OUIA-Generated-Button-secondary-17"
                   data-ouia-component-type="PF4/Button"
                   data-ouia-safe="true"
+                  data-testid="externalLinkAsButton"
                   href="https://azure.microsoft.com/en-us/services/openshift"
                   rel="noreferrer noopener"
                   target="_blank"
@@ -1754,6 +1763,7 @@ exports[`<CloudTab /> should render correctly with both trial and quota 1`] = `
                         <svg
                           aria-hidden="true"
                           class="pf-u-ml-sm"
+                          data-testid="openInNewWindowIcon"
                           fill="#0066cc"
                           height="1em"
                           role="img"
@@ -1870,6 +1880,7 @@ exports[`<CloudTab /> should render correctly with both trial and quota 1`] = `
                   data-ouia-component-id="OUIA-Generated-Button-secondary-18"
                   data-ouia-component-type="PF4/Button"
                   data-ouia-safe="true"
+                  data-testid="externalLinkAsButton"
                   href="https://cloud.ibm.com/kubernetes/catalog/create?platformType=openshift"
                   rel="noreferrer noopener"
                   target="_blank"
@@ -1926,6 +1937,7 @@ exports[`<CloudTab /> should render correctly with both trial and quota 1`] = `
                         <svg
                           aria-hidden="true"
                           class="pf-u-ml-sm"
+                          data-testid="openInNewWindowIcon"
                           fill="#0066cc"
                           height="1em"
                           role="img"
@@ -2132,6 +2144,7 @@ exports[`<CloudTab /> should render correctly with both trial and quota 1`] = `
                         <svg
                           aria-hidden="true"
                           class="pf-u-ml-sm"
+                          data-testid="openInNewWindowIcon"
                           fill="#0066cc"
                           height="1em"
                           role="img"
@@ -2769,6 +2782,7 @@ exports[`<CloudTab /> should render correctly with quota 1`] = `
                         <svg
                           aria-hidden="true"
                           class="pf-u-ml-sm"
+                          data-testid="openInNewWindowIcon"
                           fill="#0066cc"
                           height="1em"
                           role="img"
@@ -2885,6 +2899,7 @@ exports[`<CloudTab /> should render correctly with quota 1`] = `
                   data-ouia-component-id="OUIA-Generated-Button-secondary-1"
                   data-ouia-component-type="PF4/Button"
                   data-ouia-safe="true"
+                  data-testid="externalLinkAsButton"
                   href="https://azure.microsoft.com/en-us/services/openshift"
                   rel="noreferrer noopener"
                   target="_blank"
@@ -2941,6 +2956,7 @@ exports[`<CloudTab /> should render correctly with quota 1`] = `
                         <svg
                           aria-hidden="true"
                           class="pf-u-ml-sm"
+                          data-testid="openInNewWindowIcon"
                           fill="#0066cc"
                           height="1em"
                           role="img"
@@ -3057,6 +3073,7 @@ exports[`<CloudTab /> should render correctly with quota 1`] = `
                   data-ouia-component-id="OUIA-Generated-Button-secondary-2"
                   data-ouia-component-type="PF4/Button"
                   data-ouia-safe="true"
+                  data-testid="externalLinkAsButton"
                   href="https://cloud.ibm.com/kubernetes/catalog/create?platformType=openshift"
                   rel="noreferrer noopener"
                   target="_blank"
@@ -3113,6 +3130,7 @@ exports[`<CloudTab /> should render correctly with quota 1`] = `
                         <svg
                           aria-hidden="true"
                           class="pf-u-ml-sm"
+                          data-testid="openInNewWindowIcon"
                           fill="#0066cc"
                           height="1em"
                           role="img"
@@ -3319,6 +3337,7 @@ exports[`<CloudTab /> should render correctly with quota 1`] = `
                         <svg
                           aria-hidden="true"
                           class="pf-u-ml-sm"
+                          data-testid="openInNewWindowIcon"
                           fill="#0066cc"
                           height="1em"
                           role="img"
@@ -3905,6 +3924,7 @@ exports[`<CloudTab /> should render correctly without quota 1`] = `
                   data-ouia-component-id="OUIA-Generated-Button-secondary-5"
                   data-ouia-component-type="PF4/Button"
                   data-ouia-safe="true"
+                  data-testid="externalLinkAsButton"
                   href="https://cloud.redhat.com/products/dedicated/"
                   rel="noreferrer noopener"
                   target="_blank"
@@ -3965,6 +3985,7 @@ exports[`<CloudTab /> should render correctly without quota 1`] = `
                         <svg
                           aria-hidden="true"
                           class="pf-u-ml-sm"
+                          data-testid="openInNewWindowIcon"
                           fill="#0066cc"
                           height="1em"
                           role="img"
@@ -4081,6 +4102,7 @@ exports[`<CloudTab /> should render correctly without quota 1`] = `
                   data-ouia-component-id="OUIA-Generated-Button-secondary-6"
                   data-ouia-component-type="PF4/Button"
                   data-ouia-safe="true"
+                  data-testid="externalLinkAsButton"
                   href="https://azure.microsoft.com/en-us/services/openshift"
                   rel="noreferrer noopener"
                   target="_blank"
@@ -4137,6 +4159,7 @@ exports[`<CloudTab /> should render correctly without quota 1`] = `
                         <svg
                           aria-hidden="true"
                           class="pf-u-ml-sm"
+                          data-testid="openInNewWindowIcon"
                           fill="#0066cc"
                           height="1em"
                           role="img"
@@ -4253,6 +4276,7 @@ exports[`<CloudTab /> should render correctly without quota 1`] = `
                   data-ouia-component-id="OUIA-Generated-Button-secondary-7"
                   data-ouia-component-type="PF4/Button"
                   data-ouia-safe="true"
+                  data-testid="externalLinkAsButton"
                   href="https://cloud.ibm.com/kubernetes/catalog/create?platformType=openshift"
                   rel="noreferrer noopener"
                   target="_blank"
@@ -4309,6 +4333,7 @@ exports[`<CloudTab /> should render correctly without quota 1`] = `
                         <svg
                           aria-hidden="true"
                           class="pf-u-ml-sm"
+                          data-testid="openInNewWindowIcon"
                           fill="#0066cc"
                           height="1em"
                           role="img"
@@ -4515,6 +4540,7 @@ exports[`<CloudTab /> should render correctly without quota 1`] = `
                         <svg
                           aria-hidden="true"
                           class="pf-u-ml-sm"
+                          data-testid="openInNewWindowIcon"
                           fill="#0066cc"
                           height="1em"
                           role="img"
