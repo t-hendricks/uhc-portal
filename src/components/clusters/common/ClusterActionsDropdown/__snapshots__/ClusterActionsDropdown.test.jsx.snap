@@ -2,7 +2,7 @@
 
 exports[`<ClusterActionsDropdown /> admin console url does not exist should render (no console) 1`] = `
 <Dropdown
-  data-test-id="cluster-actions-dropdown"
+  data-testid="cluster-actions-dropdown"
   dropdownItems={
     Array [
       <DropdownItem
@@ -53,7 +53,7 @@ exports[`<ClusterActionsDropdown /> admin console url does not exist should rend
 
 exports[`<ClusterActionsDropdown /> cluster with state not ready should render (not ready) 1`] = `
 <Dropdown
-  data-test-id="cluster-actions-dropdown"
+  data-testid="cluster-actions-dropdown"
   dropdownItems={
     Array [
       <DropdownItem
@@ -155,7 +155,7 @@ exports[`<ClusterActionsDropdown /> cluster with state not ready should render (
 
 exports[`<ClusterActionsDropdown /> cluster with state ready and console url should render 1`] = `
 <Dropdown
-  data-test-id="cluster-actions-dropdown"
+  data-testid="cluster-actions-dropdown"
   dropdownItems={
     Array [
       <DropdownItem
@@ -219,7 +219,7 @@ exports[`<ClusterActionsDropdown /> cluster with state ready and console url sho
 
 exports[`<ClusterActionsDropdown /> cluster with state uninstalling should render (uninstalling) 1`] = `
 <Dropdown
-  data-test-id="cluster-actions-dropdown"
+  data-testid="cluster-actions-dropdown"
   dropdownItems={
     Array [
       <DropdownItem
@@ -341,7 +341,7 @@ exports[`<ClusterActionsDropdown /> cluster with state uninstalling should rende
 
 exports[`<ClusterActionsDropdown /> read only cluster should render correctly 1`] = `
 <Dropdown
-  data-test-id="cluster-actions-dropdown"
+  data-testid="cluster-actions-dropdown"
   dropdownItems={
     Array [
       <DropdownItem
@@ -370,7 +370,7 @@ exports[`<ClusterActionsDropdown /> read only cluster should render correctly 1`
 
 exports[`<ClusterActionsDropdown /> self managed cluster should render (self managed) 1`] = `
 <Dropdown
-  data-test-id="cluster-actions-dropdown"
+  data-testid="cluster-actions-dropdown"
   dropdownItems={
     Array [
       <DropdownItem
