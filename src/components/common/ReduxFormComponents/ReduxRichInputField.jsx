@@ -16,7 +16,6 @@ import {
   ExclamationCircleIcon,
 } from '@patternfly/react-icons';
 
-import { evaluateClusterNameAsyncValidation } from '~/common/validators';
 import PopoverHint from '../PopoverHint';
 
 import './ReduxRichInputField.scss';
@@ -129,6 +128,7 @@ const ReduxRichInputField = (props) => {
     name,
     value,
     onChange,
+    meta: { error, asyncValidating },
   } = props;
   // Use value pass from redux forms else use props
   const inputValue = input ? input.value : value;
@@ -158,6 +158,13 @@ const ReduxRichInputField = (props) => {
     inputClassName = isValid ? 'redux-rich-input-field_valid' : 'redux-rich-input-field_not-valid';
   }
 
+  const setAsyncValidating = (isAsyncValidating) => {
+    validationDispatch({
+      type: 'set-async-validating',
+      value: isAsyncValidating,
+    });
+  };
+
   const populateValidation = (term) => {
     const populatedValidation = validation(term);
     validationDispatch({
@@ -176,19 +183,26 @@ const ReduxRichInputField = (props) => {
     return populatedValidation;
   };
 
-  const evaluateAsyncValidation = async (term) => {
-    validationDispatch({ type: 'set-async-validating', value: true });
-    const evaluatedAsyncValidation = await evaluateClusterNameAsyncValidation(term);
-    validationDispatch({ type: 'set-async-validation', payload: evaluatedAsyncValidation });
-    validationDispatch({ type: 'set-async-validating', value: false });
+  const evaluateAsyncValidation = (formError) => {
+    validationDispatch({
+      type: 'set-async-validation',
+      payload: validationState.asyncValidation.map((v) => ({
+        ...v,
+        validated: v.text !== formError,
+      })),
+    });
   };
 
-  const triggerAsyncValidation = async (blurEvent) => {
-    // triggers the form async validation (to prevent "next" navigation if field is invalid)
-    input.onBlur(blurEvent);
-    // recalculates the component data for rendering
-    await evaluateAsyncValidation(blurEvent?.target.value ?? inputValue);
-  };
+  useEffect(() => {
+    // `false` means the form async-validation has ended (as opposed to `undefined`)
+    if (asyncValidating === false) {
+      evaluateAsyncValidation(error);
+    }
+  }, [error, asyncValidating]);
+
+  useEffect(() => {
+    setAsyncValidating(!!asyncValidating);
+  }, [asyncValidating]);
 
   useEffect(() => {
     if (inputValue?.length) {
@@ -208,7 +222,8 @@ const ReduxRichInputField = (props) => {
   }, [inputValue]);
 
   useEffect(() => {
-    triggerAsyncValidation();
+    // trigger form-level async-validation
+    input.onBlur(inputValue);
   }, []);
 
   return (
@@ -262,10 +277,10 @@ const ReduxRichInputField = (props) => {
             type={type}
             autocomplete="off"
             aria-invalid={!isValid}
-            onBlur={async (e) => {
+            onBlur={(e) => {
               setIsFocused(false);
               setShowPopover(false);
-              await triggerAsyncValidation(e);
+              input.onBlur(e);
               setTouched(true);
             }}
             onClick={() => {
@@ -347,6 +362,10 @@ ReduxRichInputField.propTypes = {
 
   // props passed by redux-form
   input: PropTypes.object.isRequired,
+  meta: PropTypes.shape({
+    error: PropTypes.string,
+    asyncValidating: PropTypes.bool,
+  }),
 };
 
 export default ReduxRichInputField;

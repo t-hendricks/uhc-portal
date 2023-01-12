@@ -29,7 +29,6 @@ export const CheckboxField = ({
     {({ field, form, meta }: FieldProps) => (
       <FormGroup
         fieldId={field.name}
-        isRequired
         validated={meta.touched && meta.error ? 'error' : 'default'}
         helperTextInvalid={meta.touched && meta.error}
         {...(validate && { isRequired: true })}
@@ -53,6 +52,7 @@ export const CheckboxField = ({
             onBlur={() => form.setFieldTouched(name, true)}
             onChange={(_, event) => field.onChange(event)}
             value={field.value || false}
+            {...(!formGroup?.label && validate && { isRequired: true })}
             {...input}
           />
         </Flex>

@@ -22,17 +22,17 @@ const mapStateToProps = (state) => {
 
   const valueSelector = formValueSelector('EditClusterWideProxy');
   const noUrlValues =
-    !valueSelector(state, 'httpProxyUrl') && !valueSelector(state, 'httpsProxyUrl');
+    !valueSelector(state, 'http_proxy_url') && !valueSelector(state, 'https_proxy_url');
   const additionalTrustBundle =
-    valueSelector(state, 'additionalTrustBundle') || cluster?.additional_trust_bundle;
+    valueSelector(state, 'additional_trust_bundle') || cluster?.additional_trust_bundle;
 
   return {
     isOpen: shouldShowModal(state, modals.EDIT_CLUSTER_WIDE_PROXY),
     initialValues: {
       clusterID: cluster.id,
-      httpProxyUrl: cluster.proxy?.http_proxy,
-      httpsProxyUrl: cluster.proxy?.https_proxy,
-      noProxyDomains: stringToArray(cluster.proxy?.no_proxy),
+      http_proxy_url: cluster.proxy?.http_proxy,
+      https_proxy_url: cluster.proxy?.https_proxy,
+      no_proxy_domains: stringToArray(cluster.proxy?.no_proxy),
     },
     additionalTrustBundle,
     editClusterProxyResponse: state.clusters.editedCluster,
@@ -48,11 +48,11 @@ const mapDispatchToProps = (dispatch) => ({
   onSubmit: (formData) => {
     const clusterProxyBody = {
       proxy: {
-        http_proxy: formData.httpProxyUrl,
-        https_proxy: formData.httpsProxyUrl,
-        no_proxy: arrayToString(formData.noProxyDomains),
+        http_proxy: formData.http_proxy_url,
+        https_proxy: formData.https_proxy_url,
+        no_proxy: arrayToString(formData.no_proxy_domains),
       },
-      additional_trust_bundle: formData.additionalTrustBundle,
+      additional_trust_bundle: formData.additional_trust_bundle,
     };
     dispatch(editCluster(formData.clusterID, clusterProxyBody));
   },
@@ -61,6 +61,7 @@ const mapDispatchToProps = (dispatch) => ({
     // in src/common/validators.js validateCA function
     dispatch(change('EditClusterWideProxy', 'additional_trust_bundle', 'Invalid file'));
   },
+  change,
 });
 
 const mergeProps = (stateProps, dispatchProps, ownProps) => {

@@ -100,6 +100,10 @@ function ClusterLogsFilterChipGroup({
       key: 'description',
       label: 'Description',
     },
+    {
+      key: 'loggedBy',
+      label: 'Logged by',
+    },
   ];
 
   // Do not count the timestamps filters
@@ -136,6 +140,7 @@ ClusterLogsFilterChipGroup.propTypes = {
   setFilter: PropTypes.func.isRequired,
   currentFilter: PropTypes.shape({
     description: PropTypes.string,
+    loggedBy: PropTypes.string,
     timestampFrom: PropTypes.string,
     timestampTo: PropTypes.string,
   }).isRequired,

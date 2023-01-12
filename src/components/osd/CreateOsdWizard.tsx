@@ -30,6 +30,7 @@ import {
   breadcrumbs,
   documentTitle,
   FieldId,
+  initialTouched,
   initialValues,
   StepId,
   StepName,
@@ -53,6 +54,7 @@ import {
 import { ClusterUpdates } from './ClusterUpdates';
 import { ReviewAndCreate } from './ReviewAndCreate';
 import { CreateOsdWizardFooter } from './CreateOsdWizardFooter';
+import { CloudProviderType } from './ClusterSettings/CloudProvider/types';
 
 export const CreateOsdWizard = () => {
   const dispatch = useDispatch();
@@ -97,7 +99,7 @@ export const CreateOsdWizard = () => {
   };
 
   return (
-    <Formik initialValues={initialValues} onSubmit={onSubmit}>
+    <Formik initialValues={initialValues} initialTouched={initialTouched} onSubmit={onSubmit}>
       <>
         <PageTitle
           title="Create an OpenShift Dedicated Cluster"
@@ -117,8 +119,15 @@ export const CreateOsdWizard = () => {
 const CreateOsdWizardInternal = () => {
   const track = useAnalytics();
   const history = useHistory();
-  const { values } = useFormState();
-  const product = values[FieldId.Product];
+  const {
+    values: {
+      [FieldId.Product]: product,
+      [FieldId.CloudProvider]: cloudProvider,
+      [FieldId.Byoc]: byoc,
+      [FieldId.InstallToVpc]: installToVpc,
+      [FieldId.ConfigureProxy]: configureProxy,
+    },
+  } = useFormState();
   const organization = useGlobalState((state) => state.userProfile.organization);
   const loadBalancerValues = useGlobalState((state) => state.loadBalancerValues);
   const persistentStorageValues = useGlobalState((state) => state.persistentStorageValues);
@@ -238,20 +247,24 @@ const CreateOsdWizardInternal = () => {
           name={StepName.Networking}
           id={StepId.Networking}
           steps={[
-            <WizardStep name={StepName.Configuration} id={StepId.NetworkingConfiguration}>
+            <WizardStep
+              name={StepName.Configuration}
+              id={StepId.NetworkingConfiguration}
+              isHidden={cloudProvider === CloudProviderType.Gcp && byoc !== 'true'}
+            >
               <NetworkingConfiguration />
             </WizardStep>,
             <WizardStep
               name={StepName.VpcSettings}
               id={StepId.NetworkingVpcSettings}
-              isHidden={!values[FieldId.InstallToVpc]}
+              isHidden={!installToVpc}
             >
               <NetworkingVpcSettings />
             </WizardStep>,
             <WizardStep
               name={StepName.ClusterProxy}
               id={StepId.NetworkingClusterProxy}
-              isHidden={!values[FieldId.ConfigureProxy]}
+              isHidden={!configureProxy}
             >
               <NetworkingClusterProxy />
             </WizardStep>,
