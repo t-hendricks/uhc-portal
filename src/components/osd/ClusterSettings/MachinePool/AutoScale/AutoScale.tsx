@@ -25,7 +25,7 @@ import { CheckboxField } from '~/components/osd/common/form';
 interface AutoScaleProps {
   autoscalingEnabled: boolean;
   isMultiAz: boolean;
-  autoScaleMinNodesValue: string;
+  autoScaleMinNodesValue: string | any;
   autoScaleMaxNodesValue: string;
   product: string;
   isBYOC: boolean;
