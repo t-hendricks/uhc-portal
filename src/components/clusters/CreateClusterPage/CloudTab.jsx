@@ -306,7 +306,7 @@ const managedServices = (hasQuota, trialEnabled) => {
         'Amazon Web Services',
         'Flexible hourly billing',
         <>
-          <CreateClusterDropDown />
+          <CreateClusterDropDown toggleId="rosa-create-cluster-dropdown" />
         </>,
       ],
     },

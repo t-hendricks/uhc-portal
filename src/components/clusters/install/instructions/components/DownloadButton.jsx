@@ -50,6 +50,7 @@ const DownloadButton = ({
         );
       }}
       disabled={!url || disabled}
+      data-testid={`download-btn-${tool}`}
       {...downloadProps}
     >
       {buttonText}

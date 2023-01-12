@@ -792,7 +792,7 @@ exports[`<CloudTab /> should render correctly with OSD Trial quota 1`] = `
                     data-ouia-component-id="OUIA-Generated-DropdownToggle-5"
                     data-ouia-component-type="PF4/DropdownToggle"
                     data-ouia-safe="true"
-                    id="pf-dropdown-toggle-id-4"
+                    id="rosa-create-cluster-dropdown"
                     type="button"
                   >
                     <span
@@ -2061,7 +2061,7 @@ exports[`<CloudTab /> should render correctly with both trial and quota 1`] = `
                     data-ouia-component-id="OUIA-Generated-DropdownToggle-7"
                     data-ouia-component-type="PF4/DropdownToggle"
                     data-ouia-safe="true"
-                    id="pf-dropdown-toggle-id-6"
+                    id="rosa-create-cluster-dropdown"
                     type="button"
                   >
                     <span
@@ -3254,7 +3254,7 @@ exports[`<CloudTab /> should render correctly with quota 1`] = `
                     data-ouia-component-id="OUIA-Generated-DropdownToggle-1"
                     data-ouia-component-type="PF4/DropdownToggle"
                     data-ouia-safe="true"
-                    id="pf-dropdown-toggle-id-0"
+                    id="rosa-create-cluster-dropdown"
                     type="button"
                   >
                     <span
@@ -4457,7 +4457,7 @@ exports[`<CloudTab /> should render correctly without quota 1`] = `
                     data-ouia-component-id="OUIA-Generated-DropdownToggle-3"
                     data-ouia-component-type="PF4/DropdownToggle"
                     data-ouia-safe="true"
-                    id="pf-dropdown-toggle-id-2"
+                    id="rosa-create-cluster-dropdown"
                     type="button"
                   >
                     <span
