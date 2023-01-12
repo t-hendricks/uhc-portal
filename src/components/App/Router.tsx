@@ -69,6 +69,7 @@ import ConnectedInstallRHVUPI from '../clusters/install/InstallRHVUPI';
 import ConnectedInstallVSphereABI from '../clusters/install/InstallVSphereABI';
 import ConnectedInstallVSphereUPI from '../clusters/install/InstallVSphereUPI';
 import ConnectedInstallVSphereIPI from '../clusters/install/InstallVSphereIPI';
+import InstallNutanix from '../clusters/install/InstallNutanix';
 import InstallVSphere from '../clusters/install/InstallVSphere';
 import InstallPlatformAgnostic from '../clusters/install/InstallPlatformAgnostic';
 import ConnectedInstallPlatformAgnosticABI from '../clusters/install/InstallPlatformAgnosticABI';
@@ -209,6 +210,7 @@ const Router: React.FC<RouterProps> = ({ history, planType, clusterId, externalC
             <Route path="/install/gcp/installer-provisioned" component={ConnectedInstallGCPIPI} />
             <Route path="/install/gcp/user-provisioned" component={ConnectedInstallGCPUPI} />
             <Route path="/install/gcp" component={InstallGCP} />
+            <Route path="/install/nutanix/" exact component={InstallNutanix} />
             <Route
               path="/install/nutanix/installer-provisioned"
               component={ConnectedInstallNutanixIPI}
