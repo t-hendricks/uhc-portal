@@ -1134,7 +1134,7 @@ exports[`<DownloadsPage> renders 1`] = `
                 Manage your Red Hat OpenShift Service on AWS (ROSA) clusters from the command line using the ROSA client for OCM and AWS APIs.
                  
                 <ExternalLink
-                  href="https://docs.openshift.com/rosa/rosa_cli/rosa-get-started-cli.html"
+                  href="https://access.redhat.com/documentation/en-us/red_hat_openshift_service_on_aws/4/html/rosa_cli/rosa-get-started-cli"
                 >
                   Get started
                 </ExternalLink>

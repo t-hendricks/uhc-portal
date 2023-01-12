@@ -55,6 +55,8 @@ const MIRROR_MIRROR_REGISTRY_LATEST =
 const DOCS_BASE = 'https://docs.openshift.com/container-platform/4.11';
 const OSD_DOCS_BASE = 'https://docs.openshift.com/dedicated';
 const ROSA_DOCS_BASE = 'https://docs.openshift.com/rosa';
+const ROSA_CP_DOCS_BASE =
+  'https://access.redhat.com/documentation/en-us/red_hat_openshift_service_on_aws/4/html';
 
 const COSTMGMT_DOCS_BASE =
   'https://access.redhat.com/documentation/en-us/cost_management_service/2022';
@@ -253,7 +255,7 @@ const links = {
   ROSA_DOCS_ENTRY: `${ROSA_DOCS_BASE}/welcome/index.html`,
   ROSA_MONITORING: `${ROSA_DOCS_BASE}/rosa_cluster_admin/rosa_monitoring/rosa-understanding-the-monitoring-stack.html`,
   ROSA_AUTOSCALING: `${ROSA_DOCS_BASE}/rosa_cluster_admin/rosa_nodes/rosa-nodes-about-autoscaling-nodes.html`,
-  ROSA_CLI_DOCS: `${ROSA_DOCS_BASE}/rosa_cli/rosa-get-started-cli.html`,
+  ROSA_CLI_DOCS: `${ROSA_CP_DOCS_BASE}/rosa_cli/rosa-get-started-cli`,
   ROSA_AWS_PREREQUISITES: `${ROSA_DOCS_BASE}/rosa_install_access_delete_clusters/rosa_getting_started_iam/rosa-aws-prereqs.html`,
   ROSA_INSTALLING: `${ROSA_DOCS_BASE}/rosa_install_access_delete_clusters/rosa_getting_started_iam/rosa-installing-rosa.html`,
   ROSA_LIFE_CYCLE: `${ROSA_DOCS_BASE}/rosa_architecture/rosa_policy_service_definition/rosa-life-cycle.html`,
@@ -269,9 +271,9 @@ const links = {
   ROSA_AWS_STS_PREREQUISITES: `${ROSA_DOCS_BASE}/rosa_planning/rosa-sts-aws-prereqs.html`,
   ROSA_AWS_ACCOUNT_ASSOCIATION: `${ROSA_DOCS_BASE}/rosa_planning/rosa-sts-aws-prereqs.html#rosa-associating-account_rosa-sts-aws-prereqs`,
   ROSA_AWS_MULTIPLE_ACCOUNT_ASSOCIATION: `${ROSA_DOCS_BASE}/rosa_planning/rosa-sts-aws-prereqs.html#rosa-associating-multiple-account_rosa-sts-aws-prereqs`,
-  ROSA_AWS_SERVICE_QUOTAS: `${ROSA_DOCS_BASE}/rosa_planning/rosa-sts-required-aws-service-quotas.html`,
+  ROSA_AWS_SERVICE_QUOTAS: `${ROSA_CP_DOCS_BASE}/prepare_your_environment/rosa-sts-required-aws-service-quotas#rosa-required-aws-service-quotas_rosa-sts-required-aws-service-quotas`,
   ROSA_AWS_LIMITS_SCALE: `${ROSA_DOCS_BASE}/rosa_planning/rosa-limits-scalability.html#node-scaling-after-installation_rosa-limits-scalability`,
-  ROSA_AWS_IAM_RESOURCES: `${ROSA_DOCS_BASE}/rosa_architecture/rosa-sts-about-iam-resources.html`,
+  ROSA_AWS_IAM_RESOURCES: `${ROSA_CP_DOCS_BASE}/introduction_to_rosa/rosa-sts-about-iam-resources`,
   ROSA_AWS_IAM_ROLES: `${ROSA_DOCS_BASE}/rosa_architecture/rosa-sts-about-iam-resources.html#rosa-sts-account-wide-roles-and-policies_rosa-sts-about-iam-resources`,
   ROSA_AWS_ACCOUNT_ROLES: `${ROSA_DOCS_BASE}/rosa_architecture/rosa-sts-about-iam-resources.html#rosa-sts-understanding-ocm-role_rosa-sts-about-iam-resources`,
   ROSA_AWS_OPERATOR_ROLE_PREFIX: `${ROSA_DOCS_BASE}/rosa_architecture/rosa-sts-about-iam-resources.html#rosa-sts-about-operator-role-prefixes_rosa-sts-about-iam-resources`,
