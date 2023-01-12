@@ -3,9 +3,8 @@
     display: inline-block;
     margin-right: var(--pf-global--spacer--md);
   }
-
-  .get-started-button {
-    width: 150px;
+  .create-button {
+    min-width: 170px;
   }
   h2.font-weight-light {
     font-weight: var(--pf-global--FontWeight--light);
@@ -36,9 +35,5 @@
   #subscriptions {
     float: right;
     display: block;
-  }
-
-  .create-cluster {
-    width: 10.2em;
   }
 }
