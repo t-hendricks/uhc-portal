@@ -15,24 +15,24 @@ exports[`InstallMultiAzureIPI renders correctly 1`] = `
               "path": "/create",
             },
             Object {
-              "label": "Microsoft Azure heterogeneous infrastructure",
+              "label": "Microsoft Azure (multi-architecture)",
             },
           ]
         }
       />
     }
-    title="Install OpenShift on Azure with heterogeneous infrastructure"
+    title="Install OpenShift on Azure with multi-architecture compute machines"
   />
   <PageSection>
     <OCPInstructions
       channel="stable"
       cloudProviderID="azure"
-      docURL="https://docs.openshift.com/container-platform/4.12/post_installation_configuration/deploy-heterogeneous-configuration.html"
+      docURL="https://docs.openshift.com/container-platform/4.12/post_installation_configuration/multi-architecture-configuration.html"
       installer="multi-openshift-install"
       isBMIPI={false}
       isUPI={false}
       preReleasePageLink="/install/multi/pre-release"
-      title="Install OpenShift on Azure with heterogeneous infrastructure"
+      title="Install OpenShift on Azure with multi-architecture compute machines"
       token={Object {}}
     />
   </PageSection>

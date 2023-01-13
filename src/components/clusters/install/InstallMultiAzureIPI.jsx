@@ -13,7 +13,7 @@ export class InstallMultiAzureIPI extends Component {
   componentDidMount() {
     scrollToTop();
     document.title =
-      'Install OpenShift 4 | Red Hat OpenShift Cluster Manager | Azure Heterogeneous Infrastructure';
+      'Install OpenShift 4 | Red Hat OpenShift Cluster Manager | Azure with Multi-Architecture Compute Machines';
 
     const { dispatch } = this.props;
     dispatch(tollboothActions.createAuthToken());
@@ -26,7 +26,7 @@ export class InstallMultiAzureIPI extends Component {
         path={[
           { label: 'Clusters' },
           { label: 'Cluster Type', path: '/create' },
-          { label: 'Microsoft Azure heterogeneous infrastructure' },
+          { label: 'Microsoft Azure (multi-architecture)' },
         ]}
       />
     );

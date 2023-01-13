@@ -7596,7 +7596,7 @@ exports[`<DownloadsPage> renders 1`] = `
             }
             name={
               <React.Fragment>
-                OpenShift Installer for heterogeneous clusters
+                OpenShift Installer with multi-architecture compute machines
                  
                 <TechnologyPreview
                   position={1}
