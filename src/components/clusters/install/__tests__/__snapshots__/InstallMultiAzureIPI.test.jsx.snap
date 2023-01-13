@@ -27,7 +27,7 @@ exports[`InstallMultiAzureIPI renders correctly 1`] = `
     <OCPInstructions
       channel="stable"
       cloudProviderID="azure"
-      docURL="https://docs.openshift.com/container-platform/4.11/post_installation_configuration/deploy-heterogeneous-configuration.html"
+      docURL="https://docs.openshift.com/container-platform/4.12/post_installation_configuration/deploy-heterogeneous-configuration.html"
       installer="multi-openshift-install"
       isBMIPI={false}
       isUPI={false}
