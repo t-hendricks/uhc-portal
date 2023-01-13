@@ -92,6 +92,7 @@ import withFeatureGate from '../features/with-feature-gate';
 import {
   ASSISTED_INSTALLER_FEATURE,
   OSD_WIZARD_V2_FEATURE,
+  HYPERSHIFT_WIZARD_FEATURE,
 } from '../../redux/constants/featureConstants';
 import InstallBMABI from '../clusters/install/InstallBareMetalABI';
 import InstallBMUPI from '../clusters/install/InstallBareMetalUPI';
@@ -110,6 +111,7 @@ import ClusterDetailsClusterOrExternalId from '../clusters/ClusterDetails/Cluste
 import { CreateOsdWizard } from '../osd';
 import { metadataByRoute, is404 } from './routeMetadata';
 import { useFeatures } from './hooks';
+import { useGlobalState } from '~/redux/hooks';
 
 const { AssistedUiRouter } = OCM;
 
@@ -134,6 +136,13 @@ const Router: React.FC<RouterProps> = ({ history, planType, clusterId, externalC
     segment: { setPageMetadata },
   } = useChrome();
   const { [OSD_WIZARD_V2_FEATURE]: isOsdWizardV2Enabled } = useFeatures();
+
+  const isHypershiftWizardEnabled = useGlobalState(
+    (state) => state.features[HYPERSHIFT_WIZARD_FEATURE],
+  );
+  // TODO: just for testing, remove this when feature flag is being used in the wizard
+  // eslint-disable-next-line no-console
+  console.log(`HYPERSHIFT_WIZARD_FEATURE is ${isHypershiftWizardEnabled ? 'Enabled' : 'Disabled'}`);
 
   useEffect(() => {
     setPageMetadata({
