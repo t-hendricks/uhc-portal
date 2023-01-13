@@ -10,6 +10,7 @@ import {
   ASSISTED_INSTALLER_NETWORK_TYPE_SELECTION_FEATURE,
   ASSISTED_INSTALLER_PLATFORM_INTEGRATION_FEATURE,
   ROSA_CREATION_WIZARD_FEATURE,
+  HYPERSHIFT_WIZARD_FEATURE,
 } from '../constants/featureConstants';
 import authorizationsService from '../../services/authorizationsService';
 import { SelfAccessReview } from '../../types/authorizations.v1/models/SelfAccessReview';
@@ -29,6 +30,7 @@ const getSimpleUnleashFeature = (unleashFeatureName: string, name: string) => ({
 // list of features to detect upon app startup
 export const features = [
   getSimpleUnleashFeature('osd-trial', OSD_TRIAL_FEATURE),
+  getSimpleUnleashFeature('hypershift-creation-wizard', HYPERSHIFT_WIZARD_FEATURE),
   getSimpleUnleashFeature('assisted-installer-sno', ASSISTED_INSTALLER_SNO_FEATURE),
   getSimpleUnleashFeature('assisted-installer-ocs', ASSISTED_INSTALLER_OCS_FEATURE),
   getSimpleUnleashFeature('assisted-installer-cnv', ASSISTED_INSTALLER_CNV_FEATURE),
