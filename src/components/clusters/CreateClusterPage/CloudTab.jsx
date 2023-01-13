@@ -402,10 +402,7 @@ const runItYourself = () => {
     ],
     [
       <>
-        <Link to="/install/ibm-cloud" className="pf-u-mr-xs">
-          IBM Cloud
-        </Link>
-        <TechnologyPreview position={PreviewBadgePosition.inline} />
+        <Link to="/install/ibm-cloud">IBM Cloud</Link>
       </>,
       'Full stack automation',
     ],
