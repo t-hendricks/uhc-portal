@@ -16,6 +16,10 @@ exports[`InstallNutanixIPI renders correctly 1`] = `
             },
             Object {
               "label": "Nutanix AOS",
+              "path": "/install/nutanix",
+            },
+            Object {
+              "label": "Installer-provisioned infrastructure",
             },
           ]
         }
