@@ -210,7 +210,7 @@ const Router: React.FC<RouterProps> = ({ history, planType, clusterId, externalC
             <Route path="/install/gcp/installer-provisioned" component={ConnectedInstallGCPIPI} />
             <Route path="/install/gcp/user-provisioned" component={ConnectedInstallGCPUPI} />
             <Route path="/install/gcp" component={InstallGCP} />
-            <Route path="/install/nutanix/" exact component={InstallNutanix} />
+            <Route path="/install/nutanix" exact component={InstallNutanix} />
             <Route
               path="/install/nutanix/installer-provisioned"
               component={ConnectedInstallNutanixIPI}

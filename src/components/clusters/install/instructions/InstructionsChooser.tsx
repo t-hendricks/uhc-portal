@@ -12,7 +12,7 @@ interface InstructionsChooserProps {
   hideUPI?: boolean;
   ipiPageLink: string;
   upiPageLink: string;
-  recommend: 'ai' | 'ipi';
+  recommend?: 'ai' | 'ipi';
   providerSpecificFeatures?: {
     ai?: React.ReactNode[];
     abi?: React.ReactNode[];
