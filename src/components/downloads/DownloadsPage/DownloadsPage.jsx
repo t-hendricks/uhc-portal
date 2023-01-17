@@ -632,7 +632,7 @@ const installationRows = (expanded, setExpanded, selections, setSelections, tool
         channel={channels.STABLE}
         name={
           <>
-            OpenShift Installer for heterogeneous clusters{' '}
+            OpenShift Installer with multi-architecture compute machines{' '}
             <TechnologyPreview position={PreviewBadgePosition.inline} />
           </>
         }

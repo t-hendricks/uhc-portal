@@ -72,7 +72,7 @@ exports[`<DownloadsPage> renders 1`] = `
                  
                 <ExternalLink
                   ExternalLink={true}
-                  href="https://docs.openshift.com/container-platform/4.11/cli_reference/openshift_cli/getting-started-cli.html"
+                  href="https://docs.openshift.com/container-platform/4.12/cli_reference/openshift_cli/getting-started-cli.html"
                 >
                   Get started
                 </ExternalLink>
@@ -1665,7 +1665,7 @@ exports[`<DownloadsPage> renders 1`] = `
                 .
                  
                 <ExternalLink
-                  href="https://docs.openshift.com/container-platform/4.11/cli_reference/kn-cli-tools.html"
+                  href="https://docs.openshift.com/container-platform/4.12/cli_reference/kn-cli-tools.html"
                 >
                   Learn more
                 </ExternalLink>
@@ -2192,7 +2192,7 @@ exports[`<DownloadsPage> renders 1`] = `
                 Manage and interact with CI pipelines on OpenShift Container Platform with the Tekton CLI for OpenShift Pipelines.
                  
                 <ExternalLink
-                  href="https://docs.openshift.com/container-platform/4.11/cli_reference/tkn_cli/installing-tkn.html#installing-tkn"
+                  href="https://docs.openshift.com/container-platform/4.12/cli_reference/tkn_cli/installing-tkn.html#installing-tkn"
                 >
                   Get started
                 </ExternalLink>
@@ -2744,7 +2744,7 @@ exports[`<DownloadsPage> renders 1`] = `
                 , a fast, iterative, and straightforward CLI tool for developers.
                  
                 <ExternalLink
-                  href="https://docs.openshift.com/container-platform/4.11/cli_reference/developer_cli_odo/understanding-odo.html"
+                  href="https://docs.openshift.com/container-platform/4.12/cli_reference/developer_cli_odo/understanding-odo.html"
                 >
                   Learn more
                 </ExternalLink>
@@ -3270,7 +3270,7 @@ exports[`<DownloadsPage> renders 1`] = `
               <Text>
                 Define, install, and upgrade application packages as Helm charts using Helm 3, a package manager for Kubernetes. 
                 <ExternalLink
-                  href="https://docs.openshift.com/container-platform/4.11/applications/working_with_helm_charts/understanding-helm.html"
+                  href="https://docs.openshift.com/container-platform/4.12/applications/working_with_helm_charts/understanding-helm.html"
                 >
                   Learn more
                 </ExternalLink>
@@ -3796,7 +3796,7 @@ exports[`<DownloadsPage> renders 1`] = `
               <Text>
                 Create and maintain catalogs of Operators from a list of bundles with the Operator Package Manager. 
                 <ExternalLink
-                  href="https://docs.openshift.com/container-platform/4.11/cli_reference/opm/cli-opm-install.html"
+                  href="https://docs.openshift.com/container-platform/4.12/cli_reference/opm/cli-opm-install.html"
                 >
                   Learn more
                 </ExternalLink>
@@ -4323,7 +4323,7 @@ exports[`<DownloadsPage> renders 1`] = `
                 Build, test, and deploy Operators with the Operator SDK CLI.
                  
                 <ExternalLink
-                  href="https://docs.openshift.com/container-platform/4.11/cli_reference/osdk/cli-osdk-install.html"
+                  href="https://docs.openshift.com/container-platform/4.12/cli_reference/osdk/cli-osdk-install.html"
                 >
                   Learn more
                 </ExternalLink>
@@ -5408,7 +5408,7 @@ exports[`<DownloadsPage> renders 1`] = `
                   Download and extract your operating system's installation program and place the file in the directory where you'll store your configuration details. Then, create clusters on supported x86_64 infrastructure using our
                    
                   <ExternalLink
-                    href="https://docs.openshift.com/container-platform/4.11/installing/index.html"
+                    href="https://docs.openshift.com/container-platform/4.12/installing/index.html"
                   >
                     documentation
                   </ExternalLink>
@@ -5946,7 +5946,7 @@ exports[`<DownloadsPage> renders 1`] = `
                   Download and extract your operating system's installation program and place the file in the directory where you'll store your configuration details. Then, create clusters on supported ARM infrastructure using our
                    
                   <ExternalLink
-                    href="https://docs.openshift.com/container-platform/4.11/installing/index.html"
+                    href="https://docs.openshift.com/container-platform/4.12/installing/index.html"
                   >
                     documentation
                   </ExternalLink>
@@ -6484,7 +6484,7 @@ exports[`<DownloadsPage> renders 1`] = `
                   Download and extract your operating system's installation program and place the file in the directory where you'll store your configuration details. Then, create clusters on supported IBM Z infrastructure using our
                    
                   <ExternalLink
-                    href="https://docs.openshift.com/container-platform/4.11/installing/index.html"
+                    href="https://docs.openshift.com/container-platform/4.12/installing/index.html"
                   >
                     documentation
                   </ExternalLink>
@@ -7016,7 +7016,7 @@ exports[`<DownloadsPage> renders 1`] = `
                   Download and extract your operating system's installation program and place the file in the directory where you'll store your configuration details. Then, create clusters on supported Power infrastructure using our
                    
                   <ExternalLink
-                    href="https://docs.openshift.com/container-platform/4.11/installing/index.html"
+                    href="https://docs.openshift.com/container-platform/4.12/installing/index.html"
                   >
                     documentation
                   </ExternalLink>
@@ -7548,7 +7548,7 @@ exports[`<DownloadsPage> renders 1`] = `
                   Download and extract your operating system's installation program and place the file in the directory where you'll store your configuration details. Then, create clusters on supported infrastructure using our
                    
                   <ExternalLink
-                    href="https://docs.openshift.com/container-platform/4.11/installing/index.html"
+                    href="https://docs.openshift.com/container-platform/4.12/installing/index.html"
                   >
                     documentation
                   </ExternalLink>
@@ -7596,7 +7596,7 @@ exports[`<DownloadsPage> renders 1`] = `
             }
             name={
               <React.Fragment>
-                OpenShift Installer for heterogeneous clusters
+                OpenShift Installer with multi-architecture compute machines
                  
                 <TechnologyPreview
                   position={1}
@@ -8634,7 +8634,7 @@ exports[`<DownloadsPage> renders 1`] = `
                   Download and install a local, minimal single instance deployment of Red Hat Quay to aid bootstrapping the first disconnected cluster.
                    
                   <ExternalLink
-                    href="https://docs.openshift.com/container-platform/4.11/installing/disconnected_install/installing-mirroring-installation-images.html#installation-about-mirror-registry_installing-mirroring-installation-images"
+                    href="https://docs.openshift.com/container-platform/4.12/installing/disconnected_install/installing-mirroring-installation-images.html#installation-about-mirror-registry_installing-mirroring-installation-images"
                   >
                     Learn more
                   </ExternalLink>
@@ -9159,7 +9159,7 @@ exports[`<DownloadsPage> renders 1`] = `
                   installation in a central, declarative tool.
                    
                   <ExternalLink
-                    href="https://docs.openshift.com/container-platform/4.11/installing/disconnected_install/installing-mirroring-disconnected.html"
+                    href="https://docs.openshift.com/container-platform/4.12/installing/disconnected_install/installing-mirroring-disconnected.html"
                   >
                     Learn more
                   </ExternalLink>
@@ -9695,7 +9695,7 @@ exports[`<DownloadsPage> renders 1`] = `
                   Write and validate machine configs in a convenient short-hand syntax with the Butane config transpiler CLI tool.
                    
                   <ExternalLink
-                    href="https://docs.openshift.com/container-platform/4.11/installing/install_config/installing-customizing.html"
+                    href="https://docs.openshift.com/container-platform/4.12/installing/install_config/installing-customizing.html"
                   >
                     Learn more
                   </ExternalLink>
@@ -10216,7 +10216,7 @@ exports[`<DownloadsPage> renders 1`] = `
                   Download and install RHCOS disk images with the coreos-installer CLI tool.
                    
                   <ExternalLink
-                    href="https://docs.openshift.com/container-platform/4.11/installing/installing_platform_agnostic/installing-platform-agnostic.html"
+                    href="https://docs.openshift.com/container-platform/4.12/installing/installing_platform_agnostic/installing-platform-agnostic.html"
                   >
                     Learn more
                   </ExternalLink>
@@ -10737,7 +10737,7 @@ exports[`<DownloadsPage> renders 1`] = `
                   The ccoctl tool provides various commands to assist with the creating and maintenance of cloud credentials from outside the cluster (necessary when Cloud Credential Operator is put in Manual mode).
                    
                   <ExternalLink
-                    href="https://docs.openshift.com/container-platform/4.11/authentication/managing_cloud_provider_credentials/cco-mode-manual.html"
+                    href="https://docs.openshift.com/container-platform/4.12/authentication/managing_cloud_provider_credentials/cco-mode-manual.html"
                   >
                     Learn more
                   </ExternalLink>

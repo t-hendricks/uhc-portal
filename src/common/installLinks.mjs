@@ -52,7 +52,7 @@ const MIRROR_ROSA_LATEST = 'https://mirror.openshift.com/pub/openshift-v4/client
 const MIRROR_MIRROR_REGISTRY_LATEST =
   'https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/mirror-registry/latest';
 
-const DOCS_BASE = 'https://docs.openshift.com/container-platform/4.11';
+const DOCS_BASE = 'https://docs.openshift.com/container-platform/4.12';
 const OSD_DOCS_BASE = 'https://docs.openshift.com/dedicated';
 const ROSA_DOCS_BASE = 'https://docs.openshift.com/rosa';
 const ROSA_CP_DOCS_BASE =
@@ -135,7 +135,7 @@ const links = {
   INSTALL_AZUREUPI_GETTING_STARTED: `${DOCS_BASE}/installing/installing_azure/installing-azure-user-infra.html`,
   INSTALL_AZUREIPI_GETTING_STARTED: `${DOCS_BASE}/installing/installing_azure/installing-azure-default.html`,
   INSTALL_AZURE_CUSTOMIZATIONS: `${DOCS_BASE}/installing/installing_azure/installing-azure-customizations.html`,
-  INSTALL_AZURE_HETEROGENEOUS: `${DOCS_BASE}/post_installation_configuration/deploy-heterogeneous-configuration.html`,
+  INSTALL_AZURE_MULTI_ARCH: `${DOCS_BASE}/post_installation_configuration/multi-architecture-configuration.html`,
 
   INSTALL_ASHIPI_GETTING_STARTED: `${DOCS_BASE}/installing/installing_azure_stack_hub/installing-azure-stack-hub-default.html`,
   INSTALL_ASHUPI_GETTING_STARTED: `${DOCS_BASE}/installing/installing_azure_stack_hub/installing-azure-stack-hub-user-infra.html`,
