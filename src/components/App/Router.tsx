@@ -108,7 +108,7 @@ import EntitlementConfig from '../common/EntitlementConfig/index';
 import InsightsAdvisorRedirector from '../clusters/InsightsAdvisorRedirector';
 import ClusterDetailsSubscriptionId from '../clusters/ClusterDetails/ClusterDetailsSubscriptionId';
 import ClusterDetailsClusterOrExternalId from '../clusters/ClusterDetails/ClusterDetailsClusterOrExternalId';
-import { CreateOsdWizard } from '../osd';
+import { CreateOsdWizard } from '../clusters/wizards';
 import { metadataByRoute, is404 } from './routeMetadata';
 import { useFeatures } from './hooks';
 import { useGlobalState } from '~/redux/hooks';
@@ -302,7 +302,12 @@ const Router: React.FC<RouterProps> = ({ history, planType, clusterId, externalC
             />
 
             {isOsdWizardV2Enabled ? (
-              <Route path="/create/osd" exact component={CreateOsdWizard} />
+              <TermsGuardedRoute
+                path="/create/osd"
+                gobackPath="/create"
+                component={CreateOsdWizard}
+                history={history}
+              />
             ) : (
               <TermsGuardedRoute
                 path="/create/osd"
@@ -327,6 +332,7 @@ const Router: React.FC<RouterProps> = ({ history, planType, clusterId, externalC
 
             <Redirect from="/create/rosa/welcome" to="/create/rosa/getstarted" />
             <Route path="/create/rosa/getstarted" component={GetStartedWithROSA} />
+
             <TermsGuardedRoute
               path="/create/rosa/wizard"
               history={history}

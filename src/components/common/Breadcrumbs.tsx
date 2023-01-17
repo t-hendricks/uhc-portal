@@ -3,8 +3,10 @@ import { LinkContainer } from 'react-router-bootstrap';
 import { Breadcrumb, BreadcrumbItem } from '@patternfly/react-core';
 import getBaseName from '../../common/getBaseName';
 
+export type BreadcrumbPath = { label: string; path?: string };
+
 type Props = {
-  path: { label: string; path?: string }[];
+  path: BreadcrumbPath[];
 };
 
 const Breadcrumbs = ({ path }: Props) => (
