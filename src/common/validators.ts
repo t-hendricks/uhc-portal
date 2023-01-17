@@ -72,6 +72,9 @@ const GCP_KMS_SERVICE_ACCOUNT_REGEX = /^[a-z0-9.+-]+@[\w.-]+\.[a-z]{2,4}$/;
 const AWS_KMS_SERVICE_ACCOUNT_REGEX =
   /^arn:aws:kms:[\w-]+:\d{12}:key\/[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/;
 
+const AWS__KMS_MULTI_REGION_SERVICE_ACCOUNT_REGEX =
+  /^arn:aws:kms:[\w-]+:\d{12}:key\/mrk-[0-9a-f]{32}$/;
+
 /**
  * A valid label key name must consist of alphanumeric characters, '-', '_' or '.',
  * and must start and end with an alphanumeric character. e.g. 'MyName', 'my.name',
@@ -1238,7 +1241,11 @@ const validateAWSKMSKeyARN = (value: string, region: string): string | undefined
     return 'Value must not contain whitespaces.';
   }
 
-  if (!AWS_KMS_SERVICE_ACCOUNT_REGEX.test(value)) {
+  if (
+    value.includes(':key/mrk-')
+      ? !AWS__KMS_MULTI_REGION_SERVICE_ACCOUNT_REGEX.test(value)
+      : !AWS_KMS_SERVICE_ACCOUNT_REGEX.test(value)
+  ) {
     return 'Key provided is not a valid ARN. It should be in the format "arn:aws:kms:<region>:<accountid>:key/<keyid>".';
   }
 
