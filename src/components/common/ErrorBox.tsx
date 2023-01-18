@@ -1,5 +1,5 @@
 import React from 'react';
-import { Alert, ExpandableSection } from '@patternfly/react-core';
+import { Alert, ExpandableSection, AlertActionCloseButton } from '@patternfly/react-core';
 import { formatErrorDetails } from '../../common/errors';
 import { ErrorState } from '~/types/types';
 
@@ -9,9 +9,19 @@ type Props<R extends Response = Response> = {
   variant?: 'danger' | 'warning';
   children?: React.ReactNode;
   isExpandable?: boolean;
+  showCloseBtn?: boolean;
+  onCloseAlert?: () => void;
 };
 
-const ErrorBox = ({ message, variant = 'danger', response, children, isExpandable }: Props) => {
+const ErrorBox = ({
+  message,
+  variant = 'danger',
+  response,
+  children,
+  isExpandable,
+  showCloseBtn = false,
+  onCloseAlert,
+}: Props) => {
   const errorDetails = formatErrorDetails(response.errorDetails);
   const detailsDisplay = (
     <>
@@ -21,8 +31,17 @@ const ErrorBox = ({ message, variant = 'danger', response, children, isExpandabl
       <span>{`Operation ID: ${response.operationID || 'N/A'}`}</span>
     </>
   );
+  const closeAlertProp = {
+    actionClose: <AlertActionCloseButton onClose={onCloseAlert} />,
+  };
   return (
-    <Alert variant={variant} isInline title={message} className="error-box">
+    <Alert
+      variant={variant}
+      isInline
+      title={message}
+      className="error-box"
+      {...(showCloseBtn && closeAlertProp)}
+    >
       {children && (
         <>
           {children}

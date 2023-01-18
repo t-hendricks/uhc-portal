@@ -203,4 +203,19 @@ describe('<MachinePools />', () => {
     const addMachinePoolButton = wrapper.find('#add-machine-pool');
     expect(addMachinePoolButton.props().disableReason).toBeFalsy();
   });
+
+  it('should render error message', () => {
+    const props = { ...baseProps, deleteMachinePoolResponse: { ...baseRequestState, error: true } };
+    const wrapper = shallow(<MachinePools {...props} />);
+
+    expect(wrapper.find('ErrorBox').length).toBe(1);
+  });
+
+  it('should close error message', () => {
+    const props = { ...baseProps, deleteMachinePoolResponse: { ...baseRequestState, error: true } };
+    const wrapper = shallow(<MachinePools {...props} />);
+    const errorBox = wrapper.find('ErrorBox');
+    errorBox.props().onCloseAlert();
+    expect(wrapper.find('ErrorBox').length).toBe(0);
+  });
 });

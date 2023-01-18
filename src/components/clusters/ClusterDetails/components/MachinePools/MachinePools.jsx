@@ -40,6 +40,7 @@ import { isHibernating } from '../../../common/clusterStates';
 const initialState = {
   deletedRowIndex: null,
   openedRows: [],
+  hideDeleteMachinePoolError: false,
 };
 
 class MachinePools extends React.Component {
@@ -71,7 +72,7 @@ class MachinePools extends React.Component {
       machinePoolsList,
       getOrganizationAndQuota,
     } = this.props;
-    const { deletedRowIndex } = this.state;
+    const { deletedRowIndex, hideDeleteMachinePoolError } = this.state;
 
     if (
       ((deleteMachinePoolResponse.fulfilled && prevProps.deleteMachinePoolResponse.pending) ||
@@ -83,9 +84,24 @@ class MachinePools extends React.Component {
       getMachinePools();
     }
 
+    // show error if there is a new response for delete action
     if (
-      prevProps.machinePoolsList.pending &&
-      machinePoolsList.fulfilled &&
+      prevProps.deleteMachinePoolResponse.error &&
+      prevProps.deleteMachinePoolResponse.pending &&
+      deleteMachinePoolResponse.error &&
+      hideDeleteMachinePoolError
+    ) {
+      // eslint-disable-next-line react/no-did-update-set-state
+      this.setState(
+        produce((draft) => {
+          draft.hideDeleteMachinePoolError = false;
+        }),
+      );
+    }
+
+    if (
+      ((prevProps.machinePoolsList.pending && machinePoolsList.fulfilled) ||
+        deleteMachinePoolResponse.error) &&
       deletedRowIndex !== null
     ) {
       // eslint-disable-next-line react/no-did-update-set-state
@@ -134,7 +150,7 @@ class MachinePools extends React.Component {
       isHypershift,
     } = this.props;
 
-    const { deletedRowIndex, openedRows } = this.state;
+    const { deletedRowIndex, openedRows, hideDeleteMachinePoolError } = this.state;
 
     const hasMachinePools = !!machinePoolsList.data.length;
 
@@ -335,6 +351,10 @@ class MachinePools extends React.Component {
     const onClickDeleteAction = (_, rowID, rowData) => {
       this.setState(
         produce((draft) => {
+          // hide outdated error message
+          if (deleteMachinePoolResponse.error && !hideDeleteMachinePoolError) {
+            draft.hideDeleteMachinePoolError = true;
+          }
           draft.deletedRowIndex = rowID;
           draft.openedRows = draft.openedRows.filter(
             (machinePoolId) => machinePoolId !== rowData.machinePool.id,
@@ -445,8 +465,19 @@ class MachinePools extends React.Component {
               )}
               {addMachinePoolBtn}
               <Divider />
-              {deleteMachinePoolResponse.error && (
-                <ErrorBox message="Error deleting machine pool" response={machinePoolsList} />
+              {deleteMachinePoolResponse.error && !hideDeleteMachinePoolError && (
+                <ErrorBox
+                  message="Error deleting machine pool"
+                  response={deleteMachinePoolResponse}
+                  showCloseBtn
+                  onCloseAlert={() =>
+                    this.setState(
+                      produce((draft) => {
+                        draft.hideDeleteMachinePoolError = true;
+                      }),
+                    )
+                  }
+                />
               )}
               {isHypershift && (
                 <Alert
