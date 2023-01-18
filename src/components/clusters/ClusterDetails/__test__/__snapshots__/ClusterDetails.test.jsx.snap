@@ -446,6 +446,7 @@ exports[`<ClusterDetails /> Cluster Details - OSD should render 1`] = `
             "current": null,
           }
         }
+        isHypershiftEnabled={false}
         machinePoolsTabRef={
           Object {
             "current": null,
