@@ -64,6 +64,7 @@ class TabsRow extends React.Component {
       upgradeSettingsTabRef,
       addAssistedTabRef,
       hasIssues,
+      isHypershiftEnabled,
     } = this.props;
     return [
       {
@@ -106,6 +107,10 @@ class TabsRow extends React.Component {
         id: 'addOns',
         show: displayAddOnsTab,
         ref: addOnsTabRef,
+        isDisabled: isHypershiftEnabled,
+        tooltip: isHypershiftEnabled ? (
+          <Tooltip content="Add-ons will be available soon for hosted control plane clusters." />
+        ) : undefined,
       },
       {
         key: 4,
@@ -213,7 +218,7 @@ class TabsRow extends React.Component {
           <Tab
             key={tab.key}
             eventKey={tab.key}
-            title={<TabTitleText>{tab.title}</TabTitleText>}
+            title={tab.title}
             tabContentId={tab.contentId}
             ouiaId={tab.title}
             isAriaDisabled={tab.isDisabled || false}
@@ -250,6 +255,7 @@ TabsRow.propTypes = {
   upgradeSettingsTabRef: PropTypes.object.isRequired,
   addAssistedTabRef: PropTypes.object.isRequired,
   hasIssues: PropTypes.bool.isRequired,
+  isHypershiftEnabled: PropTypes.bool.isRequired,
   initTabOpen: PropTypes.string,
   setOpenedTab: PropTypes.func.isRequired,
   onTabSelected: PropTypes.func.isRequired,
