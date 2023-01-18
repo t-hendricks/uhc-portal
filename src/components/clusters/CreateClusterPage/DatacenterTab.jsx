@@ -48,9 +48,9 @@ const ocpTableRows = [
   ],
   [
     <>
-      <Link to="/install/nutanix/installer-provisioned">Nutanix AOS</Link>
+      <Link to="/install/nutanix">Nutanix AOS</Link>
     </>,
-    'Full stack automation',
+    'Full stack automation and pre-existing infrastructure',
   ],
   [
     <>
