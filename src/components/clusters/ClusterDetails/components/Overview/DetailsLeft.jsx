@@ -34,6 +34,7 @@ function DetailsLeft({ cluster, cloudProviders, showAssistedId }) {
   const region = get(cluster, 'region.id', 'N/A');
   const planType = get(cluster, 'subscription.plan.type');
   const isROSA = planType === normalizedProducts.ROSA;
+  const isHypershift = get(cluster, 'hypershift.enabled');
 
   let cloudProvider;
   if (cloudProviderId && cloudProviders.fulfilled && cloudProviders.providers[cloudProviderId]) {
@@ -57,6 +58,12 @@ function DetailsLeft({ cluster, cloudProviders, showAssistedId }) {
           <DescriptionListTerm>Type</DescriptionListTerm>
           <DescriptionListDescription>
             <ClusterTypeLabel cluster={cluster} />
+          </DescriptionListDescription>
+        </DescriptionListGroup>
+        <DescriptionListGroup>
+          <DescriptionListTerm>Control Plane Type</DescriptionListTerm>
+          <DescriptionListDescription>
+            {isHypershift ? 'Hosted' : 'Standalone'}
           </DescriptionListDescription>
         </DescriptionListGroup>
         <DescriptionListGroup>
