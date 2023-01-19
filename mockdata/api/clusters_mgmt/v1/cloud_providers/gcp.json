@@ -1,7 +1,0 @@
-{
-  "kind": "CloudProvider",
-  "id": "gcp",
-  "href": "/api/clusters_mgmt/v1/cloud_providers/gcp",
-  "name": "gcp",
-  "display_name": "GCP"
-}
