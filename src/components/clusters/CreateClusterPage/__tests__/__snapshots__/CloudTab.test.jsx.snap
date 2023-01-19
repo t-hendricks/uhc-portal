@@ -37,7 +37,7 @@ exports[`<CloudTab /> should render correctly with OSD Trial quota 1`] = `
           >
             <tr
               class=""
-              data-ouia-component-id="OUIA-Generated-TableRow-73"
+              data-ouia-component-id="OUIA-Generated-TableRow-77"
               data-ouia-component-type="PF4/TableRow"
               data-ouia-safe="true"
             >
@@ -91,7 +91,7 @@ exports[`<CloudTab /> should render correctly with OSD Trial quota 1`] = `
           >
             <tr
               class=""
-              data-ouia-component-id="OUIA-Generated-TableRow-74"
+              data-ouia-component-id="OUIA-Generated-TableRow-78"
               data-ouia-component-type="PF4/TableRow"
               data-ouia-safe="true"
             >
@@ -167,7 +167,7 @@ exports[`<CloudTab /> should render correctly with OSD Trial quota 1`] = `
           >
             <tr
               class=""
-              data-ouia-component-id="OUIA-Generated-TableRow-75"
+              data-ouia-component-id="OUIA-Generated-TableRow-79"
               data-ouia-component-type="PF4/TableRow"
               data-ouia-safe="true"
             >
@@ -279,7 +279,7 @@ exports[`<CloudTab /> should render correctly with OSD Trial quota 1`] = `
             </tr>
             <tr
               class="pf-c-table__expandable-row"
-              data-ouia-component-id="OUIA-Generated-TableRow-76"
+              data-ouia-component-id="OUIA-Generated-TableRow-80"
               data-ouia-component-type="PF4/TableRow"
               data-ouia-safe="true"
               hidden=""
@@ -345,7 +345,7 @@ exports[`<CloudTab /> should render correctly with OSD Trial quota 1`] = `
           >
             <tr
               class=""
-              data-ouia-component-id="OUIA-Generated-TableRow-77"
+              data-ouia-component-id="OUIA-Generated-TableRow-81"
               data-ouia-component-type="PF4/TableRow"
               data-ouia-safe="true"
             >
@@ -453,7 +453,7 @@ exports[`<CloudTab /> should render correctly with OSD Trial quota 1`] = `
             </tr>
             <tr
               class="pf-c-table__expandable-row"
-              data-ouia-component-id="OUIA-Generated-TableRow-78"
+              data-ouia-component-id="OUIA-Generated-TableRow-82"
               data-ouia-component-type="PF4/TableRow"
               data-ouia-safe="true"
               hidden=""
@@ -519,7 +519,7 @@ exports[`<CloudTab /> should render correctly with OSD Trial quota 1`] = `
           >
             <tr
               class=""
-              data-ouia-component-id="OUIA-Generated-TableRow-79"
+              data-ouia-component-id="OUIA-Generated-TableRow-83"
               data-ouia-component-type="PF4/TableRow"
               data-ouia-safe="true"
             >
@@ -627,7 +627,7 @@ exports[`<CloudTab /> should render correctly with OSD Trial quota 1`] = `
             </tr>
             <tr
               class="pf-c-table__expandable-row"
-              data-ouia-component-id="OUIA-Generated-TableRow-80"
+              data-ouia-component-id="OUIA-Generated-TableRow-84"
               data-ouia-component-type="PF4/TableRow"
               data-ouia-safe="true"
               hidden=""
@@ -693,7 +693,7 @@ exports[`<CloudTab /> should render correctly with OSD Trial quota 1`] = `
           >
             <tr
               class=""
-              data-ouia-component-id="OUIA-Generated-TableRow-81"
+              data-ouia-component-id="OUIA-Generated-TableRow-85"
               data-ouia-component-type="PF4/TableRow"
               data-ouia-safe="true"
             >
@@ -834,7 +834,7 @@ exports[`<CloudTab /> should render correctly with OSD Trial quota 1`] = `
             </tr>
             <tr
               class="pf-c-table__expandable-row"
-              data-ouia-component-id="OUIA-Generated-TableRow-82"
+              data-ouia-component-id="OUIA-Generated-TableRow-86"
               data-ouia-component-type="PF4/TableRow"
               data-ouia-safe="true"
               hidden=""
@@ -958,7 +958,7 @@ exports[`<CloudTab /> should render correctly with OSD Trial quota 1`] = `
           >
             <tr
               class=""
-              data-ouia-component-id="OUIA-Generated-TableRow-83"
+              data-ouia-component-id="OUIA-Generated-TableRow-87"
               data-ouia-component-type="PF4/TableRow"
               data-ouia-safe="true"
             >
@@ -986,7 +986,7 @@ exports[`<CloudTab /> should render correctly with OSD Trial quota 1`] = `
           >
             <tr
               class=""
-              data-ouia-component-id="OUIA-Generated-TableRow-84"
+              data-ouia-component-id="OUIA-Generated-TableRow-88"
               data-ouia-component-type="PF4/TableRow"
               data-ouia-safe="true"
             >
@@ -1040,7 +1040,7 @@ exports[`<CloudTab /> should render correctly with OSD Trial quota 1`] = `
             </tr>
             <tr
               class=""
-              data-ouia-component-id="OUIA-Generated-TableRow-85"
+              data-ouia-component-id="OUIA-Generated-TableRow-89"
               data-ouia-component-type="PF4/TableRow"
               data-ouia-safe="true"
             >
@@ -1065,7 +1065,7 @@ exports[`<CloudTab /> should render correctly with OSD Trial quota 1`] = `
             </tr>
             <tr
               class=""
-              data-ouia-component-id="OUIA-Generated-TableRow-86"
+              data-ouia-component-id="OUIA-Generated-TableRow-90"
               data-ouia-component-type="PF4/TableRow"
               data-ouia-safe="true"
             >
@@ -1090,7 +1090,7 @@ exports[`<CloudTab /> should render correctly with OSD Trial quota 1`] = `
             </tr>
             <tr
               class=""
-              data-ouia-component-id="OUIA-Generated-TableRow-87"
+              data-ouia-component-id="OUIA-Generated-TableRow-91"
               data-ouia-component-type="PF4/TableRow"
               data-ouia-safe="true"
             >
@@ -1115,7 +1115,32 @@ exports[`<CloudTab /> should render correctly with OSD Trial quota 1`] = `
             </tr>
             <tr
               class=""
-              data-ouia-component-id="OUIA-Generated-TableRow-88"
+              data-ouia-component-id="OUIA-Generated-TableRow-92"
+              data-ouia-component-type="PF4/TableRow"
+              data-ouia-safe="true"
+            >
+              <td
+                class=""
+                data-key="0"
+                data-label="Cloud provider"
+              >
+                <a
+                  href="/install/azure/arm/installer-provisioned"
+                >
+                  Azure (ARM)
+                </a>
+              </td>
+              <td
+                class=""
+                data-key="1"
+                data-label="Installation options"
+              >
+                Full stack automation
+              </td>
+            </tr>
+            <tr
+              class=""
+              data-ouia-component-id="OUIA-Generated-TableRow-93"
               data-ouia-component-type="PF4/TableRow"
               data-ouia-safe="true"
             >
@@ -1169,7 +1194,7 @@ exports[`<CloudTab /> should render correctly with OSD Trial quota 1`] = `
             </tr>
             <tr
               class=""
-              data-ouia-component-id="OUIA-Generated-TableRow-89"
+              data-ouia-component-id="OUIA-Generated-TableRow-94"
               data-ouia-component-type="PF4/TableRow"
               data-ouia-safe="true"
             >
@@ -1194,7 +1219,7 @@ exports[`<CloudTab /> should render correctly with OSD Trial quota 1`] = `
             </tr>
             <tr
               class=""
-              data-ouia-component-id="OUIA-Generated-TableRow-90"
+              data-ouia-component-id="OUIA-Generated-TableRow-95"
               data-ouia-component-type="PF4/TableRow"
               data-ouia-safe="true"
             >
@@ -1248,7 +1273,7 @@ exports[`<CloudTab /> should render correctly with OSD Trial quota 1`] = `
             </tr>
             <tr
               class=""
-              data-ouia-component-id="OUIA-Generated-TableRow-91"
+              data-ouia-component-id="OUIA-Generated-TableRow-96"
               data-ouia-component-type="PF4/TableRow"
               data-ouia-safe="true"
             >
@@ -1316,7 +1341,7 @@ exports[`<CloudTab /> should render correctly with both trial and quota 1`] = `
           >
             <tr
               class=""
-              data-ouia-component-id="OUIA-Generated-TableRow-111"
+              data-ouia-component-id="OUIA-Generated-TableRow-117"
               data-ouia-component-type="PF4/TableRow"
               data-ouia-safe="true"
             >
@@ -1370,7 +1395,7 @@ exports[`<CloudTab /> should render correctly with both trial and quota 1`] = `
           >
             <tr
               class=""
-              data-ouia-component-id="OUIA-Generated-TableRow-112"
+              data-ouia-component-id="OUIA-Generated-TableRow-118"
               data-ouia-component-type="PF4/TableRow"
               data-ouia-safe="true"
             >
@@ -1446,7 +1471,7 @@ exports[`<CloudTab /> should render correctly with both trial and quota 1`] = `
           >
             <tr
               class=""
-              data-ouia-component-id="OUIA-Generated-TableRow-113"
+              data-ouia-component-id="OUIA-Generated-TableRow-119"
               data-ouia-component-type="PF4/TableRow"
               data-ouia-safe="true"
             >
@@ -1548,7 +1573,7 @@ exports[`<CloudTab /> should render correctly with both trial and quota 1`] = `
             </tr>
             <tr
               class="pf-c-table__expandable-row"
-              data-ouia-component-id="OUIA-Generated-TableRow-114"
+              data-ouia-component-id="OUIA-Generated-TableRow-120"
               data-ouia-component-type="PF4/TableRow"
               data-ouia-safe="true"
               hidden=""
@@ -1614,7 +1639,7 @@ exports[`<CloudTab /> should render correctly with both trial and quota 1`] = `
           >
             <tr
               class=""
-              data-ouia-component-id="OUIA-Generated-TableRow-115"
+              data-ouia-component-id="OUIA-Generated-TableRow-121"
               data-ouia-component-type="PF4/TableRow"
               data-ouia-safe="true"
             >
@@ -1722,7 +1747,7 @@ exports[`<CloudTab /> should render correctly with both trial and quota 1`] = `
             </tr>
             <tr
               class="pf-c-table__expandable-row"
-              data-ouia-component-id="OUIA-Generated-TableRow-116"
+              data-ouia-component-id="OUIA-Generated-TableRow-122"
               data-ouia-component-type="PF4/TableRow"
               data-ouia-safe="true"
               hidden=""
@@ -1788,7 +1813,7 @@ exports[`<CloudTab /> should render correctly with both trial and quota 1`] = `
           >
             <tr
               class=""
-              data-ouia-component-id="OUIA-Generated-TableRow-117"
+              data-ouia-component-id="OUIA-Generated-TableRow-123"
               data-ouia-component-type="PF4/TableRow"
               data-ouia-safe="true"
             >
@@ -1896,7 +1921,7 @@ exports[`<CloudTab /> should render correctly with both trial and quota 1`] = `
             </tr>
             <tr
               class="pf-c-table__expandable-row"
-              data-ouia-component-id="OUIA-Generated-TableRow-118"
+              data-ouia-component-id="OUIA-Generated-TableRow-124"
               data-ouia-component-type="PF4/TableRow"
               data-ouia-safe="true"
               hidden=""
@@ -1962,7 +1987,7 @@ exports[`<CloudTab /> should render correctly with both trial and quota 1`] = `
           >
             <tr
               class=""
-              data-ouia-component-id="OUIA-Generated-TableRow-119"
+              data-ouia-component-id="OUIA-Generated-TableRow-125"
               data-ouia-component-type="PF4/TableRow"
               data-ouia-safe="true"
             >
@@ -2103,7 +2128,7 @@ exports[`<CloudTab /> should render correctly with both trial and quota 1`] = `
             </tr>
             <tr
               class="pf-c-table__expandable-row"
-              data-ouia-component-id="OUIA-Generated-TableRow-120"
+              data-ouia-component-id="OUIA-Generated-TableRow-126"
               data-ouia-component-type="PF4/TableRow"
               data-ouia-safe="true"
               hidden=""
@@ -2227,7 +2252,7 @@ exports[`<CloudTab /> should render correctly with both trial and quota 1`] = `
           >
             <tr
               class=""
-              data-ouia-component-id="OUIA-Generated-TableRow-121"
+              data-ouia-component-id="OUIA-Generated-TableRow-127"
               data-ouia-component-type="PF4/TableRow"
               data-ouia-safe="true"
             >
@@ -2255,7 +2280,7 @@ exports[`<CloudTab /> should render correctly with both trial and quota 1`] = `
           >
             <tr
               class=""
-              data-ouia-component-id="OUIA-Generated-TableRow-122"
+              data-ouia-component-id="OUIA-Generated-TableRow-128"
               data-ouia-component-type="PF4/TableRow"
               data-ouia-safe="true"
             >
@@ -2309,7 +2334,7 @@ exports[`<CloudTab /> should render correctly with both trial and quota 1`] = `
             </tr>
             <tr
               class=""
-              data-ouia-component-id="OUIA-Generated-TableRow-123"
+              data-ouia-component-id="OUIA-Generated-TableRow-129"
               data-ouia-component-type="PF4/TableRow"
               data-ouia-safe="true"
             >
@@ -2334,7 +2359,7 @@ exports[`<CloudTab /> should render correctly with both trial and quota 1`] = `
             </tr>
             <tr
               class=""
-              data-ouia-component-id="OUIA-Generated-TableRow-124"
+              data-ouia-component-id="OUIA-Generated-TableRow-130"
               data-ouia-component-type="PF4/TableRow"
               data-ouia-safe="true"
             >
@@ -2359,7 +2384,7 @@ exports[`<CloudTab /> should render correctly with both trial and quota 1`] = `
             </tr>
             <tr
               class=""
-              data-ouia-component-id="OUIA-Generated-TableRow-125"
+              data-ouia-component-id="OUIA-Generated-TableRow-131"
               data-ouia-component-type="PF4/TableRow"
               data-ouia-safe="true"
             >
@@ -2384,7 +2409,32 @@ exports[`<CloudTab /> should render correctly with both trial and quota 1`] = `
             </tr>
             <tr
               class=""
-              data-ouia-component-id="OUIA-Generated-TableRow-126"
+              data-ouia-component-id="OUIA-Generated-TableRow-132"
+              data-ouia-component-type="PF4/TableRow"
+              data-ouia-safe="true"
+            >
+              <td
+                class=""
+                data-key="0"
+                data-label="Cloud provider"
+              >
+                <a
+                  href="/install/azure/arm/installer-provisioned"
+                >
+                  Azure (ARM)
+                </a>
+              </td>
+              <td
+                class=""
+                data-key="1"
+                data-label="Installation options"
+              >
+                Full stack automation
+              </td>
+            </tr>
+            <tr
+              class=""
+              data-ouia-component-id="OUIA-Generated-TableRow-133"
               data-ouia-component-type="PF4/TableRow"
               data-ouia-safe="true"
             >
@@ -2438,7 +2488,7 @@ exports[`<CloudTab /> should render correctly with both trial and quota 1`] = `
             </tr>
             <tr
               class=""
-              data-ouia-component-id="OUIA-Generated-TableRow-127"
+              data-ouia-component-id="OUIA-Generated-TableRow-134"
               data-ouia-component-type="PF4/TableRow"
               data-ouia-safe="true"
             >
@@ -2463,7 +2513,7 @@ exports[`<CloudTab /> should render correctly with both trial and quota 1`] = `
             </tr>
             <tr
               class=""
-              data-ouia-component-id="OUIA-Generated-TableRow-128"
+              data-ouia-component-id="OUIA-Generated-TableRow-135"
               data-ouia-component-type="PF4/TableRow"
               data-ouia-safe="true"
             >
@@ -2517,7 +2567,7 @@ exports[`<CloudTab /> should render correctly with both trial and quota 1`] = `
             </tr>
             <tr
               class=""
-              data-ouia-component-id="OUIA-Generated-TableRow-129"
+              data-ouia-component-id="OUIA-Generated-TableRow-136"
               data-ouia-component-type="PF4/TableRow"
               data-ouia-safe="true"
             >
@@ -3587,6 +3637,31 @@ exports[`<CloudTab /> should render correctly with quota 1`] = `
                 data-label="Cloud provider"
               >
                 <a
+                  href="/install/azure/arm/installer-provisioned"
+                >
+                  Azure (ARM)
+                </a>
+              </td>
+              <td
+                class=""
+                data-key="1"
+                data-label="Installation options"
+              >
+                Full stack automation
+              </td>
+            </tr>
+            <tr
+              class=""
+              data-ouia-component-id="OUIA-Generated-TableRow-16"
+              data-ouia-component-type="PF4/TableRow"
+              data-ouia-safe="true"
+            >
+              <td
+                class=""
+                data-key="0"
+                data-label="Cloud provider"
+              >
+                <a
                   class="pf-u-mr-xs"
                   href="/install/azure/multi/installer-provisioned"
                 >
@@ -3631,7 +3706,7 @@ exports[`<CloudTab /> should render correctly with quota 1`] = `
             </tr>
             <tr
               class=""
-              data-ouia-component-id="OUIA-Generated-TableRow-16"
+              data-ouia-component-id="OUIA-Generated-TableRow-17"
               data-ouia-component-type="PF4/TableRow"
               data-ouia-safe="true"
             >
@@ -3656,7 +3731,7 @@ exports[`<CloudTab /> should render correctly with quota 1`] = `
             </tr>
             <tr
               class=""
-              data-ouia-component-id="OUIA-Generated-TableRow-17"
+              data-ouia-component-id="OUIA-Generated-TableRow-18"
               data-ouia-component-type="PF4/TableRow"
               data-ouia-safe="true"
             >
@@ -3710,7 +3785,7 @@ exports[`<CloudTab /> should render correctly with quota 1`] = `
             </tr>
             <tr
               class=""
-              data-ouia-component-id="OUIA-Generated-TableRow-18"
+              data-ouia-component-id="OUIA-Generated-TableRow-19"
               data-ouia-component-type="PF4/TableRow"
               data-ouia-safe="true"
             >
@@ -3778,7 +3853,7 @@ exports[`<CloudTab /> should render correctly without quota 1`] = `
           >
             <tr
               class=""
-              data-ouia-component-id="OUIA-Generated-TableRow-37"
+              data-ouia-component-id="OUIA-Generated-TableRow-39"
               data-ouia-component-type="PF4/TableRow"
               data-ouia-safe="true"
             >
@@ -3832,7 +3907,7 @@ exports[`<CloudTab /> should render correctly without quota 1`] = `
           >
             <tr
               class=""
-              data-ouia-component-id="OUIA-Generated-TableRow-38"
+              data-ouia-component-id="OUIA-Generated-TableRow-40"
               data-ouia-component-type="PF4/TableRow"
               data-ouia-safe="true"
             >
@@ -3944,7 +4019,7 @@ exports[`<CloudTab /> should render correctly without quota 1`] = `
             </tr>
             <tr
               class="pf-c-table__expandable-row"
-              data-ouia-component-id="OUIA-Generated-TableRow-39"
+              data-ouia-component-id="OUIA-Generated-TableRow-41"
               data-ouia-component-type="PF4/TableRow"
               data-ouia-safe="true"
               hidden=""
@@ -4010,7 +4085,7 @@ exports[`<CloudTab /> should render correctly without quota 1`] = `
           >
             <tr
               class=""
-              data-ouia-component-id="OUIA-Generated-TableRow-40"
+              data-ouia-component-id="OUIA-Generated-TableRow-42"
               data-ouia-component-type="PF4/TableRow"
               data-ouia-safe="true"
             >
@@ -4118,7 +4193,7 @@ exports[`<CloudTab /> should render correctly without quota 1`] = `
             </tr>
             <tr
               class="pf-c-table__expandable-row"
-              data-ouia-component-id="OUIA-Generated-TableRow-41"
+              data-ouia-component-id="OUIA-Generated-TableRow-43"
               data-ouia-component-type="PF4/TableRow"
               data-ouia-safe="true"
               hidden=""
@@ -4184,7 +4259,7 @@ exports[`<CloudTab /> should render correctly without quota 1`] = `
           >
             <tr
               class=""
-              data-ouia-component-id="OUIA-Generated-TableRow-42"
+              data-ouia-component-id="OUIA-Generated-TableRow-44"
               data-ouia-component-type="PF4/TableRow"
               data-ouia-safe="true"
             >
@@ -4292,7 +4367,7 @@ exports[`<CloudTab /> should render correctly without quota 1`] = `
             </tr>
             <tr
               class="pf-c-table__expandable-row"
-              data-ouia-component-id="OUIA-Generated-TableRow-43"
+              data-ouia-component-id="OUIA-Generated-TableRow-45"
               data-ouia-component-type="PF4/TableRow"
               data-ouia-safe="true"
               hidden=""
@@ -4358,7 +4433,7 @@ exports[`<CloudTab /> should render correctly without quota 1`] = `
           >
             <tr
               class=""
-              data-ouia-component-id="OUIA-Generated-TableRow-44"
+              data-ouia-component-id="OUIA-Generated-TableRow-46"
               data-ouia-component-type="PF4/TableRow"
               data-ouia-safe="true"
             >
@@ -4499,7 +4574,7 @@ exports[`<CloudTab /> should render correctly without quota 1`] = `
             </tr>
             <tr
               class="pf-c-table__expandable-row"
-              data-ouia-component-id="OUIA-Generated-TableRow-45"
+              data-ouia-component-id="OUIA-Generated-TableRow-47"
               data-ouia-component-type="PF4/TableRow"
               data-ouia-safe="true"
               hidden=""
@@ -4623,7 +4698,7 @@ exports[`<CloudTab /> should render correctly without quota 1`] = `
           >
             <tr
               class=""
-              data-ouia-component-id="OUIA-Generated-TableRow-46"
+              data-ouia-component-id="OUIA-Generated-TableRow-48"
               data-ouia-component-type="PF4/TableRow"
               data-ouia-safe="true"
             >
@@ -4651,7 +4726,7 @@ exports[`<CloudTab /> should render correctly without quota 1`] = `
           >
             <tr
               class=""
-              data-ouia-component-id="OUIA-Generated-TableRow-47"
+              data-ouia-component-id="OUIA-Generated-TableRow-49"
               data-ouia-component-type="PF4/TableRow"
               data-ouia-safe="true"
             >
@@ -4705,7 +4780,7 @@ exports[`<CloudTab /> should render correctly without quota 1`] = `
             </tr>
             <tr
               class=""
-              data-ouia-component-id="OUIA-Generated-TableRow-48"
+              data-ouia-component-id="OUIA-Generated-TableRow-50"
               data-ouia-component-type="PF4/TableRow"
               data-ouia-safe="true"
             >
@@ -4730,7 +4805,7 @@ exports[`<CloudTab /> should render correctly without quota 1`] = `
             </tr>
             <tr
               class=""
-              data-ouia-component-id="OUIA-Generated-TableRow-49"
+              data-ouia-component-id="OUIA-Generated-TableRow-51"
               data-ouia-component-type="PF4/TableRow"
               data-ouia-safe="true"
             >
@@ -4755,7 +4830,7 @@ exports[`<CloudTab /> should render correctly without quota 1`] = `
             </tr>
             <tr
               class=""
-              data-ouia-component-id="OUIA-Generated-TableRow-50"
+              data-ouia-component-id="OUIA-Generated-TableRow-52"
               data-ouia-component-type="PF4/TableRow"
               data-ouia-safe="true"
             >
@@ -4780,7 +4855,32 @@ exports[`<CloudTab /> should render correctly without quota 1`] = `
             </tr>
             <tr
               class=""
-              data-ouia-component-id="OUIA-Generated-TableRow-51"
+              data-ouia-component-id="OUIA-Generated-TableRow-53"
+              data-ouia-component-type="PF4/TableRow"
+              data-ouia-safe="true"
+            >
+              <td
+                class=""
+                data-key="0"
+                data-label="Cloud provider"
+              >
+                <a
+                  href="/install/azure/arm/installer-provisioned"
+                >
+                  Azure (ARM)
+                </a>
+              </td>
+              <td
+                class=""
+                data-key="1"
+                data-label="Installation options"
+              >
+                Full stack automation
+              </td>
+            </tr>
+            <tr
+              class=""
+              data-ouia-component-id="OUIA-Generated-TableRow-54"
               data-ouia-component-type="PF4/TableRow"
               data-ouia-safe="true"
             >
@@ -4834,7 +4934,7 @@ exports[`<CloudTab /> should render correctly without quota 1`] = `
             </tr>
             <tr
               class=""
-              data-ouia-component-id="OUIA-Generated-TableRow-52"
+              data-ouia-component-id="OUIA-Generated-TableRow-55"
               data-ouia-component-type="PF4/TableRow"
               data-ouia-safe="true"
             >
@@ -4859,7 +4959,7 @@ exports[`<CloudTab /> should render correctly without quota 1`] = `
             </tr>
             <tr
               class=""
-              data-ouia-component-id="OUIA-Generated-TableRow-53"
+              data-ouia-component-id="OUIA-Generated-TableRow-56"
               data-ouia-component-type="PF4/TableRow"
               data-ouia-safe="true"
             >
@@ -4913,7 +5013,7 @@ exports[`<CloudTab /> should render correctly without quota 1`] = `
             </tr>
             <tr
               class=""
-              data-ouia-component-id="OUIA-Generated-TableRow-54"
+              data-ouia-component-id="OUIA-Generated-TableRow-57"
               data-ouia-component-type="PF4/TableRow"
               data-ouia-safe="true"
             >

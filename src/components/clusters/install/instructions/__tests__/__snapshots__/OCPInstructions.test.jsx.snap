@@ -287,6 +287,46 @@ exports[`Every OCP instruction page should render:  Azure Stack Hub-upi 1`] = `
 </Fragment>
 `;
 
+exports[`Every OCP instruction page should render:  Azure-arm-ipi 1`] = `
+<Fragment>
+  <Card>
+    <CardBody>
+      <Instructions>
+        <Instruction>
+          <DownloadsAndPullSecretSection
+            channel="stable"
+            cloudProviderID="azure"
+            isBMIPI={false}
+            pendoID="/"
+            preReleasePageLink="/install/arm/pre-release"
+            token={Object {}}
+            tool="aarch64-openshift-install"
+          />
+        </Instruction>
+        <Instruction>
+          <Text
+            component="h2"
+          >
+            Follow the documentation to configure your Azure account and run the installer
+          </Text>
+          <GetStarted
+            cloudProviderID="azure"
+            customizations="https://docs.openshift.com/container-platform/4.12/installing/installing_azure/installing-azure-customizations.html"
+            docURL="https://docs.openshift.com/container-platform/4.12/installing/installing_azure/installing-azure-default.html"
+            isBMIPI={false}
+            isUPI={false}
+            pendoID="/"
+          />
+        </Instruction>
+        <Instruction>
+          <SubscriptionAndSupport />
+        </Instruction>
+      </Instructions>
+    </CardBody>
+  </Card>
+</Fragment>
+`;
+
 exports[`Every OCP instruction page should render:  Azure-x86-ipi 1`] = `
 <Fragment>
   <Card>

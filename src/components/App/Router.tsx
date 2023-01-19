@@ -50,6 +50,7 @@ import InstallBareMetal from '../clusters/install/InstallBareMetal';
 import InstallASH from '../clusters/install/InstallASH';
 import ConnectedInstallASHIPI from '../clusters/install/InstallASHIPI';
 import ConnectedInstallASHUPI from '../clusters/install/InstallASHUPI';
+import ConnectedInstallArmAzureIPI from '../clusters/install/InstallArmAzureIPI';
 import InstallAzure from '../clusters/install/InstallAzure';
 import ConnectedInstallAzureIPI from '../clusters/install/InstallAzureIPI';
 import ConnectedInstallAzureUPI from '../clusters/install/InstallAzureUPI';
@@ -233,6 +234,10 @@ const Router: React.FC<RouterProps> = ({ history, planType, clusterId, externalC
             <Route path="/install/rhv/installer-provisioned" component={ConnectedInstallRHVIPI} />
             <Route path="/install/rhv/user-provisioned" component={ConnectedInstallRHVUPI} />
             <Route path="/install/rhv" component={InstallRHV} />
+            <Route
+              path="/install/azure/arm/installer-provisioned"
+              component={ConnectedInstallArmAzureIPI}
+            />
             <Route
               path="/install/azure/multi/installer-provisioned"
               component={ConnectedInstallMultiAzureIPI}

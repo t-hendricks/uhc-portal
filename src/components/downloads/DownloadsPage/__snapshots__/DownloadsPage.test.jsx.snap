@@ -5959,6 +5959,13 @@ exports[`<DownloadsPage> renders 1`] = `
                   >
                     AWS
                   </Link>
+                  ,
+                   
+                  <Link
+                    to="/install/azure/arm/installer-provisioned"
+                  >
+                    Azure
+                  </Link>
                   , or in your
                    
                   <Link
