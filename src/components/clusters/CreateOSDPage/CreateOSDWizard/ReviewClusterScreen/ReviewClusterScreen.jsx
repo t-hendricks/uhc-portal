@@ -191,7 +191,9 @@ const ReviewClusterScreen = ({
       </ReviewSection>
       <ReviewSection
         title={getStepName('NETWORKING')}
-        onGoToStep={() => goToStepById(getStepId('NETWORKING__CONFIGURATION'))}
+        onGoToStep={() =>
+          goToStepById(getStepId(`NETWORKING__${isAWS ? 'CONFIGURATION' : 'CIDR_RANGES'}`))
+        }
       >
         {ReviewItem({ name: 'cluster_privacy', formValues })}
         {showVPCCheckbox && ReviewItem({ name: 'install_to_vpc', formValues })}
