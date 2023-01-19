@@ -95,6 +95,7 @@
     "@babel/preset-env": "^7.10.4",
     "@babel/preset-react": "^7.10.4",
     "@babel/register": "^7.10.5",
+    "@cypress/code-coverage": "^3.10.0",
     "@redhat-cloud-services/types": "^0.0.16",
     "@testing-library/jest-dom": "^5.16.4",
     "@testing-library/react": "^12.1.4",
@@ -121,12 +122,15 @@
     "@wdio/spec-reporter": "^6.3.0",
     "babel-jest": "^26.0.0",
     "babel-loader": "^8.2.4",
+    "babel-plugin-istanbul": "^6.1.1",
+    "babel-plugin-transform-class-properties": "^6.24.1",
     "babel-plugin-transform-imports": "^2.0.0",
     "chalk": "^5.0.1",
     "chromedriver": "*",
     "concurrently": "^7.2.0",
     "copy-webpack-plugin": "^8.1.1",
     "css-loader": "^5.2.1",
+    "cypress": "^10.1.0",
     "enzyme": "^3.11.0",
     "enzyme-to-json": "^3.4.3",
     "eslint": "^7.24.0",
@@ -135,6 +139,7 @@
     "eslint-config-standard": "^16.0.0",
     "eslint-config-standard-react": "^11.0.1",
     "eslint-import-resolver-alias": "^1.1.2",
+    "eslint-plugin-cypress": "^2.12.1",
     "eslint-plugin-import": "^2.22.1",
     "eslint-plugin-jsx-a11y": "^6.4.1",
     "eslint-plugin-node": "^11.1.0",
@@ -157,6 +162,7 @@
     "mini-css-extract-plugin": "^1.4.1",
     "node-fetch": "^2.6.1",
     "null-loader": "^4.0.1",
+    "nyc": "^15.1.0",
     "openapi-typescript-codegen": "^0.23.0",
     "porty": "^3.1.1",
     "prettier": "2.7.1",
@@ -164,6 +170,7 @@
     "sass": "^1.34.0",
     "sass-loader": "^9.0.0",
     "shell-quote": "^1.7.3",
+    "transform-class-properties": "^1.0.0-beta",
     "ts-jest": "^26.0.0",
     "ts-loader": "^9.3.1",
     "typescript": "^4.7.4",
@@ -237,13 +244,21 @@
     "selenium-with-chromedriver": "concurrently --kill-others --success=first --names=BROWSER,TEST --prefix-colors=magenta,blueBright --handle-input --default-input-target=TEST --passthrough-arguments 'chromedriver --port=4444 --url-base=/wd/hub --verbose' 'env BROWSER=chrome yarn selenium-test {@}' --",
     "selenium-browser": "run/selenium-browser.sh",
     "selenium-test": "run/selenium-test.sh",
-    "e2e-test": "concurrently --kill-others --success=first --raw --handle-input --passthrough-arguments 'yarn selenium-with-vnc {@}' 'env WEBPACK_WATCH=false yarn start' --",
+    "e2e-test": "rm -rf ./coverage/* && yarn cypress-headless && yarn code-coverage",
     "selenium-viewer": "wait-on tcp:5900 && vinagre --file=run/selenium.vnc",
     "stop": "yarn stop-insights-proxy; run/podman-or-docker.sh rm --force browser; pkill --full 'concurrently.*SERVER(prevent self match){0},MOCK'; pkill --full 'concurrently.*BROWSER(prevent self match){0},TEST'; true",
     "prepare": "husky install",
-    "gen-types": "node scripts/gen-openapi-typescript.js && prettier --write 'src/types/**/*.ts'"
+    "gen-types": "node scripts/gen-openapi-typescript.js && prettier --write 'src/types/**/*.ts'",
+    "cypress-ui": "cypress open --config baseUrl='https://prod.foo.redhat.com:1337/openshift/'",
+    "cypress-headless": "cypress run --browser chrome --config baseUrl='https://prod.foo.redhat.com:1337/openshift/'",
+    "code-coverage": "nyc report --reporter=text-summary"
   },
   "insights": {
     "appname": "openshift"
+  },
+  "nyc": {
+    "include": [
+      "src/**/*"
+    ]
   }
 }

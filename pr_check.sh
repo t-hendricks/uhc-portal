@@ -51,7 +51,7 @@ make \
   app \
   test
 
-export FORCE_COLOR=1
+export NO_COLOR=1
 
 # Run the Selenium tests. If they get stuck, stop after realistic time. Jenkins
 # aborting after 30 minutes is wasteful and doesn't give our `cleanup` function

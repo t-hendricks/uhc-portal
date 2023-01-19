@@ -2,7 +2,7 @@
 
 exports[`<DeleteClusterDialog /> renders correctly 1`] = `
 <Modal
-  data-test-id="delete-cluster-dialog"
+  data-testid="delete-cluster-dialog"
   isPending={false}
   isPrimaryDisabled={true}
   onClose={[Function]}

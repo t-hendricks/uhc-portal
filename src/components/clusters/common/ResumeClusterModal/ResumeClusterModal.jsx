@@ -44,7 +44,7 @@ class ResumeClusterModal extends Component {
 
     return (
       <Modal
-        data-test-id="resume-cluster-modal"
+        data-testid="resume-cluster-modal"
         title="Resume from Hibernation"
         secondaryTitle={shouldDisplayClusterName ? clusterName : undefined}
         onClose={cancelResumeCluster}

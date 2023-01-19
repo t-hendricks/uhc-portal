@@ -40,7 +40,7 @@ class ArchiveClusterDialog extends Component {
       <Modal
         title="Archive cluster"
         secondaryTitle={shouldDisplayClusterName ? name : undefined}
-        data-test-id="archive-cluster-dialog"
+        data-testid="archive-cluster-dialog"
         onClose={cancelEdit}
         primaryText="Archive cluster"
         onPrimaryClick={() => submit(subscriptionID, name)}
