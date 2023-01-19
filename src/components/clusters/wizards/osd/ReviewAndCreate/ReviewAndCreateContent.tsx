@@ -48,7 +48,6 @@ export const ReviewAndCreateContent = ({ isPending }: ReviewAndCreateContentProp
   const autoscalingEnabled = canAutoScale && !!formValues[FieldId.AutoscalingEnabled];
   const isByoc = byoc === 'true';
   const isAWS = cloudProvider === CloudProviderType.Aws;
-  const isGCP = cloudProvider === CloudProviderType.Gcp;
 
   const clusterSettingsFields = [
     FieldId.CloudProvider,
@@ -118,15 +117,18 @@ export const ReviewAndCreateContent = ({ isPending }: ReviewAndCreateContentProp
 
       <ReviewSection
         title="Networking"
-        onGoToStep={() => goToStepById(StepId.NetworkingConfiguration)}
+        onGoToStep={() =>
+          goToStepById(isAWS ? StepId.NetworkingConfiguration : StepId.NetworkingCidrRanges)
+        }
       >
         <ReviewItem name={FieldId.ClusterPrivacy} formValues={formValues} />
         {isByoc && <ReviewItem name={FieldId.InstallToVpc} formValues={formValues} />}
         {isByoc && clusterPrivacy === 'internal' && installToVpc && (
           <ReviewItem name={FieldId.UsePrivateLink} formValues={formValues} />
         )}
-        {isByoc && installToVpc && isAWS && <ReviewItem name="aws_vpc" formValues={formValues} />}
-        {isByoc && installToVpc && isGCP && <ReviewItem name="gpc_vpc" formValues={formValues} />}
+        {isByoc && installToVpc && (
+          <ReviewItem name={isAWS ? 'aws_vpc' : 'gpc_vpc'} formValues={formValues} />
+        )}
         {installToVpc && <ReviewItem name={FieldId.ConfigureProxy} formValues={formValues} />}
         {installToVpc && configureProxy && (
           <>
