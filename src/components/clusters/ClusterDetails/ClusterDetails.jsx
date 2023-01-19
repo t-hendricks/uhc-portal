@@ -435,7 +435,7 @@ class ClusterDetails extends Component {
               addAssistedTabRef={this.addAssistedTabRef}
               hasIssues={cluster.state !== clusterStates.INSTALLING && hasIssues}
               hasIssuesInsights={hasIssuesInsights}
-              isHypershiftEnabled={!!clusterDetails.cluster?.hypershift?.enabled}
+              isHypershift={!!clusterDetails.cluster?.hypershift?.enabled}
               initTabOpen={initTabOpen}
               setOpenedTab={setOpenedTab}
               onTabSelected={onTabSelected}
