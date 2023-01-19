@@ -306,7 +306,7 @@ const managedServices = (hasQuota, trialEnabled) => {
         'Amazon Web Services',
         'Flexible hourly billing',
         <>
-          <CreateClusterDropDown />
+          <CreateClusterDropDown toggleId="rosa-create-cluster-dropdown" />
         </>,
       ],
     },
@@ -388,7 +388,7 @@ const runItYourself = () => {
     [
       <>
         <Link to="/install/azure/multi/installer-provisioned" className="pf-u-mr-xs">
-          Azure (heterogeneous)
+          Azure (multi-architecture)
         </Link>
         <TechnologyPreview position={PreviewBadgePosition.inline} />
       </>,

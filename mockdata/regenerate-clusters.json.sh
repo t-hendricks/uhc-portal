@@ -48,7 +48,7 @@ echo "# both sides should be sorted by subscription id."
 
 # During install, clusters-service can know external_id while account-manager still has null.
 # To allow the comparison to pass, those ids were edited to contain `EXPECT-AMS-null`.
-diff --report-identical-files --side-by-side --width=150 \
+diff --brief --report-identical-files --side-by-side --width=150 \
   --ignore-matching-lines='EXPECT-AMS-null\|null,' \
   --ignore-matching-lines='"dn":' \
   --label="from $SUBSCRIPTIONS.json" --label="from $CLUSTERS.json" \

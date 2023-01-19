@@ -53,7 +53,7 @@ exports[`InstallOSPUPI renders correctly 1`] = `
       }
       channel="stable"
       cloudProviderID="openstack"
-      docURL="https://docs.openshift.com/container-platform/4.11/installing/installing_openstack/installing-openstack-user.html"
+      docURL="https://docs.openshift.com/container-platform/4.12/installing/installing_openstack/installing-openstack-user.html"
       installer="x86_64-openshift-install"
       isBMIPI={false}
       isUPI={true}
@@ -66,7 +66,7 @@ exports[`InstallOSPUPI renders correctly 1`] = `
               "url": "https://mirror.openshift.com/pub/openshift-v4/x86_64/dependencies/rhcos/latest/rhcos-openstack.x86_64.qcow2.gz",
             },
           ],
-          "learnMoreURL": "https://docs.openshift.com/container-platform/4.11/installing/installing_openstack/installing-openstack-user.html#installation-osp-creating-image_installing-openstack-user",
+          "learnMoreURL": "https://docs.openshift.com/container-platform/4.12/installing/installing_openstack/installing-openstack-user.html#installation-osp-creating-image_installing-openstack-user",
         }
       }
       title="Install OpenShift on Red Hat OpenStack Platform with user-provisioned infrastructure"

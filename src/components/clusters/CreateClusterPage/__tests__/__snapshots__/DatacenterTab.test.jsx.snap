@@ -166,12 +166,12 @@ exports[`<DatacenterTab /> renders correctly with assisted installer 1`] = `
               Array [
                 <React.Fragment>
                   <Link
-                    to="/install/nutanix/installer-provisioned"
+                    to="/install/nutanix"
                   >
                     Nutanix AOS
                   </Link>
                 </React.Fragment>,
-                "Full stack automation",
+                "Full stack automation and pre-existing infrastructure",
               ],
               Array [
                 <React.Fragment>
@@ -325,12 +325,12 @@ exports[`<DatacenterTab /> renders correctly without assisted installer 1`] = `
               Array [
                 <React.Fragment>
                   <Link
-                    to="/install/nutanix/installer-provisioned"
+                    to="/install/nutanix"
                   >
                     Nutanix AOS
                   </Link>
                 </React.Fragment>,
-                "Full stack automation",
+                "Full stack automation and pre-existing infrastructure",
               ],
               Array [
                 <React.Fragment>

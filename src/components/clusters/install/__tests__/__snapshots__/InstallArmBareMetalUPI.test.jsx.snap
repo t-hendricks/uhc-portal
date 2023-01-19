@@ -53,7 +53,7 @@ exports[`Arm BareMetal UPI install renders correctly 1`] = `
       }
       channel="stable"
       cloudProviderID="baremetal"
-      docURL="https://docs.openshift.com/container-platform/4.11/installing/installing_bare_metal/installing-bare-metal.html"
+      docURL="https://docs.openshift.com/container-platform/4.12/installing/installing_bare_metal/installing-bare-metal.html"
       installer="aarch64-openshift-install"
       isBMIPI={false}
       isUPI={true}
@@ -83,7 +83,7 @@ exports[`Arm BareMetal UPI install renders correctly 1`] = `
               "url": "https://mirror.openshift.com/pub/openshift-v4/aarch64/dependencies/rhcos/latest/rhcos-live-rootfs.aarch64.img",
             },
           ],
-          "learnMoreURL": "https://docs.openshift.com/container-platform/4.11/installing/installing_bare_metal/installing-bare-metal.html#creating-machines-bare-metal",
+          "learnMoreURL": "https://docs.openshift.com/container-platform/4.12/installing/installing_bare_metal/installing-bare-metal.html#creating-machines-bare-metal",
         }
       }
       title="Install OpenShift on ARM Bare Metal with user-provisioned infrastructure"

@@ -3,7 +3,7 @@
 exports[`<UpgradeTrialClusterDialog /> renders correctly 1`] = `
 <Modal
   className="upgrade-trial-cluster-dialog"
-  data-test-id="upgrade-trial-cluster-dialog"
+  data-testid="upgrade-trial-cluster-dialog"
   modalSize="small"
   onClose={[Function]}
   onPrimaryClick={[Function]}
@@ -54,7 +54,7 @@ exports[`<UpgradeTrialClusterDialog /> renders correctly 1`] = `
 exports[`<UpgradeTrialClusterDialog /> renders correctly when an erorr occurs 1`] = `
 <Modal
   className="upgrade-trial-cluster-dialog"
-  data-test-id="upgrade-trial-cluster-dialog"
+  data-testid="upgrade-trial-cluster-dialog"
   modalSize="small"
   onClose={[Function]}
   onPrimaryClick={[Function]}

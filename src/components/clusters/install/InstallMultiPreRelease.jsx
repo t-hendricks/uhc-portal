@@ -15,7 +15,7 @@ export class InstallMultiPreRelease extends Component {
   componentDidMount() {
     scrollToTop();
     document.title =
-      'Install OpenShift 4 | Heterogeneous clusters | Experimental Developer Preview Builds';
+      'Install OpenShift 4 | Multi-architecture clusters | Experimental Developer Preview Builds';
 
     const { dispatch } = this.props;
     dispatch(tollboothActions.createAuthToken());
@@ -28,7 +28,10 @@ export class InstallMultiPreRelease extends Component {
         path={[
           { label: 'Clusters' },
           { label: 'Cluster Type', path: '/create' },
-          { label: 'Heterogeneous clusters' /* , path: '/install/multi/installer-provisioned' */ },
+          {
+            label:
+              'Multi-architecture clusters' /* , path: '/install/multi/installer-provisioned' */,
+          },
           { label: 'Pre-Release Builds' },
         ]}
       />
@@ -37,7 +40,7 @@ export class InstallMultiPreRelease extends Component {
     return (
       <>
         <PageTitle
-          title="Install OpenShift on heterogeneous infrastructure"
+          title="Install OpenShift with multi-architecture compute machines"
           breadcrumbs={breadcrumbs}
         />
         <PageSection>

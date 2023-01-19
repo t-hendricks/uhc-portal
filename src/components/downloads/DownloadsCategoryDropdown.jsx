@@ -5,7 +5,12 @@ import { FormSelect, FormSelectOption } from '@patternfly/react-core';
 import { downloadsCategories } from './downloadsStructure';
 
 const DownloadsCategoryDropdown = ({ selectedCategory, setCategory }) => (
-  <FormSelect aria-label="Select category" value={selectedCategory} onChange={setCategory}>
+  <FormSelect
+    aria-label="Select category"
+    value={selectedCategory}
+    onChange={setCategory}
+    data-testid="downloads-category-dropdown"
+  >
     {downloadsCategories.map((c) => (
       <FormSelectOption key={c.key} value={c.key} label={c.title} />
     ))}

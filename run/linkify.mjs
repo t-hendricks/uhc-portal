@@ -16,7 +16,7 @@ const REPO = 'uhc-portal'; // TODO figure out from git remotes
 // Kludge: get useful subset of data in single request: sort by recently changed, filter by most
 // interesting statuses.  It's OK if a few cards won't get status, can always click link.
 
-const jiraQuery = 'project = HAC AND status IN ("Review", "Closed", "Code Review") ORDER BY updatedDate desc';
+const jiraQuery = 'project = HAC AND labels = "ocm-ui" AND status IN ("Review", "Closed", "Code Review") ORDER BY updatedDate desc';
 
 // This script is all about adding escape sequences, so enable color even if stdout is a pipe.
 // 1 = base 16 colors, stylable by terminal theme.
@@ -27,6 +27,10 @@ const jiraStatusColors = {
   'CODE REVIEW': chalk.cyan,
   REVIEW: chalk.blue,
   CLOSED: chalk.green,
+};
+// Only priorities listed here will be shown at all
+const jiraPriorityBadges = {
+  'Blocker': chalk.inverse(chalk.red('\u{26D4}Blocker')), // ⛔ U+26D4 NO ENTRY
 };
 
 // { "HAC-nnn": { summary: "...", fields: { status: { name: "Closed", ... }, ... } } }
@@ -51,6 +55,7 @@ export const linkify = (text, linkFunction, jiraByKey = {}) => {
   // Jira cards.  lowercase `hac-nnn` form allowed as some folk put it in branch names.
   text = text.replace(/(HAC|SDA|SDB|MGMT)[- ](\d+)/ig, (match, board, id) => {
     const key = `${board.toUpperCase()}-${id}`;
+    const priority = jiraByKey[key]?.fields?.priority?.name;
     const status = jiraByKey[key]?.fields?.status?.name?.toUpperCase();
     const resolution = jiraByKey[key]?.fields?.resolution?.name;
     const summary = jiraByKey[key]?.fields?.summary;
@@ -64,9 +69,11 @@ export const linkify = (text, linkFunction, jiraByKey = {}) => {
     if (status) {
       const resolutionSuffix = resolution && resolution !== 'Done' ? `/${resolution}` : '';
       // ◤ U+25E4 BLACK UPPER LEFT TRIANGLE, ◢ U+25E2 BLACK LOWER RIGHT TRIANGLE
-      const badge = chalk.inverse(`\u{25E4}${status}${resolutionSuffix}\u{25E2}`);
-      const color = jiraStatusColors[status];
-      return (color ? color(badge) : badge) + link;
+      let badge = chalk.inverse(`\u{25E4}${status}${resolutionSuffix}\u{25E2}`);
+      if (jiraStatusColors[status]) {
+        badge = jiraStatusColors[status](badge);
+      }
+      return (jiraPriorityBadges[priority] || '') + badge + link;
     }
     return link;
   });

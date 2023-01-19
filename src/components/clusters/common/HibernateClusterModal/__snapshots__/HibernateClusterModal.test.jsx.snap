@@ -2,7 +2,7 @@
 
 exports[`<HibernateClusterModal /> renders correctly 1`] = `
 <Modal
-  data-test-id="hibernate-cluster-modal"
+  data-testid="hibernate-cluster-modal"
   onClose={[Function]}
   onPrimaryClick={[Function]}
   onSecondaryClick={[Function]}
@@ -34,7 +34,7 @@ exports[`<HibernateClusterModal /> renders correctly 1`] = `
 
 exports[`<HibernateClusterModal /> renders correctly when an error occurs 1`] = `
 <Modal
-  data-test-id="hibernate-cluster-modal"
+  data-testid="hibernate-cluster-modal"
   onClose={[Function]}
   onPrimaryClick={[Function]}
   onSecondaryClick={[Function]}
@@ -75,7 +75,7 @@ exports[`<HibernateClusterModal /> renders correctly when an error occurs 1`] = 
 
 exports[`<HibernateClusterModal /> renders correctly when pending 1`] = `
 <Modal
-  data-test-id="hibernate-cluster-modal"
+  data-testid="hibernate-cluster-modal"
   isPending={true}
   onClose={[Function]}
   onPrimaryClick={[Function]}
