@@ -279,7 +279,7 @@ describe('<ClusterDetails />', () => {
       expect(osdWrapper.find('TabsRow').props().displayNetworkingTab).toBe(false);
       expect(osdWrapper.find('TabsRow').props().displayMachinePoolsTab).toBe(false);
       expect(osdWrapper.find('TabsRow').props().displayUpgradeSettingsTab).toBe(false);
-      expect(osdWrapper.find('TabsRow').props().displayAddAssistedHosts).toBe(false);
+      expect(ocpWrapper.find('TabsRow').props().addHostTabDetails.showTab).toBe(false);
     });
 
     const ocpProps = {
@@ -318,7 +318,7 @@ describe('<ClusterDetails />', () => {
       expect(ocpWrapper.find('TabsRow').props().displayNetworkingTab).toBe(false);
       expect(ocpWrapper.find('TabsRow').props().displayMachinePoolsTab).toBe(false);
       expect(ocpWrapper.find('TabsRow').props().displayUpgradeSettingsTab).toBe(false);
-      expect(ocpWrapper.find('TabsRow').props().displayAddAssistedHosts).toBe(false);
+      expect(ocpWrapper.find('TabsRow').props().addHostTabDetails.showTab).toBe(false);
     });
   });
 });

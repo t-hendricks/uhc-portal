@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { Tabs, Tab, TabTitleText, TabTitleIcon } from '@patternfly/react-core';
+import { Tabs, TabTitleText, TabTitleIcon, Tooltip, Tab } from '@patternfly/react-core';
 import { ExclamationCircleIcon } from '@patternfly/react-icons';
 
 class TabsRow extends React.Component {
@@ -58,7 +58,7 @@ class TabsRow extends React.Component {
       displaySupportTab,
       displayMachinePoolsTab,
       displayUpgradeSettingsTab,
-      displayAddAssistedHosts,
+      addHostTabDetails,
       overviewTabRef,
       monitoringTabRef,
       accessControlTabRef,
@@ -158,8 +158,12 @@ class TabsRow extends React.Component {
         title: 'Add Hosts',
         contentId: 'addHostsContent',
         id: 'addAssistedHosts',
-        show: displayAddAssistedHosts,
+        show: addHostTabDetails.showTab,
         ref: addAssistedTabRef,
+        isDisabled: addHostTabDetails.isDisabled,
+        tooltip: addHostTabDetails.tabTooltip ? (
+          <Tooltip content={addHostTabDetails.tabTooltip} />
+        ) : undefined,
       },
     ];
   }
@@ -219,6 +223,8 @@ class TabsRow extends React.Component {
             title={<TabTitleText>{tab.title}</TabTitleText>}
             tabContentId={tab.contentId}
             ouiaId={tab.title}
+            isAriaDisabled={tab.isDisabled || false}
+            tooltip={tab.tooltip}
           />
         ))}
       </Tabs>
@@ -235,7 +241,11 @@ TabsRow.propTypes = {
   displaySupportTab: PropTypes.bool,
   displayMachinePoolsTab: PropTypes.bool,
   displayUpgradeSettingsTab: PropTypes.bool,
-  displayAddAssistedHosts: PropTypes.bool,
+  addHostTabDetails: PropTypes.shape({
+    showTab: PropTypes.bool,
+    isDisabled: PropTypes.bool,
+    tabTooltip: PropTypes.string,
+  }),
   overviewTabRef: PropTypes.object.isRequired,
   monitoringTabRef: PropTypes.object.isRequired,
   accessControlTabRef: PropTypes.object.isRequired,
@@ -259,7 +269,11 @@ TabsRow.defaultProps = {
   displayClusterHistoryTab: false,
   displayNetworkingTab: false,
   displayMachinePoolsTab: false,
-  displayAddAssistedHosts: false,
+  addHostTabDetails: {
+    showTab: false,
+    isDisabled: false,
+    tabTooltip: '',
+  },
   initTabOpen: '',
 };
 
