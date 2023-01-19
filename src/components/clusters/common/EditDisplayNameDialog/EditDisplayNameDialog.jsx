@@ -67,7 +67,7 @@ class EditDisplayNameDialog extends Component {
       <Modal
         title="Edit display name"
         secondaryTitle={shouldDisplayClusterName ? displayName : undefined}
-        data-test-id="edit-displayname-modal"
+        data-testid="edit-displayname-modal"
         onClose={cancelEdit}
         primaryText="Edit"
         secondaryText="Cancel"

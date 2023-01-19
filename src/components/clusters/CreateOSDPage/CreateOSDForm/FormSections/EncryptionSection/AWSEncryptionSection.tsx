@@ -1,5 +1,5 @@
 import React from 'react';
-import { GridItem } from '@patternfly/react-core';
+import { GridItem, Alert } from '@patternfly/react-core';
 import { Field } from 'redux-form';
 import ReduxVerticalFormGroup from '../../../../../common/ReduxFormComponents/ReduxVerticalFormGroup';
 import ExternalLink from '../../../../../common/ExternalLink';
@@ -21,7 +21,7 @@ const AWSCustomerManagedEncryption = ({ region }: Props) => (
         placeholder="Key ARN"
         validate={(value: string) => validateAWSKMSKeyARN(value, region)}
         isRequired
-        helpText="Unique, fully qualified identifier (Amazon Resource Name (ARN)) for your KMS Key."
+        helpText="Provide a custom key ARN"
         extendedHelpText={
           <>
             <p className="pf-u-mb-sm">{constants.awsKeyARN}</p>
@@ -31,6 +31,15 @@ const AWSCustomerManagedEncryption = ({ region }: Props) => (
           </>
         }
         showHelpTextOnError={false}
+      />
+    </GridItem>
+    <GridItem md={6}>
+      <Alert
+        className="key-arn-alert"
+        isInline
+        isLiveRegion
+        variant="info"
+        title="If you delete the ARN key, the cluster will no longer be available."
       />
     </GridItem>
     <GridItem md={6} />

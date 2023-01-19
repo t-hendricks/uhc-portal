@@ -6,7 +6,7 @@ exports[`<TokensROSA /> Renders screen with button 1`] = `
   commandTool="rosa"
   docsLink={
     <ExternalLink
-      href="https://docs.openshift.com/rosa/rosa_cli/rosa-get-started-cli.html"
+      href="https://access.redhat.com/documentation/en-us/red_hat_openshift_service_on_aws/4/html/rosa_cli/rosa-get-started-cli"
       noIcon={true}
     >
       read more about setting up the rosa CLI
@@ -42,7 +42,7 @@ exports[`<TokensROSA /> Renders token 1`] = `
   commandTool="rosa"
   docsLink={
     <ExternalLink
-      href="https://docs.openshift.com/rosa/rosa_cli/rosa-get-started-cli.html"
+      href="https://access.redhat.com/documentation/en-us/red_hat_openshift_service_on_aws/4/html/rosa_cli/rosa-get-started-cli"
       noIcon={true}
     >
       read more about setting up the rosa CLI

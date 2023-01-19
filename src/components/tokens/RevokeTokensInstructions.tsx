@@ -21,21 +21,22 @@ const RevokeTokensInstructions = ({ reason }: Props) => (
       <ListItem>
         Navigate to the{' '}
         <ExternalLink href="https://sso.redhat.com/auth/realms/redhat-external/account/#/applications">
-          <b>offline API token management</b>
+          <b>SSO application management</b>
         </ExternalLink>{' '}
         page.
       </ListItem>
       <ListItem>
-        Locate the <b>cloud-services</b> application.
+        Locate the <b>cloud-services</b> client ID, expand the row if necessary.
       </ListItem>
       <ListItem>
-        Select <b>Revoke grant</b>.
+        Select <b>Remove access</b>.
       </ListItem>
     </List>
 
     <Text>
-      Refresh tokens will stop working immediately after you revoke them, but existing access tokens
-      may take up to 15 minutes to expire.
+      All refresh tokens will stop working immediately after you Remove access, but existing access
+      tokens (which are cached by <code>ocm</code> and <code>rosa</code> commands) may take up to 15
+      minutes to expire.
     </Text>
 
     <Text>Refresh this page afterwards to generate a new token.</Text>

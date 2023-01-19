@@ -136,7 +136,7 @@ export const createClusterRequest = ({ isWizard = true, cloudProviderID, product
       if (usePrivateLink) {
         clusterRequest.aws.private_link = true;
       }
-      if (formData.customer_managed_key) {
+      if (formData.customer_managed_key === 'true') {
         clusterRequest.aws.kms_key_arn = formData.kms_key_arn;
       }
       clusterRequest.ccs.disable_scp_checks = formData.disable_scp_checks;
@@ -189,7 +189,7 @@ export const createClusterRequest = ({ isWizard = true, cloudProviderID, product
           compute_subnet: formData.compute_subnet,
         };
       }
-      if (formData.customer_managed_key) {
+      if (formData.customer_managed_key === 'true') {
         clusterRequest.gcp_encryption_key = {
           key_name: formData.key_name,
           key_ring: formData.key_ring,

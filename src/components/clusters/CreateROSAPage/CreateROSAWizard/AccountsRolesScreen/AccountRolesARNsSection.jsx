@@ -245,6 +245,7 @@ function AccountRolesARNsSection({
             <br />
             <Button
               variant="secondary"
+              data-testid="refresh_arns_btn"
               onClick={() => {
                 track(trackEvents.RefreshARNs);
                 refreshARNs();
