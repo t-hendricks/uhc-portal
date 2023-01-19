@@ -1,0 +1,22 @@
+{
+  "kind": "LimitedSupportReasonTemplateList",
+  "page": 1,
+  "size": 2,
+  "total": 2,
+  "items": [
+    {
+      "kind": "LimitedSupportReasonTemplate",
+      "id": "7bc43fa6-3014-4da6-b262-e85d093c1117",
+      "href": "/api/clusters_mgmt/v1/limited_support_reason_templates/7bc43fa6-3014-4da6-b262-e85d093c1117",
+      "summary": "Unsupported cluster configuration",
+      "details": "Red Hat has identified that your cluster is running a configuration that is inhibiting normal operation. Please see the service log for more details, or contact Red Hat support for more information."
+    },
+    {
+      "kind": "LimitedSupportReasonTemplate",
+      "id": "90a884a3-7482-4a1e-a9f2-ee1ed205feb8",
+      "href": "/api/clusters_mgmt/v1/limited_support_reason_templates/90a884a3-7482-4a1e-a9f2-ee1ed205feb8",
+      "summary": "Unsupported cloud provider configuration",
+      "details": "Red Hat has identified that the cloud provider account hosting your cluster is running a configuration that is inhibiting normal operation. Please see the service log for more details, or contact Red Hat support for more information."
+    }
+  ]
+}

@@ -50,6 +50,10 @@ else
     jq '.. | select(try .kind | test(".*Link")).href' --raw-output |
     sort --unique |
     while read -r href; do
+      if [[ "$href" =~ cloud_providers ]]; then
+        echo "  # ocm get $href  # handled below"
+        continue
+      fi
       # Linked hrefs are a mix of collections (e.g. /api/clusters_mgmt/v1/clusters/.../machine_pools)
       # and single objects (e.g. /api/clusters_mgmt/v1/machine_types/r5.xlarge).
       # size=-1 parameter makes no sense for the latter, but backend happily ignores it (as of May 2022).
@@ -61,6 +65,7 @@ else
   request "" "$cluster_href/logs/uninstall"
   request "" "$cluster_href/addon_inquiries" --parameter=size=-1
   request "" "$cluster_href/gate_agreements" --parameter=size=-1
+  request "" "$cluster_href/limited_support_reasons" --parameter=size=-1
 
   request "" "$cluster_href/upgrade_policies" --parameter="search=upgrade_type='OSD'" --parameter=size=-1
   cat "mockdata/$cluster_href/upgrade_policies.json" |
@@ -76,6 +81,10 @@ else
   request "" "$subscription_href/notification_contacts" --parameter=size=-1
   request "" "$subscription_href/support_cases" --parameter=size=1000  # SDB-2817: size=-1 here is expensive and may return errors
   request "" "$subscription_href/ondemand_metrics" --parameter=size=-1
+  request "" "$subscription_href/role_bindings" --parameter=size=-1
+
+  uuid="$(jq .external_id "mockdata/$cluster_href.json" --raw-output)"
+  request "" "/api/service_logs/v1/clusters/$uuid/cluster_logs" --parameter=size=20 --parameter='orderBy=timestamp desc'
 fi
 
 request "" "/api/accounts_mgmt/v1/current_account"
@@ -86,8 +95,11 @@ request "" "$org_href/quota_cost" --parameter=fetchRelatedResources=true --param
 
 request "" "/api/clusters_mgmt/v1/version_gates" --parameter=size=-1
 
-# Overwrite with more details.
 request "" "/api/clusters_mgmt/v1/cloud_providers" --parameter=size=-1 --parameter=fetchRegions=true
+# Not fetching sub-resources (specific provider / regions collection / specific region) —
+# not currently queried by UI, would duplicate cloud_providers.json and be a chore to maintain.
+
+request "" "/api/clusters_mgmt/v1/limited_support_reason_templates" --parameter=size=-1
 
 # TODO in dev this is requested as /api/aggregator/... ?
 request "" "/api/insights-results-aggregator/v1/clusters/$cluster_id/report" --parameter=osd_eligible=true
