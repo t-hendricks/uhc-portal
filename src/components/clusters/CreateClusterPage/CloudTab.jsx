@@ -387,6 +387,12 @@ const runItYourself = () => {
     ],
     [
       <>
+        <Link to="/install/azure/arm/installer-provisioned">Azure (ARM)</Link>
+      </>,
+      'Full stack automation',
+    ],
+    [
+      <>
         <Link to="/install/azure/multi/installer-provisioned" className="pf-u-mr-xs">
           Azure (multi-architecture)
         </Link>
