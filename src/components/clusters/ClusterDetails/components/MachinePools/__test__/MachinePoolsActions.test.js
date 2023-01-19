@@ -6,7 +6,7 @@ import {
   CLEAR_ADD_MACHINE_POOL_RESPONSE,
   CLEAR_SCALE_MACHINE_POOL_RESPONSE,
   CLEAR_GET_MACHINE_POOLS_RESPONSE,
-  getMachinePools,
+  getMachineOrNodePools,
   addMachinePool,
   scaleMachinePool,
   deleteMachinePool,
@@ -26,7 +26,7 @@ describe('MachinePools actions', () => {
 
   describe('getMachinePools', () => {
     it('dispatches successfully', () => {
-      getMachinePools('mock-cluster-id')(mockDispatch);
+      getMachineOrNodePools('mock-cluster-id')(mockDispatch);
       expect(mockDispatch).toBeCalledWith({
         payload: expect.anything(),
         type: GET_MACHINE_POOLS,
@@ -34,8 +34,13 @@ describe('MachinePools actions', () => {
     });
 
     it('calls clusterService.getMachinePools', () => {
-      getMachinePools('mock-cluster-id')(mockDispatch);
+      getMachineOrNodePools('mock-cluster-id')(mockDispatch);
       expect(clusterService.getMachinePools).toBeCalledWith('mock-cluster-id');
+    });
+
+    it('calls clusterService.getNodePools', () => {
+      getMachineOrNodePools('mock-cluster-id', true)(mockDispatch);
+      expect(clusterService.getNodePools).toBeCalledWith('mock-cluster-id');
     });
   });
 

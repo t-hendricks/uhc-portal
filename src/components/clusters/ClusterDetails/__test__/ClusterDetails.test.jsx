@@ -43,7 +43,10 @@ describe('<ClusterDetails />', () => {
       });
 
       it('should get machine pools', () => {
-        expect(functions.getMachinePools).toBeCalledWith(fixtures.clusterDetails.cluster.id);
+        expect(functions.getMachineOrNodePools).toBeCalledWith(
+          fixtures.clusterDetails.cluster.id,
+          false,
+        );
       });
 
       it('should get schedules', () => {
@@ -117,6 +120,29 @@ describe('<ClusterDetails />', () => {
 
     it('it should hide 1 tab', () => {
       expect(wrapper.find('TabsRow').props().displayMonitoringTab).toBe(false);
+    });
+  });
+
+  describe('hypershift cluster', () => {
+    const functions = funcs();
+    const props = {
+      ...fixtures,
+      ...functions,
+      clusterDetails: {
+        ...fixtures.ROSAClusterDetails,
+        cluster: {
+          ...fixtures.clusterDetails.cluster,
+          hypershift: { enabled: true },
+        },
+      },
+    };
+    shallow(<ClusterDetails {...props} />);
+
+    it('should get node pools', () => {
+      expect(functions.getMachineOrNodePools).toBeCalledWith(
+        fixtures.clusterDetails.cluster.id,
+        true,
+      );
     });
   });
 

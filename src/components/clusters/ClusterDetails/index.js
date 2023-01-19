@@ -27,7 +27,7 @@ import { viewConstants } from '../../../redux/constants';
 import { onClearFiltersAndFlags } from '~/redux/actions/viewOptionsActions';
 import { fetchClusterInsights } from './components/Insights/InsightsActions';
 import {
-  getMachinePools,
+  getMachineOrNodePools,
   clearGetMachinePoolsResponse,
 } from './components/MachinePools/MachinePoolsActions';
 import canSubscribeOCPSelector from '../common/EditSubscriptionSettingsDialog/CanSubscribeOCPSelector';
@@ -109,7 +109,8 @@ const mapDispatchToProps = (dispatch, { location }) =>
       getClusterAddOns,
       getGrants,
       getClusterRouters,
-      getMachinePools,
+      getMachineOrNodePools: (clusterId, isHypershift) =>
+        getMachineOrNodePools(clusterId, isHypershift),
       clearGetMachinePoolsResponse,
       setOpenedTab: (tabKey) => push(`${getBaseName()}${location.pathname}#${tabKey}`),
       getClusterHistory,

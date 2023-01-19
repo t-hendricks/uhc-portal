@@ -97,6 +97,7 @@ export type { LimitedSupportReasonTemplate } from './models/LimitedSupportReason
 export { ListeningMethod } from './models/ListeningMethod';
 export type { Log } from './models/Log';
 export type { MachinePool } from './models/MachinePool';
+export type { NodePool } from './models/NodePool';
 export type { MachinePoolAutoscaling } from './models/MachinePoolAutoscaling';
 export type { MachinePoolSecurityGroupFilter } from './models/MachinePoolSecurityGroupFilter';
 export type { MachineType } from './models/MachineType';

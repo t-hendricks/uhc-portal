@@ -3,7 +3,7 @@ import { reduxForm, formValueSelector } from 'redux-form';
 
 import EditTaintsModal from './EditTaintsModal';
 import {
-  getMachinePools,
+  getMachineOrNodePools,
   clearGetMachinePoolsResponse,
   clearScaleMachinePoolResponse,
   scaleMachinePool as editTaints,
@@ -31,7 +31,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
   closeModal: () => dispatch(closeModal()),
-  getMachinePools: () => dispatch(getMachinePools(ownProps.clusterId)),
+  getMachinePools: () => dispatch(getMachineOrNodePools(ownProps.clusterId, ownProps.isHypershift)),
   resetGetMachinePoolsResponse: () => dispatch(clearGetMachinePoolsResponse(ownProps.clusterId)),
   resetEditTaintsResponse: () => dispatch(clearScaleMachinePoolResponse(ownProps.clusterId)),
   onSubmit: (formData) => {

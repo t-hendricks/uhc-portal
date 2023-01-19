@@ -3,7 +3,7 @@ import get from 'lodash/get';
 
 import MachinePools from './MachinePools';
 import {
-  getMachinePools,
+  getMachineOrNodePools,
   addMachinePool,
   deleteMachinePool,
   clearGetMachinePoolsResponse,
@@ -53,7 +53,8 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch, ownProps) => ({
   openModal: (modalId, data) => dispatch(openModal(modalId, data)),
   closeModal: () => dispatch(closeModal()),
-  getMachinePools: () => dispatch(getMachinePools(ownProps.cluster.id)),
+  getMachinePools: () =>
+    dispatch(getMachineOrNodePools(ownProps.cluster.id, ownProps.cluster?.hypershift?.enabled)),
   addMachinePool: () => dispatch(addMachinePool(ownProps.clusterID)),
   clearGetMachinePoolsResponse: () => dispatch(clearGetMachinePoolsResponse(ownProps.clusterID)),
   submit: (params) => {

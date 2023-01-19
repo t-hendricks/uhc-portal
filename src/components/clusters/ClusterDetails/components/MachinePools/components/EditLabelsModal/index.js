@@ -3,7 +3,7 @@ import { reduxForm, formValueSelector } from 'redux-form';
 
 import EditLabelsModal from './EditLabelsModal';
 import {
-  getMachinePools,
+  getMachineOrNodePools,
   clearGetMachinePoolsResponse,
   clearScaleMachinePoolResponse,
   scaleMachinePool as editLabels,
@@ -41,7 +41,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
   closeModal: () => dispatch(closeModal()),
-  getMachinePools: () => dispatch(getMachinePools(ownProps.clusterId)),
+  getMachinePools: () => dispatch(getMachineOrNodePools(ownProps.clusterId, ownProps.isHypershift)),
   resetGetMachinePoolsResponse: () => dispatch(clearGetMachinePoolsResponse(ownProps.clusterId)),
   resetEditLabelsResponse: () => dispatch(clearScaleMachinePoolResponse(ownProps.clusterId)),
   resetDefaultMachinePoolEditLabelsResponse: () => dispatch(clearClusterResponse()),

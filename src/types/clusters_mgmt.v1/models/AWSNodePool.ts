@@ -7,7 +7,7 @@
  */
 export type AWSNodePool = {
   /**
-   * Indicates the type of this object. Will be 'AWSNodePool' if this is a complete object or 'AWSNodePoolLink' if it is just a link.
+   * Indicates the type of this object. Will be 'AWSNodePool' if this is a complete object or 'AWSNodePool' if it is just a link.
    */
   kind?: string;
   /**

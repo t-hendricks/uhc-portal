@@ -130,6 +130,8 @@ class MachinePools extends React.Component {
       hasMachinePoolsQuota,
     } = this.props;
 
+    const isHypershift = cluster?.hypershift?.enabled;
+
     const { deletedRowIndex, openedRows } = this.state;
 
     const hasMachinePools = !!machinePoolsList.data.length;
@@ -180,7 +182,9 @@ class MachinePools extends React.Component {
           {
             title: (
               <>
-                {machinePool.instance_type}
+                {isHypershift && machinePool.id !== 'Default'
+                  ? machinePool.aws_node_pool?.instance_type
+                  : machinePool.instance_type}
                 {machinePool.aws && (
                   <Label variant="outline" className="ocm-c-machine-pools__spot-label">
                     Spot
@@ -189,7 +193,7 @@ class MachinePools extends React.Component {
               </>
             ),
           },
-          machinePool.availability_zones?.join(', '),
+          machinePool.availability_zones?.join(', ') || machinePool.availability_zone,
           { title: nodes },
           autoscalingEnabled ? 'Enabled' : 'Disabled',
         ],
@@ -455,8 +459,12 @@ class MachinePools extends React.Component {
           </Card>
         )}
         {isAddMachinePoolModalOpen && <AddMachinePoolModal cluster={cluster} />}
-        {isEditTaintsModalOpen && <EditTaintsModal clusterId={cluster.id} />}
-        {isEditLabelsModalOpen && <EditLabelsModal clusterId={cluster.id} />}
+        {isEditTaintsModalOpen && (
+          <EditTaintsModal clusterId={cluster.id} isHypershift={isHypershift} />
+        )}
+        {isEditLabelsModalOpen && (
+          <EditLabelsModal clusterId={cluster.id} isHypershift={isHypershift} />
+        )}
       </>
     );
   }
