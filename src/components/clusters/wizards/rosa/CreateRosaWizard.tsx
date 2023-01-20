@@ -4,7 +4,7 @@ import { Formik, FormikValues } from 'formik';
 import omit from 'lodash/omit';
 
 import { Banner, PageSection } from '@patternfly/react-core';
-import { Wizard, WizardStep } from '@patternfly/react-core/dist/esm/next';
+import { Wizard, WizardStep } from '@patternfly/react-core/next';
 
 import config from '~/config';
 import { useGlobalState } from '~/redux/hooks';
@@ -74,13 +74,14 @@ export const CreateRosaWizard = () => {
 
 const CreateRosaWizardInternal = () => (
   <>
-    <Wizard isStepVisitRequired>
+    <Wizard isVisitRequired>
       <WizardStep name={StepName.AccountsAndRoles} id={StepId.AccountsAndRoles}>
         <AccountsAndRoles />
       </WizardStep>
       <WizardStep
         name={StepName.ClusterSettings}
         id={StepId.ClusterSettings}
+        isExpandable
         steps={[
           <WizardStep name={StepName.Details} id={StepId.ClusterSettingsDetails}>
             Cluster settings details content (can share component with OSD)
@@ -93,6 +94,7 @@ const CreateRosaWizardInternal = () => (
       <WizardStep
         name={StepName.Networking}
         id={StepId.Networking}
+        isExpandable
         steps={[
           <WizardStep name={StepName.Configuration} id={StepId.NetworkingConfiguration}>
             Networking - configuration content (can share component with OSD)
