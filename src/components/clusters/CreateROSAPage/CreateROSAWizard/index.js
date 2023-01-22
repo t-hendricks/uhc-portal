@@ -2,6 +2,7 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 import {
   isValid,
+  isAsyncValidating,
   reset,
   formValueSelector,
   getFormValues,
@@ -9,17 +10,17 @@ import {
   getFormSyncErrors,
   getFormAsyncErrors,
 } from 'redux-form';
-import { resetCreatedClusterResponse } from '../../../../redux/actions/clustersActions';
-import { getMachineTypes } from '../../../../redux/actions/machineTypesActions';
-import { getOrganizationAndQuota } from '../../../../redux/actions/userActions';
-import { getCloudProviders } from '../../../../redux/actions/cloudProviderActions';
+import { resetCreatedClusterResponse } from '~/redux/actions/clustersActions';
+import { getMachineTypes } from '~/redux/actions/machineTypesActions';
+import { getOrganizationAndQuota } from '~/redux/actions/userActions';
+import { getCloudProviders } from '~/redux/actions/cloudProviderActions';
 import { getUserRole, clearGetUserRoleResponse } from './rosaActions';
 import CreateROSAWizard from './CreateROSAWizard';
 import shouldShowModal from '../../../common/Modal/ModalSelectors';
 import { openModal, closeModal } from '../../../common/Modal/ModalActions';
 import { hasManagedQuotaSelector } from '../../common/quotaSelectors';
 import submitOSDRequest from '../../CreateOSDPage/submitOSDRequest';
-import { normalizedProducts } from '../../../../common/subscriptionTypes';
+import { normalizedProducts } from '~/common/subscriptionTypes';
 
 const mapStateToProps = (state) => {
   const { organization } = state.userProfile;
@@ -28,6 +29,7 @@ const mapStateToProps = (state) => {
 
   return {
     isValid: isValid('CreateCluster')(state),
+    isAsyncValidating: isAsyncValidating('CreateCluster')(state),
     isErrorModalOpen: shouldShowModal(state, 'osd-create-error'), // TODO: change 'osd' to 'rosa'
     cloudProviderID: 'aws',
     installToVPCSelected: valueSelector(state, 'install_to_vpc'),

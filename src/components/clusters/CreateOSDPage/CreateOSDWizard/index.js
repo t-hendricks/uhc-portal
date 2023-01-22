@@ -2,6 +2,7 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 import {
   isValid,
+  isAsyncValidating,
   reset,
   formValueSelector,
   getFormValues,
@@ -9,12 +10,12 @@ import {
   getFormAsyncErrors,
   touch,
 } from 'redux-form';
-import { resetCreatedClusterResponse } from '../../../../redux/actions/clustersActions';
-import { getMachineTypes } from '../../../../redux/actions/machineTypesActions';
-import { getOrganizationAndQuota } from '../../../../redux/actions/userActions';
-import { getCloudProviders } from '../../../../redux/actions/cloudProviderActions';
-import getLoadBalancerValues from '../../../../redux/actions/loadBalancerActions';
-import getPersistentStorageValues from '../../../../redux/actions/persistentStorageActions';
+import { resetCreatedClusterResponse } from '~/redux/actions/clustersActions';
+import { getMachineTypes } from '~/redux/actions/machineTypesActions';
+import { getOrganizationAndQuota } from '~/redux/actions/userActions';
+import { getCloudProviders } from '~/redux/actions/cloudProviderActions';
+import getLoadBalancerValues from '~/redux/actions/loadBalancerActions';
+import getPersistentStorageValues from '~/redux/actions/persistentStorageActions';
 import CreateOSDWizard from './CreateOSDWizard';
 import shouldShowModal from '../../../common/Modal/ModalSelectors';
 import { openModal, closeModal } from '../../../common/Modal/ModalActions';
@@ -42,6 +43,7 @@ const mapStateToProps = (state, ownProps) => {
 
   return {
     isValid: isValid('CreateCluster')(state),
+    isAsyncValidating: isAsyncValidating('CreateCluster')(state),
     isErrorModalOpen: shouldShowModal(state, 'osd-create-error'),
     ccsCredentials: ccsCredentialsSelector(cloudProviderID, state),
     isCCS,
