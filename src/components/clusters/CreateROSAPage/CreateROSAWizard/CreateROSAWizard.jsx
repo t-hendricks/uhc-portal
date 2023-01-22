@@ -446,6 +446,7 @@ class CreateROSAWizardInternal extends React.Component {
                     onSubmit={onSubmit}
                     onBeforeNext={this.onBeforeNext}
                     onBeforeSubmit={this.onBeforeSubmit}
+                    isNextDisabled={!!this.state.deferredNext}
                   />
                 ) : (
                   <></>
