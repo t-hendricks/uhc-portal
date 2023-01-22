@@ -45,7 +45,7 @@ const ValidationItem = ({ text, touched, isValid, isValidating, isInitialized })
   );
 };
 
-const ValidationIconButton = ({ touched, isValid, isValidating, onClick }) => {
+const ValidationIconButton = ({ touched, isValid, hasFailures, isValidating, onClick }) => {
   let icon = <InfoCircleIcon className="redux-rich-input-field-icon_info" />;
   let label = 'Validation rules';
   let className = 'redux-rich-input-field-button_info';
@@ -58,7 +58,7 @@ const ValidationIconButton = ({ touched, isValid, isValidating, onClick }) => {
       icon = <CheckCircleIcon className="redux-rich-input-field-icon_success" />;
       label = 'All validation rules met';
       className = 'redux-rich-input-field-button_valid';
-    } else {
+    } else if (hasFailures) {
       icon = <ExclamationCircleIcon className="redux-rich-input-field-icon_danger" />;
       label = 'Not all validation rules met';
       className = 'redux-rich-input-field-button_not-valid';
@@ -150,12 +150,20 @@ const ReduxRichInputField = (props) => {
     validationState.syncValidation,
     validationState.asyncValidation,
   );
-  const isValid = !touched || !evaluatedValidation.some((item) => item.validated === false);
+
+  // field-level validity is affected both by failures (`false`) and incomplete items (`undefined`)
+  const isValid = !touched || evaluatedValidation.every((item) => !!item.validated);
   const isValidating = touched && validationState.asyncValidation.some((item) => item.validating);
+  // required to distinguish a non-valid status due to failures, from one due to incomplete evaluation
+  const hasFailures = touched && evaluatedValidation.some((item) => item.validated === false);
 
   let inputClassName = 'redux-rich-input-field_info';
   if (touched && !isValidating) {
-    inputClassName = isValid ? 'redux-rich-input-field_valid' : 'redux-rich-input-field_not-valid';
+    if (isValid) {
+      inputClassName = 'redux-rich-input-field_valid';
+    } else if (hasFailures) {
+      inputClassName = 'redux-rich-input-field_not-valid';
+    }
   }
 
   const setAsyncValidating = (isAsyncValidating) => {
@@ -211,10 +219,10 @@ const ReduxRichInputField = (props) => {
   }, []);
 
   useEffect(() => {
-    if (!isValid) {
+    if (hasFailures) {
       setShowPopover(true);
     }
-  }, [isValid]);
+  }, [hasFailures]);
 
   useEffect(() => {
     populateValidation(inputValue);
@@ -304,6 +312,7 @@ const ReduxRichInputField = (props) => {
           <ValidationIconButton
             touched={touched}
             isValid={isValid}
+            hasFailures={hasFailures}
             isValidating={isValidating}
             onClick={(e) => {
               e.stopPropagation();
