@@ -1,8 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { EmptyState, EmptyStateBody, EmptyStateIcon, Title } from '@patternfly/react-core';
-import { PlusCircleIcon } from '@patternfly/react-icons';
+import {
+  EmptyState,
+  EmptyStateBody,
+  EmptyStateIcon,
+  Title,
+  EmptyStateSecondaryActions,
+  Button,
+} from '@patternfly/react-core';
+import { PlusCircleIcon, CubesIcon } from '@patternfly/react-icons';
 import { Spinner } from '@redhat-cloud-services/frontend-components/Spinner';
 import ErrorBox from '../../../../common/ErrorBox';
 import { availableAddOns } from './AddOnsHelper';
@@ -55,7 +62,32 @@ class AddOns extends React.Component {
       addClusterAddOnResponse,
       organization,
       quota,
+      isHypershift,
     } = this.props;
+
+    if (isHypershift) {
+      return (
+        <EmptyState>
+          <EmptyStateIcon icon={CubesIcon} />
+          <Title headingLevel="h5" size="lg">
+            Coming soon
+          </Title>
+          <EmptyStateBody>
+            Add-ons will be available soon for hosted control plane clusters.
+          </EmptyStateBody>
+          <EmptyStateSecondaryActions>
+            <Button
+              variant="link"
+              onClick={() => {
+                document.location.hash = 'overview';
+              }}
+            >
+              Go back to overview
+            </Button>
+          </EmptyStateSecondaryActions>
+        </EmptyState>
+      );
+    }
 
     if (clusterAddOns.pending && clusterAddOns.items.length === 0) {
       return (
@@ -124,6 +156,7 @@ AddOns.propTypes = {
   deleteClusterAddOnResponse: PropTypes.object.isRequired,
   clearClusterAddOnsResponses: PropTypes.func.isRequired,
   getAddOns: PropTypes.func.isRequired,
+  isHypershift: PropTypes.bool.isRequired,
 };
 
 export default AddOns;
