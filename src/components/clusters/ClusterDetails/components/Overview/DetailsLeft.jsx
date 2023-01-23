@@ -62,7 +62,7 @@ function DetailsLeft({ cluster, cloudProviders, showAssistedId }) {
         </DescriptionListGroup>
         {isHypershift && (
           <DescriptionListGroup>
-            <DescriptionListTerm>Control Plane Type</DescriptionListTerm>
+            <DescriptionListTerm>Control plane type</DescriptionListTerm>
             <DescriptionListDescription>Hosted</DescriptionListDescription>
           </DescriptionListGroup>
         )}
