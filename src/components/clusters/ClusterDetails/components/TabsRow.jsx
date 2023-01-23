@@ -209,7 +209,7 @@ class TabsRow extends React.Component {
     const targetTabKey = targetTab?.key;
     if (targetTab?.isDisabled) {
       this.handleTabClick(undefined, 0);
-    } else if (targetTabKey) {
+    } else if (targetTabKey !== undefined) {
       this.handleTabClick(undefined, targetTabKey);
     }
   };
