@@ -24,7 +24,11 @@ exports[`<TabsRow /> should hide monitoring and add-ons tabs if needed (eg. when
     key="0"
     ouiaId="Overview"
     tabContentId="overviewTabContent"
-    title="Overview"
+    title={
+      <TabTitleText>
+        Overview
+      </TabTitleText>
+    }
   />
 </Tabs>
 `;
@@ -53,7 +57,11 @@ exports[`<TabsRow /> should render 1`] = `
     key="0"
     ouiaId="Overview"
     tabContentId="overviewTabContent"
-    title="Overview"
+    title={
+      <TabTitleText>
+        Overview
+      </TabTitleText>
+    }
   />
   <Tab
     eventKey={1}
@@ -68,11 +76,13 @@ exports[`<TabsRow /> should render 1`] = `
     }
     tabContentId="monitoringTabContent"
     title={
-      <React.Fragment>
-        <TabTitleText>
-          Monitoring
-        </TabTitleText>
-      </React.Fragment>
+      <TabTitleText>
+        <React.Fragment>
+          <TabTitleText>
+            Monitoring
+          </TabTitleText>
+        </React.Fragment>
+      </TabTitleText>
     }
   />
 </Tabs>
@@ -102,7 +112,11 @@ exports[`<TabsRow /> should render monitoring tab with issues icon 1`] = `
     key="0"
     ouiaId="Overview"
     tabContentId="overviewTabContent"
-    title="Overview"
+    title={
+      <TabTitleText>
+        Overview
+      </TabTitleText>
+    }
   />
   <Tab
     eventKey={1}
@@ -127,21 +141,23 @@ exports[`<TabsRow /> should render monitoring tab with issues icon 1`] = `
     }
     tabContentId="monitoringTabContent"
     title={
-      <React.Fragment>
-        <TabTitleText>
-          Monitoring
-        </TabTitleText>
-        <TabTitleIcon
-          id="monitoring-issues-icon"
-        >
-          <ExclamationCircleIcon
-            className="danger"
-            color="currentColor"
-            noVerticalAlign={false}
-            size="sm"
-          />
-        </TabTitleIcon>
-      </React.Fragment>
+      <TabTitleText>
+        <React.Fragment>
+          <TabTitleText>
+            Monitoring
+          </TabTitleText>
+          <TabTitleIcon
+            id="monitoring-issues-icon"
+          >
+            <ExclamationCircleIcon
+              className="danger"
+              color="currentColor"
+              noVerticalAlign={false}
+              size="sm"
+            />
+          </TabTitleIcon>
+        </React.Fragment>
+      </TabTitleText>
     }
   />
 </Tabs>
