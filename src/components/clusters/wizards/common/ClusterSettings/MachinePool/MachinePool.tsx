@@ -16,6 +16,7 @@ import ExternalLink from '~/components/common/ExternalLink';
 import { constants } from '~/components/clusters/CreateOSDPage/CreateOSDForm/CreateOSDFormConstants';
 import links from '~/common/installLinks.mjs';
 import NodeCountInput from '~/components/clusters/common/NodeCountInput';
+import { normalizedProducts } from '~/common/subscriptionTypes';
 import { NodeLabelsFieldArray } from './NodeLabelsFieldArray';
 
 interface MachinePoolProps {
@@ -70,6 +71,8 @@ export const MachinePool = ({ billingModel }: MachinePoolProps) => {
   React.useEffect(() => {
     dispatch(getMachineTypes());
   }, [dispatch]);
+
+  const isRosa = product === normalizedProducts.ROSA;
 
   return (
     <Form>
@@ -141,7 +144,13 @@ export const MachinePool = ({ billingModel }: MachinePoolProps) => {
                   extendedHelpText={
                     <>
                       {constants.computeNodeCountHint}{' '}
-                      <ExternalLink href={links.OSD_SERVICE_DEFINITION_COMPUTE}>
+                      <ExternalLink
+                        href={
+                          isRosa
+                            ? links.ROSA_SERVICE_DEFINITION_COMPUTE
+                            : links.OSD_SERVICE_DEFINITION_COMPUTE
+                        }
+                      >
                         Learn more about compute node count
                       </ExternalLink>
                     </>
