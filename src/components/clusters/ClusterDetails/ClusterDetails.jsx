@@ -500,7 +500,10 @@ class ClusterDetails extends Component {
               hidden
             >
               <ErrorBoundary>
-                <AddOns clusterID={cluster.id} />
+                <AddOns
+                  clusterID={cluster.id}
+                  isHypershift={!!clusterDetails.cluster?.hypershift?.enabled}
+                />
               </ErrorBoundary>
             </TabContent>
           )}

@@ -1441,6 +1441,7 @@ exports[`<ClusterDetails /> Cluster Details - OSD should render 1`] = `
       <ErrorBoundary>
         <Connect(AddOns)
           clusterID="1i4counta3holamvo1g5tp6n8p3a03bq"
+          isHypershift={false}
         />
       </ErrorBoundary>
     </ForwardRef>
