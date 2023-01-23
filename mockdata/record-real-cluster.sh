@@ -1,7 +1,7 @@
 #!/bin/bash
 if [ $# != 1 ]; then
   cat >&2 <<'END-OF-USAGE'
-Usage: mockdata/record-real-cluster.sh CLUSTER-ID
+Usage: mockdata/record-real-cluster.sh SUBSCRIPTION-ID
 
 Fetches cluster info from API into mockdata/ files.
 Happily overwrites any existing file!  Use git to undo :-P
@@ -19,9 +19,6 @@ trap 's=$?; echo; echo "$0: Error on line "$LINENO": $BASH_COMMAND"; exit $s' ER
 cd "$(dirname "$0")"  # directory of this script
 cd "$(git rev-parse --show-toplevel)"
 
-cluster_id="$1"
-cluster_href="/api/clusters_mgmt/v1/clusters/$cluster_id"
-
 # request LOG_PREFIX PATH [EXTRA ocm FLAGS]
 function request {
   log_prefix="$1"
@@ -36,6 +33,26 @@ function request {
   #echo "${log_prefix}  Found links:"
   #jq ".. | select(try .kind | test(\".*Link\")).href | \"${log_prefix}  - \" + ." mockdata/"$path".json --raw-output
 }
+
+subscription_id="$1"
+subscription_href="/api/accounts_mgmt/v1/subscriptions/$subscription_id"
+
+request "" "$subscription_href" --parameter=fetchAccounts=true --parameter=fetchCpuAndSocket=true --parameter=fetchCapabilities=true
+request "" "$subscription_href/notification_contacts" --parameter=size=-1
+request "" "$subscription_href/support_cases" --parameter=size=1000  # SDB-2817: size=-1 here is expensive and may return errors
+request "" "$subscription_href/ondemand_metrics" --parameter=size=-1
+request "" "$subscription_href/role_bindings" --parameter=size=-1
+
+uuid="$(jq .external_cluster_id "mockdata/$subscription_href.json" --raw-output)"
+request "" "/api/service_logs/v1/clusters/$uuid/cluster_logs" --parameter=size=20 --parameter='orderBy=timestamp desc'
+
+# TODO in dev this is requested as /api/aggregator/... ?
+request "" "/api/insights-results-aggregator/v1/clusters/$uuid/report" --parameter=osd_eligible=true
+request "" "/api/insights-results-aggregator/v2/clusters/$uuid/report" --parameter=osd_eligible=true
+
+# For some cluster types e.g. OCP-AssistedInstall, this might not be a clusters_mgmt ID, but we can try.
+cluster_id="$(jq .cluster_id "mockdata/$subscription_href".json --raw-output)"
+cluster_href="/api/clusters_mgmt/v1/clusters/$cluster_id"
 
 request "" "$cluster_href"
 if [ ! -f "mockdata/$cluster_href.json" ]; then
@@ -75,16 +92,6 @@ else
       # Not currently queried by UI, would duplicate upgrade_policies.json and be a chore to maintain.
       #request "  " "$policy_href"
     done
-
-  subscription_href="$(jq .subscription.href "mockdata/$cluster_href".json --raw-output)"
-  request "" "$subscription_href" --parameter=fetchAccounts=true --parameter=fetchCpuAndSocket=true --parameter=fetchCapabilities=true
-  request "" "$subscription_href/notification_contacts" --parameter=size=-1
-  request "" "$subscription_href/support_cases" --parameter=size=1000  # SDB-2817: size=-1 here is expensive and may return errors
-  request "" "$subscription_href/ondemand_metrics" --parameter=size=-1
-  request "" "$subscription_href/role_bindings" --parameter=size=-1
-
-  uuid="$(jq .external_id "mockdata/$cluster_href.json" --raw-output)"
-  request "" "/api/service_logs/v1/clusters/$uuid/cluster_logs" --parameter=size=20 --parameter='orderBy=timestamp desc'
 fi
 
 request "" "/api/accounts_mgmt/v1/current_account"
@@ -100,9 +107,6 @@ request "" "/api/clusters_mgmt/v1/cloud_providers" --parameter=size=-1 --paramet
 # not currently queried by UI, would duplicate cloud_providers.json and be a chore to maintain.
 
 request "" "/api/clusters_mgmt/v1/limited_support_reason_templates" --parameter=size=-1
-
-# TODO in dev this is requested as /api/aggregator/... ?
-request "" "/api/insights-results-aggregator/v1/clusters/$cluster_id/report" --parameter=osd_eligible=true
 
 mockdata/regenerate-clusters.json.sh || true
 
