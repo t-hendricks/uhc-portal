@@ -4,6 +4,7 @@
 
 import type { AddOnConfig } from './AddOnConfig';
 import type { AddOnInstallMode } from './AddOnInstallMode';
+import type { AddOnNamespace } from './AddOnNamespace';
 import type { AddOnParameter } from './AddOnParameter';
 import type { AddOnRequirement } from './AddOnRequirement';
 import type { AddOnSubOperator } from './AddOnSubOperator';
@@ -26,6 +27,14 @@ export type AddOn = {
    * Self link.
    */
   href?: string;
+  /**
+   * Common annotations to be applied to all resources created by this addon.
+   */
+  common_annotations?: Record<string, string>;
+  /**
+   * Common labels to be applied to all resources created by this addon.
+   */
+  common_labels?: Record<string, string>;
   /**
    * Additional configs to be used by the addon once its installed in the cluster.
    */
@@ -74,6 +83,10 @@ export type AddOn = {
    * Name of the add-on.
    */
   name?: string;
+  /**
+   * Namespaces which are required by this addon.
+   */
+  namespaces?: Array<AddOnNamespace>;
   /**
    * The name of the operator installed by this add-on.
    */
