@@ -21,4 +21,6 @@ const getSubscriptionLastReconciledDate = (subscription) =>
     ? new Date(get(subscription, 'last_reconcile_date')).toLocaleString()
     : false;
 
-export { hasCpuAndMemory, getSubscriptionLastReconciledDate };
+const isHypershiftCluster = (cluster) => get(cluster, 'hypershift.enabled', false);
+
+export { hasCpuAndMemory, getSubscriptionLastReconciledDate, isHypershiftCluster };
