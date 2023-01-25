@@ -109,7 +109,7 @@ export const CidrRanges = () => {
               correspond to the first IP address in their subnet.
             </p>
 
-            <ExternalLink href={links.CIDR_RANGE_DEFINITIONS}>
+            <ExternalLink href={links.CIDR_RANGE_DEFINITIONS_OSD}>
               Learn more to avoid conflicts
             </ExternalLink>
           </Alert>
@@ -155,6 +155,7 @@ export const CidrRanges = () => {
                 <>
                   {constants.machineCIDRHint}
                   {privateRangesHint}
+
                   <Text component={TextVariants.p}>
                     <ExternalLink href={links.OSD_CIDR_MACHINE}>Learn more</ExternalLink>
                   </Text>
@@ -179,6 +180,7 @@ export const CidrRanges = () => {
                 <>
                   {constants.serviceCIDRHint}
                   {privateRangesHint}
+
                   <Text component={TextVariants.p}>
                     <ExternalLink href={links.OSD_CIDR_SERVICE}>Learn more</ExternalLink>
                   </Text>
@@ -203,6 +205,7 @@ export const CidrRanges = () => {
                 <>
                   {constants.podCIDRHint}
                   {privateRangesHint}
+
                   <Text component={TextVariants.p}>
                     <ExternalLink href={links.OSD_CIDR_POD}>Learn more</ExternalLink>
                   </Text>

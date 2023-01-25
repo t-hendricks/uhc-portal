@@ -60,6 +60,8 @@ function ScaleSection({
     </ExpandableSection>
   );
 
+  const isRosa = product === normalizedProducts.ROSA;
+
   return (
     <>
       {/* Instance type */}
@@ -112,7 +114,13 @@ function ScaleSection({
               extendedHelpText={
                 <>
                   {constants.computeNodeCountHint}{' '}
-                  <ExternalLink href={links.OSD_SERVICE_DEFINITION_COMPUTE}>
+                  <ExternalLink
+                    href={
+                      isRosa
+                        ? links.ROSA_SERVICE_DEFINITION_COMPUTE
+                        : links.OSD_SERVICE_DEFINITION_COMPUTE
+                    }
+                  >
                     Learn more about compute node count
                   </ExternalLink>
                 </>

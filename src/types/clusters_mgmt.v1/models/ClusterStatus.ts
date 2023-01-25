@@ -34,6 +34,10 @@ export type ClusterStatus = {
    */
   configuration_mode?: ClusterConfigurationMode;
   /**
+   * Current Replicas available for a Hosted Cluster
+   */
+  current_compute?: number;
+  /**
    * Detailed description of the cluster status.
    */
   description?: string;
