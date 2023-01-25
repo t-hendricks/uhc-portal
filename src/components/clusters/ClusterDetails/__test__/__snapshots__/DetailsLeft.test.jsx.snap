@@ -408,7 +408,9 @@ exports[`<DetailsLeft /> should render 1`] = `
       <DescriptionListTerm>
         Availability
       </DescriptionListTerm>
-      <DescriptionListDescription>
+      <DescriptionListDescription
+        data-testid="availability"
+      >
         Single zone
       </DescriptionListDescription>
     </DescriptionListGroup>
@@ -1951,7 +1953,9 @@ exports[`<DetailsLeft /> should show the extra AI cluster details 1`] = `
       <DescriptionListTerm>
         Availability
       </DescriptionListTerm>
-      <DescriptionListDescription>
+      <DescriptionListDescription
+        data-testid="availability"
+      >
         Single zone
       </DescriptionListDescription>
     </DescriptionListGroup>
