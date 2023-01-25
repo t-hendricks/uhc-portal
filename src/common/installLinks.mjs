@@ -101,7 +101,8 @@ const links = {
   OSD_CCS_GCP_SCP: `${OSD_DOCS_BASE}/osd_planning/gcp-ccs.html#ccs-gcp-customer-procedure_gcp-ccs`,
   OSD_LIFE_CYCLE: `${OSD_DOCS_BASE}/osd_architecture/osd_policy/osd-life-cycle.html`,
   OSD_Z_STREAM: `${OSD_DOCS_BASE}/osd_architecture/osd_policy/osd-life-cycle.html#rosa-patch-versions_osd-life-cycle`,
-  OSD_SERVICE_DEFINITION_COMPUTE: `${OSD_DOCS_BASE}/osd_architecture/osd_policy/osd-service-definition.html#compute_osd-service-definition`,
+  OSD_SERVICE_DEFINITION_COMPUTE: `${OSD_DOCS_BASE}/osd_architecture/osd_policy/osd-service-definition.html#instance-types_osd-service-definition`,
+  ROSA_SERVICE_DEFINITION_COMPUTE: `${ROSA_DOCS_BASE}/rosa_architecture/rosa_policy_service_definition/rosa-service-definition.html#rosa-sdpolicy-instance-types_rosa-service-definition`,
   OSD_ETCD_ENCRYPTION: `${OSD_DOCS_BASE}/osd_architecture/osd_policy/osd-service-definition.html#etcd-encryption_osd-service-definition`,
   OSD_AWS_PRIVATE_CONNECTIONS: `${OSD_DOCS_BASE}/osd_cluster_admin/osd_private_connections/aws-private-connections.html`,
   OSD_PRIVATE_CLUSTER: `${OSD_DOCS_BASE}/osd_cluster_admin/osd_private_connections/private-cluster.html`,
@@ -110,9 +111,13 @@ const links = {
   OSD_LIMITED_SUPPORT_DEFINITION: `${OSD_DOCS_BASE}/osd_architecture/osd_policy/osd-service-definition.html#limited-support_osd-service-definition`,
   OSD_MONITORING_STACK: `${OSD_DOCS_BASE}/osd_cluster_admin/osd_monitoring/osd-understanding-the-monitoring-stack.html`,
   OSD_CIDR_MACHINE: `${OSD_DOCS_BASE}/networking/cidr-range-definitions.html#machine-cidr-description`,
+  ROSA_CIDR_MACHINE: `${ROSA_DOCS_BASE}/networking/cidr-range-definitions.html#machine-cidr-description`,
   OSD_CIDR_SERVICE: `${OSD_DOCS_BASE}/networking/cidr-range-definitions.html#service-cidr-description`,
+  ROSA_CIDR_SERVICE: `${ROSA_DOCS_BASE}/networking/cidr-range-definitions.html#service-cidr-description`,
   OSD_CIDR_POD: `${OSD_DOCS_BASE}/networking/cidr-range-definitions.html#pod-cidr-description`,
+  ROSA_CIDR_POD: `${ROSA_DOCS_BASE}/networking/cidr-range-definitions.html#pod-cidr-description`,
   OSD_CIDR_HOST: `${OSD_DOCS_BASE}/networking/cidr-range-definitions.html#host-prefix-description`,
+  ROSA_CIDR_HOST: `${ROSA_DOCS_BASE}/networking/cidr-range-definitions.html#host-prefix-description`,
 
   CLI_TOOLS_OCP_GETTING_STARTED: `${DOCS_BASE}/cli_reference/openshift_cli/getting-started-cli.html`,
 
@@ -292,7 +297,10 @@ const links = {
 
   FINDING_AWS_ACCOUNT_IDENTIFIERS:
     'https://docs.aws.amazon.com/accounts/latest/reference/manage-acct-identifiers.html',
-  CIDR_RANGE_DEFINITIONS: 'https://docs.openshift.com/rosa/networking/cidr-range-definitions.html',
+  CIDR_RANGE_DEFINITIONS_ROSA:
+    'https://docs.openshift.com/rosa/networking/cidr-range-definitions.html',
+  CIDR_RANGE_DEFINITIONS_OSD:
+    'https://docs.openshift.com/dedicated/networking/cidr-range-definitions.html',
   CONFIGURE_PROXY_URL:
     'https://docs.openshift.com/dedicated/networking/configuring-cluster-wide-proxy.html',
 };

@@ -12,6 +12,12 @@ class TabsRow extends React.Component {
 
   componentDidMount() {
     window.addEventListener('popstate', this.onPopState);
+    const { initialTabKey } = this.state;
+    const initialTab = this.getTabs()[initialTabKey];
+    if (initialTab?.isDisabled) {
+      this.setState({ initialTabKey: 0 });
+      this.handleTabClick(undefined, 0);
+    }
   }
 
   componentDidUpdate() {
@@ -24,7 +30,7 @@ class TabsRow extends React.Component {
     }
 
     const initialTab = this.getTabs()[initialTabKey];
-    if (initialTabKey !== null && initialTab.show) {
+    if (initialTabKey !== null && initialTab.show && !initialTab.isDisabled) {
       this.handleTabClick(undefined, initialTabKey);
     }
   }
@@ -190,10 +196,11 @@ class TabsRow extends React.Component {
   /* use browser API (window) as a temporary workaround to change
      the active tab when hash is changed inside URL */
   onPopState = ({ target }) => {
-    const targetTabKey = this.getTabs().find(
-      (t) => t.id === target.location.hash.substring(1),
-    )?.key;
-    if (targetTabKey) {
+    const targetTab = this.getTabs().find((t) => t.id === target.location.hash.substring(1));
+    const targetTabKey = targetTab?.key;
+    if (targetTab?.isDisabled) {
+      this.handleTabClick(undefined, 0);
+    } else if (targetTabKey !== undefined) {
       this.handleTabClick(undefined, targetTabKey);
     }
   };
