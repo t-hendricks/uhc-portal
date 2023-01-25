@@ -142,12 +142,20 @@ export const RichInputField = ({
     ...validationState.syncValidation,
     ...validationState.asyncValidation,
   ];
-  const isValid = !touched || !evaluatedValidation.some((item) => item.validated === false);
+
+  // field-level validity is affected both by failures (`false`) and incomplete items (`undefined`)
+  const isValid = !touched || evaluatedValidation.every((item) => !!item.validated);
   const isValidating = touched && validationState.asyncValidation.some((item) => item.validating);
+  // required to distinguish a non-valid status due to failures, from one due to incomplete evaluation
+  const hasFailures = touched && evaluatedValidation.some((item) => item.validated === false);
 
   let inputClassName = 'rich-input-field_info';
   if (touched && !isValidating) {
-    inputClassName = isValid ? 'rich-input-field_valid' : 'rich-input-field_not-valid';
+    if (isValid) {
+      inputClassName = 'rich-input-field_valid';
+    } else if (hasFailures) {
+      inputClassName = 'rich-input-field_not-valid';
+    }
   }
 
   const setAsyncValidating = (isAsyncValidating: boolean) => {
@@ -205,10 +213,10 @@ export const RichInputField = ({
   }, []);
 
   useEffect(() => {
-    if (!isValid) {
+    if (hasFailures) {
       setShowPopover(true);
     }
-  }, [isValid]);
+  }, [hasFailures]);
 
   useEffect(() => {
     populateValidation(inputValue);
@@ -297,6 +305,7 @@ export const RichInputField = ({
           <ValidationIconButton
             touched={touched}
             isValid={isValid}
+            hasFailures={hasFailures}
             isValidating={isValidating}
             onClick={(e) => {
               e.stopPropagation();
