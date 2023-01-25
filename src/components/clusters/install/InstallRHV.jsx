@@ -3,6 +3,7 @@ import { PageSection } from '@patternfly/react-core';
 
 import Breadcrumbs from '../../common/Breadcrumbs';
 import { scrollToTop } from '../../../common/helpers';
+import links from '../../../common/installLinks.mjs';
 import { InstructionsChooser } from './instructions/InstructionsChooser';
 import { InstructionsChooserPageTitle } from './instructions/InstructionsChooserPageTitle';
 
@@ -33,7 +34,9 @@ class InstallRHV extends Component {
         <PageSection>
           <InstructionsChooser
             ipiPageLink="/install/rhv/installer-provisioned"
+            ipiLearnMoreLink={links.INSTALL_RHVIPI_GETTING_STARTED}
             upiPageLink="/install/rhv/user-provisioned"
+            upiLearnMoreLink={links.INSTALL_RHVUPI_GETTING_STARTED}
             providerSpecificFeatures={{
               ipi: ['Hosts controlled with Red Hat Virtualization Provider'],
             }}
