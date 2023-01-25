@@ -16,6 +16,7 @@ import InstallProgress from '~/components/clusters/common/InstallProgress/Instal
 import DownloadOcCliButton from '~/components/clusters/common/InstallProgress/DownloadOcCliButton';
 import InstallationLogView from './InstallationLogView';
 import ClusterStatusMonitor from './ClusterStatusMonitor';
+import { isHypershiftCluster } from '../../clusterDetailsHelper';
 
 interface ClusterProgressCardProps {
   cluster?: Cluster;
@@ -32,7 +33,7 @@ const ClusterProgressCard = ({ cluster = {}, history, refresh }: ClusterProgress
   const isWaitingROSAManual = isWaitingROSAManualMode(cluster);
   const installationInProgress = isPending || isInstalling || (isWaiting && !isWaitingROSAManual);
   const inProgress = installationInProgress || isUninstalling;
-  const estCompletionTime = cluster?.hypershift?.enabled === true ? '10' : '30 to 60';
+  const estCompletionTime = isHypershiftCluster() ? '10' : '30 to 60';
 
   let titleText;
   if (isError) {
