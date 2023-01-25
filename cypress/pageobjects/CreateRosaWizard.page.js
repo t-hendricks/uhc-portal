@@ -5,7 +5,7 @@ import CreateClusterPage from './CreateCluster.page';
 
 class CreateRosaCluster extends Page {
   isCreateRosaPage() {
-    super.assertUrlIncludes( '/openshift/create/rosa/wizard');
+    super.assertUrlIncludes('/openshift/create/rosa/wizard');
   }
 
   isAccountsAndRolesScreen() {
@@ -61,22 +61,39 @@ class CreateRosaCluster extends Page {
   showsNoAssociatedAccounts = () => cy.getByTestId('no_associated_accounts').should('be.visible');
 
   isSelectedVersion = (testVersion) => {
-    cy.get('button.pf-c-select__menu-item.pf-m-selected').scrollIntoView().invoke('text').should('eq', testVersion);
+    cy.get('button.pf-c-select__menu-item.pf-m-selected')
+      .scrollIntoView()
+      .invoke('text')
+      .should('eq', testVersion);
+  };
+
+  get accountIdMenuItem() {
+    return '.pf-c-select__menu-item';
   }
 
-  get accountIdMenuItem() { return '.pf-c-select__menu-item'; }
+  get associatedAccountsDropdown() {
+    return 'button.pf-c-select__toggle';
+  }
 
-  get associatedAccountsDropdown() { return 'button.pf-c-select__toggle'; }
+  get versionsDropdown() {
+    return 'div[name="cluster_version"] button.pf-c-select__toggle';
+  }
 
-  get versionsDropdown() { return 'div[name="cluster_version"] button.pf-c-select__toggle'; }
+  get ARNFieldRequiredMsg() {
+    return '.pf-c-expandable-section.pf-m-expanded .pf-c-form__helper-text.pf-m-error';
+  }
 
-  get ARNFieldRequiredMsg() { return '.pf-c-expandable-section.pf-m-expanded .pf-c-form__helper-text.pf-m-error'; }
+  get clusterNameInput() {
+    return 'input#name';
+  }
 
-  get clusterNameInput() { return 'input#name'; }
+  get clusterNameInputError() {
+    return 'ul#rich-input-popover-name li.pf-c-helper-text__item.pf-m-error.pf-m-dynamic';
+  }
 
-  get clusterNameInputError() { return 'ul#redux-rich-input-popover-name li.pf-c-helper-text__item.pf-m-error.pf-m-dynamic'; }
-
-  get primaryButton() { return '.rosa-wizard button.pf-c-button.pf-m-primary'; }
+  get primaryButton() {
+    return '.rosa-wizard button.pf-c-button.pf-m-primary';
+  }
 }
 
 export default new CreateRosaCluster();

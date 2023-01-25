@@ -63,7 +63,11 @@ import {
 } from './Networking';
 import { ReviewAndCreate } from './ReviewAndCreate';
 
-export const CreateOsdWizard = () => {
+interface CreateOsdWizardProps {
+  product?: string;
+}
+
+export const CreateOsdWizard = ({ product }: CreateOsdWizardProps) => {
   const dispatch = useDispatch();
   const persistentStorageValues = useGlobalState((state) => state.persistentStorageValues);
   const loadBalancerValues = useGlobalState((state) => state.loadBalancerValues);
@@ -106,7 +110,11 @@ export const CreateOsdWizard = () => {
   };
 
   return (
-    <Formik initialValues={initialValues} initialTouched={initialTouched} onSubmit={onSubmit}>
+    <Formik
+      initialValues={{ ...initialValues, ...(product && { product }) }}
+      initialTouched={initialTouched}
+      onSubmit={onSubmit}
+    >
       <>
         <PageTitle
           title="Create an OpenShift Dedicated Cluster"
@@ -238,6 +246,7 @@ const CreateOsdWizardInternal = () => {
   return (
     <>
       <Wizard
+        id="osd-wizard"
         onClose={onClose}
         onStepChange={onStepChange}
         footer={<CreateOsdWizardFooter />}
