@@ -87,6 +87,7 @@ class CreateROSAWizardInternal extends React.Component {
       isAsyncValidating !== prevProps.isAsyncValidating && isAsyncValidating === false;
     if (isAsyncValidationDone && deferredNext) {
       this.onBeforeNext(deferredNext);
+      // eslint-disable-next-line react/no-did-update-set-state
       this.setState({ deferredNext: null });
     }
 
@@ -221,6 +222,7 @@ class CreateROSAWizardInternal extends React.Component {
       privateLinkSelected,
       configureProxySelected,
     } = this.props;
+    const { deferredNext } = this.state;
 
     const steps = [
       {
@@ -446,7 +448,7 @@ class CreateROSAWizardInternal extends React.Component {
                     onSubmit={onSubmit}
                     onBeforeNext={this.onBeforeNext}
                     onBeforeSubmit={this.onBeforeSubmit}
-                    isNextDisabled={!!this.state.deferredNext}
+                    isNextDisabled={!!deferredNext}
                   />
                 ) : (
                   <></>

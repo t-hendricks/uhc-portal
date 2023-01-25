@@ -329,6 +329,7 @@ const ReduxRichInputField = (props) => {
 ValidationIconButton.propTypes = {
   touched: PropTypes.bool,
   isValid: PropTypes.bool,
+  hasFailures: PropTypes.bool,
   isValidating: PropTypes.bool,
   onClick: PropTypes.func,
 };

@@ -145,6 +145,7 @@ class CreateOSDWizardInternal extends React.Component {
       isAsyncValidating !== prevProps.isAsyncValidating && isAsyncValidating === false;
     if (isAsyncValidationDone && deferredNext) {
       this.onBeforeNext(deferredNext);
+      // eslint-disable-next-line react/no-did-update-set-state
       this.setState({ deferredNext: null });
     }
   }
