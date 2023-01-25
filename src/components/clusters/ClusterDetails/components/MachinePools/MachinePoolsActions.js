@@ -7,6 +7,7 @@ const DELETE_MACHINE_POOL = 'DELETE_MACHINE_POOL';
 const CLEAR_GET_MACHINE_POOLS_RESPONSE = 'CLEAR_GET_MACHINE_POOLS_RESPONSE';
 const CLEAR_ADD_MACHINE_POOL_RESPONSE = 'CLEAR_ADD_MACHINE_POOL_RESPONSE';
 const CLEAR_SCALE_MACHINE_POOL_RESPONSE = 'CLEAR_SCALE_MACHINE_POOL_RESPONSE';
+const CLEAR_DELETE_MACHINE_POOL_RESPONSE = 'CLEAR_DELETE_MACHINE_POOL_RESPONSE';
 
 const getMachineOrNodePools = (clusterID, isHypershiftCluster) => (dispatch) =>
   dispatch({
@@ -49,6 +50,11 @@ const clearScaleMachinePoolResponse = () => (dispatch) =>
     type: CLEAR_SCALE_MACHINE_POOL_RESPONSE,
   });
 
+const clearDeleteMachinePoolResponse = () => (dispatch) =>
+  dispatch({
+    type: CLEAR_DELETE_MACHINE_POOL_RESPONSE,
+  });
+
 export {
   GET_MACHINE_POOLS,
   ADD_MACHINE_POOL,
@@ -57,6 +63,7 @@ export {
   CLEAR_ADD_MACHINE_POOL_RESPONSE,
   CLEAR_SCALE_MACHINE_POOL_RESPONSE,
   CLEAR_GET_MACHINE_POOLS_RESPONSE,
+  CLEAR_DELETE_MACHINE_POOL_RESPONSE,
   getMachineOrNodePools,
   addMachinePool,
   scaleMachinePool,
@@ -64,4 +71,5 @@ export {
   clearAddMachinePoolResponse,
   clearGetMachinePoolsResponse,
   clearScaleMachinePoolResponse,
+  clearDeleteMachinePoolResponse,
 };

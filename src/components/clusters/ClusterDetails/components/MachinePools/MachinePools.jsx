@@ -72,7 +72,7 @@ class MachinePools extends React.Component {
       machinePoolsList,
       getOrganizationAndQuota,
     } = this.props;
-    const { deletedRowIndex, hideDeleteMachinePoolError } = this.state;
+    const { deletedRowIndex } = this.state;
 
     if (
       ((deleteMachinePoolResponse.fulfilled && prevProps.deleteMachinePoolResponse.pending) ||
@@ -82,21 +82,6 @@ class MachinePools extends React.Component {
     ) {
       getOrganizationAndQuota();
       getMachinePools();
-    }
-
-    // show error if there is a new response for delete action
-    if (
-      prevProps.deleteMachinePoolResponse.error &&
-      prevProps.deleteMachinePoolResponse.pending &&
-      deleteMachinePoolResponse.error &&
-      hideDeleteMachinePoolError
-    ) {
-      // eslint-disable-next-line react/no-did-update-set-state
-      this.setState(
-        produce((draft) => {
-          draft.hideDeleteMachinePoolError = false;
-        }),
-      );
     }
 
     if (
@@ -148,6 +133,7 @@ class MachinePools extends React.Component {
       addMachinePoolResponse,
       hasMachinePoolsQuota,
       isHypershift,
+      clearDeleteMachinePoolResponse,
     } = this.props;
 
     const { deletedRowIndex, openedRows, hideDeleteMachinePoolError } = this.state;
@@ -351,9 +337,9 @@ class MachinePools extends React.Component {
     const onClickDeleteAction = (_, rowID, rowData) => {
       this.setState(
         produce((draft) => {
-          // hide outdated error message
-          if (deleteMachinePoolResponse.error && !hideDeleteMachinePoolError) {
-            draft.hideDeleteMachinePoolError = true;
+          if (deleteMachinePoolResponse.error) {
+            clearDeleteMachinePoolResponse();
+            draft.hideDeleteMachinePoolError = false;
           }
           draft.deletedRowIndex = rowID;
           draft.openedRows = draft.openedRows.filter(
@@ -556,6 +542,7 @@ MachinePools.propTypes = {
   getMachinePools: PropTypes.func.isRequired,
   deleteMachinePool: PropTypes.func.isRequired,
   clearGetMachinePoolsResponse: PropTypes.func.isRequired,
+  clearDeleteMachinePoolResponse: PropTypes.func.isRequired,
   getOrganizationAndQuota: PropTypes.func.isRequired,
   getMachineTypes: PropTypes.func.isRequired,
   machineTypes: PropTypes.object.isRequired,
