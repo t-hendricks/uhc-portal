@@ -26,7 +26,7 @@ describe('MachinePools actions', () => {
 
   describe('getMachinePools', () => {
     it('dispatches successfully', () => {
-      getMachineOrNodePools('mock-cluster-id')(mockDispatch);
+      getMachineOrNodePools('mock-cluster-id', false)(mockDispatch);
       expect(mockDispatch).toBeCalledWith({
         payload: expect.anything(),
         type: GET_MACHINE_POOLS,
@@ -34,7 +34,7 @@ describe('MachinePools actions', () => {
     });
 
     it('calls clusterService.getMachinePools', () => {
-      getMachineOrNodePools('mock-cluster-id')(mockDispatch);
+      getMachineOrNodePools('mock-cluster-id', false)(mockDispatch);
       expect(clusterService.getMachinePools).toBeCalledWith('mock-cluster-id');
     });
 

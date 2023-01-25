@@ -109,8 +109,7 @@ const mapDispatchToProps = (dispatch, { location }) =>
       getClusterAddOns,
       getGrants,
       getClusterRouters,
-      getMachineOrNodePools: (clusterId, isHypershift) =>
-        getMachineOrNodePools(clusterId, isHypershift),
+      getMachineOrNodePools,
       clearGetMachinePoolsResponse,
       setOpenedTab: (tabKey) => push(`${getBaseName()}${location.pathname}#${tabKey}`),
       getClusterHistory,

@@ -131,7 +131,7 @@ describe('<ClusterDetails />', () => {
       clusterDetails: {
         ...fixtures.ROSAClusterDetails,
         cluster: {
-          ...fixtures.clusterDetails.cluster,
+          ...fixtures.ROSAClusterDetails.cluster,
           hypershift: { enabled: true },
         },
       },
@@ -140,7 +140,7 @@ describe('<ClusterDetails />', () => {
 
     it('should get node pools', () => {
       expect(functions.getMachineOrNodePools).toBeCalledWith(
-        fixtures.clusterDetails.cluster.id,
+        fixtures.ROSAClusterDetails.cluster.id,
         true,
       );
     });

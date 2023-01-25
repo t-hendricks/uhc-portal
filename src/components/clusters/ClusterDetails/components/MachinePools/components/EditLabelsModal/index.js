@@ -41,7 +41,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
   closeModal: () => dispatch(closeModal()),
-  getMachinePools: () => dispatch(getMachineOrNodePools(ownProps.clusterId, ownProps.isHypershift)),
+  getMachinePools: () =>
+    dispatch(getMachineOrNodePools(ownProps.clusterId, ownProps.isHypershiftCluster)),
   resetGetMachinePoolsResponse: () => dispatch(clearGetMachinePoolsResponse(ownProps.clusterId)),
   resetEditLabelsResponse: () => dispatch(clearScaleMachinePoolResponse(ownProps.clusterId)),
   resetDefaultMachinePoolEditLabelsResponse: () => dispatch(clearClusterResponse()),

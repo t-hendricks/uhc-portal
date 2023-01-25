@@ -17,6 +17,8 @@ import {
   clearGetMachinePoolsResponse,
 } from '../../ClusterDetails/components/MachinePools/MachinePoolsActions';
 
+import { isHypershiftCluster } from '../../ClusterDetails/clusterDetailsHelper';
+
 import { canAutoScaleSelector } from '../../ClusterDetails/components/MachinePools/MachinePoolsSelectors';
 import getClusterName from '../../../../common/getClusterName';
 import { getNodesCount } from '../../CreateOSDPage/CreateOSDForm/FormSections/ScaleSection/AutoScaleSection/AutoScaleHelper';
@@ -54,7 +56,7 @@ const mapStateToProps = (state) => {
     resetSection: (values) => resetSection(reduxFormConfig.form, values),
     isValid: isValid(reduxFormConfig.form)(state),
     clusterID: get(cluster, 'id', ''),
-    isHypershift: get(cluster, 'hypershift.enabled', false),
+    isHypershiftCluster: isHypershiftCluster(cluster),
     machinePoolsList: {
       ...state.machinePools.getMachinePools,
       data: [

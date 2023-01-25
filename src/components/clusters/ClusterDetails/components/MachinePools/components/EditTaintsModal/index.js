@@ -31,7 +31,8 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
   closeModal: () => dispatch(closeModal()),
-  getMachinePools: () => dispatch(getMachineOrNodePools(ownProps.clusterId, ownProps.isHypershift)),
+  getMachinePools: () =>
+    dispatch(getMachineOrNodePools(ownProps.clusterId, ownProps.isHypershiftCluster)),
   resetGetMachinePoolsResponse: () => dispatch(clearGetMachinePoolsResponse(ownProps.clusterId)),
   resetEditTaintsResponse: () => dispatch(clearScaleMachinePoolResponse(ownProps.clusterId)),
   onSubmit: (formData) => {

@@ -201,7 +201,6 @@ class ClusterDetails extends Component {
     } = this.props;
     const clusterID = get(clusterDetails, 'cluster.id');
     const isManaged = get(clusterDetails, 'cluster.managed', false);
-    const isHypershift = get(clusterDetails, 'cluster.hypershift.enabled', false);
 
     if (shouldRefetchQuota(organization)) {
       getOrganizationAndQuota();
@@ -220,7 +219,7 @@ class ClusterDetails extends Component {
       getUsers(clusterID);
       getClusterRouters(clusterID);
       this.refreshIDP();
-      getMachineOrNodePools(clusterID, isHypershift);
+      getMachineOrNodePools(clusterID, isHypershiftCluster(clusterDetails?.cluster));
       getSchedules(clusterID);
       fetchUpgradeGates();
 

@@ -27,6 +27,8 @@ import EditLabelsModal from './components/EditLabelsModal';
 import './MachinePools.scss';
 import { actionResolver } from './machinePoolsHelper';
 
+import { isHypershiftCluster } from '../../clusterDetailsHelper';
+
 import ButtonWithTooltip from '../../../../common/ButtonWithTooltip';
 import ErrorBox from '../../../../common/ErrorBox';
 import modals from '../../../../common/Modal/modals';
@@ -130,8 +132,6 @@ class MachinePools extends React.Component {
       hasMachinePoolsQuota,
     } = this.props;
 
-    const isHypershift = cluster?.hypershift?.enabled;
-
     const { deletedRowIndex, openedRows } = this.state;
 
     const hasMachinePools = !!machinePoolsList.data.length;
@@ -182,7 +182,7 @@ class MachinePools extends React.Component {
           {
             title: (
               <>
-                {isHypershift && machinePool.id !== 'Default'
+                {isHypershiftCluster(cluster) && machinePool.id !== 'Default'
                   ? machinePool.aws_node_pool?.instance_type
                   : machinePool.instance_type}
                 {machinePool.aws && (
@@ -460,10 +460,16 @@ class MachinePools extends React.Component {
         )}
         {isAddMachinePoolModalOpen && <AddMachinePoolModal cluster={cluster} />}
         {isEditTaintsModalOpen && (
-          <EditTaintsModal clusterId={cluster.id} isHypershift={isHypershift} />
+          <EditTaintsModal
+            clusterId={cluster.id}
+            isHypershiftCluster={isHypershiftCluster(cluster)}
+          />
         )}
         {isEditLabelsModalOpen && (
-          <EditLabelsModal clusterId={cluster.id} isHypershift={isHypershift} />
+          <EditLabelsModal
+            clusterId={cluster.id}
+            isHypershiftCluster={isHypershiftCluster(cluster)}
+          />
         )}
       </>
     );
