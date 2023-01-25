@@ -118,14 +118,15 @@ export const RichInputField = ({
   onChange = () => {},
 }: Props) => {
   const inputValue = input ? input.value : value;
-  const inputName = input ? input.name : name;
+  const inputName = String(input ? input.name : name);
   const inputOnChange = input ? input.onChange : onChange;
 
   const textInputRef = createRef<HTMLInputElement>();
 
   const {
+    validateField,
     isValidating: isFormValidating,
-    errors: { [inputName ?? '']: error },
+    errors: { [inputName]: error },
   } = useFormState();
 
   const [touched, setTouched] = useState(false);
@@ -215,7 +216,7 @@ export const RichInputField = ({
   }, [inputValue]);
 
   useEffect(() => {
-    input?.onBlur({ target: { value: inputValue } });
+    validateField(inputName);
   }, []);
 
   return (
@@ -269,10 +270,10 @@ export const RichInputField = ({
             type={type}
             autoComplete="off"
             aria-invalid={!isValid}
-            onBlur={(e) => {
+            onBlur={() => {
               setIsFocused(false);
               setShowPopover(false);
-              input?.onBlur(e);
+              validateField(inputName);
               setTouched(true);
             }}
             onClick={() => {
