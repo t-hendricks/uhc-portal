@@ -29,6 +29,7 @@ import type { Ingress } from './Ingress';
 import type { MachinePool } from './MachinePool';
 import type { ManagedService } from './ManagedService';
 import type { Network } from './Network';
+import type { NodePool } from './NodePool';
 import type { Product } from './Product';
 import type { ProvisionShard } from './ProvisionShard';
 import type { Proxy } from './Proxy';
@@ -241,6 +242,11 @@ export type Cluster = {
    * Node drain grace period.
    */
   node_drain_grace_period?: Value;
+  /**
+   * List of node pools on this cluster.
+   * NodePool is a scalable set of worker nodes attached to a hosted cluster.
+   */
+  node_pools?: Array<NodePool>;
   /**
    * Information about the nodes of the cluster.
    */

@@ -2,6 +2,7 @@
 /* tslint:disable */
 /* eslint-disable */
 
+import type { AwsEtcdEncryption } from './AwsEtcdEncryption';
 import type { STS } from './STS';
 
 /**
@@ -24,6 +25,10 @@ export type AWS = {
    * AWS account identifier.
    */
   account_id?: string;
+  /**
+   * Related etcd encryption configuration
+   */
+  etcd_encryption?: AwsEtcdEncryption;
   /**
    * Sets cluster to be inaccessible externally.
    */

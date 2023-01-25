@@ -18,6 +18,10 @@ export type STS = {
    */
   auto_mode?: boolean;
   /**
+   * If STS is enabled or disabled
+   */
+  enabled?: boolean;
+  /**
    * Optional unique identifier when assuming role in another account
    */
   external_id?: string;
@@ -25,6 +29,10 @@ export type STS = {
    * Instance IAM roles to use for the instance profiles of the master and worker instances
    */
   instance_iam_roles?: InstanceIAMRoles;
+  /**
+   * Secrets Manager ARN for the OIDC private key key.
+   */
+  oidc_private_key_secret_arn?: string;
   /**
    * List of roles necessary to access the AWS resources of the various operators used during installation
    */
