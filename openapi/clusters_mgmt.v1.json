@@ -5464,6 +5464,254 @@
         }
       }
     },
+    "/api/clusters_mgmt/v1/clusters/{cluster_id}/node_pools": {
+      "post": {
+        "description": "Adds a new node pool to the cluster.",
+        "parameters": [
+          {
+            "name": "cluster_id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NodePool"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Success.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NodePool"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "description": "Retrieves the list of node pools.",
+        "parameters": [
+          {
+            "name": "cluster_id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "page",
+            "description": "Index of the requested page, where one corresponds to the first page.",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "size",
+            "description": "Number of items contained in the returned page.",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "items": {
+                      "description": "Retrieved list of node pools.",
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/NodePool"
+                      }
+                    },
+                    "page": {
+                      "description": "Index of the requested page, where one corresponds to the first page.",
+                      "type": "integer",
+                      "format": "int32"
+                    },
+                    "size": {
+                      "description": "Number of items contained in the returned page.",
+                      "type": "integer",
+                      "format": "int32"
+                    },
+                    "total": {
+                      "description": "Total number of items of the collection.",
+                      "type": "integer",
+                      "format": "int32"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/clusters_mgmt/v1/clusters/{cluster_id}/node_pools/{node_pool_id}": {
+      "delete": {
+        "description": "Deletes the node pool.",
+        "parameters": [
+          {
+            "name": "cluster_id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "node_pool_id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Success."
+          },
+          "default": {
+            "description": "Error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "description": "Retrieves the details of the node pool.",
+        "parameters": [
+          {
+            "name": "cluster_id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "node_pool_id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NodePool"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "description": "Updates the node pool.",
+        "parameters": [
+          {
+            "name": "cluster_id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "node_pool_id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NodePool"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NodePool"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/clusters_mgmt/v1/clusters/{cluster_id}/product": {
       "get": {
         "description": "Retrieves the details of the product.",
@@ -7021,6 +7269,42 @@
         }
       }
     },
+    "/api/clusters_mgmt/v1/machine_types/{machine_type_id}": {
+      "get": {
+        "description": "Retrieves the details of the machine type.",
+        "parameters": [
+          {
+            "name": "machine_type_id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MachineType"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/clusters_mgmt/v1/products": {
       "get": {
         "description": "Retrieves the list of products.",
@@ -7700,6 +7984,10 @@
             "description": "AWS account identifier.",
             "type": "string"
           },
+          "etcd_encryption": {
+            "description": "Related etcd encryption configuration",
+            "$ref": "#/components/schemas/AwsEtcdEncryption"
+          },
           "private_link": {
             "description": "Sets cluster to be inaccessible externally.",
             "type": "boolean"
@@ -7860,6 +8148,38 @@
           }
         }
       },
+      "AWSNodePool": {
+        "description": "Representation of aws node pool specific parameters.",
+        "properties": {
+          "kind": {
+            "description": "Indicates the type of this object. Will be 'AWSNodePool' if this is a complete object or 'AWSNodePoolLink' if it is just a link.",
+            "type": "string"
+          },
+          "id": {
+            "description": "Unique identifier of the object.",
+            "type": "string"
+          },
+          "href": {
+            "description": "Self link.",
+            "type": "string"
+          },
+          "instance_profile": {
+            "description": "InstanceProfile is the AWS EC2 instance profile, which is a container for an IAM role that the EC2 instance uses.",
+            "type": "string"
+          },
+          "instance_type": {
+            "description": "InstanceType is an ec2 instance type for node instances (e.g. m5.large).",
+            "type": "string"
+          },
+          "tags": {
+            "description": "Optional keys and values that the installer will add as tags to all AWS resources it creates",
+            "type": "object",
+            "additionalProperties": {
+              "type": "string"
+            }
+          }
+        }
+      },
       "AWSSpotMarketOptions": {
         "description": "Spot market options for AWS machine pool.",
         "properties": {
@@ -7900,6 +8220,10 @@
       "AWSSTSPolicy": {
         "description": "Representation of an sts policies for rosa cluster",
         "properties": {
+          "arn": {
+            "description": "The ARN of the managed policy",
+            "type": "string"
+          },
           "id": {
             "description": "Policy ID",
             "type": "string"
@@ -8227,6 +8551,10 @@
             "description": "Auto creation mode for cluster - OCM will create the operator roles and OIDC provider. false by default.",
             "type": "boolean"
           },
+          "enabled": {
+            "description": "If STS is enabled or disabled",
+            "type": "boolean"
+          },
           "external_id": {
             "description": "Optional unique identifier when assuming role in another account",
             "type": "string"
@@ -8234,6 +8562,10 @@
           "instance_iam_roles": {
             "description": "Instance IAM roles to use for the instance profiles of the master and worker instances",
             "$ref": "#/components/schemas/InstanceIAMRoles"
+          },
+          "oidc_private_key_secret_arn": {
+            "description": "Secrets Manager ARN for the OIDC private key key.",
+            "type": "string"
           },
           "operator_iam_roles": {
             "description": "List of roles necessary to access the AWS resources of the various operators used during installation",
@@ -8316,6 +8648,20 @@
             "description": "Self link.",
             "type": "string"
           },
+          "common_annotations": {
+            "description": "Common annotations to be applied to all resources created by this addon.",
+            "type": "object",
+            "additionalProperties": {
+              "type": "string"
+            }
+          },
+          "common_labels": {
+            "description": "Common labels to be applied to all resources created by this addon.",
+            "type": "object",
+            "additionalProperties": {
+              "type": "string"
+            }
+          },
           "config": {
             "description": "Additional configs to be used by the addon once its installed in the cluster.",
             "$ref": "#/components/schemas/AddOnConfig"
@@ -8366,6 +8712,13 @@
           "name": {
             "description": "Name of the add-on.",
             "type": "string"
+          },
+          "namespaces": {
+            "description": "Namespaces which are required by this addon.",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AddOnNamespace"
+            }
           },
           "operator_name": {
             "description": "The name of the operator installed by this add-on.",
@@ -8593,6 +8946,40 @@
           "pending",
           "ready"
         ]
+      },
+      "AddOnNamespace": {
+        "properties": {
+          "kind": {
+            "description": "Indicates the type of this object. Will be 'AddOnNamespace' if this is a complete object or 'AddOnNamespaceLink' if it is just a link.",
+            "type": "string"
+          },
+          "id": {
+            "description": "Unique identifier of the object.",
+            "type": "string"
+          },
+          "href": {
+            "description": "Self link.",
+            "type": "string"
+          },
+          "annotations": {
+            "description": "Annotations to be applied to this namespace.",
+            "type": "object",
+            "additionalProperties": {
+              "type": "string"
+            }
+          },
+          "labels": {
+            "description": "Labels to be applied to this namespace.",
+            "type": "object",
+            "additionalProperties": {
+              "type": "string"
+            }
+          },
+          "name": {
+            "description": "Name of the namespace.",
+            "type": "string"
+          }
+        }
       },
       "AddOnParameter": {
         "description": "Representation of an add-on parameter.",
@@ -8915,6 +9302,15 @@
           }
         }
       },
+      "AwsEtcdEncryption": {
+        "description": "Contains the necessary attributes to support etcd encryption for AWS based clusters.",
+        "properties": {
+          "kms_key_arn": {
+            "description": "ARN of the KMS to be used for the etcd encryption",
+            "type": "string"
+          }
+        }
+      },
       "BillingModel": {
         "description": "Billing model for cluster resources.",
         "type": "string",
@@ -8978,10 +9374,7 @@
           },
           "regions": {
             "description": "Region",
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/CloudRegion"
-            }
+            "$ref": "#/components/schemas/CloudRegion"
           }
         }
       },
@@ -9055,6 +9448,10 @@
           "name": {
             "description": "Human friendly identifier of the region, for example `us-east-1`.\n\nNOTE: Currently for all cloud providers and all regions `id` and `name` have exactly\nthe same values.",
             "type": "string"
+          },
+          "supports_hypershift": {
+            "description": "'true' if the region is supported for Hypershift deployments, 'false' otherwise.",
+            "type": "boolean"
           },
           "supports_multi_az": {
             "description": "Whether the region supports multiple availability zones.",
@@ -9252,6 +9649,13 @@
           "node_drain_grace_period": {
             "description": "Node drain grace period.",
             "$ref": "#/components/schemas/Value"
+          },
+          "node_pools": {
+            "description": "List of node pools on this cluster.\nNodePool is a scalable set of worker nodes attached to a hosted cluster.",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/NodePool"
+            }
           },
           "nodes": {
             "description": "Information about the nodes of the cluster.",
@@ -9592,6 +9996,11 @@
           "configuration_mode": {
             "description": "Configuration mode",
             "$ref": "#/components/schemas/ClusterConfigurationMode"
+          },
+          "current_compute": {
+            "description": "Current Replicas available for a Hosted Cluster",
+            "type": "integer",
+            "format": "int32"
           },
           "description": {
             "description": "Detailed description of the cluster status.",
@@ -10472,6 +10881,109 @@
           "type": {
             "description": "The Node type.",
             "$ref": "#/components/schemas/NodeType"
+          }
+        }
+      },
+      "NodePool": {
+        "description": "Representation of a node pool in a cluster.",
+        "properties": {
+          "kind": {
+            "description": "Indicates the type of this object. Will be 'NodePool' if this is a complete object or 'NodePoolLink' if it is just a link.",
+            "type": "string"
+          },
+          "id": {
+            "description": "Unique identifier of the object.",
+            "type": "string"
+          },
+          "href": {
+            "description": "Self link.",
+            "type": "string"
+          },
+          "aws_node_pool": {
+            "description": "AWS specific parameters (Optional).",
+            "$ref": "#/components/schemas/AWSNodePool"
+          },
+          "auto_repair": {
+            "description": "Specifies whether health checks should be enabled for machines in the NodePool.",
+            "type": "boolean"
+          },
+          "autoscaling": {
+            "description": "Details for auto-scaling the machine pool.\nReplicas and autoscaling cannot be used together.",
+            "$ref": "#/components/schemas/NodePoolAutoscaling"
+          },
+          "availability_zone": {
+            "description": "The availability zone upon which the node is created.",
+            "type": "string"
+          },
+          "cluster": {
+            "description": "ID used to identify the cluster that this nodepool is attached to.",
+            "$ref": "#/components/schemas/Cluster"
+          },
+          "replicas": {
+            "description": "The number of Machines (and Nodes) to create.\nReplicas and autoscaling cannot be used together.",
+            "type": "integer",
+            "format": "int32"
+          },
+          "status": {
+            "description": "NodePool status.",
+            "$ref": "#/components/schemas/NodePoolStatus"
+          },
+          "subnet": {
+            "description": "The subnet upon which the nodes are created.",
+            "type": "string"
+          }
+        }
+      },
+      "NodePoolAutoscaling": {
+        "description": "Representation of a autoscaling in a node pool.",
+        "properties": {
+          "kind": {
+            "description": "Indicates the type of this object. Will be 'NodePoolAutoscaling' if this is a complete object or 'NodePoolAutoscalingLink' if it is just a link.",
+            "type": "string"
+          },
+          "id": {
+            "description": "Unique identifier of the object.",
+            "type": "string"
+          },
+          "href": {
+            "description": "Self link.",
+            "type": "string"
+          },
+          "max_replica": {
+            "description": "The maximum number of replicas for the node pool.",
+            "type": "integer",
+            "format": "int32"
+          },
+          "min_replica": {
+            "description": "The minimum number of replicas for the node pool.",
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "NodePoolStatus": {
+        "description": "Representation of the status of a node pool.",
+        "properties": {
+          "kind": {
+            "description": "Indicates the type of this object. Will be 'NodePoolStatus' if this is a complete object or 'NodePoolStatusLink' if it is just a link.",
+            "type": "string"
+          },
+          "id": {
+            "description": "Unique identifier of the object.",
+            "type": "string"
+          },
+          "href": {
+            "description": "Self link.",
+            "type": "string"
+          },
+          "current_replicas": {
+            "description": "The current number of replicas for the node pool.",
+            "type": "integer",
+            "format": "int32"
+          },
+          "message": {
+            "description": "Adds additional information about the NodePool status when the node pool doesn't reach the desired replicas.",
+            "type": "string"
           }
         }
       },
