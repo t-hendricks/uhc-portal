@@ -38,6 +38,7 @@ import CommonClusterModals from '../common/CommonClusterModals';
 import CancelUpgradeModal from '../common/Upgrades/CancelUpgradeModal';
 
 import { isValid, scrollToTop, shouldRefetchQuota } from '../../../common/helpers';
+import { isHypershiftCluster } from './clusterDetailsHelper';
 import getClusterName from '../../../common/getClusterName';
 import { subscriptionStatuses, knownProducts } from '../../../common/subscriptionTypes';
 import clusterStates, { getClusterAIExtraInfo, isHibernating } from '../common/clusterStates';
@@ -345,6 +346,7 @@ class ClusterDetails extends Component {
     const isAROCluster = get(cluster, 'subscription.plan.type', '') === knownProducts.ARO;
     const isOSDTrial = get(cluster, 'subscription.plan.type', '') === knownProducts.OSDTrial;
     const isManaged = cluster.managed;
+    const isHypershift = isHypershiftCluster(cluster);
     const isClusterWaiting = cluster.state === clusterStates.WAITING;
     const isClusterPending = cluster.state === clusterStates.PENDING;
     const isClusterInstalling = cluster.state === clusterStates.INSTALLING;
@@ -385,7 +387,7 @@ class ClusterDetails extends Component {
       cluster.subscription?.external_cluster_id === undefined;
     const displaySupportTab = !hideSupportTab && !isOSDTrial;
     const displayUpgradeSettingsTab =
-      (cluster.managed || isAROCluster) && cluster.canEdit && !isArchived;
+      (cluster.managed || isAROCluster) && cluster.canEdit && !isArchived && !isHypershift;
 
     const addHostTabDetails =
       assistedInstallerEnabled && !isArchived
@@ -500,10 +502,7 @@ class ClusterDetails extends Component {
               hidden
             >
               <ErrorBoundary>
-                <AddOns
-                  clusterID={cluster.id}
-                  isHypershift={!!clusterDetails.cluster?.hypershift?.enabled}
-                />
+                <AddOns clusterID={cluster.id} isHypershift={isHypershift} />
               </ErrorBoundary>
             </TabContent>
           )}
