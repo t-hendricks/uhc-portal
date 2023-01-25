@@ -1,0 +1,45 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`InstallNutanix renders correctly 1`] = `
+<Fragment>
+  <InstructionsChooserPageTitle
+    breadcrumbs={
+      <Breadcrumbs
+        path={
+          Array [
+            Object {
+              "label": "Clusters",
+            },
+            Object {
+              "label": "Cluster Type",
+              "path": "/create",
+            },
+            Object {
+              "label": "Nutanix AOS",
+            },
+          ]
+        }
+      />
+    }
+    cloudName="Nutanix AOS"
+  />
+  <PageSection>
+    <InstructionsChooser
+      agentBasedPageLink=""
+      aiPageLink="/assisted-installer/clusters/~new"
+      hideUPI={true}
+      ipiPageLink="/install/nutanix/installer-provisioned"
+      providerSpecificFeatures={
+        Object {
+          "ipi": Array [
+            "Hosts controlled with Nutanix AOS Cloud Provider",
+            "For connected or air-gapped/restricted networks",
+          ],
+        }
+      }
+      recommend="ipi"
+      upiPageLink=""
+    />
+  </PageSection>
+</Fragment>
+`;

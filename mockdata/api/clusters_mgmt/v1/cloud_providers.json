@@ -1,8 +1,8 @@
 {
   "kind": "CloudProviderList",
   "page": 1,
-  "size": 7,
-  "total": 7,
+  "size": 8,
+  "total": 8,
   "items": [
     {
       "kind": "CloudProvider",
@@ -25,7 +25,9 @@
           "supports_multi_az": true,
           "kms_location_name": "",
           "kms_location_id": "",
-          "ccs_only": true
+          "ccs_only": true,
+          "govcloud": false,
+          "supports_hypershift": false
         },
         {
           "kind": "CloudRegion",
@@ -41,7 +43,9 @@
           "supports_multi_az": true,
           "kms_location_name": "",
           "kms_location_id": "",
-          "ccs_only": true
+          "ccs_only": true,
+          "govcloud": false,
+          "supports_hypershift": false
         },
         {
           "kind": "CloudRegion",
@@ -57,7 +61,9 @@
           "supports_multi_az": true,
           "kms_location_name": "",
           "kms_location_id": "",
-          "ccs_only": false
+          "ccs_only": false,
+          "govcloud": false,
+          "supports_hypershift": false
         },
         {
           "kind": "CloudRegion",
@@ -73,7 +79,9 @@
           "supports_multi_az": true,
           "kms_location_name": "",
           "kms_location_id": "",
-          "ccs_only": false
+          "ccs_only": false,
+          "govcloud": false,
+          "supports_hypershift": false
         },
         {
           "kind": "CloudRegion",
@@ -89,7 +97,9 @@
           "supports_multi_az": true,
           "kms_location_name": "",
           "kms_location_id": "",
-          "ccs_only": false
+          "ccs_only": false,
+          "govcloud": false,
+          "supports_hypershift": false
         },
         {
           "kind": "CloudRegion",
@@ -105,7 +115,9 @@
           "supports_multi_az": true,
           "kms_location_name": "",
           "kms_location_id": "",
-          "ccs_only": false
+          "ccs_only": false,
+          "govcloud": false,
+          "supports_hypershift": false
         },
         {
           "kind": "CloudRegion",
@@ -121,7 +133,9 @@
           "supports_multi_az": true,
           "kms_location_name": "",
           "kms_location_id": "",
-          "ccs_only": false
+          "ccs_only": false,
+          "govcloud": false,
+          "supports_hypershift": false
         },
         {
           "kind": "CloudRegion",
@@ -137,7 +151,9 @@
           "supports_multi_az": true,
           "kms_location_name": "",
           "kms_location_id": "",
-          "ccs_only": false
+          "ccs_only": false,
+          "govcloud": false,
+          "supports_hypershift": false
         },
         {
           "kind": "CloudRegion",
@@ -153,7 +169,9 @@
           "supports_multi_az": true,
           "kms_location_name": "",
           "kms_location_id": "",
-          "ccs_only": true
+          "ccs_only": true,
+          "govcloud": false,
+          "supports_hypershift": false
         },
         {
           "kind": "CloudRegion",
@@ -169,7 +187,9 @@
           "supports_multi_az": true,
           "kms_location_name": "",
           "kms_location_id": "",
-          "ccs_only": false
+          "ccs_only": false,
+          "govcloud": false,
+          "supports_hypershift": false
         },
         {
           "kind": "CloudRegion",
@@ -185,7 +205,9 @@
           "supports_multi_az": true,
           "kms_location_name": "",
           "kms_location_id": "",
-          "ccs_only": false
+          "ccs_only": false,
+          "govcloud": false,
+          "supports_hypershift": false
         },
         {
           "kind": "CloudRegion",
@@ -201,7 +223,9 @@
           "supports_multi_az": true,
           "kms_location_name": "",
           "kms_location_id": "",
-          "ccs_only": false
+          "ccs_only": false,
+          "govcloud": false,
+          "supports_hypershift": false
         },
         {
           "kind": "CloudRegion",
@@ -217,7 +241,9 @@
           "supports_multi_az": true,
           "kms_location_name": "",
           "kms_location_id": "",
-          "ccs_only": true
+          "ccs_only": true,
+          "govcloud": false,
+          "supports_hypershift": false
         },
         {
           "kind": "CloudRegion",
@@ -233,7 +259,9 @@
           "supports_multi_az": true,
           "kms_location_name": "",
           "kms_location_id": "",
-          "ccs_only": false
+          "ccs_only": false,
+          "govcloud": false,
+          "supports_hypershift": true
         },
         {
           "kind": "CloudRegion",
@@ -249,7 +277,9 @@
           "supports_multi_az": true,
           "kms_location_name": "",
           "kms_location_id": "",
-          "ccs_only": false
+          "ccs_only": false,
+          "govcloud": false,
+          "supports_hypershift": false
         },
         {
           "kind": "CloudRegion",
@@ -265,7 +295,9 @@
           "supports_multi_az": true,
           "kms_location_name": "",
           "kms_location_id": "",
-          "ccs_only": false
+          "ccs_only": false,
+          "govcloud": false,
+          "supports_hypershift": false
         },
         {
           "kind": "CloudRegion",
@@ -281,7 +313,9 @@
           "supports_multi_az": true,
           "kms_location_name": "",
           "kms_location_id": "",
-          "ccs_only": true
+          "ccs_only": true,
+          "govcloud": false,
+          "supports_hypershift": false
         },
         {
           "kind": "CloudRegion",
@@ -297,7 +331,9 @@
           "supports_multi_az": true,
           "kms_location_name": "",
           "kms_location_id": "",
-          "ccs_only": false
+          "ccs_only": false,
+          "govcloud": false,
+          "supports_hypershift": false
         },
         {
           "kind": "CloudRegion",
@@ -313,7 +349,9 @@
           "supports_multi_az": true,
           "kms_location_name": "",
           "kms_location_id": "",
-          "ccs_only": false
+          "ccs_only": false,
+          "govcloud": false,
+          "supports_hypershift": true
         },
         {
           "kind": "CloudRegion",
@@ -329,7 +367,45 @@
           "supports_multi_az": true,
           "kms_location_name": "",
           "kms_location_id": "",
-          "ccs_only": false
+          "ccs_only": false,
+          "govcloud": false,
+          "supports_hypershift": false
+        },
+        {
+          "kind": "CloudRegion",
+          "id": "us-gov-east-1",
+          "href": "/api/clusters_mgmt/v1/cloud_providers/aws/regions/us-gov-east-1",
+          "display_name": "AWS GovCloud, US-East",
+          "cloud_provider": {
+            "kind": "CloudProviderLink",
+            "id": "aws",
+            "href": "/api/clusters_mgmt/v1/cloud_providers/aws"
+          },
+          "enabled": false,
+          "supports_multi_az": true,
+          "kms_location_name": "",
+          "kms_location_id": "",
+          "ccs_only": false,
+          "govcloud": true,
+          "supports_hypershift": false
+        },
+        {
+          "kind": "CloudRegion",
+          "id": "us-gov-west-1",
+          "href": "/api/clusters_mgmt/v1/cloud_providers/aws/regions/us-gov-west-1",
+          "display_name": "AWS GovCloud, US-West",
+          "cloud_provider": {
+            "kind": "CloudProviderLink",
+            "id": "aws",
+            "href": "/api/clusters_mgmt/v1/cloud_providers/aws"
+          },
+          "enabled": false,
+          "supports_multi_az": true,
+          "kms_location_name": "",
+          "kms_location_id": "",
+          "ccs_only": false,
+          "govcloud": true,
+          "supports_hypershift": false
         },
         {
           "kind": "CloudRegion",
@@ -345,7 +421,9 @@
           "supports_multi_az": false,
           "kms_location_name": "",
           "kms_location_id": "",
-          "ccs_only": false
+          "ccs_only": false,
+          "govcloud": false,
+          "supports_hypershift": false
         },
         {
           "kind": "CloudRegion",
@@ -361,7 +439,9 @@
           "supports_multi_az": true,
           "kms_location_name": "",
           "kms_location_id": "",
-          "ccs_only": false
+          "ccs_only": false,
+          "govcloud": false,
+          "supports_hypershift": false
         }
       ]
     },
@@ -386,7 +466,9 @@
           "supports_multi_az": true,
           "kms_location_name": "",
           "kms_location_id": "",
-          "ccs_only": false
+          "ccs_only": false,
+          "govcloud": false,
+          "supports_hypershift": false
         },
         {
           "kind": "CloudRegion",
@@ -402,7 +484,9 @@
           "supports_multi_az": true,
           "kms_location_name": "",
           "kms_location_id": "",
-          "ccs_only": false
+          "ccs_only": false,
+          "govcloud": false,
+          "supports_hypershift": false
         },
         {
           "kind": "CloudRegion",
@@ -418,7 +502,9 @@
           "supports_multi_az": true,
           "kms_location_name": "",
           "kms_location_id": "",
-          "ccs_only": false
+          "ccs_only": false,
+          "govcloud": false,
+          "supports_hypershift": false
         },
         {
           "kind": "CloudRegion",
@@ -434,7 +520,9 @@
           "supports_multi_az": true,
           "kms_location_name": "",
           "kms_location_id": "",
-          "ccs_only": false
+          "ccs_only": false,
+          "govcloud": false,
+          "supports_hypershift": false
         },
         {
           "kind": "CloudRegion",
@@ -450,7 +538,9 @@
           "supports_multi_az": true,
           "kms_location_name": "",
           "kms_location_id": "",
-          "ccs_only": false
+          "ccs_only": false,
+          "govcloud": false,
+          "supports_hypershift": false
         },
         {
           "kind": "CloudRegion",
@@ -466,7 +556,9 @@
           "supports_multi_az": true,
           "kms_location_name": "",
           "kms_location_id": "",
-          "ccs_only": false
+          "ccs_only": false,
+          "govcloud": false,
+          "supports_hypershift": false
         },
         {
           "kind": "CloudRegion",
@@ -482,7 +574,9 @@
           "supports_multi_az": true,
           "kms_location_name": "",
           "kms_location_id": "",
-          "ccs_only": false
+          "ccs_only": false,
+          "govcloud": false,
+          "supports_hypershift": false
         },
         {
           "kind": "CloudRegion",
@@ -498,7 +592,9 @@
           "supports_multi_az": true,
           "kms_location_name": "",
           "kms_location_id": "",
-          "ccs_only": false
+          "ccs_only": false,
+          "govcloud": false,
+          "supports_hypershift": false
         },
         {
           "kind": "CloudRegion",
@@ -514,7 +610,9 @@
           "supports_multi_az": true,
           "kms_location_name": "",
           "kms_location_id": "",
-          "ccs_only": false
+          "ccs_only": false,
+          "govcloud": false,
+          "supports_hypershift": false
         },
         {
           "kind": "CloudRegion",
@@ -530,7 +628,9 @@
           "supports_multi_az": true,
           "kms_location_name": "",
           "kms_location_id": "",
-          "ccs_only": false
+          "ccs_only": false,
+          "govcloud": false,
+          "supports_hypershift": false
         },
         {
           "kind": "CloudRegion",
@@ -546,7 +646,9 @@
           "supports_multi_az": true,
           "kms_location_name": "",
           "kms_location_id": "",
-          "ccs_only": false
+          "ccs_only": false,
+          "govcloud": false,
+          "supports_hypershift": false
         },
         {
           "kind": "CloudRegion",
@@ -562,7 +664,9 @@
           "supports_multi_az": true,
           "kms_location_name": "",
           "kms_location_id": "",
-          "ccs_only": false
+          "ccs_only": false,
+          "govcloud": false,
+          "supports_hypershift": false
         },
         {
           "kind": "CloudRegion",
@@ -578,7 +682,9 @@
           "supports_multi_az": true,
           "kms_location_name": "",
           "kms_location_id": "",
-          "ccs_only": false
+          "ccs_only": false,
+          "govcloud": false,
+          "supports_hypershift": false
         },
         {
           "kind": "CloudRegion",
@@ -594,7 +700,9 @@
           "supports_multi_az": true,
           "kms_location_name": "",
           "kms_location_id": "",
-          "ccs_only": false
+          "ccs_only": false,
+          "govcloud": false,
+          "supports_hypershift": false
         },
         {
           "kind": "CloudRegion",
@@ -610,7 +718,9 @@
           "supports_multi_az": true,
           "kms_location_name": "",
           "kms_location_id": "",
-          "ccs_only": false
+          "ccs_only": false,
+          "govcloud": false,
+          "supports_hypershift": false
         },
         {
           "kind": "CloudRegion",
@@ -626,7 +736,9 @@
           "supports_multi_az": true,
           "kms_location_name": "",
           "kms_location_id": "",
-          "ccs_only": false
+          "ccs_only": false,
+          "govcloud": false,
+          "supports_hypershift": false
         },
         {
           "kind": "CloudRegion",
@@ -642,7 +754,9 @@
           "supports_multi_az": true,
           "kms_location_name": "",
           "kms_location_id": "",
-          "ccs_only": false
+          "ccs_only": false,
+          "govcloud": false,
+          "supports_hypershift": false
         },
         {
           "kind": "CloudRegion",
@@ -658,7 +772,9 @@
           "supports_multi_az": true,
           "kms_location_name": "",
           "kms_location_id": "",
-          "ccs_only": false
+          "ccs_only": false,
+          "govcloud": false,
+          "supports_hypershift": false
         },
         {
           "kind": "CloudRegion",
@@ -674,7 +790,9 @@
           "supports_multi_az": true,
           "kms_location_name": "",
           "kms_location_id": "",
-          "ccs_only": false
+          "ccs_only": false,
+          "govcloud": false,
+          "supports_hypershift": false
         },
         {
           "kind": "CloudRegion",
@@ -690,7 +808,9 @@
           "supports_multi_az": true,
           "kms_location_name": "",
           "kms_location_id": "",
-          "ccs_only": false
+          "ccs_only": false,
+          "govcloud": false,
+          "supports_hypershift": false
         },
         {
           "kind": "CloudRegion",
@@ -706,7 +826,9 @@
           "supports_multi_az": true,
           "kms_location_name": "",
           "kms_location_id": "",
-          "ccs_only": false
+          "ccs_only": false,
+          "govcloud": false,
+          "supports_hypershift": false
         },
         {
           "kind": "CloudRegion",
@@ -722,7 +844,9 @@
           "supports_multi_az": true,
           "kms_location_name": "",
           "kms_location_id": "",
-          "ccs_only": false
+          "ccs_only": false,
+          "govcloud": false,
+          "supports_hypershift": false
         },
         {
           "kind": "CloudRegion",
@@ -738,7 +862,9 @@
           "supports_multi_az": true,
           "kms_location_name": "",
           "kms_location_id": "",
-          "ccs_only": false
+          "ccs_only": false,
+          "govcloud": false,
+          "supports_hypershift": false
         },
         {
           "kind": "CloudRegion",
@@ -754,7 +880,9 @@
           "supports_multi_az": true,
           "kms_location_name": "",
           "kms_location_id": "",
-          "ccs_only": false
+          "ccs_only": false,
+          "govcloud": false,
+          "supports_hypershift": false
         },
         {
           "kind": "CloudRegion",
@@ -770,7 +898,9 @@
           "supports_multi_az": true,
           "kms_location_name": "",
           "kms_location_id": "",
-          "ccs_only": false
+          "ccs_only": false,
+          "govcloud": false,
+          "supports_hypershift": false
         },
         {
           "kind": "CloudRegion",
@@ -786,7 +916,9 @@
           "supports_multi_az": true,
           "kms_location_name": "",
           "kms_location_id": "",
-          "ccs_only": false
+          "ccs_only": false,
+          "govcloud": false,
+          "supports_hypershift": false
         },
         {
           "kind": "CloudRegion",
@@ -802,7 +934,9 @@
           "supports_multi_az": true,
           "kms_location_name": "",
           "kms_location_id": "",
-          "ccs_only": false
+          "ccs_only": false,
+          "govcloud": false,
+          "supports_hypershift": false
         },
         {
           "kind": "CloudRegion",
@@ -818,7 +952,9 @@
           "supports_multi_az": true,
           "kms_location_name": "",
           "kms_location_id": "",
-          "ccs_only": false
+          "ccs_only": false,
+          "govcloud": false,
+          "supports_hypershift": false
         },
         {
           "kind": "CloudRegion",
@@ -834,7 +970,9 @@
           "supports_multi_az": true,
           "kms_location_name": "",
           "kms_location_id": "",
-          "ccs_only": false
+          "ccs_only": false,
+          "govcloud": false,
+          "supports_hypershift": false
         },
         {
           "kind": "CloudRegion",
@@ -850,7 +988,9 @@
           "supports_multi_az": true,
           "kms_location_name": "",
           "kms_location_id": "",
-          "ccs_only": false
+          "ccs_only": false,
+          "govcloud": false,
+          "supports_hypershift": false
         },
         {
           "kind": "CloudRegion",
@@ -866,7 +1006,9 @@
           "supports_multi_az": true,
           "kms_location_name": "",
           "kms_location_id": "",
-          "ccs_only": false
+          "ccs_only": false,
+          "govcloud": false,
+          "supports_hypershift": false
         },
         {
           "kind": "CloudRegion",
@@ -882,7 +1024,9 @@
           "supports_multi_az": true,
           "kms_location_name": "",
           "kms_location_id": "",
-          "ccs_only": false
+          "ccs_only": false,
+          "govcloud": false,
+          "supports_hypershift": false
         },
         {
           "kind": "CloudRegion",
@@ -898,7 +1042,9 @@
           "supports_multi_az": true,
           "kms_location_name": "",
           "kms_location_id": "",
-          "ccs_only": false
+          "ccs_only": false,
+          "govcloud": false,
+          "supports_hypershift": false
         },
         {
           "kind": "CloudRegion",
@@ -914,7 +1060,9 @@
           "supports_multi_az": true,
           "kms_location_name": "",
           "kms_location_id": "",
-          "ccs_only": false
+          "ccs_only": false,
+          "govcloud": false,
+          "supports_hypershift": false
         },
         {
           "kind": "CloudRegion",
@@ -930,7 +1078,9 @@
           "supports_multi_az": true,
           "kms_location_name": "",
           "kms_location_id": "",
-          "ccs_only": false
+          "ccs_only": false,
+          "govcloud": false,
+          "supports_hypershift": false
         }
       ]
     },
@@ -955,7 +1105,9 @@
           "supports_multi_az": true,
           "kms_location_name": "",
           "kms_location_id": "",
-          "ccs_only": false
+          "ccs_only": false,
+          "govcloud": false,
+          "supports_hypershift": false
         }
       ]
     },
@@ -980,7 +1132,9 @@
           "supports_multi_az": true,
           "kms_location_name": "Asia,Global",
           "kms_location_id": "asia,global",
-          "ccs_only": false
+          "ccs_only": false,
+          "govcloud": false,
+          "supports_hypershift": false
         },
         {
           "kind": "CloudRegion",
@@ -996,7 +1150,9 @@
           "supports_multi_az": true,
           "kms_location_name": "Global,Asia",
           "kms_location_id": "global,asia",
-          "ccs_only": false
+          "ccs_only": false,
+          "govcloud": false,
+          "supports_hypershift": false
         },
         {
           "kind": "CloudRegion",
@@ -1012,7 +1168,9 @@
           "supports_multi_az": true,
           "kms_location_name": "Global,asia1 (Tokyo, Osaka, and Seoul),Asia",
           "kms_location_id": "global,asia1,asia",
-          "ccs_only": false
+          "ccs_only": false,
+          "govcloud": false,
+          "supports_hypershift": false
         },
         {
           "kind": "CloudRegion",
@@ -1028,7 +1186,9 @@
           "supports_multi_az": true,
           "kms_location_name": "Asia,Global,asia1 (Tokyo, Osaka, and Seoul)",
           "kms_location_id": "asia,global,asia1",
-          "ccs_only": true
+          "ccs_only": true,
+          "govcloud": false,
+          "supports_hypershift": false
         },
         {
           "kind": "CloudRegion",
@@ -1044,7 +1204,9 @@
           "supports_multi_az": true,
           "kms_location_name": "Asia,Global",
           "kms_location_id": "asia,global",
-          "ccs_only": true
+          "ccs_only": true,
+          "govcloud": false,
+          "supports_hypershift": false
         },
         {
           "kind": "CloudRegion",
@@ -1060,7 +1222,9 @@
           "supports_multi_az": true,
           "kms_location_name": "Asia,Global",
           "kms_location_id": "asia,global",
-          "ccs_only": false
+          "ccs_only": false,
+          "govcloud": false,
+          "supports_hypershift": false
         },
         {
           "kind": "CloudRegion",
@@ -1076,7 +1240,9 @@
           "supports_multi_az": true,
           "kms_location_name": "Global",
           "kms_location_id": "global",
-          "ccs_only": false
+          "ccs_only": false,
+          "govcloud": false,
+          "supports_hypershift": false
         },
         {
           "kind": "CloudRegion",
@@ -1092,7 +1258,9 @@
           "supports_multi_az": true,
           "kms_location_name": "eur4 (Finland, Netherlands, and Belgium),europe,Global",
           "kms_location_id": "eur4,europe,global",
-          "ccs_only": true
+          "ccs_only": true,
+          "govcloud": false,
+          "supports_hypershift": false
         },
         {
           "kind": "CloudRegion",
@@ -1108,7 +1276,9 @@
           "supports_multi_az": true,
           "kms_location_name": "europe,Global",
           "kms_location_id": "europe,global",
-          "ccs_only": false
+          "ccs_only": false,
+          "govcloud": false,
+          "supports_hypershift": false
         },
         {
           "kind": "CloudRegion",
@@ -1124,7 +1294,9 @@
           "supports_multi_az": true,
           "kms_location_name": "Global,eur5 (London, Netherlands, and Belgium),europe",
           "kms_location_id": "global,eur5,europe",
-          "ccs_only": false
+          "ccs_only": false,
+          "govcloud": false,
+          "supports_hypershift": false
         },
         {
           "kind": "CloudRegion",
@@ -1140,7 +1312,9 @@
           "supports_multi_az": true,
           "kms_location_name": "europe,Global",
           "kms_location_id": "europe,global",
-          "ccs_only": true
+          "ccs_only": true,
+          "govcloud": false,
+          "supports_hypershift": false
         },
         {
           "kind": "CloudRegion",
@@ -1156,7 +1330,9 @@
           "supports_multi_az": true,
           "kms_location_name": "Global,europe,eur4 (Finland, Netherlands, and Belgium),eur5 (London, Netherlands, and Belgium)",
           "kms_location_id": "global,europe,eur4,eur5",
-          "ccs_only": false
+          "ccs_only": false,
+          "govcloud": false,
+          "supports_hypershift": false
         },
         {
           "kind": "CloudRegion",
@@ -1172,7 +1348,9 @@
           "supports_multi_az": true,
           "kms_location_name": "Global,europe",
           "kms_location_id": "global,europe",
-          "ccs_only": true
+          "ccs_only": true,
+          "govcloud": false,
+          "supports_hypershift": false
         },
         {
           "kind": "CloudRegion",
@@ -1188,7 +1366,9 @@
           "supports_multi_az": true,
           "kms_location_name": "Global",
           "kms_location_id": "global",
-          "ccs_only": false
+          "ccs_only": false,
+          "govcloud": false,
+          "supports_hypershift": false
         },
         {
           "kind": "CloudRegion",
@@ -1204,7 +1384,9 @@
           "supports_multi_az": true,
           "kms_location_name": "",
           "kms_location_id": "",
-          "ccs_only": true
+          "ccs_only": true,
+          "govcloud": false,
+          "supports_hypershift": false
         },
         {
           "kind": "CloudRegion",
@@ -1220,7 +1402,9 @@
           "supports_multi_az": true,
           "kms_location_name": "Global",
           "kms_location_id": "global",
-          "ccs_only": false
+          "ccs_only": false,
+          "govcloud": false,
+          "supports_hypershift": false
         },
         {
           "kind": "CloudRegion",
@@ -1236,7 +1420,9 @@
           "supports_multi_az": true,
           "kms_location_name": "nam4 (Iowa, South Carolina, and Oklahoma),Global,US",
           "kms_location_id": "nam4,global,us",
-          "ccs_only": false
+          "ccs_only": false,
+          "govcloud": false,
+          "supports_hypershift": false
         },
         {
           "kind": "CloudRegion",
@@ -1252,7 +1438,9 @@
           "supports_multi_az": true,
           "kms_location_name": "Global,nam4 (Iowa, South Carolina, and Oklahoma),US",
           "kms_location_id": "global,nam4,us",
-          "ccs_only": false
+          "ccs_only": false,
+          "govcloud": false,
+          "supports_hypershift": false
         },
         {
           "kind": "CloudRegion",
@@ -1268,7 +1456,9 @@
           "supports_multi_az": true,
           "kms_location_name": "US,Global",
           "kms_location_id": "us,global",
-          "ccs_only": false
+          "ccs_only": false,
+          "govcloud": false,
+          "supports_hypershift": false
         },
         {
           "kind": "CloudRegion",
@@ -1284,7 +1474,9 @@
           "supports_multi_az": true,
           "kms_location_name": "Global,US",
           "kms_location_id": "global,us",
-          "ccs_only": false
+          "ccs_only": false,
+          "govcloud": false,
+          "supports_hypershift": false
         },
         {
           "kind": "CloudRegion",
@@ -1300,9 +1492,18 @@
           "supports_multi_az": true,
           "kms_location_name": "Global,US",
           "kms_location_id": "global,us",
-          "ccs_only": false
+          "ccs_only": false,
+          "govcloud": false,
+          "supports_hypershift": false
         }
       ]
+    },
+    {
+      "kind": "CloudProvider",
+      "id": "ibmcloud",
+      "href": "/api/clusters_mgmt/v1/cloud_providers/ibmcloud",
+      "name": "ibmcloud",
+      "display_name": "IBM Cloud Platform"
     },
     {
       "kind": "CloudProvider",

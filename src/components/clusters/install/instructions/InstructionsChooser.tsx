@@ -12,6 +12,7 @@ interface InstructionsChooserProps {
   hideUPI?: boolean;
   ipiPageLink: string;
   upiPageLink: string;
+  recommend?: 'ai' | 'ipi';
   providerSpecificFeatures?: {
     ai?: React.ReactNode[];
     abi?: React.ReactNode[];
@@ -26,6 +27,7 @@ export const InstructionsChooser = ({
   hideIPI = false,
   ipiPageLink,
   hideUPI = false,
+  recommend = 'ai',
   upiPageLink,
   providerSpecificFeatures = {},
 }: InstructionsChooserProps) => (
@@ -37,9 +39,11 @@ export const InstructionsChooser = ({
         title="Interactive"
         labels={
           <>
-            <Label color="blue" icon={<StarIcon />}>
-              Recommended
-            </Label>
+            {recommend === 'ai' && (
+              <Label color="blue" icon={<StarIcon />}>
+                Recommended
+              </Label>
+            )}
             <Label color="purple">Web-based</Label>
           </>
         }
@@ -61,7 +65,6 @@ export const InstructionsChooser = ({
         title="Local Agent-based"
         labels={
           <>
-            <Label color="gold">Developer preview</Label>
             <Label color="purple">CLI-based</Label>
           </>
         }
@@ -80,7 +83,16 @@ export const InstructionsChooser = ({
         id="select-automated"
         href={ipiPageLink}
         title="Automated"
-        labels={<Label color="purple">CLI-based</Label>}
+        labels={
+          <>
+            {recommend === 'ipi' && (
+              <Label color="blue" icon={<StarIcon />}>
+                Recommended
+              </Label>
+            )}
+            <Label color="purple">CLI-based</Label>
+          </>
+        }
         body="Auto-provision your infrastructure with minimal configuration to create your cluster."
         featureListItems={[
           'Installer Provisioned Infrastructure',

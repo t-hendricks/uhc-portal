@@ -370,6 +370,7 @@ exports[`CreateRosaGetStarted matches snapshot 1`] = `
                                   data-ouia-component-id="OUIA-Generated-FormSelect-default-3"
                                   data-ouia-component-type="PF4/FormSelect"
                                   data-ouia-safe="true"
+                                  data-testid="os-dropdown-rosa"
                                 >
                                   <option
                                     class=""
@@ -408,6 +409,7 @@ exports[`CreateRosaGetStarted matches snapshot 1`] = `
                                   data-ouia-component-id="OUIA-Generated-FormSelect-default-4"
                                   data-ouia-component-type="PF4/FormSelect"
                                   data-ouia-safe="true"
+                                  data-testid="arch-dropdown-rosa"
                                   disabled=""
                                 >
                                   <option
@@ -434,6 +436,7 @@ exports[`CreateRosaGetStarted matches snapshot 1`] = `
                                   data-ouia-component-id="OUIA-Generated-Button-secondary-5"
                                   data-ouia-component-type="PF4/Button"
                                   data-ouia-safe="true"
+                                  data-testid="download-btn-rosa"
                                   download=""
                                   href="https://mirror.openshift.com/pub/openshift-v4/clients/rosa/latest/rosa-linux.tar.gz"
                                 >
@@ -446,7 +449,7 @@ exports[`CreateRosaGetStarted matches snapshot 1`] = `
                             class=""
                           >
                             <a
-                              href="https://docs.openshift.com/rosa/rosa_cli/rosa-get-started-cli.html"
+                              href="https://access.redhat.com/documentation/en-us/red_hat_openshift_service_on_aws/4/html/rosa_cli/rosa-get-started-cli"
                               rel="noreferrer noopener"
                               target="_blank"
                             >
@@ -952,7 +955,7 @@ exports[`CreateRosaGetStarted matches snapshot 1`] = `
                             To verify that your AWS account has enough
                              
                             <a
-                              href="https://docs.openshift.com/rosa/rosa_planning/rosa-sts-required-aws-service-quotas.html"
+                              href="https://access.redhat.com/documentation/en-us/red_hat_openshift_service_on_aws/4/html/prepare_your_environment/rosa-sts-required-aws-service-quotas#rosa-required-aws-service-quotas_rosa-sts-required-aws-service-quotas"
                               rel="noreferrer noopener"
                               target="_blank"
                             >
@@ -1070,7 +1073,7 @@ exports[`CreateRosaGetStarted matches snapshot 1`] = `
                                 If you're using AWS Organizations to manage the AWS accounts that host the ROSA service, the organization's service control policy (SCP) must be configured to allow Red Hat to perform
                                  
                                 <a
-                                  href="https://docs.openshift.com/rosa/rosa_architecture/rosa-sts-about-iam-resources.html"
+                                  href="https://access.redhat.com/documentation/en-us/red_hat_openshift_service_on_aws/4/html/introduction_to_rosa/rosa-sts-about-iam-resources"
                                   rel="noreferrer noopener"
                                   target="_blank"
                                 >

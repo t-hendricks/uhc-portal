@@ -16,7 +16,7 @@ const REPO = 'uhc-portal'; // TODO figure out from git remotes
 // Kludge: get useful subset of data in single request: sort by recently changed, filter by most
 // interesting statuses.  It's OK if a few cards won't get status, can always click link.
 
-const jiraQuery = 'project = HAC AND status IN ("Review", "Closed", "Code Review") ORDER BY updatedDate desc';
+const jiraQuery = 'project = HAC AND labels = "ocm-ui" AND status IN ("Review", "Closed", "Code Review") ORDER BY updatedDate desc';
 
 // This script is all about adding escape sequences, so enable color even if stdout is a pipe.
 // 1 = base 16 colors, stylable by terminal theme.

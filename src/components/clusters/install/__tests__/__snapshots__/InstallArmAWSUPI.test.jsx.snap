@@ -31,7 +31,7 @@ exports[`InstallArmAWSUPI renders correctly 1`] = `
     <OCPInstructions
       channel="stable"
       cloudProviderID="aws"
-      docURL="https://docs.openshift.com/container-platform/4.11/installing/installing_aws/installing-aws-user-infra.html"
+      docURL="https://docs.openshift.com/container-platform/4.12/installing/installing_aws/installing-aws-user-infra.html"
       installer="aarch64-openshift-install"
       isBMIPI={false}
       isUPI={true}

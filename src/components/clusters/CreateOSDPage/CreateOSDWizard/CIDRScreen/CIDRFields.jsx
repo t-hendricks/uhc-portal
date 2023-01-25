@@ -32,6 +32,7 @@ function CIDRFields({
   installToVpcSelected,
   isDefaultValuesChecked,
   change,
+  isROSA,
 }) {
   const isFieldDisabled = isDefaultValuesChecked || disabled;
 
@@ -120,7 +121,9 @@ function CIDRFields({
             correspond to the first IP address in their subnet.
           </p>
 
-          <ExternalLink href={links.CIDR_RANGE_DEFINITIONS}>
+          <ExternalLink
+            href={isROSA ? links.CIDR_RANGE_DEFINITIONS_ROSA : links.CIDR_RANGE_DEFINITIONS_OSD}
+          >
             Learn more to avoid conflicts
           </ExternalLink>
         </Alert>
@@ -162,8 +165,11 @@ function CIDRFields({
             <>
               {constants.machineCIDRHint}
               {privateRangesHint}
+
               <Text component={TextVariants.p}>
-                <ExternalLink href={links.OSD_CIDR_MACHINE}>Learn more</ExternalLink>
+                <ExternalLink href={isROSA ? links.ROSA_CIDR_MACHINE : links.OSD_CIDR_MACHINE}>
+                  Learn more
+                </ExternalLink>
               </Text>
             </>
           }
@@ -189,8 +195,11 @@ function CIDRFields({
             <>
               {constants.serviceCIDRHint}
               {privateRangesHint}
+
               <Text component={TextVariants.p}>
-                <ExternalLink href={links.OSD_CIDR_SERVICE}>Learn more</ExternalLink>
+                <ExternalLink href={isROSA ? links.ROSA_CIDR_SERVICE : links.OSD_CIDR_SERVICE}>
+                  Learn more
+                </ExternalLink>
               </Text>
             </>
           }
@@ -216,8 +225,11 @@ function CIDRFields({
             <>
               {constants.podCIDRHint}
               {privateRangesHint}
+
               <Text component={TextVariants.p}>
-                <ExternalLink href={links.OSD_CIDR_POD}>Learn more</ExternalLink>
+                <ExternalLink href={isROSA ? links.ROSA_CIDR_POD : links.OSD_CIDR_POD}>
+                  Learn more
+                </ExternalLink>
               </Text>
             </>
           }
@@ -240,8 +252,11 @@ function CIDRFields({
           extendedHelpText={
             <>
               {constants.hostPrefixHint}
+
               <Text component={TextVariants.p}>
-                <ExternalLink href={links.OSD_CIDR_HOST}>Learn more</ExternalLink>
+                <ExternalLink href={isROSA ? links.ROSA_CIDR_HOST : links.OSD_CIDR_HOST}>
+                  Learn more
+                </ExternalLink>
               </Text>
             </>
           }
@@ -259,6 +274,7 @@ CIDRFields.propTypes = {
   isMultiAz: PropTypes.bool,
   installToVpcSelected: PropTypes.bool,
   isDefaultValuesChecked: PropTypes.bool,
+  isROSA: PropTypes.bool,
 };
 
 export default CIDRFields;

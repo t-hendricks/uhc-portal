@@ -1,7 +1,0 @@
-{
-  "kind": "CloudProvider",
-  "id": "aws",
-  "href": "/api/clusters_mgmt/v1/cloud_providers/aws",
-  "name": "aws",
-  "display_name": "AWS"
-}

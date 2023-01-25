@@ -143,7 +143,7 @@ class HibernateClusterModal extends Component {
 
     return (
       <Modal
-        data-test-id="hibernate-cluster-modal"
+        data-testid="hibernate-cluster-modal"
         title="Hibernate cluster"
         secondaryTitle={shouldDisplayClusterName ? clusterName : undefined}
         onClose={cancelHibernateCluster}

@@ -111,12 +111,21 @@ const instructionsMapping = {
         docURL: links.INSTALL_AZUREUPI_GETTING_STARTED,
       },
     },
+    arm: {
+      ipi: {
+        title: 'Install OpenShift on Azure with installer-provisioned ARM infrastructure',
+        installer: tools.ARMINSTALLER,
+        channel: channels.STABLE,
+        docURL: links.INSTALL_AZUREIPI_GETTING_STARTED,
+        preReleasePageLink: '/install/arm/pre-release',
+      },
+    },
     multi: {
       ipi: {
-        title: 'Install OpenShift on Azure with heterogeneous infrastructure',
+        title: 'Install OpenShift on Azure with multi-architecture compute machines',
         installer: tools.MULTIINSTALLER,
         channel: channels.STABLE,
-        docURL: links.INSTALL_AZURE_HETEROGENEOUS,
+        docURL: links.INSTALL_AZURE_MULTI_ARCH,
         preReleasePageLink: '/install/multi/pre-release',
       },
     },
@@ -164,7 +173,7 @@ const instructionsMapping = {
       abi: {
         title: 'Install OpenShift on Bare Metal locally with Agent',
         installer: tools.X86INSTALLER,
-        channel: channels.CANDIDATE, // TODO revert this to STABLE after 4.12 GA
+        channel: channels.STABLE,
         docURL: links.INSTALL_BAREMETAL_ABI_GETTING_STARTED,
       },
       ipi: {
@@ -356,7 +365,7 @@ const instructionsMapping = {
     abi: {
       title: 'Install OpenShift on any x86_64 platform locally with Agent',
       installer: tools.X86INSTALLER,
-      channel: channels.CANDIDATE, // TODO revert this to STABLE after 4.12 GA
+      channel: channels.STABLE,
       docURL: links.INSTALL_GENERIC_ABI_GETTING_STARTED,
     },
     upi: {
@@ -408,8 +417,8 @@ const instructionsMapping = {
     abi: {
       title: 'Install OpenShift on vSphere locally with Agent',
       installer: tools.X86INSTALLER,
-      channel: channels.CANDIDATE, // TODO revert this to STABLE after 4.12 GA
-      docURL: links.INSTALL_BAREMETAL_ABI_GETTING_STARTED,
+      channel: channels.STABLE,
+      docURL: links.INSTALL_VSPHEREABI_GETTING_STARTED,
     },
     upi: {
       title: 'Install OpenShift on vSphere with user-provisioned infrastructure',

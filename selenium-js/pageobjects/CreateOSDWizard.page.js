@@ -41,7 +41,7 @@ class CreateOSDCluster extends Page {
     return !!await $("//h3[contains(text(),'Review your dedicated cluster')]");
   }
 
-  get awsProvider() { return $('div[data-test-id="aws-provider-card"]'); }
+  get awsProvider() { return $('div[data-testid="aws-provider-card"]'); }
 
   get CCSRadiobutton() { return $('input#byoc-true'); }
 

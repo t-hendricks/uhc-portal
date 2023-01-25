@@ -22,7 +22,7 @@ const AWS_ACCT_ID_PLACEHOLDER = 'Select an account';
 function NoAssociatedAWSAccounts() {
   return (
     <EmptyState className="no-associated-aws-accounts_empty-state">
-      <Title headingLevel="h6" size="md">
+      <Title headingLevel="h6" size="md" data-testid="no_associated_accounts">
         No associated accounts were found.
       </Title>
       <EmptyStateBody>Associate an AWS account to your Red Hat account.</EmptyStateBody>
@@ -79,8 +79,8 @@ function AWSAccountSelection({
       {!hasAWSAccounts && <NoAssociatedAWSAccounts />}
       <Button
         ref={associateAWSAccountBtnRef}
+        data-testid="launch-associate-account-btn"
         variant="secondary"
-        data-test-id="refresh-aws-accounts"
         onClick={(event) => {
           track(trackEvents.AssociateAWS);
           launchModal(event);
@@ -123,6 +123,7 @@ function AWSAccountSelection({
       {onRefresh && (
         <Tooltip content={<p>Click icon to refresh associated aws accounts and account-roles.</p>}>
           <Button
+            data-testid="refresh-aws-accounts"
             isLoading={isLoading}
             isDisabled={isDisabled}
             isInline

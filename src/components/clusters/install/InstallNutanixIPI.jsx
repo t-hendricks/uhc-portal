@@ -27,8 +27,8 @@ export class InstallNutanixIPI extends Component {
         path={[
           { label: 'Clusters' },
           { label: 'Cluster Type', path: '/create' },
-          { label: 'Nutanix AOS' /* , path: '/install/nutanix' */ },
-          /* { label: 'Installer-provisioned infrastructure' }, */
+          { label: 'Nutanix AOS', path: '/install/nutanix' },
+          { label: 'Installer-provisioned infrastructure' },
         ]}
       />
     );

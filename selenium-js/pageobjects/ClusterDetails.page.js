@@ -16,7 +16,7 @@ class ClusterDetails extends Page {
   }
 
   /** Details top */
-  get actionsDropdownToggle() { return $('div[data-test-id="cluster-actions-dropdown"] > button'); }
+  get actionsDropdownToggle() { return $('div[data-testid="cluster-actions-dropdown"] > button'); }
 
   get clusterNameTitle() { return $('h1.cl-details-page-title'); }
 
@@ -28,10 +28,10 @@ class ClusterDetails extends Page {
   // Archive cluster
   get archiveClusterDropdownItem() { return $("//button[contains(text(),'Archive cluster')]"); }
 
-  get archiveClusterDialogConfirm() { return $('div[data-test-id="archive-cluster-dialog"] ~ footer.pf-c-modal-box__footer > .pf-c-button.pf-m-primary'); }
+  get archiveClusterDialogConfirm() { return $('div[data-testid="archive-cluster-dialog"] ~ footer.pf-c-modal-box__footer > .pf-c-button.pf-m-primary'); }
 
   // Unarchive cluster
-  get unarchiveClusterDialogConfirm() { return $('div[data-test-id="unarchive-cluster-dialog"] ~ footer.pf-c-modal-box__footer > .pf-c-button.pf-m-primary'); }
+  get unarchiveClusterDialogConfirm() { return $('div[data-testid="unarchive-cluster-dialog"] ~ footer.pf-c-modal-box__footer > .pf-c-button.pf-m-primary'); }
 
   get unarchiveClusterButton() { return $('//button[contains(text(),\'Unarchive\')]'); }
 
@@ -40,21 +40,21 @@ class ClusterDetails extends Page {
 
   get editConsoleURLDialogInput() { return $('#edit-console-url-input'); }
 
-  get editConsoleURLDialogConfirm() { return $('div[data-test-id="edit-console-url-dialog"] ~ footer.pf-c-modal-box__footer > .pf-c-button.pf-m-primary'); }
+  get editConsoleURLDialogConfirm() { return $('div[data-testid="edit-console-url-dialog"] ~ footer.pf-c-modal-box__footer > .pf-c-button.pf-m-primary'); }
 
   // Edit display name
   get editDisplayNameDropdownItem() { return $("//button[contains(text(),'Edit display name')]"); }
 
   get editDisplayNameInput() { return $('input#edit-display-name-input'); }
 
-  get editDisplaynameConfirm() { return $('div[data-test-id="edit-displayname-modal"] ~ footer.pf-c-modal-box__footer > .pf-c-button.pf-m-primary'); }
+  get editDisplaynameConfirm() { return $('div[data-testid="edit-displayname-modal"] ~ footer.pf-c-modal-box__footer > .pf-c-button.pf-m-primary'); }
 
   // Delete cluster
   get deleteClusterDropdownItem() { return $("//button[contains(text(),'Delete cluster')]"); }
 
-  get deleteClusterDialogInput() { return $('div[data-test-id="delete-cluster-dialog"] input'); }
+  get deleteClusterDialogInput() { return $('div[data-testid="delete-cluster-dialog"] input'); }
 
-  get deleteClusterDialogConfirm() { return $('div[data-test-id="delete-cluster-dialog"] ~ footer.pf-c-modal-box__footer > .pf-c-button.pf-m-danger'); }
+  get deleteClusterDialogConfirm() { return $('div[data-testid="delete-cluster-dialog"] ~ footer.pf-c-modal-box__footer > .pf-c-button.pf-m-danger'); }
 
   /** Overview tab */
   get installationSuccessAlert() { return $('div[aria-label="Success Alert"]'); }
@@ -73,9 +73,9 @@ class ClusterDetails extends Page {
 
   get GoogleIDPDropdownItem() { return $("//ul[@aria-labelledby='add-identity-provider']/li/a[contains(text(), 'Google')]"); }
 
-  get addIDPModalConfirm() { return $('div[data-test-id="add-idp-osd-dialog"] ~ footer.pf-c-modal-box__footer > .pf-c-button.pf-m-primary'); }
+  get addIDPModalConfirm() { return $('div[data-testid="add-idp-osd-dialog"] ~ footer.pf-c-modal-box__footer > .pf-c-button.pf-m-primary'); }
 
-  get IDPModalBody() { return $('div[data-test-id="add-idp-osd-dialog"]'); }
+  get IDPModalBody() { return $('div[data-testid="add-idp-osd-dialog"]'); }
 
   get IDPTable() { return $('//table[@aria-label="Identity Providers"]'); }
 

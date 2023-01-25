@@ -50,6 +50,7 @@ import InstallBareMetal from '../clusters/install/InstallBareMetal';
 import InstallASH from '../clusters/install/InstallASH';
 import ConnectedInstallASHIPI from '../clusters/install/InstallASHIPI';
 import ConnectedInstallASHUPI from '../clusters/install/InstallASHUPI';
+import ConnectedInstallArmAzureIPI from '../clusters/install/InstallArmAzureIPI';
 import InstallAzure from '../clusters/install/InstallAzure';
 import ConnectedInstallAzureIPI from '../clusters/install/InstallAzureIPI';
 import ConnectedInstallAzureUPI from '../clusters/install/InstallAzureUPI';
@@ -69,6 +70,7 @@ import ConnectedInstallRHVUPI from '../clusters/install/InstallRHVUPI';
 import ConnectedInstallVSphereABI from '../clusters/install/InstallVSphereABI';
 import ConnectedInstallVSphereUPI from '../clusters/install/InstallVSphereUPI';
 import ConnectedInstallVSphereIPI from '../clusters/install/InstallVSphereIPI';
+import InstallNutanix from '../clusters/install/InstallNutanix';
 import InstallVSphere from '../clusters/install/InstallVSphere';
 import InstallPlatformAgnostic from '../clusters/install/InstallPlatformAgnostic';
 import ConnectedInstallPlatformAgnosticABI from '../clusters/install/InstallPlatformAgnosticABI';
@@ -91,6 +93,7 @@ import withFeatureGate from '../features/with-feature-gate';
 import {
   ASSISTED_INSTALLER_FEATURE,
   OSD_WIZARD_V2_FEATURE,
+  HYPERSHIFT_WIZARD_FEATURE,
 } from '../../redux/constants/featureConstants';
 import InstallBMABI from '../clusters/install/InstallBareMetalABI';
 import InstallBMUPI from '../clusters/install/InstallBareMetalUPI';
@@ -106,9 +109,10 @@ import EntitlementConfig from '../common/EntitlementConfig/index';
 import InsightsAdvisorRedirector from '../clusters/InsightsAdvisorRedirector';
 import ClusterDetailsSubscriptionId from '../clusters/ClusterDetails/ClusterDetailsSubscriptionId';
 import ClusterDetailsClusterOrExternalId from '../clusters/ClusterDetails/ClusterDetailsClusterOrExternalId';
-import { CreateOsdWizard } from '../osd';
+import { CreateOsdWizard } from '../clusters/wizards';
 import { metadataByRoute, is404 } from './routeMetadata';
 import { useFeatures } from './hooks';
+import { useGlobalState } from '~/redux/hooks';
 
 const { AssistedUiRouter } = OCM;
 
@@ -133,6 +137,13 @@ const Router: React.FC<RouterProps> = ({ history, planType, clusterId, externalC
     segment: { setPageMetadata },
   } = useChrome();
   const { [OSD_WIZARD_V2_FEATURE]: isOsdWizardV2Enabled } = useFeatures();
+
+  const isHypershiftWizardEnabled = useGlobalState(
+    (state) => state.features[HYPERSHIFT_WIZARD_FEATURE],
+  );
+  // TODO: just for testing, remove this when feature flag is being used in the wizard
+  // eslint-disable-next-line no-console
+  console.log(`HYPERSHIFT_WIZARD_FEATURE is ${isHypershiftWizardEnabled ? 'Enabled' : 'Disabled'}`);
 
   useEffect(() => {
     setPageMetadata({
@@ -209,6 +220,7 @@ const Router: React.FC<RouterProps> = ({ history, planType, clusterId, externalC
             <Route path="/install/gcp/installer-provisioned" component={ConnectedInstallGCPIPI} />
             <Route path="/install/gcp/user-provisioned" component={ConnectedInstallGCPUPI} />
             <Route path="/install/gcp" component={InstallGCP} />
+            <Route path="/install/nutanix" exact component={InstallNutanix} />
             <Route
               path="/install/nutanix/installer-provisioned"
               component={ConnectedInstallNutanixIPI}
@@ -222,6 +234,10 @@ const Router: React.FC<RouterProps> = ({ history, planType, clusterId, externalC
             <Route path="/install/rhv/installer-provisioned" component={ConnectedInstallRHVIPI} />
             <Route path="/install/rhv/user-provisioned" component={ConnectedInstallRHVUPI} />
             <Route path="/install/rhv" component={InstallRHV} />
+            <Route
+              path="/install/azure/arm/installer-provisioned"
+              component={ConnectedInstallArmAzureIPI}
+            />
             <Route
               path="/install/azure/multi/installer-provisioned"
               component={ConnectedInstallMultiAzureIPI}
@@ -291,7 +307,12 @@ const Router: React.FC<RouterProps> = ({ history, planType, clusterId, externalC
             />
 
             {isOsdWizardV2Enabled ? (
-              <Route path="/create/osd" exact component={CreateOsdWizard} />
+              <TermsGuardedRoute
+                path="/create/osd"
+                gobackPath="/create"
+                component={CreateOsdWizard}
+                history={history}
+              />
             ) : (
               <TermsGuardedRoute
                 path="/create/osd"
@@ -316,6 +337,7 @@ const Router: React.FC<RouterProps> = ({ history, planType, clusterId, externalC
 
             <Redirect from="/create/rosa/welcome" to="/create/rosa/getstarted" />
             <Route path="/create/rosa/getstarted" component={GetStartedWithROSA} />
+
             <TermsGuardedRoute
               path="/create/rosa/wizard"
               history={history}
