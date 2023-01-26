@@ -2,7 +2,9 @@ import React, { Component } from 'react';
 import { PageSection } from '@patternfly/react-core';
 
 import Breadcrumbs from '../../common/Breadcrumbs';
+import ExternalLink from '../../common/ExternalLink';
 import { scrollToTop } from '../../../common/helpers';
+import links from '../../../common/installLinks.mjs';
 import { InstructionsChooser } from './instructions/InstructionsChooser';
 import { InstructionsChooserPageTitle } from './instructions/InstructionsChooserPageTitle';
 
@@ -24,6 +26,15 @@ class InstallPlatformAgnostic extends Component {
       />
     );
 
+    const nonTestedPlatformsLink = (
+      <>
+        For&nbsp;
+        <ExternalLink href={links.INSTALL_GENERIC_NON_TESTED_PLATFORMS}>
+          non-tested platforms
+        </ExternalLink>
+      </>
+    );
+
     return (
       <>
         <InstructionsChooserPageTitle
@@ -33,28 +44,16 @@ class InstallPlatformAgnostic extends Component {
         <PageSection>
           <InstructionsChooser
             aiPageLink="/assisted-installer/clusters/~new"
+            aiLearnMoreLink={links.INSTALL_ASSISTED_LEARN_MORE}
             hideIPI
             upiPageLink="/install/platform-agnostic/user-provisioned"
+            upiLearnMoreLink={links.INSTALL_GENERIC_GETTING_STARTED}
             agentBasedPageLink="/install/platform-agnostic/agent-based"
-            /*
+            agentBasedLearnMoreLink={links.INSTALL_AGENT_LEARN_MORE}
             providerSpecificFeatures={{
-              ai: [
-                <>
-                  For <ExternalLink href="#">non-tested platforms</ExternalLink>
-                </>,
-              ],
-              upi: [
-                <>
-                  For <ExternalLink href="#">non-tested platforms</ExternalLink>
-                </>,
-              ],
-            }}
-            */
-            // TODO replace the below string versions with the above JSX versions when we have docs URLs for "non-tested platforms". See https://issues.redhat.com/browse/HAC-2403
-            providerSpecificFeatures={{
-              abi: ['For non-tested platforms', 'For air-gapped/restricted networks'],
-              ai: ['For non-tested platforms'],
-              upi: ['For non-tested platforms'],
+              abi: [nonTestedPlatformsLink, 'For air-gapped/restricted networks'],
+              ai: [nonTestedPlatformsLink],
+              upi: [nonTestedPlatformsLink],
             }}
           />
         </PageSection>

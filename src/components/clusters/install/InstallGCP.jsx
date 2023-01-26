@@ -3,6 +3,7 @@ import { PageSection } from '@patternfly/react-core';
 
 import Breadcrumbs from '../../common/Breadcrumbs';
 import { scrollToTop } from '../../../common/helpers';
+import links from '../../../common/installLinks.mjs';
 import { InstructionsChooser } from './instructions/InstructionsChooser';
 import { InstructionsChooserPageTitle } from './instructions/InstructionsChooserPageTitle';
 
@@ -29,7 +30,9 @@ class InstallGCP extends Component {
         <PageSection>
           <InstructionsChooser
             ipiPageLink="/install/gcp/installer-provisioned"
+            ipiLearnMoreLink={links.INSTALL_GCPIPI_LEARN_MORE}
             upiPageLink="/install/gcp/user-provisioned"
+            upiLearnMoreLink={links.INSTALL_GCPUPI_GETTING_STARTED}
             providerSpecificFeatures={{
               ipi: ['Hosts controlled with Google Cloud Provider'],
             }}

@@ -3,6 +3,7 @@ import { PageSection } from '@patternfly/react-core';
 
 import Breadcrumbs from '../../common/Breadcrumbs';
 import { scrollToTop } from '../../../common/helpers';
+import links from '../../../common/installLinks.mjs';
 import { InstructionsChooser } from './instructions/InstructionsChooser';
 import { InstructionsChooserPageTitle } from './instructions/InstructionsChooserPageTitle';
 
@@ -29,9 +30,13 @@ class InstallVSphere extends Component {
         <PageSection>
           <InstructionsChooser
             aiPageLink="/assisted-installer/clusters/~new"
+            aiLearnMoreLink={links.INSTALL_ASSISTED_LEARN_MORE}
             ipiPageLink="/install/vsphere/installer-provisioned"
+            ipiLearnMoreLink={links.INSTALL_VSPHEREIPI_GETTING_STARTED}
             upiPageLink="/install/vsphere/user-provisioned"
+            upiLearnMoreLink={links.INSTALL_VSPHEREUPI_GETTING_STARTED}
             agentBasedPageLink="/install/vsphere/agent-based"
+            agentBasedLearnMoreLink={links.INSTALL_AGENT_LEARN_MORE}
             providerSpecificFeatures={{
               abi: ['For connected or air-gapped/restricted networks'],
               ipi: [
