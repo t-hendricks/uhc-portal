@@ -7,13 +7,16 @@ import {
   DescriptionListGroup,
   DescriptionListDescription,
 } from '@patternfly/react-core';
+import spacing from '@patternfly/react-styles/css/utilities/Spacing/spacing';
 
 import Timestamp from '../../../../common/Timestamp';
+import PopoverHint from '../../../../common/PopoverHint';
 import ClusterTypeLabel from '../../../common/ClusterTypeLabel';
 import BillingModelLabel from '../../../common/BillingModelLabel';
 import InfrastructureModelLabel from '../../../common/InfrastructureModelLabel';
 import ClusterVersionInfo from './ClusterVersionInfo';
 import { normalizedProducts } from '../../../../../common/subscriptionTypes';
+import { isHypershiftCluster } from '../../clusterDetailsHelper';
 
 const getIdFields = (cluster, showAssistedId) => {
   let label = 'Cluster ID';
@@ -40,6 +43,9 @@ function DetailsLeft({ cluster, cloudProviders, showAssistedId }) {
   }
 
   const { id, idLabel } = getIdFields(cluster, showAssistedId);
+
+  const isHypershift = isHypershiftCluster(cluster);
+
   return (
     <>
       <DescriptionList>
@@ -74,7 +80,15 @@ function DetailsLeft({ cluster, cloudProviders, showAssistedId }) {
           </>
         )}
         <DescriptionListGroup>
-          <DescriptionListTerm>Version</DescriptionListTerm>
+          <DescriptionListTerm>
+            Version
+            {isHypershift && (
+              <PopoverHint
+                iconClassName={spacing.mlSm}
+                hint="This version is only for the control plane. Worker nodes may have a different version."
+              />
+            )}
+          </DescriptionListTerm>
           <DescriptionListDescription>
             <ClusterVersionInfo cluster={cluster} />
           </DescriptionListDescription>
