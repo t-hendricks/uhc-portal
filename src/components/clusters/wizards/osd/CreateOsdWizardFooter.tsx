@@ -16,12 +16,15 @@ interface CreateOsdWizardFooterProps {
 export const CreateOsdWizardFooter = ({ isLoading, onNext }: CreateOsdWizardFooterProps) => {
   const { goToNextStep, goToPrevStep, close, activeStep, steps } = useWizardContext();
   const { values, validateForm, setTouched, isValidating } = useFormState();
+  // used to determine the actions' disabled state.
+  // (as a more exclusive rule than isValidating, which relying upon would block progress to the next step)
   const [isNextDeferred, setIsNextDeferred] = useState<boolean>(false);
 
   const isButtonLoading = isValidating || isLoading;
   const isButtonDisabled = isNextDeferred || isLoading;
 
   const onValidateNext = async () => {
+    // defer execution until any ongoing validation is done
     if (isValidating) {
       if (!isNextDeferred) {
         setIsNextDeferred(true);
@@ -42,7 +45,9 @@ export const CreateOsdWizardFooter = ({ isLoading, onNext }: CreateOsdWizardFoot
   };
 
   useEffect(() => {
-    if (isValidating === false && isNextDeferred) {
+    // if "next" invocation was deferred due to earlier ongoing validation,
+    // revive the invocation when the validation is done.
+    if (isNextDeferred && isValidating === false) {
       setIsNextDeferred(false);
       onValidateNext();
     }
