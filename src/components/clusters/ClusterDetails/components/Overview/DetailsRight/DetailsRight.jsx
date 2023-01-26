@@ -20,6 +20,7 @@ import { humanizeValueWithUnit, humanizeValueWithUnitGiB } from '../../../../../
 import { subscriptionStatuses } from '../../../../../../common/subscriptionTypes';
 import PopoverHint from '../../../../../common/PopoverHint';
 import ExternalLink from '../../../../../common/ExternalLink';
+import { isHypershiftCluster } from '../../../clusterDetailsHelper';
 
 const { ClusterStatus: AIClusterStatus } = OCM;
 function DetailsRight({
@@ -30,6 +31,8 @@ function DetailsRight({
   totalMaxNodesCount,
   limitedSupport,
 }) {
+  const isHypershift = isHypershiftCluster(cluster);
+
   const memoryTotalWithUnit = humanizeValueWithUnit(
     get(cluster, 'metrics.memory.total.value', 0),
     get(cluster, 'metrics.memory.total.unit', 'B'),
@@ -39,9 +42,10 @@ function DetailsRight({
     get(cluster, 'subscription.status', '') === subscriptionStatuses.DISCONNECTED;
 
   const showDesiredNodes = cluster.managed;
-  const showInfraNodes =
-    (!cluster.managed && get(cluster, 'metrics.nodes.infra', null)) ||
-    get(cluster, 'nodes.infra', 0) > 0;
+  const showInfraNodes = isHypershift
+    ? false
+    : (!cluster.managed && get(cluster, 'metrics.nodes.infra', null)) ||
+      get(cluster, 'nodes.infra', 0) > 0;
   const hasSockets = get(cluster, 'metrics.sockets.total.value', 0) > 0;
 
   const humanizedPersistentStorage =
@@ -144,14 +148,16 @@ function DetailsRight({
               </DescriptionListTerm>
               <DescriptionListDescription>
                 <dl className="pf-l-stack">
-                  <Flex>
-                    <dt>Control plane: </dt>
-                    <dd>
-                      {controlPlaneActualNodes !== '-' || controlPlaneDesiredNodes !== '-'
-                        ? `${controlPlaneActualNodes}/${controlPlaneDesiredNodes}`
-                        : 'N/A'}
-                    </dd>
-                  </Flex>
+                  {!isHypershift && (
+                    <Flex>
+                      <dt>Control plane: </dt>
+                      <dd>
+                        {controlPlaneActualNodes !== '-' || controlPlaneDesiredNodes !== '-'
+                          ? `${controlPlaneActualNodes}/${controlPlaneDesiredNodes}`
+                          : 'N/A'}
+                      </dd>
+                    </Flex>
+                  )}
                   {showInfraNodes && (
                     <>
                       <Flex>
