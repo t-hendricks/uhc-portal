@@ -27,6 +27,8 @@ import EditLabelsModal from './components/EditLabelsModal';
 import './MachinePools.scss';
 import { actionResolver } from './machinePoolsHelper';
 
+import { isHypershiftCluster } from '../../clusterDetailsHelper';
+
 import ButtonWithTooltip from '../../../../common/ButtonWithTooltip';
 import ErrorBox from '../../../../common/ErrorBox';
 import modals from '../../../../common/Modal/modals';
@@ -180,7 +182,9 @@ class MachinePools extends React.Component {
           {
             title: (
               <>
-                {machinePool.instance_type}
+                {isHypershiftCluster(cluster) && machinePool.id !== 'Default'
+                  ? machinePool.aws_node_pool?.instance_type
+                  : machinePool.instance_type}
                 {machinePool.aws && (
                   <Label variant="outline" className="ocm-c-machine-pools__spot-label">
                     Spot
@@ -189,7 +193,7 @@ class MachinePools extends React.Component {
               </>
             ),
           },
-          machinePool.availability_zones?.join(', '),
+          machinePool.availability_zones?.join(', ') || machinePool.availability_zone,
           { title: nodes },
           autoscalingEnabled ? 'Enabled' : 'Disabled',
         ],
@@ -455,8 +459,18 @@ class MachinePools extends React.Component {
           </Card>
         )}
         {isAddMachinePoolModalOpen && <AddMachinePoolModal cluster={cluster} />}
-        {isEditTaintsModalOpen && <EditTaintsModal clusterId={cluster.id} />}
-        {isEditLabelsModalOpen && <EditLabelsModal clusterId={cluster.id} />}
+        {isEditTaintsModalOpen && (
+          <EditTaintsModal
+            clusterId={cluster.id}
+            isHypershiftCluster={isHypershiftCluster(cluster)}
+          />
+        )}
+        {isEditLabelsModalOpen && (
+          <EditLabelsModal
+            clusterId={cluster.id}
+            isHypershiftCluster={isHypershiftCluster(cluster)}
+          />
+        )}
       </>
     );
   }
