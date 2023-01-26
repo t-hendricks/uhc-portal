@@ -30,6 +30,7 @@ class EditNodeCountModal extends Component {
       machinePoolsList,
       getMachinePools,
       clusterID,
+      isHypershiftCluster,
     } = this.props;
 
     if (!machineTypes.fulfilled && !machineTypes.pending) {
@@ -39,7 +40,7 @@ class EditNodeCountModal extends Component {
       getOrganizationAndQuota();
     }
     if (!machinePoolsList.pending) {
-      getMachinePools(clusterID);
+      getMachinePools(clusterID, isHypershiftCluster);
     }
   }
 
@@ -268,6 +269,7 @@ EditNodeCountModal.propTypes = {
   onClose: PropTypes.func.isRequired,
   change: PropTypes.func.isRequired,
   isByoc: PropTypes.bool,
+  isHypershiftCluster: PropTypes.bool.isRequired,
   machinePoolId: PropTypes.string,
   machineType: PropTypes.string,
   clusterID: PropTypes.string,

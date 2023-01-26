@@ -8,7 +8,7 @@ import {
 } from './AddOnsActions';
 import { getOrganizationAndQuota } from '../../../../../redux/actions/userActions';
 import { modalActions } from '../../../../common/Modal/ModalActions';
-import { getMachinePools } from '../MachinePools/MachinePoolsActions';
+import { getMachineOrNodePools } from '../MachinePools/MachinePoolsActions';
 
 const mapStateToProps = (state) => ({
   addOns: state.addOns.addOns,
@@ -26,7 +26,7 @@ const mapDispatchToProps = {
   getOrganizationAndQuota,
   getAddOns,
   getClusterAddOns,
-  getMachinePools,
+  getMachineOrNodePools,
   addClusterAddOn,
   clearClusterAddOnsResponses,
   openModal: modalActions.openModal,
