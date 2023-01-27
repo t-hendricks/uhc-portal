@@ -58,6 +58,11 @@ function actionResolver(
     ) : (
       <>This cluster is hibernating; resume cluster in order to perform actions</>
     ));
+
+  const hypershiftMessage = isHypershiftCluster(cluster) && (
+    <>Editing node count is currently only available using ROSA CLI</>
+  );
+
   const isClusterHibernatingOrPoweringDown =
     cluster.state === clusterStates.HIBERNATING || cluster.state === clusterStates.POWERING_DOWN;
   const isClusterPoweringDown = cluster.state === clusterStates.POWERING_DOWN;
@@ -143,7 +148,11 @@ function actionResolver(
     title: 'Edit node count',
     key: getKey('editnodecount'),
     ...disableIfTooltip(
-      uninstallingMessage || readOnlyMessage || hibernatingMessage || notReadyMessage,
+      uninstallingMessage ||
+        readOnlyMessage ||
+        hibernatingMessage ||
+        notReadyMessage ||
+        hypershiftMessage,
       {
         onClick: () =>
           openModal(modals.EDIT_NODE_COUNT, {

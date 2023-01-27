@@ -197,4 +197,24 @@ describe('Cluster Actions Dropdown Items', () => {
       expect(wrapper).toMatchSnapshot();
     });
   });
+
+  describe('Hypershift cluster', () => {
+    it('enables "edit node count" option if not hypershift', () => {
+      const wrapper = shallow(<DropDownItemsRenderHelper {...Fixtures.managedReadyProps} />);
+      wrapper.find(DropdownItem).forEach((option) => {
+        if (option.props().title === 'Edit node count') {
+          expect(option.props().isAriaDisabled).toBeFalsy();
+        }
+      });
+    });
+
+    it('disables "edit node count" option if hypershift', () => {
+      const wrapper = shallow(<DropDownItemsRenderHelper {...Fixtures.hyperShiftReadyProps} />);
+      wrapper.find(DropdownItem).forEach((option) => {
+        if (option.props().title === 'Edit node count') {
+          expect(option.props().isAriaDisabled).toBeTruthy();
+        }
+      });
+    });
+  });
 });
