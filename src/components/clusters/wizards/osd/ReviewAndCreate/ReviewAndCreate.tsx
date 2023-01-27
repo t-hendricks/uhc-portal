@@ -1,7 +1,6 @@
 import React from 'react';
 
-import { useWizardFooter } from '@patternfly/react-core/next';
-
+import { useWizardFooter } from '@patternfly/react-core/dist/esm/next';
 import { useGlobalState } from '~/redux/hooks/useGlobalState';
 import CreateClusterErrorModal from '~/components/clusters/common/CreateClusterErrorModal';
 import { useFormState } from '~/components/clusters/wizards/hooks';
