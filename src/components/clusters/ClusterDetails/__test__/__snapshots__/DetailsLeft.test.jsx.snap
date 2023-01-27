@@ -384,7 +384,9 @@ exports[`<DetailsLeft /> should render 1`] = `
       <DescriptionListTerm>
         Control plane type
       </DescriptionListTerm>
-      <DescriptionListDescription>
+      <DescriptionListDescription
+        data-testid="controlType"
+      >
         Standalone
       </DescriptionListDescription>
     </DescriptionListGroup>
@@ -408,10 +410,12 @@ exports[`<DetailsLeft /> should render 1`] = `
       <DescriptionListTerm>
         Availability
       </DescriptionListTerm>
-      <DescriptionListDescription
-        data-testid="availability"
-      >
-        Single zone
+      <DescriptionListDescription>
+        <span
+          data-testid="availability"
+        >
+          Single zone
+        </span>
       </DescriptionListDescription>
     </DescriptionListGroup>
     <DescriptionListGroup>
@@ -1543,6 +1547,281 @@ exports[`<DetailsLeft /> should render 1`] = `
 </Fragment>
 `;
 
+exports[`<DetailsLeft /> should show Multi-Zone for Hypershift cluster details 1`] = `
+<div>
+  <dl
+    class="pf-c-description-list"
+  >
+    <div
+      class="pf-c-description-list__group"
+    >
+      <dt
+        class="pf-c-description-list__term"
+      >
+        <span
+          class="pf-c-description-list__text"
+        >
+          Cluster ID
+        </span>
+      </dt>
+      <dd
+        class="pf-c-description-list__description"
+      >
+        <div
+          class="pf-c-description-list__text"
+        >
+          bae5b227-2472-4e71-be4d-a18fc60bb48a
+        </div>
+      </dd>
+    </div>
+    <div
+      class="pf-c-description-list__group"
+    >
+      <dt
+        class="pf-c-description-list__term"
+      >
+        <span
+          class="pf-c-description-list__text"
+        >
+          Type
+        </span>
+      </dt>
+      <dd
+        class="pf-c-description-list__description"
+      >
+        <div
+          class="pf-c-description-list__text"
+        >
+          <span>
+            OSD
+          </span>
+        </div>
+      </dd>
+    </div>
+    <div
+      class="pf-c-description-list__group"
+    >
+      <dt
+        class="pf-c-description-list__term"
+      >
+        <span
+          class="pf-c-description-list__text"
+        >
+          Control plane type
+        </span>
+      </dt>
+      <dd
+        class="pf-c-description-list__description"
+        data-testid="controlType"
+      >
+        <div
+          class="pf-c-description-list__text"
+        >
+          Standalone
+        </div>
+      </dd>
+    </div>
+    <div
+      class="pf-c-description-list__group"
+    >
+      <dt
+        class="pf-c-description-list__term"
+      >
+        <span
+          class="pf-c-description-list__text"
+        >
+          Region
+        </span>
+      </dt>
+      <dd
+        class="pf-c-description-list__description"
+      >
+        <div
+          class="pf-c-description-list__text"
+        >
+          us-east-1
+        </div>
+      </dd>
+    </div>
+    <div
+      class="pf-c-description-list__group"
+    >
+      <dt
+        class="pf-c-description-list__term"
+      >
+        <span
+          class="pf-c-description-list__text"
+        >
+          Provider
+        </span>
+      </dt>
+      <dd
+        class="pf-c-description-list__description"
+      >
+        <div
+          class="pf-c-description-list__text"
+        >
+          Amazon Web Services
+        </div>
+      </dd>
+    </div>
+    <div
+      class="pf-c-description-list__group"
+    >
+      <dt
+        class="pf-c-description-list__term"
+      >
+        <span
+          class="pf-c-description-list__text"
+        >
+          Availability
+        </span>
+      </dt>
+      <dd
+        class="pf-c-description-list__description"
+      >
+        <div
+          class="pf-c-description-list__text"
+        >
+          <span
+            data-testid="availability"
+          >
+            Single zone
+          </span>
+        </div>
+      </dd>
+    </div>
+    <div
+      class="pf-c-description-list__group"
+    >
+      <dt
+        class="pf-c-description-list__term"
+      >
+        <span
+          class="pf-c-description-list__text"
+        >
+          Version
+        </span>
+      </dt>
+      <dd
+        class="pf-c-description-list__description"
+      >
+        <div
+          class="pf-c-description-list__text"
+        >
+          <div>
+            <dl
+              class="pf-l-stack"
+            >
+              <div
+                class="pf-l-flex"
+              >
+                <dt>
+                  OpenShift: 
+                </dt>
+                <dd>
+                  4.6.8
+                </dd>
+              </div>
+            </dl>
+          </div>
+        </div>
+      </dd>
+    </div>
+    <div
+      class="pf-c-description-list__group"
+    >
+      <dt
+        class="pf-c-description-list__term"
+      >
+        <span
+          class="pf-c-description-list__text"
+        >
+          Created at
+        </span>
+      </dt>
+      <dd
+        class="pf-c-description-list__description"
+      >
+        <div
+          class="pf-c-description-list__text"
+        >
+          <span>
+            1/10/2021 10:17:16 AM
+          </span>
+        </div>
+      </dd>
+    </div>
+    <div
+      class="pf-c-description-list__group"
+    >
+      <dt
+        class="pf-c-description-list__term"
+      >
+        <span
+          class="pf-c-description-list__text"
+        >
+          Owner
+        </span>
+      </dt>
+      <dd
+        class="pf-c-description-list__description"
+      >
+        <div
+          class="pf-c-description-list__text"
+        >
+          Liza Gilman
+        </div>
+      </dd>
+    </div>
+    <div
+      class="pf-c-description-list__group"
+    >
+      <dt
+        class="pf-c-description-list__term"
+      >
+        <span
+          class="pf-c-description-list__text"
+        >
+          Subscription type
+        </span>
+      </dt>
+      <dd
+        class="pf-c-description-list__description"
+      >
+        <div
+          class="pf-c-description-list__text"
+        >
+          Standard
+        </div>
+      </dd>
+    </div>
+    <div
+      class="pf-c-description-list__group"
+    >
+      <dt
+        class="pf-c-description-list__term"
+      >
+        <span
+          class="pf-c-description-list__text"
+        >
+          Infrastructure type
+        </span>
+      </dt>
+      <dd
+        class="pf-c-description-list__description"
+      >
+        <div
+          class="pf-c-description-list__text"
+        >
+          Red Hat cloud account
+        </div>
+      </dd>
+    </div>
+  </dl>
+</div>
+`;
+
 exports[`<DetailsLeft /> should show the extra AI cluster details 1`] = `
 <Fragment>
   <DescriptionList>
@@ -1929,7 +2208,9 @@ exports[`<DetailsLeft /> should show the extra AI cluster details 1`] = `
       <DescriptionListTerm>
         Control plane type
       </DescriptionListTerm>
-      <DescriptionListDescription>
+      <DescriptionListDescription
+        data-testid="controlType"
+      >
         Standalone
       </DescriptionListDescription>
     </DescriptionListGroup>
@@ -1953,10 +2234,12 @@ exports[`<DetailsLeft /> should show the extra AI cluster details 1`] = `
       <DescriptionListTerm>
         Availability
       </DescriptionListTerm>
-      <DescriptionListDescription
-        data-testid="availability"
-      >
-        Single zone
+      <DescriptionListDescription>
+        <span
+          data-testid="availability"
+        >
+          Single zone
+        </span>
       </DescriptionListDescription>
     </DescriptionListGroup>
     <DescriptionListGroup>
