@@ -7,6 +7,7 @@ import links from '../../../common/installLinks.mjs';
 import getClusterName from '../../../common/getClusterName';
 import modals from '../../common/Modal/modals';
 import { subscriptionStatuses } from '../../../common/subscriptionTypes';
+import { isHypershiftCluster } from '../ClusterDetails/clusterDetailsHelper';
 
 const ClusterUpdateLink = ({ cluster, openModal, hideOSDUpdates }) => {
   const { upgrade } = cluster.metrics;
@@ -40,6 +41,11 @@ const ClusterUpdateLink = ({ cluster, openModal, hideOSDUpdates }) => {
       (!cluster.canEdit || !osdUpgradeAvailable || isHibernating(cluster.state) || isStale)) ||
     (!cluster.managed && (!upgrade.available || isStale))
   ) {
+    return null;
+  }
+
+  // Only show update for non hypershift clusters
+  if (isHypershiftCluster(cluster)) {
     return null;
   }
 
