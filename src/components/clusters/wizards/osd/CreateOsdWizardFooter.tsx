@@ -2,8 +2,7 @@ import React from 'react';
 import { setNestedObjectValues } from 'formik';
 
 import { Button } from '@patternfly/react-core';
-import { useWizardContext, WizardFooterWrapper } from '@patternfly/react-core/next';
-
+import { useWizardContext, WizardFooterWrapper } from '@patternfly/react-core/dist/esm/next';
 import { scrollToFirstError } from '~/common/helpers';
 import { getScrollErrorIds } from '~/components/clusters/wizards/form/utils';
 import { useFormState } from '~/components/clusters/wizards/hooks';
@@ -14,7 +13,13 @@ interface CreateOsdWizardFooterProps {
 }
 
 export const CreateOsdWizardFooter = ({ isLoading, onNext }: CreateOsdWizardFooterProps) => {
-  const { goToNextStep, goToPrevStep, close, activeStep, steps } = useWizardContext();
+  const {
+    onNext: goToNextStep,
+    onBack: goToPrevStep,
+    onClose: close,
+    activeStep,
+    steps,
+  } = useWizardContext();
   const { values, validateForm, setTouched } = useFormState();
 
   const onValidateNext = async () => {
