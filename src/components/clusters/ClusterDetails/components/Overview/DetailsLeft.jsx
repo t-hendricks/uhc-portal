@@ -45,6 +45,7 @@ function DetailsLeft({ cluster, cloudProviders, showAssistedId }) {
   const { id, idLabel } = getIdFields(cluster, showAssistedId);
 
   const isHypershift = isHypershiftCluster(cluster);
+  const controlPlaneType = isHypershift ? 'Hosted' : 'Standalone';
 
   return (
     <>
@@ -58,6 +59,10 @@ function DetailsLeft({ cluster, cloudProviders, showAssistedId }) {
           <DescriptionListDescription>
             <ClusterTypeLabel cluster={cluster} />
           </DescriptionListDescription>
+        </DescriptionListGroup>
+        <DescriptionListGroup>
+          <DescriptionListTerm>Control plane type</DescriptionListTerm>
+          <DescriptionListDescription>{controlPlaneType}</DescriptionListDescription>
         </DescriptionListGroup>
         <DescriptionListGroup>
           <DescriptionListTerm>Region</DescriptionListTerm>
