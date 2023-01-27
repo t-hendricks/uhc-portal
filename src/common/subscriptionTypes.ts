@@ -88,6 +88,7 @@ const knownProducts = {
   OCP: 'OCP',
   RHMI: 'RHMI',
   ROSA: 'ROSA',
+  ROSA_HyperShift: 'ROSA-HyperShift',
   ARO: 'ARO',
   OCP_Assisted_Install: 'OCP-AssistedInstall',
 };
@@ -113,6 +114,7 @@ const clustersServiceProducts = [
   normalizedProducts.OSD,
   normalizedProducts.OSDTrial,
   normalizedProducts.ROSA,
+  normalizedProducts.ROSA_HyperShift,
   normalizedProducts.RHMI,
   normalizedProducts.ARO,
 ];

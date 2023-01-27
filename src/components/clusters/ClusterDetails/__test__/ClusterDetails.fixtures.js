@@ -436,6 +436,15 @@ const ROSAClusterDetails = produce(CCSClusterDetails, (draft) => {
   };
 });
 
+const ROSAHypershiftClusterDetails = produce(CCSClusterDetails, (draft) => {
+  draft.cluster.product = { id: normalizedProducts.ROSA };
+  draft.cluster.hypershift = { enabled: true };
+  draft.cluster.subscription.plan = {
+    id: normalizedProducts.ROSA,
+    type: normalizedProducts.ROSA,
+  };
+});
+
 const ROSAManualClusterDetails = produce(ROSAClusterDetails, (draft) => {
   draft.cluster.aws = {
     sts: {
@@ -1036,6 +1045,7 @@ const fixtures = {
   OSDRHMClusterDetails,
   ROSAClusterDetails,
   ROSAManualClusterDetails,
+  ROSAHypershiftClusterDetails,
   RHMIClusterDetails,
   insightsData,
   OCPClusterDetails,

@@ -3,29 +3,38 @@ import { shallow } from 'enzyme';
 
 import DetailsLeft from '../components/Overview/DetailsLeft';
 import fixtures from './ClusterDetails.fixtures';
+import { knownProducts } from '~/common/subscriptionTypes';
 
-const getCluster = (showAssistedId) => {
-  if (showAssistedId) {
+const getCluster = (productType) => {
+  if (productType === knownProducts.OCP_Assisted_Install) {
     return fixtures.AIClusterDetails.cluster;
+  }
+  if (productType === knownProducts.ROSA_HyperShift) {
+    return fixtures.ROSAHypershiftClusterDetails.cluster;
   }
   return fixtures.clusterDetails.cluster;
 };
 
 describe('<DetailsLeft />', () => {
-  const wrapper = (showAssistedId) =>
+  const wrapper = (productType) =>
     shallow(
       <DetailsLeft
-        cluster={getCluster(showAssistedId)}
+        cluster={getCluster(productType)}
         cloudProviders={fixtures.cloudProviders}
-        showAssistedId={showAssistedId}
+        showAssistedId={productType === knownProducts.OCP_Assisted_Install}
       />,
     );
 
   it('should render', () => {
-    expect(wrapper(false)).toMatchSnapshot();
+    expect(wrapper(knownProducts.OSD)).toMatchSnapshot();
   });
 
   it('should show the extra AI cluster details', () => {
-    expect(wrapper(true)).toMatchSnapshot();
+    expect(wrapper(knownProducts.OCP_Assisted_Install)).toMatchSnapshot();
+  });
+
+  it('should show Multi-Zone for Hypershift cluster details', () => {
+    const azComponent = wrapper(knownProducts.ROSA_HyperShift).find('[data-testid="availability"]');
+    expect(azComponent.html()).toContain('Multi-zone');
   });
 });
