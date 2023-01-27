@@ -6,6 +6,7 @@ const actionResolver = (
   onClickScale,
   onClickEditTaints,
   onClickEditLaebls,
+  isHypershift,
 ) => {
   // hide actions kebab for expandable rows
   if (!rowData.machinePool) {
@@ -22,12 +23,16 @@ const actionResolver = (
     title: 'Edit labels',
     onClick: onClickEditLaebls,
     className: 'hand-pointer',
+    isAriaDisabled: isHypershift,
+    tooltip: 'Editing machine pools is currently only available using ROSA CLI',
   };
 
   const editTaintsAction = {
     title: 'Edit taints',
     onClick: onClickEditTaints,
     className: 'hand-pointer',
+    isAriaDisabled: isHypershift,
+    tooltip: 'Editing machine pools is currently only available using ROSA CLI',
   };
 
   const additionalMachinePoolActions = [editLabelsAction, editTaintsAction, deleteAction];
@@ -37,6 +42,8 @@ const actionResolver = (
       title: 'Scale',
       onClick: onClickScale,
       className: 'hand-pointer',
+      isAriaDisabled: isHypershift,
+      tooltip: 'Scaling machine pools is currently only available using ROSA CLI',
     },
     ...(rowData.machinePool?.id !== 'Default' ? additionalMachinePoolActions : []),
   ];
