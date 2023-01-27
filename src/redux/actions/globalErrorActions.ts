@@ -4,8 +4,7 @@ import { SET_GLOBAL_ERROR, CLEAR_GLOBAL_ERROR } from '../constants/globalErrorCo
 const setGlobalError = (errorTitle: string, sourceComponent: string, errorMessage: string) =>
   action(SET_GLOBAL_ERROR, { errorTitle, errorMessage, sourceComponent });
 
-/** If component is specified, clear only errors from that component, otherwise any error. */
-const clearGlobalError = (requestingComponent?: string) =>
+const clearGlobalError = (requestingComponent: string) =>
   action(CLEAR_GLOBAL_ERROR, requestingComponent);
 
 const actions = {
