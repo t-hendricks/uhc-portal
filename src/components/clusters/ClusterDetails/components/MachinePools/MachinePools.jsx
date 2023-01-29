@@ -5,6 +5,7 @@ import isEmpty from 'lodash/isEmpty';
 import cx from 'classnames';
 
 import {
+  Alert,
   Card,
   Button,
   CardBody,
@@ -130,6 +131,7 @@ class MachinePools extends React.Component {
       deleteMachinePoolResponse,
       addMachinePoolResponse,
       hasMachinePoolsQuota,
+      isHypershift,
     } = this.props;
 
     const { deletedRowIndex, openedRows } = this.state;
@@ -397,9 +399,14 @@ class MachinePools extends React.Component {
       'You do not have permission to add a machine pool. Only cluster owners, cluster editors, and Organization Administrators can add machine pools.';
     const quotaReason = !hasMachinePoolsQuota && noQuotaTooltip;
 
+    const hypershiftReason =
+      isHypershift && 'Adding machine pools is currently only available using ROSA CLI';
+
     const addMachinePoolBtn = (
       <ButtonWithTooltip
-        disableReason={readOnlyReason || hibernatingReason || canNotEditReason || quotaReason}
+        disableReason={
+          readOnlyReason || hibernatingReason || canNotEditReason || quotaReason || hypershiftReason
+        }
         id="add-machine-pool"
         onClick={() => openModal('add-machine-pool')}
         variant="secondary"
@@ -409,7 +416,12 @@ class MachinePools extends React.Component {
       </ButtonWithTooltip>
     );
 
-    const tableActionsDisabled = !!(readOnlyReason || hibernatingReason || canNotEditReason);
+    const tableActionsDisabled = !!(
+      readOnlyReason ||
+      hibernatingReason ||
+      canNotEditReason ||
+      isHypershift
+    );
 
     return (
       <>
@@ -435,6 +447,13 @@ class MachinePools extends React.Component {
               <Divider />
               {deleteMachinePoolResponse.error && (
                 <ErrorBox message="Error deleting machine pool" response={machinePoolsList} />
+              )}
+              {isHypershift && (
+                <Alert
+                  variant="info"
+                  isInline
+                  title="Scaling and deleting machine pools is currently only available using ROSA CLI"
+                />
               )}
               <Table
                 aria-label="Machine pools"
@@ -509,6 +528,7 @@ MachinePools.propTypes = {
   getOrganizationAndQuota: PropTypes.func.isRequired,
   getMachineTypes: PropTypes.func.isRequired,
   machineTypes: PropTypes.object.isRequired,
+  isHypershift: PropTypes.bool,
 };
 
 export default MachinePools;
