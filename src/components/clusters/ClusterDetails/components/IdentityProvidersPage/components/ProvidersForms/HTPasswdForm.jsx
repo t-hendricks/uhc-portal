@@ -145,7 +145,7 @@ class HTPasswdForm extends React.Component {
               />
             </StackItem>
           )}
-          {!useSuggestionIsChecked && isPassword && (
+          {isPassword && !useSuggestedPassword && (
             <StackItem className="pf-u-mt-sm pf-u-mb-sm">
               <Field
                 component={ReduxVerticalFormGroup}
