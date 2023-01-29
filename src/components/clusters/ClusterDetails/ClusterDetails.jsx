@@ -549,7 +549,7 @@ class ClusterDetails extends Component {
               hidden
             >
               <ErrorBoundary>
-                <MachinePools cluster={cluster} />
+                <MachinePools cluster={cluster} isHypershift={isHypershiftCluster(cluster)} />
               </ErrorBoundary>
             </TabContent>
           )}

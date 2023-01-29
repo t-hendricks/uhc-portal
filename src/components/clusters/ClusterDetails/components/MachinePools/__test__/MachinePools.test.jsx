@@ -1,5 +1,5 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { shallow, mount } from 'enzyme';
 
 import MachinePools from '../MachinePools';
 
@@ -163,5 +163,44 @@ describe('<MachinePools />', () => {
     const wrapper = shallow(<MachinePools {...props} />);
 
     expect(wrapper.find('#add-machine-pool').props().disableReason).toBeTruthy();
+  });
+
+  it('Should disable action menu if hypershift', () => {
+    const props = { ...baseProps, isHypershift: true };
+    const wrapper = mount(<MachinePools {...props} />);
+    // need to find by classname because action menu doesn't have an accessible label
+    const actionMenus = wrapper.find('.pf-c-dropdown__toggle');
+    expect(actionMenus).toHaveLength(1);
+
+    actionMenus.forEach((button) => {
+      expect(button.props().disabled).toBeTruthy();
+    });
+  });
+
+  it('Should enable action menu if hypershift is false', () => {
+    const props = { ...baseProps, isHypershift: false };
+    const wrapper = mount(<MachinePools {...props} />);
+    // need to find by classname because action menu doesn't have an accessible label
+    const actionMenus = wrapper.find('.pf-c-dropdown__toggle');
+    expect(actionMenus).toHaveLength(1);
+
+    actionMenus.forEach((button) => {
+      expect(button.props().disabled).toBeFalsy();
+    });
+  });
+
+  it('Add machine pool button is disabled if hypershift', () => {
+    const props = { ...baseProps, isHypershift: true };
+    const wrapper = shallow(<MachinePools {...props} />);
+
+    const addMachinePoolButton = wrapper.find('#add-machine-pool');
+    expect(addMachinePoolButton.props().disableReason).toBeTruthy();
+  });
+
+  it('Add machine pool button is enabled  if not hypershift', () => {
+    const props = { ...baseProps, isHypershift: false };
+    const wrapper = shallow(<MachinePools {...props} />);
+    const addMachinePoolButton = wrapper.find('#add-machine-pool');
+    expect(addMachinePoolButton.props().disableReason).toBeFalsy();
   });
 });

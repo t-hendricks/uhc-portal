@@ -10,7 +10,6 @@ exports[`<MachinePools /> renders with a machine pool with autosacaling enabled 
     >
       <ButtonWithTooltip
         className="pf-u-mb-lg"
-        disableReason={false}
         id="add-machine-pool"
         onClick={[Function]}
         variant="secondary"
@@ -255,7 +254,6 @@ exports[`<MachinePools /> renders with additional machine pools, some with label
     >
       <ButtonWithTooltip
         className="pf-u-mb-lg"
-        disableReason={false}
         id="add-machine-pool"
         onClick={[Function]}
         variant="secondary"
@@ -626,7 +624,6 @@ exports[`<MachinePools /> renders with the default machine pool 1`] = `
     >
       <ButtonWithTooltip
         className="pf-u-mb-lg"
-        disableReason={false}
         id="add-machine-pool"
         onClick={[Function]}
         variant="secondary"
@@ -743,7 +740,6 @@ exports[`<MachinePools /> renders with the default machine pool when it has labe
     >
       <ButtonWithTooltip
         className="pf-u-mb-lg"
-        disableReason={false}
         id="add-machine-pool"
         onClick={[Function]}
         variant="secondary"
