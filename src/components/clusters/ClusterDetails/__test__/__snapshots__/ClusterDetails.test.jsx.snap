@@ -1838,6 +1838,7 @@ exports[`<ClusterDetails /> Cluster Details - OSD should render 1`] = `
               },
             }
           }
+          isHypershift={false}
         />
       </ErrorBoundary>
     </ForwardRef>
