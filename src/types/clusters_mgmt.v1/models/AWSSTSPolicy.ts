@@ -7,6 +7,10 @@
  */
 export type AWSSTSPolicy = {
   /**
+   * The ARN of the managed policy
+   */
+  arn?: string;
+  /**
    * Policy ID
    */
   id?: string;

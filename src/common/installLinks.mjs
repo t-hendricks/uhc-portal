@@ -101,7 +101,8 @@ const links = {
   OSD_CCS_GCP_SCP: `${OSD_DOCS_BASE}/osd_planning/gcp-ccs.html#ccs-gcp-customer-procedure_gcp-ccs`,
   OSD_LIFE_CYCLE: `${OSD_DOCS_BASE}/osd_architecture/osd_policy/osd-life-cycle.html`,
   OSD_Z_STREAM: `${OSD_DOCS_BASE}/osd_architecture/osd_policy/osd-life-cycle.html#rosa-patch-versions_osd-life-cycle`,
-  OSD_SERVICE_DEFINITION_COMPUTE: `${OSD_DOCS_BASE}/osd_architecture/osd_policy/osd-service-definition.html#compute_osd-service-definition`,
+  OSD_SERVICE_DEFINITION_COMPUTE: `${OSD_DOCS_BASE}/osd_architecture/osd_policy/osd-service-definition.html#instance-types_osd-service-definition`,
+  ROSA_SERVICE_DEFINITION_COMPUTE: `${ROSA_DOCS_BASE}/rosa_architecture/rosa_policy_service_definition/rosa-service-definition.html#rosa-sdpolicy-instance-types_rosa-service-definition`,
   OSD_ETCD_ENCRYPTION: `${OSD_DOCS_BASE}/osd_architecture/osd_policy/osd-service-definition.html#etcd-encryption_osd-service-definition`,
   OSD_AWS_PRIVATE_CONNECTIONS: `${OSD_DOCS_BASE}/osd_cluster_admin/osd_private_connections/aws-private-connections.html`,
   OSD_PRIVATE_CLUSTER: `${OSD_DOCS_BASE}/osd_cluster_admin/osd_private_connections/private-cluster.html`,
@@ -122,11 +123,15 @@ const links = {
 
   INSTALL_DOCS_ENTRY: `${DOCS_BASE}/installing/index.html`,
 
+  INSTALL_ASSISTED_LEARN_MORE: `${DOCS_BASE}/installing/installing_on_prem_assisted/installing-on-prem-assisted.html`,
+  INSTALL_AGENT_LEARN_MORE: `${DOCS_BASE}/installing/installing_with_agent_based_installer/preparing-to-install-with-agent-based-installer.html`,
+
   INSTALL_ALIBABAIPI_DOCS_LANDING: `${DOCS_BASE}/installing/installing_alibaba/preparing-to-install-on-alibaba.html`,
   INSTALL_ALIBABA_CUSTOMIZATIONS: `${DOCS_BASE}/installing/installing_alibaba/installing-alibaba-customizations.html`,
 
   INSTALL_AWSIPI_DOCS_LANDING: `${DOCS_BASE}/installing/installing_aws/installing-aws-account.html`,
   INSTALL_AWSIPI_DOCS_ENTRY: `${DOCS_BASE}/welcome/index.html`,
+  INSTALL_AWSIPI_LEARN_MORE: `${DOCS_BASE}/installing/installing_aws/installing-aws-default.html`,
   INSTALL_AWSUPI_GETTING_STARTED: `${DOCS_BASE}/installing/installing_aws/installing-aws-user-infra.html`,
   INSTALL_AWS_CUSTOMIZATIONS: `${DOCS_BASE}/installing/installing_aws/installing-aws-customizations.html`,
   INSTALL_AWS_VPC: `${DOCS_BASE}/installing/installing_aws/installing-aws-vpc.html`,
@@ -143,12 +148,9 @@ const links = {
   INSTALL_ASH_CUSTOMIZATIONS: `${DOCS_BASE}/installing/installing_azure_stack_hub/installing-azure-stack-hub-network-customizations.html`,
   RHCOS_ASHUPI_VHD_X86: `${MIRROR_RHCOS_LATEST_X86}/rhcos-azurestack.x86_64.vhd.gz`,
 
-  // TODO restore this doc after 4.12 GA
-  // INSTALL_BAREMETAL_ABI_GETTING_STARTED: `${DOCS_BASE}/installing/installing_with_agent_based_installer/preparing-to-install-with-agent-based-installer.html`,
-  INSTALL_BAREMETAL_ABI_GETTING_STARTED:
-    'https://cloud.redhat.com/blog/meet-the-new-agent-based-openshift-installer-1',
   INSTALL_BAREMETAL_UPI_GETTING_STARTED: `${DOCS_BASE}/installing/installing_bare_metal/installing-bare-metal.html`,
   INSTALL_BAREMETAL_IPI_GETTING_STARTED: `${DOCS_BASE}/installing/installing_bare_metal_ipi/ipi-install-installation-workflow.html`,
+  INSTALL_BAREMETAL_IPI_LEARN_MORE: `${DOCS_BASE}/installing/installing_bare_metal_ipi/ipi-install-overview.html`,
   INSTALL_BAREMETAL_RHCOS_LEARN_MORE: `${DOCS_BASE}/installing/installing_bare_metal/installing-bare-metal.html#creating-machines-bare-metal`,
   INSTALL_BAREMETAL_CUSTOMIZATIONS: `${DOCS_BASE}/installing/installing_bare_metal/installing-bare-metal-network-customizations.html`,
   RHCOS_BAREMETAL_ISO_X86: `${MIRROR_RHCOS_LATEST_X86}/rhcos-live.x86_64.iso`,
@@ -158,6 +160,7 @@ const links = {
     'https://access.redhat.com/documentation/en-us/red_hat_openshift_local',
 
   INSTALL_GCPIPI_GETTING_STARTED: `${DOCS_BASE}/installing/installing_gcp/installing-gcp-account.html`,
+  INSTALL_GCPIPI_LEARN_MORE: `${DOCS_BASE}/installing/installing_gcp/installing-gcp-default.html`,
   INSTALL_GCPUPI_GETTING_STARTED: `${DOCS_BASE}/installing/installing_gcp/installing-gcp-user-infra.html`,
   INSTALL_GCPUPI_RHCOS_LEARN_MORE: `${DOCS_BASE}/installing/installing_gcp/installing-gcp-user-infra.html#installation-gcp-user-infra-rhcos_installing-gcp-user-infra`,
   INSTALL_GCP_CUSTOMIZATIONS: `${DOCS_BASE}/installing/installing_gcp/installing-gcp-customizations.html`,
@@ -173,10 +176,6 @@ const links = {
   RHCOS_OSPUPI_QCOW_X86: `${MIRROR_RHCOS_LATEST_X86}/rhcos-openstack.x86_64.qcow2.gz`,
   RHCOS_OSPUPI_QCOW_PPC: `${MIRROR_RHCOS_LATEST_PPC}/rhcos-openstack.ppc64le.qcow2.gz`,
 
-  // TODO restore this doc after 4.12 GA
-  // INSTALL_VSPHEREABI_GETTING_STARTED: `${DOCS_BASE}/installing/installing_with_agent_based_installer/preparing-to-install-with-agent-based-installer.html`,
-  INSTALL_VSPHEREABI_GETTING_STARTED:
-    'https://cloud.redhat.com/blog/meet-the-new-agent-based-openshift-installer-1',
   INSTALL_VSPHEREUPI_GETTING_STARTED: `${DOCS_BASE}/installing/installing_vsphere/installing-vsphere.html`,
   INSTALL_VSPHEREIPI_GETTING_STARTED: `${DOCS_BASE}/installing/installing_vsphere/installing-vsphere-installer-provisioned.html`,
   INSTALL_VSPHERE_RHCOS_LEARN_MORE: `${DOCS_BASE}/installing/installing_vsphere/installing-vsphere.html#installation-vsphere-machines_installing-vsphere`,
@@ -197,11 +196,8 @@ const links = {
   INSTALL_RHV_CUSTOMIZATIONS: `${DOCS_BASE}/installing/installing_rhv/installing-rhv-customizations.html`,
   INSTALL_RHVUPI_GETTING_STARTED: `${DOCS_BASE}/installing/installing_rhv/installing-rhv-user-infra.html`,
 
-  // TODO restore this doc after 4.12 GA
-  // INSTALL_GENERIC_ABI_GETTING_STARTED: `${DOCS_BASE}/installing/installing_with_agent_based_installer/preparing-to-install-with-agent-based-installer.html`,
-  INSTALL_GENERIC_ABI_GETTING_STARTED:
-    'https://cloud.redhat.com/blog/meet-the-new-agent-based-openshift-installer-1',
   INSTALL_GENERIC_GETTING_STARTED: `${DOCS_BASE}/installing/installing_platform_agnostic/installing-platform-agnostic.html`,
+  INSTALL_GENERIC_NON_TESTED_PLATFORMS: 'https://access.redhat.com/articles/4207611',
   INSTALL_GENERIC_RHCOS_LEARN_MORE: `${DOCS_BASE}/installing/installing_platform_agnostic/installing-platform-agnostic.html#creating-machines-platform-agnostic`,
   RHCOS_GENERIC_ISO_X86: `${MIRROR_RHCOS_LATEST_X86}/rhcos-live.x86_64.iso`,
   RHCOS_GENERIC_KERNEL_X86: `${MIRROR_RHCOS_LATEST_X86}/rhcos-live-kernel-x86_64`,

@@ -25,8 +25,11 @@ exports[`BareMetal install renders correctly 1`] = `
   />
   <PageSection>
     <InstructionsChooser
+      agentBasedLearnMoreLink="https://docs.openshift.com/container-platform/4.12/installing/installing_with_agent_based_installer/preparing-to-install-with-agent-based-installer.html"
       agentBasedPageLink="/install/metal/agent-based"
+      aiLearnMoreLink="https://docs.openshift.com/container-platform/4.12/installing/installing_on_prem_assisted/installing-on-prem-assisted.html"
       aiPageLink="/assisted-installer/clusters/~new"
+      ipiLearnMoreLink="https://docs.openshift.com/container-platform/4.12/installing/installing_bare_metal_ipi/ipi-install-overview.html"
       ipiPageLink="/install/metal/installer-provisioned"
       providerSpecificFeatures={
         Object {
@@ -42,6 +45,7 @@ exports[`BareMetal install renders correctly 1`] = `
           ],
         }
       }
+      upiLearnMoreLink="https://docs.openshift.com/container-platform/4.12/installing/installing_bare_metal/installing-bare-metal.html"
       upiPageLink="/install/metal/user-provisioned"
     />
   </PageSection>

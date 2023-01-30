@@ -1971,14 +1971,14 @@
     tippy.js "5.1.2"
     tslib "^2.0.0"
 
-"@patternfly/react-core@^4.276.1":
-  version "4.276.1"
-  resolved "https://registry.yarnpkg.com/@patternfly/react-core/-/react-core-4.276.1.tgz#7a8a4d67ad4ae0418638e36db98735da60c6e9f7"
-  integrity sha512-jtE13hTetJtvczKKa4PcSdNvoZIiwhv7s0oLc1EzObjfnYpyyqzN6EfJuG/M+fQ4WsHwiwd/rWltOVDI1s1myg==
+"@patternfly/react-core@^4.264.0":
+  version "4.267.6"
+  resolved "https://registry.yarnpkg.com/@patternfly/react-core/-/react-core-4.267.6.tgz#d9a755e627fa333647ace30c15c400db47046799"
+  integrity sha512-4sb0OeGHLSLfFzrs5Tn3IXHuu6VLb+6v/FG4vcMccnGq7j/Bocns40g5mPkxC9KVbWHq7lT34wfKzS5kyIBHKQ==
   dependencies:
-    "@patternfly/react-icons" "^4.93.5"
-    "@patternfly/react-styles" "^4.92.5"
-    "@patternfly/react-tokens" "^4.94.5"
+    "@patternfly/react-icons" "^4.93.3"
+    "@patternfly/react-styles" "^4.92.3"
+    "@patternfly/react-tokens" "^4.94.3"
     focus-trap "6.9.2"
     react-dropzone "9.0.0"
     tippy.js "5.1.2"
@@ -1999,10 +1999,10 @@
   resolved "https://registry.yarnpkg.com/@patternfly/react-icons/-/react-icons-4.93.1.tgz#0d39e84c6c5886be958154b755ed7084fde2658c"
   integrity sha512-Jac+D+Mb94bUYall6cbe6gCIUEzzHPjbnOkBxV52i4BRensxTVUL2McrGn8pv4gIiQVYo+at/T2yrtGjfm+rSQ==
 
-"@patternfly/react-icons@^4.93.5":
-  version "4.93.5"
-  resolved "https://registry.yarnpkg.com/@patternfly/react-icons/-/react-icons-4.93.5.tgz#001bc33ddef0f861452ab3cce8b8a22640138d34"
-  integrity sha512-0TRgONPr0C0/wzOjwlOI9WB068m/8VG9sW3Y+4PBDyimVRUg2blSzeQbeAjWu/O1mNMwpGtqSqk9XHjGmAxwJQ==
+"@patternfly/react-icons@^4.93.3":
+  version "4.93.3"
+  resolved "https://registry.yarnpkg.com/@patternfly/react-icons/-/react-icons-4.93.3.tgz#ba617b1daefce81ba903bc702ff66060413e2a9f"
+  integrity sha512-OIEeTc4Noi9XOIRF3OB3sz9dRnxr1h4eNIzIeZwRd8xXWCQxYcrllxPV98F3+RpL4ZCH2QWb/2gG4mHrVyX+0A==
 
 "@patternfly/react-styles@^4.56.2":
   version "4.56.2"
@@ -2024,10 +2024,10 @@
   resolved "https://registry.yarnpkg.com/@patternfly/react-styles/-/react-styles-4.92.1.tgz#ea27b4a18f58a1e8648e2868ab76e75d6f655d79"
   integrity sha512-hRN6ULmp0KoscbCfTM3ihc7v6Rt5gZAqALLqyzwxgtzUnQwPdoqIOa/PuAzDPr5rkfjXjqBiYKbnsR2wG/aC4g==
 
-"@patternfly/react-styles@^4.92.5":
-  version "4.92.5"
-  resolved "https://registry.yarnpkg.com/@patternfly/react-styles/-/react-styles-4.92.5.tgz#a4b91c02e3a8e6b107785a3c06542436f4b81f73"
-  integrity sha512-oV7grkjEw/68Q5+CReaDddgz89He5QkdToIklvcTOCqzI1GmpAACmsfCb3wusqcwROj0hOHBAzf2cRZcRkdqAg==
+"@patternfly/react-styles@^4.92.3":
+  version "4.92.3"
+  resolved "https://registry.yarnpkg.com/@patternfly/react-styles/-/react-styles-4.92.3.tgz#046acee6e38c996cf41c288819eca17c3634a782"
+  integrity sha512-jC8F71trFWVYM7YVTP/3MBLwLZDCY3tgHeAmSKdcw6R607LK4rtCzfw5lt2IHNmAjQ0ggqDlJGWsJAfGMe4iPA==
 
 "@patternfly/react-table@^4.75.2":
   version "4.75.2"
@@ -2068,10 +2068,10 @@
   resolved "https://registry.yarnpkg.com/@patternfly/react-tokens/-/react-tokens-4.94.1.tgz#d638eef3fbf532017f826034c58e71d961baa9a1"
   integrity sha512-d/dmhQ9hEhbxeQTUWX9m9uU49D3GTtcrPqBq+kr6c7BqyovJBF14jYd7KBjZc4ZWu9TIEqL4rowqYdoeWK0eTA==
 
-"@patternfly/react-tokens@^4.94.5":
-  version "4.94.5"
-  resolved "https://registry.yarnpkg.com/@patternfly/react-tokens/-/react-tokens-4.94.5.tgz#3595848e4fc7c7043cea42106ddeeb6a98c67c0c"
-  integrity sha512-IbGIUkt0wL9JRXfQZBm072sFlZBDJMiwJRJ8XrIPrfiQka5OMWOcgM2d8BmExkV+SqnpahbOnHD0wBG0kWdsLg==
+"@patternfly/react-tokens@^4.94.3":
+  version "4.94.3"
+  resolved "https://registry.yarnpkg.com/@patternfly/react-tokens/-/react-tokens-4.94.3.tgz#efc7e61ed94299423443db7416a6a52d8b56d8c6"
+  integrity sha512-Rq8RMJ/iu/nTDidEb/xQWUMXFW+W4MuoLBonTAFv/Bx8G3gFMHU2JGtv9R5SvAYU6Eux9EkjCG7h3xiLqwH3jg==
 
 "@polka/url@^1.0.0-next.20":
   version "1.0.0-next.21"
@@ -4457,20 +4457,10 @@ camelcase@^6.3.0:
   resolved "https://registry.yarnpkg.com/camelcase/-/camelcase-6.3.0.tgz#5685b95eb209ac9c0c177467778c9c84df58ba9a"
   integrity sha512-Gmy6FhYlCY7uOElZUSbxo2UCDH8owEk996gkbrpsgGtrJLM3J7jGxl9Ic7Qwwj4ivOE5AWZWRMecDdF7hqGjFA==
 
-caniuse-lite@^1.0.30001261:
-  version "1.0.30001341"
-  resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30001341.tgz#59590c8ffa8b5939cf4161f00827b8873ad72498"
-  integrity sha512-2SodVrFFtvGENGCv0ChVJIDQ0KPaS1cg7/qtfMaICgeMolDdo/Z2OD32F0Aq9yl6F4YFwGPBS5AaPqNYiW4PoA==
-
-caniuse-lite@^1.0.30001370:
-  version "1.0.30001373"
-  resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30001373.tgz#2dc3bc3bfcb5d5a929bec11300883040d7b4b4be"
-  integrity sha512-pJYArGHrPp3TUqQzFYRmP/lwJlj8RCbVe3Gd3eJQkAV8SAC6b19XS9BjMvRdvaS8RMkaTN8ZhoHP6S1y8zzwEQ==
-
-caniuse-lite@^1.0.30001400:
-  version "1.0.30001439"
-  resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30001439.tgz#ab7371faeb4adff4b74dad1718a6fd122e45d9cb"
-  integrity sha512-1MgUzEkoMO6gKfXflStpYgZDlFM7M/ck/bgfVCACO5vnAf0fXoNVHdWtqGU+MYca+4bL9Z5bpOVmR33cWW9G2A==
+caniuse-lite@^1.0.30001261, caniuse-lite@^1.0.30001370, caniuse-lite@^1.0.30001400:
+  version "1.0.30001445"
+  resolved "https://registry.npmjs.org/caniuse-lite/-/caniuse-lite-1.0.30001445.tgz"
+  integrity sha512-8sdQIdMztYmzfTMO6KfLny878Ln9c2M0fc7EH60IjlP4Dc4PiCy7K2Vl3ITmWgOyPgVQKa5x+UP/KqFsxj4mBg==
 
 capital-case@^1.0.4:
   version "1.0.4"
@@ -10498,10 +10488,10 @@ opener@^1.5.2:
   resolved "https://registry.yarnpkg.com/opener/-/opener-1.5.2.tgz#5d37e1f35077b9dcac4301372271afdeb2a13598"
   integrity sha512-ur5UIdyw5Y7yEj9wLzhqXiy6GZ3Mwx0yGI+5sMn2r0N0v3cKJvUmFH5yPP+WXh9e0xfyzyJX95D8l088DNFj7A==
 
-openshift-assisted-ui-lib@2.14.1:
-  version "2.14.1"
-  resolved "https://registry.yarnpkg.com/openshift-assisted-ui-lib/-/openshift-assisted-ui-lib-2.14.1.tgz#27ba709788dc382ad72f1569304cb4e81e73d7ca"
-  integrity sha512-UT7DAHO5RvffUuFM/u0JC6svQhI6ioLNRGivqZKo2VeMIqUkAXVGY7SgcLb+r9ROx7k5TUXjWRHtqSU/LG0zWQ==
+openshift-assisted-ui-lib@2.14.2:
+  version "2.14.2"
+  resolved "https://registry.yarnpkg.com/openshift-assisted-ui-lib/-/openshift-assisted-ui-lib-2.14.2.tgz#e5a0898a2969f916f7e67a483418f2010b83ff89"
+  integrity sha512-KZtOm9rFT8he7gCiNFlnSv8rGMh8CzDJ2/it3EempZCek0X6FcYTfb5I9eAsExQKsxKE4b4bnnGP3yjhS95A6w==
   dependencies:
     axios-case-converter "^0.11.1"
     cidr-tools "^4.3.0"

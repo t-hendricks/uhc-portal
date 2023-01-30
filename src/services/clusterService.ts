@@ -9,6 +9,7 @@ import type {
   UpgradePolicy,
   UpgradePolicyState,
   MachinePool,
+  NodePool,
   CloudVPC,
   KeyRing,
   EncryptionKey,
@@ -446,6 +447,26 @@ const getMachinePools = (clusterID: string) =>
     total?: number;
   }>(`/api/clusters_mgmt/v1/clusters/${clusterID}/machine_pools`);
 
+const getNodePools = (clusterID: string) =>
+  apiRequest.get<{
+    /**
+     * Retrieved list of node pools.
+     */
+    items?: Array<NodePool>;
+    /**
+     * Index of the requested page, where one corresponds to the first page.
+     */
+    page?: number;
+    /**
+     * Number of items contained in the returned page.
+     */
+    size?: number;
+    /**
+     * Total number of items of the collection.
+     */
+    total?: number;
+  }>(`/api/clusters_mgmt/v1/clusters/${clusterID}/node_pools`);
+
 const addMachinePool = (clusterID: string, data: MachinePool) =>
   apiRequest.post<MachinePool>(`/api/clusters_mgmt/v1/clusters/${clusterID}/machine_pools`, data);
 
@@ -754,6 +775,7 @@ const clusterService = {
   editClusterIdentityProvider,
   getClusterStatus,
   getMachinePools,
+  getNodePools,
   addMachinePool,
   scaleMachinePool,
   deleteMachinePool,

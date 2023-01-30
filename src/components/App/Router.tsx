@@ -37,7 +37,6 @@ import ClustersList from '../clusters/ClusterList';
 import ArchivedClusterList from '../clusters/ArchivedClusterList';
 import CreateClusterPage from '../clusters/CreateClusterPage';
 import RegisterCluster from '../clusters/RegisterCluster';
-import CreateOSDWizard from '../clusters/CreateOSDPage/CreateOSDWizard';
 import CreateROSAWizard from '../clusters/CreateROSAPage/CreateROSAWizard';
 import ConnectedInstallAlibaba from '../clusters/install/InstallAlibaba';
 import InstallArmAWS from '../clusters/install/InstallArmAWS';
@@ -92,7 +91,6 @@ import Insights from './Insights';
 import withFeatureGate from '../features/with-feature-gate';
 import {
   ASSISTED_INSTALLER_FEATURE,
-  OSD_WIZARD_V2_FEATURE,
   HYPERSHIFT_WIZARD_FEATURE,
 } from '../../redux/constants/featureConstants';
 import InstallBMABI from '../clusters/install/InstallBareMetalABI';
@@ -112,7 +110,6 @@ import ClusterDetailsClusterOrExternalId from '../clusters/ClusterDetails/Cluste
 import { CreateOsdWizard } from '../clusters/wizards';
 import { metadataByRoute, is404 } from './routeMetadata';
 import { useFeatures } from './hooks';
-import { useGlobalState } from '~/redux/hooks';
 
 const { AssistedUiRouter } = OCM;
 
@@ -136,11 +133,8 @@ const Router: React.FC<RouterProps> = ({ history, planType, clusterId, externalC
   const {
     segment: { setPageMetadata },
   } = useChrome();
-  const { [OSD_WIZARD_V2_FEATURE]: isOsdWizardV2Enabled } = useFeatures();
+  const { [HYPERSHIFT_WIZARD_FEATURE]: isHypershiftWizardEnabled } = useFeatures();
 
-  const isHypershiftWizardEnabled = useGlobalState(
-    (state) => state.features[HYPERSHIFT_WIZARD_FEATURE],
-  );
   // TODO: just for testing, remove this when feature flag is being used in the wizard
   // eslint-disable-next-line no-console
   console.log(`HYPERSHIFT_WIZARD_FEATURE is ${isHypershiftWizardEnabled ? 'Enabled' : 'Disabled'}`);
@@ -302,26 +296,15 @@ const Router: React.FC<RouterProps> = ({ history, planType, clusterId, externalC
             <TermsGuardedRoute
               path="/create/osdtrial"
               gobackPath="/create"
-              render={() => <CreateOSDWizard product={normalizedProducts.OSDTrial} />}
+              render={() => <CreateOsdWizard product={normalizedProducts.OSDTrial} />}
               history={history}
             />
-
-            {isOsdWizardV2Enabled ? (
-              <TermsGuardedRoute
-                path="/create/osd"
-                gobackPath="/create"
-                component={CreateOsdWizard}
-                history={history}
-              />
-            ) : (
-              <TermsGuardedRoute
-                path="/create/osd"
-                gobackPath="/create"
-                render={() => <CreateOSDWizard product={normalizedProducts.OSD} />}
-                history={history}
-              />
-            )}
-
+            <TermsGuardedRoute
+              path="/create/osd"
+              gobackPath="/create"
+              component={CreateOsdWizard}
+              history={history}
+            />
             <Route
               path="/create/cloud"
               render={(props) => <CreateClusterPage activeTab="cloud" {...props} />}

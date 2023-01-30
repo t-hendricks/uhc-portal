@@ -25,6 +25,7 @@ exports[`InstallASH renders correctly 1`] = `
   />
   <PageSection>
     <InstructionsChooser
+      ipiLearnMoreLink="https://docs.openshift.com/container-platform/4.12/installing/installing_azure_stack_hub/installing-azure-stack-hub-default.html"
       ipiPageLink="/install/azure-stack-hub/installer-provisioned"
       providerSpecificFeatures={
         Object {
@@ -33,6 +34,7 @@ exports[`InstallASH renders correctly 1`] = `
           ],
         }
       }
+      upiLearnMoreLink="https://docs.openshift.com/container-platform/4.12/installing/installing_azure_stack_hub/installing-azure-stack-hub-user-infra.html"
       upiPageLink="/install/azure-stack-hub/user-provisioned"
     />
   </PageSection>

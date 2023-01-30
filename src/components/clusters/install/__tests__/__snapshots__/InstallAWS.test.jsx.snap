@@ -25,6 +25,7 @@ exports[`InstallAWS renders correctly 1`] = `
   />
   <PageSection>
     <InstructionsChooser
+      ipiLearnMoreLink="https://docs.openshift.com/container-platform/4.12/installing/installing_aws/installing-aws-default.html"
       ipiPageLink="/install/aws/installer-provisioned"
       providerSpecificFeatures={
         Object {
@@ -33,6 +34,7 @@ exports[`InstallAWS renders correctly 1`] = `
           ],
         }
       }
+      upiLearnMoreLink="https://docs.openshift.com/container-platform/4.12/installing/installing_aws/installing-aws-user-infra.html"
       upiPageLink="/install/aws/user-provisioned"
     />
   </PageSection>

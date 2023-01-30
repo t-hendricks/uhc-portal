@@ -5,12 +5,7 @@ import { Formik, FormikValues } from 'formik';
 import omit from 'lodash/omit';
 
 import { Banner, PageSection } from '@patternfly/react-core';
-import {
-  Wizard,
-  WizardStep,
-  WizardStepChangeScope,
-  WizardStepType,
-} from '@patternfly/react-core/next';
+import { Wizard, WizardNavStepData, WizardStep } from '@patternfly/react-core/dist/esm/next';
 import { Spinner } from '@redhat-cloud-services/frontend-components';
 
 import config from '~/config';
@@ -63,7 +58,11 @@ import {
 } from './Networking';
 import { ReviewAndCreate } from './ReviewAndCreate';
 
-export const CreateOsdWizard = () => {
+interface CreateOsdWizardProps {
+  product?: string;
+}
+
+export const CreateOsdWizard = ({ product }: CreateOsdWizardProps) => {
   const dispatch = useDispatch();
   const persistentStorageValues = useGlobalState((state) => state.persistentStorageValues);
   const loadBalancerValues = useGlobalState((state) => state.loadBalancerValues);
@@ -106,7 +105,11 @@ export const CreateOsdWizard = () => {
   };
 
   return (
-    <Formik initialValues={initialValues} initialTouched={initialTouched} onSubmit={onSubmit}>
+    <Formik
+      initialValues={{ ...initialValues, ...(product && { product }) }}
+      initialTouched={initialTouched}
+      onSubmit={onSubmit}
+    >
       <>
         <PageTitle
           title="Create an OpenShift Dedicated Cluster"
@@ -181,27 +184,10 @@ const CreateOsdWizardInternal = () => {
 
   const onClose = () => history.push(UrlPath.CreateCloud);
 
-  const onStepChange = (
-    _event: React.MouseEvent<HTMLButtonElement>,
-    { name }: WizardStepType,
-    _prevStep: WizardStepType,
-    scope: WizardStepChangeScope,
-  ) => {
-    let trackEvent: TrackEvent;
-
-    switch (scope) {
-      case WizardStepChangeScope.Next:
-        trackEvent = trackEvents.WizardNext;
-        break;
-      case WizardStepChangeScope.Back:
-        trackEvent = trackEvents.WizardBack;
-        break;
-      default:
-        trackEvent = trackEvents.WizardLinkNav;
-    }
-
-    trackStepChange(trackEvent, name?.toString());
-  };
+  const onNext = ({ name }: WizardNavStepData) => trackStepChange(trackEvents.WizardNext, name);
+  const onBack = ({ name }: WizardNavStepData) => trackStepChange(trackEvents.WizardBack, name);
+  const onNavByIndex = ({ name }: WizardNavStepData) =>
+    trackStepChange(trackEvents.WizardLinkNav, name);
 
   if (
     organization.pending ||
@@ -238,11 +224,14 @@ const CreateOsdWizardInternal = () => {
   return (
     <>
       <Wizard
+        id="osd-wizard"
         onClose={onClose}
-        onStepChange={onStepChange}
+        onNext={onNext}
+        onBack={onBack}
+        onNavByIndex={onNavByIndex}
         footer={<CreateOsdWizardFooter />}
         nav={{ 'aria-label': `${ariaLabel} steps` }}
-        isVisitRequired
+        isStepVisitRequired
       >
         <WizardStep name={StepName.BillingModel} id={StepId.BillingModel}>
           <BillingModel />
@@ -250,7 +239,6 @@ const CreateOsdWizardInternal = () => {
         <WizardStep
           name={StepName.ClusterSettings}
           id={StepId.ClusterSettings}
-          isExpandable
           steps={[
             <WizardStep
               name={StepName.CloudProvider}
@@ -270,7 +258,6 @@ const CreateOsdWizardInternal = () => {
         <WizardStep
           name={StepName.Networking}
           id={StepId.Networking}
-          isExpandable
           steps={[
             <WizardStep
               name={StepName.Configuration}

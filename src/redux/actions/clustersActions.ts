@@ -561,6 +561,8 @@ const fetchClusterDetails = (subscriptionID: string) =>
 const setClusterDetails = (cluster: AugmentedCluster, mergeDetails = false) =>
   action(clustersConstants.SET_CLUSTER_DETAILS, { cluster, mergeDetails });
 
+const clearClusterDetails = () => action(clustersConstants.CLEAR_CLUSTER_DETAILS);
+
 const resetCreatedClusterResponse = () => action(clustersConstants.RESET_CREATED_CLUSTER_RESPONSE);
 
 const getClusterStatus = (clusterID: string) =>
@@ -590,6 +592,7 @@ type ClusterAction = ActionType<
   | typeof editClusterConsoleURL
   | typeof fetchClustersAction
   | typeof fetchClusterDetails
+  | typeof clearClusterDetails
   | typeof resetCreatedClusterResponse
   | typeof getClusterStatus
   | typeof getInstallableVersions
@@ -603,6 +606,7 @@ const clustersActions = {
   fetchClusters,
   fetchClusterDetails,
   setClusterDetails,
+  clearClusterDetails,
   invalidateClusters,
   resetCreatedClusterResponse,
   editClusterDisplayName,

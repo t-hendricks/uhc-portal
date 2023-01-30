@@ -44,6 +44,10 @@ export type CloudRegion = {
    */
   name?: string;
   /**
+   * 'true' if the region is supported for Hypershift deployments, 'false' otherwise.
+   */
+  supports_hypershift?: boolean;
+  /**
    * Whether the region supports multiple availability zones.
    */
   supports_multi_az?: boolean;

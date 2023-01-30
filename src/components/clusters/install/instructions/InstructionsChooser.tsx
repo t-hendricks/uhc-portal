@@ -6,12 +6,16 @@ import { InstructionsChooserCard } from './InstructionsChooserCard';
 import './InstructionsChooser.scss';
 
 interface InstructionsChooserProps {
-  aiPageLink: string;
-  agentBasedPageLink: string;
+  aiPageLink?: string;
+  aiLearnMoreLink?: string;
+  agentBasedPageLink?: string;
+  agentBasedLearnMoreLink?: string;
   hideIPI?: boolean;
   hideUPI?: boolean;
   ipiPageLink: string;
+  ipiLearnMoreLink?: string;
   upiPageLink: string;
+  upiLearnMoreLink?: string;
   recommend?: 'ai' | 'ipi';
   providerSpecificFeatures?: {
     ai?: React.ReactNode[];
@@ -23,12 +27,16 @@ interface InstructionsChooserProps {
 
 export const InstructionsChooser = ({
   aiPageLink,
+  aiLearnMoreLink,
   agentBasedPageLink,
+  agentBasedLearnMoreLink,
   hideIPI = false,
   ipiPageLink,
+  ipiLearnMoreLink,
   hideUPI = false,
   recommend = 'ai',
   upiPageLink,
+  upiLearnMoreLink,
   providerSpecificFeatures = {},
 }: InstructionsChooserProps) => (
   <div className="pf-c-content ocm-page instructions-chooser">
@@ -54,7 +62,7 @@ export const InstructionsChooser = ({
           'For connected networks',
           ...(providerSpecificFeatures.ai || []),
         ]}
-        footerLinkHref="#" // TODO URL here
+        footerLinkHref={aiLearnMoreLink}
         footerLinkText="Learn more about interactive"
       />
     )}
@@ -74,7 +82,7 @@ export const InstructionsChooser = ({
           'Preflight validations',
           ...(providerSpecificFeatures.abi || []),
         ]}
-        footerLinkHref="#" // TODO URL here
+        footerLinkHref={agentBasedLearnMoreLink}
         footerLinkText="Learn more about local agent-based"
       />
     )}
@@ -98,7 +106,7 @@ export const InstructionsChooser = ({
           'Installer Provisioned Infrastructure',
           ...(providerSpecificFeatures.ipi || []),
         ]}
-        footerLinkHref="#" // TODO URL here
+        footerLinkHref={ipiLearnMoreLink}
         footerLinkText="Learn more about automated"
       />
     )}
@@ -114,7 +122,7 @@ export const InstructionsChooser = ({
           'Highly customizable',
           ...(providerSpecificFeatures.upi || []),
         ]}
-        footerLinkHref="#" // TODO URL here
+        footerLinkHref={upiLearnMoreLink}
         footerLinkText="Learn more about full control"
       />
     )}

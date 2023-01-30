@@ -47,6 +47,11 @@ const managedReadyProps = {
   ...props,
 };
 
+const hyperShiftReadyProps = {
+  cluster: { ...cluster, hypershift: { enabled: true } },
+  ...props,
+};
+
 const managedReadyOsdTrialProps = {
   cluster: { ...osdTrialCluster },
   ...props,
@@ -158,4 +163,5 @@ export {
   osdTrialCluster,
   organizationClusterProps,
   hibernateClusterModalData,
+  hyperShiftReadyProps,
 };

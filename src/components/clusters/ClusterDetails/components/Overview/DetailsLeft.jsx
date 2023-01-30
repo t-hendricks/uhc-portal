@@ -7,13 +7,16 @@ import {
   DescriptionListGroup,
   DescriptionListDescription,
 } from '@patternfly/react-core';
+import spacing from '@patternfly/react-styles/css/utilities/Spacing/spacing';
 
 import Timestamp from '../../../../common/Timestamp';
+import PopoverHint from '../../../../common/PopoverHint';
 import ClusterTypeLabel from '../../../common/ClusterTypeLabel';
 import BillingModelLabel from '../../../common/BillingModelLabel';
 import InfrastructureModelLabel from '../../../common/InfrastructureModelLabel';
 import ClusterVersionInfo from './ClusterVersionInfo';
 import { normalizedProducts } from '../../../../../common/subscriptionTypes';
+import { isHypershiftCluster } from '../../clusterDetailsHelper';
 
 const getIdFields = (cluster, showAssistedId) => {
   let label = 'Cluster ID';
@@ -31,6 +34,7 @@ function DetailsLeft({ cluster, cloudProviders, showAssistedId }) {
   const region = get(cluster, 'region.id', 'N/A');
   const planType = get(cluster, 'subscription.plan.type');
   const isROSA = planType === normalizedProducts.ROSA;
+  const isHypershift = isHypershiftCluster(cluster);
 
   let cloudProvider;
   if (cloudProviderId && cloudProviders.fulfilled && cloudProviders.providers[cloudProviderId]) {
@@ -40,6 +44,8 @@ function DetailsLeft({ cluster, cloudProviders, showAssistedId }) {
   }
 
   const { id, idLabel } = getIdFields(cluster, showAssistedId);
+  const controlPlaneType = isHypershift ? 'Hosted' : 'Standalone';
+
   return (
     <>
       <DescriptionList>
@@ -52,6 +58,10 @@ function DetailsLeft({ cluster, cloudProviders, showAssistedId }) {
           <DescriptionListDescription>
             <ClusterTypeLabel cluster={cluster} />
           </DescriptionListDescription>
+        </DescriptionListGroup>
+        <DescriptionListGroup>
+          <DescriptionListTerm>Control plane type</DescriptionListTerm>
+          <DescriptionListDescription>{controlPlaneType}</DescriptionListDescription>
         </DescriptionListGroup>
         <DescriptionListGroup>
           <DescriptionListTerm>Region</DescriptionListTerm>
@@ -67,14 +77,22 @@ function DetailsLeft({ cluster, cloudProviders, showAssistedId }) {
           <>
             <DescriptionListGroup>
               <DescriptionListTerm>Availability</DescriptionListTerm>
-              <DescriptionListDescription>
-                {cluster.multi_az ? 'Multi-zone' : 'Single zone'}
+              <DescriptionListDescription data-testid="availability">
+                {cluster.multi_az || isHypershift ? 'Multi-zone' : 'Single zone'}
               </DescriptionListDescription>
             </DescriptionListGroup>
           </>
         )}
         <DescriptionListGroup>
-          <DescriptionListTerm>Version</DescriptionListTerm>
+          <DescriptionListTerm>
+            Version
+            {isHypershift && (
+              <PopoverHint
+                iconClassName={spacing.mlSm}
+                hint="This version is only for the control plane. Worker nodes may have a different version."
+              />
+            )}
+          </DescriptionListTerm>
           <DescriptionListDescription>
             <ClusterVersionInfo cluster={cluster} />
           </DescriptionListDescription>
