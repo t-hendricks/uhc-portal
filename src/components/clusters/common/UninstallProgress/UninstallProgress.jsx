@@ -15,6 +15,7 @@ import { ExclamationCircleIcon } from '@patternfly/react-icons';
 import AddOnsConstants from '../../ClusterDetails/components/AddOns/AddOnsConstants';
 
 import './UninstallProgress.scss';
+import { isHypershiftCluster } from '../../ClusterDetails/clusterDetailsHelper';
 
 class UninstallProgress extends React.Component {
   state = {
@@ -42,7 +43,7 @@ class UninstallProgress extends React.Component {
   };
 
   render() {
-    const { clusterAddOns, addOns } = this.props;
+    const { cluster, clusterAddOns, addOns } = this.props;
 
     const { showPopover } = this.state;
 
@@ -164,8 +165,16 @@ class UninstallProgress extends React.Component {
       const pending = { variant: 'pending', text: 'Pending' };
       const completed = { variant: 'success', text: 'Completed' };
       const inProgress = { variant: 'info', text: 'Uninstalling', isCurrent: true };
+      const notSupported = { variant: 'pending', text: 'Not Supported' };
 
       const hasAddOns = blockingAddons.length !== 0 && clusterAddOns.items.length !== 0;
+
+      if (isHypershiftCluster(cluster)) {
+        return {
+          addOnCleanUp: notSupported,
+          clusterUninstall: inProgress,
+        };
+      }
       if (!hasAddOns || !anyAddonsNotDeleted) {
         return {
           addOnCleanUp: completed,
