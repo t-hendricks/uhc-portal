@@ -61,7 +61,9 @@ function DetailsLeft({ cluster, cloudProviders, showAssistedId }) {
         </DescriptionListGroup>
         <DescriptionListGroup>
           <DescriptionListTerm>Control plane type</DescriptionListTerm>
-          <DescriptionListDescription>{controlPlaneType}</DescriptionListDescription>
+          <DescriptionListDescription data-testid="controlType">
+            {controlPlaneType}
+          </DescriptionListDescription>
         </DescriptionListGroup>
         <DescriptionListGroup>
           <DescriptionListTerm>Region</DescriptionListTerm>
