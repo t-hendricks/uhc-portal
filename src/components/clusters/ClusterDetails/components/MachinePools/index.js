@@ -17,9 +17,26 @@ import { openModal, closeModal } from '../../../../common/Modal/ModalActions';
 import shouldShowModal from '../../../../common/Modal/ModalSelectors';
 import modals from '../../../../common/Modal/modals';
 
-const mapStateToProps = (state) => {
+const mapStateToProps = (state, ownProps) => {
   const cluster = get(state, 'clusters.details.cluster', {});
   const nodes = get(cluster, 'nodes', {});
+
+  const props = {
+    isAddMachinePoolModalOpen: shouldShowModal(state, 'add-machine-pool'),
+    isEditTaintsModalOpen: shouldShowModal(state, modals.EDIT_TAINTS),
+    isEditLabelsModalOpen: shouldShowModal(state, modals.EDIT_LABELS),
+    machinePoolsList: state.machinePools.getMachinePools,
+    addMachinePoolResponse: state.machinePools.addMachinePoolResponse,
+    deleteMachinePoolResponse: state.machinePools.deleteMachinePoolResponse,
+    scaleMachinePoolResponse: state.machinePools.scaleMachinePoolResponse,
+    hasMachinePoolsQuota: hasMachinePoolsQuotaSelector(state),
+    machineTypes: state.machineTypes,
+    organization: state.userProfile.organization,
+  };
+
+  if (ownProps.isHypershift) {
+    return props;
+  }
 
   // align the default machine pool structure to additional machine pools structure
   const defaultMachinePool = {
@@ -36,17 +53,8 @@ const mapStateToProps = (state) => {
   }
 
   return {
-    isAddMachinePoolModalOpen: shouldShowModal(state, 'add-machine-pool'),
-    isEditTaintsModalOpen: shouldShowModal(state, modals.EDIT_TAINTS),
-    isEditLabelsModalOpen: shouldShowModal(state, modals.EDIT_LABELS),
     defaultMachinePool,
-    machinePoolsList: state.machinePools.getMachinePools,
-    addMachinePoolResponse: state.machinePools.addMachinePoolResponse,
-    deleteMachinePoolResponse: state.machinePools.deleteMachinePoolResponse,
-    scaleMachinePoolResponse: state.machinePools.scaleMachinePoolResponse,
-    hasMachinePoolsQuota: hasMachinePoolsQuotaSelector(state),
-    machineTypes: state.machineTypes,
-    organization: state.userProfile.organization,
+    ...props,
   };
 };
 
@@ -54,7 +62,7 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
   openModal: (modalId, data) => dispatch(openModal(modalId, data)),
   closeModal: () => dispatch(closeModal()),
   getMachinePools: () =>
-    dispatch(getMachineOrNodePools(ownProps.cluster.id, ownProps.cluster?.hypershift?.enabled)),
+    dispatch(getMachineOrNodePools(ownProps.cluster.id, ownProps.isHypershift)),
   addMachinePool: () => dispatch(addMachinePool(ownProps.clusterID)),
   clearGetMachinePoolsResponse: () => dispatch(clearGetMachinePoolsResponse(ownProps.clusterID)),
   submit: (params) => {
