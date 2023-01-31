@@ -85,6 +85,7 @@ class IdentityProvidersPage extends React.Component {
       submitIDPResponse,
       selectedMappingMethod,
       change,
+      clearFields,
       IDPList,
       clusterConsoleURL,
       initialValues,
@@ -195,6 +196,7 @@ class IdentityProvidersPage extends React.Component {
                       selectedMappingMethod={selectedMappingMethod}
                       clusterConsoleURL={clusterConsoleURL}
                       change={change}
+                      clearFields={clearFields}
                       IDPList={IDPList}
                       isEditForm={isEditForm}
                       idpEdited={idpEdited}
@@ -255,6 +257,7 @@ IdentityProvidersPage.propTypes = {
   submitIDPResponse: PropTypes.object,
   selectedMappingMethod: PropTypes.string,
   change: PropTypes.func.isRequired,
+  clearFields: PropTypes.func.isRequired,
   IDPList: PropTypes.array.isRequired,
   idpEdited: PropTypes.object,
   editedType: PropTypes.string,
