@@ -76,6 +76,15 @@ class HTPasswdForm extends React.Component {
     change('htpasswd_username', suggestedUsername);
   }
 
+  componentDidUpdate(prevProps, prevState) {
+    const { clearFields } = this.props;
+    const { useSuggestedPassword } = this.state;
+    // artificially reset the uncontrolled password confirmation field once it's hidden
+    if (useSuggestedPassword && !prevState.useSuggestedPassword) {
+      clearFields(false, false, 'htpasswd_password_confirmation');
+    }
+  }
+
   radioControlledInputGroup = ({
     suggestedValueRadioLabel,
     createOwnRadioLabel,
@@ -145,7 +154,7 @@ class HTPasswdForm extends React.Component {
               />
             </StackItem>
           )}
-          {!useSuggestionIsChecked && isPassword && (
+          {isPassword && !useSuggestedPassword && (
             <StackItem className="pf-u-mt-sm pf-u-mb-sm">
               <Field
                 component={ReduxVerticalFormGroup}
@@ -278,6 +287,7 @@ class HTPasswdForm extends React.Component {
 HTPasswdForm.propTypes = {
   isPending: PropTypes.bool,
   change: PropTypes.func,
+  clearFields: PropTypes.func,
   input: PropTypes.object,
   HTPasswdPasswordErrors: {
     emptyPassword: PropTypes.bool,
