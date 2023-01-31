@@ -28,6 +28,8 @@ import {
   DELETE_MACHINE_POOL,
   CLEAR_ADD_MACHINE_POOL_RESPONSE,
   CLEAR_SCALE_MACHINE_POOL_RESPONSE,
+  CLEAR_GET_MACHINE_POOLS_RESPONSE,
+  CLEAR_DELETE_MACHINE_POOL_RESPONSE,
 } from './MachinePoolsActions';
 
 const initialState = {
@@ -69,6 +71,11 @@ function MachinePoolsReducer(state = initialState, action) {
           ...initialState.getMachinePools,
           ...getErrorState(action),
         };
+        break;
+
+      // CLEAR_GET_MACHINE_POOLS_RESPONSE
+      case CLEAR_GET_MACHINE_POOLS_RESPONSE:
+        draft.getMachinePools = { ...initialState.getMachinePools };
         break;
 
       // ADD_MACHINE_POOL
@@ -136,6 +143,11 @@ function MachinePoolsReducer(state = initialState, action) {
           ...initialState.deleteMachinePoolResponse,
           ...getErrorState(action),
         };
+        break;
+
+      // CLEAR_DELETE_MACHINE_POOL_RESPONSE
+      case CLEAR_DELETE_MACHINE_POOL_RESPONSE:
+        draft.deleteMachinePoolResponse = { ...initialState.deleteMachinePoolResponse };
         break;
     }
   });

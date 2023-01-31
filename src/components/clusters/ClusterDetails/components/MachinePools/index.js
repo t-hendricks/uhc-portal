@@ -7,6 +7,7 @@ import {
   addMachinePool,
   deleteMachinePool,
   clearGetMachinePoolsResponse,
+  clearDeleteMachinePoolResponse,
 } from './MachinePoolsActions';
 import { hasMachinePoolsQuotaSelector } from './MachinePoolsSelectors';
 
@@ -57,6 +58,8 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
     dispatch(getMachineOrNodePools(ownProps.cluster.id, ownProps.cluster?.hypershift?.enabled)),
   addMachinePool: () => dispatch(addMachinePool(ownProps.clusterID)),
   clearGetMachinePoolsResponse: () => dispatch(clearGetMachinePoolsResponse(ownProps.clusterID)),
+  clearDeleteMachinePoolResponse: () =>
+    dispatch(clearDeleteMachinePoolResponse(ownProps.clusterID)),
   submit: (params) => {
     dispatch(addMachinePool(ownProps.clusterID, params));
   },

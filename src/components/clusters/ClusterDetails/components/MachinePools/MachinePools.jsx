@@ -40,6 +40,7 @@ import { isHibernating } from '../../../common/clusterStates';
 const initialState = {
   deletedRowIndex: null,
   openedRows: [],
+  hideDeleteMachinePoolError: false,
 };
 
 class MachinePools extends React.Component {
@@ -84,8 +85,8 @@ class MachinePools extends React.Component {
     }
 
     if (
-      prevProps.machinePoolsList.pending &&
-      machinePoolsList.fulfilled &&
+      ((prevProps.machinePoolsList.pending && machinePoolsList.fulfilled) ||
+        deleteMachinePoolResponse.error) &&
       deletedRowIndex !== null
     ) {
       // eslint-disable-next-line react/no-did-update-set-state
@@ -132,9 +133,10 @@ class MachinePools extends React.Component {
       addMachinePoolResponse,
       hasMachinePoolsQuota,
       isHypershift,
+      clearDeleteMachinePoolResponse,
     } = this.props;
 
-    const { deletedRowIndex, openedRows } = this.state;
+    const { deletedRowIndex, openedRows, hideDeleteMachinePoolError } = this.state;
 
     const hasMachinePools = !!machinePoolsList.data.length;
 
@@ -335,6 +337,10 @@ class MachinePools extends React.Component {
     const onClickDeleteAction = (_, rowID, rowData) => {
       this.setState(
         produce((draft) => {
+          if (deleteMachinePoolResponse.error) {
+            clearDeleteMachinePoolResponse();
+            draft.hideDeleteMachinePoolError = false;
+          }
           draft.deletedRowIndex = rowID;
           draft.openedRows = draft.openedRows.filter(
             (machinePoolId) => machinePoolId !== rowData.machinePool.id,
@@ -445,8 +451,19 @@ class MachinePools extends React.Component {
               )}
               {addMachinePoolBtn}
               <Divider />
-              {deleteMachinePoolResponse.error && (
-                <ErrorBox message="Error deleting machine pool" response={machinePoolsList} />
+              {deleteMachinePoolResponse.error && !hideDeleteMachinePoolError && (
+                <ErrorBox
+                  message="Error deleting machine pool"
+                  response={deleteMachinePoolResponse}
+                  showCloseBtn
+                  onCloseAlert={() =>
+                    this.setState(
+                      produce((draft) => {
+                        draft.hideDeleteMachinePoolError = true;
+                      }),
+                    )
+                  }
+                />
               )}
               {isHypershift && (
                 <Alert
@@ -525,6 +542,7 @@ MachinePools.propTypes = {
   getMachinePools: PropTypes.func.isRequired,
   deleteMachinePool: PropTypes.func.isRequired,
   clearGetMachinePoolsResponse: PropTypes.func.isRequired,
+  clearDeleteMachinePoolResponse: PropTypes.func.isRequired,
   getOrganizationAndQuota: PropTypes.func.isRequired,
   getMachineTypes: PropTypes.func.isRequired,
   machineTypes: PropTypes.object.isRequired,
