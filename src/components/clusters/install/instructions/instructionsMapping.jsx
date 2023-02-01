@@ -113,10 +113,10 @@ const instructionsMapping = {
     },
     multi: {
       ipi: {
-        title: 'Install OpenShift on Azure with heterogeneous infrastructure',
+        title: 'Install OpenShift on Azure with multi-architecture compute machines',
         installer: tools.MULTIINSTALLER,
         channel: channels.STABLE,
-        docURL: links.INSTALL_AZURE_HETEROGENEOUS,
+        docURL: links.INSTALL_AZURE_MULTI_ARCH,
         preReleasePageLink: '/install/multi/pre-release',
       },
     },

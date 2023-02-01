@@ -17,6 +17,7 @@ const HYPERSHIFT_WIZARD_FEATURE = 'HYPERSHIFT_WIZARD_FEATURE';
 
 // Features controlled by URL `?features={...}`:
 const OSD_WIZARD_V2_FEATURE = 'osd-wizard-v2';
+const ROSA_WIZARD_V2_FEATURE = 'rosa-wizard-v2';
 
 export {
   SET_FEATURE,
@@ -31,4 +32,5 @@ export {
   ROSA_CREATION_WIZARD_FEATURE,
   HYPERSHIFT_WIZARD_FEATURE,
   OSD_WIZARD_V2_FEATURE,
+  ROSA_WIZARD_V2_FEATURE,
 };

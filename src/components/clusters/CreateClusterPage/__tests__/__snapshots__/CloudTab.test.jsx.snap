@@ -1128,7 +1128,7 @@ exports[`<CloudTab /> should render correctly with OSD Trial quota 1`] = `
                   class="pf-u-mr-xs"
                   href="/install/azure/multi/installer-provisioned"
                 >
-                  Azure (heterogeneous)
+                  Azure (multi-architecture)
                 </a>
                 <span
                   class="pf-c-label pf-m-orange pf-u-ml-md pf-u-display-inline"
@@ -2397,7 +2397,7 @@ exports[`<CloudTab /> should render correctly with both trial and quota 1`] = `
                   class="pf-u-mr-xs"
                   href="/install/azure/multi/installer-provisioned"
                 >
-                  Azure (heterogeneous)
+                  Azure (multi-architecture)
                 </a>
                 <span
                   class="pf-c-label pf-m-orange pf-u-ml-md pf-u-display-inline"
@@ -3590,7 +3590,7 @@ exports[`<CloudTab /> should render correctly with quota 1`] = `
                   class="pf-u-mr-xs"
                   href="/install/azure/multi/installer-provisioned"
                 >
-                  Azure (heterogeneous)
+                  Azure (multi-architecture)
                 </a>
                 <span
                   class="pf-c-label pf-m-orange pf-u-ml-md pf-u-display-inline"
@@ -4793,7 +4793,7 @@ exports[`<CloudTab /> should render correctly without quota 1`] = `
                   class="pf-u-mr-xs"
                   href="/install/azure/multi/installer-provisioned"
                 >
-                  Azure (heterogeneous)
+                  Azure (multi-architecture)
                 </a>
                 <span
                   class="pf-c-label pf-m-orange pf-u-ml-md pf-u-display-inline"

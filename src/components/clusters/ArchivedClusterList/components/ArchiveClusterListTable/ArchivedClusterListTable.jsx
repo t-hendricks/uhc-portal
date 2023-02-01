@@ -57,7 +57,7 @@ function ArchivedClusterListTable(props) {
 
   const sortColumns = {
     Name: 'display_name',
-    Type: 'plan.type',
+    Type: 'plan.id',
     Status: 'status',
   };
 

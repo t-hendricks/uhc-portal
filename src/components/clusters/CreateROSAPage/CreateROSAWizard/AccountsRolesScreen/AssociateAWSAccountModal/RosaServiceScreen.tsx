@@ -12,7 +12,7 @@ import {
 
 import links from '~/common/installLinks.mjs';
 import ExternalLink from '~/components/common/ExternalLink';
-import { CheckboxField } from '~/components/osd/common/form';
+import { CheckboxField } from '~/components/clusters/wizards/form';
 
 interface RosaServiceScreenProps {
   hideTitle?: boolean;
