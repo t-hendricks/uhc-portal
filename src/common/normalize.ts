@@ -37,6 +37,7 @@ const normalizeProductID = (id: string | undefined): string => {
     MOA: normalizedProducts.ROSA,
     ROSA: normalizedProducts.ROSA,
     ROSA_HYPERSHIFT: normalizedProducts.ROSA_HyperShift,
+    MOA_HOSTEDCONTROLPLANE: normalizedProducts.ROSA_HyperShift,
     ARO: normalizedProducts.ARO,
     OCP_ASSISTEDINSTALL: normalizedProducts.OCP_Assisted_Install,
     ANY: normalizedProducts.ANY, // used by account-manager in quota_cost
@@ -228,6 +229,10 @@ const fakeClusterFromSubscription = (subscription: Subscription): FakeCluster =>
     cluster.region = {
       id: regionId.toLowerCase(),
     };
+  }
+
+  if (normalizeProductID(subscription.plan?.id) === normalizedProducts.ROSA_HyperShift) {
+    cluster.hypershift = { enabled: true };
   }
 
   return cluster;
