@@ -231,10 +231,6 @@ const fakeClusterFromSubscription = (subscription: Subscription): FakeCluster =>
     };
   }
 
-  if (normalizeProductID(subscription.plan?.id) === normalizedProducts.ROSA_HyperShift) {
-    cluster.hypershift = { enabled: true };
-  }
-
   return cluster;
 };
 

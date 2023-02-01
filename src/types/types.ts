@@ -41,7 +41,6 @@ export type FakeCluster = // AICluster &
     | 'ccs'
     | 'external_id'
     | 'name'
-    | 'hypershift'
   > & {
     metrics: OneMetric;
     state?: string | ClusterState;
