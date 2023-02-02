@@ -31,7 +31,7 @@ exports[`InstallASHUPI renders correctly 1`] = `
     <OCPInstructions
       channel="stable"
       cloudProviderID="ash"
-      docURL="https://docs.openshift.com/container-platform/4.11/installing/installing_azure_stack_hub/installing-azure-stack-hub-user-infra.html"
+      docURL="https://docs.openshift.com/container-platform/4.12/installing/installing_azure_stack_hub/installing-azure-stack-hub-user-infra.html"
       installer="x86_64-openshift-install"
       isBMIPI={false}
       isUPI={true}
@@ -44,7 +44,7 @@ exports[`InstallASHUPI renders correctly 1`] = `
               "url": "https://mirror.openshift.com/pub/openshift-v4/x86_64/dependencies/rhcos/latest/rhcos-azurestack.x86_64.vhd.gz",
             },
           ],
-          "learnMoreURL": "https://docs.openshift.com/container-platform/4.11/installing/installing_azure_stack_hub/installing-azure-stack-hub-user-infra.html#installation-azure-user-infra-uploading-rhcos_installing-azure-stack-hub-user-infra",
+          "learnMoreURL": "https://docs.openshift.com/container-platform/4.12/installing/installing_azure_stack_hub/installing-azure-stack-hub-user-infra.html#installation-azure-user-infra-uploading-rhcos_installing-azure-stack-hub-user-infra",
         }
       }
       title="Install OpenShift on Azure Stack Hub with user-provisioned infrastructure"

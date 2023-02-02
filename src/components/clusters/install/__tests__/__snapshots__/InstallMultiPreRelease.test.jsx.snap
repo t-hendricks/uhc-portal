@@ -15,7 +15,7 @@ exports[`InstallMultiPreRelease renders correctly 1`] = `
               "path": "/create",
             },
             Object {
-              "label": "Heterogeneous clusters",
+              "label": "Multi-architecture clusters",
             },
             Object {
               "label": "Pre-Release Builds",
@@ -24,7 +24,7 @@ exports[`InstallMultiPreRelease renders correctly 1`] = `
         }
       />
     }
-    title="Install OpenShift on heterogeneous infrastructure"
+    title="Install OpenShift with multi-architecture compute machines"
   />
   <PageSection>
     <InstructionsPreRelease

@@ -577,7 +577,8 @@ const installationRows = (expanded, setExpanded, selections, setSelections, tool
               <ExternalLink href={links.INSTALL_DOCS_ENTRY}>documentation</ExternalLink> as a guide.
             </Text>
             <Text>
-              Learn how to deploy in <Link to="/install/aws/arm">AWS</Link>, or in your{' '}
+              Learn how to deploy in <Link to="/install/aws/arm">AWS</Link>,{' '}
+              <Link to="/install/azure/arm/installer-provisioned">Azure</Link>, or in your{' '}
               <Link to="/install/arm">data center</Link>.
             </Text>
           </TextContent>
@@ -632,7 +633,7 @@ const installationRows = (expanded, setExpanded, selections, setSelections, tool
         channel={channels.STABLE}
         name={
           <>
-            OpenShift Installer for heterogeneous clusters{' '}
+            OpenShift Installer with multi-architecture compute machines{' '}
             <TechnologyPreview position={PreviewBadgePosition.inline} />
           </>
         }

@@ -8,7 +8,7 @@ exports[`TelemetryDisclaimer renders correctly 1`] = `
    
   <Text
     component="a"
-    href="https://docs.openshift.com/container-platform/4.11/support/remote_health_monitoring/about-remote-health-monitoring.html"
+    href="https://docs.openshift.com/container-platform/4.12/support/remote_health_monitoring/about-remote-health-monitoring.html"
     rel="noreferrer noopener"
     target="_blank"
   >

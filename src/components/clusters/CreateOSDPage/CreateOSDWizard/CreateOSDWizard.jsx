@@ -368,10 +368,15 @@ class CreateOSDWizardInternal extends React.Component {
         name: stepNameById[stepId.REVIEW_AND_CREATE],
         component: (
           <ErrorBoundary>
-            <ReviewClusterScreen
-              isPending={createClusterResponse.pending}
-              clusterRequestParams={{ isWizard: true }}
-            />
+            <WizardContext.Consumer>
+              {({ goToStepById }) => (
+                <ReviewClusterScreen
+                  isPending={createClusterResponse.pending}
+                  clusterRequestParams={{ isWizard: true }}
+                  goToStepById={goToStepById}
+                />
+              )}
+            </WizardContext.Consumer>
             {isErrorModalOpen && <CreateClusterErrorModal onRetry={onSubmit} />}
           </ErrorBoundary>
         ),
