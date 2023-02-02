@@ -38,7 +38,9 @@ class ClusterVersionInfo extends React.Component {
     const { popoverOpen } = this.state;
     const isUpgrading = get(cluster, 'metrics.upgrade.state') === 'running';
     const clusterVersion =
-      (isUpgrading ? cluster.version?.raw_id : cluster.openshift_version) || 'N/A';
+      (isUpgrading ? cluster.version?.raw_id : cluster.openshift_version) ||
+      cluster.version?.raw_id ||
+      'N/A';
     const channel = get(cluster, 'metrics.channel');
 
     const scheduledUpdate = schedules.items.find(
