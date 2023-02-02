@@ -29,7 +29,7 @@ class InstallPlatformAgnostic extends Component {
     const nonTestedPlatformsLink = (
       <>
         For&nbsp;
-        <ExternalLink href={links.INSTALL_GENERIC_NON_TESTED_PLATFORMS}>
+        <ExternalLink href={links.INSTALL_GENERIC_NON_TESTED_PLATFORMS} stopClickPropagation>
           non-tested platforms
         </ExternalLink>
       </>

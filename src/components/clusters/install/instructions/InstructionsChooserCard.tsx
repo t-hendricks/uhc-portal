@@ -44,10 +44,7 @@ export const InstructionsChooserCard = ({
       role="link"
       aria-labelledby={`${id}-title`}
       aria-describedby={`${id}-description`}
-      onClick={(event) => {
-        // Don't treat this as a card click if it propagated up from a link inside the card
-        if (!(event.target instanceof Element && event.target.tagName === 'A')) history.push(href);
-      }}
+      onClick={() => history.push(href)}
       onKeyUp={(event) => event.key === 'Enter' && history.push(href)}
     >
       <CardTitle id={`${id}-title`}>
@@ -71,7 +68,9 @@ export const InstructionsChooserCard = ({
       </CardBody>
       {footerLinkHref && (
         <CardFooter>
-          <ExternalLink href={footerLinkHref}>{footerLinkText}</ExternalLink>
+          <ExternalLink href={footerLinkHref} stopClickPropagation>
+            {footerLinkText}
+          </ExternalLink>
         </CardFooter>
       )}
     </Card>
