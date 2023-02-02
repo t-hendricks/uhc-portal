@@ -28,8 +28,6 @@ import EditLabelsModal from './components/EditLabelsModal';
 import './MachinePools.scss';
 import { actionResolver } from './machinePoolsHelper';
 
-import { isHypershiftCluster } from '../../clusterDetailsHelper';
-
 import ButtonWithTooltip from '../../../../common/ButtonWithTooltip';
 import ErrorBox from '../../../../common/ErrorBox';
 import modals from '../../../../common/Modal/modals';
@@ -186,7 +184,7 @@ class MachinePools extends React.Component {
           {
             title: (
               <>
-                {isHypershiftCluster(cluster) && machinePool.id !== 'Default'
+                {isHypershift && machinePool.id !== 'Default'
                   ? machinePool.aws_node_pool?.instance_type
                   : machinePool.instance_type}
                 {machinePool.aws && (
@@ -310,14 +308,18 @@ class MachinePools extends React.Component {
       machinePool.autoscaling ||
       machinePool.aws;
 
-    const isDefaultExpandable = isExpandable(defaultMachinePool);
+    const rows = [];
 
-    // initialize rows array with default machine pool row
-    const rows = [getMachinePoolRow(defaultMachinePool, isDefaultExpandable)];
+    if (!isHypershift) {
+      const isDefaultExpandable = isExpandable(defaultMachinePool);
 
-    if (isDefaultExpandable) {
-      // add default machine pool expandable row
-      rows.push(getExpandableRow(defaultMachinePool, 0));
+      // initialize rows array with default machine pool row
+      rows.push(getMachinePoolRow(defaultMachinePool, isDefaultExpandable));
+
+      if (isDefaultExpandable) {
+        // add default machine pool expandable row
+        rows.push(getExpandableRow(defaultMachinePool, 0));
+      }
     }
 
     // set all other machine pools rows
@@ -496,16 +498,10 @@ class MachinePools extends React.Component {
         )}
         {isAddMachinePoolModalOpen && <AddMachinePoolModal cluster={cluster} />}
         {isEditTaintsModalOpen && (
-          <EditTaintsModal
-            clusterId={cluster.id}
-            isHypershiftCluster={isHypershiftCluster(cluster)}
-          />
+          <EditTaintsModal clusterId={cluster.id} isHypershiftCluster={isHypershift} />
         )}
         {isEditLabelsModalOpen && (
-          <EditLabelsModal
-            clusterId={cluster.id}
-            isHypershiftCluster={isHypershiftCluster(cluster)}
-          />
+          <EditLabelsModal clusterId={cluster.id} isHypershiftCluster={isHypershift} />
         )}
       </>
     );
@@ -538,7 +534,7 @@ MachinePools.propTypes = {
     desired: checkNodesAtLeastOne,
     autoscaling: checkNodesAtLeastOne,
     labels: PropTypes.objectOf(PropTypes.string),
-  }).isRequired,
+  }),
   getMachinePools: PropTypes.func.isRequired,
   deleteMachinePool: PropTypes.func.isRequired,
   clearGetMachinePoolsResponse: PropTypes.func.isRequired,
