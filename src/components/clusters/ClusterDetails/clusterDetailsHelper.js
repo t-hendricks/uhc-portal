@@ -24,6 +24,6 @@ const getSubscriptionLastReconciledDate = (subscription) =>
 
 const isHypershiftCluster = (cluster) =>
   get(cluster, 'hypershift.enabled', false) ||
-  get(cluster, 'product.id') === normalizedProducts.ROSA_HyperShift;
+  get(cluster, 'subscription.plan.id') === normalizedProducts.ROSA_HyperShift;
 
 export { hasCpuAndMemory, getSubscriptionLastReconciledDate, isHypershiftCluster };
