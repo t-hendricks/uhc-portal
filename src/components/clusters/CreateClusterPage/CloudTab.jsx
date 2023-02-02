@@ -387,8 +387,14 @@ const runItYourself = () => {
     ],
     [
       <>
+        <Link to="/install/azure/arm/installer-provisioned">Azure (ARM)</Link>
+      </>,
+      'Full stack automation',
+    ],
+    [
+      <>
         <Link to="/install/azure/multi/installer-provisioned" className="pf-u-mr-xs">
-          Azure (heterogeneous)
+          Azure (multi-architecture)
         </Link>
         <TechnologyPreview position={PreviewBadgePosition.inline} />
       </>,
@@ -402,10 +408,7 @@ const runItYourself = () => {
     ],
     [
       <>
-        <Link to="/install/ibm-cloud" className="pf-u-mr-xs">
-          IBM Cloud
-        </Link>
-        <TechnologyPreview position={PreviewBadgePosition.inline} />
+        <Link to="/install/ibm-cloud">IBM Cloud</Link>
       </>,
       'Full stack automation',
     ],

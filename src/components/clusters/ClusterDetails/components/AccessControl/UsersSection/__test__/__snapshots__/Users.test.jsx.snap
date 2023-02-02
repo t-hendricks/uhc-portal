@@ -118,7 +118,7 @@ exports[`<Users /> with users should render 1`] = `
                     Groups are mapped to role bindings on the cluster. For more information check the
                      
                     <a
-                      href="https://docs.openshift.com/container-platform/4.11/authentication/understanding-authentication.html"
+                      href="https://docs.openshift.com/container-platform/4.12/authentication/understanding-authentication.html"
                     >
                       OpenShift 4 documentation
                     </a>
