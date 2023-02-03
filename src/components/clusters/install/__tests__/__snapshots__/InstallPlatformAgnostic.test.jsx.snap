@@ -37,6 +37,7 @@ exports[`Platform agnostic install renders correctly 1`] = `
               For 
               <ExternalLink
                 href="https://access.redhat.com/articles/4207611"
+                stopClickPropagation={true}
               >
                 non-tested platforms
               </ExternalLink>
@@ -48,6 +49,7 @@ exports[`Platform agnostic install renders correctly 1`] = `
               For 
               <ExternalLink
                 href="https://access.redhat.com/articles/4207611"
+                stopClickPropagation={true}
               >
                 non-tested platforms
               </ExternalLink>
@@ -58,6 +60,7 @@ exports[`Platform agnostic install renders correctly 1`] = `
               For 
               <ExternalLink
                 href="https://access.redhat.com/articles/4207611"
+                stopClickPropagation={true}
               >
                 non-tested platforms
               </ExternalLink>
