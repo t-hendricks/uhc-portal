@@ -3,6 +3,7 @@ import { PageSection } from '@patternfly/react-core';
 
 import Breadcrumbs from '../../common/Breadcrumbs';
 import { scrollToTop } from '../../../common/helpers';
+import links from '../../../common/installLinks.mjs';
 import { InstructionsChooserPageTitle } from '~/components/clusters/install/instructions/InstructionsChooserPageTitle';
 import { InstructionsChooser } from '~/components/clusters/install/instructions/InstructionsChooser';
 
@@ -29,7 +30,9 @@ class InstallNutanix extends Component {
         <PageSection>
           <InstructionsChooser
             aiPageLink="/assisted-installer/clusters/~new"
+            aiLearnMoreLink={links.INSTALL_ASSISTED_LEARN_MORE}
             ipiPageLink="/install/nutanix/installer-provisioned"
+            ipiLearnMoreLink={links.INSTALL_NUTANIXIPI_GETTING_STARTED}
             upiPageLink=""
             agentBasedPageLink=""
             hideUPI
