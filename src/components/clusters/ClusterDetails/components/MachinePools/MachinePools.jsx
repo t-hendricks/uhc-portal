@@ -424,12 +424,7 @@ class MachinePools extends React.Component {
       </ButtonWithTooltip>
     );
 
-    const tableActionsDisabled = !!(
-      readOnlyReason ||
-      hibernatingReason ||
-      canNotEditReason ||
-      isHypershift
-    );
+    const tableActionsDisabled = !!(readOnlyReason || hibernatingReason || canNotEditReason);
 
     return (
       <>
@@ -471,7 +466,7 @@ class MachinePools extends React.Component {
                 <Alert
                   variant="info"
                   isInline
-                  title="Scaling and deleting machine pools is currently only available using ROSA CLI"
+                  title="Scaling machine pools is currently only available using ROSA CLI"
                 />
               )}
               <Table
@@ -486,6 +481,7 @@ class MachinePools extends React.Component {
                     onClickScaleAction,
                     onClickEditTaintsAction,
                     onClickEditLaeblsAction,
+                    isHypershift,
                   )
                 }
                 areActionsDisabled={() => tableActionsDisabled}
