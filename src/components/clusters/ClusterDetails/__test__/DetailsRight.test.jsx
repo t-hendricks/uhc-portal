@@ -22,6 +22,7 @@ describe('<DetailsRight />', () => {
         cluster={clusterDetails.cluster}
         totalDesiredComputeNodes={clusterDetails.cluster.nodes.compute}
         autoscaleEnabled={false}
+        totalActualNodes={clusterDetails.cluster.metrics.nodes.compute}
       />,
     );
     expect(wrapper).toMatchSnapshot();
@@ -35,6 +36,7 @@ describe('<DetailsRight />', () => {
         autoscaleEnabled
         totalMinNodesCount={2}
         totalMaxNodesCount={4}
+        totalActualNodes={clusterDetails.cluster.metrics.nodes.compute}
       />,
     );
     expect(wrapper).toMatchSnapshot();
@@ -46,6 +48,7 @@ describe('<DetailsRight />', () => {
         <DetailsRight
           cluster={{ ...clusterDetails.cluster, managed: false, nodes: null }}
           autoscaleEnabled={false}
+          totalActualNodes={clusterDetails.cluster.metrics.nodes.compute}
         />,
       );
       expect(wrapper).toMatchSnapshot();
@@ -60,6 +63,7 @@ describe('<DetailsRight />', () => {
             subscription: { status: 'Archived' },
           }}
           autoscaleEnabled={false}
+          totalActualNodes={clusterDetails.cluster.metrics.nodes.compute}
         />,
       );
       expect(wrapper).toMatchSnapshot();
@@ -74,6 +78,7 @@ describe('<DetailsRight />', () => {
             subscription: { status: 'Deprovisioned' },
           }}
           autoscaleEnabled={false}
+          totalActualNodes={clusterDetails.cluster.metrics.nodes.compute}
         />,
       );
       expect(wrapper).toMatchSnapshot();
@@ -89,6 +94,7 @@ describe('<DetailsRight />', () => {
             nodes: null,
           }}
           autoscaleEnabled={false}
+          totalActualNodes={clusterDetails.cluster.metrics.nodes.compute}
         />,
       );
       expect(wrapper).toMatchSnapshot();
@@ -106,6 +112,7 @@ describe('<DetailsRight />', () => {
             storage_quota: null,
           }}
           autoscaleEnabled={false}
+          totalActualNodes={clusterDetails.cluster.metrics.nodes.compute}
         />,
       );
       expect(wrapper).toMatchSnapshot();
@@ -114,7 +121,12 @@ describe('<DetailsRight />', () => {
 
   describe('AI clusters', () => {
     it('should render the "created at" and "owner" detail', () => {
-      const wrapper = shallow(<DetailsRight cluster={fixtures.AIClusterDetails.cluster} />);
+      const wrapper = shallow(
+        <DetailsRight
+          cluster={fixtures.AIClusterDetails.cluster}
+          totalActualNodes={fixtures.AIClusterDetails.cluster.metrics.nodes.compute}
+        />,
+      );
       expect(wrapper).toMatchSnapshot();
     });
   });
