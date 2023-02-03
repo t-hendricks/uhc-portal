@@ -29,10 +29,12 @@ const scaleMachinePool = (clusterID, machinePoolID, params) => (dispatch) =>
     payload: clusterService.scaleMachinePool(clusterID, machinePoolID, params),
   });
 
-const deleteMachinePool = (clusterID, machinePoolID) => (dispatch) =>
+const deleteMachinePool = (clusterID, machinePoolID, isHypershiftCluster) => (dispatch) =>
   dispatch({
     type: DELETE_MACHINE_POOL,
-    payload: clusterService.deleteMachinePool(clusterID, machinePoolID),
+    payload: isHypershiftCluster
+      ? clusterService.deleteNodePool(clusterID, machinePoolID)
+      : clusterService.deleteMachinePool(clusterID, machinePoolID),
   });
 
 const clearAddMachinePoolResponse = () => (dispatch) =>
