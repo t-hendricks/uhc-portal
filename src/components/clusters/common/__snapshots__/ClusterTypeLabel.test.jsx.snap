@@ -1,0 +1,21 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ClusterTypeLabel for ROSA hypershift 1`] = `
+<Tooltip
+  content="Red Hat OpenShift Service on AWS - Hosted control plane"
+>
+  <span>
+    ROSA - Hosted
+  </span>
+</Tooltip>
+`;
+
+exports[`ClusterTypeLabel for classic ROSA 1`] = `
+<Tooltip
+  content="Red Hat OpenShift Service on AWS - Standalone control plane"
+>
+  <span>
+    ROSA - Standalone
+  </span>
+</Tooltip>
+`;

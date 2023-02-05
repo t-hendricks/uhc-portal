@@ -12,6 +12,10 @@ function ClusterTypeLabel({ cluster }) {
       name: 'OCP',
       tooltip: 'Self-managed OpenShift Container Platform (OCP) cluster',
     },
+    [normalizedProducts.OCP_Assisted_Install]: {
+      name: 'OCP',
+      tooltip: 'Self-managed OpenShift Container Platform (OCP) cluster',
+    },
     [normalizedProducts.OSD]: {
       name: 'OSD',
       tooltip: 'OpenShift Dedicated (OSD) cluster managed by Red Hat',
@@ -25,8 +29,12 @@ function ClusterTypeLabel({ cluster }) {
       tooltip: 'Red Hat Managed Integration',
     },
     [normalizedProducts.ROSA]: {
-      name: 'ROSA',
-      tooltip: 'Red Hat OpenShift Service on AWS',
+      name: 'ROSA - Standalone',
+      tooltip: 'Red Hat OpenShift Service on AWS - Standalone control plane',
+    },
+    [normalizedProducts.ROSA_HyperShift]: {
+      name: 'ROSA - Hosted',
+      tooltip: 'Red Hat OpenShift Service on AWS - Hosted control plane',
     },
     [normalizedProducts.ARO]: {
       name: 'ARO',
@@ -38,7 +46,7 @@ function ClusterTypeLabel({ cluster }) {
     },
   };
 
-  const planType = get(cluster, 'subscription.plan.type', normalizedProducts.UNKNOWN);
+  const planType = get(cluster, 'subscription.plan.id', normalizedProducts.UNKNOWN);
 
   const type = clusterTypes[planType] || clusterTypes[normalizedProducts.UNKNOWN];
   return (
