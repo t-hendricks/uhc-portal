@@ -203,7 +203,7 @@ const ReduxRichInputField = (props) => {
 
   useEffect(() => {
     // `false` means the form async-validation has ended (as opposed to `undefined`)
-    if (asyncValidating === false) {
+    if (asyncValidating === false && inputValue) {
       evaluateAsyncValidation(error);
     }
   }, [error, asyncValidating]);

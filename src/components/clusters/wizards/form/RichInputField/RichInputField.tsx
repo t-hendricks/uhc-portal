@@ -197,7 +197,7 @@ export const RichInputField = ({
 
   useEffect(() => {
     // `false` means the form validation execution has ended (as opposed to `undefined`)
-    if (isFormValidating === false) {
+    if (isFormValidating === false && inputValue) {
       evaluateAsyncValidation(error);
     }
   }, [error, isFormValidating]);
