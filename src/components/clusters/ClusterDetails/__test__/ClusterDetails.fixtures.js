@@ -440,7 +440,7 @@ const ROSAHypershiftClusterDetails = produce(CCSClusterDetails, (draft) => {
   draft.cluster.product = { id: normalizedProducts.ROSA };
   draft.cluster.hypershift = { enabled: true };
   draft.cluster.subscription.plan = {
-    id: normalizedProducts.ROSA,
+    id: normalizedProducts.ROSA_HyperShift,
     type: normalizedProducts.ROSA,
   };
 });

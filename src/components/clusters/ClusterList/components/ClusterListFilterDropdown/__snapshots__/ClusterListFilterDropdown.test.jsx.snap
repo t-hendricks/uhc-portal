@@ -44,7 +44,21 @@ exports[`<ClusterListFilterDropdown /> should render 1`] = `
             isDisabled={false}
             isRequired={false}
             isValid={true}
-            label="ROSA"
+            label="ROSA - Standalone"
+            onChange={[Function]}
+            ouiaSafe={true}
+          />
+        </DropdownItem>
+        <DropdownItem>
+          <Checkbox
+            className="pf-c-dropdown__menu-item"
+            component="div"
+            id="ROSA-HyperShift"
+            isChecked={false}
+            isDisabled={false}
+            isRequired={false}
+            isValid={true}
+            label="ROSA - Hosted"
             onChange={[Function]}
             ouiaSafe={true}
           />
