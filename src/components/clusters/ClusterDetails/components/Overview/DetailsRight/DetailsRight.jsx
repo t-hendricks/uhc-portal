@@ -15,12 +15,12 @@ import links from '../../../../../../common/installLinks.mjs';
 import { isAISubscriptionWithoutMetrics } from '../../../../../../common/isAssistedInstallerCluster';
 import ClusterNetwork from '../ClusterNetwork';
 import { constants } from '../../../../CreateOSDPage/CreateOSDForm/CreateOSDFormConstants';
-import ClusterStateIcon from '../../../../common/ClusterStateIcon/ClusterStateIcon';
 import { humanizeValueWithUnit, humanizeValueWithUnitGiB } from '../../../../../../common/units';
 import { subscriptionStatuses } from '../../../../../../common/subscriptionTypes';
 import PopoverHint from '../../../../../common/PopoverHint';
 import ExternalLink from '../../../../../common/ExternalLink';
 import { isHypershiftCluster } from '../../../clusterDetailsHelper';
+import { ClusterStatus } from './ClusterStatus';
 
 const { ClusterStatus: AIClusterStatus } = OCM;
 function DetailsRight({
@@ -73,12 +73,7 @@ function DetailsRight({
               <AIClusterStatus status={cluster.metrics.state} className="clusterstate" />
             ) : (
               <>
-                <ClusterStateIcon
-                  clusterState={cluster.state.state}
-                  limitedSupport={limitedSupport}
-                  animated
-                />{' '}
-                {cluster.state.description}
+                <ClusterStatus cluster={cluster} limitedSupport={limitedSupport} />
                 {limitedSupport ? ' - Limited support' : null}
                 {cluster?.status?.provision_error_code && (
                   <DescriptionList>

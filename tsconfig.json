@@ -16,7 +16,8 @@
     "allowSyntheticDefaultImports": true,
     "strict": true,
     "paths": {
-      "~/*": ["src/*"]
+      "~/*": ["src/*"],
+      "@testUtils": ["src/testUtils.tsx"]
     },
     "resolveJsonModule": true
   },

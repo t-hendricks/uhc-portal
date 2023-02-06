@@ -18,7 +18,7 @@ const clusterStates = {
   STALE: 'stale',
 };
 
-const stateDescription = (state) => {
+const getStateDescription = (state) => {
   let description = '';
   switch (state) {
     case clusterStates.DEPROVISIONED:
@@ -77,7 +77,7 @@ function getClusterStateAndDescription(cluster) {
 
   return {
     state,
-    description: stateDescription(state),
+    description: getStateDescription(state),
   };
 }
 
@@ -124,5 +124,6 @@ export {
   isWaitingROSAManualMode,
   getClusterAIPermissions,
   getClusterAIExtraInfo,
+  getStateDescription,
 };
 export default clusterStates;
