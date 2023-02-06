@@ -7,16 +7,33 @@ const actionResolver = (
   onClickEditTaints,
   onClickEditLaebls,
   isHypershift,
+  machinePoolsCount,
 ) => {
   // hide actions kebab for expandable rows
   if (!rowData.machinePool) {
     return [];
   }
 
+  const hypershiftTooltip = {
+    scale: { tooltip: 'Scaling machine pools is currently only available using ROSA CLI' },
+    delete: { tooltip: 'The last machine pool cannot be deleted' },
+    edit: { tooltip: 'Editing machine pools is currently only available using ROSA CLI' },
+  };
+
+  const scaleAction = {
+    title: 'Scale',
+    onClick: onClickScale,
+    className: 'hand-pointer',
+    isAriaDisabled: isHypershift,
+    ...(isHypershift && hypershiftTooltip.scale),
+  };
+
   const deleteAction = {
     title: 'Delete',
     onClick: onClickDelete,
     className: 'hand-pointer',
+    isAriaDisabled: isHypershift && machinePoolsCount === 1,
+    ...(isHypershift && hypershiftTooltip.delete),
   };
 
   const editLabelsAction = {
@@ -24,7 +41,7 @@ const actionResolver = (
     onClick: onClickEditLaebls,
     className: 'hand-pointer',
     isAriaDisabled: isHypershift,
-    tooltip: 'Editing machine pools is currently only available using ROSA CLI',
+    ...(isHypershift && hypershiftTooltip.edit),
   };
 
   const editTaintsAction = {
@@ -32,20 +49,17 @@ const actionResolver = (
     onClick: onClickEditTaints,
     className: 'hand-pointer',
     isAriaDisabled: isHypershift,
-    tooltip: 'Editing machine pools is currently only available using ROSA CLI',
+    ...(isHypershift && hypershiftTooltip.edit),
   };
 
-  const additionalMachinePoolActions = [editLabelsAction, editTaintsAction, deleteAction];
-
+  if (isHypershift) {
+    return [scaleAction, deleteAction];
+  }
   return [
-    {
-      title: 'Scale',
-      onClick: onClickScale,
-      className: 'hand-pointer',
-      isAriaDisabled: isHypershift,
-      tooltip: 'Scaling machine pools is currently only available using ROSA CLI',
-    },
-    ...(rowData.machinePool?.id !== 'Default' ? additionalMachinePoolActions : []),
+    scaleAction,
+    ...(rowData.machinePool?.id !== 'Default'
+      ? [editLabelsAction, editTaintsAction, deleteAction]
+      : []),
   ];
 };
 
