@@ -13,7 +13,6 @@ import { Cluster } from '~/types/clusters_mgmt.v1';
 import clusterStates, {
   isWaitingROSAManualMode,
   isWaitingHypershiftCluster,
-  isWaitingPlainROSAManual,
 } from '~/components/clusters/common/clusterStates';
 import UninstallProgress from '~/components/clusters/common/UninstallProgress';
 import InstallProgress from '~/components/clusters/common/InstallProgress/InstallProgress';
@@ -30,15 +29,13 @@ interface ClusterProgressCardProps {
 
 const ClusterProgressCard = ({ cluster = {}, history, refresh }: ClusterProgressCardProps) => {
   const isError = cluster.state === clusterStates.ERROR;
-  const isWaiting = cluster.state === clusterStates.WAITING;
   const isPending = cluster.state === clusterStates.PENDING;
   const isInstalling = cluster.state === clusterStates.INSTALLING;
   const isUninstalling = cluster.state === clusterStates.UNINSTALLING;
   const isWaitingROSAManual = isWaitingROSAManualMode(cluster);
   const isWaitingHypershift = isWaitingHypershiftCluster(cluster);
-  const isWaitingAndPlainROSAManual = isWaitingPlainROSAManual(cluster);
   const installationInProgress =
-    isPending || isInstalling || isWaiting || isWaitingHypershift || !isWaitingAndPlainROSAManual;
+    isPending || isInstalling || isWaitingHypershift || !isWaitingROSAManual;
   const inProgress = installationInProgress || isUninstalling;
   const estCompletionTime = isHypershiftCluster(cluster) ? '10' : '30 to 60';
 
@@ -47,7 +44,7 @@ const ClusterProgressCard = ({ cluster = {}, history, refresh }: ClusterProgress
     titleText = 'Installation error';
   } else if (isUninstalling) {
     titleText = 'Cluster uninstallation';
-  } else if (isWaitingAndPlainROSAManual) {
+  } else if (isWaitingROSAManual) {
     titleText = 'Action required to continue installation';
   } else if (installationInProgress) {
     titleText = 'Installing cluster';

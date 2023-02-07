@@ -7,12 +7,12 @@ import ActionRequiredLink from './ActionRequiredLink';
 import clusterStates, {
   isROSA,
   isWaitingHypershiftCluster,
-  isWaitingPlainROSAManual,
+  isWaitingROSAManualMode,
 } from '../clusterStates';
 
 function ProgressList({ cluster, actionRequiredInitialOpen }) {
   const isROSACluster = isROSA(cluster);
-  const isWaitingAndPlainROSAManual = isWaitingPlainROSAManual(cluster);
+  const isWaitingAndROSAManual = isWaitingROSAManualMode(cluster);
   const isWaitingHypershift = isWaitingHypershiftCluster(cluster);
 
   const getProgressData = () => {
@@ -50,7 +50,7 @@ function ProgressList({ cluster, actionRequiredInitialOpen }) {
           clusterInstallation: pending,
         };
       }
-      if (isWaitingAndPlainROSAManual) {
+      if (isWaitingAndROSAManual) {
         // Show link to Action required modal for manual creation of ROSA operator roles and
         // OIDC provider.
         return {
