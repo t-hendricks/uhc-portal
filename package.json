@@ -22,7 +22,6 @@
     "@redhat-cloud-services/frontend-components-config-utilities": "^1.0.0",
     "@redhat-cloud-services/frontend-components-notifications": "^3.1.0",
     "@redhat-cloud-services/frontend-components-utilities": "^3.1.1",
-    "@redhat-cloud-services/rule-components": "^3.1.1",
     "@redhat-cloud-services/types": "^0.0.16",
     "@reduxjs/toolkit": "^1.6.2",
     "@sentry/browser": "^5.19.1",
