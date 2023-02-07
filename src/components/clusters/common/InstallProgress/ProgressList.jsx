@@ -12,7 +12,6 @@ import clusterStates, {
 
 function ProgressList({ cluster, actionRequiredInitialOpen }) {
   const isROSACluster = isROSA(cluster);
-  // const isWaitingAndROSAManualMode = isWaitingROSAManualMode(cluster);
   const isWaitingAndPlainROSAManual = isWaitingPlainROSAManual(cluster);
   const isWaitingHypershift = isWaitingHypershiftCluster(cluster);
 
