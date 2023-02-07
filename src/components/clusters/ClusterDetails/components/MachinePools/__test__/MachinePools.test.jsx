@@ -241,6 +241,40 @@ describe('<MachinePools />', () => {
     });
   });
 
+  it('Should disable delete action in kebab menu if there is only one node pool and hypershift is true', () => {
+    const props = {
+      ...baseProps,
+      isHypershift: true,
+      machinePoolsList: {
+        data: [
+          {
+            kind: 'NodePool',
+            href: '/api/clusters_mgmt/v1/clusters/21gitfhopbgmmfhlu65v93n4g4n3djde/node_pools/workers',
+            id: 'workers',
+            replicas: 2,
+            auto_repair: true,
+            aws_node_pool: {
+              instance_type: 'm5.xlarge',
+              instance_profile: 'staging-21gitfhopbgmmfhlu65v93n4g4n3djde-jknhystj27-worker',
+              tags: {
+                'api.openshift.com/environment': 'staging',
+              },
+            },
+            availability_zone: 'us-east-1b',
+            subnet: 'subnet-049f90721559000de',
+            status: {
+              current_replicas: 2,
+            },
+          },
+        ],
+      },
+    };
+    const wrapper = mount(<MachinePools {...props} />);
+    const deleteButton = wrapper.find('ActionsColumn').props().items[1];
+    expect(deleteButton.title).toBe('Delete');
+    expect(deleteButton.isAriaDisabled).toBeTruthy();
+  });
+
   it('Should enable all actions in kebab menu if hypershift is false', () => {
     const props = {
       ...baseProps,
