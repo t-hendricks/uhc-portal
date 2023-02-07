@@ -132,7 +132,6 @@ class MachinePools extends React.Component {
       addMachinePoolResponse,
       hasMachinePoolsQuota,
       isHypershift,
-      clearDeleteMachinePoolResponse,
     } = this.props;
 
     const { deletedRowIndex, openedRows, hideDeleteMachinePoolError } = this.state;
@@ -341,7 +340,6 @@ class MachinePools extends React.Component {
       this.setState(
         produce((draft) => {
           if (deleteMachinePoolResponse.error) {
-            clearDeleteMachinePoolResponse();
             draft.hideDeleteMachinePoolError = false;
           }
           draft.deletedRowIndex = rowID;
