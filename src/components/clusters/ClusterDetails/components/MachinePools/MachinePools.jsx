@@ -97,8 +97,9 @@ class MachinePools extends React.Component {
   }
 
   componentWillUnmount() {
-    const { clearGetMachinePoolsResponse } = this.props;
+    const { clearGetMachinePoolsResponse, clearDeleteMachinePoolResponse } = this.props;
     clearGetMachinePoolsResponse();
+    clearDeleteMachinePoolResponse();
   }
 
   onCollapse = (event, rowKey, isOpen, rowData) => {
@@ -482,6 +483,7 @@ class MachinePools extends React.Component {
                     onClickEditTaintsAction,
                     onClickEditLaeblsAction,
                     isHypershift,
+                    machinePoolsList.data.length,
                   )
                 }
                 areActionsDisabled={() => tableActionsDisabled}

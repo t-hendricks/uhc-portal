@@ -197,13 +197,32 @@ describe('<MachinePools />', () => {
               current_replicas: 2,
             },
           },
+          {
+            kind: 'NodePool',
+            href: '/api/clusters_mgmt/v1/clusters/21gitfhopbgmmfhlu65v93n4g4n3djde/node_pools/workers',
+            id: 'additional-np',
+            replicas: 3,
+            auto_repair: true,
+            aws_node_pool: {
+              instance_type: 'm5.xlarge',
+              instance_profile: 'staging-21gitfhopbgmmfhlu65v93n4g4n3djde-jknhystj27-worker',
+              tags: {
+                'api.openshift.com/environment': 'staging',
+              },
+            },
+            availability_zone: 'us-east-1b',
+            subnet: 'subnet-049f90721559000de',
+            status: {
+              current_replicas: 3,
+            },
+          },
         ],
       },
     };
     const wrapper = mount(<MachinePools {...props} />);
     // need to find by classname because action menu doesn't have an accessible label
     const actionMenus = wrapper.find('.pf-c-dropdown__toggle');
-    expect(actionMenus).toHaveLength(1);
+    expect(actionMenus).toHaveLength(2);
 
     actionMenus.forEach((button) => {
       expect(button.props().disabled).toBeFalsy();
