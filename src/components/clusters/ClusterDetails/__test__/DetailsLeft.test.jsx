@@ -39,7 +39,7 @@ describe('<DetailsLeft />', () => {
     expect(azComponent.html()).toContain('Multi-zone');
     const { container } = render(
       <DetailsLeft
-        cluster={getCluster(false)}
+        cluster={getCluster(knownProducts.ROSA_HyperShift)}
         cloudProviders={fixtures.cloudProviders}
         showAssistedId={false}
       />,
@@ -50,7 +50,7 @@ describe('<DetailsLeft />', () => {
   it('should show control plane type as Hosted if hypershift', () => {
     render(
       <DetailsLeft
-        cluster={{ ...fixtures.clusterDetails.cluster, hypershift: { enabled: true } }}
+        cluster={fixtures.ROSAHypershiftClusterDetails.cluster}
         cloudProviders={fixtures.cloudProviders}
       />,
     );
@@ -60,9 +60,10 @@ describe('<DetailsLeft />', () => {
   it('should show control plane type as Standalone if not hypershift', () => {
     render(
       <DetailsLeft
-        cluster={{ ...fixtures.clusterDetails.cluster, hypershift: { enabled: false } }}
+        cluster={fixtures.clusterDetails.cluster}
         cloudProviders={fixtures.cloudProviders}
       />,
     );
+    expect(screen.getByTestId('controlType', 'Standalone')).toBeInTheDocument();
   });
 });
