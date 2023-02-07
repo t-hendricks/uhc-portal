@@ -1593,7 +1593,7 @@ exports[`<DetailsLeft /> should show Multi-Zone for Hypershift cluster details 1
           class="pf-c-description-list__text"
         >
           <span>
-            ROSA
+            ROSA - Hosted
           </span>
         </div>
       </dd>
