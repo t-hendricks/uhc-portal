@@ -10,7 +10,11 @@ import {
 } from '@patternfly/react-core';
 
 import { Cluster } from '~/types/clusters_mgmt.v1';
-import clusterStates, { isWaitingROSAManualMode } from '~/components/clusters/common/clusterStates';
+import clusterStates, {
+  isWaitingROSAManualMode,
+  isWaitingHypershiftCluster,
+  isWaitingPlainROSAManual,
+} from '~/components/clusters/common/clusterStates';
 import UninstallProgress from '~/components/clusters/common/UninstallProgress';
 import InstallProgress from '~/components/clusters/common/InstallProgress/InstallProgress';
 import DownloadOcCliButton from '~/components/clusters/common/InstallProgress/DownloadOcCliButton';
@@ -31,7 +35,10 @@ const ClusterProgressCard = ({ cluster = {}, history, refresh }: ClusterProgress
   const isInstalling = cluster.state === clusterStates.INSTALLING;
   const isUninstalling = cluster.state === clusterStates.UNINSTALLING;
   const isWaitingROSAManual = isWaitingROSAManualMode(cluster);
-  const installationInProgress = isPending || isInstalling || (isWaiting && !isWaitingROSAManual);
+  const isWaitingHypershift = isWaitingHypershiftCluster(cluster);
+  const isWaitingAndPlainROSAManual = isWaitingPlainROSAManual(cluster);
+  const installationInProgress =
+    isPending || isInstalling || isWaiting || isWaitingHypershift || !isWaitingAndPlainROSAManual;
   const inProgress = installationInProgress || isUninstalling;
   const estCompletionTime = isHypershiftCluster(cluster) ? '10' : '30 to 60';
 
@@ -40,7 +47,7 @@ const ClusterProgressCard = ({ cluster = {}, history, refresh }: ClusterProgress
     titleText = 'Installation error';
   } else if (isUninstalling) {
     titleText = 'Cluster uninstallation';
-  } else if (isWaitingROSAManual) {
+  } else if (isWaitingAndPlainROSAManual) {
     titleText = 'Action required to continue installation';
   } else if (installationInProgress) {
     titleText = 'Installing cluster';

@@ -4,11 +4,17 @@ import { ProgressStepper, ProgressStep, Spinner } from '@patternfly/react-core';
 import UnknownIcon from '@patternfly/react-icons/dist/js/icons/unknown-icon';
 import './ProgressList.scss';
 import ActionRequiredLink from './ActionRequiredLink';
-import clusterStates, { isROSA, isWaitingROSAManualMode } from '../clusterStates';
+import clusterStates, {
+  isROSA,
+  isWaitingHypershiftCluster,
+  isWaitingPlainROSAManual,
+} from '../clusterStates';
 
 function ProgressList({ cluster, actionRequiredInitialOpen }) {
   const isROSACluster = isROSA(cluster);
-  const isWaitingAndROSAManualMode = isWaitingROSAManualMode(cluster);
+  // const isWaitingAndROSAManualMode = isWaitingROSAManualMode(cluster);
+  const isWaitingAndPlainROSAManual = isWaitingPlainROSAManual(cluster);
+  const isWaitingHypershift = isWaitingHypershiftCluster(cluster);
 
   const getProgressData = () => {
     const pending = { variant: 'pending' };
@@ -32,7 +38,20 @@ function ProgressList({ cluster, actionRequiredInitialOpen }) {
     }
 
     if (isROSACluster) {
-      if (isWaitingAndROSAManualMode) {
+      if (isWaitingHypershift) {
+        // Show waiting status for creation of ROSA operator roles and
+        // OIDC provider.
+        return {
+          awsAccountSetup: completed,
+          oidcAndOperatorRolesSetup: {
+            text: 'Waiting',
+            ...inProcess,
+          },
+          DNSSetup: pending,
+          clusterInstallation: pending,
+        };
+      }
+      if (isWaitingAndPlainROSAManual) {
         // Show link to Action required modal for manual creation of ROSA operator roles and
         // OIDC provider.
         return {

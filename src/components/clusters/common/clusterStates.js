@@ -1,5 +1,6 @@
 import get from 'lodash/get';
 import { subscriptionStatuses, normalizedProducts } from '../../../common/subscriptionTypes';
+import { isHypershiftCluster } from '../ClusterDetails/clusterDetailsHelper';
 
 const clusterStates = {
   WAITING: 'waiting',
@@ -98,6 +99,14 @@ const isROSAManualMode = (cluster) =>
 const isWaitingROSAManualMode = (cluster) =>
   cluster.state === clusterStates.WAITING && isROSAManualMode(cluster);
 
+// Indicates that this is a Hypershift cluster waiting for OIDC
+// to be detected.
+const isWaitingHypershiftCluster = (cluster) =>
+  cluster.state === clusterStates.WAITING && isHypershiftCluster(cluster);
+
+const isWaitingPlainROSAManual = (cluster) =>
+  isWaitingROSAManualMode(cluster) && !isWaitingHypershiftCluster(cluster);
+
 const isOffline = (state) => isHibernating(state) || state === clusterStates.UNINSTALLING;
 
 const getClusterAIPermissions = (cluster) => ({
@@ -122,6 +131,8 @@ export {
   isROSA,
   isROSAManualMode,
   isWaitingROSAManualMode,
+  isWaitingHypershiftCluster,
+  isWaitingPlainROSAManual,
   getClusterAIPermissions,
   getClusterAIExtraInfo,
   getStateDescription,
