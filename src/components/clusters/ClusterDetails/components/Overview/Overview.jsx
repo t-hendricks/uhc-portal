@@ -29,6 +29,7 @@ import isAssistedInstallSubscription, {
 } from '../../../../../common/isAssistedInstallerCluster';
 import withFeatureGate from '../../../../features/with-feature-gate';
 import { ASSISTED_INSTALLER_FEATURE } from '~/redux/constants/featureConstants';
+import { isHypershiftCluster } from '../../clusterDetailsHelper';
 
 import './Overview.scss';
 
@@ -67,6 +68,7 @@ class Overview extends React.Component {
       this.props;
     let topCard;
 
+    const isHypershift = isHypershiftCluster(cluster);
     const { showInstallSuccessAlert } = this.state;
     const clusterState = getClusterStateAndDescription(cluster);
     const isArchived = get(cluster, 'subscription.status', false) === subscriptionStatuses.ARCHIVED;
@@ -120,9 +122,6 @@ class Overview extends React.Component {
           <Title headingLevel="h2" className="card-title">
             Resource usage
           </Title>
-          {showInstallSuccessAlert && (
-            <Alert variant="success" isInline title="Cluster installed successfully" />
-          )}
           {shouldMonitorStatus && (
             <ClusterStatusMonitor refresh={refresh} cluster={cluster} history={history} />
           )}
@@ -149,6 +148,9 @@ class Overview extends React.Component {
       <Grid hasGutter>
         <GridItem xl2={showSidePanel ? 9 : 12}>
           <Grid hasGutter>
+            {showInstallSuccessAlert && (
+              <Alert variant="success" isInline title="Cluster installed successfully" />
+            )}
             {topCard}
             {showAssistedInstallerDetailCard && (
               <GatedAIDetailCard
@@ -156,7 +158,7 @@ class Overview extends React.Component {
                 aiClusterId={cluster.aiCluster.id}
               />
             )}
-            {showResourceUsage && !showSidePanel && resourceUsage}
+            {showResourceUsage && !showSidePanel && !isHypershift && resourceUsage}
             {showDetailsCard && (
               <Card className="ocm-c-overview-details__card">
                 <CardTitle className="ocm-c-overview-details__card--header">
