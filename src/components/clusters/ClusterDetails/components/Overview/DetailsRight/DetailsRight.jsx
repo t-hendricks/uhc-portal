@@ -92,7 +92,7 @@ function DetailsRight({
             )}
           </DescriptionListDescription>
         </DescriptionListGroup>
-        {showVCPU && (
+        {showVCPU && !isHypershift && (
           <>
             <DescriptionListGroup>
               <DescriptionListTerm>Total vCPU</DescriptionListTerm>
@@ -102,7 +102,7 @@ function DetailsRight({
             </DescriptionListGroup>
           </>
         )}
-        {!isDisconnected && (
+        {!isDisconnected && !isHypershift && (
           <>
             <DescriptionListGroup>
               <DescriptionListTerm>Total memory</DescriptionListTerm>
