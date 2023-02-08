@@ -14,7 +14,7 @@ class TabsRow extends React.Component {
     window.addEventListener('popstate', this.onPopState);
     const { initialTabKey } = this.state;
     const initialTab = this.getTabs()[initialTabKey];
-    if (initialTab?.isDisabled) {
+    if (initialTab?.isDisabled || !initialTab?.show) {
       this.setState({ initialTabKey: 0 });
       this.handleTabClick(undefined, 0);
     }
@@ -198,7 +198,7 @@ class TabsRow extends React.Component {
   onPopState = ({ target }) => {
     const targetTab = this.getTabs().find((t) => t.id === target.location.hash.substring(1));
     const targetTabKey = targetTab?.key;
-    if (targetTab?.isDisabled) {
+    if (targetTab?.isDisabled || !targetTab?.show) {
       this.handleTabClick(undefined, 0);
     } else if (targetTabKey !== undefined) {
       this.handleTabClick(undefined, targetTabKey);
