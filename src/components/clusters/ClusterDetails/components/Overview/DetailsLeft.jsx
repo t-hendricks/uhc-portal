@@ -61,7 +61,9 @@ function DetailsLeft({ cluster, cloudProviders, showAssistedId }) {
         </DescriptionListGroup>
         <DescriptionListGroup>
           <DescriptionListTerm>Control plane type</DescriptionListTerm>
-          <DescriptionListDescription>{controlPlaneType}</DescriptionListDescription>
+          <DescriptionListDescription data-testid="controlType">
+            {controlPlaneType}
+          </DescriptionListDescription>
         </DescriptionListGroup>
         <DescriptionListGroup>
           <DescriptionListTerm>Region</DescriptionListTerm>
@@ -77,8 +79,10 @@ function DetailsLeft({ cluster, cloudProviders, showAssistedId }) {
           <>
             <DescriptionListGroup>
               <DescriptionListTerm>Availability</DescriptionListTerm>
-              <DescriptionListDescription data-testid="availability">
-                {cluster.multi_az || isHypershift ? 'Multi-zone' : 'Single zone'}
+              <DescriptionListDescription>
+                <span data-testid="availability">
+                  {cluster.multi_az || isHypershift ? 'Multi-zone' : 'Single zone'}
+                </span>
               </DescriptionListDescription>
             </DescriptionListGroup>
           </>
