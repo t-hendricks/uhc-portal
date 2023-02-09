@@ -12,6 +12,7 @@ import './ValidationIconButton.scss';
 
 interface ValidationIconButtonProps {
   isValid: boolean;
+  hasFailures: boolean;
   isValidating: boolean;
   touched: boolean;
   onClick: React.ComponentProps<typeof Button>['onClick'];
@@ -19,6 +20,7 @@ interface ValidationIconButtonProps {
 
 export const ValidationIconButton = ({
   isValid,
+  hasFailures,
   isValidating,
   touched,
   onClick,
@@ -35,7 +37,7 @@ export const ValidationIconButton = ({
       icon = <CheckCircleIcon className="validation-icon_success" />;
       label = 'All validation rules met';
       className = 'validation-icon-button_valid';
-    } else {
+    } else if (hasFailures) {
       icon = <ExclamationCircleIcon className="validation-icon_danger" />;
       label = 'Not all validation rules met';
       className = 'validation-icon-button_not-valid';
