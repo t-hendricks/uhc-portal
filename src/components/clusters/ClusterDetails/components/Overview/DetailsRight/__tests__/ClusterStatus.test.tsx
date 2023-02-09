@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, screen, within } from '@testUtils';
+import { render, screen } from '@testUtils';
 import { ClusterStatus } from '../ClusterStatus';
 
 const cluster = {
@@ -7,6 +7,35 @@ const cluster = {
   id: 'cluster-id',
   state: { state: 'ready', description: 'Ready' },
 };
+const machinePools = [
+  {
+    status: { current_replicas: 2 },
+    replicas: 2,
+  },
+  {
+    status: { current_replicas: 3 },
+    replicas: 4,
+  },
+];
+
+const machinePoolsAutoScale = [
+  {
+    autoscaling: { min_replica: 2, max_replica: 3 },
+    status: { current_replicas: 2 },
+  },
+  {
+    autoscaling: { min_replica: 2, max_replica: 3 },
+    status: { current_replicas: 3 },
+  },
+  {
+    autoscaling: { min_replica: 2, max_replica: 3 },
+    status: { current_replicas: 1 },
+  },
+  {
+    autoscaling: { min_replica: 2, max_replica: 3 },
+    status: { current_replicas: 4 },
+  },
+];
 
 describe('ClusterStatus', () => {
   describe('when hypershift is not enabled', () => {
@@ -25,6 +54,7 @@ describe('ClusterStatus', () => {
         <ClusterStatus
           cluster={{ ...cluster, hypershift: { enabled: true } }}
           limitedSupport={false}
+          machinePools={machinePools}
         />,
       );
 
@@ -32,56 +62,28 @@ describe('ClusterStatus', () => {
       expect(screen.getByText('Machine pools:')).toBeVisible();
     });
 
-    it('shows "Ready" machine pools status when compute counts are equal', () => {
+    it('shows correct number of machine pools in "ready like" status', () => {
       render(
         <ClusterStatus
-          cluster={{
-            ...cluster,
-            nodes: { compute: 1 },
-            status: { current_compute: 1 },
-            hypershift: { enabled: true },
-          }}
+          cluster={{ ...cluster, hypershift: { enabled: true } }}
           limitedSupport={false}
+          machinePools={machinePools}
         />,
       );
 
-      expect(within(screen.getByTestId('machine-pools-status')).getByText('Ready')).toBeVisible();
+      expect(screen.getByText('Pending 1 / 2')).toBeVisible();
     });
 
-    it('shows "Installing" machine pools status when compute counts are not equal', () => {
+    it('shows correct number of autoscaling machine pools in "ready like" status ', () => {
       render(
         <ClusterStatus
-          cluster={{
-            ...cluster,
-            nodes: { compute: 1 },
-            status: { current_compute: 0 },
-            hypershift: { enabled: true },
-          }}
+          cluster={{ ...cluster, hypershift: { enabled: true } }}
           limitedSupport={false}
+          machinePools={machinePoolsAutoScale}
         />,
       );
 
-      expect(
-        within(screen.getByTestId('machine-pools-status')).getByText('Installing'),
-      ).toBeVisible();
-    });
-
-    it('shows "Uninstalling" machine pools status when cluster-wide compute count is greater than the node compute count', () => {
-      render(
-        <ClusterStatus
-          cluster={{
-            ...cluster,
-            nodes: { compute: 0 },
-            status: { current_compute: 1 },
-            hypershift: { enabled: true },
-          }}
-          limitedSupport={false}
-        />,
-      );
-
-      expect(
-        within(screen.getByTestId('machine-pools-status')).getByText('Uninstalling'),
-      ).toBeVisible();
+      expect(screen.getByText('Pending 2 / 4')).toBeVisible();
     });
   });
 });
