@@ -14,6 +14,8 @@ const actionResolver = (
     return [];
   }
 
+  const deleteDisabled = isHypershift && machinePoolsCount === 1;
+
   const hypershiftTooltip = {
     scale: { tooltip: 'Scaling machine pools is currently only available using ROSA CLI' },
     delete: { tooltip: 'The last machine pool cannot be deleted' },
@@ -32,8 +34,8 @@ const actionResolver = (
     title: 'Delete',
     onClick: onClickDelete,
     className: 'hand-pointer',
-    isAriaDisabled: isHypershift && machinePoolsCount === 1,
-    ...(isHypershift && hypershiftTooltip.delete),
+    isAriaDisabled: deleteDisabled,
+    ...(deleteDisabled && hypershiftTooltip.delete),
   };
 
   const editLabelsAction = {
