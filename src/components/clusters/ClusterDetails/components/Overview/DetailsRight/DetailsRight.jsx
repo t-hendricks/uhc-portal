@@ -31,6 +31,7 @@ function DetailsRight({
   totalMaxNodesCount,
   limitedSupport,
   totalActualNodes,
+  machinePools,
 }) {
   const isHypershift = isHypershiftCluster(cluster);
 
@@ -74,7 +75,11 @@ function DetailsRight({
               <AIClusterStatus status={cluster.metrics.state} className="clusterstate" />
             ) : (
               <>
-                <ClusterStatus cluster={cluster} limitedSupport={limitedSupport} />
+                <ClusterStatus
+                  cluster={cluster}
+                  limitedSupport={limitedSupport}
+                  machinePools={machinePools}
+                />
                 {limitedSupport ? ' - Limited support' : null}
                 {cluster?.status?.provision_error_code && (
                   <DescriptionList>
@@ -266,6 +271,7 @@ DetailsRight.propTypes = {
   autoscaleEnabled: PropTypes.bool.isRequired,
   limitedSupport: PropTypes.bool,
   totalActualNodes: PropTypes.oneOfType([PropTypes.number, PropTypes.bool]),
+  machinePools: PropTypes.array,
 };
 
 export default DetailsRight;

@@ -21,6 +21,7 @@ const mapStateToProps = (state) => {
       totalMinNodesCount,
       totalMaxNodesCount,
       totalActualNodes,
+      machinePools,
     };
   }
   return {
@@ -28,6 +29,7 @@ const mapStateToProps = (state) => {
     totalDesiredComputeNodes,
     totalActualNodes,
     limitedSupport: cluster?.status?.limited_support_reason_count > 0,
+    machinePools,
   };
 };
 
