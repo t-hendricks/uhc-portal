@@ -61,7 +61,7 @@ function DetailsRight({
   const infraActualNodes = get(cluster, 'metrics.nodes.infra', '-');
   const infraDesiredNodes = get(cluster, 'nodes.infra', '-');
 
-  const workerActualNodes = totalActualNodes || '-';
+  const workerActualNodes = totalActualNodes === false ? '-' : totalActualNodes;
   const workerDesiredNodes = totalDesiredComputeNodes || '-';
 
   return (
@@ -265,7 +265,7 @@ DetailsRight.propTypes = {
   totalMaxNodesCount: PropTypes.number,
   autoscaleEnabled: PropTypes.bool.isRequired,
   limitedSupport: PropTypes.bool,
-  totalActualNodes: PropTypes.number,
+  totalActualNodes: PropTypes.oneOfType([PropTypes.number, PropTypes.bool]),
 };
 
 export default DetailsRight;
