@@ -1,12 +1,14 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
+import { useSelector } from 'react-redux';
+import { isAsyncValidating } from 'redux-form';
 
 import { WizardFooter, WizardContext, Button } from '@patternfly/react-core';
 
 import { stepId } from './rosaWizardConstants';
 
-const CreateRosaWizardFooter = ({ onBeforeNext, onBeforeSubmit, onSubmit }) => {
+const CreateRosaWizardFooter = ({ onBeforeNext, onBeforeSubmit, onSubmit, isNextDisabled }) => {
+  const asyncValidating = useSelector(isAsyncValidating('CreateCluster'));
   const { pending: getAccountIDsLoading } = useSelector(
     (state) => state.rosaReducer.getAWSAccountIDsResponse,
   );
@@ -28,7 +30,7 @@ const CreateRosaWizardFooter = ({ onBeforeNext, onBeforeSubmit, onSubmit }) => {
       <WizardContext.Consumer>
         {({ activeStep, onNext, onBack, onClose }) => (
           <>
-            {activeStep.name === 'Review and create' ? (
+            {activeStep.id === stepId.REVIEW_AND_CREATE ? (
               <Button variant="primary" type="submit" onClick={() => onBeforeSubmit(onSubmit)}>
                 Create cluster
               </Button>
@@ -37,7 +39,8 @@ const CreateRosaWizardFooter = ({ onBeforeNext, onBeforeSubmit, onSubmit }) => {
                 variant="primary"
                 type="submit"
                 onClick={() => onBeforeNext(onNext)}
-                isDisabled={areAwsResourcesLoading}
+                isLoading={asyncValidating || areAwsResourcesLoading}
+                isDisabled={isNextDisabled || areAwsResourcesLoading}
               >
                 Next
               </Button>
@@ -63,6 +66,7 @@ CreateRosaWizardFooter.propTypes = {
   onBeforeNext: PropTypes.func.isRequired,
   onBeforeSubmit: PropTypes.func.isRequired,
   onSubmit: PropTypes.func.isRequired,
+  isNextDisabled: PropTypes.bool,
 };
 
 export default CreateRosaWizardFooter;
