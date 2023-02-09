@@ -1,5 +1,6 @@
 import get from 'lodash/get';
 import { subscriptionStatuses, normalizedProducts } from '../../../common/subscriptionTypes';
+import { isHypershiftCluster } from '../ClusterDetails/clusterDetailsHelper';
 
 const clusterStates = {
   WAITING: 'waiting',
@@ -18,7 +19,7 @@ const clusterStates = {
   STALE: 'stale',
 };
 
-const stateDescription = (state) => {
+const getStateDescription = (state) => {
   let description = '';
   switch (state) {
     case clusterStates.DEPROVISIONED:
@@ -77,7 +78,7 @@ function getClusterStateAndDescription(cluster) {
 
   return {
     state,
-    description: stateDescription(state),
+    description: getStateDescription(state),
   };
 }
 
@@ -96,7 +97,14 @@ const isROSAManualMode = (cluster) =>
 // Indicates that this is a ROSA cluster waiting for manual creation of OIDC
 // and operator roles.
 const isWaitingROSAManualMode = (cluster) =>
-  cluster.state === clusterStates.WAITING && isROSAManualMode(cluster);
+  cluster.state === clusterStates.WAITING &&
+  isROSAManualMode(cluster) &&
+  !isHypershiftCluster(cluster);
+
+// Indicates that this is a Hypershift cluster waiting for OIDC
+// to be detected.
+const isWaitingHypershiftCluster = (cluster) =>
+  cluster.state === clusterStates.WAITING && isHypershiftCluster(cluster);
 
 const isOffline = (state) => isHibernating(state) || state === clusterStates.UNINSTALLING;
 
@@ -122,7 +130,9 @@ export {
   isROSA,
   isROSAManualMode,
   isWaitingROSAManualMode,
+  isWaitingHypershiftCluster,
   getClusterAIPermissions,
   getClusterAIExtraInfo,
+  getStateDescription,
 };
 export default clusterStates;

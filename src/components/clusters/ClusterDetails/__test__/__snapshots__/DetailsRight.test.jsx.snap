@@ -8,10 +8,370 @@ exports[`<DetailsRight /> AI clusters should render the "created at" and "owner"
         Status
       </DescriptionListTerm>
       <DescriptionListDescription>
-        <ClusterStateIcon
-          animated={true}
+        <ClusterStatus
+          cluster={
+            Object {
+              "activity_timestamp": "2021-01-11T11:55:29Z",
+              "addons": Object {
+                "href": "/api/clusters_mgmt/v1/clusters/1i4counta3holamvo1g5tp6n8p3a03bq/addons",
+                "kind": "AddOnInstallationListLink",
+              },
+              "aiCluster": Object {
+                "id": "1i4counta3holamvo1g5tp6n8p3a03bq",
+              },
+              "api": Object {
+                "listening": "external",
+                "url": "https://api.test-liza.wiex.s1.devshift.org:6443",
+              },
+              "aws_infrastructure_access_role_grants": Object {
+                "href": "/api/clusters_mgmt/v1/clusters/1i4counta3holamvo1g5tp6n8p3a03bq/aws_infrastructure_access_role_grants",
+                "items": null,
+                "kind": "AWSInfrastructureAccessRoleGrantLink",
+              },
+              "canEdit": false,
+              "ccs": Object {
+                "disable_scp_checks": false,
+                "enabled": true,
+              },
+              "cloud_provider": Object {
+                "href": "/api/clusters_mgmt/v1/cloud_providers/aws",
+                "id": "aws",
+                "kind": "CloudProviderLink",
+              },
+              "console": Object {
+                "url": "https://console-openshift-console.apps.test-liza.wiex.s1.devshift.org",
+              },
+              "creation_timestamp": "2021-01-10T15:17:16.278663Z",
+              "display_name": "test-liza",
+              "dns": Object {
+                "base_domain": "wiex.s1.devshift.org",
+              },
+              "etcd_encryption": false,
+              "expiration_timestamp": "2021-01-12T03:17:14.999204Z",
+              "external_configuration": Object {
+                "href": "/api/clusters_mgmt/v1/clusters/1i4counta3holamvo1g5tp6n8p3a03bq/external_configuration",
+                "kind": "ExternalConfiguration",
+                "labels": Object {
+                  "href": "/api/clusters_mgmt/v1/clusters/1i4counta3holamvo1g5tp6n8p3a03bq/external_configuration/labels",
+                  "kind": "LabelListLink",
+                },
+                "syncsets": Object {
+                  "href": "/api/clusters_mgmt/v1/clusters/1i4counta3holamvo1g5tp6n8p3a03bq/external_configuration/syncsets",
+                  "kind": "SyncsetListLink",
+                },
+              },
+              "external_id": "bae5b227-2472-4e71-be4d-a18fc60bb48a",
+              "flavour": Object {
+                "href": "/api/clusters_mgmt/v1/flavours/osd-4",
+                "id": "osd-4",
+                "kind": "FlavourLink",
+              },
+              "groups": Object {
+                "href": "/api/clusters_mgmt/v1/clusters/1i4counta3holamvo1g5tp6n8p3a03bq/groups",
+                "kind": "GroupListLink",
+              },
+              "health_state": "healthy",
+              "href": "/api/clusters_mgmt/v1/clusters/1i4counta3holamvo1g5tp6n8p3a03bq",
+              "id": "1i4counta3holamvo1g5tp6n8p3a03bq",
+              "identity_providers": Object {
+                "href": "/api/clusters_mgmt/v1/clusters/1i4counta3holamvo1g5tp6n8p3a03bq/identity_providers",
+                "kind": "IdentityProviderListLink",
+              },
+              "infra_id": "test-liza-d7vkd",
+              "ingresses": Object {
+                "href": "/api/clusters_mgmt/v1/clusters/1i4counta3holamvo1g5tp6n8p3a03bq/ingresses",
+                "id": "1i4counta3holamvo1g5tp6n8p3a03bq",
+                "kind": "IngressListLink",
+              },
+              "kind": "Cluster",
+              "load_balancer_quota": 0,
+              "machine_pools": Object {
+                "href": "/api/clusters_mgmt/v1/clusters/1i4counta3holamvo1g5tp6n8p3a03bq/machine_pools",
+                "kind": "MachinePoolListLink",
+              },
+              "managed": true,
+              "metrics": Object {
+                "compute_nodes_cpu": Object {
+                  "total": Object {
+                    "unit": "",
+                    "value": 16,
+                  },
+                },
+                "compute_nodes_memory": Object {
+                  "total": Object {
+                    "unit": "B",
+                    "value": 65835802624,
+                  },
+                },
+                "compute_nodes_sockets": Object {
+                  "total": Object {
+                    "unit": "",
+                    "value": 0,
+                  },
+                },
+                "cpu": Object {
+                  "total": Object {
+                    "unit": "",
+                    "value": 36,
+                  },
+                  "updated_timestamp": "2021-01-11T11:55:29Z",
+                  "used": Object {
+                    "unit": "",
+                    "value": 3.8904761904758463,
+                  },
+                },
+                "memory": Object {
+                  "total": Object {
+                    "unit": "B",
+                    "value": 147469647872,
+                  },
+                  "updated_timestamp": "2021-01-11T11:55:29Z",
+                  "used": Object {
+                    "unit": "B",
+                    "value": 28802600960,
+                  },
+                },
+                "nodes": Object {
+                  "compute": 4,
+                  "infra": 2,
+                  "master": 3,
+                  "total": 9,
+                },
+                "sockets": Object {
+                  "total": Object {
+                    "unit": "",
+                    "value": 0,
+                  },
+                  "used": Object {
+                    "unit": "",
+                    "value": 0,
+                  },
+                },
+                "storage": Object {
+                  "total": Object {
+                    "unit": "B",
+                    "value": 0,
+                  },
+                  "used": Object {
+                    "unit": "B",
+                    "value": 0,
+                  },
+                },
+                "upgrade": Object {
+                  "available": false,
+                  "updated_timestamp": "2021-01-11T11:55:29Z",
+                },
+                "version_update_available": false,
+              },
+              "multi_az": false,
+              "name": "test-liza",
+              "network": Object {
+                "host_prefix": 23,
+                "machine_cidr": "10.0.0.0/16",
+                "pod_cidr": "10.128.0.0/14",
+                "service_cidr": "172.30.0.0/16",
+              },
+              "node_drain_grace_period": Object {
+                "unit": "minutes",
+                "value": 60,
+              },
+              "nodes": Object {
+                "availability_zones": Array [
+                  "us-east-1a",
+                ],
+                "compute": 4,
+                "compute_machine_type": Object {
+                  "href": "/api/clusters_mgmt/v1/machine_types/m5.xlarge",
+                  "id": "m5.xlarge",
+                  "kind": "MachineTypeLink",
+                },
+                "infra": 2,
+                "master": 3,
+                "master_machine_type": Object {
+                  "href": "/api/clusters_mgmt/v1/machine_types/m5.xlarge",
+                  "id": "m5.xlarge",
+                  "kind": "MachineTypeLink",
+                },
+              },
+              "openshift_version": "4.6.8",
+              "product": Object {
+                "id": "OSD",
+              },
+              "region": Object {
+                "href": "/api/clusters_mgmt/v1/cloud_providers/aws/regions/us-east-1",
+                "id": "us-east-1",
+                "kind": "CloudRegionLink",
+              },
+              "state": "ready",
+              "status": Object {
+                "dns_ready": true,
+                "provision_error_code": "",
+                "provision_error_message": "",
+                "state": "ready",
+              },
+              "storage_quota": Object {
+                "unit": "B",
+                "value": 107374182400,
+              },
+              "subscription": Object {
+                "capabilities": Array [
+                  Object {
+                    "inherited": true,
+                    "name": "capability.cluster.subscribed_ocp",
+                    "value": "true",
+                  },
+                  Object {
+                    "inherited": true,
+                    "name": "capability.cluster.manage_cluster_admin",
+                    "value": "true",
+                  },
+                ],
+                "cloud_provider_id": "aws",
+                "cluster_id": "1i4counta3holamvo1g5tp6n8p3a03bq",
+                "console_url": "https://console-openshift-console.apps.test-liza.wiex.s1.devshift.org",
+                "cpu_total": 8,
+                "created_at": "2021-01-10T15:17:15.19112Z",
+                "creator": Object {
+                  "email": "***REMOVED***",
+                  "href": "/api/accounts_mgmt/v1/accounts/1MRilA9vHlOUX9ui3lx6IohSsaS",
+                  "id": "1MRilA9vHlOUX9ui3lx6IohSsaS",
+                  "kind": "Account",
+                  "name": "Liza Gilman",
+                  "username": "egilman.openshift",
+                },
+                "display_name": "test-liza",
+                "external_cluster_id": "bae5b227-2472-4e71-be4d-a18fc60bb48a",
+                "href": "/api/accounts_mgmt/v1/subscriptions/1msoogsgTLQ4PePjrTOt3UqvMzX",
+                "id": "1msoogsgTLQ4PePjrTOt3UqvMzX",
+                "kind": "Subscription",
+                "last_reconcile_date": "0001-01-01T00:00:00Z",
+                "last_released_at": "0001-01-01T00:00:00Z",
+                "last_telemetry_date": "2021-01-11T03:59:48.224585Z",
+                "managed": true,
+                "metrics": Array [
+                  Object {
+                    "HealthState": "healthy",
+                    "cloud_provider": "aws",
+                    "compute_nodes_cpu": Object {
+                      "total": Object {
+                        "unit": "",
+                        "value": 24,
+                      },
+                      "updated_timestamp": "1970-01-01T00:00:00Z",
+                      "used": Object {
+                        "unit": "",
+                        "value": 0,
+                      },
+                    },
+                    "compute_nodes_memory": Object {
+                      "total": Object {
+                        "unit": "B",
+                        "value": 98489344000,
+                      },
+                      "updated_timestamp": "1970-01-01T00:00:00Z",
+                      "used": Object {
+                        "unit": "B",
+                        "value": 0,
+                      },
+                    },
+                    "compute_nodes_sockets": Object {
+                      "total": Object {
+                        "unit": "",
+                        "value": 0,
+                      },
+                      "updated_timestamp": "1970-01-01T00:00:00Z",
+                      "used": Object {
+                        "unit": "",
+                        "value": 0,
+                      },
+                    },
+                    "console_url": "https://console-openshift-console.apps.test-liza.wiex.s1.devshift.org",
+                    "cpu": Object {
+                      "total": Object {
+                        "unit": "",
+                        "value": 36,
+                      },
+                      "updated_timestamp": "2021-01-11T11:55:10.517Z",
+                      "used": Object {
+                        "unit": "",
+                        "value": 3.8904761904758463,
+                      },
+                    },
+                    "critical_alerts_firing": 0,
+                    "memory": Object {
+                      "total": Object {
+                        "unit": "B",
+                        "value": 147469647872,
+                      },
+                      "updated_timestamp": "2021-01-11T11:55:10.448Z",
+                      "used": Object {
+                        "unit": "B",
+                        "value": 28802600960,
+                      },
+                    },
+                    "nodes": Object {
+                      "compute": 4,
+                      "infra": 2,
+                      "master": 3,
+                      "total": 9,
+                    },
+                    "open_shift_version": "4.6.8",
+                    "operating_system": "",
+                    "operators_condition_failing": 0,
+                    "region": "us-east-1",
+                    "sockets": Object {
+                      "total": Object {
+                        "unit": "",
+                        "value": 0,
+                      },
+                      "updated_timestamp": "1970-01-01T00:00:00Z",
+                      "used": Object {
+                        "unit": "",
+                        "value": 0,
+                      },
+                    },
+                    "state": "ready",
+                    "state_description": "",
+                    "storage": Object {
+                      "total": Object {
+                        "unit": "B",
+                        "value": 0,
+                      },
+                      "updated_timestamp": "1970-01-01T00:00:00Z",
+                      "used": Object {
+                        "unit": "B",
+                        "value": 0,
+                      },
+                    },
+                    "subscription_cpu_total": 8,
+                    "subscription_socket_total": 4,
+                    "upgrade": Object {
+                      "updated_timestamp": "2021-01-11T11:55:10.206Z",
+                    },
+                  },
+                ],
+                "organization_id": "1MKVU4otCIuogoLtgtyU6wajxjW",
+                "plan": Object {
+                  "id": "OCP-AssistedInstall",
+                  "type": "OCP",
+                },
+                "provenance": "Provisioning",
+                "region_id": "us-east-1",
+                "socket_total": 4,
+                "status": "Active",
+                "support_level": "Premium",
+                "updated_at": "2021-01-11T03:59:48.224622Z",
+              },
+              "upgrade_channel_group": "stable",
+              "version": Object {
+                "channel_group": "stable",
+                "href": "/api/clusters_mgmt/v1/versions/openshift-v4.6.8",
+                "id": "openshift-v4.6.8",
+                "kind": "Version",
+              },
+            }
+          }
         />
-         
       </DescriptionListDescription>
     </DescriptionListGroup>
     <DescriptionListGroup>
@@ -471,12 +831,367 @@ exports[`<DetailsRight /> CCS clusters should not render storage quota 1`] = `
         Status
       </DescriptionListTerm>
       <DescriptionListDescription>
-        <ClusterStateIcon
-          animated={true}
-          clusterState="ready"
+        <ClusterStatus
+          cluster={
+            Object {
+              "activity_timestamp": "2021-01-11T11:55:29Z",
+              "addons": Object {
+                "href": "/api/clusters_mgmt/v1/clusters/1i4counta3holamvo1g5tp6n8p3a03bq/addons",
+                "kind": "AddOnInstallationListLink",
+              },
+              "api": Object {
+                "listening": "external",
+                "url": "https://api.test-liza.wiex.s1.devshift.org:6443",
+              },
+              "aws_infrastructure_access_role_grants": Object {
+                "href": "/api/clusters_mgmt/v1/clusters/1i4counta3holamvo1g5tp6n8p3a03bq/aws_infrastructure_access_role_grants",
+                "items": null,
+                "kind": "AWSInfrastructureAccessRoleGrantLink",
+              },
+              "ccs": Object {
+                "enabled": true,
+              },
+              "cloud_provider": Object {
+                "href": "/api/clusters_mgmt/v1/cloud_providers/aws",
+                "id": "aws",
+                "kind": "CloudProviderLink",
+              },
+              "console": Object {
+                "url": "https://console-openshift-console.apps.test-liza.wiex.s1.devshift.org",
+              },
+              "creation_timestamp": "2021-01-10T15:17:16.278663Z",
+              "display_name": "test-liza",
+              "dns": Object {
+                "base_domain": "wiex.s1.devshift.org",
+              },
+              "etcd_encryption": false,
+              "expiration_timestamp": "2021-01-12T03:17:14.999204Z",
+              "external_configuration": Object {
+                "href": "/api/clusters_mgmt/v1/clusters/1i4counta3holamvo1g5tp6n8p3a03bq/external_configuration",
+                "kind": "ExternalConfiguration",
+                "labels": Object {
+                  "href": "/api/clusters_mgmt/v1/clusters/1i4counta3holamvo1g5tp6n8p3a03bq/external_configuration/labels",
+                  "kind": "LabelListLink",
+                },
+                "syncsets": Object {
+                  "href": "/api/clusters_mgmt/v1/clusters/1i4counta3holamvo1g5tp6n8p3a03bq/external_configuration/syncsets",
+                  "kind": "SyncsetListLink",
+                },
+              },
+              "external_id": "bae5b227-2472-4e71-be4d-a18fc60bb48a",
+              "flavour": Object {
+                "href": "/api/clusters_mgmt/v1/flavours/osd-4",
+                "id": "osd-4",
+                "kind": "FlavourLink",
+              },
+              "groups": Object {
+                "href": "/api/clusters_mgmt/v1/clusters/1i4counta3holamvo1g5tp6n8p3a03bq/groups",
+                "kind": "GroupListLink",
+              },
+              "health_state": "healthy",
+              "href": "/api/clusters_mgmt/v1/clusters/1i4counta3holamvo1g5tp6n8p3a03bq",
+              "id": "1i4counta3holamvo1g5tp6n8p3a03bq",
+              "identity_providers": Object {
+                "href": "/api/clusters_mgmt/v1/clusters/1i4counta3holamvo1g5tp6n8p3a03bq/identity_providers",
+                "kind": "IdentityProviderListLink",
+              },
+              "infra_id": "test-liza-d7vkd",
+              "ingresses": Object {
+                "href": "/api/clusters_mgmt/v1/clusters/1i4counta3holamvo1g5tp6n8p3a03bq/ingresses",
+                "id": "1i4counta3holamvo1g5tp6n8p3a03bq",
+                "kind": "IngressListLink",
+              },
+              "kind": "Cluster",
+              "load_balancer_quota": 0,
+              "machine_pools": Object {
+                "href": "/api/clusters_mgmt/v1/clusters/1i4counta3holamvo1g5tp6n8p3a03bq/machine_pools",
+                "kind": "MachinePoolListLink",
+              },
+              "managed": true,
+              "metrics": Object {
+                "compute_nodes_cpu": Object {
+                  "total": Object {
+                    "unit": "",
+                    "value": 16,
+                  },
+                },
+                "compute_nodes_memory": Object {
+                  "total": Object {
+                    "unit": "B",
+                    "value": 65835802624,
+                  },
+                },
+                "compute_nodes_sockets": Object {
+                  "total": Object {
+                    "unit": "",
+                    "value": 0,
+                  },
+                },
+                "cpu": Object {
+                  "total": Object {
+                    "unit": "",
+                    "value": 36,
+                  },
+                  "updated_timestamp": "2021-01-11T11:55:29Z",
+                  "used": Object {
+                    "unit": "",
+                    "value": 3.8904761904758463,
+                  },
+                },
+                "memory": Object {
+                  "total": Object {
+                    "unit": "B",
+                    "value": 147469647872,
+                  },
+                  "updated_timestamp": "2021-01-11T11:55:29Z",
+                  "used": Object {
+                    "unit": "B",
+                    "value": 28802600960,
+                  },
+                },
+                "nodes": Object {
+                  "compute": 4,
+                  "infra": 2,
+                  "master": 3,
+                  "total": 9,
+                },
+                "sockets": Object {
+                  "total": Object {
+                    "unit": "",
+                    "value": 0,
+                  },
+                  "used": Object {
+                    "unit": "",
+                    "value": 0,
+                  },
+                },
+                "storage": Object {
+                  "total": Object {
+                    "unit": "B",
+                    "value": 0,
+                  },
+                  "used": Object {
+                    "unit": "B",
+                    "value": 0,
+                  },
+                },
+                "upgrade": Object {
+                  "available": false,
+                  "updated_timestamp": "2021-01-11T11:55:29Z",
+                },
+                "version_update_available": false,
+              },
+              "multi_az": false,
+              "name": "test-liza",
+              "network": Object {
+                "host_prefix": 23,
+                "machine_cidr": "10.0.0.0/16",
+                "pod_cidr": "10.128.0.0/14",
+                "service_cidr": "172.30.0.0/16",
+              },
+              "node_drain_grace_period": Object {
+                "unit": "minutes",
+                "value": 60,
+              },
+              "nodes": Object {
+                "availability_zones": Array [
+                  "us-east-1a",
+                ],
+                "compute": 4,
+                "compute_machine_type": Object {
+                  "href": "/api/clusters_mgmt/v1/machine_types/m5.xlarge",
+                  "id": "m5.xlarge",
+                  "kind": "MachineTypeLink",
+                },
+                "infra": 2,
+                "master": 3,
+                "master_machine_type": Object {
+                  "href": "/api/clusters_mgmt/v1/machine_types/m5.xlarge",
+                  "id": "m5.xlarge",
+                  "kind": "MachineTypeLink",
+                },
+              },
+              "openshift_version": "4.6.8",
+              "product": Object {
+                "id": "OSD",
+              },
+              "region": Object {
+                "href": "/api/clusters_mgmt/v1/cloud_providers/aws/regions/us-east-1",
+                "id": "us-east-1",
+                "kind": "CloudRegionLink",
+              },
+              "state": Object {
+                "description": "Ready",
+                "state": "ready",
+              },
+              "status": Object {
+                "dns_ready": true,
+                "provision_error_code": "",
+                "provision_error_message": "",
+                "state": "ready",
+              },
+              "storage_quota": null,
+              "subscription": Object {
+                "capabilities": Array [
+                  Object {
+                    "inherited": true,
+                    "name": "capability.cluster.subscribed_ocp",
+                    "value": "true",
+                  },
+                  Object {
+                    "inherited": true,
+                    "name": "capability.cluster.manage_cluster_admin",
+                    "value": "true",
+                  },
+                ],
+                "cloud_provider_id": "aws",
+                "cluster_id": "1i4counta3holamvo1g5tp6n8p3a03bq",
+                "console_url": "https://console-openshift-console.apps.test-liza.wiex.s1.devshift.org",
+                "cpu_total": 8,
+                "created_at": "2021-01-10T15:17:15.19112Z",
+                "creator": Object {
+                  "email": "***REMOVED***",
+                  "href": "/api/accounts_mgmt/v1/accounts/1MRilA9vHlOUX9ui3lx6IohSsaS",
+                  "id": "1MRilA9vHlOUX9ui3lx6IohSsaS",
+                  "kind": "Account",
+                  "name": "Liza Gilman",
+                  "username": "egilman.openshift",
+                },
+                "display_name": "test-liza",
+                "external_cluster_id": "bae5b227-2472-4e71-be4d-a18fc60bb48a",
+                "href": "/api/accounts_mgmt/v1/subscriptions/1msoogsgTLQ4PePjrTOt3UqvMzX",
+                "id": "1msoogsgTLQ4PePjrTOt3UqvMzX",
+                "kind": "Subscription",
+                "last_reconcile_date": "0001-01-01T00:00:00Z",
+                "last_released_at": "0001-01-01T00:00:00Z",
+                "last_telemetry_date": "2021-01-11T03:59:48.224585Z",
+                "managed": true,
+                "metrics": Array [
+                  Object {
+                    "HealthState": "healthy",
+                    "cloud_provider": "aws",
+                    "compute_nodes_cpu": Object {
+                      "total": Object {
+                        "unit": "",
+                        "value": 24,
+                      },
+                      "updated_timestamp": "1970-01-01T00:00:00Z",
+                      "used": Object {
+                        "unit": "",
+                        "value": 0,
+                      },
+                    },
+                    "compute_nodes_memory": Object {
+                      "total": Object {
+                        "unit": "B",
+                        "value": 98489344000,
+                      },
+                      "updated_timestamp": "1970-01-01T00:00:00Z",
+                      "used": Object {
+                        "unit": "B",
+                        "value": 0,
+                      },
+                    },
+                    "compute_nodes_sockets": Object {
+                      "total": Object {
+                        "unit": "",
+                        "value": 0,
+                      },
+                      "updated_timestamp": "1970-01-01T00:00:00Z",
+                      "used": Object {
+                        "unit": "",
+                        "value": 0,
+                      },
+                    },
+                    "console_url": "https://console-openshift-console.apps.test-liza.wiex.s1.devshift.org",
+                    "cpu": Object {
+                      "total": Object {
+                        "unit": "",
+                        "value": 36,
+                      },
+                      "updated_timestamp": "2021-01-11T11:55:10.517Z",
+                      "used": Object {
+                        "unit": "",
+                        "value": 3.8904761904758463,
+                      },
+                    },
+                    "critical_alerts_firing": 0,
+                    "memory": Object {
+                      "total": Object {
+                        "unit": "B",
+                        "value": 147469647872,
+                      },
+                      "updated_timestamp": "2021-01-11T11:55:10.448Z",
+                      "used": Object {
+                        "unit": "B",
+                        "value": 28802600960,
+                      },
+                    },
+                    "nodes": Object {
+                      "compute": 4,
+                      "infra": 2,
+                      "master": 3,
+                      "total": 9,
+                    },
+                    "open_shift_version": "4.6.8",
+                    "operating_system": "",
+                    "operators_condition_failing": 0,
+                    "region": "us-east-1",
+                    "sockets": Object {
+                      "total": Object {
+                        "unit": "",
+                        "value": 0,
+                      },
+                      "updated_timestamp": "1970-01-01T00:00:00Z",
+                      "used": Object {
+                        "unit": "",
+                        "value": 0,
+                      },
+                    },
+                    "state": "ready",
+                    "state_description": "",
+                    "storage": Object {
+                      "total": Object {
+                        "unit": "B",
+                        "value": 0,
+                      },
+                      "updated_timestamp": "1970-01-01T00:00:00Z",
+                      "used": Object {
+                        "unit": "B",
+                        "value": 0,
+                      },
+                    },
+                    "subscription_cpu_total": 8,
+                    "subscription_socket_total": 4,
+                    "upgrade": Object {
+                      "updated_timestamp": "2021-01-11T11:55:10.206Z",
+                    },
+                  },
+                ],
+                "organization_id": "1MKVU4otCIuogoLtgtyU6wajxjW",
+                "plan": Object {
+                  "href": "/api/accounts_mgmt/v1/plans/OSD",
+                  "id": "OSD",
+                  "kind": "Plan",
+                  "type": "OSD",
+                },
+                "provenance": "Provisioning",
+                "region_id": "us-east-1",
+                "socket_total": 4,
+                "status": "Active",
+                "support_level": "Premium",
+                "updated_at": "2021-01-11T03:59:48.224622Z",
+              },
+              "upgrade_channel_group": "stable",
+              "version": Object {
+                "channel_group": "stable",
+                "href": "/api/clusters_mgmt/v1/versions/openshift-v4.6.8",
+                "id": "openshift-v4.6.8",
+                "kind": "Version",
+              },
+            }
+          }
         />
-         
-        Ready
       </DescriptionListDescription>
     </DescriptionListGroup>
     <DescriptionListGroup>
@@ -915,12 +1630,354 @@ exports[`<DetailsRight /> Self Managed cluster should not render desired nodes w
         Status
       </DescriptionListTerm>
       <DescriptionListDescription>
-        <ClusterStateIcon
-          animated={true}
-          clusterState="ready"
+        <ClusterStatus
+          cluster={
+            Object {
+              "activity_timestamp": "2021-01-11T11:55:29Z",
+              "addons": Object {
+                "href": "/api/clusters_mgmt/v1/clusters/1i4counta3holamvo1g5tp6n8p3a03bq/addons",
+                "kind": "AddOnInstallationListLink",
+              },
+              "api": Object {
+                "listening": "external",
+                "url": "https://api.test-liza.wiex.s1.devshift.org:6443",
+              },
+              "aws_infrastructure_access_role_grants": Object {
+                "href": "/api/clusters_mgmt/v1/clusters/1i4counta3holamvo1g5tp6n8p3a03bq/aws_infrastructure_access_role_grants",
+                "items": null,
+                "kind": "AWSInfrastructureAccessRoleGrantLink",
+              },
+              "ccs": Object {
+                "disable_scp_checks": false,
+                "enabled": false,
+              },
+              "cloud_provider": Object {
+                "href": "/api/clusters_mgmt/v1/cloud_providers/aws",
+                "id": "aws",
+                "kind": "CloudProviderLink",
+              },
+              "console": Object {
+                "url": "https://console-openshift-console.apps.test-liza.wiex.s1.devshift.org",
+              },
+              "creation_timestamp": "2021-01-10T15:17:16.278663Z",
+              "display_name": "test-liza",
+              "dns": Object {
+                "base_domain": "wiex.s1.devshift.org",
+              },
+              "etcd_encryption": false,
+              "expiration_timestamp": "2021-01-12T03:17:14.999204Z",
+              "external_configuration": Object {
+                "href": "/api/clusters_mgmt/v1/clusters/1i4counta3holamvo1g5tp6n8p3a03bq/external_configuration",
+                "kind": "ExternalConfiguration",
+                "labels": Object {
+                  "href": "/api/clusters_mgmt/v1/clusters/1i4counta3holamvo1g5tp6n8p3a03bq/external_configuration/labels",
+                  "kind": "LabelListLink",
+                },
+                "syncsets": Object {
+                  "href": "/api/clusters_mgmt/v1/clusters/1i4counta3holamvo1g5tp6n8p3a03bq/external_configuration/syncsets",
+                  "kind": "SyncsetListLink",
+                },
+              },
+              "external_id": "bae5b227-2472-4e71-be4d-a18fc60bb48a",
+              "flavour": Object {
+                "href": "/api/clusters_mgmt/v1/flavours/osd-4",
+                "id": "osd-4",
+                "kind": "FlavourLink",
+              },
+              "groups": Object {
+                "href": "/api/clusters_mgmt/v1/clusters/1i4counta3holamvo1g5tp6n8p3a03bq/groups",
+                "kind": "GroupListLink",
+              },
+              "health_state": "healthy",
+              "href": "/api/clusters_mgmt/v1/clusters/1i4counta3holamvo1g5tp6n8p3a03bq",
+              "id": "1i4counta3holamvo1g5tp6n8p3a03bq",
+              "identity_providers": Object {
+                "href": "/api/clusters_mgmt/v1/clusters/1i4counta3holamvo1g5tp6n8p3a03bq/identity_providers",
+                "kind": "IdentityProviderListLink",
+              },
+              "infra_id": "test-liza-d7vkd",
+              "ingresses": Object {
+                "href": "/api/clusters_mgmt/v1/clusters/1i4counta3holamvo1g5tp6n8p3a03bq/ingresses",
+                "id": "1i4counta3holamvo1g5tp6n8p3a03bq",
+                "kind": "IngressListLink",
+              },
+              "kind": "Cluster",
+              "load_balancer_quota": 0,
+              "machine_pools": Object {
+                "href": "/api/clusters_mgmt/v1/clusters/1i4counta3holamvo1g5tp6n8p3a03bq/machine_pools",
+                "kind": "MachinePoolListLink",
+              },
+              "managed": false,
+              "metrics": Object {
+                "compute_nodes_cpu": Object {
+                  "total": Object {
+                    "unit": "",
+                    "value": 16,
+                  },
+                },
+                "compute_nodes_memory": Object {
+                  "total": Object {
+                    "unit": "B",
+                    "value": 65835802624,
+                  },
+                },
+                "compute_nodes_sockets": Object {
+                  "total": Object {
+                    "unit": "",
+                    "value": 0,
+                  },
+                },
+                "cpu": Object {
+                  "total": Object {
+                    "unit": "",
+                    "value": 36,
+                  },
+                  "updated_timestamp": "2021-01-11T11:55:29Z",
+                  "used": Object {
+                    "unit": "",
+                    "value": 3.8904761904758463,
+                  },
+                },
+                "memory": Object {
+                  "total": Object {
+                    "unit": "B",
+                    "value": 147469647872,
+                  },
+                  "updated_timestamp": "2021-01-11T11:55:29Z",
+                  "used": Object {
+                    "unit": "B",
+                    "value": 28802600960,
+                  },
+                },
+                "nodes": Object {
+                  "compute": 4,
+                  "infra": 2,
+                  "master": 3,
+                  "total": 9,
+                },
+                "sockets": Object {
+                  "total": Object {
+                    "unit": "",
+                    "value": 0,
+                  },
+                  "used": Object {
+                    "unit": "",
+                    "value": 0,
+                  },
+                },
+                "storage": Object {
+                  "total": Object {
+                    "unit": "B",
+                    "value": 0,
+                  },
+                  "used": Object {
+                    "unit": "B",
+                    "value": 0,
+                  },
+                },
+                "upgrade": Object {
+                  "available": false,
+                  "updated_timestamp": "2021-01-11T11:55:29Z",
+                },
+                "version_update_available": false,
+              },
+              "multi_az": false,
+              "name": "test-liza",
+              "network": Object {
+                "host_prefix": 23,
+                "machine_cidr": "10.0.0.0/16",
+                "pod_cidr": "10.128.0.0/14",
+                "service_cidr": "172.30.0.0/16",
+              },
+              "node_drain_grace_period": Object {
+                "unit": "minutes",
+                "value": 60,
+              },
+              "nodes": null,
+              "openshift_version": "4.6.8",
+              "product": Object {
+                "id": "OSD",
+              },
+              "region": Object {
+                "href": "/api/clusters_mgmt/v1/cloud_providers/aws/regions/us-east-1",
+                "id": "us-east-1",
+                "kind": "CloudRegionLink",
+              },
+              "state": Object {
+                "description": "Ready",
+                "state": "ready",
+              },
+              "status": Object {
+                "dns_ready": true,
+                "provision_error_code": "",
+                "provision_error_message": "",
+                "state": "ready",
+              },
+              "storage_quota": Object {
+                "unit": "B",
+                "value": 107374182400,
+              },
+              "subscription": Object {
+                "capabilities": Array [
+                  Object {
+                    "inherited": true,
+                    "name": "capability.cluster.subscribed_ocp",
+                    "value": "true",
+                  },
+                  Object {
+                    "inherited": true,
+                    "name": "capability.cluster.manage_cluster_admin",
+                    "value": "true",
+                  },
+                ],
+                "cloud_provider_id": "aws",
+                "cluster_id": "1i4counta3holamvo1g5tp6n8p3a03bq",
+                "console_url": "https://console-openshift-console.apps.test-liza.wiex.s1.devshift.org",
+                "cpu_total": 8,
+                "created_at": "2021-01-10T15:17:15.19112Z",
+                "creator": Object {
+                  "email": "***REMOVED***",
+                  "href": "/api/accounts_mgmt/v1/accounts/1MRilA9vHlOUX9ui3lx6IohSsaS",
+                  "id": "1MRilA9vHlOUX9ui3lx6IohSsaS",
+                  "kind": "Account",
+                  "name": "Liza Gilman",
+                  "username": "egilman.openshift",
+                },
+                "display_name": "test-liza",
+                "external_cluster_id": "bae5b227-2472-4e71-be4d-a18fc60bb48a",
+                "href": "/api/accounts_mgmt/v1/subscriptions/1msoogsgTLQ4PePjrTOt3UqvMzX",
+                "id": "1msoogsgTLQ4PePjrTOt3UqvMzX",
+                "kind": "Subscription",
+                "last_reconcile_date": "0001-01-01T00:00:00Z",
+                "last_released_at": "0001-01-01T00:00:00Z",
+                "last_telemetry_date": "2021-01-11T03:59:48.224585Z",
+                "managed": true,
+                "metrics": Array [
+                  Object {
+                    "HealthState": "healthy",
+                    "cloud_provider": "aws",
+                    "compute_nodes_cpu": Object {
+                      "total": Object {
+                        "unit": "",
+                        "value": 24,
+                      },
+                      "updated_timestamp": "1970-01-01T00:00:00Z",
+                      "used": Object {
+                        "unit": "",
+                        "value": 0,
+                      },
+                    },
+                    "compute_nodes_memory": Object {
+                      "total": Object {
+                        "unit": "B",
+                        "value": 98489344000,
+                      },
+                      "updated_timestamp": "1970-01-01T00:00:00Z",
+                      "used": Object {
+                        "unit": "B",
+                        "value": 0,
+                      },
+                    },
+                    "compute_nodes_sockets": Object {
+                      "total": Object {
+                        "unit": "",
+                        "value": 0,
+                      },
+                      "updated_timestamp": "1970-01-01T00:00:00Z",
+                      "used": Object {
+                        "unit": "",
+                        "value": 0,
+                      },
+                    },
+                    "console_url": "https://console-openshift-console.apps.test-liza.wiex.s1.devshift.org",
+                    "cpu": Object {
+                      "total": Object {
+                        "unit": "",
+                        "value": 36,
+                      },
+                      "updated_timestamp": "2021-01-11T11:55:10.517Z",
+                      "used": Object {
+                        "unit": "",
+                        "value": 3.8904761904758463,
+                      },
+                    },
+                    "critical_alerts_firing": 0,
+                    "memory": Object {
+                      "total": Object {
+                        "unit": "B",
+                        "value": 147469647872,
+                      },
+                      "updated_timestamp": "2021-01-11T11:55:10.448Z",
+                      "used": Object {
+                        "unit": "B",
+                        "value": 28802600960,
+                      },
+                    },
+                    "nodes": Object {
+                      "compute": 4,
+                      "infra": 2,
+                      "master": 3,
+                      "total": 9,
+                    },
+                    "open_shift_version": "4.6.8",
+                    "operating_system": "",
+                    "operators_condition_failing": 0,
+                    "region": "us-east-1",
+                    "sockets": Object {
+                      "total": Object {
+                        "unit": "",
+                        "value": 0,
+                      },
+                      "updated_timestamp": "1970-01-01T00:00:00Z",
+                      "used": Object {
+                        "unit": "",
+                        "value": 0,
+                      },
+                    },
+                    "state": "ready",
+                    "state_description": "",
+                    "storage": Object {
+                      "total": Object {
+                        "unit": "B",
+                        "value": 0,
+                      },
+                      "updated_timestamp": "1970-01-01T00:00:00Z",
+                      "used": Object {
+                        "unit": "B",
+                        "value": 0,
+                      },
+                    },
+                    "subscription_cpu_total": 8,
+                    "subscription_socket_total": 4,
+                    "upgrade": Object {
+                      "updated_timestamp": "2021-01-11T11:55:10.206Z",
+                    },
+                  },
+                ],
+                "organization_id": "1MKVU4otCIuogoLtgtyU6wajxjW",
+                "plan": Object {
+                  "href": "/api/accounts_mgmt/v1/plans/OSD",
+                  "id": "OSD",
+                  "kind": "Plan",
+                  "type": "OSD",
+                },
+                "provenance": "Provisioning",
+                "region_id": "us-east-1",
+                "socket_total": 4,
+                "status": "Active",
+                "support_level": "Premium",
+                "updated_at": "2021-01-11T03:59:48.224622Z",
+              },
+              "upgrade_channel_group": "stable",
+              "version": Object {
+                "channel_group": "stable",
+                "href": "/api/clusters_mgmt/v1/versions/openshift-v4.6.8",
+                "id": "openshift-v4.6.8",
+                "kind": "Version",
+              },
+            }
+          }
         />
-         
-        Ready
       </DescriptionListDescription>
     </DescriptionListGroup>
     <DescriptionListGroup>
@@ -1337,12 +2394,206 @@ exports[`<DetailsRight /> Self Managed cluster should not render vcpu and memory
         Status
       </DescriptionListTerm>
       <DescriptionListDescription>
-        <ClusterStateIcon
-          animated={true}
-          clusterState="ready"
+        <ClusterStatus
+          cluster={
+            Object {
+              "activity_timestamp": "2021-01-11T11:55:29Z",
+              "addons": Object {
+                "href": "/api/clusters_mgmt/v1/clusters/1i4counta3holamvo1g5tp6n8p3a03bq/addons",
+                "kind": "AddOnInstallationListLink",
+              },
+              "api": Object {
+                "listening": "external",
+                "url": "https://api.test-liza.wiex.s1.devshift.org:6443",
+              },
+              "aws_infrastructure_access_role_grants": Object {
+                "href": "/api/clusters_mgmt/v1/clusters/1i4counta3holamvo1g5tp6n8p3a03bq/aws_infrastructure_access_role_grants",
+                "items": null,
+                "kind": "AWSInfrastructureAccessRoleGrantLink",
+              },
+              "ccs": Object {
+                "disable_scp_checks": false,
+                "enabled": false,
+              },
+              "cloud_provider": Object {
+                "href": "/api/clusters_mgmt/v1/cloud_providers/aws",
+                "id": "aws",
+                "kind": "CloudProviderLink",
+              },
+              "console": Object {
+                "url": "https://console-openshift-console.apps.test-liza.wiex.s1.devshift.org",
+              },
+              "creation_timestamp": "2021-01-10T15:17:16.278663Z",
+              "display_name": "test-liza",
+              "dns": Object {
+                "base_domain": "wiex.s1.devshift.org",
+              },
+              "etcd_encryption": false,
+              "expiration_timestamp": "2021-01-12T03:17:14.999204Z",
+              "external_configuration": Object {
+                "href": "/api/clusters_mgmt/v1/clusters/1i4counta3holamvo1g5tp6n8p3a03bq/external_configuration",
+                "kind": "ExternalConfiguration",
+                "labels": Object {
+                  "href": "/api/clusters_mgmt/v1/clusters/1i4counta3holamvo1g5tp6n8p3a03bq/external_configuration/labels",
+                  "kind": "LabelListLink",
+                },
+                "syncsets": Object {
+                  "href": "/api/clusters_mgmt/v1/clusters/1i4counta3holamvo1g5tp6n8p3a03bq/external_configuration/syncsets",
+                  "kind": "SyncsetListLink",
+                },
+              },
+              "external_id": "bae5b227-2472-4e71-be4d-a18fc60bb48a",
+              "flavour": Object {
+                "href": "/api/clusters_mgmt/v1/flavours/osd-4",
+                "id": "osd-4",
+                "kind": "FlavourLink",
+              },
+              "groups": Object {
+                "href": "/api/clusters_mgmt/v1/clusters/1i4counta3holamvo1g5tp6n8p3a03bq/groups",
+                "kind": "GroupListLink",
+              },
+              "health_state": "healthy",
+              "href": "/api/clusters_mgmt/v1/clusters/1i4counta3holamvo1g5tp6n8p3a03bq",
+              "id": "1i4counta3holamvo1g5tp6n8p3a03bq",
+              "identity_providers": Object {
+                "href": "/api/clusters_mgmt/v1/clusters/1i4counta3holamvo1g5tp6n8p3a03bq/identity_providers",
+                "kind": "IdentityProviderListLink",
+              },
+              "infra_id": "test-liza-d7vkd",
+              "ingresses": Object {
+                "href": "/api/clusters_mgmt/v1/clusters/1i4counta3holamvo1g5tp6n8p3a03bq/ingresses",
+                "id": "1i4counta3holamvo1g5tp6n8p3a03bq",
+                "kind": "IngressListLink",
+              },
+              "kind": "Cluster",
+              "load_balancer_quota": 0,
+              "machine_pools": Object {
+                "href": "/api/clusters_mgmt/v1/clusters/1i4counta3holamvo1g5tp6n8p3a03bq/machine_pools",
+                "kind": "MachinePoolListLink",
+              },
+              "managed": false,
+              "metrics": Object {
+                "compute_nodes_cpu": Object {
+                  "total": Object {
+                    "unit": "",
+                    "value": 16,
+                  },
+                },
+                "compute_nodes_memory": Object {
+                  "total": Object {
+                    "unit": "B",
+                    "value": 65835802624,
+                  },
+                },
+                "compute_nodes_sockets": Object {
+                  "total": Object {
+                    "unit": "",
+                    "value": 0,
+                  },
+                },
+                "cpu": Object {
+                  "total": Object {
+                    "unit": "",
+                    "value": 36,
+                  },
+                  "updated_timestamp": "2021-01-11T11:55:29Z",
+                  "used": Object {
+                    "unit": "",
+                    "value": 3.8904761904758463,
+                  },
+                },
+                "memory": Object {
+                  "total": Object {
+                    "unit": "B",
+                    "value": 147469647872,
+                  },
+                  "updated_timestamp": "2021-01-11T11:55:29Z",
+                  "used": Object {
+                    "unit": "B",
+                    "value": 28802600960,
+                  },
+                },
+                "nodes": Object {
+                  "compute": 4,
+                  "infra": 2,
+                  "master": 3,
+                  "total": 9,
+                },
+                "sockets": Object {
+                  "total": Object {
+                    "unit": "",
+                    "value": 0,
+                  },
+                  "used": Object {
+                    "unit": "",
+                    "value": 0,
+                  },
+                },
+                "storage": Object {
+                  "total": Object {
+                    "unit": "B",
+                    "value": 0,
+                  },
+                  "used": Object {
+                    "unit": "B",
+                    "value": 0,
+                  },
+                },
+                "upgrade": Object {
+                  "available": false,
+                  "updated_timestamp": "2021-01-11T11:55:29Z",
+                },
+                "version_update_available": false,
+              },
+              "multi_az": false,
+              "name": "test-liza",
+              "network": Object {
+                "host_prefix": 23,
+                "machine_cidr": "10.0.0.0/16",
+                "pod_cidr": "10.128.0.0/14",
+                "service_cidr": "172.30.0.0/16",
+              },
+              "node_drain_grace_period": Object {
+                "unit": "minutes",
+                "value": 60,
+              },
+              "nodes": null,
+              "openshift_version": "4.6.8",
+              "product": Object {
+                "id": "OSD",
+              },
+              "region": Object {
+                "href": "/api/clusters_mgmt/v1/cloud_providers/aws/regions/us-east-1",
+                "id": "us-east-1",
+                "kind": "CloudRegionLink",
+              },
+              "state": Object {
+                "description": "Ready",
+                "state": "ready",
+              },
+              "status": Object {
+                "dns_ready": true,
+                "provision_error_code": "",
+                "provision_error_message": "",
+                "state": "ready",
+              },
+              "storage_quota": Object {
+                "unit": "B",
+                "value": 107374182400,
+              },
+              "subscription": Object {
+                "status": "Disconnected",
+              },
+              "upgrade_channel_group": "stable",
+              "version": Object {
+                "channel_group": "stable",
+                "href": "/api/clusters_mgmt/v1/versions/openshift-v4.6.8",
+                "id": "openshift-v4.6.8",
+                "kind": "Version",
+              },
+            }
+          }
         />
-         
-        Ready
       </DescriptionListDescription>
     </DescriptionListGroup>
     <DescriptionListGroup>
@@ -1592,12 +2843,223 @@ exports[`<DetailsRight /> Self Managed cluster should render status correctly fo
         Status
       </DescriptionListTerm>
       <DescriptionListDescription>
-        <ClusterStateIcon
-          animated={true}
-          clusterState="ready"
+        <ClusterStatus
+          cluster={
+            Object {
+              "activity_timestamp": "2021-01-11T11:55:29Z",
+              "addons": Object {
+                "href": "/api/clusters_mgmt/v1/clusters/1i4counta3holamvo1g5tp6n8p3a03bq/addons",
+                "kind": "AddOnInstallationListLink",
+              },
+              "api": Object {
+                "listening": "external",
+                "url": "https://api.test-liza.wiex.s1.devshift.org:6443",
+              },
+              "aws_infrastructure_access_role_grants": Object {
+                "href": "/api/clusters_mgmt/v1/clusters/1i4counta3holamvo1g5tp6n8p3a03bq/aws_infrastructure_access_role_grants",
+                "items": null,
+                "kind": "AWSInfrastructureAccessRoleGrantLink",
+              },
+              "ccs": Object {
+                "disable_scp_checks": false,
+                "enabled": false,
+              },
+              "cloud_provider": Object {
+                "href": "/api/clusters_mgmt/v1/cloud_providers/aws",
+                "id": "aws",
+                "kind": "CloudProviderLink",
+              },
+              "console": Object {
+                "url": "https://console-openshift-console.apps.test-liza.wiex.s1.devshift.org",
+              },
+              "creation_timestamp": "2021-01-10T15:17:16.278663Z",
+              "display_name": "test-liza",
+              "dns": Object {
+                "base_domain": "wiex.s1.devshift.org",
+              },
+              "etcd_encryption": false,
+              "expiration_timestamp": "2021-01-12T03:17:14.999204Z",
+              "external_configuration": Object {
+                "href": "/api/clusters_mgmt/v1/clusters/1i4counta3holamvo1g5tp6n8p3a03bq/external_configuration",
+                "kind": "ExternalConfiguration",
+                "labels": Object {
+                  "href": "/api/clusters_mgmt/v1/clusters/1i4counta3holamvo1g5tp6n8p3a03bq/external_configuration/labels",
+                  "kind": "LabelListLink",
+                },
+                "syncsets": Object {
+                  "href": "/api/clusters_mgmt/v1/clusters/1i4counta3holamvo1g5tp6n8p3a03bq/external_configuration/syncsets",
+                  "kind": "SyncsetListLink",
+                },
+              },
+              "external_id": "bae5b227-2472-4e71-be4d-a18fc60bb48a",
+              "flavour": Object {
+                "href": "/api/clusters_mgmt/v1/flavours/osd-4",
+                "id": "osd-4",
+                "kind": "FlavourLink",
+              },
+              "groups": Object {
+                "href": "/api/clusters_mgmt/v1/clusters/1i4counta3holamvo1g5tp6n8p3a03bq/groups",
+                "kind": "GroupListLink",
+              },
+              "health_state": "healthy",
+              "href": "/api/clusters_mgmt/v1/clusters/1i4counta3holamvo1g5tp6n8p3a03bq",
+              "id": "1i4counta3holamvo1g5tp6n8p3a03bq",
+              "identity_providers": Object {
+                "href": "/api/clusters_mgmt/v1/clusters/1i4counta3holamvo1g5tp6n8p3a03bq/identity_providers",
+                "kind": "IdentityProviderListLink",
+              },
+              "infra_id": "test-liza-d7vkd",
+              "ingresses": Object {
+                "href": "/api/clusters_mgmt/v1/clusters/1i4counta3holamvo1g5tp6n8p3a03bq/ingresses",
+                "id": "1i4counta3holamvo1g5tp6n8p3a03bq",
+                "kind": "IngressListLink",
+              },
+              "kind": "Cluster",
+              "load_balancer_quota": 0,
+              "machine_pools": Object {
+                "href": "/api/clusters_mgmt/v1/clusters/1i4counta3holamvo1g5tp6n8p3a03bq/machine_pools",
+                "kind": "MachinePoolListLink",
+              },
+              "managed": false,
+              "metrics": Object {
+                "compute_nodes_cpu": Object {
+                  "total": Object {
+                    "unit": "",
+                    "value": 16,
+                  },
+                },
+                "compute_nodes_memory": Object {
+                  "total": Object {
+                    "unit": "B",
+                    "value": 65835802624,
+                  },
+                },
+                "compute_nodes_sockets": Object {
+                  "total": Object {
+                    "unit": "",
+                    "value": 0,
+                  },
+                },
+                "cpu": Object {
+                  "total": Object {
+                    "unit": "",
+                    "value": 36,
+                  },
+                  "updated_timestamp": "2021-01-11T11:55:29Z",
+                  "used": Object {
+                    "unit": "",
+                    "value": 3.8904761904758463,
+                  },
+                },
+                "memory": Object {
+                  "total": Object {
+                    "unit": "B",
+                    "value": 147469647872,
+                  },
+                  "updated_timestamp": "2021-01-11T11:55:29Z",
+                  "used": Object {
+                    "unit": "B",
+                    "value": 28802600960,
+                  },
+                },
+                "nodes": Object {
+                  "compute": 4,
+                  "infra": 2,
+                  "master": 3,
+                  "total": 9,
+                },
+                "sockets": Object {
+                  "total": Object {
+                    "unit": "",
+                    "value": 0,
+                  },
+                  "used": Object {
+                    "unit": "",
+                    "value": 0,
+                  },
+                },
+                "storage": Object {
+                  "total": Object {
+                    "unit": "B",
+                    "value": 0,
+                  },
+                  "used": Object {
+                    "unit": "B",
+                    "value": 0,
+                  },
+                },
+                "upgrade": Object {
+                  "available": false,
+                  "updated_timestamp": "2021-01-11T11:55:29Z",
+                },
+                "version_update_available": false,
+              },
+              "multi_az": false,
+              "name": "test-liza",
+              "network": Object {
+                "host_prefix": 23,
+                "machine_cidr": "10.0.0.0/16",
+                "pod_cidr": "10.128.0.0/14",
+                "service_cidr": "172.30.0.0/16",
+              },
+              "node_drain_grace_period": Object {
+                "unit": "minutes",
+                "value": 60,
+              },
+              "nodes": Object {
+                "availability_zones": Array [
+                  "us-east-1a",
+                ],
+                "compute": 4,
+                "compute_machine_type": Object {
+                  "href": "/api/clusters_mgmt/v1/machine_types/m5.xlarge",
+                  "id": "m5.xlarge",
+                  "kind": "MachineTypeLink",
+                },
+                "infra": 2,
+                "master": 3,
+                "master_machine_type": Object {
+                  "href": "/api/clusters_mgmt/v1/machine_types/m5.xlarge",
+                  "id": "m5.xlarge",
+                  "kind": "MachineTypeLink",
+                },
+              },
+              "openshift_version": "4.6.8",
+              "product": Object {
+                "id": "OSD",
+              },
+              "region": Object {
+                "href": "/api/clusters_mgmt/v1/cloud_providers/aws/regions/us-east-1",
+                "id": "us-east-1",
+                "kind": "CloudRegionLink",
+              },
+              "state": Object {
+                "description": "Ready",
+                "state": "ready",
+              },
+              "status": Object {
+                "dns_ready": true,
+                "provision_error_code": "",
+                "provision_error_message": "",
+                "state": "ready",
+              },
+              "storage_quota": Object {
+                "unit": "B",
+                "value": 107374182400,
+              },
+              "subscription": Object {
+                "status": "Archived",
+              },
+              "upgrade_channel_group": "stable",
+              "version": Object {
+                "channel_group": "stable",
+                "href": "/api/clusters_mgmt/v1/versions/openshift-v4.6.8",
+                "id": "openshift-v4.6.8",
+                "kind": "Version",
+              },
+            }
+          }
         />
-         
-        Ready
       </DescriptionListDescription>
     </DescriptionListGroup>
     <DescriptionListGroup>
@@ -1883,12 +3345,223 @@ exports[`<DetailsRight /> Self Managed cluster should render status correctly fo
         Status
       </DescriptionListTerm>
       <DescriptionListDescription>
-        <ClusterStateIcon
-          animated={true}
-          clusterState="ready"
+        <ClusterStatus
+          cluster={
+            Object {
+              "activity_timestamp": "2021-01-11T11:55:29Z",
+              "addons": Object {
+                "href": "/api/clusters_mgmt/v1/clusters/1i4counta3holamvo1g5tp6n8p3a03bq/addons",
+                "kind": "AddOnInstallationListLink",
+              },
+              "api": Object {
+                "listening": "external",
+                "url": "https://api.test-liza.wiex.s1.devshift.org:6443",
+              },
+              "aws_infrastructure_access_role_grants": Object {
+                "href": "/api/clusters_mgmt/v1/clusters/1i4counta3holamvo1g5tp6n8p3a03bq/aws_infrastructure_access_role_grants",
+                "items": null,
+                "kind": "AWSInfrastructureAccessRoleGrantLink",
+              },
+              "ccs": Object {
+                "disable_scp_checks": false,
+                "enabled": false,
+              },
+              "cloud_provider": Object {
+                "href": "/api/clusters_mgmt/v1/cloud_providers/aws",
+                "id": "aws",
+                "kind": "CloudProviderLink",
+              },
+              "console": Object {
+                "url": "https://console-openshift-console.apps.test-liza.wiex.s1.devshift.org",
+              },
+              "creation_timestamp": "2021-01-10T15:17:16.278663Z",
+              "display_name": "test-liza",
+              "dns": Object {
+                "base_domain": "wiex.s1.devshift.org",
+              },
+              "etcd_encryption": false,
+              "expiration_timestamp": "2021-01-12T03:17:14.999204Z",
+              "external_configuration": Object {
+                "href": "/api/clusters_mgmt/v1/clusters/1i4counta3holamvo1g5tp6n8p3a03bq/external_configuration",
+                "kind": "ExternalConfiguration",
+                "labels": Object {
+                  "href": "/api/clusters_mgmt/v1/clusters/1i4counta3holamvo1g5tp6n8p3a03bq/external_configuration/labels",
+                  "kind": "LabelListLink",
+                },
+                "syncsets": Object {
+                  "href": "/api/clusters_mgmt/v1/clusters/1i4counta3holamvo1g5tp6n8p3a03bq/external_configuration/syncsets",
+                  "kind": "SyncsetListLink",
+                },
+              },
+              "external_id": "bae5b227-2472-4e71-be4d-a18fc60bb48a",
+              "flavour": Object {
+                "href": "/api/clusters_mgmt/v1/flavours/osd-4",
+                "id": "osd-4",
+                "kind": "FlavourLink",
+              },
+              "groups": Object {
+                "href": "/api/clusters_mgmt/v1/clusters/1i4counta3holamvo1g5tp6n8p3a03bq/groups",
+                "kind": "GroupListLink",
+              },
+              "health_state": "healthy",
+              "href": "/api/clusters_mgmt/v1/clusters/1i4counta3holamvo1g5tp6n8p3a03bq",
+              "id": "1i4counta3holamvo1g5tp6n8p3a03bq",
+              "identity_providers": Object {
+                "href": "/api/clusters_mgmt/v1/clusters/1i4counta3holamvo1g5tp6n8p3a03bq/identity_providers",
+                "kind": "IdentityProviderListLink",
+              },
+              "infra_id": "test-liza-d7vkd",
+              "ingresses": Object {
+                "href": "/api/clusters_mgmt/v1/clusters/1i4counta3holamvo1g5tp6n8p3a03bq/ingresses",
+                "id": "1i4counta3holamvo1g5tp6n8p3a03bq",
+                "kind": "IngressListLink",
+              },
+              "kind": "Cluster",
+              "load_balancer_quota": 0,
+              "machine_pools": Object {
+                "href": "/api/clusters_mgmt/v1/clusters/1i4counta3holamvo1g5tp6n8p3a03bq/machine_pools",
+                "kind": "MachinePoolListLink",
+              },
+              "managed": true,
+              "metrics": Object {
+                "compute_nodes_cpu": Object {
+                  "total": Object {
+                    "unit": "",
+                    "value": 16,
+                  },
+                },
+                "compute_nodes_memory": Object {
+                  "total": Object {
+                    "unit": "B",
+                    "value": 65835802624,
+                  },
+                },
+                "compute_nodes_sockets": Object {
+                  "total": Object {
+                    "unit": "",
+                    "value": 0,
+                  },
+                },
+                "cpu": Object {
+                  "total": Object {
+                    "unit": "",
+                    "value": 36,
+                  },
+                  "updated_timestamp": "2021-01-11T11:55:29Z",
+                  "used": Object {
+                    "unit": "",
+                    "value": 3.8904761904758463,
+                  },
+                },
+                "memory": Object {
+                  "total": Object {
+                    "unit": "B",
+                    "value": 147469647872,
+                  },
+                  "updated_timestamp": "2021-01-11T11:55:29Z",
+                  "used": Object {
+                    "unit": "B",
+                    "value": 28802600960,
+                  },
+                },
+                "nodes": Object {
+                  "compute": 4,
+                  "infra": 2,
+                  "master": 3,
+                  "total": 9,
+                },
+                "sockets": Object {
+                  "total": Object {
+                    "unit": "",
+                    "value": 0,
+                  },
+                  "used": Object {
+                    "unit": "",
+                    "value": 0,
+                  },
+                },
+                "storage": Object {
+                  "total": Object {
+                    "unit": "B",
+                    "value": 0,
+                  },
+                  "used": Object {
+                    "unit": "B",
+                    "value": 0,
+                  },
+                },
+                "upgrade": Object {
+                  "available": false,
+                  "updated_timestamp": "2021-01-11T11:55:29Z",
+                },
+                "version_update_available": false,
+              },
+              "multi_az": false,
+              "name": "test-liza",
+              "network": Object {
+                "host_prefix": 23,
+                "machine_cidr": "10.0.0.0/16",
+                "pod_cidr": "10.128.0.0/14",
+                "service_cidr": "172.30.0.0/16",
+              },
+              "node_drain_grace_period": Object {
+                "unit": "minutes",
+                "value": 60,
+              },
+              "nodes": Object {
+                "availability_zones": Array [
+                  "us-east-1a",
+                ],
+                "compute": 4,
+                "compute_machine_type": Object {
+                  "href": "/api/clusters_mgmt/v1/machine_types/m5.xlarge",
+                  "id": "m5.xlarge",
+                  "kind": "MachineTypeLink",
+                },
+                "infra": 2,
+                "master": 3,
+                "master_machine_type": Object {
+                  "href": "/api/clusters_mgmt/v1/machine_types/m5.xlarge",
+                  "id": "m5.xlarge",
+                  "kind": "MachineTypeLink",
+                },
+              },
+              "openshift_version": "4.6.8",
+              "product": Object {
+                "id": "OSD",
+              },
+              "region": Object {
+                "href": "/api/clusters_mgmt/v1/cloud_providers/aws/regions/us-east-1",
+                "id": "us-east-1",
+                "kind": "CloudRegionLink",
+              },
+              "state": Object {
+                "description": "Ready",
+                "state": "ready",
+              },
+              "status": Object {
+                "dns_ready": true,
+                "provision_error_code": "",
+                "provision_error_message": "",
+                "state": "ready",
+              },
+              "storage_quota": Object {
+                "unit": "B",
+                "value": 107374182400,
+              },
+              "subscription": Object {
+                "status": "Deprovisioned",
+              },
+              "upgrade_channel_group": "stable",
+              "version": Object {
+                "channel_group": "stable",
+                "href": "/api/clusters_mgmt/v1/versions/openshift-v4.6.8",
+                "id": "openshift-v4.6.8",
+                "kind": "Version",
+              },
+            }
+          }
         />
-         
-        Ready
       </DescriptionListDescription>
     </DescriptionListGroup>
     <DescriptionListGroup>
@@ -2199,12 +3872,371 @@ exports[`<DetailsRight /> should render when autoscale disabled 1`] = `
         Status
       </DescriptionListTerm>
       <DescriptionListDescription>
-        <ClusterStateIcon
-          animated={true}
-          clusterState="ready"
+        <ClusterStatus
+          cluster={
+            Object {
+              "activity_timestamp": "2021-01-11T11:55:29Z",
+              "addons": Object {
+                "href": "/api/clusters_mgmt/v1/clusters/1i4counta3holamvo1g5tp6n8p3a03bq/addons",
+                "kind": "AddOnInstallationListLink",
+              },
+              "api": Object {
+                "listening": "external",
+                "url": "https://api.test-liza.wiex.s1.devshift.org:6443",
+              },
+              "aws_infrastructure_access_role_grants": Object {
+                "href": "/api/clusters_mgmt/v1/clusters/1i4counta3holamvo1g5tp6n8p3a03bq/aws_infrastructure_access_role_grants",
+                "items": null,
+                "kind": "AWSInfrastructureAccessRoleGrantLink",
+              },
+              "ccs": Object {
+                "disable_scp_checks": false,
+                "enabled": false,
+              },
+              "cloud_provider": Object {
+                "href": "/api/clusters_mgmt/v1/cloud_providers/aws",
+                "id": "aws",
+                "kind": "CloudProviderLink",
+              },
+              "console": Object {
+                "url": "https://console-openshift-console.apps.test-liza.wiex.s1.devshift.org",
+              },
+              "creation_timestamp": "2021-01-10T15:17:16.278663Z",
+              "display_name": "test-liza",
+              "dns": Object {
+                "base_domain": "wiex.s1.devshift.org",
+              },
+              "etcd_encryption": false,
+              "expiration_timestamp": "2021-01-12T03:17:14.999204Z",
+              "external_configuration": Object {
+                "href": "/api/clusters_mgmt/v1/clusters/1i4counta3holamvo1g5tp6n8p3a03bq/external_configuration",
+                "kind": "ExternalConfiguration",
+                "labels": Object {
+                  "href": "/api/clusters_mgmt/v1/clusters/1i4counta3holamvo1g5tp6n8p3a03bq/external_configuration/labels",
+                  "kind": "LabelListLink",
+                },
+                "syncsets": Object {
+                  "href": "/api/clusters_mgmt/v1/clusters/1i4counta3holamvo1g5tp6n8p3a03bq/external_configuration/syncsets",
+                  "kind": "SyncsetListLink",
+                },
+              },
+              "external_id": "bae5b227-2472-4e71-be4d-a18fc60bb48a",
+              "flavour": Object {
+                "href": "/api/clusters_mgmt/v1/flavours/osd-4",
+                "id": "osd-4",
+                "kind": "FlavourLink",
+              },
+              "groups": Object {
+                "href": "/api/clusters_mgmt/v1/clusters/1i4counta3holamvo1g5tp6n8p3a03bq/groups",
+                "kind": "GroupListLink",
+              },
+              "health_state": "healthy",
+              "href": "/api/clusters_mgmt/v1/clusters/1i4counta3holamvo1g5tp6n8p3a03bq",
+              "id": "1i4counta3holamvo1g5tp6n8p3a03bq",
+              "identity_providers": Object {
+                "href": "/api/clusters_mgmt/v1/clusters/1i4counta3holamvo1g5tp6n8p3a03bq/identity_providers",
+                "kind": "IdentityProviderListLink",
+              },
+              "infra_id": "test-liza-d7vkd",
+              "ingresses": Object {
+                "href": "/api/clusters_mgmt/v1/clusters/1i4counta3holamvo1g5tp6n8p3a03bq/ingresses",
+                "id": "1i4counta3holamvo1g5tp6n8p3a03bq",
+                "kind": "IngressListLink",
+              },
+              "kind": "Cluster",
+              "load_balancer_quota": 0,
+              "machine_pools": Object {
+                "href": "/api/clusters_mgmt/v1/clusters/1i4counta3holamvo1g5tp6n8p3a03bq/machine_pools",
+                "kind": "MachinePoolListLink",
+              },
+              "managed": true,
+              "metrics": Object {
+                "compute_nodes_cpu": Object {
+                  "total": Object {
+                    "unit": "",
+                    "value": 16,
+                  },
+                },
+                "compute_nodes_memory": Object {
+                  "total": Object {
+                    "unit": "B",
+                    "value": 65835802624,
+                  },
+                },
+                "compute_nodes_sockets": Object {
+                  "total": Object {
+                    "unit": "",
+                    "value": 0,
+                  },
+                },
+                "cpu": Object {
+                  "total": Object {
+                    "unit": "",
+                    "value": 36,
+                  },
+                  "updated_timestamp": "2021-01-11T11:55:29Z",
+                  "used": Object {
+                    "unit": "",
+                    "value": 3.8904761904758463,
+                  },
+                },
+                "memory": Object {
+                  "total": Object {
+                    "unit": "B",
+                    "value": 147469647872,
+                  },
+                  "updated_timestamp": "2021-01-11T11:55:29Z",
+                  "used": Object {
+                    "unit": "B",
+                    "value": 28802600960,
+                  },
+                },
+                "nodes": Object {
+                  "compute": 4,
+                  "infra": 2,
+                  "master": 3,
+                  "total": 9,
+                },
+                "sockets": Object {
+                  "total": Object {
+                    "unit": "",
+                    "value": 0,
+                  },
+                  "used": Object {
+                    "unit": "",
+                    "value": 0,
+                  },
+                },
+                "storage": Object {
+                  "total": Object {
+                    "unit": "B",
+                    "value": 0,
+                  },
+                  "used": Object {
+                    "unit": "B",
+                    "value": 0,
+                  },
+                },
+                "upgrade": Object {
+                  "available": false,
+                  "updated_timestamp": "2021-01-11T11:55:29Z",
+                },
+                "version_update_available": false,
+              },
+              "multi_az": false,
+              "name": "test-liza",
+              "network": Object {
+                "host_prefix": 23,
+                "machine_cidr": "10.0.0.0/16",
+                "pod_cidr": "10.128.0.0/14",
+                "service_cidr": "172.30.0.0/16",
+              },
+              "node_drain_grace_period": Object {
+                "unit": "minutes",
+                "value": 60,
+              },
+              "nodes": Object {
+                "availability_zones": Array [
+                  "us-east-1a",
+                ],
+                "compute": 4,
+                "compute_machine_type": Object {
+                  "href": "/api/clusters_mgmt/v1/machine_types/m5.xlarge",
+                  "id": "m5.xlarge",
+                  "kind": "MachineTypeLink",
+                },
+                "infra": 2,
+                "master": 3,
+                "master_machine_type": Object {
+                  "href": "/api/clusters_mgmt/v1/machine_types/m5.xlarge",
+                  "id": "m5.xlarge",
+                  "kind": "MachineTypeLink",
+                },
+              },
+              "openshift_version": "4.6.8",
+              "product": Object {
+                "id": "OSD",
+              },
+              "region": Object {
+                "href": "/api/clusters_mgmt/v1/cloud_providers/aws/regions/us-east-1",
+                "id": "us-east-1",
+                "kind": "CloudRegionLink",
+              },
+              "state": Object {
+                "description": "Ready",
+                "state": "ready",
+              },
+              "status": Object {
+                "dns_ready": true,
+                "provision_error_code": "",
+                "provision_error_message": "",
+                "state": "ready",
+              },
+              "storage_quota": Object {
+                "unit": "B",
+                "value": 107374182400,
+              },
+              "subscription": Object {
+                "capabilities": Array [
+                  Object {
+                    "inherited": true,
+                    "name": "capability.cluster.subscribed_ocp",
+                    "value": "true",
+                  },
+                  Object {
+                    "inherited": true,
+                    "name": "capability.cluster.manage_cluster_admin",
+                    "value": "true",
+                  },
+                ],
+                "cloud_provider_id": "aws",
+                "cluster_id": "1i4counta3holamvo1g5tp6n8p3a03bq",
+                "console_url": "https://console-openshift-console.apps.test-liza.wiex.s1.devshift.org",
+                "cpu_total": 8,
+                "created_at": "2021-01-10T15:17:15.19112Z",
+                "creator": Object {
+                  "email": "***REMOVED***",
+                  "href": "/api/accounts_mgmt/v1/accounts/1MRilA9vHlOUX9ui3lx6IohSsaS",
+                  "id": "1MRilA9vHlOUX9ui3lx6IohSsaS",
+                  "kind": "Account",
+                  "name": "Liza Gilman",
+                  "username": "egilman.openshift",
+                },
+                "display_name": "test-liza",
+                "external_cluster_id": "bae5b227-2472-4e71-be4d-a18fc60bb48a",
+                "href": "/api/accounts_mgmt/v1/subscriptions/1msoogsgTLQ4PePjrTOt3UqvMzX",
+                "id": "1msoogsgTLQ4PePjrTOt3UqvMzX",
+                "kind": "Subscription",
+                "last_reconcile_date": "0001-01-01T00:00:00Z",
+                "last_released_at": "0001-01-01T00:00:00Z",
+                "last_telemetry_date": "2021-01-11T03:59:48.224585Z",
+                "managed": true,
+                "metrics": Array [
+                  Object {
+                    "HealthState": "healthy",
+                    "cloud_provider": "aws",
+                    "compute_nodes_cpu": Object {
+                      "total": Object {
+                        "unit": "",
+                        "value": 24,
+                      },
+                      "updated_timestamp": "1970-01-01T00:00:00Z",
+                      "used": Object {
+                        "unit": "",
+                        "value": 0,
+                      },
+                    },
+                    "compute_nodes_memory": Object {
+                      "total": Object {
+                        "unit": "B",
+                        "value": 98489344000,
+                      },
+                      "updated_timestamp": "1970-01-01T00:00:00Z",
+                      "used": Object {
+                        "unit": "B",
+                        "value": 0,
+                      },
+                    },
+                    "compute_nodes_sockets": Object {
+                      "total": Object {
+                        "unit": "",
+                        "value": 0,
+                      },
+                      "updated_timestamp": "1970-01-01T00:00:00Z",
+                      "used": Object {
+                        "unit": "",
+                        "value": 0,
+                      },
+                    },
+                    "console_url": "https://console-openshift-console.apps.test-liza.wiex.s1.devshift.org",
+                    "cpu": Object {
+                      "total": Object {
+                        "unit": "",
+                        "value": 36,
+                      },
+                      "updated_timestamp": "2021-01-11T11:55:10.517Z",
+                      "used": Object {
+                        "unit": "",
+                        "value": 3.8904761904758463,
+                      },
+                    },
+                    "critical_alerts_firing": 0,
+                    "memory": Object {
+                      "total": Object {
+                        "unit": "B",
+                        "value": 147469647872,
+                      },
+                      "updated_timestamp": "2021-01-11T11:55:10.448Z",
+                      "used": Object {
+                        "unit": "B",
+                        "value": 28802600960,
+                      },
+                    },
+                    "nodes": Object {
+                      "compute": 4,
+                      "infra": 2,
+                      "master": 3,
+                      "total": 9,
+                    },
+                    "open_shift_version": "4.6.8",
+                    "operating_system": "",
+                    "operators_condition_failing": 0,
+                    "region": "us-east-1",
+                    "sockets": Object {
+                      "total": Object {
+                        "unit": "",
+                        "value": 0,
+                      },
+                      "updated_timestamp": "1970-01-01T00:00:00Z",
+                      "used": Object {
+                        "unit": "",
+                        "value": 0,
+                      },
+                    },
+                    "state": "ready",
+                    "state_description": "",
+                    "storage": Object {
+                      "total": Object {
+                        "unit": "B",
+                        "value": 0,
+                      },
+                      "updated_timestamp": "1970-01-01T00:00:00Z",
+                      "used": Object {
+                        "unit": "B",
+                        "value": 0,
+                      },
+                    },
+                    "subscription_cpu_total": 8,
+                    "subscription_socket_total": 4,
+                    "upgrade": Object {
+                      "updated_timestamp": "2021-01-11T11:55:10.206Z",
+                    },
+                  },
+                ],
+                "organization_id": "1MKVU4otCIuogoLtgtyU6wajxjW",
+                "plan": Object {
+                  "href": "/api/accounts_mgmt/v1/plans/OSD",
+                  "id": "OSD",
+                  "kind": "Plan",
+                  "type": "OSD",
+                },
+                "provenance": "Provisioning",
+                "region_id": "us-east-1",
+                "socket_total": 4,
+                "status": "Active",
+                "support_level": "Premium",
+                "updated_at": "2021-01-11T03:59:48.224622Z",
+              },
+              "upgrade_channel_group": "stable",
+              "version": Object {
+                "channel_group": "stable",
+                "href": "/api/clusters_mgmt/v1/versions/openshift-v4.6.8",
+                "id": "openshift-v4.6.8",
+                "kind": "Version",
+              },
+            }
+          }
         />
-         
-        Ready
       </DescriptionListDescription>
     </DescriptionListGroup>
     <DescriptionListGroup>
@@ -2663,12 +4695,371 @@ exports[`<DetailsRight /> should render when autoscale enabled 1`] = `
         Status
       </DescriptionListTerm>
       <DescriptionListDescription>
-        <ClusterStateIcon
-          animated={true}
-          clusterState="ready"
+        <ClusterStatus
+          cluster={
+            Object {
+              "activity_timestamp": "2021-01-11T11:55:29Z",
+              "addons": Object {
+                "href": "/api/clusters_mgmt/v1/clusters/1i4counta3holamvo1g5tp6n8p3a03bq/addons",
+                "kind": "AddOnInstallationListLink",
+              },
+              "api": Object {
+                "listening": "external",
+                "url": "https://api.test-liza.wiex.s1.devshift.org:6443",
+              },
+              "aws_infrastructure_access_role_grants": Object {
+                "href": "/api/clusters_mgmt/v1/clusters/1i4counta3holamvo1g5tp6n8p3a03bq/aws_infrastructure_access_role_grants",
+                "items": null,
+                "kind": "AWSInfrastructureAccessRoleGrantLink",
+              },
+              "ccs": Object {
+                "disable_scp_checks": false,
+                "enabled": false,
+              },
+              "cloud_provider": Object {
+                "href": "/api/clusters_mgmt/v1/cloud_providers/aws",
+                "id": "aws",
+                "kind": "CloudProviderLink",
+              },
+              "console": Object {
+                "url": "https://console-openshift-console.apps.test-liza.wiex.s1.devshift.org",
+              },
+              "creation_timestamp": "2021-01-10T15:17:16.278663Z",
+              "display_name": "test-liza",
+              "dns": Object {
+                "base_domain": "wiex.s1.devshift.org",
+              },
+              "etcd_encryption": false,
+              "expiration_timestamp": "2021-01-12T03:17:14.999204Z",
+              "external_configuration": Object {
+                "href": "/api/clusters_mgmt/v1/clusters/1i4counta3holamvo1g5tp6n8p3a03bq/external_configuration",
+                "kind": "ExternalConfiguration",
+                "labels": Object {
+                  "href": "/api/clusters_mgmt/v1/clusters/1i4counta3holamvo1g5tp6n8p3a03bq/external_configuration/labels",
+                  "kind": "LabelListLink",
+                },
+                "syncsets": Object {
+                  "href": "/api/clusters_mgmt/v1/clusters/1i4counta3holamvo1g5tp6n8p3a03bq/external_configuration/syncsets",
+                  "kind": "SyncsetListLink",
+                },
+              },
+              "external_id": "bae5b227-2472-4e71-be4d-a18fc60bb48a",
+              "flavour": Object {
+                "href": "/api/clusters_mgmt/v1/flavours/osd-4",
+                "id": "osd-4",
+                "kind": "FlavourLink",
+              },
+              "groups": Object {
+                "href": "/api/clusters_mgmt/v1/clusters/1i4counta3holamvo1g5tp6n8p3a03bq/groups",
+                "kind": "GroupListLink",
+              },
+              "health_state": "healthy",
+              "href": "/api/clusters_mgmt/v1/clusters/1i4counta3holamvo1g5tp6n8p3a03bq",
+              "id": "1i4counta3holamvo1g5tp6n8p3a03bq",
+              "identity_providers": Object {
+                "href": "/api/clusters_mgmt/v1/clusters/1i4counta3holamvo1g5tp6n8p3a03bq/identity_providers",
+                "kind": "IdentityProviderListLink",
+              },
+              "infra_id": "test-liza-d7vkd",
+              "ingresses": Object {
+                "href": "/api/clusters_mgmt/v1/clusters/1i4counta3holamvo1g5tp6n8p3a03bq/ingresses",
+                "id": "1i4counta3holamvo1g5tp6n8p3a03bq",
+                "kind": "IngressListLink",
+              },
+              "kind": "Cluster",
+              "load_balancer_quota": 0,
+              "machine_pools": Object {
+                "href": "/api/clusters_mgmt/v1/clusters/1i4counta3holamvo1g5tp6n8p3a03bq/machine_pools",
+                "kind": "MachinePoolListLink",
+              },
+              "managed": true,
+              "metrics": Object {
+                "compute_nodes_cpu": Object {
+                  "total": Object {
+                    "unit": "",
+                    "value": 16,
+                  },
+                },
+                "compute_nodes_memory": Object {
+                  "total": Object {
+                    "unit": "B",
+                    "value": 65835802624,
+                  },
+                },
+                "compute_nodes_sockets": Object {
+                  "total": Object {
+                    "unit": "",
+                    "value": 0,
+                  },
+                },
+                "cpu": Object {
+                  "total": Object {
+                    "unit": "",
+                    "value": 36,
+                  },
+                  "updated_timestamp": "2021-01-11T11:55:29Z",
+                  "used": Object {
+                    "unit": "",
+                    "value": 3.8904761904758463,
+                  },
+                },
+                "memory": Object {
+                  "total": Object {
+                    "unit": "B",
+                    "value": 147469647872,
+                  },
+                  "updated_timestamp": "2021-01-11T11:55:29Z",
+                  "used": Object {
+                    "unit": "B",
+                    "value": 28802600960,
+                  },
+                },
+                "nodes": Object {
+                  "compute": 4,
+                  "infra": 2,
+                  "master": 3,
+                  "total": 9,
+                },
+                "sockets": Object {
+                  "total": Object {
+                    "unit": "",
+                    "value": 0,
+                  },
+                  "used": Object {
+                    "unit": "",
+                    "value": 0,
+                  },
+                },
+                "storage": Object {
+                  "total": Object {
+                    "unit": "B",
+                    "value": 0,
+                  },
+                  "used": Object {
+                    "unit": "B",
+                    "value": 0,
+                  },
+                },
+                "upgrade": Object {
+                  "available": false,
+                  "updated_timestamp": "2021-01-11T11:55:29Z",
+                },
+                "version_update_available": false,
+              },
+              "multi_az": false,
+              "name": "test-liza",
+              "network": Object {
+                "host_prefix": 23,
+                "machine_cidr": "10.0.0.0/16",
+                "pod_cidr": "10.128.0.0/14",
+                "service_cidr": "172.30.0.0/16",
+              },
+              "node_drain_grace_period": Object {
+                "unit": "minutes",
+                "value": 60,
+              },
+              "nodes": Object {
+                "availability_zones": Array [
+                  "us-east-1a",
+                ],
+                "compute": 4,
+                "compute_machine_type": Object {
+                  "href": "/api/clusters_mgmt/v1/machine_types/m5.xlarge",
+                  "id": "m5.xlarge",
+                  "kind": "MachineTypeLink",
+                },
+                "infra": 2,
+                "master": 3,
+                "master_machine_type": Object {
+                  "href": "/api/clusters_mgmt/v1/machine_types/m5.xlarge",
+                  "id": "m5.xlarge",
+                  "kind": "MachineTypeLink",
+                },
+              },
+              "openshift_version": "4.6.8",
+              "product": Object {
+                "id": "OSD",
+              },
+              "region": Object {
+                "href": "/api/clusters_mgmt/v1/cloud_providers/aws/regions/us-east-1",
+                "id": "us-east-1",
+                "kind": "CloudRegionLink",
+              },
+              "state": Object {
+                "description": "Ready",
+                "state": "ready",
+              },
+              "status": Object {
+                "dns_ready": true,
+                "provision_error_code": "",
+                "provision_error_message": "",
+                "state": "ready",
+              },
+              "storage_quota": Object {
+                "unit": "B",
+                "value": 107374182400,
+              },
+              "subscription": Object {
+                "capabilities": Array [
+                  Object {
+                    "inherited": true,
+                    "name": "capability.cluster.subscribed_ocp",
+                    "value": "true",
+                  },
+                  Object {
+                    "inherited": true,
+                    "name": "capability.cluster.manage_cluster_admin",
+                    "value": "true",
+                  },
+                ],
+                "cloud_provider_id": "aws",
+                "cluster_id": "1i4counta3holamvo1g5tp6n8p3a03bq",
+                "console_url": "https://console-openshift-console.apps.test-liza.wiex.s1.devshift.org",
+                "cpu_total": 8,
+                "created_at": "2021-01-10T15:17:15.19112Z",
+                "creator": Object {
+                  "email": "***REMOVED***",
+                  "href": "/api/accounts_mgmt/v1/accounts/1MRilA9vHlOUX9ui3lx6IohSsaS",
+                  "id": "1MRilA9vHlOUX9ui3lx6IohSsaS",
+                  "kind": "Account",
+                  "name": "Liza Gilman",
+                  "username": "egilman.openshift",
+                },
+                "display_name": "test-liza",
+                "external_cluster_id": "bae5b227-2472-4e71-be4d-a18fc60bb48a",
+                "href": "/api/accounts_mgmt/v1/subscriptions/1msoogsgTLQ4PePjrTOt3UqvMzX",
+                "id": "1msoogsgTLQ4PePjrTOt3UqvMzX",
+                "kind": "Subscription",
+                "last_reconcile_date": "0001-01-01T00:00:00Z",
+                "last_released_at": "0001-01-01T00:00:00Z",
+                "last_telemetry_date": "2021-01-11T03:59:48.224585Z",
+                "managed": true,
+                "metrics": Array [
+                  Object {
+                    "HealthState": "healthy",
+                    "cloud_provider": "aws",
+                    "compute_nodes_cpu": Object {
+                      "total": Object {
+                        "unit": "",
+                        "value": 24,
+                      },
+                      "updated_timestamp": "1970-01-01T00:00:00Z",
+                      "used": Object {
+                        "unit": "",
+                        "value": 0,
+                      },
+                    },
+                    "compute_nodes_memory": Object {
+                      "total": Object {
+                        "unit": "B",
+                        "value": 98489344000,
+                      },
+                      "updated_timestamp": "1970-01-01T00:00:00Z",
+                      "used": Object {
+                        "unit": "B",
+                        "value": 0,
+                      },
+                    },
+                    "compute_nodes_sockets": Object {
+                      "total": Object {
+                        "unit": "",
+                        "value": 0,
+                      },
+                      "updated_timestamp": "1970-01-01T00:00:00Z",
+                      "used": Object {
+                        "unit": "",
+                        "value": 0,
+                      },
+                    },
+                    "console_url": "https://console-openshift-console.apps.test-liza.wiex.s1.devshift.org",
+                    "cpu": Object {
+                      "total": Object {
+                        "unit": "",
+                        "value": 36,
+                      },
+                      "updated_timestamp": "2021-01-11T11:55:10.517Z",
+                      "used": Object {
+                        "unit": "",
+                        "value": 3.8904761904758463,
+                      },
+                    },
+                    "critical_alerts_firing": 0,
+                    "memory": Object {
+                      "total": Object {
+                        "unit": "B",
+                        "value": 147469647872,
+                      },
+                      "updated_timestamp": "2021-01-11T11:55:10.448Z",
+                      "used": Object {
+                        "unit": "B",
+                        "value": 28802600960,
+                      },
+                    },
+                    "nodes": Object {
+                      "compute": 4,
+                      "infra": 2,
+                      "master": 3,
+                      "total": 9,
+                    },
+                    "open_shift_version": "4.6.8",
+                    "operating_system": "",
+                    "operators_condition_failing": 0,
+                    "region": "us-east-1",
+                    "sockets": Object {
+                      "total": Object {
+                        "unit": "",
+                        "value": 0,
+                      },
+                      "updated_timestamp": "1970-01-01T00:00:00Z",
+                      "used": Object {
+                        "unit": "",
+                        "value": 0,
+                      },
+                    },
+                    "state": "ready",
+                    "state_description": "",
+                    "storage": Object {
+                      "total": Object {
+                        "unit": "B",
+                        "value": 0,
+                      },
+                      "updated_timestamp": "1970-01-01T00:00:00Z",
+                      "used": Object {
+                        "unit": "B",
+                        "value": 0,
+                      },
+                    },
+                    "subscription_cpu_total": 8,
+                    "subscription_socket_total": 4,
+                    "upgrade": Object {
+                      "updated_timestamp": "2021-01-11T11:55:10.206Z",
+                    },
+                  },
+                ],
+                "organization_id": "1MKVU4otCIuogoLtgtyU6wajxjW",
+                "plan": Object {
+                  "href": "/api/accounts_mgmt/v1/plans/OSD",
+                  "id": "OSD",
+                  "kind": "Plan",
+                  "type": "OSD",
+                },
+                "provenance": "Provisioning",
+                "region_id": "us-east-1",
+                "socket_total": 4,
+                "status": "Active",
+                "support_level": "Premium",
+                "updated_at": "2021-01-11T03:59:48.224622Z",
+              },
+              "upgrade_channel_group": "stable",
+              "version": Object {
+                "channel_group": "stable",
+                "href": "/api/clusters_mgmt/v1/versions/openshift-v4.6.8",
+                "id": "openshift-v4.6.8",
+                "kind": "Version",
+              },
+            }
+          }
         />
-         
-        Ready
       </DescriptionListDescription>
     </DescriptionListGroup>
     <DescriptionListGroup>

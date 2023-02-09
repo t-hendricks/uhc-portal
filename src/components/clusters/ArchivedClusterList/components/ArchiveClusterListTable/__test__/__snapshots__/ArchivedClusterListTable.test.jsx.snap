@@ -17,9 +17,6 @@ exports[`<ArchivedClusterListTable /> ArchivedClusterListTable should render 1`]
       },
       Object {
         "title": "Type",
-        "transforms": Array [
-          [Function],
-        ],
       },
       Object {
         "title": "Status",

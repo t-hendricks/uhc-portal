@@ -10,7 +10,10 @@ import {
 } from '@patternfly/react-core';
 
 import { Cluster } from '~/types/clusters_mgmt.v1';
-import clusterStates, { isWaitingROSAManualMode } from '~/components/clusters/common/clusterStates';
+import clusterStates, {
+  isWaitingROSAManualMode,
+  isWaitingHypershiftCluster,
+} from '~/components/clusters/common/clusterStates';
 import UninstallProgress from '~/components/clusters/common/UninstallProgress';
 import InstallProgress from '~/components/clusters/common/InstallProgress/InstallProgress';
 import DownloadOcCliButton from '~/components/clusters/common/InstallProgress/DownloadOcCliButton';
@@ -26,12 +29,13 @@ interface ClusterProgressCardProps {
 
 const ClusterProgressCard = ({ cluster = {}, history, refresh }: ClusterProgressCardProps) => {
   const isError = cluster.state === clusterStates.ERROR;
-  const isWaiting = cluster.state === clusterStates.WAITING;
   const isPending = cluster.state === clusterStates.PENDING;
   const isInstalling = cluster.state === clusterStates.INSTALLING;
   const isUninstalling = cluster.state === clusterStates.UNINSTALLING;
   const isWaitingROSAManual = isWaitingROSAManualMode(cluster);
-  const installationInProgress = isPending || isInstalling || (isWaiting && !isWaitingROSAManual);
+  const isWaitingHypershift = isWaitingHypershiftCluster(cluster);
+  const installationInProgress =
+    isPending || isInstalling || isWaitingHypershift || !isWaitingROSAManual;
   const inProgress = installationInProgress || isUninstalling;
   const estCompletionTime = isHypershiftCluster(cluster) ? '10' : '30 to 60';
 
