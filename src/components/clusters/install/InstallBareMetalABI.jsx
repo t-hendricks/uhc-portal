@@ -41,6 +41,7 @@ export class InstallBareMetalABI extends Component {
             token={token}
             breadcrumbs={breadcrumbs}
             cloudProviderID="baremetal"
+            installationTypeId="local-agent-based"
             {...instructionsMapping.baremetal.x86.abi}
             isUPI
           />
