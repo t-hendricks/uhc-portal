@@ -20,6 +20,7 @@ import { humanizeValueWithUnit, humanizeValueWithUnitGiB } from '../../../../../
 import { subscriptionStatuses } from '../../../../../../common/subscriptionTypes';
 import PopoverHint from '../../../../../common/PopoverHint';
 import ExternalLink from '../../../../../common/ExternalLink';
+import { isHypershiftCluster } from '../../../clusterDetailsHelper';
 
 const { ClusterStatus: AIClusterStatus } = OCM;
 function DetailsRight({
@@ -29,7 +30,10 @@ function DetailsRight({
   totalMinNodesCount,
   totalMaxNodesCount,
   limitedSupport,
+  totalActualNodes,
 }) {
+  const isHypershift = isHypershiftCluster(cluster);
+
   const memoryTotalWithUnit = humanizeValueWithUnit(
     get(cluster, 'metrics.memory.total.value', 0),
     get(cluster, 'metrics.memory.total.unit', 'B'),
@@ -39,9 +43,10 @@ function DetailsRight({
     get(cluster, 'subscription.status', '') === subscriptionStatuses.DISCONNECTED;
 
   const showDesiredNodes = cluster.managed;
-  const showInfraNodes =
-    (!cluster.managed && get(cluster, 'metrics.nodes.infra', null)) ||
-    get(cluster, 'nodes.infra', 0) > 0;
+  const showInfraNodes = isHypershift
+    ? false
+    : (!cluster.managed && get(cluster, 'metrics.nodes.infra', null)) ||
+      get(cluster, 'nodes.infra', 0) > 0;
   const hasSockets = get(cluster, 'metrics.sockets.total.value', 0) > 0;
 
   const humanizedPersistentStorage =
@@ -56,7 +61,7 @@ function DetailsRight({
   const infraActualNodes = get(cluster, 'metrics.nodes.infra', '-');
   const infraDesiredNodes = get(cluster, 'nodes.infra', '-');
 
-  const workerActualNodes = get(cluster, 'metrics.nodes.compute', '-');
+  const workerActualNodes = totalActualNodes || '-';
   const workerDesiredNodes = totalDesiredComputeNodes || '-';
 
   return (
@@ -144,14 +149,16 @@ function DetailsRight({
               </DescriptionListTerm>
               <DescriptionListDescription>
                 <dl className="pf-l-stack">
-                  <Flex>
-                    <dt>Control plane: </dt>
-                    <dd>
-                      {controlPlaneActualNodes !== '-' || controlPlaneDesiredNodes !== '-'
-                        ? `${controlPlaneActualNodes}/${controlPlaneDesiredNodes}`
-                        : 'N/A'}
-                    </dd>
-                  </Flex>
+                  {!isHypershift && (
+                    <Flex>
+                      <dt>Control plane: </dt>
+                      <dd>
+                        {controlPlaneActualNodes !== '-' || controlPlaneDesiredNodes !== '-'
+                          ? `${controlPlaneActualNodes}/${controlPlaneDesiredNodes}`
+                          : 'N/A'}
+                      </dd>
+                    </Flex>
+                  )}
                   {showInfraNodes && (
                     <>
                       <Flex>
@@ -182,10 +189,12 @@ function DetailsRight({
               <DescriptionListTerm>Nodes</DescriptionListTerm>
               <DescriptionListDescription>
                 <dl className="pf-l-stack">
-                  <Flex>
-                    <dt>Control plane: </dt>
-                    <dd>{get(cluster, 'metrics.nodes.master', 'N/A')}</dd>
-                  </Flex>
+                  {!isHypershift && (
+                    <Flex>
+                      <dt>Control plane: </dt>
+                      <dd>{get(cluster, 'metrics.nodes.master', 'N/A')}</dd>
+                    </Flex>
+                  )}
                   {showInfraNodes && (
                     <>
                       <Flex>
@@ -196,7 +205,7 @@ function DetailsRight({
                   )}
                   <Flex>
                     <dt>Compute: </dt>
-                    <dd>{get(cluster, 'metrics.nodes.compute', 'N/A')}</dd>
+                    <dd>{totalActualNodes || 'N/A'}</dd>
                   </Flex>
                 </dl>
               </DescriptionListDescription>
@@ -261,6 +270,7 @@ DetailsRight.propTypes = {
   totalMaxNodesCount: PropTypes.number,
   autoscaleEnabled: PropTypes.bool.isRequired,
   limitedSupport: PropTypes.bool,
+  totalActualNodes: PropTypes.number,
 };
 
 export default DetailsRight;

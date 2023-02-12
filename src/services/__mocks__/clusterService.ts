@@ -37,6 +37,9 @@ getMachineTypes.mockResolvedValue({});
 const getMachinePools = jest.fn();
 getMachinePools.mockResolvedValue({});
 
+const getNodePools = jest.fn();
+getNodePools.mockResolvedValue({});
+
 const addMachinePool = jest.fn();
 addMachinePool.mockResolvedValue({});
 
@@ -69,6 +72,7 @@ const clusterService = {
   getClusterStatus,
   getMachineTypes,
   getMachinePools,
+  getNodePools,
   addMachinePool,
   scaleMachinePool,
   deleteMachinePool,

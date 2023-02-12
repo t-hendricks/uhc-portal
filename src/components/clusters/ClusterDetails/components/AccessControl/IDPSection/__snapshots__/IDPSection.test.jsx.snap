@@ -144,7 +144,7 @@ exports[`<IDPSection /> should render (no IDPs) 1`] = `
                         }
                       }
                     >
-                      HTPasswd
+                      htpasswd
                     </Link>
                   }
                 />,
@@ -293,7 +293,7 @@ exports[`<IDPSection /> should render (with IDPs) 1`] = `
                         }
                       }
                     >
-                      HTPasswd
+                      htpasswd
                     </Link>
                   }
                 />,

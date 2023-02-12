@@ -1,5 +1,5 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { shallow, mount } from 'enzyme';
 
 import MachinePools from '../MachinePools';
 
@@ -10,6 +10,13 @@ const deleteMachinePool = jest.fn();
 const openModal = jest.fn();
 const getOrganizationAndQuota = jest.fn();
 const getMachineTypes = jest.fn();
+
+const defaultMachinePool = {
+  id: 'some-id',
+  instance_type: 'm5.xlarge',
+  availability_zones: ['us-east-1'],
+  desired: 1,
+};
 
 const baseProps = {
   cluster: {
@@ -23,12 +30,6 @@ const baseProps = {
   addMachinePoolResponse: { ...baseRequestState },
   scaleMachinePoolResponse: { ...baseRequestState },
   machinePoolsList: { ...baseRequestState, data: [] },
-  defaultMachinePool: {
-    id: 'some-id',
-    instance_type: 'm5.xlarge',
-    availability_zones: ['us-east-1'],
-    desired: 1,
-  },
   getMachinePools,
   deleteMachinePool,
   clearGetMachinePoolsResponse: jest.fn(),
@@ -38,22 +39,28 @@ const baseProps = {
   hasMachinePoolsQuota: true,
 };
 
+const osdProps = {
+  ...baseProps,
+  defaultMachinePool: { ...defaultMachinePool },
+  isHypershift: false,
+};
+
 describe('<MachinePools />', () => {
   it('should call getMachinePools on mount', () => {
-    shallow(<MachinePools {...baseProps} />);
+    shallow(<MachinePools {...osdProps} />);
     expect(getMachinePools).toBeCalled();
   });
 
   it('renders with the default machine pool', () => {
-    const wrapper = shallow(<MachinePools {...baseProps} />);
+    const wrapper = shallow(<MachinePools {...osdProps} />);
     expect(wrapper).toMatchSnapshot();
   });
 
   it('renders with the default machine pool when it has labels', () => {
     const props = {
-      ...baseProps,
+      ...osdProps,
       defaultMachinePool: {
-        ...baseProps.defaultMachinePool,
+        ...osdProps.defaultMachinePool,
         labels: { foo: 'bar', hello: 'world' },
       },
     };
@@ -63,7 +70,7 @@ describe('<MachinePools />', () => {
 
   it('renders with additional machine pools, some with labels and/or taints', () => {
     const props = {
-      ...baseProps,
+      ...osdProps,
       machinePoolsList: {
         data: [
           {
@@ -132,19 +139,19 @@ describe('<MachinePools />', () => {
       },
     ];
 
-    const wrapper = shallow(<MachinePools {...baseProps} machinePoolsList={{ data }} />);
+    const wrapper = shallow(<MachinePools {...osdProps} machinePoolsList={{ data }} />);
     expect(wrapper).toMatchSnapshot();
   });
 
   it('should open modal', () => {
-    const wrapper = shallow(<MachinePools {...baseProps} />);
+    const wrapper = shallow(<MachinePools {...osdProps} />);
 
     wrapper.find('#add-machine-pool').simulate('click');
     expect(openModal).toBeCalledWith('add-machine-pool');
   });
 
   it('should render skeleton while fetching machine pools', () => {
-    const wrapper = shallow(<MachinePools {...baseProps} />);
+    const wrapper = shallow(<MachinePools {...osdProps} />);
 
     wrapper.setProps({ machinePoolsList: { ...baseRequestState, pending: true, data: [] } });
     expect(wrapper).toMatchSnapshot();
@@ -152,16 +159,104 @@ describe('<MachinePools />', () => {
   });
 
   it('should not allow adding machine pools to users without permissions', () => {
-    const props = { ...baseProps, cluster: { canEdit: false } };
+    const props = { ...osdProps, cluster: { canEdit: false } };
     const wrapper = shallow(<MachinePools {...props} />);
 
     expect(wrapper.find('#add-machine-pool').props().disableReason).toBeTruthy();
   });
 
   it('should not allow adding machine pools to users without enough quota', () => {
-    const props = { ...baseProps, hasMachinePoolsQuota: false };
+    const props = { ...osdProps, hasMachinePoolsQuota: false };
     const wrapper = shallow(<MachinePools {...props} />);
 
     expect(wrapper.find('#add-machine-pool').props().disableReason).toBeTruthy();
+  });
+
+  it('Should disable action menu if hypershift', () => {
+    const props = {
+      ...baseProps,
+      isHypershift: true,
+      machinePoolsList: {
+        data: [
+          {
+            kind: 'NodePool',
+
+            href: '/api/clusters_mgmt/v1/clusters/21gitfhopbgmmfhlu65v93n4g4n3djde/node_pools/workers',
+
+            id: 'workers',
+
+            replicas: 2,
+
+            auto_repair: true,
+
+            aws_node_pool: {
+              instance_type: 'm5.xlarge',
+
+              instance_profile: 'staging-21gitfhopbgmmfhlu65v93n4g4n3djde-jknhystj27-worker',
+
+              tags: {
+                'api.openshift.com/environment': 'staging',
+              },
+            },
+
+            availability_zone: 'us-east-1b',
+
+            subnet: 'subnet-049f90721559000de',
+
+            status: {
+              current_replicas: 2,
+            },
+          },
+        ],
+      },
+    };
+    const wrapper = mount(<MachinePools {...props} />);
+    // need to find by classname because action menu doesn't have an accessible label
+    const actionMenus = wrapper.find('.pf-c-dropdown__toggle');
+    expect(actionMenus).toHaveLength(1);
+
+    actionMenus.forEach((button) => {
+      expect(button.props().disabled).toBeTruthy();
+    });
+  });
+
+  it('Should enable action menu if hypershift is false', () => {
+    const wrapper = mount(<MachinePools {...osdProps} />);
+    // need to find by classname because action menu doesn't have an accessible label
+    const actionMenus = wrapper.find('.pf-c-dropdown__toggle');
+    expect(actionMenus).toHaveLength(1);
+
+    actionMenus.forEach((button) => {
+      expect(button.props().disabled).toBeFalsy();
+    });
+  });
+
+  it('Add machine pool button is disabled if hypershift', () => {
+    const props = { ...baseProps, isHypershift: true };
+    const wrapper = shallow(<MachinePools {...props} />);
+
+    const addMachinePoolButton = wrapper.find('#add-machine-pool');
+    expect(addMachinePoolButton.props().disableReason).toBeTruthy();
+  });
+
+  it('Add machine pool button is enabled if not hypershift', () => {
+    const wrapper = shallow(<MachinePools {...osdProps} />);
+    const addMachinePoolButton = wrapper.find('#add-machine-pool');
+    expect(addMachinePoolButton.props().disableReason).toBeFalsy();
+  });
+
+  it('should render error message', () => {
+    const props = { ...baseProps, deleteMachinePoolResponse: { ...baseRequestState, error: true } };
+    const wrapper = shallow(<MachinePools {...props} />);
+
+    expect(wrapper.find('ErrorBox').length).toBe(1);
+  });
+
+  it('should close error message', () => {
+    const props = { ...baseProps, deleteMachinePoolResponse: { ...baseRequestState, error: true } };
+    const wrapper = shallow(<MachinePools {...props} />);
+    const errorBox = wrapper.find('ErrorBox');
+    errorBox.props().onCloseAlert();
+    expect(wrapper.find('ErrorBox').length).toBe(0);
   });
 });

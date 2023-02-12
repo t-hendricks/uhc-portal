@@ -194,7 +194,7 @@ class ClusterDetails extends Component {
       getClusterHistory,
       getClusterRouters,
       organization,
-      getMachinePools,
+      getMachineOrNodePools,
       getSchedules,
       fetchClusterInsights,
       fetchUpgradeGates,
@@ -219,7 +219,7 @@ class ClusterDetails extends Component {
       getUsers(clusterID);
       getClusterRouters(clusterID);
       this.refreshIDP();
-      getMachinePools(clusterID);
+      getMachineOrNodePools(clusterID, isHypershiftCluster(clusterDetails?.cluster));
       getSchedules(clusterID);
       fetchUpgradeGates();
 
@@ -549,7 +549,7 @@ class ClusterDetails extends Component {
               hidden
             >
               <ErrorBoundary>
-                <MachinePools cluster={cluster} />
+                <MachinePools cluster={cluster} isHypershift={isHypershiftCluster(cluster)} />
               </ErrorBoundary>
             </TabContent>
           )}
@@ -637,7 +637,7 @@ ClusterDetails.propTypes = {
   getGrants: PropTypes.func.isRequired,
   clusterLogsViewOptions: PropTypes.object.isRequired,
   getClusterHistory: PropTypes.func.isRequired,
-  getMachinePools: PropTypes.func.isRequired,
+  getMachineOrNodePools: PropTypes.func.isRequired,
   clearGetMachinePoolsResponse: PropTypes.func.isRequired,
   setOpenedTab: PropTypes.func.isRequired,
   canSubscribeOCP: PropTypes.bool.isRequired,

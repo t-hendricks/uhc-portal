@@ -70,10 +70,8 @@ class ReduxVerticalFormGroup extends React.Component {
         <InputGroup className={isValid && 'valid-field'}>
           {inputPrefix ? <InputGroupText>{inputPrefix}</InputGroupText> : null}
           <InputComponent
-            value={input.value}
-            isRequired={isRequired}
             id={input.name}
-            name={input.name}
+            isRequired={isRequired}
             validated={isValid ? 'default' : 'error'}
             {...disabledProp}
             {...input}

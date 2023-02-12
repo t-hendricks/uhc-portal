@@ -6,6 +6,7 @@ import { subscriptionStatuses, normalizedProducts } from '../../../../common/sub
 import getClusterName from '../../../../common/getClusterName';
 import modals from '../../../common/Modal/modals';
 import { isAssistedInstallCluster } from '../../../../common/isAssistedInstallerCluster';
+import { isHypershiftCluster } from '../../ClusterDetails/clusterDetailsHelper';
 
 /**
  * Helper using reason message why it's disabled as source-of-truth
@@ -57,6 +58,11 @@ function actionResolver(
     ) : (
       <>This cluster is hibernating; resume cluster in order to perform actions</>
     ));
+
+  const hypershiftMessage = isHypershiftCluster(cluster) && (
+    <>Editing node count is currently only available using ROSA CLI</>
+  );
+
   const isClusterHibernatingOrPoweringDown =
     cluster.state === clusterStates.HIBERNATING || cluster.state === clusterStates.POWERING_DOWN;
   const isClusterPoweringDown = cluster.state === clusterStates.POWERING_DOWN;
@@ -142,7 +148,11 @@ function actionResolver(
     title: 'Edit node count',
     key: getKey('editnodecount'),
     ...disableIfTooltip(
-      uninstallingMessage || readOnlyMessage || hibernatingMessage || notReadyMessage,
+      uninstallingMessage ||
+        readOnlyMessage ||
+        hibernatingMessage ||
+        notReadyMessage ||
+        hypershiftMessage,
       {
         onClick: () =>
           openModal(modals.EDIT_NODE_COUNT, {
@@ -308,7 +318,11 @@ function actionResolver(
   const showDelete = cluster.canDelete && cluster.managed;
   const showScale = cluster.canEdit && cluster.managed && !cluster.ccs?.enabled;
   const showHibernateCluster =
-    cluster.canEdit && cluster.managed && canHibernateCluster && !isProductOSDTrial;
+    cluster.canEdit &&
+    cluster.managed &&
+    canHibernateCluster &&
+    !isProductOSDTrial &&
+    !isHypershiftCluster(cluster);
   const showEditNodeCount = cluster.canEdit && cluster.managed;
   const isArchived = get(cluster, 'subscription.status', false) === subscriptionStatuses.ARCHIVED;
   const showArchive = cluster.canEdit && !cluster.managed && cluster.subscription && !isArchived;

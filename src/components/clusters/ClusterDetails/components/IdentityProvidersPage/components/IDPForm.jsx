@@ -104,6 +104,7 @@ class IDPForm extends React.Component {
       isEditForm,
       idpEdited,
       change,
+      clearFields,
       selectedIDP,
       idpTypeName,
       formTitle,
@@ -283,6 +284,7 @@ class IDPForm extends React.Component {
               isEditForm={isEditForm}
               idpEdited={idpEdited}
               change={change}
+              clearFields={clearFields}
               HTPasswdPasswordErrors={HTPasswdPasswordErrors}
             />
           )}
@@ -314,6 +316,7 @@ IDPForm.propTypes = {
   selectedIDP: PropTypes.string,
   selectedMappingMethod: PropTypes.string,
   change: PropTypes.func.isRequired,
+  clearFields: PropTypes.func.isRequired,
   IDPList: PropTypes.array.isRequired,
   isEditForm: PropTypes.bool,
   idpEdited: PropTypes.object,
