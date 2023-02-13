@@ -1576,6 +1576,35 @@
     debug "^3.1.0"
     lodash.once "^4.1.1"
 
+"@cypress/grep@3.1.3":
+  version "3.1.3"
+  resolved "https://registry.yarnpkg.com/@cypress/grep/-/grep-3.1.3.tgz#3cfaf7b08e352e80c820133cd00a606f9491701d"
+  integrity sha512-kuifujYlCBKzOtkiFwa8mg18SusXoQOELMgJu8l4ffqpgZg2fukwLGaO1K7qgL8V9ZSu6OhJh8CJRbI99A+snQ==
+  dependencies:
+    debug "^4.3.2"
+    find-test-names "1.25.0"
+    globby "^11.0.4"
+
+find-test-names@1.25.0:
+  version "1.25.0"
+  resolved "https://registry.yarnpkg.com/find-test-names/-/find-test-names-1.25.0.tgz#d2db42903f39b5ca8fcdce18fdbb345b98ec4984"
+  integrity sha512-Aj+txwltmtuthwE4nBkl7Jlw/Dge5WPIS3v6NCiOQYqpGhryWdJVgcNzLCpG7QlEqQ7rtcJmLAS4Yg2Cntfg0g==
+  dependencies:
+    "@babel/parser" "^7.16.5"
+    acorn-walk "^8.2.0"
+    debug "^4.3.3"
+    globby "^11.0.4"
+    simple-bin-help "1.7.7"
+
+simple-bin-help@1.7.7:
+  version "1.7.7"
+  resolved "https://registry.yarnpkg.com/simple-bin-help/-/simple-bin-help-1.7.7.tgz#3202946a9414152fba6fa61a9c154015750c684e"
+  integrity sha512-e36uqSXbTL0yNUc7RgjMFAEMDgV5jbPd18LrCeswZJ7aUtEq0qPf4rroQyW3Tfl1E7rcsW1amZoV3OCGOne1Tg==
+  dependencies:
+    debug "3.2.7"
+    update-notifier "5.1.0"
+    word-wrap "1.2.3"
+
 "@discoveryjs/json-ext@^0.5.0":
   version "0.5.2"
   resolved "https://registry.yarnpkg.com/@discoveryjs/json-ext/-/json-ext-0.5.2.tgz#8f03a22a04de437254e8ce8cc84ba39689288752"
