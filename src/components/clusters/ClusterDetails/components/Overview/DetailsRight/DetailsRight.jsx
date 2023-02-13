@@ -15,12 +15,12 @@ import links from '../../../../../../common/installLinks.mjs';
 import { isAISubscriptionWithoutMetrics } from '../../../../../../common/isAssistedInstallerCluster';
 import ClusterNetwork from '../ClusterNetwork';
 import { constants } from '../../../../CreateOSDPage/CreateOSDForm/CreateOSDFormConstants';
-import ClusterStateIcon from '../../../../common/ClusterStateIcon/ClusterStateIcon';
 import { humanizeValueWithUnit, humanizeValueWithUnitGiB } from '../../../../../../common/units';
 import { subscriptionStatuses } from '../../../../../../common/subscriptionTypes';
 import PopoverHint from '../../../../../common/PopoverHint';
 import ExternalLink from '../../../../../common/ExternalLink';
 import { isHypershiftCluster } from '../../../clusterDetailsHelper';
+import { ClusterStatus } from './ClusterStatus';
 
 const { ClusterStatus: AIClusterStatus } = OCM;
 function DetailsRight({
@@ -31,6 +31,7 @@ function DetailsRight({
   totalMaxNodesCount,
   limitedSupport,
   totalActualNodes,
+  machinePools,
 }) {
   const isHypershift = isHypershiftCluster(cluster);
 
@@ -61,7 +62,7 @@ function DetailsRight({
   const infraActualNodes = get(cluster, 'metrics.nodes.infra', '-');
   const infraDesiredNodes = get(cluster, 'nodes.infra', '-');
 
-  const workerActualNodes = totalActualNodes || '-';
+  const workerActualNodes = totalActualNodes === false ? '-' : totalActualNodes;
   const workerDesiredNodes = totalDesiredComputeNodes || '-';
 
   return (
@@ -74,12 +75,11 @@ function DetailsRight({
               <AIClusterStatus status={cluster.metrics.state} className="clusterstate" />
             ) : (
               <>
-                <ClusterStateIcon
-                  clusterState={cluster.state.state}
+                <ClusterStatus
+                  cluster={cluster}
                   limitedSupport={limitedSupport}
-                  animated
-                />{' '}
-                {cluster.state.description}
+                  machinePools={machinePools}
+                />
                 {limitedSupport ? ' - Limited support' : null}
                 {cluster?.status?.provision_error_code && (
                   <DescriptionList>
@@ -97,7 +97,7 @@ function DetailsRight({
             )}
           </DescriptionListDescription>
         </DescriptionListGroup>
-        {showVCPU && (
+        {showVCPU && !isHypershift && (
           <>
             <DescriptionListGroup>
               <DescriptionListTerm>Total vCPU</DescriptionListTerm>
@@ -107,7 +107,7 @@ function DetailsRight({
             </DescriptionListGroup>
           </>
         )}
-        {!isDisconnected && (
+        {!isDisconnected && !isHypershift && (
           <>
             <DescriptionListGroup>
               <DescriptionListTerm>Total memory</DescriptionListTerm>
@@ -270,7 +270,8 @@ DetailsRight.propTypes = {
   totalMaxNodesCount: PropTypes.number,
   autoscaleEnabled: PropTypes.bool.isRequired,
   limitedSupport: PropTypes.bool,
-  totalActualNodes: PropTypes.number,
+  totalActualNodes: PropTypes.oneOfType([PropTypes.number, PropTypes.bool]),
+  machinePools: PropTypes.array,
 };
 
 export default DetailsRight;
