@@ -57,13 +57,8 @@ describe('<DetailsLeft />', () => {
     expect(screen.getByTestId('controlType', 'Hosted')).toBeInTheDocument();
   });
 
-  it('should show control plane type as Standalone if not hypershift', () => {
-    render(
-      <DetailsLeft
-        cluster={fixtures.clusterDetails.cluster}
-        cloudProviders={fixtures.cloudProviders}
-      />,
-    );
-    expect(screen.getByTestId('controlType', 'Standalone')).toBeInTheDocument();
+  it('hide control plane type if not hypershift', () => {
+    const controlTypeComponent = wrapper(knownProducts.OSD).find('[data-testid="controlType"]');
+    expect(controlTypeComponent).toHaveLength(0);
   });
 });

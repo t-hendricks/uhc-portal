@@ -12,10 +12,10 @@ exports[`ClusterTypeLabel for ROSA hypershift 1`] = `
 
 exports[`ClusterTypeLabel for classic ROSA 1`] = `
 <Tooltip
-  content="Red Hat OpenShift Service on AWS - Standalone control plane"
+  content="Red Hat OpenShift Service on AWS"
 >
   <span>
-    ROSA - Standalone
+    ROSA
   </span>
 </Tooltip>
 `;
