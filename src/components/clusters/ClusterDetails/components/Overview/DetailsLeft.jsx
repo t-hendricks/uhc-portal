@@ -59,12 +59,14 @@ function DetailsLeft({ cluster, cloudProviders, showAssistedId }) {
             <ClusterTypeLabel cluster={cluster} />
           </DescriptionListDescription>
         </DescriptionListGroup>
-        <DescriptionListGroup>
-          <DescriptionListTerm>Control plane type</DescriptionListTerm>
-          <DescriptionListDescription data-testid="controlType">
-            {controlPlaneType}
-          </DescriptionListDescription>
-        </DescriptionListGroup>
+        {isHypershift && (
+          <DescriptionListGroup>
+            <DescriptionListTerm>Control plane type</DescriptionListTerm>
+            <DescriptionListDescription data-testid="controlType">
+              {controlPlaneType}
+            </DescriptionListDescription>
+          </DescriptionListGroup>
+        )}
         <DescriptionListGroup>
           <DescriptionListTerm>Region</DescriptionListTerm>
           <DescriptionListDescription>{region}</DescriptionListDescription>
