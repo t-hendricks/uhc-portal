@@ -382,16 +382,6 @@ exports[`<DetailsLeft /> should render 1`] = `
     </DescriptionListGroup>
     <DescriptionListGroup>
       <DescriptionListTerm>
-        Control plane type
-      </DescriptionListTerm>
-      <DescriptionListDescription
-        data-testid="controlType"
-      >
-        Standalone
-      </DescriptionListDescription>
-    </DescriptionListGroup>
-    <DescriptionListGroup>
-      <DescriptionListTerm>
         Region
       </DescriptionListTerm>
       <DescriptionListDescription>
@@ -2163,16 +2153,6 @@ exports[`<DetailsLeft /> should show the extra AI cluster details 1`] = `
             }
           }
         />
-      </DescriptionListDescription>
-    </DescriptionListGroup>
-    <DescriptionListGroup>
-      <DescriptionListTerm>
-        Control plane type
-      </DescriptionListTerm>
-      <DescriptionListDescription
-        data-testid="controlType"
-      >
-        Standalone
       </DescriptionListDescription>
     </DescriptionListGroup>
     <DescriptionListGroup>
