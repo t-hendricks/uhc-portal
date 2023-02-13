@@ -16,7 +16,7 @@ import {
 
 // eslint-disable-next-line camelcase
 import { global_danger_color_100, global_success_color_100 } from '@patternfly/react-tokens';
-import { Spinner } from '@patternfly/react-core';
+import { Spinner, spinnerSize } from '@patternfly/react-core';
 import clusterStates from '../clusterStates';
 
 function ClusterStateIcon(props) {
@@ -39,7 +39,7 @@ function ClusterStateIcon(props) {
     case clusterStates.POWERING_DOWN:
     case clusterStates.RESUMING:
       if (animated) {
-        return <Spinner {...iconProps} />;
+        return <Spinner {...iconProps} size={spinnerSize.md} />;
       }
       return <InProgressIcon {...iconProps} />;
     case clusterStates.DISCONNECTED:
@@ -48,7 +48,7 @@ function ClusterStateIcon(props) {
       return <CheckCircleIcon color={global_success_color_100.value} {...iconProps} />;
     case clusterStates.UNINSTALLING:
       if (animated) {
-        return <Spinner {...iconProps} />;
+        return <Spinner {...iconProps} size={spinnerSize.md} />;
       }
       return <InProgressIcon {...iconProps} />;
     case clusterStates.ERROR:

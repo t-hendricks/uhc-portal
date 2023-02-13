@@ -88,6 +88,7 @@ const knownProducts = {
   OCP: 'OCP',
   RHMI: 'RHMI',
   ROSA: 'ROSA',
+  ROSA_HyperShift: 'ROSA-HyperShift',
   ARO: 'ARO',
   OCP_Assisted_Install: 'OCP-AssistedInstall',
 };
@@ -113,6 +114,7 @@ const clustersServiceProducts = [
   normalizedProducts.OSD,
   normalizedProducts.OSDTrial,
   normalizedProducts.ROSA,
+  normalizedProducts.ROSA_HyperShift,
   normalizedProducts.RHMI,
   normalizedProducts.ARO,
 ];
@@ -126,7 +128,12 @@ const clustersServiceProducts = [
 const productFilterOptions = [
   { key: normalizedProducts.OCP, label: 'OCP', plansToQuery: ['OCP', 'OCP-AssistedInstall'] },
   { key: normalizedProducts.OSD, label: 'OSD', plansToQuery: ['OSD'] },
-  { key: normalizedProducts.ROSA, label: 'ROSA', plansToQuery: ['MOA', 'ROSA'] },
+  { key: normalizedProducts.ROSA, label: 'ROSA - Standalone', plansToQuery: ['MOA', 'ROSA'] },
+  {
+    key: normalizedProducts.ROSA_HyperShift,
+    label: 'ROSA - Hosted',
+    plansToQuery: ['MOA-HostedControlPlane'],
+  },
   { key: normalizedProducts.ARO, label: 'ARO', plansToQuery: ['ARO'] },
 ];
 

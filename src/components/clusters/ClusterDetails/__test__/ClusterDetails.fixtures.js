@@ -33,7 +33,7 @@ const funcs = () => ({
   getGrants: jest.fn(),
   getClusterHistory: jest.fn(),
   getClusterRouters: jest.fn(),
-  getMachinePools: jest.fn(),
+  getMachineOrNodePools: jest.fn(),
   resetClusterHistory: jest.fn(),
   toggleSubscriptionReleased: jest.fn(),
   clearGetMachinePoolsResponse: jest.fn(),
@@ -432,6 +432,15 @@ const ROSAClusterDetails = produce(CCSClusterDetails, (draft) => {
   draft.cluster.product = { id: normalizedProducts.ROSA };
   draft.cluster.subscription.plan = {
     id: normalizedProducts.ROSA,
+    type: normalizedProducts.ROSA,
+  };
+});
+
+const ROSAHypershiftClusterDetails = produce(CCSClusterDetails, (draft) => {
+  draft.cluster.product = { id: normalizedProducts.ROSA };
+  draft.cluster.hypershift = { enabled: true };
+  draft.cluster.subscription.plan = {
+    id: normalizedProducts.ROSA_HyperShift,
     type: normalizedProducts.ROSA,
   };
 });
@@ -1036,6 +1045,7 @@ const fixtures = {
   OSDRHMClusterDetails,
   ROSAClusterDetails,
   ROSAManualClusterDetails,
+  ROSAHypershiftClusterDetails,
   RHMIClusterDetails,
   insightsData,
   OCPClusterDetails,

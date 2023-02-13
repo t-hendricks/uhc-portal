@@ -1,4 +1,5 @@
 import { has, get } from 'lodash';
+import { normalizedProducts } from '~/common/subscriptionTypes';
 
 const hasCpuAndMemory = (cpu, memory) => {
   const totalCPU = has(cpu, 'total.value');
@@ -21,4 +22,8 @@ const getSubscriptionLastReconciledDate = (subscription) =>
     ? new Date(get(subscription, 'last_reconcile_date')).toLocaleString()
     : false;
 
-export { hasCpuAndMemory, getSubscriptionLastReconciledDate };
+const isHypershiftCluster = (cluster) =>
+  get(cluster, 'hypershift.enabled', false) ||
+  get(cluster, 'subscription.plan.id') === normalizedProducts.ROSA_HyperShift;
+
+export { hasCpuAndMemory, getSubscriptionLastReconciledDate, isHypershiftCluster };

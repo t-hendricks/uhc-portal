@@ -11,11 +11,13 @@ import { getOrganizationAndQuota } from '../../../../redux/actions/userActions';
 import { getMachineTypes } from '../../../../redux/actions/machineTypesActions';
 import { clearClusterResponse, editCluster } from '../../../../redux/actions/clustersActions';
 import {
-  getMachinePools,
+  getMachineOrNodePools,
   scaleMachinePool,
   clearScaleMachinePoolResponse,
   clearGetMachinePoolsResponse,
 } from '../../ClusterDetails/components/MachinePools/MachinePoolsActions';
+
+import { isHypershiftCluster } from '../../ClusterDetails/clusterDetailsHelper';
 
 import { canAutoScaleSelector } from '../../ClusterDetails/components/MachinePools/MachinePoolsSelectors';
 import getClusterName from '../../../../common/getClusterName';
@@ -54,6 +56,7 @@ const mapStateToProps = (state) => {
     resetSection: (values) => resetSection(reduxFormConfig.form, values),
     isValid: isValid(reduxFormConfig.form)(state),
     clusterID: get(cluster, 'id', ''),
+    isHypershiftCluster: isHypershiftCluster(cluster),
     machinePoolsList: {
       ...state.machinePools.getMachinePools,
       data: [
@@ -181,7 +184,8 @@ const mapDispatchToProps = (dispatch) => ({
       dispatch(scaleMachinePool(clusterID, formData.machine_pool, machinePoolRequest));
     }
   },
-  getMachinePools: (clusterID) => dispatch(getMachinePools(clusterID)),
+  getMachinePools: (clusterID, isHypershift) =>
+    dispatch(getMachineOrNodePools(clusterID, isHypershift)),
   resetScaleMachinePoolResponse: () => dispatch(clearScaleMachinePoolResponse()),
   resetScaleDefaultMachinePoolResponse: () => dispatch(clearClusterResponse()),
   resetGetMachinePoolsResponse: () => dispatch(clearGetMachinePoolsResponse()),

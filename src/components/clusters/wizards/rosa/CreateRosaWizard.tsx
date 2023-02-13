@@ -74,7 +74,7 @@ export const CreateRosaWizard = () => {
 
 const CreateRosaWizardInternal = () => (
   <>
-    <Wizard isStepVisitRequired>
+    <Wizard id="rosa-wizard" isStepVisitRequired>
       <WizardStep name={StepName.AccountsAndRoles} id={StepId.AccountsAndRoles}>
         <AccountsAndRoles />
       </WizardStep>

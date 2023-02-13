@@ -50,7 +50,7 @@ const IDPTypeNames = {
   [IDPformValues.OPENID]: 'OpenID',
   [IDPformValues.LDAP]: 'LDAP',
   [IDPformValues.GITLAB]: 'GitLab',
-  [IDPformValues.HTPASSWD]: 'HTPasswd',
+  [IDPformValues.HTPASSWD]: 'htpasswd',
 };
 
 const singularFormIDP = {

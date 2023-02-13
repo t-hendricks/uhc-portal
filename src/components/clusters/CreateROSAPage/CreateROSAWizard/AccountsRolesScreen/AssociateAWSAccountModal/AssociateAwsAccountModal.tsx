@@ -9,7 +9,6 @@ import {
   WizardStep,
   WizardFooterWrapper,
 } from '@patternfly/react-core/dist/esm/next';
-
 import { scrollToFirstError } from '~/common/helpers';
 import { OcmRoleScreen } from './OcmRoleScreen';
 import { UserRoleScreen } from './UserRoleScreen';
@@ -57,7 +56,13 @@ export const AssociateAwsAccountModal = ({ isOpen, onClose }: Props) => (
 );
 
 const AssociateAwsAccountFooter = () => {
-  const { activeStep, steps, onNext: goToNext, onBack, onClose } = useWizardContext();
+  const {
+    activeStep,
+    steps,
+    onNext: goToNextStep,
+    onBack: goToPrevStep,
+    onClose: close,
+  } = useWizardContext();
   const { validateForm, setTouched, submitForm } = useFormikContext();
   const isLastStep = activeStep.index === steps.length;
 
@@ -76,7 +81,7 @@ const AssociateAwsAccountFooter = () => {
       return;
     }
 
-    goToNext();
+    goToNextStep();
   };
 
   return (
@@ -84,10 +89,10 @@ const AssociateAwsAccountFooter = () => {
       <Button variant="primary" onClick={onNext}>
         {isLastStep ? 'Ok' : 'Next'}
       </Button>
-      <Button variant="secondary" onClick={onBack} isDisabled={activeStep.index === 1}>
+      <Button variant="secondary" onClick={goToPrevStep} isDisabled={activeStep.index === 1}>
         Back
       </Button>
-      <Button variant="link" onClick={onClose}>
+      <Button variant="link" onClick={close}>
         Cancel
       </Button>
     </WizardFooterWrapper>

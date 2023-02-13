@@ -12,6 +12,7 @@ const mapStateToProps = (state) => {
     totalMinNodesCount,
     totalMaxNodesCount,
     totalDesiredComputeNodes,
+    totalActualNodes,
   } = nodesSectionData;
 
   if (hasMachinePoolWithAutoscaling) {
@@ -19,12 +20,16 @@ const mapStateToProps = (state) => {
       autoscaleEnabled: hasMachinePoolWithAutoscaling,
       totalMinNodesCount,
       totalMaxNodesCount,
+      totalActualNodes,
+      machinePools,
     };
   }
   return {
     autoscaleEnabled: hasMachinePoolWithAutoscaling,
     totalDesiredComputeNodes,
+    totalActualNodes,
     limitedSupport: cluster?.status?.limited_support_reason_count > 0,
+    machinePools,
   };
 };
 

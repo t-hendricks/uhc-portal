@@ -3,7 +3,6 @@ import isEmpty from 'lodash/isEmpty';
 
 import { Bullseye, Spinner, Stack, StackItem, Title } from '@patternfly/react-core';
 import { useWizardContext } from '@patternfly/react-core/dist/esm/next';
-
 import config from '~/config';
 import ReviewSection, {
   ReviewItem,

@@ -3,7 +3,6 @@ import { setNestedObjectValues } from 'formik';
 
 import { Button } from '@patternfly/react-core';
 import { useWizardContext, WizardFooterWrapper } from '@patternfly/react-core/dist/esm/next';
-
 import { scrollToFirstError } from '~/common/helpers';
 import { getScrollErrorIds } from '~/components/clusters/wizards/form/utils';
 import { useFormState } from '~/components/clusters/wizards/hooks';
@@ -14,7 +13,13 @@ interface CreateOsdWizardFooterProps {
 }
 
 export const CreateOsdWizardFooter = ({ isLoading, onNext }: CreateOsdWizardFooterProps) => {
-  const { onNext: goToNext, onBack, onClose, activeStep, steps } = useWizardContext();
+  const {
+    onNext: goToNextStep,
+    onBack: goToPrevStep,
+    onClose: close,
+    activeStep,
+    steps,
+  } = useWizardContext();
   const { values, validateForm, setTouched } = useFormState();
 
   const onValidateNext = async () => {
@@ -27,7 +32,7 @@ export const CreateOsdWizardFooter = ({ isLoading, onNext }: CreateOsdWizardFoot
       return;
     }
 
-    (onNext ?? goToNext)();
+    (onNext ?? goToNextStep)();
   };
 
   return (
@@ -41,12 +46,12 @@ export const CreateOsdWizardFooter = ({ isLoading, onNext }: CreateOsdWizardFoot
       </Button>
       <Button
         variant="secondary"
-        onClick={onBack}
+        onClick={goToPrevStep}
         isDisabled={isLoading || steps.indexOf(activeStep) === 0}
       >
         Back
       </Button>
-      <Button variant="link" onClick={onClose} isDisabled={isLoading}>
+      <Button variant="link" onClick={close} isDisabled={isLoading}>
         Cancel
       </Button>
     </WizardFooterWrapper>

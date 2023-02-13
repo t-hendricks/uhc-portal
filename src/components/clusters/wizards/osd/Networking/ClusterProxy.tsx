@@ -11,7 +11,6 @@ import {
   Text,
 } from '@patternfly/react-core';
 import { useWizardContext } from '@patternfly/react-core/dist/esm/next';
-
 import links from '~/common/installLinks.mjs';
 import { checkNoProxyDomains, validateCA, validateUrl } from '~/common/validators';
 import { stringToArray } from '~/common/helpers';

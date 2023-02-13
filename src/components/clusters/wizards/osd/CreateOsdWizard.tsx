@@ -175,6 +175,7 @@ const CreateOsdWizardInternal = () => {
     });
 
   const onClose = () => history.push(UrlPath.CreateCloud);
+
   const onNext = ({ name }: WizardNavStepData) => trackStepChange(trackEvents.WizardNext, name);
   const onBack = ({ name }: WizardNavStepData) => trackStepChange(trackEvents.WizardBack, name);
   const onNavByIndex = ({ name }: WizardNavStepData) =>
