@@ -14,7 +14,6 @@ import {
   getMachineOrNodePools,
   scaleMachinePool,
   clearScaleMachinePoolResponse,
-  clearGetMachinePoolsResponse,
 } from '../../ClusterDetails/components/MachinePools/MachinePoolsActions';
 
 import { isHypershiftCluster } from '../../ClusterDetails/clusterDetailsHelper';
@@ -188,7 +187,6 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch(getMachineOrNodePools(clusterID, isHypershift)),
   resetScaleMachinePoolResponse: () => dispatch(clearScaleMachinePoolResponse()),
   resetScaleDefaultMachinePoolResponse: () => dispatch(clearClusterResponse()),
-  resetGetMachinePoolsResponse: () => dispatch(clearGetMachinePoolsResponse()),
   closeModal: () => dispatch(closeModal()),
   getOrganizationAndQuota: () => dispatch(getOrganizationAndQuota()),
   getMachineTypes: () => dispatch(getMachineTypes()),

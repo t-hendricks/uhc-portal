@@ -42,9 +42,8 @@ class EditLabelsModal extends Component {
   };
 
   cancelEdit = () => {
-    const { resetEditLabelsResponse, resetGetMachinePoolsResponse, closeModal, reset } = this.props;
+    const { resetEditLabelsResponse, closeModal, reset } = this.props;
     resetEditLabelsResponse();
-    resetGetMachinePoolsResponse();
     closeModal();
     reset();
   };
@@ -136,7 +135,6 @@ EditLabelsModal.propTypes = {
   editLabelsResponse: PropTypes.object.isRequired,
   getMachinePools: PropTypes.func.isRequired,
   resetEditLabelsResponse: PropTypes.func.isRequired,
-  resetGetMachinePoolsResponse: PropTypes.func.isRequired,
   machinePoolsList: PropTypes.object.isRequired,
   change: PropTypes.func.isRequired,
   reset: PropTypes.func.isRequired,
