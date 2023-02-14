@@ -50,7 +50,7 @@ import UpgradeSettingsTab from './components/UpgradeSettings';
 import { isUninstalledAICluster } from '../../../common/isAssistedInstallerCluster';
 import { hasCapability, subscriptionCapabilities } from '../../../common/subscriptionCapabilities';
 
-const { HostsClusterDetailTab, canAddHost } = OCM;
+const { HostsClusterDetailTab, getAddHostTabDetails } = OCM;
 class ClusterDetails extends Component {
   state = {
     selectedTab: '',
@@ -388,8 +388,11 @@ class ClusterDetails extends Component {
     const displaySupportTab = !hideSupportTab && !isOSDTrial;
     const displayUpgradeSettingsTab =
       (cluster.managed || isAROCluster) && cluster.canEdit && !isArchived && !isHypershift;
-    const displayAddAssistedHosts =
-      assistedInstallerEnabled && canAddHost({ cluster }) && !isArchived;
+
+    const addHostTabDetails =
+      assistedInstallerEnabled && !isArchived
+        ? getAddHostTabDetails({ cluster })
+        : { showTab: false, isDisabled: false, tabTooltip: '' };
 
     return (
       <>
@@ -420,7 +423,7 @@ class ClusterDetails extends Component {
               displaySupportTab={displaySupportTab}
               displayMachinePoolsTab={displayMachinePoolsTab}
               displayUpgradeSettingsTab={displayUpgradeSettingsTab}
-              displayAddAssistedHosts={displayAddAssistedHosts}
+              addHostTabDetails={addHostTabDetails}
               overviewTabRef={this.overviewTabRef}
               monitoringTabRef={this.monitoringTabRef}
               accessControlTabRef={this.accessControlTabRef}
@@ -566,7 +569,8 @@ class ClusterDetails extends Component {
               </ErrorBoundary>
             </TabContent>
           )}
-          {displayAddAssistedHosts && (
+          {/* If the tab is shown and disabled, it will have a tooltip and no content */}
+          {addHostTabDetails.showTab && !addHostTabDetails.isDisabled && (
             <TabContent
               eventKey={9}
               id="addHostsContent"
