@@ -414,6 +414,13 @@ exports[`<ClusterDetails /> Cluster Details - OSD should render 1`] = `
             "current": null,
           }
         }
+        addHostTabDetails={
+          Object {
+            "isDisabled": false,
+            "showTab": false,
+            "tabTooltip": "",
+          }
+        }
         addOnsTabRef={
           Object {
             "current": null,
@@ -425,7 +432,6 @@ exports[`<ClusterDetails /> Cluster Details - OSD should render 1`] = `
           }
         }
         displayAccessControlTab={true}
-        displayAddAssistedHosts={false}
         displayAddOnsTab={true}
         displayClusterHistoryTab={false}
         displayMachinePoolsTab={true}
