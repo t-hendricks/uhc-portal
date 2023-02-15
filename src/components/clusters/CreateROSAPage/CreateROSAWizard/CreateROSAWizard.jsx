@@ -139,7 +139,7 @@ class CreateROSAWizardInternal extends React.Component {
     }
 
     // Allow step navigation forward when the current step is valid and backwards regardless.
-    return (stepIdReached >= id && !hasPrevStepError) || id <= currentStepId;
+    return id <= currentStepId || (id <= stepIdReached && !hasPrevStepError);
   };
 
   getUserRoleInfo = () => {
