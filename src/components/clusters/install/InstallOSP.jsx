@@ -3,6 +3,7 @@ import { PageSection } from '@patternfly/react-core';
 
 import Breadcrumbs from '../../common/Breadcrumbs';
 import { scrollToTop } from '../../../common/helpers';
+import links from '../../../common/installLinks.mjs';
 import { InstructionsChooser } from './instructions/InstructionsChooser';
 import { InstructionsChooserPageTitle } from './instructions/InstructionsChooserPageTitle';
 
@@ -29,7 +30,9 @@ class InstallOSP extends Component {
         <PageSection>
           <InstructionsChooser
             ipiPageLink="/install/openstack/installer-provisioned"
+            ipiLearnMoreLink={links.INSTALL_OSPIPI_GETTING_STARTED}
             upiPageLink="/install/openstack/user-provisioned"
+            upiLearnMoreLink={links.INSTALL_OSPUPI_GETTING_STARTED}
             providerSpecificFeatures={{
               ipi: ['Hosts controlled with OpenStack Provider'],
             }}

@@ -172,7 +172,7 @@ describe('<MachinePools />', () => {
     expect(wrapper.find('#add-machine-pool').props().disableReason).toBeTruthy();
   });
 
-  it('Should disable action menu if hypershift', () => {
+  it('Should disable unavailable actions in kebab menu if hypershift', () => {
     const props = {
       ...baseProps,
       isHypershift: true,
@@ -180,29 +180,122 @@ describe('<MachinePools />', () => {
         data: [
           {
             kind: 'NodePool',
-
             href: '/api/clusters_mgmt/v1/clusters/21gitfhopbgmmfhlu65v93n4g4n3djde/node_pools/workers',
-
             id: 'workers',
-
             replicas: 2,
-
             auto_repair: true,
-
             aws_node_pool: {
               instance_type: 'm5.xlarge',
-
               instance_profile: 'staging-21gitfhopbgmmfhlu65v93n4g4n3djde-jknhystj27-worker',
-
               tags: {
                 'api.openshift.com/environment': 'staging',
               },
             },
-
             availability_zone: 'us-east-1b',
-
             subnet: 'subnet-049f90721559000de',
+            status: {
+              current_replicas: 2,
+            },
+          },
+          {
+            kind: 'NodePool',
+            href: '/api/clusters_mgmt/v1/clusters/21gitfhopbgmmfhlu65v93n4g4n3djde/node_pools/workers',
+            id: 'additional-np',
+            replicas: 3,
+            auto_repair: true,
+            aws_node_pool: {
+              instance_type: 'm5.xlarge',
+              instance_profile: 'staging-21gitfhopbgmmfhlu65v93n4g4n3djde-jknhystj27-worker',
+              tags: {
+                'api.openshift.com/environment': 'staging',
+              },
+            },
+            availability_zone: 'us-east-1b',
+            subnet: 'subnet-049f90721559000de',
+            status: {
+              current_replicas: 3,
+            },
+          },
+        ],
+      },
+    };
+    const wrapper = mount(<MachinePools {...props} />);
+    // need to find by classname because action menu doesn't have an accessible label
+    const actionMenus = wrapper.find('.pf-c-dropdown__toggle');
+    expect(actionMenus).toHaveLength(2);
 
+    actionMenus.forEach((button) => {
+      expect(button.props().disabled).toBeFalsy();
+      button.simulate('click');
+      wrapper.update();
+      const menuItems = wrapper.find('.pf-c-dropdown__menu .pf-c-dropdown__menu-item');
+      expect(menuItems.length).toBeGreaterThan(0);
+      menuItems.forEach((item) => {
+        // Only the delete action is currently available
+        if (item.text() === 'Delete') {
+          expect(item.props()['aria-disabled']).toBeFalsy();
+        } else {
+          expect(item.props()['aria-disabled']).toBeTruthy();
+        }
+      });
+    });
+  });
+
+  it('Should disable delete action in kebab menu if there is only one node pool and hypershift is true', () => {
+    const props = {
+      ...baseProps,
+      isHypershift: true,
+      machinePoolsList: {
+        data: [
+          {
+            kind: 'NodePool',
+            href: '/api/clusters_mgmt/v1/clusters/21gitfhopbgmmfhlu65v93n4g4n3djde/node_pools/workers',
+            id: 'workers',
+            replicas: 2,
+            auto_repair: true,
+            aws_node_pool: {
+              instance_type: 'm5.xlarge',
+              instance_profile: 'staging-21gitfhopbgmmfhlu65v93n4g4n3djde-jknhystj27-worker',
+              tags: {
+                'api.openshift.com/environment': 'staging',
+              },
+            },
+            availability_zone: 'us-east-1b',
+            subnet: 'subnet-049f90721559000de',
+            status: {
+              current_replicas: 2,
+            },
+          },
+        ],
+      },
+    };
+    const wrapper = mount(<MachinePools {...props} />);
+    const deleteButton = wrapper.find('ActionsColumn').props().items[1];
+    expect(deleteButton.title).toBe('Delete');
+    expect(deleteButton.isAriaDisabled).toBeTruthy();
+  });
+
+  it('Should enable all actions in kebab menu if hypershift is false', () => {
+    const props = {
+      ...baseProps,
+      isHypershift: false,
+      machinePoolsList: {
+        data: [
+          {
+            kind: 'NodePool',
+            href: '/api/clusters_mgmt/v1/clusters/21gitfhopbgmmfhlu65v93n4g4n3djde/node_pools/workers',
+            id: 'workers',
+            replicas: 2,
+            auto_repair: true,
+            aws_node_pool: {
+              instance_type: 'm5.xlarge',
+              instance_profile: 'staging-21gitfhopbgmmfhlu65v93n4g4n3djde-jknhystj27-worker',
+              tags: {
+                'api.openshift.com/environment': 'staging',
+              },
+            },
+            availability_zone: 'us-east-1b',
+            subnet: 'subnet-049f90721559000de',
             status: {
               current_replicas: 2,
             },
@@ -213,21 +306,17 @@ describe('<MachinePools />', () => {
     const wrapper = mount(<MachinePools {...props} />);
     // need to find by classname because action menu doesn't have an accessible label
     const actionMenus = wrapper.find('.pf-c-dropdown__toggle');
-    expect(actionMenus).toHaveLength(1);
-
-    actionMenus.forEach((button) => {
-      expect(button.props().disabled).toBeTruthy();
-    });
-  });
-
-  it('Should enable action menu if hypershift is false', () => {
-    const wrapper = mount(<MachinePools {...osdProps} />);
-    // need to find by classname because action menu doesn't have an accessible label
-    const actionMenus = wrapper.find('.pf-c-dropdown__toggle');
-    expect(actionMenus).toHaveLength(1);
+    expect(actionMenus).toHaveLength(2);
 
     actionMenus.forEach((button) => {
       expect(button.props().disabled).toBeFalsy();
+      button.simulate('click');
+      wrapper.update();
+      const menuItems = wrapper.find('.pf-c-dropdown__menu .pf-c-dropdown__menu-item');
+      expect(menuItems.length).toBeGreaterThan(0);
+      menuItems.forEach((item) => {
+        expect(item.props()['aria-disabled']).toBeFalsy();
+      });
     });
   });
 

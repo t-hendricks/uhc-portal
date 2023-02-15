@@ -68,18 +68,27 @@ class CreateROSAWizardInternal extends React.Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    const { createClusterResponse, isErrorModalOpen, openModal, isValid } = this.props;
-    const { currentStepId } = this.state;
+    const { createClusterResponse, isErrorModalOpen, openModal, isValid, isAsyncValidating } =
+      this.props;
+    const { currentStepId, deferredNext } = this.state;
 
     // Track validity of individual steps by id
-    if (isValid !== prevProps.isValid) {
+    if (isValid !== prevProps.isValid || isAsyncValidating !== prevProps.isAsyncValidating) {
       // eslint-disable-next-line react/no-did-update-set-state
       this.setState(() => ({
         validatedSteps: {
           ...prevState.validatedSteps,
-          [currentStepId]: isValid,
+          [currentStepId]: isValid && !isAsyncValidating,
         },
       }));
+    }
+
+    const isAsyncValidationDone =
+      isAsyncValidating !== prevProps.isAsyncValidating && isAsyncValidating === false;
+    if (isAsyncValidationDone && deferredNext) {
+      this.onBeforeNext(deferredNext);
+      // eslint-disable-next-line react/no-did-update-set-state
+      this.setState({ deferredNext: null });
     }
 
     if (createClusterResponse.error && !isErrorModalOpen) {
@@ -159,8 +168,15 @@ class CreateROSAWizardInternal extends React.Component {
   };
 
   onBeforeNext = async (onNext) => {
-    const { getUserRoleResponse, selectedAWSAccountID } = this.props;
-    const { currentStepId } = this.state;
+    const { isAsyncValidating, getUserRoleResponse, selectedAWSAccountID } = this.props;
+    const { currentStepId, deferredNext } = this.state;
+
+    if (isAsyncValidating) {
+      if (!deferredNext) {
+        this.setState({ deferredNext: onNext });
+      }
+      return;
+    }
 
     if (this.scrolledToFirstError()) {
       return;
@@ -206,6 +222,7 @@ class CreateROSAWizardInternal extends React.Component {
       privateLinkSelected,
       configureProxySelected,
     } = this.props;
+    const { deferredNext } = this.state;
 
     const steps = [
       {
@@ -431,6 +448,7 @@ class CreateROSAWizardInternal extends React.Component {
                     onSubmit={onSubmit}
                     onBeforeNext={this.onBeforeNext}
                     onBeforeSubmit={this.onBeforeSubmit}
+                    isNextDisabled={!!deferredNext}
                   />
                 ) : (
                   <></>
@@ -463,6 +481,7 @@ const requestStatePropTypes = PropTypes.shape({
 
 CreateROSAWizardInternal.propTypes = {
   isValid: PropTypes.bool,
+  isAsyncValidating: PropTypes.bool,
   cloudProviderID: PropTypes.string,
   installToVPCSelected: PropTypes.bool,
   privateLinkSelected: PropTypes.bool,

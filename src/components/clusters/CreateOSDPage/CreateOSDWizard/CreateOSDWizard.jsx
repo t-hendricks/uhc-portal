@@ -18,8 +18,8 @@ import ErrorBoundary from '../../../App/ErrorBoundary';
 import PageTitle from '../../../common/PageTitle';
 import Breadcrumbs from '../../../common/Breadcrumbs';
 
-import { shouldRefetchQuota, scrollToFirstError } from '../../../../common/helpers';
-import usePreventBrowserNav from '../../../../hooks/usePreventBrowserNav';
+import { shouldRefetchQuota, scrollToFirstError } from '~/common/helpers';
+import usePreventBrowserNav from '~/hooks/usePreventBrowserNav';
 
 import { trackEvents, ocmResourceTypeByProduct } from '~/common/analytics';
 import withAnalytics from '~/hoc/withAnalytics';
@@ -34,11 +34,11 @@ import VPCScreen from './VPCScreen';
 import ClusterProxyScreen from './ClusterProxyScreen';
 import CIDRScreen from './CIDRScreen';
 import UpdatesScreen from './UpdatesScreen';
-import config from '../../../../config';
+import config from '~/config';
 import Unavailable from '../../../common/Unavailable';
 import CreateClusterErrorModal from '../../common/CreateClusterErrorModal';
 import LeaveCreateClusterPrompt from '../../common/LeaveCreateClusterPrompt';
-import { normalizedProducts } from '../../../../common/subscriptionTypes';
+import { normalizedProducts } from '~/common/subscriptionTypes';
 import { VALIDATE_CLOUD_PROVIDER_CREDENTIALS } from './ccsInquiriesActions';
 
 import './createOSDWizard.scss';
@@ -92,10 +92,16 @@ class CreateOSDWizardInternal extends React.Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    const { createClusterResponse, isErrorModalOpen, openModal, cloudProviderID, isValid, isCCS } =
-      this.props;
-    const { currentStepId, stepIdReached, validatedSteps } = this.state;
-    const hasInvalidCpStep = !validatedSteps[stepId.CLUSTER_SETTINGS__CLOUD_PROVIDER];
+    const {
+      isCCS,
+      isValid,
+      openModal,
+      cloudProviderID,
+      isErrorModalOpen,
+      isAsyncValidating,
+      createClusterResponse,
+    } = this.props;
+    const { currentStepId, stepIdReached, validatedSteps, deferredNext } = this.state;
 
     if (createClusterResponse.error && !isErrorModalOpen) {
       openModal('osd-create-error');
@@ -111,6 +117,7 @@ class CreateOSDWizardInternal extends React.Component {
       this.setState({ stepIdReached: stepId.CLUSTER_SETTINGS__CLOUD_PROVIDER });
     }
 
+    const hasInvalidCpStep = !validatedSteps[stepId.CLUSTER_SETTINGS__CLOUD_PROVIDER];
     // If the cloud provider step was invalid prior to updating the infra type to
     // a RH cloud account, set step to be valid in the validatedSteps dictionary.
     if (hasInvalidCpStep && !isCCS && isCCS !== prevProps.isCCS) {
@@ -124,14 +131,22 @@ class CreateOSDWizardInternal extends React.Component {
     }
 
     // Track validity of individual steps by id
-    if (isValid !== prevProps.isValid) {
+    if (isValid !== prevProps.isValid || isAsyncValidating !== prevProps.isAsyncValidating) {
       // eslint-disable-next-line react/no-did-update-set-state
       this.setState(() => ({
         validatedSteps: {
           ...prevState.validatedSteps,
-          [currentStepId]: isValid,
+          [currentStepId]: isValid && !isAsyncValidating,
         },
       }));
+    }
+
+    const isAsyncValidationDone =
+      isAsyncValidating !== prevProps.isAsyncValidating && isAsyncValidating === false;
+    if (isAsyncValidationDone && deferredNext) {
+      this.onBeforeNext(deferredNext);
+      // eslint-disable-next-line react/no-did-update-set-state
+      this.setState({ deferredNext: null });
     }
   }
 
@@ -199,10 +214,23 @@ class CreateOSDWizardInternal extends React.Component {
   };
 
   onBeforeNext = async (onNext) => {
-    const { touch, formErrors, isCCSCredentialsValidationNeeded, cloudProviderID } = this.props;
-    const { currentStepId, validatedSteps } = this.state;
+    const {
+      touch,
+      formErrors,
+      cloudProviderID,
+      isAsyncValidating,
+      isCCSCredentialsValidationNeeded,
+    } = this.props;
+    const { currentStepId, validatedSteps, deferredNext } = this.state;
     const isCurrentStepValid = validatedSteps[currentStepId];
     const errorIds = Object.keys(formErrors);
+
+    if (isAsyncValidating) {
+      if (!deferredNext) {
+        this.setState({ deferredNext: onNext });
+      }
+      return;
+    }
 
     // When errors exist, touch the fields with those errors to trigger validation.
     if (errorIds?.length > 0 && !isCurrentStepValid) {
@@ -210,6 +238,7 @@ class CreateOSDWizardInternal extends React.Component {
       scrollToFirstError(errorIds);
       return;
     }
+
     if (
       isCCSCredentialsValidationNeeded &&
       cloudProviderID &&
@@ -224,6 +253,7 @@ class CreateOSDWizardInternal extends React.Component {
 
   render() {
     const {
+      isAsyncValidating,
       onSubmit,
       createClusterResponse,
       machineTypes,
@@ -242,6 +272,7 @@ class CreateOSDWizardInternal extends React.Component {
       configureProxySelected,
       ccsCredentialsValidityResponse,
     } = this.props;
+    const { deferredNext } = this.state;
 
     const isTrialDefault = product === normalizedProducts.OSDTrial;
 
@@ -488,8 +519,8 @@ class CreateOSDWizardInternal extends React.Component {
                   variant="primary"
                   type="submit"
                   onClick={() => this.onBeforeNext(onNext)}
-                  isLoading={ccsValidationPending}
-                  isDisabled={ccsValidationPending}
+                  isLoading={isAsyncValidating || ccsValidationPending}
+                  isDisabled={deferredNext || ccsValidationPending}
                 >
                   Next
                 </Button>
@@ -557,6 +588,7 @@ const requestStatePropTypes = PropTypes.shape({
 
 CreateOSDWizardInternal.propTypes = {
   isValid: PropTypes.bool,
+  isAsyncValidating: PropTypes.bool,
   ccsCredentialsValidityResponse: PropTypes.object,
   isCCS: PropTypes.bool,
   isCCSCredentialsValidationNeeded: PropTypes.bool,

@@ -26,8 +26,10 @@ exports[`InstallNutanix renders correctly 1`] = `
   <PageSection>
     <InstructionsChooser
       agentBasedPageLink=""
+      aiLearnMoreLink="https://docs.openshift.com/container-platform/4.12/installing/installing_on_prem_assisted/installing-on-prem-assisted.html"
       aiPageLink="/assisted-installer/clusters/~new"
       hideUPI={true}
+      ipiLearnMoreLink="https://docs.openshift.com/container-platform/4.12/installing/installing_nutanix/preparing-to-install-on-nutanix.html"
       ipiPageLink="/install/nutanix/installer-provisioned"
       providerSpecificFeatures={
         Object {

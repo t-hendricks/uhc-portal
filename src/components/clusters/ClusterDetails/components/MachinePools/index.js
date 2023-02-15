@@ -72,7 +72,7 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
     dispatch(addMachinePool(ownProps.clusterID, params));
   },
   deleteMachinePool: (machinePoolID) =>
-    dispatch(deleteMachinePool(ownProps.cluster.id, machinePoolID)),
+    dispatch(deleteMachinePool(ownProps.cluster.id, machinePoolID, ownProps.isHypershift)),
   getOrganizationAndQuota: () => dispatch(getOrganizationAndQuota()),
   getMachineTypes: () => dispatch(getMachineTypes()),
 });
