@@ -105,23 +105,27 @@ class CreateROSAWizardInternal extends React.Component {
     resetForm();
   }
 
-  onNext = ({ id }) => {
-    const { stepIdReached, currentStepId } = this.state;
+  // triggered by all forms of navigation;
+  // next / back / nav-links / imperative (e.g. "edit step" links in the review step)
+  onCurrentStepChanged = ({ id }) => {
+    this.setState({ currentStepId: id });
+  };
+
+  onNext = ({ id }, { prevId }) => {
+    const { stepIdReached } = this.state;
     if (id && stepIdReached < id) {
       this.setState({ stepIdReached: id });
     }
-    this.setState({ currentStepId: id });
 
-    this.trackWizardNavigation(trackEvents.WizardNext, currentStepId);
+    this.trackWizardNavigation(trackEvents.WizardNext, prevId);
   };
 
+  // only triggered by the wizard nav-links
   onGoToStep = ({ id }) => {
-    this.setState({ currentStepId: id });
     this.trackWizardNavigation(trackEvents.WizardLinkNav, id);
   };
 
   onBack = ({ id }) => {
-    this.setState({ currentStepId: id });
     this.trackWizardNavigation(trackEvents.WizardBack, id);
   };
 
@@ -184,13 +188,8 @@ class CreateROSAWizardInternal extends React.Component {
     if (this.scrolledToFirstError()) {
       return;
     }
-    // when navigating back to step 1 from link in no user-role error messages on review screen
-    // even though we're hitting [Next] on step 1, currentStepId is set to review step.
-    // TODO: figure out how to update currentStepId externally from WizardContextConsumer.goToStepById()
-    if (
-      [stepId.ACCOUNTS_AND_ROLES, stepId.REVIEW_AND_CREATE].includes(currentStepId) &&
-      !getUserRoleResponse?.fulfilled
-    ) {
+    // when navigating back to step 1 from link in no user-role error messages on review screen.
+    if (currentStepId === stepId.ACCOUNTS_AND_ROLES && !getUserRoleResponse?.fulfilled) {
       const data = await this.getUserRoleInfo();
       const gotoNextStep = isUserRoleForSelectedAWSAccount(data.value, selectedAWSAccountID);
       if (!gotoNextStep) {
@@ -444,6 +443,7 @@ class CreateROSAWizardInternal extends React.Component {
               onNext={this.onNext}
               onBack={this.onBack}
               onGoToStep={this.onGoToStep}
+              onCurrentStepChanged={this.onCurrentStepChanged}
               onClose={() => history.push('/')}
               footer={
                 !createClusterResponse.pending ? (
