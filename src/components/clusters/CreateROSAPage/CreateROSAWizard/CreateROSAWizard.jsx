@@ -1,8 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Redirect } from 'react-router';
-import { Banner, Wizard, PageSection, WizardContext } from '@patternfly/react-core';
+import { isMatch } from 'lodash';
 import { Spinner } from '@redhat-cloud-services/frontend-components';
+import { Banner, Wizard, PageSection, WizardContext } from '@patternfly/react-core';
 
 import config from '~/config';
 import { shouldRefetchQuota, scrollToFirstError } from '~/common/helpers';
@@ -68,8 +69,14 @@ class CreateROSAWizardInternal extends React.Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    const { createClusterResponse, isErrorModalOpen, openModal, isValid, isAsyncValidating } =
-      this.props;
+    const {
+      createClusterResponse,
+      isErrorModalOpen,
+      openModal,
+      formValues,
+      isValid,
+      isAsyncValidating,
+    } = this.props;
     const { currentStepId, deferredNext } = this.state;
 
     // Track validity of individual steps by id
@@ -84,6 +91,11 @@ class CreateROSAWizardInternal extends React.Component {
           [currentStepId]: isValid,
         },
       }));
+    }
+
+    const formValuesChanged = !isMatch(prevProps.formValues, formValues);
+    if (formValuesChanged) {
+      this.setState({ stepIdReached: currentStepId });
     }
 
     const isAsyncValidationDone =
@@ -523,6 +535,7 @@ CreateROSAWizardInternal.propTypes = {
   formErrors: PropTypes.object,
   getUserRoleResponse: PropTypes.object,
   selectedAWSAccountID: PropTypes.string,
+  formValues: PropTypes.object,
 
   // for "no quota" redirect
   hasProductQuota: PropTypes.bool,
