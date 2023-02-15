@@ -95,6 +95,7 @@ class CreateROSAWizardInternal extends React.Component {
 
     const formValuesChanged = !isMatch(prevProps.formValues, formValues);
     if (formValuesChanged) {
+      // eslint-disable-next-line react/no-did-update-set-state
       this.setState({ stepIdReached: currentStepId });
     }
 
