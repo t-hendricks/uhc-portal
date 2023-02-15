@@ -447,6 +447,11 @@
   resolved "https://registry.yarnpkg.com/@babel/helper-plugin-utils/-/helper-plugin-utils-7.18.9.tgz#4b8aea3b069d8cb8a72cdfe28ddf5ceca695ef2f"
   integrity sha512-aBXPT3bmtLryXaoJLyYPXPlSD4p1ld9aYeR+sJNOZjJJGiOpb+fKfh3NkcCu7J54nUJwCERPBExCCpyCOHnu/w==
 
+"@babel/helper-plugin-utils@^7.18.6":
+  version "7.20.2"
+  resolved "https://registry.yarnpkg.com/@babel/helper-plugin-utils/-/helper-plugin-utils-7.20.2.tgz#d1b9000752b18d0877cff85a5c376ce5c3121629"
+  integrity sha512-8RvlJG2mj4huQ4pZ+rU9lqKi9ZKiRmuvGuM2HlWmkmgOhbs6zEAw6IEiJ5cQqGbDzGZOhwuOQNtZMi/ENLjZoQ==
+
 "@babel/helper-remap-async-to-generator@^7.13.0":
   version "7.13.0"
   resolved "https://registry.yarnpkg.com/@babel/helper-remap-async-to-generator/-/helper-remap-async-to-generator-7.13.0.tgz#376a760d9f7b4b2077a9dd05aa9c3927cadb2209"
@@ -656,7 +661,7 @@
   resolved "https://registry.yarnpkg.com/@babel/parser/-/parser-7.16.2.tgz#3723cd5c8d8773eef96ce57ea1d9b7faaccd12ac"
   integrity sha512-RUVpT0G2h6rOZwqLDTrKk7ksNv7YpAilTnYe1/Q+eDjxEceRMKVWbCsX7t8h6C1qCFi/1Y8WZjcEPBAFG27GPw==
 
-"@babel/parser@^7.16.5":
+"@babel/parser@^7.16.5", "@babel/parser@^7.21.2":
   version "7.21.2"
   resolved "https://registry.yarnpkg.com/@babel/parser/-/parser-7.21.2.tgz#dacafadfc6d7654c3051a66d6fe55b6cb2f2a0b3"
   integrity sha512-URpaIJQwEkEC2T9Kn+Ai6Xe/02iNaVCuT/PtoRz3GPVJVDpPd7mLo+VddTbhCRU9TXqW5mSrQfXZyi8kDKOVpQ==
@@ -839,6 +844,13 @@
   integrity sha512-d4HM23Q1K7oq/SLNmG6mRt85l2csmQ0cHRaxRXjKW0YFdEXqlZ5kzFQKH5Uc3rDJECgu+yCRgPkG04Mm98R/1g==
   dependencies:
     "@babel/helper-plugin-utils" "^7.12.13"
+
+"@babel/plugin-syntax-jsx@^7.18.6":
+  version "7.18.6"
+  resolved "https://registry.yarnpkg.com/@babel/plugin-syntax-jsx/-/plugin-syntax-jsx-7.18.6.tgz#a8feef63b010150abd97f1649ec296e849943ca0"
+  integrity sha512-6mmljtAedFGTWu2p/8WIORGwy+61PLgOMPOdazc7YoJ9ZCWUyFy3A6CpPkRKLKD1ToAesxX8KGEViAiLo9N+7Q==
+  dependencies:
+    "@babel/helper-plugin-utils" "^7.18.6"
 
 "@babel/plugin-syntax-logical-assignment-operators@^7.10.4", "@babel/plugin-syntax-logical-assignment-operators@^7.8.3":
   version "7.10.4"
@@ -6889,6 +6901,18 @@ find-test-names@1.25.0:
     globby "^11.0.4"
     simple-bin-help "^1.7.7"
 
+find-test-names@^1.19.0:
+  version "1.28.1"
+  resolved "https://registry.yarnpkg.com/find-test-names/-/find-test-names-1.28.1.tgz#2b0db5eea6efe89885242e2817024f1595ff7635"
+  integrity sha512-fP3LL2N3NzYpE+C6oFWmsYLOP+k4N+qX8354lSdaTJWjVjVuUh//zM8RpYb+cEeVd7HLDgTWA7zosjiAV+N+cQ==
+  dependencies:
+    "@babel/parser" "^7.21.2"
+    "@babel/plugin-syntax-jsx" "^7.18.6"
+    acorn-walk "^8.2.0"
+    debug "^4.3.3"
+    globby "^11.0.4"
+    simple-bin-help "^1.8.0"
+
 find-up@5.0.0:
   version "5.0.0"
   resolved "https://registry.yarnpkg.com/find-up/-/find-up-5.0.0.tgz#4c92819ecb7083561e4f4a240a86be5198f536fc"
@@ -12523,6 +12547,11 @@ simple-bin-help@1.7.7:
     debug "3.2.7"
     update-notifier "5.1.0"
     word-wrap "1.2.3"
+
+simple-bin-help@^1.7.7, simple-bin-help@^1.8.0:
+  version "1.8.0"
+  resolved "https://registry.yarnpkg.com/simple-bin-help/-/simple-bin-help-1.8.0.tgz#21bb82c6bccd9fa8678f9c0fadf2956b54e2160a"
+  integrity sha512-0LxHn+P1lF5r2WwVB/za3hLRIsYoLaNq1CXqjbrs3ZvLuvlWnRKrUjEWzV7umZL7hpQ7xULiQMV+0iXdRa5iFg==
 
 sirv@^1.0.7:
   version "1.0.19"
