@@ -20,6 +20,9 @@ import '@cypress/code-coverage/support';
 // Alternatively you can use CommonJS syntax:
 // require('./commands')
 
+const registerCypressGrep = require('@cypress/grep')
+registerCypressGrep()
+
 before(() => {
   cy.log('Setting viewport to "macbook-13"');
   cy.viewport('macbook-13');

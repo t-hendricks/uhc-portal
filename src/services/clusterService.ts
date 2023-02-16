@@ -481,6 +481,11 @@ const deleteMachinePool = (clusterID: string, machinePoolID: string) =>
     `/api/clusters_mgmt/v1/clusters/${clusterID}/machine_pools/${machinePoolID}`,
   );
 
+const deleteNodePool = (clusterID: string, nodePoolID: string) =>
+  apiRequest.delete<unknown>(
+    `/api/clusters_mgmt/v1/clusters/${clusterID}/node_pools/${nodePoolID}`,
+  );
+
 const upgradeTrialCluster = (clusterID: string, data: Cluster) =>
   apiRequest.patch<Cluster>(`/api/clusters_mgmt/v1/clusters/${clusterID}`, data);
 
@@ -779,6 +784,7 @@ const clusterService = {
   addMachinePool,
   scaleMachinePool,
   deleteMachinePool,
+  deleteNodePool,
   upgradeTrialCluster,
   getUpgradeGates,
   getClusterGateAgreements,

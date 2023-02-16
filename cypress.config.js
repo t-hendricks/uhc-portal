@@ -4,9 +4,14 @@ const { defineConfig } = require('cypress');
 module.exports = defineConfig({
   chromeWebSecurity: false,
   defaultCommandTimeout: 6000,
+  env: {
+    grepOmitFiltered: true,
+    grepFilterSpecs: true
+  },
   e2e: {
     setupNodeEvents(on, config) {
       // implement node event listeners here
+      require('@cypress/grep/src/plugin')(config);
       require('@cypress/code-coverage/task')(on, config);
       return config;
     },

@@ -97,8 +97,9 @@ class MachinePools extends React.Component {
   }
 
   componentWillUnmount() {
-    const { clearGetMachinePoolsResponse } = this.props;
+    const { clearGetMachinePoolsResponse, clearDeleteMachinePoolResponse } = this.props;
     clearGetMachinePoolsResponse();
+    clearDeleteMachinePoolResponse();
   }
 
   onCollapse = (event, rowKey, isOpen, rowData) => {
@@ -131,7 +132,6 @@ class MachinePools extends React.Component {
       addMachinePoolResponse,
       hasMachinePoolsQuota,
       isHypershift,
-      clearDeleteMachinePoolResponse,
     } = this.props;
 
     const { deletedRowIndex, openedRows, hideDeleteMachinePoolError } = this.state;
@@ -340,7 +340,6 @@ class MachinePools extends React.Component {
       this.setState(
         produce((draft) => {
           if (deleteMachinePoolResponse.error) {
-            clearDeleteMachinePoolResponse();
             draft.hideDeleteMachinePoolError = false;
           }
           draft.deletedRowIndex = rowID;
@@ -424,12 +423,7 @@ class MachinePools extends React.Component {
       </ButtonWithTooltip>
     );
 
-    const tableActionsDisabled = !!(
-      readOnlyReason ||
-      hibernatingReason ||
-      canNotEditReason ||
-      isHypershift
-    );
+    const tableActionsDisabled = !!(readOnlyReason || hibernatingReason || canNotEditReason);
 
     return (
       <>
@@ -471,7 +465,7 @@ class MachinePools extends React.Component {
                 <Alert
                   variant="info"
                   isInline
-                  title="Scaling and deleting machine pools is currently only available using ROSA CLI"
+                  title="Scaling machine pools is currently only available using ROSA CLI"
                 />
               )}
               <Table
@@ -486,6 +480,8 @@ class MachinePools extends React.Component {
                     onClickScaleAction,
                     onClickEditTaintsAction,
                     onClickEditLaeblsAction,
+                    isHypershift,
+                    machinePoolsList.data.length,
                   )
                 }
                 areActionsDisabled={() => tableActionsDisabled}

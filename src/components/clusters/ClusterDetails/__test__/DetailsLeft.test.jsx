@@ -4,6 +4,7 @@ import { shallow } from 'enzyme';
 import DetailsLeft from '../components/Overview/DetailsLeft';
 import fixtures from './ClusterDetails.fixtures';
 import { knownProducts } from '~/common/subscriptionTypes';
+import { screen, render } from '~/testUtils';
 
 const getCluster = (productType) => {
   if (productType === knownProducts.OCP_Assisted_Install) {
@@ -36,5 +37,28 @@ describe('<DetailsLeft />', () => {
   it('should show Multi-Zone for Hypershift cluster details', () => {
     const azComponent = wrapper(knownProducts.ROSA_HyperShift).find('[data-testid="availability"]');
     expect(azComponent.html()).toContain('Multi-zone');
+    const { container } = render(
+      <DetailsLeft
+        cluster={getCluster(knownProducts.ROSA_HyperShift)}
+        cloudProviders={fixtures.cloudProviders}
+        showAssistedId={false}
+      />,
+    );
+    expect(container).toMatchSnapshot();
+  });
+
+  it('should show control plane type as Hosted if hypershift', () => {
+    render(
+      <DetailsLeft
+        cluster={fixtures.ROSAHypershiftClusterDetails.cluster}
+        cloudProviders={fixtures.cloudProviders}
+      />,
+    );
+    expect(screen.getByTestId('controlType', 'Hosted')).toBeInTheDocument();
+  });
+
+  it('hide control plane type if not hypershift', () => {
+    const controlTypeComponent = wrapper(knownProducts.OSD).find('[data-testid="controlType"]');
+    expect(controlTypeComponent).toHaveLength(0);
   });
 });

@@ -25,23 +25,50 @@ exports[`Platform agnostic install renders correctly 1`] = `
   />
   <PageSection>
     <InstructionsChooser
+      agentBasedLearnMoreLink="https://docs.openshift.com/container-platform/4.12/installing/installing_with_agent_based_installer/preparing-to-install-with-agent-based-installer.html"
       agentBasedPageLink="/install/platform-agnostic/agent-based"
+      aiLearnMoreLink="https://docs.openshift.com/container-platform/4.12/installing/installing_on_prem_assisted/installing-on-prem-assisted.html"
       aiPageLink="/assisted-installer/clusters/~new"
       hideIPI={true}
       providerSpecificFeatures={
         Object {
           "abi": Array [
-            "For non-tested platforms",
+            <React.Fragment>
+              For 
+              <ExternalLink
+                href="https://access.redhat.com/articles/4207611"
+                stopClickPropagation={true}
+              >
+                non-tested platforms
+              </ExternalLink>
+            </React.Fragment>,
             "For air-gapped/restricted networks",
           ],
           "ai": Array [
-            "For non-tested platforms",
+            <React.Fragment>
+              For 
+              <ExternalLink
+                href="https://access.redhat.com/articles/4207611"
+                stopClickPropagation={true}
+              >
+                non-tested platforms
+              </ExternalLink>
+            </React.Fragment>,
           ],
           "upi": Array [
-            "For non-tested platforms",
+            <React.Fragment>
+              For 
+              <ExternalLink
+                href="https://access.redhat.com/articles/4207611"
+                stopClickPropagation={true}
+              >
+                non-tested platforms
+              </ExternalLink>
+            </React.Fragment>,
           ],
         }
       }
+      upiLearnMoreLink="https://docs.openshift.com/container-platform/4.12/installing/installing_platform_agnostic/installing-platform-agnostic.html"
       upiPageLink="/install/platform-agnostic/user-provisioned"
     />
   </PageSection>

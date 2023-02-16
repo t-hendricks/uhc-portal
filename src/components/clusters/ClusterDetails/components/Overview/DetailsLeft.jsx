@@ -59,10 +59,14 @@ function DetailsLeft({ cluster, cloudProviders, showAssistedId }) {
             <ClusterTypeLabel cluster={cluster} />
           </DescriptionListDescription>
         </DescriptionListGroup>
-        <DescriptionListGroup>
-          <DescriptionListTerm>Control plane type</DescriptionListTerm>
-          <DescriptionListDescription>{controlPlaneType}</DescriptionListDescription>
-        </DescriptionListGroup>
+        {isHypershift && (
+          <DescriptionListGroup>
+            <DescriptionListTerm>Control plane type</DescriptionListTerm>
+            <DescriptionListDescription data-testid="controlType">
+              {controlPlaneType}
+            </DescriptionListDescription>
+          </DescriptionListGroup>
+        )}
         <DescriptionListGroup>
           <DescriptionListTerm>Region</DescriptionListTerm>
           <DescriptionListDescription>{region}</DescriptionListDescription>
@@ -77,8 +81,10 @@ function DetailsLeft({ cluster, cloudProviders, showAssistedId }) {
           <>
             <DescriptionListGroup>
               <DescriptionListTerm>Availability</DescriptionListTerm>
-              <DescriptionListDescription data-testid="availability">
-                {cluster.multi_az || isHypershift ? 'Multi-zone' : 'Single zone'}
+              <DescriptionListDescription>
+                <span data-testid="availability">
+                  {cluster.multi_az || isHypershift ? 'Multi-zone' : 'Single zone'}
+                </span>
               </DescriptionListDescription>
             </DescriptionListGroup>
           </>

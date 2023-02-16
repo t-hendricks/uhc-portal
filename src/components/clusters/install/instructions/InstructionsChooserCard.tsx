@@ -1,8 +1,18 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
-import { Card, CardTitle, CardBody, Title, Flex, List, ListItem } from '@patternfly/react-core';
+import {
+  Card,
+  CardTitle,
+  CardBody,
+  Title,
+  Flex,
+  List,
+  ListItem,
+  CardFooter,
+} from '@patternfly/react-core';
 import spacing from '@patternfly/react-styles/css/utilities/Spacing/spacing';
 import CheckIcon from '@patternfly/react-icons/dist/esm/icons/check-icon';
+import ExternalLink from '~/components/common/ExternalLink';
 
 interface InstructionsChooserCardProps {
   id: string;
@@ -11,8 +21,8 @@ interface InstructionsChooserCardProps {
   labels: React.ReactNode;
   body: React.ReactNode;
   featureListItems: React.ReactNode[];
-  footerLinkHref: string;
-  footerLinkText: React.ReactNode;
+  footerLinkHref?: string;
+  footerLinkText?: React.ReactNode;
 }
 
 export const InstructionsChooserCard = ({
@@ -56,14 +66,13 @@ export const InstructionsChooserCard = ({
           ))}
         </List>
       </CardBody>
-      {/*
-      // TODO restore this footer when we have URLs for documentation links for each card. See https://issues.redhat.com/browse/HAC-2403
-      <CardFooter>
-        <ExternalLink href={footerLinkHref} stopClickPropagation>
-          {footerLinkText}
-        </ExternalLink>
-      </CardFooter>
-      */}
+      {footerLinkHref && (
+        <CardFooter>
+          <ExternalLink href={footerLinkHref} stopClickPropagation>
+            {footerLinkText}
+          </ExternalLink>
+        </CardFooter>
+      )}
     </Card>
   );
 };

@@ -6,39 +6,62 @@ const actionResolver = (
   onClickScale,
   onClickEditTaints,
   onClickEditLaebls,
+  isHypershift,
+  machinePoolsCount,
 ) => {
   // hide actions kebab for expandable rows
   if (!rowData.machinePool) {
     return [];
   }
 
+  const deleteDisabled = isHypershift && machinePoolsCount === 1;
+
+  const hypershiftTooltip = {
+    scale: { tooltip: 'Scaling machine pools is currently only available using ROSA CLI' },
+    delete: { tooltip: 'The last machine pool cannot be deleted' },
+    edit: { tooltip: 'Editing machine pools is currently only available using ROSA CLI' },
+  };
+
+  const scaleAction = {
+    title: 'Scale',
+    onClick: onClickScale,
+    className: 'hand-pointer',
+    isAriaDisabled: isHypershift,
+    ...(isHypershift && hypershiftTooltip.scale),
+  };
+
   const deleteAction = {
     title: 'Delete',
     onClick: onClickDelete,
     className: 'hand-pointer',
+    isAriaDisabled: deleteDisabled,
+    ...(deleteDisabled && hypershiftTooltip.delete),
   };
 
   const editLabelsAction = {
     title: 'Edit labels',
     onClick: onClickEditLaebls,
     className: 'hand-pointer',
+    isAriaDisabled: isHypershift,
+    ...(isHypershift && hypershiftTooltip.edit),
   };
 
   const editTaintsAction = {
     title: 'Edit taints',
     onClick: onClickEditTaints,
     className: 'hand-pointer',
+    isAriaDisabled: isHypershift,
+    ...(isHypershift && hypershiftTooltip.edit),
   };
 
-  const additionalMachinePoolActions = [editLabelsAction, editTaintsAction, deleteAction];
-
+  if (isHypershift) {
+    return [scaleAction, deleteAction];
+  }
   return [
-    {
-      title: 'Scale',
-      onClick: onClickScale,
-      className: 'hand-pointer',
-    },
-    ...(rowData.machinePool?.id !== 'Default' ? additionalMachinePoolActions : []),
+    scaleAction,
+    ...(rowData.machinePool?.id !== 'Default'
+      ? [editLabelsAction, editTaintsAction, deleteAction]
+      : []),
   ];
 };
 

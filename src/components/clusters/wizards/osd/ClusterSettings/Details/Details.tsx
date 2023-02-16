@@ -65,7 +65,6 @@ export const Details = () => {
     },
     setFieldValue,
     getFieldProps,
-    setFieldError,
   } = useFormState();
 
   const [isExpanded, setIsExpanded] = React.useState(false);
@@ -133,16 +132,6 @@ export const Details = () => {
     },
   ];
 
-  const onClusterNameBlur = async (event: React.FocusEvent<any>) => {
-    const value = event?.target?.value;
-
-    if (value) {
-      const clusterNameAsyncError = await asyncValidateClusterName(value);
-
-      setFieldError(FieldId.ClusterName, clusterNameAsyncError);
-    }
-  };
-
   const validateClusterName = async (value: string) => {
     const syncError = createPessimisticValidator(clusterNameValidation)(value);
     if (syncError) {
@@ -181,7 +170,6 @@ export const Details = () => {
               input={{
                 ...getFieldProps(FieldId.ClusterName),
                 onChange: (value: string) => setFieldValue(FieldId.ClusterName, value, false),
-                onBlur: onClusterNameBlur,
               }}
             />
           </GridItem>
