@@ -14,7 +14,6 @@ import {
 import OutlinedQuestionCircleIcon from '@patternfly/react-icons/dist/esm/icons/outlined-question-circle-icon';
 
 import CreateOSDWizardIntro from '~/styles/images/CreateOSDWizard-intro.png';
-import { useGlobalState } from '~/redux/hooks/useGlobalState';
 import { OSD_TRIAL_FEATURE } from '~/redux/constants/featureConstants';
 import { billingModels, normalizedProducts } from '~/common/subscriptionTypes';
 import ExternalLink from '~/components/common/ExternalLink';
@@ -26,6 +25,7 @@ import { FieldId } from '~/components/clusters/wizards/osd/constants';
 import { useFormState } from '~/components/clusters/wizards/hooks';
 import { RadioGroupField, RadioGroupOption } from '~/components/clusters/wizards/form';
 import { useGetBillingQuotas } from './useGetBillingQuotas';
+import { useFeatureGate } from '~/hooks/useFeatureGate';
 
 import './BillingModel.scss';
 
@@ -36,9 +36,8 @@ export const BillingModel = () => {
     setFieldValue,
   } = useFormState();
   const quotas = useGetBillingQuotas(product);
-  const showOsdTrial = useGlobalState(
-    (state) => state.features[OSD_TRIAL_FEATURE] && quotas.osdTrial,
-  );
+  const osdTrialFeature = useFeatureGate(OSD_TRIAL_FEATURE);
+  const showOsdTrial = osdTrialFeature && quotas.osdTrial;
 
   const trialDescription = (
     <p>

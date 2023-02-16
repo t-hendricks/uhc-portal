@@ -7,6 +7,8 @@ import { billingModels, normalizedProducts } from '../../../../../../common/subs
 
 import { availableQuota, quotaTypes } from '../../../../common/quotaSelectors';
 
+import { featureGateSelector } from '~/hooks/useFeatureGate';
+
 import BillingModelSection from './BillingModelSection';
 
 const mapStateToProps = (state) => {
@@ -27,7 +29,7 @@ const mapStateToProps = (state) => {
   return {
     product,
     showOSDTrial:
-      state.features[OSD_TRIAL_FEATURE] &&
+      featureGateSelector(state, OSD_TRIAL_FEATURE) &&
       quotaQuery({
         resourceType: quotaTypes.CLUSTER,
         product: OSDTrial,

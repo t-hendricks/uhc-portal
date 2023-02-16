@@ -162,6 +162,14 @@ const ReviewClusterScreen = ({
           </ReviewSection>
         </>
       )}
+      {isROSA && formValues.hypershift && (
+        <ReviewSection
+          title={getStepName('CONTROL_PLANE')}
+          onGoToStep={() => goToStepById(getStepId('CONTROL_PLANE'))}
+        >
+          {ReviewItem({ name: 'hypershift', formValues })}
+        </ReviewSection>
+      )}
       {!isROSA && (
         <ReviewSection
           title={getStepName('BILLING_MODEL')}

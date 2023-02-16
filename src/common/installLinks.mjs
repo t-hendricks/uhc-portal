@@ -298,6 +298,9 @@ const links = {
     'https://docs.openshift.com/dedicated/networking/cidr-range-definitions.html',
   CONFIGURE_PROXY_URL:
     'https://docs.openshift.com/dedicated/networking/configuring-cluster-wide-proxy.html',
+  VIRTUAL_PRIVATE_CLOUD_URL:
+    'https://docs.openshift.com/rosa/rosa_planning/rosa-sts-aws-prereqs.html#rosa-vpc_rosa-sts-aws-prereqs',
+  AWS_CONTROL_PLANE_URL: `${DOCS_BASE}/architecture/control-plane.html#hosted-control-planes-architecture_control-plane`,
 };
 
 // Tool identifiers are public — e.g. for linking to specific tool in DownloadsPage.
