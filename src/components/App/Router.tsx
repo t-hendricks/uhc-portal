@@ -109,7 +109,7 @@ import ClusterDetailsSubscriptionId from '../clusters/ClusterDetails/ClusterDeta
 import ClusterDetailsClusterOrExternalId from '../clusters/ClusterDetails/ClusterDetailsClusterOrExternalId';
 import { CreateOsdWizard } from '../clusters/wizards';
 import { metadataByRoute, is404 } from './routeMetadata';
-import { useFeatures } from './hooks';
+import { useFeatureGate } from '~/hooks/useFeatureGate';
 
 const { AssistedUiRouter } = OCM;
 
@@ -133,8 +133,8 @@ const Router: React.FC<RouterProps> = ({ history, planType, clusterId, externalC
   const {
     segment: { setPageMetadata },
   } = useChrome();
-  const { [HYPERSHIFT_WIZARD_FEATURE]: isHypershiftWizardEnabled } = useFeatures();
 
+  const isHypershiftWizardEnabled = useFeatureGate(HYPERSHIFT_WIZARD_FEATURE);
   // TODO: just for testing, remove this when feature flag is being used in the wizard
   // eslint-disable-next-line no-console
   console.log(`HYPERSHIFT_WIZARD_FEATURE is ${isHypershiftWizardEnabled ? 'Enabled' : 'Disabled'}`);
