@@ -230,6 +230,10 @@ export const createClusterRequest = ({ isWizard = true, cloudProviderID, product
       value: parseFloat(formData.persistent_storage),
     };
   }
+
+  if (formData.hypershift) {
+    clusterRequest.hypershift = { enabled: formData.hypershift === 'true' };
+  }
   return clusterRequest;
 };
 
