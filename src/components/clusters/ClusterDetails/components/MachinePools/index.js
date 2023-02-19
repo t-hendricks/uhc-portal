@@ -10,6 +10,7 @@ import {
   clearDeleteMachinePoolResponse,
 } from './MachinePoolsActions';
 import { hasMachinePoolsQuotaSelector } from './MachinePoolsSelectors';
+import { normalizeNodePool } from './machinePoolsHelper';
 
 import { getOrganizationAndQuota } from '../../../../../redux/actions/userActions';
 import { getMachineTypes } from '../../../../../redux/actions/machineTypesActions';
@@ -36,7 +37,13 @@ const mapStateToProps = (state, ownProps) => {
   };
 
   if (ownProps.isHypershift) {
-    return props;
+    return {
+      ...props,
+      machinePoolsList: {
+        ...props.machinePoolsList,
+        data: state.machinePools.getMachinePools.data.map(normalizeNodePool),
+      },
+    };
   }
 
   // align the default machine pool structure to additional machine pools structure
