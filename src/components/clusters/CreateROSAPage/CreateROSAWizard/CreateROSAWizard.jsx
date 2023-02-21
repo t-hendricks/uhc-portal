@@ -76,6 +76,8 @@ class CreateROSAWizardInternal extends React.Component {
       formValues,
       isValid,
       isAsyncValidating,
+      installToVPCSelected,
+      configureProxySelected,
     } = this.props;
     const { currentStepId, deferredNext } = this.state;
 
@@ -88,6 +90,10 @@ class CreateROSAWizardInternal extends React.Component {
       this.setState(() => ({
         validatedSteps: {
           ...prevState.validatedSteps,
+          // reset steps that were removed from the wizard due to a toggle on another step
+          ...(installToVPCSelected ? { [stepId.NETWORKING__VPC_SETTINGS]: undefined } : {}),
+          ...(configureProxySelected ? { [stepId.NETWORKING__CLUSTER_WIDE_PROXY]: undefined } : {}),
+          // update the current step (overriding the possible assignments above)
           [currentStepId]: isValid,
         },
       }));
