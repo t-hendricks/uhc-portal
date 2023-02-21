@@ -25,6 +25,7 @@ import clusterStates from '../../../common/clusterStates';
 import ButtonWithTooltip from '../../../../common/ButtonWithTooltip';
 import MinorVersionUpgradeAlert from '../../../common/Upgrades/MinorVersionUpgradeAlert';
 import UpgradeAcknowledgeWarning from '../../../common/Upgrades/UpgradeAcknowledge/UpgradeAcknowledgeWarning';
+import { isHypershiftCluster } from '../../clusterDetailsHelper';
 
 class UpgradeSettingsTab extends React.Component {
   state = { confirmationModalOpen: false };
@@ -214,6 +215,7 @@ class UpgradeSettingsTab extends React.Component {
                     change={change}
                     initialSceduleValue={initialValues.automatic_upgrade_schedule}
                     showDivider
+                    isHypershift={isHypershiftCluster(cluster)}
                   />
                 </Grid>
               </Form>
