@@ -14,6 +14,7 @@ import usePreventBrowserNav from '~/hooks/usePreventBrowserNav';
 import { stepId, stepNameById } from './rosaWizardConstants';
 
 import ClusterSettingsScreen from '../../CreateOSDPage/CreateOSDWizard/ClusterSettingsScreen';
+import ControlPlaneScreen from './ControlPlaneScreen';
 import MachinePoolScreen from '../../CreateOSDPage/CreateOSDWizard/MachinePoolScreen';
 import NetworkScreen from '../../CreateOSDPage/CreateOSDWizard/NetworkScreen';
 import VPCScreen from '../../CreateOSDPage/CreateOSDWizard/VPCScreen';
@@ -31,6 +32,8 @@ import ErrorBoundary from '../../../App/ErrorBoundary';
 import ClusterRolesScreen from './ClusterRolesScreen';
 import AccountsRolesScreen from './AccountsRolesScreen';
 import { isUserRoleForSelectedAWSAccount } from './AccountsRolesScreen/AccountsRolesScreen';
+import { HYPERSHIFT_WIZARD_FEATURE } from '../../../../redux/constants/featureConstants';
+import { useFeatureGate } from '~/hooks/useFeatureGate';
 
 import CreateRosaWizardFooter from './CreateRosaWizardFooter';
 
@@ -242,6 +245,7 @@ class CreateROSAWizardInternal extends React.Component {
       history,
       privateLinkSelected,
       configureProxySelected,
+      isHypershiftEnabled,
     } = this.props;
     const { deferredNext } = this.state;
 
@@ -374,6 +378,20 @@ class CreateROSAWizardInternal extends React.Component {
         canJumpTo: this.canJumpTo(stepId.REVIEW_AND_CREATE),
       },
     ];
+
+    if (isHypershiftEnabled) {
+      steps.splice(1, 0, {
+        id: stepId.CONTROL_PLANE,
+        name: stepNameById[stepId.CONTROL_PLANE],
+        component: (
+          <ErrorBoundary>
+            <ControlPlaneScreen />
+          </ErrorBoundary>
+        ),
+        canJumpTo: this.canJumpTo(stepId.CONTROL_PLANE),
+      });
+    }
+
     const ariaTitle = 'Create ROSA cluster wizard';
 
     const orgWasFetched = !organization.pending && organization.fulfilled;
@@ -486,10 +504,10 @@ class CreateROSAWizardInternal extends React.Component {
 
 function CreateROSAWizard(props) {
   usePreventBrowserNav();
-
+  const isHypershiftEnabled = useFeatureGate(HYPERSHIFT_WIZARD_FEATURE);
   return (
     <>
-      <CreateROSAWizardInternal {...props} />
+      <CreateROSAWizardInternal {...props} isHypershiftEnabled={isHypershiftEnabled} />
       <LeaveCreateClusterPrompt product={normalizedProducts.ROSA} />
     </>
   );

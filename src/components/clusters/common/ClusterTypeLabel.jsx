@@ -29,8 +29,8 @@ function ClusterTypeLabel({ cluster }) {
       tooltip: 'Red Hat Managed Integration',
     },
     [normalizedProducts.ROSA]: {
-      name: 'ROSA - Standalone',
-      tooltip: 'Red Hat OpenShift Service on AWS - Standalone control plane',
+      name: 'ROSA',
+      tooltip: 'Red Hat OpenShift Service on AWS',
     },
     [normalizedProducts.ROSA_HyperShift]: {
       name: 'ROSA - Hosted',

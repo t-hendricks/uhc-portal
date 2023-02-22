@@ -63,6 +63,11 @@ const reviewValues = {
     title: 'Version',
     valueTransform: (value) => value?.raw_id,
   },
+  hypershift: {
+    title: 'Control plane',
+    isBoolean: true,
+    values: { true: 'Hosted', false: 'Standalone' },
+  },
   region: {
     title: 'Region',
   },

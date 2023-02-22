@@ -23,32 +23,29 @@ import { useFormState } from '~/components/clusters/wizards/hooks';
 import { NodesInput } from './NodesInput';
 
 interface AutoScaleProps {
-  autoscalingEnabled: boolean;
-  isMultiAz: boolean;
-  autoScaleMinNodesValue: string;
-  autoScaleMaxNodesValue: string;
-  product: string;
-  isBYOC: boolean;
   isDefaultMachinePool: boolean;
 }
 
-export const AutoScale = ({
-  autoscalingEnabled,
-  isDefaultMachinePool,
-  product,
-  isBYOC,
-  isMultiAz,
-  autoScaleMinNodesValue,
-  autoScaleMaxNodesValue,
-}: AutoScaleProps) => {
+export const AutoScale = ({ isDefaultMachinePool }: AutoScaleProps) => {
   const {
     setFieldValue,
     getFieldProps,
     getFieldMeta,
-    values: { [FieldId.MinReplicas]: minReplicas },
+    values: {
+      [FieldId.AutoscalingEnabled]: autoscalingEnabled,
+      [FieldId.AutoscalingEnabled]: multiAz,
+      [FieldId.MinReplicas]: minReplicas,
+      [FieldId.AutoscalingEnabled]: maxReplicas,
+      [FieldId.AutoscalingEnabled]: product,
+      [FieldId.AutoscalingEnabled]: byoc,
+    },
   } = useFormState();
   const [minErrorMessage, setMinErrorMessage] = React.useState<string>();
   const [maxErrorMessage, setMaxErrorMessage] = React.useState<string>();
+  const isMultiAz = multiAz === 'true';
+  const isBYOC = byoc === 'true';
+  const isRosa = product === normalizedProducts.ROSA;
+  const autoScalingUrl = isRosa ? links.ROSA_AUTOSCALING : links.APPLYING_AUTOSCALING;
 
   React.useEffect(() => {
     const minAllowed = getMinNodesAllowed({
@@ -64,9 +61,9 @@ export const AutoScale = ({
         isMultiAz ? (minAllowed / 3).toString() : minAllowed.toString(),
       );
     }
-  }, [autoscalingEnabled, isBYOC, isDefaultMachinePool, isMultiAz, product, setFieldValue]);
+  }, [isBYOC, isDefaultMachinePool, isMultiAz, product, setFieldValue]);
 
-  const minNodes = () => {
+  const minNodes = React.useMemo(() => {
     const minNodesAllowed = getMinNodesAllowed({
       isDefaultMachinePool,
       product,
@@ -79,82 +76,38 @@ export const AutoScale = ({
     }
 
     return undefined;
-  };
+  }, [isDefaultMachinePool, product, isBYOC, isMultiAz]);
 
-  const validateNodes = (value: string) => {
-    const requiredError = required(value?.toString());
-    const minNodesError = validateNumericInput(value, { min: minNodes(), allowZero: true });
-    const maxNodesError = validateNumericInput(value, {
-      max: isMultiAz ? MAX_NODES / 3 : MAX_NODES,
-      allowZero: true,
-    });
+  const validateNodes = React.useCallback(
+    (value: string) => {
+      const requiredError = required(value?.toString());
+      const minNodesError = validateNumericInput(value, { min: minNodes, allowZero: true });
+      const maxNodesError = validateNumericInput(value, {
+        max: isMultiAz ? MAX_NODES / 3 : MAX_NODES,
+        allowZero: true,
+      });
 
-    return requiredError || minNodesError || maxNodesError || undefined;
-  };
-
-  const validateMaxNodes = (value: string) => {
-    const nodesError = validateNodes(value);
-
-    if (nodesError) {
-      return nodesError;
-    }
-
-    if (minReplicas && parseInt(value, 10) < parseInt(minReplicas, 10)) {
-      return 'Max nodes cannot be less than min nodes.';
-    }
-
-    return undefined;
-  };
-
-  const minField = (
-    <Field
-      component={NodesInput}
-      name={FieldId.MinReplicas}
-      type="text"
-      ariaLabel="Minimum nodes"
-      validate={validateNodes}
-      displayError={(_: string, error: string) => setMinErrorMessage(error)}
-      hideError={() => setMinErrorMessage(undefined)}
-      limit="min"
-      min={minNodes()}
-      max={isMultiAz ? MAX_NODES / 3 : MAX_NODES}
-      input={{
-        ...getFieldProps(FieldId.MinReplicas),
-        onChange: (value: string) => setFieldValue(FieldId.MinReplicas, value),
-      }}
-      meta={getFieldMeta(FieldId.MinReplicas)}
-    />
+      return requiredError || minNodesError || maxNodesError || undefined;
+    },
+    [isMultiAz, minNodes],
   );
 
-  const maxField = (
-    <Field
-      component={NodesInput}
-      name={FieldId.MaxReplicas}
-      type="text"
-      ariaLabel="Maximum nodes"
-      validate={validateMaxNodes}
-      displayError={(_: string, error: string) => setMaxErrorMessage(error)}
-      hideError={() => setMaxErrorMessage(undefined)}
-      limit="max"
-      min={minNodes()}
-      max={isMultiAz ? MAX_NODES / 3 : MAX_NODES}
-      input={{
-        ...getFieldProps(FieldId.MaxReplicas),
-        onChange: (value: string) => setFieldValue(FieldId.MaxReplicas, value),
-      }}
-      meta={getFieldMeta(FieldId.MaxReplicas)}
-    />
-  );
+  const validateMaxNodes = React.useCallback(
+    (value: string) => {
+      const nodesError = validateNodes(value);
 
-  const errorText = (message: string) => (
-    <HelperTextItem variant="error" hasIcon>
-      {message}
-    </HelperTextItem>
-  );
-  const helpText = (message: string) => <HelperTextItem>{message}</HelperTextItem>;
+      if (nodesError) {
+        return nodesError;
+      }
 
-  const isRosa = product === normalizedProducts.ROSA;
-  const autoScalingUrl = isRosa ? links.ROSA_AUTOSCALING : links.APPLYING_AUTOSCALING;
+      if (minReplicas && parseInt(value, 10) < parseInt(minReplicas, 10)) {
+        return 'Max nodes cannot be less than min nodes.';
+      }
+
+      return undefined;
+    },
+    [minReplicas, validateNodes],
+  );
 
   const azFormGroups = (
     <>
@@ -167,13 +120,36 @@ export const AutoScale = ({
             className="autoscaling__nodes-formGroup"
             helperText={
               <HelperText>
-                {isMultiAz &&
-                  helpText(`x 3 zones = ${parseInt(autoScaleMinNodesValue, 10) || 0 * 3}`)}
-                {minErrorMessage && errorText(minErrorMessage)}
+                {isMultiAz && (
+                  <HelperTextItem>{`x 3 zones = ${
+                    parseInt(minReplicas, 10) || 0 * 3
+                  }`}</HelperTextItem>
+                )}
+                {minErrorMessage && (
+                  <HelperTextItem variant="error" hasIcon>
+                    {minErrorMessage}
+                  </HelperTextItem>
+                )}
               </HelperText>
             }
           >
-            {minField}
+            <Field
+              component={NodesInput}
+              name={FieldId.MinReplicas}
+              type="text"
+              ariaLabel="Minimum nodes"
+              validate={validateNodes}
+              displayError={(_: string, error: string) => setMinErrorMessage(error)}
+              hideError={() => setMinErrorMessage(undefined)}
+              limit="min"
+              min={minNodes}
+              max={isMultiAz ? MAX_NODES / 3 : MAX_NODES}
+              input={{
+                ...getFieldProps(FieldId.MinReplicas),
+                onChange: (value: string) => setFieldValue(FieldId.MinReplicas, value),
+              }}
+              meta={getFieldMeta(FieldId.MinReplicas)}
+            />
           </FormGroup>
         </SplitItem>
         <SplitItem>
@@ -184,9 +160,16 @@ export const AutoScale = ({
             className="autoscaling__nodes-formGroup"
             helperText={
               <HelperText>
-                {isMultiAz &&
-                  helpText(`x 3 zones = ${parseInt(autoScaleMaxNodesValue, 10) || 0 * 3}`)}
-                {maxErrorMessage && errorText(maxErrorMessage)}
+                {isMultiAz && (
+                  <HelperTextItem>{`x 3 zones = ${
+                    parseInt(maxReplicas, 10) || 0 * 3
+                  }`}</HelperTextItem>
+                )}
+                {maxErrorMessage && (
+                  <HelperTextItem variant="error" hasIcon>
+                    {maxErrorMessage}
+                  </HelperTextItem>
+                )}
               </HelperText>
             }
             labelIcon={
@@ -208,7 +191,23 @@ export const AutoScale = ({
               />
             }
           >
-            {maxField}
+            <Field
+              component={NodesInput}
+              name={FieldId.MaxReplicas}
+              type="text"
+              ariaLabel="Maximum nodes"
+              validate={validateMaxNodes}
+              displayError={(_: string, error: string) => setMaxErrorMessage(error)}
+              hideError={() => setMaxErrorMessage(undefined)}
+              limit="max"
+              min={minNodes}
+              max={isMultiAz ? MAX_NODES / 3 : MAX_NODES}
+              input={{
+                ...getFieldProps(FieldId.MaxReplicas),
+                onChange: (value: string) => setFieldValue(FieldId.MaxReplicas, value),
+              }}
+              meta={getFieldMeta(FieldId.MaxReplicas)}
+            />
           </FormGroup>
         </SplitItem>
       </Split>

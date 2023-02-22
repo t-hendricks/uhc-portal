@@ -36,9 +36,8 @@ class EditTaintsModal extends Component {
   };
 
   cancelEdit = () => {
-    const { resetEditTaintsResponse, resetGetMachinePoolsResponse, closeModal, reset } = this.props;
+    const { resetEditTaintsResponse, closeModal, reset } = this.props;
     resetEditTaintsResponse();
-    resetGetMachinePoolsResponse();
     closeModal();
     reset();
   };
@@ -105,7 +104,6 @@ EditTaintsModal.propTypes = {
   editTaintsResponse: PropTypes.object.isRequired,
   getMachinePools: PropTypes.func.isRequired,
   resetEditTaintsResponse: PropTypes.func.isRequired,
-  resetGetMachinePoolsResponse: PropTypes.func.isRequired,
   machinePoolsList: PropTypes.object.isRequired,
   change: PropTypes.func.isRequired,
   reset: PropTypes.func.isRequired,

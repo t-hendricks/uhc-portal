@@ -97,7 +97,8 @@ class Overview extends React.Component {
       !isAssistedInstallSubscription(cluster.subscription) &&
       !shouldShowLogs(cluster) &&
       !isDeprovisioned &&
-      !isArchived;
+      !isArchived &&
+      !isHypershift;
     const showCostBreakdown =
       !cluster.managed &&
       userAccess.fulfilled &&
@@ -158,7 +159,7 @@ class Overview extends React.Component {
                 aiClusterId={cluster.aiCluster.id}
               />
             )}
-            {showResourceUsage && !showSidePanel && !isHypershift && resourceUsage}
+            {showResourceUsage && !showSidePanel && resourceUsage}
             {showDetailsCard && (
               <Card className="ocm-c-overview-details__card">
                 <CardTitle className="ocm-c-overview-details__card--header">

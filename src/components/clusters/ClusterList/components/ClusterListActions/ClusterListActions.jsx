@@ -25,6 +25,8 @@ import {
 } from '@patternfly/react-core';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import { featureConstants } from '../../../../../redux/constants';
+import { useFeatureGate } from '~/hooks/useFeatureGate';
 
 const useMediaQuery = (query) => {
   if (typeof window === 'undefined' || typeof window.matchMedia === 'undefined') {
@@ -108,7 +110,8 @@ const useItems = (aiEnabled) => {
   return [dropdownItems, toolbarItems];
 };
 
-const ClusterListActions = ({ className, aiEnabled }) => {
+const ClusterListActions = ({ className }) => {
+  const aiEnabled = useFeatureGate(featureConstants.ASSISTED_INSTALLER_FEATURE);
   const [isOpen, onToggle] = useState(false);
   const [dropdownItems, toolbarItems] = useItems(aiEnabled);
 
@@ -133,7 +136,6 @@ const ClusterListActions = ({ className, aiEnabled }) => {
 
 ClusterListActions.propTypes = {
   className: PropTypes.string,
-  aiEnabled: PropTypes.bool,
 };
 
 export default ClusterListActions;

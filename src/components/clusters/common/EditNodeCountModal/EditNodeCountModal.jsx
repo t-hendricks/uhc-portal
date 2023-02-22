@@ -84,19 +84,14 @@ class EditNodeCountModal extends Component {
   };
 
   resetResponse() {
-    const {
-      resetScaleDefaultMachinePoolResponse,
-      resetScaleMachinePoolResponse,
-      machinePoolId,
-      resetGetMachinePoolsResponse,
-    } = this.props;
+    const { resetScaleDefaultMachinePoolResponse, resetScaleMachinePoolResponse, machinePoolId } =
+      this.props;
 
     if (machinePoolId === 'Default') {
       resetScaleDefaultMachinePoolResponse();
     } else {
       resetScaleMachinePoolResponse();
     }
-    resetGetMachinePoolsResponse();
   }
 
   render() {
@@ -251,7 +246,6 @@ EditNodeCountModal.propTypes = {
   handleSubmit: PropTypes.func.isRequired,
   resetScaleDefaultMachinePoolResponse: PropTypes.func.isRequired,
   resetScaleMachinePoolResponse: PropTypes.func.isRequired,
-  resetGetMachinePoolsResponse: PropTypes.func.isRequired,
   editNodeCountResponse: PropTypes.object,
   isMultiAz: PropTypes.bool,
   initialValues: PropTypes.shape({
