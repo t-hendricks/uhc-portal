@@ -16,7 +16,9 @@ function DefaultMachinePoolScreen({
   autoScaleMaxNodesValue,
   change,
   billingModel,
+  formValues,
 }) {
+  const isHypershift = formValues.hypershift === 'true';
   return (
     <Form
       onSubmit={(event) => {
@@ -49,6 +51,7 @@ function DefaultMachinePoolScreen({
           autoScaleMaxNodesValue={autoScaleMaxNodesValue}
           billingModel={billingModel}
           showStorageAndLoadBalancers={false}
+          isHypershift={isHypershift}
         />
       </Grid>
     </Form>
@@ -67,6 +70,9 @@ DefaultMachinePoolScreen.propTypes = {
   change: PropTypes.func.isRequired,
   autoScaleMinNodesValue: PropTypes.string,
   autoScaleMaxNodesValue: PropTypes.string,
+  formValues: PropTypes.objectOf(
+    PropTypes.oneOfType([PropTypes.string, PropTypes.number, PropTypes.bool]),
+  ),
 };
 
 export default DefaultMachinePoolScreen;

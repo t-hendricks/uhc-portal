@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import { formValueSelector } from 'redux-form';
+import { formValueSelector, getFormValues } from 'redux-form';
 
 import createOSDInitialValues from '../../createOSDInitialValues';
 
@@ -25,6 +25,7 @@ const mapStateToProps = (state, ownProps) => {
     isByoc,
     customerManagedEncryptionSelected,
     selectedRegion,
+    formValues: getFormValues('CreateCluster')(state),
     initialValues: createOSDInitialValues({
       cloudProviderID,
       product,

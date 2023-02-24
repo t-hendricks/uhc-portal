@@ -36,6 +36,7 @@ function ScaleSection({
   autoScaleMaxNodesValue = '0',
   change,
   billingModel,
+  isHypershift,
 }) {
   const expandableSectionTitle = isMachinePool ? 'Edit node labels and taints' : 'Edit node labels';
 
@@ -106,7 +107,9 @@ function ScaleSection({
             <Field
               component={NodeCountInput}
               name="nodes_compute"
-              label={isMultiAz ? 'Compute node count (per zone)' : 'Compute node count'}
+              label={
+                isMultiAz || isHypershift ? 'Compute node count (per zone)' : 'Compute node count'
+              }
               isMultiAz={isMultiAz}
               isByoc={isBYOC}
               machineType={machineType}
@@ -205,6 +208,7 @@ ScaleSection.propTypes = {
   change: PropTypes.func.isRequired,
   autoScaleMinNodesValue: PropTypes.string,
   autoScaleMaxNodesValue: PropTypes.string,
+  isHypershift: PropTypes.bool,
 };
 
 export default ScaleSection;

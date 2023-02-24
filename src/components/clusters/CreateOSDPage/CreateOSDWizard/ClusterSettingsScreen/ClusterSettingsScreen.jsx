@@ -27,6 +27,7 @@ function ClusterSettingsScreen({
   product,
   billingModel,
   change,
+  formValues,
 }) {
   const [isExpanded, setIsExpanded] = useState(false);
 
@@ -35,6 +36,7 @@ function ClusterSettingsScreen({
   };
 
   const isRosa = product === normalizedProducts.ROSA;
+  const isHypershift = formValues.hypershift === 'true';
 
   return (
     <Form
@@ -57,6 +59,7 @@ function ClusterSettingsScreen({
           product={product}
           billingModel={billingModel}
           isWizard
+          isHypershift={isHypershift}
         />
         {!isByoc && !isRosa && (
           <>
@@ -151,6 +154,9 @@ ClusterSettingsScreen.propTypes = {
   billingModel: PropTypes.string,
   selectedRegion: PropTypes.string,
   change: PropTypes.func,
+  formValues: PropTypes.objectOf(
+    PropTypes.oneOfType([PropTypes.string, PropTypes.number, PropTypes.bool]),
+  ),
 };
 
 export default ClusterSettingsScreen;

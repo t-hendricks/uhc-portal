@@ -22,6 +22,7 @@ import PopoverHintWithTitle from '~/components/common/PopoverHintWithTitle';
 export const ReviewItem = ({ name, formValues }) => {
   const reviewValue = reviewValues[name];
   let value = formValues[name];
+  const isHypershift = formValues.hypershift === 'true';
 
   if (!reviewValue) {
     return (
@@ -38,6 +39,10 @@ export const ReviewItem = ({ name, formValues }) => {
 
   if (reviewValue.isBoolean && value === undefined) {
     value = 'false';
+  }
+
+  if (reviewValue.title === 'Availability' && isHypershift) {
+    value = 'true';
   }
 
   let displayValue;
