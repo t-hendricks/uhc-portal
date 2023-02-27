@@ -28,7 +28,7 @@ if [ -z "${QUAY_TOKEN}" ]; then
   echo "Environment variable 'QUAY_TOKEN' is mandatory."
   exit 1
 fi
-podman login -u "${QUAY_USER}" -p "${QUAY_TOKEN}" quay.io
+printenv QUAY_TOKEN | podman login --verbose --username="${QUAY_USER}" --password-stdin quay.io
 
 # Run the checks:
 
