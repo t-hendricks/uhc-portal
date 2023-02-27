@@ -85,7 +85,7 @@ const links = {
   REMOTE_HEALTH_INSIGHTS: `${DOCS_BASE}/support/remote_health_monitoring/using-insights-to-identify-issues-with-your-cluster.html`,
   UPDATING_CLUSTER: `${DOCS_BASE}/updating/updating-cluster-within-minor.html`,
   MIGRATING_FROM_3_TO_4: `${DOCS_BASE}/migrating_from_ocp_3_to_4/about-migrating-from-3-to-4.html`,
-  SERVERLESS_ABOUT: `${DOCS_BASE}/serverless/discover/about-serverless.html`,
+  SERVERLESS_ABOUT: `${DOCS_BASE}/serverless/about/about-serverless.html`,
   SERVICE_MESH_ABOUT: `${DOCS_BASE}/service_mesh/v2x/ossm-architecture.html`,
   VIRT_ABOUT: `${DOCS_BASE}/virt/about-virt.html`,
 
