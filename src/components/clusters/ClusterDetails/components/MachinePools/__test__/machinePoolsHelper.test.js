@@ -1,4 +1,4 @@
-import { actionResolver, parseLabels, parseTags } from '../machinePoolsHelper';
+import { actionResolver, parseLabels, parseTags, normalizeNodePool } from '../machinePoolsHelper';
 
 describe('machine pools action resolver', () => {
   const onClickDelete = jest.fn();
@@ -105,5 +105,52 @@ describe('parseTags', () => {
 
   it('should return an empty object when there are no tags', () => {
     expect(parseTags([])).toEqual({});
+  });
+});
+
+describe('normalizeNodePool', () => {
+  const nodePoolBase = {
+    kind: 'NodePool',
+    href: '/api/clusters_mgmt/v1/clusters/21gitfhopbgmmfhlu65v93n4g4n3djde/node_pools/workers',
+    id: 'workers',
+    auto_repair: true,
+    aws_node_pool: {
+      instance_type: 'm5.xlarge',
+      instance_profile: 'staging-21gitfhopbgmmfhlu65v93n4g4n3djde-jknhystj27-worker',
+      tags: {
+        'api.openshift.com/environment': 'staging',
+      },
+    },
+    availability_zone: 'us-east-1b',
+    subnet: 'subnet-049f90721559000de',
+    status: {
+      current_replicas: 2,
+    },
+  };
+  it('Changes singular (min|max)_replica to plural (min|max)_replicas', () => {
+    const nodePoolwithAutoScaling = {
+      ...nodePoolBase,
+      autoscaling: {
+        min_replica: 2,
+        max_replica: 5,
+      },
+    };
+
+    const normalizedNodePool = {
+      ...nodePoolBase,
+      autoscaling: {
+        min_replicas: 2,
+        max_replicas: 5,
+      },
+    };
+    expect(normalizeNodePool(nodePoolwithAutoScaling)).toEqual(normalizedNodePool);
+  });
+
+  it('should keep same structue', () => {
+    const nodePoolWithoutAutoscaling = {
+      ...nodePoolBase,
+      replicas: 2,
+    };
+    expect(normalizeNodePool(nodePoolWithoutAutoscaling)).toEqual(nodePoolWithoutAutoscaling);
   });
 });
