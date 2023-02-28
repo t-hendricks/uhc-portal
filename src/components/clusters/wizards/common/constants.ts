@@ -1,9 +1,13 @@
 import { FormikValues } from 'formik';
 
+// Fields that are used in both OSD and ROSA wizards.
 export enum FieldId {
+  // In ROSA wizard, some e.g. 'byoc' are not user-changable but
+  // we still set them to fixed values, to reuse code that depends on them.
   Byoc = 'byoc',
   Product = 'product',
   CloudProvider = 'cloud_provider',
+  BillingModel = 'billing_model',
   AcknowledgePrereq = 'acknowledge_prerequisites',
   CidrDefaultValuesEnabled = 'cidr_default_values_enabled',
   UpgradePolicy = 'upgrade_policy',

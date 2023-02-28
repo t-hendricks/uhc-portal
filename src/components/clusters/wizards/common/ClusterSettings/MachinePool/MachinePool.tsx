@@ -20,14 +20,11 @@ import { normalizedProducts } from '~/common/subscriptionTypes';
 import { getNodesCount } from '~/components/clusters/CreateOSDPage/CreateOSDForm/FormSections/ScaleSection/AutoScaleSection/AutoScaleHelper';
 import { NodeLabelsFieldArray } from './NodeLabelsFieldArray';
 
-interface MachinePoolProps {
-  billingModel?: string;
-}
-
-export const MachinePool = ({ billingModel }: MachinePoolProps) => {
+export const MachinePool = () => {
   const dispatch = useDispatch();
   const {
     values: {
+      [FieldId.BillingModel]: billingModel,
       [FieldId.Product]: product,
       [FieldId.CloudProvider]: cloudProvider,
       [FieldId.MachineType]: machineType,

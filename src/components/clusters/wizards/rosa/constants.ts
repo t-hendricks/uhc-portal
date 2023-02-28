@@ -1,6 +1,6 @@
 import { FormikValues } from 'formik';
 
-import { normalizedProducts } from '~/common/subscriptionTypes';
+import { billingModels, normalizedProducts } from '~/common/subscriptionTypes';
 import { BreadcrumbPath } from '~/components/common/Breadcrumbs';
 import {
   FieldId as CommonFieldId,
@@ -57,5 +57,6 @@ export const initialValues: FormikValues = {
   [FieldId.Product]: normalizedProducts.ROSA,
   [FieldId.CloudProvider]: CloudProviderType.Aws,
   [FieldId.Byoc]: 'true',
+  [FieldId.BillingModel]: billingModels.STANDARD,
   [FieldId.NodeLabels]: [{ key: '', value: '' }],
 };
