@@ -131,12 +131,15 @@ class CreateOSDWizardInternal extends React.Component {
     }
 
     // Track validity of individual steps by id
-    if (isValid !== prevProps.isValid || isAsyncValidating !== prevProps.isAsyncValidating) {
+    if (
+      (isValid !== prevProps.isValid || isAsyncValidating !== prevProps.isAsyncValidating) &&
+      !isAsyncValidating
+    ) {
       // eslint-disable-next-line react/no-did-update-set-state
       this.setState(() => ({
         validatedSteps: {
           ...prevState.validatedSteps,
-          [currentStepId]: isValid && !isAsyncValidating,
+          [currentStepId]: isValid,
         },
       }));
     }
