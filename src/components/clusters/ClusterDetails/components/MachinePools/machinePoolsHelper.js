@@ -104,4 +104,19 @@ const validateDuplicateLabels = (labels) => {
   return undefined;
 };
 
-export { parseTags, parseLabels, actionResolver, validateDuplicateLabels };
+const normalizeNodePool = (nodePool) => {
+  const normalizedNodePool = { ...nodePool };
+  if (normalizedNodePool.autoscaling) {
+    if (nodePool.autoscaling.min_replica) {
+      normalizedNodePool.autoscaling.min_replicas = nodePool.autoscaling.min_replica;
+      delete normalizedNodePool.autoscaling.min_replica;
+    }
+    if (nodePool.autoscaling.max_replica) {
+      normalizedNodePool.autoscaling.max_replicas = nodePool.autoscaling.max_replica;
+      delete normalizedNodePool.autoscaling.max_replica;
+    }
+  }
+  return normalizedNodePool;
+};
+
+export { parseTags, parseLabels, actionResolver, validateDuplicateLabels, normalizeNodePool };
