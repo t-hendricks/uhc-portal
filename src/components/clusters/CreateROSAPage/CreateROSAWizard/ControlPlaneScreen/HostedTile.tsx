@@ -44,7 +44,7 @@ const HostedTile = ({ handleChange, isSelected }: HostedTileProps) => (
       className={defaultMarginBottomSpacing}
     >
       <Text component={TextVariants.p}>
-        To create a ROSA cluster that is hosted by Red Hat,you must be able to create clusters on a
+        To create a ROSA cluster that is hosted by Red Hat, you must be able to create clusters on a
         VPC.
       </Text>
       <Text component={TextVariants.p}>
