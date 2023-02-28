@@ -1,9 +1,9 @@
-import Login from '../pageobjects/login.page';
-import ClusterListPage from '../pageobjects/ClusterList.page';
-import CreateClusterPage from '../pageobjects/CreateCluster.page';
-import CreateOSDWizardPage from '../pageobjects/CreateOSDWizard.page';
-import GlobalNav from '../pageobjects/GlobalNav.page';
-import LeaveCreateClusterPrompt from '../pageobjects/LeaveCreateClusterPrompt';
+import Login from '../../pageobjects/login.page';
+import ClusterListPage from '../../pageobjects/ClusterList.page';
+import CreateClusterPage from '../../pageobjects/CreateCluster.page';
+import CreateOSDWizardPage from '../../pageobjects/CreateOSDWizard.page';
+import GlobalNav from '../../pageobjects/GlobalNav.page';
+import LeaveCreateClusterPrompt from '../../pageobjects/LeaveCreateClusterPrompt';
 
 const clusterName = `test-${Math.random().toString(36).substr(2, 10)}`;
 
