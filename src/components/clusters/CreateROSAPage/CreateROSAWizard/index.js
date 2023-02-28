@@ -40,6 +40,7 @@ const mapStateToProps = (state) => {
     organization,
     cloudProviders: state.cloudProviders,
     hasProductQuota: hasManagedQuotaSelector(state, normalizedProducts.ROSA),
+    formValues: getFormValues('CreateCluster')(state) ?? {},
     formErrors: {
       ...getFormSyncErrors('CreateCluster')(state),
       ...getFormAsyncErrors('CreateCluster')(state),
