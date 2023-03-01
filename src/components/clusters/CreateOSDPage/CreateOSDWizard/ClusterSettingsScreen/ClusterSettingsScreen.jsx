@@ -17,6 +17,7 @@ import { constants } from '../../CreateOSDForm/CreateOSDFormConstants';
 import BasicFieldsSection from '../../CreateOSDForm/FormSections/BasicFieldsSection';
 import links from '../../../../../common/installLinks.mjs';
 import { normalizedProducts } from '../../../../../common/subscriptionTypes';
+import { validateAWSKMSKeyARN } from '~/common/validators';
 
 function ClusterSettingsScreen({
   isByoc,
@@ -27,6 +28,8 @@ function ClusterSettingsScreen({
   product,
   billingModel,
   change,
+  kmsKeyArn,
+  kmsKeyArnError,
 }) {
   const [isExpanded, setIsExpanded] = useState(false);
 
@@ -35,6 +38,15 @@ function ClusterSettingsScreen({
   };
 
   const isRosa = product === normalizedProducts.ROSA;
+
+  React.useEffect(() => {
+    if (
+      customerManagedEncryptionSelected === 'true' &&
+      validateAWSKMSKeyARN(kmsKeyArn, selectedRegion)
+    ) {
+      setIsExpanded(true);
+    }
+  }, []);
 
   return (
     <Form
@@ -110,6 +122,7 @@ function ClusterSettingsScreen({
               customerManagedEncryptionSelected={customerManagedEncryptionSelected}
               selectedRegion={selectedRegion}
               cloudProviderID={cloudProviderID}
+              kmsKeyArnError={kmsKeyArnError}
             />
           )}
           <GridItem md={6}>
@@ -146,11 +159,13 @@ ClusterSettingsScreen.propTypes = {
   isByoc: PropTypes.bool,
   cloudProviderID: PropTypes.string,
   isMultiAz: PropTypes.bool,
-  customerManagedEncryptionSelected: PropTypes.bool,
+  customerManagedEncryptionSelected: PropTypes.string,
   product: PropTypes.string,
   billingModel: PropTypes.string,
   selectedRegion: PropTypes.string,
   change: PropTypes.func,
+  kmsKeyArn: PropTypes.string,
+  kmsKeyArnError: PropTypes.string,
 };
 
 export default ClusterSettingsScreen;
