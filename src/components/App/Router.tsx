@@ -302,21 +302,12 @@ const Router: React.FC<RouterProps> = ({ history, planType, clusterId, externalC
               history={history}
             />
 
-            {isOsdWizardV2Enabled ? (
-              <TermsGuardedRoute
-                path="/create/osd"
-                gobackPath="/create"
-                component={CreateOsdWizard}
-                history={history}
-              />
-            ) : (
-              <TermsGuardedRoute
-                path="/create/osd"
-                gobackPath="/create"
-                render={() => <CreateOSDWizard product={normalizedProducts.OSD} />}
-                history={history}
-              />
-            )}
+            <TermsGuardedRoute
+              path="/create/osd"
+              gobackPath="/create"
+              render={() => <CreateOSDWizard product={normalizedProducts.OSD} />}
+              history={history}
+            />
 
             <Route
               path="/create/cloud"
