@@ -1,6 +1,6 @@
-import Login from '../pageobjects/login.page';
-import ClusterListPage from '../pageobjects/ClusterList.page';
-import CreateRosaWizardPage from '../pageobjects/CreateRosaWizard.page';
+import Login from '../../pageobjects/login.page';
+import ClusterListPage from '../../pageobjects/ClusterList.page';
+import CreateRosaWizardPage from '../../pageobjects/CreateRosaWizard.page';
 
 const associatedAccountsSelector = '**/api/accounts_mgmt/v1/organizations/*/labels';
 const ARNsSelector = '**/api/clusters_mgmt/v1/aws_inquiries/sts_account_roles';

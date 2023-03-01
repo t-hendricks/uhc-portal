@@ -10,13 +10,15 @@ import {
   ASSISTED_INSTALLER_FEATURE,
 } from '../../../redux/constants/featureConstants';
 
+import { featureGateSelector } from '~/hooks/useFeatureGate';
+
 const mapStateToProps = (state) => ({
   hasOSDQuota: hasManagedQuotaSelector(state, normalizedProducts.OSD),
   hasOSDTrialQuota: hasManagedQuotaSelector(state, normalizedProducts.OSDTrial),
   organization: state.userProfile.organization,
   token: state.tollbooth.token,
-  osdTrialFeature: state.features[OSD_TRIAL_FEATURE],
-  assistedInstallerFeature: state.features[ASSISTED_INSTALLER_FEATURE],
+  osdTrialFeature: featureGateSelector(state, OSD_TRIAL_FEATURE),
+  assistedInstallerFeature: featureGateSelector(state, ASSISTED_INSTALLER_FEATURE),
 });
 
 const mapDispatchToProps = () => (dispatch) => ({

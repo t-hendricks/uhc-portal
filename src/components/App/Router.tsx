@@ -92,7 +92,6 @@ import Insights from './Insights';
 import withFeatureGate from '../features/with-feature-gate';
 import {
   ASSISTED_INSTALLER_FEATURE,
-  OSD_WIZARD_V2_FEATURE,
   HYPERSHIFT_WIZARD_FEATURE,
 } from '../../redux/constants/featureConstants';
 import InstallBMABI from '../clusters/install/InstallBareMetalABI';
@@ -109,10 +108,8 @@ import EntitlementConfig from '../common/EntitlementConfig/index';
 import InsightsAdvisorRedirector from '../clusters/InsightsAdvisorRedirector';
 import ClusterDetailsSubscriptionId from '../clusters/ClusterDetails/ClusterDetailsSubscriptionId';
 import ClusterDetailsClusterOrExternalId from '../clusters/ClusterDetails/ClusterDetailsClusterOrExternalId';
-import { CreateOsdWizard } from '../clusters/wizards';
 import { metadataByRoute, is404 } from './routeMetadata';
-import { useFeatures } from './hooks';
-import { useGlobalState } from '~/redux/hooks';
+import { useFeatureGate } from '~/hooks/useFeatureGate';
 
 const { AssistedUiRouter } = OCM;
 
@@ -136,11 +133,8 @@ const Router: React.FC<RouterProps> = ({ history, planType, clusterId, externalC
   const {
     segment: { setPageMetadata },
   } = useChrome();
-  const { [OSD_WIZARD_V2_FEATURE]: isOsdWizardV2Enabled } = useFeatures();
 
-  const isHypershiftWizardEnabled = useGlobalState(
-    (state) => state.features[HYPERSHIFT_WIZARD_FEATURE],
-  );
+  const isHypershiftWizardEnabled = useFeatureGate(HYPERSHIFT_WIZARD_FEATURE);
   // TODO: just for testing, remove this when feature flag is being used in the wizard
   // eslint-disable-next-line no-console
   console.log(`HYPERSHIFT_WIZARD_FEATURE is ${isHypershiftWizardEnabled ? 'Enabled' : 'Disabled'}`);
@@ -306,21 +300,12 @@ const Router: React.FC<RouterProps> = ({ history, planType, clusterId, externalC
               history={history}
             />
 
-            {isOsdWizardV2Enabled ? (
-              <TermsGuardedRoute
-                path="/create/osd"
-                gobackPath="/create"
-                component={CreateOsdWizard}
-                history={history}
-              />
-            ) : (
-              <TermsGuardedRoute
-                path="/create/osd"
-                gobackPath="/create"
-                render={() => <CreateOSDWizard product={normalizedProducts.OSD} />}
-                history={history}
-              />
-            )}
+            <TermsGuardedRoute
+              path="/create/osd"
+              gobackPath="/create"
+              render={() => <CreateOSDWizard product={normalizedProducts.OSD} />}
+              history={history}
+            />
 
             <Route
               path="/create/cloud"
