@@ -5,7 +5,7 @@ import EditLabelsModal from './EditLabelsModal';
 import {
   getMachineOrNodePools,
   clearScaleMachinePoolResponse,
-  scaleMachinePool as editLabels,
+  patchMachinePoolOrNodePool as editLabels,
 } from '../../MachinePoolsActions';
 
 import { clearClusterResponse } from '../../../../../../../redux/actions/clustersActions';
