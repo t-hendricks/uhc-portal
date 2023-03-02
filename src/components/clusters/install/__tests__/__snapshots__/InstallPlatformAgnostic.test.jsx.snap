@@ -30,6 +30,7 @@ exports[`Platform agnostic install renders correctly 1`] = `
       aiLearnMoreLink="https://docs.openshift.com/container-platform/4.12/installing/installing_on_prem_assisted/installing-on-prem-assisted.html"
       aiPageLink="/assisted-installer/clusters/~new"
       hideIPI={true}
+      name="platform-agnostic"
       providerSpecificFeatures={
         Object {
           "abi": Array [
