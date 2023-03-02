@@ -2744,7 +2744,7 @@ exports[`<DownloadsPage> renders 1`] = `
                 , a fast, iterative, and straightforward CLI tool for developers.
                  
                 <ExternalLink
-                  href="https://docs.openshift.com/container-platform/4.12/cli_reference/developer_cli_odo/understanding-odo.html"
+                  href="https://odo.dev"
                 >
                   Learn more
                 </ExternalLink>
@@ -2785,6 +2785,7 @@ exports[`<DownloadsPage> renders 1`] = `
                   odo
                 </code>
                 )
+                <CooperativeCommunityBadge />
               </React.Fragment>
             }
             selections={Object {}}

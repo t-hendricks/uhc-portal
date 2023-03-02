@@ -39,6 +39,7 @@ import links, {
   urlsSelector,
 } from '../../../common/installLinks.mjs';
 import DevPreviewBadge from '../../common/DevPreviewBadge';
+import CooperativeCommunityBadge from '../../common/CooperativeCommunityBadge';
 
 import DownloadButton from '../../clusters/install/instructions/components/DownloadButton';
 import AlignRight from '../../common/AlignRight';
@@ -444,6 +445,7 @@ const devToolRows = (expanded, setExpanded, selections, setSelections, toolRefs,
         name={
           <>
             Developer-focused CLI for OpenShift (<code>odo</code>)
+            <CooperativeCommunityBadge />
           </>
         }
         description={
