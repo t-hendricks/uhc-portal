@@ -1,7 +1,7 @@
 import Login from '../../pageobjects/login.page';
 import GlobalNav from '../../pageobjects/GlobalNav.page';
 import Downloads from '../../pageobjects/Downloads.page';
-import ClusterListPage from "../../pageobjects/ClusterList.page";
+import ClusterListPage from '../../pageobjects/ClusterList.page';
 
 const ROSARowTitle = 'Manage your Red Hat OpenShift Service on AWS';
 const OCRowTitle = 'Create applications and manage OpenShift projects from the command line using the OpenShift client oc';
