@@ -38,8 +38,7 @@ import links, {
   githubReleasesToFetch,
   urlsSelector,
 } from '../../../common/installLinks.mjs';
-import DevPreviewBadge from '../../common/DevPreviewBadge';
-import CooperativeCommunityBadge from '../../common/CooperativeCommunityBadge';
+import SupportLevelBadge, { SupportLevelType } from '../../common/SupportLevelBadge';
 
 import DownloadButton from '../../clusters/install/instructions/components/DownloadButton';
 import AlignRight from '../../common/AlignRight';
@@ -356,7 +355,7 @@ const cliToolRows = (expanded, setExpanded, selections, setSelections, toolRefs,
         name={
           <>
             OpenShift Cluster Manager API command-line interface (<code>ocm</code>){' '}
-            <DevPreviewBadge />
+            <SupportLevelBadge type={SupportLevelType.devPreview} />
           </>
         }
         description={
@@ -445,7 +444,7 @@ const devToolRows = (expanded, setExpanded, selections, setSelections, toolRefs,
         name={
           <>
             Developer-focused CLI for OpenShift (<code>odo</code>)
-            <CooperativeCommunityBadge />
+            <SupportLevelBadge type={SupportLevelType.cooperativeCommunity} />
           </>
         }
         description={
@@ -514,7 +513,8 @@ const devToolRows = (expanded, setExpanded, selections, setSelections, toolRefs,
         channel={channels.STABLE}
         name={
           <>
-            Red Hat OpenShift Application Services CLI (<code>rhoas</code>) <DevPreviewBadge />
+            Red Hat OpenShift Application Services CLI (<code>rhoas</code>){' '}
+            <SupportLevelBadge type={SupportLevelType.devPreview} />
           </>
         }
         description={

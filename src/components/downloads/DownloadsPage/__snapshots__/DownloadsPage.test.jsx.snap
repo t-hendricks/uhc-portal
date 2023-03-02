@@ -647,7 +647,9 @@ exports[`<DownloadsPage> renders 1`] = `
                 </code>
                 )
                  
-                <DevPreviewBadge />
+                <SupportLevelBadge
+                  type="DEV_PREVIEW"
+                />
               </React.Fragment>
             }
             selections={Object {}}
@@ -2785,7 +2787,9 @@ exports[`<DownloadsPage> renders 1`] = `
                   odo
                 </code>
                 )
-                <CooperativeCommunityBadge />
+                <SupportLevelBadge
+                  type="COOPERATIVE_COMMUNITY"
+                />
               </React.Fragment>
             }
             selections={Object {}}
@@ -4899,8 +4903,11 @@ exports[`<DownloadsPage> renders 1`] = `
                 <code>
                   rhoas
                 </code>
-                ) 
-                <DevPreviewBadge />
+                )
+                 
+                <SupportLevelBadge
+                  type="DEV_PREVIEW"
+                />
               </React.Fragment>
             }
             selections={Object {}}
