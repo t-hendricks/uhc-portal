@@ -2744,7 +2744,7 @@ exports[`<DownloadsPage> renders 1`] = `
                 , a fast, iterative, and straightforward CLI tool for developers.
                  
                 <ExternalLink
-                  href="https://odo.dev"
+                  href="https://odo.dev/docs/introduction"
                 >
                   Learn more
                 </ExternalLink>

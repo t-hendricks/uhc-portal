@@ -235,7 +235,7 @@ const links = {
 
   TKN_DOCS: `${DOCS_BASE}/cli_reference/tkn_cli/installing-tkn.html#installing-tkn`,
 
-  ODO_DOCS: `https://odo.dev`,
+  ODO_DOCS: 'https://odo.dev/docs/introduction',
 
   OPM_DOCS: `${DOCS_BASE}/cli_reference/opm/cli-opm-install.html`,
 
