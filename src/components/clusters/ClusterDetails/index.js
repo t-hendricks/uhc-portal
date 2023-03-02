@@ -43,6 +43,7 @@ import { getUserAccess } from '../../../redux/actions/costActions';
 
 import { getUpgradeGates } from '../common/Upgrades/UpgradeAcknowledge/UpgradeAcknowledgeSelectors';
 import { fetchUpgradeGates } from '../../../redux/actions/upgradeGateActions';
+import { featureGateSelector } from '~/hooks/useFeatureGate';
 
 const mapStateToProps = (state, { location }) => {
   const { details } = state.clusters;
@@ -81,7 +82,7 @@ const mapStateToProps = (state, { location }) => {
     initTabOpen: location.hash.replace('#', ''),
     notificationContacts,
     supportCases,
-    assistedInstallerEnabled: state.features[ASSISTED_INSTALLER_FEATURE],
+    assistedInstallerEnabled: featureGateSelector(state, ASSISTED_INSTALLER_FEATURE),
     userAccess: state.cost.userAccess,
     gotRouters: get(clusterRouters, 'getRouters.routers.length', 0) > 0,
     upgradeGates: getUpgradeGates(state),
