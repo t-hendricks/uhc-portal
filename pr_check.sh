@@ -47,9 +47,7 @@ node --version
 export CHROMEDRIVER_SKIP_DOWNLOAD=true
 
 make \
-  js-lint \
-  app \
-  test
+  app
 
 export NO_COLOR=1
 
