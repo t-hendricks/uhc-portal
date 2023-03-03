@@ -74,7 +74,9 @@ exports[`<Tokens /> Renders loading screen 1`] = `
                   </code>
                    command-line tool:
                    
-                  <DevPreviewBadge />
+                  <SupportLevelBadge
+                    type="DEV_PREVIEW"
+                  />
                   <Text
                     component="p"
                   />
@@ -320,7 +322,9 @@ exports[`<Tokens /> Renders screen with token 1`] = `
                   </code>
                    command-line tool:
                    
-                  <DevPreviewBadge />
+                  <SupportLevelBadge
+                    type="DEV_PREVIEW"
+                  />
                   <Text
                     component="p"
                   />
@@ -474,7 +478,9 @@ exports[`<Tokens /> Renders token 1`] = `
                   </code>
                    command-line tool:
                    
-                  <DevPreviewBadge />
+                  <SupportLevelBadge
+                    type="DEV_PREVIEW"
+                  />
                   <Text
                     component="p"
                   />
