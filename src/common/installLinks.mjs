@@ -207,6 +207,7 @@ const links = {
   INSTALL_PRE_RELEASE_INSTALLER_DOC: 'https://github.com/openshift/installer/tree/master/docs/user',
   INSTALL_PRE_RELEASE_FEEDBACK: 'https://issues.redhat.com/projects/OCPBUGS/issues',
   INSTALL_PRE_RELEASE_SUPPORT_KCS: 'https://access.redhat.com/support/offerings/devpreview',
+  COOPERATIVE_COMMUNITY_SUPPORT_KCS: 'https://access.redhat.com/solutions/5893251',
 
   INSTALL_POWER_GETTING_STARTED: `${DOCS_BASE}/installing/installing_ibm_power/installing-ibm-power.html`,
   INSTALL_POWER_RHCOS_LEARN_MORE: `${DOCS_BASE}/installing/installing_ibm_power/installing-ibm-power.html#creating-machines-bare-metal-power`,
@@ -234,7 +235,7 @@ const links = {
 
   TKN_DOCS: `${DOCS_BASE}/cli_reference/tkn_cli/installing-tkn.html#installing-tkn`,
 
-  ODO_DOCS: `${DOCS_BASE}/cli_reference/developer_cli_odo/understanding-odo.html`,
+  ODO_DOCS: 'https://odo.dev/docs/introduction',
 
   OPM_DOCS: `${DOCS_BASE}/cli_reference/opm/cli-opm-install.html`,
 
