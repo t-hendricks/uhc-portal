@@ -89,8 +89,11 @@ import NotFoundError from './NotFoundError';
 import Quota from '../quota';
 import Insights from './Insights';
 import withFeatureGate from '../features/with-feature-gate';
+import { useFeatures } from './hooks/useFeatures';
 import {
   ASSISTED_INSTALLER_FEATURE,
+  OSD_WIZARD_V1,
+  OSD_WIZARD_V2_FEATURE,
   HYPERSHIFT_WIZARD_FEATURE,
 } from '../../redux/constants/featureConstants';
 import InstallBMABI from '../clusters/install/InstallBareMetalABI';
@@ -136,9 +139,19 @@ const Router: React.FC<RouterProps> = ({ history, planType, clusterId, externalC
   } = useChrome();
 
   const isHypershiftWizardEnabled = useFeatureGate(HYPERSHIFT_WIZARD_FEATURE);
+
+  // OSD_WIZARD_V2_FEATURE enabled in staging, disabled in production (via Unleashed)
+  const isOSDv2WizardEnabled = useFeatureGate(OSD_WIZARD_V2_FEATURE);
+  // OSD_WIZARD_V1 can be enabled in staging by appending `?features={"osd-wizard-v1":"true"}`
+  const { [OSD_WIZARD_V1]: showOSDWizardV1 } = useFeatures();
+
   // TODO: just for testing, remove this when feature flag is being used in the wizard
   // eslint-disable-next-line no-console
   console.log(`HYPERSHIFT_WIZARD_FEATURE is ${isHypershiftWizardEnabled ? 'Enabled' : 'Disabled'}`);
+  // eslint-disable-next-line no-console
+  console.log(`OSD_WIZARD_V2_FEATURE is ${isOSDv2WizardEnabled ? 'Enabled' : 'Disabled'}`);
+  // eslint-disable-next-line no-console
+  console.log(`Using OSD ${isOSDv2WizardEnabled && !showOSDWizardV1 ? 'v2' : 'v1'} wizard`);
 
   useEffect(() => {
     setPageMetadata({
@@ -300,19 +313,22 @@ const Router: React.FC<RouterProps> = ({ history, planType, clusterId, externalC
               render={() => <CreateOsdWizard product={normalizedProducts.OSDTrial} />}
               history={history}
             />
-            <TermsGuardedRoute
-              path="/create/osd"
-              gobackPath="/create"
-              component={CreateOsdWizard}
-              history={history}
-            />
 
-            <TermsGuardedRoute
-              path="/create/osd"
-              gobackPath="/create"
-              render={() => <CreateOSDWizard product={normalizedProducts.OSD} />}
-              history={history}
-            />
+            {isOSDv2WizardEnabled && !showOSDWizardV1 ? (
+              <TermsGuardedRoute
+                path="/create/osd"
+                gobackPath="/create"
+                component={CreateOsdWizard}
+                history={history}
+              />
+            ) : (
+              <TermsGuardedRoute
+                path="/create/osd"
+                gobackPath="/create"
+                render={() => <CreateOSDWizard product={normalizedProducts.OSD} />}
+                history={history}
+              />
+            )}
 
             <Route
               path="/create/cloud"
