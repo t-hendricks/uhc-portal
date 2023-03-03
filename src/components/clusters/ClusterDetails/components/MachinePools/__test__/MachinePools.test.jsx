@@ -122,7 +122,7 @@ describe('<MachinePools />', () => {
     expect(wrapper).toMatchSnapshot();
   });
 
-  it('renders with a machine pool with autosacaling enabled', () => {
+  it('renders with a machine pool with autoscaling enabled', () => {
     const data = [
       {
         autoscaling: { max_replicas: 2, min_replicas: 1 },
@@ -332,6 +332,44 @@ describe('<MachinePools />', () => {
     const wrapper = shallow(<MachinePools {...osdProps} />);
     const addMachinePoolButton = wrapper.find('#add-machine-pool');
     expect(addMachinePoolButton.props().disableReason).toBeFalsy();
+  });
+
+  it('OpenShift version for machine pools is shown if hypershift', () => {
+    const props = {
+      ...baseProps,
+      isHypershift: true,
+      machinePoolsList: {
+        data: [
+          {
+            kind: 'NodePool',
+            href: '/api/clusters_mgmt/v1/clusters/21gitfhopbgmmfhlu65v93n4g4n3djde/node_pools/workers',
+            id: 'workers',
+            replicas: 2,
+            auto_repair: true,
+            aws_node_pool: {
+              instance_type: 'm5.xlarge',
+              instance_profile: 'staging-21gitfhopbgmmfhlu65v93n4g4n3djde-jknhystj27-worker',
+              tags: {
+                'api.openshift.com/environment': 'staging',
+              },
+            },
+            availability_zone: 'us-east-1b',
+            subnet: 'subnet-049f90721559000de',
+            status: {
+              current_replicas: 2,
+            },
+            version: {
+              kind: 'VersionLink',
+              id: 'openshift-v4.12.5-candidate',
+              href: '/api/clusters_mgmt/v1/versions/openshift-v4.12.5-candidate',
+            },
+          },
+        ],
+      },
+    };
+
+    const wrapper = shallow(<MachinePools {...props} />);
+    expect(wrapper).toMatchSnapshot();
   });
 
   it('should render error message', () => {
