@@ -110,7 +110,8 @@ function AccountRolesARNsSection({
     }
     setInstallerRoleOptions(installerOptions);
     // default to currently selected, first installer role, or 'No Role Detected'
-    const hasInstallerRole = selectedInstallerRoleARN !== NO_ROLE_DETECTED;
+    const hasInstallerRole =
+      selectedInstallerRoleARN && selectedInstallerRoleARN !== NO_ROLE_DETECTED;
     const newInstallerRole = hasInstallerRole
       ? selectedInstallerRoleARN
       : accountRolesARNs[0]?.Installer || NO_ROLE_DETECTED;
