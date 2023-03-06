@@ -35,6 +35,8 @@ import InstructionCommand from '../../../../common/InstructionCommand';
 // todo - WAT!?
 import './AccountsRolesScreen.scss';
 
+const NO_ROLE_DETECTED = 'No role detected';
+
 function AccountRolesARNsSection({
   change,
   touchARNsFields,
@@ -46,8 +48,6 @@ function AccountRolesARNsSection({
   clearGetAWSAccountRolesARNsResponse,
   openOcmRoleInstructionsModal,
 }) {
-  const NO_ROLE_DETECTED = 'No role detected';
-
   const track = useAnalytics();
   const [isExpanded, setIsExpanded] = useState(true);
   const [accountRoles, setAccountRoles] = useState([]);
@@ -110,9 +110,11 @@ function AccountRolesARNsSection({
     }
     setInstallerRoleOptions(installerOptions);
     // default to currently selected, first installer role, or 'No Role Detected'
-    setSelectedInstallerRole(
-      selectedInstallerRoleARN || accountRolesARNs[0]?.Installer || NO_ROLE_DETECTED,
-    );
+    const hasInstallerRole = selectedInstallerRoleARN !== NO_ROLE_DETECTED;
+    const newInstallerRole = hasInstallerRole
+      ? selectedInstallerRoleARN
+      : accountRolesARNs[0]?.Installer || NO_ROLE_DETECTED;
+    setSelectedInstallerRole(newInstallerRole);
   };
 
   const resolveARNsErrorTitle = (response) =>
