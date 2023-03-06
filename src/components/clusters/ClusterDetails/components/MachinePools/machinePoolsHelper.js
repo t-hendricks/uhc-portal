@@ -105,8 +105,8 @@ const validateDuplicateLabels = (labels) => {
 };
 
 const normalizeNodePool = (nodePool) => {
-  const normalizedNodePool = { ...nodePool };
-  if (normalizedNodePool.autoscaling) {
+  if (nodePool.autoscaling) {
+    const normalizedNodePool = { ...nodePool, autoscaling: { ...nodePool.autoscaling } };
     if (nodePool.autoscaling.min_replica) {
       normalizedNodePool.autoscaling.min_replicas = nodePool.autoscaling.min_replica;
       delete normalizedNodePool.autoscaling.min_replica;
@@ -115,8 +115,9 @@ const normalizeNodePool = (nodePool) => {
       normalizedNodePool.autoscaling.max_replicas = nodePool.autoscaling.max_replica;
       delete normalizedNodePool.autoscaling.max_replica;
     }
+    return normalizedNodePool;
   }
-  return normalizedNodePool;
+  return nodePool;
 };
 
 export { parseTags, parseLabels, actionResolver, validateDuplicateLabels, normalizeNodePool };
