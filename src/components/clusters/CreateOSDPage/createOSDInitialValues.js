@@ -9,6 +9,7 @@ const createOSDInitialValues = ({
   isByoc,
   isMultiAz,
   isTrialDefault,
+  hypershiftSelected = false,
 }) => {
   let defaultNodeCount;
   if (isByoc || isTrialDefault) {
@@ -20,7 +21,7 @@ const createOSDInitialValues = ({
   const initialValues = {
     cloud_provider: cloudProviderID,
     node_drain_grace_period: 60,
-    upgrade_policy: 'manual',
+    upgrade_policy: hypershiftSelected ? 'automatic' : 'manual',
     automatic_upgrade_schedule: '0 0 * * 0',
     multi_az: (!!isMultiAz).toString(),
     persistent_storage: '107374182400',
