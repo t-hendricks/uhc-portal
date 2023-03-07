@@ -16,6 +16,7 @@ import { isAISubscriptionWithoutMetrics } from '../../../../../../common/isAssis
 import ClusterNetwork from '../ClusterNetwork';
 import { constants } from '../../../../CreateOSDPage/CreateOSDForm/CreateOSDFormConstants';
 import { humanizeValueWithUnit, humanizeValueWithUnitGiB } from '../../../../../../common/units';
+import { extractAWSID } from '../../../../../../common/rosa';
 import { subscriptionStatuses } from '../../../../../../common/subscriptionTypes';
 import PopoverHint from '../../../../../common/PopoverHint';
 import ExternalLink from '../../../../../common/ExternalLink';
@@ -34,6 +35,8 @@ function DetailsRight({
   machinePools,
 }) {
   const isHypershift = isHypershiftCluster(cluster);
+  const rosaCreatorArn = get(cluster, 'aws.sts.role_arn', '');
+  const awsInfraAccount = rosaCreatorArn ? extractAWSID(rosaCreatorArn) : null;
 
   const memoryTotalWithUnit = humanizeValueWithUnit(
     get(cluster, 'metrics.memory.total.value', 0),
@@ -114,6 +117,14 @@ function DetailsRight({
               <DescriptionListDescription>
                 {memoryTotalWithUnit.value} {memoryTotalWithUnit.unit}
               </DescriptionListDescription>
+            </DescriptionListGroup>
+          </>
+        )}
+        {awsInfraAccount && (
+          <>
+            <DescriptionListGroup>
+              <DescriptionListTerm>Infrastructure AWS account</DescriptionListTerm>
+              <DescriptionListDescription>{awsInfraAccount}</DescriptionListDescription>
             </DescriptionListGroup>
           </>
         )}
