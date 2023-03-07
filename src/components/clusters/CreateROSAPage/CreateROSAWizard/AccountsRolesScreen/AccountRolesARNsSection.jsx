@@ -37,6 +37,22 @@ import './AccountsRolesScreen.scss';
 
 const NO_ROLE_DETECTED = 'No role detected';
 
+const hasCompleteRoleSet = (role) =>
+  role.Installer && role.Support && role.ControlPlane && role.Worker;
+
+// Order: current selected role > first complete role set > first incomplete role set > 'No Role Detected'
+const getDefaultInstallerRole = (selectedInstallerRoleARN, accountRolesARNs) => {
+  if (selectedInstallerRoleARN && selectedInstallerRoleARN !== NO_ROLE_DETECTED) {
+    return selectedInstallerRoleARN;
+  }
+
+  if (accountRolesARNs.length === 0) {
+    return NO_ROLE_DETECTED;
+  }
+  const defaultRole = accountRolesARNs.find(hasCompleteRoleSet) || accountRolesARNs[0];
+  return defaultRole.Installer;
+};
+
 function AccountRolesARNsSection({
   change,
   touchARNsFields,
@@ -77,7 +93,7 @@ function AccountRolesARNsSection({
   useEffect(() => {
     accountRoles.forEach((role) => {
       if (role.Installer === selectedInstallerRole) {
-        setAllARNsFound(role.Installer && role.Support && role.ControlPlane && role.Worker);
+        setAllARNsFound(hasCompleteRoleSet(role));
         change('installer_role_arn', role.Installer || NO_ROLE_DETECTED);
         change('support_role_arn', role.Support || NO_ROLE_DETECTED);
         change('control_plane_role_arn', role.ControlPlane || NO_ROLE_DETECTED);
@@ -109,13 +125,12 @@ function AccountRolesARNsSection({
       });
     }
     setInstallerRoleOptions(installerOptions);
-    // default to currently selected, first installer role, or 'No Role Detected'
-    const hasInstallerRole =
-      selectedInstallerRoleARN && selectedInstallerRoleARN !== NO_ROLE_DETECTED;
-    const newInstallerRole = hasInstallerRole
-      ? selectedInstallerRoleARN
-      : accountRolesARNs[0]?.Installer || NO_ROLE_DETECTED;
-    setSelectedInstallerRole(newInstallerRole);
+
+    const defaultInstallerRole = getDefaultInstallerRole(
+      selectedInstallerRoleARN,
+      accountRolesARNs,
+    );
+    setSelectedInstallerRole(defaultInstallerRole);
   };
 
   const resolveARNsErrorTitle = (response) =>
