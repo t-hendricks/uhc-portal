@@ -21,6 +21,7 @@ const mapStateToProps = (state, ownProps) => {
   return {
     initialValues: createOSDInitialValues({
       cloudProviderID,
+      product,
       isByoc,
       isMultiAz,
       isTrialDefault: ownProps.isTrialDefault,
