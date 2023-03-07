@@ -122,7 +122,7 @@ function DetailsRight({
         )}
         {awsInfraAccount && (
           <>
-            <DescriptionListGroup>
+            <DescriptionListGroup data-testid="aws-account">
               <DescriptionListTerm>Infrastructure AWS account</DescriptionListTerm>
               <DescriptionListDescription>{awsInfraAccount}</DescriptionListDescription>
             </DescriptionListGroup>
