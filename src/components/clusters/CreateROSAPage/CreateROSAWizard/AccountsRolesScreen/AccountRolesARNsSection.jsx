@@ -44,6 +44,7 @@ function AccountRolesARNsSection({
   getAWSAccountRolesARNs,
   getAWSAccountRolesARNsResponse,
   clearGetAWSAccountRolesARNsResponse,
+  onAccountChanged,
   openOcmRoleInstructionsModal,
 }) {
   const NO_ROLE_DETECTED = 'No role detected';
@@ -72,6 +73,7 @@ function AccountRolesARNsSection({
 
   useEffect(() => {
     clearGetAWSAccountRolesARNsResponse();
+    onAccountChanged();
   }, [selectedAWSAccountID]);
 
   useEffect(() => {
@@ -413,6 +415,7 @@ AccountRolesARNsSection.propTypes = {
   getAWSAccountRolesARNs: PropTypes.func.isRequired,
   getAWSAccountRolesARNsResponse: PropTypes.object.isRequired,
   clearGetAWSAccountRolesARNsResponse: PropTypes.func.isRequired,
+  onAccountChanged: PropTypes.func.isRequired,
   openOcmRoleInstructionsModal: PropTypes.func.isRequired,
 };
 
