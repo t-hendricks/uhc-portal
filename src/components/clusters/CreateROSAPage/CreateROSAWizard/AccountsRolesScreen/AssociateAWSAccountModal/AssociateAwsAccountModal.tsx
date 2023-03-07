@@ -8,7 +8,7 @@ import {
   WizardHeader,
   WizardStep,
   WizardFooterWrapper,
-} from '@patternfly/react-core/dist/esm/next';
+} from '@patternfly/react-core/next';
 import { scrollToFirstError } from '~/common/helpers';
 import { OcmRoleScreen } from './OcmRoleScreen';
 import { UserRoleScreen } from './UserRoleScreen';
@@ -34,7 +34,7 @@ export const AssociateAwsAccountModal = ({ isOpen, onClose }: Props) => (
       <Wizard
         onSave={onClose}
         onClose={onClose}
-        isStepVisitRequired
+        isVisitRequired
         footer={<AssociateAwsAccountFooter />}
         header={
           <WizardHeader
@@ -56,13 +56,7 @@ export const AssociateAwsAccountModal = ({ isOpen, onClose }: Props) => (
 );
 
 const AssociateAwsAccountFooter = () => {
-  const {
-    activeStep,
-    steps,
-    onNext: goToNextStep,
-    onBack: goToPrevStep,
-    onClose: close,
-  } = useWizardContext();
+  const { activeStep, steps, goToNextStep, goToPrevStep, close } = useWizardContext();
   const { validateForm, setTouched, submitForm } = useFormikContext();
   const isLastStep = activeStep.index === steps.length;
 
