@@ -392,7 +392,7 @@ class CreateOSDWizardInternal extends React.Component {
         name: stepNameById[stepId.CLUSTER_UPDATES],
         component: (
           <ErrorBoundary>
-            <UpdatesScreen />
+            <UpdatesScreen isTrialDefault={isTrialDefault} />
           </ErrorBoundary>
         ),
         canJumpTo: this.canJumpTo(stepId.CLUSTER_UPDATES),
