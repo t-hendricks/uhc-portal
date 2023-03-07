@@ -4,7 +4,7 @@ import { Formik, FormikValues } from 'formik';
 import omit from 'lodash/omit';
 
 import { Banner, PageSection } from '@patternfly/react-core';
-import { Wizard, WizardStep } from '@patternfly/react-core/dist/esm/next';
+import { Wizard, WizardStep } from '@patternfly/react-core/next';
 
 import config from '~/config';
 import { useGlobalState } from '~/redux/hooks';
@@ -74,7 +74,7 @@ export const CreateRosaWizard = () => {
 
 const CreateRosaWizardInternal = () => (
   <>
-    <Wizard id="rosa-wizard" isStepVisitRequired>
+    <Wizard id="rosa-wizard" isVisitRequired>
       <WizardStep name={StepName.AccountsAndRoles} id={StepId.AccountsAndRoles}>
         <AccountsAndRoles />
       </WizardStep>
