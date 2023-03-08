@@ -307,13 +307,21 @@ const Router: React.FC<RouterProps> = ({ history, planType, clusterId, externalC
             <Redirect from="/create/osd/gcp" to="/create/osd" />
             <Redirect from="/create/osdtrial/aws" to="/create/osdtrial" />
             <Redirect from="/create/osdtrial/gcp" to="/create/osdtrial" />
-            <TermsGuardedRoute
-              path="/create/osdtrial"
-              gobackPath="/create"
-              render={() => <CreateOsdWizard product={normalizedProducts.OSDTrial} />}
-              history={history}
-            />
-
+            {isOSDv2WizardEnabled && !showOSDWizardV1 ? (
+              <TermsGuardedRoute
+                path="/create/osdtrial"
+                gobackPath="/create"
+                render={() => <CreateOsdWizard product={normalizedProducts.OSDTrial} />}
+                history={history}
+              />
+            ) : (
+              <TermsGuardedRoute
+                path="/create/osdtrial"
+                gobackPath="/create"
+                render={() => <CreateOSDWizard product={normalizedProducts.OSDTrial} />}
+                history={history}
+              />
+            )}
             {isOSDv2WizardEnabled && !showOSDWizardV1 ? (
               <TermsGuardedRoute
                 path="/create/osd"
