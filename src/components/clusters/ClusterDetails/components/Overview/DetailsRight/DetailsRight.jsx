@@ -35,7 +35,7 @@ function DetailsRight({
   machinePools,
 }) {
   const isHypershift = isHypershiftCluster(cluster);
-  const rosaCreatorArn = get(cluster, 'aws.sts.role_arn', '');
+  const rosaCreatorArn = get(cluster, 'properties.rosa_creator_arn', '');
   const awsInfraAccount = rosaCreatorArn ? extractAWSID(rosaCreatorArn) : null;
 
   const memoryTotalWithUnit = humanizeValueWithUnit(
