@@ -179,27 +179,6 @@ const MachineTypeSelection = ({
     [forceChoiceInput, input],
   );
 
-  const machineTypeSelectItem = React.useCallback(
-    (machineType) => {
-      const hasQuota = isTypeAvailable(machineType.id);
-
-      return (
-        <SelectOption
-          {...extraProps}
-          key={machineType.id}
-          id={`machineType.${machineType.id}`}
-          value={machineType.id}
-          description={machineTypeDescription(machineType)}
-          isSelected={hasQuota && input.value === machineType.id}
-          formValue={machineType.id}
-        >
-          {machineTypeLabel(machineType)}
-        </SelectOption>
-      );
-    },
-    [extraProps, input.value, isTypeAvailable],
-  );
-
   const sortedMachineTypes = React.useMemo(
     () => sortMachineTypes(machineTypes, cloudProviderID),
     [cloudProviderID, machineTypes],
@@ -210,10 +189,37 @@ const MachineTypeSelection = ({
     [isTypeAvailable, sortedMachineTypes],
   );
 
-  const options = React.useMemo(
-    () => groupedSelectItems(filteredMachineTypes, machineTypeSelectItem),
-    [filteredMachineTypes, machineTypeSelectItem],
-  );
+  const options = React.useMemo(() => {
+    const machineGroups = groupedMachineTypes(filteredMachineTypes);
+    const hasQuota = isTypeAvailable(machineType.id);
+
+    const selectGroups = machineGroups
+      .map(([categoryLabel, categoryMachines]) => {
+        if (categoryMachines.length > 0) {
+          return (
+            <SelectGroup label={categoryLabel} key={categoryLabel}>
+              {categoryMachines.map((machineType) => (
+                <SelectOption
+                  {...extraProps}
+                  key={machineType.id}
+                  id={`machineType.${machineType.id}`}
+                  value={machineType.id}
+                  description={machineTypeDescription(machineType)}
+                  isSelected={hasQuota && input.value === machineType.id}
+                  formValue={machineType.id}
+                >
+                  {machineTypeLabel(machineType)}
+                </SelectOption>
+              ))}
+            </SelectGroup>
+          );
+        }
+        return null;
+      })
+      .filter(Boolean);
+
+    return selectGroups;
+  }, [extraProps, filteredMachineTypes, input.value, isTypeAvailable, machineType.id]);
 
   // In the dropdown we put the machine type id in separate description row,
   // but the Select toggle doesn't support that, so combine both into one label.
@@ -321,23 +327,6 @@ const groupedMachineTypes = (machines) => {
   });
 
   return machineGroups;
-};
-
-const groupedSelectItems = (machines, machineTypeSelectItem) => {
-  const machineGroups = groupedMachineTypes(machines);
-  const selectGroups = machineGroups
-    .map(([categoryLabel, categoryMachines]) => {
-      if (categoryMachines.length > 0) {
-        return (
-          <SelectGroup label={categoryLabel} key={categoryLabel}>
-            {categoryMachines.map((machineType) => machineTypeSelectItem(machineType))}
-          </SelectGroup>
-        );
-      }
-      return null;
-    })
-    .filter(Boolean);
-  return selectGroups;
 };
 
 const inputMetaPropTypes = PropTypes.shape({
