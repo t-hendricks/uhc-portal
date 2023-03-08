@@ -29,7 +29,8 @@ function ClusterSettingsScreen({
   billingModel,
   change,
   kmsKeyArn,
-  kmsKeyArnError,
+  formErrors,
+  touch,
 }) {
   const [isExpanded, setIsExpanded] = useState(false);
 
@@ -38,13 +39,25 @@ function ClusterSettingsScreen({
   };
 
   const isRosa = product === normalizedProducts.ROSA;
+  const isGCP = cloudProviderID === 'gcp';
+
+  const {
+    key_ring: keyRingError,
+    key_name: keyNameError,
+    kms_service_account: kmsServiceAccountError,
+  } = formErrors;
+
+  const gcpError = keyRingError || keyNameError || kmsServiceAccountError;
 
   React.useEffect(() => {
-    if (
-      customerManagedEncryptionSelected === 'true' &&
-      validateAWSKMSKeyARN(kmsKeyArn, selectedRegion)
-    ) {
-      setIsExpanded(true);
+    if (customerManagedEncryptionSelected === 'true') {
+      if (isGCP && gcpError) {
+        setIsExpanded(true);
+      }
+      if (!isGCP && validateAWSKMSKeyARN(kmsKeyArn, selectedRegion)) {
+        setIsExpanded(true);
+        touch('CreateCluster', 'kms_key_arn');
+      }
     }
   }, []);
 
@@ -122,7 +135,7 @@ function ClusterSettingsScreen({
               customerManagedEncryptionSelected={customerManagedEncryptionSelected}
               selectedRegion={selectedRegion}
               cloudProviderID={cloudProviderID}
-              kmsKeyArnError={kmsKeyArnError}
+              kmsKeyArn={kmsKeyArn}
             />
           )}
           <GridItem md={6}>
@@ -165,7 +178,8 @@ ClusterSettingsScreen.propTypes = {
   selectedRegion: PropTypes.string,
   change: PropTypes.func,
   kmsKeyArn: PropTypes.string,
-  kmsKeyArnError: PropTypes.string,
+  formErrors: PropTypes.object,
+  touch: PropTypes.func,
 };
 
 export default ClusterSettingsScreen;

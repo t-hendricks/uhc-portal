@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import { formValueSelector, getFormSyncErrors } from 'redux-form';
+import { formValueSelector, getFormSyncErrors, getFormAsyncErrors, touch } from 'redux-form';
 
 import createOSDInitialValues from '../../createOSDInitialValues';
 
@@ -17,8 +17,9 @@ const mapStateToProps = (state, ownProps) => {
   const customerManagedEncryptionSelected = valueSelector(state, 'customer_managed_key');
   const selectedRegion = valueSelector(state, 'region');
   const kmsKeyArn = valueSelector(state, 'kms_key_arn');
-  const { kms_key_arn: kmsKeyArnError } = {
+  const formErrors = {
     ...getFormSyncErrors('CreateCluster')(state),
+    ...getFormAsyncErrors('CreateCluster')(state),
   };
 
   return {
@@ -30,7 +31,8 @@ const mapStateToProps = (state, ownProps) => {
     customerManagedEncryptionSelected,
     selectedRegion,
     kmsKeyArn,
-    kmsKeyArnError,
+    formErrors,
+    touch: (fieldNames) => touch('CreateCluster', ...fieldNames),
     initialValues: createOSDInitialValues({
       cloudProviderID,
       product,

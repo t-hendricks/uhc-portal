@@ -12,7 +12,7 @@ function CustomerManagedEncryption({
   customerManagedEncryptionSelected,
   selectedRegion,
   cloudProviderID,
-  kmsKeyArnError,
+  kmsKeyArn,
 }) {
   const isGCP = cloudProviderID === 'gcp';
 
@@ -62,7 +62,7 @@ function CustomerManagedEncryption({
           (isGCP ? (
             <GCPClusterEncryption selectedRegion={selectedRegion} />
           ) : (
-            <AWSCustomerManagedEncryption region={selectedRegion} kmsKeyArnError={kmsKeyArnError} />
+            <AWSCustomerManagedEncryption region={selectedRegion} kmsKeyArn={kmsKeyArn} />
           ))}
       </GridItem>
     </Grid>
@@ -73,7 +73,7 @@ CustomerManagedEncryption.propTypes = {
   customerManagedEncryptionSelected: PropTypes.string,
   selectedRegion: PropTypes.string,
   cloudProviderID: PropTypes.string,
-  kmsKeyArnError: PropTypes.string,
+  kmsKeyArn: PropTypes.string,
 };
 
 export default CustomerManagedEncryption;

@@ -1,0 +1,83 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<SupportLevelBadge> renders for cooperative community badges 1`] = `
+<Popover
+  bodyContent={
+    <React.Fragment>
+      <div
+        className="pf-u-mb-sm"
+      >
+        Cooperative Community Support provides assistance to Red Hat customers that have questions
+about community-provided software that is often used with our Red Hat products
+      </div>
+      <ExternalLink
+        href="https://access.redhat.com/solutions/5893251"
+      >
+        Learn more
+      </ExternalLink>
+    </React.Fragment>
+  }
+  position="top"
+>
+  <Label
+    className="pf-u-ml-md pf-u-display-inline"
+    color="orange"
+    icon={
+      <InfoCircleIcon
+        color="var(--pf-c-label__content--Color)"
+        noVerticalAlign={false}
+        size="sm"
+      />
+    }
+    onClick={[Function]}
+    style={
+      Object {
+        "cursor": "pointer",
+      }
+    }
+  >
+    Cooperative Community
+  </Label>
+</Popover>
+`;
+
+exports[`<SupportLevelBadge> renders for devPreview badges 1`] = `
+<Popover
+  bodyContent={
+    <React.Fragment>
+      <div
+        className="pf-u-mb-sm"
+      >
+        Developer preview features provide early access to upcoming product innovations, enabling
+you to test functionality and provide feedback during the development process.
+      </div>
+      <ExternalLink
+        href="https://access.redhat.com/support/offerings/devpreview"
+      >
+        Learn more
+      </ExternalLink>
+    </React.Fragment>
+  }
+  position="top"
+>
+  <Label
+    className="pf-u-ml-md pf-u-display-inline"
+    color="orange"
+    icon={
+      <InfoCircleIcon
+        color="var(--pf-c-label__content--Color)"
+        noVerticalAlign={false}
+        size="sm"
+      />
+    }
+    onClick={[Function]}
+    style={
+      Object {
+        "cursor": "pointer",
+      }
+    }
+  >
+    Developer Preview
+  </Label>
+</Popover>
+`;

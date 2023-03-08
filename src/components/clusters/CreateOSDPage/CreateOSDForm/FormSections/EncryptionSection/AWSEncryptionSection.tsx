@@ -8,10 +8,10 @@ import { constants } from '../../CreateOSDFormConstants';
 
 interface Props {
   region: string;
-  kmsKeyArnError: string;
+  kmsKeyArn: string;
 }
 
-const AWSCustomerManagedEncryption = ({ region, kmsKeyArnError }: Props) => (
+const AWSCustomerManagedEncryption = ({ region, kmsKeyArn }: Props) => (
   <>
     <GridItem md={6}>
       <Field
@@ -22,7 +22,7 @@ const AWSCustomerManagedEncryption = ({ region, kmsKeyArnError }: Props) => (
         placeholder="Key ARN"
         validate={(value: string) => validateAWSKMSKeyARN(value, region)}
         isRequired
-        helpText={kmsKeyArnError ? 'Provide a custom key ARN' : ''}
+        helpText={!kmsKeyArn ? 'Provide a custom key ARN' : ''}
         extendedHelpText={
           <>
             <p className="pf-u-mb-sm">{constants.awsKeyARN}</p>

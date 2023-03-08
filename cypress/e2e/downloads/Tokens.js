@@ -15,6 +15,7 @@ describe('Token pages', () => {
   it('ocm-cli token page', () => {
     TokenPages.navigateToOCMToken();
     cy.get('.pf-c-spinner').should('not.exist');
+    TokenPages.isOCMTokenPage();
     cy.get('h1').scrollIntoView().contains('OpenShift Cluster Manager API Token').should('be.visible')
     cy.getByTestId('load-token-btn').should('exist');
   });
@@ -22,6 +23,7 @@ describe('Token pages', () => {
   it('rosa token page', () => {
     TokenPages.navigateToROSAToken();
     cy.get('.pf-c-spinner').should('not.exist');
+    TokenPages.isROSATokenPage();
     cy.get('h1').scrollIntoView().contains('OpenShift Cluster Manager API Token').should('be.visible')
     cy.getByTestId('load-token-btn').should('exist');
   });
