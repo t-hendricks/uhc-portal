@@ -129,7 +129,7 @@ exports[`MachineTypeSelection when the machine types list is available with rhin
         isLoading={false}
         isNoResultsOption={false}
         isPlaceholder={false}
-        isSelected={true}
+        isSelected={false}
         key="m5.4xlarge"
         keyHandler={[Function]}
         onClick={[Function]}
