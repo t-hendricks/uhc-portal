@@ -153,7 +153,7 @@ export const MachinePool = () => {
                   }
                   cloudProviderID={cloudProvider}
                   product={product}
-                  isMachinePool
+                  isMachinePool={false}
                   billingModel={billingModel}
                   input={{
                     ...getFieldProps(FieldId.NodesCompute),
