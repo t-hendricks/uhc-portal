@@ -5,6 +5,7 @@ import DetailsRight from '../components/Overview/DetailsRight/DetailsRight';
 import fixtures from './ClusterDetails.fixtures';
 import { getClusterStateAndDescription } from '../../common/clusterStates';
 import { subscriptionStatuses } from '../../../../common/subscriptionTypes';
+import { screen, render } from '~/testUtils';
 
 describe('<DetailsRight />', () => {
   let { clusterDetails } = fixtures;
@@ -98,6 +99,32 @@ describe('<DetailsRight />', () => {
         />,
       );
       expect(wrapper).toMatchSnapshot();
+    });
+  });
+
+  describe('AWS Account', () => {
+    it('should not be rendered for OSD clusters', () => {
+      render(
+        <DetailsRight
+          cluster={clusterDetails.cluster}
+          cloudProviders={fixtures.cloudProviders}
+          autoscaleEnabled={false}
+        />,
+      );
+      expect(screen.queryByTestId('aws-account')).not.toBeInTheDocument();
+    });
+
+    it('should be rendered for ROSA / Hypershift ROSA clusters', () => {
+      render(
+        <DetailsRight
+          cluster={fixtures.ROSAManualClusterDetails.cluster}
+          cloudProviders={fixtures.cloudProviders}
+          autoscaleEnabled={false}
+        />,
+      );
+      const awsElem = screen.getByTestId('aws-account');
+      expect(awsElem).toContainHTML('Infrastructure AWS account');
+      expect(awsElem).toContainHTML('123456789012');
     });
   });
 

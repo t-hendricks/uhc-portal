@@ -208,6 +208,9 @@ exports[`<ActionRequiredLink /> should render correctly 1`] = `
           "product": Object {
             "id": "ROSA",
           },
+          "properties": Object {
+            "rosa_creator_arn": "arn:aws:iam::123456789012:user/richard",
+          },
           "region": Object {
             "href": "/api/clusters_mgmt/v1/cloud_providers/aws/regions/us-east-1",
             "id": "us-east-1",
