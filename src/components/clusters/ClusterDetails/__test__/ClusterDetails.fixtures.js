@@ -434,6 +434,9 @@ const ROSAClusterDetails = produce(CCSClusterDetails, (draft) => {
     id: normalizedProducts.ROSA,
     type: normalizedProducts.ROSA,
   };
+  draft.cluster.properties = {
+    rosa_creator_arn: 'arn:aws:iam::123456789012:user/richard',
+  };
 });
 
 const ROSAHypershiftClusterDetails = produce(CCSClusterDetails, (draft) => {
