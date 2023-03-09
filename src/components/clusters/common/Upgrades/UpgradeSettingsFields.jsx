@@ -28,8 +28,52 @@ function UpgradeSettingsFields({
   change,
   initialSceduleValue,
   product,
+  isHypershift = false,
 }) {
   const isRosa = product === normalizedProducts.ROSA;
+
+  const automatic = {
+    value: 'automatic',
+    label: 'Recurring updates',
+    description: (
+      <>
+        The cluster will be automatically updated based on your preferred day and start time when
+        new patch updates (
+        <ExternalLink href={isRosa ? links.ROSA_Z_STREAM : links.OSD_Z_STREAM}>
+          z-stream
+        </ExternalLink>
+        ) are available. When a new minor version is available, you'll be notified and must manually
+        allow the cluster to update to the next minor version.
+      </>
+    ),
+    extraField: isAutomatic && (
+      <Grid>
+        <GridItem md={6}>
+          <Field
+            component={UpgradeScheduleSelection}
+            name="automatic_upgrade_schedule"
+            isDisabled={isDisabled}
+          />
+        </GridItem>
+      </Grid>
+    ),
+  };
+  const manual = {
+    value: 'manual',
+    label: 'Individual updates',
+    description: (
+      <>
+        Schedule each update individually. Take into consideration end of life dates from the{' '}
+        <ExternalLink href={isRosa ? links.ROSA_LIFE_CYCLE : links.OSD_LIFE_CYCLE}>
+          lifecycle policy
+        </ExternalLink>{' '}
+        when planning updates.
+      </>
+    ),
+  };
+
+  const options = isHypershift ? [automatic, manual] : [manual, automatic];
+
   return (
     <>
       <GridItem>
@@ -53,48 +97,7 @@ function UpgradeSettingsFields({
               change('automatic_upgrade_schedule', initialSceduleValue);
             }
           }}
-          options={[
-            {
-              value: 'manual',
-              label: 'Individual updates',
-              description: (
-                <>
-                  Schedule each update individually. Take into consideration end of life dates from{' '}
-                  the{' '}
-                  <ExternalLink href={isRosa ? links.ROSA_LIFE_CYCLE : links.OSD_LIFE_CYCLE}>
-                    lifecycle policy
-                  </ExternalLink>{' '}
-                  when planning updates.
-                </>
-              ),
-            },
-            {
-              value: 'automatic',
-              label: 'Recurring updates',
-              description: (
-                <>
-                  The cluster will be automatically updated based on your preferred day and start
-                  time when new patch updates (
-                  <ExternalLink href={isRosa ? links.ROSA_Z_STREAM : links.OSD_Z_STREAM}>
-                    z-stream
-                  </ExternalLink>
-                  ) are available. When a new minor version is available, you'll be notified and
-                  must manually allow the cluster to update to the next minor version.
-                </>
-              ),
-              extraField: isAutomatic && (
-                <Grid>
-                  <GridItem md={6}>
-                    <Field
-                      component={UpgradeScheduleSelection}
-                      name="automatic_upgrade_schedule"
-                      isDisabled={isDisabled}
-                    />
-                  </GridItem>
-                </Grid>
-              ),
-            },
-          ]}
+          options={options}
           defaultValue="manual"
           disableDefaultValueHandling // interferes with enableReinitialize.
         />
@@ -125,6 +128,7 @@ function UpgradeSettingsFields({
 UpgradeSettingsFields.propTypes = {
   isAutomatic: PropTypes.bool,
   isDisabled: PropTypes.bool,
+  isHypershift: PropTypes.bool,
   showDivider: PropTypes.bool,
   change: PropTypes.func,
   product: PropTypes.string,

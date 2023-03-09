@@ -1,8 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Redirect } from 'react-router';
-import { Banner, Wizard, PageSection, WizardContext } from '@patternfly/react-core';
+import { isMatch } from 'lodash';
 import { Spinner } from '@redhat-cloud-services/frontend-components';
+import { Banner, Wizard, PageSection, WizardContext } from '@patternfly/react-core';
 
 import config from '~/config';
 import { shouldRefetchQuota, scrollToFirstError } from '~/common/helpers';
@@ -71,19 +72,40 @@ class CreateROSAWizardInternal extends React.Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    const { createClusterResponse, isErrorModalOpen, openModal, isValid, isAsyncValidating } =
-      this.props;
+    const {
+      createClusterResponse,
+      isErrorModalOpen,
+      openModal,
+      formValues,
+      isValid,
+      isAsyncValidating,
+      installToVPCSelected,
+      configureProxySelected,
+    } = this.props;
     const { currentStepId, deferredNext } = this.state;
 
     // Track validity of individual steps by id
-    if (isValid !== prevProps.isValid || isAsyncValidating !== prevProps.isAsyncValidating) {
+    if (
+      (isValid !== prevProps.isValid || isAsyncValidating !== prevProps.isAsyncValidating) &&
+      !isAsyncValidating
+    ) {
       // eslint-disable-next-line react/no-did-update-set-state
       this.setState(() => ({
         validatedSteps: {
           ...prevState.validatedSteps,
-          [currentStepId]: isValid && !isAsyncValidating,
+          // reset steps that were removed from the wizard due to a toggle on another step
+          ...(installToVPCSelected ? { [stepId.NETWORKING__VPC_SETTINGS]: undefined } : {}),
+          ...(configureProxySelected ? { [stepId.NETWORKING__CLUSTER_WIDE_PROXY]: undefined } : {}),
+          // update the current step (overriding the possible assignments above)
+          [currentStepId]: isValid,
         },
       }));
+    }
+
+    const formValuesChanged = !isMatch(prevProps.formValues, formValues);
+    if (formValuesChanged) {
+      // eslint-disable-next-line react/no-did-update-set-state
+      this.setState({ stepIdReached: currentStepId });
     }
 
     const isAsyncValidationDone =
@@ -105,23 +127,27 @@ class CreateROSAWizardInternal extends React.Component {
     resetForm();
   }
 
-  onNext = ({ id }) => {
-    const { stepIdReached, currentStepId } = this.state;
+  // triggered by all forms of navigation;
+  // next / back / nav-links / imperative (e.g. "edit step" links in the review step)
+  onCurrentStepChanged = ({ id }) => {
+    this.setState({ currentStepId: id });
+  };
+
+  onNext = ({ id }, { prevId }) => {
+    const { stepIdReached } = this.state;
     if (id && stepIdReached < id) {
       this.setState({ stepIdReached: id });
     }
-    this.setState({ currentStepId: id });
 
-    this.trackWizardNavigation(trackEvents.WizardNext, currentStepId);
+    this.trackWizardNavigation(trackEvents.WizardNext, prevId);
   };
 
+  // only triggered by the wizard nav-links
   onGoToStep = ({ id }) => {
-    this.setState({ currentStepId: id });
     this.trackWizardNavigation(trackEvents.WizardLinkNav, id);
   };
 
   onBack = ({ id }) => {
-    this.setState({ currentStepId: id });
     this.trackWizardNavigation(trackEvents.WizardBack, id);
   };
 
@@ -139,7 +165,7 @@ class CreateROSAWizardInternal extends React.Component {
     }
 
     // Allow step navigation forward when the current step is valid and backwards regardless.
-    return (stepIdReached >= id && !hasPrevStepError) || id <= currentStepId;
+    return id <= currentStepId || (id <= stepIdReached && !hasPrevStepError);
   };
 
   getUserRoleInfo = () => {
@@ -184,13 +210,8 @@ class CreateROSAWizardInternal extends React.Component {
     if (this.scrolledToFirstError()) {
       return;
     }
-    // when navigating back to step 1 from link in no user-role error messages on review screen
-    // even though we're hitting [Next] on step 1, currentStepId is set to review step.
-    // TODO: figure out how to update currentStepId externally from WizardContextConsumer.goToStepById()
-    if (
-      [stepId.ACCOUNTS_AND_ROLES, stepId.REVIEW_AND_CREATE].includes(currentStepId) &&
-      !getUserRoleResponse?.fulfilled
-    ) {
+    // when navigating back to step 1 from link in no user-role error messages on review screen.
+    if (currentStepId === stepId.ACCOUNTS_AND_ROLES && !getUserRoleResponse?.fulfilled) {
       const data = await this.getUserRoleInfo();
       const gotoNextStep = isUserRoleForSelectedAWSAccount(data.value, selectedAWSAccountID);
       if (!gotoNextStep) {
@@ -459,6 +480,7 @@ class CreateROSAWizardInternal extends React.Component {
               onNext={this.onNext}
               onBack={this.onBack}
               onGoToStep={this.onGoToStep}
+              onCurrentStepChanged={this.onCurrentStepChanged}
               onClose={() => history.push('/')}
               footer={
                 !createClusterResponse.pending ? (
@@ -538,6 +560,7 @@ CreateROSAWizardInternal.propTypes = {
   formErrors: PropTypes.object,
   getUserRoleResponse: PropTypes.object,
   selectedAWSAccountID: PropTypes.string,
+  formValues: PropTypes.object,
 
   // for "no quota" redirect
   hasProductQuota: PropTypes.bool,

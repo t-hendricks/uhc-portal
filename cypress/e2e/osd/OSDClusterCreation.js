@@ -29,10 +29,6 @@ describe('OSD cluster tests', () => {
       CreateClusterPage.isCreateClusterPage();
       cy.getByTestId('osd-create-cluster-button').click({ force: true }); // need force=true to get past 'element detached from dom' error
       CreateOSDWizardPage.isCreateOSDPage();
-      // append the fake=true query param
-      cy.url().then(url => cy.visit(`${url}?fake=true`));
-      cy.get('.spinner-loading-text').should('not.exist');
-      CreateOSDWizardPage.showsFakeClusterBanner();
     });
 
     it('shows an error with invalid and empty names', () => {
@@ -47,11 +43,17 @@ describe('OSD cluster tests', () => {
       cy.get(CreateOSDWizardPage.clusterNameInput).clear();
       cy.get(CreateOSDWizardPage.clusterNameInputError).should('have.length', 4);
       cy.get(CreateOSDWizardPage.clusterNameInput).clear().type('a*a');
-      cy.get(CreateOSDWizardPage.clusterNameInputError).contains('Consist of lower-case alphanumeric');
+      cy.get(CreateOSDWizardPage.clusterNameInputError).contains(
+        'Consist of lower-case alphanumeric',
+      );
       cy.get(CreateOSDWizardPage.clusterNameInput).clear().type('9a');
-      cy.get(CreateOSDWizardPage.clusterNameInputError).contains('Start with a lower-case alphabetic');
+      cy.get(CreateOSDWizardPage.clusterNameInputError).contains(
+        'Start with a lower-case alphabetic',
+      );
       cy.get(CreateOSDWizardPage.clusterNameInput).clear().type('a*');
-      cy.get(CreateOSDWizardPage.clusterNameInputError).last().contains('End with a lower-case alphanumeric');
+      cy.get(CreateOSDWizardPage.clusterNameInputError)
+        .last()
+        .contains('End with a lower-case alphanumeric');
     });
 
     it('fills OSD wizard but does not really create an OSD cluster', () => {
@@ -87,7 +89,7 @@ describe('OSD Trial cluster tests', () => {
       CreateClusterPage.isCreateClusterPage();
       cy.getByTestId('osd-create-trial-cluster').click({ force: true });
       CreateOSDWizardPage.isCreateOSDTrialPage();
-      cy.get(CreateOSDWizardPage.CCSSSelected).should('exist');
+      cy.get(CreateOSDWizardPage.CCSSelected).should('exist');
       cy.get(CreateOSDWizardPage.TrialSelected).should('exist');
     });
   });

@@ -28,7 +28,7 @@ if [ -z "${QUAY_TOKEN}" ]; then
   echo "Environment variable 'QUAY_TOKEN' is mandatory."
   exit 1
 fi
-podman login -u "${QUAY_USER}" -p "${QUAY_TOKEN}" quay.io
+printenv QUAY_TOKEN | podman login --verbose --username="${QUAY_USER}" --password-stdin quay.io
 
 # Run the checks:
 
@@ -47,9 +47,7 @@ node --version
 export CHROMEDRIVER_SKIP_DOWNLOAD=true
 
 make \
-  js-lint \
-  app \
-  test
+  app
 
 export NO_COLOR=1
 

@@ -38,7 +38,7 @@ import {
 import links, { tools, channels } from '../../common/installLinks.mjs';
 import Breadcrumbs from '../common/Breadcrumbs';
 import ExternalLink from '../common/ExternalLink';
-import DevPreviewBadge from '../common/DevPreviewBadge';
+import SupportLevelBadge, { SupportLevelType } from '../common/SupportLevelBadge';
 import DownloadAndOSSelection from '../clusters/install/instructions/components/DownloadAndOSSelection';
 import { loadOfflineToken } from './TokenUtils';
 import TokenBox from './TokenBox';
@@ -128,7 +128,9 @@ const Tokens = (props: Props) => {
                       <List component="ol">
                         <ListItem>
                           Download and install the <code>{commandName}</code> command-line tool:{' '}
-                          {commandTool === tools.OCM && <DevPreviewBadge />}
+                          {commandTool === tools.OCM && (
+                            <SupportLevelBadge type={SupportLevelType.devPreview} />
+                          )}
                           <Text component="p" />
                           <DownloadAndOSSelection tool={commandTool} channel={channels.STABLE} />
                           <Text component="p" />

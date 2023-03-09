@@ -115,7 +115,12 @@ export const BillingModel = () => {
 
   React.useEffect(() => {
     if (product === normalizedProducts.OSDTrial) {
-      setFieldValue(FieldId.BillingModel, billingModels.STANDARD_TRIAL);
+      if (showOsdTrial) {
+        setFieldValue(FieldId.BillingModel, billingModels.STANDARD_TRIAL);
+        setFieldValue(FieldId.Byoc, 'true');
+      } else {
+        setFieldValue(FieldId.Product, normalizedProducts.OSD);
+      }
     }
 
     // Select marketplace billing if user only has marketplace quota
@@ -183,7 +188,7 @@ export const BillingModel = () => {
     <Flex alignItems={{ default: 'alignItemsFlexStart' }}>
       <FlexItem flex={{ default: 'flex_3' }}>
         <Stack hasGutter>
-          <StackItem className="pf-u-mb-0">
+          <StackItem className="pf-u-mb-xl">
             <Title headingLevel="h2" className="pf-u-pb-md">
               Welcome to Red Hat OpenShift Dedicated
             </Title>

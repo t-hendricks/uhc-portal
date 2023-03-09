@@ -10,7 +10,7 @@ import ExternalLink from '../../../../../../common/ExternalLink';
 import PopoverHint from '../../../../../../common/PopoverHint';
 import links from '../../../../../../../common/installLinks.mjs';
 
-class CostSavingSection extends React.Component {
+class CostSavingsSection extends React.Component {
   state = {};
 
   onMaxHourlyPriceChange = (currentPrice, delta) =>
@@ -121,17 +121,17 @@ class CostSavingSection extends React.Component {
   }
 }
 
-CostSavingSection.propTypes = {
+CostSavingsSection.propTypes = {
   change: PropTypes.func.isRequired,
   useSpotInstances: PropTypes.bool,
   spotInstancePricing: PropTypes.string,
   spotInstanceMaxHourlyPrice: PropTypes.number,
 };
 
-CostSavingSection.defaultProps = {
+CostSavingsSection.defaultProps = {
   useSpotInstances: false,
   spotInstancePricing: 'onDemand',
   spotInstanceMaxHourlyPrice: 0.01,
 };
 
-export default CostSavingSection;
+export default CostSavingsSection;
