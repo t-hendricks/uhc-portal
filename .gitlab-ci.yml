@@ -1,0 +1,166 @@
+image: 
+    # node:12.22.12
+    name: $REGISTRY/node@sha256:3a69ea1270dbf4ef20477361be4b7a43400e559c6abdfaf69d73f7c755f434f5
+
+# Grants access to the shared gitlab runners
+default:
+  tags:
+    - shared
+
+variables:
+  CYPRESS_CACHE_FOLDER: '$CI_PROJECT_DIR/cache/Cypress'
+  GITLAB_TOKEN: $GITLAB_TOKEN
+  FF_USE_FASTZIP: 'true'
+  CACHE_COMPRESSION_LEVEL: 'fast'
+  CACHE_FALLBACK_KEY: fallback-key
+  REGISTRY: images.paas.redhat.com/ocm_team
+
+# global cache, jobs override the policy setting as needed
+cache: &global_cache
+  key:
+    files:
+      # compute cache key from lock file
+      - yarn.lock
+  # files and folders to cache
+  paths:
+    - node_modules/
+    - cache/Cypress/
+    - .yarn/
+  policy: pull-push
+
+# Adds a comment to the MR
+.send-note: &send-note
+  - apt-get update && apt-get install -y curl && apt-get install -y jq
+  - echo "$NOTE_BODY"
+  - |
+    echo -n "$NOTE_BODY" |
+    jq --raw-input --slurp '{ "body": . }' |
+    curl --insecure --location --request POST "https://gitlab.cee.redhat.com/api/v4/projects/$CI_MERGE_REQUEST_PROJECT_ID/merge_requests/$CI_MERGE_REQUEST_IID/notes" --header "PRIVATE-TOKEN: $GITLAB_TOKEN" --header "Content-Type: application/json" --data @-
+
+# Save job output to a variable
+.store-note: &store-note
+  variables:
+    EMOJI_CONDITIONAL: '(if [ "$${CI_JOB_STATUS}" == "success" ]; then echo "✅"; else echo "🚫"; fi);'
+  after_script:
+    - EMOJI=$(eval $EMOJI_CONDITIONAL)
+    - |
+      NOTE_BODY="<br>**$CI_JOB_NAME $CI_JOB_STATUS $EMOJI**<br>Job url: $CI_JOB_URL"
+    - JOB_NAME=$(echo "${CI_JOB_NAME_SLUG^^}" | tr - _)
+    - |
+      if [ "$JOB_NAME" == "CYPRESS_TESTING" ]; then NOTE_BODY="$NOTE_BODY<br>Artifacts: https://gitlab.cee.redhat.com/service/uhc-portal/-/jobs/$CI_JOB_ID/artifacts/browse"; fi;
+    - if [ "$CI_JOB_STATUS" == "failed" ]; then echo "$JOB_NAME=$NOTE_BODY" > .env; else echo "$JOB_NAME=" > .env; fi;
+  artifacts:
+    reports:
+      dotenv: 
+        - .env
+
+stages:
+  - install
+  - test
+  - report
+
+📦 Install and cache dependencies:
+  <<: *store-note
+  image:
+    # cypress/base:12.22.8
+    name: $REGISTRY/cypress/base@sha256:cb264109d529236b4eb28c061a22a20b293c58858d077ba6d980e87437c391e9
+  stage: install
+  only:
+    - merge_requests
+  script:
+    - echo "Installing dependencies"
+    - node --version
+    - yarn install --frozen-lockfile --cache-folder .yarn
+    - yarn cypress cache path
+    - yarn cypress cache list
+    - yarn cypress verify
+
+🧪 Unit testing:
+  <<: *store-note
+  stage: test
+  cache:
+    # inherit all global cache settings
+    <<: *global_cache
+    # override the policy
+    policy: pull
+  only:
+    - merge_requests
+  script:
+    - echo "Running unit tests..."
+    - node --version
+    - yarn test
+
+👀 Linting:
+  <<: *store-note
+  stage: test
+  cache:
+    # inherit all global cache settings
+    <<: *global_cache
+    # override the policy
+    policy: pull
+  only:
+    - merge_requests
+  script:
+    - echo "Linting code..."
+    - node --version
+    - yarn lint
+
+🌎 Cypress testing:
+  <<: *store-note
+  image:
+    # cypress/included:10.0.1
+    name: $REGISTRY/cypress/included@sha256:f066902e490e15b177a19ff64004ac4ef677c682d5a627a8f05a18f08b8de631
+    entrypoint: ['']
+  stage: test
+  cache:
+    # inherit all global cache settings
+    <<: *global_cache
+    # override the policy
+    policy: pull
+  only:
+    - merge_requests
+  before_script:
+    - apt-get -y install make
+    - apt-get -y install sudo
+    - make dev-env-setup
+  script:
+    - echo "Running cypress tests"
+    - node --version
+    - yarn start &
+    - NODE_TLS_REJECT_UNAUTHORIZED=0 yarn wait-on https://prod.foo.redhat.com:1337/openshift/
+    - TERM=xterm LC_ALL=C.UTF-8 LANG=C.UTF-8 yarn e2e-test
+  artifacts:
+    when: always
+    paths:
+      - cypress/videos/**/*.mp4
+      - cypress/screenshots/**/*.png
+    expire_in: 1 day
+    reports:
+      dotenv: 
+        - .env
+
+Pipeline failure:
+  stage: report
+  only:
+    - merge_requests
+  script:
+    # ${CI_JOB_NAME_SLUG^^} used as variable key
+    # INSTALL_AND_CACHE_DEPENDENCIES | LINTING | UNIT_TESTING | CYPRESS_TESTING
+    - |
+      NOTE_BODY="Pipeline failed, pipeline url: $CI_PIPELINE_URL<br>$INSTALL_AND_CACHE_DEPENDENCIES$LINTING$UNIT_TESTING$CYPRESS_TESTING"
+    - *send-note
+  artifacts:
+    reports:
+      dotenv: 
+        - .env
+  when: on_failure
+
+Pipeline success:
+  stage: report
+  only:
+    - merge_requests
+  script:
+    - |
+      NOTE_BODY="Pipeline success, pipeline url: $CI_PIPELINE_URL"
+    - *send-note
+  when: on_success

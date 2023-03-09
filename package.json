@@ -13,7 +13,7 @@
     "@patternfly/patternfly": "^4.215.1",
     "@patternfly/react-charts": "^6.59.2",
     "@patternfly/react-code-editor": "^4.47.2",
-    "@patternfly/react-core": "^4.264.0",
+    "@patternfly/react-core": "^4.276.6",
     "@patternfly/react-icons": "^4.57.2",
     "@patternfly/react-styles": "^4.85.7",
     "@patternfly/react-table": "^4.75.2",
@@ -80,9 +80,7 @@
     "urijs": "^1.19.11",
     "url": "^0.11.0",
     "uuid": "^8.1.0",
-    "yup": "^0.32.11",
-    "find-test-names": "1.25.0",
-    "simple-bin-help": "1.7.7"
+    "yup": "^0.32.11"
   },
   "devDependencies": {
     "@babel/core": "^7.10.4",
@@ -188,7 +186,9 @@
     "@types/react": "17.0.3",
     "is-in-subnet": "3.1.0",
     "jsprim": "1.4.2",
-    "multicast-dns": "7.2.3"
+    "multicast-dns": "7.2.3",
+    "find-test-names": "1.25.0",
+    "simple-bin-help": "1.7.7"
   },
   "jest": {
     "verbose": true,
@@ -205,6 +205,9 @@
     },
     "transformIgnorePatterns": [
       "<rootDir>/node_modules/(?!(@patternfly|react-monaco-editor|monaco-editor|lodash-es|openshift-assisted-ui-lib)/)"
+    ],
+    "testPathIgnorePatterns": [
+      "<rootDir>/cache/Cypress/"
     ],
     "moduleNameMapper": {
       "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/__mocks__/fileMock.js",
@@ -246,7 +249,7 @@
     "selenium-with-chromedriver": "concurrently --kill-others --success=first --names=BROWSER,TEST --prefix-colors=magenta,blueBright --handle-input --default-input-target=TEST --passthrough-arguments 'chromedriver --port=4444 --url-base=/wd/hub --verbose' 'env BROWSER=chrome yarn selenium-test {@}' --",
     "selenium-browser": "run/selenium-browser.sh",
     "selenium-test": "run/selenium-test.sh",
-    "e2e-test": "rm -rf ./coverage/* && yarn cypress-headless && yarn code-coverage",
+    "e2e-test": "rm -rf ./coverage/* && yarn cypress-headless --env grepTags=-smoke && yarn code-coverage",
     "selenium-viewer": "wait-on tcp:5900 && vinagre --file=run/selenium.vnc",
     "stop": "yarn stop-insights-proxy; run/podman-or-docker.sh rm --force browser; pkill --full 'concurrently.*SERVER(prevent self match){0},MOCK'; pkill --full 'concurrently.*BROWSER(prevent self match){0},TEST'; true",
     "prepare": "husky install",

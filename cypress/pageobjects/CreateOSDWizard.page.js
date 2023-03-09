@@ -41,17 +41,27 @@ class CreateOSDCluster extends Page {
     cy.contains('h2', 'Review your dedicated cluster');
   }
 
-  showsFakeClusterBanner = () => cy.contains('On submit, a fake OSD cluster will be created.');
+  showsFakeClusterBanner = () => cy.contains('div', 'On submit, a fake OSD cluster will be created.');
 
-  get clusterNameInput() { return 'input#name'; }
+  get clusterNameInput() {
+    return 'input#name';
+  }
 
-  get clusterNameInputError() { return 'ul#redux-rich-input-popover-name li.pf-c-helper-text__item.pf-m-error.pf-m-dynamic'; }
+  get clusterNameInputError() {
+    return 'ul#rich-input-popover-name li.pf-c-helper-text__item.pf-m-error.pf-m-dynamic';
+  }
 
-  get primaryButton() { return '.osd-wizard button.pf-c-button.pf-m-primary'; }
+  get primaryButton() {
+    return '#osd-wizard button.pf-c-button.pf-m-primary';
+  }
 
-  get CCSSSelected() { return 'input:checked[name="byoc"][value="true"]'; }
+  get CCSSelected() {
+    return 'input:checked[name="byoc"][value="true"]';
+  }
 
-  get TrialSelected() { return 'input:checked[name="billing_model"][value="standard-trial"]'; }
+  get TrialSelected() {
+    return 'input:checked[name="billing_model"][value="standard-trial"]';
+  }
 }
 
 export default new CreateOSDCluster();

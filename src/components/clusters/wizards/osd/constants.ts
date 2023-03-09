@@ -1,6 +1,6 @@
 import { FormikValues } from 'formik';
 
-import { billingModels } from '~/common/subscriptionTypes';
+import { billingModels, normalizedProducts } from '~/common/subscriptionTypes';
 import {
   HOST_PREFIX_DEFAULT,
   MACHINE_CIDR_DEFAULT,
@@ -104,7 +104,7 @@ export const breadcrumbs: BreadcrumbPath[] = [
 ];
 
 export const initialValues: FormikValues = {
-  [FieldId.Product]: 'OSD',
+  [FieldId.Product]: normalizedProducts.OSD,
   [FieldId.Byoc]: 'false',
   [FieldId.CloudProvider]: CloudProviderType.Aws,
   [FieldId.AcknowledgePrereq]: false,
