@@ -45,6 +45,10 @@ const getOpenShiftVersion = (machinePool) => {
   return versionFormatter(extractedVersion) || extractedVersion;
 };
 
+// Percentages
+const getColumnWidths = (isHypershift) =>
+  isHypershift ? [15, 15, 20, 15, 15, 20] : [19, 19, 25, 19, 19];
+
 const initialState = {
   deletedRowIndex: null,
   openedRows: [],
@@ -156,15 +160,16 @@ class MachinePools extends React.Component {
       );
     }
 
+    const widths = getColumnWidths(isHypershift);
     const columns = [
-      { title: 'Machine pool', transforms: [cellWidth(19)], cellFormatters: [expandable] },
-      { title: 'Instance type', transforms: [cellWidth(19)] },
-      { title: 'Availability zones', transforms: [cellWidth(25)] },
-      { title: 'Node count', transforms: [cellWidth(19)] },
-      { title: 'Autoscaling', transforms: [cellWidth(19)] },
+      { title: 'Machine pool', transforms: [cellWidth(widths[0])], cellFormatters: [expandable] },
+      { title: 'Instance type', transforms: [cellWidth(widths[1])] },
+      { title: 'Availability zones', transforms: [cellWidth(widths[2])] },
+      { title: 'Node count', transforms: [cellWidth(widths[3])] },
+      { title: 'Autoscaling', transforms: [cellWidth(widths[4])] },
     ];
     if (isHypershift) {
-      columns.push({ title: 'Version', transforms: [cellWidth(25)] });
+      columns.push({ title: 'Version', transforms: [cellWidth(widths[5])] });
     }
 
     const getMachinePoolRow = (machinePool = {}, isExpandableRow) => {
