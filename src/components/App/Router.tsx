@@ -37,7 +37,6 @@ import ClustersList from '../clusters/ClusterList';
 import ArchivedClusterList from '../clusters/ArchivedClusterList';
 import CreateClusterPage from '../clusters/CreateClusterPage';
 import RegisterCluster from '../clusters/RegisterCluster';
-import CreateOSDWizard from '../clusters/CreateOSDPage/CreateOSDWizard';
 import CreateROSAWizard from '../clusters/CreateROSAPage/CreateROSAWizard';
 import ConnectedInstallAlibaba from '../clusters/install/InstallAlibaba';
 import InstallArmAWS from '../clusters/install/InstallArmAWS';
@@ -108,6 +107,8 @@ import EntitlementConfig from '../common/EntitlementConfig/index';
 import InsightsAdvisorRedirector from '../clusters/InsightsAdvisorRedirector';
 import ClusterDetailsSubscriptionId from '../clusters/ClusterDetails/ClusterDetailsSubscriptionId';
 import ClusterDetailsClusterOrExternalId from '../clusters/ClusterDetails/ClusterDetailsClusterOrExternalId';
+import CreateOSDWizard from '../clusters/CreateOSDPage/CreateOSDWizard';
+import { CreateOsdWizard } from '../clusters/wizards';
 import { metadataByRoute, is404 } from './routeMetadata';
 import { useFeatureGate } from '~/hooks/useFeatureGate';
 
@@ -296,7 +297,13 @@ const Router: React.FC<RouterProps> = ({ history, planType, clusterId, externalC
             <TermsGuardedRoute
               path="/create/osdtrial"
               gobackPath="/create"
-              render={() => <CreateOSDWizard product={normalizedProducts.OSDTrial} />}
+              render={() => <CreateOsdWizard product={normalizedProducts.OSDTrial} />}
+              history={history}
+            />
+            <TermsGuardedRoute
+              path="/create/osd"
+              gobackPath="/create"
+              component={CreateOsdWizard}
               history={history}
             />
 
