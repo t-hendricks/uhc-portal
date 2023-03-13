@@ -39,6 +39,7 @@ exports[`<AccessControl /> should render 1`] = `
           clusterConsoleURL="https://console-openshift-console.apps.example.com"
           clusterHibernating={false}
           clusterID="fake id"
+          isHypershift={false}
           isReadOnly={false}
         />
       </Tab>

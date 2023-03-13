@@ -49,7 +49,7 @@ describe('<IDPSection />', () => {
     expect(wrapper).toMatchSnapshot();
   });
 
-  it('should render (with IDPs)', () => {
+  describe('should render (with IDPs)', () => {
     const IDPs = {
       ...baseIDPs,
       clusterIDPList: [
@@ -67,19 +67,31 @@ describe('<IDPSection />', () => {
       fulfilled: true,
     };
 
-    const openModal = jest.fn();
-    const wrapper = shallow(
-      <IDPSection
-        canEdit={false}
-        clusterID="fake id"
-        subscriptionID="fake sub"
-        identityProviders={IDPs}
-        clusterHibernating={false}
-        isReadOnly={false}
-        openModal={openModal}
-        clusterConsoleURL="http://example.com/"
-      />,
-    );
-    expect(wrapper).toMatchSnapshot();
+    const buildWrapper = ({ isHypershift }) => {
+      const openModal = jest.fn();
+      return shallow(
+        <IDPSection
+          canEdit={false}
+          clusterID="fake id"
+          subscriptionID="fake sub"
+          identityProviders={IDPs}
+          clusterHibernating={false}
+          isReadOnly={false}
+          isHypershift={isHypershift}
+          openModal={openModal}
+          clusterConsoleURL="http://example.com/"
+        />,
+      );
+    };
+
+    it('non-Hypershift cluster', () => {
+      const wrapper = buildWrapper({ isHypershift: false });
+      expect(wrapper).toMatchSnapshot();
+    });
+
+    it('Hypershift cluster', () => {
+      const wrapper = buildWrapper({ isHypershift: true });
+      expect(wrapper).toMatchSnapshot();
+    });
   });
 });

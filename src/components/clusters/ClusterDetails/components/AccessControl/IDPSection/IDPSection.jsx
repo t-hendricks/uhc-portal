@@ -209,6 +209,7 @@ IDPSection.propTypes = {
   canEdit: PropTypes.bool.isRequired,
   clusterHibernating: PropTypes.bool.isRequired,
   isReadOnly: PropTypes.bool.isRequired,
+  isHypershift: PropTypes.bool.isRequired,
   history: PropTypes.shape({
     push: PropTypes.func,
   }),

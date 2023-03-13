@@ -1,4 +1,4 @@
-import { generateIDPName, isEmptyReduxArray } from './IdentityProvidersHelper';
+import { generateIDPName, isEmptyReduxArray, getOauthCallbackURL } from './IdentityProvidersHelper';
 
 describe('generateIDPName()', () => {
   it('Returns IDP type name if the list is empty', () => {
@@ -34,7 +34,7 @@ describe('generateIDPName()', () => {
 });
 
 describe('isEmptyArray()', () => {
-  it('Returns False if atleast one claim is present', () => {
+  it('Returns False if at least one claim is present', () => {
     expect(
       isEmptyReduxArray(
         [
@@ -58,5 +58,27 @@ describe('isEmptyArray()', () => {
   });
   it('Returns false for different identity provider type when the array is undefined', () => {
     expect(isEmptyReduxArray(undefined, 'openid_name')).toEqual(false);
+  });
+});
+
+describe('getOauthCallbackURL()', () => {
+  const baseUrl = 'https://console-url.some-domain.test.com';
+  const idpName = 'my-idp-name';
+
+  it('Returns empty if the parameters are also empty', () => {
+    expect(getOauthCallbackURL('', idpName, false)).toEqual('');
+    expect(getOauthCallbackURL(baseUrl, '', false)).toEqual('');
+  });
+
+  it('Replaces the base name with the oauth URL for non-Hypershift clusters', () => {
+    expect(getOauthCallbackURL(baseUrl, idpName, false)).toEqual(
+      'https://oauth-openshift.some-domain.test.com/oauth2callback/my-idp-name',
+    );
+  });
+
+  it('Replaces the base name with the oauth URL for Hypershift clusters', () => {
+    expect(getOauthCallbackURL(baseUrl, idpName, true)).toEqual(
+      'https://oauth.some-domain.test.com/oauth2callback/my-idp-name',
+    );
   });
 });

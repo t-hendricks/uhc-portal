@@ -169,7 +169,245 @@ exports[`<IDPSection /> should render (no IDPs) 1`] = `
 </Card>
 `;
 
-exports[`<IDPSection /> should render (with IDPs) 1`] = `
+exports[`<IDPSection /> should render (with IDPs) Hypershift cluster 1`] = `
+<Card>
+  <CardBody>
+    <Stack
+      hasGutter={true}
+    >
+      <StackItem>
+        <Title
+          className="card-title"
+          headingLevel="h2"
+          size="lg"
+        >
+          Identity providers
+        </Title>
+        <p>
+          Configure identity providers to allow users to log into the cluster. 
+          <a
+            href="https://docs.openshift.com/container-platform/4.12/authentication/understanding-identity-provider.html"
+            rel="noopener noreferrer"
+            target="_blank"
+          >
+            Learn more.
+          </a>
+        </p>
+      </StackItem>
+      <StackItem>
+        <Tooltip
+          content="You do not have permission to add an identity provider. Only cluster owners, cluster editors, and Organization Administrators can add identity providers."
+        >
+          <Dropdown
+            dropdownItems={
+              Array [
+                <DropdownItem
+                  component={
+                    <Link
+                      to={
+                        Object {
+                          "pathname": "/details/s/fake sub/add-idp/github",
+                          "state": Object {
+                            "allLoaded": true,
+                          },
+                        }
+                      }
+                    >
+                      GitHub
+                    </Link>
+                  }
+                />,
+                <DropdownItem
+                  component={
+                    <Link
+                      to={
+                        Object {
+                          "pathname": "/details/s/fake sub/add-idp/google",
+                          "state": Object {
+                            "allLoaded": true,
+                          },
+                        }
+                      }
+                    >
+                      Google
+                    </Link>
+                  }
+                />,
+                <DropdownItem
+                  component={
+                    <Link
+                      to={
+                        Object {
+                          "pathname": "/details/s/fake sub/add-idp/openid",
+                          "state": Object {
+                            "allLoaded": true,
+                          },
+                        }
+                      }
+                    >
+                      OpenID
+                    </Link>
+                  }
+                />,
+                <DropdownItem
+                  component={
+                    <Link
+                      to={
+                        Object {
+                          "pathname": "/details/s/fake sub/add-idp/ldap",
+                          "state": Object {
+                            "allLoaded": true,
+                          },
+                        }
+                      }
+                    >
+                      LDAP
+                    </Link>
+                  }
+                />,
+                <DropdownItem
+                  component={
+                    <Link
+                      to={
+                        Object {
+                          "pathname": "/details/s/fake sub/add-idp/gitlab",
+                          "state": Object {
+                            "allLoaded": true,
+                          },
+                        }
+                      }
+                    >
+                      GitLab
+                    </Link>
+                  }
+                />,
+                <DropdownItem
+                  component={
+                    <Link
+                      to={
+                        Object {
+                          "pathname": "/details/s/fake sub/add-idp/htpasswd",
+                          "state": Object {
+                            "allLoaded": true,
+                          },
+                        }
+                      }
+                    >
+                      htpasswd
+                    </Link>
+                  }
+                />,
+              ]
+            }
+            isOpen={false}
+            toggle={
+              <DropdownToggle
+                id="add-identity-provider"
+                isDisabled="You do not have permission to add an identity provider. Only cluster owners, cluster editors, and Organization Administrators can add identity providers."
+                onToggle={[Function]}
+              >
+                Add identity provider
+              </DropdownToggle>
+            }
+          />
+        </Tooltip>
+      </StackItem>
+      <StackItem>
+        <Table
+          actionResolver={[Function]}
+          areActionsDisabled={[Function]}
+          aria-label="Identity Providers"
+          borders={true}
+          canCollapseAll={false}
+          canSelectAll={true}
+          canSortFavorites={true}
+          cells={
+            Array [
+              Object {
+                "title": "Name",
+                "transforms": Array [
+                  [Function],
+                ],
+              },
+              Object {
+                "title": "Type",
+                "transforms": Array [
+                  [Function],
+                ],
+              },
+              Object {
+                "title": "Auth callback URL",
+                "transforms": Array [
+                  [Function],
+                ],
+              },
+            ]
+          }
+          className=""
+          collapseAllAriaLabel=""
+          contentId="expanded-content"
+          dropdownDirection="down"
+          dropdownPosition="right"
+          expandId="expandable-toggle"
+          gridBreakPoint="grid-md"
+          isHeaderSelectDisabled={false}
+          isNested={false}
+          isStickyHeader={false}
+          isTreeTable={false}
+          ouiaSafe={true}
+          role="grid"
+          rowLabeledBy="simple-node"
+          rows={
+            Array [
+              Object {
+                "cells": Array [
+                  "hello",
+                  "GitHub",
+                  Object {
+                    "title": <ClipboardCopyLinkButton
+                      className="access-control-tables-copy"
+                      text="https://oauth.com/oauth2callback/hello"
+                    >
+                      Copy URL to clipboard
+                    </ClipboardCopyLinkButton>,
+                  },
+                ],
+                "idpID": "id",
+                "idpName": "hello",
+                "idpTypeName": "GithubIdentityProvider",
+              },
+              Object {
+                "cells": Array [
+                  "hi",
+                  "Google",
+                  Object {
+                    "title": <ClipboardCopyLinkButton
+                      className="access-control-tables-copy"
+                      text="https://oauth.com/oauth2callback/hi"
+                    >
+                      Copy URL to clipboard
+                    </ClipboardCopyLinkButton>,
+                  },
+                ],
+                "idpID": "id",
+                "idpName": "hi",
+                "idpTypeName": "GoogleIdentityProvider",
+              },
+            ]
+          }
+          selectVariant="checkbox"
+          variant="compact"
+        >
+          <TableHeader />
+          <TableBody />
+        </Table>
+      </StackItem>
+    </Stack>
+  </CardBody>
+</Card>
+`;
+
+exports[`<IDPSection /> should render (with IDPs) non-Hypershift cluster 1`] = `
 <Card>
   <CardBody>
     <Stack

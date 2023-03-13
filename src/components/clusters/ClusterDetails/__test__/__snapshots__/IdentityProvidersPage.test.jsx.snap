@@ -58,6 +58,7 @@ exports[`<IdentityProvidersPage /> renders correctly (Google IDP) 1`] = `
               formTitle="Add a Google identity provider"
               idpTypeName="Google"
               isEditForm={false}
+              isHypershift={false}
               selectedIDP="GoogleIdentityProvider"
               submitIDPResponse={
                 Object {
