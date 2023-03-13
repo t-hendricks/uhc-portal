@@ -9,6 +9,7 @@ import IDPSection from './IDPSection';
 import NetworkSelfServiceSection from './NetworkSelfServiceSection';
 import clusterStates, { isHibernating } from '../../../common/clusterStates';
 import { subscriptionStatuses } from '../../../../../common/subscriptionTypes';
+import { isHypershiftCluster } from '../../clusterDetailsHelper';
 
 function AccessControl({
   cluster,
@@ -99,6 +100,7 @@ function AccessControl({
           >
             <IDPSection
               clusterID={get(cluster, 'id')}
+              isHypershift={isHypershiftCluster(cluster)}
               history={history}
               clusterConsoleURL={clusterConsoleURL}
               canEdit={cluster.canEdit}

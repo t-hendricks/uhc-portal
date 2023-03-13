@@ -109,6 +109,7 @@ class IDPForm extends React.Component {
       idpTypeName,
       formTitle,
       HTPasswdPasswordErrors,
+      isHypershift,
     } = this.props;
     const { IDPName, isExpanded } = this.state;
 
@@ -256,7 +257,7 @@ class IDPForm extends React.Component {
                   OAuth callback URL
                 </span>
                 <ClipboardCopy isReadOnly>
-                  {getOauthCallbackURL(clusterConsoleURL, IDPName)}
+                  {getOauthCallbackURL(clusterConsoleURL, IDPName, isHypershift)}
                 </ClipboardCopy>
               </div>
             </GridItem>
@@ -319,6 +320,7 @@ IDPForm.propTypes = {
   clearFields: PropTypes.func.isRequired,
   IDPList: PropTypes.array.isRequired,
   isEditForm: PropTypes.bool,
+  isHypershift: PropTypes.bool,
   idpEdited: PropTypes.object,
   idpName: PropTypes.string,
   HTPasswdPasswordErrors: PropTypes.object,

@@ -94,15 +94,17 @@ const mappingMethods = [
  * getOauthCallbackURL returns the OAuth callback URL for a given cluster console URL and IDP Name.
  * @param {String} consoleURL a cluster's console URL.
  * @param {String} IDPName an IDP name.
+ * @param {Boolean} isHypershift indicates if it's a Hypershift cluster
  * @returns {String} The OAuth callback URL for this IDP.
  */
-const getOauthCallbackURL = (consoleURL, IDPName) => {
+const getOauthCallbackURL = (consoleURL, IDPName, isHypershift) => {
   if (!IDPName || !consoleURL) {
     return '';
   }
   const URLWithSlash = consoleURL.endsWith('/') ? consoleURL : `${consoleURL}/`;
+
   const URLParts = URLWithSlash.split('.');
-  URLParts[0] = 'https://oauth-openshift';
+  URLParts[0] = isHypershift ? 'https://oauth' : 'https://oauth-openshift';
 
   const oauthURLBase = URLParts.join('.');
   return `${oauthURLBase}oauth2callback/${IDPName}`;

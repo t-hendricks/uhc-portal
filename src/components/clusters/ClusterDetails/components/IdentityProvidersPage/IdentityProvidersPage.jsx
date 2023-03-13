@@ -22,6 +22,7 @@ import Unavailable from '../../../../common/Unavailable';
 import getClusterName from '../../../../../common/getClusterName';
 import { subscriptionStatuses } from '../../../../../common/subscriptionTypes';
 import { IDPTypeNames, singularFormIDP } from './IdentityProvidersHelper';
+import { isHypershiftCluster } from '../../clusterDetailsHelper';
 
 class IdentityProvidersPage extends React.Component {
   componentDidMount() {
@@ -200,6 +201,7 @@ class IdentityProvidersPage extends React.Component {
                       isEditForm={isEditForm}
                       idpEdited={idpEdited}
                       idpName={initialValues.name}
+                      isHypershift={isHypershiftCluster(cluster)}
                       HTPasswdPasswordErrors={HTPasswdPasswordErrors}
                     />
                   ) : (

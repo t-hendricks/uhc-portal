@@ -41,6 +41,7 @@ class IDPSection extends React.Component {
       canEdit,
       clusterHibernating,
       isReadOnly,
+      isHypershift,
       history,
     } = this.props;
 
@@ -58,7 +59,7 @@ class IDPSection extends React.Component {
           title: IDPNeedsOAuthURL(idp.type) ? (
             <ClipboardCopyLinkButton
               className="access-control-tables-copy"
-              text={getOauthCallbackURL(clusterConsoleURL, idp.name)}
+              text={getOauthCallbackURL(clusterConsoleURL, idp.name, isHypershift)}
             >
               Copy URL to clipboard
             </ClipboardCopyLinkButton>
