@@ -54,9 +54,6 @@ const actionResolver = (
     ...(isHypershift && hypershiftTooltip.edit),
   };
 
-  if (isHypershift) {
-    return [scaleAction, deleteAction];
-  }
   return [
     scaleAction,
     ...(rowData.machinePool?.id !== 'Default'
