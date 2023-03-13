@@ -87,7 +87,6 @@ class IdentityProvidersPage extends React.Component {
       change,
       clearFields,
       IDPList,
-      clusterConsoleURL,
       initialValues,
       idpEdited,
       editedType,
@@ -194,7 +193,10 @@ class IdentityProvidersPage extends React.Component {
                       formTitle={secondaryTitle}
                       submitIDPResponse={submitIDPResponse}
                       selectedMappingMethod={selectedMappingMethod}
-                      clusterConsoleURL={clusterConsoleURL}
+                      clusterUrls={{
+                        console: get(cluster, 'console.url'),
+                        api: get(cluster, 'api.url'),
+                      }}
                       change={change}
                       clearFields={clearFields}
                       IDPList={IDPList}
@@ -251,7 +253,6 @@ IdentityProvidersPage.propTypes = {
     pending: PropTypes.bool,
   }),
   setGlobalError: PropTypes.func.isRequired,
-  clusterConsoleURL: PropTypes.string,
   resetResponse: PropTypes.func.isRequired,
   resetForm: PropTypes.func.isRequired,
   handleSubmit: PropTypes.func.isRequired,

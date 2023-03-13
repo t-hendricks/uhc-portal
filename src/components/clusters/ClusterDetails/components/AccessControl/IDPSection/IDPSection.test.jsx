@@ -9,6 +9,11 @@ const baseIDPs = {
   error: false,
 };
 
+const clusterUrls = {
+  console: 'https://console-openshift-console.apps.test-liza.wiex.s1.devshift.org',
+  api: 'https://api.test-liza.wiex.s1.devshift.org:6443',
+};
+
 describe('<IDPSection />', () => {
   it('should render (no IDPs)', () => {
     const openModal = jest.fn();
@@ -20,8 +25,9 @@ describe('<IDPSection />', () => {
         identityProviders={baseIDPs}
         clusterHibernating={false}
         isReadOnly={false}
+        isHypershift={false}
         openModal={openModal}
-        clusterConsoleURL="http://example.com/"
+        clusterUrls={clusterUrls}
       />,
     );
     expect(wrapper).toMatchSnapshot();
@@ -42,8 +48,9 @@ describe('<IDPSection />', () => {
         clusterID="fake id"
         subscriptionID="fake sub"
         identityProviders={IDPs}
+        isHypershift={false}
         openModal={jest.fn()}
-        clusterConsoleURL="http://example.com/"
+        clusterUrls={clusterUrls}
       />,
     );
     expect(wrapper).toMatchSnapshot();
@@ -79,7 +86,7 @@ describe('<IDPSection />', () => {
           isReadOnly={false}
           isHypershift={isHypershift}
           openModal={openModal}
-          clusterConsoleURL="http://example.com/"
+          clusterUrls={clusterUrls}
         />,
       );
     };

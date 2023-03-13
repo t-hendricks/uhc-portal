@@ -366,7 +366,7 @@ exports[`<IDPSection /> should render (with IDPs) Hypershift cluster 1`] = `
                   Object {
                     "title": <ClipboardCopyLinkButton
                       className="access-control-tables-copy"
-                      text="https://oauth.com/oauth2callback/hello"
+                      text="https://oauth.test-liza.wiex.s1.devshift.org/oauth2callback/hello"
                     >
                       Copy URL to clipboard
                     </ClipboardCopyLinkButton>,
@@ -383,7 +383,7 @@ exports[`<IDPSection /> should render (with IDPs) Hypershift cluster 1`] = `
                   Object {
                     "title": <ClipboardCopyLinkButton
                       className="access-control-tables-copy"
-                      text="https://oauth.com/oauth2callback/hi"
+                      text="https://oauth.test-liza.wiex.s1.devshift.org/oauth2callback/hi"
                     >
                       Copy URL to clipboard
                     </ClipboardCopyLinkButton>,
@@ -604,7 +604,7 @@ exports[`<IDPSection /> should render (with IDPs) non-Hypershift cluster 1`] = `
                   Object {
                     "title": <ClipboardCopyLinkButton
                       className="access-control-tables-copy"
-                      text="https://oauth-openshift.com/oauth2callback/hello"
+                      text="https://oauth-openshift.apps.test-liza.wiex.s1.devshift.org/oauth2callback/hello"
                     >
                       Copy URL to clipboard
                     </ClipboardCopyLinkButton>,
@@ -621,7 +621,7 @@ exports[`<IDPSection /> should render (with IDPs) non-Hypershift cluster 1`] = `
                   Object {
                     "title": <ClipboardCopyLinkButton
                       className="access-control-tables-copy"
-                      text="https://oauth-openshift.com/oauth2callback/hi"
+                      text="https://oauth-openshift.apps.test-liza.wiex.s1.devshift.org/oauth2callback/hi"
                     >
                       Copy URL to clipboard
                     </ClipboardCopyLinkButton>,

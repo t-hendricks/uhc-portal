@@ -100,7 +100,7 @@ class IDPForm extends React.Component {
     const {
       submitIDPResponse,
       selectedMappingMethod,
-      clusterConsoleURL,
+      clusterUrls,
       isEditForm,
       idpEdited,
       change,
@@ -257,7 +257,7 @@ class IDPForm extends React.Component {
                   OAuth callback URL
                 </span>
                 <ClipboardCopy isReadOnly>
-                  {getOauthCallbackURL(clusterConsoleURL, IDPName, isHypershift)}
+                  {getOauthCallbackURL(clusterUrls, IDPName, isHypershift)}
                 </ClipboardCopy>
               </div>
             </GridItem>
@@ -312,7 +312,10 @@ class IDPForm extends React.Component {
 }
 
 IDPForm.propTypes = {
-  clusterConsoleURL: PropTypes.string,
+  clusterUrls: PropTypes.shape({
+    console: PropTypes.string,
+    api: PropTypes.string,
+  }).isRequired,
   submitIDPResponse: PropTypes.object,
   selectedIDP: PropTypes.string,
   selectedMappingMethod: PropTypes.string,
@@ -330,7 +333,6 @@ IDPForm.propTypes = {
 
 IDPForm.defaultProps = {
   selectedIDP: 'GithubIdentityProvider',
-  clusterConsoleURL: '',
 };
 
 export default IDPForm;

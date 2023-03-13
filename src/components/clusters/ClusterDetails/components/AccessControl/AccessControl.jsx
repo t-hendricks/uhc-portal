@@ -11,16 +11,10 @@ import clusterStates, { isHibernating } from '../../../common/clusterStates';
 import { subscriptionStatuses } from '../../../../../common/subscriptionTypes';
 import { isHypershiftCluster } from '../../clusterDetailsHelper';
 
-function AccessControl({
-  cluster,
-  clusterConsoleURL,
-  cloudProvider,
-  history,
-  refreshEvent = null,
-}) {
+function AccessControl({ cluster, clusterUrls, cloudProvider, history, refreshEvent = null }) {
   const [activeKey, setActiveKey] = React.useState(0);
 
-  // class for whether display vetical tabs (wider screen)
+  // class for whether display vertical tabs (wider screen)
   const [isVerticalTab, setIsVerticalTab] = useState(true);
   const [tabClass, setTabClass] = useState('');
 
@@ -102,7 +96,7 @@ function AccessControl({
               clusterID={get(cluster, 'id')}
               isHypershift={isHypershiftCluster(cluster)}
               history={history}
-              clusterConsoleURL={clusterConsoleURL}
+              clusterUrls={clusterUrls}
               canEdit={cluster.canEdit}
               clusterHibernating={isHibernating(cluster.state)}
               isReadOnly={isReadOnly}
@@ -153,7 +147,10 @@ function AccessControl({
 
 AccessControl.propTypes = {
   cluster: PropTypes.object.isRequired,
-  clusterConsoleURL: PropTypes.string.isRequired,
+  clusterUrls: PropTypes.shape({
+    console: PropTypes.string,
+    api: PropTypes.string,
+  }).isRequired,
   cloudProvider: PropTypes.string.isRequired,
   history: PropTypes.object,
   refreshEvent: PropTypes.object,

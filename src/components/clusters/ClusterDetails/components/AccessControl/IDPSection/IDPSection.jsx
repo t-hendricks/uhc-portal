@@ -35,7 +35,7 @@ class IDPSection extends React.Component {
     const {
       clusterID,
       subscriptionID,
-      clusterConsoleURL,
+      clusterUrls,
       identityProviders,
       openModal,
       canEdit,
@@ -59,7 +59,7 @@ class IDPSection extends React.Component {
           title: IDPNeedsOAuthURL(idp.type) ? (
             <ClipboardCopyLinkButton
               className="access-control-tables-copy"
-              text={getOauthCallbackURL(clusterConsoleURL, idp.name, isHypershift)}
+              text={getOauthCallbackURL(clusterUrls, idp.name, isHypershift)}
             >
               Copy URL to clipboard
             </ClipboardCopyLinkButton>
@@ -203,7 +203,10 @@ class IDPSection extends React.Component {
 IDPSection.propTypes = {
   clusterID: PropTypes.string.isRequired,
   subscriptionID: PropTypes.string.isRequired,
-  clusterConsoleURL: PropTypes.string.isRequired,
+  clusterUrls: PropTypes.shape({
+    console: PropTypes.string,
+    api: PropTypes.string,
+  }).isRequired,
   identityProviders: PropTypes.object.isRequired,
   openModal: PropTypes.func.isRequired,
   canEdit: PropTypes.bool.isRequired,
