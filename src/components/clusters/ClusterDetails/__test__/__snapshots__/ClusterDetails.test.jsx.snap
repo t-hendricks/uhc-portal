@@ -9675,6 +9675,7 @@ exports[`<ClusterDetails /> Cluster Details - OSD should render 1`] = `
                             >
                               <Tab
                                 eventKey={0}
+                                id="Overview"
                                 isAriaDisabled={false}
                                 key=".$0"
                                 ouiaId="Overview"
@@ -9687,6 +9688,7 @@ exports[`<ClusterDetails /> Cluster Details - OSD should render 1`] = `
                               >
                                 <TabBase
                                   eventKey={0}
+                                  id="Overview"
                                   innerRef={null}
                                   isAriaDisabled={false}
                                   ouiaId="Overview"
@@ -9706,7 +9708,7 @@ exports[`<ClusterDetails /> Cluster Details - OSD should render 1`] = `
                                       aria-disabled={false}
                                       aria-selected={true}
                                       className="pf-c-tabs__link"
-                                      id="pf-tab-0-pf-16788206355844udfirsj9bp"
+                                      id="pf-tab-0-Overview"
                                       onClick={[Function]}
                                       ouiaId="Overview"
                                       parentInnerRef={null}
@@ -9720,7 +9722,7 @@ exports[`<ClusterDetails /> Cluster Details - OSD should render 1`] = `
                                         data-ouia-component-id="Overview"
                                         data-ouia-component-type="PF4/TabButton"
                                         data-ouia-safe={true}
-                                        id="pf-tab-0-pf-16788206355844udfirsj9bp"
+                                        id="pf-tab-0-Overview"
                                         onClick={[Function]}
                                         role="tab"
                                         type="button"
@@ -9739,6 +9741,7 @@ exports[`<ClusterDetails /> Cluster Details - OSD should render 1`] = `
                               </Tab>
                               <Tab
                                 eventKey={2}
+                                id="Access control"
                                 isAriaDisabled={false}
                                 key=".$2"
                                 ouiaId="Access control"
@@ -9751,6 +9754,7 @@ exports[`<ClusterDetails /> Cluster Details - OSD should render 1`] = `
                               >
                                 <TabBase
                                   eventKey={2}
+                                  id="Access control"
                                   innerRef={null}
                                   isAriaDisabled={false}
                                   ouiaId="Access control"
@@ -9770,7 +9774,7 @@ exports[`<ClusterDetails /> Cluster Details - OSD should render 1`] = `
                                       aria-disabled={false}
                                       aria-selected={false}
                                       className="pf-c-tabs__link"
-                                      id="pf-tab-2-pf-16788206355844udfirsj9bp"
+                                      id="pf-tab-2-Access control"
                                       onClick={[Function]}
                                       ouiaId="Access control"
                                       parentInnerRef={null}
@@ -9784,7 +9788,7 @@ exports[`<ClusterDetails /> Cluster Details - OSD should render 1`] = `
                                         data-ouia-component-id="Access control"
                                         data-ouia-component-type="PF4/TabButton"
                                         data-ouia-safe={true}
-                                        id="pf-tab-2-pf-16788206355844udfirsj9bp"
+                                        id="pf-tab-2-Access control"
                                         onClick={[Function]}
                                         role="tab"
                                         type="button"
@@ -9803,6 +9807,7 @@ exports[`<ClusterDetails /> Cluster Details - OSD should render 1`] = `
                               </Tab>
                               <Tab
                                 eventKey={3}
+                                id="Add-ons"
                                 isAriaDisabled={false}
                                 key=".$3"
                                 ouiaId="Add-ons"
@@ -9815,6 +9820,7 @@ exports[`<ClusterDetails /> Cluster Details - OSD should render 1`] = `
                               >
                                 <TabBase
                                   eventKey={3}
+                                  id="Add-ons"
                                   innerRef={null}
                                   isAriaDisabled={false}
                                   ouiaId="Add-ons"
@@ -9834,7 +9840,7 @@ exports[`<ClusterDetails /> Cluster Details - OSD should render 1`] = `
                                       aria-disabled={false}
                                       aria-selected={false}
                                       className="pf-c-tabs__link"
-                                      id="pf-tab-3-pf-16788206355844udfirsj9bp"
+                                      id="pf-tab-3-Add-ons"
                                       onClick={[Function]}
                                       ouiaId="Add-ons"
                                       parentInnerRef={null}
@@ -9848,7 +9854,7 @@ exports[`<ClusterDetails /> Cluster Details - OSD should render 1`] = `
                                         data-ouia-component-id="Add-ons"
                                         data-ouia-component-type="PF4/TabButton"
                                         data-ouia-safe={true}
-                                        id="pf-tab-3-pf-16788206355844udfirsj9bp"
+                                        id="pf-tab-3-Add-ons"
                                         onClick={[Function]}
                                         role="tab"
                                         type="button"
@@ -9867,6 +9873,7 @@ exports[`<ClusterDetails /> Cluster Details - OSD should render 1`] = `
                               </Tab>
                               <Tab
                                 eventKey={5}
+                                id="Networking"
                                 isAriaDisabled={false}
                                 key=".$5"
                                 ouiaId="Networking"
@@ -9879,6 +9886,7 @@ exports[`<ClusterDetails /> Cluster Details - OSD should render 1`] = `
                               >
                                 <TabBase
                                   eventKey={5}
+                                  id="Networking"
                                   innerRef={null}
                                   isAriaDisabled={false}
                                   ouiaId="Networking"
@@ -9898,7 +9906,7 @@ exports[`<ClusterDetails /> Cluster Details - OSD should render 1`] = `
                                       aria-disabled={false}
                                       aria-selected={false}
                                       className="pf-c-tabs__link"
-                                      id="pf-tab-5-pf-16788206355844udfirsj9bp"
+                                      id="pf-tab-5-Networking"
                                       onClick={[Function]}
                                       ouiaId="Networking"
                                       parentInnerRef={null}
@@ -9912,7 +9920,7 @@ exports[`<ClusterDetails /> Cluster Details - OSD should render 1`] = `
                                         data-ouia-component-id="Networking"
                                         data-ouia-component-type="PF4/TabButton"
                                         data-ouia-safe={true}
-                                        id="pf-tab-5-pf-16788206355844udfirsj9bp"
+                                        id="pf-tab-5-Networking"
                                         onClick={[Function]}
                                         role="tab"
                                         type="button"
@@ -9931,6 +9939,7 @@ exports[`<ClusterDetails /> Cluster Details - OSD should render 1`] = `
                               </Tab>
                               <Tab
                                 eventKey={6}
+                                id="Machine pools"
                                 isAriaDisabled={false}
                                 key=".$6"
                                 ouiaId="Machine pools"
@@ -9943,6 +9952,7 @@ exports[`<ClusterDetails /> Cluster Details - OSD should render 1`] = `
                               >
                                 <TabBase
                                   eventKey={6}
+                                  id="Machine pools"
                                   innerRef={null}
                                   isAriaDisabled={false}
                                   ouiaId="Machine pools"
@@ -9962,7 +9972,7 @@ exports[`<ClusterDetails /> Cluster Details - OSD should render 1`] = `
                                       aria-disabled={false}
                                       aria-selected={false}
                                       className="pf-c-tabs__link"
-                                      id="pf-tab-6-pf-16788206355844udfirsj9bp"
+                                      id="pf-tab-6-Machine pools"
                                       onClick={[Function]}
                                       ouiaId="Machine pools"
                                       parentInnerRef={null}
@@ -9976,7 +9986,7 @@ exports[`<ClusterDetails /> Cluster Details - OSD should render 1`] = `
                                         data-ouia-component-id="Machine pools"
                                         data-ouia-component-type="PF4/TabButton"
                                         data-ouia-safe={true}
-                                        id="pf-tab-6-pf-16788206355844udfirsj9bp"
+                                        id="pf-tab-6-Machine pools"
                                         onClick={[Function]}
                                         role="tab"
                                         type="button"
@@ -9995,6 +10005,7 @@ exports[`<ClusterDetails /> Cluster Details - OSD should render 1`] = `
                               </Tab>
                               <Tab
                                 eventKey={7}
+                                id="Support"
                                 isAriaDisabled={false}
                                 key=".$7"
                                 ouiaId="Support"
@@ -10007,6 +10018,7 @@ exports[`<ClusterDetails /> Cluster Details - OSD should render 1`] = `
                               >
                                 <TabBase
                                   eventKey={7}
+                                  id="Support"
                                   innerRef={null}
                                   isAriaDisabled={false}
                                   ouiaId="Support"
@@ -10026,7 +10038,7 @@ exports[`<ClusterDetails /> Cluster Details - OSD should render 1`] = `
                                       aria-disabled={false}
                                       aria-selected={false}
                                       className="pf-c-tabs__link"
-                                      id="pf-tab-7-pf-16788206355844udfirsj9bp"
+                                      id="pf-tab-7-Support"
                                       onClick={[Function]}
                                       ouiaId="Support"
                                       parentInnerRef={null}
@@ -10040,7 +10052,7 @@ exports[`<ClusterDetails /> Cluster Details - OSD should render 1`] = `
                                         data-ouia-component-id="Support"
                                         data-ouia-component-type="PF4/TabButton"
                                         data-ouia-safe={true}
-                                        id="pf-tab-7-pf-16788206355844udfirsj9bp"
+                                        id="pf-tab-7-Support"
                                         onClick={[Function]}
                                         role="tab"
                                         type="button"
@@ -15905,7 +15917,7 @@ exports[`<ClusterDetails /> Cluster Details - OSD should render 1`] = `
                                                                               popper={
                                                                                 <ForwardRef
                                                                                   active={false}
-                                                                                  aria-describedby="popover-pf-16788206355786eyc85l5zfb-body"
+                                                                                  aria-describedby="popover-pf-16788240305797cddeuy6uj8-body"
                                                                                   aria-label="help"
                                                                                   aria-modal="true"
                                                                                   className="pf-c-popover"
@@ -15938,7 +15950,7 @@ exports[`<ClusterDetails /> Cluster Details - OSD should render 1`] = `
                                                                                       onClose={[Function]}
                                                                                     />
                                                                                     <PopoverBody
-                                                                                      id="popover-pf-16788206355786eyc85l5zfb-body"
+                                                                                      id="popover-pf-16788240305797cddeuy6uj8-body"
                                                                                     >
                                                                                       The actual number of compute nodes may not always match with the number of desired when the cluster is scaling.
                                                                                     </PopoverBody>
