@@ -64,7 +64,6 @@
     "react-monaco-editor": "^0.43.0",
     "react-redux": "^7.2.0",
     "react-router": "^5.2.0",
-    "react-router-bootstrap": "^0.25.0",
     "react-router-dom": "^5.2.0",
     "react-router-hash-link": "^2.0.0",
     "react-tagsinput": "3.19.x",

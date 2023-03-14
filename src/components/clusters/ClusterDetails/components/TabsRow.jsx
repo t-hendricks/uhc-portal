@@ -1,17 +1,31 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-
+import { withRouter } from 'react-router-dom';
 import { Tabs, TabTitleText, TabTitleIcon, Tooltip, Tab } from '@patternfly/react-core';
 import { ExclamationCircleIcon } from '@patternfly/react-icons';
 
 class TabsRow extends React.Component {
+  unlisten = null;
+
   state = {
     activeTabKey: 0,
     initialTabKey: this.getInitTab(),
   };
 
   componentDidMount() {
-    window.addEventListener('popstate', this.onPopState);
+    const { history } = this.props;
+    this.unlisten = history.listen((location, action) => {
+      // listen to browser back/forward and manual URL changes
+      if (action === 'POP') {
+        const targetTab = this.getTabs().find((t) => `#${t.id}` === location.hash);
+        const targetTabKey = targetTab?.key;
+        if (targetTab?.isDisabled || !targetTab?.show) {
+          this.handleTabClick(undefined, 0, false);
+        } else if (targetTabKey !== undefined) {
+          this.handleTabClick(undefined, targetTabKey, false);
+        }
+      }
+    });
     const { initialTabKey } = this.state;
     const initialTab = this.getTabs()[initialTabKey];
     if (initialTab?.isDisabled || !initialTab?.show) {
@@ -36,7 +50,7 @@ class TabsRow extends React.Component {
   }
 
   componentWillUnmount() {
-    window.removeEventListener('popstate', this.onPopState);
+    this.unlisten();
   }
 
   getInitTab() {
@@ -168,8 +182,8 @@ class TabsRow extends React.Component {
     ];
   }
 
-  handleTabClick = (event, tabIndex) => {
-    const { setOpenedTab, onTabSelected } = this.props;
+  handleTabClick = (event, tabIndex, historyPush = true) => {
+    const { onTabSelected, history, location } = this.props;
     const tabs = this.getTabs();
     this.setState(
       (state) => ({
@@ -179,7 +193,12 @@ class TabsRow extends React.Component {
       () => {
         const { initialTabKey } = this.state;
         if (initialTabKey === null) {
-          setOpenedTab(tabs[tabIndex].id);
+          if (historyPush) {
+            history.push({
+              pathname: location.pathname,
+              hash: `#${tabs[tabIndex].id}`,
+            });
+          }
         }
       },
     );
@@ -195,18 +214,6 @@ class TabsRow extends React.Component {
         }
       }
     });
-  };
-
-  /* use browser API (window) as a temporary workaround to change
-     the active tab when hash is changed inside URL */
-  onPopState = ({ target }) => {
-    const targetTab = this.getTabs().find((t) => t.id === target.location.hash.substring(1));
-    const targetTabKey = targetTab?.key;
-    if (targetTab?.isDisabled || !targetTab?.show) {
-      this.handleTabClick(undefined, 0);
-    } else if (targetTabKey !== undefined) {
-      this.handleTabClick(undefined, targetTabKey);
-    }
   };
 
   render() {
@@ -258,8 +265,11 @@ TabsRow.propTypes = {
   addAssistedTabRef: PropTypes.object.isRequired,
   hasIssues: PropTypes.bool.isRequired,
   initTabOpen: PropTypes.string,
-  setOpenedTab: PropTypes.func.isRequired,
   onTabSelected: PropTypes.func.isRequired,
+  history: PropTypes.object.isRequired,
+  location: PropTypes.shape({
+    pathname: PropTypes.string.isRequired,
+  }).isRequired,
 };
 
 TabsRow.defaultProps = {
@@ -277,4 +287,4 @@ TabsRow.defaultProps = {
   initTabOpen: '',
 };
 
-export default TabsRow;
+export default withRouter(TabsRow);
