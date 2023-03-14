@@ -36,6 +36,10 @@ import InstructionCommand from '../../../../common/InstructionCommand';
 import './AccountsRolesScreen.scss';
 
 const NO_ROLE_DETECTED = 'No role detected';
+const noRoleOption = {
+  name: NO_ROLE_DETECTED,
+  value: NO_ROLE_DETECTED,
+};
 
 const hasCompleteRoleSet = (role) =>
   role.Installer && role.Support && role.ControlPlane && role.Worker;
@@ -53,6 +57,13 @@ const getDefaultInstallerRole = (selectedInstallerRoleARN, accountRolesARNs) => 
   return defaultRole.Installer;
 };
 
+const setFormRoles = (change, role) => {
+  change('installer_role_arn', role?.Installer || NO_ROLE_DETECTED);
+  change('support_role_arn', role?.Support || NO_ROLE_DETECTED);
+  change('control_plane_role_arn', role?.ControlPlane || NO_ROLE_DETECTED);
+  change('worker_role_arn', role?.Worker || NO_ROLE_DETECTED);
+};
+
 function AccountRolesARNsSection({
   change,
   touchARNsFields,
@@ -67,12 +78,7 @@ function AccountRolesARNsSection({
   const track = useAnalytics();
   const [isExpanded, setIsExpanded] = useState(true);
   const [accountRoles, setAccountRoles] = useState([]);
-  const [installerRoleOptions, setInstallerRoleOptions] = useState([
-    {
-      name: NO_ROLE_DETECTED,
-      value: NO_ROLE_DETECTED,
-    },
-  ]);
+  const [installerRoleOptions, setInstallerRoleOptions] = useState([noRoleOption]);
   const [selectedInstallerRole, setSelectedInstallerRole] = useState(NO_ROLE_DETECTED);
   const [allARNsFound, setAllARNsFound] = useState(false);
   const [hasARNsError, setHasARNsError] = useState(false);
@@ -87,6 +93,11 @@ function AccountRolesARNsSection({
   }, [touchARNsFields]);
 
   useEffect(() => {
+    setSelectedInstallerRole(NO_ROLE_DETECTED);
+    setAccountRoles([]);
+    setInstallerRoleOptions([noRoleOption]);
+    setFormRoles(change, null);
+    setAllARNsFound(false);
     clearGetAWSAccountRolesARNsResponse();
   }, [selectedAWSAccountID]);
 
@@ -94,10 +105,7 @@ function AccountRolesARNsSection({
     accountRoles.forEach((role) => {
       if (role.Installer === selectedInstallerRole) {
         setAllARNsFound(hasCompleteRoleSet(role));
-        change('installer_role_arn', role.Installer || NO_ROLE_DETECTED);
-        change('support_role_arn', role.Support || NO_ROLE_DETECTED);
-        change('control_plane_role_arn', role.ControlPlane || NO_ROLE_DETECTED);
-        change('worker_role_arn', role.Worker || NO_ROLE_DETECTED);
+        setFormRoles(change, role);
         change('rosa_max_os_version', role.version);
       }
     });
@@ -106,14 +114,8 @@ function AccountRolesARNsSection({
   const setSelectedInstallerRoleAndOptions = (accountRolesARNs) => {
     const installerOptions = [];
     if (accountRolesARNs.length === 0) {
-      change('installer_role_arn', NO_ROLE_DETECTED);
-      change('support_role_arn', NO_ROLE_DETECTED);
-      change('control_plane_role_arn', NO_ROLE_DETECTED);
-      change('worker_role_arn', NO_ROLE_DETECTED);
-      installerOptions.push({
-        name: NO_ROLE_DETECTED,
-        value: NO_ROLE_DETECTED,
-      });
+      setFormRoles(change, null);
+      installerOptions.push(noRoleOption);
       change('rosa_max_os_version', undefined);
       setAllARNsFound(false);
     } else {
