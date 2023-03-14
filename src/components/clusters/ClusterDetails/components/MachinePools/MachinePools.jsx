@@ -6,7 +6,6 @@ import get from 'lodash/get';
 import cx from 'classnames';
 
 import {
-  Alert,
   Card,
   Button,
   CardBody,
@@ -377,7 +376,7 @@ class MachinePools extends React.Component {
     const onClickScaleAction = (_, __, rowData) =>
       openModal(modals.EDIT_NODE_COUNT, {
         machinePool: rowData.machinePool,
-        isDefaultMachinePool: rowData.machinePool.id === 'Default',
+        isDefaultMachinePool: rowData.machinePool.id === 'Default' && !isHypershift,
         cluster,
       });
 
@@ -482,13 +481,6 @@ class MachinePools extends React.Component {
                       }),
                     )
                   }
-                />
-              )}
-              {isHypershift && (
-                <Alert
-                  variant="info"
-                  isInline
-                  title="Scaling machine pools is currently only available using ROSA CLI"
                 />
               )}
               <Table
