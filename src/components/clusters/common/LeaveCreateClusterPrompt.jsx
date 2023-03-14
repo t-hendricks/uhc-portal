@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useHistory } from 'react-router';
+import { useHistory } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { Modal, ModalVariant, Button } from '@patternfly/react-core';
 

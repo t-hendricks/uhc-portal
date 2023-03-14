@@ -13,7 +13,7 @@ limitations under the License.
 
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Redirect } from 'react-router';
+import { Redirect } from 'react-router-dom';
 import get from 'lodash/get';
 
 import { PageSection, TabContent } from '@patternfly/react-core';

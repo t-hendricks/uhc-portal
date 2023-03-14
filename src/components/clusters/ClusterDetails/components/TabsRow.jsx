@@ -229,6 +229,7 @@ class TabsRow extends React.Component {
             eventKey={tab.key}
             title={<TabTitleText>{tab.title}</TabTitleText>}
             tabContentId={tab.contentId}
+            id={tab.title}
             ouiaId={tab.title}
             isAriaDisabled={tab.isDisabled || false}
             tooltip={tab.tooltip}
