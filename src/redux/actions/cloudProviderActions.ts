@@ -26,6 +26,7 @@ const getCloudProvidersAndRegions = () =>
                 supports_multi_az: region.supports_multi_az,
                 kms_location_id: region.kms_location_id,
                 ccs_only: region.ccs_only,
+                supports_hypershift: region.supports_hypershift,
               };
             }
           });
