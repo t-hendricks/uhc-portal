@@ -38,6 +38,7 @@ describe('Cluster Actions Dropdown Items', () => {
       expect(Fixtures.managedReadyProps.openModal).toBeCalledWith('edit-node-count', {
         cluster: Fixtures.cluster,
         isDefaultMachinePool: true,
+        isHypershiftCluster: false,
       });
     });
 
@@ -208,11 +209,12 @@ describe('Cluster Actions Dropdown Items', () => {
       });
     });
 
-    it('disables "edit node count" option if hypershift', () => {
+    // hypershift now allows 'edit node count'
+    it('enables "edit node count" option if hypershift', () => {
       const wrapper = shallow(<DropDownItemsRenderHelper {...Fixtures.hyperShiftReadyProps} />);
       wrapper.find(DropdownItem).forEach((option) => {
         if (option.props().title === 'Edit node count') {
-          expect(option.props().isAriaDisabled).toBeTruthy();
+          expect(option.props().isAriaDisabled).toBeFalsy();
         }
       });
     });

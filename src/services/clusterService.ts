@@ -467,6 +467,12 @@ const getNodePools = (clusterID: string) =>
     total?: number;
   }>(`/api/clusters_mgmt/v1/clusters/${clusterID}/node_pools`);
 
+const patchNodePool = (clusterID: string, nodePoolID: string, data: NodePool) =>
+  apiRequest.patch<NodePool>(
+    `/api/clusters_mgmt/v1/clusters/${clusterID}/node_pools/${nodePoolID}`,
+    data,
+  );
+
 const addMachinePool = (clusterID: string, data: MachinePool) =>
   apiRequest.post<MachinePool>(`/api/clusters_mgmt/v1/clusters/${clusterID}/machine_pools`, data);
 
@@ -781,6 +787,7 @@ const clusterService = {
   getClusterStatus,
   getMachinePools,
   getNodePools,
+  patchNodePool,
   addMachinePool,
   scaleMachinePool,
   deleteMachinePool,
