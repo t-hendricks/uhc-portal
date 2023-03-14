@@ -1,0 +1,359 @@
+yarn run v1.22.10
+$ TZ=America/New_York jest --env=jsdom -u
+  console.log
+    Tokens: componentDidMount, props = { show: true, setOfflineToken: [Function: setOfflineToken] }
+
+      at src/components/tokens/Tokens.tsx:99:15
+
+  console.log
+    Tokens: getOfflineToken succeeded => scope undefined
+
+      at src/components/tokens/TokenUtils.ts:127:15
+
+  console.warn
+    react-i18next:: You will need to pass in an i18next instance by using initReactI18next
+
+      at warn (node_modules/react-i18next/dist/commonjs/utils.js:22:31)
+      at warnOnce (node_modules/react-i18next/dist/commonjs/utils.js:35:8)
+      at useTranslation (node_modules/react-i18next/dist/commonjs/useTranslation.js:36:25)
+      at f (node_modules/openshift-assisted-ui-lib/dist/index.js:3:4502)
+      at TechnologyPreview (node_modules/openshift-assisted-ui-lib/dist/index.js:3:26128)
+      at renderWithHooks (node_modules/react-dom/cjs/react-dom.development.js:14985:18)
+      at mountIndeterminateComponent (node_modules/react-dom/cjs/react-dom.development.js:17811:13)
+
+  console.log
+    HYPERSHIFT_WIZARD_FEATURE is Disabled
+
+      at Router (src/components/App/Router.tsx:150:11)
+
+  console.log
+    OSD_WIZARD_V2_FEATURE is Disabled
+
+      at Router (src/components/App/Router.tsx:152:11)
+
+  console.log
+    Using OSD v1 wizard
+
+      at Router (src/components/App/Router.tsx:154:11)
+
+  console.log
+    HYPERSHIFT_WIZARD_FEATURE is Disabled
+
+      at Router (src/components/App/Router.tsx:150:11)
+
+  console.log
+    OSD_WIZARD_V2_FEATURE is Disabled
+
+      at Router (src/components/App/Router.tsx:152:11)
+
+  console.log
+    Using OSD v1 wizard
+
+      at Router (src/components/App/Router.tsx:154:11)
+
+  console.log
+    HYPERSHIFT_WIZARD_FEATURE is Disabled
+
+      at Router (src/components/App/Router.tsx:150:11)
+
+  console.log
+    OSD_WIZARD_V2_FEATURE is Disabled
+
+      at Router (src/components/App/Router.tsx:152:11)
+
+  console.log
+    Using OSD v1 wizard
+
+      at Router (src/components/App/Router.tsx:154:11)
+
+  console.log
+    HYPERSHIFT_WIZARD_FEATURE is Disabled
+
+      at Router (src/components/App/Router.tsx:150:11)
+
+  console.log
+    OSD_WIZARD_V2_FEATURE is Disabled
+
+      at Router (src/components/App/Router.tsx:152:11)
+
+  console.log
+    Using OSD v1 wizard
+
+      at Router (src/components/App/Router.tsx:154:11)
+
+  console.log
+    HYPERSHIFT_WIZARD_FEATURE is Disabled
+
+      at Router (src/components/App/Router.tsx:150:11)
+
+  console.log
+    OSD_WIZARD_V2_FEATURE is Disabled
+
+      at Router (src/components/App/Router.tsx:152:11)
+
+  console.log
+    Using OSD v1 wizard
+
+      at Router (src/components/App/Router.tsx:154:11)
+
+  console.log
+    Tokens: componentDidMount, props = {
+      show: true,
+      offlineToken: undefined,
+      setOfflineToken: [Function: setOfflineToken]
+    }
+
+      at src/components/tokens/Tokens.tsx:99:15
+
+  console.log
+    Tokens: getOfflineToken succeeded => scope undefined
+
+      at src/components/tokens/TokenUtils.ts:127:15
+
+  console.log
+    HYPERSHIFT_WIZARD_FEATURE is Disabled
+
+      at Router (src/components/App/Router.tsx:150:11)
+
+  console.log
+    OSD_WIZARD_V2_FEATURE is Disabled
+
+      at Router (src/components/App/Router.tsx:152:11)
+
+  console.log
+    Using OSD v1 wizard
+
+      at Router (src/components/App/Router.tsx:154:11)
+
+  console.warn
+    react-i18next:: You will need to pass in an i18next instance by using initReactI18next
+
+      at warn (node_modules/react-i18next/dist/commonjs/utils.js:22:31)
+      at warnOnce (node_modules/react-i18next/dist/commonjs/utils.js:35:8)
+      at useTranslation (node_modules/react-i18next/dist/commonjs/useTranslation.js:36:25)
+      at f (node_modules/openshift-assisted-ui-lib/dist/index.js:3:4502)
+      at TechnologyPreview (node_modules/openshift-assisted-ui-lib/dist/index.js:3:26128)
+      at renderWithHooks (node_modules/react-dom/cjs/react-dom.development.js:14985:18)
+      at mountIndeterminateComponent (node_modules/react-dom/cjs/react-dom.development.js:17811:13)
+
+  console.log
+    HYPERSHIFT_WIZARD_FEATURE is Disabled
+
+      at Router (src/components/App/Router.tsx:150:11)
+
+  console.log
+    OSD_WIZARD_V2_FEATURE is Disabled
+
+      at Router (src/components/App/Router.tsx:152:11)
+
+  console.log
+    Using OSD v1 wizard
+
+      at Router (src/components/App/Router.tsx:154:11)
+
+  console.log
+    HYPERSHIFT_WIZARD_FEATURE is Disabled
+
+      at Router (src/components/App/Router.tsx:150:11)
+
+  console.log
+    OSD_WIZARD_V2_FEATURE is Disabled
+
+      at Router (src/components/App/Router.tsx:152:11)
+
+  console.log
+    Using OSD v1 wizard
+
+      at Router (src/components/App/Router.tsx:154:11)
+
+  console.log
+    HYPERSHIFT_WIZARD_FEATURE is Disabled
+
+      at Router (src/components/App/Router.tsx:150:11)
+
+  console.log
+    OSD_WIZARD_V2_FEATURE is Disabled
+
+      at Router (src/components/App/Router.tsx:152:11)
+
+  console.log
+    Using OSD v1 wizard
+
+      at Router (src/components/App/Router.tsx:154:11)
+
+  console.log
+    HYPERSHIFT_WIZARD_FEATURE is Disabled
+
+      at Router (src/components/App/Router.tsx:150:11)
+
+  console.log
+    OSD_WIZARD_V2_FEATURE is Disabled
+
+      at Router (src/components/App/Router.tsx:152:11)
+
+  console.log
+    Using OSD v1 wizard
+
+      at Router (src/components/App/Router.tsx:154:11)
+
+  console.log
+    HYPERSHIFT_WIZARD_FEATURE is Disabled
+
+      at Router (src/components/App/Router.tsx:150:11)
+
+  console.log
+    OSD_WIZARD_V2_FEATURE is Disabled
+
+      at Router (src/components/App/Router.tsx:152:11)
+
+  console.log
+    Using OSD v1 wizard
+
+      at Router (src/components/App/Router.tsx:154:11)
+
+  console.log
+    HYPERSHIFT_WIZARD_FEATURE is Disabled
+
+      at Router (src/components/App/Router.tsx:150:11)
+
+  console.log
+    OSD_WIZARD_V2_FEATURE is Disabled
+
+      at Router (src/components/App/Router.tsx:152:11)
+
+  console.log
+    Using OSD v1 wizard
+
+      at Router (src/components/App/Router.tsx:154:11)
+
+  console.log
+    HYPERSHIFT_WIZARD_FEATURE is Disabled
+
+      at Router (src/components/App/Router.tsx:150:11)
+
+  console.log
+    OSD_WIZARD_V2_FEATURE is Disabled
+
+      at Router (src/components/App/Router.tsx:152:11)
+
+  console.log
+    Using OSD v1 wizard
+
+      at Router (src/components/App/Router.tsx:154:11)
+
+  console.log
+    HYPERSHIFT_WIZARD_FEATURE is Disabled
+
+      at Router (src/components/App/Router.tsx:150:11)
+
+  console.log
+    OSD_WIZARD_V2_FEATURE is Disabled
+
+      at Router (src/components/App/Router.tsx:152:11)
+
+  console.log
+    Using OSD v1 wizard
+
+      at Router (src/components/App/Router.tsx:154:11)
+
+  console.log
+    HYPERSHIFT_WIZARD_FEATURE is Disabled
+
+      at Router (src/components/App/Router.tsx:150:11)
+
+  console.log
+    OSD_WIZARD_V2_FEATURE is Disabled
+
+      at Router (src/components/App/Router.tsx:152:11)
+
+  console.log
+    Using OSD v1 wizard
+
+      at Router (src/components/App/Router.tsx:154:11)
+
+  console.log
+    HYPERSHIFT_WIZARD_FEATURE is Disabled
+
+      at Router (src/components/App/Router.tsx:150:11)
+
+  console.log
+    OSD_WIZARD_V2_FEATURE is Disabled
+
+      at Router (src/components/App/Router.tsx:152:11)
+
+  console.log
+    Using OSD v1 wizard
+
+      at Router (src/components/App/Router.tsx:154:11)
+
+  console.log
+    HYPERSHIFT_WIZARD_FEATURE is Disabled
+
+      at Router (src/components/App/Router.tsx:150:11)
+
+  console.log
+    OSD_WIZARD_V2_FEATURE is Disabled
+
+      at Router (src/components/App/Router.tsx:152:11)
+
+  console.log
+    Using OSD v1 wizard
+
+      at Router (src/components/App/Router.tsx:154:11)
+
+  console.log
+    HYPERSHIFT_WIZARD_FEATURE is Disabled
+
+      at Router (src/components/App/Router.tsx:150:11)
+
+  console.log
+    OSD_WIZARD_V2_FEATURE is Disabled
+
+      at Router (src/components/App/Router.tsx:152:11)
+
+  console.log
+    Using OSD v1 wizard
+
+      at Router (src/components/App/Router.tsx:154:11)
+
+  console.log
+    HYPERSHIFT_WIZARD_FEATURE is Disabled
+
+      at Router (src/components/App/Router.tsx:150:11)
+
+  console.log
+    OSD_WIZARD_V2_FEATURE is Disabled
+
+      at Router (src/components/App/Router.tsx:152:11)
+
+  console.log
+    Using OSD v1 wizard
+
+      at Router (src/components/App/Router.tsx:154:11)
+
+  console.log
+    HYPERSHIFT_WIZARD_FEATURE is Disabled
+
+      at Router (src/components/App/Router.tsx:150:11)
+
+  console.log
+    OSD_WIZARD_V2_FEATURE is Disabled
+
+      at Router (src/components/App/Router.tsx:152:11)
+
+  console.log
+    Using OSD v1 wizard
+
+      at Router (src/components/App/Router.tsx:154:11)
+
+  console.log
+    Tokens: getOfflineToken succeeded => scope undefined
+
+      at src/components/tokens/TokenUtils.ts:127:15
+
+  console.log
+    Tokens: getOfflineToken succeeded => scope undefined
+
+      at src/components/tokens/TokenUtils.ts:127:15
+
+info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.

@@ -1,4 +1,5 @@
 import React from 'react';
+import { MemoryRouter } from 'react-router';
 import { render, screen } from '~/testUtils';
 
 import TabsRow from '../components/TabsRow';
@@ -37,7 +38,11 @@ describe('<TabsRow />', () => {
 
   it('should display overview, access control, monitoring, and add-ons tabs', () => {
     const tabProps = { ...props, displayAccessControlTab: true, displayAddOnsTab: true };
-    render(<TabsRow {...tabProps} />);
+    render(
+      <MemoryRouter keyLength={0} initialEntries={[{ pathname: '/details/s/:id', key: 'testKey' }]}>
+        <TabsRow {...tabProps} />
+      </MemoryRouter>,
+    );
 
     expect(screen.getAllByRole('tab')).toHaveLength(4);
 
@@ -60,7 +65,11 @@ describe('<TabsRow />', () => {
       displayAddOnsTab: false,
       displayMonitoringTab: false,
     };
-    render(<TabsRow {...tabProps} />);
+    render(
+      <MemoryRouter keyLength={0} initialEntries={[{ pathname: '/details/s/:id', key: 'testKey' }]}>
+        <TabsRow {...tabProps} />
+      </MemoryRouter>,
+    );
 
     expect(screen.getAllByRole('tab')).toHaveLength(2);
 
@@ -80,7 +89,11 @@ describe('<TabsRow />', () => {
       ...props,
       hasIssues: true,
     };
-    render(<TabsRow {...tabProps} />);
+    render(
+      <MemoryRouter keyLength={0} initialEntries={[{ pathname: '/details/s/:id', key: 'testKey' }]}>
+        <TabsRow {...tabProps} />
+      </MemoryRouter>,
+    );
 
     // There is an accessibility issue with the warning icon.
     // It doesn't have an accessible label and is hidden (with aria-hidden) so it is not easily found
