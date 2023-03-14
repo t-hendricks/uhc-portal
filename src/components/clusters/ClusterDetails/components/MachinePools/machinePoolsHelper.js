@@ -18,7 +18,6 @@ const actionResolver = (
 
   const hypershiftTooltip = {
     delete: { tooltip: 'The last machine pool cannot be deleted' },
-    edit: { tooltip: 'Editing machine pools is currently only available using ROSA CLI' },
   };
 
   const scaleAction = {
@@ -39,21 +38,17 @@ const actionResolver = (
     title: 'Edit labels',
     onClick: onClickEditLaebls,
     className: 'hand-pointer',
-    isAriaDisabled: isHypershift,
-    ...(isHypershift && hypershiftTooltip.edit),
   };
 
   const editTaintsAction = {
     title: 'Edit taints',
     onClick: onClickEditTaints,
     className: 'hand-pointer',
-    isAriaDisabled: isHypershift,
-    ...(isHypershift && hypershiftTooltip.edit),
   };
 
   return [
     scaleAction,
-    ...(rowData.machinePool?.id !== 'Default'
+    ...(rowData.machinePool?.id !== 'Default' || isHypershift
       ? [editLabelsAction, editTaintsAction, deleteAction]
       : []),
   ];
