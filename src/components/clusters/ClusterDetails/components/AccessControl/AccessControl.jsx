@@ -93,6 +93,7 @@ function AccessControl({
         >
           <Tab
             eventKey={0}
+            id="identity-providers"
             title={<TabTitleText>Identity providers</TabTitleText>}
             isHidden={identityProvidersIsHidden}
           >
@@ -107,6 +108,7 @@ function AccessControl({
           </Tab>
           <Tab
             eventKey={1}
+            id="cluster-roles-access"
             title={<TabTitleText>Cluster Roles and Access</TabTitleText>}
             isHidden={clusterRolesAndAccessIsHidden}
           >
@@ -116,7 +118,11 @@ function AccessControl({
               isReadOnly={isReadOnly}
             />
           </Tab>
-          <Tab eventKey={2} title={<TabTitleText>OCM Roles and Access</TabTitleText>}>
+          <Tab
+            eventKey={2}
+            id="ocm-roles-access"
+            title={<TabTitleText>OCM Roles and Access</TabTitleText>}
+          >
             <OCMRolesSection
               subscription={cluster.subscription}
               canEditOCMRoles={cluster.canEditOCMRoles}
@@ -126,6 +132,7 @@ function AccessControl({
           </Tab>
           <Tab
             eventKey={3}
+            id="aws-infra-access"
             isHidden={AWSInfrastructureAccessIsHidden}
             title={<TabTitleText>AWS infrastructure access</TabTitleText>}
           >

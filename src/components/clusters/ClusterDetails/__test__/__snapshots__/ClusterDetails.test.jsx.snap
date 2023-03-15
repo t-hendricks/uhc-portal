@@ -7012,12 +7012,12 @@ exports[`<ClusterDetails /> Cluster Details - OSD should render 1`] = `
                                       role="presentation"
                                     >
                                       <button
-                                        aria-controls="pf-tab-section-0-pf-1678896186404226mfxcb99p"
+                                        aria-controls="pf-tab-section-0-identity-providers"
                                         aria-selected="true"
                                         class="pf-c-tabs__link"
                                         data-ouia-component-type="PF4/TabButton"
                                         data-ouia-safe="true"
-                                        id="pf-tab-0-pf-1678896186404226mfxcb99p"
+                                        id="pf-tab-0-identity-providers"
                                         role="tab"
                                         type="button"
                                       >
@@ -7033,12 +7033,12 @@ exports[`<ClusterDetails /> Cluster Details - OSD should render 1`] = `
                                       role="presentation"
                                     >
                                       <button
-                                        aria-controls="pf-tab-section-1-pf-1678896186404226mfxcb99p"
+                                        aria-controls="pf-tab-section-1-cluster-roles-access"
                                         aria-selected="false"
                                         class="pf-c-tabs__link"
                                         data-ouia-component-type="PF4/TabButton"
                                         data-ouia-safe="true"
-                                        id="pf-tab-1-pf-1678896186404226mfxcb99p"
+                                        id="pf-tab-1-cluster-roles-access"
                                         role="tab"
                                         type="button"
                                       >
@@ -7054,12 +7054,12 @@ exports[`<ClusterDetails /> Cluster Details - OSD should render 1`] = `
                                       role="presentation"
                                     >
                                       <button
-                                        aria-controls="pf-tab-section-2-pf-1678896186404226mfxcb99p"
+                                        aria-controls="pf-tab-section-2-ocm-roles-access"
                                         aria-selected="false"
                                         class="pf-c-tabs__link"
                                         data-ouia-component-type="PF4/TabButton"
                                         data-ouia-safe="true"
-                                        id="pf-tab-2-pf-1678896186404226mfxcb99p"
+                                        id="pf-tab-2-ocm-roles-access"
                                         role="tab"
                                         type="button"
                                       >
@@ -7075,12 +7075,12 @@ exports[`<ClusterDetails /> Cluster Details - OSD should render 1`] = `
                                       role="presentation"
                                     >
                                       <button
-                                        aria-controls="pf-tab-section-3-pf-1678896186404226mfxcb99p"
+                                        aria-controls="pf-tab-section-3-aws-infra-access"
                                         aria-selected="false"
                                         class="pf-c-tabs__link"
                                         data-ouia-component-type="PF4/TabButton"
                                         data-ouia-safe="true"
-                                        id="pf-tab-3-pf-1678896186404226mfxcb99p"
+                                        id="pf-tab-3-aws-infra-access"
                                         role="tab"
                                         type="button"
                                       >
@@ -7094,11 +7094,11 @@ exports[`<ClusterDetails /> Cluster Details - OSD should render 1`] = `
                                   </ul>
                                 </div>
                                 <section
-                                  aria-labelledby="pf-tab-0-pf-1678896186404226mfxcb99p"
+                                  aria-labelledby="pf-tab-0-identity-providers"
                                   class="pf-c-tab-content"
                                   data-ouia-component-type="PF4/TabContent"
                                   data-ouia-safe="true"
-                                  id="pf-tab-section-0-pf-1678896186404226mfxcb99p"
+                                  id="pf-tab-section-0-identity-providers"
                                   role="tabpanel"
                                   tabindex="0"
                                 >
@@ -7145,12 +7145,12 @@ exports[`<ClusterDetails /> Cluster Details - OSD should render 1`] = `
                                   </article>
                                 </section>
                                 <section
-                                  aria-labelledby="pf-tab-1-pf-1678896186404226mfxcb99p"
+                                  aria-labelledby="pf-tab-1-cluster-roles-access"
                                   class="pf-c-tab-content"
                                   data-ouia-component-type="PF4/TabContent"
                                   data-ouia-safe="true"
                                   hidden=""
-                                  id="pf-tab-section-1-pf-1678896186404226mfxcb99p"
+                                  id="pf-tab-section-1-cluster-roles-access"
                                   role="tabpanel"
                                   tabindex="0"
                                 >
@@ -7197,12 +7197,12 @@ exports[`<ClusterDetails /> Cluster Details - OSD should render 1`] = `
                                   </article>
                                 </section>
                                 <section
-                                  aria-labelledby="pf-tab-2-pf-1678896186404226mfxcb99p"
+                                  aria-labelledby="pf-tab-2-ocm-roles-access"
                                   class="pf-c-tab-content"
                                   data-ouia-component-type="PF4/TabContent"
                                   data-ouia-safe="true"
                                   hidden=""
-                                  id="pf-tab-section-2-pf-1678896186404226mfxcb99p"
+                                  id="pf-tab-section-2-ocm-roles-access"
                                   role="tabpanel"
                                   tabindex="0"
                                 >
@@ -7334,12 +7334,12 @@ exports[`<ClusterDetails /> Cluster Details - OSD should render 1`] = `
                                   </article>
                                 </section>
                                 <section
-                                  aria-labelledby="pf-tab-3-pf-1678896186404226mfxcb99p"
+                                  aria-labelledby="pf-tab-3-aws-infra-access"
                                   class="pf-c-tab-content"
                                   data-ouia-component-type="PF4/TabContent"
                                   data-ouia-safe="true"
                                   hidden=""
-                                  id="pf-tab-section-3-pf-1678896186404226mfxcb99p"
+                                  id="pf-tab-section-3-aws-infra-access"
                                   role="tabpanel"
                                   tabindex="0"
                                 >
@@ -8663,12 +8663,12 @@ exports[`<ClusterDetails /> Cluster Details - OSD should render 1`] = `
                                         role="presentation"
                                       >
                                         <button
-                                          aria-controls="pf-tab-section-0-pf-1678896186404226mfxcb99p"
+                                          aria-controls="pf-tab-section-0-identity-providers"
                                           aria-selected="true"
                                           class="pf-c-tabs__link"
                                           data-ouia-component-type="PF4/TabButton"
                                           data-ouia-safe="true"
-                                          id="pf-tab-0-pf-1678896186404226mfxcb99p"
+                                          id="pf-tab-0-identity-providers"
                                           role="tab"
                                           type="button"
                                         >
@@ -8684,12 +8684,12 @@ exports[`<ClusterDetails /> Cluster Details - OSD should render 1`] = `
                                         role="presentation"
                                       >
                                         <button
-                                          aria-controls="pf-tab-section-1-pf-1678896186404226mfxcb99p"
+                                          aria-controls="pf-tab-section-1-cluster-roles-access"
                                           aria-selected="false"
                                           class="pf-c-tabs__link"
                                           data-ouia-component-type="PF4/TabButton"
                                           data-ouia-safe="true"
-                                          id="pf-tab-1-pf-1678896186404226mfxcb99p"
+                                          id="pf-tab-1-cluster-roles-access"
                                           role="tab"
                                           type="button"
                                         >
@@ -8705,12 +8705,12 @@ exports[`<ClusterDetails /> Cluster Details - OSD should render 1`] = `
                                         role="presentation"
                                       >
                                         <button
-                                          aria-controls="pf-tab-section-2-pf-1678896186404226mfxcb99p"
+                                          aria-controls="pf-tab-section-2-ocm-roles-access"
                                           aria-selected="false"
                                           class="pf-c-tabs__link"
                                           data-ouia-component-type="PF4/TabButton"
                                           data-ouia-safe="true"
-                                          id="pf-tab-2-pf-1678896186404226mfxcb99p"
+                                          id="pf-tab-2-ocm-roles-access"
                                           role="tab"
                                           type="button"
                                         >
@@ -8726,12 +8726,12 @@ exports[`<ClusterDetails /> Cluster Details - OSD should render 1`] = `
                                         role="presentation"
                                       >
                                         <button
-                                          aria-controls="pf-tab-section-3-pf-1678896186404226mfxcb99p"
+                                          aria-controls="pf-tab-section-3-aws-infra-access"
                                           aria-selected="false"
                                           class="pf-c-tabs__link"
                                           data-ouia-component-type="PF4/TabButton"
                                           data-ouia-safe="true"
-                                          id="pf-tab-3-pf-1678896186404226mfxcb99p"
+                                          id="pf-tab-3-aws-infra-access"
                                           role="tab"
                                           type="button"
                                         >
@@ -8745,11 +8745,11 @@ exports[`<ClusterDetails /> Cluster Details - OSD should render 1`] = `
                                     </ul>
                                   </div>
                                   <section
-                                    aria-labelledby="pf-tab-0-pf-1678896186404226mfxcb99p"
+                                    aria-labelledby="pf-tab-0-identity-providers"
                                     class="pf-c-tab-content"
                                     data-ouia-component-type="PF4/TabContent"
                                     data-ouia-safe="true"
-                                    id="pf-tab-section-0-pf-1678896186404226mfxcb99p"
+                                    id="pf-tab-section-0-identity-providers"
                                     role="tabpanel"
                                     tabindex="0"
                                   >
@@ -8796,12 +8796,12 @@ exports[`<ClusterDetails /> Cluster Details - OSD should render 1`] = `
                                     </article>
                                   </section>
                                   <section
-                                    aria-labelledby="pf-tab-1-pf-1678896186404226mfxcb99p"
+                                    aria-labelledby="pf-tab-1-cluster-roles-access"
                                     class="pf-c-tab-content"
                                     data-ouia-component-type="PF4/TabContent"
                                     data-ouia-safe="true"
                                     hidden=""
-                                    id="pf-tab-section-1-pf-1678896186404226mfxcb99p"
+                                    id="pf-tab-section-1-cluster-roles-access"
                                     role="tabpanel"
                                     tabindex="0"
                                   >
@@ -8848,12 +8848,12 @@ exports[`<ClusterDetails /> Cluster Details - OSD should render 1`] = `
                                     </article>
                                   </section>
                                   <section
-                                    aria-labelledby="pf-tab-2-pf-1678896186404226mfxcb99p"
+                                    aria-labelledby="pf-tab-2-ocm-roles-access"
                                     class="pf-c-tab-content"
                                     data-ouia-component-type="PF4/TabContent"
                                     data-ouia-safe="true"
                                     hidden=""
-                                    id="pf-tab-section-2-pf-1678896186404226mfxcb99p"
+                                    id="pf-tab-section-2-ocm-roles-access"
                                     role="tabpanel"
                                     tabindex="0"
                                   >
@@ -8985,12 +8985,12 @@ exports[`<ClusterDetails /> Cluster Details - OSD should render 1`] = `
                                     </article>
                                   </section>
                                   <section
-                                    aria-labelledby="pf-tab-3-pf-1678896186404226mfxcb99p"
+                                    aria-labelledby="pf-tab-3-aws-infra-access"
                                     class="pf-c-tab-content"
                                     data-ouia-component-type="PF4/TabContent"
                                     data-ouia-safe="true"
                                     hidden=""
-                                    id="pf-tab-section-3-pf-1678896186404226mfxcb99p"
+                                    id="pf-tab-section-3-aws-infra-access"
                                     role="tabpanel"
                                     tabindex="0"
                                   >
@@ -17316,12 +17316,12 @@ exports[`<ClusterDetails /> Cluster Details - OSD should render 1`] = `
                                     role="presentation"
                                   >
                                     <button
-                                      aria-controls="pf-tab-section-0-pf-1678896186404226mfxcb99p"
+                                      aria-controls="pf-tab-section-0-identity-providers"
                                       aria-selected="true"
                                       class="pf-c-tabs__link"
                                       data-ouia-component-type="PF4/TabButton"
                                       data-ouia-safe="true"
-                                      id="pf-tab-0-pf-1678896186404226mfxcb99p"
+                                      id="pf-tab-0-identity-providers"
                                       role="tab"
                                       type="button"
                                     >
@@ -17337,12 +17337,12 @@ exports[`<ClusterDetails /> Cluster Details - OSD should render 1`] = `
                                     role="presentation"
                                   >
                                     <button
-                                      aria-controls="pf-tab-section-1-pf-1678896186404226mfxcb99p"
+                                      aria-controls="pf-tab-section-1-cluster-roles-access"
                                       aria-selected="false"
                                       class="pf-c-tabs__link"
                                       data-ouia-component-type="PF4/TabButton"
                                       data-ouia-safe="true"
-                                      id="pf-tab-1-pf-1678896186404226mfxcb99p"
+                                      id="pf-tab-1-cluster-roles-access"
                                       role="tab"
                                       type="button"
                                     >
@@ -17358,12 +17358,12 @@ exports[`<ClusterDetails /> Cluster Details - OSD should render 1`] = `
                                     role="presentation"
                                   >
                                     <button
-                                      aria-controls="pf-tab-section-2-pf-1678896186404226mfxcb99p"
+                                      aria-controls="pf-tab-section-2-ocm-roles-access"
                                       aria-selected="false"
                                       class="pf-c-tabs__link"
                                       data-ouia-component-type="PF4/TabButton"
                                       data-ouia-safe="true"
-                                      id="pf-tab-2-pf-1678896186404226mfxcb99p"
+                                      id="pf-tab-2-ocm-roles-access"
                                       role="tab"
                                       type="button"
                                     >
@@ -17379,12 +17379,12 @@ exports[`<ClusterDetails /> Cluster Details - OSD should render 1`] = `
                                     role="presentation"
                                   >
                                     <button
-                                      aria-controls="pf-tab-section-3-pf-1678896186404226mfxcb99p"
+                                      aria-controls="pf-tab-section-3-aws-infra-access"
                                       aria-selected="false"
                                       class="pf-c-tabs__link"
                                       data-ouia-component-type="PF4/TabButton"
                                       data-ouia-safe="true"
-                                      id="pf-tab-3-pf-1678896186404226mfxcb99p"
+                                      id="pf-tab-3-aws-infra-access"
                                       role="tab"
                                       type="button"
                                     >
@@ -17398,11 +17398,11 @@ exports[`<ClusterDetails /> Cluster Details - OSD should render 1`] = `
                                 </ul>
                               </div>
                               <section
-                                aria-labelledby="pf-tab-0-pf-1678896186404226mfxcb99p"
+                                aria-labelledby="pf-tab-0-identity-providers"
                                 class="pf-c-tab-content"
                                 data-ouia-component-type="PF4/TabContent"
                                 data-ouia-safe="true"
-                                id="pf-tab-section-0-pf-1678896186404226mfxcb99p"
+                                id="pf-tab-section-0-identity-providers"
                                 role="tabpanel"
                                 tabindex="0"
                               >
@@ -17449,12 +17449,12 @@ exports[`<ClusterDetails /> Cluster Details - OSD should render 1`] = `
                                 </article>
                               </section>
                               <section
-                                aria-labelledby="pf-tab-1-pf-1678896186404226mfxcb99p"
+                                aria-labelledby="pf-tab-1-cluster-roles-access"
                                 class="pf-c-tab-content"
                                 data-ouia-component-type="PF4/TabContent"
                                 data-ouia-safe="true"
                                 hidden=""
-                                id="pf-tab-section-1-pf-1678896186404226mfxcb99p"
+                                id="pf-tab-section-1-cluster-roles-access"
                                 role="tabpanel"
                                 tabindex="0"
                               >
@@ -17501,12 +17501,12 @@ exports[`<ClusterDetails /> Cluster Details - OSD should render 1`] = `
                                 </article>
                               </section>
                               <section
-                                aria-labelledby="pf-tab-2-pf-1678896186404226mfxcb99p"
+                                aria-labelledby="pf-tab-2-ocm-roles-access"
                                 class="pf-c-tab-content"
                                 data-ouia-component-type="PF4/TabContent"
                                 data-ouia-safe="true"
                                 hidden=""
-                                id="pf-tab-section-2-pf-1678896186404226mfxcb99p"
+                                id="pf-tab-section-2-ocm-roles-access"
                                 role="tabpanel"
                                 tabindex="0"
                               >
@@ -17638,12 +17638,12 @@ exports[`<ClusterDetails /> Cluster Details - OSD should render 1`] = `
                                 </article>
                               </section>
                               <section
-                                aria-labelledby="pf-tab-3-pf-1678896186404226mfxcb99p"
+                                aria-labelledby="pf-tab-3-aws-infra-access"
                                 class="pf-c-tab-content"
                                 data-ouia-component-type="PF4/TabContent"
                                 data-ouia-safe="true"
                                 hidden=""
-                                id="pf-tab-section-3-pf-1678896186404226mfxcb99p"
+                                id="pf-tab-section-3-aws-infra-access"
                                 role="tabpanel"
                                 tabindex="0"
                               >
@@ -18142,6 +18142,7 @@ exports[`<ClusterDetails /> Cluster Details - OSD should render 1`] = `
                                       >
                                         <Tab
                                           eventKey={0}
+                                          id="identity-providers"
                                           isHidden={false}
                                           key=".0"
                                           title={
@@ -18152,6 +18153,7 @@ exports[`<ClusterDetails /> Cluster Details - OSD should render 1`] = `
                                         >
                                           <TabBase
                                             eventKey={0}
+                                            id="identity-providers"
                                             innerRef={null}
                                             isHidden={false}
                                             title={
@@ -18165,22 +18167,22 @@ exports[`<ClusterDetails /> Cluster Details - OSD should render 1`] = `
                                               role="presentation"
                                             >
                                               <TabButton
-                                                aria-controls="pf-tab-section-0-pf-1678896186404226mfxcb99p"
+                                                aria-controls="pf-tab-section-0-identity-providers"
                                                 aria-selected={true}
                                                 className="pf-c-tabs__link"
-                                                id="pf-tab-0-pf-1678896186404226mfxcb99p"
+                                                id="pf-tab-0-identity-providers"
                                                 isHidden={false}
                                                 onClick={[Function]}
                                                 parentInnerRef={null}
                                                 role="tab"
                                               >
                                                 <button
-                                                  aria-controls="pf-tab-section-0-pf-1678896186404226mfxcb99p"
+                                                  aria-controls="pf-tab-section-0-identity-providers"
                                                   aria-selected={true}
                                                   className="pf-c-tabs__link"
                                                   data-ouia-component-type="PF4/TabButton"
                                                   data-ouia-safe={true}
-                                                  id="pf-tab-0-pf-1678896186404226mfxcb99p"
+                                                  id="pf-tab-0-identity-providers"
                                                   isHidden={false}
                                                   onClick={[Function]}
                                                   role="tab"
@@ -18200,6 +18202,7 @@ exports[`<ClusterDetails /> Cluster Details - OSD should render 1`] = `
                                         </Tab>
                                         <Tab
                                           eventKey={1}
+                                          id="cluster-roles-access"
                                           isHidden={false}
                                           key=".1"
                                           title={
@@ -18210,6 +18213,7 @@ exports[`<ClusterDetails /> Cluster Details - OSD should render 1`] = `
                                         >
                                           <TabBase
                                             eventKey={1}
+                                            id="cluster-roles-access"
                                             innerRef={null}
                                             isHidden={false}
                                             title={
@@ -18223,22 +18227,22 @@ exports[`<ClusterDetails /> Cluster Details - OSD should render 1`] = `
                                               role="presentation"
                                             >
                                               <TabButton
-                                                aria-controls="pf-tab-section-1-pf-1678896186404226mfxcb99p"
+                                                aria-controls="pf-tab-section-1-cluster-roles-access"
                                                 aria-selected={false}
                                                 className="pf-c-tabs__link"
-                                                id="pf-tab-1-pf-1678896186404226mfxcb99p"
+                                                id="pf-tab-1-cluster-roles-access"
                                                 isHidden={false}
                                                 onClick={[Function]}
                                                 parentInnerRef={null}
                                                 role="tab"
                                               >
                                                 <button
-                                                  aria-controls="pf-tab-section-1-pf-1678896186404226mfxcb99p"
+                                                  aria-controls="pf-tab-section-1-cluster-roles-access"
                                                   aria-selected={false}
                                                   className="pf-c-tabs__link"
                                                   data-ouia-component-type="PF4/TabButton"
                                                   data-ouia-safe={true}
-                                                  id="pf-tab-1-pf-1678896186404226mfxcb99p"
+                                                  id="pf-tab-1-cluster-roles-access"
                                                   isHidden={false}
                                                   onClick={[Function]}
                                                   role="tab"
@@ -18258,6 +18262,7 @@ exports[`<ClusterDetails /> Cluster Details - OSD should render 1`] = `
                                         </Tab>
                                         <Tab
                                           eventKey={2}
+                                          id="ocm-roles-access"
                                           key=".2"
                                           title={
                                             <TabTitleText>
@@ -18267,6 +18272,7 @@ exports[`<ClusterDetails /> Cluster Details - OSD should render 1`] = `
                                         >
                                           <TabBase
                                             eventKey={2}
+                                            id="ocm-roles-access"
                                             innerRef={null}
                                             title={
                                               <TabTitleText>
@@ -18279,21 +18285,21 @@ exports[`<ClusterDetails /> Cluster Details - OSD should render 1`] = `
                                               role="presentation"
                                             >
                                               <TabButton
-                                                aria-controls="pf-tab-section-2-pf-1678896186404226mfxcb99p"
+                                                aria-controls="pf-tab-section-2-ocm-roles-access"
                                                 aria-selected={false}
                                                 className="pf-c-tabs__link"
-                                                id="pf-tab-2-pf-1678896186404226mfxcb99p"
+                                                id="pf-tab-2-ocm-roles-access"
                                                 onClick={[Function]}
                                                 parentInnerRef={null}
                                                 role="tab"
                                               >
                                                 <button
-                                                  aria-controls="pf-tab-section-2-pf-1678896186404226mfxcb99p"
+                                                  aria-controls="pf-tab-section-2-ocm-roles-access"
                                                   aria-selected={false}
                                                   className="pf-c-tabs__link"
                                                   data-ouia-component-type="PF4/TabButton"
                                                   data-ouia-safe={true}
-                                                  id="pf-tab-2-pf-1678896186404226mfxcb99p"
+                                                  id="pf-tab-2-ocm-roles-access"
                                                   onClick={[Function]}
                                                   role="tab"
                                                   type="button"
@@ -18312,6 +18318,7 @@ exports[`<ClusterDetails /> Cluster Details - OSD should render 1`] = `
                                         </Tab>
                                         <Tab
                                           eventKey={3}
+                                          id="aws-infra-access"
                                           isHidden={false}
                                           key=".3"
                                           title={
@@ -18322,6 +18329,7 @@ exports[`<ClusterDetails /> Cluster Details - OSD should render 1`] = `
                                         >
                                           <TabBase
                                             eventKey={3}
+                                            id="aws-infra-access"
                                             innerRef={null}
                                             isHidden={false}
                                             title={
@@ -18335,22 +18343,22 @@ exports[`<ClusterDetails /> Cluster Details - OSD should render 1`] = `
                                               role="presentation"
                                             >
                                               <TabButton
-                                                aria-controls="pf-tab-section-3-pf-1678896186404226mfxcb99p"
+                                                aria-controls="pf-tab-section-3-aws-infra-access"
                                                 aria-selected={false}
                                                 className="pf-c-tabs__link"
-                                                id="pf-tab-3-pf-1678896186404226mfxcb99p"
+                                                id="pf-tab-3-aws-infra-access"
                                                 isHidden={false}
                                                 onClick={[Function]}
                                                 parentInnerRef={null}
                                                 role="tab"
                                               >
                                                 <button
-                                                  aria-controls="pf-tab-section-3-pf-1678896186404226mfxcb99p"
+                                                  aria-controls="pf-tab-section-3-aws-infra-access"
                                                   aria-selected={false}
                                                   className="pf-c-tabs__link"
                                                   data-ouia-component-type="PF4/TabButton"
                                                   data-ouia-safe={true}
-                                                  id="pf-tab-3-pf-1678896186404226mfxcb99p"
+                                                  id="pf-tab-3-aws-infra-access"
                                                   isHidden={false}
                                                   onClick={[Function]}
                                                   role="tab"
@@ -18375,6 +18383,7 @@ exports[`<ClusterDetails /> Cluster Details - OSD should render 1`] = `
                                       child={
                                         <Tab
                                           eventKey={0}
+                                          id="identity-providers"
                                           isHidden={false}
                                           title={
                                             <TabTitleText>
@@ -18395,7 +18404,7 @@ exports[`<ClusterDetails /> Cluster Details - OSD should render 1`] = `
                                           />
                                         </Tab>
                                       }
-                                      id="pf-1678896186404226mfxcb99p"
+                                      id="identity-providers"
                                       key="0"
                                     >
                                       <TabContentBase
@@ -18403,6 +18412,7 @@ exports[`<ClusterDetails /> Cluster Details - OSD should render 1`] = `
                                         child={
                                           <Tab
                                             eventKey={0}
+                                            id="identity-providers"
                                             isHidden={false}
                                             title={
                                               <TabTitleText>
@@ -18423,16 +18433,16 @@ exports[`<ClusterDetails /> Cluster Details - OSD should render 1`] = `
                                             />
                                           </Tab>
                                         }
-                                        id="pf-1678896186404226mfxcb99p"
+                                        id="identity-providers"
                                         innerRef={null}
                                       >
                                         <section
-                                          aria-labelledby="pf-tab-0-pf-1678896186404226mfxcb99p"
+                                          aria-labelledby="pf-tab-0-identity-providers"
                                           className="pf-c-tab-content"
                                           data-ouia-component-type="PF4/TabContent"
                                           data-ouia-safe={true}
                                           hidden={false}
-                                          id="pf-tab-section-0-pf-1678896186404226mfxcb99p"
+                                          id="pf-tab-section-0-identity-providers"
                                           role="tabpanel"
                                           tabIndex={0}
                                         >
@@ -18551,6 +18561,7 @@ exports[`<ClusterDetails /> Cluster Details - OSD should render 1`] = `
                                       child={
                                         <Tab
                                           eventKey={1}
+                                          id="cluster-roles-access"
                                           isHidden={false}
                                           title={
                                             <TabTitleText>
@@ -18924,7 +18935,7 @@ exports[`<ClusterDetails /> Cluster Details - OSD should render 1`] = `
                                           />
                                         </Tab>
                                       }
-                                      id="pf-1678896186404226mfxcb99p"
+                                      id="cluster-roles-access"
                                       key="1"
                                     >
                                       <TabContentBase
@@ -18932,6 +18943,7 @@ exports[`<ClusterDetails /> Cluster Details - OSD should render 1`] = `
                                         child={
                                           <Tab
                                             eventKey={1}
+                                            id="cluster-roles-access"
                                             isHidden={false}
                                             title={
                                               <TabTitleText>
@@ -19305,16 +19317,16 @@ exports[`<ClusterDetails /> Cluster Details - OSD should render 1`] = `
                                             />
                                           </Tab>
                                         }
-                                        id="pf-1678896186404226mfxcb99p"
+                                        id="cluster-roles-access"
                                         innerRef={null}
                                       >
                                         <section
-                                          aria-labelledby="pf-tab-1-pf-1678896186404226mfxcb99p"
+                                          aria-labelledby="pf-tab-1-cluster-roles-access"
                                           className="pf-c-tab-content"
                                           data-ouia-component-type="PF4/TabContent"
                                           data-ouia-safe={true}
                                           hidden={true}
-                                          id="pf-tab-section-1-pf-1678896186404226mfxcb99p"
+                                          id="pf-tab-section-1-cluster-roles-access"
                                           role="tabpanel"
                                           tabIndex={0}
                                         >
@@ -20162,6 +20174,7 @@ exports[`<ClusterDetails /> Cluster Details - OSD should render 1`] = `
                                       child={
                                         <Tab
                                           eventKey={2}
+                                          id="ocm-roles-access"
                                           title={
                                             <TabTitleText>
                                               OCM Roles and Access
@@ -20330,7 +20343,7 @@ exports[`<ClusterDetails /> Cluster Details - OSD should render 1`] = `
                                           />
                                         </Tab>
                                       }
-                                      id="pf-1678896186404226mfxcb99p"
+                                      id="ocm-roles-access"
                                       key="2"
                                     >
                                       <TabContentBase
@@ -20338,6 +20351,7 @@ exports[`<ClusterDetails /> Cluster Details - OSD should render 1`] = `
                                         child={
                                           <Tab
                                             eventKey={2}
+                                            id="ocm-roles-access"
                                             title={
                                               <TabTitleText>
                                                 OCM Roles and Access
@@ -20506,16 +20520,16 @@ exports[`<ClusterDetails /> Cluster Details - OSD should render 1`] = `
                                             />
                                           </Tab>
                                         }
-                                        id="pf-1678896186404226mfxcb99p"
+                                        id="ocm-roles-access"
                                         innerRef={null}
                                       >
                                         <section
-                                          aria-labelledby="pf-tab-2-pf-1678896186404226mfxcb99p"
+                                          aria-labelledby="pf-tab-2-ocm-roles-access"
                                           className="pf-c-tab-content"
                                           data-ouia-component-type="PF4/TabContent"
                                           data-ouia-safe={true}
                                           hidden={true}
-                                          id="pf-tab-section-2-pf-1678896186404226mfxcb99p"
+                                          id="pf-tab-section-2-ocm-roles-access"
                                           role="tabpanel"
                                           tabIndex={0}
                                         >
@@ -22696,6 +22710,7 @@ exports[`<ClusterDetails /> Cluster Details - OSD should render 1`] = `
                                       child={
                                         <Tab
                                           eventKey={3}
+                                          id="aws-infra-access"
                                           isHidden={false}
                                           title={
                                             <TabTitleText>
@@ -22710,7 +22725,7 @@ exports[`<ClusterDetails /> Cluster Details - OSD should render 1`] = `
                                           />
                                         </Tab>
                                       }
-                                      id="pf-1678896186404226mfxcb99p"
+                                      id="aws-infra-access"
                                       key="3"
                                     >
                                       <TabContentBase
@@ -22718,6 +22733,7 @@ exports[`<ClusterDetails /> Cluster Details - OSD should render 1`] = `
                                         child={
                                           <Tab
                                             eventKey={3}
+                                            id="aws-infra-access"
                                             isHidden={false}
                                             title={
                                               <TabTitleText>
@@ -22732,16 +22748,16 @@ exports[`<ClusterDetails /> Cluster Details - OSD should render 1`] = `
                                             />
                                           </Tab>
                                         }
-                                        id="pf-1678896186404226mfxcb99p"
+                                        id="aws-infra-access"
                                         innerRef={null}
                                       >
                                         <section
-                                          aria-labelledby="pf-tab-3-pf-1678896186404226mfxcb99p"
+                                          aria-labelledby="pf-tab-3-aws-infra-access"
                                           className="pf-c-tab-content"
                                           data-ouia-component-type="PF4/TabContent"
                                           data-ouia-safe={true}
                                           hidden={true}
-                                          id="pf-tab-section-3-pf-1678896186404226mfxcb99p"
+                                          id="pf-tab-section-3-aws-infra-access"
                                           role="tabpanel"
                                           tabIndex={0}
                                         >
