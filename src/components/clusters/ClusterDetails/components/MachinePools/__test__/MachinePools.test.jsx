@@ -270,7 +270,7 @@ describe('<MachinePools />', () => {
       },
     };
     const wrapper = mount(<MachinePools {...props} />);
-    const deleteButton = wrapper.find('ActionsColumn').props().items[1];
+    const deleteButton = wrapper.find('ActionsColumn').props().items[3];
     expect(deleteButton.title).toBe('Delete');
     expect(deleteButton.isAriaDisabled).toBeTruthy();
   });
