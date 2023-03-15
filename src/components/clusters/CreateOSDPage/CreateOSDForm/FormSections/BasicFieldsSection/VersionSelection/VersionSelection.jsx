@@ -6,6 +6,7 @@ import get from 'lodash/get';
 import {
   Select,
   SelectOption,
+  SelectGroup,
   FormGroup,
   TextList,
   TextListVariants,
@@ -18,6 +19,7 @@ import { Spinner } from '@redhat-cloud-services/frontend-components/Spinner';
 import ErrorBox from '../../../../../../common/ErrorBox';
 import InstructionCommand from '../../../../../../common/InstructionCommand';
 import { isSupportedMinorVersion } from '~/common/helpers';
+import { useOCPLifeCycleStatusData } from '~/components/releases/hooks';
 
 function VersionSelection({
   isRosa,
@@ -33,8 +35,17 @@ function VersionSelection({
   const [isOpen, setIsOpen] = useState(false);
   const [versions, setVersions] = useState([]);
   const [rosaVersionError, setRosaVersionError] = useState(false);
+  const [statusData] = useOCPLifeCycleStatusData();
+  const statusVersions = statusData?.[0]?.versions;
+  const supportVersionMap = statusVersions?.reduce((acc, version) => {
+    acc[version.name] = version.type;
+    return acc;
+  }, {});
 
-  const isValidRosaVersion = (version) => isSupportedMinorVersion(version, rosaMaxOSVersion);
+  const isValidRosaVersion = React.useCallback(
+    (version) => isSupportedMinorVersion(version, rosaMaxOSVersion),
+    [rosaMaxOSVersion],
+  );
 
   const RosaVersionErrorAlert = () => (
     <Alert
@@ -71,7 +82,7 @@ function VersionSelection({
       // First time.
       getInstallableVersions(isRosa);
     }
-  }, [getInstallableVersionsResponse]);
+  }, [getInstallableVersions, getInstallableVersionsResponse, isRosa]);
 
   useEffect(() => {
     if (versions.length && !selectedClusterVersion?.raw_id) {
@@ -88,7 +99,14 @@ function VersionSelection({
       const versionIndex = defaultRosaVersionFound ? defaultRosaVersionIndex : defaultVersionIndex;
       input.onChange(versions[versionIndex !== -1 ? versionIndex : 0]);
     }
-  }, [versions, selectedClusterVersion?.raw_id, isRosa, rosaMaxOSVersion]);
+  }, [
+    versions,
+    selectedClusterVersion?.raw_id,
+    isRosa,
+    rosaMaxOSVersion,
+    input,
+    isValidRosaVersion,
+  ]);
 
   const onToggle = (toggleOpenValue) => {
     setIsOpen(toggleOpenValue);
@@ -110,6 +128,45 @@ function VersionSelection({
     );
     return selectedVersion ? selectedVersion.raw_id : '';
   };
+
+  const selectOptions = React.useMemo(() => {
+    const fullSupport = [];
+    const maintenanceSupport = [];
+
+    versions.forEach((version) => {
+      const versionName = version.raw_id.split('.', 2).join('.');
+      const selectOption = (
+        <SelectOption
+          className="pf-c-dropdown__menu-item"
+          isSelected={selectedClusterVersion?.raw_id === version.raw_id}
+          value={version.raw_id}
+          formValue={version.raw_id}
+          key={version.id}
+          isDisabled={isRosa && !isValidRosaVersion(version.raw_id)}
+          description={
+            isRosa &&
+            !isValidRosaVersion(version.raw_id) &&
+            'This version is not compatible with the selected ARNs in previous step'
+          }
+        >
+          {`${version.raw_id}`}
+        </SelectOption>
+      );
+
+      switch (supportVersionMap?.[versionName]) {
+        case SupportStatusType.Full:
+          fullSupport.push(selectOption);
+          break;
+        default:
+          maintenanceSupport.push(selectOption);
+      }
+    });
+
+    return {
+      fullSupport,
+      maintenanceSupport,
+    };
+  }, [isRosa, isValidRosaVersion, selectedClusterVersion?.raw_id, supportVersionMap, versions]);
 
   return (
     <>
@@ -144,29 +201,21 @@ function VersionSelection({
             onSelect={onSelect}
             isDisabled={isDisabled}
           >
-            {versions.map((version) => (
-              <SelectOption
-                className="pf-c-dropdown__menu-item"
-                isSelected={selectedClusterVersion?.raw_id === version.raw_id}
-                value={version.raw_id}
-                formValue={version.raw_id}
-                key={version.id}
-                isDisabled={isRosa && !isValidRosaVersion(version.raw_id)}
-                description={
-                  isRosa &&
-                  !isValidRosaVersion(version.raw_id) &&
-                  'This version is not compatible with the selected ARNs in previous step'
-                }
-              >
-                {`${version.raw_id}`}
-              </SelectOption>
-            ))}
+            <SelectGroup label="Full support">{selectOptions.fullSupport}</SelectGroup>
+            <SelectGroup label="Maintenance support">
+              {selectOptions.maintenanceSupport}
+            </SelectGroup>
           </Select>
         )}
       </FormGroup>
     </>
   );
 }
+
+const SupportStatusType = {
+  Full: 'Full Support',
+  Maintenance: 'Maintenance Support',
+};
 
 VersionSelection.propTypes = {
   isDisabled: PropTypes.bool,
