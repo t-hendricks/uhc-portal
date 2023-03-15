@@ -15884,10 +15884,12 @@ exports[`<ClusterDetails /> Cluster Details - OSD should render 1`] = `
                                                                         <PopoverHint
                                                                           hint="The actual number of compute nodes may not always match with the number of desired when the cluster is scaling."
                                                                           iconClassName="nodes-hint"
+                                                                          id="cluster-scaling-hint"
                                                                         >
                                                                           <Popover
                                                                             aria-label="help"
                                                                             bodyContent="The actual number of compute nodes may not always match with the number of desired when the cluster is scaling."
+                                                                            id="cluster-scaling-hint"
                                                                           >
                                                                             <Popper
                                                                               appendTo={[Function]}
@@ -15917,7 +15919,7 @@ exports[`<ClusterDetails /> Cluster Details - OSD should render 1`] = `
                                                                               popper={
                                                                                 <ForwardRef
                                                                                   active={false}
-                                                                                  aria-describedby="popover-pf-16788240305797cddeuy6uj8-body"
+                                                                                  aria-describedby="popover-cluster-scaling-hint-body"
                                                                                   aria-label="help"
                                                                                   aria-modal="true"
                                                                                   className="pf-c-popover"
@@ -15950,7 +15952,7 @@ exports[`<ClusterDetails /> Cluster Details - OSD should render 1`] = `
                                                                                       onClose={[Function]}
                                                                                     />
                                                                                     <PopoverBody
-                                                                                      id="popover-pf-16788240305797cddeuy6uj8-body"
+                                                                                      id="popover-cluster-scaling-hint-body"
                                                                                     >
                                                                                       The actual number of compute nodes may not always match with the number of desired when the cluster is scaling.
                                                                                     </PopoverBody>
