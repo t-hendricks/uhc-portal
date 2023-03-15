@@ -6,7 +6,7 @@ import IDPSection from './IDPSection';
 
 const mapStateToProps = (state) => ({
   identityProviders: state.identityProviders.clusterIdentityProviders,
-  subscriptionID: state.clusters.details.cluster.subscription.id,
+  subscriptionID: state.clusters.details.cluster.subscription?.id,
 });
 
 const mapDispatchToProps = {
