@@ -15,9 +15,11 @@ class TokenPages extends Page {
     cy.visit('/token/rosa');
   }
 
-  tokenPageIsLoaded() {
-    cy.get('.pf-c-spinner').should('not.exist');
-    cy.get('h1').scrollIntoView().contains('OpenShift Cluster Manager API Token').should('be.visible');
+  waitTokenPageIsLoaded() {
+    // If the app is still loading, there are several stages — blank page, then spinner, then OCM renders.
+    // So the "no spinner" check is not very reliable; the "h1" check is the real deal.
+    cy.get('.pf-c-spinner', { timeout: 30000 }).should('not.exist');
+    cy.get('h1', { timeout: 30000 }).scrollIntoView().contains('OpenShift Cluster Manager API Token').should('be.visible');
   }
 
   // check load token part
