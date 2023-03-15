@@ -1003,7 +1003,6 @@ exports[`<CloudTab /> should render correctly with OSD Trial quota 1`] = `
                 </a>
                 <span
                   class="pf-c-label pf-m-orange pf-u-ml-md pf-u-display-inline"
-                  data-testid="undefined"
                   style="cursor: pointer;"
                 >
                   <span
@@ -1157,7 +1156,6 @@ exports[`<CloudTab /> should render correctly with OSD Trial quota 1`] = `
                 </a>
                 <span
                   class="pf-c-label pf-m-orange pf-u-ml-md pf-u-display-inline"
-                  data-testid="undefined"
                   style="cursor: pointer;"
                 >
                   <span
@@ -2268,7 +2266,6 @@ exports[`<CloudTab /> should render correctly with both trial and quota 1`] = `
                 </a>
                 <span
                   class="pf-c-label pf-m-orange pf-u-ml-md pf-u-display-inline"
-                  data-testid="undefined"
                   style="cursor: pointer;"
                 >
                   <span
@@ -2422,7 +2419,6 @@ exports[`<CloudTab /> should render correctly with both trial and quota 1`] = `
                 </a>
                 <span
                   class="pf-c-label pf-m-orange pf-u-ml-md pf-u-display-inline"
-                  data-testid="undefined"
                   style="cursor: pointer;"
                 >
                   <span
@@ -3457,7 +3453,6 @@ exports[`<CloudTab /> should render correctly with quota 1`] = `
                 </a>
                 <span
                   class="pf-c-label pf-m-orange pf-u-ml-md pf-u-display-inline"
-                  data-testid="undefined"
                   style="cursor: pointer;"
                 >
                   <span
@@ -3611,7 +3606,6 @@ exports[`<CloudTab /> should render correctly with quota 1`] = `
                 </a>
                 <span
                   class="pf-c-label pf-m-orange pf-u-ml-md pf-u-display-inline"
-                  data-testid="undefined"
                   style="cursor: pointer;"
                 >
                   <span
@@ -4656,7 +4650,6 @@ exports[`<CloudTab /> should render correctly without quota 1`] = `
                 </a>
                 <span
                   class="pf-c-label pf-m-orange pf-u-ml-md pf-u-display-inline"
-                  data-testid="undefined"
                   style="cursor: pointer;"
                 >
                   <span
@@ -4810,7 +4803,6 @@ exports[`<CloudTab /> should render correctly without quota 1`] = `
                 </a>
                 <span
                   class="pf-c-label pf-m-orange pf-u-ml-md pf-u-display-inline"
-                  data-testid="undefined"
                   style="cursor: pointer;"
                 >
                   <span
