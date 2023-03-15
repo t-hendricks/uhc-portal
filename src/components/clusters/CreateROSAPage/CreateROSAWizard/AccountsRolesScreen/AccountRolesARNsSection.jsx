@@ -57,7 +57,7 @@ const getDefaultInstallerRole = (selectedInstallerRoleARN, accountRolesARNs) => 
   return defaultRole.Installer;
 };
 
-const setFormRoles = (change, role) => {
+const updateRoleArns = (change, role) => {
   change('installer_role_arn', role?.Installer || NO_ROLE_DETECTED);
   change('support_role_arn', role?.Support || NO_ROLE_DETECTED);
   change('control_plane_role_arn', role?.ControlPlane || NO_ROLE_DETECTED);
@@ -96,7 +96,7 @@ function AccountRolesARNsSection({
     setSelectedInstallerRole(NO_ROLE_DETECTED);
     setAccountRoles([]);
     setInstallerRoleOptions([noRoleOption]);
-    setFormRoles(change, null);
+    updateRoleArns(change, null);
     setAllARNsFound(false);
     clearGetAWSAccountRolesARNsResponse();
   }, [selectedAWSAccountID]);
@@ -105,7 +105,7 @@ function AccountRolesARNsSection({
     accountRoles.forEach((role) => {
       if (role.Installer === selectedInstallerRole) {
         setAllARNsFound(hasCompleteRoleSet(role));
-        setFormRoles(change, role);
+        updateRoleArns(change, role);
         change('rosa_max_os_version', role.version);
       }
     });
@@ -114,7 +114,7 @@ function AccountRolesARNsSection({
   const setSelectedInstallerRoleAndOptions = (accountRolesARNs) => {
     const installerOptions = [];
     if (accountRolesARNs.length === 0) {
-      setFormRoles(change, null);
+      updateRoleArns(change, null);
       installerOptions.push(noRoleOption);
       change('rosa_max_os_version', undefined);
       setAllARNsFound(false);
