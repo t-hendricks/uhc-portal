@@ -17,19 +17,17 @@ exports[`CreateRosaGetStarted matches snapshot 1`] = `
         class="pf-c-breadcrumb__list"
       >
         <li
-          class="pf-c-breadcrumb__item active"
-          href="/"
+          class="pf-c-breadcrumb__item"
         >
           <a
             class="pf-c-breadcrumb__link"
-            href="/openshift"
+            href="/"
           >
             Clusters
           </a>
         </li>
         <li
           class="pf-c-breadcrumb__item"
-          href="/create"
         >
           <span
             class="pf-c-breadcrumb__item-divider"
@@ -50,7 +48,7 @@ exports[`CreateRosaGetStarted matches snapshot 1`] = `
           </span>
           <a
             class="pf-c-breadcrumb__link"
-            href="/openshift/create"
+            href="/create"
           >
             Cluster Type
           </a>

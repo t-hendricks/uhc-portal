@@ -1,15 +1,29 @@
 import React from 'react';
-import { shallow } from 'enzyme';
-
+import { shallow, mount } from 'enzyme';
+import { MemoryRouter } from 'react-router-dom';
+import { TestWrapper } from '../../../../testUtils';
 import ClusterDetails from '../ClusterDetails';
 import fixtures, { funcs } from './ClusterDetails.fixtures';
 import clusterStates from '../../common/clusterStates';
 import { subscriptionStatuses } from '../../../../common/subscriptionTypes';
 
 describe('<ClusterDetails />', () => {
+  // eslint-disable-next-line react/prop-types
+  const RouterWrapper = ({ children }) => (
+    <TestWrapper>
+      <MemoryRouter keyLength={0} initialEntries={[{ pathname: '/details/s/:id', key: 'testKey' }]}>
+        {children}
+      </MemoryRouter>
+    </TestWrapper>
+  );
+
   describe('Cluster Details - OSD', () => {
     const functions = funcs();
-    const wrapper = shallow(<ClusterDetails {...fixtures} {...functions} hasIssues />);
+    const wrapper = mount(
+      <RouterWrapper>
+        <ClusterDetails {...fixtures} {...functions} hasIssues />
+      </RouterWrapper>,
+    );
 
     it('should render', () => {
       expect(wrapper).toMatchSnapshot();
@@ -69,7 +83,16 @@ describe('<ClusterDetails />', () => {
         hasIssues: true,
       };
 
-      wrapper.setProps(installingClusterWithIssuesProps);
+      const wrapper = mount(
+        <RouterWrapper>
+          <ClusterDetails
+            {...fixtures}
+            {...functions}
+            hasIssues
+            {...installingClusterWithIssuesProps}
+          />
+        </RouterWrapper>,
+      );
       expect(wrapper.find('TabsRow').props().hasIssues).toBe(false);
     });
   });
@@ -78,7 +101,11 @@ describe('<ClusterDetails />', () => {
     const functions = funcs();
 
     it('should present', () => {
-      const wrapper = shallow(<ClusterDetails {...fixtures} {...functions} />);
+      const wrapper = mount(
+        <RouterWrapper>
+          <ClusterDetails {...fixtures} {...functions} />
+        </RouterWrapper>,
+      );
       expect(wrapper.find('TabsRow').props().displaySupportTab).toBe(true);
     });
 
@@ -98,7 +125,11 @@ describe('<ClusterDetails />', () => {
           },
         },
       };
-      const wrapper = shallow(<ClusterDetails {...props} />);
+      const wrapper = mount(
+        <RouterWrapper>
+          <ClusterDetails {...props} />
+        </RouterWrapper>,
+      );
       expect(wrapper.find('TabsRow').props().displaySupportTab).toBe(false);
     });
   });
@@ -110,7 +141,11 @@ describe('<ClusterDetails />', () => {
       ...functions,
       clusterDetails: { ...fixtures.AROClusterDetails },
     };
-    const wrapper = shallow(<ClusterDetails {...props} />);
+    const wrapper = mount(
+      <RouterWrapper>
+        <ClusterDetails {...props} />
+      </RouterWrapper>,
+    );
 
     it('should get on-demand metrics', () => {
       expect(functions.getOnDemandMetrics).toBeCalledWith(
@@ -243,7 +278,11 @@ describe('<ClusterDetails />', () => {
       },
     };
     // hide support tab for OSDTrial clusters regardless Deprovisioned/Archived or not
-    const wrapper = shallow(<ClusterDetails {...props} />);
+    const wrapper = mount(
+      <RouterWrapper>
+        <ClusterDetails {...props} />
+      </RouterWrapper>,
+    );
     it('should hide the support tab for OSDTrial cluster', () => {
       expect(wrapper.find('TabsRow').props().displaySupportTab).toBe(false);
     });
@@ -266,7 +305,11 @@ describe('<ClusterDetails />', () => {
         },
       },
     };
-    const osdWrapper = shallow(<ClusterDetails {...osdProps} />);
+    const osdWrapper = mount(
+      <RouterWrapper>
+        <ClusterDetails {...osdProps} />
+      </RouterWrapper>,
+    );
     it('should show support tab for Deprovisioned clusters', () => {
       // show support tab with disabled buttons (refer to Support/Support.text.jsx)
       expect(osdWrapper.find('TabsRow').props().displaySupportTab).toBe(true);
@@ -305,7 +348,11 @@ describe('<ClusterDetails />', () => {
         },
       },
     };
-    const ocpWrapper = shallow(<ClusterDetails {...ocpProps} />);
+    const ocpWrapper = mount(
+      <RouterWrapper>
+        <ClusterDetails {...ocpProps} />
+      </RouterWrapper>,
+    );
     it('should show support tab for Archived clusters', () => {
       // show support tab with disabled buttons (refer to Support/Support.text.jsx)
       expect(ocpWrapper.find('TabsRow').props().displaySupportTab).toBe(true);

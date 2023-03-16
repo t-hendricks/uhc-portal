@@ -1,6 +1,6 @@
 import React from 'react';
 import { mount } from 'enzyme';
-import { MemoryRouter } from 'react-router';
+import { MemoryRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import * as useChromeHook from '@redhat-cloud-services/frontend-components/useChrome';
 

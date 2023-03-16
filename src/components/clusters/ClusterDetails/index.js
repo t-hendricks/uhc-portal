@@ -2,7 +2,6 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import get from 'lodash/get';
 
-import { push } from 'connected-react-router';
 import { addNotification } from '@redhat-cloud-services/frontend-components-notifications/redux';
 
 import ClusterDetails from './ClusterDetails';
@@ -36,7 +35,6 @@ import { issuesAndWarningsSelector } from './components/Monitoring/MonitoringSel
 import issuesCountSelector from './components/Insights/InsightsSelectors';
 import canHibernateClusterSelector from '../common/HibernateClusterModal/HibernateClusterModalSelector';
 import { toggleSubscriptionReleased } from '../common/TransferClusterOwnershipDialog/subscriptionReleasedActions';
-import getBaseName from '../../../common/getBaseName';
 import { ASSISTED_INSTALLER_FEATURE } from '../../../redux/constants/featureConstants';
 import supportActions from './components/Support/SupportActions';
 import { getUserAccess } from '../../../redux/actions/costActions';
@@ -89,7 +87,7 @@ const mapStateToProps = (state, { location }) => {
   };
 };
 
-const mapDispatchToProps = (dispatch, { location }) =>
+const mapDispatchToProps = (dispatch) =>
   bindActionCreators(
     {
       fetchDetails: fetchClusterDetails,
@@ -112,7 +110,6 @@ const mapDispatchToProps = (dispatch, { location }) =>
       getClusterRouters,
       getMachineOrNodePools,
       clearGetMachinePoolsResponse,
-      setOpenedTab: (tabKey) => push(`${getBaseName()}${location.pathname}#${tabKey}`),
       getClusterHistory,
       toggleSubscriptionReleased,
       getNotificationContacts: supportActions.getNotificationContacts,
