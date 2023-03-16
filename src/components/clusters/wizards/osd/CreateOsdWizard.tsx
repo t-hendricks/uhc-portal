@@ -1,6 +1,6 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
-import { Redirect, useHistory } from 'react-router';
+import { Redirect, useHistory } from 'react-router-dom';
 import { Formik, FormikValues } from 'formik';
 import omit from 'lodash/omit';
 

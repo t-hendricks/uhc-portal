@@ -13,7 +13,7 @@ limitations under the License.
 
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Redirect } from 'react-router';
+import { Redirect } from 'react-router-dom';
 import get from 'lodash/get';
 
 import { PageSection, TabContent } from '@patternfly/react-core';
@@ -277,7 +277,6 @@ class ClusterDetails extends Component {
       hasIssues,
       hasIssuesInsights,
       toggleSubscriptionReleased,
-      setOpenedTab,
       initTabOpen,
       assistedInstallerEnabled,
       userAccess,
@@ -438,7 +437,6 @@ class ClusterDetails extends Component {
               hasIssues={cluster.state !== clusterStates.INSTALLING && hasIssues}
               hasIssuesInsights={hasIssuesInsights}
               initTabOpen={initTabOpen}
-              setOpenedTab={setOpenedTab}
               onTabSelected={onTabSelected}
             />
           </ClusterDetailsTop>
@@ -643,7 +641,6 @@ ClusterDetails.propTypes = {
   getClusterHistory: PropTypes.func.isRequired,
   getMachineOrNodePools: PropTypes.func.isRequired,
   clearGetMachinePoolsResponse: PropTypes.func.isRequired,
-  setOpenedTab: PropTypes.func.isRequired,
   canSubscribeOCP: PropTypes.bool.isRequired,
   canTransferClusterOwnership: PropTypes.bool.isRequired,
   canHibernateCluster: PropTypes.bool.isRequired,

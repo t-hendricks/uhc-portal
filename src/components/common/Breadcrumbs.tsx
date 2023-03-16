@@ -1,7 +1,6 @@
 import React from 'react';
-import { LinkContainer } from 'react-router-bootstrap';
 import { Breadcrumb, BreadcrumbItem } from '@patternfly/react-core';
-import getBaseName from '../../common/getBaseName';
+import { Link } from 'react-router-dom';
 
 export type BreadcrumbPath = { label: string; path?: string };
 
@@ -18,11 +17,13 @@ const Breadcrumbs = ({ path }: Props) => (
         const itemPath = item.path;
 
         return (
-          <LinkContainer key={itemLabel} to={itemPath || ''}>
-            <BreadcrumbItem to={`${getBaseName()}${itemPath || ''}` || '#'}>
-              {itemLabel}
-            </BreadcrumbItem>
-          </LinkContainer>
+          <BreadcrumbItem
+            render={({ className, ariaCurrent }) => (
+              <Link to={`${itemPath || '/'}`} className={className} aria-current={ariaCurrent}>
+                {itemLabel}
+              </Link>
+            )}
+          />
         );
       }
       return (
