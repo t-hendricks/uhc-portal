@@ -28,6 +28,13 @@ if [ -z "${QUAY_TOKEN}" ]; then
   echo "Environment variable 'QUAY_TOKEN' is mandatory."
   exit 1
 fi
+
+# `podman pull` sometimes fails on auth despite prior `podman login` succeeding.
+# There was a theory this may be caused by concurrent jobs overriting same auth file,
+# hopefully this will isolate them?
+export REGISTRY_AUTH_FILE="${PWD}/podman-auth.json"
+rm -f "${REGISTRY_AUTH_FILE}"
+
 printenv QUAY_TOKEN | podman login --verbose --username="${QUAY_USER}" --password-stdin quay.io
 
 # Run the checks:

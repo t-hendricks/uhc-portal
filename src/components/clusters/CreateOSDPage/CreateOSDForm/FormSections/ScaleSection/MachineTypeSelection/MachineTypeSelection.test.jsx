@@ -1,5 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
+import { render, screen, waitFor, userEvent } from '@testUtils';
 import MachineTypeSelection from './MachineTypeSelection';
 
 import {
@@ -220,45 +221,33 @@ const fieldProps = (initialValue) => {
   };
 };
 
-describe('<MachineTypeSelection />', () => {
-  describe('when machine type list needs to be fetched', () => {
-    let field;
-    let forceChoiceField;
-    let getDefaultFlavour;
-    let getMachineTypes;
-    let wrapper;
-    beforeEach(() => {
-      field = fieldProps(undefined);
-      forceChoiceField = fieldProps(false);
-      getDefaultFlavour = jest.fn();
-      getMachineTypes = jest.fn();
-      wrapper = shallow(
-        <MachineTypeSelection
-          flavours={baseFlavoursState}
-          machineTypes={baseState}
-          machine_type={field}
-          machine_type_force_choice={forceChoiceField}
-          isMultiAz={false}
-          quota={{}}
-          organization={organizationState}
-          getDefaultFlavour={getDefaultFlavour}
-          getMachineTypes={getMachineTypes}
-          isBYOC={false}
-          cloudProviderID="aws"
-          isMachinePool={false}
-          product="OSD"
-          billingModel="standard"
-        />,
-      );
-    });
+describe('MachineTypeSelection', () => {
+  it('flavours are fetched on render', () => {
+    const field = fieldProps(undefined);
+    const forceChoiceField = fieldProps(false);
+    const getDefaultFlavour = jest.fn();
+    const getMachineTypes = jest.fn();
 
-    it('renders correctly', () => {
-      expect(wrapper).toMatchSnapshot();
-    });
+    render(
+      <MachineTypeSelection
+        flavours={baseFlavoursState}
+        machineTypes={baseState}
+        machine_type={field}
+        machine_type_force_choice={forceChoiceField}
+        isMultiAz={false}
+        quota={{}}
+        organization={organizationState}
+        getDefaultFlavour={getDefaultFlavour}
+        getMachineTypes={getMachineTypes}
+        isBYOC={false}
+        cloudProviderID="aws"
+        isMachinePool={false}
+        product="OSD"
+        billingModel="standard"
+      />,
+    );
 
-    it('fetches flavours', () => {
-      expect(getDefaultFlavour).toBeCalled();
-    });
+    expect(getDefaultFlavour).toBeCalled();
   });
 
   describe('with an error loading machineTypes', () => {
@@ -397,13 +386,14 @@ describe('<MachineTypeSelection />', () => {
     });
 
     describe('with rhinfra quota available', () => {
-      beforeEach(() => {
-        const quota = rhQuotaList;
-        field = fieldProps(undefined);
-        forceChoiceField = fieldProps(false);
-        getDefaultFlavour = jest.fn();
-        getMachineTypes = jest.fn();
-        wrapper = shallow(
+      const quota = rhQuotaList;
+      const field = fieldProps(undefined);
+      const forceChoiceField = fieldProps(false);
+      const getDefaultFlavour = jest.fn();
+      const getMachineTypes = jest.fn();
+
+      it('selects default according to flavours API', async () => {
+        render(
           <MachineTypeSelection
             flavours={fulfilledFlavoursState}
             machineTypes={fulfilledMachineState}
@@ -421,24 +411,39 @@ describe('<MachineTypeSelection />', () => {
             billingModel="standard"
           />,
         );
+
+        await waitFor(() => expect(field.input.onChange).toBeCalledWith('m5.xlarge'));
       });
 
-      it('renders correctly', () => {
-        expect(wrapper).toMatchSnapshot();
-      });
+      it('does not display ccs_only machine types, only machines with quota', async () => {
+        render(
+          <MachineTypeSelection
+            flavours={fulfilledFlavoursState}
+            machineTypes={fulfilledMachineState}
+            machine_type={field}
+            machine_type_force_choice={forceChoiceField}
+            quota={quota}
+            organization={organizationState}
+            getDefaultFlavour={getDefaultFlavour}
+            getMachineTypes={getMachineTypes}
+            isMultiAz
+            isBYOC={false}
+            isMachinePool={false}
+            cloudProviderID="aws"
+            product="OSD"
+            billingModel="standard"
+          />,
+        );
 
-      it('selects default according to flavours API', () => {
-        expect(field.input.onChange).toBeCalled();
-        expect(field.input.onChange).toBeCalledWith('m5.xlarge');
-      });
+        const optionsMenu = screen.getByLabelText('Options menu');
+        await userEvent.click(optionsMenu);
 
-      it('does not display ccs_only machine types, only machines with quota', () => {
-        const types = wrapper
-          .find('SelectOption')
-          .getElements()
-          .map((e) => e.key);
-        expect(types).not.toContain('m5.12xlarge');
-        expect(types).not.toContain('g4dn.2xlarge');
+        const options = screen
+          .getAllByRole('option')
+          .map((option) => option.querySelector('.pf-c-select__menu-item-description').textContent);
+
+        expect(options).not.toContain('m5.12xlarge');
+        expect(options).not.toContain('g4dn.2xlarge');
       });
     });
 
@@ -489,13 +494,14 @@ describe('<MachineTypeSelection />', () => {
     });
 
     describe('with rhinfra quota not covering previous selection', () => {
-      beforeEach(() => {
-        const quota = rhQuotaList;
-        field = fieldProps('m5.12xlarge');
-        forceChoiceField = fieldProps(false);
-        getDefaultFlavour = jest.fn();
-        getMachineTypes = jest.fn();
-        wrapper = shallow(
+      const quota = rhQuotaList;
+      const field = fieldProps('m5.12xlarge');
+      const forceChoiceField = fieldProps(false);
+      const getDefaultFlavour = jest.fn();
+      const getMachineTypes = jest.fn();
+
+      it('clears selection to force manual choice', async () => {
+        render(
           <MachineTypeSelection
             flavours={fulfilledFlavoursState}
             machineTypes={fulfilledMachineState}
@@ -513,35 +519,54 @@ describe('<MachineTypeSelection />', () => {
             billingModel="standard"
           />,
         );
+
+        await waitFor(() => {
+          expect(field.input.onChange).toHaveBeenCalledWith('');
+          expect(forceChoiceField.input.onChange).toHaveBeenCalledWith(true);
+        });
       });
 
-      it('renders correctly', () => {
-        expect(wrapper).toMatchSnapshot();
-      });
+      it('does not display ccs_only machine types, only machines with quota', async () => {
+        render(
+          <MachineTypeSelection
+            flavours={fulfilledFlavoursState}
+            machineTypes={fulfilledMachineState}
+            machine_type={field}
+            machine_type_force_choice={forceChoiceField}
+            quota={quota}
+            organization={organizationState}
+            getDefaultFlavour={getDefaultFlavour}
+            getMachineTypes={getMachineTypes}
+            isMultiAz
+            isBYOC={false}
+            isMachinePool={false}
+            cloudProviderID="aws"
+            product="OSD"
+            billingModel="standard"
+          />,
+        );
 
-      it('clears selection to force manual choice', () => {
-        expect(field.input.onChange).toHaveBeenCalledWith('');
-        expect(forceChoiceField.input.onChange).toHaveBeenCalledWith(true);
-      });
+        const optionsMenu = screen.getByLabelText('Options menu');
+        await userEvent.click(optionsMenu);
 
-      it('does not display ccs_only machine types, only machines with quota', () => {
-        const types = wrapper
-          .find('SelectOption')
-          .getElements()
-          .map((e) => e.key);
-        expect(types).not.toContain('m5.12xlarge');
-        expect(types).not.toContain('g4dn.2xlarge');
+        const options = screen
+          .getAllByRole('option')
+          .map((option) => option.querySelector('.pf-c-select__menu-item-description').textContent);
+
+        expect(options).not.toContain('m5.12xlarge');
+        expect(options).not.toContain('g4dn.2xlarge');
       });
     });
 
     describe('byoc with sufficient byoc quota available', () => {
-      beforeEach(() => {
-        const quota = CCSQuotaList;
-        field = fieldProps(undefined);
-        forceChoiceField = fieldProps(false);
-        getDefaultFlavour = jest.fn();
-        getMachineTypes = jest.fn();
-        wrapper = shallow(
+      const quota = CCSQuotaList;
+      const field = fieldProps(undefined);
+      const forceChoiceField = fieldProps(false);
+      const getDefaultFlavour = jest.fn();
+      const getMachineTypes = jest.fn();
+
+      it('selects default according to flavours API', async () => {
+        render(
           <MachineTypeSelection
             flavours={fulfilledFlavoursState}
             machineTypes={fulfilledMachineState}
@@ -559,23 +584,36 @@ describe('<MachineTypeSelection />', () => {
             billingModel="standard"
           />,
         );
+
+        await waitFor(() => expect(field.input.onChange).toBeCalledWith('m5.xlarge'));
       });
 
-      it('renders correctly', () => {
-        expect(wrapper).toMatchSnapshot();
-      });
+      it('displays only machine types with quota', async () => {
+        render(
+          <MachineTypeSelection
+            flavours={fulfilledFlavoursState}
+            machineTypes={fulfilledMachineState}
+            machine_type={field}
+            machine_type_force_choice={forceChoiceField}
+            quota={quota}
+            organization={organizationState}
+            getDefaultFlavour={getDefaultFlavour}
+            getMachineTypes={getMachineTypes}
+            isMultiAz
+            isBYOC
+            isMachinePool={false}
+            cloudProviderID="aws"
+            product="OSD"
+            billingModel="standard"
+          />,
+        );
 
-      it('selects default according to flavours API', () => {
-        expect(field.input.onChange).toBeCalled();
-        expect(field.input.onChange).toBeCalledWith('m5.xlarge');
-      });
+        const optionsMenu = screen.getByLabelText('Options menu');
+        userEvent.click(optionsMenu);
 
-      it('displays only machine types with quota', () => {
-        const types = wrapper
-          .find('SelectOption')
-          .getElements()
-          .map((e) => e.key);
-        expect(types).toContain('m5.xlarge');
+        await waitFor(() =>
+          expect(screen.getByText('m5.xlarge', { exact: false })).toBeInTheDocument(),
+        );
       });
     });
 
@@ -626,20 +664,15 @@ describe('<MachineTypeSelection />', () => {
       types: moreTypes,
       typesByID: mapMachineTypesById(moreTypes),
     };
-    let field;
-    let forceChoiceField;
-    let getDefaultFlavour;
-    let getMachineTypes;
-    let wrapper;
+    const quota = CCSQuotaList;
+    const field = fieldProps(undefined);
+    const forceChoiceField = fieldProps(false);
+    const getDefaultFlavour = jest.fn();
+    const getMachineTypes = jest.fn();
 
     describe('byoc with sufficient byoc quota available', () => {
-      beforeEach(() => {
-        const quota = CCSQuotaList;
-        field = fieldProps(undefined);
-        forceChoiceField = fieldProps(false);
-        getDefaultFlavour = jest.fn();
-        getMachineTypes = jest.fn();
-        wrapper = shallow(
+      it('selects default according to flavours API', async () => {
+        render(
           <MachineTypeSelection
             flavours={fulfilledFlavoursState}
             machineTypes={state}
@@ -657,24 +690,39 @@ describe('<MachineTypeSelection />', () => {
             billingModel="standard"
           />,
         );
+
+        await waitFor(() => expect(field.input.onChange).toBeCalledWith('m5.xlarge'));
       });
 
-      it('renders correctly', () => {
-        expect(wrapper).toMatchSnapshot();
-      });
+      it('displays only machine types with quota from known categories', async () => {
+        render(
+          <MachineTypeSelection
+            flavours={fulfilledFlavoursState}
+            machineTypes={state}
+            machine_type={field}
+            machine_type_force_choice={forceChoiceField}
+            quota={quota}
+            organization={organizationState}
+            getDefaultFlavour={getDefaultFlavour}
+            getMachineTypes={getMachineTypes}
+            isMultiAz
+            isBYOC
+            isMachinePool={false}
+            cloudProviderID="aws"
+            product="OSD"
+            billingModel="standard"
+          />,
+        );
 
-      it('selects default according to flavours API', () => {
-        expect(field.input.onChange).toBeCalled();
-        expect(field.input.onChange).toBeCalledWith('m5.xlarge');
-      });
+        const optionsMenu = screen.getByLabelText('Options menu');
+        await userEvent.click(optionsMenu);
 
-      it('displays only machine types with quota from known categories', () => {
-        const types = wrapper
-          .find('SelectOption')
-          .getElements()
-          .map((e) => e.key);
-        expect(types).toContain('m5.xlarge');
-        expect(types).not.toContain('foo.2xbar');
+        const options = screen
+          .getAllByRole('option')
+          .map((option) => option.querySelector('.pf-c-select__menu-item-description').textContent);
+
+        expect(options).toContain('m5.xlarge');
+        expect(options).not.toContain('foo.2xbar');
       });
     });
   });
