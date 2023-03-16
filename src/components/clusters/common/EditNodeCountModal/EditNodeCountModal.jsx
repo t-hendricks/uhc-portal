@@ -161,6 +161,13 @@ class EditNodeCountModal extends Component {
     const pending =
       editNodeCountResponse.pending || organization.pending || machinePoolsList.pending;
 
+    const getMinNodes = () => {
+      if ((!isHypershiftCluster && machinePoolId !== 'Default') || isHypershiftCluster) {
+        return 0;
+      }
+      return undefined;
+    };
+
     return (
       <Modal
         className="edit-cluster-modal edit-cluster-modal-rhinfra"
@@ -220,7 +227,7 @@ class EditNodeCountModal extends Component {
                       currentNodeCount={initialValues.nodes_compute || 0}
                       cloudProviderID={cloudProviderID}
                       product={product}
-                      minNodes={machinePoolId !== 'Default' && !isHypershiftCluster ? 0 : undefined}
+                      minNodes={getMinNodes()}
                       isMachinePool
                       billingModel={billingModel}
                     />
