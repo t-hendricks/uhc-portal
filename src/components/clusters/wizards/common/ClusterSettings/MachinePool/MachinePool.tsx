@@ -2,7 +2,7 @@ import React from 'react';
 import { useDispatch } from 'react-redux';
 import { Field } from 'formik';
 
-import { Form, Grid, GridItem, Title, Text, ExpandableSection, Flex } from '@patternfly/react-core';
+import { Form, Grid, GridItem, Title, Text, ExpandableSection } from '@patternfly/react-core';
 
 import { required } from '~/common/validators';
 import { getMachineTypes } from '~/redux/actions/machineTypesActions';
@@ -94,83 +94,81 @@ export const MachinePool = () => {
         </Text>
       </GridItem>
 
-      <Grid hasGutter md={6}>
-        <Flex direction={{ default: 'column' }} spaceItems={{ default: 'spaceItemsLg' }}>
-          <GridItem>
-            <Field
-              component={MachineTypeSelection}
-              name={FieldId.MachineType}
-              validate={required}
-              isMultiAz={isMultiAz}
-              isBYOC={isByoc}
-              cloudProviderID={cloudProvider}
-              product={product}
-              isMachinePool={false}
-              billingModel={billingModel}
-              inModal={false}
-              machine_type={{
-                input: {
-                  ...getFieldProps(FieldId.MachineType),
-                  onChange: (value: string) => setFieldValue(FieldId.MachineType, value),
-                },
-                meta: getFieldMeta(FieldId.MachineType),
-              }}
-              machine_type_force_choice={{
-                input: {
-                  ...getFieldProps(FieldId.MachineTypeForceChoice),
-                  onChange: (value: string) => setFieldValue(FieldId.MachineTypeForceChoice, value),
-                },
-              }}
-            />
-          </GridItem>
+      <Grid hasGutter>
+        <GridItem md={6}>
+          <Field
+            component={MachineTypeSelection}
+            name={FieldId.MachineType}
+            validate={required}
+            isMultiAz={isMultiAz}
+            isBYOC={isByoc}
+            cloudProviderID={cloudProvider}
+            product={product}
+            isMachinePool={false}
+            billingModel={billingModel}
+            inModal={false}
+            machine_type={{
+              input: {
+                ...getFieldProps(FieldId.MachineType),
+                onChange: (value: string) => setFieldValue(FieldId.MachineType, value),
+              },
+              meta: getFieldMeta(FieldId.MachineType),
+            }}
+            machine_type_force_choice={{
+              input: {
+                ...getFieldProps(FieldId.MachineTypeForceChoice),
+                onChange: (value: string) => setFieldValue(FieldId.MachineTypeForceChoice, value),
+              },
+            }}
+          />
+        </GridItem>
 
-          {canAutoScale && (
-            <>
-              <GridItem>
-                <AutoScale isDefaultMachinePool />
-              </GridItem>
-              {autoscalingEnabled && nodeLabelsExpandableSection}
-            </>
-          )}
+        {canAutoScale && (
+          <>
+            <GridItem>
+              <AutoScale isDefaultMachinePool />
+            </GridItem>
+            {autoscalingEnabled && nodeLabelsExpandableSection}
+          </>
+        )}
 
-          {!autoscalingEnabled && (
-            <>
-              <GridItem>
-                <Field
-                  component={NodeCountInput}
-                  name={FieldId.NodesCompute}
-                  label={isMultiAz ? 'Compute node count (per zone)' : 'Compute node count'}
-                  isMultiAz={isMultiAz}
-                  isByoc={isByoc}
-                  machineType={machineType}
-                  extendedHelpText={
-                    <>
-                      {constants.computeNodeCountHint}{' '}
-                      <ExternalLink
-                        href={
-                          isRosa
-                            ? links.ROSA_SERVICE_DEFINITION_COMPUTE
-                            : links.OSD_SERVICE_DEFINITION_COMPUTE
-                        }
-                      >
-                        Learn more about compute node count
-                      </ExternalLink>
-                    </>
-                  }
-                  cloudProviderID={cloudProvider}
-                  product={product}
-                  isMachinePool={false}
-                  billingModel={billingModel}
-                  input={{
-                    ...getFieldProps(FieldId.NodesCompute),
-                    onChange: (value: string) => setFieldValue(FieldId.NodesCompute, value),
-                  }}
-                />
-              </GridItem>
-              {nodeLabelsExpandableSection}
-            </>
-          )}
-        </Flex>
+        {!autoscalingEnabled && (
+          <>
+            <GridItem md={6}>
+              <Field
+                component={NodeCountInput}
+                name={FieldId.NodesCompute}
+                label={isMultiAz ? 'Compute node count (per zone)' : 'Compute node count'}
+                isMultiAz={isMultiAz}
+                isByoc={isByoc}
+                machineType={machineType}
+                extendedHelpText={
+                  <>
+                    {constants.computeNodeCountHint}{' '}
+                    <ExternalLink
+                      href={
+                        isRosa
+                          ? links.ROSA_SERVICE_DEFINITION_COMPUTE
+                          : links.OSD_SERVICE_DEFINITION_COMPUTE
+                      }
+                    >
+                      Learn more about compute node count
+                    </ExternalLink>
+                  </>
+                }
+                cloudProviderID={cloudProvider}
+                product={product}
+                isMachinePool={false}
+                billingModel={billingModel}
+                input={{
+                  ...getFieldProps(FieldId.NodesCompute),
+                  onChange: (value: string) => setFieldValue(FieldId.NodesCompute, value),
+                }}
+              />
+            </GridItem>
+            {nodeLabelsExpandableSection}
+          </>
+        )}
       </Grid>
     </Form>
   );
