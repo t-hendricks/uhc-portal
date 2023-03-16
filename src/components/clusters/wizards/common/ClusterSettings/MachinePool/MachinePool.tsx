@@ -5,8 +5,8 @@ import { Field } from 'formik';
 import { Form, Grid, GridItem, Title, Text, ExpandableSection, Flex } from '@patternfly/react-core';
 
 import { required } from '~/common/validators';
-import { useGlobalState } from '~/redux/hooks/useGlobalState';
 import { getMachineTypes } from '~/redux/actions/machineTypesActions';
+import { useGlobalState } from '~/redux/hooks/useGlobalState';
 import { canAutoScaleOnCreateSelector } from '~/components/clusters/ClusterDetails/components/MachinePools/MachinePoolsSelectors';
 import MachineTypeSelection from '~/components/clusters/CreateOSDPage/CreateOSDForm/FormSections/ScaleSection/MachineTypeSelection';
 import { FieldId } from '~/components/clusters/wizards/common/constants';
@@ -17,6 +17,7 @@ import { constants } from '~/components/clusters/CreateOSDPage/CreateOSDForm/Cre
 import links from '~/common/installLinks.mjs';
 import NodeCountInput from '~/components/clusters/common/NodeCountInput';
 import { normalizedProducts } from '~/common/subscriptionTypes';
+import { getNodesCount } from '~/components/clusters/CreateOSDPage/CreateOSDForm/FormSections/ScaleSection/AutoScaleSection/AutoScaleHelper';
 import { NodeLabelsFieldArray } from './NodeLabelsFieldArray';
 
 interface MachinePoolProps {
@@ -31,10 +32,9 @@ export const MachinePool = ({ billingModel }: MachinePoolProps) => {
       [FieldId.CloudProvider]: cloudProvider,
       [FieldId.MachineType]: machineType,
       [FieldId.AutoscalingEnabled]: autoscalingEnabled,
-      [FieldId.MinReplicas]: minReplicas,
-      [FieldId.MaxReplicas]: maxReplicas,
       [FieldId.MultiAz]: multiAz,
       [FieldId.Byoc]: byoc,
+      [FieldId.NodesCompute]: nodesCompute,
     },
     errors,
     getFieldProps,
@@ -43,8 +43,28 @@ export const MachinePool = ({ billingModel }: MachinePoolProps) => {
   } = useFormState();
   const isMultiAz = multiAz === 'true';
   const isByoc = byoc === 'true';
+  const isRosa = product === normalizedProducts.ROSA;
   const canAutoScale = useGlobalState((state) => canAutoScaleOnCreateSelector(state, product));
   const [isNodeLabelsExpanded, setIsNodeLabelsExpanded] = React.useState(false);
+
+  // If no value has been set for compute nodes already,
+  // set an initial value based on infrastructure and availability selections.
+  React.useEffect(() => {
+    if (!nodesCompute) {
+      setFieldValue(FieldId.NodesCompute, getNodesCount(isByoc, isMultiAz));
+    }
+  }, [isByoc, isMultiAz, nodesCompute, setFieldValue]);
+
+  // Expand Node labels section when errors exist
+  React.useEffect(() => {
+    if (!isNodeLabelsExpanded && errors[FieldId.NodeLabels]) {
+      setIsNodeLabelsExpanded(true);
+    }
+  }, [errors[FieldId.NodeLabels], isNodeLabelsExpanded]);
+
+  React.useEffect(() => {
+    dispatch(getMachineTypes());
+  }, [dispatch]);
 
   const nodeLabelsExpandableSection = (
     <ExpandableSection
@@ -60,19 +80,6 @@ export const MachinePool = ({ billingModel }: MachinePoolProps) => {
       <NodeLabelsFieldArray />
     </ExpandableSection>
   );
-
-  // Expand Node labels section when errors exist
-  React.useEffect(() => {
-    if (errors[FieldId.NodeLabels]) {
-      setIsNodeLabelsExpanded(true);
-    }
-  }, [errors[FieldId.NodeLabels]]);
-
-  React.useEffect(() => {
-    dispatch(getMachineTypes());
-  }, [dispatch]);
-
-  const isRosa = product === normalizedProducts.ROSA;
 
   return (
     <Form>
@@ -117,15 +124,7 @@ export const MachinePool = ({ billingModel }: MachinePoolProps) => {
           {canAutoScale && (
             <>
               <GridItem>
-                <AutoScale
-                  autoscalingEnabled={autoscalingEnabled}
-                  isMultiAz={isMultiAz}
-                  autoScaleMinNodesValue={minReplicas}
-                  autoScaleMaxNodesValue={maxReplicas}
-                  product={product}
-                  isBYOC={isByoc}
-                  isDefaultMachinePool
-                />
+                <AutoScale isDefaultMachinePool />
               </GridItem>
               {autoscalingEnabled && nodeLabelsExpandableSection}
             </>
