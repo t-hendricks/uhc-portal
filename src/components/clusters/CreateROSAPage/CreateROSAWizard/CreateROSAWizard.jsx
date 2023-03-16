@@ -72,12 +72,12 @@ class CreateROSAWizardInternal extends React.Component {
       getMachineTypes();
     }
 
-    const firstStep = isHypershiftEnabled
+    const firstStepId = isHypershiftEnabled
       ? stepId.CONTROL_PLANE
       : stepId.ACCOUNTS_AND_ROLES_AS_FIRST_STEP;
     this.setState({
-      stepIdReached: firstStep,
-      currentStepId: firstStep,
+      stepIdReached: firstStepId,
+      currentStepId: firstStepId,
       accountAndRolesStepId: isHypershiftEnabled
         ? stepId.ACCOUNTS_AND_ROLES_AS_SECOND_STEP
         : stepId.ACCOUNTS_AND_ROLES_AS_FIRST_STEP,
