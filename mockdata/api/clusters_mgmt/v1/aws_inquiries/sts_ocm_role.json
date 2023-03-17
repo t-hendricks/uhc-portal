@@ -1,0 +1,6 @@
+{
+  "arn": "arn:aws:iam::264732383067:role/ManagedOpenShift-OCM-Role-1515115",
+  "type": "OCM (TODO is this right?)",
+  "isAdmin": true,
+  "roleVersion": "4.10"
+}
