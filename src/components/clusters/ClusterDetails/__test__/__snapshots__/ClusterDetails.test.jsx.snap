@@ -8065,7 +8065,7 @@ exports[`<ClusterDetails /> Cluster Details - OSD should render 1`] = `
                                                   class="pf-c-description-list__text"
                                                 >
                                                   <span>
-                                                    10/01/2021 10:17:16
+                                                    1/10/2021 10:17:16 AM
                                                   </span>
                                                 </div>
                                               </dd>
@@ -9765,7 +9765,7 @@ exports[`<ClusterDetails /> Cluster Details - OSD should render 1`] = `
                                                     class="pf-c-description-list__text"
                                                   >
                                                     <span>
-                                                      10/01/2021 10:17:16
+                                                      1/10/2021 10:17:16 AM
                                                     </span>
                                                   </div>
                                                 </dd>
@@ -11017,7 +11017,7 @@ exports[`<ClusterDetails /> Cluster Details - OSD should render 1`] = `
                                                 class="pf-c-description-list__text"
                                               >
                                                 <span>
-                                                  10/01/2021 10:17:16
+                                                  1/10/2021 10:17:16 AM
                                                 </span>
                                               </div>
                                             </dd>
@@ -14428,7 +14428,7 @@ exports[`<ClusterDetails /> Cluster Details - OSD should render 1`] = `
                                                                         value="2021-01-10T15:17:16.278663Z"
                                                                       >
                                                                         <span>
-                                                                          10/01/2021 10:17:16
+                                                                          1/10/2021 10:17:16 AM
                                                                         </span>
                                                                       </Timestamp>
                                                                     </div>
