@@ -2,7 +2,8 @@ import React from 'react';
 
 import { Form, Title, Text, TextVariants } from '@patternfly/react-core';
 
-import { Field } from 'redux-form';
+import { Field, ChangeAction } from 'redux-form';
+import { FormikValues } from 'formik';
 import { hypershiftValue } from './ControlPlaneCommon';
 import HostedTile from './HostedTile';
 import StandAloneTile from './StandAloneTile';
@@ -15,9 +16,15 @@ type ControlPlaneFieldProps = {
     value: hypershiftValue;
     onChange: (value: hypershiftValue) => void;
   };
+  change: ChangeAction;
+  formValues: FormikValues;
 };
 
-const ControlPlaneField = ({ input: { value, onChange } }: ControlPlaneFieldProps) => {
+const ControlPlaneField = ({
+  input: { value, onChange },
+  change,
+  formValues,
+}: ControlPlaneFieldProps) => {
   React.useEffect(() => {
     if (!value) {
       onChange('true');
@@ -26,6 +33,16 @@ const ControlPlaneField = ({ input: { value, onChange } }: ControlPlaneFieldProp
 
   const handleChange = (isHypershift: hypershiftValue) => {
     onChange(isHypershift);
+    // Reset VPC settings in case they were configured and then came back to the Control plane step
+    Object.keys(formValues).forEach((formValue) => {
+      if (
+        formValue.startsWith('public_subnet_id_') ||
+        formValue.startsWith('private_subnet_id_') ||
+        formValue.startsWith('az_')
+      ) {
+        change(formValue, '');
+      }
+    });
   };
 
   return (
@@ -36,7 +53,13 @@ const ControlPlaneField = ({ input: { value, onChange } }: ControlPlaneFieldProp
   );
 };
 
-const ControlPlaneScreen = () => (
+const ControlPlaneScreen = ({
+  change,
+  formValues,
+}: {
+  change: ChangeAction;
+  formValues: FormikValues;
+}) => (
   <Form
     onSubmit={(event) => {
       event.preventDefault();
@@ -56,6 +79,8 @@ const ControlPlaneScreen = () => (
       validate={(value: hypershiftValue | undefined) =>
         !value ? 'Control plane is required.' : undefined
       }
+      change={change}
+      formValues={formValues}
     />
   </Form>
 );
