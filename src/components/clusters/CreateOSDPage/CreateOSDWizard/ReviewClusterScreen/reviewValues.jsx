@@ -206,11 +206,15 @@ const reviewValues = {
   aws_vpc: {
     title: 'VPC subnet settings',
     valueTransform: (value, allValues) => {
+      const hidePublicFields =
+        allValues.hypershift === 'true'
+          ? allValues.cluster_privacy === 'internal'
+          : allValues.use_privatelink;
       let vpcs = [
         {
           az: allValues.az_0,
           privateSubnet: allValues.private_subnet_id_0,
-          publicSubnet: allValues.use_privatelink ? undefined : allValues.public_subnet_id_0,
+          publicSubnet: hidePublicFields ? undefined : allValues.public_subnet_id_0,
         },
       ];
       if (allValues.multi_az === 'true') {
@@ -219,12 +223,12 @@ const reviewValues = {
           {
             az: allValues.az_1,
             privateSubnet: allValues.private_subnet_id_1,
-            publicSubnet: allValues.use_privatelink ? undefined : allValues.public_subnet_id_1,
+            publicSubnet: hidePublicFields ? undefined : allValues.public_subnet_id_1,
           },
           {
             az: allValues.az_2,
             privateSubnet: allValues.private_subnet_id_2,
-            publicSubnet: allValues.use_privatelink ? undefined : allValues.public_subnet_id_2,
+            publicSubnet: hidePublicFields ? undefined : allValues.public_subnet_id_2,
           },
         ];
       }
@@ -236,18 +240,18 @@ const reviewValues = {
           <GridItem md={3}>
             <strong>Private subnet ID</strong>
           </GridItem>
-          {!allValues.use_privatelink ? (
+          {!hidePublicFields ? (
             <GridItem md={3}>
               <strong>Public subnet ID</strong>
             </GridItem>
           ) : null}
-          <GridItem md={allValues.use_privatelink ? 6 : 3} />
+          <GridItem md={hidePublicFields ? 6 : 3} />
           {vpcs.map((vpc) => (
             <>
               <GridItem md={3}>{vpc.az}</GridItem>
               <GridItem md={3}>{vpc.privateSubnet}</GridItem>
-              {!allValues.use_privatelink ? <GridItem md={3}>{vpc.publicSubnet}</GridItem> : null}
-              <GridItem md={allValues.use_privatelink ? 6 : 3} />
+              {!hidePublicFields ? <GridItem md={3}>{vpc.publicSubnet}</GridItem> : null}
+              <GridItem md={hidePublicFields ? 6 : 3} />
             </>
           ))}
         </Grid>
@@ -323,7 +327,7 @@ const reviewValues = {
   },
   network_host_prefix: {
     title: 'Host prefix',
-    valueTransform: (value) => (value.includes('/') ? value : `/${value}`),
+    valueTransform: (value) => (value?.includes('/') ? value : `/${value}`),
   },
   cluster_privacy: {
     title: 'Cluster privacy',

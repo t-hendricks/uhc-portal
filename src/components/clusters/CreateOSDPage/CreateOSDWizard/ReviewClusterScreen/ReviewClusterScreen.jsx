@@ -206,8 +206,8 @@ const ReviewClusterScreen = ({
         {ReviewItem({ name: 'cluster_privacy', formValues })}
         {showVPCCheckbox && ReviewItem({ name: 'install_to_vpc', formValues })}
         {showVPCCheckbox &&
-          formValues.cluster_privacy === 'internal' &&
-          formValues.install_to_vpc &&
+          (formValues.hypershift === 'true' ||
+            (formValues.cluster_privacy === 'internal' && formValues.install_to_vpc)) &&
           ReviewItem({ name: 'use_privatelink', formValues })}
         {showVPCCheckbox &&
           formValues.install_to_vpc &&
