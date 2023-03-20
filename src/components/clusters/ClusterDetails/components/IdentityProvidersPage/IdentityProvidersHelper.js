@@ -94,6 +94,12 @@ const idpOauthNeedsPort = (IDPName) => IDPName === IDPTypeNames[IDPformValues.OP
 
 /**
  * getOauthCallbackURL returns the OAuth callback URL for a given cluster base URL and IDP Name.
+ * Format for non-Hypershift clusters:
+ *  - General case: https://oauth-openshift.<console_url>/oauth2callback/<idp_name>
+ * Format for Hypershift clusters:
+ *  - General case: https://oauth.<api_url_without_port>/oauth2callback/<idp_name>
+ *  - OpenID: https://oauth.<api_url_including_port>/oauth2callback/<idp_name>
+ *
  * @param {Object} clusterUrls an object containing the console and API URLs
  * @param {String} IDPName an IDP name.
  * @param {Boolean} isHypershift indicates if it's a Hypershift cluster
@@ -109,7 +115,7 @@ const getOauthCallbackURL = (clusterUrls, IDPName, isHypershift) => {
     : `${clusterOauthBaseURL}/`;
 
   const URLParts = URLWithSlash.split('.');
-  URLParts[0] = isHypershift ? 'https://oauth' : 'https://oauth-openshift';
+  URLParts[0] = `https://oauth${isHypershift ? '' : '-openshift'}`;
 
   if (isHypershift && !idpOauthNeedsPort(IDPName)) {
     const lastPart = URLParts[URLParts.length - 1];
