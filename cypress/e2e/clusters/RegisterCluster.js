@@ -5,7 +5,8 @@ import RegisterClusterPage from '../../pageobjects/RegisterCluster.page';
 import ClusterDetailsPage from '../../pageobjects/ClusterDetails.page';
 
 describe('Register cluster flow', () => {
-  let displayName;
+  const clusterID = v4();
+  const displayName = `cypress-${clusterID}`;
 
   before(() => {
     cy.visit('/');
@@ -63,9 +64,6 @@ describe('Register cluster flow', () => {
   });
 
   it('creates a new cluster and redirects to its details page', () => {
-    const clusterID = v4();
-    displayName = `cypress-${clusterID}`;
-
     ClusterListPage.registerCluster().should('be.visible').click();
     ClusterListPage.isRegisterClusterUrl();
     RegisterClusterPage.clusterIDInput().type(clusterID).blur();
