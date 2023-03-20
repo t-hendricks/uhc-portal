@@ -112,7 +112,8 @@ describe('Register cluster flow', () => {
   });
 
   it('Finally, archive the cluster created', () => {
-    ClusterDetailsPage.actionsDropdownToggle(true).click();
+    ClusterDetailsPage.actionsDropdownToggle().find('span').first().should('have.text', 'Actions');
+    ClusterDetailsPage.actionsDropdownToggle().click();
     ClusterDetailsPage.archiveClusterDropdownItem().click();
     ClusterDetailsPage.archiveClusterDialogConfirm().click();
   });

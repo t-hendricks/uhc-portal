@@ -10,16 +10,10 @@ class ClusterDetails extends Page {
 
   editConsoleURLDialogConfirm = () => cy.get('button').contains('Add URL');
 
-  openConsoleLink = () => cy.get('.pull-left');
+  openConsoleLink = () => cy.getByTestId('console-url-link');
 
-  actionsDropdownToggle = (delayed) =>
-    delayed
-      ? cy
-          .get('div[data-testid="cluster-actions-dropdown"]', { timeout: 3000 })
-          .should('exist')
-          .find('button')
-          .first()
-      : cy.get('div[data-testid="cluster-actions-dropdown"]').find('button').first();
+  actionsDropdownToggle = () =>
+    cy.getByTestId('cluster-actions-dropdown').find('button').first();
 
   editDisplayNameDropdownItem = () => cy.contains('button', 'Edit display name');
 
