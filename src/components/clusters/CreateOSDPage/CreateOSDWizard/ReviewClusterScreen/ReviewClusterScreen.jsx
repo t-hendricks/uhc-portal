@@ -71,6 +71,7 @@ const ReviewClusterScreen = ({
 
   const [userRole, setUserRole] = useState('');
   const [ocmRole, setOcmRole] = useState('');
+  const isHypershiftEnabled = !!formValues.hypershift; // doesn't matter if "true" or "false"
 
   useEffect(() => {
     clearGetUserRoleResponse();
@@ -128,8 +129,16 @@ const ReviewClusterScreen = ({
     }
     return isROSA ? rosaStepId[step] : stepId[step];
   };
+
   const getStepName = (stepKey) =>
     isROSA ? rosaStepNameById[rosaStepId[stepKey]] : stepNameById[stepId[stepKey]];
+
+  let accountStepId = 'ACCOUNTS_AND_ROLES';
+  if (isROSA) {
+    accountStepId = isHypershiftEnabled
+      ? 'ACCOUNTS_AND_ROLES_AS_SECOND_STEP'
+      : 'ACCOUNTS_AND_ROLES_AS_FIRST_STEP';
+  }
 
   return (
     <div className="ocm-create-osd-review-screen">
@@ -139,9 +148,17 @@ const ReviewClusterScreen = ({
       {isROSA && (
         <>
           <ReduxHiddenCheckbox name="detected_ocm_and_user_roles" />
+          {isHypershiftEnabled && (
+            <ReviewSection
+              title={getStepName('CONTROL_PLANE')}
+              onGoToStep={() => goToStepById(getStepId('CONTROL_PLANE'))}
+            >
+              {ReviewItem({ name: 'hypershift', formValues })}
+            </ReviewSection>
+          )}
           <ReviewSection
-            title={getStepName('ACCOUNTS_AND_ROLES')}
-            onGoToStep={() => goToStepById(getStepId('ACCOUNTS_AND_ROLES'))}
+            title={getStepName(accountStepId)}
+            onGoToStep={() => goToStepById(getStepId(accountStepId))}
             initiallyExpanded={errorWithAWSAccountRoles}
           >
             {ReviewItem({ name: 'associated_aws_id', formValues })}
@@ -161,14 +178,6 @@ const ReviewClusterScreen = ({
             {ReviewItem({ name: 'worker_role_arn', formValues })}
           </ReviewSection>
         </>
-      )}
-      {isROSA && formValues.hypershift && (
-        <ReviewSection
-          title={getStepName('CONTROL_PLANE')}
-          onGoToStep={() => goToStepById(getStepId('CONTROL_PLANE'))}
-        >
-          {ReviewItem({ name: 'hypershift', formValues })}
-        </ReviewSection>
       )}
       {!isROSA && (
         <ReviewSection
