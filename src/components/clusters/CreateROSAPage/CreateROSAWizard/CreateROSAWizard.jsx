@@ -41,8 +41,9 @@ import './createROSAWizard.scss';
 
 class CreateROSAWizardInternal extends React.Component {
   state = {
-    stepIdReached: stepId.ACCOUNTS_AND_ROLES,
-    currentStepId: stepId.ACCOUNTS_AND_ROLES,
+    stepIdReached: undefined,
+    currentStepId: undefined,
+    accountAndRolesStepId: undefined,
     // Dictionary of step IDs; { [stepId: number]: boolean },
     // where entry values indicate the latest form validation state for those respective steps.
     validatedSteps: {},
@@ -56,6 +57,7 @@ class CreateROSAWizardInternal extends React.Component {
       getMachineTypes,
       getOrganizationAndQuota,
       getCloudProviders,
+      isHypershiftEnabled,
     } = this.props;
 
     document.title = 'Create OpenShift ROSA Cluster';
@@ -69,6 +71,17 @@ class CreateROSAWizardInternal extends React.Component {
     if (!machineTypes.fulfilled && !machineTypes.pending) {
       getMachineTypes();
     }
+
+    const firstStep = isHypershiftEnabled
+      ? stepId.CONTROL_PLANE
+      : stepId.ACCOUNTS_AND_ROLES_AS_FIRST_STEP;
+    this.setState({
+      stepIdReached: firstStep,
+      currentStepId: firstStep,
+      accountAndRolesStepId: isHypershiftEnabled
+        ? stepId.ACCOUNTS_AND_ROLES_AS_SECOND_STEP
+        : stepId.ACCOUNTS_AND_ROLES_AS_FIRST_STEP,
+    });
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -152,7 +165,7 @@ class CreateROSAWizardInternal extends React.Component {
   };
 
   canJumpTo = (id) => {
-    const { stepIdReached, currentStepId, validatedSteps } = this.state;
+    const { stepIdReached, currentStepId, accountAndRolesStepId, validatedSteps } = this.state;
     const { selectedAWSAccountID } = this.props;
 
     const hasPrevStepError = Object.entries(validatedSteps).some(
@@ -160,7 +173,7 @@ class CreateROSAWizardInternal extends React.Component {
     );
 
     // disable all future wizard step links if no assoc. aws acct. selected
-    if (id > stepId.ACCOUNTS_AND_ROLES && !selectedAWSAccountID) {
+    if (id > accountAndRolesStepId && !selectedAWSAccountID) {
       return false;
     }
 
@@ -198,7 +211,7 @@ class CreateROSAWizardInternal extends React.Component {
 
   onBeforeNext = async (onNext) => {
     const { isAsyncValidating, getUserRoleResponse, selectedAWSAccountID } = this.props;
-    const { currentStepId, deferredNext } = this.state;
+    const { currentStepId, accountAndRolesStepId, deferredNext } = this.state;
 
     if (isAsyncValidating) {
       if (!deferredNext) {
@@ -211,7 +224,7 @@ class CreateROSAWizardInternal extends React.Component {
       return;
     }
     // when navigating back to step 1 from link in no user-role error messages on review screen.
-    if (currentStepId === stepId.ACCOUNTS_AND_ROLES && !getUserRoleResponse?.fulfilled) {
+    if (currentStepId === accountAndRolesStepId && !getUserRoleResponse?.fulfilled) {
       const data = await this.getUserRoleInfo();
       const gotoNextStep = isUserRoleForSelectedAWSAccount(data.value, selectedAWSAccountID);
       if (!gotoNextStep) {
@@ -248,18 +261,28 @@ class CreateROSAWizardInternal extends React.Component {
       isHypershiftEnabled,
       hypershiftSelected,
     } = this.props;
-    const { deferredNext } = this.state;
+    const { accountAndRolesStepId, deferredNext } = this.state;
 
     const steps = [
+      isHypershiftEnabled && {
+        id: stepId.CONTROL_PLANE,
+        name: stepNameById[stepId.CONTROL_PLANE],
+        component: (
+          <ErrorBoundary>
+            <ControlPlaneScreen />
+          </ErrorBoundary>
+        ),
+        canJumpTo: this.canJumpTo(stepId.CONTROL_PLANE),
+      },
       {
-        id: stepId.ACCOUNTS_AND_ROLES,
-        name: stepNameById[stepId.ACCOUNTS_AND_ROLES],
+        id: accountAndRolesStepId,
+        name: stepNameById[accountAndRolesStepId],
         component: (
           <ErrorBoundary>
             <AccountsRolesScreen organizationID={organization?.details?.id} />
           </ErrorBoundary>
         ),
-        canJumpTo: this.canJumpTo(stepId.ACCOUNTS_AND_ROLES),
+        canJumpTo: this.canJumpTo(accountAndRolesStepId),
       },
       {
         name: stepNameById[stepId.CLUSTER_SETTINGS],
@@ -379,20 +402,7 @@ class CreateROSAWizardInternal extends React.Component {
         ),
         canJumpTo: this.canJumpTo(stepId.REVIEW_AND_CREATE),
       },
-    ];
-
-    if (isHypershiftEnabled) {
-      steps.splice(1, 0, {
-        id: stepId.CONTROL_PLANE,
-        name: stepNameById[stepId.CONTROL_PLANE],
-        component: (
-          <ErrorBoundary>
-            <ControlPlaneScreen />
-          </ErrorBoundary>
-        ),
-        canJumpTo: this.canJumpTo(stepId.CONTROL_PLANE),
-      });
-    }
+    ].filter(Boolean);
 
     const ariaTitle = 'Create ROSA cluster wizard';
 
@@ -487,6 +497,7 @@ class CreateROSAWizardInternal extends React.Component {
               footer={
                 !createClusterResponse.pending ? (
                   <CreateRosaWizardFooter
+                    firstStepId={steps[0].id}
                     onSubmit={onSubmit}
                     onBeforeNext={this.onBeforeNext}
                     onBeforeSubmit={this.onBeforeSubmit}

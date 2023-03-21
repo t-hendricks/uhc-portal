@@ -1,6 +1,7 @@
 export const stepId = {
-  ACCOUNTS_AND_ROLES: 10,
-  CONTROL_PLANE: 15,
+  ACCOUNTS_AND_ROLES_AS_FIRST_STEP: 5,
+  CONTROL_PLANE: 10,
+  ACCOUNTS_AND_ROLES_AS_SECOND_STEP: 15,
   CLUSTER_SETTINGS: 20,
   CLUSTER_SETTINGS__DETAILS: 21,
   CLUSTER_SETTINGS__MACHINE_POOL: 23,
@@ -15,7 +16,8 @@ export const stepId = {
 };
 
 export const stepNameById = {
-  [stepId.ACCOUNTS_AND_ROLES]: 'Accounts and roles',
+  [stepId.ACCOUNTS_AND_ROLES_AS_FIRST_STEP]: 'Accounts and roles',
+  [stepId.ACCOUNTS_AND_ROLES_AS_SECOND_STEP]: 'Accounts and roles',
   [stepId.CONTROL_PLANE]: 'Control plane',
   [stepId.CLUSTER_SETTINGS]: 'Cluster settings',
   [stepId.CLUSTER_SETTINGS__DETAILS]: 'Details',
