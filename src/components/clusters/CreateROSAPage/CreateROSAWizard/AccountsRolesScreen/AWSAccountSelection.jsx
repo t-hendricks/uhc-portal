@@ -100,7 +100,7 @@ function AWSAccountSelection({
       helperTextInvalid={touched && error}
       isRequired
     >
-      <div>
+      <div className="pf-u-display-flex">
         <Select
           {...inputProps}
           label={label}
