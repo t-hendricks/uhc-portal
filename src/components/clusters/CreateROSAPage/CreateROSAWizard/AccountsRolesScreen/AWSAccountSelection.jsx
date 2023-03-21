@@ -100,43 +100,47 @@ function AWSAccountSelection({
       helperTextInvalid={touched && error}
       isRequired
     >
-      <Select
-        {...inputProps}
-        label={label}
-        labelIcon={extendedHelpText && <PopoverHint hint={extendedHelpText} />}
-        isOpen={isOpen}
-        selections={hasAWSAccounts ? selectedAWSAccountID : ''}
-        onToggle={onToggle}
-        onSelect={onSelect}
-        isDisabled={isDisabled}
-        placeholderText={AWS_ACCT_ID_PLACEHOLDER}
-        footer={footer}
-      >
-        {AWSAccountIDs.map((awsId) => (
-          <SelectOption
-            className="pf-c-dropdown__menu-item"
-            key={awsId}
-            value={awsId}
-          >{`${awsId}`}</SelectOption>
-        ))}
-      </Select>
-      {onRefresh && (
-        <Tooltip content={<p>Click icon to refresh associated aws accounts and account-roles.</p>}>
-          <Button
-            data-testid="refresh-aws-accounts"
-            isLoading={isLoading}
-            isDisabled={isDisabled}
-            isInline
-            isSmall
-            variant="secondary"
-            onClick={() => {
-              onRefresh();
-            }}
+      <div>
+        <Select
+          {...inputProps}
+          label={label}
+          labelIcon={extendedHelpText && <PopoverHint hint={extendedHelpText} />}
+          isOpen={isOpen}
+          selections={hasAWSAccounts ? selectedAWSAccountID : ''}
+          onToggle={onToggle}
+          onSelect={onSelect}
+          isDisabled={isDisabled}
+          placeholderText={AWS_ACCT_ID_PLACEHOLDER}
+          footer={footer}
+        >
+          {AWSAccountIDs.map((awsId) => (
+            <SelectOption
+              className="pf-c-dropdown__menu-item"
+              key={awsId}
+              value={awsId}
+            >{`${awsId}`}</SelectOption>
+          ))}
+        </Select>
+        {onRefresh && (
+          <Tooltip
+            content={<p>Click icon to refresh associated aws accounts and account-roles.</p>}
           >
-            Refresh
-          </Button>
-        </Tooltip>
-      )}
+            <Button
+              data-testid="refresh-aws-accounts"
+              isLoading={isLoading}
+              isDisabled={isDisabled}
+              isInline
+              isSmall
+              variant="secondary"
+              onClick={() => {
+                onRefresh();
+              }}
+            >
+              Refresh
+            </Button>
+          </Tooltip>
+        )}
+      </div>
     </FormGroup>
   );
 }
