@@ -12,9 +12,7 @@ const mapStateToProps = (state, ownProps) => {
   const cloudProviderID = valueSelector(state, 'cloud_provider');
   const isMultiAz = valueSelector(state, 'multi_az') === 'true';
   const isByoc = valueSelector(state, 'byoc') === 'true';
-
-  const hypershiftSelected = valueSelector(state, 'hypershift') === 'true';
-
+  const isHypershiftSelected = valueSelector(state, 'hypershift') === 'true';
   const isAutomaticUpgrade = valueSelector(state, 'upgrade_policy') === 'automatic';
   const product = valueSelector(state, 'product');
 
@@ -25,11 +23,11 @@ const mapStateToProps = (state, ownProps) => {
       isByoc,
       isMultiAz,
       isTrialDefault: ownProps.isTrialDefault,
-      hypershiftSelected,
+      isHypershiftSelected,
     }),
     isAutomaticUpgrade,
     product,
-    hypershiftSelected,
+    isHypershiftSelected,
   };
 };
 

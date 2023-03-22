@@ -33,6 +33,7 @@ const ReviewClusterScreen = ({
   clearGetUserRoleResponse,
   clearGetOcmRoleResponse,
   goToStepById,
+  isHypershiftSelected,
 }) => {
   const isByoc = formValues.byoc === 'true';
   const isAWS = formValues.cloud_provider === 'aws';
@@ -40,18 +41,19 @@ const ReviewClusterScreen = ({
   const isROSA = formValues.product === normalizedProducts.ROSA;
   const showVPCCheckbox = isROSA || isByoc;
   const clusterSettingsFields = [
-    !isROSA && 'cloud_provider',
+    ...(!isROSA ? ['cloud_provider'] : []),
     'name',
     'cluster_version',
     'region',
     'multi_az',
-    !isByoc && !isROSA && 'persistent_storage',
-    !isByoc && isROSA && 'load_balancers',
-    isByoc && isAWS && !isROSA && 'disable_scp_checks',
-    'enable_user_workload_monitoring',
-    isByoc && 'customer_managed_key',
+    ...(!isByoc && !isROSA ? ['persistent_storage'] : []),
+    ...(!isByoc && isROSA ? ['load_balancers'] : []),
+    ...(isByoc && isAWS && !isROSA ? ['disable_scp_checks'] : []),
+    ...(!isHypershiftSelected ? ['enable_user_workload_monitoring'] : []),
+    ...(isByoc ? ['customer_managed_key'] : []),
     'etcd_encryption',
-  ].filter(Boolean);
+  ];
+
   if (isCreateClusterPending) {
     return (
       <Bullseye>
@@ -284,6 +286,7 @@ ReviewClusterScreen.propTypes = {
   clearGetUserRoleResponse: PropTypes.func.isRequired,
   clearGetOcmRoleResponse: PropTypes.func.isRequired,
   goToStepById: PropTypes.func.isRequired,
+  isHypershiftSelected: PropTypes.bool,
 };
 
 export default ReviewClusterScreen;
