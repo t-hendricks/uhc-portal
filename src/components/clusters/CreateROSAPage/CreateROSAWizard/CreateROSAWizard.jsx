@@ -11,7 +11,7 @@ import { normalizedProducts } from '~/common/subscriptionTypes';
 import { trackEvents, ocmResourceType } from '~/common/analytics';
 import withAnalytics from '~/hoc/withAnalytics';
 import usePreventBrowserNav from '~/hooks/usePreventBrowserNav';
-import { stepId, stepNameById } from './rosaWizardConstants';
+import { getAccountAndRolesStepId, stepId, stepNameById } from './rosaWizardConstants';
 
 import ClusterSettingsScreen from '../../CreateOSDPage/CreateOSDWizard/ClusterSettingsScreen';
 import ControlPlaneScreen from './ControlPlaneScreen';
@@ -78,9 +78,7 @@ class CreateROSAWizardInternal extends React.Component {
     this.setState({
       stepIdReached: firstStepId,
       currentStepId: firstStepId,
-      accountAndRolesStepId: isHypershiftEnabled
-        ? stepId.ACCOUNTS_AND_ROLES_AS_SECOND_STEP
-        : stepId.ACCOUNTS_AND_ROLES_AS_FIRST_STEP,
+      accountAndRolesStepId: getAccountAndRolesStepId(isHypershiftEnabled),
     });
   }
 

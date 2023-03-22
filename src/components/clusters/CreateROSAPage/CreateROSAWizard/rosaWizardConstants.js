@@ -15,6 +15,12 @@ export const stepId = {
   REVIEW_AND_CREATE: 60,
 };
 
+export const getAccountAndRolesStepId = (isHypershiftEnabled) => {
+  return isHypershiftEnabled
+    ? stepId.ACCOUNTS_AND_ROLES_AS_SECOND_STEP
+    : stepId.ACCOUNTS_AND_ROLES_AS_FIRST_STEP;
+};
+
 export const stepNameById = {
   [stepId.ACCOUNTS_AND_ROLES_AS_FIRST_STEP]: 'Accounts and roles',
   [stepId.ACCOUNTS_AND_ROLES_AS_SECOND_STEP]: 'Accounts and roles',
