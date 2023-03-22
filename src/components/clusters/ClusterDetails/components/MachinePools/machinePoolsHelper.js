@@ -107,11 +107,11 @@ const validateDuplicateLabels = (labels) => {
 const normalizeNodePool = (nodePool) => {
   if (nodePool.autoscaling) {
     const normalizedNodePool = { ...nodePool, autoscaling: { ...nodePool.autoscaling } };
-    if (nodePool.autoscaling.min_replica) {
+    if (nodePool.autoscaling.min_replica >= 0) {
       normalizedNodePool.autoscaling.min_replicas = nodePool.autoscaling.min_replica;
       delete normalizedNodePool.autoscaling.min_replica;
     }
-    if (nodePool.autoscaling.max_replica) {
+    if (nodePool.autoscaling.max_replica >= 0) {
       normalizedNodePool.autoscaling.max_replicas = nodePool.autoscaling.max_replica;
       delete normalizedNodePool.autoscaling.max_replica;
     }
