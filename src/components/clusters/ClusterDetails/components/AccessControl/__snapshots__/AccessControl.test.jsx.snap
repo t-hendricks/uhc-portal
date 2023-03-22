@@ -36,9 +36,15 @@ exports[`<AccessControl /> should render 1`] = `
       >
         <Connect(IDPSection)
           canEdit={true}
-          clusterConsoleURL="https://console-openshift-console.apps.example.com"
           clusterHibernating={false}
           clusterID="fake id"
+          clusterUrls={
+            Object {
+              "api": "https://api.test-liza.wiex.s1.devshift.org:6443",
+              "console": "https://console-openshift-console.apps.example.com",
+            }
+          }
+          isHypershift={false}
           isReadOnly={false}
         />
       </Tab>
