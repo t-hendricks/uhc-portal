@@ -9,7 +9,7 @@ const createOSDInitialValues = ({
   isByoc,
   isMultiAz,
   isTrialDefault,
-  hypershiftSelected = false,
+  isHypershiftSelected,
 }) => {
   let defaultNodeCount;
   if (isByoc || isTrialDefault) {
@@ -21,12 +21,12 @@ const createOSDInitialValues = ({
   const initialValues = {
     cloud_provider: cloudProviderID,
     node_drain_grace_period: 60,
-    upgrade_policy: hypershiftSelected ? 'automatic' : 'manual',
+    upgrade_policy: isHypershiftSelected ? 'automatic' : 'manual',
     automatic_upgrade_schedule: '0 0 * * 0',
     multi_az: (!!isMultiAz).toString(),
     persistent_storage: '107374182400',
     load_balancers: '0',
-    enable_user_workload_monitoring: 'true',
+    ...(!isHypershiftSelected ? { enable_user_workload_monitoring: 'true' } : {}),
     nodes_compute: defaultNodeCount,
     node_labels: [{}],
     byoc: (!!isByoc || !!isTrialDefault).toString(),
