@@ -14,6 +14,8 @@ import {
   stepId as rosaStepId,
   stepNameById as rosaStepNameById,
 } from '~/components/clusters/CreateROSAPage/CreateROSAWizard/rosaWizardConstants';
+import { HYPERSHIFT_WIZARD_FEATURE } from '~/redux/constants/featureConstants';
+import { useFeatureGate } from '~/hooks/useFeatureGate';
 
 const ReviewClusterScreen = ({
   change,
@@ -71,7 +73,7 @@ const ReviewClusterScreen = ({
 
   const [userRole, setUserRole] = useState('');
   const [ocmRole, setOcmRole] = useState('');
-  const isHypershiftEnabled = !!formValues.hypershift; // doesn't matter if "true" or "false"
+  const isHypershiftEnabled = useFeatureGate(HYPERSHIFT_WIZARD_FEATURE);
 
   useEffect(() => {
     clearGetUserRoleResponse();
