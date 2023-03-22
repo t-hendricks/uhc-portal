@@ -35,8 +35,8 @@ const ClusterProgressCard = ({ cluster = {}, history, refresh }: ClusterProgress
   const isWaitingROSAManual = isWaitingROSAManualMode(cluster);
   const isWaitingHypershift = isWaitingHypershiftCluster(cluster);
   const installationInProgress =
-    isPending || isInstalling || isWaitingHypershift || !isWaitingROSAManual;
-  const inProgress = installationInProgress || isUninstalling;
+    (isPending || isInstalling || isWaitingHypershift || !isWaitingROSAManual) && !isError;
+  const inProgress = (installationInProgress || isUninstalling) && !isError;
   const estCompletionTime = isHypershiftCluster(cluster) ? '10' : '30 to 60';
 
   let titleText;
