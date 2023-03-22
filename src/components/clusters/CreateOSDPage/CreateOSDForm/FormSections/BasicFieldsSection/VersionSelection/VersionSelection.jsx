@@ -200,6 +200,7 @@ function VersionSelection({
             onToggle={onToggle}
             onSelect={onSelect}
             isDisabled={isDisabled}
+            onBlur={(event) => event.stopPropagation()}
           >
             <SelectGroup label="Full support">{selectOptions.fullSupport}</SelectGroup>
             <SelectGroup label="Maintenance support">
