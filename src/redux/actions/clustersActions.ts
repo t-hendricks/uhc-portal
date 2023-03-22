@@ -391,22 +391,26 @@ const fetchClustersAndPermissions = async (
       });
     }
 
-    // Performing a batch request to obtain the AI clusters data.
-    const aiClustersRequest =
-      subscriptionIds.length === 0
-        ? Promise.resolve({ data: [] })
-        : assistedService.getAIClustersBySubscription(subscriptionIds);
-    return aiClustersRequest.then((res) => {
-      const aiClusters = res.data || [];
-      aiClusters.forEach((aiCluster) => {
-        const clusterId = aiCluster.id;
-        const entry = subscriptionMap.get(clusterId);
-        if (entry) {
-          entry.aiCluster = aiCluster;
-        }
-      });
-      return enrichForClusterService();
+    let aiClusters = [] as OCM.Cluster[];
+    if (subscriptionIds.length > 0) {
+      assistedService
+        .getAIClustersBySubscription(subscriptionIds)
+        .then((res) => {
+          aiClusters = res.data;
+        })
+        .catch((error) => {
+          Sentry.captureException(error);
+        });
+    }
+
+    aiClusters.forEach((aiCluster) => {
+      const entry = subscriptionMap.get(aiCluster.id);
+      if (entry) {
+        entry.aiCluster = aiCluster;
+      }
     });
+
+    return enrichForClusterService();
   };
 
   await Promise.all(promises);
