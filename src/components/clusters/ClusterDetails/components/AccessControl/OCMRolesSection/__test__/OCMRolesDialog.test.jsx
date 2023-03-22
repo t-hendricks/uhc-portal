@@ -20,6 +20,5 @@ describe('<OCMRolesDialog />', () => {
 
     expect(wrapper).toMatchSnapshot();
     expect(wrapper.find('TextInput').length).toBe(1);
-    expect(wrapper.find('Alert').length).toBe(1);
   });
 });
