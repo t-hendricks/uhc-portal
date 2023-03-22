@@ -37,7 +37,8 @@ export const createClusterRequest = ({ isWizard = true, cloudProviderID, product
     },
     etcd_encryption: formData.etcd_encryption,
     billing_model: 'standard',
-    disable_user_workload_monitoring: !formData.enable_user_workload_monitoring,
+    disable_user_workload_monitoring:
+      formData.hypershift === 'true' ? true : !formData.enable_user_workload_monitoring,
   };
 
   if (formData.billing_model) {

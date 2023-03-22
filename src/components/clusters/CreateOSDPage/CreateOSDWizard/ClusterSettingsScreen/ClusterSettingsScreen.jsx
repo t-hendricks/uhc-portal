@@ -31,13 +31,9 @@ function ClusterSettingsScreen({
   kmsKeyArn,
   formErrors,
   touch,
+  isHypershiftSelected,
 }) {
   const [isExpanded, setIsExpanded] = useState(false);
-
-  const onToggle = () => {
-    setIsExpanded(!isExpanded);
-  };
-
   const isRosa = product === normalizedProducts.ROSA;
   const isGCP = cloudProviderID === 'gcp';
 
@@ -48,6 +44,10 @@ function ClusterSettingsScreen({
   } = formErrors;
 
   const gcpError = keyRingError || keyNameError || kmsServiceAccountError;
+
+  const onToggle = () => {
+    setIsExpanded(!isExpanded);
+  };
 
   React.useEffect(() => {
     if (customerManagedEncryptionSelected === 'true') {
@@ -124,7 +124,11 @@ function ClusterSettingsScreen({
             </GridItem>
           </>
         )}
-        <UserWorkloadMonitoringSection parent="create" disableUVM={false} planType={product} />
+
+        {!isHypershiftSelected && (
+          <UserWorkloadMonitoringSection parent="create" disableUVM={false} planType={product} />
+        )}
+
         <ExpandableSection
           toggleText="Advanced Encryption"
           onToggle={onToggle}
@@ -180,6 +184,7 @@ ClusterSettingsScreen.propTypes = {
   kmsKeyArn: PropTypes.string,
   formErrors: PropTypes.object,
   touch: PropTypes.func,
+  isHypershiftSelected: PropTypes.bool,
 };
 
 export default ClusterSettingsScreen;

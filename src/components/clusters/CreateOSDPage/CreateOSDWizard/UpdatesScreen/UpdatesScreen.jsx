@@ -4,7 +4,7 @@ import { Grid, GridItem, Form, Title } from '@patternfly/react-core';
 
 import UpgradeSettingsFields from '../../../common/Upgrades/UpgradeSettingsFields';
 
-function UpdatesScreen({ isAutomaticUpgrade, change, product, hypershiftSelected = false }) {
+function UpdatesScreen({ isAutomaticUpgrade, change, product, isHypershiftSelected = false }) {
   return (
     <Form
       onSubmit={(event) => {
@@ -21,7 +21,7 @@ function UpdatesScreen({ isAutomaticUpgrade, change, product, hypershiftSelected
           change={change}
           initialSceduleValue="0 0 * * 0"
           product={product}
-          isHypershift={hypershiftSelected}
+          isHypershift={isHypershiftSelected}
         />
       </Grid>
     </Form>
@@ -32,7 +32,7 @@ UpdatesScreen.propTypes = {
   isAutomaticUpgrade: PropTypes.bool,
   change: PropTypes.func.isRequired,
   product: PropTypes.string,
-  hypershiftSelected: PropTypes.bool,
+  isHypershiftSelected: PropTypes.bool,
 };
 
 export default UpdatesScreen;

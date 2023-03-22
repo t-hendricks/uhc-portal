@@ -19,6 +19,7 @@ const mapStateToProps = (state) => {
   const installToVPCSelected = valueSelector(state, 'install_to_vpc');
   const configureProxySelected = valueSelector(state, 'configure_proxy');
   const { getUserRoleResponse, getOCMRoleResponse } = state.rosaReducer;
+  const isHypershiftSelected = valueSelector(state, 'hypershift') === 'true';
 
   return {
     formValues: getFormValues('CreateCluster')(state),
@@ -28,6 +29,7 @@ const mapStateToProps = (state) => {
     configureProxySelected,
     getUserRoleResponse,
     getOCMRoleResponse,
+    isHypershiftSelected,
   };
 };
 
