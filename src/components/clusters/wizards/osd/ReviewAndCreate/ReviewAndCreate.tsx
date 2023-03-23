@@ -15,6 +15,7 @@ export const ReviewAndCreate = ({ track }: ReviewAndCreateProps) => {
   const { submitForm } = useFormState();
   const createClusterResponse = useGlobalState((state) => state.clusters.createdCluster);
   const [isErrorModalOpen, setIsErrorModalOpen] = React.useState(false);
+  const isSubmitting = createClusterResponse.pending;
 
   React.useEffect(() => {
     if (createClusterResponse.error && !isErrorModalOpen) {
@@ -23,16 +24,18 @@ export const ReviewAndCreate = ({ track }: ReviewAndCreateProps) => {
   }, [createClusterResponse.error, isErrorModalOpen]);
 
   useWizardFooter(
-    React.useMemo(
-      () => ({
+    React.useMemo(() => {
+      if (isSubmitting) {
+        return <></>;
+      }
+      return {
         nextButtonText: 'Create cluster',
         onNext: () => {
           submitForm();
           track();
         },
-      }),
-      [submitForm, track],
-    ),
+      };
+    }, [submitForm, track]),
     StepId.Review,
   );
 
