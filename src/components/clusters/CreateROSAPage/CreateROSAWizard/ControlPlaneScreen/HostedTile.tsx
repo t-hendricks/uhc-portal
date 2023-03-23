@@ -17,6 +17,7 @@ const HostedTile = ({ handleChange, isSelected }: HostedTileProps) => (
     onClick={() => handleChange('true')}
     isSelected={isSelected}
     className="controlPlaneScreenTile"
+    data-testid="hosted-control-planes"
   >
     <Text component={TextVariants.p} className={defaultMarginBottomSpacing}>
       Run an OpenShift cluster where the control plane is decoupled from the data plane, and is

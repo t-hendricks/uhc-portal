@@ -14,6 +14,8 @@ import {
   stepId as rosaStepId,
   stepNameById as rosaStepNameById,
 } from '~/components/clusters/CreateROSAPage/CreateROSAWizard/rosaWizardConstants';
+import { HYPERSHIFT_WIZARD_FEATURE } from '~/redux/constants/featureConstants';
+import { useFeatureGate } from '~/hooks/useFeatureGate';
 
 const ReviewClusterScreen = ({
   change,
@@ -71,6 +73,7 @@ const ReviewClusterScreen = ({
 
   const [userRole, setUserRole] = useState('');
   const [ocmRole, setOcmRole] = useState('');
+  const isHypershiftEnabled = useFeatureGate(HYPERSHIFT_WIZARD_FEATURE);
 
   useEffect(() => {
     clearGetUserRoleResponse();
@@ -128,8 +131,16 @@ const ReviewClusterScreen = ({
     }
     return isROSA ? rosaStepId[step] : stepId[step];
   };
+
   const getStepName = (stepKey) =>
     isROSA ? rosaStepNameById[rosaStepId[stepKey]] : stepNameById[stepId[stepKey]];
+
+  let accountStepId = 'ACCOUNTS_AND_ROLES';
+  if (isROSA) {
+    accountStepId = isHypershiftEnabled
+      ? 'ACCOUNTS_AND_ROLES_AS_SECOND_STEP'
+      : 'ACCOUNTS_AND_ROLES_AS_FIRST_STEP';
+  }
 
   return (
     <div className="ocm-create-osd-review-screen">
@@ -139,9 +150,17 @@ const ReviewClusterScreen = ({
       {isROSA && (
         <>
           <ReduxHiddenCheckbox name="detected_ocm_and_user_roles" />
+          {isHypershiftEnabled && (
+            <ReviewSection
+              title={getStepName('CONTROL_PLANE')}
+              onGoToStep={() => goToStepById(getStepId('CONTROL_PLANE'))}
+            >
+              {ReviewItem({ name: 'hypershift', formValues })}
+            </ReviewSection>
+          )}
           <ReviewSection
-            title={getStepName('ACCOUNTS_AND_ROLES')}
-            onGoToStep={() => goToStepById(getStepId('ACCOUNTS_AND_ROLES'))}
+            title={getStepName(accountStepId)}
+            onGoToStep={() => goToStepById(getStepId(accountStepId))}
             initiallyExpanded={errorWithAWSAccountRoles}
           >
             {ReviewItem({ name: 'associated_aws_id', formValues })}
@@ -161,14 +180,6 @@ const ReviewClusterScreen = ({
             {ReviewItem({ name: 'worker_role_arn', formValues })}
           </ReviewSection>
         </>
-      )}
-      {isROSA && formValues.hypershift && (
-        <ReviewSection
-          title={getStepName('CONTROL_PLANE')}
-          onGoToStep={() => goToStepById(getStepId('CONTROL_PLANE'))}
-        >
-          {ReviewItem({ name: 'hypershift', formValues })}
-        </ReviewSection>
       )}
       {!isROSA && (
         <ReviewSection

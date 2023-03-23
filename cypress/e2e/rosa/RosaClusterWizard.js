@@ -33,6 +33,15 @@ describe('Rosa cluster tests', () => {
       cy.get('#with-web').click();
       CreateRosaWizardPage.isCreateRosaPage();
       cy.get('.spinner-loading-text').should('not.exist');
+      CreateRosaWizardPage.isControlPlaneTypeScreen();
+    });
+
+    it('selects standalone control plane mode', () => {
+      CreateRosaWizardPage.selectStandaloneControlPlaneTypeOption();
+    });
+
+    it('moves next to the Accounts and Roles screen', () => {
+      cy.get(CreateRosaWizardPage.primaryButton).click({ force: true });
       CreateRosaWizardPage.isAccountsAndRolesScreen();
     });
 
