@@ -29,6 +29,7 @@ exports[`ARM Bare Metal install renders correctly 1`] = `
       aiPageLink="/assisted-installer/clusters/~new?useArm=true"
       ipiLearnMoreLink="https://docs.openshift.com/container-platform/4.12/installing/installing_bare_metal_ipi/ipi-install-overview.html"
       ipiPageLink="/install/arm/installer-provisioned"
+      name="arm"
       providerSpecificFeatures={
         Object {
           "ipi": Array [

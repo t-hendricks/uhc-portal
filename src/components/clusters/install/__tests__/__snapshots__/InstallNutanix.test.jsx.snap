@@ -31,6 +31,7 @@ exports[`InstallNutanix renders correctly 1`] = `
       hideUPI={true}
       ipiLearnMoreLink="https://docs.openshift.com/container-platform/4.12/installing/installing_nutanix/preparing-to-install-on-nutanix.html"
       ipiPageLink="/install/nutanix/installer-provisioned"
+      name="nutanix"
       providerSpecificFeatures={
         Object {
           "ipi": Array [

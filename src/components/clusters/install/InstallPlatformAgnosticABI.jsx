@@ -41,6 +41,7 @@ export class InstallPlatformAgnosticABI extends Component {
             token={token}
             breadcrumbs={breadcrumbs}
             cloudProviderID="generic"
+            installationTypeId="local-agent-based"
             {...instructionsMapping.generic.abi}
             isUPI
           />
