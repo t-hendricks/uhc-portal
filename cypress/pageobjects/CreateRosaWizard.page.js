@@ -12,6 +12,10 @@ class CreateRosaCluster extends Page {
     cy.contains('h2', 'Welcome to Red Hat OpenShift Service on AWS (ROSA)');
   }
 
+  isControlPlaneTypeScreen() {
+    cy.contains('h3', 'Select an AWS control plane type');
+  }
+
   isAssociateAccountsDialog() {
     cy.contains('h2', 'Associate AWS Account');
   }
@@ -93,6 +97,13 @@ class CreateRosaCluster extends Page {
 
   get primaryButton() {
     return '.rosa-wizard button.pf-c-button.pf-m-primary';
+  }
+
+  selectStandaloneControlPlaneTypeOption() {
+    cy.getByTestId('standalone-control-planes').click();
+    cy.getByTestId('standalone-control-planes').should('have.attr', 'aria-selected').then((isSelected) => {
+      expect(isSelected).to.eq('true');
+    });
   }
 }
 

@@ -15,6 +15,7 @@ const StandAloneTile = ({ handleChange, isSelected }: StandAloneTileProps) => (
     onClick={() => handleChange('false')}
     isSelected={isSelected}
     className="controlPlaneScreenTile"
+    data-testid="standalone-control-planes"
   >
     <Text component={TextVariants.p} className={defaultMarginBottomSpacing}>
       Run an OpenShift cluster where the control plane and data plane are coupled. The control plane
