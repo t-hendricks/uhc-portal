@@ -3,6 +3,7 @@
 exports[`InstructionsChooser renders correctly with AI and UPI 1`] = `
 <div
   className="pf-c-content ocm-page instructions-chooser"
+  data-ouia-component-id="undefined-instructions-chooser"
 >
   <InstructionsChooserCard
     body="Runs Assisted Installer with standard configuration settings to create your cluster."
@@ -65,6 +66,7 @@ exports[`InstructionsChooser renders correctly with AI and UPI 1`] = `
 exports[`InstructionsChooser renders correctly with AI enabled 1`] = `
 <div
   className="pf-c-content ocm-page instructions-chooser"
+  data-ouia-component-id="undefined-instructions-chooser"
 >
   <InstructionsChooserCard
     body="Runs Assisted Installer with standard configuration settings to create your cluster."
@@ -148,6 +150,7 @@ exports[`InstructionsChooser renders correctly with AI enabled 1`] = `
 exports[`InstructionsChooser renders correctly with default settings 1`] = `
 <div
   className="pf-c-content ocm-page instructions-chooser"
+  data-ouia-component-id="undefined-instructions-chooser"
 >
   <InstructionsChooserCard
     body="Auto-provision your infrastructure with minimal configuration to create your cluster."

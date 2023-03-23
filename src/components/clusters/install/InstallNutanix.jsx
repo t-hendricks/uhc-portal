@@ -43,6 +43,7 @@ class InstallNutanix extends Component {
                 'For connected or air-gapped/restricted networks',
               ],
             }}
+            name="nutanix"
           />
         </PageSection>
       </>
