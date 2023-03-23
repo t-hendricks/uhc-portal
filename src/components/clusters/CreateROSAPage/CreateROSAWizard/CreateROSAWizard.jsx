@@ -246,7 +246,7 @@ class CreateROSAWizardInternal extends React.Component {
       privateLinkSelected,
       configureProxySelected,
       isHypershiftEnabled,
-      hypershiftSelected,
+      isHypershiftSelected,
     } = this.props;
     const { deferredNext } = this.state;
 
@@ -309,7 +309,7 @@ class CreateROSAWizardInternal extends React.Component {
             canJumpTo: this.canJumpTo(stepId.NETWORKING__CONFIGURATION),
           },
           installToVPCSelected &&
-            !hypershiftSelected && {
+            !isHypershiftSelected && {
               id: stepId.NETWORKING__VPC_SETTINGS,
               name: stepNameById[stepId.NETWORKING__VPC_SETTINGS],
               component: (
