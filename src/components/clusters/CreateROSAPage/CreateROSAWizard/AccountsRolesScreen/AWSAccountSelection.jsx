@@ -11,6 +11,8 @@ import {
   EmptyStateBody,
   EmptyState,
   Tooltip,
+  Flex,
+  FlexItem,
 } from '@patternfly/react-core';
 import useAnalytics from '~/hooks/useAnalytics';
 import { trackEvents } from '~/common/analytics';
@@ -58,8 +60,8 @@ function AWSAccountSelection({
     }
   }, [isOpen, hasAWSAccounts]);
 
-  const onToggle = (toogleOpenValue) => {
-    setIsOpen(toogleOpenValue);
+  const onToggle = (toggleOpenValue) => {
+    setIsOpen(toggleOpenValue);
   };
 
   const onSelect = (_, selection) => {
@@ -86,7 +88,7 @@ function AWSAccountSelection({
           launchModal(event);
         }}
       >
-        Associate a new AWS account
+        Link a new AWS infrastructure account
       </Button>
     </>
   );
@@ -100,47 +102,52 @@ function AWSAccountSelection({
       helperTextInvalid={touched && error}
       isRequired
     >
-      <div className="pf-u-display-flex">
-        <Select
-          {...inputProps}
-          label={label}
-          labelIcon={extendedHelpText && <PopoverHint hint={extendedHelpText} />}
-          isOpen={isOpen}
-          selections={hasAWSAccounts ? selectedAWSAccountID : ''}
-          onToggle={onToggle}
-          onSelect={onSelect}
-          isDisabled={isDisabled}
-          placeholderText={AWS_ACCT_ID_PLACEHOLDER}
-          footer={footer}
-        >
-          {AWSAccountIDs.map((awsId) => (
-            <SelectOption
-              className="pf-c-dropdown__menu-item"
-              key={awsId}
-              value={awsId}
-            >{`${awsId}`}</SelectOption>
-          ))}
-        </Select>
-        {onRefresh && (
-          <Tooltip
-            content={<p>Click icon to refresh associated aws accounts and account-roles.</p>}
+      <Flex>
+        <FlexItem grow={{ default: 'grow' }}>
+          <Select
+            {...inputProps}
+            label={label}
+            labelIcon={extendedHelpText && <PopoverHint hint={extendedHelpText} />}
+            isOpen={isOpen}
+            selections={hasAWSAccounts ? selectedAWSAccountID : ''}
+            onToggle={onToggle}
+            onSelect={onSelect}
+            isDisabled={isDisabled}
+            placeholderText={AWS_ACCT_ID_PLACEHOLDER}
+            footer={footer}
           >
-            <Button
-              data-testid="refresh-aws-accounts"
-              isLoading={isLoading}
-              isDisabled={isDisabled}
-              isInline
-              isSmall
-              variant="secondary"
-              onClick={() => {
-                onRefresh();
-              }}
+            {AWSAccountIDs.map((awsId) => (
+              <SelectOption
+                className="pf-c-dropdown__menu-item"
+                key={awsId}
+                value={awsId}
+              >{`${awsId}`}</SelectOption>
+            ))}
+          </Select>
+        </FlexItem>
+
+        {onRefresh && (
+          <FlexItem>
+            <Tooltip
+              content={<p>Click icon to refresh associated aws accounts and account-roles.</p>}
             >
-              Refresh
-            </Button>
-          </Tooltip>
+              <Button
+                data-testid="refresh-aws-accounts"
+                isLoading={isLoading}
+                isDisabled={isDisabled}
+                isInline
+                isSmall
+                variant="secondary"
+                onClick={() => {
+                  onRefresh();
+                }}
+              >
+                Refresh
+              </Button>
+            </Tooltip>
+          </FlexItem>
         )}
-      </div>
+      </Flex>
     </FormGroup>
   );
 }

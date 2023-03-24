@@ -185,7 +185,7 @@ function AccountsRolesScreen({
           </Text>
         </GridItem>
         <GridItem span={4} />
-        <GridItem span={6}>
+        <GridItem sm={12} md={6}>
           {awsIDsErrorBox}
           <Field
             component={AWSAccountSelection}
@@ -202,8 +202,8 @@ function AccountsRolesScreen({
             validate={!getAWSAccountIDsResponse.fulfilled ? undefined : required}
             extendedHelpText={
               <>
-                A list of associated AWS accounts. You must associate at least one account to
-                proceed.
+                A list of associated AWS infrastructure accounts. You must associate at least one
+                account to proceed.
               </>
             }
             AWSAccountIDs={AWSAccountIDs}
@@ -220,7 +220,7 @@ function AccountsRolesScreen({
               setIsAssocAwsAccountModalOpen(true);
             }}
           >
-            Instruction to associate a new AWS infrastructure account
+            Link a new AWS infrastructure account
           </Button>
         </GridItem>
         <GridItem span={7} />
