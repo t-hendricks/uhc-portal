@@ -49,8 +49,14 @@ import AddNotificationContactDialog from './components/Support/components/AddNot
 import UpgradeSettingsTab from './components/UpgradeSettings';
 import { isUninstalledAICluster } from '../../../common/isAssistedInstallerCluster';
 import { hasCapability, subscriptionCapabilities } from '../../../common/subscriptionCapabilities';
+import withFeatureGate from '../../features/with-feature-gate';
+import { ASSISTED_INSTALLER_FEATURE } from '../../../redux/constants/featureConstants';
 
 const { HostsClusterDetailTab, getAddHostTabDetails } = OCM;
+const GatedAIHostsClusterDetailTab = withFeatureGate(
+  HostsClusterDetailTab,
+  ASSISTED_INSTALLER_FEATURE,
+);
 class ClusterDetails extends Component {
   state = {
     selectedTab: '',
@@ -580,7 +586,7 @@ class ClusterDetails extends Component {
               hidden
             >
               <ErrorBoundary>
-                <HostsClusterDetailTab
+                <GatedAIHostsClusterDetailTab
                   cluster={cluster}
                   extraInfo={this.getAiExtraInfo()}
                   isVisible={selectedTab === 'addAssistedHosts'}
