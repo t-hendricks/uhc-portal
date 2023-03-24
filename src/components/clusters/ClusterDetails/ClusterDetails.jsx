@@ -142,13 +142,6 @@ class ClusterDetails extends Component {
     }
   };
 
-  getAiExtraInfo = () => {
-    // AI needs the information about the organization that may not be ready by the time
-    // the cluster details are fetched. On the render, the information will be fulfilled
-    const { organization } = this.props;
-    return getClusterAIExtraInfo(organization);
-  };
-
   refresh(clicked) {
     const { match, clusterDetails, fetchDetails } = this.props;
     const { cluster } = clusterDetails;
@@ -588,7 +581,6 @@ class ClusterDetails extends Component {
               <ErrorBoundary>
                 <GatedAIHostsClusterDetailTab
                   cluster={cluster}
-                  extraInfo={this.getAiExtraInfo()}
                   isVisible={selectedTab === 'addAssistedHosts'}
                 />
               </ErrorBoundary>
