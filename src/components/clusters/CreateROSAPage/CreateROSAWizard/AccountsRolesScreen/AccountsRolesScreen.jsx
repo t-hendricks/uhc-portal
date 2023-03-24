@@ -185,7 +185,7 @@ function AccountsRolesScreen({
           </Text>
         </GridItem>
         <GridItem span={4} />
-        <GridItem sm={12} md={6}>
+        <GridItem sm={12} md={7}>
           {awsIDsErrorBox}
           <Field
             component={AWSAccountSelection}
