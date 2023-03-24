@@ -220,7 +220,7 @@ function AccountsRolesScreen({
               setIsAssocAwsAccountModalOpen(true);
             }}
           >
-            Link a new AWS infrastructure account
+            How to associate a new account
           </Button>
         </GridItem>
         <GridItem span={7} />

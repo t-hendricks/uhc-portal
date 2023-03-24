@@ -88,7 +88,7 @@ function AWSAccountSelection({
           launchModal(event);
         }}
       >
-        Link a new AWS infrastructure account
+        How to associate a new account
       </Button>
     </>
   );
