@@ -62,8 +62,8 @@ stages:
 📦 Install and cache dependencies:
   <<: *store-note
   image:
-    # cypress/base:12.22.8
-    name: $REGISTRY/cypress/base@sha256:cb264109d529236b4eb28c061a22a20b293c58858d077ba6d980e87437c391e9
+    # cypress/base:18.12.1
+    name: $REGISTRY/cypress/base@sha256:f355fc0fcdf664cf5872f4492c59e4cced407fda30cb6ddb27938b0369e2bea6
   stage: install
   only:
     - merge_requests
