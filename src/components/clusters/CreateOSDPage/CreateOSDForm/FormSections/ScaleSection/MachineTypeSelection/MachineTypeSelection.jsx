@@ -5,8 +5,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { FormGroup, Select, SelectGroup, SelectOption } from '@patternfly/react-core';
-import { Spinner } from '@redhat-cloud-services/frontend-components/Spinner';
+import { FormGroup, Select, SelectGroup, SelectOption, Spinner } from '@patternfly/react-core';
 
 import ErrorBox from '../../../../../../common/ErrorBox';
 import PopoverHint from '../../../../../../common/PopoverHint';
@@ -266,7 +265,7 @@ const MachineTypeSelection = ({
   ) : (
     <>
       <div className="spinner-fit-container">
-        <Spinner />
+        <Spinner size="md" />
       </div>
       <div className="spinner-loading-text">Loading node types...</div>
     </>
