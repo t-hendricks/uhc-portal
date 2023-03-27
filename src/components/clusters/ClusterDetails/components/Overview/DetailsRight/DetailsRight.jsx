@@ -46,6 +46,8 @@ function DetailsRight({
   const isDisconnected =
     get(cluster, 'subscription.status', '') === subscriptionStatuses.DISCONNECTED;
 
+  const billingMarketplaceAccount = get(cluster, 'subscription.billing_marketplace_account', '');
+
   const showDesiredNodes = cluster.managed;
   const showInfraNodes = isHypershift
     ? false
@@ -125,6 +127,14 @@ function DetailsRight({
             <DescriptionListGroup data-testid="aws-account">
               <DescriptionListTerm>Infrastructure AWS account</DescriptionListTerm>
               <DescriptionListDescription>{awsInfraAccount}</DescriptionListDescription>
+            </DescriptionListGroup>
+          </>
+        )}
+        {billingMarketplaceAccount && (
+          <>
+            <DescriptionListGroup data-testid="billing-marketplace-account">
+              <DescriptionListTerm>Billing marketplace account</DescriptionListTerm>
+              <DescriptionListDescription>{billingMarketplaceAccount}</DescriptionListDescription>
             </DescriptionListGroup>
           </>
         )}
