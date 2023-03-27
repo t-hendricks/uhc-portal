@@ -178,19 +178,19 @@ function AccountsRolesScreen({
           </Text>
         </GridItem>
         <GridItem span={8}>
-          <Title headingLevel="h3">AWS account</Title>
+          <Title headingLevel="h3">AWS infrastructure account</Title>
           <Text component={TextVariants.p}>
-            Select an AWS account that is associated with your Red Hat account, or associate a new
-            AWS account.
+            Select an AWS account that is associated with your Red Hat account or associate a new
+            account. This account will contain the ROSA infrastructure.
           </Text>
         </GridItem>
         <GridItem span={4} />
-        <GridItem span={5}>
+        <GridItem sm={12} md={7}>
           {awsIDsErrorBox}
           <Field
             component={AWSAccountSelection}
             name="associated_aws_id"
-            label="Associated AWS accounts"
+            label="Associated AWS infrastructure account"
             launchAssocAWSAcctModal={() => {
               openAssociateAWSAccountModal();
               setIsAssocAwsAccountModalOpen(true);
@@ -202,8 +202,8 @@ function AccountsRolesScreen({
             validate={!getAWSAccountIDsResponse.fulfilled ? undefined : required}
             extendedHelpText={
               <>
-                A list of associated AWS accounts. You must associate at least one account to
-                proceed.
+                A list of associated AWS infrastructure accounts. You must associate at least one
+                account to proceed.
               </>
             }
             AWSAccountIDs={AWSAccountIDs}
@@ -220,7 +220,7 @@ function AccountsRolesScreen({
               setIsAssocAwsAccountModalOpen(true);
             }}
           >
-            Associate a new AWS account
+            How to associate a new account
           </Button>
         </GridItem>
         <GridItem span={7} />
