@@ -26570,7 +26570,6 @@ exports[`<ClusterDetails /> Cluster Details - OSD should render 1`] = `
                           isHypershift={false}
                         >
                           <MachinePools
-                            addMachinePool={[Function]}
                             addMachinePoolResponse={
                               Object {
                                 "error": false,
@@ -27002,7 +27001,6 @@ exports[`<ClusterDetails /> Cluster Details - OSD should render 1`] = `
                                 "pending": false,
                               }
                             }
-                            submit={[Function]}
                           >
                             <Card>
                               <article

@@ -19,10 +19,18 @@ const getMachineOrNodePools = (clusterID, isHypershiftCluster) => (dispatch) =>
       : clusterService.getMachinePools(clusterID),
   });
 
-const addMachinePool = (clusterID, params) => (dispatch) =>
+/**
+ * Creates a machine or node pool
+ * @param {string} clusterID - Cluster ID
+ * @param {MachinePool | NodePool} params - see src/types/clusters_mgmt.v1/models
+ * @param {boolean} - isHypershiftCluster  -  is this a Hypershift control plane cluster?
+ */
+const addMachinePoolOrNodePool = (clusterID, params, isHypershiftCluster) => (dispatch) =>
   dispatch({
     type: ADD_MACHINE_POOL,
-    payload: clusterService.addMachinePool(clusterID, params),
+    payload: isHypershiftCluster
+      ? clusterService.addNodePool(clusterID, params)
+      : clusterService.addMachinePool(clusterID, params),
   });
 
 /**
@@ -88,7 +96,7 @@ export {
   CLEAR_GET_MACHINE_POOLS_RESPONSE,
   CLEAR_DELETE_MACHINE_POOL_RESPONSE,
   getMachineOrNodePools,
-  addMachinePool,
+  addMachinePoolOrNodePool,
   patchMachinePoolOrNodePool,
   deleteMachinePool,
   clearAddMachinePoolResponse,

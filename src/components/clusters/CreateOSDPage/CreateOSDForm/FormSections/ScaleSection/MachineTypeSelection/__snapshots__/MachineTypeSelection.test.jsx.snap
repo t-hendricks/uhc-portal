@@ -149,7 +149,9 @@ exports[`MachineTypeSelection when the request is pending renders correctly 1`] 
   <div
     className="spinner-fit-container"
   >
-    <Spinner />
+    <Spinner
+      size="md"
+    />
   </div>
   <div
     className="spinner-loading-text"

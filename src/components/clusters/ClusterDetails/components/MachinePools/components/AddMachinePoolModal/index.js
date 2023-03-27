@@ -7,7 +7,8 @@ import { canAutoScaleSelector, canUseSpotInstances } from '../../MachinePoolsSel
 import { closeModal } from '../../../../../../common/Modal/ModalActions';
 import { getMachineTypes } from '../../../../../../../redux/actions/machineTypesActions';
 import { getOrganizationAndQuota } from '../../../../../../../redux/actions/userActions';
-import { addMachinePool, clearAddMachinePoolResponse } from '../../MachinePoolsActions';
+import { addMachinePoolOrNodePool, clearAddMachinePoolResponse } from '../../MachinePoolsActions';
+import { getAWSCloudProviderVPCs } from '~/components/clusters/CreateOSDPage/CreateOSDWizard/ccsInquiriesActions';
 
 import {
   parseReduxFormKeyValueList,
@@ -38,18 +39,25 @@ const mapStateToProps = (state, ownProps) => {
     spotInstanceMaxHourlyPrice: valueSelector(state, 'spot_instance_max_hourly_price') || 0.01,
     initialValues: {
       name: '',
+      subnet: '',
       nodes_compute: '0',
       node_labels: [{}],
       taints: [{ effect: 'NoSchedule' }],
     },
+    vpcListPending: state.ccsInquiries?.vpcs?.pending,
+    vpcListBySubnet: state.ccsInquiries?.vpcs?.data?.bySubnetID,
   };
 };
 
+// MachinePoolAutoscaling uses min_replicas and max_replicas, NodePoolAutoscaling uses min_replica and max_replica
+const replicasFieldName = ({ isHypershiftCluster }, minOrMax) =>
+  `${minOrMax}_replica${!isHypershiftCluster ? 's' : ''}`;
+
 const mapDispatchToProps = (dispatch, ownProps) => ({
   onSubmit: (formData) => {
+    const { isHypershiftCluster } = ownProps;
     const machinePoolRequest = {
       id: formData.name,
-      instance_type: formData.machine_type,
     };
 
     if (formData.autoscalingEnabled) {
@@ -58,40 +66,59 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
       const isMultiAz = ownProps.cluster.multi_az;
 
       machinePoolRequest.autoscaling = {
-        min_replicas: isMultiAz ? minNodes * 3 : minNodes,
-        max_replicas: isMultiAz ? maxNodes * 3 : maxNodes,
+        [replicasFieldName(ownProps, 'min')]: isMultiAz ? minNodes * 3 : minNodes,
+        [replicasFieldName(ownProps, 'max')]: isMultiAz ? maxNodes * 3 : maxNodes,
       };
     } else {
       machinePoolRequest.replicas = parseInt(formData.nodes_compute, 10);
     }
 
-    const parsedLabels = parseReduxFormKeyValueList(formData.node_labels);
-    const parsedTaints = parseReduxFormTaints(formData.taints);
-
-    if (!isEmpty(parsedLabels)) {
-      machinePoolRequest.labels = parsedLabels;
-    }
-
-    if (parsedTaints.length > 0) {
-      machinePoolRequest.taints = parsedTaints;
-    }
-
-    if (formData.spot_instances) {
-      machinePoolRequest.aws = {
-        spot_market_options:
-          formData.spot_instance_pricing === 'maximum' &&
-          formData.spot_instance_max_hourly_price !== undefined
-            ? { max_price: formData.spot_instance_max_hourly_price }
-            : {},
+    if (isHypershiftCluster) {
+      machinePoolRequest.aws_node_pool = {
+        instance_type: formData.machine_type,
       };
+      machinePoolRequest.subnet = formData.subnet;
+    } else {
+      machinePoolRequest.instance_type = formData.machine_type;
+
+      const parsedLabels = parseReduxFormKeyValueList(formData.node_labels);
+      const parsedTaints = parseReduxFormTaints(formData.taints);
+
+      if (!isEmpty(parsedLabels)) {
+        machinePoolRequest.labels = parsedLabels;
+      }
+
+      if (parsedTaints.length > 0) {
+        machinePoolRequest.taints = parsedTaints;
+      }
+
+      if (formData.spot_instances) {
+        machinePoolRequest.aws = {
+          spot_market_options:
+            formData.spot_instance_pricing === 'maximum' &&
+            formData.spot_instance_max_hourly_price !== undefined
+              ? { max_price: formData.spot_instance_max_hourly_price }
+              : {},
+        };
+      }
     }
 
-    dispatch(addMachinePool(ownProps.cluster.id, machinePoolRequest));
+    dispatch(
+      addMachinePoolOrNodePool(
+        ownProps.cluster.id,
+        machinePoolRequest,
+        ownProps.isHypershiftCluster,
+      ),
+    );
   },
   clearAddMachinePoolResponse: () => dispatch(clearAddMachinePoolResponse()),
   closeModal: () => dispatch(closeModal()),
   getOrganizationAndQuota: () => dispatch(getOrganizationAndQuota()),
   getMachineTypes: () => dispatch(getMachineTypes()),
+  getAWSVPCs: (cluster) =>
+    dispatch(
+      getAWSCloudProviderVPCs({ sts: { role_arn: cluster.aws.sts.role_arn } }, cluster.region.id),
+    ),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(reduxFormAddMachinePool);
