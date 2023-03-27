@@ -4,7 +4,6 @@ import get from 'lodash/get';
 import MachinePools from './MachinePools';
 import {
   getMachineOrNodePools,
-  addMachinePool,
   deleteMachinePool,
   clearGetMachinePoolsResponse,
   clearDeleteMachinePoolResponse,
@@ -71,13 +70,9 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
   closeModal: () => dispatch(closeModal()),
   getMachinePools: () =>
     dispatch(getMachineOrNodePools(ownProps.cluster.id, ownProps.isHypershift)),
-  addMachinePool: () => dispatch(addMachinePool(ownProps.clusterID)),
   clearGetMachinePoolsResponse: () => dispatch(clearGetMachinePoolsResponse(ownProps.clusterID)),
   clearDeleteMachinePoolResponse: () =>
     dispatch(clearDeleteMachinePoolResponse(ownProps.clusterID)),
-  submit: (params) => {
-    dispatch(addMachinePool(ownProps.clusterID, params));
-  },
   deleteMachinePool: (machinePoolID) =>
     dispatch(deleteMachinePool(ownProps.cluster.id, machinePoolID, ownProps.isHypershift)),
   getOrganizationAndQuota: () => dispatch(getOrganizationAndQuota()),

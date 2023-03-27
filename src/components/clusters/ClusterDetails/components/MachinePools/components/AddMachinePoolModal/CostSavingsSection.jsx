@@ -21,8 +21,7 @@ class CostSavingsSection extends React.Component {
       this.props;
     return (
       <>
-        <GridItem lg={6} />
-        <GridItem id="costsavings">
+        <GridItem id="costsavings" md={12}>
           <FormGroup fieldId="costsavings" label="Cost saving" />
           <Field
             component={ReduxCheckbox}
@@ -32,7 +31,7 @@ class CostSavingsSection extends React.Component {
             non-guaranteed Spot Instances.  This cannot be changed after machine pool is created."
           />
         </GridItem>
-        <GridItem lg={6} />
+
         {useSpotInstances && (
           <>
             <GridItem>
