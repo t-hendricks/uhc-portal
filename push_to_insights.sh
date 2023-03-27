@@ -36,9 +36,6 @@
 # URL of the Insights deployment repository for OCM:
 export PUSH_URL="git@github.com:RedHatInsights/uhc-portal-frontend-deploy.git"
 
-# Public key of GitHub:
-export PUSH_HOSTKEY="github.com ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAQEAq2A7hRGmdnm9tUDbO9IDSwBK6TbQa+PXYPCPy6rbTrTtw7PHkccKrpp0yVhp5HdEIcKr6pLlVDBfOLX9QUsyCOV0wzfjIJNlGEYsdlLJizHhbn2mUjvSAHQqZETYP81eFzLQNnPHt4EVVUh7VfDESU84KezmD5QlWpXLmvU31/yMf+Se8xhHTvKSCZIFImWwoG6mbUoWf9nzpIoaSjB+weqqUUmpaaasXVal72J+UX2B+2RPW3RcT0eOzQgqlJL3RKrTJvdsjE3JEAvGq3lGHSZXy28G3skua2SmVi/w4yCE6gbODqnTWlg7+wC604ydGXA8VJiS5ap43JXiUFFAaQ=="
-
 # Check the environment variables:
 if [ -z "${PUSH_KEY}" ]; then
   echo "Insights push key hasn't been provided."
@@ -48,11 +45,6 @@ fi
 if [ -z "${PUSH_URL}" ]; then
   echo "Insights push URL hasn't been provided."
   echo "Make sure to set the 'PUSH_URL' environment variable."
-  exit 1
-fi
-if [ -z "${PUSH_HOSTKEY}" ]; then
-  echo "Insights push host key hasn't been provided."
-  echo "Make sure to set the 'PUSH_HOSTKEY' environment variable."
   exit 1
 fi
 
@@ -65,7 +57,7 @@ SUBJECT="$(git log --pretty=format:'%s' -n 1)"
 COMMIT_DATE="$(git log --pretty=format:'%ci' -n 1)"
 
 function cleanup_secrets() {
-  rm --force key hostkey ssh
+  rm --force key ssh
 }
 trap cleanup_secrets EXIT
 
@@ -74,9 +66,6 @@ cleanup_secrets
 # Save the push key:
 printenv PUSH_KEY | base64 --decode > key
 chmod u=r,g=,o= key
-
-# Save the push host key:
-printenv PUSH_HOSTKEY > hostkey
 
 git --version
 ssh -V
@@ -91,7 +80,6 @@ exec /usr/bin/ssh \
 -o User=git \
 -o IdentityFile=${PWD}/key \
 -o IdentitiesOnly=true \
--o UserKnownHostsFile=${PWD}/hostkey \
 \$@
 .
 chmod u=rx,g=,o= ssh
