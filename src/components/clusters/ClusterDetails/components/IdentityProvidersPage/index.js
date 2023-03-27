@@ -97,7 +97,6 @@ const mapStateToProps = (state, ownProps) => {
   return {
     clusterDetails: state.clusters.details,
     clusterID: state.clusters.details.cluster.id,
-    clusterConsoleURL: get(state.clusters.details.cluster, 'console.url'),
     selectedIDP,
     submitIDPResponse: isEditForm
       ? state.identityProviders.editClusterIDP

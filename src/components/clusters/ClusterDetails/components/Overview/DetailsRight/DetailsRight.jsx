@@ -100,7 +100,7 @@ function DetailsRight({
             )}
           </DescriptionListDescription>
         </DescriptionListGroup>
-        {showVCPU && !isHypershift && (
+        {showVCPU && (
           <>
             <DescriptionListGroup>
               <DescriptionListTerm>Total vCPU</DescriptionListTerm>
@@ -110,7 +110,7 @@ function DetailsRight({
             </DescriptionListGroup>
           </>
         )}
-        {!isDisconnected && !isHypershift && (
+        {!isDisconnected && (
           <>
             <DescriptionListGroup>
               <DescriptionListTerm>Total memory</DescriptionListTerm>
@@ -154,6 +154,7 @@ function DetailsRight({
                 Nodes
                 <span className="font-weight-normal"> (actual/desired)</span>
                 <PopoverHint
+                  id="cluster-scaling-hint"
                   iconClassName="nodes-hint"
                   hint="The actual number of compute nodes may not always match with the number of desired when the cluster is scaling."
                 />
@@ -247,6 +248,7 @@ function DetailsRight({
               <DescriptionListTerm>
                 Autoscale
                 <PopoverHint
+                  id="autoscaling-hint"
                   iconClassName="nodes-hint"
                   hint={
                     <>

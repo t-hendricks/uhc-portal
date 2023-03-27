@@ -8,7 +8,10 @@ describe('<AccessControl />', () => {
     const wrapper = shallow(
       <AccessControl
         cluster={{ canEdit: true, id: 'fake id' }}
-        clusterConsoleURL="https://console-openshift-console.apps.example.com"
+        clusterUrls={{
+          console: 'https://console-openshift-console.apps.example.com',
+          api: 'https://api.test-liza.wiex.s1.devshift.org:6443',
+        }}
         cloudProvider="aws"
       />,
     );

@@ -9,17 +9,12 @@ import IDPSection from './IDPSection';
 import NetworkSelfServiceSection from './NetworkSelfServiceSection';
 import clusterStates, { isHibernating } from '../../../common/clusterStates';
 import { subscriptionStatuses } from '../../../../../common/subscriptionTypes';
+import { isHypershiftCluster } from '../../clusterDetailsHelper';
 
-function AccessControl({
-  cluster,
-  clusterConsoleURL,
-  cloudProvider,
-  history,
-  refreshEvent = null,
-}) {
+function AccessControl({ cluster, clusterUrls, cloudProvider, history, refreshEvent = null }) {
   const [activeKey, setActiveKey] = React.useState(0);
 
-  // class for whether display vetical tabs (wider screen)
+  // class for whether display vertical tabs (wider screen)
   const [isVerticalTab, setIsVerticalTab] = useState(true);
   const [tabClass, setTabClass] = useState('');
 
@@ -93,13 +88,15 @@ function AccessControl({
         >
           <Tab
             eventKey={0}
+            id="identity-providers"
             title={<TabTitleText>Identity providers</TabTitleText>}
             isHidden={identityProvidersIsHidden}
           >
             <IDPSection
               clusterID={get(cluster, 'id')}
+              isHypershift={isHypershiftCluster(cluster)}
               history={history}
-              clusterConsoleURL={clusterConsoleURL}
+              clusterUrls={clusterUrls}
               canEdit={cluster.canEdit}
               clusterHibernating={isHibernating(cluster.state)}
               isReadOnly={isReadOnly}
@@ -107,6 +104,7 @@ function AccessControl({
           </Tab>
           <Tab
             eventKey={1}
+            id="cluster-roles-access"
             title={<TabTitleText>Cluster Roles and Access</TabTitleText>}
             isHidden={clusterRolesAndAccessIsHidden}
           >
@@ -116,7 +114,11 @@ function AccessControl({
               isReadOnly={isReadOnly}
             />
           </Tab>
-          <Tab eventKey={2} title={<TabTitleText>OCM Roles and Access</TabTitleText>}>
+          <Tab
+            eventKey={2}
+            id="ocm-roles-access"
+            title={<TabTitleText>OCM Roles and Access</TabTitleText>}
+          >
             <OCMRolesSection
               subscription={cluster.subscription}
               canEditOCMRoles={cluster.canEditOCMRoles}
@@ -126,6 +128,7 @@ function AccessControl({
           </Tab>
           <Tab
             eventKey={3}
+            id="aws-infra-access"
             isHidden={AWSInfrastructureAccessIsHidden}
             title={<TabTitleText>AWS infrastructure access</TabTitleText>}
           >
@@ -144,7 +147,10 @@ function AccessControl({
 
 AccessControl.propTypes = {
   cluster: PropTypes.object.isRequired,
-  clusterConsoleURL: PropTypes.string.isRequired,
+  clusterUrls: PropTypes.shape({
+    console: PropTypes.string,
+    api: PropTypes.string,
+  }).isRequired,
   cloudProvider: PropTypes.string.isRequired,
   history: PropTypes.object,
   refreshEvent: PropTypes.object,

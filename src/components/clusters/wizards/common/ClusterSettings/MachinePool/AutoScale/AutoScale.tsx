@@ -1,12 +1,5 @@
 import React from 'react';
-import {
-  FormGroup,
-  GridItem,
-  Split,
-  SplitItem,
-  HelperText,
-  HelperTextItem,
-} from '@patternfly/react-core';
+import { FormGroup, GridItem, HelperText, HelperTextItem, Flex } from '@patternfly/react-core';
 import { Field } from 'formik';
 
 import { FieldId } from '~/components/clusters/wizards/common/constants';
@@ -55,13 +48,13 @@ export const AutoScale = ({ isDefaultMachinePool }: AutoScaleProps) => {
       isMultiAz,
     });
 
-    if (minAllowed) {
+    if (!minReplicas && minAllowed) {
       setFieldValue(
         FieldId.MinReplicas,
         isMultiAz ? (minAllowed / 3).toString() : minAllowed.toString(),
       );
     }
-  }, [isBYOC, isDefaultMachinePool, isMultiAz, product, setFieldValue]);
+  }, [minReplicas, isBYOC, isDefaultMachinePool, isMultiAz, product, setFieldValue]);
 
   const minNodes = React.useMemo(() => {
     const minNodesAllowed = getMinNodesAllowed({
@@ -110,108 +103,102 @@ export const AutoScale = ({ isDefaultMachinePool }: AutoScaleProps) => {
   );
 
   const azFormGroups = (
-    <>
-      <Split hasGutter className="autoscaling__container">
-        <SplitItem>
-          <FormGroup
-            label={isMultiAz ? 'Minimum nodes per zone' : 'Minimum node count'}
-            isRequired
-            fieldId="nodes_min"
-            className="autoscaling__nodes-formGroup"
-            helperText={
-              <HelperText>
-                {isMultiAz && (
-                  <HelperTextItem>{`x 3 zones = ${
-                    parseInt(minReplicas, 10) || 0 * 3
-                  }`}</HelperTextItem>
-                )}
-                {minErrorMessage && (
-                  <HelperTextItem variant="error" hasIcon>
-                    {minErrorMessage}
-                  </HelperTextItem>
-                )}
-              </HelperText>
-            }
-          >
-            <Field
-              component={NodesInput}
-              name={FieldId.MinReplicas}
-              type="text"
-              ariaLabel="Minimum nodes"
-              validate={validateNodes}
-              displayError={(_: string, error: string) => setMinErrorMessage(error)}
-              hideError={() => setMinErrorMessage(undefined)}
-              limit="min"
-              min={minNodes}
-              max={isMultiAz ? MAX_NODES / 3 : MAX_NODES}
-              input={{
-                ...getFieldProps(FieldId.MinReplicas),
-                onChange: (value: string) => setFieldValue(FieldId.MinReplicas, value),
-              }}
-              meta={getFieldMeta(FieldId.MinReplicas)}
-            />
-          </FormGroup>
-        </SplitItem>
-        <SplitItem>
-          <FormGroup
-            label={isMultiAz ? 'Maximum nodes per zone' : 'Maximum node count'}
-            isRequired
-            fieldId="nodes_max"
-            className="autoscaling__nodes-formGroup"
-            helperText={
-              <HelperText>
-                {isMultiAz && (
-                  <HelperTextItem>{`x 3 zones = ${
-                    parseInt(maxReplicas, 10) || 0 * 3
-                  }`}</HelperTextItem>
-                )}
-                {maxErrorMessage && (
-                  <HelperTextItem variant="error" hasIcon>
-                    {maxErrorMessage}
-                  </HelperTextItem>
-                )}
-              </HelperText>
-            }
-            labelIcon={
-              <PopoverHint
-                hint={
+    <Flex
+      flexWrap={{ default: 'nowrap' }}
+      spaceItems={{ default: 'spaceItemsMd' }}
+      className="pf-u-mt-md"
+    >
+      <FormGroup
+        label={isMultiAz ? 'Minimum nodes per zone' : 'Minimum node count'}
+        isRequired
+        fieldId="nodes_min"
+        className="autoscaling__nodes-formGroup"
+        helperText={
+          <HelperText>
+            {isMultiAz && (
+              <HelperTextItem>{`x 3 zones = ${parseInt(minReplicas, 10) || 0 * 3}`}</HelperTextItem>
+            )}
+            {minErrorMessage && (
+              <HelperTextItem variant="error" hasIcon>
+                {minErrorMessage}
+              </HelperTextItem>
+            )}
+          </HelperText>
+        }
+      >
+        <Field
+          component={NodesInput}
+          name={FieldId.MinReplicas}
+          type="text"
+          ariaLabel="Minimum nodes"
+          validate={validateNodes}
+          displayError={(_: string, error: string) => setMinErrorMessage(error)}
+          hideError={() => setMinErrorMessage(undefined)}
+          limit="min"
+          min={minNodes}
+          max={isMultiAz ? MAX_NODES / 3 : MAX_NODES}
+          input={{
+            ...getFieldProps(FieldId.MinReplicas),
+            onChange: (value: string) => setFieldValue(FieldId.MinReplicas, value),
+          }}
+          meta={getFieldMeta(FieldId.MinReplicas)}
+        />
+      </FormGroup>
+      <FormGroup
+        label={isMultiAz ? 'Maximum nodes per zone' : 'Maximum node count'}
+        isRequired
+        fieldId="nodes_max"
+        className="autoscaling__nodes-formGroup"
+        helperText={
+          <HelperText>
+            {isMultiAz && (
+              <HelperTextItem>{`x 3 zones = ${parseInt(maxReplicas, 10) || 0 * 3}`}</HelperTextItem>
+            )}
+            {maxErrorMessage && (
+              <HelperTextItem variant="error" hasIcon>
+                {maxErrorMessage}
+              </HelperTextItem>
+            )}
+          </HelperText>
+        }
+        labelIcon={
+          <PopoverHint
+            hint={
+              <>
+                {constants.computeNodeCountHint}
+                <br />
+                {isRosa ? (
                   <>
-                    {constants.computeNodeCountHint}
+                    <ExternalLink href={links.ROSA_WORKER_NODE_COUNT}>
+                      Learn more about worker/compute node count
+                    </ExternalLink>
                     <br />
-                    {isRosa ? (
-                      <>
-                        <ExternalLink href={links.ROSA_WORKER_NODE_COUNT}>
-                          Learn more about worker/compute node count
-                        </ExternalLink>
-                        <br />
-                      </>
-                    ) : null}
                   </>
-                }
-              />
+                ) : null}
+              </>
             }
-          >
-            <Field
-              component={NodesInput}
-              name={FieldId.MaxReplicas}
-              type="text"
-              ariaLabel="Maximum nodes"
-              validate={validateMaxNodes}
-              displayError={(_: string, error: string) => setMaxErrorMessage(error)}
-              hideError={() => setMaxErrorMessage(undefined)}
-              limit="max"
-              min={minNodes}
-              max={isMultiAz ? MAX_NODES / 3 : MAX_NODES}
-              input={{
-                ...getFieldProps(FieldId.MaxReplicas),
-                onChange: (value: string) => setFieldValue(FieldId.MaxReplicas, value),
-              }}
-              meta={getFieldMeta(FieldId.MaxReplicas)}
-            />
-          </FormGroup>
-        </SplitItem>
-      </Split>
-    </>
+          />
+        }
+      >
+        <Field
+          component={NodesInput}
+          name={FieldId.MaxReplicas}
+          type="text"
+          ariaLabel="Maximum nodes"
+          validate={validateMaxNodes}
+          displayError={(_: string, error: string) => setMaxErrorMessage(error)}
+          hideError={() => setMaxErrorMessage(undefined)}
+          limit="max"
+          min={minNodes}
+          max={isMultiAz ? MAX_NODES / 3 : MAX_NODES}
+          input={{
+            ...getFieldProps(FieldId.MaxReplicas),
+            onChange: (value: string) => setFieldValue(FieldId.MaxReplicas, value),
+          }}
+          meta={getFieldMeta(FieldId.MaxReplicas)}
+        />
+      </FormGroup>
+    </Flex>
   );
 
   return (

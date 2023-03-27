@@ -1,8 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import get from 'lodash/get';
-import { Redirect } from 'react-router';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import {
   PageSection,
   Card,
@@ -23,6 +22,7 @@ import Unavailable from '../../../../common/Unavailable';
 import getClusterName from '../../../../../common/getClusterName';
 import { subscriptionStatuses } from '../../../../../common/subscriptionTypes';
 import { IDPTypeNames, singularFormIDP } from './IdentityProvidersHelper';
+import { isHypershiftCluster } from '../../clusterDetailsHelper';
 
 class IdentityProvidersPage extends React.Component {
   componentDidMount() {
@@ -87,7 +87,6 @@ class IdentityProvidersPage extends React.Component {
       change,
       clearFields,
       IDPList,
-      clusterConsoleURL,
       initialValues,
       idpEdited,
       editedType,
@@ -194,13 +193,17 @@ class IdentityProvidersPage extends React.Component {
                       formTitle={secondaryTitle}
                       submitIDPResponse={submitIDPResponse}
                       selectedMappingMethod={selectedMappingMethod}
-                      clusterConsoleURL={clusterConsoleURL}
+                      clusterUrls={{
+                        console: get(cluster, 'console.url'),
+                        api: get(cluster, 'api.url'),
+                      }}
                       change={change}
                       clearFields={clearFields}
                       IDPList={IDPList}
                       isEditForm={isEditForm}
                       idpEdited={idpEdited}
                       idpName={initialValues.name}
+                      isHypershift={isHypershiftCluster(cluster)}
                       HTPasswdPasswordErrors={HTPasswdPasswordErrors}
                     />
                   ) : (
@@ -250,7 +253,6 @@ IdentityProvidersPage.propTypes = {
     pending: PropTypes.bool,
   }),
   setGlobalError: PropTypes.func.isRequired,
-  clusterConsoleURL: PropTypes.string,
   resetResponse: PropTypes.func.isRequired,
   resetForm: PropTypes.func.isRequired,
   handleSubmit: PropTypes.func.isRequired,
