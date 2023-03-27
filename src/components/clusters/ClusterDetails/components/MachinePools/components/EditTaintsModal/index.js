@@ -5,7 +5,7 @@ import EditTaintsModal from './EditTaintsModal';
 import {
   getMachineOrNodePools,
   clearScaleMachinePoolResponse,
-  scaleMachinePool as editTaints,
+  patchMachinePoolOrNodePool as editTaints,
 } from '../../MachinePoolsActions';
 
 import { closeModal } from '../../../../../../common/Modal/ModalActions';

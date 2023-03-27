@@ -1,6 +1,6 @@
 import React from 'react';
 import { AxiosResponse, AxiosInstance } from 'axios';
-import { useHistory } from 'react-router';
+import { useHistory } from 'react-router-dom';
 import { TERMS_REQUIRED_CODE, hasOwnErrorPage, getInternalErrorCode } from '../../../common/errors';
 import apiErrorInterceptor from './ApiErrorInterceptor';
 import TermsError from '../../common/TermsError';

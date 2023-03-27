@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, screen } from '@testUtils';
-import { MemoryRouter } from 'react-router';
+import { MemoryRouter } from 'react-router-dom';
 import { axe, toHaveNoViolations } from 'jest-axe';
 
 import CloudTab from '../CloudTab';

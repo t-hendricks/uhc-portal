@@ -90,22 +90,42 @@ const mappingMethods = [
   },
 ];
 
+const idpOauthNeedsPort = (IDPName) => IDPName === IDPTypeNames[IDPformValues.OPENID];
+
 /**
- * getOauthCallbackURL returns the OAuth callback URL for a given cluster console URL and IDP Name.
- * @param {String} consoleURL a cluster's console URL.
+ * getOauthCallbackURL returns the OAuth callback URL for a given cluster base URL and IDP Name.
+ * Format for non-Hypershift clusters:
+ *  - General case: https://oauth-openshift.<console_url>/oauth2callback/<idp_name>
+ * Format for Hypershift clusters:
+ *  - General case: https://oauth.<api_url_without_port>/oauth2callback/<idp_name>
+ *  - OpenID: https://oauth.<api_url_including_port>/oauth2callback/<idp_name>
+ *
+ * @param {Object} clusterUrls an object containing the console and API URLs
  * @param {String} IDPName an IDP name.
+ * @param {Boolean} isHypershift indicates if it's a Hypershift cluster
  * @returns {String} The OAuth callback URL for this IDP.
  */
-const getOauthCallbackURL = (consoleURL, IDPName) => {
-  if (!IDPName || !consoleURL) {
+const getOauthCallbackURL = (clusterUrls, IDPName, isHypershift) => {
+  const clusterOauthBaseURL = isHypershift ? clusterUrls.api : clusterUrls.console;
+  if (!IDPName || !clusterOauthBaseURL) {
     return '';
   }
-  const URLWithSlash = consoleURL.endsWith('/') ? consoleURL : `${consoleURL}/`;
-  const URLParts = URLWithSlash.split('.');
-  URLParts[0] = 'https://oauth-openshift';
+  const URLWithSlash = clusterOauthBaseURL.endsWith('/')
+    ? clusterOauthBaseURL
+    : `${clusterOauthBaseURL}/`;
 
-  const oauthURLBase = URLParts.join('.');
-  return `${oauthURLBase}oauth2callback/${IDPName}`;
+  const URLParts = URLWithSlash.split('.');
+  URLParts[0] = `https://oauth${isHypershift ? '' : '-openshift'}`;
+
+  if (isHypershift && !idpOauthNeedsPort(IDPName)) {
+    const lastPart = URLParts[URLParts.length - 1];
+    if (lastPart.indexOf(':') !== -1) {
+      // eslint-disable-next-line prefer-destructuring
+      URLParts[URLParts.length - 1] = `${lastPart.split(':')[0]}/`;
+    }
+  }
+
+  return `${URLParts.join('.')}oauth2callback/${IDPName}`;
 };
 
 /**

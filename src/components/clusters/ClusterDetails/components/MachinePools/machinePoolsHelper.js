@@ -17,7 +17,6 @@ const actionResolver = (
   const deleteDisabled = isHypershift && machinePoolsCount === 1;
 
   const hypershiftTooltip = {
-    scale: { tooltip: 'Scaling machine pools is currently only available using ROSA CLI' },
     delete: { tooltip: 'The last machine pool cannot be deleted' },
     edit: { tooltip: 'Editing machine pools is currently only available using ROSA CLI' },
   };
@@ -26,8 +25,6 @@ const actionResolver = (
     title: 'Scale',
     onClick: onClickScale,
     className: 'hand-pointer',
-    isAriaDisabled: isHypershift,
-    ...(isHypershift && hypershiftTooltip.scale),
   };
 
   const deleteAction = {
@@ -54,9 +51,6 @@ const actionResolver = (
     ...(isHypershift && hypershiftTooltip.edit),
   };
 
-  if (isHypershift) {
-    return [scaleAction, deleteAction];
-  }
   return [
     scaleAction,
     ...(rowData.machinePool?.id !== 'Default'
@@ -104,6 +98,7 @@ const validateDuplicateLabels = (labels) => {
   return undefined;
 };
 
+// Takes a node_pool format (singular min/max replica) and converts machine pool style of data (plural min/max replicas)
 const normalizeNodePool = (nodePool) => {
   if (nodePool.autoscaling) {
     const normalizedNodePool = { ...nodePool, autoscaling: { ...nodePool.autoscaling } };
@@ -120,4 +115,31 @@ const normalizeNodePool = (nodePool) => {
   return nodePool;
 };
 
-export { parseTags, parseLabels, actionResolver, validateDuplicateLabels, normalizeNodePool };
+// Takes a machine pool style of data and makes it match node_pool format (singular min/max replica)
+const normalizeMachinePool = (machinePool) => {
+  if (machinePool?.autoscaling) {
+    const normalizeMachinePool = { ...machinePool };
+    normalizeMachinePool.autoscaling = { ...machinePool.autoscaling };
+    normalizeMachinePool.autoscaling.min_replica = 0;
+    normalizeMachinePool.autoscaling.max_replica = 0;
+    if (machinePool.autoscaling?.min_replicas >= 0) {
+      normalizeMachinePool.autoscaling.min_replica = machinePool.autoscaling.min_replicas;
+      delete normalizeMachinePool.autoscaling.min_replicas;
+    }
+    if (machinePool.autoscaling?.max_replicas >= 0) {
+      normalizeMachinePool.autoscaling.max_replica = machinePool.autoscaling.max_replicas;
+      delete normalizeMachinePool.autoscaling.max_replicas;
+    }
+    return normalizeMachinePool;
+  }
+  return machinePool;
+};
+
+export {
+  parseTags,
+  parseLabels,
+  actionResolver,
+  validateDuplicateLabels,
+  normalizeNodePool,
+  normalizeMachinePool,
+};

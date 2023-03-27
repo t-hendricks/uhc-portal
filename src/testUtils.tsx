@@ -5,7 +5,7 @@ import '@testing-library/jest-dom';
 
 import { store } from './redux/store';
 
-const TestWrapper = ({ children }: { children: React.ReactNode }) => (
+export const TestWrapper = ({ children }: { children: React.ReactNode }) => (
   <Provider store={store}>{children}</Provider>
 );
 

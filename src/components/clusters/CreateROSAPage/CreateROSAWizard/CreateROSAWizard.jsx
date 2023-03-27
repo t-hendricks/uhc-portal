@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Redirect } from 'react-router';
+import { Redirect } from 'react-router-dom';
 import { isMatch } from 'lodash';
 import { Spinner } from '@redhat-cloud-services/frontend-components';
 import { Banner, Wizard, PageSection, WizardContext } from '@patternfly/react-core';
@@ -246,6 +246,7 @@ class CreateROSAWizardInternal extends React.Component {
       privateLinkSelected,
       configureProxySelected,
       isHypershiftEnabled,
+      hypershiftSelected,
     } = this.props;
     const { deferredNext } = this.state;
 
@@ -307,16 +308,17 @@ class CreateROSAWizardInternal extends React.Component {
             ),
             canJumpTo: this.canJumpTo(stepId.NETWORKING__CONFIGURATION),
           },
-          installToVPCSelected && {
-            id: stepId.NETWORKING__VPC_SETTINGS,
-            name: stepNameById[stepId.NETWORKING__VPC_SETTINGS],
-            component: (
-              <ErrorBoundary>
-                <VPCScreen privateLinkSelected={privateLinkSelected} />
-              </ErrorBoundary>
-            ),
-            canJumpTo: this.canJumpTo(stepId.NETWORKING__VPC_SETTINGS),
-          },
+          installToVPCSelected &&
+            !hypershiftSelected && {
+              id: stepId.NETWORKING__VPC_SETTINGS,
+              name: stepNameById[stepId.NETWORKING__VPC_SETTINGS],
+              component: (
+                <ErrorBoundary>
+                  <VPCScreen privateLinkSelected={privateLinkSelected} />
+                </ErrorBoundary>
+              ),
+              canJumpTo: this.canJumpTo(stepId.NETWORKING__VPC_SETTINGS),
+            },
           configureProxySelected && {
             id: stepId.NETWORKING__CLUSTER_WIDE_PROXY,
             name: stepNameById[stepId.NETWORKING__CLUSTER_WIDE_PROXY],

@@ -231,8 +231,8 @@ describe('<MachinePools />', () => {
       const menuItems = wrapper.find('.pf-c-dropdown__menu .pf-c-dropdown__menu-item');
       expect(menuItems.length).toBeGreaterThan(0);
       menuItems.forEach((item) => {
-        // Only the delete action is currently available
-        if (item.text() === 'Delete') {
+        // Only the delete, scale action currently available
+        if (item.text() === 'Delete' || item.text() === 'Scale') {
           expect(item.props()['aria-disabled']).toBeFalsy();
         } else {
           expect(item.props()['aria-disabled']).toBeTruthy();
@@ -270,7 +270,7 @@ describe('<MachinePools />', () => {
       },
     };
     const wrapper = mount(<MachinePools {...props} />);
-    const deleteButton = wrapper.find('ActionsColumn').props().items[1];
+    const deleteButton = wrapper.find('ActionsColumn').props().items[3];
     expect(deleteButton.title).toBe('Delete');
     expect(deleteButton.isAriaDisabled).toBeTruthy();
   });

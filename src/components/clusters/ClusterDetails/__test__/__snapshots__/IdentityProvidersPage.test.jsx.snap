@@ -54,10 +54,16 @@ exports[`<IdentityProvidersPage /> renders correctly (Google IDP) 1`] = `
                 ]
               }
               change={[MockFunction]}
-              clusterConsoleURL=""
+              clusterUrls={
+                Object {
+                  "api": "https://api.test-liza.wiex.s1.devshift.org:6443",
+                  "console": "https://console-openshift-console.apps.example.com",
+                }
+              }
               formTitle="Add a Google identity provider"
               idpTypeName="Google"
               isEditForm={false}
+              isHypershift={false}
               selectedIDP="GoogleIdentityProvider"
               submitIDPResponse={
                 Object {

@@ -404,6 +404,7 @@ exports[`<DetailsRight /> AI clusters should render the "created at" and "owner"
         <PopoverHint
           hint="The actual number of compute nodes may not always match with the number of desired when the cluster is scaling."
           iconClassName="nodes-hint"
+          id="cluster-scaling-hint"
         />
       </DescriptionListTerm>
       <DescriptionListDescription>
@@ -1224,6 +1225,7 @@ exports[`<DetailsRight /> CCS clusters should not render storage quota 1`] = `
         <PopoverHint
           hint="The actual number of compute nodes may not always match with the number of desired when the cluster is scaling."
           iconClassName="nodes-hint"
+          id="cluster-scaling-hint"
         />
       </DescriptionListTerm>
       <DescriptionListDescription>
@@ -3610,6 +3612,7 @@ exports[`<DetailsRight /> Self Managed cluster should render status correctly fo
         <PopoverHint
           hint="The actual number of compute nodes may not always match with the number of desired when the cluster is scaling."
           iconClassName="nodes-hint"
+          id="cluster-scaling-hint"
         />
       </DescriptionListTerm>
       <DescriptionListDescription>
@@ -4285,6 +4288,7 @@ exports[`<DetailsRight /> should render when autoscale disabled 1`] = `
         <PopoverHint
           hint="The actual number of compute nodes may not always match with the number of desired when the cluster is scaling."
           iconClassName="nodes-hint"
+          id="cluster-scaling-hint"
         />
       </DescriptionListTerm>
       <DescriptionListDescription>
@@ -5148,6 +5152,7 @@ exports[`<DetailsRight /> should render when autoscale enabled 1`] = `
             </React.Fragment>
           }
           iconClassName="nodes-hint"
+          id="autoscaling-hint"
         />
       </DescriptionListTerm>
       <DescriptionListDescription>

@@ -26,6 +26,7 @@ exports[`<AccessControl /> should render 1`] = `
     >
       <Tab
         eventKey={0}
+        id="identity-providers"
         isHidden={false}
         title={
           <TabTitleText>
@@ -35,14 +36,21 @@ exports[`<AccessControl /> should render 1`] = `
       >
         <Connect(IDPSection)
           canEdit={true}
-          clusterConsoleURL="https://console-openshift-console.apps.example.com"
           clusterHibernating={false}
           clusterID="fake id"
+          clusterUrls={
+            Object {
+              "api": "https://api.test-liza.wiex.s1.devshift.org:6443",
+              "console": "https://console-openshift-console.apps.example.com",
+            }
+          }
+          isHypershift={false}
           isReadOnly={false}
         />
       </Tab>
       <Tab
         eventKey={1}
+        id="cluster-roles-access"
         isHidden={false}
         title={
           <TabTitleText>
@@ -63,6 +71,7 @@ exports[`<AccessControl /> should render 1`] = `
       </Tab>
       <Tab
         eventKey={2}
+        id="ocm-roles-access"
         title={
           <TabTitleText>
             OCM Roles and Access
@@ -75,6 +84,7 @@ exports[`<AccessControl /> should render 1`] = `
       </Tab>
       <Tab
         eventKey={3}
+        id="aws-infra-access"
         isHidden={false}
         title={
           <TabTitleText>
