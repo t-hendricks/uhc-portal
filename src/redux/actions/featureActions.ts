@@ -62,22 +62,24 @@ export const features = [
   },
   {
     name: ASSISTED_INSTALLER_MULTIARCH_SUPPORTED,
-    action: () =>
-      accountsService.getCurrentAccount().then((response) => {
-        const organizationID = response.data?.organization?.id;
-        return organizationID !== undefined
-          ? accountsService.getOrganization(organizationID).then((organizationResponse) => {
-              console.log(organizationResponse);
-              const organization = organizationResponse.data;
-              const capabilities = organization.capabilities || [];
-              const bareMetalInstallerMultiarch = capabilities.find(
-                (capability) =>
-                  capability.name === 'capability.organization.bare_metal_installer_multiarch',
-              );
-              return bareMetalInstallerMultiarch?.value === 'true';
-            })
-          : Promise.reject(Error('No organization'));
-      }),
+    action: async () => {
+      let isFeatureEnabled = false;
+      const response = await accountsService.getCurrentAccount()
+      const organizationID = response.data?.organization?.id;
+      if (organizationID) {
+        const organizationResponse = await accountsService.getOrganization(organizationID);
+        const organization = organizationResponse.data;
+        const capabilities = organization.capabilities || [];
+        const bareMetalInstallerMultiarch = capabilities.find(
+          (capability) =>
+            capability.name === 'capability.organization.bare_metal_installer_multiarch',
+        );
+        
+        isFeatureEnabled = bareMetalInstallerMultiarch?.value === 'true';
+      }
+      
+      return isFeatureEnabled;
+    },
   },
 ];
 
