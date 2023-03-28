@@ -8,7 +8,7 @@ import Modal from '../../../../../../common/Modal/Modal';
 import ErrorBox from '../../../../../../common/ErrorBox';
 import ScaleSection from '../../../../../CreateOSDPage/CreateOSDForm/FormSections/ScaleSection/ScaleSection';
 import ReduxVerticalFormGroup from '../../../../../../common/ReduxFormComponents/ReduxVerticalFormGroup';
-import { checkMachinePoolName } from '../../../../../../../common/validators';
+import { checkMachinePoolName, checkNodePoolName } from '../../../../../../../common/validators';
 import CostSavingsSection from './CostSavingsSection';
 
 class AddMachinePoolModal extends Component {
@@ -152,7 +152,7 @@ class AddMachinePoolModal extends Component {
                     component={ReduxVerticalFormGroup}
                     name="name"
                     type="text"
-                    validate={checkMachinePoolName}
+                    validate={isHypershiftCluster ? checkNodePoolName : checkMachinePoolName}
                     disabled={isPending}
                   />
                 </FormGroup>
