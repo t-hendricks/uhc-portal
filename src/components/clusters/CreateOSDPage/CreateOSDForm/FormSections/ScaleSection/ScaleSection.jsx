@@ -38,6 +38,8 @@ function ScaleSection({
   change,
   billingModel,
 }) {
+  const isMultiAvailZone = !isHypershiftCluster && isMultiAz;
+
   const expandableSectionTitle = isMachinePool ? 'Edit node labels and taints' : 'Edit node labels';
 
   const labelsAndTaintsSection = !isHypershiftCluster ? (
@@ -71,7 +73,7 @@ function ScaleSection({
           names={['machine_type', 'machine_type_force_choice']}
           validate={{ machine_type: required }}
           disabled={pending}
-          isMultiAz={isMultiAz}
+          isMultiAz={isMultiAvailZone}
           isBYOC={isBYOC}
           cloudProviderID={cloudProviderID}
           product={product}
@@ -87,7 +89,7 @@ function ScaleSection({
           <GridItem md={12}>
             <AutoScaleSection
               autoscalingEnabled={autoscalingEnabled}
-              isMultiAz={isMultiAz}
+              isMultiAz={isMultiAvailZone}
               change={change}
               autoScaleMinNodesValue={autoScaleMinNodesValue}
               autoScaleMaxNodesValue={autoScaleMaxNodesValue}
@@ -106,8 +108,8 @@ function ScaleSection({
             <Field
               component={NodeCountInput}
               name="nodes_compute"
-              label={isMultiAz ? 'Compute node count (per zone)' : 'Compute node count'}
-              isMultiAz={isMultiAz}
+              label={isMultiAvailZone ? 'Compute node count (per zone)' : 'Compute node count'}
+              isMultiAz={isMultiAvailZone}
               isByoc={isBYOC}
               machineType={machineType}
               isDisabled={pending}
@@ -154,7 +156,7 @@ function ScaleSection({
                 billingModel={billingModel}
                 product={product}
                 isBYOC={isBYOC}
-                isMultiAZ={isMultiAz}
+                isMultiAZ={isMultiAvailZone}
               />
             </FormGroup>
           </GridItem>
@@ -174,7 +176,7 @@ function ScaleSection({
                 billingModel={billingModel}
                 product={product}
                 isBYOC={isBYOC}
-                isMultiAZ={isMultiAz}
+                isMultiAZ={isMultiAvailZone}
               />
             </FormGroup>
           </GridItem>

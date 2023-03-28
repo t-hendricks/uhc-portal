@@ -63,7 +63,7 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
     if (formData.autoscalingEnabled) {
       const minNodes = parseInt(formData.min_replicas, 10);
       const maxNodes = parseInt(formData.max_replicas, 10);
-      const isMultiAz = ownProps.cluster.multi_az;
+      const isMultiAz = !isHypershiftCluster && ownProps.cluster.multi_az;
 
       machinePoolRequest.autoscaling = {
         [replicasFieldName(ownProps, 'min')]: isMultiAz ? minNodes * 3 : minNodes,
