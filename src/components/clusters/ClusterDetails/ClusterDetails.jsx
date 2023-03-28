@@ -41,7 +41,7 @@ import { isValid, scrollToTop, shouldRefetchQuota } from '../../../common/helper
 import { isHypershiftCluster } from './clusterDetailsHelper';
 import getClusterName from '../../../common/getClusterName';
 import { subscriptionStatuses, knownProducts } from '../../../common/subscriptionTypes';
-import clusterStates, { getClusterAIExtraInfo, isHibernating } from '../common/clusterStates';
+import clusterStates, { isHibernating } from '../common/clusterStates';
 import AddGrantModal from './components/AccessControl/NetworkSelfServiceSection/AddGrantModal';
 import Unavailable from '../../common/Unavailable';
 import Support from './components/Support';
