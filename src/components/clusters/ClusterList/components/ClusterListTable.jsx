@@ -158,6 +158,7 @@ function ClusterListTable(props) {
       if (
         state === clusterStates.WAITING ||
         state === clusterStates.PENDING ||
+        state === clusterStates.VALIDATING ||
         state === clusterStates.INSTALLING
       ) {
         return (

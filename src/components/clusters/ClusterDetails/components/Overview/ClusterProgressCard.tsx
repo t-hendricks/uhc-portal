@@ -30,12 +30,14 @@ interface ClusterProgressCardProps {
 const ClusterProgressCard = ({ cluster = {}, history, refresh }: ClusterProgressCardProps) => {
   const isError = cluster.state === clusterStates.ERROR;
   const isPending = cluster.state === clusterStates.PENDING;
+  const isValidating = cluster.state === clusterStates.VALIDATING;
   const isInstalling = cluster.state === clusterStates.INSTALLING;
   const isUninstalling = cluster.state === clusterStates.UNINSTALLING;
   const isWaitingROSAManual = isWaitingROSAManualMode(cluster);
   const isWaitingHypershift = isWaitingHypershiftCluster(cluster);
   const installationInProgress =
-    (isPending || isInstalling || isWaitingHypershift || !isWaitingROSAManual) && !isError;
+    (isPending || isInstalling || isWaitingHypershift || isValidating || !isWaitingROSAManual) &&
+    !isError;
   const inProgress = (installationInProgress || isUninstalling) && !isError;
   const estCompletionTime = isHypershiftCluster(cluster) ? '10' : '30 to 60';
 
