@@ -64,7 +64,7 @@ export const features = [
     name: ASSISTED_INSTALLER_MULTIARCH_SUPPORTED,
     action: async () => {
       let isFeatureEnabled = false;
-      const response = await accountsService.getCurrentAccount()
+      const response = await accountsService.getCurrentAccount();
       const organizationID = response.data?.organization?.id;
       if (organizationID) {
         const organizationResponse = await accountsService.getOrganization(organizationID);
@@ -74,10 +74,10 @@ export const features = [
           (capability) =>
             capability.name === 'capability.organization.bare_metal_installer_multiarch',
         );
-        
+
         isFeatureEnabled = bareMetalInstallerMultiarch?.value === 'true';
       }
-      
+
       return isFeatureEnabled;
     },
   },
