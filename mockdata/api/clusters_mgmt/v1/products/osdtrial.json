@@ -1,0 +1,6 @@
+{
+  "kind": "Product",
+  "id": "osdtrial",
+  "href": "/api/clusters_mgmt/v1/products/osdtrial",
+  "name": "OpenShift Dedicated Trial"
+}
