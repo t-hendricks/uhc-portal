@@ -14,8 +14,14 @@ import {
   Text,
   TextVariants,
   Alert,
+  Switch,
+  Popover,
+  Button,
+  Grid,
+  GridItem,
 } from '@patternfly/react-core';
 import { Spinner } from '@redhat-cloud-services/frontend-components/Spinner';
+import { OutlinedQuestionCircleIcon } from '@patternfly/react-icons';
 import ErrorBox from '../../../../../../common/ErrorBox';
 import InstructionCommand from '../../../../../../common/InstructionCommand';
 import { isSupportedMinorVersion } from '~/common/helpers';
@@ -35,6 +41,7 @@ function VersionSelection({
   const [isOpen, setIsOpen] = useState(false);
   const [versions, setVersions] = useState([]);
   const [rosaVersionError, setRosaVersionError] = useState(false);
+  const [showOnlyCompatibleVersions, setShowOnlyCompatibleVersions] = useState(isRosa || false);
   const [statusData] = useOCPLifeCycleStatusData();
   const statusVersions = statusData?.[0]?.versions;
   const supportVersionMap = statusVersions?.reduce((acc, version) => {
@@ -46,6 +53,10 @@ function VersionSelection({
     (version) => isSupportedMinorVersion(version, rosaMaxOSVersion),
     [rosaMaxOSVersion],
   );
+
+  const toggleCompatibleVersions = () => {
+    setShowOnlyCompatibleVersions(!showOnlyCompatibleVersions);
+  };
 
   const RosaVersionErrorAlert = () => (
     <Alert
@@ -135,6 +146,12 @@ function VersionSelection({
 
     versions.forEach((version) => {
       const versionName = version.raw_id.split('.', 2).join('.');
+      const isIncompatibleVersion = isRosa && !isValidRosaVersion(version.raw_id);
+
+      if (isIncompatibleVersion && showOnlyCompatibleVersions) {
+        return;
+      }
+
       const selectOption = (
         <SelectOption
           className="pf-c-dropdown__menu-item"
@@ -142,10 +159,9 @@ function VersionSelection({
           value={version.raw_id}
           formValue={version.raw_id}
           key={version.id}
-          isDisabled={isRosa && !isValidRosaVersion(version.raw_id)}
+          isDisabled={isIncompatibleVersion}
           description={
-            isRosa &&
-            !isValidRosaVersion(version.raw_id) &&
+            isIncompatibleVersion &&
             'This version is not compatible with the selected ARNs in previous step'
           }
         >
@@ -166,7 +182,14 @@ function VersionSelection({
       fullSupport,
       maintenanceSupport,
     };
-  }, [isRosa, isValidRosaVersion, selectedClusterVersion?.raw_id, supportVersionMap, versions]);
+  }, [
+    isRosa,
+    isValidRosaVersion,
+    selectedClusterVersion?.raw_id,
+    supportVersionMap,
+    versions,
+    showOnlyCompatibleVersions,
+  ]);
 
   return (
     <>
@@ -193,20 +216,49 @@ function VersionSelection({
           </>
         )}
         {getInstallableVersionsResponse.fulfilled && !rosaVersionError && (
-          <Select
-            label={label}
-            isOpen={isOpen}
-            selections={selectedClusterVersion?.raw_id || getSelection()}
-            onToggle={onToggle}
-            onSelect={onSelect}
-            isDisabled={isDisabled}
-            onBlur={(event) => event.stopPropagation()}
-          >
-            <SelectGroup label="Full support">{selectOptions.fullSupport}</SelectGroup>
-            <SelectGroup label="Maintenance support">
-              {selectOptions.maintenanceSupport}
-            </SelectGroup>
-          </Select>
+          <Grid>
+            <GridItem>
+              <Select
+                label={label}
+                isOpen={isOpen}
+                selections={selectedClusterVersion?.raw_id || getSelection()}
+                onToggle={onToggle}
+                onSelect={onSelect}
+                isDisabled={isDisabled}
+                onBlur={(event) => event.stopPropagation()}
+              >
+                <SelectGroup label="Full support">{selectOptions.fullSupport}</SelectGroup>
+                <SelectGroup label="Maintenance support">
+                  {selectOptions.maintenanceSupport}
+                </SelectGroup>
+              </Select>
+            </GridItem>
+            {isRosa && (
+              <GridItem className="pf-u-pt-md">
+                <Switch
+                  className="pf-u-align-items-center"
+                  id="view-only-compatible-versions"
+                  aria-label="View only compatible versions"
+                  label={
+                    <>
+                      <span>View compatible versions only</span>
+                      <Popover
+                        bodyContent="View only versions that are compatible with the selected ARNs in previous step"
+                        enableFlip={false}
+                      >
+                        <Button variant="plain">
+                          <OutlinedQuestionCircleIcon />
+                        </Button>
+                      </Popover>
+                    </>
+                  }
+                  hasCheckIcon
+                  isChecked={showOnlyCompatibleVersions}
+                  onChange={toggleCompatibleVersions}
+                />
+              </GridItem>
+            )}
+          </Grid>
         )}
       </FormGroup>
     </>
