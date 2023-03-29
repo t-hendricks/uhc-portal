@@ -8232,6 +8232,7 @@ exports[`<ClusterDetails /> Cluster Details - OSD should render 1`] = `
                                                 </div>
                                               </dd>
                                             </div>
+                                            
                                             <div
                                               class="pf-c-description-list__group"
                                             >
@@ -9932,6 +9933,7 @@ exports[`<ClusterDetails /> Cluster Details - OSD should render 1`] = `
                                                   </div>
                                                 </dd>
                                               </div>
+                                              
                                               <div
                                                 class="pf-c-description-list__group"
                                               >
@@ -11184,6 +11186,7 @@ exports[`<ClusterDetails /> Cluster Details - OSD should render 1`] = `
                                               </div>
                                             </dd>
                                           </div>
+                                          
                                           <div
                                             class="pf-c-description-list__group"
                                           >
