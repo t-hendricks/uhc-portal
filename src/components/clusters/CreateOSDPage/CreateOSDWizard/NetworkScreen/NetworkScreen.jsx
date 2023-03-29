@@ -36,6 +36,7 @@ function NetworkScreen(props) {
     isByoc,
     product,
     formValues,
+    isHypershiftSelected,
   } = props;
 
   const { OSD, OSDTrial } = normalizedProducts;
@@ -76,8 +77,11 @@ function NetworkScreen(props) {
 
   const onClusterPrivacyChange = (_, value) => {
     if (value === 'external') {
-      change('use_privatelink', false);
-      shouldUncheckInstallToVPC();
+      if (!isHypershiftSelected) {
+        // hypershift always uses private link and vpc
+        change('use_privatelink', false);
+        shouldUncheckInstallToVPC();
+      }
     }
   };
 
@@ -116,6 +120,17 @@ function NetworkScreen(props) {
       isDisabled={privateLinkAndClusterSelected || configureProxySelected}
     />
   );
+  const configureClusterProxyField = (
+    <Field
+      component={ReduxCheckbox}
+      name="configure_cluster_proxy"
+      label="Configure a cluster-wide proxy"
+      onChange={onClusterProxyChange}
+      helpText={
+        <div className="ocm-c--reduxcheckbox-description">{constants.clusterProxyHint}</div>
+      }
+    />
+  );
 
   return (
     <Form
@@ -143,7 +158,8 @@ function NetworkScreen(props) {
               <Text>
                 {/* eslint-disable-next-line max-len */}
                 Install your cluster with all public or private API endpoints and application
-                routes.
+                routes.{' '}
+                {isHypershiftSelected && 'You can customize these options after installation.'}
               </Text>
             </GridItem>
             <Field
@@ -158,11 +174,16 @@ function NetworkScreen(props) {
                   label: (
                     <>
                       Public
-                      <div className="radio-helptext">
+                      <div className="ocm-c--reduxradiobutton-description">
                         Access Kubernetes API endpoint and application routes from the internet.
                       </div>
                     </>
                   ),
+                  extraField:
+                    isHypershiftSelected && !privateClusterSelected ? (
+                      // TODO: Placeholder for the Public subnet ID selector
+                      <></>
+                    ) : null,
                 },
                 {
                   value: 'internal',
@@ -170,7 +191,7 @@ function NetworkScreen(props) {
                   label: (
                     <>
                       Private
-                      <div className="radio-helptext">
+                      <div className="ocm-c--reduxradiobutton-description">
                         Access Kubernetes API endpoint and application routes from direct private
                         connections only.
                       </div>
@@ -184,7 +205,6 @@ function NetworkScreen(props) {
             {privateClusterSelected && (
               <GridItem>
                 <Alert
-                  className="bottom-alert"
                   variant="warning"
                   isInline
                   title="You will not be able to access your cluster until you edit network settings in your cloud provider."
@@ -204,58 +224,74 @@ function NetworkScreen(props) {
           <>
             <GridItem>
               <Title headingLevel="h4" size="xl" className="privacy-heading">
-                Virtual Private Cloud (VPC)
+                {isHypershiftSelected
+                  ? 'Install into a Virtual Private Cloud (VPC)'
+                  : 'Virtual Private Cloud (VPC)'}
               </Title>
-              <Text>
-                By default, a new VPC will be created for your cluster. Alternatively, you may opt
-                to install to an existing VPC below.
-              </Text>
             </GridItem>
             <GridItem>
-              <FormGroup fieldId="install-to-vpc">
-                {privateClusterSelected ? (
-                  <Tooltip
-                    position="top-start"
-                    enableFlip
-                    content={
-                      <p>
-                        Private clusters must be installed into an existing VPC and have PrivateLink
-                        enabled.
-                      </p>
-                    }
-                  >
-                    {installToVPCCheckbox}
-                  </Tooltip>
-                ) : (
-                  installToVPCCheckbox
-                )}
-                <FormFieldGroup>
-                  {privateClusterSelected && cloudProviderID === 'aws' && (
-                    <FormGroup>
-                      <Field
-                        component={ReduxCheckbox}
-                        name="use_privatelink"
-                        label="Use a PrivateLink"
-                        onChange={onPrivateLinkChange}
-                        isDisabled={forcePrivateLink && privateClusterSelected}
-                        helpText={<>{constants.privateLinkHint}</>}
-                      />
-                    </FormGroup>
-                  )}
-                  {showConfigureProxy && (
-                    <FormGroup>
-                      <Field
-                        component={ReduxCheckbox}
-                        name="configure_cluster_proxy"
-                        label="Configure a cluster-wide proxy"
-                        onChange={onClusterProxyChange}
-                        helpText={<>{constants.clusterProxyHint}</>}
-                      />
-                    </FormGroup>
-                  )}
-                </FormFieldGroup>
-              </FormGroup>
+              <Text>
+                {isHypershiftSelected
+                  ? 'To install a hosted ROSA cluster, you must have a VPC. Specify your VPC details based on your selected region and account.'
+                  : 'By default, a new VPC will be created for your cluster. Alternatively, you may opt to install to an existing VPC below.'}
+              </Text>
             </GridItem>
+            {isHypershiftSelected ? (
+              <GridItem>
+                <Alert
+                  variant="info"
+                  isInline
+                  title="Hosted control plane for ROSA clusters are installed and managed in your AWS VPC through a fully private connection using AWS PrivateLink."
+                >
+                  <ExternalLink href={links.VIRTUAL_PRIVATE_CLOUD_URL}>
+                    Learn more about networking on hosted clusters
+                  </ExternalLink>
+                </Alert>
+                <FormGroup>
+                  <FormFieldGroup>{configureClusterProxyField}</FormFieldGroup>
+                </FormGroup>
+              </GridItem>
+            ) : (
+              <GridItem>
+                <FormGroup fieldId="install-to-vpc">
+                  {privateClusterSelected ? (
+                    <Tooltip
+                      position="top-start"
+                      enableFlip
+                      content={
+                        <p>
+                          Private clusters must be installed into an existing VPC and have
+                          PrivateLink enabled.
+                        </p>
+                      }
+                    >
+                      {installToVPCCheckbox}
+                    </Tooltip>
+                  ) : (
+                    installToVPCCheckbox
+                  )}
+                  <FormFieldGroup>
+                    {privateClusterSelected && cloudProviderID === 'aws' && (
+                      <FormGroup>
+                        <Field
+                          component={ReduxCheckbox}
+                          name="use_privatelink"
+                          label="Use a PrivateLink"
+                          onChange={onPrivateLinkChange}
+                          isDisabled={forcePrivateLink && privateClusterSelected}
+                          helpText={
+                            <div className="ocm-c--reduxcheckbox-description">
+                              {constants.privateLinkHint}
+                            </div>
+                          }
+                        />
+                      </FormGroup>
+                    )}
+                    {showConfigureProxy && <FormGroup>{configureClusterProxyField}</FormGroup>}
+                  </FormFieldGroup>
+                </FormGroup>
+              </GridItem>
+            )}
           </>
         )}
       </Grid>
@@ -276,6 +312,7 @@ NetworkScreen.propTypes = {
   isByoc: PropTypes.bool,
   product: PropTypes.string,
   formValues: PropTypes.object,
+  isHypershiftSelected: PropTypes.bool,
 };
 
 export default NetworkScreen;

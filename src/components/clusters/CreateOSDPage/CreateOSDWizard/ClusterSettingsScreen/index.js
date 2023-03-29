@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import { formValueSelector, getFormValues } from 'redux-form';
+import { formValueSelector, getFormSyncErrors, getFormAsyncErrors, touch } from 'redux-form';
 
 import createOSDInitialValues from '../../createOSDInitialValues';
 
@@ -10,12 +10,18 @@ const mapStateToProps = (state, ownProps) => {
   const valueSelector = formValueSelector('CreateCluster');
 
   const cloudProviderID = valueSelector(state, 'cloud_provider');
-  const isMultiAz = valueSelector(state, 'multi_az') === 'true';
+  const isHypershiftSelected = valueSelector(state, 'hypershift') === 'true';
+  const isMultiAz = valueSelector(state, 'multi_az') === 'true' || isHypershiftSelected;
   const isByoc = valueSelector(state, 'byoc') === 'true';
   const product = valueSelector(state, 'product');
   const billingModel = valueSelector(state, 'billing_model');
   const customerManagedEncryptionSelected = valueSelector(state, 'customer_managed_key');
   const selectedRegion = valueSelector(state, 'region');
+  const kmsKeyArn = valueSelector(state, 'kms_key_arn');
+  const formErrors = {
+    ...getFormSyncErrors('CreateCluster')(state),
+    ...getFormAsyncErrors('CreateCluster')(state),
+  };
 
   return {
     cloudProviderID,
@@ -25,7 +31,10 @@ const mapStateToProps = (state, ownProps) => {
     isByoc,
     customerManagedEncryptionSelected,
     selectedRegion,
-    formValues: getFormValues('CreateCluster')(state),
+    kmsKeyArn,
+    formErrors,
+    isHypershiftSelected,
+    touch: (fieldNames) => touch('CreateCluster', ...fieldNames),
     initialValues: createOSDInitialValues({
       cloudProviderID,
       product,

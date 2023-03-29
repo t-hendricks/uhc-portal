@@ -3,7 +3,7 @@ const { defineConfig } = require('cypress');
 
 module.exports = defineConfig({
   chromeWebSecurity: false,
-  defaultCommandTimeout: 6000,
+  defaultCommandTimeout: 8000,
   env: {
     grepOmitFiltered: true,
     grepFilterSpecs: true

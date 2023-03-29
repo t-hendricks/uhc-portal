@@ -29,7 +29,6 @@ import isAssistedInstallSubscription, {
 } from '../../../../../common/isAssistedInstallerCluster';
 import withFeatureGate from '../../../../features/with-feature-gate';
 import { ASSISTED_INSTALLER_FEATURE } from '~/redux/constants/featureConstants';
-import { isHypershiftCluster } from '../../clusterDetailsHelper';
 
 import './Overview.scss';
 
@@ -68,7 +67,6 @@ class Overview extends React.Component {
       this.props;
     let topCard;
 
-    const isHypershift = isHypershiftCluster(cluster);
     const { showInstallSuccessAlert } = this.state;
     const clusterState = getClusterStateAndDescription(cluster);
     const isArchived = get(cluster, 'subscription.status', false) === subscriptionStatuses.ARCHIVED;
@@ -97,8 +95,7 @@ class Overview extends React.Component {
       !isAssistedInstallSubscription(cluster.subscription) &&
       !shouldShowLogs(cluster) &&
       !isDeprovisioned &&
-      !isArchived &&
-      !isHypershift;
+      !isArchived;
     const showCostBreakdown =
       !cluster.managed &&
       userAccess.fulfilled &&

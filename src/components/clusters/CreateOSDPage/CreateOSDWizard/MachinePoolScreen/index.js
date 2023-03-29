@@ -10,8 +10,9 @@ import createOSDInitialValues from '../../createOSDInitialValues';
 const mapStateToProps = (state, ownProps) => {
   const valueSelector = formValueSelector('CreateCluster');
 
+  const isHypershiftSelected = valueSelector(state, 'hypershift') === 'true';
+  const isMultiAz = valueSelector(state, 'multi_az') === 'true' || isHypershiftSelected;
   const cloudProviderID = valueSelector(state, 'cloud_provider');
-  const isMultiAz = valueSelector(state, 'multi_az') === 'true';
   const isByoc = valueSelector(state, 'byoc') === 'true';
   const product = valueSelector(state, 'product');
   const billingModel = valueSelector(state, 'billing_model');
@@ -24,6 +25,7 @@ const mapStateToProps = (state, ownProps) => {
     billingModel,
     isByoc,
     machineType,
+    isHypershiftSelected,
     canAutoScale: canAutoScaleOnCreateSelector(state, product),
     autoscalingEnabled: !!valueSelector(state, 'autoscalingEnabled'),
     autoScaleMinNodesValue: valueSelector(state, 'min_replicas'),

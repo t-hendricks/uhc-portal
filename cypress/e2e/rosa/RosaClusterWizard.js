@@ -1,6 +1,6 @@
-import Login from '../pageobjects/login.page';
-import ClusterListPage from '../pageobjects/ClusterList.page';
-import CreateRosaWizardPage from '../pageobjects/CreateRosaWizard.page';
+import Login from '../../pageobjects/login.page';
+import ClusterListPage from '../../pageobjects/ClusterList.page';
+import CreateRosaWizardPage from '../../pageobjects/CreateRosaWizard.page';
 
 const associatedAccountsSelector = '**/api/accounts_mgmt/v1/organizations/*/labels';
 const ARNsSelector = '**/api/clusters_mgmt/v1/aws_inquiries/sts_account_roles';
@@ -33,6 +33,15 @@ describe('Rosa cluster tests', () => {
       cy.get('#with-web').click();
       CreateRosaWizardPage.isCreateRosaPage();
       cy.get('.spinner-loading-text').should('not.exist');
+      CreateRosaWizardPage.isControlPlaneTypeScreen();
+    });
+
+    it('selects standalone control plane mode', () => {
+      CreateRosaWizardPage.selectStandaloneControlPlaneTypeOption();
+    });
+
+    it('moves next to the Accounts and Roles screen', () => {
+      cy.get(CreateRosaWizardPage.primaryButton).click({ force: true });
       CreateRosaWizardPage.isAccountsAndRolesScreen();
     });
 

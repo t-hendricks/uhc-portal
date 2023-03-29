@@ -25,6 +25,7 @@ import {
   GET_MACHINE_POOLS,
   ADD_MACHINE_POOL,
   SCALE_MACHINE_POOL,
+  PATCH_NODE_POOL,
   DELETE_MACHINE_POOL,
   CLEAR_ADD_MACHINE_POOL_RESPONSE,
   CLEAR_SCALE_MACHINE_POOL_RESPONSE,
@@ -104,10 +105,12 @@ function MachinePoolsReducer(state = initialState, action) {
 
       // SCALE_MACHINE_POOL
       case PENDING_ACTION(SCALE_MACHINE_POOL):
+      case PENDING_ACTION(PATCH_NODE_POOL):
         draft.scaleMachinePoolResponse.pending = true;
         break;
 
       case FULFILLED_ACTION(SCALE_MACHINE_POOL):
+      case FULFILLED_ACTION(PATCH_NODE_POOL):
         draft.scaleMachinePoolResponse = {
           ...initialState.scaleMachinePoolResponse,
           fulfilled: true,
@@ -115,6 +118,7 @@ function MachinePoolsReducer(state = initialState, action) {
         break;
 
       case REJECTED_ACTION(SCALE_MACHINE_POOL):
+      case REJECTED_ACTION(PATCH_NODE_POOL):
         draft.scaleMachinePoolResponse = {
           ...initialState.scaleMachinePoolResponse,
           ...getErrorState(action),

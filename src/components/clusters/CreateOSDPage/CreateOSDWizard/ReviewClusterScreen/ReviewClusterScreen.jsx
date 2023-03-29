@@ -14,6 +14,8 @@ import {
   stepId as rosaStepId,
   stepNameById as rosaStepNameById,
 } from '~/components/clusters/CreateROSAPage/CreateROSAWizard/rosaWizardConstants';
+import { HYPERSHIFT_WIZARD_FEATURE } from '~/redux/constants/featureConstants';
+import { useFeatureGate } from '~/hooks/useFeatureGate';
 
 const ReviewClusterScreen = ({
   change,
@@ -31,6 +33,7 @@ const ReviewClusterScreen = ({
   clearGetUserRoleResponse,
   clearGetOcmRoleResponse,
   goToStepById,
+  isHypershiftSelected,
 }) => {
   const isByoc = formValues.byoc === 'true';
   const isAWS = formValues.cloud_provider === 'aws';
@@ -38,18 +41,19 @@ const ReviewClusterScreen = ({
   const isROSA = formValues.product === normalizedProducts.ROSA;
   const showVPCCheckbox = isROSA || isByoc;
   const clusterSettingsFields = [
-    !isROSA && 'cloud_provider',
+    ...(!isROSA ? ['cloud_provider'] : []),
     'name',
     'cluster_version',
     'region',
     'multi_az',
-    !isByoc && !isROSA && 'persistent_storage',
-    !isByoc && isROSA && 'load_balancers',
-    isByoc && isAWS && !isROSA && 'disable_scp_checks',
-    'enable_user_workload_monitoring',
-    isByoc && 'customer_managed_key',
+    ...(!isByoc && !isROSA ? ['persistent_storage'] : []),
+    ...(!isByoc && isROSA ? ['load_balancers'] : []),
+    ...(isByoc && isAWS && !isROSA ? ['disable_scp_checks'] : []),
+    ...(!isHypershiftSelected ? ['enable_user_workload_monitoring'] : []),
+    ...(isByoc ? ['customer_managed_key'] : []),
     'etcd_encryption',
-  ].filter(Boolean);
+  ];
+
   if (isCreateClusterPending) {
     return (
       <Bullseye>
@@ -71,6 +75,7 @@ const ReviewClusterScreen = ({
 
   const [userRole, setUserRole] = useState('');
   const [ocmRole, setOcmRole] = useState('');
+  const isHypershiftEnabled = useFeatureGate(HYPERSHIFT_WIZARD_FEATURE);
 
   useEffect(() => {
     clearGetUserRoleResponse();
@@ -128,8 +133,16 @@ const ReviewClusterScreen = ({
     }
     return isROSA ? rosaStepId[step] : stepId[step];
   };
+
   const getStepName = (stepKey) =>
     isROSA ? rosaStepNameById[rosaStepId[stepKey]] : stepNameById[stepId[stepKey]];
+
+  let accountStepId = 'ACCOUNTS_AND_ROLES';
+  if (isROSA) {
+    accountStepId = isHypershiftEnabled
+      ? 'ACCOUNTS_AND_ROLES_AS_SECOND_STEP'
+      : 'ACCOUNTS_AND_ROLES_AS_FIRST_STEP';
+  }
 
   return (
     <div className="ocm-create-osd-review-screen">
@@ -139,9 +152,17 @@ const ReviewClusterScreen = ({
       {isROSA && (
         <>
           <ReduxHiddenCheckbox name="detected_ocm_and_user_roles" />
+          {isHypershiftEnabled && (
+            <ReviewSection
+              title={getStepName('CONTROL_PLANE')}
+              onGoToStep={() => goToStepById(getStepId('CONTROL_PLANE'))}
+            >
+              {ReviewItem({ name: 'hypershift', formValues })}
+            </ReviewSection>
+          )}
           <ReviewSection
-            title={getStepName('ACCOUNTS_AND_ROLES')}
-            onGoToStep={() => goToStepById(getStepId('ACCOUNTS_AND_ROLES'))}
+            title={getStepName(accountStepId)}
+            onGoToStep={() => goToStepById(getStepId(accountStepId))}
             initiallyExpanded={errorWithAWSAccountRoles}
           >
             {ReviewItem({ name: 'associated_aws_id', formValues })}
@@ -161,14 +182,6 @@ const ReviewClusterScreen = ({
             {ReviewItem({ name: 'worker_role_arn', formValues })}
           </ReviewSection>
         </>
-      )}
-      {isROSA && formValues.hypershift && (
-        <ReviewSection
-          title={getStepName('CONTROL_PLANE')}
-          onGoToStep={() => goToStepById(getStepId('CONTROL_PLANE'))}
-        >
-          {ReviewItem({ name: 'hypershift', formValues })}
-        </ReviewSection>
       )}
       {!isROSA && (
         <ReviewSection
@@ -206,8 +219,8 @@ const ReviewClusterScreen = ({
         {ReviewItem({ name: 'cluster_privacy', formValues })}
         {showVPCCheckbox && ReviewItem({ name: 'install_to_vpc', formValues })}
         {showVPCCheckbox &&
-          formValues.cluster_privacy === 'internal' &&
-          formValues.install_to_vpc &&
+          (formValues.hypershift === 'true' ||
+            (formValues.cluster_privacy === 'internal' && formValues.install_to_vpc)) &&
           ReviewItem({ name: 'use_privatelink', formValues })}
         {showVPCCheckbox &&
           formValues.install_to_vpc &&
@@ -273,6 +286,7 @@ ReviewClusterScreen.propTypes = {
   clearGetUserRoleResponse: PropTypes.func.isRequired,
   clearGetOcmRoleResponse: PropTypes.func.isRequired,
   goToStepById: PropTypes.func.isRequired,
+  isHypershiftSelected: PropTypes.bool,
 };
 
 export default ReviewClusterScreen;

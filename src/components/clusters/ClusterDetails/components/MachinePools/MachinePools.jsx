@@ -2,10 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import produce from 'immer';
 import isEmpty from 'lodash/isEmpty';
+import get from 'lodash/get';
 import cx from 'classnames';
 
 import {
-  Alert,
   Card,
   Button,
   CardBody,
@@ -25,7 +25,6 @@ import Skeleton from '@redhat-cloud-services/frontend-components/Skeleton';
 import AddMachinePoolModal from './components/AddMachinePoolModal';
 import EditTaintsModal from './components/EditTaintsModal';
 import EditLabelsModal from './components/EditLabelsModal';
-import './MachinePools.scss';
 import { actionResolver } from './machinePoolsHelper';
 
 import ButtonWithTooltip from '../../../../common/ButtonWithTooltip';
@@ -33,7 +32,21 @@ import ErrorBox from '../../../../common/ErrorBox';
 import modals from '../../../../common/Modal/modals';
 
 import { noQuotaTooltip } from '../../../../../common/helpers';
+import { versionFormatter } from '../../../../../common/versionFormatter';
 import { isHibernating } from '../../../common/clusterStates';
+import './MachinePools.scss';
+
+const getOpenShiftVersion = (machinePool) => {
+  const extractedVersion = get(machinePool, 'version.id', '');
+  if (!extractedVersion) {
+    return 'N/A';
+  }
+  return versionFormatter(extractedVersion) || extractedVersion;
+};
+
+// Percentages
+const getColumnWidths = (isHypershift) =>
+  isHypershift ? [15, 15, 20, 15, 15, 20] : [19, 19, 25, 19, 19];
 
 const initialState = {
   deletedRowIndex: null,
@@ -146,13 +159,17 @@ class MachinePools extends React.Component {
       );
     }
 
+    const widths = getColumnWidths(isHypershift);
     const columns = [
-      { title: 'Machine pool', transforms: [cellWidth(19)], cellFormatters: [expandable] },
-      { title: 'Instance type', transforms: [cellWidth(19)] },
-      { title: 'Availability zones', transforms: [cellWidth(25)] },
-      { title: 'Node count', transforms: [cellWidth(19)] },
-      { title: 'Autoscaling', transforms: [cellWidth(19)] },
+      { title: 'Machine pool', transforms: [cellWidth(widths[0])], cellFormatters: [expandable] },
+      { title: 'Instance type', transforms: [cellWidth(widths[1])] },
+      { title: 'Availability zones', transforms: [cellWidth(widths[2])] },
+      { title: 'Node count', transforms: [cellWidth(widths[3])] },
+      { title: 'Autoscaling', transforms: [cellWidth(widths[4])] },
     ];
+    if (isHypershift) {
+      columns.push({ title: 'Version', transforms: [cellWidth(widths[5])] });
+    }
 
     const getMachinePoolRow = (machinePool = {}, isExpandableRow) => {
       const autoscalingEnabled = machinePool.autoscaling;
@@ -178,27 +195,32 @@ class MachinePools extends React.Component {
         nodes = `${machinePool.desired || machinePool.replicas}`;
       }
 
+      const cells = [
+        machinePool.id,
+        {
+          title: (
+            <>
+              {isHypershift && machinePool.id !== 'Default'
+                ? machinePool.aws_node_pool?.instance_type
+                : machinePool.instance_type}
+              {machinePool.aws && (
+                <Label variant="outline" className="ocm-c-machine-pools__spot-label">
+                  Spot
+                </Label>
+              )}
+            </>
+          ),
+        },
+        machinePool.availability_zones?.join(', ') || machinePool.availability_zone,
+        { title: nodes },
+        autoscalingEnabled ? 'Enabled' : 'Disabled',
+      ];
+      if (isHypershift) {
+        cells.push(getOpenShiftVersion(machinePool));
+      }
+
       const row = {
-        cells: [
-          machinePool.id,
-          {
-            title: (
-              <>
-                {isHypershift && machinePool.id !== 'Default'
-                  ? machinePool.aws_node_pool?.instance_type
-                  : machinePool.instance_type}
-                {machinePool.aws && (
-                  <Label variant="outline" className="ocm-c-machine-pools__spot-label">
-                    Spot
-                  </Label>
-                )}
-              </>
-            ),
-          },
-          machinePool.availability_zones?.join(', ') || machinePool.availability_zone,
-          { title: nodes },
-          autoscalingEnabled ? 'Enabled' : 'Disabled',
-        ],
+        cells,
         key: machinePool.id,
         machinePool,
       };
@@ -354,7 +376,7 @@ class MachinePools extends React.Component {
     const onClickScaleAction = (_, __, rowData) =>
       openModal(modals.EDIT_NODE_COUNT, {
         machinePool: rowData.machinePool,
-        isDefaultMachinePool: rowData.machinePool.id === 'Default',
+        isDefaultMachinePool: rowData.machinePool.id === 'Default' && !isHypershift,
         cluster,
       });
 
@@ -459,13 +481,6 @@ class MachinePools extends React.Component {
                       }),
                     )
                   }
-                />
-              )}
-              {isHypershift && (
-                <Alert
-                  variant="info"
-                  isInline
-                  title="Scaling machine pools is currently only available using ROSA CLI"
                 />
               )}
               <Table

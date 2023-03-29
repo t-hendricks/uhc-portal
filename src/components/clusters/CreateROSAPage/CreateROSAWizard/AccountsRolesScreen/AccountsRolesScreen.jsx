@@ -80,6 +80,11 @@ function AccountsRolesScreen({
     clearGetUserRoleResponse();
   };
 
+  const resetUserRoleFields = () => {
+    setNoUserForSelectedAWSAcct(false);
+    clearGetUserRoleResponse();
+  };
+
   // default product and cloud_provider form values
   useEffect(() => {
     // default product and cloud_provider form values
@@ -227,6 +232,7 @@ function AccountsRolesScreen({
             getAWSAccountRolesARNs={getAWSAccountRolesARNs}
             getAWSAccountRolesARNsResponse={getAWSAccountRolesARNsResponse}
             clearGetAWSAccountRolesARNsResponse={clearGetAWSAccountRolesARNsResponse}
+            onAccountChanged={resetUserRoleFields}
             change={change}
             touchARNsFields={touchARNsFields}
             openOcmRoleInstructionsModal={openOcmRoleInstructionsModal}

@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import { Redirect } from 'react-router';
+import { Redirect } from 'react-router-dom';
 
 import {
   Banner,
@@ -131,12 +131,15 @@ class CreateOSDWizardInternal extends React.Component {
     }
 
     // Track validity of individual steps by id
-    if (isValid !== prevProps.isValid || isAsyncValidating !== prevProps.isAsyncValidating) {
+    if (
+      (isValid !== prevProps.isValid || isAsyncValidating !== prevProps.isAsyncValidating) &&
+      !isAsyncValidating
+    ) {
       // eslint-disable-next-line react/no-did-update-set-state
       this.setState(() => ({
         validatedSteps: {
           ...prevState.validatedSteps,
-          [currentStepId]: isValid && !isAsyncValidating,
+          [currentStepId]: isValid,
         },
       }));
     }
@@ -389,7 +392,7 @@ class CreateOSDWizardInternal extends React.Component {
         name: stepNameById[stepId.CLUSTER_UPDATES],
         component: (
           <ErrorBoundary>
-            <UpdatesScreen />
+            <UpdatesScreen isTrialDefault={isTrialDefault} />
           </ErrorBoundary>
         ),
         canJumpTo: this.canJumpTo(stepId.CLUSTER_UPDATES),
@@ -402,7 +405,7 @@ class CreateOSDWizardInternal extends React.Component {
             <WizardContext.Consumer>
               {({ goToStepById }) => (
                 <ReviewClusterScreen
-                  isPending={createClusterResponse.pending}
+                  isCreateClusterPending={createClusterResponse.pending}
                   clusterRequestParams={{ isWizard: true }}
                   goToStepById={goToStepById}
                 />

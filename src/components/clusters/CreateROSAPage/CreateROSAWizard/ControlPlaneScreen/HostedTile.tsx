@@ -17,6 +17,7 @@ const HostedTile = ({ handleChange, isSelected }: HostedTileProps) => (
     onClick={() => handleChange('true')}
     isSelected={isSelected}
     className="controlPlaneScreenTile"
+    data-testid="hosted-control-planes"
   >
     <Text component={TextVariants.p} className={defaultMarginBottomSpacing}>
       Run an OpenShift cluster where the control plane is decoupled from the data plane, and is
@@ -44,7 +45,7 @@ const HostedTile = ({ handleChange, isSelected }: HostedTileProps) => (
       className={defaultMarginBottomSpacing}
     >
       <Text component={TextVariants.p}>
-        To create a ROSA cluster that is hosted by Red Hat,you must be able to create clusters on a
+        To create a ROSA cluster that is hosted by Red Hat, you must be able to create clusters on a
         VPC.
       </Text>
       <Text component={TextVariants.p}>

@@ -2,7 +2,7 @@ import React from 'react';
 import { useDispatch } from 'react-redux';
 import { Field } from 'formik';
 
-import { Form, Grid, GridItem, Title, Text, ExpandableSection, Flex } from '@patternfly/react-core';
+import { Form, Grid, GridItem, Title, Text, ExpandableSection } from '@patternfly/react-core';
 
 import { required } from '~/common/validators';
 import { getMachineTypes } from '~/redux/actions/machineTypesActions';
@@ -20,14 +20,11 @@ import { normalizedProducts } from '~/common/subscriptionTypes';
 import { getNodesCount } from '~/components/clusters/CreateOSDPage/CreateOSDForm/FormSections/ScaleSection/AutoScaleSection/AutoScaleHelper';
 import { NodeLabelsFieldArray } from './NodeLabelsFieldArray';
 
-interface MachinePoolProps {
-  billingModel?: string;
-}
-
-export const MachinePool = ({ billingModel }: MachinePoolProps) => {
+export const MachinePool = () => {
   const dispatch = useDispatch();
   const {
     values: {
+      [FieldId.BillingModel]: billingModel,
       [FieldId.Product]: product,
       [FieldId.CloudProvider]: cloudProvider,
       [FieldId.MachineType]: machineType,
@@ -35,11 +32,13 @@ export const MachinePool = ({ billingModel }: MachinePoolProps) => {
       [FieldId.MultiAz]: multiAz,
       [FieldId.Byoc]: byoc,
       [FieldId.NodesCompute]: nodesCompute,
+      [FieldId.NodeLabels]: nodeLabels,
     },
     errors,
     getFieldProps,
     setFieldValue,
     getFieldMeta,
+    setFieldTouched,
   } = useFormState();
   const isMultiAz = multiAz === 'true';
   const isByoc = byoc === 'true';
@@ -61,6 +60,10 @@ export const MachinePool = ({ billingModel }: MachinePoolProps) => {
       setIsNodeLabelsExpanded(true);
     }
   }, [errors[FieldId.NodeLabels], isNodeLabelsExpanded]);
+
+  React.useEffect(() => {
+    if (nodeLabels[0].key) setFieldTouched(FieldId.NodeLabels, true, true);
+  }, []);
 
   React.useEffect(() => {
     dispatch(getMachineTypes());
@@ -91,83 +94,81 @@ export const MachinePool = ({ billingModel }: MachinePoolProps) => {
         </Text>
       </GridItem>
 
-      <Grid hasGutter md={6}>
-        <Flex direction={{ default: 'column' }} spaceItems={{ default: 'spaceItemsLg' }}>
-          <GridItem>
-            <Field
-              component={MachineTypeSelection}
-              name={FieldId.MachineType}
-              validate={required}
-              isMultiAz={isMultiAz}
-              isBYOC={isByoc}
-              cloudProviderID={cloudProvider}
-              product={product}
-              isMachinePool={false}
-              billingModel={billingModel}
-              inModal={false}
-              machine_type={{
-                input: {
-                  ...getFieldProps(FieldId.MachineType),
-                  onChange: (value: string) => setFieldValue(FieldId.MachineType, value),
-                },
-                meta: getFieldMeta(FieldId.MachineType),
-              }}
-              machine_type_force_choice={{
-                input: {
-                  ...getFieldProps(FieldId.MachineTypeForceChoice),
-                  onChange: (value: string) => setFieldValue(FieldId.MachineTypeForceChoice, value),
-                },
-              }}
-            />
-          </GridItem>
+      <Grid hasGutter>
+        <GridItem md={6}>
+          <Field
+            component={MachineTypeSelection}
+            name={FieldId.MachineType}
+            validate={required}
+            isMultiAz={isMultiAz}
+            isBYOC={isByoc}
+            cloudProviderID={cloudProvider}
+            product={product}
+            isMachinePool={false}
+            billingModel={billingModel}
+            inModal={false}
+            machine_type={{
+              input: {
+                ...getFieldProps(FieldId.MachineType),
+                onChange: (value: string) => setFieldValue(FieldId.MachineType, value),
+              },
+              meta: getFieldMeta(FieldId.MachineType),
+            }}
+            machine_type_force_choice={{
+              input: {
+                ...getFieldProps(FieldId.MachineTypeForceChoice),
+                onChange: (value: string) => setFieldValue(FieldId.MachineTypeForceChoice, value),
+              },
+            }}
+          />
+        </GridItem>
 
-          {canAutoScale && (
-            <>
-              <GridItem>
-                <AutoScale isDefaultMachinePool />
-              </GridItem>
-              {autoscalingEnabled && nodeLabelsExpandableSection}
-            </>
-          )}
+        {canAutoScale && (
+          <>
+            <GridItem>
+              <AutoScale isDefaultMachinePool />
+            </GridItem>
+            {autoscalingEnabled && nodeLabelsExpandableSection}
+          </>
+        )}
 
-          {!autoscalingEnabled && (
-            <>
-              <GridItem>
-                <Field
-                  component={NodeCountInput}
-                  name={FieldId.NodesCompute}
-                  label={isMultiAz ? 'Compute node count (per zone)' : 'Compute node count'}
-                  isMultiAz={isMultiAz}
-                  isByoc={isByoc}
-                  machineType={machineType}
-                  extendedHelpText={
-                    <>
-                      {constants.computeNodeCountHint}{' '}
-                      <ExternalLink
-                        href={
-                          isRosa
-                            ? links.ROSA_SERVICE_DEFINITION_COMPUTE
-                            : links.OSD_SERVICE_DEFINITION_COMPUTE
-                        }
-                      >
-                        Learn more about compute node count
-                      </ExternalLink>
-                    </>
-                  }
-                  cloudProviderID={cloudProvider}
-                  product={product}
-                  isMachinePool
-                  billingModel={billingModel}
-                  input={{
-                    ...getFieldProps(FieldId.NodesCompute),
-                    onChange: (value: string) => setFieldValue(FieldId.NodesCompute, value),
-                  }}
-                />
-              </GridItem>
-              {nodeLabelsExpandableSection}
-            </>
-          )}
-        </Flex>
+        {!autoscalingEnabled && (
+          <>
+            <GridItem md={6}>
+              <Field
+                component={NodeCountInput}
+                name={FieldId.NodesCompute}
+                label={isMultiAz ? 'Compute node count (per zone)' : 'Compute node count'}
+                isMultiAz={isMultiAz}
+                isByoc={isByoc}
+                machineType={machineType}
+                extendedHelpText={
+                  <>
+                    {constants.computeNodeCountHint}{' '}
+                    <ExternalLink
+                      href={
+                        isRosa
+                          ? links.ROSA_SERVICE_DEFINITION_COMPUTE
+                          : links.OSD_SERVICE_DEFINITION_COMPUTE
+                      }
+                    >
+                      Learn more about compute node count
+                    </ExternalLink>
+                  </>
+                }
+                cloudProviderID={cloudProvider}
+                product={product}
+                isMachinePool={false}
+                billingModel={billingModel}
+                input={{
+                  ...getFieldProps(FieldId.NodesCompute),
+                  onChange: (value: string) => setFieldValue(FieldId.NodesCompute, value),
+                }}
+              />
+            </GridItem>
+            {nodeLabelsExpandableSection}
+          </>
+        )}
       </Grid>
     </Form>
   );

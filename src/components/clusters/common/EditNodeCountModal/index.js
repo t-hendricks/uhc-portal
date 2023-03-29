@@ -12,7 +12,7 @@ import { getMachineTypes } from '../../../../redux/actions/machineTypesActions';
 import { clearClusterResponse, editCluster } from '../../../../redux/actions/clustersActions';
 import {
   getMachineOrNodePools,
-  scaleMachinePool,
+  patchMachinePoolOrNodePool,
   clearScaleMachinePoolResponse,
 } from '../../ClusterDetails/components/MachinePools/MachinePoolsActions';
 
@@ -37,6 +37,7 @@ const mapStateToProps = (state) => {
   const selectedMachinePool =
     valueSelector(state, 'machine_pool') ||
     modalData.machinePool?.id ||
+    (isHypershiftCluster(cluster) && state.machinePools.getMachinePools.data[0]?.id) ||
     (modalData.isDefaultMachinePool && 'Default');
 
   const cloudProviderID = get(cluster, 'cloud_provider.id', '');
@@ -59,12 +60,16 @@ const mapStateToProps = (state) => {
     machinePoolsList: {
       ...state.machinePools.getMachinePools,
       data: [
-        {
-          name: 'Default',
-          value: 'Default',
-          machineType: get(cluster, 'nodes.compute_machine_type.id', ''),
-          nodes: get(cluster, 'nodes.compute', null),
-        },
+        ...(!isHypershiftCluster(cluster)
+          ? [
+              {
+                name: 'Default',
+                value: 'Default',
+                machineType: get(cluster, 'nodes.compute_machine_type.id', ''),
+                nodes: get(cluster, 'nodes.compute', null),
+              },
+            ]
+          : []),
         ...state.machinePools.getMachinePools.data.map((machinePool) => ({
           name: machinePool.id,
           value: machinePool.id,
@@ -100,8 +105,12 @@ const mapStateToProps = (state) => {
   let machinePoolWithAutoscale = false;
 
   const getMinAndMaxNodesValues = (autoscaleObj) => {
-    const min = autoscaleObj.min_replicas;
-    const max = autoscaleObj.max_replicas;
+    const min = isHypershiftCluster(cluster)
+      ? autoscaleObj?.min_replica
+      : autoscaleObj.min_replicas;
+    const max = isHypershiftCluster(cluster)
+      ? autoscaleObj?.max_replica
+      : autoscaleObj.max_replicas;
 
     return {
       min_replicas: isMultiAz ? (min / 3).toString() : min.toString(),
@@ -138,16 +147,18 @@ const mapStateToProps = (state) => {
     ) || {};
 
   machinePoolWithAutoscale = selectedMachinePoolData.autoscaling;
-
   return {
     ...commonProps,
     editNodeCountResponse: state.machinePools.scaleMachinePoolResponse,
-    machineType: get(selectedMachinePoolData, 'instance_type', ''),
+    machineType: isHypershiftCluster(cluster)
+      ? get(selectedMachinePoolData, 'aws_node_pool.instance_type', '')
+      : get(selectedMachinePoolData, 'instance_type', ''),
     machinePoolId: selectedMachinePool,
     initialValues: {
       nodes_compute:
         get(selectedMachinePoolData, 'replicas', null) ||
         get(machinePoolWithAutoscale, 'min_replicas', null) ||
+        get(machinePoolWithAutoscale, 'min_replica', null) ||
         0,
       machine_pool: selectedMachinePool,
       autoscalingEnabled: machinePoolWithAutoscale,
@@ -157,7 +168,7 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = (dispatch) => ({
-  onSubmit: (formData, clusterID, isMultiAz) => {
+  onSubmit: (formData, clusterID, isMultiAz, isHypershiftCluster) => {
     const machinePoolRequest = {};
     const nodesCount = parseInt(formData.nodes_compute, 10);
 
@@ -169,7 +180,7 @@ const mapDispatchToProps = (dispatch) => ({
       max_replicas: isMultiAz ? maxNodes * 3 : maxNodes,
     };
 
-    if (formData.machine_pool === 'Default') {
+    if (formData.machine_pool === 'Default' && !isHypershiftCluster) {
       machinePoolRequest.nodes = formData.autoscalingEnabled
         ? { autoscale_compute: autoScaleLimits }
         : { compute: nodesCount };
@@ -180,7 +191,14 @@ const mapDispatchToProps = (dispatch) => ({
       } else {
         machinePoolRequest.replicas = nodesCount;
       }
-      dispatch(scaleMachinePool(clusterID, formData.machine_pool, machinePoolRequest));
+      dispatch(
+        patchMachinePoolOrNodePool(
+          clusterID,
+          formData.machine_pool,
+          machinePoolRequest,
+          isHypershiftCluster,
+        ),
+      );
     }
   },
   getMachinePools: (clusterID, isHypershift) =>
@@ -194,7 +212,12 @@ const mapDispatchToProps = (dispatch) => ({
 
 const mergeProps = (stateProps, dispatchProps, ownProps) => {
   const onSubmit = (formData) => {
-    dispatchProps.onSubmit(formData, stateProps.clusterID, stateProps.isMultiAz);
+    dispatchProps.onSubmit(
+      formData,
+      stateProps.clusterID,
+      stateProps.isMultiAz,
+      stateProps.isHypershiftCluster,
+    );
   };
   return {
     ...ownProps,

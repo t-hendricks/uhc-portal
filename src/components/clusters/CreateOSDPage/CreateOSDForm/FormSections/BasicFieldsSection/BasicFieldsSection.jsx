@@ -36,7 +36,7 @@ function BasicFieldsSection({
   change,
   isWizard,
   handleMultiAZChangeForOldForm,
-  isHypershift,
+  isHypershiftSelected,
 }) {
   const multiAzTooltip = !hasMultiAzQuota && noQuotaTooltip;
   const singleAzTooltip = !hasSingleAzQuota && noQuotaTooltip;
@@ -144,12 +144,12 @@ function BasicFieldsSection({
       {/* Availability */}
       {showAvailability && (
         <>
-          {isHypershift ? (
+          {isHypershiftSelected ? (
             <>
               <Alert
                 isInline
                 variant="info"
-                title="The hosted control plane uses multiple zones."
+                title="The hosted control plane uses multiple availability zones."
               />
             </>
           ) : (
@@ -204,7 +204,7 @@ BasicFieldsSection.propTypes = {
   hasSingleAzQuota: PropTypes.bool.isRequired,
   hasMultiAzQuota: PropTypes.bool.isRequired,
   isWizard: PropTypes.bool,
-  isHypershift: PropTypes.bool,
+  isHypershiftSelected: PropTypes.bool,
 };
 
 export default BasicFieldsSection;

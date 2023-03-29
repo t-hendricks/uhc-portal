@@ -10,14 +10,10 @@ import {
   SET_OFFLINE_TOKEN,
 } from './rosaConstants';
 import { accountsService } from '../../../../services';
+import { extractAWSID } from '../../../../common/rosa';
 
 export const getAWSIDsFromARNs = (arns) => {
-  // Ex: arns = ['arn:aws:iam::268733382466:role/ManagedOpenShift-OCM-Role-15212158', ...],
-  // '268733382466' above ^^ is an example AWS account ID
-  const ids = arns.map((arn) => {
-    const arnSegment = arn.substr(arn.indexOf('::') + 2);
-    return arnSegment.substr(0, arnSegment.indexOf(':'));
-  });
+  const ids = arns.map(extractAWSID);
   return [...new Set(ids)]; // convert to Set to remove duplicates, spread to convert back to array
 };
 
@@ -36,8 +32,7 @@ export const normalizeSTSUsersByAWSAccounts = (stsUserRoles) => {
     return [];
   }
   const ids = stsUserRoles.split(',').map((stsUser) => {
-    let awsAcctId = stsUser.substr(stsUser.indexOf('::') + 2);
-    awsAcctId = awsAcctId.substr(0, awsAcctId.indexOf(':'));
+    const awsAcctId = extractAWSID(stsUser);
     return { aws_id: awsAcctId, sts_user: stsUser.substr(stsUser.indexOf(':role/') + 6) };
   });
   return [...new Set(ids)]; // convert to Set to remove duplicates, spread to convert back to array

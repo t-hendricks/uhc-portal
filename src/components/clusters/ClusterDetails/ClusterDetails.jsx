@@ -13,7 +13,7 @@ limitations under the License.
 
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Redirect } from 'react-router';
+import { Redirect } from 'react-router-dom';
 import get from 'lodash/get';
 
 import { PageSection, TabContent } from '@patternfly/react-core';
@@ -277,7 +277,6 @@ class ClusterDetails extends Component {
       hasIssues,
       hasIssuesInsights,
       toggleSubscriptionReleased,
-      setOpenedTab,
       initTabOpen,
       assistedInstallerEnabled,
       userAccess,
@@ -365,7 +364,10 @@ class ClusterDetails extends Component {
       !isClusterWaiting &&
       cluster.managed &&
       !isArchived;
-    const consoleURL = get(cluster, 'console.url');
+    const clusterUrls = {
+      console: get(cluster, 'console.url'),
+      api: get(cluster, 'api.url'),
+    };
     const displayMonitoringTab =
       !isArchived && !cluster.managed && !isAROCluster && !isUninstalledAICluster(cluster);
     const displayAccessControlTab = !isArchived;
@@ -438,7 +440,6 @@ class ClusterDetails extends Component {
               hasIssues={cluster.state !== clusterStates.INSTALLING && hasIssues}
               hasIssuesInsights={hasIssuesInsights}
               initTabOpen={initTabOpen}
-              setOpenedTab={setOpenedTab}
               onTabSelected={onTabSelected}
             />
           </ClusterDetailsTop>
@@ -485,7 +486,7 @@ class ClusterDetails extends Component {
               <ErrorBoundary>
                 <AccessControl
                   cluster={cluster}
-                  clusterConsoleURL={consoleURL}
+                  clusterUrls={clusterUrls}
                   cloudProvider={get(cluster, 'cloud_provider.id')}
                   history={history}
                   refreshEvent={refreshEvent}
@@ -643,7 +644,6 @@ ClusterDetails.propTypes = {
   getClusterHistory: PropTypes.func.isRequired,
   getMachineOrNodePools: PropTypes.func.isRequired,
   clearGetMachinePoolsResponse: PropTypes.func.isRequired,
-  setOpenedTab: PropTypes.func.isRequired,
   canSubscribeOCP: PropTypes.bool.isRequired,
   canTransferClusterOwnership: PropTypes.bool.isRequired,
   canHibernateCluster: PropTypes.bool.isRequired,

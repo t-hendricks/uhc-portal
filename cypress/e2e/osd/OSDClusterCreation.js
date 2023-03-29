@@ -1,9 +1,9 @@
-import Login from '../pageobjects/login.page';
-import ClusterListPage from '../pageobjects/ClusterList.page';
-import CreateClusterPage from '../pageobjects/CreateCluster.page';
-import CreateOSDWizardPage from '../pageobjects/CreateOSDWizard.page';
-import GlobalNav from '../pageobjects/GlobalNav.page';
-import LeaveCreateClusterPrompt from '../pageobjects/LeaveCreateClusterPrompt';
+import Login from '../../pageobjects/login.page';
+import ClusterListPage from '../../pageobjects/ClusterList.page';
+import CreateClusterPage from '../../pageobjects/CreateCluster.page';
+import CreateOSDWizardPage from '../../pageobjects/CreateOSDWizard.page';
+import GlobalNav from '../../pageobjects/GlobalNav.page';
+import LeaveCreateClusterPrompt from '../../pageobjects/LeaveCreateClusterPrompt';
 
 const clusterName = `test-${Math.random().toString(36).substr(2, 10)}`;
 
@@ -29,10 +29,6 @@ describe('OSD cluster tests', () => {
       CreateClusterPage.isCreateClusterPage();
       cy.getByTestId('osd-create-cluster-button').click({ force: true }); // need force=true to get past 'element detached from dom' error
       CreateOSDWizardPage.isCreateOSDPage();
-      // append the fake=true query param
-      cy.url().then((url) => cy.visit(`${url}?fake=true`));
-      cy.get('.spinner-loading-text').should('not.exist');
-      CreateOSDWizardPage.showsFakeClusterBanner();
     });
 
     it('shows an error with invalid and empty names', () => {

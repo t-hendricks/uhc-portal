@@ -1,7 +1,7 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
 
-import { useWizardContext } from '@patternfly/react-core/dist/esm/next';
+import { useWizardContext } from '@patternfly/react-core/next';
 import { useFormState } from '~/components/clusters/wizards/hooks';
 import { useGlobalState } from '~/redux/hooks';
 import {
@@ -13,7 +13,7 @@ import { CreateOsdWizardFooter } from '~/components/clusters/wizards/osd/CreateO
 export const CloudProviderStepFooter = () => {
   const dispatch = useDispatch();
   const { values } = useFormState();
-  const { onNext: goToNextStep } = useWizardContext();
+  const { goToNextStep } = useWizardContext();
   const { ccsCredentialsValidity } = useGlobalState((state) => state.ccsInquiries);
   const { pending: isValidatingCcsCredentials } = ccsCredentialsValidity;
 

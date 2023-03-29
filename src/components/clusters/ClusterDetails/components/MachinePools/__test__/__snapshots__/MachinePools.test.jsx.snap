@@ -1,6 +1,146 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`<MachinePools /> renders with a machine pool with autosacaling enabled 1`] = `
+exports[`<MachinePools /> OpenShift version for machine pools is shown if hypershift 1`] = `
+<Fragment>
+  <Card
+    className="ocm-c-machine-pools__card"
+  >
+    <CardBody
+      className="ocm-c-machine-pools__card--body"
+    >
+      <ButtonWithTooltip
+        className="pf-u-mb-lg"
+        disableReason="Adding machine pools is currently only available using ROSA CLI"
+        id="add-machine-pool"
+        onClick={[Function]}
+        variant="secondary"
+      >
+        Add machine pool
+      </ButtonWithTooltip>
+      <Divider />
+      <Table
+        actionResolver={[Function]}
+        areActionsDisabled={[Function]}
+        aria-label="Machine pools"
+        borders={true}
+        canCollapseAll={false}
+        canSelectAll={true}
+        canSortFavorites={true}
+        cells={
+          Array [
+            Object {
+              "cellFormatters": Array [
+                [Function],
+              ],
+              "title": "Machine pool",
+              "transforms": Array [
+                [Function],
+              ],
+            },
+            Object {
+              "title": "Instance type",
+              "transforms": Array [
+                [Function],
+              ],
+            },
+            Object {
+              "title": "Availability zones",
+              "transforms": Array [
+                [Function],
+              ],
+            },
+            Object {
+              "title": "Node count",
+              "transforms": Array [
+                [Function],
+              ],
+            },
+            Object {
+              "title": "Autoscaling",
+              "transforms": Array [
+                [Function],
+              ],
+            },
+            Object {
+              "title": "Version",
+              "transforms": Array [
+                [Function],
+              ],
+            },
+          ]
+        }
+        className=""
+        collapseAllAriaLabel=""
+        contentId="expanded-content"
+        dropdownDirection="down"
+        dropdownPosition="right"
+        expandId="expandable-toggle"
+        gridBreakPoint="grid-md"
+        isHeaderSelectDisabled={false}
+        isNested={false}
+        isStickyHeader={false}
+        isTreeTable={false}
+        onCollapse={[Function]}
+        ouiaSafe={true}
+        role="grid"
+        rowLabeledBy="simple-node"
+        rows={
+          Array [
+            Object {
+              "cells": Array [
+                "workers",
+                Object {
+                  "title": <React.Fragment>
+                    m5.xlarge
+                  </React.Fragment>,
+                },
+                "us-east-1b",
+                Object {
+                  "title": "2",
+                },
+                "Disabled",
+                "4.12.5",
+              ],
+              "key": "workers",
+              "machinePool": Object {
+                "auto_repair": true,
+                "availability_zone": "us-east-1b",
+                "aws_node_pool": Object {
+                  "instance_profile": "staging-21gitfhopbgmmfhlu65v93n4g4n3djde-jknhystj27-worker",
+                  "instance_type": "m5.xlarge",
+                  "tags": Object {
+                    "api.openshift.com/environment": "staging",
+                  },
+                },
+                "href": "/api/clusters_mgmt/v1/clusters/21gitfhopbgmmfhlu65v93n4g4n3djde/node_pools/workers",
+                "id": "workers",
+                "kind": "NodePool",
+                "replicas": 2,
+                "status": Object {
+                  "current_replicas": 2,
+                },
+                "subnet": "subnet-049f90721559000de",
+                "version": Object {
+                  "href": "/api/clusters_mgmt/v1/versions/openshift-v4.12.5-candidate",
+                  "id": "openshift-v4.12.5-candidate",
+                  "kind": "VersionLink",
+                },
+              },
+            },
+          ]
+        }
+        selectVariant="checkbox"
+        variant={null}
+      >
+        <TableHeader />
+        <TableBody />
+      </Table>
+    </CardBody>
+  </Card>
+</Fragment>
+`;
+
+exports[`<MachinePools /> renders with a machine pool with autoscaling enabled 1`] = `
 <Fragment>
   <Card
     className="ocm-c-machine-pools__card"
