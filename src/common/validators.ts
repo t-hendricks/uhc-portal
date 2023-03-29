@@ -50,6 +50,8 @@ const MAX_CLUSTER_NAME_LENGTH = 15;
 
 const MAX_MACHINE_POOL_NAME_LENGTH = 30;
 
+const MAX_NODE_POOL_NAME_LENGTH = 15;
+
 // Maximum length of a cluster display name
 const MAX_CLUSTER_DISPLAY_NAME_LENGTH = 63;
 
@@ -207,6 +209,8 @@ const clusterNameAsyncValidation = (value: string) => checkObjectNameAsyncValida
 const checkMachinePoolName = (value: string) =>
   checkObjectName(value, 'Machine pool', MAX_MACHINE_POOL_NAME_LENGTH);
 
+const checkNodePoolName = (value: string) =>
+  checkObjectName(value, 'Machine pool', MAX_NODE_POOL_NAME_LENGTH);
 /**
  * executes cluster-name async validations.
  * to be used at the form level hook (asyncValidate).
@@ -1411,6 +1415,7 @@ export {
   validateGCPServiceAccount,
   validateServiceAccountObject,
   checkMachinePoolName,
+  checkNodePoolName,
   checkCustomOperatorRolesPrefix,
   checkLabels,
   validateUniqueAZ,
