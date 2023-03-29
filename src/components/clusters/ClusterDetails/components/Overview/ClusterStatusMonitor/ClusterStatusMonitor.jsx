@@ -24,6 +24,7 @@ class clusterStatusMonitor extends React.Component {
       const isInstalling = (state) =>
         state === clusterStates.INSTALLING ||
         state === clusterStates.PENDING ||
+        state === clusterStates.VALIDATING ||
         state === clusterStates.WAITING;
 
       if (status.fulfilled) {

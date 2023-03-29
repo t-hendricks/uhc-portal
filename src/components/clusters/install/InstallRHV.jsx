@@ -40,6 +40,7 @@ class InstallRHV extends Component {
             providerSpecificFeatures={{
               ipi: ['Hosts controlled with Red Hat Virtualization Provider'],
             }}
+            name="rhv"
           />
         </PageSection>
       </>

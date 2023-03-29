@@ -35,6 +35,7 @@ function ClusterStateIcon(props) {
     case clusterStates.WAITING:
     case clusterStates.PENDING:
     case clusterStates.INSTALLING:
+    case clusterStates.VALIDATING:
     case clusterStates.UPDATING:
     case clusterStates.POWERING_DOWN:
     case clusterStates.RESUMING:

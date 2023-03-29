@@ -15,7 +15,7 @@ import { BreadcrumbPath } from '~/components/common/Breadcrumbs';
 import { ClusterPrivacyType } from './Networking/constants';
 
 export enum OsdFieldId {
-  BillingModel = 'billing_model',
+  // TODO: many fields here should move to common/constants.
   AccountId = 'account_id',
   AccessKeyId = 'access_key_id',
   SecretAccessKey = 'secret_access_key',

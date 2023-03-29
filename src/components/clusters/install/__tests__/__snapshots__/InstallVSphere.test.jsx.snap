@@ -31,6 +31,7 @@ exports[`InstallVSphere renders correctly 1`] = `
       aiPageLink="/assisted-installer/clusters/~new"
       ipiLearnMoreLink="https://docs.openshift.com/container-platform/4.12/installing/installing_vsphere/installing-vsphere-installer-provisioned.html"
       ipiPageLink="/install/vsphere/installer-provisioned"
+      name="vsphere"
       providerSpecificFeatures={
         Object {
           "abi": Array [

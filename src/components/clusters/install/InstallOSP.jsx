@@ -36,6 +36,7 @@ class InstallOSP extends Component {
             providerSpecificFeatures={{
               ipi: ['Hosts controlled with OpenStack Provider'],
             }}
+            name="openstack"
           />
         </PageSection>
       </>

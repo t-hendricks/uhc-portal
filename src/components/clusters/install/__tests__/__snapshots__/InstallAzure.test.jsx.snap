@@ -27,6 +27,7 @@ exports[`InstallAzure renders correctly 1`] = `
     <InstructionsChooser
       ipiLearnMoreLink="https://docs.openshift.com/container-platform/4.12/installing/installing_azure/installing-azure-default.html"
       ipiPageLink="/install/azure/installer-provisioned"
+      name="azure"
       providerSpecificFeatures={
         Object {
           "ipi": Array [

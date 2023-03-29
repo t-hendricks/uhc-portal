@@ -36,6 +36,7 @@ class InstallArmAWS extends Component {
             providerSpecificFeatures={{
               ipi: ['Hosts controlled with AWS Provider'],
             }}
+            name="aws"
           />
         </PageSection>
       </>

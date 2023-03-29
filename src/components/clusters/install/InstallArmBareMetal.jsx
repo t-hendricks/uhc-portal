@@ -42,6 +42,7 @@ class InstallArmBareMetal extends Component {
               ],
               upi: ['For air-gapped/restricted networks'],
             }}
+            name="arm"
           />
         </PageSection>
       </>

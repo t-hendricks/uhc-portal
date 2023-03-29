@@ -36,6 +36,7 @@ class InstallAzure extends Component {
             providerSpecificFeatures={{
               ipi: ['Hosts controlled with Azure Provider'],
             }}
+            name="azure"
           />
         </PageSection>
       </>
