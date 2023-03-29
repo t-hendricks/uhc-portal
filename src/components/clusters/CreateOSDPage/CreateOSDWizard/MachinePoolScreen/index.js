@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import { formValueSelector, getFormValues } from 'redux-form';
+import { formValueSelector } from 'redux-form';
 
 import { canAutoScaleOnCreateSelector } from '../../../ClusterDetails/components/MachinePools/MachinePoolsSelectors';
 
@@ -30,7 +30,6 @@ const mapStateToProps = (state, ownProps) => {
     autoscalingEnabled: !!valueSelector(state, 'autoscalingEnabled'),
     autoScaleMinNodesValue: valueSelector(state, 'min_replicas'),
     autoScaleMaxNodesValue: valueSelector(state, 'max_replicas'),
-    formValues: getFormValues('CreateCluster')(state),
     initialValues: createOSDInitialValues({
       cloudProviderID,
       product,
