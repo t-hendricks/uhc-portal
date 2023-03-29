@@ -1001,31 +1001,33 @@ exports[`<CloudTab /> should render correctly with OSD Trial quota 1`] = `
                 >
                   Alibaba Cloud
                 </a>
-                <span
-                  class="pf-c-label pf-m-orange pf-u-ml-md pf-u-display-inline"
-                  style="cursor: pointer;"
-                >
+                <span>
                   <span
-                    class="pf-c-label__content"
+                    class="pf-c-label pf-m-orange pf-u-ml-md pf-u-display-inline"
+                    style="cursor: pointer;"
                   >
                     <span
-                      class="pf-c-label__icon"
+                      class="pf-c-label__content"
                     >
-                      <svg
-                        aria-hidden="true"
-                        fill="var(--pf-c-label__content--Color)"
-                        height="1em"
-                        role="img"
-                        style="vertical-align: -0.125em;"
-                        viewBox="0 0 512 512"
-                        width="1em"
+                      <span
+                        class="pf-c-label__icon"
                       >
-                        <path
-                          d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"
-                        />
-                      </svg>
+                        <svg
+                          aria-hidden="true"
+                          fill="var(--pf-c-label__content--Color)"
+                          height="1em"
+                          role="img"
+                          style="vertical-align: -0.125em;"
+                          viewBox="0 0 512 512"
+                          width="1em"
+                        >
+                          <path
+                            d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"
+                          />
+                        </svg>
+                      </span>
+                      ai:Technology Preview
                     </span>
-                    ai:Technology Preview
                   </span>
                 </span>
               </td>
@@ -1154,31 +1156,33 @@ exports[`<CloudTab /> should render correctly with OSD Trial quota 1`] = `
                 >
                   Azure (multi-architecture)
                 </a>
-                <span
-                  class="pf-c-label pf-m-orange pf-u-ml-md pf-u-display-inline"
-                  style="cursor: pointer;"
-                >
+                <span>
                   <span
-                    class="pf-c-label__content"
+                    class="pf-c-label pf-m-orange pf-u-ml-md pf-u-display-inline"
+                    style="cursor: pointer;"
                   >
                     <span
-                      class="pf-c-label__icon"
+                      class="pf-c-label__content"
                     >
-                      <svg
-                        aria-hidden="true"
-                        fill="var(--pf-c-label__content--Color)"
-                        height="1em"
-                        role="img"
-                        style="vertical-align: -0.125em;"
-                        viewBox="0 0 512 512"
-                        width="1em"
+                      <span
+                        class="pf-c-label__icon"
                       >
-                        <path
-                          d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"
-                        />
-                      </svg>
+                        <svg
+                          aria-hidden="true"
+                          fill="var(--pf-c-label__content--Color)"
+                          height="1em"
+                          role="img"
+                          style="vertical-align: -0.125em;"
+                          viewBox="0 0 512 512"
+                          width="1em"
+                        >
+                          <path
+                            d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"
+                          />
+                        </svg>
+                      </span>
+                      ai:Technology Preview
                     </span>
-                    ai:Technology Preview
                   </span>
                 </span>
               </td>
@@ -2264,31 +2268,33 @@ exports[`<CloudTab /> should render correctly with both trial and quota 1`] = `
                 >
                   Alibaba Cloud
                 </a>
-                <span
-                  class="pf-c-label pf-m-orange pf-u-ml-md pf-u-display-inline"
-                  style="cursor: pointer;"
-                >
+                <span>
                   <span
-                    class="pf-c-label__content"
+                    class="pf-c-label pf-m-orange pf-u-ml-md pf-u-display-inline"
+                    style="cursor: pointer;"
                   >
                     <span
-                      class="pf-c-label__icon"
+                      class="pf-c-label__content"
                     >
-                      <svg
-                        aria-hidden="true"
-                        fill="var(--pf-c-label__content--Color)"
-                        height="1em"
-                        role="img"
-                        style="vertical-align: -0.125em;"
-                        viewBox="0 0 512 512"
-                        width="1em"
+                      <span
+                        class="pf-c-label__icon"
                       >
-                        <path
-                          d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"
-                        />
-                      </svg>
+                        <svg
+                          aria-hidden="true"
+                          fill="var(--pf-c-label__content--Color)"
+                          height="1em"
+                          role="img"
+                          style="vertical-align: -0.125em;"
+                          viewBox="0 0 512 512"
+                          width="1em"
+                        >
+                          <path
+                            d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"
+                          />
+                        </svg>
+                      </span>
+                      ai:Technology Preview
                     </span>
-                    ai:Technology Preview
                   </span>
                 </span>
               </td>
@@ -2417,31 +2423,33 @@ exports[`<CloudTab /> should render correctly with both trial and quota 1`] = `
                 >
                   Azure (multi-architecture)
                 </a>
-                <span
-                  class="pf-c-label pf-m-orange pf-u-ml-md pf-u-display-inline"
-                  style="cursor: pointer;"
-                >
+                <span>
                   <span
-                    class="pf-c-label__content"
+                    class="pf-c-label pf-m-orange pf-u-ml-md pf-u-display-inline"
+                    style="cursor: pointer;"
                   >
                     <span
-                      class="pf-c-label__icon"
+                      class="pf-c-label__content"
                     >
-                      <svg
-                        aria-hidden="true"
-                        fill="var(--pf-c-label__content--Color)"
-                        height="1em"
-                        role="img"
-                        style="vertical-align: -0.125em;"
-                        viewBox="0 0 512 512"
-                        width="1em"
+                      <span
+                        class="pf-c-label__icon"
                       >
-                        <path
-                          d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"
-                        />
-                      </svg>
+                        <svg
+                          aria-hidden="true"
+                          fill="var(--pf-c-label__content--Color)"
+                          height="1em"
+                          role="img"
+                          style="vertical-align: -0.125em;"
+                          viewBox="0 0 512 512"
+                          width="1em"
+                        >
+                          <path
+                            d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"
+                          />
+                        </svg>
+                      </span>
+                      ai:Technology Preview
                     </span>
-                    ai:Technology Preview
                   </span>
                 </span>
               </td>
@@ -3451,31 +3459,33 @@ exports[`<CloudTab /> should render correctly with quota 1`] = `
                 >
                   Alibaba Cloud
                 </a>
-                <span
-                  class="pf-c-label pf-m-orange pf-u-ml-md pf-u-display-inline"
-                  style="cursor: pointer;"
-                >
+                <span>
                   <span
-                    class="pf-c-label__content"
+                    class="pf-c-label pf-m-orange pf-u-ml-md pf-u-display-inline"
+                    style="cursor: pointer;"
                   >
                     <span
-                      class="pf-c-label__icon"
+                      class="pf-c-label__content"
                     >
-                      <svg
-                        aria-hidden="true"
-                        fill="var(--pf-c-label__content--Color)"
-                        height="1em"
-                        role="img"
-                        style="vertical-align: -0.125em;"
-                        viewBox="0 0 512 512"
-                        width="1em"
+                      <span
+                        class="pf-c-label__icon"
                       >
-                        <path
-                          d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"
-                        />
-                      </svg>
+                        <svg
+                          aria-hidden="true"
+                          fill="var(--pf-c-label__content--Color)"
+                          height="1em"
+                          role="img"
+                          style="vertical-align: -0.125em;"
+                          viewBox="0 0 512 512"
+                          width="1em"
+                        >
+                          <path
+                            d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"
+                          />
+                        </svg>
+                      </span>
+                      ai:Technology Preview
                     </span>
-                    ai:Technology Preview
                   </span>
                 </span>
               </td>
@@ -3604,31 +3614,33 @@ exports[`<CloudTab /> should render correctly with quota 1`] = `
                 >
                   Azure (multi-architecture)
                 </a>
-                <span
-                  class="pf-c-label pf-m-orange pf-u-ml-md pf-u-display-inline"
-                  style="cursor: pointer;"
-                >
+                <span>
                   <span
-                    class="pf-c-label__content"
+                    class="pf-c-label pf-m-orange pf-u-ml-md pf-u-display-inline"
+                    style="cursor: pointer;"
                   >
                     <span
-                      class="pf-c-label__icon"
+                      class="pf-c-label__content"
                     >
-                      <svg
-                        aria-hidden="true"
-                        fill="var(--pf-c-label__content--Color)"
-                        height="1em"
-                        role="img"
-                        style="vertical-align: -0.125em;"
-                        viewBox="0 0 512 512"
-                        width="1em"
+                      <span
+                        class="pf-c-label__icon"
                       >
-                        <path
-                          d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"
-                        />
-                      </svg>
+                        <svg
+                          aria-hidden="true"
+                          fill="var(--pf-c-label__content--Color)"
+                          height="1em"
+                          role="img"
+                          style="vertical-align: -0.125em;"
+                          viewBox="0 0 512 512"
+                          width="1em"
+                        >
+                          <path
+                            d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"
+                          />
+                        </svg>
+                      </span>
+                      ai:Technology Preview
                     </span>
-                    ai:Technology Preview
                   </span>
                 </span>
               </td>
@@ -4648,31 +4660,33 @@ exports[`<CloudTab /> should render correctly without quota 1`] = `
                 >
                   Alibaba Cloud
                 </a>
-                <span
-                  class="pf-c-label pf-m-orange pf-u-ml-md pf-u-display-inline"
-                  style="cursor: pointer;"
-                >
+                <span>
                   <span
-                    class="pf-c-label__content"
+                    class="pf-c-label pf-m-orange pf-u-ml-md pf-u-display-inline"
+                    style="cursor: pointer;"
                   >
                     <span
-                      class="pf-c-label__icon"
+                      class="pf-c-label__content"
                     >
-                      <svg
-                        aria-hidden="true"
-                        fill="var(--pf-c-label__content--Color)"
-                        height="1em"
-                        role="img"
-                        style="vertical-align: -0.125em;"
-                        viewBox="0 0 512 512"
-                        width="1em"
+                      <span
+                        class="pf-c-label__icon"
                       >
-                        <path
-                          d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"
-                        />
-                      </svg>
+                        <svg
+                          aria-hidden="true"
+                          fill="var(--pf-c-label__content--Color)"
+                          height="1em"
+                          role="img"
+                          style="vertical-align: -0.125em;"
+                          viewBox="0 0 512 512"
+                          width="1em"
+                        >
+                          <path
+                            d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"
+                          />
+                        </svg>
+                      </span>
+                      ai:Technology Preview
                     </span>
-                    ai:Technology Preview
                   </span>
                 </span>
               </td>
@@ -4801,31 +4815,33 @@ exports[`<CloudTab /> should render correctly without quota 1`] = `
                 >
                   Azure (multi-architecture)
                 </a>
-                <span
-                  class="pf-c-label pf-m-orange pf-u-ml-md pf-u-display-inline"
-                  style="cursor: pointer;"
-                >
+                <span>
                   <span
-                    class="pf-c-label__content"
+                    class="pf-c-label pf-m-orange pf-u-ml-md pf-u-display-inline"
+                    style="cursor: pointer;"
                   >
                     <span
-                      class="pf-c-label__icon"
+                      class="pf-c-label__content"
                     >
-                      <svg
-                        aria-hidden="true"
-                        fill="var(--pf-c-label__content--Color)"
-                        height="1em"
-                        role="img"
-                        style="vertical-align: -0.125em;"
-                        viewBox="0 0 512 512"
-                        width="1em"
+                      <span
+                        class="pf-c-label__icon"
                       >
-                        <path
-                          d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"
-                        />
-                      </svg>
+                        <svg
+                          aria-hidden="true"
+                          fill="var(--pf-c-label__content--Color)"
+                          height="1em"
+                          role="img"
+                          style="vertical-align: -0.125em;"
+                          viewBox="0 0 512 512"
+                          width="1em"
+                        >
+                          <path
+                            d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"
+                          />
+                        </svg>
+                      </span>
+                      ai:Technology Preview
                     </span>
-                    ai:Technology Preview
                   </span>
                 </span>
               </td>
