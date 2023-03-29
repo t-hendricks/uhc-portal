@@ -21,6 +21,8 @@ import { normalizedProducts } from '~/common/subscriptionTypes';
 import { PLACEHOLDER_VALUE } from '../../CreateOSDForm/FormSections/NetworkingSection/AvailabilityZoneSelection';
 import useAnalytics from '~/hooks/useAnalytics';
 import { ocmResourceType, trackEvents } from '~/common/analytics';
+import { required } from '~/common/validators';
+import { SubnetSelectField } from './SubnetSelectField';
 
 function NetworkScreen(props) {
   const {
@@ -38,9 +40,10 @@ function NetworkScreen(props) {
     formValues,
     isHypershiftSelected,
   } = props;
-
   const { OSD, OSDTrial } = normalizedProducts;
   const isByocOSD = isByoc && [OSD, OSDTrial].includes(product);
+  const publicSubnetIdRef = React.useRef();
+
   // show only if the product is ROSA with VPC or BYOC/CCS OSD with VPC
   // Do not need to check for VPC here, since checking the "Configure a cluster-wide proxy" checkbox
   // automatically checks the "Install into an existing VPC" checkbox in the UI
@@ -76,12 +79,23 @@ function NetworkScreen(props) {
   };
 
   const onClusterPrivacyChange = (_, value) => {
+    const { cluster_privacy_public_subnet_id: publicSubnetId, cluster_privacy: clusterPrivacy } =
+      formValues;
     if (value === 'external') {
       if (!isHypershiftSelected) {
         // hypershift always uses private link and vpc
         change('use_privatelink', false);
         shouldUncheckInstallToVPC();
       }
+
+      // When toggling from Private to Public, if a previous public subnet ID was selected,
+      // use that previous value to rehydrate the dropdown.
+      if (publicSubnetIdRef.current && clusterPrivacy === 'internal') {
+        change('cluster_privacy_public_subnet_id', publicSubnetIdRef.current);
+      }
+    } else {
+      publicSubnetIdRef.current = publicSubnetId;
+      change('cluster_privacy_public_subnet_id', undefined);
     }
   };
 
@@ -179,11 +193,16 @@ function NetworkScreen(props) {
                       </div>
                     </>
                   ),
-                  extraField:
-                    isHypershiftSelected && !privateClusterSelected ? (
-                      // TODO: Placeholder for the Public subnet ID selector
-                      <></>
-                    ) : null,
+                  extraField: isHypershiftSelected && !privateClusterSelected && (
+                    <Field
+                      component={SubnetSelectField}
+                      name="cluster_privacy_public_subnet_id"
+                      label="Public subnet ID"
+                      className="pf-u-mt-md pf-u-ml-lg"
+                      isRequired
+                      validate={required}
+                    />
+                  ),
                 },
                 {
                   value: 'internal',
