@@ -58,7 +58,7 @@ module.exports = async (_env, argv) => {
 
   const getChromeTemplate = async () => {
     const result = await axios.get(
-      `https://console.redhat.com/${betaMode ? 'beta/' : ''}apps/chrome`,
+      `https://console.redhat.com/${betaMode ? 'beta/' : ''}apps/chrome/index.html`,
     );
     return result.data;
   };
