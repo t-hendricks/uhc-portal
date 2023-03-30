@@ -54,8 +54,10 @@ function VersionSelection({
     [rosaMaxOSVersion],
   );
 
-  const toggleCompatibleVersions = () => {
-    setShowOnlyCompatibleVersions(!showOnlyCompatibleVersions);
+  const toggleCompatibleVersions = (showCompatible, ev) => {
+    ev.preventDefault();
+    ev.stopPropagation();
+    setShowOnlyCompatibleVersions(showCompatible);
   };
 
   const RosaVersionErrorAlert = () => (
@@ -229,7 +231,7 @@ function VersionSelection({
               >
                 {isRosa ? (
                   <Switch
-                    className="pf-u-align-items-center pf-u-mx-md"
+                    className="pf-u-align-items-center pf-u-mx-md pf-u-mb-sm"
                     id="view-only-compatible-versions"
                     aria-label="View only compatible versions"
                     label={
