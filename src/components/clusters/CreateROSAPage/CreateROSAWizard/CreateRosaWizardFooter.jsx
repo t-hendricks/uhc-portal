@@ -7,7 +7,13 @@ import { WizardFooter, WizardContext, Button } from '@patternfly/react-core';
 
 import { stepId } from './rosaWizardConstants';
 
-const CreateRosaWizardFooter = ({ onBeforeNext, onBeforeSubmit, onSubmit, isNextDisabled }) => {
+const CreateRosaWizardFooter = ({
+  firstStepId,
+  onBeforeNext,
+  onBeforeSubmit,
+  onSubmit,
+  isNextDisabled,
+}) => {
   const asyncValidating = useSelector(isAsyncValidating('CreateCluster'));
   const { pending: getAccountIDsLoading } = useSelector(
     (state) => state.rosaReducer.getAWSAccountIDsResponse,
@@ -45,11 +51,7 @@ const CreateRosaWizardFooter = ({ onBeforeNext, onBeforeSubmit, onSubmit, isNext
                 Next
               </Button>
             )}
-            <Button
-              variant="secondary"
-              onClick={onBack}
-              isDisabled={activeStep.id === stepId.ACCOUNTS_AND_ROLES}
-            >
+            <Button variant="secondary" onClick={onBack} isDisabled={activeStep.id === firstStepId}>
               Back
             </Button>
             <Button variant="link" onClick={onClose}>
@@ -63,6 +65,7 @@ const CreateRosaWizardFooter = ({ onBeforeNext, onBeforeSubmit, onSubmit, isNext
 };
 
 CreateRosaWizardFooter.propTypes = {
+  firstStepId: PropTypes.string.isRequired,
   onBeforeNext: PropTypes.func.isRequired,
   onBeforeSubmit: PropTypes.func.isRequired,
   onSubmit: PropTypes.func.isRequired,

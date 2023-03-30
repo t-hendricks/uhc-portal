@@ -45,6 +45,7 @@ class InstallVSphere extends Component {
               ],
               upi: ['For connected or air-gapped/restricted networks'],
             }}
+            name="vsphere"
           />
         </PageSection>
       </>

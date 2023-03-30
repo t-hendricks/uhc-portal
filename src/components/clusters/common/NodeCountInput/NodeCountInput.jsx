@@ -43,8 +43,16 @@ class NodeCountInput extends React.Component {
   }
 
   getAvailableQuota() {
-    const { quota, isByoc, machineType, machineTypesByID, cloudProviderID, product, billingModel } =
-      this.props;
+    const {
+      quota,
+      isByoc,
+      isMultiAz,
+      machineType,
+      machineTypesByID,
+      cloudProviderID,
+      product,
+      billingModel,
+    } = this.props;
 
     const machineTypeResource = machineTypesByID[machineType];
     if (!machineTypeResource) {
@@ -56,6 +64,7 @@ class NodeCountInput extends React.Component {
       product,
       cloudProviderID,
       isBYOC: isByoc,
+      isMultiAz,
       resourceName,
       billingModel,
     };
@@ -98,7 +107,7 @@ class NodeCountInput extends React.Component {
     }
     const disabled = isDisabled || notEnoughQuota;
 
-    // Set up options for load balancers
+    // Set up options for nodes
     const option = (value) => (
       <FormSelectOption
         key={value}

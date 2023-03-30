@@ -53,6 +53,7 @@ export const ClusterStatus = ({ cluster, limitedSupport, machinePools }: Cluster
         case clusterStates.WAITING:
           return clusterStates.WAITING;
         case clusterStates.INSTALLING:
+        case clusterStates.VALIDATING:
           return clusterStates.PENDING;
         default:
           return clusterStates.DEPROVISIONED;

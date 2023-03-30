@@ -405,7 +405,7 @@ class CreateOSDWizardInternal extends React.Component {
             <WizardContext.Consumer>
               {({ goToStepById }) => (
                 <ReviewClusterScreen
-                  isPending={createClusterResponse.pending}
+                  isCreateClusterPending={createClusterResponse.pending}
                   clusterRequestParams={{ isWizard: true }}
                   goToStepById={goToStepById}
                 />

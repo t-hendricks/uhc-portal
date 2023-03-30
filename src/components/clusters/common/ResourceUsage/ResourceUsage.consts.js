@@ -5,6 +5,8 @@ const metricsStatusMessages = {
     'This cluster is installing so some data might not be available. This may take a few minutes.',
   [clusterStates.PENDING]:
     'This cluster is installing so some data might not be available. This may take a few minutes.',
+  [clusterStates.VALIDATING]:
+    'This cluster is installing so some data might not be available. This may take a few minutes.',
   [clusterStates.WAITING]: 'This cluster requires user action before installation can start.',
   [clusterStates.ERROR]: 'An error occured',
   [clusterStates.UNINSTALLING]:

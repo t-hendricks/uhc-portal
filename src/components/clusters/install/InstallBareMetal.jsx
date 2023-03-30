@@ -45,6 +45,7 @@ class InstallBareMetal extends Component {
               ],
               upi: ['For air-gapped/restricted networks'],
             }}
+            name="metal"
           />
         </PageSection>
       </>

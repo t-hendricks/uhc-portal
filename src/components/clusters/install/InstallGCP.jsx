@@ -36,6 +36,7 @@ class InstallGCP extends Component {
             providerSpecificFeatures={{
               ipi: ['Hosts controlled with Google Cloud Provider'],
             }}
+            name="gcp"
           />
         </PageSection>
       </>

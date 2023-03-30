@@ -55,6 +55,7 @@ class InstallPlatformAgnostic extends Component {
               ai: [nonTestedPlatformsLink],
               upi: [nonTestedPlatformsLink],
             }}
+            name="platform-agnostic"
           />
         </PageSection>
       </>

@@ -27,6 +27,7 @@ exports[`InstallOSP renders correctly 1`] = `
     <InstructionsChooser
       ipiLearnMoreLink="https://docs.openshift.com/container-platform/4.12/installing/installing_openstack/installing-openstack-installer-custom.html"
       ipiPageLink="/install/openstack/installer-provisioned"
+      name="openstack"
       providerSpecificFeatures={
         Object {
           "ipi": Array [

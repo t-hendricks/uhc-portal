@@ -14,6 +14,7 @@ const OCPInstructions = (props) => {
   const {
     token,
     cloudProviderID,
+    installationTypeId,
     rhcos,
     installer = tools.X86INSTALLER,
     channel,
@@ -31,7 +32,9 @@ const OCPInstructions = (props) => {
     : 'Follow the instructions to configure your environment and install your cluster';
   return (
     <>
-      <Card>
+      <Card
+        ouiaId={`${cloudProviderID}${installationTypeId ? '-'.concat(installationTypeId) : ''}`}
+      >
         <CardBody>
           {token.error && (
             <>
@@ -78,6 +81,7 @@ const OCPInstructions = (props) => {
 OCPInstructions.propTypes = {
   token: PropTypes.object.isRequired,
   cloudProviderID: PropTypes.string.isRequired,
+  installationTypeId: PropTypes.string,
   rhcos: PropTypes.object,
   installer: PropTypes.oneOf(Object.values(tools)),
   channel: PropTypes.oneOf(Object.values(channels)).isRequired,
