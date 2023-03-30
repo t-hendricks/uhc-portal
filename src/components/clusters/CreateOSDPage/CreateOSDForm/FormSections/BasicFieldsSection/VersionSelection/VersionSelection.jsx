@@ -227,37 +227,37 @@ function VersionSelection({
                 isDisabled={isDisabled}
                 onBlur={(event) => event.stopPropagation()}
               >
+                {isRosa ? (
+                  <Switch
+                    className="pf-u-align-items-center pf-u-mx-md"
+                    id="view-only-compatible-versions"
+                    aria-label="View only compatible versions"
+                    label={
+                      <>
+                        <span>View only compatible versions</span>
+                        <Popover
+                          bodyContent="View only versions that are compatible with the selected ARNs in previous step"
+                          enableFlip={false}
+                        >
+                          <Button variant="plain">
+                            <OutlinedQuestionCircleIcon />
+                          </Button>
+                        </Popover>
+                      </>
+                    }
+                    hasCheckIcon
+                    isChecked={showOnlyCompatibleVersions}
+                    onChange={toggleCompatibleVersions}
+                  />
+                ) : (
+                  <span className="pf-u-display-none">&nbsp;</span>
+                )}
                 <SelectGroup label="Full support">{selectOptions.fullSupport}</SelectGroup>
                 <SelectGroup label="Maintenance support">
                   {selectOptions.maintenanceSupport}
                 </SelectGroup>
               </Select>
             </GridItem>
-            {isRosa && (
-              <GridItem className="pf-u-pt-md">
-                <Switch
-                  className="pf-u-align-items-center"
-                  id="view-only-compatible-versions"
-                  aria-label="View only compatible versions"
-                  label={
-                    <>
-                      <span>View compatible versions only</span>
-                      <Popover
-                        bodyContent="View only versions that are compatible with the selected ARNs in previous step"
-                        enableFlip={false}
-                      >
-                        <Button variant="plain">
-                          <OutlinedQuestionCircleIcon />
-                        </Button>
-                      </Popover>
-                    </>
-                  }
-                  hasCheckIcon
-                  isChecked={showOnlyCompatibleVersions}
-                  onChange={toggleCompatibleVersions}
-                />
-              </GridItem>
-            )}
           </Grid>
         )}
       </FormGroup>
