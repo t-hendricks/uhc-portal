@@ -236,6 +236,7 @@ function VersionSelection({
                     className="pf-u-align-items-center pf-u-mx-md pf-u-mb-sm pf-u-font-size-sm"
                     id="view-only-compatible-versions"
                     aria-label="View only compatible versions"
+                    key={`compatible-switch-${showOnlyCompatibleVersions}`}
                     label={
                       <>
                         <span>View only compatible versions</span>
