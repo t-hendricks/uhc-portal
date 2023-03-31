@@ -2,7 +2,9 @@
 
 exports[`Every OCP instruction page should render:  AWS-arm-ipi 1`] = `
 <Fragment>
-  <Card>
+  <Card
+    ouiaId="aws"
+  >
     <CardBody>
       <Instructions>
         <Instruction>
@@ -42,7 +44,9 @@ exports[`Every OCP instruction page should render:  AWS-arm-ipi 1`] = `
 
 exports[`Every OCP instruction page should render:  AWS-arm-upi 1`] = `
 <Fragment>
-  <Card>
+  <Card
+    ouiaId="aws"
+  >
     <CardBody>
       <Instructions>
         <Instruction>
@@ -82,7 +86,9 @@ exports[`Every OCP instruction page should render:  AWS-arm-upi 1`] = `
 
 exports[`Every OCP instruction page should render:  AWS-x86-ipi 1`] = `
 <Fragment>
-  <Card>
+  <Card
+    ouiaId="aws"
+  >
     <CardBody>
       <Instructions>
         <Instruction>
@@ -121,7 +127,9 @@ exports[`Every OCP instruction page should render:  AWS-x86-ipi 1`] = `
 
 exports[`Every OCP instruction page should render:  AWS-x86-upi 1`] = `
 <Fragment>
-  <Card>
+  <Card
+    ouiaId="aws"
+  >
     <CardBody>
       <Instructions>
         <Instruction>
@@ -160,7 +168,9 @@ exports[`Every OCP instruction page should render:  AWS-x86-upi 1`] = `
 
 exports[`Every OCP instruction page should render:  Alibaba Cloud 1`] = `
 <Fragment>
-  <Card>
+  <Card
+    ouiaId="alibaba"
+  >
     <CardBody>
       <Instructions>
         <Instruction>
@@ -199,7 +209,9 @@ exports[`Every OCP instruction page should render:  Alibaba Cloud 1`] = `
 
 exports[`Every OCP instruction page should render:  Azure Stack Hub-ipi 1`] = `
 <Fragment>
-  <Card>
+  <Card
+    ouiaId="ash"
+  >
     <CardBody>
       <Instructions>
         <Instruction>
@@ -238,7 +250,9 @@ exports[`Every OCP instruction page should render:  Azure Stack Hub-ipi 1`] = `
 
 exports[`Every OCP instruction page should render:  Azure Stack Hub-upi 1`] = `
 <Fragment>
-  <Card>
+  <Card
+    ouiaId="ash"
+  >
     <CardBody>
       <Instructions>
         <Instruction>
@@ -289,7 +303,9 @@ exports[`Every OCP instruction page should render:  Azure Stack Hub-upi 1`] = `
 
 exports[`Every OCP instruction page should render:  Azure-arm-ipi 1`] = `
 <Fragment>
-  <Card>
+  <Card
+    ouiaId="azure"
+  >
     <CardBody>
       <Instructions>
         <Instruction>
@@ -329,7 +345,9 @@ exports[`Every OCP instruction page should render:  Azure-arm-ipi 1`] = `
 
 exports[`Every OCP instruction page should render:  Azure-x86-ipi 1`] = `
 <Fragment>
-  <Card>
+  <Card
+    ouiaId="azure"
+  >
     <CardBody>
       <Instructions>
         <Instruction>
@@ -368,7 +386,9 @@ exports[`Every OCP instruction page should render:  Azure-x86-ipi 1`] = `
 
 exports[`Every OCP instruction page should render:  Azure-x86-upi 1`] = `
 <Fragment>
-  <Card>
+  <Card
+    ouiaId="azure"
+  >
     <CardBody>
       <Instructions>
         <Instruction>
@@ -407,7 +427,9 @@ exports[`Every OCP instruction page should render:  Azure-x86-upi 1`] = `
 
 exports[`Every OCP instruction page should render:  Bare Metal-arm-ipi 1`] = `
 <Fragment>
-  <Card>
+  <Card
+    ouiaId="baremetal"
+  >
     <CardBody>
       <Instructions>
         <Instruction>
@@ -447,7 +469,9 @@ exports[`Every OCP instruction page should render:  Bare Metal-arm-ipi 1`] = `
 
 exports[`Every OCP instruction page should render:  Bare Metal-arm-upi 1`] = `
 <Fragment>
-  <Card>
+  <Card
+    ouiaId="baremetal"
+  >
     <CardBody>
       <Instructions>
         <Instruction>
@@ -515,7 +539,9 @@ exports[`Every OCP instruction page should render:  Bare Metal-arm-upi 1`] = `
 
 exports[`Every OCP instruction page should render:  Bare Metal-ppc-upi 1`] = `
 <Fragment>
-  <Card>
+  <Card
+    ouiaId="baremetal"
+  >
     <CardBody>
       <Instructions>
         <Instruction>
@@ -583,7 +609,9 @@ exports[`Every OCP instruction page should render:  Bare Metal-ppc-upi 1`] = `
 
 exports[`Every OCP instruction page should render:  Bare Metal-s390x-upi 1`] = `
 <Fragment>
-  <Card>
+  <Card
+    ouiaId="baremetal"
+  >
     <CardBody>
       <Instructions>
         <Instruction>
@@ -692,7 +720,9 @@ exports[`Every OCP instruction page should render:  Bare Metal-s390x-upi 1`] = `
 
 exports[`Every OCP instruction page should render:  Bare Metal-x86-ipi 1`] = `
 <Fragment>
-  <Card>
+  <Card
+    ouiaId="baremetal"
+  >
     <CardBody>
       <Instructions>
         <Instruction>
@@ -731,7 +761,9 @@ exports[`Every OCP instruction page should render:  Bare Metal-x86-ipi 1`] = `
 
 exports[`Every OCP instruction page should render:  Bare Metal-x86-upi 1`] = `
 <Fragment>
-  <Card>
+  <Card
+    ouiaId="baremetal"
+  >
     <CardBody>
       <Instructions>
         <Instruction>
@@ -798,7 +830,9 @@ exports[`Every OCP instruction page should render:  Bare Metal-x86-upi 1`] = `
 
 exports[`Every OCP instruction page should render:  GCP-ipi 1`] = `
 <Fragment>
-  <Card>
+  <Card
+    ouiaId="gcp"
+  >
     <CardBody>
       <Instructions>
         <Instruction>
@@ -837,7 +871,9 @@ exports[`Every OCP instruction page should render:  GCP-ipi 1`] = `
 
 exports[`Every OCP instruction page should render:  GCP-upi 1`] = `
 <Fragment>
-  <Card>
+  <Card
+    ouiaId="gcp"
+  >
     <CardBody>
       <Instructions>
         <Instruction>
@@ -888,7 +924,9 @@ exports[`Every OCP instruction page should render:  GCP-upi 1`] = `
 
 exports[`Every OCP instruction page should render:  IBM Cloud 1`] = `
 <Fragment>
-  <Card>
+  <Card
+    ouiaId="ibmCloud"
+  >
     <CardBody>
       <Instructions>
         <Instruction>
@@ -927,7 +965,9 @@ exports[`Every OCP instruction page should render:  IBM Cloud 1`] = `
 
 exports[`Every OCP instruction page should render:  Nutanix AOS-ipi 1`] = `
 <Fragment>
-  <Card>
+  <Card
+    ouiaId="nutanix"
+  >
     <CardBody>
       <Instructions>
         <Instruction>
@@ -966,7 +1006,9 @@ exports[`Every OCP instruction page should render:  Nutanix AOS-ipi 1`] = `
 
 exports[`Every OCP instruction page should render:  Platform Agnostic-upi 1`] = `
 <Fragment>
-  <Card>
+  <Card
+    ouiaId="generic"
+  >
     <CardBody>
       <Instructions>
         <Instruction>
@@ -1033,7 +1075,9 @@ exports[`Every OCP instruction page should render:  Platform Agnostic-upi 1`] = 
 
 exports[`Every OCP instruction page should render:  Red Hat OpenStack Platform-ipi 1`] = `
 <Fragment>
-  <Card>
+  <Card
+    ouiaId="openstack"
+  >
     <CardBody>
       <Instructions>
         <Instruction>
@@ -1072,7 +1116,9 @@ exports[`Every OCP instruction page should render:  Red Hat OpenStack Platform-i
 
 exports[`Every OCP instruction page should render:  Red Hat OpenStack Platform-upi 1`] = `
 <Fragment>
-  <Card>
+  <Card
+    ouiaId="openstack"
+  >
     <CardBody>
       <Instructions>
         <Instruction>
@@ -1123,7 +1169,9 @@ exports[`Every OCP instruction page should render:  Red Hat OpenStack Platform-u
 
 exports[`Every OCP instruction page should render:  Red Hat Virtualization-ipi 1`] = `
 <Fragment>
-  <Card>
+  <Card
+    ouiaId="ovirt"
+  >
     <CardBody>
       <Instructions>
         <Instruction>
@@ -1162,7 +1210,9 @@ exports[`Every OCP instruction page should render:  Red Hat Virtualization-ipi 1
 
 exports[`Every OCP instruction page should render:  Red Hat Virtualization-upi 1`] = `
 <Fragment>
-  <Card>
+  <Card
+    ouiaId="ovirt"
+  >
     <CardBody>
       <Instructions>
         <Instruction>
@@ -1201,7 +1251,9 @@ exports[`Every OCP instruction page should render:  Red Hat Virtualization-upi 1
 
 exports[`Every OCP instruction page should render:  VMware vSphere-ipi 1`] = `
 <Fragment>
-  <Card>
+  <Card
+    ouiaId="vsphere"
+  >
     <CardBody>
       <Instructions>
         <Instruction>
@@ -1240,7 +1292,9 @@ exports[`Every OCP instruction page should render:  VMware vSphere-ipi 1`] = `
 
 exports[`Every OCP instruction page should render:  VMware vSphere-upi 1`] = `
 <Fragment>
-  <Card>
+  <Card
+    ouiaId="vsphere"
+  >
     <CardBody>
       <Instructions>
         <Instruction>

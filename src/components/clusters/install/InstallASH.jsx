@@ -36,6 +36,7 @@ class InstallASH extends Component {
             providerSpecificFeatures={{
               ipi: ['Hosts controlled with Azure Provider'],
             }}
+            name="azure-stack-hub"
           />
         </PageSection>
       </>

@@ -74,12 +74,12 @@ class UpgradeTrialClusterDialog extends Component {
 
     const standardClusters = availableClustersFromQuota(quotaList, quotaParams);
     const standardNodes = availableNodesFromQuota(quotaList, quotaParams);
-    quota.STANDARD = standardNodes > nodeMinimum && standardClusters > 0;
+    quota.STANDARD = standardNodes >= nodeMinimum && standardClusters > 0;
 
     quotaParams.billingModel = MARKETPLACE;
     const marketClusters = availableClustersFromQuota(quotaList, quotaParams);
     const marketNodes = availableNodesFromQuota(quotaList, quotaParams);
-    quota.MARKETPLACE = marketNodes > nodeMinimum && marketClusters > 0;
+    quota.MARKETPLACE = marketNodes >= nodeMinimum && marketClusters > 0;
 
     return quota;
   }

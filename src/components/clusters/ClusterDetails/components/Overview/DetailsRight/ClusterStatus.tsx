@@ -11,7 +11,7 @@ const numberReadyNodePools = (nodePools: NodePool[]) =>
   nodePools?.filter((pool) => {
     const current = pool.status?.current_replicas;
 
-    if (!current) {
+    if (current === undefined) {
       return false;
     }
     if (pool.autoscaling) {
@@ -21,7 +21,7 @@ const numberReadyNodePools = (nodePools: NodePool[]) =>
       return current >= pool.autoscaling.min_replica && current <= pool.autoscaling.max_replica;
     }
 
-    if (!pool.replicas) {
+    if (pool.replicas === undefined) {
       return false;
     }
     return pool.replicas === current;
@@ -53,6 +53,7 @@ export const ClusterStatus = ({ cluster, limitedSupport, machinePools }: Cluster
         case clusterStates.WAITING:
           return clusterStates.WAITING;
         case clusterStates.INSTALLING:
+        case clusterStates.VALIDATING:
           return clusterStates.PENDING;
         default:
           return clusterStates.DEPROVISIONED;

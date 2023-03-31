@@ -35,6 +35,35 @@ import InstructionCommand from '../../../../common/InstructionCommand';
 // todo - WAT!?
 import './AccountsRolesScreen.scss';
 
+const NO_ROLE_DETECTED = 'No role detected';
+const noRoleOption = {
+  name: NO_ROLE_DETECTED,
+  value: NO_ROLE_DETECTED,
+};
+
+const hasCompleteRoleSet = (role) =>
+  role.Installer && role.Support && role.ControlPlane && role.Worker;
+
+// Order: current selected role > first complete role set > first incomplete role set > 'No Role Detected'
+const getDefaultInstallerRole = (selectedInstallerRoleARN, accountRolesARNs) => {
+  if (selectedInstallerRoleARN && selectedInstallerRoleARN !== NO_ROLE_DETECTED) {
+    return selectedInstallerRoleARN;
+  }
+
+  if (accountRolesARNs.length === 0) {
+    return NO_ROLE_DETECTED;
+  }
+  const defaultRole = accountRolesARNs.find(hasCompleteRoleSet) || accountRolesARNs[0];
+  return defaultRole.Installer;
+};
+
+const updateRoleArns = (change, role) => {
+  change('installer_role_arn', role?.Installer || NO_ROLE_DETECTED);
+  change('support_role_arn', role?.Support || NO_ROLE_DETECTED);
+  change('control_plane_role_arn', role?.ControlPlane || NO_ROLE_DETECTED);
+  change('worker_role_arn', role?.Worker || NO_ROLE_DETECTED);
+};
+
 function AccountRolesARNsSection({
   change,
   touchARNsFields,
@@ -47,17 +76,10 @@ function AccountRolesARNsSection({
   onAccountChanged,
   openOcmRoleInstructionsModal,
 }) {
-  const NO_ROLE_DETECTED = 'No role detected';
-
   const track = useAnalytics();
   const [isExpanded, setIsExpanded] = useState(true);
   const [accountRoles, setAccountRoles] = useState([]);
-  const [installerRoleOptions, setInstallerRoleOptions] = useState([
-    {
-      name: NO_ROLE_DETECTED,
-      value: NO_ROLE_DETECTED,
-    },
-  ]);
+  const [installerRoleOptions, setInstallerRoleOptions] = useState([noRoleOption]);
   const [selectedInstallerRole, setSelectedInstallerRole] = useState(NO_ROLE_DETECTED);
   const [allARNsFound, setAllARNsFound] = useState(false);
   const [hasARNsError, setHasARNsError] = useState(false);
@@ -72,6 +94,11 @@ function AccountRolesARNsSection({
   }, [touchARNsFields]);
 
   useEffect(() => {
+    setSelectedInstallerRole(NO_ROLE_DETECTED);
+    setAccountRoles([]);
+    setInstallerRoleOptions([noRoleOption]);
+    updateRoleArns(change, null);
+    setAllARNsFound(false);
     clearGetAWSAccountRolesARNsResponse();
     onAccountChanged();
   }, [selectedAWSAccountID]);
@@ -79,11 +106,8 @@ function AccountRolesARNsSection({
   useEffect(() => {
     accountRoles.forEach((role) => {
       if (role.Installer === selectedInstallerRole) {
-        setAllARNsFound(role.Installer && role.Support && role.ControlPlane && role.Worker);
-        change('installer_role_arn', role.Installer || NO_ROLE_DETECTED);
-        change('support_role_arn', role.Support || NO_ROLE_DETECTED);
-        change('control_plane_role_arn', role.ControlPlane || NO_ROLE_DETECTED);
-        change('worker_role_arn', role.Worker || NO_ROLE_DETECTED);
+        setAllARNsFound(hasCompleteRoleSet(role));
+        updateRoleArns(change, role);
         change('rosa_max_os_version', role.version);
       }
     });
@@ -92,14 +116,8 @@ function AccountRolesARNsSection({
   const setSelectedInstallerRoleAndOptions = (accountRolesARNs) => {
     const installerOptions = [];
     if (accountRolesARNs.length === 0) {
-      change('installer_role_arn', NO_ROLE_DETECTED);
-      change('support_role_arn', NO_ROLE_DETECTED);
-      change('control_plane_role_arn', NO_ROLE_DETECTED);
-      change('worker_role_arn', NO_ROLE_DETECTED);
-      installerOptions.push({
-        name: NO_ROLE_DETECTED,
-        value: NO_ROLE_DETECTED,
-      });
+      updateRoleArns(change, null);
+      installerOptions.push(noRoleOption);
       change('rosa_max_os_version', undefined);
       setAllARNsFound(false);
     } else {
@@ -111,10 +129,12 @@ function AccountRolesARNsSection({
       });
     }
     setInstallerRoleOptions(installerOptions);
-    // default to currently selected, first installer role, or 'No Role Detected'
-    setSelectedInstallerRole(
-      selectedInstallerRoleARN || accountRolesARNs[0]?.Installer || NO_ROLE_DETECTED,
+
+    const defaultInstallerRole = getDefaultInstallerRole(
+      selectedInstallerRoleARN,
+      accountRolesARNs,
     );
+    setSelectedInstallerRole(defaultInstallerRole);
   };
 
   const resolveARNsErrorTitle = (response) =>

@@ -2,22 +2,32 @@ import React, { Component } from 'react';
 import get from 'lodash/get';
 import PropTypes from 'prop-types';
 import { Field } from 'redux-form';
-import { Form, GridItem, Grid, FormGroup } from '@patternfly/react-core';
+import { Form, GridItem, Grid, FormGroup, Spinner } from '@patternfly/react-core';
 
 import Modal from '../../../../../../common/Modal/Modal';
 import ErrorBox from '../../../../../../common/ErrorBox';
 import ScaleSection from '../../../../../CreateOSDPage/CreateOSDForm/FormSections/ScaleSection/ScaleSection';
 import ReduxVerticalFormGroup from '../../../../../../common/ReduxFormComponents/ReduxVerticalFormGroup';
-import { checkMachinePoolName } from '../../../../../../../common/validators';
+import { checkMachinePoolName, checkNodePoolName } from '../../../../../../../common/validators';
 import CostSavingsSection from './CostSavingsSection';
 
 class AddMachinePoolModal extends Component {
   componentDidMount() {
-    const { getOrganizationAndQuota, machineTypes, getMachineTypes } = this.props;
+    const {
+      getOrganizationAndQuota,
+      machineTypes,
+      getMachineTypes,
+      cluster,
+      getAWSVPCs,
+      isHypershiftCluster,
+    } = this.props;
     if (!machineTypes.fulfilled && !machineTypes.pending) {
       getMachineTypes();
     }
     getOrganizationAndQuota();
+    if (isHypershiftCluster) {
+      getAWSVPCs(cluster);
+    }
   }
 
   componentDidUpdate(prevProps) {
@@ -40,11 +50,50 @@ class AddMachinePoolModal extends Component {
     closeModal();
   };
 
+  // Ensure that an entered subnet is:
+  //    is not empty
+  //    tied to the same vpc as the control plane
+  //    is private
+  checkSubnetId = (value) => {
+    const { vpcListBySubnet, cluster } = this.props;
+
+    if (!value) {
+      // Ensure that a something is entered in the subnet field
+      return 'Private subnet is required';
+    }
+
+    let clusterVPC;
+    if (
+      vpcListBySubnet &&
+      cluster.aws.subnet_ids &&
+      cluster.aws.subnet_ids.length > 0 &&
+      vpcListBySubnet[cluster.aws.subnet_ids[0]]
+    ) {
+      clusterVPC = vpcListBySubnet[cluster.aws.subnet_ids[0]].vpc_id;
+    } else {
+      // There isn't enough information to perform validation
+      // Most likely because the call to get vpcs failed
+      // Validation will be done by the API
+      return undefined;
+    }
+
+    if (
+      !vpcListBySubnet[value] ||
+      vpcListBySubnet[value].public ||
+      clusterVPC !== vpcListBySubnet[value].vpc_id
+    ) {
+      return 'No such private subnet';
+    }
+
+    return undefined;
+  };
+
   render() {
     const {
       submit,
       addMachinePoolResponse,
       cluster,
+      isHypershiftCluster,
       pristine,
       invalid,
       organization,
@@ -58,6 +107,7 @@ class AddMachinePoolModal extends Component {
       useSpotInstances,
       spotInstancePricing,
       spotInstanceMaxHourlyPrice,
+      vpcListPending,
     } = this.props;
 
     const billingModel = get(cluster, 'billing_model');
@@ -81,7 +131,9 @@ class AddMachinePoolModal extends Component {
         secondaryText="Cancel"
         onPrimaryClick={submit}
         onSecondaryClick={this.cancelAddMachinePool}
-        isPrimaryDisabled={isPending || pristine || invalid}
+        isPrimaryDisabled={
+          isPending || pristine || invalid || (isHypershiftCluster && vpcListPending)
+        }
         isPending={isPending}
       >
         <>
@@ -93,14 +145,14 @@ class AddMachinePoolModal extends Component {
               e.preventDefault();
             }}
           >
-            <Grid>
+            <Grid hasGutter md={6}>
               <GridItem md={6}>
-                <FormGroup label="Machine pool name" className="pf-u-mb-md" isRequired>
+                <FormGroup label="Machine pool name" isRequired>
                   <Field
                     component={ReduxVerticalFormGroup}
                     name="name"
                     type="text"
-                    validate={checkMachinePoolName}
+                    validate={isHypershiftCluster ? checkNodePoolName : checkMachinePoolName}
                     disabled={isPending}
                   />
                 </FormGroup>
@@ -113,6 +165,7 @@ class AddMachinePoolModal extends Component {
                 machineType={selectedMachineType}
                 cloudProviderID={cluster.cloud_provider.id}
                 product={cluster?.subscription?.plan?.type}
+                isHypershiftCluster={isHypershiftCluster}
                 showStorageAndLoadBalancers={false}
                 minNodes={0}
                 isMachinePool
@@ -135,6 +188,31 @@ class AddMachinePoolModal extends Component {
                   />
                 </>
               )}
+              {isHypershiftCluster && (
+                <>
+                  <GridItem md={6}>
+                    {!vpcListPending ? (
+                      <FormGroup label="Private subnet ID" isRequired>
+                        <Field
+                          component={ReduxVerticalFormGroup}
+                          name="subnet"
+                          type="text"
+                          validate={this.checkSubnetId}
+                          disabled={vpcListPending}
+                        />
+                      </FormGroup>
+                    ) : (
+                      <>
+                        <div className="spinner-fit-container">
+                          <Spinner size="md" />
+                        </div>
+                        <div className="spinner-loading-text">Loading subnets ...</div>
+                      </>
+                    )}
+                  </GridItem>
+                  <GridItem md={6} />
+                </>
+              )}
             </Grid>
           </Form>
         </>
@@ -149,6 +227,7 @@ AddMachinePoolModal.propTypes = {
   clearAddMachinePoolResponse: PropTypes.func.isRequired,
   addMachinePoolResponse: PropTypes.object,
   cluster: PropTypes.object.isRequired,
+  isHypershiftCluster: PropTypes.bool.isRequired,
   getOrganizationAndQuota: PropTypes.func.isRequired,
   getMachineTypes: PropTypes.func.isRequired,
   machineTypes: PropTypes.object.isRequired,
@@ -165,6 +244,9 @@ AddMachinePoolModal.propTypes = {
   useSpotInstances: PropTypes.bool.isRequired,
   spotInstancePricing: PropTypes.string,
   spotInstanceMaxHourlyPrice: PropTypes.number,
+  getAWSVPCs: PropTypes.func,
+  vpcListPending: PropTypes.bool,
+  vpcListBySubnet: PropTypes.object,
 };
 
 AddMachinePoolModal.defaultProps = {

@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import { Redirect } from 'react-router';
+import { Redirect } from 'react-router-dom';
 
 import {
   Banner,
@@ -405,7 +405,7 @@ class CreateOSDWizardInternal extends React.Component {
             <WizardContext.Consumer>
               {({ goToStepById }) => (
                 <ReviewClusterScreen
-                  isPending={createClusterResponse.pending}
+                  isCreateClusterPending={createClusterResponse.pending}
                   clusterRequestParams={{ isWizard: true }}
                   goToStepById={goToStepById}
                 />

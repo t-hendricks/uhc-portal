@@ -6,7 +6,6 @@ import get from 'lodash/get';
 import cx from 'classnames';
 
 import {
-  Alert,
   Card,
   Button,
   CardBody,
@@ -377,7 +376,7 @@ class MachinePools extends React.Component {
     const onClickScaleAction = (_, __, rowData) =>
       openModal(modals.EDIT_NODE_COUNT, {
         machinePool: rowData.machinePool,
-        isDefaultMachinePool: rowData.machinePool.id === 'Default',
+        isDefaultMachinePool: rowData.machinePool.id === 'Default' && !isHypershift,
         cluster,
       });
 
@@ -429,14 +428,9 @@ class MachinePools extends React.Component {
       'You do not have permission to add a machine pool. Only cluster owners, cluster editors, and Organization Administrators can add machine pools.';
     const quotaReason = !hasMachinePoolsQuota && noQuotaTooltip;
 
-    const hypershiftReason =
-      isHypershift && 'Adding machine pools is currently only available using ROSA CLI';
-
     const addMachinePoolBtn = (
       <ButtonWithTooltip
-        disableReason={
-          readOnlyReason || hibernatingReason || canNotEditReason || quotaReason || hypershiftReason
-        }
+        disableReason={readOnlyReason || hibernatingReason || canNotEditReason || quotaReason}
         id="add-machine-pool"
         onClick={() => openModal('add-machine-pool')}
         variant="secondary"
@@ -484,13 +478,6 @@ class MachinePools extends React.Component {
                   }
                 />
               )}
-              {isHypershift && (
-                <Alert
-                  variant="info"
-                  isInline
-                  title="Scaling machine pools is currently only available using ROSA CLI"
-                />
-              )}
               <Table
                 aria-label="Machine pools"
                 cells={columns}
@@ -515,7 +502,9 @@ class MachinePools extends React.Component {
             </CardBody>
           </Card>
         )}
-        {isAddMachinePoolModalOpen && <AddMachinePoolModal cluster={cluster} />}
+        {isAddMachinePoolModalOpen && (
+          <AddMachinePoolModal cluster={cluster} isHypershiftCluster={isHypershift} />
+        )}
         {isEditTaintsModalOpen && (
           <EditTaintsModal clusterId={cluster.id} isHypershiftCluster={isHypershift} />
         )}

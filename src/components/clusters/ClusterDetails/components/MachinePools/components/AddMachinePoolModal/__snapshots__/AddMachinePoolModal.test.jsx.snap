@@ -16,12 +16,14 @@ exports[`<AddMachinePoolModal /> renders correctly 1`] = `
     className="control-form-cursor"
     onSubmit={[Function]}
   >
-    <Grid>
+    <Grid
+      hasGutter={true}
+      md={6}
+    >
       <GridItem
         md={6}
       >
         <FormGroup
-          className="pf-u-mb-md"
           isRequired={true}
           label="Machine pool name"
         >

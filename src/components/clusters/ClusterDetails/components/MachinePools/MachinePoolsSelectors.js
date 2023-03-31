@@ -2,6 +2,7 @@ import get from 'lodash/get';
 
 import { availableNodesFromQuota } from '../../../common/quotaSelectors';
 import { normalizedProducts, billingModels } from '../../../../../common/subscriptionTypes';
+import { isHypershiftCluster } from '../../clusterDetailsHelper';
 
 const hasMachinePoolsQuotaSelector = (state) => {
   const { organization } = state.userProfile;
@@ -72,6 +73,7 @@ const canUseSpotInstances = (state, product) => {
   const cloudProviderID = cluster.cloud_provider?.id;
   return (
     cloudProviderID === 'aws' &&
+    !isHypershiftCluster(cluster) &&
     (product === normalizedProducts.ROSA ||
       (product === normalizedProducts.OSD && state.clusters.details?.cluster?.ccs?.enabled))
   );

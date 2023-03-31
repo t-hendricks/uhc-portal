@@ -17,6 +17,7 @@ const clusterStates = {
   DEPROVISIONED: 'deprovisioned',
   ARCHIVED: 'archived',
   STALE: 'stale',
+  VALIDATING: 'validating',
 };
 
 const getStateDescription = (state) => {
@@ -50,6 +51,7 @@ function getClusterStateAndDescription(cluster) {
     state = clusterStates.ARCHIVED;
   } else if (
     cluster.state === clusterStates.INSTALLING ||
+    cluster.state === clusterStates.VALIDATING ||
     cluster.state === clusterStates.PENDING
   ) {
     state = clusterStates.INSTALLING;

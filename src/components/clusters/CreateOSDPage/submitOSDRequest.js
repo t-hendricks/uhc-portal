@@ -37,7 +37,8 @@ export const createClusterRequest = ({ isWizard = true, cloudProviderID, product
     },
     etcd_encryption: formData.etcd_encryption,
     billing_model: 'standard',
-    disable_user_workload_monitoring: !formData.enable_user_workload_monitoring,
+    disable_user_workload_monitoring:
+      formData.hypershift === 'true' ? true : !formData.enable_user_workload_monitoring,
   };
 
   if (formData.billing_model) {
@@ -94,6 +95,11 @@ export const createClusterRequest = ({ isWizard = true, cloudProviderID, product
     const isInstallExistingVPC = wasExistingVPCShown && formData.install_to_vpc;
     const configureProxySelected = formData.configure_proxy === true;
     const usePrivateLink = formData.use_privatelink;
+    // Hypershift always uses PrivateLink and can also have public subnets if the cluster_privacy === 'external' (Public)
+    const hidePublicFields =
+      formData.hypershift === 'true'
+        ? formData.cluster_privacy === 'internal'
+        : formData.use_privatelink;
     clusterRequest.ccs = {
       enabled: true,
     };
@@ -140,21 +146,23 @@ export const createClusterRequest = ({ isWizard = true, cloudProviderID, product
         clusterRequest.aws.kms_key_arn = formData.kms_key_arn;
       }
       clusterRequest.ccs.disable_scp_checks = formData.disable_scp_checks;
+
       if (isInstallExistingVPC) {
         const subnetIds = [formData.private_subnet_id_0];
-        if (!usePrivateLink) {
+        if (!hidePublicFields) {
           subnetIds.push(formData.public_subnet_id_0);
         }
 
         if (isMultiAz) {
           subnetIds.push(formData.private_subnet_id_1);
           subnetIds.push(formData.private_subnet_id_2);
-          if (!usePrivateLink) {
+          if (!hidePublicFields) {
             subnetIds.push(formData.public_subnet_id_1);
             subnetIds.push(formData.public_subnet_id_2);
           }
         }
-        clusterRequest.aws.subnet_ids = subnetIds;
+        // TODO: Temporarily filter out null values, this can happen until the new subnet selector for hypershift is implemented
+        clusterRequest.aws.subnet_ids = subnetIds.filter((sn) => sn);
 
         let AZs = [formData.az_0];
 

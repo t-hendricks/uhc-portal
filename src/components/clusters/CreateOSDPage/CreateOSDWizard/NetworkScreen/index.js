@@ -16,6 +16,8 @@ const mapStateToProps = (state, ownProps) => {
   const privateClusterSelected = valueSelector(state, 'cluster_privacy') === 'internal';
   const selectedRegion = valueSelector(state, 'region');
   const formValues = getFormValues('CreateCluster')(state);
+  // hosted ROSA cluster
+  const isHypershiftSelected = valueSelector(state, 'hypershift') === 'true';
 
   return {
     cloudProviderID,
@@ -26,12 +28,14 @@ const mapStateToProps = (state, ownProps) => {
     product,
     isByoc: isCCS,
     formValues,
+    isHypershiftSelected,
     initialValues: createOSDInitialValues({
       cloudProviderID,
       product,
       isMultiAz,
       isByoc: isCCS,
       isTrialDefault: ownProps.isTrialDefault,
+      isHypershiftSelected,
     }),
   };
 };

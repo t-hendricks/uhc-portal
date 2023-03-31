@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router';
+import { withRouter } from 'react-router-dom';
 import {
   isValid,
   isAsyncValidating,
@@ -47,6 +47,7 @@ const mapStateToProps = (state) => {
     },
     getUserRoleResponse,
     selectedAWSAccountID: valueSelector(state, 'associated_aws_id'),
+    isHypershiftSelected: valueSelector(state, 'hypershift') === 'true',
   };
 };
 

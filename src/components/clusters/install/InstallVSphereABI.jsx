@@ -41,6 +41,7 @@ export class InstallVSphereABI extends Component {
             token={token}
             breadcrumbs={breadcrumbs}
             cloudProviderID="vsphere"
+            installationTypeId="local-agent-based"
             {...instructionsMapping.vsphere.abi}
             isUPI
           />

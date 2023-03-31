@@ -7,9 +7,9 @@ class Login extends Page {
 
   get inputPassword() { return '#password'; }
 
-  clickNextBtn = () => cy.get('button').contains('Next').should('be.visible').click();
+  clickNextBtn = () => cy.get('button').contains('Next').should('be.visible').click({force: true});
 
-  clickSubmitBtn = () => cy.get('button[type="submit"]').should('be.visible').click();
+  clickSubmitBtn = () => cy.get('button[type="submit"]').should('be.visible').click({force: true});
 
   isLoginPageUrl = () => cy.url().should('include', 'auth/realms/redhat-external/protocol/openid-connect');
 
@@ -23,10 +23,10 @@ class Login extends Page {
     });
 
     const { username, password } = getAuthConfig();
-    cy.get(this.inputUsername).first().type(username); // there are 2 hidden username fields?!
+    cy.get(this.inputUsername).first().type(username, {force: true}); // there are 2 hidden username fields?!
     this.clickNextBtn();
     this.isPasswordScreen();
-    cy.get(this.inputPassword).type(password);
+    cy.get(this.inputPassword).type(password, {force: true});
     this.clickSubmitBtn();
     this.closePendoIfShowing();
     this.closeCookieConsentIfShowing();

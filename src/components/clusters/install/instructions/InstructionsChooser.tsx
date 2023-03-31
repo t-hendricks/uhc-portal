@@ -23,6 +23,7 @@ interface InstructionsChooserProps {
     ipi?: React.ReactNode[];
     upi?: React.ReactNode[];
   };
+  name?: string;
 }
 
 export const InstructionsChooser = ({
@@ -38,8 +39,12 @@ export const InstructionsChooser = ({
   upiPageLink,
   upiLearnMoreLink,
   providerSpecificFeatures = {},
+  name,
 }: InstructionsChooserProps) => (
-  <div className="pf-c-content ocm-page instructions-chooser">
+  <div
+    className="pf-c-content ocm-page instructions-chooser"
+    data-ouia-component-id={`${name}-instructions-chooser`}
+  >
     {aiPageLink && (
       <InstructionsChooserCard
         id="select-interactive"

@@ -35,10 +35,10 @@ const clusterDetails = {
       cluster_billing_model: 'standard',
     },
     console: {
-      url: 'https://https://example.com/veryfakewebconsole',
+      url: 'https://console-openshift-console.apps.example.com',
     },
     api: {
-      url: 'https://example.com/veryfakeapi',
+      url: 'https://api.test-liza.wiex.s1.devshift.org:6443',
       listening: 'external',
     },
     state: 'ready',

@@ -10,7 +10,7 @@ exports[`<MachinePools /> OpenShift version for machine pools is shown if hypers
     >
       <ButtonWithTooltip
         className="pf-u-mb-lg"
-        disableReason="Adding machine pools is currently only available using ROSA CLI"
+        disableReason={false}
         id="add-machine-pool"
         onClick={[Function]}
         variant="secondary"
@@ -18,11 +18,6 @@ exports[`<MachinePools /> OpenShift version for machine pools is shown if hypers
         Add machine pool
       </ButtonWithTooltip>
       <Divider />
-      <Alert
-        isInline={true}
-        title="Scaling machine pools is currently only available using ROSA CLI"
-        variant="info"
-      />
       <Table
         actionResolver={[Function]}
         areActionsDisabled={[Function]}
