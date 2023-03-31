@@ -113,8 +113,8 @@ const mapStateToProps = (state) => {
       : autoscaleObj.max_replicas;
 
     return {
-      min_replicas: isMultiAz ? (min / 3).toString() : min.toString(),
-      max_replicas: isMultiAz ? (max / 3).toString() : max.toString(),
+      min_replicas: !isHypershiftCluster && isMultiAz ? (min / 3).toString() : min.toString(),
+      max_replicas: !isHypershiftCluster && isMultiAz ? (max / 3).toString() : max.toString(),
     };
   };
 
@@ -215,7 +215,7 @@ const mergeProps = (stateProps, dispatchProps, ownProps) => {
     dispatchProps.onSubmit(
       formData,
       stateProps.clusterID,
-      stateProps.isMultiAz,
+      !stateProps.isHypershiftCluster && stateProps.isMultiAz,
       stateProps.isHypershiftCluster,
     );
   };

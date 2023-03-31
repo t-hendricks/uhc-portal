@@ -129,6 +129,8 @@ class EditNodeCountModal extends Component {
       <ErrorBox message="Error editing machine pool" response={editNodeCountResponse} />
     ) : null;
 
+    const isMultiAvailZone = !isHypershiftCluster && isMultiAz;
+
     const resizingAlert = (nodes) => (
       <Alert
         variant="warning"
@@ -201,7 +203,7 @@ class EditNodeCountModal extends Component {
                   <GridItem>
                     <AutoScaleSection
                       autoscalingEnabled={autoscalingEnabled}
-                      isMultiAz={isMultiAz}
+                      isMultiAz={isMultiAvailZone}
                       change={change}
                       autoScaleMinNodesValue={autoScaleMinNodesValue}
                       autoScaleMaxNodesValue={autoScaleMaxNodesValue}
@@ -218,8 +220,8 @@ class EditNodeCountModal extends Component {
                     <Field
                       component={NodeCountInput}
                       name="nodes_compute"
-                      label={isMultiAz ? 'Node count per zone' : 'Node count'}
-                      isMultiAz={isMultiAz}
+                      label={isMultiAvailZone ? 'Node count per zone' : 'Node count'}
+                      isMultiAz={isMultiAvailZone}
                       isByoc={isByoc}
                       machineType={machineType}
                       isDisabled={pending}
