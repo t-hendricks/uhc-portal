@@ -145,11 +145,12 @@ function VersionSelection({
   const selectOptions = React.useMemo(() => {
     const fullSupport = [];
     const maintenanceSupport = [];
+    let hasIncompatibleVersions = false;
 
     versions.forEach((version) => {
       const versionName = version.raw_id.split('.', 2).join('.');
       const isIncompatibleVersion = isRosa && !isValidRosaVersion(version.raw_id);
-
+      hasIncompatibleVersions = hasIncompatibleVersions || isIncompatibleVersion;
       if (isIncompatibleVersion && showOnlyCompatibleVersions) {
         return;
       }
@@ -183,6 +184,7 @@ function VersionSelection({
     return {
       fullSupport,
       maintenanceSupport,
+      hasIncompatibleVersions,
     };
   }, [
     isRosa,
@@ -229,9 +231,9 @@ function VersionSelection({
                 isDisabled={isDisabled}
                 onBlur={(event) => event.stopPropagation()}
               >
-                {isRosa ? (
+                {isRosa && selectOptions.hasIncompatibleVersions ? (
                   <Switch
-                    className="pf-u-align-items-center pf-u-mx-md pf-u-mb-sm"
+                    className="pf-u-align-items-center pf-u-mx-md pf-u-mb-sm pf-u-font-size-sm"
                     id="view-only-compatible-versions"
                     aria-label="View only compatible versions"
                     label={
@@ -241,7 +243,7 @@ function VersionSelection({
                           bodyContent="View only versions that are compatible with the selected ARNs in previous step"
                           enableFlip={false}
                         >
-                          <Button variant="plain">
+                          <Button variant="plain" className="pf-u-py-0">
                             <OutlinedQuestionCircleIcon />
                           </Button>
                         </Popover>
