@@ -243,7 +243,7 @@ function VersionSelection({
                           bodyContent="View only versions that are compatible with the selected ARNs in previous step"
                           enableFlip={false}
                         >
-                          <Button variant="plain" className="pf-u-py-0">
+                          <Button variant="plain" className="pf-u-p-0 pf-u-ml-md">
                             <OutlinedQuestionCircleIcon />
                           </Button>
                         </Popover>
