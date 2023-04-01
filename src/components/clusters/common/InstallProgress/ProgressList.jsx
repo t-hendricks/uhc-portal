@@ -82,7 +82,7 @@ function ProgressList({ cluster, actionRequiredInitialOpen }) {
     }
 
     // first steps completed
-    if (cluster.state === clusterStates.INSTALLING) {
+    if (cluster.state === clusterStates.INSTALLING || cluster.state === clusterStates.VALIDATING) {
       if (!cluster.status.dns_ready) {
         return {
           awsAccountSetup: completed,

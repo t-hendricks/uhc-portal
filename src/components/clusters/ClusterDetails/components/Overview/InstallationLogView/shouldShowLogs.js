@@ -6,6 +6,7 @@ const shouldShowLogs = (cluster) =>
   (cluster.state === clusterStates.WAITING ||
     cluster.state === clusterStates.PENDING ||
     cluster.state === clusterStates.INSTALLING ||
+    cluster.state === clusterStates.VALIDATING ||
     cluster.state === clusterStates.ERROR ||
     cluster.state === clusterStates.UNINSTALLING);
 

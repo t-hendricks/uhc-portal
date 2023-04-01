@@ -29,9 +29,9 @@ function ClusterSettingsScreen({
   billingModel,
   change,
   kmsKeyArn,
+  isHypershiftSelected,
   formErrors,
   touch,
-  isHypershiftSelected,
 }) {
   const [isExpanded, setIsExpanded] = useState(false);
   const isRosa = product === normalizedProducts.ROSA;
@@ -183,9 +183,9 @@ ClusterSettingsScreen.propTypes = {
   selectedRegion: PropTypes.string,
   change: PropTypes.func,
   kmsKeyArn: PropTypes.string,
+  isHypershiftSelected: PropTypes.bool,
   formErrors: PropTypes.object,
   touch: PropTypes.func,
-  isHypershiftSelected: PropTypes.bool,
 };
 
 export default ClusterSettingsScreen;

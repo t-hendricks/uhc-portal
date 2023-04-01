@@ -10,14 +10,14 @@ const mapStateToProps = (state, ownProps) => {
   const valueSelector = formValueSelector('CreateCluster');
 
   const cloudProviderID = valueSelector(state, 'cloud_provider');
-  const isHypershiftSelected = valueSelector(state, 'hypershift') === 'true';
-  const isMultiAz = valueSelector(state, 'multi_az') === 'true' || isHypershiftSelected;
+  const isMultiAz = valueSelector(state, 'multi_az') === 'true';
   const isByoc = valueSelector(state, 'byoc') === 'true';
   const product = valueSelector(state, 'product');
   const billingModel = valueSelector(state, 'billing_model');
   const customerManagedEncryptionSelected = valueSelector(state, 'customer_managed_key');
   const selectedRegion = valueSelector(state, 'region');
   const kmsKeyArn = valueSelector(state, 'kms_key_arn');
+  const isHypershiftSelected = valueSelector(state, 'hypershift') === 'true';
   const formErrors = {
     ...getFormSyncErrors('CreateCluster')(state),
     ...getFormAsyncErrors('CreateCluster')(state),
@@ -32,8 +32,8 @@ const mapStateToProps = (state, ownProps) => {
     customerManagedEncryptionSelected,
     selectedRegion,
     kmsKeyArn,
-    formErrors,
     isHypershiftSelected,
+    formErrors,
     touch: (fieldNames) => touch('CreateCluster', ...fieldNames),
     initialValues: createOSDInitialValues({
       cloudProviderID,

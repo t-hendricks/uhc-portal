@@ -7,6 +7,7 @@ import ProgressList from './ProgressList';
 function InstallProgress({ cluster }) {
   return cluster.state === clusterStates.INSTALLING ||
     cluster.state === clusterStates.PENDING ||
+    cluster.state === clusterStates.VALIDATING ||
     cluster.state === clusterStates.WAITING ? (
     <ProgressList cluster={cluster} actionRequiredInitialOpen />
   ) : null;
