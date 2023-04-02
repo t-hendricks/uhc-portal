@@ -19,18 +19,18 @@ import {
 } from '@patternfly/react-core';
 import spacing from '@patternfly/react-styles/css/utilities/Spacing/spacing';
 import { Spinner } from '@redhat-cloud-services/frontend-components/Spinner';
-import useAnalytics from '~/hooks/useAnalytics';
+import links from '~/common/installLinks.mjs';
 import { trackEvents } from '~/common/analytics';
-import { isSupportedMinorVersion, formatMinorVersion } from '~/common/helpers';
+import useAnalytics from '~/hooks/useAnalytics';
 import { useOCPLatestVersion } from '~/components/releases/hooks';
-import links from '../../../../../common/installLinks.mjs';
+import { isSupportedMinorVersion, formatMinorVersion } from '~/common/helpers';
 
-import ReduxVerticalFormGroup from '../../../../common/ReduxFormComponents/ReduxVerticalFormGroup';
-import { ReduxFormDropdown } from '../../../../common/ReduxFormComponents';
-import ExternalLink from '../../../../common/ExternalLink';
-import ErrorBox from '../../../../common/ErrorBox';
+import ErrorBox from '~/components/common/ErrorBox';
+import ExternalLink from '~/components/common/ExternalLink';
+import InstructionCommand from '~/components/common/InstructionCommand';
+import { ReduxFormDropdown } from '~/components/common/ReduxFormComponents';
+import ReduxVerticalFormGroup from '~/components/common/ReduxFormComponents/ReduxVerticalFormGroup';
 import ErrorNoOCMRole from './ErrorNoOCMRole';
-import InstructionCommand from '../../../../common/InstructionCommand';
 
 // todo - WAT!?
 import './AccountsRolesScreen.scss';
@@ -41,38 +41,16 @@ const noRoleOption = {
   value: NO_ROLE_DETECTED,
 };
 
-const hasCompleteRoleSet = (role) =>
-  role.Installer && role.Support && role.ControlPlane && role.Worker;
-
-// Order: current selected role > first complete role set > first incomplete role set > 'No Role Detected'
-const getDefaultInstallerRole = (selectedInstallerRoleARN, accountRolesARNs) => {
-  if (selectedInstallerRoleARN && selectedInstallerRoleARN !== NO_ROLE_DETECTED) {
-    return selectedInstallerRoleARN;
-  }
-
-  if (accountRolesARNs.length === 0) {
-    return NO_ROLE_DETECTED;
-  }
-  const defaultRole = accountRolesARNs.find(hasCompleteRoleSet) || accountRolesARNs[0];
-  return defaultRole.Installer;
-};
-
-const updateRoleArns = (change, role) => {
-  change('installer_role_arn', role?.Installer || NO_ROLE_DETECTED);
-  change('support_role_arn', role?.Support || NO_ROLE_DETECTED);
-  change('control_plane_role_arn', role?.ControlPlane || NO_ROLE_DETECTED);
-  change('worker_role_arn', role?.Worker || NO_ROLE_DETECTED);
-};
-
 function AccountRolesARNsSection({
+  touch,
   change,
-  touchARNsFields,
   selectedAWSAccountID,
   selectedInstallerRoleARN,
   rosaMaxOSVersion,
   getAWSAccountRolesARNs,
   getAWSAccountRolesARNsResponse,
   clearGetAWSAccountRolesARNsResponse,
+  isHypershiftSelected,
   onAccountChanged,
   openOcmRoleInstructionsModal,
 }) {
@@ -83,6 +61,40 @@ function AccountRolesARNsSection({
   const [selectedInstallerRole, setSelectedInstallerRole] = useState(NO_ROLE_DETECTED);
   const [allARNsFound, setAllARNsFound] = useState(false);
   const [hasARNsError, setHasARNsError] = useState(false);
+
+  const touchARNsFields = () => {
+    touch('installer_role_arn');
+    touch('support_role_arn');
+    touch('worker_role_arn');
+    if (!isHypershiftSelected) {
+      touch('control_plane_role_arn');
+    }
+  };
+
+  const updateRoleArns = (role) => {
+    change('installer_role_arn', role?.Installer || NO_ROLE_DETECTED);
+    change('support_role_arn', role?.Support || NO_ROLE_DETECTED);
+    change('worker_role_arn', role?.Worker || NO_ROLE_DETECTED);
+    if (!isHypershiftSelected) {
+      change('control_plane_role_arn', role?.ControlPlane || NO_ROLE_DETECTED);
+    }
+  };
+
+  const hasCompleteRoleSet = (role) =>
+    role.Installer && role.Support && role.Worker && (role.ControlPlane || isHypershiftSelected);
+
+  // Order: current selected role > first complete role set > first incomplete role set > 'No Role Detected'
+  const getDefaultInstallerRole = (selectedInstallerRoleARN, accountRolesARNs) => {
+    if (selectedInstallerRoleARN && selectedInstallerRoleARN !== NO_ROLE_DETECTED) {
+      return selectedInstallerRoleARN;
+    }
+
+    if (accountRolesARNs.length === 0) {
+      return NO_ROLE_DETECTED;
+    }
+    const defaultRole = accountRolesARNs.find(hasCompleteRoleSet) || accountRolesARNs[0];
+    return defaultRole.Installer;
+  };
 
   const hasNoTrustedRelationshipOnClusterRoleError = ({ errorDetails }) =>
     errorDetails?.length &&
@@ -97,7 +109,7 @@ function AccountRolesARNsSection({
     setSelectedInstallerRole(NO_ROLE_DETECTED);
     setAccountRoles([]);
     setInstallerRoleOptions([noRoleOption]);
-    updateRoleArns(change, null);
+    updateRoleArns(null);
     setAllARNsFound(false);
     clearGetAWSAccountRolesARNsResponse();
     onAccountChanged();
@@ -107,7 +119,7 @@ function AccountRolesARNsSection({
     accountRoles.forEach((role) => {
       if (role.Installer === selectedInstallerRole) {
         setAllARNsFound(hasCompleteRoleSet(role));
-        updateRoleArns(change, role);
+        updateRoleArns(role);
         change('rosa_max_os_version', role.version);
       }
     });
@@ -116,7 +128,7 @@ function AccountRolesARNsSection({
   const setSelectedInstallerRoleAndOptions = (accountRolesARNs) => {
     const installerOptions = [];
     if (accountRolesARNs.length === 0) {
-      updateRoleArns(change, null);
+      updateRoleArns(null);
       installerOptions.push(noRoleOption);
       change('rosa_max_os_version', undefined);
       setAllARNsFound(false);
@@ -346,27 +358,31 @@ function AccountRolesARNsSection({
                   }
                   isDisabled
                 />
-                <br />
-                <Field
-                  component={ReduxVerticalFormGroup}
-                  name="control_plane_role_arn"
-                  label="Control plane role"
-                  type="text"
-                  validate={roleARNRequired}
-                  isRequired
-                  extendedHelpText={
-                    <>
-                      An IAM role used by the ROSA control plane.
-                      <br />
-                      For more information see{' '}
-                      <ExternalLink href={links.ROSA_AWS_IAM_ROLES}>
-                        Table 2 about the control plane role policy
-                      </ExternalLink>
-                      .
-                    </>
-                  }
-                  isDisabled
-                />
+                {!isHypershiftSelected && (
+                  <>
+                    <br />
+                    <Field
+                      component={ReduxVerticalFormGroup}
+                      name="control_plane_role_arn"
+                      label="Control plane role"
+                      type="text"
+                      validate={roleARNRequired}
+                      isRequired
+                      extendedHelpText={
+                        <>
+                          An IAM role used by the ROSA control plane.
+                          <br />
+                          For more information see{' '}
+                          <ExternalLink href={links.ROSA_AWS_IAM_ROLES}>
+                            Table 2 about the control plane role policy
+                          </ExternalLink>
+                          .
+                        </>
+                      }
+                      isDisabled
+                    />
+                  </>
+                )}
               </GridItem>
               {rosaMaxOSVersion && (
                 <GridItem>
@@ -427,14 +443,15 @@ function AccountRolesARNsSection({
 }
 
 AccountRolesARNsSection.propTypes = {
+  touch: PropTypes.func,
   change: PropTypes.func,
-  touchARNsFields: PropTypes.func,
   selectedAWSAccountID: PropTypes.string,
   selectedInstallerRoleARN: PropTypes.string,
   rosaMaxOSVersion: PropTypes.string,
   getAWSAccountRolesARNs: PropTypes.func.isRequired,
   getAWSAccountRolesARNsResponse: PropTypes.object.isRequired,
   clearGetAWSAccountRolesARNsResponse: PropTypes.func.isRequired,
+  isHypershiftSelected: PropTypes.bool,
   onAccountChanged: PropTypes.func.isRequired,
   openOcmRoleInstructionsModal: PropTypes.func.isRequired,
 };

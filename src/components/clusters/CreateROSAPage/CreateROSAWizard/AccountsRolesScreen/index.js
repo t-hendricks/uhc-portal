@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import { formValueSelector, touch } from 'redux-form';
+import { formValueSelector } from 'redux-form';
 
 import wizardConnector from '../../../CreateOSDPage/CreateOSDWizard/WizardConnector';
 import AccountsRolesScreen from './AccountsRolesScreen';
@@ -27,12 +27,6 @@ const mapDispatchToProps = (dispatch) => ({
   clearGetAWSAccountRolesARNsResponse: () => dispatch(clearGetAWSAccountRolesARNsResponse()),
   clearGetUserRoleResponse: () => dispatch(clearGetUserRoleResponse()),
   getUserRole: () => dispatch(getUserRole()),
-  touchARNsFields: () => {
-    dispatch(touch('CreateCluster', 'installer_role_arn'));
-    dispatch(touch('CreateCluster', 'support_role_arn'));
-    dispatch(touch('CreateCluster', 'control_plane_role_arn'));
-    dispatch(touch('CreateCluster', 'worker_role_arn'));
-  },
   setOfflineToken: (token) => dispatch(setOfflineToken(token)),
 });
 
@@ -46,6 +40,7 @@ const mapStateToProps = (state) => {
   const valueSelector = formValueSelector('CreateCluster');
 
   return {
+    isHypershiftSelected: valueSelector(state, 'hypershift') === 'true',
     selectedAWSAccountID: valueSelector(state, 'associated_aws_id'),
     selectedInstallerRoleARN: valueSelector(state, 'installer_role_arn'),
     rosaMaxOSVersion: valueSelector(state, 'rosa_max_os_version'),
