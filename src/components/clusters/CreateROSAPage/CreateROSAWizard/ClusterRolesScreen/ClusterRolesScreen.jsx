@@ -14,20 +14,23 @@ import {
   TextContent,
   TextVariants,
   Title,
+  ToggleGroup,
+  ToggleGroupItem,
 } from '@patternfly/react-core';
 
 import ExternalLink from '../../../../common/ExternalLink';
 import ErrorBox from '../../../../common/ErrorBox';
 import InstructionCommand from '../../../../common/InstructionCommand';
 import RadioButtons from '../../../../common/ReduxFormComponents/RadioButtons';
-import ReduxVerticalFormGroup from '../../../../common/ReduxFormComponents/ReduxVerticalFormGroup';
-import validators from '../../../../../common/validators';
 import PopoverHint from '../../../../common/PopoverHint';
 import links from '../../../../../common/installLinks.mjs';
+import { required } from '../../../../../common/validators';
 import useAnalytics from '~/hooks/useAnalytics';
 import { trackEvents } from '~/common/analytics';
 import ReduxHiddenCheckbox from '~/components/common/ReduxFormComponents/ReduxHiddenCheckbox';
 import { BackToAssociateAwsAccountLink } from '../common/BackToAssociateAwsAccountLink';
+import CustomOperatorRoleNames from './CustomOperatorRoleNames';
+import CustomerOIDCConfiguration from './CustomerOIDCConfiguration';
 
 export const createOperatorRolesHashPrefix = () => {
   // random 4 alphanumeric hash
@@ -45,18 +48,34 @@ const roleModes = {
 };
 
 function ClusterRolesScreen({
+  clusterName,
   change,
   awsAccountID,
   rosaCreationMode,
+  byoOidcConfigID,
   customOperatorRolesPrefix,
   getOCMRole,
   getOCMRoleResponse,
   clearGetOcmRoleResponse,
-  clusterName,
+  getUserOidcConfigurations,
+  isHypershiftSelected,
 }) {
   const [isAutoModeAvailable, setIsAutoModeAvailable] = useState(false);
+  const isMandatoryByoOidc = isHypershiftSelected;
+  const [hasByoOidcConfig, setHasByoOidcConfig] = useState(
+    isHypershiftSelected || !!byoOidcConfigID,
+  );
   const [getOCMRoleErrorBox, setGetOCMRoleErrorBox] = useState(null);
   const track = useAnalytics();
+
+  const toggleByoOidcConfig = (isChecked) => () => {
+    if (isChecked) {
+      change('rosa_roles_provider_creation_mode', roleModes.MANUAL);
+    } else {
+      change('byo_oidc_config_id', '');
+    }
+    setHasByoOidcConfig(isChecked);
+  };
 
   useEffect(() => {
     if (!customOperatorRolesPrefix) {
@@ -196,12 +215,39 @@ function ClusterRolesScreen({
         <GridItem>
           <Title headingLevel="h3">Cluster roles and policies</Title>
         </GridItem>
-        <GridItem>
-          <Text component={TextVariants.p}>
-            Choose the preferred mode for creating the operator roles and OIDC provider.{' '}
-            <ExternalLink href={links.ROSA_AWS_IAM_ROLES}>Learn more about ROSA roles</ExternalLink>
-          </Text>
-        </GridItem>
+        {isMandatoryByoOidc ? (
+          <Alert
+            isInline
+            id="rosa-hypershift-require-byo-oidc"
+            variant="info"
+            title="Hosted control plane clusters require a specified OIDC provider."
+          />
+        ) : (
+          <>
+            <GridItem>
+              <Text component={TextVariants.p}>
+                Set whether you&apos;d like Red Hat to manage your OIDC configuration or you&apos;d
+                like to manage it yourself.
+              </Text>
+            </GridItem>
+            <GridItem>
+              <ToggleGroup>
+                <ToggleGroupItem
+                  text="Red Hat manage the OIDC"
+                  buttonId="managed-oidc-configuration"
+                  isSelected={!hasByoOidcConfig}
+                  onChange={toggleByoOidcConfig(false)}
+                />
+                <ToggleGroupItem
+                  text="Manage the OIDC myself"
+                  buttonId="customer-oidc-configuration"
+                  isSelected={hasByoOidcConfig}
+                  onChange={toggleByoOidcConfig(true)}
+                />
+              </ToggleGroup>
+            </GridItem>
+          </>
+        )}
         <ReduxHiddenCheckbox name="detected_ocm_role" />
         {getOCMRoleErrorBox && <GridItem>{getOCMRoleErrorBox}</GridItem>}
         {getOCMRoleResponse.pending && (
@@ -212,55 +258,44 @@ function ClusterRolesScreen({
             <div className="spinner-loading-text pf-u-ml-xl">Checking for admin OCM role...</div>
           </GridItem>
         )}
-        {getOCMRoleResponse.fulfilled && (
-          <GridItem span={10}>
-            <FormGroup isRequired fieldId="role_mode">
-              <Field
-                component={RadioButtons}
-                name="rosa_roles_provider_creation_mode"
-                className="radio-button"
-                disabled={getOCMRoleResponse.pending}
-                options={roleModeOptions}
-                onChange={handleCreationModeChange}
-                disableDefaultValueHandling
-              />
-            </FormGroup>
-          </GridItem>
+        {getOCMRoleResponse.fulfilled && !hasByoOidcConfig && (
+          <>
+            <GridItem>
+              <Text component={TextVariants.p}>
+                Choose the preferred mode for creating the operator roles and OIDC provider.{' '}
+                <ExternalLink href={links.ROSA_AWS_IAM_ROLES}>
+                  Learn more about ROSA roles
+                </ExternalLink>
+              </Text>
+            </GridItem>
+            <GridItem span={10}>
+              <FormGroup isRequired fieldId="role_mode">
+                <Field
+                  component={RadioButtons}
+                  name="rosa_roles_provider_creation_mode"
+                  className="radio-button"
+                  disabled={getOCMRoleResponse.pending}
+                  options={roleModeOptions}
+                  onChange={handleCreationModeChange}
+                  disableDefaultValueHandling
+                />
+              </FormGroup>
+            </GridItem>
+          </>
         )}
-        <GridItem>
-          <Title headingLevel="h3">Name operator roles</Title>
-        </GridItem>
-        <GridItem span={10}>
-          <Text component={TextVariants.p}>
-            To easily identify the Operator IAM roles for a cluster in your AWS account, the{' '}
-            Operator role names are prefixed with your cluster name and a random 4-digit hash. You
-            can optionally replace this prefix.
-          </Text>
-        </GridItem>
-        <GridItem span={6}>
+
+        {hasByoOidcConfig ? (
           <Field
-            component={ReduxVerticalFormGroup}
-            name="custom_operator_roles_prefix"
-            label="Custom operator roles prefix"
-            type="text"
-            // eslint-disable-next-line import/no-named-as-default-member
-            validate={validators.checkCustomOperatorRolesPrefix}
-            helpText={`Maximum ${validators.MAX_CUSTOM_OPERATOR_ROLES_PREFIX_LENGTH} characters.  Changing the cluster name will regenerate this value.`}
-            extendedHelpText={
-              <TextContent>
-                <Text component={TextVariants.p}>
-                  You can specify a custom prefix for the cluster-specific Operator IAM roles to{' '}
-                  use. <br />
-                  See examples in{' '}
-                  <ExternalLink href={links.ROSA_AWS_OPERATOR_ROLE_PREFIX}>
-                    Defining a custom Operator IAM role prefix
-                  </ExternalLink>
-                </Text>
-              </TextContent>
-            }
-            showHelpTextOnError={false}
+            component={CustomerOIDCConfiguration}
+            name="byo_oidc_config_id"
+            label="Config ID"
+            getUserOidcConfigurations={getUserOidcConfigurations}
+            byoOidcConfigID={byoOidcConfigID}
+            validate={required}
           />
-        </GridItem>
+        ) : (
+          <CustomOperatorRoleNames />
+        )}
       </Grid>
     </Form>
   );
@@ -270,11 +305,14 @@ ClusterRolesScreen.propTypes = {
   change: PropTypes.func,
   awsAccountID: PropTypes.string,
   rosaCreationMode: PropTypes.string,
+  byoOidcConfigID: PropTypes.string,
   customOperatorRolesPrefix: PropTypes.string,
   getOCMRole: PropTypes.func.isRequired,
   getOCMRoleResponse: PropTypes.func.isRequired,
+  getUserOidcConfigurations: PropTypes.func.isRequired,
   clearGetOcmRoleResponse: PropTypes.func.isRequired,
   clusterName: PropTypes.string,
+  isHypershiftSelected: PropTypes.bool,
 };
 
 export default ClusterRolesScreen;

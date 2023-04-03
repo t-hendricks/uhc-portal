@@ -56,6 +56,14 @@ const reviewValues = {
   rosa_roles_provider_creation_mode: {
     title: 'Operator roles and OIDC provider mode',
   },
+  // Adding a different entry for "byo_oidc_config_id" to show the configuration type
+  byo_oidc_config_id_type: {
+    title: 'OIDC Configuration Type',
+    valueTransform: (value, allValues) => (allValues.byo_oidc_config_id ? 'Customer' : 'Managed'),
+  },
+  byo_oidc_config_id: {
+    title: 'OIDC Config ID',
+  },
   custom_operator_roles_prefix: {
     title: 'Operator roles prefix',
   },
