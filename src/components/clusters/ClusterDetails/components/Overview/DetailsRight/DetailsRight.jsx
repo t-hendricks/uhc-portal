@@ -69,6 +69,7 @@ function DetailsRight({
 
   const workerActualNodes = totalActualNodes === false ? '-' : totalActualNodes;
   const workerDesiredNodes = totalDesiredComputeNodes || '-';
+  const oidcConfig = cluster.aws?.sts?.oidc_config;
 
   return (
     <>
@@ -281,6 +282,24 @@ function DetailsRight({
         )}
         {/* Network */}
         <ClusterNetwork cluster={cluster} />
+
+        {oidcConfig && (
+          <DescriptionListGroup>
+            <DescriptionListTerm>OIDC Configuration</DescriptionListTerm>
+            <DescriptionListDescription>
+              <dl className="pf-l-stack">
+                <Flex>
+                  <dt>Type:</dt>
+                  <dd>{oidcConfig?.managed ? 'Red Hat managed' : 'Self-managed'}</dd>
+                </Flex>
+                <Flex>
+                  <dt>ID:</dt>
+                  <dd>{oidcConfig?.id}</dd>
+                </Flex>
+              </dl>
+            </DescriptionListDescription>
+          </DescriptionListGroup>
+        )}
       </DescriptionList>
     </>
   );
