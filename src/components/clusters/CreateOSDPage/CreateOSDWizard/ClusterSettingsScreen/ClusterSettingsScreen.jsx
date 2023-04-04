@@ -96,6 +96,7 @@ function ClusterSettingsScreen({
           product={product}
           billingModel={billingModel}
           isWizard
+          isHypershiftSelected={isHypershiftSelected}
         />
         {!isByoc && !isRosa && (
           <>
