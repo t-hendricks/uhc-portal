@@ -57,7 +57,6 @@ const marketplaceBillingModelLabel =
   'On-Demand (Hourly): Flexible usage billed through the Red Hat Marketplace';
 
 const MIN_VAL = 1;
-const MAX_VAL = 999;
 
 class EditSubscriptionSettingsFields extends Component {
   state = {};
@@ -224,13 +223,6 @@ class EditSubscriptionSettingsFields extends Component {
         errorMsg: `${systemUnits} value must be an integer number greater than ${MIN_VAL - 1}.`,
       };
     }
-    if (value > MAX_VAL) {
-      return {
-        isValid: false,
-        errorMsg: `${systemUnits} value must be an integer number no larger than ${MAX_VAL}.`,
-      };
-    }
-
     return { isValid: true, errorMsg: '' };
   };
 
@@ -474,7 +466,6 @@ class EditSubscriptionSettingsFields extends Component {
       <NumberInput
         value={cpuSocketValue}
         min={MIN_VAL}
-        max={MAX_VAL}
         inputName={systemUnits === SOCKETS ? SOCKET_TOTAL : CPU_TOTAL}
         isDisabled={isDisabled || isDisabledByBillingModel || isDisabledBySupportLevel}
         onMinus={this.handleUnitsNumberDelta(-1)}
@@ -487,7 +478,7 @@ class EditSubscriptionSettingsFields extends Component {
         }
         minusBtnAriaLabel="decrement the number by 1"
         plusBtnAriaLabel="increment the number by 1"
-        widthChars={MAX_VAL.toString().length}
+        widthChars={5}
       />
     ) : (
       <>
@@ -564,7 +555,7 @@ class EditSubscriptionSettingsFields extends Component {
           isRequired={isDisconnectedSub}
           helperText={
             isDisconnectedSub
-              ? `${systemUnits} value can be any integer number between ${MIN_VAL}-${MAX_VAL}`
+              ? `${systemUnits} value can be any integer larger than ${MIN_VAL}`
               : ''
           }
           helperTextInvalid={systemUnitsNumericErrorMsg}
