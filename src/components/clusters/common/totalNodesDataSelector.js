@@ -15,7 +15,7 @@ const totalNodesDataSelector = (cluster, machinePools) => {
 
   let totalActualNodes = get(cluster, 'metrics.nodes.compute', false);
 
-  if (isHypershift && machinePools) {
+  if (isHypershift && machinePools.length > 0) {
     totalActualNodes = machinePools.reduce(
       (total, pool) => total + get(pool, 'status.current_replicas', 0),
       0,
