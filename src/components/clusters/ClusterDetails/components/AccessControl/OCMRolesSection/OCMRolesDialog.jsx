@@ -187,6 +187,7 @@ function OCMRolesDialog({
               }}
               selections={roleID}
               isOpen={isDropdownOpen}
+              menuAppendTo={() => document.body}
             >
               {options.map((option) => (
                 <SelectOption key={option.id} value={option.id} description={option.description}>

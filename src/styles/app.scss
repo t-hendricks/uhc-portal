@@ -357,14 +357,6 @@ h1 .badged-resource-pf .badged-resource-pf-icon {
   }
 }
 
-#ocm-roles-access-dialog {
-  // TODO OCM RBAC pahse 2: remove this with the alert
-  .pf-c-alert {
-    background-color: unset;
-    border-top: unset;
-  }
-}
-
 .pf-c-tabs__item-text > #monitoring-issues-icon,
 .pf-c-tabs__item-text > #insights-issues-icon  {
   margin-left: 5px;
