@@ -17,6 +17,7 @@ const clusterStates = {
   DEPROVISIONED: 'deprovisioned',
   ARCHIVED: 'archived',
   STALE: 'stale',
+  VALIDATING: 'validating',
 };
 
 const getStateDescription = (state) => {
@@ -50,6 +51,7 @@ function getClusterStateAndDescription(cluster) {
     state = clusterStates.ARCHIVED;
   } else if (
     cluster.state === clusterStates.INSTALLING ||
+    cluster.state === clusterStates.VALIDATING ||
     cluster.state === clusterStates.PENDING
   ) {
     state = clusterStates.INSTALLING;
@@ -112,17 +114,6 @@ const getClusterAIPermissions = (cluster) => ({
   canEdit: cluster.canEdit,
 });
 
-const getClusterAIExtraInfo = (organization) => {
-  const capabilities = organization.details?.capabilities ?? [];
-
-  const found = capabilities.find(
-    (capability) => capability.name === 'capability.organization.bare_metal_installer_multiarch',
-  );
-  return {
-    canSelectCpuArchitecture: found?.value === 'true',
-  };
-};
-
 export {
   getClusterStateAndDescription,
   isHibernating,
@@ -132,7 +123,6 @@ export {
   isWaitingROSAManualMode,
   isWaitingHypershiftCluster,
   getClusterAIPermissions,
-  getClusterAIExtraInfo,
   getStateDescription,
 };
 export default clusterStates;

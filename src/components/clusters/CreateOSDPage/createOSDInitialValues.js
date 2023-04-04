@@ -23,7 +23,7 @@ const createOSDInitialValues = ({
     node_drain_grace_period: 60,
     upgrade_policy: isHypershiftSelected ? 'automatic' : 'manual',
     automatic_upgrade_schedule: '0 0 * * 0',
-    multi_az: (!!isMultiAz).toString(),
+    multi_az: isHypershiftSelected ? 'true' : (!!isMultiAz).toString(),
     persistent_storage: '107374182400',
     load_balancers: '0',
     ...(!isHypershiftSelected ? { enable_user_workload_monitoring: 'true' } : {}),
