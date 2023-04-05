@@ -59,7 +59,8 @@ const reviewValues = {
   // Adding a different entry for "byo_oidc_config_id" to show the configuration type
   byo_oidc_config_id_type: {
     title: 'OIDC Configuration Type',
-    valueTransform: (value, allValues) => (allValues.byo_oidc_config_id ? 'Customer' : 'Managed'),
+    valueTransform: (value, allValues) =>
+      allValues.byo_oidc_config_id ? 'Self-managed' : 'Red Hat managed',
   },
   byo_oidc_config_id: {
     title: 'OIDC Config ID',
