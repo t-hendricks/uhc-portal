@@ -77,7 +77,7 @@ function CustomerOIDCConfiguration({
     } finally {
       setIsLoading(false);
     }
-  }, []);
+  }, [byoOidcConfigID, inputProps.onChange]);
 
   const onSelect = (_, selection) => {
     setIsDropdownOpen(false);
