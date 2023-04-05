@@ -16,7 +16,7 @@ import {
   clearScaleMachinePoolResponse,
 } from '../../ClusterDetails/components/MachinePools/MachinePoolsActions';
 
-import { isHypershiftCluster } from '../../ClusterDetails/clusterDetailsHelper';
+import { isHypershiftCluster, isMultiAZ } from '../../ClusterDetails/clusterDetailsHelper';
 
 import { canAutoScaleSelector } from '../../ClusterDetails/components/MachinePools/MachinePoolsSelectors';
 import getClusterName from '../../../../common/getClusterName';
@@ -42,12 +42,12 @@ const mapStateToProps = (state) => {
 
   const cloudProviderID = get(cluster, 'cloud_provider.id', '');
 
-  const isMultiAz = get(cluster, 'multi_az', false);
+  const isMultiAvailZone = isMultiAZ(cluster);
 
   let requestedNodes = 0;
   if (valueSelector(state, 'autoscalingEnabled')) {
     const maxReplicas = valueSelector(state, 'max_replicas');
-    requestedNodes = isMultiAz ? maxReplicas * 3 : maxReplicas;
+    requestedNodes = isMultiAvailZone ? maxReplicas * 3 : maxReplicas;
   } else {
     requestedNodes = valueSelector(state, 'nodes_compute');
   }
@@ -79,7 +79,7 @@ const mapStateToProps = (state) => {
         })),
       ],
     },
-    isMultiAz,
+    isMultiAvailZone,
     masterResizeAlertThreshold: masterResizeAlertThresholdSelector(
       selectedMachinePool,
       requestedNodes,
@@ -113,12 +113,14 @@ const mapStateToProps = (state) => {
       : autoscaleObj.max_replicas;
 
     return {
-      min_replicas: !isHypershiftCluster && isMultiAz ? (min / 3).toString() : min.toString(),
-      max_replicas: !isHypershiftCluster && isMultiAz ? (max / 3).toString() : max.toString(),
+      min_replicas:
+        !isHypershiftCluster && isMultiAvailZone ? (min / 3).toString() : min.toString(),
+      max_replicas:
+        !isHypershiftCluster && isMultiAvailZone ? (max / 3).toString() : max.toString(),
     };
   };
 
-  const initialValuesNodesCompute = getNodesCount(commonProps.isByoc, isMultiAz);
+  const initialValuesNodesCompute = getNodesCount(commonProps.isByoc, isMultiAvailZone);
 
   // Cluster's default machine pool case
   if (selectedMachinePool === 'Default') {

@@ -10,6 +10,7 @@ import ScaleSection from '../../../../../CreateOSDPage/CreateOSDForm/FormSection
 import ReduxVerticalFormGroup from '../../../../../../common/ReduxFormComponents/ReduxVerticalFormGroup';
 import { checkMachinePoolName } from '../../../../../../../common/validators';
 import CostSavingsSection from './CostSavingsSection';
+import { isMultiAZ } from '../../../../clusterDetailsHelper';
 
 class AddMachinePoolModal extends Component {
   componentDidMount() {
@@ -161,7 +162,7 @@ class AddMachinePoolModal extends Component {
               <ScaleSection
                 pending={isPending}
                 isBYOC={!!cluster?.ccs?.enabled}
-                isMultiAz={cluster.multi_az}
+                isMultiAz={isMultiAZ(cluster)}
                 machineType={selectedMachineType}
                 cloudProviderID={cluster.cloud_provider.id}
                 product={cluster?.subscription?.plan?.type}

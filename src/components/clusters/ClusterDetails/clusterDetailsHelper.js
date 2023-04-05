@@ -26,4 +26,6 @@ const isHypershiftCluster = (cluster) =>
   get(cluster, 'hypershift.enabled', false) ||
   get(cluster, 'subscription.plan.id') === normalizedProducts.ROSA_HyperShift;
 
-export { hasCpuAndMemory, getSubscriptionLastReconciledDate, isHypershiftCluster };
+const isMultiAZ = (cluster) => !isHypershiftCluster(cluster) && get(cluster, 'multi_az', false);
+
+export { hasCpuAndMemory, getSubscriptionLastReconciledDate, isHypershiftCluster, isMultiAZ };

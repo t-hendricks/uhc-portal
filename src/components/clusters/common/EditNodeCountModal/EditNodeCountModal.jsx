@@ -129,7 +129,7 @@ class EditNodeCountModal extends Component {
       <ErrorBox message="Error editing machine pool" response={editNodeCountResponse} />
     ) : null;
 
-    const isMultiAvailZone = !isHypershiftCluster && isMultiAz;
+    const isMultiAvailZone = isMultiAz; // KKD change this
 
     const resizingAlert = (nodes) => (
       <Alert

@@ -16,7 +16,7 @@ import { constants } from '../../CreateOSDFormConstants';
 import PopoverHint from '../../../../../common/PopoverHint';
 import { required } from '../../../../../../common/validators';
 import ExternalLink from '../../../../../common/ExternalLink';
-
+// import {isMultiAZ} from '~/components/clusters/ClusterDetails/clusterDetailsHelper'
 import AutoScaleSection from './AutoScaleSection/AutoScaleSection';
 
 function ScaleSection({
@@ -38,7 +38,7 @@ function ScaleSection({
   change,
   billingModel,
 }) {
-  const isMultiAvailZone = !isHypershiftCluster && isMultiAz;
+  const isMultiAvailZone = isMultiAz; // KKD - please change this - can just be isMultiAZ
 
   const expandableSectionTitle = isMachinePool ? 'Edit node labels and taints' : 'Edit node labels';
 
