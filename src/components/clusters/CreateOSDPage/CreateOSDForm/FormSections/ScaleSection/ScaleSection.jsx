@@ -16,7 +16,6 @@ import { constants } from '../../CreateOSDFormConstants';
 import PopoverHint from '../../../../../common/PopoverHint';
 import { required } from '../../../../../../common/validators';
 import ExternalLink from '../../../../../common/ExternalLink';
-// import {isMultiAZ} from '~/components/clusters/ClusterDetails/clusterDetailsHelper'
 import AutoScaleSection from './AutoScaleSection/AutoScaleSection';
 
 function ScaleSection({
@@ -38,8 +37,6 @@ function ScaleSection({
   change,
   billingModel,
 }) {
-  const isMultiAvailZone = isMultiAz; // KKD - please change this - can just be isMultiAZ
-
   const expandableSectionTitle = isMachinePool ? 'Edit node labels and taints' : 'Edit node labels';
 
   const labelsAndTaintsSection = !isHypershiftCluster ? (
@@ -73,7 +70,7 @@ function ScaleSection({
           names={['machine_type', 'machine_type_force_choice']}
           validate={{ machine_type: required }}
           disabled={pending}
-          isMultiAz={isMultiAvailZone}
+          isMultiAz={isMultiAz}
           isBYOC={isBYOC}
           cloudProviderID={cloudProviderID}
           product={product}
@@ -89,7 +86,7 @@ function ScaleSection({
           <GridItem md={12}>
             <AutoScaleSection
               autoscalingEnabled={autoscalingEnabled}
-              isMultiAz={isMultiAvailZone}
+              isMultiAz={isMultiAz}
               change={change}
               autoScaleMinNodesValue={autoScaleMinNodesValue}
               autoScaleMaxNodesValue={autoScaleMaxNodesValue}
@@ -108,8 +105,8 @@ function ScaleSection({
             <Field
               component={NodeCountInput}
               name="nodes_compute"
-              label={isMultiAvailZone ? 'Compute node count (per zone)' : 'Compute node count'}
-              isMultiAz={isMultiAvailZone}
+              label={isMultiAz ? 'Compute node count (per zone)' : 'Compute node count'}
+              isMultiAz={isMultiAz}
               isByoc={isBYOC}
               machineType={machineType}
               isDisabled={pending}
@@ -156,7 +153,7 @@ function ScaleSection({
                 billingModel={billingModel}
                 product={product}
                 isBYOC={isBYOC}
-                isMultiAZ={isMultiAvailZone}
+                isMultiAZ={isMultiAz}
               />
             </FormGroup>
           </GridItem>
@@ -176,7 +173,7 @@ function ScaleSection({
                 billingModel={billingModel}
                 product={product}
                 isBYOC={isBYOC}
-                isMultiAZ={isMultiAvailZone}
+                isMultiAZ={isMultiAz}
               />
             </FormGroup>
           </GridItem>

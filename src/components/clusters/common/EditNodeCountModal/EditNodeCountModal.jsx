@@ -129,8 +129,6 @@ class EditNodeCountModal extends Component {
       <ErrorBox message="Error editing machine pool" response={editNodeCountResponse} />
     ) : null;
 
-    const isMultiAvailZone = isMultiAz; // KKD change this
-
     const resizingAlert = (nodes) => (
       <Alert
         variant="warning"
@@ -203,7 +201,7 @@ class EditNodeCountModal extends Component {
                   <GridItem>
                     <AutoScaleSection
                       autoscalingEnabled={autoscalingEnabled}
-                      isMultiAz={isMultiAvailZone}
+                      isMultiAz={isMultiAz}
                       change={change}
                       autoScaleMinNodesValue={autoScaleMinNodesValue}
                       autoScaleMaxNodesValue={autoScaleMaxNodesValue}
@@ -220,8 +218,8 @@ class EditNodeCountModal extends Component {
                     <Field
                       component={NodeCountInput}
                       name="nodes_compute"
-                      label={isMultiAvailZone ? 'Node count per zone' : 'Node count'}
-                      isMultiAz={isMultiAvailZone}
+                      label={isMultiAz ? 'Node count per zone' : 'Node count'}
+                      isMultiAz={isMultiAz}
                       isByoc={isByoc}
                       machineType={machineType}
                       isDisabled={pending}
