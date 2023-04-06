@@ -351,6 +351,9 @@ const reviewValues = {
       undefined: 'Public',
     },
   },
+  cluster_privacy_public_subnet_id: {
+    title: 'Public subnet ID',
+  },
   associated_aws_id: {
     title: 'AWS infrastructure account ID',
   },

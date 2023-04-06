@@ -120,6 +120,9 @@ export const createClusterRequest = ({ isWizard = true, cloudProviderID, product
             },
             operator_role_prefix: formData.custom_operator_roles_prefix,
           },
+          ...(formData.cluster_privacy_public_subnet_id && {
+            subnet_ids: [formData.cluster_privacy_public_subnet_id],
+          }),
         };
         // auto mode
         if (formData.rosa_roles_provider_creation_mode === 'auto') {
@@ -177,7 +180,10 @@ export const createClusterRequest = ({ isWizard = true, cloudProviderID, product
           }
         }
         // TODO: Temporarily filter out null values, this can happen until the new subnet selector for hypershift is implemented
-        clusterRequest.aws.subnet_ids = subnetIds.filter((sn) => sn);
+        clusterRequest.aws.subnet_ids = [
+          ...(clusterRequest.aws.subnet_ids ?? []),
+          ...subnetIds,
+        ].filter((sn) => sn);
 
         let AZs = [formData.az_0];
 
