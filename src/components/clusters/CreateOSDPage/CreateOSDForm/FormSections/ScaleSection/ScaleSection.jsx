@@ -16,7 +16,6 @@ import { constants } from '../../CreateOSDFormConstants';
 import PopoverHint from '../../../../../common/PopoverHint';
 import { required } from '../../../../../../common/validators';
 import ExternalLink from '../../../../../common/ExternalLink';
-
 import AutoScaleSection from './AutoScaleSection/AutoScaleSection';
 
 function ScaleSection({

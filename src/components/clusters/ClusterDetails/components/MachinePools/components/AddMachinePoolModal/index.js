@@ -9,6 +9,7 @@ import { getMachineTypes } from '../../../../../../../redux/actions/machineTypes
 import { getOrganizationAndQuota } from '../../../../../../../redux/actions/userActions';
 import { addMachinePoolOrNodePool, clearAddMachinePoolResponse } from '../../MachinePoolsActions';
 import { getAWSCloudProviderVPCs } from '~/components/clusters/CreateOSDPage/CreateOSDWizard/ccsInquiriesActions';
+import { isMultiAZ } from '../../../../clusterDetailsHelper';
 
 import {
   parseReduxFormKeyValueList,
@@ -63,11 +64,13 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
     if (formData.autoscalingEnabled) {
       const minNodes = parseInt(formData.min_replicas, 10);
       const maxNodes = parseInt(formData.max_replicas, 10);
-      const isMultiAz = ownProps.cluster.multi_az;
+      // const isMultiAz = !isHypershiftCluster && ownProps.cluster.multi_az;
+
+      const isMultiAvailZone = isMultiAZ(ownProps.cluster);
 
       machinePoolRequest.autoscaling = {
-        [replicasFieldName(ownProps, 'min')]: isMultiAz ? minNodes * 3 : minNodes,
-        [replicasFieldName(ownProps, 'max')]: isMultiAz ? maxNodes * 3 : maxNodes,
+        [replicasFieldName(ownProps, 'min')]: isMultiAvailZone ? minNodes * 3 : minNodes,
+        [replicasFieldName(ownProps, 'max')]: isMultiAvailZone ? maxNodes * 3 : maxNodes,
       };
     } else {
       machinePoolRequest.replicas = parseInt(formData.nodes_compute, 10);
