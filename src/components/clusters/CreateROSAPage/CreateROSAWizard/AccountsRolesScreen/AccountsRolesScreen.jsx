@@ -175,7 +175,7 @@ function AccountsRolesScreen({
           <Title headingLevel="h3">Prerequisites</Title>
           <Text component={TextVariants.p}>
             To use the web interface to create a ROSA cluster you will need to have already
-            completed the perquisite steps to prepare your AWS account on the{' '}
+            completed the prerequisite steps to prepare your AWS account on the{' '}
             <Link to="getstarted">{`Get started with a ${productName} (ROSA) page.`}</Link>
           </Text>
         </GridItem>
