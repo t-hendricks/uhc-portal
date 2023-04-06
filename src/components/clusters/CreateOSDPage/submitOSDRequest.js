@@ -1,11 +1,11 @@
 import pick from 'lodash/pick';
 import isEmpty from 'lodash/isEmpty';
 
-import config from '../../../config';
+import config from '~/config';
 
-import { DEFAULT_FLAVOUR_ID } from '../../../redux/actions/flavourActions';
-import { createCluster } from '../../../redux/actions/clustersActions';
-import { parseReduxFormKeyValueList } from '../../../common/helpers';
+import { DEFAULT_FLAVOUR_ID } from '~/redux/actions/flavourActions';
+import { createCluster } from '~/redux/actions/clustersActions';
+import { parseReduxFormKeyValueList } from '~/common/helpers';
 
 export const createClusterRequest = ({ isWizard = true, cloudProviderID, product }, formData) => {
   const isMultiAz = formData.multi_az === 'true';
@@ -112,8 +112,10 @@ export const createClusterRequest = ({ isWizard = true, cloudProviderID, product
             role_arn: formData.installer_role_arn,
             support_role_arn: formData.support_role_arn,
             instance_iam_roles: {
-              master_role_arn: formData.control_plane_role_arn,
               worker_role_arn: formData.worker_role_arn,
+              ...(formData.hypershift !== 'true'
+                ? { master_role_arn: formData.control_plane_role_arn }
+                : {}),
             },
             operator_role_prefix: formData.custom_operator_roles_prefix,
           },

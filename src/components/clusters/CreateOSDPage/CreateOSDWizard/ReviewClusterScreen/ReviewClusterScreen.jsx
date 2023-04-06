@@ -2,20 +2,26 @@ import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import isEmpty from 'lodash/isEmpty';
 import { Title, Bullseye, Stack, StackItem, Spinner } from '@patternfly/react-core';
-import DebugClusterRequest from '../../DebugClusterRequest';
-import config from '../../../../../config';
-import { normalizedProducts } from '../../../../../common/subscriptionTypes';
-import './ReviewClusterScreen.scss';
-import ReviewSection, { ReviewItem, ReviewRoleItem } from './ReviewSection';
-import ReduxHiddenCheckbox from '../../../../common/ReduxFormComponents/ReduxHiddenCheckbox';
+
+import config from '~/config';
+import { HYPERSHIFT_WIZARD_FEATURE } from '~/redux/constants/featureConstants';
+import { normalizedProducts } from '~/common/subscriptionTypes';
 import { getUserRoleForSelectedAWSAccount } from '~/components/clusters/CreateROSAPage/CreateROSAWizard/AccountsRolesScreen/AccountsRolesScreen';
-import { stepId, stepNameById } from '../osdWizardConstants';
+import {
+  stepId,
+  stepNameById,
+} from '~/components/clusters/CreateOSDPage/CreateOSDWizard/osdWizardConstants';
 import {
   stepId as rosaStepId,
   stepNameById as rosaStepNameById,
 } from '~/components/clusters/CreateROSAPage/CreateROSAWizard/rosaWizardConstants';
-import { HYPERSHIFT_WIZARD_FEATURE } from '~/redux/constants/featureConstants';
 import { useFeatureGate } from '~/hooks/useFeatureGate';
+
+import ReduxHiddenCheckbox from '~/components/common/ReduxFormComponents/ReduxHiddenCheckbox';
+import DebugClusterRequest from '~/components/clusters/CreateOSDPage/DebugClusterRequest';
+import ReviewSection, { ReviewItem, ReviewRoleItem } from './ReviewSection';
+
+import './ReviewClusterScreen.scss';
 
 const ReviewClusterScreen = ({
   change,
@@ -178,7 +184,7 @@ const ReviewClusterScreen = ({
             })}
             {ReviewItem({ name: 'installer_role_arn', formValues })}
             {ReviewItem({ name: 'support_role_arn', formValues })}
-            {ReviewItem({ name: 'control_plane_role_arn', formValues })}
+            {!isHypershiftSelected && ReviewItem({ name: 'control_plane_role_arn', formValues })}
             {ReviewItem({ name: 'worker_role_arn', formValues })}
           </ReviewSection>
         </>

@@ -17,21 +17,22 @@ import {
 import { Field } from 'redux-form';
 import { Link } from 'react-router-dom';
 
-import AWSLogo from '../../../../../styles/images/AWS.png';
-import RedHat from '../../../../../styles/images/Logo-RedHat-Hat-Color-RGB.png';
-import AWSAccountSelection from './AWSAccountSelection';
-import AccountRolesARNsSection from './AccountRolesARNsSection';
-import ErrorBox from '../../../../common/ErrorBox';
-import { required } from '../../../../../common/validators';
-import { normalizedProducts } from '../../../../../common/subscriptionTypes';
-import UserRoleInstructionsModal from './UserRoleInstructionsModal';
-import OCMRoleInstructionsModal from './OCMRoleInstructionsModal';
-import InstructionCommand from '../../../../common/InstructionCommand';
-import { AssociateAwsAccountModal } from './AssociateAWSAccountModal';
-import { RosaCliCommand } from './constants/cliCommands';
+import AWSLogo from '~/styles/images/AWS.png';
+import RedHat from '~/styles/images/Logo-RedHat-Hat-Color-RGB.png';
+import { required } from '~/common/validators';
+import { normalizedProducts } from '~/common/subscriptionTypes';
 import { trackEvents } from '~/common/analytics';
 import useAnalytics from '~/hooks/useAnalytics';
+import ErrorBox from '~/components/common/ErrorBox';
+import InstructionCommand from '~/components/common/InstructionCommand';
 import { loadOfflineToken } from '~/components/tokens/TokenUtils';
+
+import { RosaCliCommand } from './constants/cliCommands';
+import AWSAccountSelection from './AWSAccountSelection';
+import AccountRolesARNsSection from './AccountRolesARNsSection';
+import UserRoleInstructionsModal from './UserRoleInstructionsModal';
+import OCMRoleInstructionsModal from './OCMRoleInstructionsModal';
+import { AssociateAwsAccountModal } from './AssociateAWSAccountModal';
 import { productName } from '../CreateRosaGetStarted/CreateRosaGetStarted';
 
 export const isUserRoleForSelectedAWSAccount = (users, awsAcctId) =>
@@ -41,8 +42,8 @@ export const getUserRoleForSelectedAWSAccount = (users, awsAcctId) =>
   users.find((user) => user.aws_id === awsAcctId);
 
 function AccountsRolesScreen({
+  touch,
   change,
-  touchARNsFields,
   organizationID,
   selectedAWSAccountID,
   selectedInstallerRoleARN,
@@ -60,6 +61,7 @@ function AccountsRolesScreen({
   openOcmRoleInstructionsModal,
   isUserRoleModalOpen,
   isOCMRoleModalOpen,
+  isHypershiftSelected,
   closeModal,
   offlineToken,
   setOfflineToken,
@@ -226,15 +228,16 @@ function AccountsRolesScreen({
         <GridItem span={7} />
         {selectedAWSAccountID && hasAWSAccounts && (
           <AccountRolesARNsSection
+            touch={touch}
+            change={change}
             selectedAWSAccountID={selectedAWSAccountID}
             selectedInstallerRoleARN={selectedInstallerRoleARN}
             rosaMaxOSVersion={rosaMaxOSVersion}
             getAWSAccountRolesARNs={getAWSAccountRolesARNs}
             getAWSAccountRolesARNsResponse={getAWSAccountRolesARNsResponse}
             clearGetAWSAccountRolesARNsResponse={clearGetAWSAccountRolesARNsResponse}
+            isHypershiftSelected={isHypershiftSelected}
             onAccountChanged={resetUserRoleFields}
-            change={change}
-            touchARNsFields={touchARNsFields}
             openOcmRoleInstructionsModal={openOcmRoleInstructionsModal}
           />
         )}
@@ -298,8 +301,8 @@ function AccountsRolesScreen({
 }
 
 AccountsRolesScreen.propTypes = {
+  touch: PropTypes.func,
   change: PropTypes.func,
-  touchARNsFields: PropTypes.func,
   selectedAWSAccountID: PropTypes.string,
   selectedInstallerRoleARN: PropTypes.string,
   getAWSAccountIDs: PropTypes.func.isRequired,
@@ -321,6 +324,7 @@ AccountsRolesScreen.propTypes = {
   openOcmRoleInstructionsModal: PropTypes.func,
   isUserRoleModalOpen: PropTypes.bool,
   isOCMRoleModalOpen: PropTypes.bool,
+  isHypershiftSelected: PropTypes.bool,
   closeModal: PropTypes.func,
   offlineToken: PropTypes.string,
   setOfflineToken: PropTypes.func,
