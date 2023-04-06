@@ -139,19 +139,22 @@ const Router: React.FC<RouterProps> = ({ history, planType, clusterId, externalC
   } = useChrome();
 
   const isHypershiftWizardEnabled = useFeatureGate(HYPERSHIFT_WIZARD_FEATURE);
-
   // OSD_WIZARD_V2_FEATURE enabled in staging, disabled in production (via Unleashed)
   const isOSDv2WizardEnabled = useFeatureGate(OSD_WIZARD_V2_FEATURE);
   // OSD_WIZARD_V1 can be enabled in staging by appending `?features={"osd-wizard-v1":"true"}`
   const { [OSD_WIZARD_V1]: showOSDWizardV1 } = useFeatures();
 
-  // TODO: just for testing, remove this when feature flag is being used in the wizard
-  // eslint-disable-next-line no-console
-  console.log(`HYPERSHIFT_WIZARD_FEATURE is ${isHypershiftWizardEnabled ? 'Enabled' : 'Disabled'}`);
-  // eslint-disable-next-line no-console
-  console.log(`OSD_WIZARD_V2_FEATURE is ${isOSDv2WizardEnabled ? 'Enabled' : 'Disabled'}`);
-  // eslint-disable-next-line no-console
-  console.log(`Using OSD ${isOSDv2WizardEnabled && !showOSDWizardV1 ? 'v2' : 'v1'} wizard`);
+  // For testing purposes, show which major features are enabled/disabled
+  React.useEffect(() => {
+    // eslint-disable-next-line no-console
+    console.info(
+      '---------------Features---------------\n',
+      `HYPERSHIFT_WIZARD_FEATURE: ${isHypershiftWizardEnabled ? 'Enabled' : 'Disabled'}\n`,
+      `OSD_WIZARD_V2_FEATURE: ${isOSDv2WizardEnabled ? 'Enabled' : 'Disabled'}\n`,
+      `OSD_WIZARD_V1: ${showOSDWizardV1 ? 'Enabled' : 'Disabled'}\n`,
+      '-------------------------------------',
+    );
+  }, [isHypershiftWizardEnabled, isOSDv2WizardEnabled, showOSDWizardV1]);
 
   useEffect(() => {
     setPageMetadata({
