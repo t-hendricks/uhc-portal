@@ -8,12 +8,17 @@ class ClusterDetails extends Page {
 
   editConsoleURLDialogInput = () => cy.get('input[id="edit-console-url-input"]');
 
-  editConsoleURLDialogConfirm = () => cy.get('button').contains('Add URL');
+  editConsoleURLDialogConfirm = () =>
+    cy
+      .get('div[aria-label="Add console URL"]')
+      .find('footer')
+      .find('button')
+      .first()
+      .contains('Add URL');
 
   openConsoleLink = () => cy.getByTestId('console-url-link');
 
-  actionsDropdownToggle = () =>
-    cy.getByTestId('cluster-actions-dropdown').find('button').first();
+  actionsDropdownToggle = () => cy.getByTestId('cluster-actions-dropdown').find('button').first();
 
   editDisplayNameDropdownItem = () => cy.contains('button', 'Edit display name');
 
@@ -35,11 +40,18 @@ class ClusterDetails extends Page {
   unarchiveClusterDialogConfirm = () => cy.contains('button', 'Unarchive cluster');
 
   clusterNameTitle = () => cy.get('h1.cl-details-page-title');
+
+  waitForEditUrlModalToClear = () => {
+    cy.get('input[id="edit-console-url-input"]', { timeout: 30000 }).should('not.exist');
+  };
+
+  waitForClusterDetailsLoad = () => {
+    cy.get('div.cluster-details-spinner', { timeout: 30000 }).should('not.exist');
+  };
 }
 
 ClusterDetails.propTypes = {
   displayName: PropTypes.string.isRequired,
-  delayed: PropTypes.bool,
 };
 
 export default new ClusterDetails();

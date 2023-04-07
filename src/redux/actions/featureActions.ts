@@ -1,6 +1,7 @@
 import { action, ActionType } from 'typesafe-actions';
 import {
   SET_FEATURE,
+  ASSISTED_INSTALLER_MULTIARCH_SUPPORTED,
   ASSISTED_INSTALLER_FEATURE,
   ASSISTED_INSTALLER_SNO_FEATURE,
   ASSISTED_INSTALLER_OCS_FEATURE,
@@ -14,6 +15,7 @@ import {
   HYPERSHIFT_WIZARD_FEATURE,
 } from '../constants/featureConstants';
 import authorizationsService from '../../services/authorizationsService';
+import accountsService from '../../services/accountsService';
 import { SelfAccessReview } from '../../types/authorizations.v1/models/SelfAccessReview';
 import type { AppThunk } from '../types';
 
@@ -57,6 +59,27 @@ export const features = [
         }),
         authorizationsService.selfFeatureReview('assisted-installer'),
       ]).then(([resource, unleash]) => resource.data.allowed && unleash.data.enabled),
+  },
+  {
+    name: ASSISTED_INSTALLER_MULTIARCH_SUPPORTED,
+    action: async () => {
+      let isFeatureEnabled = false;
+      const response = await accountsService.getCurrentAccount();
+      const organizationID = response.data?.organization?.id;
+      if (organizationID) {
+        const organizationResponse = await accountsService.getOrganization(organizationID);
+        const organization = organizationResponse.data;
+        const capabilities = organization.capabilities || [];
+        const bareMetalInstallerMultiarch = capabilities.find(
+          (capability) =>
+            capability.name === 'capability.organization.bare_metal_installer_multiarch',
+        );
+
+        isFeatureEnabled = bareMetalInstallerMultiarch?.value === 'true';
+      }
+
+      return isFeatureEnabled;
+    },
   },
 ];
 

@@ -79,7 +79,8 @@ describe('Register cluster flow', () => {
     ClusterDetailsPage.addConsoleURLButton().click();
     ClusterDetailsPage.editConsoleURLDialogInput().type(url);
     ClusterDetailsPage.editConsoleURLDialogConfirm().click();
-    ClusterDetailsPage.editConsoleURLDialogConfirm().should('not.exist');
+    ClusterDetailsPage.waitForEditUrlModalToClear();
+    ClusterDetailsPage.waitForClusterDetailsLoad();
     ClusterDetailsPage.openConsoleLink()
       .should('have.attr', 'href', url)
       .find('button')
@@ -93,7 +94,9 @@ describe('Register cluster flow', () => {
     ClusterDetailsPage.editDisplayNameInput().clear();
     ClusterDetailsPage.editDisplayNameInput().type(`${displayName}-test`).blur();
     ClusterDetailsPage.editDisplaynameConfirm().click({ waitForAnimations: true });
+    ClusterDetailsPage.waitForClusterDetailsLoad();
     ClusterDetailsPage.clusterNameTitle().should('have.text', `${displayName}-test`);
+  
   });
 
   it('successfully archives the newly created cluster', () => {
@@ -108,10 +111,12 @@ describe('Register cluster flow', () => {
     ClusterDetailsPage.unarchiveClusterButton().click();
     ClusterDetailsPage.unarchiveClusterDialogConfirm().click();
     ClusterDetailsPage.successNotification().should('exist');
+    ClusterDetailsPage.waitForClusterDetailsLoad();
     ClusterDetailsPage.actionsDropdownToggle().should('exist');
   });
 
   it('Finally, archive the cluster created', () => {
+    ClusterDetailsPage.actionsDropdownToggle().should('exist');
     ClusterDetailsPage.actionsDropdownToggle().find('span').first().should('have.text', 'Actions');
     ClusterDetailsPage.actionsDropdownToggle().click();
     ClusterDetailsPage.archiveClusterDropdownItem().click();

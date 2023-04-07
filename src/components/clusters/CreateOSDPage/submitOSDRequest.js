@@ -242,6 +242,11 @@ export const createClusterRequest = ({ isWizard = true, cloudProviderID, product
   if (formData.hypershift) {
     clusterRequest.hypershift = { enabled: formData.hypershift === 'true' };
   }
+
+  if (formData.hypershift === 'true') {
+    clusterRequest.multi_az = true;
+  }
+
   return clusterRequest;
 };
 
