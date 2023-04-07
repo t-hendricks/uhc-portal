@@ -6,6 +6,8 @@ class ClusterDetails extends Page {
 
   addConsoleURLButton = () => cy.get('button').contains('Add console URL');
 
+  openConsoleButton = () => cy.getByTestId('console-url-link').find('button').first();
+
   editConsoleURLDialogInput = () => cy.get('input[id="edit-console-url-input"]');
 
   editConsoleURLDialogConfirm = () =>
@@ -41,12 +43,28 @@ class ClusterDetails extends Page {
 
   clusterNameTitle = () => cy.get('h1.cl-details-page-title');
 
+  waitForEditUrlModalToLoad = () => {
+    cy.get('input[id="edit-console-url-input"]', { timeout: 30000 }).should('exist');
+  };
+
   waitForEditUrlModalToClear = () => {
-    cy.get('input[id="edit-console-url-input"]', { timeout: 30000 }).should('not.exist');
+    cy.getByTestId('edit-console-url-dialog', { timeout: 30000 }).should('not.exist');
+  };
+
+  waitForEditDisplayNamelModalToLoad = () => {
+    cy.get('input[id="edit-display-name-input"]', { timeout: 30000 }).should('exist');
+  };
+
+  waitForEditDisplayNamelModalToClear = () => {
+    cy.getByTestId('edit-displayname-modal', { timeout: 30000 }).should('not.exist');
+  };
+
+  waitForDisplayNameChange = (displayName) => {
+    cy.get('h1.cl-details-page-title', { timeout: 30000 }).should('not.equal', displayName);
   };
 
   waitForClusterDetailsLoad = () => {
-    cy.get('div.cluster-details-spinner', { timeout: 30000 }).should('not.exist');
+    cy.get('div.ins-c-spinner.cluster-details-spinner', { timeout: 30000 }).should('not.exist');
   };
 }
 

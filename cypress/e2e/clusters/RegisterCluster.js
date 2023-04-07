@@ -77,6 +77,7 @@ describe('Register cluster flow', () => {
   it('successfully changes the console URL for the cluster', () => {
     const url = 'http://example.com';
     ClusterDetailsPage.addConsoleURLButton().click();
+    ClusterDetailsPage.waitForEditUrlModalToLoad();
     ClusterDetailsPage.editConsoleURLDialogInput().type(url);
     ClusterDetailsPage.editConsoleURLDialogConfirm().click();
     ClusterDetailsPage.waitForEditUrlModalToClear();
@@ -90,13 +91,14 @@ describe('Register cluster flow', () => {
   it('successfully changes display name', () => {
     ClusterDetailsPage.actionsDropdownToggle().click();
     ClusterDetailsPage.editDisplayNameDropdownItem().click();
-    ClusterDetailsPage.editDisplayNameInput().should('exist');
+    ClusterDetailsPage.waitForEditDisplayNamelModalToLoad();
     ClusterDetailsPage.editDisplayNameInput().clear();
     ClusterDetailsPage.editDisplayNameInput().type(`${displayName}-test`).blur();
-    ClusterDetailsPage.editDisplaynameConfirm().click({ waitForAnimations: true });
+    ClusterDetailsPage.editDisplaynameConfirm().click();
+    ClusterDetailsPage.waitForEditDisplayNamelModalToClear();
     ClusterDetailsPage.waitForClusterDetailsLoad();
+    ClusterDetailsPage.waitForDisplayNameChange(displayName);
     ClusterDetailsPage.clusterNameTitle().should('have.text', `${displayName}-test`);
-  
   });
 
   it('successfully archives the newly created cluster', () => {
@@ -104,6 +106,7 @@ describe('Register cluster flow', () => {
     ClusterDetailsPage.archiveClusterDropdownItem().click();
     ClusterDetailsPage.archiveClusterDialogConfirm().click();
     ClusterDetailsPage.successNotification().should('exist');
+    ClusterDetailsPage.waitForClusterDetailsLoad();
     ClusterDetailsPage.unarchiveClusterButton().should('exist');
   });
 
@@ -112,7 +115,6 @@ describe('Register cluster flow', () => {
     ClusterDetailsPage.unarchiveClusterDialogConfirm().click();
     ClusterDetailsPage.successNotification().should('exist');
     ClusterDetailsPage.waitForClusterDetailsLoad();
-    ClusterDetailsPage.actionsDropdownToggle().should('exist');
   });
 
   it('Finally, archive the cluster created', () => {
