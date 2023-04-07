@@ -66,6 +66,8 @@ export const Details = () => {
       [FieldId.CustomerManagedKey]: hasCustomerManagedKey,
       [FieldId.KmsKeyArn]: kmsKeyArn,
     },
+    errors,
+    isValidating,
     setFieldValue,
     getFieldProps,
   } = useFormState();
@@ -82,17 +84,27 @@ export const Details = () => {
 
   const { gcpKeyRings } = useGlobalState((state) => state.ccsInquiries);
 
+  const {
+    [FieldId.KeyRing]: keyRingError,
+    [FieldId.KeyName]: keyNameError,
+    [FieldId.KmsServiceAccount]: kmsServiceAccountError,
+    [FieldId.KeyLocation]: keyLocationError,
+  } = errors;
+
+  const isGCPError =
+    gcpKeyRings.error || keyRingError || keyNameError || kmsServiceAccountError || keyLocationError;
+
   React.useEffect(() => {
     dispatch(getCloudProviders());
   }, [dispatch]);
 
   React.useEffect(() => {
     if (hasCustomerManagedKey === 'true') {
-      if ((isGCP && gcpKeyRings.error) || (!isGCP && validateAWSKMSKeyARN(kmsKeyArn, region))) {
+      if ((isGCP && isGCPError) || (!isGCP && validateAWSKMSKeyARN(kmsKeyArn, region))) {
         setIsExpanded(true);
       }
     }
-  }, []);
+  }, [isValidating]);
 
   const azQuotaParams = {
     product,
@@ -299,6 +311,7 @@ export const Details = () => {
             toggleText="Advanced Encryption"
             onToggle={onToggle}
             isExpanded={isExpanded}
+            isActive
           >
             {isByoc && (
               <CustomerManagedEncryption

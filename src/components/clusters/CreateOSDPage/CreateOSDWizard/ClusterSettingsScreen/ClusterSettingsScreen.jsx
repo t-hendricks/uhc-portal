@@ -34,6 +34,11 @@ function ClusterSettingsScreen({
   touch,
 }) {
   const [isExpanded, setIsExpanded] = useState(false);
+
+  const onToggle = () => {
+    setIsExpanded(!isExpanded);
+  };
+
   const isRosa = product === normalizedProducts.ROSA;
   const isGCP = cloudProviderID === 'gcp';
 
@@ -41,25 +46,26 @@ function ClusterSettingsScreen({
     key_ring: keyRingError,
     key_name: keyNameError,
     kms_service_account: kmsServiceAccountError,
+    key_location: keyLocationError,
   } = formErrors;
 
-  const gcpError = keyRingError || keyNameError || kmsServiceAccountError;
-
-  const onToggle = () => {
-    setIsExpanded(!isExpanded);
-  };
+  const gcpError = keyRingError || keyNameError || kmsServiceAccountError || keyLocationError;
 
   React.useEffect(() => {
+    let isAdvancedEncryptionExpanded = false;
     if (customerManagedEncryptionSelected === 'true') {
       if (isGCP && gcpError) {
-        setIsExpanded(true);
+        isAdvancedEncryptionExpanded = true;
       }
       if (!isGCP && validateAWSKMSKeyARN(kmsKeyArn, selectedRegion)) {
-        setIsExpanded(true);
+        isAdvancedEncryptionExpanded = true;
         touch('CreateCluster', 'kms_key_arn');
       }
     }
-  }, []);
+    if (isAdvancedEncryptionExpanded) {
+      setIsExpanded(true);
+    }
+  }, [customerManagedEncryptionSelected, isGCP, gcpError, kmsKeyArn, selectedRegion]);
 
   return (
     <Form
