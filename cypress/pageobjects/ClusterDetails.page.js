@@ -60,7 +60,11 @@ class ClusterDetails extends Page {
   };
 
   waitForDisplayNameChange = (displayName) => {
-    cy.get('h1.cl-details-page-title', { timeout: 30000 }).should('not.equal', displayName);
+    cy.get('h1.cl-details-page-title', { timeout: 30000 }).should('not.have.text', displayName);
+  };
+
+  waitForArchiveClusterDropdownLoad = () => {
+    cy.contains('button', 'Archive cluster', { timeout: 30000 }).should('exist');
   };
 
   waitForClusterDetailsLoad = () => {

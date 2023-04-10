@@ -103,6 +103,7 @@ describe('Register cluster flow', () => {
 
   it('successfully archives the newly created cluster', () => {
     ClusterDetailsPage.actionsDropdownToggle().click();
+    ClusterDetailsPage.waitForArchiveClusterDropdownLoad();
     ClusterDetailsPage.archiveClusterDropdownItem().click();
     ClusterDetailsPage.archiveClusterDialogConfirm().click();
     ClusterDetailsPage.successNotification().should('exist');
@@ -121,6 +122,7 @@ describe('Register cluster flow', () => {
     ClusterDetailsPage.actionsDropdownToggle().should('exist');
     ClusterDetailsPage.actionsDropdownToggle().find('span').first().should('have.text', 'Actions');
     ClusterDetailsPage.actionsDropdownToggle().click();
+    ClusterDetailsPage.waitForArchiveClusterDropdownLoad();
     ClusterDetailsPage.archiveClusterDropdownItem().click();
     ClusterDetailsPage.archiveClusterDialogConfirm().click();
   });
