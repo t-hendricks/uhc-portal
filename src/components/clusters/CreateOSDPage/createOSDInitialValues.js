@@ -39,7 +39,6 @@ const createOSDInitialValues = ({
     install_to_vpc: isHypershiftSelected,
     use_privatelink: isHypershiftSelected,
     configure_proxy: false,
-    configure_cluster_proxy: false,
     disable_scp_checks: false,
     billing_model: isTrialDefault ? 'standard-trial' : 'standard',
     product: product || (isTrialDefault ? normalizedProducts.OSDTrial : normalizedProducts.OSD),

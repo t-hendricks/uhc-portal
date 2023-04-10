@@ -123,7 +123,7 @@ function NetworkScreen(props) {
   const configureClusterProxyField = (
     <Field
       component={ReduxCheckbox}
-      name="configure_cluster_proxy"
+      name="configure_proxy"
       label="Configure a cluster-wide proxy"
       onChange={onClusterProxyChange}
       helpText={
