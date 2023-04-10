@@ -242,7 +242,7 @@ function AccountRolesARNsSection({
       )}
       {!getAWSAccountRolesARNsResponse.pending && !allARNsFound && !hasARNsError && (
         <GridItem span={8}>
-          <Alert isInline variant="warning" title="Some account roles ARNs were not detected.">
+          <Alert isInline variant="danger" title="Some account roles ARNs were not detected.">
             <br />
             Create the account roles using the following command in the ROSA CLI
             <InstructionCommand textAriaLabel="Copyable ROSA login command">
