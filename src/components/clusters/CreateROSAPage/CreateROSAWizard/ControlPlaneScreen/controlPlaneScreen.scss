@@ -1,5 +1,5 @@
 .controlPlaneScreenTile {
-  text-align: left;
+  text-align: left !important;
 
   .pf-c-tile__body {
     --pf-c-tile__body--FontSize: var(--pf-global--FontSize--md);
