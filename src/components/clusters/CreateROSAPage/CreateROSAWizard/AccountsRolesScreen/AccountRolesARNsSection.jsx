@@ -30,7 +30,7 @@ import ExternalLink from '~/components/common/ExternalLink';
 import InstructionCommand from '~/components/common/InstructionCommand';
 import { ReduxFormDropdown } from '~/components/common/ReduxFormComponents';
 import ReduxVerticalFormGroup from '~/components/common/ReduxFormComponents/ReduxVerticalFormGroup';
-import ErrorNoOCMRole from './ErrorNoOCMRole';
+import { AwsRoleErrorAlert } from './AwsRoleErrorAlert';
 
 // todo - WAT!?
 import './AccountsRolesScreen.scss';
@@ -52,7 +52,7 @@ function AccountRolesARNsSection({
   clearGetAWSAccountRolesARNsResponse,
   isHypershiftSelected,
   onAccountChanged,
-  openOcmRoleInstructionsModal,
+  openAssociateAwsAccountModal,
 }) {
   const track = useAnalytics();
   const [isExpanded, setIsExpanded] = useState(true);
@@ -149,10 +149,13 @@ function AccountRolesARNsSection({
     setSelectedInstallerRole(defaultInstallerRole);
   };
 
-  const resolveARNsErrorTitle = (response) =>
-    hasNoTrustedRelationshipOnClusterRoleError(response)
-      ? 'Cannot detect an OCM role'
-      : 'Error getting AWS account ARNs';
+  const resolveARNsErrorTitle = React.useCallback(
+    (response) =>
+      hasNoTrustedRelationshipOnClusterRoleError(response)
+        ? 'Cannot detect an OCM role'
+        : 'Error getting AWS account ARNs',
+    [],
+  );
 
   const trackArnsRefreshed = (response) => {
     track(trackEvents.ARNsRefreshed, {
@@ -222,24 +225,28 @@ function AccountRolesARNsSection({
   const rolesOutOfDate =
     latestVersionLoaded && !isSupportedMinorVersion(latestOCPVersion, rosaMaxOSVersion);
 
+  const arnsErrorAlert = React.useMemo(() => {
+    const alertTitle = resolveARNsErrorTitle(getAWSAccountRolesARNsResponse);
+
+    if (hasNoTrustedRelationshipOnClusterRoleError(getAWSAccountRolesARNsResponse)) {
+      return (
+        <AwsRoleErrorAlert
+          title={alertTitle}
+          openAssociateAwsAccountModal={openAssociateAwsAccountModal}
+        />
+      );
+    }
+
+    return <ErrorBox message={alertTitle} response={getAWSAccountRolesARNsResponse} />;
+  }, [getAWSAccountRolesARNsResponse, openAssociateAwsAccountModal, resolveARNsErrorTitle]);
+
   return (
     <>
       <GridItem />
       <GridItem>
         <Title headingLevel="h3">Account roles</Title>
       </GridItem>
-      {hasARNsError && (
-        <GridItem span={8}>
-          <ErrorBox
-            message={resolveARNsErrorTitle(getAWSAccountRolesARNsResponse)}
-            response={getAWSAccountRolesARNsResponse}
-          >
-            {hasNoTrustedRelationshipOnClusterRoleError(getAWSAccountRolesARNsResponse) && (
-              <ErrorNoOCMRole openOcmRoleInstructionsModal={openOcmRoleInstructionsModal} />
-            )}
-          </ErrorBox>
-        </GridItem>
-      )}
+      {hasARNsError && <GridItem span={8}>{arnsErrorAlert}</GridItem>}
       {!getAWSAccountRolesARNsResponse.pending && !allARNsFound && !hasARNsError && (
         <GridItem span={8}>
           <Alert isInline variant="danger" title="Some account roles ARNs were not detected.">
@@ -453,7 +460,7 @@ AccountRolesARNsSection.propTypes = {
   clearGetAWSAccountRolesARNsResponse: PropTypes.func.isRequired,
   isHypershiftSelected: PropTypes.bool,
   onAccountChanged: PropTypes.func.isRequired,
-  openOcmRoleInstructionsModal: PropTypes.func.isRequired,
+  openAssociateAwsAccountModal: PropTypes.func.isRequired,
 };
 
 export default AccountRolesARNsSection;

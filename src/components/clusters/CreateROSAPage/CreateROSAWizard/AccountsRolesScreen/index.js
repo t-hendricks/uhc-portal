@@ -4,7 +4,6 @@ import { formValueSelector } from 'redux-form';
 import wizardConnector from '../../../CreateOSDPage/CreateOSDWizard/WizardConnector';
 import AccountsRolesScreen from './AccountsRolesScreen';
 import { openModal, closeModal } from '../../../../common/Modal/ModalActions';
-import shouldShowModal from '../../../../common/Modal/ModalSelectors';
 
 import {
   getAWSAccountIDs,
@@ -18,8 +17,6 @@ import {
 
 const mapDispatchToProps = (dispatch) => ({
   openAssociateAWSAccountModal: () => dispatch(openModal('associate-aws-modal')),
-  openUserRoleInstructionsModal: () => dispatch(openModal('user-role-instructions-modal')),
-  openOcmRoleInstructionsModal: () => dispatch(openModal('ocm-role-instructions-modal')),
   closeModal: () => dispatch(closeModal()),
   getAWSAccountIDs: (organizationID) => dispatch(getAWSAccountIDs(organizationID)),
   getAWSAccountRolesARNs: (awsAccountID) => dispatch(getAWSAccountRolesARNs(awsAccountID)),
@@ -47,8 +44,6 @@ const mapStateToProps = (state) => {
     getAWSAccountIDsResponse,
     getAWSAccountRolesARNsResponse,
     getUserRoleResponse,
-    isUserRoleModalOpen: shouldShowModal(state, 'user-role-instructions-modal'),
-    isOCMRoleModalOpen: shouldShowModal(state, 'ocm-role-instructions-modal'),
     offlineToken,
   };
 };
