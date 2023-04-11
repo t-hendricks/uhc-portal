@@ -158,7 +158,7 @@ function ClusterRolesScreen({
       isExpandable
       title="If you would like to enable auto mode, expand the alert and follow the steps below."
     >
-      <TextContent className="ocm-alert-text">
+      <TextContent className="pf-u-font-size-sm">
         <Text component={TextVariants.p} className="pf-u-mb-sm">
           Create the Admin OCM role using the following command in the ROSA CLI. Only one OCM role
           can be linked per Red Hat org.{' '}
