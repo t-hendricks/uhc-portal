@@ -91,7 +91,26 @@ const knownProducts = {
   ROSA_HyperShift: 'ROSA-HyperShift',
   ARO: 'ARO',
   OCP_Assisted_Install: 'OCP-AssistedInstall',
+  RHACS: 'RHACS',
+  RHACSTrial: 'RHACSTrial',
+  RHOSR: 'RHOSR',
+  RHOSRTrial: 'RHOSRTrial',
+  RHOSAK: 'RHOSAK',
+  RHOSAKTrial: 'RHOSAKTrial',
+  RHOSE: 'RHOSE',
+  RHOSETrial: 'RHOSETrial',
 };
+
+const hiddenProductTypes = [
+  knownProducts.RHACS,
+  knownProducts.RHACSTrial,
+  knownProducts.RHOSR,
+  knownProducts.RHOSRTrial,
+  knownProducts.RHOSAK,
+  knownProducts.RHOSAKTrial,
+  knownProducts.RHOSE,
+  knownProducts.RHOSETrial,
+];
 
 /**
  * cluster.product.id, subscription.plan.type, subscription.plan.id,
@@ -165,6 +184,7 @@ export {
   subscriptionProductBundles,
   subscriptionSystemUnits,
   knownProducts,
+  hiddenProductTypes,
   normalizedProducts,
   clustersServiceProducts,
   productFilterOptions,
