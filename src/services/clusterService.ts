@@ -28,6 +28,7 @@ import type {
   GCP,
   Flavour,
   LimitedSupportReason,
+  OidcConfig,
 } from '../types/clusters_mgmt.v1';
 import type { Subscription } from '../types/accounts_mgmt.v1';
 
@@ -729,6 +730,9 @@ const getOperatorRoleCommands = (
     },
   });
 
+const getOidcConfigurations = () =>
+  apiRequest.get<OidcConfig[]>(`/api/clusters_mgmt/v1/oidc_configs`);
+
 const getLimitedSupportReasons = (clusterId: string) =>
   apiRequest.get<{
     /**
@@ -802,6 +806,7 @@ const clusterService = {
   postClusterGateAgreement,
   getOperatorRoleCommands,
   getLimitedSupportReasons,
+  getOidcConfigurations,
 };
 
 export {

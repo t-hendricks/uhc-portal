@@ -135,6 +135,13 @@ export const createClusterRequest = ({ isWizard = true, cloudProviderID, product
           ...clusterRequest.properties,
           rosa_creator_arn: formData.rosa_creator_arn,
         };
+
+        // BYO OIDC
+        if (formData.byo_oidc_config_id) {
+          clusterRequest.aws.sts.oidc_config = {
+            id: formData.byo_oidc_config_id,
+          };
+        }
       } else {
         // AWS CCS credentials
         clusterRequest.aws = {
