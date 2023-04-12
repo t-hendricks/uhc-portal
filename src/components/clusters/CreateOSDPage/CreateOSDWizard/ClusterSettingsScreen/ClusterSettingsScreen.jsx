@@ -32,6 +32,7 @@ function ClusterSettingsScreen({
   formErrors,
   touch,
   isHypershiftSelected,
+  isNextClicked,
 }) {
   const [isExpanded, setIsExpanded] = useState(false);
 
@@ -65,7 +66,14 @@ function ClusterSettingsScreen({
     if (isAdvancedEncryptionExpanded) {
       setIsExpanded(true);
     }
-  }, [customerManagedEncryptionSelected, isGCP, gcpError, kmsKeyArn, selectedRegion]);
+  }, [
+    customerManagedEncryptionSelected,
+    isGCP,
+    gcpError,
+    kmsKeyArn,
+    selectedRegion,
+    isNextClicked,
+  ]);
 
   return (
     <Form
@@ -191,6 +199,7 @@ ClusterSettingsScreen.propTypes = {
   formErrors: PropTypes.object,
   touch: PropTypes.func,
   isHypershiftSelected: PropTypes.bool,
+  isNextClicked: PropTypes.bool,
 };
 
 export default ClusterSettingsScreen;
