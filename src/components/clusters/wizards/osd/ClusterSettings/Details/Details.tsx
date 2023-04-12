@@ -311,7 +311,6 @@ export const Details = () => {
             toggleText="Advanced Encryption"
             onToggle={onToggle}
             isExpanded={isExpanded}
-            isActive
           >
             {isByoc && (
               <CustomerManagedEncryption
