@@ -99,7 +99,7 @@ exports[`<MachinePools /> OpenShift version for machine pools is shown if hypers
                   "title": "2",
                 },
                 "Disabled",
-                "4.12.5",
+                "4.12.5-candidate",
               ],
               "key": "workers",
               "machinePool": Object {
