@@ -352,7 +352,7 @@ const reviewValues = {
     },
   },
   associated_aws_id: {
-    title: 'AWS account ID',
+    title: 'AWS infrastructure account ID',
   },
   installer_role_arn: {
     title: 'Installer role',
