@@ -133,6 +133,9 @@ const reviewValues = {
       false: 'Disabled',
     },
   },
+  etcd_key_arn: {
+    title: 'Etcd encryption key ARN',
+  },
   customer_managed_key: {
     title: 'Encrypt volumes with customer keys',
     isBoolean: true,

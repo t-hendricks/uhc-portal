@@ -17,6 +17,9 @@ const mapStateToProps = (state, ownProps) => {
   const customerManagedEncryptionSelected = valueSelector(state, 'customer_managed_key');
   const selectedRegion = valueSelector(state, 'region');
   const kmsKeyArn = valueSelector(state, 'kms_key_arn');
+  const etcdKeyArn = valueSelector(state, 'etcd_key_arn');
+  const isEtcdEncryptionSelected = valueSelector(state, 'etcd_encryption');
+
   const isHypershiftSelected = valueSelector(state, 'hypershift') === 'true';
   const formErrors = {
     ...getFormSyncErrors('CreateCluster')(state),
@@ -32,6 +35,8 @@ const mapStateToProps = (state, ownProps) => {
     customerManagedEncryptionSelected,
     selectedRegion,
     kmsKeyArn,
+    etcdKeyArn,
+    isEtcdEncryptionSelected,
     isHypershiftSelected,
     formErrors,
     touch: (fieldNames) => touch('CreateCluster', ...fieldNames),

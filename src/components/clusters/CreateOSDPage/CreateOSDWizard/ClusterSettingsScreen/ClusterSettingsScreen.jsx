@@ -4,18 +4,15 @@ import { Title, Grid, GridItem, FormGroup, Form, ExpandableSection } from '@patt
 import { Field } from 'redux-form';
 
 import PopoverHint from '../../../../common/PopoverHint';
-import ReduxCheckbox from '../../../../common/ReduxFormComponents/ReduxCheckbox';
-import ExternalLink from '../../../../common/ExternalLink';
 import PersistentStorageDropdown from '../../../common/PersistentStorageDropdown';
 import LoadBalancersDropdown from '../../../common/LoadBalancersDropdown';
 
 import CustomerManagedEncryptionSection from '../../CreateOSDForm/FormSections/EncryptionSection/CustomerManagedKeyEncryption';
 import UserWorkloadMonitoringSection from '../../../common/UserWorkloadMonitoringSection';
+import EtcdEncryptionSection from '../../CreateOSDForm/FormSections/EncryptionSection/EtcdEncryptionSection';
 
 import { constants } from '../../CreateOSDForm/CreateOSDFormConstants';
-
 import BasicFieldsSection from '../../CreateOSDForm/FormSections/BasicFieldsSection';
-import links from '../../../../../common/installLinks.mjs';
 import { normalizedProducts } from '../../../../../common/subscriptionTypes';
 import { validateAWSKMSKeyARN } from '~/common/validators';
 
@@ -29,6 +26,8 @@ function ClusterSettingsScreen({
   billingModel,
   change,
   kmsKeyArn,
+  etcdKeyArn,
+  isEtcdEncryptionSelected,
   formErrors,
   touch,
   isHypershiftSelected,
@@ -63,6 +62,16 @@ function ClusterSettingsScreen({
         touch('CreateCluster', 'kms_key_arn');
       }
     }
+
+    if (
+      isEtcdEncryptionSelected &&
+      isHypershiftSelected &&
+      validateAWSKMSKeyARN(etcdKeyArn, selectedRegion)
+    ) {
+      isAdvancedEncryptionExpanded = true;
+      touch('CreateCluster', 'etcd_key_arn');
+    }
+
     if (isAdvancedEncryptionExpanded) {
       setIsExpanded(true);
     }
@@ -74,6 +83,12 @@ function ClusterSettingsScreen({
     selectedRegion,
     isNextClicked,
   ]);
+
+  React.useEffect(() => {
+    if (!isEtcdEncryptionSelected && !!etcdKeyArn) {
+      change('etcd_key_arn', '');
+    }
+  }, [isEtcdEncryptionSelected, change]);
 
   return (
     <Form
@@ -157,29 +172,13 @@ function ClusterSettingsScreen({
               kmsKeyArn={kmsKeyArn}
             />
           )}
-          <GridItem md={6}>
-            <FormGroup fieldId="etcd_encryption" id="etcdEncryption" label="etcd encryption">
-              <Field
-                component={ReduxCheckbox}
-                name="etcd_encryption"
-                label="Enable additional etcd encryption"
-                extendedHelpText={
-                  <>
-                    {constants.enableAdditionalEtcdHint}{' '}
-                    <ExternalLink
-                      href={isRosa ? links.ROSA_SERVICE_ETCD_ENCRYPTION : links.OSD_ETCD_ENCRYPTION}
-                    >
-                      Learn more about etcd encryption
-                    </ExternalLink>
-                  </>
-                }
-              />
-
-              <div className="ocm-c--reduxcheckbox-description">
-                Add more encryption for OpenShift and Kubernetes API resources.
-              </div>
-            </FormGroup>
-          </GridItem>
+          <EtcdEncryptionSection
+            isRosa={isRosa}
+            isHypershiftSelected={isHypershiftSelected}
+            isEtcdEncryptionSelected={isEtcdEncryptionSelected}
+            etcdKeyArn={etcdKeyArn}
+            selectedRegion={selectedRegion}
+          />
         </ExpandableSection>
         <GridItem md={6} />
       </Grid>
@@ -197,6 +196,8 @@ ClusterSettingsScreen.propTypes = {
   selectedRegion: PropTypes.string,
   change: PropTypes.func,
   kmsKeyArn: PropTypes.string,
+  etcdKeyArn: PropTypes.string,
+  isEtcdEncryptionSelected: PropTypes.bool,
   formErrors: PropTypes.object,
   touch: PropTypes.func,
   isHypershiftSelected: PropTypes.bool,

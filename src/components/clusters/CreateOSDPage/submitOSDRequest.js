@@ -13,6 +13,8 @@ export const createClusterRequest = ({ isWizard = true, cloudProviderID, product
   // But to avoid bugs where we ignore user's choices, when both are present, the field should win.
   const actualCloudProviderID = formData.cloud_provider || cloudProviderID;
   const actualProduct = formData.product || product;
+  const isHypershiftSelected = formData.hypershift === 'true';
+
   const clusterRequest = {
     name: formData.name,
     region: {
@@ -38,7 +40,7 @@ export const createClusterRequest = ({ isWizard = true, cloudProviderID, product
     etcd_encryption: formData.etcd_encryption,
     billing_model: 'standard',
     disable_user_workload_monitoring:
-      formData.hypershift === 'true' ? true : !formData.enable_user_workload_monitoring,
+      isHypershiftSelected || !formData.enable_user_workload_monitoring,
   };
 
   if (formData.billing_model) {
@@ -96,10 +98,9 @@ export const createClusterRequest = ({ isWizard = true, cloudProviderID, product
     const configureProxySelected = formData.configure_proxy === true;
     const usePrivateLink = formData.use_privatelink;
     // Hypershift always uses PrivateLink and can also have public subnets if the cluster_privacy === 'external' (Public)
-    const hidePublicFields =
-      formData.hypershift === 'true'
-        ? formData.cluster_privacy === 'internal'
-        : formData.use_privatelink;
+    const hidePublicFields = isHypershiftSelected
+      ? formData.cluster_privacy === 'internal'
+      : formData.use_privatelink;
     clusterRequest.ccs = {
       enabled: true,
     };
@@ -153,6 +154,11 @@ export const createClusterRequest = ({ isWizard = true, cloudProviderID, product
       }
       if (formData.customer_managed_key === 'true') {
         clusterRequest.aws.kms_key_arn = formData.kms_key_arn;
+      }
+      if (isHypershiftSelected && formData.etcd_key_arn) {
+        clusterRequest.aws.etcd_encryption = {
+          kms_key_arn: formData.etcd_key_arn,
+        };
       }
       clusterRequest.ccs.disable_scp_checks = formData.disable_scp_checks;
 
@@ -249,7 +255,7 @@ export const createClusterRequest = ({ isWizard = true, cloudProviderID, product
   }
 
   if (formData.hypershift) {
-    clusterRequest.hypershift = { enabled: formData.hypershift === 'true' };
+    clusterRequest.hypershift = { enabled: isHypershiftSelected };
   }
 
   if (formData.hypershift === 'true') {
