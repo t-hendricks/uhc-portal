@@ -101,7 +101,7 @@ const knownProducts = {
   RHOSETrial: 'RHOSETrial',
 };
 
-const hiddenProductTypes = [
+const omittedProducts = [
   knownProducts.RHACS,
   knownProducts.RHACSTrial,
   knownProducts.RHOSR,
@@ -184,7 +184,7 @@ export {
   subscriptionProductBundles,
   subscriptionSystemUnits,
   knownProducts,
-  hiddenProductTypes,
+  omittedProducts,
   normalizedProducts,
   clustersServiceProducts,
   productFilterOptions,
