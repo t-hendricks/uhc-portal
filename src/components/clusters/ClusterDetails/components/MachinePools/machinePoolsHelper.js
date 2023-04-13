@@ -70,7 +70,11 @@ const findDuplicateKey = (labels) => {
 };
 
 const parseLabels = (labelsObj) =>
-  labelsObj ? Object.keys(labelsObj).map((labelKey) => `${labelKey}=${labelsObj[labelKey]}`) : [];
+  labelsObj
+    ? Object.keys(labelsObj).map(
+        (labelKey) => `${labelKey}${labelsObj[labelKey] ? '=' : ''}${labelsObj[labelKey]}`,
+      )
+    : [];
 
 const parseTags = (tags) => {
   const labels = {};
