@@ -37,6 +37,7 @@ function BasicFieldsSection({
   isWizard,
   handleMultiAZChangeForOldForm,
   isHypershiftSelected,
+  clusterPrivacy,
 }) {
   const multiAzTooltip = !hasMultiAzQuota && noQuotaTooltip;
   const singleAzTooltip = !hasSingleAzQuota && noQuotaTooltip;
@@ -49,6 +50,12 @@ function BasicFieldsSection({
     const azCount = isMultiAz ? 3 : 1;
     for (let i = 0; i < azCount; i += 1) {
       change(`az_${i}`, AVAILABILITY_ZONE_PLACEHOLDER);
+    }
+
+    // Reset the public subnet ID selection associated with cluster privacy on region change,
+    // since the list of values there can change entirely based on the selected region.
+    if (clusterPrivacy === 'external') {
+      change('cluster_privacy_public_subnet_id', undefined);
     }
   };
 
@@ -205,6 +212,7 @@ BasicFieldsSection.propTypes = {
   hasMultiAzQuota: PropTypes.bool.isRequired,
   isWizard: PropTypes.bool,
   isHypershiftSelected: PropTypes.bool,
+  clusterPrivacy: PropTypes.string,
 };
 
 export default BasicFieldsSection;
