@@ -11,8 +11,7 @@ class GlobalNav extends Page {
     cy.get('body').then(($body) => {
       this.closeSideBar($body);
       cy.get('.pf-c-skeleton').should('not.exist');
-      cy.contains('a.pf-c-nav__link', text)
-        .click();
+      cy.contains('a.pf-c-nav__link', text).click();
     });
   }
 
@@ -21,6 +20,8 @@ class GlobalNav extends Page {
       this.closeSideBar($body);
     });
   }
+
+  breadcrumbItem = (item) => cy.get('ol.pf-c-breadcrumb__list > li').contains(item);
 }
 
 export default new GlobalNav();
