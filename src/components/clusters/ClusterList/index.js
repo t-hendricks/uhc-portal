@@ -13,7 +13,6 @@ import { canTransferClusterOwnershipListSelector } from '../common/TransferClust
 import canHibernateClusterListSelector from '../common/HibernateClusterModal/CanHibernateClusterListSelector';
 import { toggleSubscriptionReleased } from '../common/TransferClusterOwnershipDialog/subscriptionReleasedActions';
 import { clearGlobalError } from '../../../redux/actions/globalErrorActions';
-import { hiddenProductTypes } from '~/common/subscriptionTypes';
 
 const mapDispatchToProps = {
   invalidateClusters: () => clustersActions.invalidateClusters(),
@@ -33,12 +32,6 @@ const mapDispatchToProps = {
 
 const mapStateToProps = (state) => ({
   ...state.clusters.clusters,
-  clusters: state.clusters.clusters.clusters.filter(
-    (cluster) =>
-      // These subscription types exist primarily to extend quota and subscription
-      // management capabilities, and are not meant to be visible to customers.
-      !hiddenProductTypes.includes(cluster.subscription.plan.id),
-  ),
   viewOptions: state.viewOptions[viewConstants.CLUSTERS_VIEW],
   username: state.userProfile.keycloakProfile.username,
   cloudProviders: state.cloudProviders,

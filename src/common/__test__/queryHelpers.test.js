@@ -55,7 +55,8 @@ describe('createViewQueryObject()', () => {
     has_filters: false,
     page: 3,
     page_size: 50,
-    filter: "(cluster_id!='') AND (status NOT IN ('Deprovisioned', 'Archived'))",
+    filter:
+      "(cluster_id!='') AND (plan.id NOT IN ('RHACS', 'RHACSTrial', 'RHOSR', 'RHOSRTrial', 'RHOSAK', 'RHOSAKTrial', 'RHOSE', 'RHOSETrial')) AND (status NOT IN ('Deprovisioned', 'Archived'))",
   };
 
   it('properly creates the query object when no filter is defined', () => {
@@ -126,7 +127,8 @@ describe('createViewQueryObject()', () => {
     };
     expect(createViewQueryObject(viewOptions)).toEqual({
       ...baseResult,
-      filter: "(cluster_id!='') AND (status IN ('Deprovisioned', 'Archived'))",
+      filter:
+        "(cluster_id!='') AND (plan.id NOT IN ('RHACS', 'RHACSTrial', 'RHOSR', 'RHOSRTrial', 'RHOSAK', 'RHOSAKTrial', 'RHOSE', 'RHOSETrial')) AND (status IN ('Deprovisioned', 'Archived'))",
     });
   });
 
@@ -140,7 +142,7 @@ describe('createViewQueryObject()', () => {
     const expected = {
       ...baseResult,
       has_filters: !!viewOptions.filter,
-      filter: `(cluster_id!='') AND (status NOT IN ('Deprovisioned', 'Archived')) AND (display_name ILIKE '%${escaped}%' OR external_cluster_id ILIKE '%${escaped}%' OR cluster_id ILIKE '%${escaped}%')`,
+      filter: `${baseResult.filter} AND (display_name ILIKE '%${escaped}%' OR external_cluster_id ILIKE '%${escaped}%' OR cluster_id ILIKE '%${escaped}%')`,
     };
     expect(createViewQueryObject(viewOptions)).toEqual(expected);
   });
@@ -157,8 +159,7 @@ describe('createViewQueryObject()', () => {
     const expected = {
       ...baseResult,
       has_filters: false,
-      filter:
-        "(cluster_id!='') AND (status NOT IN ('Deprovisioned', 'Archived')) AND (plan_id IN ('OCP','OCP-AssistedInstall','MOA','ROSA'))",
+      filter: `${baseResult.filter} AND (plan_id IN ('OCP','OCP-AssistedInstall','MOA','ROSA'))`,
     };
 
     expect(createViewQueryObject(viewOptions)).toEqual(expected);
@@ -175,7 +176,7 @@ describe('createViewQueryObject()', () => {
     const expected = {
       ...baseResult,
       has_filters: false,
-      filter: `(cluster_id!='') AND (status NOT IN ('Deprovisioned', 'Archived')) AND (creator.username='${username}')`,
+      filter: `${baseResult.filter} AND (creator.username='${username}')`,
     };
 
     expect(createViewQueryObject(viewOptions, username)).toEqual(expected);

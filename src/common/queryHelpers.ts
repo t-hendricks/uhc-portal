@@ -1,6 +1,6 @@
 import isEqual from 'lodash/isEqual';
 import isEmpty from 'lodash/isEmpty';
-import { productFilterOptions } from './subscriptionTypes';
+import { omittedProducts, productFilterOptions } from './subscriptionTypes';
 import { ViewOptions } from '../types/types';
 
 type QueryObject = { [key: string]: string | number | boolean };
@@ -54,6 +54,9 @@ const createViewQueryObject = (viewOptions?: ViewOptions, username?: string): Qu
 
     // base filter: filter out clusters without IDs
     clauses.push("cluster_id!=''");
+
+    // Filter out subscription plans that do not represent clusters.
+    clauses.push(`plan.id NOT IN (${omittedProducts.map(sqlString).join(', ')})`);
 
     // handle archived flag
     if (viewOptions.flags.showArchived) {
