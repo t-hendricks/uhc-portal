@@ -5,7 +5,7 @@ import { Field } from 'redux-form';
 import RadioButtons from '~/components/common/ReduxFormComponents/RadioButtons';
 import ExternalLink from '~/components/common/ExternalLink';
 import GCPClusterEncryption from './GCPEncryptionSection';
-import AWSCustomerManagedEncryption from './AWSEncryptionSection';
+import AWSCustomerManagedEncryption from './AWSCustomerManagedEncryption';
 import './encryptionSection.scss';
 
 function CustomerManagedEncryption({
@@ -62,7 +62,11 @@ function CustomerManagedEncryption({
           (isGCP ? (
             <GCPClusterEncryption selectedRegion={selectedRegion} />
           ) : (
-            <AWSCustomerManagedEncryption region={selectedRegion} kmsKeyArn={kmsKeyArn} />
+            <AWSCustomerManagedEncryption
+              fieldName="kms_key_arn"
+              region={selectedRegion}
+              keyArn={kmsKeyArn}
+            />
           ))}
       </GridItem>
     </Grid>

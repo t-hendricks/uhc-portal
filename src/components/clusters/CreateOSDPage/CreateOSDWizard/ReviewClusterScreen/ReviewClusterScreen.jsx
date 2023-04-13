@@ -45,6 +45,7 @@ const ReviewClusterScreen = ({
   const isAWS = formValues.cloud_provider === 'aws';
   const isGCP = formValues.cloud_provider === 'gcp';
   const isROSA = formValues.product === normalizedProducts.ROSA;
+  const hasEtcdEncryption = isHypershiftSelected && !!formValues.etcd_key_arn;
   const showVPCCheckbox = isROSA || isByoc;
   const clusterSettingsFields = [
     ...(!isROSA ? ['cloud_provider'] : []),
@@ -58,6 +59,7 @@ const ReviewClusterScreen = ({
     ...(!isHypershiftSelected ? ['enable_user_workload_monitoring'] : []),
     ...(isByoc ? ['customer_managed_key'] : []),
     'etcd_encryption',
+    ...(hasEtcdEncryption ? ['etcd_key_arn'] : []),
   ];
 
   if (isCreateClusterPending) {
