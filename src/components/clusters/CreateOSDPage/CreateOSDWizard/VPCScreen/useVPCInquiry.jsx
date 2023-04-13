@@ -46,7 +46,7 @@ export const useAWSVPCInquiry = () => {
     (vpcsCredentials?.access_key_id === credentials?.access_key_id &&
       vpcsCredentials?.secret_access_key === credentials?.secret_access_key);
   const hasLatestVpcs =
-    Object.values(vpcs.data.bySubnetID)?.some((subnet) =>
+    Object.values(vpcs.data?.bySubnetID || {})?.some((subnet) =>
       subnet.availability_zone.includes(region),
     ) && vpcsHasLatestCredentials;
 

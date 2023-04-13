@@ -2,6 +2,7 @@ import React from 'react';
 
 import { WrappedFieldInputProps, WrappedFieldMetaProps } from 'redux-form';
 import {
+  Alert,
   Flex,
   FormGroup,
   Select,
@@ -125,6 +126,12 @@ export const SubnetSelectField = ({
       className={className}
     >
       {vpcsError && <ErrorBox message="Failed to fetch subnet IDs." response={vpcs} />}
+
+      {!isVpcsLoading && !vpcsItems.length && (
+        <Alert variant="danger" isInline isPlain title="No VPCs found">
+          A VPC with a public subnet must be associated with the selected AWS account ID.
+        </Alert>
+      )}
 
       {isVpcsLoading ? (
         <Flex alignItems={{ default: 'alignItemsCenter' }} spaceItems={{ default: 'spaceItemsSm' }}>

@@ -10,6 +10,15 @@ import ErrorBox from '../../../../../../common/ErrorBox';
 import './CloudRegionComboBox.scss';
 
 class CloudRegionComboBox extends React.Component {
+  componentDidMount() {
+    const { input, availableRegions } = this.props;
+
+    // In the event no initial value is set in the form, select to the first available region.
+    if (!input.value) {
+      this.onChange(availableRegions[0].id);
+    }
+  }
+
   componentDidUpdate(prevProps) {
     const { isMultiAz, input, cloudProviderID, cloudProviders } = this.props;
 
