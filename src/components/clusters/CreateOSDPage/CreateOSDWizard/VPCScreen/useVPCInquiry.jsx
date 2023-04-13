@@ -37,6 +37,18 @@ export const useAWSVPCInquiry = () => {
   );
   const region = useSelector((state) => valueSelector(state, 'region'));
   const vpcs = useSelector((state) => state.ccsInquiries.vpcs);
+  const { credentials: vpcsCredentials } = vpcs;
+
+  // When vpcs subnet availability zones possess the current selected region and current
+  // CCS credentials match what's stored for vpcs, vpcs results can be considered up-to-date.
+  const vpcsHasLatestCredentials =
+    vpcsCredentials?.sts?.role_arn === credentials?.sts?.role_arn ||
+    (vpcsCredentials?.access_key_id === credentials?.access_key_id &&
+      vpcsCredentials?.secret_access_key === credentials?.secret_access_key);
+  const hasLatestVpcs =
+    Object.values(vpcs.data?.bySubnetID || {})?.some((subnet) =>
+      subnet.availability_zone.includes(region),
+    ) && vpcsHasLatestCredentials;
 
   useEffect(() => {
     // The action works similarly for AWS and GCP,

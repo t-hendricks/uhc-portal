@@ -5,6 +5,7 @@ import { isAsyncValidating } from 'redux-form';
 
 import { WizardFooter, WizardContext, Button } from '@patternfly/react-core';
 
+import { useGlobalState } from '~/redux/hooks';
 import { stepId } from './rosaWizardConstants';
 
 const CreateRosaWizardFooter = ({
@@ -27,9 +28,14 @@ const CreateRosaWizardFooter = ({
   const { pending: getOCMRoleLoading } = useSelector(
     (state) => state.rosaReducer.getOCMRoleResponse,
   );
+  const { pending: isVpcsLoading } = useGlobalState((state) => state.ccsInquiries.vpcs);
 
   const areAwsResourcesLoading =
-    getAccountIDsLoading || getAccountARNsLoading || getUserRoleLoading || getOCMRoleLoading;
+    getAccountIDsLoading ||
+    getAccountARNsLoading ||
+    getUserRoleLoading ||
+    getOCMRoleLoading ||
+    isVpcsLoading;
 
   return (
     <WizardFooter>
