@@ -237,7 +237,7 @@ class MachinePools extends React.Component {
       const labelsList = labelsKeys.length
         ? labelsKeys.map((key) => (
             <React.Fragment key={`laebl-${key}`}>
-              <Label color="blue">{`${[key]} = ${labels[key]}`}</Label>{' '}
+              <Label color="blue">{`${[key]} ${labels[key] ? '=' : ''} ${labels[key]}`}</Label>{' '}
             </React.Fragment>
           ))
         : null;

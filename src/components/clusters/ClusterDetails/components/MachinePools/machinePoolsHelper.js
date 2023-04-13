@@ -78,7 +78,7 @@ const parseTags = (tags) => {
     if (!checkLabels(tag)) {
       const labelParts = tag.split('=');
       const labelKey = labelParts[0];
-      const labelValue = labelParts[1];
+      const labelValue = labelParts[1] ? labelParts[1] : '';
       labels[labelKey] = labelValue;
     }
   });
