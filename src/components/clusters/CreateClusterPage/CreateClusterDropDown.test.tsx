@@ -1,10 +1,7 @@
 import React from 'react';
-import { render } from '@testing-library/react';
+import { render, axe } from '@testUtils';
 import { MemoryRouter } from 'react-router-dom';
-import { axe, toHaveNoViolations } from 'jest-axe';
 import CreateClusterDropDown from './CreateClusterDropDown';
-
-expect.extend(toHaveNoViolations);
 
 describe('CreateClusterDropDown', () => {
   it('is accessible', async () => {

@@ -1,13 +1,10 @@
 import React from 'react';
-import { render } from '@testing-library/react';
+import { render, axe } from '@testUtils';
 import { MemoryRouter } from 'react-router-dom';
-import { axe, toHaveNoViolations } from 'jest-axe';
 import { Provider } from 'react-redux';
 
 import { store } from '../../../../../redux/store';
 import CreateRosaGetStarted from './CreateRosaGetStarted';
-
-expect.extend(toHaveNoViolations);
 
 global.insights = {
   chrome: {
