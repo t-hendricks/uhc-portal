@@ -25,7 +25,6 @@ function ScaleSection({
   machineType,
   cloudProviderID,
   product,
-  isHypershiftCluster,
   showStorageAndLoadBalancers = true,
   minNodes,
   isMachinePool = false,
@@ -39,7 +38,7 @@ function ScaleSection({
 }) {
   const expandableSectionTitle = isMachinePool ? 'Edit node labels and taints' : 'Edit node labels';
 
-  const labelsAndTaintsSection = !isHypershiftCluster ? (
+  const labelsAndTaintsSection = (
     <ExpandableSection
       toggleTextCollapsed={expandableSectionTitle}
       toggleTextExpanded={expandableSectionTitle}
@@ -57,7 +56,7 @@ function ScaleSection({
         </>
       )}
     </ExpandableSection>
-  ) : null;
+  );
 
   const isRosa = product === normalizedProducts.ROSA;
 
@@ -197,7 +196,6 @@ ScaleSection.propTypes = {
   machineType: PropTypes.string.isRequired,
   cloudProviderID: PropTypes.string.isRequired,
   product: PropTypes.oneOf(Object.keys(normalizedProducts)).isRequired,
-  isHypershiftCluster: PropTypes.bool.isRequired,
   billingModel: PropTypes.oneOf(Object.values(billingModels)),
   minNodes: PropTypes.number,
   isMachinePool: PropTypes.bool,
