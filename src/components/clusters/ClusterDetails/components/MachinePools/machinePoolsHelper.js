@@ -5,7 +5,7 @@ const actionResolver = (
   onClickDelete,
   onClickScale,
   onClickEditTaints,
-  onClickEditLaebls,
+  onClickEditLabels,
   isHypershift,
   machinePoolsCount,
 ) => {
@@ -36,7 +36,7 @@ const actionResolver = (
 
   const editLabelsAction = {
     title: 'Edit labels',
-    onClick: onClickEditLaebls,
+    onClick: onClickEditLabels,
     className: 'hand-pointer',
   };
 
@@ -134,6 +134,31 @@ const normalizeMachinePool = (machinePool) => {
   return machinePool;
 };
 
+const getPoolIds = (subnet) => {
+  if (Array.isArray(subnet)) {
+    return subnet;
+  }
+  return [subnet];
+};
+
+const getSubnetIds = (machinePoolOrNodePool) => {
+  const { subnet, subnets } = machinePoolOrNodePool;
+  if (subnet) {
+    // Hypershift clusters (node pools)
+    return getPoolIds(subnet);
+  }
+  if (subnets) {
+    // ROSA classic (machine pools)
+    return getPoolIds(subnets);
+  }
+  return [];
+};
+
+const hasSubnets = (machinePoolOrNodePool) => {
+  const { subnet, subnets } = machinePoolOrNodePool;
+  return !!subnet || (Array.isArray(subnets) && subnets.length > 0);
+};
+
 export {
   parseTags,
   parseLabels,
@@ -141,4 +166,6 @@ export {
   validateDuplicateLabels,
   normalizeNodePool,
   normalizeMachinePool,
+  getSubnetIds,
+  hasSubnets,
 };
