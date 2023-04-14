@@ -47,6 +47,7 @@ function CreateOIDCProviderInstructions() {
 }
 
 function CustomerOIDCConfiguration({
+  awsAccountID,
   getUserOidcConfigurations,
   byoOidcConfigID,
   input: {
@@ -63,7 +64,7 @@ function CustomerOIDCConfiguration({
   const refreshOidcConfigs = React.useCallback(() => {
     setIsLoading(true);
     try {
-      getUserOidcConfigurations().then(({ action }) => {
+      getUserOidcConfigurations(awsAccountID).then(({ action }) => {
         const currentConfigs = action.payload;
         setOidcConfigs(currentConfigs);
 
@@ -185,6 +186,7 @@ function CustomerOIDCConfiguration({
 }
 
 CustomerOIDCConfiguration.propTypes = {
+  awsAccountID: PropTypes.string,
   getUserOidcConfigurations: PropTypes.func.isRequired,
   byoOidcConfigID: PropTypes.string,
   input: PropTypes.shape({
