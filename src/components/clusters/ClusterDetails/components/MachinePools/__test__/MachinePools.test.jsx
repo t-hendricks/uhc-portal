@@ -232,7 +232,12 @@ describe('<MachinePools />', () => {
       expect(menuItems.length).toBeGreaterThan(0);
       menuItems.forEach((item) => {
         // Only the delete, scale action currently available
-        if (item.text() === 'Delete' || item.text() === 'Scale') {
+        if (
+          item.text() === 'Delete' ||
+          item.text() === 'Scale' ||
+          item.text() === 'Edit labels' ||
+          item.text() === 'Edit taints'
+        ) {
           expect(item.props()['aria-disabled']).toBeFalsy();
         } else {
           expect(item.props()['aria-disabled']).toBeTruthy();

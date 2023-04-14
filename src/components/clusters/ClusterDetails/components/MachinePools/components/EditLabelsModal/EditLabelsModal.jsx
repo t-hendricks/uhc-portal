@@ -103,7 +103,7 @@ class EditLabelsModal extends Component {
                   name="labels"
                   label="Labels"
                   tags={tags}
-                  inputPlaceholder="Add a label"
+                  inputPlaceholder="Add a label, then press enter"
                   validate={[checkLabels, validateDuplicateLabels]}
                 />
               </GridItem>
