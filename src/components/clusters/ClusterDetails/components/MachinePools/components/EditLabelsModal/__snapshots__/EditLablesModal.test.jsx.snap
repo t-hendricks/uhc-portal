@@ -45,7 +45,7 @@ exports[`<EditLabelsModal /> renders correctly 1`] = `
         </p>
         <Field
           component={[Function]}
-          inputPlaceholder="Add a label"
+          inputPlaceholder="Add a label, then press enter"
           label="Labels"
           name="labels"
           tags={Array []}
