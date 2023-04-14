@@ -43,6 +43,10 @@ const ControlPlaneField = ({
         change(formValue, '');
       }
     });
+
+    if (isHypershift === 'true' && formValues.multi_az === 'true') {
+      change('multi_az', 'false');
+    }
   };
 
   return (
