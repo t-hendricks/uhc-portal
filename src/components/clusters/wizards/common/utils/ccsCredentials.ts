@@ -11,23 +11,33 @@ import {
 import { CloudProviderType } from '~/components/clusters/wizards/common/constants';
 import { FieldId } from '~/components/clusters/wizards/osd/constants';
 import { AWSCredentials } from '~/types/types';
+import { normalizedProducts } from '~/common/subscriptionTypes';
 
 /**
  * Gets AWS CCS credentials from form state, in form suitable for actions.
  */
 export const getAwsCcsCredentials = (values: FormikValues): AWSCredentials => {
   const {
+    [FieldId.Product]: product,
     [FieldId.AccountId]: accountId,
     [FieldId.AccessKeyId]: accessKeyId,
     [FieldId.SecretAccessKey]: secretAccessKey,
+    [FieldId.InstallerRoleArn]: installerRoleArn,
   } = values;
 
-  // TODO: handle STS
-  return {
-    account_id: accountId,
-    access_key_id: accessKeyId,
-    secret_access_key: secretAccessKey,
-  };
+  const isSTS = product === normalizedProducts.ROSA;
+  return isSTS
+    ? {
+        account_id: accountId,
+        sts: {
+          role_arn: installerRoleArn,
+        },
+      }
+    : {
+        account_id: accountId,
+        access_key_id: accessKeyId,
+        secret_access_key: secretAccessKey,
+      };
 };
 
 /**

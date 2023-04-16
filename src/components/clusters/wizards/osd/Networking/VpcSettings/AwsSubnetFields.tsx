@@ -45,7 +45,7 @@ export const AwsSubnetFields = (props: AwsSubnetFieldsProps) => {
   const { isMultiAz } = props;
   const ccsCredentials = React.useMemo(
     () => getAwsCcsCredentials(values),
-    [accountId, accessKeyId, secretAccessKey],
+    [accountId, accessKeyId, secretAccessKey, installerRoleArn],
   );
   const vpcs = useGlobalState((state) => state.ccsInquiries.vpcs);
 
