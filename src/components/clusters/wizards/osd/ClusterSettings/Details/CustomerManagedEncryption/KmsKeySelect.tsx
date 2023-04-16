@@ -13,7 +13,7 @@ import { constants } from '~/components/clusters/CreateOSDPage/CreateOSDForm/Cre
 import PopoverHint from '~/components/common/PopoverHint';
 import DynamicSelect from '~/components/common/DynamicSelect';
 import ExternalLink from '~/components/common/ExternalLink';
-import { getCcsCredentials } from '~/components/clusters/wizards/common/utils';
+import { getGcpCcsCredentials } from '~/components/clusters/wizards/common/utils';
 import { FieldId } from '~/components/clusters/wizards/osd/constants';
 import { EncryptionKey } from '~/types/clusters_mgmt.v1';
 
@@ -21,7 +21,7 @@ export const KmsKeySelect = () => {
   const dispatch = useDispatch();
   const { gcpKeys } = useGlobalState((state) => state.ccsInquiries);
   const { values, getFieldProps, setFieldValue, getFieldMeta } = useFormState();
-  const ccsCredentials = getCcsCredentials(values) as string;
+  const ccsCredentials = getGcpCcsCredentials(values);
 
   const { [FieldId.KeyLocation]: keyLocation, [FieldId.KeyRing]: keyRing } = values;
   const hasDependencies = !!(ccsCredentials && keyLocation && keyRing);

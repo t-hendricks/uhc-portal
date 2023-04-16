@@ -23,7 +23,7 @@ import { useFormState } from '~/components/clusters/wizards/hooks';
 import { CloudProviderType } from '~/components/clusters/wizards/common/constants';
 import { TextInputField } from '~/components/clusters/wizards/form';
 import { FieldId } from '~/components/clusters/wizards/osd/constants';
-import { AWSCredentials } from '~/services/clusterService';
+import { getAwsCcsCredentials } from '../../../common';
 
 interface AwsSubnetFieldsProps {
   region: string;
@@ -33,29 +33,25 @@ interface AwsSubnetFieldsProps {
 
 export const AwsSubnetFields = (props: AwsSubnetFieldsProps) => {
   const dispatch = useDispatch();
+  const { values } = useFormState();
   const {
-    values: {
-      [FieldId.CloudProvider]: cloudProvider,
-      [FieldId.Region]: region,
-      [FieldId.AccountId]: accountId,
-      [FieldId.AccessKeyId]: accessKeyId,
-      [FieldId.SecretAccessKey]: secretAccessKey,
-    },
-  } = useFormState();
+    [FieldId.CloudProvider]: cloudProvider,
+    [FieldId.Region]: region,
+    [FieldId.AccountId]: accountId,
+    [FieldId.AccessKeyId]: accessKeyId,
+    [FieldId.SecretAccessKey]: secretAccessKey,
+    [FieldId.InstallerRoleArn]: installerRoleArn,
+  } = values;
   const { isMultiAz } = props;
   const ccsCredentials = React.useMemo(
-    () => ({
-      account_id: accountId,
-      access_key_id: accessKeyId,
-      secret_access_key: secretAccessKey,
-    }),
+    () => getAwsCcsCredentials(values),
     [accountId, accessKeyId, secretAccessKey],
   );
   const vpcs = useGlobalState((state) => state.ccsInquiries.vpcs);
 
   React.useEffect(() => {
     if (cloudProvider === CloudProviderType.Aws) {
-      dispatch(getAWSCloudProviderVPCs(ccsCredentials as AWSCredentials, region));
+      dispatch(getAWSCloudProviderVPCs(ccsCredentials, region));
     }
   }, [ccsCredentials, cloudProvider, dispatch, region]);
 

@@ -13,49 +13,46 @@ import { FieldId } from '~/components/clusters/wizards/osd/constants';
 import { AWSCredentials } from '~/types/types';
 
 /**
- * Gets AWS or GCP CCS credentials from form state, in form suitable for actions.
- * In GCP case we return JSON string; parsing it is deferred to action time,
- * when it's easier to present errors to user.
+ * Gets AWS CCS credentials from form state, in form suitable for actions.
  */
-export const getCcsCredentials = (values: FormikValues): string | AWSCredentials | null => {
+export const getAwsCcsCredentials = (values: FormikValues): AWSCredentials => {
   const {
-    [FieldId.GcpServiceAccount]: gcpServiceAccount,
     [FieldId.AccountId]: accountId,
     [FieldId.AccessKeyId]: accessKeyId,
     [FieldId.SecretAccessKey]: secretAccessKey,
-    [FieldId.CloudProvider]: cloudProvider,
   } = values;
 
-  switch (cloudProvider) {
-    case CloudProviderType.Gcp:
-      return gcpServiceAccount;
-    case CloudProviderType.Aws:
-      // TODO: handle STS
-      return {
-        account_id: accountId,
-        access_key_id: accessKeyId,
-        secret_access_key: secretAccessKey,
-      };
-    default:
-      return null;
-  }
+  // TODO: handle STS
+  return {
+    account_id: accountId,
+    access_key_id: accessKeyId,
+    secret_access_key: secretAccessKey,
+  };
+};
+
+/**
+ * Gets GCP CCS credentials from form state, in form suitable for actions.
+ * We return JSON string; parsing it is deferred to action time,
+ * when it's easier to present errors to user.
+ */
+export const getGcpCcsCredentials = (values: FormikValues): string => {
+  const { [FieldId.GcpServiceAccount]: gcpServiceAccount } = values;
+
+  return gcpServiceAccount;
 };
 
 export const getCloudProverInfo = (values: FormikValues, dispatch: Dispatch) => {
-  const ccsCredentials = getCcsCredentials(values);
-
   if (values[FieldId.CloudProvider] === CloudProviderType.Gcp) {
     // hard code region since we're just validating credentials
     return dispatch(
       getGCPCloudProviderVPCs(
         VALIDATE_CLOUD_PROVIDER_CREDENTIALS,
-        ccsCredentials as string,
+        getGcpCcsCredentials(values),
         'us-east1',
       ),
     );
   }
-
-  return dispatch(getAWSCloudProviderRegions(ccsCredentials as AWSCredentials));
+  return dispatch(getAWSCloudProviderRegions(getAwsCcsCredentials(values)));
 };
 
 export const shouldValidateCcsCredentials = (
@@ -65,7 +62,12 @@ export const shouldValidateCcsCredentials = (
   const areCCSCredentialsValid =
     ccsCredentialsValidity.fulfilled &&
     ccsCredentialsValidity.cloudProvider === values[FieldId.CloudProvider] &&
-    isEqual(ccsCredentialsValidity.credentials, getCcsCredentials(values));
+    isEqual(
+      ccsCredentialsValidity.credentials,
+      values[FieldId.CloudProvider] === CloudProviderType.Aws
+        ? getAwsCcsCredentials(values)
+        : getGcpCcsCredentials(values),
+    );
 
   return values[FieldId.Byoc] === 'true' && !areCCSCredentialsValid;
 };

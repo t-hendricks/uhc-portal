@@ -19,7 +19,7 @@ import { useGlobalState } from '~/redux/hooks/useGlobalState';
 import { useFormState } from '~/components/clusters/wizards/hooks';
 import { CloudProviderType } from '~/components/clusters/wizards/common/constants';
 import { FieldId } from '~/components/clusters/wizards/osd/constants';
-import { getCcsCredentials } from '~/components/clusters/wizards/common/utils';
+import { getGcpCcsCredentials } from '~/components/clusters/wizards/common/utils';
 import { CloudVPC } from '~/types/clusters_mgmt.v1';
 
 interface GcpVpcNameSelectFieldProps {
@@ -44,7 +44,7 @@ export const GcpVpcNameSelectField = ({
   const dispatch = useDispatch();
   const { values } = useFormState();
   const { vpcs } = useGlobalState((state) => state.ccsInquiries);
-  const ccsCredentials = getCcsCredentials(values) as string;
+  const ccsCredentials = getGcpCcsCredentials(values);
   const region = values[FieldId.Region];
   const hasDependencies = !!(ccsCredentials && region);
   const matchesDependencies =

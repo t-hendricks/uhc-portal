@@ -14,7 +14,7 @@ import { constants } from '~/components/clusters/CreateOSDPage/CreateOSDForm/Cre
 import { CloudProviderType } from '~/components/clusters/wizards/common/constants';
 import { required } from '~/common/validators';
 import ExternalLink from '~/components/common/ExternalLink';
-import { getCcsCredentials } from '~/components/clusters/wizards/common/utils';
+import { getGcpCcsCredentials } from '~/components/clusters/wizards/common/utils';
 import { FieldId } from '~/components/clusters/wizards/osd/constants';
 import { KeyRing } from '~/types/clusters_mgmt.v1';
 
@@ -22,7 +22,7 @@ export const KmsKeyRingSelect = () => {
   const dispatch = useDispatch();
   const { gcpKeyRings } = useGlobalState((state) => state.ccsInquiries);
   const { values, getFieldProps, setFieldValue, getFieldMeta } = useFormState();
-  const ccsCredentials = getCcsCredentials(values) as string;
+  const ccsCredentials = getGcpCcsCredentials(values);
 
   const { [FieldId.KeyLocation]: keyLocation } = values;
   const hasDependencies = !!(ccsCredentials && keyLocation);
