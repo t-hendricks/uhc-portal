@@ -49,6 +49,7 @@ function CreateOIDCProviderInstructions() {
 function CustomerOIDCConfiguration({
   getUserOidcConfigurations,
   byoOidcConfigID,
+  onSelect: onParentSelect,
   input: {
     // Redux Form's onBlur interferes with Patternfly's Select footer onClick handlers.
     onBlur: _onBlur,
@@ -71,17 +72,18 @@ function CustomerOIDCConfiguration({
           byoOidcConfigID &&
           currentConfigs.find((config) => config.id === byoOidcConfigID) === undefined;
         if (isSelectedConfigDeleted) {
-          inputProps.onChange('');
+          onParentSelect(null);
         }
       });
     } finally {
       setIsLoading(false);
     }
-  }, [byoOidcConfigID, inputProps.onChange]);
+  }, [byoOidcConfigID, onParentSelect]);
 
-  const onSelect = (_, selection) => {
+  const onSelect = (_, configId) => {
+    const selectedConfig = oidcConfigs.find((config) => config.id === configId);
     setIsDropdownOpen(false);
-    inputProps.onChange(selection);
+    onParentSelect(selectedConfig);
   };
 
   useEffect(() => {
@@ -187,9 +189,9 @@ function CustomerOIDCConfiguration({
 CustomerOIDCConfiguration.propTypes = {
   getUserOidcConfigurations: PropTypes.func.isRequired,
   byoOidcConfigID: PropTypes.string,
+  onSelect: PropTypes.func,
   input: PropTypes.shape({
     value: PropTypes.string,
-    onChange: PropTypes.func,
     onBlur: PropTypes.func,
   }),
   meta: PropTypes.shape({
