@@ -127,7 +127,7 @@ export const SubnetSelectField = ({
     >
       {vpcsError && <ErrorBox message="Failed to fetch subnet IDs." response={vpcs} />}
 
-      {!isVpcsLoading && !vpcsItems.length && (
+      {!isVpcsLoading && vpcsItems?.length === 0 && (
         <Alert variant="danger" isInline isPlain title="No VPCs found">
           A VPC with a public subnet must be associated with the selected AWS account ID.
         </Alert>
