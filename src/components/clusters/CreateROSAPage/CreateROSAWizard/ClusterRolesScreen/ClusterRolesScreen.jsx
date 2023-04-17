@@ -73,8 +73,14 @@ function ClusterRolesScreen({
       change('rosa_roles_provider_creation_mode', roleModes.MANUAL);
     } else {
       change('byo_oidc_config_id', '');
+      change('byo_oidc_config_id_managed', '');
     }
     setHasByoOidcConfig(isChecked);
+  };
+
+  const onSelectOIDCConfig = (oidcConfig) => {
+    change('byo_oidc_config_id', oidcConfig ? oidcConfig.id : '');
+    change('byo_oidc_config_id_managed', !oidcConfig || oidcConfig.managed ? 'true' : 'false');
   };
 
   useEffect(() => {
@@ -292,6 +298,7 @@ function ClusterRolesScreen({
             getUserOidcConfigurations={getUserOidcConfigurations}
             byoOidcConfigID={byoOidcConfigID}
             validate={required}
+            onSelect={onSelectOIDCConfig}
           />
         ) : (
           <CustomOperatorRoleNames />

@@ -261,8 +261,12 @@ const ReviewClusterScreen = ({
         >
           {!isHypershiftSelected &&
             ReviewItem({ name: 'rosa_roles_provider_creation_mode', formValues })}
-          {!isHypershiftSelected && ReviewItem({ name: 'byo_oidc_config_id_type', formValues })}
-          {formValues.byo_oidc_config_id && ReviewItem({ name: 'byo_oidc_config_id', formValues })}
+          {formValues.byo_oidc_config_id && (
+            <>
+              {ReviewItem({ name: 'byo_oidc_config_id_managed', formValues })}
+              {ReviewItem({ name: 'byo_oidc_config_id', formValues })}
+            </>
+          )}
           {ReviewItem({ name: 'custom_operator_roles_prefix', formValues })}
         </ReviewSection>
       )}
