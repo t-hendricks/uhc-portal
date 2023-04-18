@@ -34,10 +34,11 @@ const credentialsFromJSON = async (gcpCredentialsJSON) => {
 /**
  * List AWS VPCs for given CCS account.
  * @param {*} awsCredentials { accountID, accessKey, secretKey } object
+ * @param {string} [subnet] - only vpc attached to the entered subnet will be returned
  */
-export const getAWSCloudProviderVPCs = (awsCredentials, region) => ({
+export const getAWSCloudProviderVPCs = (awsCredentials, region, subnet = undefined) => ({
   type: LIST_VPCS,
-  payload: listAWSVPCs(awsCredentials, region),
+  payload: listAWSVPCs(awsCredentials, region, subnet),
   // parameters can be used to check if we need to query again.
   meta: {
     credentials: awsCredentials,
