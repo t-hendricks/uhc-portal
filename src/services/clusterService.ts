@@ -730,8 +730,14 @@ const getOperatorRoleCommands = (
     },
   });
 
-const getOidcConfigurations = () =>
-  apiRequest.get<OidcConfig[]>(`/api/clusters_mgmt/v1/oidc_configs`);
+const getOidcConfigurations = (awsAccountID: string) =>
+  apiRequest.get<OidcConfig[]>(`/api/clusters_mgmt/v1/oidc_configs`, {
+    params: {
+      // Managed oidc_configs are reused across the organization. For those, awsAccountID is not set
+      // Unmanaged oidc_configs are associated to a particular aws account. For those, awsAccountID must match
+      search: `aws.account_id='${awsAccountID}' or aws.account_id=''`,
+    },
+  });
 
 const getLimitedSupportReasons = (clusterId: string) =>
   apiRequest.get<{

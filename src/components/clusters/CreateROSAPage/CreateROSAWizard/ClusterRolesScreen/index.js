@@ -24,7 +24,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => ({
   getOCMRole: (awsAccountID) => dispatch(getOCMRole(awsAccountID)),
   clearGetOcmRoleResponse: () => dispatch(clearGetOcmRoleResponse()),
-  getUserOidcConfigurations: () => dispatch(getUserOidcConfigurations()),
+  getUserOidcConfigurations: (awsAccountID) => dispatch(getUserOidcConfigurations(awsAccountID)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(wizardConnector(ClusterRolesScreen));

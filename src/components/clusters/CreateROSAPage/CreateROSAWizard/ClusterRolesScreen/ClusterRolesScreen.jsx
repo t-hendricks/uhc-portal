@@ -295,6 +295,7 @@ function ClusterRolesScreen({
             component={CustomerOIDCConfiguration}
             name="byo_oidc_config_id"
             label="Config ID"
+            awsAccountID={awsAccountID}
             getUserOidcConfigurations={getUserOidcConfigurations}
             byoOidcConfigID={byoOidcConfigID}
             validate={required}
