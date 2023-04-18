@@ -33,6 +33,9 @@ const ControlPlaneField = ({
 
   const handleChange = (isHypershift: hypershiftValue) => {
     onChange(isHypershift);
+    // Uncheck the following Network checkboxes when switching Control plane selection
+    change('install_to_vpc', false);
+    change('configure_proxy', false);
     // Reset VPC settings in case they were configured and then came back to the Control plane step
     Object.keys(formValues).forEach((formValue) => {
       if (
