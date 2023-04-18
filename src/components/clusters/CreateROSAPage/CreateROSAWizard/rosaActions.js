@@ -110,9 +110,11 @@ export const getUserRole = () => ({
   payload: fetchUserRolesByOCMAccountID(),
 });
 
-export const getUserOidcConfigurations = () => ({
+export const getUserOidcConfigurations = (awsAccountID) => ({
   type: LIST_USER_OIDC_CONFIGURATIONS,
-  payload: clusterService.getOidcConfigurations().then((response) => response?.data?.items ?? []),
+  payload: clusterService
+    .getOidcConfigurations(awsAccountID)
+    .then((response) => response?.data?.items ?? []),
 });
 
 export const clearGetAWSAccountIDsResponse = () => ({
