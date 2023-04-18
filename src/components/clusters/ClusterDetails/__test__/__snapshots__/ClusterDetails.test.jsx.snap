@@ -7653,7 +7653,7 @@ exports[`<ClusterDetails /> Cluster Details - OSD should render 1`] = `
                                         Instance type
                                       </th>
                                       <th
-                                        class="pf-m-width-25"
+                                        class="pf-m-width-15"
                                         data-key="3"
                                         data-label="Availability zones"
                                         scope="col"
@@ -7669,7 +7669,7 @@ exports[`<ClusterDetails /> Cluster Details - OSD should render 1`] = `
                                         Node count
                                       </th>
                                       <th
-                                        class=""
+                                        class="pf-m-width-15"
                                         data-key="5"
                                         data-label="Autoscaling"
                                         scope="col"
@@ -9346,7 +9346,7 @@ exports[`<ClusterDetails /> Cluster Details - OSD should render 1`] = `
                                           Instance type
                                         </th>
                                         <th
-                                          class="pf-m-width-25"
+                                          class="pf-m-width-15"
                                           data-key="3"
                                           data-label="Availability zones"
                                           scope="col"
@@ -9362,7 +9362,7 @@ exports[`<ClusterDetails /> Cluster Details - OSD should render 1`] = `
                                           Node count
                                         </th>
                                         <th
-                                          class=""
+                                          class="pf-m-width-15"
                                           data-key="5"
                                           data-label="Autoscaling"
                                           scope="col"
@@ -26078,7 +26078,7 @@ exports[`<ClusterDetails /> Cluster Details - OSD should render 1`] = `
                                       Instance type
                                     </th>
                                     <th
-                                      class="pf-m-width-25"
+                                      class="pf-m-width-15"
                                       data-key="3"
                                       data-label="Availability zones"
                                       scope="col"
@@ -26094,7 +26094,7 @@ exports[`<ClusterDetails /> Cluster Details - OSD should render 1`] = `
                                       Node count
                                     </th>
                                     <th
-                                      class=""
+                                      class="pf-m-width-15"
                                       data-key="5"
                                       data-label="Autoscaling"
                                       scope="col"

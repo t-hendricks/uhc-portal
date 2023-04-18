@@ -160,15 +160,15 @@ class MachinePools extends React.Component {
     const columns = [
       { title: 'Machine pool', cellFormatters: [expandable] },
       { title: 'Instance type' },
-      { title: 'Availability zones', transform: [cellWidth(15)] },
+      { title: 'Availability zones', transforms: [cellWidth(15)] },
     ];
     if (showSubnetColumn) {
       columns.push({ title: 'Subnets' });
     }
     columns.push({ title: 'Node count' });
-    columns.push({ title: 'Autoscaling count', transform: [cellWidth(15)] });
+    columns.push({ title: 'Autoscaling', transforms: [cellWidth(15)] });
     if (isHypershift) {
-      columns.push({ title: 'Version', transform: [cellWidth(15)] });
+      columns.push({ title: 'Version', transforms: [cellWidth(15)] });
     }
 
     const getMachinePoolRow = (machinePool = {}, isExpandableRow) => {
@@ -216,8 +216,8 @@ class MachinePools extends React.Component {
           ? {
               title: (
                 <>
-                  {getSubnetIds(machinePool).map((subnetId) => (
-                    <div>{subnetId}</div>
+                  {getSubnetIds(machinePool).map((subnetId, idx) => (
+                    <div key={`subnet-${subnetId || idx}`}>{subnetId}</div>
                   ))}
                 </>
               ),
@@ -225,10 +225,8 @@ class MachinePools extends React.Component {
           : null,
         { title: nodes },
         autoscalingEnabled ? 'Enabled' : 'Disabled',
-      ].filter(Boolean);
-      if (isHypershift) {
-        cells.push(getOpenShiftVersion(machinePool));
-      }
+        isHypershift ? getOpenShiftVersion(machinePool) : null,
+      ].filter((column) => column !== null);
 
       const row = {
         cells,
