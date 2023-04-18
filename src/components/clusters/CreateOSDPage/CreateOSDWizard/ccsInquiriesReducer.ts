@@ -28,7 +28,7 @@ import { AugmentedSubnetwork, AWSCredentials } from '~/types/types';
 // this is not a critical choice, as long as it's comparable.
 type GCPCredentialsJSON = string;
 
-type State = {
+export type State = {
   ccsCredentialsValidity: PromiseReducerState<{
     cloudProvider?: string;
     credentials?: AWSCredentials | GCPCredentialsJSON;

@@ -3,8 +3,9 @@ import cidrTools from 'cidr-tools';
 import { ValidationError, Validator } from 'jsonschema';
 import { clusterService } from '~/services';
 import type { GCP } from '../types/clusters_mgmt.v1';
-import type { AugmentedSubnetwork, SubnetFormProps } from '../types/types';
+import type { AugmentedSubnetwork } from '../types/types';
 import { sqlString } from './queryHelpers';
+import { State as CcsInquiriesState } from '~/components/clusters/CreateOSDPage/CreateOSDWizard/ccsInquiriesReducer';
 
 type Networks = Parameters<typeof cidrTools['overlap']>[0];
 
@@ -1114,6 +1115,11 @@ const validateValueNotPlaceholder = (placeholder: any) => (value: any) =>
 // unregisters and re-registers the field when `validate` prop changes, which would
 // happen constantly without careful memoization.)
 
+type SubnetFormProps = {
+  vpcs: CcsInquiriesState['vpcs'];
+  vpcsValid: boolean;
+};
+
 type BySubnetID = { [id: string]: AugmentedSubnetwork };
 
 /** Finds all bySubnetID info hashes for AWS VPC subnet fields. */
@@ -1135,16 +1141,7 @@ const awsVPCSubnetInfos = (
 const validateAWSSubnet = (
   value: string,
   allValues: { [key: string]: string },
-  formProps: {
-    vpcs: {
-      fulfilled: boolean;
-      data: {
-        bySubnetID: BySubnetID;
-      };
-      region?: string;
-    };
-    vpcsValid: boolean;
-  },
+  formProps: SubnetFormProps,
   name: string,
 ): string | undefined => {
   if (!value) {
@@ -1152,7 +1149,7 @@ const validateAWSSubnet = (
   }
 
   const { vpcs, vpcsValid } = formProps;
-  if (vpcsValid) {
+  if (vpcs.fulfilled && vpcsValid) {
     const subnetInfo = vpcs.data.bySubnetID[value];
     if (!subnetInfo) {
       return `No such subnet in region ${vpcs.region}.`;
@@ -1180,7 +1177,7 @@ const validateAWSSubnetIsPrivate = (
   formProps: SubnetFormProps,
 ) => {
   const { vpcs, vpcsValid } = formProps;
-  if (vpcsValid) {
+  if (vpcs.fulfilled && vpcsValid) {
     const subnetInfo = vpcs.data.bySubnetID[value];
     if (subnetInfo && subnetInfo.public) {
       return 'Provided subnet is public, should be private.';
@@ -1195,7 +1192,7 @@ const validateAWSSubnetIsPublic = (
   formProps: SubnetFormProps,
 ) => {
   const { vpcs, vpcsValid } = formProps;
-  if (vpcsValid) {
+  if (vpcs.fulfilled && vpcsValid) {
     const subnetInfo = vpcs.data.bySubnetID[value];
     if (subnetInfo && !subnetInfo.public) {
       return 'Provided subnet is private, should be public.';

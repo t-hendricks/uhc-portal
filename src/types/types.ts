@@ -105,19 +105,6 @@ export type AugmentedSubnetwork = Subnetwork & {
   ['vpc_name']?: string; // presence depends on AWS "Name" tag, not guaranteed.
 };
 
-export type BySubnetID = { [id: string]: AugmentedSubnetwork };
-
-export type SubnetFormProps = {
-  vpcs: {
-    fulfilled: boolean;
-    data: {
-      bySubnetID: BySubnetID;
-    };
-    region?: string;
-  };
-  vpcsValid: boolean;
-};
-
 export type ViewSorting = {
   isAscending: boolean;
   sortField: string;
