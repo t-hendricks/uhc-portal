@@ -123,6 +123,8 @@ export const MachinePool = () => {
           />
         </GridItem>
 
+        <GridItem md={6} />
+
         {canAutoScale && (
           <>
             <GridItem>
@@ -169,6 +171,7 @@ export const MachinePool = () => {
             {nodeLabelsExpandableSection}
           </>
         )}
+        <GridItem md={6} />
       </Grid>
     </Form>
   );
