@@ -83,18 +83,6 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
       machinePoolRequest.subnet = formData.subnet;
     } else {
       machinePoolRequest.instance_type = formData.machine_type;
-
-      const parsedLabels = parseReduxFormKeyValueList(formData.node_labels);
-      const parsedTaints = parseReduxFormTaints(formData.taints);
-
-      if (!isEmpty(parsedLabels)) {
-        machinePoolRequest.labels = parsedLabels;
-      }
-
-      if (parsedTaints.length > 0) {
-        machinePoolRequest.taints = parsedTaints;
-      }
-
       if (formData.spot_instances) {
         machinePoolRequest.aws = {
           spot_market_options:
@@ -104,6 +92,16 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
               : {},
         };
       }
+    }
+    const parsedLabels = parseReduxFormKeyValueList(formData.node_labels);
+    const parsedTaints = parseReduxFormTaints(formData.taints);
+
+    if (!isEmpty(parsedLabels)) {
+      machinePoolRequest.labels = parsedLabels;
+    }
+
+    if (parsedTaints.length > 0) {
+      machinePoolRequest.taints = parsedTaints;
     }
 
     dispatch(
