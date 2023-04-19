@@ -169,9 +169,9 @@ export const MachinePool = () => {
               />
             </GridItem>
             {nodeLabelsExpandableSection}
+            <GridItem md={6} />
           </>
         )}
-        <GridItem md={6} />
       </Grid>
     </Form>
   );
