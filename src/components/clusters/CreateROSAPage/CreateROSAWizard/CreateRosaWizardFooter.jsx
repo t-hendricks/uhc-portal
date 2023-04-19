@@ -6,7 +6,7 @@ import { isAsyncValidating } from 'redux-form';
 import { WizardFooter, WizardContext, Button } from '@patternfly/react-core';
 
 import { useGlobalState } from '~/redux/hooks';
-import { stepId } from './rosaWizardConstants';
+import { stepId, hasLoadingState } from './rosaWizardConstants';
 
 const CreateRosaWizardFooter = ({
   firstStepId,
@@ -51,8 +51,12 @@ const CreateRosaWizardFooter = ({
                 variant="primary"
                 type="submit"
                 onClick={() => onBeforeNext(onNext)}
-                isLoading={asyncValidating || areAwsResourcesLoading}
-                isDisabled={isNextDisabled || areAwsResourcesLoading}
+                isLoading={
+                  hasLoadingState(activeStep.id) && (asyncValidating || areAwsResourcesLoading)
+                }
+                isDisabled={
+                  hasLoadingState(activeStep.id) && (isNextDisabled || areAwsResourcesLoading)
+                }
               >
                 Next
               </Button>
