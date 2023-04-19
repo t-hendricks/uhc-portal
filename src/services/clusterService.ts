@@ -517,7 +517,7 @@ const upgradeTrialCluster = (clusterID: string, data: Cluster) =>
  *  }`
  * @param region {string} the region ID.
  */
-const listAWSVPCs = (credentials: AWS, region: string) =>
+const listAWSVPCs = (credentials: AWS, region: string, subnet?: string) =>
   apiRequest.post<{
     /**
      * Retrieved list of cloud VPC.
@@ -545,6 +545,7 @@ const listAWSVPCs = (credentials: AWS, region: string) =>
     region: {
       id: region,
     },
+    subnets: subnet ? [subnet] : undefined,
   });
 
 const listGCPVPCs = (credentials: GCP, region: string) =>
