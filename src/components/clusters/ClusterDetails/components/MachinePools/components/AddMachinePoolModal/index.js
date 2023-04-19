@@ -116,10 +116,21 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
   closeModal: () => dispatch(closeModal()),
   getOrganizationAndQuota: () => dispatch(getOrganizationAndQuota()),
   getMachineTypes: () => dispatch(getMachineTypes()),
-  getAWSVPCs: (cluster) =>
-    dispatch(
-      getAWSCloudProviderVPCs({ sts: { role_arn: cluster.aws.sts.role_arn } }, cluster.region.id),
-    ),
+  getAWSVPCs: (cluster) => {
+    const subnet =
+      cluster.aws && cluster.aws.subnet_ids && cluster.aws.subnet_ids[0]
+        ? cluster.aws.subnet_ids[0]
+        : undefined;
+    return dispatch(
+      getAWSCloudProviderVPCs(
+        {
+          sts: { role_arn: cluster.aws.sts.role_arn },
+        },
+        cluster.region.id,
+        subnet,
+      ),
+    );
+  },
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(reduxFormAddMachinePool);
