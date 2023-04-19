@@ -20,6 +20,8 @@ export const getAccountAndRolesStepId = (isHypershiftEnabled) =>
     ? stepId.ACCOUNTS_AND_ROLES_AS_SECOND_STEP
     : stepId.ACCOUNTS_AND_ROLES_AS_FIRST_STEP;
 
+export const hasLoadingState = (wizardStepId) => wizardStepId !== stepId.CONTROL_PLANE;
+
 export const stepNameById = {
   [stepId.ACCOUNTS_AND_ROLES_AS_FIRST_STEP]: 'Accounts and roles',
   [stepId.ACCOUNTS_AND_ROLES_AS_SECOND_STEP]: 'Accounts and roles',
