@@ -160,7 +160,7 @@ class MachinePools extends React.Component {
     const columns = [
       { title: 'Machine pool', cellFormatters: [expandable] },
       { title: 'Instance type' },
-      { title: 'Availability zones', transforms: [cellWidth(15)] },
+      { title: 'Availability zones', transforms: [cellWidth(20)] },
     ];
     if (showSubnetColumn) {
       columns.push({ title: 'Subnets' });

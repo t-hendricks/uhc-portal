@@ -7653,7 +7653,7 @@ exports[`<ClusterDetails /> Cluster Details - OSD should render 1`] = `
                                         Instance type
                                       </th>
                                       <th
-                                        class="pf-m-width-15"
+                                        class="pf-m-width-20"
                                         data-key="3"
                                         data-label="Availability zones"
                                         scope="col"
@@ -9346,7 +9346,7 @@ exports[`<ClusterDetails /> Cluster Details - OSD should render 1`] = `
                                           Instance type
                                         </th>
                                         <th
-                                          class="pf-m-width-15"
+                                          class="pf-m-width-20"
                                           data-key="3"
                                           data-label="Availability zones"
                                           scope="col"
@@ -26078,7 +26078,7 @@ exports[`<ClusterDetails /> Cluster Details - OSD should render 1`] = `
                                       Instance type
                                     </th>
                                     <th
-                                      class="pf-m-width-15"
+                                      class="pf-m-width-20"
                                       data-key="3"
                                       data-label="Availability zones"
                                       scope="col"
