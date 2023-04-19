@@ -309,6 +309,17 @@ const mapListResponse = <I extends any, T extends { items?: I[] }, D extends Dra
     draft.data.items = draft.data.items?.map(itemFunc);
   });
 
+/**
+ * Normalizes a single item or a list of items to a list
+ * @param itemOrList {Object} item or list of items.
+ */
+const normalizeToList = <T>(itemOrList: T | T[]): T[] => {
+  if (Array.isArray(itemOrList)) {
+    return itemOrList;
+  }
+  return [itemOrList];
+};
+
 export {
   normalizeProductID,
   normalizeCluster,
@@ -317,5 +328,6 @@ export {
   normalizeSubscription,
   normalizeQuotaCost,
   mapListResponse,
+  normalizeToList,
   normalizeMetrics,
 };

@@ -1,4 +1,5 @@
 import { checkLabels } from '../../../../../common/validators';
+import { normalizeToList } from '../../../../../common/normalize';
 
 const actionResolver = (
   rowData,
@@ -134,29 +135,22 @@ const normalizeMachinePool = (machinePool) => {
   return machinePool;
 };
 
-const getPoolIds = (subnet) => {
-  if (Array.isArray(subnet)) {
-    return subnet;
-  }
-  return [subnet];
-};
-
 const getSubnetIds = (machinePoolOrNodePool) => {
   const { subnet, subnets } = machinePoolOrNodePool;
   if (subnet) {
     // Hypershift clusters (node pools)
-    return getPoolIds(subnet);
+    return normalizeToList(subnet);
   }
   if (subnets) {
     // ROSA classic (machine pools)
-    return getPoolIds(subnets);
+    return normalizeToList(subnets);
   }
   return [];
 };
 
 const hasSubnets = (machinePoolOrNodePool) => {
-  const { subnet, subnets } = machinePoolOrNodePool;
-  return !!subnet || (Array.isArray(subnets) && subnets.length > 0);
+  const subnetIds = getSubnetIds(machinePoolOrNodePool);
+  return subnetIds.length > 0;
 };
 
 export {
