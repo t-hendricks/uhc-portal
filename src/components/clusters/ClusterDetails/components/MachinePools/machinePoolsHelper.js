@@ -1,5 +1,5 @@
 import { checkLabels } from '../../../../../common/validators';
-import { normalizeToList } from '../../../../../common/normalize';
+import { asArray } from '../../../../../common/helpers';
 
 const actionResolver = (
   rowData,
@@ -136,16 +136,9 @@ const normalizeMachinePool = (machinePool) => {
 };
 
 const getSubnetIds = (machinePoolOrNodePool) => {
+  // NodePools have "subnet", MachinePools have "subnets"
   const { subnet, subnets } = machinePoolOrNodePool;
-  if (subnet) {
-    // Hypershift clusters (node pools)
-    return normalizeToList(subnet);
-  }
-  if (subnets) {
-    // ROSA classic (machine pools)
-    return normalizeToList(subnets);
-  }
-  return [];
+  return asArray(subnet || subnets || []);
 };
 
 const hasSubnets = (machinePoolOrNodePool) => {
