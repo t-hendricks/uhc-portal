@@ -26,13 +26,14 @@ export const AutoScale = ({ isDefaultMachinePool }: AutoScaleProps) => {
     getFieldMeta,
     values: {
       [FieldId.AutoscalingEnabled]: autoscalingEnabled,
-      [FieldId.AutoscalingEnabled]: multiAz,
+      [FieldId.MultiAz]: multiAz,
       [FieldId.MinReplicas]: minReplicas,
-      [FieldId.AutoscalingEnabled]: maxReplicas,
-      [FieldId.AutoscalingEnabled]: product,
-      [FieldId.AutoscalingEnabled]: byoc,
+      [FieldId.MaxReplicas]: maxReplicas,
+      [FieldId.Product]: product,
+      [FieldId.Byoc]: byoc,
     },
   } = useFormState();
+
   const [minErrorMessage, setMinErrorMessage] = React.useState<string>();
   const [maxErrorMessage, setMaxErrorMessage] = React.useState<string>();
   const isMultiAz = multiAz === 'true';
