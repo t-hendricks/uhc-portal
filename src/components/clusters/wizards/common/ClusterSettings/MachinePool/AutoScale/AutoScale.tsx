@@ -117,7 +117,9 @@ export const AutoScale = ({ isDefaultMachinePool }: AutoScaleProps) => {
         helperText={
           <HelperText>
             {isMultiAz && (
-              <HelperTextItem>{`x 3 zones = ${parseInt(minReplicas, 10) || 0 * 3}`}</HelperTextItem>
+              <HelperTextItem>{`x 3 zones = ${
+                (parseInt(minReplicas, 10) || 0) * 3
+              }`}</HelperTextItem>
             )}
             {minErrorMessage && (
               <HelperTextItem variant="error" hasIcon>
@@ -153,7 +155,9 @@ export const AutoScale = ({ isDefaultMachinePool }: AutoScaleProps) => {
         helperText={
           <HelperText>
             {isMultiAz && (
-              <HelperTextItem>{`x 3 zones = ${parseInt(maxReplicas, 10) || 0 * 3}`}</HelperTextItem>
+              <HelperTextItem>{`x 3 zones = ${
+                (parseInt(maxReplicas, 10) || 0) * 3
+              }`}</HelperTextItem>
             )}
             {maxErrorMessage && (
               <HelperTextItem variant="error" hasIcon>
