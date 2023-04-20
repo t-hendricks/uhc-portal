@@ -4789,6 +4789,7 @@ exports[`<ClusterDetails /> Cluster Details - OSD should render 1`] = `
                             >
                               <a
                                 className="pull-left"
+                                data-testid="console-url-link"
                                 href="https://console-openshift-console.apps.test-liza.wiex.s1.devshift.org"
                                 rel="noopener noreferrer"
                                 target="_blank"
@@ -8232,6 +8233,7 @@ exports[`<ClusterDetails /> Cluster Details - OSD should render 1`] = `
                                                 </div>
                                               </dd>
                                             </div>
+                                            
                                             <div
                                               class="pf-c-description-list__group"
                                             >
@@ -9932,6 +9934,7 @@ exports[`<ClusterDetails /> Cluster Details - OSD should render 1`] = `
                                                   </div>
                                                 </dd>
                                               </div>
+                                              
                                               <div
                                                 class="pf-c-description-list__group"
                                               >
@@ -11184,6 +11187,7 @@ exports[`<ClusterDetails /> Cluster Details - OSD should render 1`] = `
                                               </div>
                                             </dd>
                                           </div>
+                                          
                                           <div
                                             class="pf-c-description-list__group"
                                           >
@@ -26570,7 +26574,6 @@ exports[`<ClusterDetails /> Cluster Details - OSD should render 1`] = `
                           isHypershift={false}
                         >
                           <MachinePools
-                            addMachinePool={[Function]}
                             addMachinePoolResponse={
                               Object {
                                 "error": false,
@@ -27002,7 +27005,6 @@ exports[`<ClusterDetails /> Cluster Details - OSD should render 1`] = `
                                 "pending": false,
                               }
                             }
-                            submit={[Function]}
                           >
                             <Card>
                               <article

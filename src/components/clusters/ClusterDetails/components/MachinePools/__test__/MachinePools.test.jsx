@@ -320,20 +320,6 @@ describe('<MachinePools />', () => {
     });
   });
 
-  it('Add machine pool button is disabled if hypershift', () => {
-    const props = { ...baseProps, isHypershift: true };
-    const wrapper = shallow(<MachinePools {...props} />);
-
-    const addMachinePoolButton = wrapper.find('#add-machine-pool');
-    expect(addMachinePoolButton.props().disableReason).toBeTruthy();
-  });
-
-  it('Add machine pool button is enabled if not hypershift', () => {
-    const wrapper = shallow(<MachinePools {...osdProps} />);
-    const addMachinePoolButton = wrapper.find('#add-machine-pool');
-    expect(addMachinePoolButton.props().disableReason).toBeFalsy();
-  });
-
   it('OpenShift version for machine pools is shown if hypershift', () => {
     const props = {
       ...baseProps,

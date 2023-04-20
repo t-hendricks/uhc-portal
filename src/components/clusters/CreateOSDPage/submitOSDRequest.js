@@ -1,11 +1,11 @@
 import pick from 'lodash/pick';
 import isEmpty from 'lodash/isEmpty';
 
-import config from '../../../config';
+import config from '~/config';
 
-import { DEFAULT_FLAVOUR_ID } from '../../../redux/actions/flavourActions';
-import { createCluster } from '../../../redux/actions/clustersActions';
-import { parseReduxFormKeyValueList } from '../../../common/helpers';
+import { DEFAULT_FLAVOUR_ID } from '~/redux/actions/flavourActions';
+import { createCluster } from '~/redux/actions/clustersActions';
+import { parseReduxFormKeyValueList } from '~/common/helpers';
 
 export const createClusterRequest = ({ isWizard = true, cloudProviderID, product }, formData) => {
   const isMultiAz = formData.multi_az === 'true';
@@ -13,6 +13,8 @@ export const createClusterRequest = ({ isWizard = true, cloudProviderID, product
   // But to avoid bugs where we ignore user's choices, when both are present, the field should win.
   const actualCloudProviderID = formData.cloud_provider || cloudProviderID;
   const actualProduct = formData.product || product;
+  const isHypershiftSelected = formData.hypershift === 'true';
+
   const clusterRequest = {
     name: formData.name,
     region: {
@@ -37,7 +39,8 @@ export const createClusterRequest = ({ isWizard = true, cloudProviderID, product
     },
     etcd_encryption: formData.etcd_encryption,
     billing_model: 'standard',
-    disable_user_workload_monitoring: !formData.enable_user_workload_monitoring,
+    disable_user_workload_monitoring:
+      isHypershiftSelected || !formData.enable_user_workload_monitoring,
   };
 
   if (formData.billing_model) {
@@ -95,10 +98,9 @@ export const createClusterRequest = ({ isWizard = true, cloudProviderID, product
     const configureProxySelected = formData.configure_proxy === true;
     const usePrivateLink = formData.use_privatelink;
     // Hypershift always uses PrivateLink and can also have public subnets if the cluster_privacy === 'external' (Public)
-    const hidePublicFields =
-      formData.hypershift === 'true'
-        ? formData.cluster_privacy === 'internal'
-        : formData.use_privatelink;
+    const hidePublicFields = isHypershiftSelected
+      ? formData.cluster_privacy === 'internal'
+      : formData.use_privatelink;
     clusterRequest.ccs = {
       enabled: true,
     };
@@ -111,8 +113,10 @@ export const createClusterRequest = ({ isWizard = true, cloudProviderID, product
             role_arn: formData.installer_role_arn,
             support_role_arn: formData.support_role_arn,
             instance_iam_roles: {
-              master_role_arn: formData.control_plane_role_arn,
               worker_role_arn: formData.worker_role_arn,
+              ...(formData.hypershift !== 'true'
+                ? { master_role_arn: formData.control_plane_role_arn }
+                : {}),
             },
             operator_role_prefix: formData.custom_operator_roles_prefix,
           },
@@ -129,6 +133,13 @@ export const createClusterRequest = ({ isWizard = true, cloudProviderID, product
           ...clusterRequest.properties,
           rosa_creator_arn: formData.rosa_creator_arn,
         };
+
+        // BYO OIDC
+        if (formData.byo_oidc_config_id) {
+          clusterRequest.aws.sts.oidc_config = {
+            id: formData.byo_oidc_config_id,
+          };
+        }
       } else {
         // AWS CCS credentials
         clusterRequest.aws = {
@@ -143,6 +154,11 @@ export const createClusterRequest = ({ isWizard = true, cloudProviderID, product
       }
       if (formData.customer_managed_key === 'true') {
         clusterRequest.aws.kms_key_arn = formData.kms_key_arn;
+      }
+      if (isHypershiftSelected && formData.etcd_key_arn) {
+        clusterRequest.aws.etcd_encryption = {
+          kms_key_arn: formData.etcd_key_arn,
+        };
       }
       clusterRequest.ccs.disable_scp_checks = formData.disable_scp_checks;
 
@@ -239,8 +255,13 @@ export const createClusterRequest = ({ isWizard = true, cloudProviderID, product
   }
 
   if (formData.hypershift) {
-    clusterRequest.hypershift = { enabled: formData.hypershift === 'true' };
+    clusterRequest.hypershift = { enabled: isHypershiftSelected };
   }
+
+  if (formData.hypershift === 'true') {
+    clusterRequest.multi_az = true;
+  }
+
   return clusterRequest;
 };
 

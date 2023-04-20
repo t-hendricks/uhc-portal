@@ -46,6 +46,8 @@ function DetailsRight({
   const isDisconnected =
     get(cluster, 'subscription.status', '') === subscriptionStatuses.DISCONNECTED;
 
+  const billingMarketplaceAccount = get(cluster, 'subscription.billing_marketplace_account', '');
+
   const showDesiredNodes = cluster.managed;
   const showInfraNodes = isHypershift
     ? false
@@ -67,6 +69,7 @@ function DetailsRight({
 
   const workerActualNodes = totalActualNodes === false ? '-' : totalActualNodes;
   const workerDesiredNodes = totalDesiredComputeNodes || '-';
+  const oidcConfig = cluster.aws?.sts?.oidc_config;
 
   return (
     <>
@@ -125,6 +128,14 @@ function DetailsRight({
             <DescriptionListGroup data-testid="aws-account">
               <DescriptionListTerm>Infrastructure AWS account</DescriptionListTerm>
               <DescriptionListDescription>{awsInfraAccount}</DescriptionListDescription>
+            </DescriptionListGroup>
+          </>
+        )}
+        {billingMarketplaceAccount && (
+          <>
+            <DescriptionListGroup data-testid="billing-marketplace-account">
+              <DescriptionListTerm>Billing marketplace account</DescriptionListTerm>
+              <DescriptionListDescription>{billingMarketplaceAccount}</DescriptionListDescription>
             </DescriptionListGroup>
           </>
         )}
@@ -271,6 +282,24 @@ function DetailsRight({
         )}
         {/* Network */}
         <ClusterNetwork cluster={cluster} />
+
+        {oidcConfig && (
+          <DescriptionListGroup>
+            <DescriptionListTerm>OIDC Configuration</DescriptionListTerm>
+            <DescriptionListDescription>
+              <dl className="pf-l-stack">
+                <Flex>
+                  <dt>Type:</dt>
+                  <dd>{oidcConfig?.managed ? 'Red Hat managed' : 'Self-managed'}</dd>
+                </Flex>
+                <Flex>
+                  <dt>ID:</dt>
+                  <dd>{oidcConfig?.id}</dd>
+                </Flex>
+              </dl>
+            </DescriptionListDescription>
+          </DescriptionListGroup>
+        )}
       </DescriptionList>
     </>
   );

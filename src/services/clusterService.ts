@@ -28,6 +28,7 @@ import type {
   GCP,
   Flavour,
   LimitedSupportReason,
+  OidcConfig,
 } from '../types/clusters_mgmt.v1';
 import type { Subscription } from '../types/accounts_mgmt.v1';
 
@@ -476,6 +477,9 @@ const patchNodePool = (clusterID: string, nodePoolID: string, data: NodePool) =>
 const addMachinePool = (clusterID: string, data: MachinePool) =>
   apiRequest.post<MachinePool>(`/api/clusters_mgmt/v1/clusters/${clusterID}/machine_pools`, data);
 
+const addNodePool = (clusterID: string, data: NodePool) =>
+  apiRequest.post<MachinePool>(`/api/clusters_mgmt/v1/clusters/${clusterID}/node_pools`, data);
+
 const scaleMachinePool = (clusterID: string, machinePoolID: string, data: MachinePool) =>
   apiRequest.patch<MachinePool>(
     `/api/clusters_mgmt/v1/clusters/${clusterID}/machine_pools/${machinePoolID}`,
@@ -726,6 +730,15 @@ const getOperatorRoleCommands = (
     },
   });
 
+const getOidcConfigurations = (awsAccountID: string) =>
+  apiRequest.get<OidcConfig[]>(`/api/clusters_mgmt/v1/oidc_configs`, {
+    params: {
+      // Managed oidc_configs are reused across the organization. For those, awsAccountID is not set
+      // Unmanaged oidc_configs are associated to a particular aws account. For those, awsAccountID must match
+      search: `aws.account_id='${awsAccountID}' or aws.account_id=''`,
+    },
+  });
+
 const getLimitedSupportReasons = (clusterId: string) =>
   apiRequest.get<{
     /**
@@ -789,6 +802,7 @@ const clusterService = {
   getNodePools,
   patchNodePool,
   addMachinePool,
+  addNodePool,
   scaleMachinePool,
   deleteMachinePool,
   deleteNodePool,
@@ -798,6 +812,7 @@ const clusterService = {
   postClusterGateAgreement,
   getOperatorRoleCommands,
   getLimitedSupportReasons,
+  getOidcConfigurations,
 };
 
 export {

@@ -50,6 +50,8 @@ const MAX_CLUSTER_NAME_LENGTH = 15;
 
 const MAX_MACHINE_POOL_NAME_LENGTH = 30;
 
+const MAX_NODE_POOL_NAME_LENGTH = 15;
+
 // Maximum length of a cluster display name
 const MAX_CLUSTER_DISPLAY_NAME_LENGTH = 63;
 
@@ -72,7 +74,7 @@ const GCP_KMS_SERVICE_ACCOUNT_REGEX = /^[a-z0-9.+-]+@[\w.-]+\.[a-z]{2,4}$/;
 const AWS_KMS_SERVICE_ACCOUNT_REGEX =
   /^arn:aws:kms:[\w-]+:\d{12}:key\/[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/;
 
-const AWS__KMS_MULTI_REGION_SERVICE_ACCOUNT_REGEX =
+const AWS_KMS_MULTI_REGION_SERVICE_ACCOUNT_REGEX =
   /^arn:aws:kms:[\w-]+:\d{12}:key\/mrk-[0-9a-f]{32}$/;
 
 /**
@@ -207,6 +209,8 @@ const clusterNameAsyncValidation = (value: string) => checkObjectNameAsyncValida
 const checkMachinePoolName = (value: string) =>
   checkObjectName(value, 'Machine pool', MAX_MACHINE_POOL_NAME_LENGTH);
 
+const checkNodePoolName = (value: string) =>
+  checkObjectName(value, 'Machine pool', MAX_NODE_POOL_NAME_LENGTH);
 /**
  * executes cluster-name async validations.
  * to be used at the form level hook (asyncValidate).
@@ -1243,7 +1247,7 @@ const validateAWSKMSKeyARN = (value: string, region: string): string | undefined
 
   if (
     value.includes(':key/mrk-')
-      ? !AWS__KMS_MULTI_REGION_SERVICE_ACCOUNT_REGEX.test(value)
+      ? !AWS_KMS_MULTI_REGION_SERVICE_ACCOUNT_REGEX.test(value)
       : !AWS_KMS_SERVICE_ACCOUNT_REGEX.test(value)
   ) {
     return 'Key provided is not a valid ARN. It should be in the format "arn:aws:kms:<region>:<accountid>:key/<keyid>".';
@@ -1411,6 +1415,7 @@ export {
   validateGCPServiceAccount,
   validateServiceAccountObject,
   checkMachinePoolName,
+  checkNodePoolName,
   checkCustomOperatorRolesPrefix,
   checkLabels,
   validateUniqueAZ,

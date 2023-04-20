@@ -4,11 +4,12 @@ import PropTypes from 'prop-types';
 import {
   Form,
   TextInput,
+  Select,
+  SelectOption,
   FormGroup,
   Text,
   TextContent,
   TextVariants,
-  Alert,
 } from '@patternfly/react-core';
 
 import modals from '../../../../../common/Modal/modals';
@@ -29,6 +30,7 @@ function OCMRolesDialog({
   const [APIErrorMsg, setAPIErrorMsg] = useState('');
   const [roleID, setRoleID] = useState(null);
   const [isPrimaryDisabled, setIsPrimaryDisabled] = useState(false);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
   // when it's opened reset username and roleID
   // changes to the row are implicitly covered by isOpen.
@@ -103,6 +105,21 @@ function OCMRolesDialog({
   // and add radio selection for roles.
   const title = row.isCreating ? 'Grant role' : 'Edit role';
   const btnText = row.isCreating ? 'Grant role' : 'Edit role';
+
+  const options = [
+    {
+      id: ocmRoles.CLUSTER_EDITOR,
+      name: 'Cluster editor',
+      description:
+        'Cluster editor role will allow users or groups to manage and cofigure the cluster.',
+    },
+    {
+      id: ocmRoles.CLUSTER_VIEWER,
+      name: 'Cluster viewer',
+      description: 'Cluster viewer role will allow users or groups to view cluster details only.',
+    },
+  ];
+
   return (
     isOpen && (
       <Modal
@@ -116,8 +133,8 @@ function OCMRolesDialog({
         id="ocm-roles-access-dialog"
       >
         <p className="pf-u-mb-xl">
-          Allow users in your organization to edit clusters. These permissions only apply to cluster
-          management in OpenShift Cluster Manager.
+          Allow users in your organization to edit or view clusters. These permissions only apply to
+          cluster management in OpenShift Cluster Manager.
         </p>
         <Form
           className="control-form-cursor"
@@ -161,11 +178,24 @@ function OCMRolesDialog({
               aria-label="username"
             />
           </FormGroup>
-          <Alert
-            variant="info"
-            isInline
-            title="This user will be granted with Cluster Editor role and will be able to manage and configure the cluster."
-          />
+          <FormGroup label="Role" isRequired>
+            <Select
+              onToggle={setIsDropdownOpen}
+              onSelect={(e, selection) => {
+                setRoleID(selection);
+                setIsDropdownOpen(false);
+              }}
+              selections={roleID}
+              isOpen={isDropdownOpen}
+              menuAppendTo={() => document.body}
+            >
+              {options.map((option) => (
+                <SelectOption key={option.id} value={option.id} description={option.description}>
+                  {option.name}
+                </SelectOption>
+              ))}
+            </Select>
+          </FormGroup>
         </Form>
       </Modal>
     )

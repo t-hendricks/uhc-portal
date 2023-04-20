@@ -1,4 +1,22 @@
-// expected format to be "openshift-vA.B.C(-suffix)"
-export const versionRegEx = /^.*[v-]([0-9\\.]+).*$/;
+import semver from 'semver';
 
-export const versionFormatter = (version: string): string => version.replace(versionRegEx, '$1');
+const versionRegExp = /^.*(v[0-9]+.*)$/;
+
+/**
+ * Formats a version for display
+ * @param version expected format (openshift-)vA.B.C(-suffix1)(-suffix2)
+ * @returns a simplified display of the version. For the part after the version, extracts the first string
+ *  example:
+ *  - openshift-v4.12.0-candidate --> 4.12.0-candidate
+ */
+export const versionFormatter = (version: string): string => {
+  const rawVersion = semver.coerce(version);
+  if (!rawVersion) {
+    return version;
+  }
+  const baseVersion = version.replace(versionRegExp, '$1');
+  const prerelease = semver.prerelease(baseVersion) || [];
+
+  const textTokens = prerelease.find((item): item is string => typeof item === 'string');
+  return `${rawVersion.raw}${textTokens ? `-${textTokens.split('-')[0]}` : ''}`;
+};

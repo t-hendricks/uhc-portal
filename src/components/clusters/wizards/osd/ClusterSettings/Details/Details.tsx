@@ -29,8 +29,10 @@ import {
   clusterNameAsyncValidation,
   clusterNameValidation,
   createPessimisticValidator,
+  validateAWSKMSKeyARN,
 } from '~/common/validators';
 import { constants } from '~/components/clusters/CreateOSDPage/CreateOSDForm/CreateOSDFormConstants';
+import { CloudProviderType } from '~/components/clusters/wizards/common/constants';
 import PopoverHint from '~/components/common/PopoverHint';
 import PersistentStorageDropdown from '~/components/clusters/common/PersistentStorageDropdown';
 import LoadBalancersDropdown from '~/components/clusters/common/LoadBalancersDropdown';
@@ -62,7 +64,10 @@ export const Details = () => {
       [FieldId.Region]: region,
       [FieldId.CloudProvider]: cloudProvider,
       [FieldId.CustomerManagedKey]: hasCustomerManagedKey,
+      [FieldId.KmsKeyArn]: kmsKeyArn,
     },
+    errors,
+    isValidating,
     setFieldValue,
     getFieldProps,
   } = useFormState();
@@ -71,14 +76,35 @@ export const Details = () => {
 
   const isByoc = byoc === 'true';
   const isMultiAz = multiAz === 'true';
+  const isGCP = cloudProvider === CloudProviderType.Gcp;
 
   const {
     organization: { quotaList },
   } = useGlobalState((state) => state.userProfile);
 
+  const { gcpKeyRings } = useGlobalState((state) => state.ccsInquiries);
+
+  const {
+    [FieldId.KeyRing]: keyRingError,
+    [FieldId.KeyName]: keyNameError,
+    [FieldId.KmsServiceAccount]: kmsServiceAccountError,
+    [FieldId.KeyLocation]: keyLocationError,
+  } = errors;
+
+  const isGCPError =
+    gcpKeyRings.error || keyRingError || keyNameError || kmsServiceAccountError || keyLocationError;
+
   React.useEffect(() => {
     dispatch(getCloudProviders());
   }, [dispatch]);
+
+  React.useEffect(() => {
+    if (hasCustomerManagedKey === 'true') {
+      if ((isGCP && isGCPError) || (!isGCP && validateAWSKMSKeyARN(kmsKeyArn, region))) {
+        setIsExpanded(true);
+      }
+    }
+  }, [isValidating]);
 
   const azQuotaParams = {
     product,
@@ -291,6 +317,7 @@ export const Details = () => {
                 hasCustomerManagedKey={hasCustomerManagedKey}
                 region={region}
                 cloudProvider={cloudProvider}
+                kmsKeyArn={kmsKeyArn}
               />
             )}
             <Grid hasGutter>

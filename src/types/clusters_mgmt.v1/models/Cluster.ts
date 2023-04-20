@@ -6,6 +6,7 @@ import type { AddOnInstallation } from './AddOnInstallation';
 import type { AWS } from './AWS';
 import type { AWSInfrastructureAccessRoleGrant } from './AWSInfrastructureAccessRoleGrant';
 import type { BillingModel } from './BillingModel';
+import type { ByoOidc } from './ByoOidc';
 import type { CCS } from './CCS';
 import type { CloudProvider } from './CloudProvider';
 import type { CloudRegion } from './CloudRegion';
@@ -135,6 +136,10 @@ export type Cluster = {
    * Billing model for cluster resources.
    */
   billing_model?: BillingModel;
+  /**
+   * Contains information about BYO OIDC.
+   */
+  byo_oidc?: ByoOidc;
   /**
    * Link to the cloud provider where the cluster is installed.
    */

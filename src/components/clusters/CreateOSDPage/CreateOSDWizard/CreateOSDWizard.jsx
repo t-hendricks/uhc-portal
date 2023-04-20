@@ -224,9 +224,11 @@ class CreateOSDWizardInternal extends React.Component {
       isAsyncValidating,
       isCCSCredentialsValidationNeeded,
     } = this.props;
-    const { currentStepId, validatedSteps, deferredNext } = this.state;
+    const { currentStepId, validatedSteps, deferredNext, isNextClicked } = this.state;
     const isCurrentStepValid = validatedSteps[currentStepId];
     const errorIds = Object.keys(formErrors);
+
+    this.setState({ isNextClicked: true });
 
     if (isAsyncValidating) {
       if (!deferredNext) {
@@ -239,6 +241,7 @@ class CreateOSDWizardInternal extends React.Component {
     if (errorIds?.length > 0 && !isCurrentStepValid) {
       touch(errorIds);
       scrollToFirstError(errorIds);
+      this.setState({ isNextClicked: !isNextClicked });
       return;
     }
 
@@ -250,6 +253,7 @@ class CreateOSDWizardInternal extends React.Component {
       // Only proceed to the next step if the validation is successful.
       await this.getCloudProverInfo(cloudProviderID);
     }
+
     // When no errors or validy checks are required, go to the next step.
     onNext();
   };
@@ -275,7 +279,7 @@ class CreateOSDWizardInternal extends React.Component {
       configureProxySelected,
       ccsCredentialsValidityResponse,
     } = this.props;
-    const { deferredNext } = this.state;
+    const { deferredNext, isNextClicked } = this.state;
 
     const isTrialDefault = product === normalizedProducts.OSDTrial;
 
@@ -317,7 +321,10 @@ class CreateOSDWizardInternal extends React.Component {
             name: stepNameById[stepId.CLUSTER_SETTINGS__DETAILS],
             component: (
               <ErrorBoundary>
-                <ClusterSettingsScreen isTrialDefault={isTrialDefault} />
+                <ClusterSettingsScreen
+                  isTrialDefault={isTrialDefault}
+                  isNextClicked={isNextClicked}
+                />
               </ErrorBoundary>
             ),
             canJumpTo: this.canJumpTo(stepId.CLUSTER_SETTINGS__DETAILS),

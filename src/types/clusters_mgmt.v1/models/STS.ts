@@ -3,6 +3,7 @@
 /* eslint-disable */
 
 import type { InstanceIAMRoles } from './InstanceIAMRoles';
+import type { OidcConfig } from './OidcConfig';
 import type { OperatorIAMRole } from './OperatorIAMRole';
 
 /**
@@ -30,9 +31,13 @@ export type STS = {
    */
   instance_iam_roles?: InstanceIAMRoles;
   /**
-   * Secrets Manager ARN for the OIDC private key key.
+   * If true, cluster account and operator roles have managed policies attached.
    */
-  oidc_private_key_secret_arn?: string;
+  managed_policies?: boolean;
+  /**
+   * Registered Oidc Config, if available holds information related to the oidc config
+   */
+  oidc_config?: OidcConfig;
   /**
    * List of roles necessary to access the AWS resources of the various operators used during installation
    */

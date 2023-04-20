@@ -8,20 +8,22 @@ import { constants } from '../../CreateOSDFormConstants';
 
 interface Props {
   region: string;
+  keyArn: string;
+  fieldName: 'kms_key_arn' | 'etcd_key_arn';
 }
 
-const AWSCustomerManagedEncryption = ({ region }: Props) => (
+const AWSCustomerManagedEncryption = ({ fieldName, region, keyArn }: Props) => (
   <>
     <GridItem md={6}>
       <Field
         component={ReduxVerticalFormGroup}
-        name="kms_key_arn"
+        name={fieldName}
         type="text"
         label="Key ARN"
         placeholder="Key ARN"
         validate={(value: string) => validateAWSKMSKeyARN(value, region)}
         isRequired
-        helpText="Provide a custom key ARN"
+        helpText={!keyArn ? 'Provide a custom key ARN' : ''}
         extendedHelpText={
           <>
             <p className="pf-u-mb-sm">{constants.awsKeyARN}</p>

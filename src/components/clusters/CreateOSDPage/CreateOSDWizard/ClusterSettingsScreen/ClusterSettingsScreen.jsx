@@ -4,19 +4,17 @@ import { Title, Grid, GridItem, FormGroup, Form, ExpandableSection } from '@patt
 import { Field } from 'redux-form';
 
 import PopoverHint from '../../../../common/PopoverHint';
-import ReduxCheckbox from '../../../../common/ReduxFormComponents/ReduxCheckbox';
-import ExternalLink from '../../../../common/ExternalLink';
 import PersistentStorageDropdown from '../../../common/PersistentStorageDropdown';
 import LoadBalancersDropdown from '../../../common/LoadBalancersDropdown';
 
 import CustomerManagedEncryptionSection from '../../CreateOSDForm/FormSections/EncryptionSection/CustomerManagedKeyEncryption';
 import UserWorkloadMonitoringSection from '../../../common/UserWorkloadMonitoringSection';
+import EtcdEncryptionSection from '../../CreateOSDForm/FormSections/EncryptionSection/EtcdEncryptionSection';
 
 import { constants } from '../../CreateOSDForm/CreateOSDFormConstants';
-
 import BasicFieldsSection from '../../CreateOSDForm/FormSections/BasicFieldsSection';
-import links from '../../../../../common/installLinks.mjs';
 import { normalizedProducts } from '../../../../../common/subscriptionTypes';
+import { validateAWSKMSKeyARN } from '~/common/validators';
 
 function ClusterSettingsScreen({
   isByoc,
@@ -27,6 +25,13 @@ function ClusterSettingsScreen({
   product,
   billingModel,
   change,
+  kmsKeyArn,
+  etcdKeyArn,
+  isEtcdEncryptionSelected,
+  formErrors,
+  touch,
+  isHypershiftSelected,
+  isNextClicked,
 }) {
   const [isExpanded, setIsExpanded] = useState(false);
 
@@ -35,6 +40,55 @@ function ClusterSettingsScreen({
   };
 
   const isRosa = product === normalizedProducts.ROSA;
+  const isGCP = cloudProviderID === 'gcp';
+
+  const {
+    key_ring: keyRingError,
+    key_name: keyNameError,
+    kms_service_account: kmsServiceAccountError,
+    key_location: keyLocationError,
+  } = formErrors;
+
+  const gcpError = keyRingError || keyNameError || kmsServiceAccountError || keyLocationError;
+
+  React.useEffect(() => {
+    let isAdvancedEncryptionExpanded = false;
+    if (customerManagedEncryptionSelected === 'true') {
+      if (isGCP && gcpError) {
+        isAdvancedEncryptionExpanded = true;
+      }
+      if (!isGCP && validateAWSKMSKeyARN(kmsKeyArn, selectedRegion)) {
+        isAdvancedEncryptionExpanded = true;
+        touch('CreateCluster', 'kms_key_arn');
+      }
+    }
+
+    if (
+      isEtcdEncryptionSelected &&
+      isHypershiftSelected &&
+      validateAWSKMSKeyARN(etcdKeyArn, selectedRegion)
+    ) {
+      isAdvancedEncryptionExpanded = true;
+      touch('CreateCluster', 'etcd_key_arn');
+    }
+
+    if (isAdvancedEncryptionExpanded) {
+      setIsExpanded(true);
+    }
+  }, [
+    customerManagedEncryptionSelected,
+    isGCP,
+    gcpError,
+    kmsKeyArn,
+    selectedRegion,
+    isNextClicked,
+  ]);
+
+  React.useEffect(() => {
+    if (!isEtcdEncryptionSelected && !!etcdKeyArn) {
+      change('etcd_key_arn', '');
+    }
+  }, [isEtcdEncryptionSelected, change]);
 
   return (
     <Form
@@ -57,6 +111,7 @@ function ClusterSettingsScreen({
           product={product}
           billingModel={billingModel}
           isWizard
+          isHypershiftSelected={isHypershiftSelected}
         />
         {!isByoc && !isRosa && (
           <>
@@ -99,7 +154,11 @@ function ClusterSettingsScreen({
             </GridItem>
           </>
         )}
-        <UserWorkloadMonitoringSection parent="create" disableUVM={false} planType={product} />
+
+        {!isHypershiftSelected && (
+          <UserWorkloadMonitoringSection parent="create" disableUVM={false} planType={product} />
+        )}
+
         <ExpandableSection
           toggleText="Advanced Encryption"
           onToggle={onToggle}
@@ -110,31 +169,16 @@ function ClusterSettingsScreen({
               customerManagedEncryptionSelected={customerManagedEncryptionSelected}
               selectedRegion={selectedRegion}
               cloudProviderID={cloudProviderID}
+              kmsKeyArn={kmsKeyArn}
             />
           )}
-          <GridItem md={6}>
-            <FormGroup fieldId="etcd_encryption" id="etcdEncryption" label="etcd encryption">
-              <Field
-                component={ReduxCheckbox}
-                name="etcd_encryption"
-                label="Enable additional etcd encryption"
-                extendedHelpText={
-                  <>
-                    {constants.enableAdditionalEtcdHint}{' '}
-                    <ExternalLink
-                      href={isRosa ? links.ROSA_SERVICE_ETCD_ENCRYPTION : links.OSD_ETCD_ENCRYPTION}
-                    >
-                      Learn more about etcd encryption
-                    </ExternalLink>
-                  </>
-                }
-              />
-
-              <div className="ocm-c--reduxcheckbox-description">
-                Add more encryption for OpenShift and Kubernetes API resources.
-              </div>
-            </FormGroup>
-          </GridItem>
+          <EtcdEncryptionSection
+            isRosa={isRosa}
+            isHypershiftSelected={isHypershiftSelected}
+            isEtcdEncryptionSelected={isEtcdEncryptionSelected}
+            etcdKeyArn={etcdKeyArn}
+            selectedRegion={selectedRegion}
+          />
         </ExpandableSection>
         <GridItem md={6} />
       </Grid>
@@ -146,11 +190,18 @@ ClusterSettingsScreen.propTypes = {
   isByoc: PropTypes.bool,
   cloudProviderID: PropTypes.string,
   isMultiAz: PropTypes.bool,
-  customerManagedEncryptionSelected: PropTypes.bool,
+  customerManagedEncryptionSelected: PropTypes.string,
   product: PropTypes.string,
   billingModel: PropTypes.string,
   selectedRegion: PropTypes.string,
   change: PropTypes.func,
+  kmsKeyArn: PropTypes.string,
+  etcdKeyArn: PropTypes.string,
+  isEtcdEncryptionSelected: PropTypes.bool,
+  formErrors: PropTypes.object,
+  touch: PropTypes.func,
+  isHypershiftSelected: PropTypes.bool,
+  isNextClicked: PropTypes.bool,
 };
 
 export default ClusterSettingsScreen;
