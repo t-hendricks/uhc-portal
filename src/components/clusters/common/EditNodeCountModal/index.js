@@ -79,7 +79,7 @@ const mapStateToProps = (state) => {
         })),
       ],
     },
-    isMultiAvailZone,
+    isMultiAz: isMultiAvailZone,
     masterResizeAlertThreshold: masterResizeAlertThresholdSelector(
       selectedMachinePool,
       requestedNodes,
