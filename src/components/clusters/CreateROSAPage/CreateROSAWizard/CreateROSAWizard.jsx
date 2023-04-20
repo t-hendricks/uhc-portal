@@ -186,7 +186,7 @@ class CreateROSAWizardInternal extends React.Component {
 
   scrolledToFirstError = () => {
     const { touch, formErrors } = this.props;
-    const { validatedSteps, currentStepId } = this.state;
+    const { validatedSteps, currentStepId, isNextClicked } = this.state;
     const isCurrentStepValid = validatedSteps[currentStepId];
     const errorIds = Object.keys(formErrors);
 
@@ -194,6 +194,7 @@ class CreateROSAWizardInternal extends React.Component {
     if (errorIds?.length > 0 && !isCurrentStepValid) {
       touch(errorIds);
       scrollToFirstError(errorIds);
+      this.setState({ isNextClicked: !isNextClicked });
       return true;
     }
     return false;
@@ -210,6 +211,8 @@ class CreateROSAWizardInternal extends React.Component {
   onBeforeNext = async (onNext) => {
     const { isAsyncValidating, getUserRoleResponse, selectedAWSAccountID } = this.props;
     const { currentStepId, accountAndRolesStepId, deferredNext } = this.state;
+
+    this.setState({ isNextClicked: true });
 
     if (isAsyncValidating) {
       if (!deferredNext) {
@@ -257,9 +260,9 @@ class CreateROSAWizardInternal extends React.Component {
       privateLinkSelected,
       configureProxySelected,
       isHypershiftEnabled,
-      hypershiftSelected,
+      isHypershiftSelected,
     } = this.props;
-    const { accountAndRolesStepId, deferredNext } = this.state;
+    const { accountAndRolesStepId, deferredNext, isNextClicked } = this.state;
 
     const steps = [
       isHypershiftEnabled && {
@@ -291,7 +294,7 @@ class CreateROSAWizardInternal extends React.Component {
             name: stepNameById[stepId.CLUSTER_SETTINGS__DETAILS],
             component: (
               <ErrorBoundary>
-                <ClusterSettingsScreen />
+                <ClusterSettingsScreen isNextClicked={isNextClicked} />
               </ErrorBoundary>
             ),
             canJumpTo: this.canJumpTo(stepId.CLUSTER_SETTINGS__DETAILS),
@@ -330,7 +333,7 @@ class CreateROSAWizardInternal extends React.Component {
             canJumpTo: this.canJumpTo(stepId.NETWORKING__CONFIGURATION),
           },
           installToVPCSelected &&
-            !hypershiftSelected && {
+            !isHypershiftSelected && {
               id: stepId.NETWORKING__VPC_SETTINGS,
               name: stepNameById[stepId.NETWORKING__VPC_SETTINGS],
               component: (

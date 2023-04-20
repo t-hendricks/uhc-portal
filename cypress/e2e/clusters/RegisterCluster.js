@@ -1,0 +1,129 @@
+import { v4 } from 'uuid';
+import Login from '../../pageobjects/login.page';
+import ClusterListPage from '../../pageobjects/ClusterList.page';
+import RegisterClusterPage from '../../pageobjects/RegisterCluster.page';
+import ClusterDetailsPage from '../../pageobjects/ClusterDetails.page';
+
+describe('Register cluster flow', () => {
+  const clusterID = v4();
+  const displayName = `cypress-${clusterID}`;
+
+  before(() => {
+    cy.visit('/');
+    Login.isLoginPageUrl();
+    Login.login();
+
+    ClusterListPage.isClusterListUrl();
+    ClusterListPage.waitForDataReady();
+    cy.getByTestId('create_cluster_btn').should('be.visible');
+  });
+
+  it('navigate to register cluster', () => {
+    ClusterListPage.registerCluster().should('be.visible').click();
+    ClusterListPage.isRegisterClusterUrl();
+    ClusterListPage.isRegisterClusterScreen();
+  });
+
+  it('shows an error when cluster ID is not valid', () => {
+    RegisterClusterPage.clusterIDInput().type('not really a uuid').blur();
+    RegisterClusterPage.clusterIDError().should('be.visible');
+    RegisterClusterPage.clusterIDError().should(
+      'have.text',
+      " Cluster ID 'not really a uuid' is not a valid UUID.",
+    );
+    RegisterClusterPage.clusterIDInput().clear();
+    RegisterClusterPage.clusterIDError().should('be.visible');
+    RegisterClusterPage.clusterIDError().should('have.text', ' Cluster ID is required.');
+  });
+
+  it('shows error when display name is not valid', () => {
+    RegisterClusterPage.displayNameInput().type('a'.repeat(70)).blur();
+    RegisterClusterPage.displayNameError().should('be.visible');
+    RegisterClusterPage.displayNameError().should(
+      'have.text',
+      ' Cluster display name may not exceed 63 characters.',
+    );
+  });
+
+  it('shows error when URL is not valid', () => {
+    RegisterClusterPage.clusterURLInput().type('asdf').blur();
+    RegisterClusterPage.clusterURLError().should('be.visible');
+    RegisterClusterPage.clusterURLError().should(
+      'have.text',
+      ' The URL should include the scheme prefix (http://, https://)',
+    );
+    RegisterClusterPage.clusterURLInput().clear();
+    RegisterClusterPage.clusterURLInput().type('https://uwu').blur();
+    RegisterClusterPage.clusterURLError().should('be.visible');
+    RegisterClusterPage.clusterURLError().should('have.text', ' Invalid URL');
+  });
+
+  it('redirects to cluster list when clicking cancel', () => {
+    RegisterClusterPage.cancelButton().click();
+    ClusterListPage.isClusterListScreen();
+  });
+
+  it('creates a new cluster and redirects to its details page', () => {
+    ClusterListPage.registerCluster().should('be.visible').click();
+    ClusterListPage.isRegisterClusterUrl();
+    RegisterClusterPage.clusterIDInput().type(clusterID).blur();
+    RegisterClusterPage.clusterIDError().should('not.exist');
+    RegisterClusterPage.displayNameInput().type(displayName).blur();
+    RegisterClusterPage.displayNameError().should('not.exist');
+    RegisterClusterPage.submitButton().click();
+    ClusterDetailsPage.isClusterDetailsPage(displayName);
+  });
+
+  it('successfully changes the console URL for the cluster', () => {
+    const url = 'http://example.com';
+    ClusterDetailsPage.addConsoleURLButton().click();
+    ClusterDetailsPage.waitForEditUrlModalToLoad();
+    ClusterDetailsPage.editConsoleURLDialogInput().type(url);
+    ClusterDetailsPage.editConsoleURLDialogConfirm().click();
+    ClusterDetailsPage.waitForEditUrlModalToClear();
+    ClusterDetailsPage.waitForClusterDetailsLoad();
+    ClusterDetailsPage.openConsoleLink()
+      .should('have.attr', 'href', url)
+      .find('button')
+      .should('have.text', 'Open console');
+  });
+
+  it('successfully changes display name', () => {
+    ClusterDetailsPage.actionsDropdownToggle().click();
+    ClusterDetailsPage.editDisplayNameDropdownItem().click();
+    ClusterDetailsPage.waitForEditDisplayNamelModalToLoad();
+    ClusterDetailsPage.editDisplayNameInput().clear();
+    ClusterDetailsPage.editDisplayNameInput().type(`${displayName}-test`).blur();
+    ClusterDetailsPage.editDisplaynameConfirm().click();
+    ClusterDetailsPage.waitForEditDisplayNamelModalToClear();
+    ClusterDetailsPage.waitForClusterDetailsLoad();
+    ClusterDetailsPage.waitForDisplayNameChange(displayName);
+    ClusterDetailsPage.clusterNameTitle().should('have.text', `${displayName}-test`);
+  });
+
+  it('successfully archives the newly created cluster', () => {
+    ClusterDetailsPage.actionsDropdownToggle().click();
+    ClusterDetailsPage.waitForArchiveClusterDropdownLoad();
+    ClusterDetailsPage.archiveClusterDropdownItem().click();
+    ClusterDetailsPage.archiveClusterDialogConfirm().click();
+    ClusterDetailsPage.successNotification().should('exist');
+    ClusterDetailsPage.waitForClusterDetailsLoad();
+    ClusterDetailsPage.unarchiveClusterButton().should('exist');
+  });
+
+  it('successfully unarchives the archived cluster', () => {
+    ClusterDetailsPage.unarchiveClusterButton().click();
+    ClusterDetailsPage.unarchiveClusterDialogConfirm().click();
+    ClusterDetailsPage.successNotification().should('exist');
+    ClusterDetailsPage.waitForClusterDetailsLoad();
+  });
+
+  it('Finally, archive the cluster created', () => {
+    ClusterDetailsPage.actionsDropdownToggle().should('exist');
+    ClusterDetailsPage.actionsDropdownToggle().find('span').first().should('have.text', 'Actions');
+    ClusterDetailsPage.actionsDropdownToggle().click();
+    ClusterDetailsPage.waitForArchiveClusterDropdownLoad();
+    ClusterDetailsPage.archiveClusterDropdownItem().click();
+    ClusterDetailsPage.archiveClusterDialogConfirm().click();
+  });
+});

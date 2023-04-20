@@ -36,7 +36,7 @@ function NetworkScreen(props) {
     isByoc,
     product,
     formValues,
-    hypershiftSelected,
+    isHypershiftSelected,
   } = props;
 
   const { OSD, OSDTrial } = normalizedProducts;
@@ -77,7 +77,7 @@ function NetworkScreen(props) {
 
   const onClusterPrivacyChange = (_, value) => {
     if (value === 'external') {
-      if (!hypershiftSelected) {
+      if (!isHypershiftSelected) {
         // hypershift always uses private link and vpc
         change('use_privatelink', false);
         shouldUncheckInstallToVPC();
@@ -159,7 +159,7 @@ function NetworkScreen(props) {
                 {/* eslint-disable-next-line max-len */}
                 Install your cluster with all public or private API endpoints and application
                 routes.{' '}
-                {hypershiftSelected && 'You can customize these options after installation.'}
+                {isHypershiftSelected && 'You can customize these options after installation.'}
               </Text>
             </GridItem>
             <Field
@@ -180,7 +180,7 @@ function NetworkScreen(props) {
                     </>
                   ),
                   extraField:
-                    hypershiftSelected && !privateClusterSelected ? (
+                    isHypershiftSelected && !privateClusterSelected ? (
                       // TODO: Placeholder for the Public subnet ID selector
                       <></>
                     ) : null,
@@ -224,19 +224,19 @@ function NetworkScreen(props) {
           <>
             <GridItem>
               <Title headingLevel="h4" size="xl" className="privacy-heading">
-                {hypershiftSelected
+                {isHypershiftSelected
                   ? 'Install into a Virtual Private Cloud (VPC)'
                   : 'Virtual Private Cloud (VPC)'}
               </Title>
             </GridItem>
             <GridItem>
               <Text>
-                {hypershiftSelected
+                {isHypershiftSelected
                   ? 'To install a hosted ROSA cluster, you must have a VPC. Specify your VPC details based on your selected region and account.'
                   : 'By default, a new VPC will be created for your cluster. Alternatively, you may opt to install to an existing VPC below.'}
               </Text>
             </GridItem>
-            {hypershiftSelected ? (
+            {isHypershiftSelected ? (
               <GridItem>
                 <Alert
                   variant="info"
@@ -312,7 +312,7 @@ NetworkScreen.propTypes = {
   isByoc: PropTypes.bool,
   product: PropTypes.string,
   formValues: PropTypes.object,
-  hypershiftSelected: PropTypes.bool,
+  isHypershiftSelected: PropTypes.bool,
 };
 
 export default NetworkScreen;

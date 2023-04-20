@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-@import "~@patternfly/patternfly/sass-utilities/_all";
+@import '~@patternfly/patternfly/sass-utilities/_all';
 
 // override the blue patternfly header border to match other properties
 .navbar-pf-vertical {
@@ -22,7 +22,8 @@ limitations under the License.
 }
 
 // work around PatternFly bug that hides DropDownKebab menu
-.table-grid-pf .row, .table-grid-pf [class*="col-"] {
+.table-grid-pf .row,
+.table-grid-pf [class*='col-'] {
   overflow-x: visible;
 }
 
@@ -76,8 +77,8 @@ limitations under the License.
 
 // fix donut chart tooltip css
 .metrics-chart .VictoryContainer > div > svg > g > text > tspan {
- stroke: none !important;
- fill: #ffffff !important;
+  stroke: none !important;
+  fill: #ffffff !important;
 }
 
 // Enable word wrapping in the cluster list
@@ -112,7 +113,7 @@ limitations under the License.
   font-size: 14px;
 }
 
-.font-weight-normal{
+.font-weight-normal {
   font-weight: normal;
 }
 
@@ -130,10 +131,10 @@ limitations under the License.
 }
 
 .radio-tooltip {
-  left: -70px
+  left: -70px;
 }
 
-.cl-details-page-title{
+.cl-details-page-title {
   font-size: var(--pf-global--FontSize--2xl);
   position: relative;
   top: 50%;
@@ -152,13 +153,13 @@ limitations under the License.
   margin-left: 10px;
 }
 
-#cl-details-btns a{
+#cl-details-btns a {
   @media (max-width: 480px) {
     margin-left: 0;
   }
 }
 
-#cl-details-top-row{
+#cl-details-top-row {
   flex-wrap: wrap;
 }
 
@@ -171,7 +172,7 @@ limitations under the License.
   }
 }
 
-#cl-details-top .pf-c-tabs{
+#cl-details-top .pf-c-tabs {
   margin-top: 20px;
 }
 
@@ -200,7 +201,7 @@ TODO: This is overriding too much, should be more specific
 }
 
 #upgradeSettingsContent .pf-c-card {
-    margin-top: 0px;
+  margin-top: 0px;
 }
 
 .empty-state-color {
@@ -212,13 +213,14 @@ TODO: This is overriding too much, should be more specific
 }
 
 .ocm-c-overview-resource-usage__card--body,
-.ocm-c-metrics-charts__card .pf-c-card__body, .metrics-chart{
+.ocm-c-metrics-charts__card .pf-c-card__body,
+.metrics-chart {
   display: flex;
   justify-content: space-evenly;
   margin: 0;
-    @media (max-width: 767px) {
-      flex-direction: column;
-    }
+  @media (max-width: 767px) {
+    flex-direction: column;
+  }
   &.chart-title {
     font-size: var(--pf-global--FontSize--md);
     font-weight: 700;
@@ -259,7 +261,10 @@ footer {
     }
   }
 
-  a, a:hover, a:focus, a:visited {
+  a,
+  a:hover,
+  a:focus,
+  a:visited {
     margin: auto 10px;
     color: var(--pf-global--Color--200);
   }
@@ -289,7 +294,7 @@ p.notfound {
   margin-right: 20px;
 }
 
-#register-cluster-top-text{
+#register-cluster-top-text {
   margin-bottom: 20px;
 }
 
@@ -298,7 +303,7 @@ p.notfound {
   margin-top: calc(var(--pf-c-page__main-section--PaddingTop) * -1);
   margin-right: calc(var(--pf-c-page__main-section--PaddingRight) * -1);
   margin-left: calc(var(--pf-c-page__main-section--PaddingLeft) * -1);
-  padding-top: var(--pf-c-page__main-section--PaddingTop) ;
+  padding-top: var(--pf-c-page__main-section--PaddingTop);
   padding-right: var(--pf-c-page__main-section--PaddingRight);
   padding-left: var(--pf-c-page__main-section--PaddingLeft);
 }
@@ -357,16 +362,8 @@ h1 .badged-resource-pf .badged-resource-pf-icon {
   }
 }
 
-#ocm-roles-access-dialog {
-  // TODO OCM RBAC pahse 2: remove this with the alert
-  .pf-c-alert {
-    background-color: unset;
-    border-top: unset;
-  }
-}
-
 .pf-c-tabs__item-text > #monitoring-issues-icon,
-.pf-c-tabs__item-text > #insights-issues-icon  {
+.pf-c-tabs__item-text > #insights-issues-icon {
   margin-left: 5px;
 }
 
@@ -411,7 +408,8 @@ h1 .badged-resource-pf .badged-resource-pf-icon {
   margin-bottom: 6px;
 }
 
-.tippy-popper, .pf-tippy-theme.tippy-tooltip .tippy-content {
+.tippy-popper,
+.pf-tippy-theme.tippy-tooltip .tippy-content {
   pointer-events: all !important;
 }
 
@@ -420,10 +418,10 @@ h1 .badged-resource-pf .badged-resource-pf-icon {
 }
 
 .bottom-alert {
- margin-top: 24px;
- h4 {
-  margin-top: 0 !important;
- }
+  margin-top: 24px;
+  h4 {
+    margin-top: 0 !important;
+  }
 }
 
 .card-badge-container > span.card-badge {
@@ -477,8 +475,8 @@ h1 .badged-resource-pf .badged-resource-pf-icon {
 .tile-disabled {
   color: var(--pf-global--disabled-color--100);
 
-  &.tile-disabled:hover h5{
-  color: var(--pf-global--Color--100);
+  &.tile-disabled:hover h5 {
+    color: var(--pf-global--Color--100);
   }
 }
 
@@ -502,7 +500,7 @@ h1 .badged-resource-pf .badged-resource-pf-icon {
 
 .cluster-status-string {
   &.status-installing svg {
-    color:  var(--pf-c-table--cell--Color);
+    color: var(--pf-c-table--cell--Color);
   }
 }
 
@@ -531,14 +529,14 @@ h1 .badged-resource-pf .badged-resource-pf-icon {
 }
 
 .quota-dropdown {
- ul {
-  list-style-type: none;
-  margin: 0;
-  padding: 0;
-  max-height: 200px !important;
-  overflow-y:auto;
-  overflow-x:hidden;
- }
+  ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    max-height: 200px !important;
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
   div {
     width: 100%;
   }
@@ -588,18 +586,18 @@ h1 .badged-resource-pf .badged-resource-pf-icon {
 
     .pf-c-form__label-text {
       font-weight: var(--pf-global--FontWeight--bold);
-      font-size: var(--pf-global--FontSize--sm)
+      font-size: var(--pf-global--FontSize--sm);
     }
   }
   &.expired-eval-option {
     color: var(--pf-global--danger-color--100);
     font-weight: var(--pf-global--FontWeight--bold);
   }
-  &.warning-title-icon{
+  &.warning-title-icon {
     margin-left: 10px;
     fill: var(--pf-global--warning-color--100);
   }
-  &.danger-title-icon{
+  &.danger-title-icon {
     margin-left: 10px;
     fill: var(--pf-global--danger-color--100);
   }
@@ -619,7 +617,7 @@ h1 .badged-resource-pf .badged-resource-pf-icon {
 }
 
 .control-form-cursor {
-  div.pf-c-form__group .pf-c-form__label{
+  div.pf-c-form__group .pf-c-form__label {
     cursor: default;
   }
 }
@@ -636,7 +634,7 @@ h1 .badged-resource-pf .badged-resource-pf-icon {
   }
 }
 
-.pf-c-button.pf-m-link.access-control-tables-copy{
+.pf-c-button.pf-m-link.access-control-tables-copy {
   padding: 0;
   font-size: var(--pf-c-table--cell--FontSize);
 }
@@ -649,20 +647,11 @@ h1 .badged-resource-pf .badged-resource-pf-icon {
   color: var(--pf-global--Color--200);
 }
 
-.ocm-alert-text {
-  font-size: var(--pf-global--FontSize--sm);
-}
-
-.rosa-role-error {
-  @extend .ocm-alert-text;
-  max-width: 900px;
-}
-
 $ocm-l-autofit--breakpoint-map: build-breakpoint-map();
 $ocm-c-width-limiter--breakpoint-map: build-breakpoint-map();
 
 .pf-c-page__main-section {
-    &.pf-m-dark-1000 {
-        --pf-c-page__main-section--BackgroundColor: var(--pf-global--palette--black-1000);
-    }
+  &.pf-m-dark-1000 {
+    --pf-c-page__main-section--BackgroundColor: var(--pf-global--palette--black-1000);
+  }
 }

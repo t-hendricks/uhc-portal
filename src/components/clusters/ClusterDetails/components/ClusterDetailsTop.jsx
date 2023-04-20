@@ -105,7 +105,13 @@ function ClusterDetailsTop(props) {
   let launchConsole;
   if (consoleURL && !isOffline(cluster.state)) {
     launchConsole = (
-      <a href={consoleURL} target="_blank" rel="noopener noreferrer" className="pull-left">
+      <a
+        href={consoleURL}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="pull-left"
+        data-testid="console-url-link"
+      >
         <Button variant="primary">Open console</Button>
       </a>
     );

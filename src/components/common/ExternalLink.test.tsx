@@ -1,11 +1,8 @@
 import React from 'react';
-import { render, screen, fireEvent } from '@testing-library/react';
-import { axe, toHaveNoViolations } from 'jest-axe';
+import { render, screen, fireEvent, axe } from '@testUtils';
 import '@testing-library/jest-dom';
-
 import ExternalLink from './ExternalLink';
 
-expect.extend(toHaveNoViolations);
 const useAnalyticsMock = jest.fn();
 jest.mock('~/hooks/useAnalytics', () => jest.fn(() => useAnalyticsMock));
 

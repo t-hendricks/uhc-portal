@@ -2,37 +2,24 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import get from 'lodash/get';
 
-import {
-  Alert,
-  AlertActionLink,
-  Button,
-  Form,
-  Grid,
-  GridItem,
-  Text,
-  TextContent,
-  TextVariants,
-  Title,
-} from '@patternfly/react-core';
+import { Button, Form, Grid, GridItem, Text, TextVariants, Title } from '@patternfly/react-core';
 import { Field } from 'redux-form';
 import { Link } from 'react-router-dom';
 
-import AWSLogo from '../../../../../styles/images/AWS.png';
-import RedHat from '../../../../../styles/images/Logo-RedHat-Hat-Color-RGB.png';
-import AWSAccountSelection from './AWSAccountSelection';
-import AccountRolesARNsSection from './AccountRolesARNsSection';
-import ErrorBox from '../../../../common/ErrorBox';
-import { required } from '../../../../../common/validators';
-import { normalizedProducts } from '../../../../../common/subscriptionTypes';
-import UserRoleInstructionsModal from './UserRoleInstructionsModal';
-import OCMRoleInstructionsModal from './OCMRoleInstructionsModal';
-import InstructionCommand from '../../../../common/InstructionCommand';
-import { AssociateAwsAccountModal } from './AssociateAWSAccountModal';
-import { RosaCliCommand } from './constants/cliCommands';
+import AWSLogo from '~/styles/images/AWS.png';
+import RedHat from '~/styles/images/Logo-RedHat-Hat-Color-RGB.png';
+import { required } from '~/common/validators';
+import { normalizedProducts } from '~/common/subscriptionTypes';
 import { trackEvents } from '~/common/analytics';
 import useAnalytics from '~/hooks/useAnalytics';
+import ErrorBox from '~/components/common/ErrorBox';
 import { loadOfflineToken } from '~/components/tokens/TokenUtils';
+
+import AWSAccountSelection from './AWSAccountSelection';
+import AccountRolesARNsSection from './AccountRolesARNsSection';
+import { AssociateAwsAccountModal } from './AssociateAWSAccountModal';
 import { productName } from '../CreateRosaGetStarted/CreateRosaGetStarted';
+import { AwsRoleErrorAlert } from './AwsRoleErrorAlert';
 
 export const isUserRoleForSelectedAWSAccount = (users, awsAcctId) =>
   users.some((user) => user.aws_id === awsAcctId);
@@ -41,8 +28,8 @@ export const getUserRoleForSelectedAWSAccount = (users, awsAcctId) =>
   users.find((user) => user.aws_id === awsAcctId);
 
 function AccountsRolesScreen({
+  touch,
   change,
-  touchARNsFields,
   organizationID,
   selectedAWSAccountID,
   selectedInstallerRoleARN,
@@ -56,13 +43,9 @@ function AccountsRolesScreen({
   clearGetAWSAccountRolesARNsResponse,
   clearGetAWSAccountIDsResponse,
   clearGetUserRoleResponse,
-  openUserRoleInstructionsModal,
-  openOcmRoleInstructionsModal,
-  isUserRoleModalOpen,
-  isOCMRoleModalOpen,
-  closeModal,
   offlineToken,
   setOfflineToken,
+  isHypershiftSelected,
 }) {
   const [AWSAccountIDs, setAWSAccountIDs] = useState([]);
   const [noUserForSelectedAWSAcct, setNoUserForSelectedAWSAcct] = useState(false);
@@ -155,6 +138,11 @@ function AccountsRolesScreen({
     clearGetAWSAccountIDsResponse();
   };
 
+  const onAssociateAwsAccountModalOpen = () => {
+    openAssociateAWSAccountModal();
+    setIsAssocAwsAccountModalOpen(true);
+  };
+
   return (
     <Form onSubmit={() => false}>
       {/* these images use fixed positioning */}
@@ -173,28 +161,25 @@ function AccountsRolesScreen({
           <Title headingLevel="h3">Prerequisites</Title>
           <Text component={TextVariants.p}>
             To use the web interface to create a ROSA cluster you will need to have already
-            completed the perquisite steps to prepare your AWS account on the{' '}
+            completed the prerequisite steps to prepare your AWS account on the{' '}
             <Link to="getstarted">{`Get started with a ${productName} (ROSA) page.`}</Link>
           </Text>
         </GridItem>
         <GridItem span={8}>
-          <Title headingLevel="h3">AWS account</Title>
+          <Title headingLevel="h3">AWS infrastructure account</Title>
           <Text component={TextVariants.p}>
-            Select an AWS account that is associated with your Red Hat account, or associate a new
-            AWS account.
+            Select an AWS account that is associated with your Red Hat account or associate a new
+            account. This account will contain the ROSA infrastructure.
           </Text>
         </GridItem>
         <GridItem span={4} />
-        <GridItem span={5}>
+        <GridItem sm={12} md={7}>
           {awsIDsErrorBox}
           <Field
             component={AWSAccountSelection}
             name="associated_aws_id"
-            label="Associated AWS accounts"
-            launchAssocAWSAcctModal={() => {
-              openAssociateAWSAccountModal();
-              setIsAssocAwsAccountModalOpen(true);
-            }}
+            label="Associated AWS infrastructure account"
+            launchAssocAWSAcctModal={onAssociateAwsAccountModalOpen}
             onRefresh={() => {
               setRefreshButtonClicked(true);
               resetAWSAccountFields();
@@ -202,8 +187,8 @@ function AccountsRolesScreen({
             validate={!getAWSAccountIDsResponse.fulfilled ? undefined : required}
             extendedHelpText={
               <>
-                A list of associated AWS accounts. You must associate at least one account to
-                proceed.
+                A list of associated AWS infrastructure accounts. You must associate at least one
+                account to proceed.
               </>
             }
             AWSAccountIDs={AWSAccountIDs}
@@ -216,90 +201,50 @@ function AccountsRolesScreen({
             className="pf-u-mt-md"
             onClick={() => {
               track(trackEvents.AssociateAWS);
-              openAssociateAWSAccountModal();
-              setIsAssocAwsAccountModalOpen(true);
+              onAssociateAwsAccountModalOpen();
             }}
           >
-            Associate a new AWS account
+            How to associate a new account
           </Button>
         </GridItem>
-        <GridItem span={7} />
+
         {selectedAWSAccountID && hasAWSAccounts && (
           <AccountRolesARNsSection
+            touch={touch}
+            change={change}
             selectedAWSAccountID={selectedAWSAccountID}
             selectedInstallerRoleARN={selectedInstallerRoleARN}
             rosaMaxOSVersion={rosaMaxOSVersion}
             getAWSAccountRolesARNs={getAWSAccountRolesARNs}
             getAWSAccountRolesARNsResponse={getAWSAccountRolesARNsResponse}
             clearGetAWSAccountRolesARNsResponse={clearGetAWSAccountRolesARNsResponse}
+            isHypershiftSelected={isHypershiftSelected}
             onAccountChanged={resetUserRoleFields}
-            change={change}
-            touchARNsFields={touchARNsFields}
-            openOcmRoleInstructionsModal={openOcmRoleInstructionsModal}
+            openAssociateAwsAccountModal={onAssociateAwsAccountModalOpen}
           />
         )}
-        <GridItem span={9}>
-          {(getUserRoleResponse?.error || noUserForSelectedAWSAcct) && (
-            <>
-              <br />
-              <Alert
-                className="pf-u-ml-lg"
-                variant="danger"
-                isInline
-                title="A user-role could not be detected"
-                actionLinks={
-                  <AlertActionLink onClick={() => openUserRoleInstructionsModal()}>
-                    See more user role instructions
-                  </AlertActionLink>
-                }
-              >
-                <TextContent className="ocm-alert-text">
-                  <Text component={TextVariants.p} className="pf-u-mb-sm">
-                    It is necessary to create and link a user-role with the Red Hat cluster{' '}
-                    installer to proceed.
-                  </Text>
-                  <Text component={TextVariants.p} className="pf-u-mb-sm">
-                    To create a user-role, run the following command:
-                  </Text>
-                  <Text component={TextVariants.p} className="pf-u-mb-sm">
-                    <InstructionCommand textAriaLabel="Copyable ROSA create user-role">
-                      {RosaCliCommand.UserRole}
-                    </InstructionCommand>
-                  </Text>
-                  <Text component={TextVariants.p} className="pf-u-mb-sm ocm-secondary-text">
-                    After the role is created and linked successfully, you&apos;ll be able to{' '}
-                    continue by clicking the Next button.
-                  </Text>
-                </TextContent>
-              </Alert>
-            </>
-          )}
-        </GridItem>
+
+        {(getUserRoleResponse?.error || noUserForSelectedAWSAcct) && (
+          <GridItem span={8} className="pf-u-mt-sm">
+            <AwsRoleErrorAlert
+              title="A user-role could not be detected"
+              openAssociateAwsAccountModal={onAssociateAwsAccountModalOpen}
+            />
+          </GridItem>
+        )}
       </Grid>
 
       <AssociateAwsAccountModal
         isOpen={isAssocAwsAccountModalOpen}
         onClose={onAssociateAwsAccountModalClose}
       />
-
-      <UserRoleInstructionsModal
-        closeModal={closeModal}
-        isOpen={isUserRoleModalOpen}
-        hasAWSAccounts={hasAWSAccounts}
-      />
-
-      <OCMRoleInstructionsModal
-        closeModal={closeModal}
-        isOpen={isOCMRoleModalOpen}
-        hasAWSAccounts={hasAWSAccounts}
-      />
     </Form>
   );
 }
 
 AccountsRolesScreen.propTypes = {
+  touch: PropTypes.func,
   change: PropTypes.func,
-  touchARNsFields: PropTypes.func,
   selectedAWSAccountID: PropTypes.string,
   selectedInstallerRoleARN: PropTypes.string,
   getAWSAccountIDs: PropTypes.func.isRequired,
@@ -317,13 +262,9 @@ AccountsRolesScreen.propTypes = {
     installer_role_arn: PropTypes.string,
   }).isRequired,
   rosaMaxOSVersion: PropTypes.string,
-  openUserRoleInstructionsModal: PropTypes.func,
-  openOcmRoleInstructionsModal: PropTypes.func,
-  isUserRoleModalOpen: PropTypes.bool,
-  isOCMRoleModalOpen: PropTypes.bool,
-  closeModal: PropTypes.func,
   offlineToken: PropTypes.string,
   setOfflineToken: PropTypes.func,
+  isHypershiftSelected: PropTypes.bool,
 };
 
 export default AccountsRolesScreen;

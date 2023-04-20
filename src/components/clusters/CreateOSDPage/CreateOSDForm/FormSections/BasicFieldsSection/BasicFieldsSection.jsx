@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { Field } from 'redux-form';
-import { FormGroup, GridItem } from '@patternfly/react-core';
+import { FormGroup, GridItem, Alert } from '@patternfly/react-core';
 import CloudRegionComboBox from './CloudRegionComboBox';
 import { constants } from '../../CreateOSDFormConstants';
 import { noQuotaTooltip } from '../../../../../../common/helpers';
@@ -36,6 +36,7 @@ function BasicFieldsSection({
   change,
   isWizard,
   handleMultiAZChangeForOldForm,
+  isHypershiftSelected,
 }) {
   const multiAzTooltip = !hasMultiAzQuota && noQuotaTooltip;
   const singleAzTooltip = !hasSingleAzQuota && noQuotaTooltip;
@@ -143,35 +144,47 @@ function BasicFieldsSection({
       {/* Availability */}
       {showAvailability && (
         <>
-          <GridItem md={6}>
-            <FormGroup label="Availability" isRequired isInline fieldId="availability-toggle">
-              <Field
-                component={RadioButtons}
-                name="multi_az"
-                disabled={pending}
-                onChange={handleMultiAZChange}
-                options={[
-                  {
-                    value: 'false',
-                    label: 'Single zone',
-                    disabled: !hasSingleAzQuota,
-                    tooltipText: singleAzTooltip,
-                    extendedHelpText: constants.availabilityHintSingleZone,
-                  },
-                  {
-                    value: 'true',
-                    label: 'Multi-zone',
-                    disabled: !hasMultiAzQuota,
-                    tooltipText: multiAzTooltip,
-                    extendedHelpText: constants.availabilityHintMultiZone,
-                  },
-                ]}
-                defaultValue={hasSingleAzQuota ? 'false' : 'true'}
-                disableDefaultValueHandling={isWizard}
+          {isHypershiftSelected ? (
+            <>
+              <Alert
+                isInline
+                variant="info"
+                title="The hosted control plane uses multiple availability zones."
               />
-            </FormGroup>
-          </GridItem>
-          <GridItem md={6} />
+            </>
+          ) : (
+            <>
+              <GridItem md={6}>
+                <FormGroup label="Availability" isRequired isInline fieldId="availability-toggle">
+                  <Field
+                    component={RadioButtons}
+                    name="multi_az"
+                    disabled={pending}
+                    onChange={handleMultiAZChange}
+                    options={[
+                      {
+                        value: 'false',
+                        label: 'Single zone',
+                        disabled: !hasSingleAzQuota,
+                        tooltipText: singleAzTooltip,
+                        extendedHelpText: constants.availabilityHintSingleZone,
+                      },
+                      {
+                        value: 'true',
+                        label: 'Multi-zone',
+                        disabled: !hasMultiAzQuota,
+                        tooltipText: multiAzTooltip,
+                        extendedHelpText: constants.availabilityHintMultiZone,
+                      },
+                    ]}
+                    defaultValue={hasSingleAzQuota ? 'false' : 'true'}
+                    disableDefaultValueHandling={isWizard}
+                  />
+                </FormGroup>
+              </GridItem>
+              <GridItem md={6} />
+            </>
+          )}
         </>
       )}
     </>
@@ -191,6 +204,7 @@ BasicFieldsSection.propTypes = {
   hasSingleAzQuota: PropTypes.bool.isRequired,
   hasMultiAzQuota: PropTypes.bool.isRequired,
   isWizard: PropTypes.bool,
+  isHypershiftSelected: PropTypes.bool,
 };
 
 export default BasicFieldsSection;

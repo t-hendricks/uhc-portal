@@ -56,6 +56,17 @@ const reviewValues = {
   rosa_roles_provider_creation_mode: {
     title: 'Operator roles and OIDC provider mode',
   },
+  byo_oidc_config_id: {
+    title: 'OIDC Configuration ID',
+  },
+  byo_oidc_config_id_managed: {
+    title: 'OIDC Configuration Type',
+    isBoolean: true,
+    values: {
+      true: 'Red Hat managed',
+      false: 'Self-managed',
+    },
+  },
   custom_operator_roles_prefix: {
     title: 'Operator roles prefix',
   },
@@ -121,6 +132,9 @@ const reviewValues = {
       true: 'Enabled',
       false: 'Disabled',
     },
+  },
+  etcd_key_arn: {
+    title: 'Etcd encryption key ARN',
   },
   customer_managed_key: {
     title: 'Encrypt volumes with customer keys',
@@ -338,7 +352,7 @@ const reviewValues = {
     },
   },
   associated_aws_id: {
-    title: 'AWS account ID',
+    title: 'AWS infrastructure account ID',
   },
   installer_role_arn: {
     title: 'Installer role',

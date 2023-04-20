@@ -1,11 +1,8 @@
 import React from 'react';
-import { render, screen } from '@testUtils';
+import { render, screen, axe } from '@testUtils';
 import { MemoryRouter } from 'react-router-dom';
-import { axe, toHaveNoViolations } from 'jest-axe';
 
 import CloudTab from '../CloudTab';
-
-expect.extend(toHaveNoViolations);
 
 describe('<CloudTab />', () => {
   it('should render correctly with quota', () => {

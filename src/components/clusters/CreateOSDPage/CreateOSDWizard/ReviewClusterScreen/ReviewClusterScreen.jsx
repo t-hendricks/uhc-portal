@@ -2,20 +2,26 @@ import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import isEmpty from 'lodash/isEmpty';
 import { Title, Bullseye, Stack, StackItem, Spinner } from '@patternfly/react-core';
-import DebugClusterRequest from '../../DebugClusterRequest';
-import config from '../../../../../config';
-import { normalizedProducts } from '../../../../../common/subscriptionTypes';
-import './ReviewClusterScreen.scss';
-import ReviewSection, { ReviewItem, ReviewRoleItem } from './ReviewSection';
-import ReduxHiddenCheckbox from '../../../../common/ReduxFormComponents/ReduxHiddenCheckbox';
+
+import config from '~/config';
+import { HYPERSHIFT_WIZARD_FEATURE } from '~/redux/constants/featureConstants';
+import { normalizedProducts } from '~/common/subscriptionTypes';
 import { getUserRoleForSelectedAWSAccount } from '~/components/clusters/CreateROSAPage/CreateROSAWizard/AccountsRolesScreen/AccountsRolesScreen';
-import { stepId, stepNameById } from '../osdWizardConstants';
+import {
+  stepId,
+  stepNameById,
+} from '~/components/clusters/CreateOSDPage/CreateOSDWizard/osdWizardConstants';
 import {
   stepId as rosaStepId,
   stepNameById as rosaStepNameById,
 } from '~/components/clusters/CreateROSAPage/CreateROSAWizard/rosaWizardConstants';
-import { HYPERSHIFT_WIZARD_FEATURE } from '~/redux/constants/featureConstants';
 import { useFeatureGate } from '~/hooks/useFeatureGate';
+
+import ReduxHiddenCheckbox from '~/components/common/ReduxFormComponents/ReduxHiddenCheckbox';
+import DebugClusterRequest from '~/components/clusters/CreateOSDPage/DebugClusterRequest';
+import ReviewSection, { ReviewItem, ReviewRoleItem } from './ReviewSection';
+
+import './ReviewClusterScreen.scss';
 
 const ReviewClusterScreen = ({
   change,
@@ -33,25 +39,29 @@ const ReviewClusterScreen = ({
   clearGetUserRoleResponse,
   clearGetOcmRoleResponse,
   goToStepById,
+  isHypershiftSelected,
 }) => {
   const isByoc = formValues.byoc === 'true';
   const isAWS = formValues.cloud_provider === 'aws';
   const isGCP = formValues.cloud_provider === 'gcp';
   const isROSA = formValues.product === normalizedProducts.ROSA;
+  const hasEtcdEncryption = isHypershiftSelected && !!formValues.etcd_key_arn;
   const showVPCCheckbox = isROSA || isByoc;
   const clusterSettingsFields = [
-    !isROSA && 'cloud_provider',
+    ...(!isROSA ? ['cloud_provider'] : []),
     'name',
     'cluster_version',
     'region',
     'multi_az',
-    !isByoc && !isROSA && 'persistent_storage',
-    !isByoc && isROSA && 'load_balancers',
-    isByoc && isAWS && !isROSA && 'disable_scp_checks',
-    'enable_user_workload_monitoring',
-    isByoc && 'customer_managed_key',
+    ...(!isByoc && !isROSA ? ['persistent_storage'] : []),
+    ...(!isByoc && isROSA ? ['load_balancers'] : []),
+    ...(isByoc && isAWS && !isROSA ? ['disable_scp_checks'] : []),
+    ...(!isHypershiftSelected ? ['enable_user_workload_monitoring'] : []),
+    ...(isByoc ? ['customer_managed_key'] : []),
     'etcd_encryption',
-  ].filter(Boolean);
+    ...(hasEtcdEncryption ? ['etcd_key_arn'] : []),
+  ];
+
   if (isCreateClusterPending) {
     return (
       <Bullseye>
@@ -176,7 +186,7 @@ const ReviewClusterScreen = ({
             })}
             {ReviewItem({ name: 'installer_role_arn', formValues })}
             {ReviewItem({ name: 'support_role_arn', formValues })}
-            {ReviewItem({ name: 'control_plane_role_arn', formValues })}
+            {!isHypershiftSelected && ReviewItem({ name: 'control_plane_role_arn', formValues })}
             {ReviewItem({ name: 'worker_role_arn', formValues })}
           </ReviewSection>
         </>
@@ -251,7 +261,14 @@ const ReviewClusterScreen = ({
           title={getStepName('CLUSTER_ROLES_AND_POLICIES')}
           onGoToStep={() => goToStepById(getStepId('CLUSTER_ROLES_AND_POLICIES'))}
         >
-          {ReviewItem({ name: 'rosa_roles_provider_creation_mode', formValues })}
+          {!isHypershiftSelected &&
+            ReviewItem({ name: 'rosa_roles_provider_creation_mode', formValues })}
+          {formValues.byo_oidc_config_id && (
+            <>
+              {ReviewItem({ name: 'byo_oidc_config_id_managed', formValues })}
+              {ReviewItem({ name: 'byo_oidc_config_id', formValues })}
+            </>
+          )}
           {ReviewItem({ name: 'custom_operator_roles_prefix', formValues })}
         </ReviewSection>
       )}
@@ -284,6 +301,7 @@ ReviewClusterScreen.propTypes = {
   clearGetUserRoleResponse: PropTypes.func.isRequired,
   clearGetOcmRoleResponse: PropTypes.func.isRequired,
   goToStepById: PropTypes.func.isRequired,
+  isHypershiftSelected: PropTypes.bool,
 };
 
 export default ReviewClusterScreen;

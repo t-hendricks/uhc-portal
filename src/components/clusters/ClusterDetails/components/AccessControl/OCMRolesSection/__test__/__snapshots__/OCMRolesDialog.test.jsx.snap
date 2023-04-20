@@ -14,7 +14,7 @@ exports[`<OCMRolesDialog /> should render 1`] = `
   <p
     className="pf-u-mb-xl"
   >
-    Allow users in your organization to edit clusters. These permissions only apply to cluster management in OpenShift Cluster Manager.
+    Allow users in your organization to edit or view clusters. These permissions only apply to cluster management in OpenShift Cluster Manager.
   </p>
   <Form
     className="control-form-cursor"
@@ -59,11 +59,115 @@ exports[`<OCMRolesDialog /> should render 1`] = `
         value={null}
       />
     </FormGroup>
-    <Alert
-      isInline={true}
-      title="This user will be granted with Cluster Editor role and will be able to manage and configure the cluster."
-      variant="info"
-    />
+    <FormGroup
+      isRequired={true}
+      label="Role"
+    >
+      <Select
+        aria-describedby=""
+        aria-invalid={false}
+        aria-label=""
+        aria-labelledby=""
+        chipGroupComponent={null}
+        className=""
+        clearSelectionsAriaLabel="Clear all"
+        createText="Create"
+        customBadgeText={null}
+        customContent={null}
+        direction="down"
+        favorites={Array []}
+        favoritesLabel="Favorites"
+        hasInlineFilter={false}
+        hasPlaceholderStyle={false}
+        inlineFilterPlaceholderText={null}
+        inputAutoComplete="off"
+        inputIdPrefix=""
+        isCreatable={false}
+        isCreateOptionOnTop={false}
+        isCreateSelectOptionObject={false}
+        isDisabled={false}
+        isFlipEnabled={true}
+        isGrouped={false}
+        isInputFilterPersisted={false}
+        isInputValuePersisted={false}
+        isOpen={false}
+        isPlain={false}
+        menuAppendTo={[Function]}
+        noResultsFoundText="No results found"
+        onClear={[Function]}
+        onCreateOption={[Function]}
+        onFilter={null}
+        onSelect={[Function]}
+        onToggle={[Function]}
+        onTypeaheadInputChanged={null}
+        ouiaSafe={true}
+        placeholderText=""
+        position="left"
+        removeFindDomNode={false}
+        removeSelectionAriaLabel="Remove"
+        selections={null}
+        shouldResetOnSelect={true}
+        toggleAriaLabel="Options menu"
+        toggleIcon={null}
+        toggleId={null}
+        toggleIndicator={null}
+        typeAheadAriaDescribedby=""
+        typeAheadAriaLabel=""
+        validated="default"
+        variant="single"
+        width=""
+        zIndex={9999}
+      >
+        <SelectOption
+          className=""
+          component="button"
+          description="Cluster editor role will allow users or groups to manage and cofigure the cluster."
+          index={0}
+          inputId=""
+          isChecked={false}
+          isDisabled={false}
+          isFavorite={null}
+          isLastOptionBeforeFooter={[Function]}
+          isLoad={false}
+          isLoading={false}
+          isNoResultsOption={false}
+          isPlaceholder={false}
+          isSelected={false}
+          key="ClusterEditor"
+          keyHandler={[Function]}
+          onClick={[Function]}
+          sendRef={[Function]}
+          setViewMoreNextIndex={[Function]}
+          value="ClusterEditor"
+        >
+          Cluster editor
+        </SelectOption>
+        <SelectOption
+          className=""
+          component="button"
+          description="Cluster viewer role will allow users or groups to view cluster details only."
+          index={0}
+          inputId=""
+          isChecked={false}
+          isDisabled={false}
+          isFavorite={null}
+          isLastOptionBeforeFooter={[Function]}
+          isLoad={false}
+          isLoading={false}
+          isNoResultsOption={false}
+          isPlaceholder={false}
+          isSelected={false}
+          key="ClusterViewer"
+          keyHandler={[Function]}
+          onClick={[Function]}
+          sendRef={[Function]}
+          setViewMoreNextIndex={[Function]}
+          value="ClusterViewer"
+        >
+          Cluster viewer
+        </SelectOption>
+      </Select>
+    </FormGroup>
   </Form>
 </Modal>
 `;

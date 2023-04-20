@@ -74,6 +74,18 @@ describe('ClusterStatus', () => {
       expect(screen.getByText('Pending 1 / 2')).toBeVisible();
     });
 
+    it('shows correct number of ready machine pools when one machine pool has 0 replicas', () => {
+      render(
+        <ClusterStatus
+          cluster={{ ...cluster, hypershift: { enabled: true } }}
+          limitedSupport={false}
+          machinePools={[...machinePools, { status: { current_replicas: 0 }, replicas: 0 }]}
+        />,
+      );
+
+      expect(screen.getByText('Pending 2 / 3')).toBeVisible();
+    });
+
     it('shows correct number of autoscaling machine pools in "ready like" status ', () => {
       render(
         <ClusterStatus

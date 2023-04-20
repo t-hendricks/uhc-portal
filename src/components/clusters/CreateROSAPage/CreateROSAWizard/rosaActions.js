@@ -8,8 +8,9 @@ import {
   CLEAR_GET_OCM_ROLE_RESPONSE,
   CLEAR_GET_USER_ROLE_RESPONSE,
   SET_OFFLINE_TOKEN,
+  LIST_USER_OIDC_CONFIGURATIONS,
 } from './rosaConstants';
-import { accountsService } from '../../../../services';
+import { accountsService, clusterService } from '../../../../services';
 import { extractAWSID } from '../../../../common/rosa';
 
 export const getAWSIDsFromARNs = (arns) => {
@@ -107,6 +108,13 @@ const fetchUserRolesByOCMAccountID = async () => {
 export const getUserRole = () => ({
   type: GET_USER_ROLE,
   payload: fetchUserRolesByOCMAccountID(),
+});
+
+export const getUserOidcConfigurations = (awsAccountID) => ({
+  type: LIST_USER_OIDC_CONFIGURATIONS,
+  payload: clusterService
+    .getOidcConfigurations(awsAccountID)
+    .then((response) => response?.data?.items ?? []),
 });
 
 export const clearGetAWSAccountIDsResponse = () => ({

@@ -47,7 +47,7 @@ const mapStateToProps = (state) => {
     },
     getUserRoleResponse,
     selectedAWSAccountID: valueSelector(state, 'associated_aws_id'),
-    hypershiftSelected: valueSelector(state, 'hypershift') === 'true',
+    isHypershiftSelected: valueSelector(state, 'hypershift') === 'true',
   };
 };
 

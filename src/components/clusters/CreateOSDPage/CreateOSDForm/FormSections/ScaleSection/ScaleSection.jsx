@@ -16,7 +16,6 @@ import { constants } from '../../CreateOSDFormConstants';
 import PopoverHint from '../../../../../common/PopoverHint';
 import { required } from '../../../../../../common/validators';
 import ExternalLink from '../../../../../common/ExternalLink';
-
 import AutoScaleSection from './AutoScaleSection/AutoScaleSection';
 
 function ScaleSection({
@@ -26,6 +25,7 @@ function ScaleSection({
   machineType,
   cloudProviderID,
   product,
+  isHypershiftCluster,
   showStorageAndLoadBalancers = true,
   minNodes,
   isMachinePool = false,
@@ -39,13 +39,12 @@ function ScaleSection({
 }) {
   const expandableSectionTitle = isMachinePool ? 'Edit node labels and taints' : 'Edit node labels';
 
-  const labelsAndTaintsSection = (
+  const labelsAndTaintsSection = !isHypershiftCluster ? (
     <ExpandableSection
       toggleTextCollapsed={expandableSectionTitle}
       toggleTextExpanded={expandableSectionTitle}
-      className="pf-u-mt-md"
     >
-      <Title headingLevel="h3" className="pf-u-mb-md">
+      <Title headingLevel="h3" className="pf-u-mb-md pf-u-mt-lg">
         Node labels
       </Title>
       <FieldArray name="node_labels" component={ReduxFormKeyValueList} />
@@ -58,7 +57,7 @@ function ScaleSection({
         </>
       )}
     </ExpandableSection>
-  );
+  ) : null;
 
   const isRosa = product === normalizedProducts.ROSA;
 
@@ -132,6 +131,7 @@ function ScaleSection({
               billingModel={billingModel}
             />
           </GridItem>
+          <GridItem md={6} />
           {labelsAndTaintsSection}
         </>
       )}
@@ -197,6 +197,7 @@ ScaleSection.propTypes = {
   machineType: PropTypes.string.isRequired,
   cloudProviderID: PropTypes.string.isRequired,
   product: PropTypes.oneOf(Object.keys(normalizedProducts)).isRequired,
+  isHypershiftCluster: PropTypes.bool.isRequired,
   billingModel: PropTypes.oneOf(Object.values(billingModels)),
   minNodes: PropTypes.number,
   isMachinePool: PropTypes.bool,

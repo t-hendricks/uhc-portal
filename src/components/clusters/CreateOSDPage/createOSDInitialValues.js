@@ -9,7 +9,7 @@ const createOSDInitialValues = ({
   isByoc,
   isMultiAz,
   isTrialDefault,
-  hypershiftSelected = false,
+  isHypershiftSelected,
 }) => {
   let defaultNodeCount;
   if (isByoc || isTrialDefault) {
@@ -21,12 +21,12 @@ const createOSDInitialValues = ({
   const initialValues = {
     cloud_provider: cloudProviderID,
     node_drain_grace_period: 60,
-    upgrade_policy: hypershiftSelected ? 'automatic' : 'manual',
+    upgrade_policy: isHypershiftSelected ? 'automatic' : 'manual',
     automatic_upgrade_schedule: '0 0 * * 0',
     multi_az: (!!isMultiAz).toString(),
     persistent_storage: '107374182400',
     load_balancers: '0',
-    enable_user_workload_monitoring: 'true',
+    ...(!isHypershiftSelected ? { enable_user_workload_monitoring: 'true' } : {}),
     nodes_compute: defaultNodeCount,
     node_labels: [{}],
     byoc: (!!isByoc || !!isTrialDefault).toString(),
@@ -36,8 +36,8 @@ const createOSDInitialValues = ({
     aws_secret_access_key: '',
     network_configuration_toggle: 'basic',
     cluster_privacy: 'external',
-    install_to_vpc: hypershiftSelected,
-    use_privatelink: hypershiftSelected,
+    install_to_vpc: isHypershiftSelected,
+    use_privatelink: isHypershiftSelected,
     configure_proxy: false,
     configure_cluster_proxy: false,
     disable_scp_checks: false,

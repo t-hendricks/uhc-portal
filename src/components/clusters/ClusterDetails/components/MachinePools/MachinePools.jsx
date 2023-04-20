@@ -428,14 +428,9 @@ class MachinePools extends React.Component {
       'You do not have permission to add a machine pool. Only cluster owners, cluster editors, and Organization Administrators can add machine pools.';
     const quotaReason = !hasMachinePoolsQuota && noQuotaTooltip;
 
-    const hypershiftReason =
-      isHypershift && 'Adding machine pools is currently only available using ROSA CLI';
-
     const addMachinePoolBtn = (
       <ButtonWithTooltip
-        disableReason={
-          readOnlyReason || hibernatingReason || canNotEditReason || quotaReason || hypershiftReason
-        }
+        disableReason={readOnlyReason || hibernatingReason || canNotEditReason || quotaReason}
         id="add-machine-pool"
         onClick={() => openModal('add-machine-pool')}
         variant="secondary"
@@ -507,7 +502,9 @@ class MachinePools extends React.Component {
             </CardBody>
           </Card>
         )}
-        {isAddMachinePoolModalOpen && <AddMachinePoolModal cluster={cluster} />}
+        {isAddMachinePoolModalOpen && (
+          <AddMachinePoolModal cluster={cluster} isHypershiftCluster={isHypershift} />
+        )}
         {isEditTaintsModalOpen && (
           <EditTaintsModal clusterId={cluster.id} isHypershiftCluster={isHypershift} />
         )}

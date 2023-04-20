@@ -40,11 +40,21 @@ const normalizeProductID = (id: string | undefined): string => {
     MOA_HOSTEDCONTROLPLANE: normalizedProducts.ROSA_HyperShift,
     ARO: normalizedProducts.ARO,
     OCP_ASSISTEDINSTALL: normalizedProducts.OCP_Assisted_Install,
+    RHACS: normalizedProducts.RHACS,
+    RHACSTRIAL: normalizedProducts.RHACSTrial,
+    RHOSR: normalizedProducts.RHOSR,
+    RHOSRTRIAL: normalizedProducts.RHOSRTrial,
+    RHOSAK: normalizedProducts.RHOSAK,
+    RHOSAKTRIAL: normalizedProducts.RHOSAKTrial,
+    RHOSE: normalizedProducts.RHOSE,
+    RHOSETRIAL: normalizedProducts.RHOSETrial,
     ANY: normalizedProducts.ANY, // used by account-manager in quota_cost
   };
+
   if (typeof id !== 'string') {
     return normalizedProducts.UNKNOWN;
   }
+
   return map[id.toUpperCase().replace('-', '_')] || normalizedProducts.UNKNOWN;
 };
 
