@@ -34,10 +34,12 @@ const mapStateToProps = (state) => {
   const modalData = state.modal.data;
   const cluster = modalData?.cluster;
 
+  const isHypershift = isHypershiftCluster(cluster);
+
   const selectedMachinePool =
     valueSelector(state, 'machine_pool') ||
     modalData.machinePool?.id ||
-    (isHypershiftCluster(cluster) && state.machinePools.getMachinePools.data[0]?.id) ||
+    (isHypershift && state.machinePools.getMachinePools.data[0]?.id) ||
     (modalData.isDefaultMachinePool && 'Default');
 
   const cloudProviderID = get(cluster, 'cloud_provider.id', '');
@@ -56,11 +58,11 @@ const mapStateToProps = (state) => {
     resetSection: (values) => resetSection(reduxFormConfig.form, values),
     isValid: isValid(reduxFormConfig.form)(state),
     clusterID: get(cluster, 'id', ''),
-    isHypershiftCluster: isHypershiftCluster(cluster),
+    isHypershiftCluster: isHypershift,
     machinePoolsList: {
       ...state.machinePools.getMachinePools,
       data: [
-        ...(!isHypershiftCluster(cluster)
+        ...(!isHypershift
           ? [
               {
                 name: 'Default',
@@ -105,18 +107,12 @@ const mapStateToProps = (state) => {
   let machinePoolWithAutoscale = false;
 
   const getMinAndMaxNodesValues = (autoscaleObj) => {
-    const min = isHypershiftCluster(cluster)
-      ? autoscaleObj?.min_replica
-      : autoscaleObj.min_replicas;
-    const max = isHypershiftCluster(cluster)
-      ? autoscaleObj?.max_replica
-      : autoscaleObj.max_replicas;
+    const min = isHypershift ? autoscaleObj?.min_replica : autoscaleObj.min_replicas;
+    const max = isHypershift ? autoscaleObj?.max_replica : autoscaleObj.max_replicas;
 
     return {
-      min_replicas:
-        !isHypershiftCluster && isMultiAvailZone ? (min / 3).toString() : min.toString(),
-      max_replicas:
-        !isHypershiftCluster && isMultiAvailZone ? (max / 3).toString() : max.toString(),
+      min_replicas: !isHypershift && isMultiAvailZone ? (min / 3).toString() : min.toString(),
+      max_replicas: !isHypershift && isMultiAvailZone ? (max / 3).toString() : max.toString(),
     };
   };
 
@@ -152,7 +148,7 @@ const mapStateToProps = (state) => {
   return {
     ...commonProps,
     editNodeCountResponse: state.machinePools.scaleMachinePoolResponse,
-    machineType: isHypershiftCluster(cluster)
+    machineType: isHypershift
       ? get(selectedMachinePoolData, 'aws_node_pool.instance_type', '')
       : get(selectedMachinePoolData, 'instance_type', ''),
     machinePoolId: selectedMachinePool,
