@@ -26,13 +26,14 @@ export const AutoScale = ({ isDefaultMachinePool }: AutoScaleProps) => {
     getFieldMeta,
     values: {
       [FieldId.AutoscalingEnabled]: autoscalingEnabled,
-      [FieldId.AutoscalingEnabled]: multiAz,
+      [FieldId.MultiAz]: multiAz,
       [FieldId.MinReplicas]: minReplicas,
-      [FieldId.AutoscalingEnabled]: maxReplicas,
-      [FieldId.AutoscalingEnabled]: product,
-      [FieldId.AutoscalingEnabled]: byoc,
+      [FieldId.MaxReplicas]: maxReplicas,
+      [FieldId.Product]: product,
+      [FieldId.Byoc]: byoc,
     },
   } = useFormState();
+
   const [minErrorMessage, setMinErrorMessage] = React.useState<string>();
   const [maxErrorMessage, setMaxErrorMessage] = React.useState<string>();
   const isMultiAz = multiAz === 'true';
@@ -116,7 +117,9 @@ export const AutoScale = ({ isDefaultMachinePool }: AutoScaleProps) => {
         helperText={
           <HelperText>
             {isMultiAz && (
-              <HelperTextItem>{`x 3 zones = ${parseInt(minReplicas, 10) || 0 * 3}`}</HelperTextItem>
+              <HelperTextItem>{`x 3 zones = ${
+                (parseInt(minReplicas, 10) || 0) * 3
+              }`}</HelperTextItem>
             )}
             {minErrorMessage && (
               <HelperTextItem variant="error" hasIcon>
@@ -152,7 +155,9 @@ export const AutoScale = ({ isDefaultMachinePool }: AutoScaleProps) => {
         helperText={
           <HelperText>
             {isMultiAz && (
-              <HelperTextItem>{`x 3 zones = ${parseInt(maxReplicas, 10) || 0 * 3}`}</HelperTextItem>
+              <HelperTextItem>{`x 3 zones = ${
+                (parseInt(maxReplicas, 10) || 0) * 3
+              }`}</HelperTextItem>
             )}
             {maxErrorMessage && (
               <HelperTextItem variant="error" hasIcon>
