@@ -121,7 +121,7 @@ exports[`<OCMRolesDialog /> should render 1`] = `
         <SelectOption
           className=""
           component="button"
-          description="Cluster editor role will allow users or groups to manage and cofigure the cluster."
+          description="Cluster editor role will allow users or groups to manage and configure the cluster."
           index={0}
           inputId=""
           isChecked={false}
@@ -165,6 +165,54 @@ exports[`<OCMRolesDialog /> should render 1`] = `
           value="ClusterViewer"
         >
           Cluster viewer
+        </SelectOption>
+        <SelectOption
+          className=""
+          component="button"
+          description="Identity provider editor role will allow users or groups to manage and configure the identity providers."
+          index={0}
+          inputId=""
+          isChecked={false}
+          isDisabled={false}
+          isFavorite={null}
+          isLastOptionBeforeFooter={[Function]}
+          isLoad={false}
+          isLoading={false}
+          isNoResultsOption={false}
+          isPlaceholder={false}
+          isSelected={false}
+          key="IdpEditor"
+          keyHandler={[Function]}
+          onClick={[Function]}
+          sendRef={[Function]}
+          setViewMoreNextIndex={[Function]}
+          value="IdpEditor"
+        >
+          Identity provider editor
+        </SelectOption>
+        <SelectOption
+          className=""
+          component="button"
+          description="Machine pool editor role will allow users or groups to manage and configure the machine pools."
+          index={0}
+          inputId=""
+          isChecked={false}
+          isDisabled={false}
+          isFavorite={null}
+          isLastOptionBeforeFooter={[Function]}
+          isLoad={false}
+          isLoading={false}
+          isNoResultsOption={false}
+          isPlaceholder={false}
+          isSelected={false}
+          key="MachinePoolEditor"
+          keyHandler={[Function]}
+          onClick={[Function]}
+          sendRef={[Function]}
+          setViewMoreNextIndex={[Function]}
+          value="MachinePoolEditor"
+        >
+          Machine pool editor
         </SelectOption>
       </Select>
     </FormGroup>
