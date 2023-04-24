@@ -41,7 +41,7 @@ import { isValid, scrollToTop, shouldRefetchQuota } from '../../../common/helper
 import { isHypershiftCluster } from './clusterDetailsHelper';
 import getClusterName from '../../../common/getClusterName';
 import { subscriptionStatuses, knownProducts } from '../../../common/subscriptionTypes';
-import clusterStates, { getClusterAIExtraInfo, isHibernating } from '../common/clusterStates';
+import clusterStates, { isHibernating } from '../common/clusterStates';
 import AddGrantModal from './components/AccessControl/NetworkSelfServiceSection/AddGrantModal';
 import Unavailable from '../../common/Unavailable';
 import Support from './components/Support';
@@ -49,8 +49,14 @@ import AddNotificationContactDialog from './components/Support/components/AddNot
 import UpgradeSettingsTab from './components/UpgradeSettings';
 import { isUninstalledAICluster } from '../../../common/isAssistedInstallerCluster';
 import { hasCapability, subscriptionCapabilities } from '../../../common/subscriptionCapabilities';
+import withFeatureGate from '../../features/with-feature-gate';
+import { ASSISTED_INSTALLER_FEATURE } from '../../../redux/constants/featureConstants';
 
 const { HostsClusterDetailTab, getAddHostTabDetails } = OCM;
+const GatedAIHostsClusterDetailTab = withFeatureGate(
+  HostsClusterDetailTab,
+  ASSISTED_INSTALLER_FEATURE,
+);
 class ClusterDetails extends Component {
   state = {
     selectedTab: '',
@@ -134,13 +140,6 @@ class ClusterDetails extends Component {
     if (isValid(subscriptionID)) {
       fetchDetails(subscriptionID);
     }
-  };
-
-  getAiExtraInfo = () => {
-    // AI needs the information about the organization that may not be ready by the time
-    // the cluster details are fetched. On the render, the information will be fulfilled
-    const { organization } = this.props;
-    return getClusterAIExtraInfo(organization);
   };
 
   refresh(clicked) {
@@ -580,9 +579,8 @@ class ClusterDetails extends Component {
               hidden
             >
               <ErrorBoundary>
-                <HostsClusterDetailTab
+                <GatedAIHostsClusterDetailTab
                   cluster={cluster}
-                  extraInfo={this.getAiExtraInfo()}
                   isVisible={selectedTab === 'addAssistedHosts'}
                 />
               </ErrorBoundary>
