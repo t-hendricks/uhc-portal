@@ -111,12 +111,24 @@ function OCMRolesDialog({
       id: ocmRoles.CLUSTER_EDITOR,
       name: 'Cluster editor',
       description:
-        'Cluster editor role will allow users or groups to manage and cofigure the cluster.',
+        'Cluster editor role will allow users or groups to manage and configure the cluster.',
     },
     {
       id: ocmRoles.CLUSTER_VIEWER,
       name: 'Cluster viewer',
       description: 'Cluster viewer role will allow users or groups to view cluster details only.',
+    },
+    {
+      id: ocmRoles.IDP_EDITOR,
+      name: 'Identity provider editor',
+      description:
+        'Identity provider editor role will allow users or groups to manage and configure the identity providers.',
+    },
+    {
+      id: ocmRoles.MACHINE_POOL_EDITOR,
+      name: 'Machine pool editor',
+      description:
+        'Machine pool editor role will allow users or groups to manage and configure the machine pools.',
     },
   ];
 
