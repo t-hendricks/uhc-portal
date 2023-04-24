@@ -14,6 +14,7 @@ const CreateRosaWizardFooter = ({
   onBeforeSubmit,
   onSubmit,
   isNextDisabled,
+  currentStepId,
 }) => {
   const asyncValidating = useSelector(isAsyncValidating('CreateCluster'));
   const { pending: getAccountIDsLoading } = useSelector(
@@ -29,13 +30,21 @@ const CreateRosaWizardFooter = ({
     (state) => state.rosaReducer.getOCMRoleResponse,
   );
   const { pending: isVpcsLoading } = useGlobalState((state) => state.ccsInquiries.vpcs);
+  const clusterPrivacy = useGlobalState(
+    (state) => state.form.CreateCluster?.values.cluster_privacy,
+  );
+
+  const isPublicSubnetsLoading =
+    currentStepId === stepId.NETWORKING__CONFIGURATION &&
+    clusterPrivacy === 'external' &&
+    isVpcsLoading;
 
   const areAwsResourcesLoading =
     getAccountIDsLoading ||
     getAccountARNsLoading ||
     getUserRoleLoading ||
     getOCMRoleLoading ||
-    isVpcsLoading;
+    isPublicSubnetsLoading;
 
   return (
     <WizardFooter>
@@ -80,6 +89,7 @@ CreateRosaWizardFooter.propTypes = {
   onBeforeSubmit: PropTypes.func.isRequired,
   onSubmit: PropTypes.func.isRequired,
   isNextDisabled: PropTypes.bool,
+  currentStepId: PropTypes.string,
 };
 
 export default CreateRosaWizardFooter;

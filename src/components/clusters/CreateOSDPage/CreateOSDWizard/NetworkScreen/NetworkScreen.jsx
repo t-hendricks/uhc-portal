@@ -179,11 +179,17 @@ function NetworkScreen(props) {
                       </div>
                     </>
                   ),
-                  extraField:
-                    isHypershiftSelected && !privateClusterSelected ? (
-                      // TODO: Placeholder for the Public subnet ID selector
-                      <></>
-                    ) : null,
+                  extraField: isHypershiftSelected && !privateClusterSelected && (
+                    <Field
+                      component={SubnetSelectField}
+                      name="cluster_privacy_public_subnet_id"
+                      label="Public subnet ID"
+                      className="pf-u-mt-md pf-u-ml-lg"
+                      isRequired
+                      validate={required}
+                      privacy="public"
+                    />
+                  ),
                 },
                 {
                   value: 'internal',

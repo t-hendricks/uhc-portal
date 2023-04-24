@@ -11,6 +11,7 @@ export const VALIDATE_CLOUD_PROVIDER_CREDENTIALS = 'VALIDATE_CLOUD_PROVIDER_CRED
 export const LIST_VPCS = 'LIST_VPCS';
 export const LIST_GCP_KEY_RINGS = 'LIST_GCP_KEY_RINGS';
 export const LIST_GCP_KEYS = 'LIST_GCP_KEYS';
+export const CLEAR_LIST_VPCS = 'CLEAR_LIST_VPCS';
 export const CLEAR_ALL_CLOUD_PROVIDER_INQUIRIES = 'CLEAR_ALL_CLOUD_PROVIDER_INQUIRIES';
 export const CLEAR_CCS_CREDENTIALS_INQUIRY = 'CLEAR_CCS_CREDENTIALS_INQUIRY';
 
@@ -101,4 +102,8 @@ export const clearAllCloudProviderInquiries = () => ({
 
 export const clearCcsCredientialsInquiry = () => ({
   type: CLEAR_CCS_CREDENTIALS_INQUIRY,
+});
+
+export const clearListVpcs = () => ({
+  type: CLEAR_LIST_VPCS,
 });
