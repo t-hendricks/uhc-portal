@@ -33,10 +33,15 @@ import { ASSISTED_INSTALLER_FEATURE } from '~/redux/constants/featureConstants';
 import './Overview.scss';
 
 const { AssistedInstallerDetailCard, AssistedInstallerExtraDetailCard } = OCM;
-const GatedAIDetailCard = withFeatureGate(AssistedInstallerDetailCard, ASSISTED_INSTALLER_FEATURE);
+const GatedAIDetailCard = withFeatureGate(
+  AssistedInstallerDetailCard,
+  ASSISTED_INSTALLER_FEATURE,
+  () => false,
+);
 const GatedAIExtraDetailCard = withFeatureGate(
   AssistedInstallerExtraDetailCard,
   ASSISTED_INSTALLER_FEATURE,
+  () => false,
 );
 
 class Overview extends React.Component {
