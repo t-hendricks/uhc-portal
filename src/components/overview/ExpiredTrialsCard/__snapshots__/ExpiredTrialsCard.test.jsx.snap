@@ -10,6 +10,7 @@ exports[`<ExpiredTrialsCard /> When data is available renders correctly 1`] = `
   <CardBody>
     <Table
       actionResolver={[Function]}
+      actionsMenuAppendTo="inline"
       areActionsDisabled={[Function]}
       aria-label="Expired Trials"
       borders={true}
