@@ -201,6 +201,7 @@ function NetworkScreen(props) {
                       className="pf-u-mt-md pf-u-ml-lg"
                       isRequired
                       validate={required}
+                      privacy="public"
                     />
                   ),
                 },

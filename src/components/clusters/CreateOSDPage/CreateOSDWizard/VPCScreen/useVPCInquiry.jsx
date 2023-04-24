@@ -4,7 +4,7 @@ import { formValueSelector } from 'redux-form';
 import { isEqual } from 'lodash';
 
 import ccsCredentialsSelector from '../credentialsSelector';
-import { getAWSCloudProviderVPCs } from '../ccsInquiriesActions';
+import { clearListVpcs, getAWSCloudProviderVPCs } from '../ccsInquiriesActions';
 
 const valueSelector = formValueSelector('CreateCluster');
 
@@ -37,7 +37,7 @@ export const useAWSVPCInquiry = () => {
   );
   const region = useSelector((state) => valueSelector(state, 'region'));
   const vpcs = useSelector((state) => state.ccsInquiries.vpcs);
-  const { credentials: vpcsCredentials } = vpcs;
+  const { credentials: vpcsCredentials, error: vpcsError } = vpcs;
 
   // When vpcs subnet availability zones possess the current selected region and current
   // CCS credentials match what's stored for vpcs, vpcs results can be considered up-to-date.
@@ -54,6 +54,11 @@ export const useAWSVPCInquiry = () => {
     // The action works similarly for AWS and GCP,
     // but current GCP components don't need it, they fetch the data themselves.
     if (cloudProviderID === 'aws' && !hasLatestVpcs) {
+      // Clear stale error state before re-fetching VPCs
+      if (vpcsError) {
+        dispatch(clearListVpcs());
+      }
+
       dispatch(getAWSCloudProviderVPCs(credentials, region));
     }
   }, [cloudProviderID, credentials, region, hasLatestVpcs]);

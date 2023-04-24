@@ -12,6 +12,7 @@ import {
   LIST_GCP_KEY_RINGS,
   LIST_GCP_KEYS,
   LIST_VPCS,
+  CLEAR_LIST_VPCS,
   CLEAR_ALL_CLOUD_PROVIDER_INQUIRIES,
   CLEAR_CCS_CREDENTIALS_INQUIRY,
 } from './ccsInquiriesActions';
@@ -191,6 +192,11 @@ function ccsInquiriesReducer(state = initialState, action) {
           data: action.payload?.data,
         };
         break;
+      case CLEAR_LIST_VPCS:
+        return {
+          ...state,
+          vpcs: initialState.vpcs,
+        };
 
       case CLEAR_ALL_CLOUD_PROVIDER_INQUIRIES:
         return { ...initialState };

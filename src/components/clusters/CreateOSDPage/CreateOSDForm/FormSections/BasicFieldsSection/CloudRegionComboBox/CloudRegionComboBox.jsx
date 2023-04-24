@@ -12,10 +12,12 @@ import './CloudRegionComboBox.scss';
 class CloudRegionComboBox extends React.Component {
   componentDidMount() {
     const { input, availableRegions } = this.props;
+    const { value: initialRegion } = input;
+    const isInitialRegionAvailable = availableRegions.find((region) => region.id === initialRegion);
 
-    // In the event no initial value is set in the form, select to the first available region.
-    if (!input.value) {
-      this.onChange(availableRegions[0].id);
+    if (!initialRegion || (initialRegion && !isInitialRegionAvailable)) {
+      const [firstAvailableRegion] = availableRegions;
+      this.onChange(firstAvailableRegion.id);
     }
   }
 
