@@ -1,6 +1,7 @@
 import get from 'lodash/get';
 
 import { normalizedProducts, billingModels } from '../../../common/subscriptionTypes';
+import { BillingModel } from '~/types/clusters_mgmt.v1';
 
 /**
  * Known quota resourceType values.
@@ -28,13 +29,25 @@ const match = (a, b) => a === b || a === any || b === any;
 const matchCaseInsensitively = (a, b) => match(a.toLowerCase(), b.toLowerCase());
 
 /**
+ * Performs an explicit mapping from a given billingModel to the billingModel which should be used to check quotas for
+ */
+const mapBillingModel = (model) => {
+  switch (model) {
+    case BillingModel.MARKETPLACE_AWS:
+      return BillingModel.MARKETPLACE;
+    default:
+      return model;
+  }
+};
+
+/**
  * Returns true if a QuotaCost.related_resources item matches given constraints.
- * query should consists of same fields as the resource; omitted fields are treated as 'any'.
+ * query should consist of same fields as the resource; omitted fields are treated as 'any'.
  */
 const relatedResourceMatches = (resource, query) =>
   match(resource.resource_type, query.resource_type || any) &&
   matchCaseInsensitively(resource.product, query.product || normalizedProducts.ANY) &&
-  match(resource.billing_model, query.billing_model || any) &&
+  match(resource.billing_model, mapBillingModel(query.billing_model || any)) &&
   match(resource.cloud_provider, query.cloud_provider || any) &&
   match(resource.byoc, query.byoc || any) &&
   matchCaseInsensitively(resource.availability_zone_type, query.availability_zone_type || any) &&
@@ -42,7 +55,7 @@ const relatedResourceMatches = (resource, query) =>
 
 /**
  * Returns remaining matching quota (integer, possibly 0 or Infinity) from a single QuotaCost item.
- * query should consists of same fields as the resource; omitted fields are treated as 'any'.
+ * query should consist of same fields as the resource; omitted fields are treated as 'any'.
  */
 const availableFromQuotaCostItem = (quotaCostItem, query) => {
   const matchingCosts = [];
