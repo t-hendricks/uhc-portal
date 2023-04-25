@@ -2,7 +2,7 @@ import { get, indexOf, inRange } from 'lodash';
 import cidrTools from 'cidr-tools';
 import { ValidationError, Validator } from 'jsonschema';
 import { clusterService } from '~/services';
-import type { GCP } from '../types/clusters_mgmt.v1';
+import type { GCP, Taint } from '../types/clusters_mgmt.v1';
 import type { AugmentedSubnetwork } from '../types/types';
 import { sqlString } from './queryHelpers';
 import { State as CcsInquiriesState } from '~/components/clusters/CreateOSDPage/CreateOSDWizard/ccsInquiriesReducer';
@@ -405,23 +405,37 @@ const labelValueValidations = (
 
 const taintKeyValueValidations = (
   value: string,
+  allValues: { taints?: Taint[] },
 ): {
   validated: boolean;
   text: string;
-}[] => [
-  {
-    validated: value?.length > 0,
-    text: 'Required',
-  },
-  {
-    validated: typeof value === 'undefined' || value.length <= LABEL_VALUE_MAX_LENGTH,
-    text: `A valid value must be ${LABEL_VALUE_MAX_LENGTH} characters or less`,
-  },
-  {
-    validated: typeof value === 'undefined' || LABEL_VALUE_REGEX.test(value),
-    text: "A valid value must consist of alphanumeric characters, '-', '.' or '_' and must start and end with an alphanumeric character",
-  },
-];
+}[] => {
+  const { taints } = allValues;
+  const isEmptyValid = taints?.length === 1 && !taints[0].key && !taints[0].value;
+
+  if (isEmptyValid) {
+    return [
+      {
+        validated: true,
+        text: 'Required',
+      },
+    ];
+  }
+  return [
+    {
+      validated: value?.length > 0,
+      text: 'Required',
+    },
+    {
+      validated: typeof value === 'undefined' || value.length <= LABEL_VALUE_MAX_LENGTH,
+      text: `A valid value must be ${LABEL_VALUE_MAX_LENGTH} characters or less`,
+    },
+    {
+      validated: typeof value === 'undefined' || LABEL_VALUE_REGEX.test(value),
+      text: "A valid value must consist of alphanumeric characters, '-', '.' or '_' and must start and end with an alphanumeric character",
+    },
+  ];
+};
 
 const checkLabelKey = createPessimisticValidator(labelKeyValidations);
 
