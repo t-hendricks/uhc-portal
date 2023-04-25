@@ -25,7 +25,7 @@ import Skeleton from '@redhat-cloud-services/frontend-components/Skeleton';
 import AddMachinePoolModal from './components/AddMachinePoolModal';
 import EditTaintsModal from './components/EditTaintsModal';
 import EditLabelsModal from './components/EditLabelsModal';
-import { actionResolver } from './machinePoolsHelper';
+import { actionResolver, getSubnetIds, hasSubnets } from './machinePoolsHelper';
 
 import ButtonWithTooltip from '../../../../common/ButtonWithTooltip';
 import ErrorBox from '../../../../common/ErrorBox';
@@ -43,10 +43,6 @@ const getOpenShiftVersion = (machinePool) => {
   }
   return versionFormatter(extractedVersion) || extractedVersion;
 };
-
-// Percentages
-const getColumnWidths = (isHypershift) =>
-  isHypershift ? [15, 15, 20, 15, 15, 20] : [19, 19, 25, 19, 19];
 
 const initialState = {
   deletedRowIndex: null,
@@ -159,16 +155,20 @@ class MachinePools extends React.Component {
       );
     }
 
-    const widths = getColumnWidths(isHypershift);
+    const showSubnetColumn = machinePoolsList.data.some(hasSubnets);
+
     const columns = [
-      { title: 'Machine pool', transforms: [cellWidth(widths[0])], cellFormatters: [expandable] },
-      { title: 'Instance type', transforms: [cellWidth(widths[1])] },
-      { title: 'Availability zones', transforms: [cellWidth(widths[2])] },
-      { title: 'Node count', transforms: [cellWidth(widths[3])] },
-      { title: 'Autoscaling', transforms: [cellWidth(widths[4])] },
+      { title: 'Machine pool', cellFormatters: [expandable] },
+      { title: 'Instance type' },
+      { title: 'Availability zones', transforms: [cellWidth(20)] },
     ];
+    if (showSubnetColumn) {
+      columns.push({ title: 'Subnets' });
+    }
+    columns.push({ title: 'Node count' });
+    columns.push({ title: 'Autoscaling', transforms: [cellWidth(15)] });
     if (isHypershift) {
-      columns.push({ title: 'Version', transforms: [cellWidth(widths[5])] });
+      columns.push({ title: 'Version', transforms: [cellWidth(15)] });
     }
 
     const getMachinePoolRow = (machinePool = {}, isExpandableRow) => {
@@ -212,12 +212,21 @@ class MachinePools extends React.Component {
           ),
         },
         machinePool.availability_zones?.join(', ') || machinePool.availability_zone,
+        showSubnetColumn
+          ? {
+              title: (
+                <>
+                  {getSubnetIds(machinePool).map((subnetId, idx) => (
+                    <div key={`subnet-${subnetId || idx}`}>{subnetId}</div>
+                  ))}
+                </>
+              ),
+            }
+          : null,
         { title: nodes },
         autoscalingEnabled ? 'Enabled' : 'Disabled',
-      ];
-      if (isHypershift) {
-        cells.push(getOpenShiftVersion(machinePool));
-      }
+        isHypershift ? getOpenShiftVersion(machinePool) : null,
+      ].filter((column) => column !== null);
 
       const row = {
         cells,
@@ -236,7 +245,7 @@ class MachinePools extends React.Component {
 
       const labelsList = labelsKeys.length
         ? labelsKeys.map((key) => (
-            <React.Fragment key={`laebl-${key}`}>
+            <React.Fragment key={`label-${key}`}>
               <Label color="blue">{`${[key]} ${labels[key] ? '=' : ''} ${labels[key]}`}</Label>{' '}
             </React.Fragment>
           ))
@@ -385,7 +394,7 @@ class MachinePools extends React.Component {
         machinePool: rowData.machinePool,
       });
 
-    const onClickEditLaeblsAction = (_, __, rowData) =>
+    const onClickEditLabelsAction = (_, __, rowData) =>
       openModal(modals.EDIT_LABELS, {
         machinePool: rowData.machinePool,
       });
@@ -489,7 +498,7 @@ class MachinePools extends React.Component {
                     onClickDeleteAction,
                     onClickScaleAction,
                     onClickEditTaintsAction,
-                    onClickEditLaeblsAction,
+                    onClickEditLabelsAction,
                     isHypershift,
                     machinePoolsList.data.length,
                   )

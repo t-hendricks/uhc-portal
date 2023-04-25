@@ -33,15 +33,9 @@ exports[`<MachinePools /> OpenShift version for machine pools is shown if hypers
                 [Function],
               ],
               "title": "Machine pool",
-              "transforms": Array [
-                [Function],
-              ],
             },
             Object {
               "title": "Instance type",
-              "transforms": Array [
-                [Function],
-              ],
             },
             Object {
               "title": "Availability zones",
@@ -50,10 +44,10 @@ exports[`<MachinePools /> OpenShift version for machine pools is shown if hypers
               ],
             },
             Object {
+              "title": "Subnets",
+            },
+            Object {
               "title": "Node count",
-              "transforms": Array [
-                [Function],
-              ],
             },
             Object {
               "title": "Autoscaling",
@@ -95,6 +89,13 @@ exports[`<MachinePools /> OpenShift version for machine pools is shown if hypers
                   </React.Fragment>,
                 },
                 "us-east-1b",
+                Object {
+                  "title": <React.Fragment>
+                    <div>
+                      subnet-049f90721559000de
+                    </div>
+                  </React.Fragment>,
+                },
                 Object {
                   "title": "2",
                 },
@@ -173,15 +174,9 @@ exports[`<MachinePools /> renders with a machine pool with autoscaling enabled 1
                 [Function],
               ],
               "title": "Machine pool",
-              "transforms": Array [
-                [Function],
-              ],
             },
             Object {
               "title": "Instance type",
-              "transforms": Array [
-                [Function],
-              ],
             },
             Object {
               "title": "Availability zones",
@@ -191,9 +186,6 @@ exports[`<MachinePools /> renders with a machine pool with autoscaling enabled 1
             },
             Object {
               "title": "Node count",
-              "transforms": Array [
-                [Function],
-              ],
             },
             Object {
               "title": "Autoscaling",
@@ -418,15 +410,9 @@ exports[`<MachinePools /> renders with additional machine pools, some with label
                 [Function],
               ],
               "title": "Machine pool",
-              "transforms": Array [
-                [Function],
-              ],
             },
             Object {
               "title": "Instance type",
-              "transforms": Array [
-                [Function],
-              ],
             },
             Object {
               "title": "Availability zones",
@@ -436,9 +422,6 @@ exports[`<MachinePools /> renders with additional machine pools, some with label
             },
             Object {
               "title": "Node count",
-              "transforms": Array [
-                [Function],
-              ],
             },
             Object {
               "title": "Autoscaling",
@@ -789,15 +772,9 @@ exports[`<MachinePools /> renders with the default machine pool 1`] = `
                 [Function],
               ],
               "title": "Machine pool",
-              "transforms": Array [
-                [Function],
-              ],
             },
             Object {
               "title": "Instance type",
-              "transforms": Array [
-                [Function],
-              ],
             },
             Object {
               "title": "Availability zones",
@@ -807,9 +784,6 @@ exports[`<MachinePools /> renders with the default machine pool 1`] = `
             },
             Object {
               "title": "Node count",
-              "transforms": Array [
-                [Function],
-              ],
             },
             Object {
               "title": "Autoscaling",
@@ -906,15 +880,9 @@ exports[`<MachinePools /> renders with the default machine pool when it has labe
                 [Function],
               ],
               "title": "Machine pool",
-              "transforms": Array [
-                [Function],
-              ],
             },
             Object {
               "title": "Instance type",
-              "transforms": Array [
-                [Function],
-              ],
             },
             Object {
               "title": "Availability zones",
@@ -924,9 +892,6 @@ exports[`<MachinePools /> renders with the default machine pool when it has labe
             },
             Object {
               "title": "Node count",
-              "transforms": Array [
-                [Function],
-              ],
             },
             Object {
               "title": "Autoscaling",

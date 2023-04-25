@@ -32,6 +32,17 @@ const stringToArray = (str?: string) => str && str.trim().split(',');
 const arrayToString = (arr?: string[]) => arr && arr.join(',');
 
 /**
+ * Normalizes the data to make sure it's a list
+ * @param itemOrList {Object} item or list of items.
+ */
+const asArray = <T>(itemOrList: T | T[]): T[] => {
+  if (Array.isArray(itemOrList)) {
+    return itemOrList;
+  }
+  return [itemOrList];
+};
+
+/**
  * Parses comma separated key<delimiter>value pairs into an object.
  * @param {*} str Comma separated string of kay:val pairs
  * @param {*} delimiter delimiter to split each pair by
@@ -95,8 +106,8 @@ const nestedIsEmpty = (obj: { [k: string]: unknown[] }): boolean =>
 const helpers = {
   noop,
   isValid,
-  // omitEmptyFields,
   strToCleanArray,
+  asArray,
   scrollToTop,
   nestedIsEmpty,
 };
@@ -238,8 +249,8 @@ const formatMinorVersion = (version: string) => {
 export {
   noop,
   isValid,
-  // omitEmptyFields,
   strToCleanArray,
+  asArray,
   multiInputToCleanArray,
   scrollToTop,
   getRandomID,
