@@ -21,8 +21,8 @@ class CancelUpgradeModal extends React.Component {
   };
 
   deleteSchedule = () => {
-    const { schedule, deleteSchedule } = this.props;
-    deleteSchedule(schedule.cluster_id, schedule.id);
+    const { schedule, deleteSchedule, isHypershift } = this.props;
+    deleteSchedule(schedule.cluster_id, schedule.id, isHypershift);
   };
 
   render() {
@@ -70,6 +70,7 @@ CancelUpgradeModal.propTypes = {
     version: PropTypes.string,
   }),
   clearDeleteScheduleResponse: PropTypes.func.isRequired,
+  isHypershift: PropTypes.bool.isRequired,
 };
 
 export default CancelUpgradeModal;
