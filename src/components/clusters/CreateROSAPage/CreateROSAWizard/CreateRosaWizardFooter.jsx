@@ -31,7 +31,7 @@ const CreateRosaWizardFooter = ({
   );
   const { pending: isVpcsLoading } = useGlobalState((state) => state.ccsInquiries.vpcs);
   const clusterPrivacy = useGlobalState(
-    (state) => state.form.CreateCluster?.values.cluster_privacy,
+    (state) => state.form.CreateCluster?.values?.cluster_privacy,
   );
 
   const isPublicSubnetsLoading =
