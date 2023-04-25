@@ -8,6 +8,7 @@ import ErrorBox from '../../../../../../common/ErrorBox';
 import { SpotInstanceInfoAlert, isMachinePoolUsingSpotInstances } from '../SpotInstanceHelper';
 
 import { ReduxFormDropdown, ReduxFormTaints } from '../../../../../../common/ReduxFormComponents';
+import { validateNoEmptyTaints } from '~/common/validators';
 
 class EditTaintsModal extends Component {
   componentDidMount() {
@@ -43,8 +44,14 @@ class EditTaintsModal extends Component {
   };
 
   render() {
-    const { machinePoolsList, handleSubmit, editTaintsResponse, pristine, selectedMachinePoolId } =
-      this.props;
+    const {
+      machinePoolsList,
+      handleSubmit,
+      editTaintsResponse,
+      pristine,
+      selectedMachinePoolId,
+      invalid,
+    } = this.props;
 
     const error = editTaintsResponse.error ? (
       <ErrorBox message="Error editing taints" response={editTaintsResponse} />
@@ -59,7 +66,7 @@ class EditTaintsModal extends Component {
         primaryText="Save"
         onPrimaryClick={handleSubmit}
         onSecondaryClick={this.cancelEdit}
-        isPrimaryDisabled={pending || pristine}
+        isPrimaryDisabled={pending || pristine || invalid}
         isPending={pending}
         modalSize="medium"
       >
@@ -81,7 +88,13 @@ class EditTaintsModal extends Component {
               </GridItem>
               <GridItem span={7} />
               <GridItem>
-                <FieldArray name="taints" component={ReduxFormTaints} isEditing />
+                <FieldArray
+                  name="taints"
+                  component={ReduxFormTaints}
+                  isEditing
+                  canAddMore={!invalid}
+                  warn={validateNoEmptyTaints}
+                />
               </GridItem>
               {isMachinePoolUsingSpotInstances(selectedMachinePoolId, machinePoolsList) && (
                 <>
@@ -108,6 +121,7 @@ EditTaintsModal.propTypes = {
   change: PropTypes.func.isRequired,
   reset: PropTypes.func.isRequired,
   pristine: PropTypes.bool.isRequired,
+  invalid: PropTypes.bool.isRequired,
   selectedMachinePoolId: PropTypes.string.isRequired,
 };
 

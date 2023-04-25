@@ -403,9 +403,39 @@ const labelValueValidations = (
   },
 ];
 
+const taintKeyValueValidations = (
+  value: string,
+): {
+  validated: boolean;
+  text: string;
+}[] => [
+  {
+    validated: value?.length > 0,
+    text: 'Required',
+  },
+  {
+    validated: typeof value === 'undefined' || value.length <= LABEL_VALUE_MAX_LENGTH,
+    text: `A valid value must be ${LABEL_VALUE_MAX_LENGTH} characters or less`,
+  },
+  {
+    validated: typeof value === 'undefined' || LABEL_VALUE_REGEX.test(value),
+    text: "A valid value must consist of alphanumeric characters, '-', '.' or '_' and must start and end with an alphanumeric character",
+  },
+];
+
 const checkLabelKey = createPessimisticValidator(labelKeyValidations);
 
 const checkLabelValue = createPessimisticValidator(labelValueValidations);
+
+const checkTaintField = createPessimisticValidator(taintKeyValueValidations);
+
+const validateNoEmptyTaints = (
+  value: string,
+  allValues: { taints: { key: string; value: string }[] },
+): string | undefined => {
+  const hasIncomplete = allValues.taints?.find((item) => !item.key || !item.value);
+  return hasIncomplete ? 'Empty taints' : undefined;
+};
 
 const checkLabels = (input: string | string[]) =>
   parseNodeLabels(input)
@@ -1435,6 +1465,8 @@ export {
   asyncValidateClusterName,
   checkLabelKey,
   checkLabelValue,
+  checkTaintField,
+  validateNoEmptyTaints,
 };
 
 export default validators;

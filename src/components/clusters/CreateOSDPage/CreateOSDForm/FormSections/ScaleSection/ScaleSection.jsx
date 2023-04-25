@@ -52,7 +52,7 @@ function ScaleSection({
           <Title headingLevel="h3" className="pf-u-mb-md pf-u-mt-lg">
             Taints
           </Title>
-          <FieldArray name="taints" component={ReduxFormTaints} />
+          <FieldArray name="taints" component={ReduxFormTaints} canAddMore />
         </>
       )}
     </ExpandableSection>

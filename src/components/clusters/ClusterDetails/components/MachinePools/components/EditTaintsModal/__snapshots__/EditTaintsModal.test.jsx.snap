@@ -43,9 +43,11 @@ exports[`<EditTaintsModal /> renders correctl 1`] = `
       />
       <GridItem>
         <FieldArray
+          canAddMore={true}
           component={[Function]}
           isEditing={true}
           name="taints"
+          warn={[Function]}
         />
       </GridItem>
     </Grid>

@@ -4,13 +4,20 @@ import { Field } from 'redux-form';
 import { Button, Grid, GridItem } from '@patternfly/react-core';
 import { PlusCircleIcon, MinusCircleIcon } from '@patternfly/react-icons';
 
+import { getRandomID } from '~/common/helpers';
+import { checkTaintField } from '~/common/validators';
+
 import ReduxVerticalFormGroup from '../ReduxVerticalFormGroup';
 import ReduxFormDropdown from '../ReduxFormDropdown';
-import { getRandomID } from '../../../../common/helpers';
 
 import '../ReduxFormKeyValueList/ReduxFormKeyValueList.scss';
 
-const ReduxFormTaints = ({ fields, meta: { error, submitFailed }, isEditing = false }) => (
+const ReduxFormTaints = ({
+  fields,
+  meta: { error, submitFailed, warning },
+  isEditing = false,
+  canAddMore,
+}) => (
   <Grid hasGutter>
     <GridItem span={3} className="pf-c-form__label pf-c-form__label-text">
       Key
@@ -34,6 +41,7 @@ const ReduxFormTaints = ({ fields, meta: { error, submitFailed }, isEditing = fa
               index={index}
               aria-label="Key-value list key"
               isRequired
+              validate={checkTaintField}
             />
           </GridItem>
           <GridItem span={3}>
@@ -43,6 +51,7 @@ const ReduxFormTaints = ({ fields, meta: { error, submitFailed }, isEditing = fa
               index={index}
               aria-label="Key-value list value"
               isRequired
+              validate={checkTaintField}
             />
           </GridItem>
           <GridItem span={3}>
@@ -79,6 +88,7 @@ const ReduxFormTaints = ({ fields, meta: { error, submitFailed }, isEditing = fa
         icon={<PlusCircleIcon />}
         variant="link"
         isInline
+        isDisabled={!canAddMore || !!warning}
         className="reduxFormKeyValueList-addBtn pf-u-mb-lg"
       >
         Add taint
@@ -91,8 +101,11 @@ const ReduxFormTaints = ({ fields, meta: { error, submitFailed }, isEditing = fa
 ReduxFormTaints.propTypes = {
   fields: PropTypes.array.isRequired,
   isEditing: PropTypes.bool,
+  // The "meta" field does not receive accurate "valid / invalid" values
+  canAddMore: PropTypes.bool,
   meta: PropTypes.shape({
     error: PropTypes.string,
+    warning: PropTypes.string,
     submitFailed: PropTypes.bool,
   }),
 };
