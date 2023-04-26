@@ -21,6 +21,8 @@ import { normalizedProducts } from '~/common/subscriptionTypes';
 import { PLACEHOLDER_VALUE } from '../../CreateOSDForm/FormSections/NetworkingSection/AvailabilityZoneSelection';
 import useAnalytics from '~/hooks/useAnalytics';
 import { ocmResourceType, trackEvents } from '~/common/analytics';
+import { required } from '~/common/validators';
+import { SubnetSelectField } from './SubnetSelectField';
 
 function NetworkScreen(props) {
   const {
