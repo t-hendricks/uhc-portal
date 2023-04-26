@@ -59,6 +59,7 @@ const ReviewClusterScreen = ({
     ...(!isHypershiftSelected ? ['enable_user_workload_monitoring'] : []),
     ...(isByoc ? ['customer_managed_key'] : []),
     'etcd_encryption',
+    ...(!isHypershiftSelected ? ['fips'] : []),
     ...(hasEtcdEncryption ? ['etcd_key_arn'] : []),
   ];
 

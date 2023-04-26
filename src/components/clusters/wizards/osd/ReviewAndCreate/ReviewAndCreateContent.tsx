@@ -59,6 +59,7 @@ export const ReviewAndCreateContent = ({ isPending }: ReviewAndCreateContentProp
     FieldId.EnableUserWorkloadMonitoring,
     ...(isByoc ? [FieldId.CustomerManagedKey] : []),
     FieldId.EtcdEncryption,
+    FieldId.FipsCryptography,
   ];
 
   if (isPending) {
