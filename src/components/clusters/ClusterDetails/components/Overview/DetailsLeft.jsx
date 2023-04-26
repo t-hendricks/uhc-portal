@@ -103,6 +103,16 @@ function DetailsLeft({ cluster, cloudProviders, showAssistedId }) {
             <ClusterVersionInfo cluster={cluster} />
           </DescriptionListDescription>
         </DescriptionListGroup>
+        {!isHypershift && cluster.fips && (
+          <DescriptionListGroup>
+            <DescriptionListTerm>Encryption level</DescriptionListTerm>
+            <DescriptionListDescription>
+              <dl className="pf-l-stack">
+                <dt>FIPS Cryptography enabled</dt>
+              </dl>
+            </DescriptionListDescription>
+          </DescriptionListGroup>
+        )}
         <DescriptionListGroup>
           <DescriptionListTerm>Created at</DescriptionListTerm>
           <DescriptionListDescription>

@@ -21,6 +21,7 @@ export enum FieldId {
   MultiAz = 'multi_az',
   NodesCompute = 'nodes_compute',
   MachineTypeForceChoice = 'machine_type_force_choice',
+  FipsCryptography = 'fips',
 }
 
 export const initialValues: FormikValues = {
