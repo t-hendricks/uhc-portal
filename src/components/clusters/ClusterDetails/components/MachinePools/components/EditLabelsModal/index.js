@@ -46,9 +46,14 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
   resetDefaultMachinePoolEditLabelsResponse: () => dispatch(clearClusterResponse()),
   onSubmit: (formData) =>
     dispatch(
-      editLabels(ownProps.clusterId, formData.machinePoolId, {
-        labels: parseTags(formData.labels),
-      }),
+      editLabels(
+        ownProps.clusterId,
+        formData.machinePoolId,
+        {
+          labels: parseTags(formData.labels),
+        },
+        ownProps.isHypershiftCluster,
+      ),
     ),
 });
 

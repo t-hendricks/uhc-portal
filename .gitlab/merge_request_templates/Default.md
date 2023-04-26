@@ -1,4 +1,3 @@
-
 # content
 
 (add a summarized description of the MR content)
@@ -26,7 +25,7 @@ if you only see {all_commits} here but no text was generated, cancel and re-open
 
 # ticketing
 
-(state the ticket or tickets this MR pertains to, e.g. "closes HAC-123, HAC-234".  
+(state the ticket or tickets this MR pertains to, e.g. "closes HAC-nnn, HAC-mmm".  
 note that "fixes", "closes" or "resolves" (case-insensitive) will automatically
 move the ticket(s) to "review" upon merge.  
-to avoid this, you can use e.g. "addresses HAC-123")
+to avoid this, you can use e.g. "addresses HAC-nnn")

@@ -33,6 +33,9 @@ const ControlPlaneField = ({
 
   const handleChange = (isHypershift: hypershiftValue) => {
     onChange(isHypershift);
+    // Uncheck the following Network checkboxes when switching Control plane selection
+    change('install_to_vpc', false);
+    change('configure_proxy', false);
     // Reset VPC settings in case they were configured and then came back to the Control plane step
     Object.keys(formValues).forEach((formValue) => {
       if (
@@ -46,6 +49,11 @@ const ControlPlaneField = ({
 
     if (isHypershift === 'true' && formValues.multi_az === 'true') {
       change('multi_az', 'false');
+    }
+
+    // Reset the cluster privacy public subnet ID when Standalone is chosen.
+    if (isHypershift === 'false' && formValues.cluster_privacy_public_subnet_id) {
+      change('cluster_privacy_public_subnet_id', undefined);
     }
   };
 

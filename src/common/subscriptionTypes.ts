@@ -101,7 +101,7 @@ const knownProducts = {
   RHOSETrial: 'RHOSETrial',
 };
 
-const hiddenProductTypes = [
+const omittedProducts = [
   knownProducts.RHACS,
   knownProducts.RHACSTrial,
   knownProducts.RHOSR,
@@ -173,6 +173,8 @@ const billingModels = {
 const ocmRoles = {
   CLUSTER_EDITOR: 'ClusterEditor',
   CLUSTER_VIEWER: 'ClusterViewer',
+  IDP_EDITOR: 'IdpEditor',
+  MACHINE_POOL_EDITOR: 'MachinePoolEditor',
 };
 
 export {
@@ -184,7 +186,7 @@ export {
   subscriptionProductBundles,
   subscriptionSystemUnits,
   knownProducts,
-  hiddenProductTypes,
+  omittedProducts,
   normalizedProducts,
   clustersServiceProducts,
   productFilterOptions,

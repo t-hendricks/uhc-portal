@@ -16,6 +16,11 @@ import { useAWSVPCInquiry } from '~/components/clusters/CreateOSDPage/CreateOSDW
 import ErrorBox from '~/components/common/ErrorBox';
 import { CloudVPC, Subnetwork } from '~/types/clusters_mgmt.v1';
 
+enum Privacy {
+  Public = 'public',
+  Private = 'private',
+}
+
 interface SubnetSelectFieldProps {
   name: string;
   label: string;
@@ -24,6 +29,7 @@ interface SubnetSelectFieldProps {
   isDisabled?: boolean;
   isRequired?: boolean;
   className?: string;
+  privacy?: 'public' | 'private';
 }
 
 export const SubnetSelectField = ({
@@ -34,6 +40,7 @@ export const SubnetSelectField = ({
   isDisabled,
   isRequired,
   className,
+  privacy,
 }: SubnetSelectFieldProps) => {
   const [isExpanded, setIsExpanded] = React.useState(false);
   const [selectedSubnetId, setSelectedSubnetId] = React.useState(input.value);
@@ -47,14 +54,21 @@ export const SubnetSelectField = ({
 
     if (subnets && subnets.length > 0) {
       subnets.forEach((subnet) => {
-        if (subnet.availability_zone) {
-          if (acc[subnet.availability_zone]) {
-            acc[subnet.availability_zone].push(subnet);
-          } else {
-            acc[subnet.availability_zone] = [subnet];
+        if (
+          (privacy === Privacy.Public && subnet.public) ||
+          (privacy === Privacy.Private && !subnet.public) ||
+          !privacy
+        ) {
+          if (subnet.availability_zone) {
+            if (acc[subnet.availability_zone]) {
+              acc[subnet.availability_zone].push(subnet);
+            } else {
+              acc[subnet.availability_zone] = [subnet];
+            }
           }
+
+          subnetList.push(subnet);
         }
-        subnetList.push(subnet);
       });
     }
 
@@ -128,9 +142,13 @@ export const SubnetSelectField = ({
       {vpcsError && <ErrorBox message="Failed to fetch subnet IDs." response={vpcs} />}
 
       {!vpcsError && !isVpcsLoading && vpcsItems?.length === 0 && (
-        <Alert variant="danger" isInline isPlain title="No VPCs found">
-          A VPC with a public subnet must be associated with the selected AWS account ID.
-        </Alert>
+        <Alert
+          variant="danger"
+          isInline
+          isPlain
+          title="A VPC with a public subnet must be associated with the selected AWS account ID."
+          className="pf-u-mb-sm"
+        />
       )}
 
       {isVpcsLoading ? (

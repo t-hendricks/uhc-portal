@@ -34,7 +34,14 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
     dispatch(getMachineOrNodePools(ownProps.clusterId, ownProps.isHypershiftCluster)),
   resetEditTaintsResponse: () => dispatch(clearScaleMachinePoolResponse(ownProps.clusterId)),
   onSubmit: (formData) => {
-    dispatch(editTaints(ownProps.clusterId, formData.machinePoolId, { taints: formData.taints }));
+    dispatch(
+      editTaints(
+        ownProps.clusterId,
+        formData.machinePoolId,
+        { taints: formData.taints },
+        ownProps.isHypershiftCluster,
+      ),
+    );
   },
 });
 

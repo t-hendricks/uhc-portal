@@ -21,6 +21,8 @@ import { normalizedProducts } from '~/common/subscriptionTypes';
 import { PLACEHOLDER_VALUE } from '../../CreateOSDForm/FormSections/NetworkingSection/AvailabilityZoneSelection';
 import useAnalytics from '~/hooks/useAnalytics';
 import { ocmResourceType, trackEvents } from '~/common/analytics';
+import { required } from '~/common/validators';
+import { SubnetSelectField } from './SubnetSelectField';
 
 function NetworkScreen(props) {
   const {
@@ -123,7 +125,7 @@ function NetworkScreen(props) {
   const configureClusterProxyField = (
     <Field
       component={ReduxCheckbox}
-      name="configure_cluster_proxy"
+      name="configure_proxy"
       label="Configure a cluster-wide proxy"
       onChange={onClusterProxyChange}
       helpText={
@@ -179,11 +181,17 @@ function NetworkScreen(props) {
                       </div>
                     </>
                   ),
-                  extraField:
-                    isHypershiftSelected && !privateClusterSelected ? (
-                      // TODO: Placeholder for the Public subnet ID selector
-                      <></>
-                    ) : null,
+                  extraField: isHypershiftSelected && !privateClusterSelected && (
+                    <Field
+                      component={SubnetSelectField}
+                      name="cluster_privacy_public_subnet_id"
+                      label="Public subnet ID"
+                      className="pf-u-mt-md pf-u-ml-lg"
+                      isRequired
+                      validate={required}
+                      privacy="public"
+                    />
+                  ),
                 },
                 {
                   value: 'internal',
