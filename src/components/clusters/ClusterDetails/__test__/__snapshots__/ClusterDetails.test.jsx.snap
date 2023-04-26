@@ -17725,7 +17725,6 @@ exports[`<ClusterDetails /> Cluster Details - OSD should render 1`] = `
                     >
                       <ErrorBoundary>
                         <AccessControl
-                          cloudProvider="aws"
                           cluster={
                             Object {
                               "activity_timestamp": "2021-01-11T11:55:29Z",
@@ -18084,12 +18083,6 @@ exports[`<ClusterDetails /> Cluster Details - OSD should render 1`] = `
                                 "id": "openshift-v4.6.8",
                                 "kind": "Version",
                               },
-                            }
-                          }
-                          clusterUrls={
-                            Object {
-                              "api": "https://api.test-liza.wiex.s1.devshift.org:6443",
-                              "console": "https://console-openshift-console.apps.test-liza.wiex.s1.devshift.org",
                             }
                           }
                           history={

@@ -7,11 +7,15 @@ import OCMRolesSection from './OCMRolesSection';
 import UsersSection from './UsersSection';
 import IDPSection from './IDPSection';
 import NetworkSelfServiceSection from './NetworkSelfServiceSection';
-import clusterStates, { isHibernating } from '../../../common/clusterStates';
-import { subscriptionStatuses } from '../../../../../common/subscriptionTypes';
-import { isHypershiftCluster } from '../../clusterDetailsHelper';
+import { isHibernating } from '../../../common/clusterStates';
+import {
+  isHypershiftCluster,
+  isReadyForAwsAccessActions,
+  isReadyForIdpActions,
+  isReadyForRoleAccessActions,
+} from '../../clusterDetailsHelper';
 
-function AccessControl({ cluster, clusterUrls, cloudProvider, history, refreshEvent = null }) {
+function AccessControl({ cluster, history, refreshEvent = null }) {
   const [activeKey, setActiveKey] = React.useState(0);
 
   // class for whether display vertical tabs (wider screen)
@@ -20,14 +24,17 @@ function AccessControl({ cluster, clusterUrls, cloudProvider, history, refreshEv
 
   // class for whether display tab titles (hide when there's single tab)
   const [bodyClass, setBodyClass] = useState('');
-
+  const clusterUrls = {
+    console: get(cluster, 'console.url'),
+    api: get(cluster, 'api.url'),
+  };
   // states based on the cluster
   const [isReadOnly, setIsReadOnly] = useState(false);
   const [clusterRolesAndAccessIsHidden, setClusterRolesAndAccessIsHidden] = useState(false);
   const [identityProvidersIsHidden, setIdentityProvidersIsHidden] = useState(false);
   const [AWSInfrastructureAccessIsHidden, setAWSInfrastructureAccessIsHidden] = useState(false);
 
-  // dyanmically adjust the tab to be vertical (wider screen) or on the top
+  // dynamically adjust the tab to be vertical (wider screen) or on the top
   useEffect(() => {
     const minWidthQuery = window.matchMedia ? window.matchMedia('(min-width: 768px)') : null;
     const handler = (e) => {
@@ -53,27 +60,18 @@ function AccessControl({ cluster, clusterUrls, cloudProvider, history, refreshEv
   }, []);
 
   useEffect(() => {
+    const hideRolesActions = !isReadyForRoleAccessActions(cluster);
+    const hideIdpActions = !isReadyForIdpActions(cluster);
+    const hideAwsInfrastructureAccess = !isReadyForAwsAccessActions(cluster);
+
+    setClusterRolesAndAccessIsHidden(hideRolesActions);
+    setIdentityProvidersIsHidden(hideIdpActions);
+    setAWSInfrastructureAccessIsHidden(hideAwsInfrastructureAccess);
     setIsReadOnly(cluster?.status?.configuration_mode === 'read_only');
-    const isClusterReady = cluster.state === clusterStates.READY;
-    const isArchived =
-      get(cluster, 'subscription.status', false) === subscriptionStatuses.ARCHIVED ||
-      get(cluster, 'subscription.status', false) === subscriptionStatuses.DEPROVISIONED;
-    const isManagedAndReady =
-      cluster.managed &&
-      get(cluster, 'console.url') &&
-      (isClusterReady || isHibernating(cluster.state)) &&
-      !isArchived;
-    // hide the tab title if there only one tab - "OCM Roles and Access".
-    if (isManagedAndReady) {
-      setBodyClass('');
-    } else {
-      setBodyClass('single-tab');
-    }
-    setClusterRolesAndAccessIsHidden(!isManagedAndReady);
-    setIdentityProvidersIsHidden(!isManagedAndReady);
-    setAWSInfrastructureAccessIsHidden(
-      !isManagedAndReady || cloudProvider !== 'aws' || get(cluster, 'ccs.enabled', false),
-    );
+
+    // hide the tab title if there is only one tab ("OCM Roles and Access").
+    const isSingleTab = hideRolesActions && hideIdpActions && hideAwsInfrastructureAccess;
+    setBodyClass(isSingleTab ? 'single-tab' : '');
   }, [cluster]);
 
   return (
@@ -147,11 +145,6 @@ function AccessControl({ cluster, clusterUrls, cloudProvider, history, refreshEv
 
 AccessControl.propTypes = {
   cluster: PropTypes.object.isRequired,
-  clusterUrls: PropTypes.shape({
-    console: PropTypes.string,
-    api: PropTypes.string,
-  }).isRequired,
-  cloudProvider: PropTypes.string.isRequired,
   history: PropTypes.object,
   refreshEvent: PropTypes.object,
 };

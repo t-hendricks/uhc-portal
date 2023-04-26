@@ -1,5 +1,6 @@
 import { has, get } from 'lodash';
-import { normalizedProducts } from '~/common/subscriptionTypes';
+import { normalizedProducts, subscriptionStatuses } from '~/common/subscriptionTypes';
+import clusterStates, { isHibernating } from '~/components/clusters/common/clusterStates';
 
 const hasCpuAndMemory = (cpu, memory) => {
   const totalCPU = has(cpu, 'total.value');
@@ -28,4 +29,34 @@ const isHypershiftCluster = (cluster) =>
 
 const isMultiAZ = (cluster) => !isHypershiftCluster(cluster) && get(cluster, 'multi_az', false);
 
-export { hasCpuAndMemory, getSubscriptionLastReconciledDate, isHypershiftCluster, isMultiAZ };
+const isArchivedSubscription = (cluster) => {
+  const status = get(cluster, 'subscription.status', '');
+  return status === subscriptionStatuses.ARCHIVED || status === subscriptionStatuses.DEPROVISIONED;
+};
+
+const hasValidStatusForActions = (cluster, needsConsoleUrl) =>
+  cluster.managed &&
+  (!needsConsoleUrl || get(cluster, 'console.url')) &&
+  (cluster.state === clusterStates.READY || isHibernating(cluster.state)) &&
+  !isArchivedSubscription(cluster);
+
+const isReadyForRoleAccessActions = (cluster) => hasValidStatusForActions(cluster, true);
+
+const isReadyForAwsAccessActions = (cluster) =>
+  hasValidStatusForActions(cluster, true) &&
+  get(cluster, 'cloud_provider.id') === 'aws' &&
+  !get(cluster, 'ccs.enabled', false);
+
+const isReadyForIdpActions = (cluster) =>
+  hasValidStatusForActions(cluster, !isHypershiftCluster(cluster));
+
+export {
+  hasCpuAndMemory,
+  getSubscriptionLastReconciledDate,
+  isHypershiftCluster,
+  isMultiAZ,
+  isArchivedSubscription,
+  isReadyForRoleAccessActions,
+  isReadyForAwsAccessActions,
+  isReadyForIdpActions,
+};

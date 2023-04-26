@@ -1,6 +1,5 @@
 import get from 'lodash/get';
 import { subscriptionStatuses, normalizedProducts } from '../../../common/subscriptionTypes';
-import { isHypershiftCluster } from '../ClusterDetails/clusterDetailsHelper';
 
 const clusterStates = {
   WAITING: 'waiting',
@@ -95,6 +94,10 @@ const isROSA = (cluster) => cluster.product.id === normalizedProducts.ROSA;
 // Indicates that this is a ROSA cluster with manual mode
 const isROSAManualMode = (cluster) =>
   isROSA(cluster) && cluster.aws.sts && !cluster.aws.sts.auto_mode;
+
+const isHypershiftCluster = (cluster) =>
+  get(cluster, 'hypershift.enabled', false) ||
+  get(cluster, 'subscription.plan.id') === normalizedProducts.ROSA_HyperShift;
 
 // Indicates that this is a ROSA cluster waiting for manual creation of OIDC
 // and operator roles.
