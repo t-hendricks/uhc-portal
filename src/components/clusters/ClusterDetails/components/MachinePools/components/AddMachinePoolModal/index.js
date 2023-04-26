@@ -83,18 +83,6 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
       machinePoolRequest.subnet = formData.subnet;
     } else {
       machinePoolRequest.instance_type = formData.machine_type;
-
-      const parsedLabels = parseReduxFormKeyValueList(formData.node_labels);
-      const parsedTaints = parseReduxFormTaints(formData.taints);
-
-      if (!isEmpty(parsedLabels)) {
-        machinePoolRequest.labels = parsedLabels;
-      }
-
-      if (parsedTaints.length > 0) {
-        machinePoolRequest.taints = parsedTaints;
-      }
-
       if (formData.spot_instances) {
         machinePoolRequest.aws = {
           spot_market_options:
@@ -104,6 +92,16 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
               : {},
         };
       }
+    }
+    const parsedLabels = parseReduxFormKeyValueList(formData.node_labels);
+    const parsedTaints = parseReduxFormTaints(formData.taints);
+
+    if (!isEmpty(parsedLabels)) {
+      machinePoolRequest.labels = parsedLabels;
+    }
+
+    if (parsedTaints.length > 0) {
+      machinePoolRequest.taints = parsedTaints;
     }
 
     dispatch(
@@ -118,10 +116,21 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
   closeModal: () => dispatch(closeModal()),
   getOrganizationAndQuota: () => dispatch(getOrganizationAndQuota()),
   getMachineTypes: () => dispatch(getMachineTypes()),
-  getAWSVPCs: (cluster) =>
-    dispatch(
-      getAWSCloudProviderVPCs({ sts: { role_arn: cluster.aws.sts.role_arn } }, cluster.region.id),
-    ),
+  getAWSVPCs: (cluster) => {
+    const subnet =
+      cluster.aws && cluster.aws.subnet_ids && cluster.aws.subnet_ids[0]
+        ? cluster.aws.subnet_ids[0]
+        : undefined;
+    return dispatch(
+      getAWSCloudProviderVPCs(
+        {
+          sts: { role_arn: cluster.aws.sts.role_arn },
+        },
+        cluster.region.id,
+        subnet,
+      ),
+    );
+  },
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(reduxFormAddMachinePool);

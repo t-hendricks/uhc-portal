@@ -262,7 +262,7 @@ class CreateROSAWizardInternal extends React.Component {
       isHypershiftEnabled,
       isHypershiftSelected,
     } = this.props;
-    const { accountAndRolesStepId, deferredNext, isNextClicked } = this.state;
+    const { accountAndRolesStepId, deferredNext, isNextClicked, currentStepId } = this.state;
 
     const steps = [
       isHypershiftEnabled && {
@@ -503,6 +503,7 @@ class CreateROSAWizardInternal extends React.Component {
                     onBeforeNext={this.onBeforeNext}
                     onBeforeSubmit={this.onBeforeSubmit}
                     isNextDisabled={!!deferredNext}
+                    currentStepId={currentStepId}
                   />
                 ) : (
                   <></>

@@ -233,6 +233,7 @@ const ReviewClusterScreen = ({
         {showVPCCheckbox &&
           formValues.install_to_vpc &&
           isAWS &&
+          !isHypershiftSelected &&
           ReviewItem({ name: 'aws_vpc', formValues })}
         {showVPCCheckbox &&
           formValues.install_to_vpc &&

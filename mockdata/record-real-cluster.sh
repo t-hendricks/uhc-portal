@@ -19,8 +19,9 @@ trap 's=$?; echo; echo "$0: Error on line "$LINENO": $BASH_COMMAND"; exit $s' ER
 cd "$(dirname "$0")"  # directory of this script
 cd "$(git rev-parse --show-toplevel)"
 
-# request LOG_PREFIX PATH [EXTRA ocm FLAGS]
-function request {
+# try_request LOG_PREFIX PATH [EXTRA ocm FLAGS]
+#   Returns 0 only if request succeeded.
+function try_request {
   log_prefix="$1"
   path="$2"
   shift 2
@@ -28,10 +29,16 @@ function request {
   echo "${log_prefix}ocm get $path $*"
   # In case of error, leaving an empty file would result in mockserver returning
   # 200 OK with empty body. Better delete it so UI gets 404.
-  ocm get "$path" "$@" > mockdata/"$path".json || rm mockdata/"$path".json
+  if ! ocm get "$path" "$@" > mockdata/"$path".json; then
+    rm mockdata/"$path".json
+    return 1
+  fi
+}
 
-  #echo "${log_prefix}  Found links:"
-  #jq ".. | select(try .kind | test(\".*Link\")).href | \"${log_prefix}  - \" + ." mockdata/"$path".json --raw-output
+# request LOG_PREFIX PATH [EXTRA ocm FLAGS]
+#   Succeeds even if request failed; test presence
+function request {
+  try_request "$@" || return 0
 }
 
 subscription_id="$1"
@@ -54,8 +61,7 @@ request "" "/api/insights-results-aggregator/v2/clusters/$uuid/report" --paramet
 cluster_id="$(jq .cluster_id "mockdata/$subscription_href".json --raw-output)"
 cluster_href="/api/clusters_mgmt/v1/clusters/$cluster_id"
 
-request "" "$cluster_href"
-if [ ! -f "mockdata/$cluster_href.json" ]; then
+if ! try_request "" "$cluster_href"; then
   # Don't abort the whole script - partial capture is useful when backend is misbehaving -
   # but skip the requests we can't make without the cluster data.
   echo '  ^^ FAILED getting cluster json, skipping crawl of links :-['
@@ -94,12 +100,22 @@ else
     done
 fi
 
-request "" "/api/accounts_mgmt/v1/current_account"
+echo
+echo "# Trying to get CLUSTER's account & org (may need UHCSupport role):"
+account_href=$(jq .creator.href "mockdata/$subscription_href.json" --raw-output)
+if try_request "  " "$account_href"; then
+  cp -v "mockdata/$account_href.json" "mockdata/api/accounts_mgmt/v1/current_account.json"
+else
+  echo "# Falling back to YOUR account & org:"
+  request "  " "/api/accounts_mgmt/v1/current_account"
+fi
 
-org_href=$(jq .organization.href  "mockdata/api/accounts_mgmt/v1/current_account".json --raw-output)
-request "" "$org_href" --parameter=fetchCapabilities=true
-request "" "$org_href/quota_cost" --parameter=fetchRelatedResources=true --parameter=size=-1
+org_href=$(jq .organization.href "mockdata/api/accounts_mgmt/v1/current_account.json" --raw-output)
+request "    " "$org_href" --parameter=fetchCapabilities=true
+request "    " "$org_href/quota_cost" --parameter=fetchRelatedResources=true --parameter=size=-1
 
+echo
+echo "# Global data"
 request "" "/api/clusters_mgmt/v1/version_gates" --parameter=size=-1
 
 request "" "/api/clusters_mgmt/v1/cloud_providers" --parameter=size=-1 --parameter=fetchRegions=true

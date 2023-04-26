@@ -38,10 +38,34 @@ exports[`<CloudRegionComboBox /> when region list needs to be fetched renders co
     }
   }
   disabled={false}
-  handleCloudRegionChange={[MockFunction]}
+  handleCloudRegionChange={
+    [MockFunction] {
+      "calls": Array [
+        Array [],
+      ],
+      "results": Array [
+        Object {
+          "type": "return",
+          "value": undefined,
+        },
+      ],
+    }
+  }
   input={
     Object {
-      "onChange": [MockFunction],
+      "onChange": [MockFunction] {
+        "calls": Array [
+          Array [
+            "us-east-1",
+          ],
+        ],
+        "results": Array [
+          Object {
+            "type": "return",
+            "value": undefined,
+          },
+        ],
+      },
     }
   }
   isMultiAz={false}
@@ -262,10 +286,34 @@ exports[`<CloudRegionComboBox /> when the request is pending renders correctly 1
     }
   }
   disabled={false}
-  handleCloudRegionChange={[MockFunction]}
+  handleCloudRegionChange={
+    [MockFunction] {
+      "calls": Array [
+        Array [],
+      ],
+      "results": Array [
+        Object {
+          "type": "return",
+          "value": undefined,
+        },
+      ],
+    }
+  }
   input={
     Object {
-      "onChange": [MockFunction],
+      "onChange": [MockFunction] {
+        "calls": Array [
+          Array [
+            "us-east-1",
+          ],
+        ],
+        "results": Array [
+          Object {
+            "type": "return",
+            "value": undefined,
+          },
+        ],
+      },
     }
   }
   isMultiAz={false}
@@ -332,10 +380,34 @@ exports[`<CloudRegionComboBox /> when there was an error renders correctly 1`] =
     }
   }
   disabled={false}
-  handleCloudRegionChange={[MockFunction]}
+  handleCloudRegionChange={
+    [MockFunction] {
+      "calls": Array [
+        Array [],
+      ],
+      "results": Array [
+        Object {
+          "type": "return",
+          "value": undefined,
+        },
+      ],
+    }
+  }
   input={
     Object {
-      "onChange": [MockFunction],
+      "onChange": [MockFunction] {
+        "calls": Array [
+          Array [
+            "us-east-1",
+          ],
+        ],
+        "results": Array [
+          Object {
+            "type": "return",
+            "value": undefined,
+          },
+        ],
+      },
     }
   }
   isMultiAz={false}

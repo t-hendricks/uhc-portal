@@ -159,36 +159,6 @@ class AddMachinePoolModal extends Component {
                 </FormGroup>
               </GridItem>
               <GridItem md={6} />
-              <ScaleSection
-                pending={isPending}
-                isBYOC={!!cluster?.ccs?.enabled}
-                isMultiAz={isMultiAZ(cluster)}
-                machineType={selectedMachineType}
-                cloudProviderID={cluster.cloud_provider.id}
-                product={cluster?.subscription?.plan?.type}
-                isHypershiftCluster={isHypershiftCluster}
-                showStorageAndLoadBalancers={false}
-                minNodes={0}
-                isMachinePool
-                inModal
-                canAutoScale={canAutoScale}
-                autoscalingEnabled={autoscalingEnabled}
-                change={change}
-                autoScaleMinNodesValue={autoScaleMinNodesValue}
-                autoScaleMaxNodesValue={autoScaleMaxNodesValue}
-                billingModel={billingModel}
-              />
-              {/* Cost savings */}
-              {canUseSpotInstances && (
-                <>
-                  <CostSavingsSection
-                    useSpotInstances={useSpotInstances}
-                    spotInstancePricing={spotInstancePricing}
-                    spotInstanceMaxHourlyPrice={spotInstanceMaxHourlyPrice}
-                    change={change}
-                  />
-                </>
-              )}
               {isHypershiftCluster && (
                 <>
                   <GridItem md={6}>
@@ -212,6 +182,36 @@ class AddMachinePoolModal extends Component {
                     )}
                   </GridItem>
                   <GridItem md={6} />
+                </>
+              )}
+
+              <ScaleSection
+                pending={isPending}
+                isBYOC={!!cluster?.ccs?.enabled}
+                isMultiAz={isMultiAZ(cluster)}
+                machineType={selectedMachineType}
+                cloudProviderID={cluster.cloud_provider.id}
+                product={cluster?.subscription?.plan?.type}
+                showStorageAndLoadBalancers={false}
+                minNodes={0}
+                isMachinePool
+                inModal
+                canAutoScale={canAutoScale}
+                autoscalingEnabled={autoscalingEnabled}
+                change={change}
+                autoScaleMinNodesValue={autoScaleMinNodesValue}
+                autoScaleMaxNodesValue={autoScaleMaxNodesValue}
+                billingModel={billingModel}
+              />
+              {/* Cost savings */}
+              {canUseSpotInstances && (
+                <>
+                  <CostSavingsSection
+                    useSpotInstances={useSpotInstances}
+                    spotInstancePricing={spotInstancePricing}
+                    spotInstanceMaxHourlyPrice={spotInstanceMaxHourlyPrice}
+                    change={change}
+                  />
                 </>
               )}
             </Grid>

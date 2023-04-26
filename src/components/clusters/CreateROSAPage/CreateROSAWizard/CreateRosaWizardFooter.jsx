@@ -5,7 +5,8 @@ import { isAsyncValidating } from 'redux-form';
 
 import { WizardFooter, WizardContext, Button } from '@patternfly/react-core';
 
-import { stepId } from './rosaWizardConstants';
+import { useGlobalState } from '~/redux/hooks';
+import { stepId, hasLoadingState } from './rosaWizardConstants';
 
 const CreateRosaWizardFooter = ({
   firstStepId,
@@ -13,6 +14,7 @@ const CreateRosaWizardFooter = ({
   onBeforeSubmit,
   onSubmit,
   isNextDisabled,
+  currentStepId,
 }) => {
   const asyncValidating = useSelector(isAsyncValidating('CreateCluster'));
   const { pending: getAccountIDsLoading } = useSelector(
@@ -27,9 +29,22 @@ const CreateRosaWizardFooter = ({
   const { pending: getOCMRoleLoading } = useSelector(
     (state) => state.rosaReducer.getOCMRoleResponse,
   );
+  const { pending: isVpcsLoading } = useGlobalState((state) => state.ccsInquiries.vpcs);
+  const clusterPrivacy = useGlobalState(
+    (state) => state.form.CreateCluster?.values?.cluster_privacy,
+  );
+
+  const isPublicSubnetsLoading =
+    currentStepId === stepId.NETWORKING__CONFIGURATION &&
+    clusterPrivacy === 'external' &&
+    isVpcsLoading;
 
   const areAwsResourcesLoading =
-    getAccountIDsLoading || getAccountARNsLoading || getUserRoleLoading || getOCMRoleLoading;
+    getAccountIDsLoading ||
+    getAccountARNsLoading ||
+    getUserRoleLoading ||
+    getOCMRoleLoading ||
+    isPublicSubnetsLoading;
 
   return (
     <WizardFooter>
@@ -45,8 +60,12 @@ const CreateRosaWizardFooter = ({
                 variant="primary"
                 type="submit"
                 onClick={() => onBeforeNext(onNext)}
-                isLoading={asyncValidating || areAwsResourcesLoading}
-                isDisabled={isNextDisabled || areAwsResourcesLoading}
+                isLoading={
+                  hasLoadingState(activeStep.id) && (asyncValidating || areAwsResourcesLoading)
+                }
+                isDisabled={
+                  hasLoadingState(activeStep.id) && (isNextDisabled || areAwsResourcesLoading)
+                }
               >
                 Next
               </Button>
@@ -70,6 +89,7 @@ CreateRosaWizardFooter.propTypes = {
   onBeforeSubmit: PropTypes.func.isRequired,
   onSubmit: PropTypes.func.isRequired,
   isNextDisabled: PropTypes.bool,
+  currentStepId: PropTypes.string,
 };
 
 export default CreateRosaWizardFooter;
