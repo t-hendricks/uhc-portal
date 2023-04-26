@@ -31,10 +31,10 @@ const matchCaseInsensitively = (a, b) => match(a.toLowerCase(), b.toLowerCase())
 /**
  * Performs an explicit mapping from a given billingModel to the billingModel which should be used to check quotas for
  */
-const mapBillingModel = (model) => {
+const getBillingQuotaModel = (model) => {
   switch (model) {
     case BillingModel.MARKETPLACE_AWS:
-      return BillingModel.MARKETPLACE;
+      return billingModels.MARKETPLACE;
     default:
       return model;
   }
@@ -47,7 +47,7 @@ const mapBillingModel = (model) => {
 const relatedResourceMatches = (resource, query) =>
   match(resource.resource_type, query.resource_type || any) &&
   matchCaseInsensitively(resource.product, query.product || normalizedProducts.ANY) &&
-  match(resource.billing_model, mapBillingModel(query.billing_model || any)) &&
+  match(resource.billing_model, getBillingQuotaModel(query.billing_model || any)) &&
   match(resource.cloud_provider, query.cloud_provider || any) &&
   match(resource.byoc, query.byoc || any) &&
   matchCaseInsensitively(resource.availability_zone_type, query.availability_zone_type || any) &&
