@@ -95,10 +95,10 @@ const MachineTypeSelection = ({
     const defaultType =
       flavours?.byID[DEFAULT_FLAVOUR_ID]?.[cloudProviderID]?.compute_instance_type;
 
-    if (defaultType) {
+    if (defaultType && isTypeAvailable(defaultType)) {
       input.onChange(defaultType);
     }
-  }, [cloudProviderID, flavours?.byID, forceChoiceInput.value, input]);
+  }, [cloudProviderID, flavours?.byID, forceChoiceInput.value, input, isTypeAvailable]);
 
   const setInvalidValue = React.useCallback(() => {
     // Tell redux form the current value of this field is empty.
