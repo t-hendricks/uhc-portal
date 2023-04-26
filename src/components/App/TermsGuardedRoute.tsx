@@ -11,7 +11,7 @@ type Props = {
 
 const TermsGuardedRoute = ({
   component: WrappedComponent,
-  render: WarppedRender,
+  render: WrappedRender,
   history,
   gobackPath = '/',
   ...restProps
@@ -24,10 +24,10 @@ const TermsGuardedRoute = ({
       </TermsGuard>
     );
   }
-  if (WarppedRender) {
+  if (WrappedRender) {
     render = (props: RouteComponentProps) => (
       <TermsGuard history={history} gobackPath={gobackPath}>
-        {WarppedRender(props)}
+        {WrappedRender(props)}
       </TermsGuard>
     );
   }

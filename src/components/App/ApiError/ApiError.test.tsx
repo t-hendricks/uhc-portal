@@ -4,7 +4,7 @@ import { createMemoryHistory } from 'history';
 import type { AxiosResponse } from 'axios';
 import apiRequest from '../../../services/apiRequest';
 import ApiError from './ApiError';
-import TermsError from '../../common/TermsError';
+import TermsError from '../../common/TermsGuard/TermsError';
 
 jest.mock('../../../services/apiRequest');
 
