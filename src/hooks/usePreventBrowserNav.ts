@@ -11,8 +11,13 @@ const usePreventBrowserNav = (when = true) => {
   React.useEffect(() => {
     if (when) {
       window.onbeforeunload = () => {
-        // Don't trigger dialogs when elements with download attributes are clicked
-        if (!document.activeElement?.hasAttribute('download')) {
+        const { activeElement } = document;
+
+        // Don't trigger confirmation dialog when downloading or when the 'data-no-nav-prompt' attribute is applied to a button.
+        if (
+          !activeElement?.hasAttribute('download') &&
+          !(activeElement as HTMLButtonElement)?.dataset?.noNavPrompt
+        ) {
           return true;
         }
 

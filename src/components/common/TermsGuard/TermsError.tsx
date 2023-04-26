@@ -13,7 +13,8 @@ import { ExclamationCircleIcon } from '@patternfly/react-icons';
 // eslint-disable-next-line camelcase
 import { global_danger_color_100 } from '@patternfly/react-tokens';
 
-import getTermsAppLink from '../../common/getTermsAppLink';
+import getTermsAppLink from '../../../common/getTermsAppLink';
+import { ViewTermsButton } from './ViewTermsButton';
 
 type Props = {
   error: AxiosResponse<{ details?: { ['legal_terms_url']?: string }[] }>;
@@ -24,6 +25,7 @@ const TermsError = ({ error, restore }: Props) => {
   const tncBaseURL = error.data?.details?.[0]?.legal_terms_url;
   const currentHref = window.location.href;
   const tncAppURL = getTermsAppLink(tncBaseURL, currentHref, currentHref);
+
   return (
     <EmptyState variant={EmptyStateVariant.large}>
       <EmptyStateIcon icon={ExclamationCircleIcon} color={global_danger_color_100.value} />
@@ -35,9 +37,7 @@ const TermsError = ({ error, restore }: Props) => {
         cluster will remain unaffected until then. Once you accept the terms, you will need to retry
         the action that was blocked.
       </EmptyStateBody>
-      <Button variant="primary" component="a" href={tncAppURL}>
-        View Terms and Conditions
-      </Button>
+      <ViewTermsButton href={tncAppURL} />
       <EmptyStateSecondaryActions>
         <Button variant="link" onClick={restore}>
           Go back to previous page
