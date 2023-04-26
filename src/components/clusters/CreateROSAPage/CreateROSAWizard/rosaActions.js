@@ -50,8 +50,9 @@ export const normalizeSTSUsersByAWSAccounts = (stsUserRoles) => {
 export const normalizeAWSAccountRoles = (accountRoles) =>
   (accountRoles?.items || []).map((accountRole) =>
     (accountRole?.items || []).reduce(
-      (roleObj, { type, arn, roleVersion }) => ({
+      (roleObj, { type, arn, roleVersion, ...otherRoleAttributes }) => ({
         ...roleObj,
+        ...otherRoleAttributes,
         version: roleVersion,
         [type]: arn,
       }),
