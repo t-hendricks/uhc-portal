@@ -153,12 +153,22 @@ function VersionSelection({
     let hasIncompatibleVersions = false;
 
     versions.forEach((version) => {
-      const versionName = version.raw_id.split('.', 2).join('.');
+      const { raw_id: versionRawId } = version;
+      const versionName = parseFloat(versionRawId);
+      const minManagedPolicyVersionName = parseFloat(MIN_MANAGED_POLICY_VERSION);
+
+      const versionPatch = Number(versionRawId.split('.')[2]);
+      const minManagedPolicyVersionPatch = Number(MIN_MANAGED_POLICY_VERSION.split('.')[2]);
+
+      const isIncompatibleHostedVersion =
+        isHypershiftSelected &&
+        hasManagedArnsSelected &&
+        (versionName < minManagedPolicyVersionName ||
+          (versionName === minManagedPolicyVersionName &&
+            versionPatch < minManagedPolicyVersionPatch));
+
       const isIncompatibleVersion =
-        (isRosa && !isValidRosaVersion(version.raw_id)) ||
-        (isHypershiftSelected &&
-          hasManagedArnsSelected &&
-          parseFloat(versionName) < MIN_MANAGED_POLICY_VERSION);
+        (isRosa && !isValidRosaVersion(version.raw_id)) || isIncompatibleHostedVersion;
       hasIncompatibleVersions = hasIncompatibleVersions || isIncompatibleVersion;
 
       if (isIncompatibleVersion && showOnlyCompatibleVersions) {
