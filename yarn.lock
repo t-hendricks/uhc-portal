@@ -2088,23 +2088,25 @@
     commander ">=2.20.0"
     react-content-loader ">=3.4.1"
 
-"@redhat-cloud-services/frontend-components-utilities@^3.1.1":
-  version "3.1.2"
-  resolved "https://registry.yarnpkg.com/@redhat-cloud-services/frontend-components-utilities/-/frontend-components-utilities-3.1.2.tgz#965c03508336e6d68dc9cad39b38ae05acd0f4e8"
-  integrity sha512-CDnhCQTotqCWUzZUgPXEori95FDhrXGBUxodwQpR3wKTb1lBpwDHg4b3TdpzPz+KyryClT6OfNkVabmjQ2S6CA==
-  dependencies:
-    "@sentry/browser" "^5.4.0"
-    awesome-debounce-promise "^2.1.0"
-    axios "^0.21.1"
-    commander ">=2.20.0"
-    react-content-loader ">=3.4.1"
-
 "@redhat-cloud-services/frontend-components-utilities@^3.2.25":
   version "3.3.9"
   resolved "https://registry.yarnpkg.com/@redhat-cloud-services/frontend-components-utilities/-/frontend-components-utilities-3.3.9.tgz#1f5444d9854ef67d0918f081b730af2bce9e4d46"
   integrity sha512-5NUktJBoaOoUVFQo81qMq/zFmJupHlmA+y1TDgZw5aCGXmqabAvtFXsI4R/diDVgvC04GdyWDPwdzZzqxKz5YQ==
   dependencies:
     "@redhat-cloud-services/types" "^0.0.15"
+    "@sentry/browser" "^5.30.0"
+    awesome-debounce-promise "^2.1.0"
+    axios "^0.27.2"
+    commander "^2.20.3"
+    mkdirp "^1.0.4"
+    react-content-loader "^6.2.0"
+
+"@redhat-cloud-services/frontend-components-utilities@^3.5.0":
+  version "3.5.0"
+  resolved "https://registry.yarnpkg.com/@redhat-cloud-services/frontend-components-utilities/-/frontend-components-utilities-3.5.0.tgz#663b1984638bce0a46c705259737428418ecb35b"
+  integrity sha512-+psPuT+5hpOP0vF6wjmJNUfLSgObtTBKSCtT7Ju9XfmWnmiKLc6Er1iias2Othy4WP+5EaLlH22Rd1wk8ut8HA==
+  dependencies:
+    "@redhat-cloud-services/types" "^0.0.17"
     "@sentry/browser" "^5.30.0"
     awesome-debounce-promise "^2.1.0"
     axios "^0.27.2"
@@ -2132,6 +2134,11 @@
   version "0.0.16"
   resolved "https://registry.yarnpkg.com/@redhat-cloud-services/types/-/types-0.0.16.tgz#fec49333b780b294a0c5e78e7bde557e0f9d871e"
   integrity sha512-JtIAPT1ZJzgwUvttWjtxe3ufMhUJ0upapJ7yi/MLKFhC46B5X2ht7hgbgIeCv5Nf7QLc8TDsSUXqqr9L93Ek5A==
+
+"@redhat-cloud-services/types@^0.0.17":
+  version "0.0.17"
+  resolved "https://registry.yarnpkg.com/@redhat-cloud-services/types/-/types-0.0.17.tgz#00d4642ffb3885e7ca6790d626f5ca5909e73af9"
+  integrity sha512-3V9mmarS3jD5fBksMwh+XCEAMUIzqSOxDkH6OcIVu6w/gaBBOWHh34Jwn4CxKlu+WStxVV/rxm3oFGpsWqljvg==
 
 "@reduxjs/toolkit@^1.6.2":
   version "1.6.2"

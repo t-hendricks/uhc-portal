@@ -46,19 +46,22 @@ module.exports = async (_env, argv) => {
   const apiEnv = argv.env['api-env'] || (isDevServer ? 'development' : 'production');
   console.log(`Building with apiEnv=${apiEnv}, beta=${betaMode}, isDevServer=${isDevServer}`);
 
-  let bundleAnalyzer = null;
+  // While user-visible URLs are moving /beta/openshift -> /preview/openshift,
+  // the compiled assets will remain at /beta/apps/openshift.
   const appDeployment = betaMode ? 'beta/apps' : 'apps';
+  const publicPath = `/${appDeployment}/${insights.appname}/`;
+
+  let bundleAnalyzer = null;
   if (process.env.BUNDLE_ANALYZER) {
     bundleAnalyzer = new BundleAnalyzerPlugin({ analyzerPort: '5000', openAnalyzer: true });
   }
-  const publicPath = `/${appDeployment}/${insights.appname}/`;
   const entry = path.resolve(srcDir, 'bootstrap.ts');
 
   const noInsightsProxy = argv.env.noproxy;
 
   const getChromeTemplate = async () => {
     const result = await axios.get(
-      `https://console.redhat.com/${betaMode ? 'beta/' : ''}apps/chrome/index.html`,
+      `https://console.redhat.com/${betaMode ? 'preview/' : ''}apps/chrome/index.html`,
     );
     return result.data;
   };
@@ -250,7 +253,13 @@ module.exports = async (_env, argv) => {
           {
             // docs: https://github.com/chimurai/http-proxy-middleware#http-proxy-options
             // proxy everything except our own app, mimicking insights-proxy behaviour
-            context: ['**', `!${publicPath}**`, '!/mockdata'],
+            context: [
+              '**',
+              '!/mockdata/**',
+              `!/apps/${insights.appname}/**`,
+              `!/beta/apps/${insights.appname}/**`,
+              `!/preview/apps/${insights.appname}/**`, // not expected to be used
+            ],
             target: 'https://console.redhat.com',
             // replace the "host" header's URL origin with the origin from the target URL
             changeOrigin: true,
