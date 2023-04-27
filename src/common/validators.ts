@@ -992,22 +992,28 @@ const validateARN = (value: string): string | undefined => {
  *
  * @param {*} values array of value objects, from redux-form
  */
-const atLeastOneRequired = (fieldName: string) => (fields: { name: string }[]) => {
-  if (!fields) {
-    return undefined;
-  }
-  let nonEmptyValues = 0;
-  fields.forEach((field) => {
-    const content = get(field, fieldName, null);
-    if (content && content.trim() !== '') {
-      nonEmptyValues += 1;
+const atLeastOneRequired =
+  (fieldName: string, isEmpty?: (value: unknown) => boolean) => (fields: { name: string }[]) => {
+    if (!fields) {
+      return undefined;
     }
-  });
-  if (nonEmptyValues === 0) {
-    return 'At least one is required.';
-  }
-  return undefined;
-};
+    let nonEmptyValues = 0;
+    fields.forEach((field) => {
+      if (isEmpty) {
+        isEmpty(field) || nonEmptyValues++;
+      } else {
+        const content = get(field, fieldName, null);
+        if (content && content.trim() !== '') {
+          nonEmptyValues++;
+        }
+      }
+    });
+
+    if (nonEmptyValues === 0) {
+      return 'At least one is required.';
+    }
+    return undefined;
+  };
 
 const awsNumericAccountID = (input: string): string | undefined => {
   if (!input) {

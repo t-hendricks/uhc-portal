@@ -8,16 +8,23 @@ import {
   Alert,
   HelperText,
   HelperTextItem,
+  Button,
 } from '@patternfly/react-core';
-import { CheckCircleIcon, ExclamationCircleIcon } from '@patternfly/react-icons';
+import { CheckCircleIcon, ExclamationCircleIcon, PlusCircleIcon } from '@patternfly/react-icons';
 import PropTypes from 'prop-types';
 import { randAlphanumString } from '../../../../../../../common/helpers';
 import ReduxVerticalFormGroup from '../../../../../../common/ReduxFormComponents/ReduxVerticalFormGroup';
 import {
+  atLeastOneRequired,
   required,
   validateHTPasswdPassword,
   validateHTPasswdUsername,
 } from '../../../../../../../common/validators';
+import {
+  ReduxFieldArray,
+  RenderCompoundArrayFields,
+} from '../../../../../../../components/common/ReduxFormComponents';
+
 import './HTPasswdForm.scss';
 
 const generatePassword = () => {
@@ -59,6 +66,55 @@ const generatePassword = () => {
   availableIndices.splice(lowerIndex.index, 1);
 
   return suggestion.join('');
+};
+
+// https://issues.redhat.com/browse/HAC-2011
+const NewHTPasswdForm = ({
+  isPending,
+  isEditForm,
+  idpEdited,
+  change,
+  clearFields,
+  HTPasswdPasswordErrors,
+}) => {
+  const handleAdd = React.useCallback(() => {
+    change('htpasswd_users', [{ username: 'foo' }]);
+  });
+
+  return (
+    <>
+      <ReduxFieldArray
+        fieldName="users"
+        component={RenderCompoundArrayFields}
+        compoundFields={[
+          {
+            name: 'username',
+            label: 'Username',
+            type: 'text',
+            isRequired: true,
+            getPlaceholderText: (index) => `Unique username ${index + 1}`,
+            validate: [validateHTPasswdUsername],
+          },
+          {
+            name: 'password',
+            label: 'Password',
+            type: 'password',
+            isRequired: true,
+            getHelpText: (index) => `TODO: Help text for index ${index}`,
+            validate: [validateHTPasswdUsername],
+          },
+        ]}
+        label="Users"
+        helpText="Unique names of the users within the cluster. A username must not contain /, :, or %."
+        isRequired
+        disabled={isPending}
+        validate={atLeastOneRequired(
+          'users',
+          (field) => !field?.username || field.username.trim() === '',
+        )}
+      />
+    </>
+  );
 };
 
 class HTPasswdForm extends React.Component {
@@ -279,6 +335,8 @@ class HTPasswdForm extends React.Component {
             user.
           </Alert>
         </GridItem>
+        <br />
+        <NewHTPasswdForm {...this.props} />
       </>
     );
   }

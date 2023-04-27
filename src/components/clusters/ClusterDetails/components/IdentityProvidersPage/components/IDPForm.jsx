@@ -156,9 +156,9 @@ class IDPForm extends React.Component {
         case IDPformValues.HTPASSWD:
           text = (
             <>
-              Define an <code>htpasswd</code> identity provider for your managed cluster to create a
-              single, static user that can log in to your cluster and troubleshoot it. If this user
-              needs elevated permissions, add it to an{' '}
+              Define an <code>htpasswd</code> identity provider for your managed cluster to create
+              one or multiple static users that can log in to your cluster and troubleshoot it. If
+              these users need elevated permissions, add it to an{' '}
               <ExternalLink href={links.OSD_DEDICATED_ADMIN_ROLE}>
                 administrative group
               </ExternalLink>{' '}

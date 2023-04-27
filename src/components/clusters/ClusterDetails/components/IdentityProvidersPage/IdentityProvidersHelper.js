@@ -227,10 +227,15 @@ const getCreateIDPRequestData = (formData) => {
     issuer: formData.issuer,
   });
 
-  const htpasswdData = () => ({
-    username: formData.htpasswd_username,
-    password: formData.htpasswd_password,
-  });
+  const htpasswdData = () => {
+    console.log('--- htpasswdData, formData: ', formData);
+    return {
+      // TODO: Do these username/password have special meaning over users[]?
+      // username: formData.htpasswd_username,
+      // password: formData.htpasswd_password,
+      users: formData.users,
+    };
+  };
 
   const IDPs = {
     GithubIdentityProvider: { name: 'github', data: githubData },
@@ -247,6 +252,7 @@ const getCreateIDPRequestData = (formData) => {
     id: formData.idpId,
   };
 
+  console.log('--- getCreateIDPRequestData, formData: ', formData);
   const selectedIDPData = IDPs[formData.type].data();
   const selectedIDPName = IDPs[formData.type].name;
 
