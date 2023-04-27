@@ -10,8 +10,14 @@ import {
 } from '~/components/clusters/CreateOSDPage/CreateOSDWizard/ccsInquiriesActions';
 import { CloudProviderType } from '~/components/clusters/wizards/common/constants';
 import { FieldId } from '~/components/clusters/wizards/osd/constants';
+import { AWSCredentials } from '~/types/types';
 
-export const getCcsCredentials = (values: FormikValues): string | FormikValues | null => {
+/**
+ * Gets AWS or GCP CCS credentials from form state, in form suitable for actions.
+ * In GCP case we return JSON string; parsing it is deferred to action time,
+ * when it's easier to present errors to user.
+ */
+export const getCcsCredentials = (values: FormikValues): string | AWSCredentials | null => {
   const {
     [FieldId.GcpServiceAccount]: gcpServiceAccount,
     [FieldId.AccountId]: accountId,
@@ -24,6 +30,7 @@ export const getCcsCredentials = (values: FormikValues): string | FormikValues |
     case CloudProviderType.Gcp:
       return gcpServiceAccount;
     case CloudProviderType.Aws:
+      // TODO: handle STS
       return {
         account_id: accountId,
         access_key_id: accessKeyId,
@@ -40,11 +47,15 @@ export const getCloudProverInfo = (values: FormikValues, dispatch: Dispatch) => 
   if (values[FieldId.CloudProvider] === CloudProviderType.Gcp) {
     // hard code region since we're just validating credentials
     return dispatch(
-      getGCPCloudProviderVPCs(VALIDATE_CLOUD_PROVIDER_CREDENTIALS, ccsCredentials, 'us-east1'),
+      getGCPCloudProviderVPCs(
+        VALIDATE_CLOUD_PROVIDER_CREDENTIALS,
+        ccsCredentials as string,
+        'us-east1',
+      ),
     );
   }
 
-  return dispatch(getAWSCloudProviderRegions(ccsCredentials));
+  return dispatch(getAWSCloudProviderRegions(ccsCredentials as AWSCredentials));
 };
 
 export const shouldValidateCcsCredentials = (

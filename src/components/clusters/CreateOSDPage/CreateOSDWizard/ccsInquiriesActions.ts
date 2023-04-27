@@ -1,4 +1,7 @@
 import pick from 'lodash/pick';
+import { action, ActionType } from 'typesafe-actions';
+import { GCP } from '~/types/clusters_mgmt.v1';
+import { AWSCredentials } from '~/types/types';
 import {
   listAWSVPCs,
   listGCPVPCs,
@@ -16,7 +19,7 @@ export const CLEAR_ALL_CLOUD_PROVIDER_INQUIRIES = 'CLEAR_ALL_CLOUD_PROVIDER_INQU
 export const CLEAR_CCS_CREDENTIALS_INQUIRY = 'CLEAR_CCS_CREDENTIALS_INQUIRY';
 
 // Made async to ease handling of JSON SyntaxError as action rejection.
-const credentialsFromJSON = async (gcpCredentialsJSON) => {
+const credentialsFromJSON = async (gcpCredentialsJSON: string): Promise<GCP> => {
   const parsedCredentials = JSON.parse(gcpCredentialsJSON);
   return pick(parsedCredentials, [
     'type',
@@ -34,76 +37,96 @@ const credentialsFromJSON = async (gcpCredentialsJSON) => {
 
 /**
  * List AWS VPCs for given CCS account.
- * @param {*} awsCredentials { accountID, accessKey, secretKey } object
- * @param {string} [subnet] - only vpc attached to the entered subnet will be returned
+ * Optimization: If `subnet` is provided, only VPC attached to that subnet id will be included.
  */
-export const getAWSCloudProviderVPCs = (awsCredentials, region, subnet = undefined) => ({
-  type: LIST_VPCS,
-  payload: listAWSVPCs(awsCredentials, region, subnet),
-  // parameters can be used to check if we need to query again.
-  meta: {
-    credentials: awsCredentials,
-    cloudProvider: 'aws',
-    region,
-  },
-});
+export const getAWSCloudProviderVPCs = (
+  awsCredentials: AWSCredentials,
+  region: string,
+  subnet?: string,
+) =>
+  action(
+    LIST_VPCS,
+    listAWSVPCs(awsCredentials, region, subnet),
+    // parameters can be used to check if we need to query again.
+    {
+      credentials: awsCredentials,
+      cloudProvider: 'aws',
+      region,
+      subnet,
+    },
+  );
 
-export const getGCPCloudProviderVPCs = (type, gcpCredentialsJSON, region) => ({
-  type,
-  payload: () =>
+export const getGCPCloudProviderVPCs = (
+  type: 'VALIDATE_CLOUD_PROVIDER_CREDENTIALS' | 'LIST_VPCS',
+  gcpCredentialsJSON: string,
+  region: string,
+) =>
+  action(
+    type,
     credentialsFromJSON(gcpCredentialsJSON).then((creds) => listGCPVPCs(creds, region)),
-  // parameters can be used to check if we need to query again.
-  meta: { credentials: gcpCredentialsJSON, cloudProvider: 'gcp', region },
-});
+    // parameters can be used to check if we need to query again.
+    {
+      credentials: gcpCredentialsJSON,
+      cloudProvider: 'gcp',
+      region,
+      subnet: undefined,
+    },
+  );
 
 /**
  * Validate AWS credentials.
- * @param {*} awsCredentials { accountID, accessKey, secretKey } object
  */
-export const getAWSCloudProviderRegions = (awsCredentials) => ({
-  type: VALIDATE_CLOUD_PROVIDER_CREDENTIALS,
-  payload: listAWSRegions(awsCredentials),
-  meta: {
-    credentials: awsCredentials,
-    cloudProvider: 'aws',
-  },
-});
+export const getAWSCloudProviderRegions = (awsCredentials: AWSCredentials) =>
+  action(
+    VALIDATE_CLOUD_PROVIDER_CREDENTIALS,
+    listAWSRegions(awsCredentials),
+    // meta parameters can be used to check if we need to query again.
+    {
+      credentials: awsCredentials,
+      cloudProvider: 'aws',
+    },
+  );
 
-export const getGCPKeyRings = (gcpCredentialsJSON, keyLocation) => ({
-  type: LIST_GCP_KEY_RINGS,
-  payload: () =>
+export const getGCPKeyRings = (gcpCredentialsJSON: string, keyLocation: string) =>
+  action(
+    LIST_GCP_KEY_RINGS,
     credentialsFromJSON(gcpCredentialsJSON).then((creds) => listGCPKeyRings(creds, keyLocation)),
-  // parameters can be used to check if we need to query again.
-  meta: {
-    credentials: gcpCredentialsJSON,
-    keyLocation,
-    cloudProvider: 'gcp',
-  },
-});
+    // parameters can be used to check if we need to query again.
+    {
+      credentials: gcpCredentialsJSON,
+      keyLocation,
+      cloudProvider: 'gcp',
+    },
+  );
 
-export const getGCPKeys = (gcpCredentialsJSON, keyLocation, keyRing) => ({
-  type: LIST_GCP_KEYS,
-  payload: () =>
+export const getGCPKeys = (gcpCredentialsJSON: string, keyLocation: string, keyRing: string) =>
+  action(
+    LIST_GCP_KEYS,
     credentialsFromJSON(gcpCredentialsJSON).then((creds) =>
       listGCPKeys(creds, keyLocation, keyRing),
     ),
-  // parameters can be used to check if we need to query again.
-  meta: {
-    credentials: gcpCredentialsJSON,
-    keyLocation,
-    keyRing,
-    cloudProvider: 'gcp',
-  },
-});
+    // parameters can be used to check if we need to query again.
+    {
+      credentials: gcpCredentialsJSON,
+      keyLocation,
+      keyRing,
+      cloudProvider: 'gcp',
+    },
+  );
 
-export const clearAllCloudProviderInquiries = () => ({
-  type: CLEAR_ALL_CLOUD_PROVIDER_INQUIRIES,
-});
+export const clearAllCloudProviderInquiries = () => action(CLEAR_ALL_CLOUD_PROVIDER_INQUIRIES);
 
-export const clearCcsCredientialsInquiry = () => ({
-  type: CLEAR_CCS_CREDENTIALS_INQUIRY,
-});
+export const clearCcsCredientialsInquiry = () => action(CLEAR_CCS_CREDENTIALS_INQUIRY);
 
-export const clearListVpcs = () => ({
-  type: CLEAR_LIST_VPCS,
-});
+export const clearListVpcs = () => action(CLEAR_LIST_VPCS);
+
+export type InquiriesAction = ActionType<
+  | typeof getAWSCloudProviderVPCs
+  | typeof getGCPCloudProviderVPCs
+  | typeof getAWSCloudProviderRegions
+  | typeof getGCPKeyRings
+  | typeof getGCPKeys
+  | typeof clearAllCloudProviderInquiries
+  | typeof clearCcsCredientialsInquiry
+  | typeof clearListVpcs
+>;

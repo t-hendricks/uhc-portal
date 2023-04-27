@@ -1,11 +1,21 @@
-import { processAWSVPCs } from './ccsInquiriesReducer';
+import { processAWSVPCs } from '~/components/clusters/CreateOSDPage/CreateOSDWizard/ccsInquiriesReducer';
+import { CloudVPC } from '~/types/clusters_mgmt.v1';
 import awsVPCs from '../../../../../mockdata/api/clusters_mgmt/v1/aws_inquiries/vpcs.json';
 
 describe('processAWSVPCs', () => {
   it('works', () => {
-    const result = processAWSVPCs(awsVPCs);
-    // Contains original response unmodified.
-    expect(result.items).toHaveLength(result.size);
+    // Backend has technical difficulties with optional arrays in JSON.
+    // This mockdata contains `aws_subnets: null` which is totally a real thing backend
+    // may return even when `aws_subnets: []` would be appropriate.
+    //
+    // Our openapi-derived `CloudVPC` type only describes array | undefined.
+    // TODO: Ideally TS should be aware of `null` possiblity!
+    //   For now making a *false promise* to TS that it's `CloudVPC` i.e. without `null`,
+    //   so it will let us test actual run-time handling of actual real data...
+    const result = processAWSVPCs(awsVPCs as { items: CloudVPC[] });
+
+    // Contains original items unmodified.
+    expect(result.items).toHaveLength(awsVPCs.size);
     // old API before https://gitlab.cee.redhat.com/service/uhc-clusters-service/-/merge_requests/3852
     expect(result.bySubnetID['subnet-0c17300787ec127bc']).toEqual({
       vpc_id: 'vpc-0c79e0e9acafedaef',

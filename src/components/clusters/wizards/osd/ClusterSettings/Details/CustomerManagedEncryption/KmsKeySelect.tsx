@@ -15,12 +15,13 @@ import DynamicSelect from '~/components/common/DynamicSelect';
 import ExternalLink from '~/components/common/ExternalLink';
 import { getCcsCredentials } from '~/components/clusters/wizards/common/utils';
 import { FieldId } from '~/components/clusters/wizards/osd/constants';
+import { EncryptionKey } from '~/types/clusters_mgmt.v1';
 
 export const KmsKeySelect = () => {
   const dispatch = useDispatch();
   const { gcpKeys } = useGlobalState((state) => state.ccsInquiries);
   const { values, getFieldProps, setFieldValue, getFieldMeta } = useFormState();
-  const ccsCredentials = getCcsCredentials(values);
+  const ccsCredentials = getCcsCredentials(values) as string;
 
   const { [FieldId.KeyLocation]: keyLocation, [FieldId.KeyRing]: keyRing } = values;
   const hasDependencies = !!(ccsCredentials && keyLocation && keyRing);
@@ -63,11 +64,13 @@ export const KmsKeySelect = () => {
           onChange: (value: string) => setFieldValue(FieldId.KeyName, value),
         }}
         meta={getFieldMeta(FieldId.KeyName)}
-        loadData={() => dispatch(getGCPKeys(ccsCredentials, keyLocation, keyRing))}
+        loadData={() =>
+          hasDependencies && dispatch(getGCPKeys(ccsCredentials, keyLocation, keyRing))
+        }
         hasDependencies={hasDependencies}
         matchesDependencies={matchesDependencies}
         requestStatus={gcpKeys}
-        items={(gcpKeys.data?.items || []).map((key: { name: string }) => key.name)}
+        items={(gcpKeys.data?.items || []).map((key: EncryptionKey) => key.name)}
       />
     </GridItem>
   );

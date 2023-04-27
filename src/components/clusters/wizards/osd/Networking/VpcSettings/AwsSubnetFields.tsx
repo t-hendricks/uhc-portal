@@ -23,6 +23,7 @@ import { useFormState } from '~/components/clusters/wizards/hooks';
 import { CloudProviderType } from '~/components/clusters/wizards/common/constants';
 import { TextInputField } from '~/components/clusters/wizards/form';
 import { FieldId } from '~/components/clusters/wizards/osd/constants';
+import { AWSCredentials } from '~/services/clusterService';
 
 interface AwsSubnetFieldsProps {
   region: string;
@@ -54,7 +55,7 @@ export const AwsSubnetFields = (props: AwsSubnetFieldsProps) => {
 
   React.useEffect(() => {
     if (cloudProvider === CloudProviderType.Aws) {
-      dispatch(getAWSCloudProviderVPCs(ccsCredentials, region));
+      dispatch(getAWSCloudProviderVPCs(ccsCredentials as AWSCredentials, region));
     }
   }, [ccsCredentials, cloudProvider, dispatch, region]);
 

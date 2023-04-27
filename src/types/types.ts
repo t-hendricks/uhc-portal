@@ -2,6 +2,7 @@ import type React from 'react';
 import type { Cluster as AICluster, FeatureSupportLevel } from 'openshift-assisted-ui-lib/ocm';
 import type { List, OneMetric, Subscription } from './accounts_mgmt.v1';
 import type {
+  AWS,
   Cluster,
   ClusterState,
   LimitedSupportReason,
@@ -93,10 +94,15 @@ export type ErrorState = {
   operationID?: string;
 };
 
+export type AWSCredentials = Pick<
+  AWS,
+  'account_id' | 'access_key_id' | 'secret_access_key' | 'sts'
+>;
+
+/** A subnet augmented with info from its parent CloudVPC. */
 export type AugmentedSubnetwork = Subnetwork & {
   ['vpc_id']: string;
-  ['vpc_name']: string;
-  public: boolean;
+  ['vpc_name']?: string; // presence depends on AWS "Name" tag, not guaranteed.
 };
 
 export type BySubnetID = { [id: string]: AugmentedSubnetwork };
