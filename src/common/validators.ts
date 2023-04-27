@@ -403,51 +403,56 @@ const labelValueValidations = (
   },
 ];
 
-const taintKeyValueValidations = (
+const taintValueValidations = (
+  value: string,
+): {
+  validated: boolean;
+  text: string;
+}[] => [
+  {
+    validated: !value || value.length <= LABEL_VALUE_MAX_LENGTH,
+    text: `A valid value must be ${LABEL_VALUE_MAX_LENGTH} characters or less`,
+  },
+  {
+    validated: !value || LABEL_VALUE_REGEX.test(value),
+    text: "A valid value must consist of alphanumeric characters, '-', '.' or '_' and must start and end with an alphanumeric character",
+  },
+];
+
+const taintKeyValidations = (
   value: string,
   allValues: { taints?: Taint[] },
 ): {
   validated: boolean;
   text: string;
 }[] => {
+  const formatErrors = taintValueValidations(value);
+  const hasFormatErrors = formatErrors.find((validation) => !validation.validated) !== undefined;
+  if (hasFormatErrors) {
+    return formatErrors;
+  }
+
   const { taints } = allValues;
   const isEmptyValid = taints?.length === 1 && !taints[0].key && !taints[0].value;
-
-  if (isEmptyValid) {
-    return [
-      {
-        validated: true,
-        text: 'Required',
-      },
-    ];
-  }
   return [
     {
-      validated: value?.length > 0,
+      validated: isEmptyValid || value?.length > 0,
       text: 'Required',
-    },
-    {
-      validated: typeof value === 'undefined' || value.length <= LABEL_VALUE_MAX_LENGTH,
-      text: `A valid value must be ${LABEL_VALUE_MAX_LENGTH} characters or less`,
-    },
-    {
-      validated: typeof value === 'undefined' || LABEL_VALUE_REGEX.test(value),
-      text: "A valid value must consist of alphanumeric characters, '-', '.' or '_' and must start and end with an alphanumeric character",
     },
   ];
 };
 
 const checkLabelKey = createPessimisticValidator(labelKeyValidations);
-
 const checkLabelValue = createPessimisticValidator(labelValueValidations);
 
-const checkTaintField = createPessimisticValidator(taintKeyValueValidations);
+const checkTaintKey = createPessimisticValidator(taintKeyValidations);
+const checkTaintValue = createPessimisticValidator(taintValueValidations);
 
 const validateNoEmptyTaints = (
   value: string,
   allValues: { taints: { key: string; value: string }[] },
 ): string | undefined => {
-  const hasIncomplete = allValues.taints?.find((item) => !item.key || !item.value);
+  const hasIncomplete = allValues.taints?.find((item) => !item.key);
   return hasIncomplete ? 'Empty taints' : undefined;
 };
 
@@ -1479,7 +1484,8 @@ export {
   asyncValidateClusterName,
   checkLabelKey,
   checkLabelValue,
-  checkTaintField,
+  checkTaintKey,
+  checkTaintValue,
   validateNoEmptyTaints,
 };
 

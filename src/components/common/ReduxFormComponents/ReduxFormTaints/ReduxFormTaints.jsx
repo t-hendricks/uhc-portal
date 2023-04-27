@@ -5,7 +5,7 @@ import { Button, Grid, GridItem } from '@patternfly/react-core';
 import { PlusCircleIcon, MinusCircleIcon } from '@patternfly/react-icons';
 
 import { getRandomID } from '~/common/helpers';
-import { checkTaintField } from '~/common/validators';
+import { checkTaintKey, checkTaintValue } from '~/common/validators';
 
 import ReduxVerticalFormGroup from '../ReduxVerticalFormGroup';
 import ReduxFormDropdown from '../ReduxFormDropdown';
@@ -41,7 +41,7 @@ const ReduxFormTaints = ({
               index={index}
               aria-label="Key-value list key"
               isRequired
-              validate={checkTaintField}
+              validate={checkTaintKey}
             />
           </GridItem>
           <GridItem span={3}>
@@ -51,7 +51,7 @@ const ReduxFormTaints = ({
               index={index}
               aria-label="Key-value list value"
               isRequired
-              validate={checkTaintField}
+              validate={checkTaintValue}
             />
           </GridItem>
           <GridItem span={3}>
