@@ -176,25 +176,17 @@ module.exports = async (_env, argv) => {
           use: [MiniCssExtractPlugin.loader, 'css-loader'],
         },
         {
-          // eslint-disable-next-line max-len
-          // Since we use Insights' upstream PatternFly, we're using null-loader to save about 1MB of CSS
-          test: /\.css$/i,
-          include: reactCSS,
-          use: 'null-loader',
-        },
-        {
           test: /(webfont\.svg|\.(eot|ttf|woff|woff2))$/,
-          loader: 'file-loader',
-          options: {
-            name: 'fonts/[name].[hash].[ext]',
+          type: 'asset/resource',
+          generator: {
+            filename: 'fonts/[name].[hash].[ext]'
           },
         },
         {
           test: /(?!webfont)\.(gif|jpg|png|svg)$/,
-          loader: 'url-loader', // Bundle small images in JS as base64 URIs.
-          options: {
-            limit: 8000, // Don't bundle images larger than 8KB in the JS bundle.
-            name: 'images/[name].[hash].[ext]',
+          type: 'asset', // automatically chooses between bundling small images in JS as base64 URIs and emitting separate files based on size
+          generator: {
+            filename: 'images/[name].[hash].[ext]'
           },
         },
         // For react-markdown#unified#vfile
@@ -225,6 +217,8 @@ module.exports = async (_env, argv) => {
       alias: {
         '~': path.resolve(__dirname, 'src/'),
         '@testUtils': path.resolve(__dirname, 'src/testUtils.tsx'),
+        // Since we use Insights' upstream PatternFly, we're excluding it to save about 1MB of CSS
+        '@patternfly/react-styles/css': false,
       },
     },
 
