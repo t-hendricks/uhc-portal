@@ -269,7 +269,7 @@ class MachinePools extends React.Component {
               <Title headingLevel="h4" className="autoscale__lim">{`Min nodes ${
                 cluster.multi_az ? 'per zone' : ''
               }`}</Title>
-              {cluster.multi_az
+              {cluster.multi_az && !isHypershift
                 ? machinePool.autoscaling.min_replicas / 3
                 : machinePool.autoscaling.min_replicas}
             </SplitItem>
@@ -277,7 +277,7 @@ class MachinePools extends React.Component {
               <Title headingLevel="h4" className="autoscale__lim">{`Max nodes ${
                 cluster.multi_az ? 'per zone' : ''
               }`}</Title>
-              {cluster.multi_az
+              {cluster.multi_az && !isHypershift
                 ? machinePool.autoscaling.max_replicas / 3
                 : machinePool.autoscaling.max_replicas}
             </SplitItem>
