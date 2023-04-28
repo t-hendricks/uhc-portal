@@ -68,6 +68,68 @@ const generatePassword = () => {
   return suggestion.join('');
 };
 
+const getHelpTextItemVariant = (errName, passwordErrors) => {
+  const emptyPassword = passwordErrors?.emptyPassword;
+  if (emptyPassword) {
+    return 'default';
+  }
+  if (passwordErrors === undefined) {
+    return 'success';
+  }
+  const hasError = passwordErrors[errName];
+  return hasError ? 'error' : 'success';
+};
+
+const getHelpTextItemIcon = (errName, passwordErrors) => {
+  const variant = getHelpTextItemVariant(errName, passwordErrors);
+  switch (variant) {
+    case 'success':
+      return <CheckCircleIcon />;
+    case 'error':
+      return <ExclamationCircleIcon />;
+    default:
+      return <span>•</span>;
+  }
+};
+
+const HelpTextPassword = ({ passwordErrors }) => {
+  const helpTextItemVariant = (errName) => getHelpTextItemVariant(errName, passwordErrors);
+  const helpTextItemIcon = (errName) => getHelpTextItemIcon(errName, passwordErrors);
+
+  return (
+    <HelperText>
+      <HelperTextItem
+        isDynamic
+        variant={helpTextItemVariant('baseRequirements')}
+        icon={helpTextItemIcon('baseRequirements')}
+      >
+        At least 14 characters (ASCII-standard) without whitespaces
+      </HelperTextItem>
+      <HelperTextItem
+        isDynamic
+        variant={helpTextItemVariant('lowercase')}
+        icon={helpTextItemIcon('lowercase')}
+      >
+        Include lowercase letters
+      </HelperTextItem>
+      <HelperTextItem
+        isDynamic
+        variant={helpTextItemVariant('uppercase')}
+        icon={helpTextItemIcon('uppercase')}
+      >
+        Include uppercase letters
+      </HelperTextItem>
+      <HelperTextItem
+        isDynamic
+        variant={helpTextItemVariant('numbersOrSymbols')}
+        icon={helpTextItemIcon('numbersOrSymbols')}
+      >
+        Include numbers or symbols (ASCII-standard characters only)
+      </HelperTextItem>
+    </HelperText>
+  );
+};
+
 // https://issues.redhat.com/browse/HAC-2011
 const NewHTPasswdForm = ({
   isPending,
@@ -75,11 +137,12 @@ const NewHTPasswdForm = ({
   idpEdited,
   change,
   clearFields,
-  HTPasswdPasswordErrors,
+  HtPasswdErrors,
 }) => {
-  const handleAdd = React.useCallback(() => {
-    change('htpasswd_users', [{ username: 'foo' }]);
-  });
+  const getHelpText = (index) => {
+    const passwordErrors = HtPasswdErrors?.[index]?.password;
+    return <HelpTextPassword passwordErrors={passwordErrors} />;
+  };
 
   return (
     <>
@@ -100,8 +163,8 @@ const NewHTPasswdForm = ({
             label: 'Password',
             type: 'password',
             isRequired: true,
-            getHelpText: (index) => `TODO: Help text for index ${index}`,
-            validate: [validateHTPasswdUsername],
+            getHelpText,
+            validate: validateHTPasswdPassword,
           },
         ]}
         label="Users"
@@ -113,10 +176,15 @@ const NewHTPasswdForm = ({
           (field) => !field?.username || field.username.trim() === '',
         )}
       />
+      <GridItem span={8}>
+        <Alert isInline variant="info" title="Securely store your username and password">
+          If you lose these credentials, you will have to delete and recreate the cluster admin
+          user.
+        </Alert>
+      </GridItem>
     </>
   );
 };
-
 class HTPasswdForm extends React.Component {
   state = {
     useSuggestedUsername: true,
@@ -230,65 +298,7 @@ class HTPasswdForm extends React.Component {
 
   render() {
     const { isPending, HTPasswdPasswordErrors } = this.props;
-
     const { suggestedUsername, suggestedPassword } = this.state;
-
-    const helpTextItemVariant = (errName) => {
-      const emptyPassword = HTPasswdPasswordErrors?.emptyPassword;
-      if (emptyPassword) {
-        return 'default';
-      }
-      if (HTPasswdPasswordErrors === undefined) {
-        return 'success';
-      }
-      const hasError = HTPasswdPasswordErrors[errName];
-      return hasError ? 'error' : 'success';
-    };
-
-    const helpTextItemIcon = (errName) => {
-      const variant = helpTextItemVariant(errName);
-      switch (variant) {
-        case 'success':
-          return <CheckCircleIcon />;
-        case 'error':
-          return <ExclamationCircleIcon />;
-        default:
-          return <span>•</span>;
-      }
-    };
-
-    const helpText = (
-      <HelperText>
-        <HelperTextItem
-          isDynamic
-          variant={helpTextItemVariant('baseRequirements')}
-          icon={helpTextItemIcon('baseRequirements')}
-        >
-          At least 14 characters (ASCII-standard) without whitespaces
-        </HelperTextItem>
-        <HelperTextItem
-          isDynamic
-          variant={helpTextItemVariant('lowercase')}
-          icon={helpTextItemIcon('lowercase')}
-        >
-          Include lowercase letters
-        </HelperTextItem>
-        <HelperTextItem
-          isDynamic
-          variant={helpTextItemVariant('uppercase')}
-          icon={helpTextItemIcon('uppercase')}
-        >
-          Include uppercase letters
-        </HelperTextItem>
-        <HelperTextItem
-          isDynamic
-          variant={helpTextItemVariant('numbersOrSymbols')}
-          icon={helpTextItemIcon('numbersOrSymbols')}
-        >
-          Include numbers or symbols (ASCII-standard characters only)
-        </HelperTextItem>
-      </HelperText>
-    );
 
     return (
       <>
@@ -326,14 +336,8 @@ class HTPasswdForm extends React.Component {
             validate={validateHTPasswdPassword}
             isRequired
             disabled={isPending}
-            helpText={helpText}
+            helpText={<HelpTextPassword passwordErrors={HTPasswdPasswordErrors} />}
           />
-        </GridItem>
-        <GridItem span={8}>
-          <Alert isInline variant="info" title="Securely store your username and password">
-            If you lose these credentials, you will have to delete and recreate the cluster admin
-            user.
-          </Alert>
         </GridItem>
         <br />
         <NewHTPasswdForm {...this.props} />

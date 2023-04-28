@@ -93,13 +93,6 @@ class RenderCompoundFields extends React.Component {
       meta: { error },
     } = this.props;
 
-    console.group('ReduxFieldArray');
-    console.log('fields: ', fields);
-    console.log('fieldName: ', fieldName);
-    console.log('validateField: ', validateField);
-    console.log('error: ', error);
-    console.groupEnd();
-
     const labelGridItem = (index) => {
       if (index === 0) {
         return (
@@ -121,12 +114,11 @@ class RenderCompoundFields extends React.Component {
 
     const fieldGridItem = (item, index) => {
       const { id } = fields.get(index);
-      console.log(`--- fieldGridItem ${index}: `, fields.get(index));
 
       const compoundFieldSpan = Math.max(Math.floor(fieldSpan / compoundFields.length), 1);
       return (
         <>
-          {compoundFields.map((compoundField, index) => (
+          {compoundFields.map((compoundField) => (
             <GridItem
               className="field-grid-item"
               span={compoundFieldSpan}

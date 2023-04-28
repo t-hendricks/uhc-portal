@@ -108,7 +108,8 @@ class IDPForm extends React.Component {
       selectedIDP,
       idpTypeName,
       formTitle,
-      HTPasswdPasswordErrors,
+      HTPasswdPasswordErrors /* Remove?? */,
+      HtPasswdErrors,
       isHypershift,
     } = this.props;
     const { IDPName, isExpanded } = this.state;
@@ -287,6 +288,7 @@ class IDPForm extends React.Component {
               change={change}
               clearFields={clearFields}
               HTPasswdPasswordErrors={HTPasswdPasswordErrors}
+              HtPasswdErrors={HtPasswdErrors}
             />
           )}
           {SelectedProviderAdvancedOptions && (

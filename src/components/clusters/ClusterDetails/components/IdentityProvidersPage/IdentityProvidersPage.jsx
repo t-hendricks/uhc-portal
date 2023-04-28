@@ -94,7 +94,8 @@ class IdentityProvidersPage extends React.Component {
       selectedIDP,
       pristine,
       invalid,
-      HTPasswdPasswordErrors,
+      HTPasswdPasswordErrors /* To be removed ?*/,
+      HtPasswdErrors,
     } = this.props;
     const { cluster } = clusterDetails;
 
@@ -204,7 +205,8 @@ class IdentityProvidersPage extends React.Component {
                       idpEdited={idpEdited}
                       idpName={initialValues.name}
                       isHypershift={isHypershiftCluster(cluster)}
-                      HTPasswdPasswordErrors={HTPasswdPasswordErrors}
+                      HTPasswdPasswordErrors={HTPasswdPasswordErrors /* Generic */}
+                      HtPasswdErrors={HtPasswdErrors}
                     />
                   ) : (
                     <Spinner />

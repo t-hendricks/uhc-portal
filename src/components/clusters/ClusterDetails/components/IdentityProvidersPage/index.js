@@ -94,6 +94,13 @@ const mapStateToProps = (state, ownProps) => {
     selectedIDP = get(IDPformValues, match.params.idpTypeName.toUpperCase(), false);
   }
 
+  // TODO: Looking for validation errors
+  console.group('mapStateToProps');
+  console.log('state: ', state);
+  console.log('errorsSelector: ', errorSelector(state, 'users'));
+  console.log('errors: ', get(errorSelector(state), 'users'));
+  console.groupEnd();
+
   return {
     clusterDetails: state.clusters.details,
     clusterID: state.clusters.details.cluster.id,
@@ -127,6 +134,7 @@ const mapStateToProps = (state, ownProps) => {
       'htpasswd_password',
       undefined,
     ),
+    HtPasswdErrors: get(errorSelector(state), 'users'),
   };
 };
 
