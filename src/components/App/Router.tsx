@@ -355,7 +355,11 @@ const Router: React.FC<RouterProps> = ({ history, planType, clusterId, externalC
             />
 
             <Redirect from="/create/rosa/welcome" to="/create/rosa/getstarted" />
-            <Route path="/create/rosa/getstarted" component={GetStartedWithROSA} />
+            <TermsGuardedRoute
+              path="/create/rosa/getstarted"
+              history={history}
+              component={GetStartedWithROSA}
+            />
 
             <TermsGuardedRoute
               path="/create/rosa/wizard"
