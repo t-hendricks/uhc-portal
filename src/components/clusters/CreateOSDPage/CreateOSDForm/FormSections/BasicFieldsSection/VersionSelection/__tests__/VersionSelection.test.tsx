@@ -13,7 +13,7 @@ describe('VersionSelection', () => {
     );
   });
 
-  it('does not show versions prior to "4.11" when hypershift and an ARN with a managed policy are selected', () => {
+  it('does not show versions prior to "4.11.4" when hypershift and an ARN with a managed policy are selected', () => {
     render(
       <VersionSelection
         isOpen
@@ -32,11 +32,12 @@ describe('VersionSelection', () => {
     );
 
     expect(screen.getByRole('option', { name: '4.12.1' })).toBeVisible();
-    expect(screen.getByRole('option', { name: '4.11.1' })).toBeVisible();
+    expect(screen.getByRole('option', { name: '4.11.4' })).toBeVisible();
+    expect(screen.queryByRole('option', { name: '4.11.3' })).not.toBeInTheDocument();
     expect(screen.queryByRole('option', { name: '4.10.1' })).not.toBeInTheDocument();
   });
 
-  it('shows versions prior to "4.11" when hypershift is selected and no ARNs with managed policies are selected', () => {
+  it('shows versions prior to "4.11.4" when hypershift is selected and no ARNs with managed policies are selected', () => {
     render(
       <VersionSelection
         isOpen
@@ -53,9 +54,9 @@ describe('VersionSelection', () => {
       />,
     );
 
-    expect(screen.getByRole('option', { name: '4.12.1' })).toBeVisible();
-    expect(screen.getByRole('option', { name: '4.11.1' })).toBeVisible();
-    expect(screen.getByRole('option', { name: '4.10.1' })).toBeVisible();
+    versions.forEach((version) => {
+      expect(screen.getByRole('option', { name: version.raw_id })).toBeVisible();
+    });
   });
 });
 
@@ -82,10 +83,25 @@ const versions = [
     enabled: true,
     end_of_life_timestamp: '2024-03-17T00:00:00Z',
     hosted_control_plane_enabled: true,
-    href: '/api/clusters_mgmt/v1/versions/openshift-v4.11.1',
-    id: 'openshift-v4.11.1',
+    href: '/api/clusters_mgmt/v1/versions/openshift-v4.11.4',
+    id: 'openshift-v4.11.4',
     kind: 'Version',
-    raw_id: '4.11.1',
+    raw_id: '4.11.4',
+    release_image:
+      'quay.io/openshift-release-dev/ocp-release@sha256:b9d6ccb5ba5a878141e468e56fa62912ad7c04864acfec0c0056d2b41e3259cc',
+    rosa_enabled: true,
+  },
+  {
+    ami_overrides: [],
+    channel_group: 'stable',
+    default: false,
+    enabled: true,
+    end_of_life_timestamp: '2024-03-17T00:00:00Z',
+    hosted_control_plane_enabled: true,
+    href: '/api/clusters_mgmt/v1/versions/openshift-v4.11.3',
+    id: 'openshift-v4.11.3',
+    kind: 'Version',
+    raw_id: '4.11.3',
     release_image:
       'quay.io/openshift-release-dev/ocp-release@sha256:b9d6ccb5ba5a878141e468e56fa62912ad7c04864acfec0c0056d2b41e3259cc',
     rosa_enabled: true,
