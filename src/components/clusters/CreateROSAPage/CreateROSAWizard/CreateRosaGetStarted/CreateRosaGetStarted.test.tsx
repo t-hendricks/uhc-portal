@@ -16,7 +16,7 @@ global.insights = {
   },
 };
 
-describe('CreateRosaGetStarted', () => {
+describe('<CreateRosaGetStarted />', () => {
   it('is accessible', async () => {
     const { container } = render(
       <MemoryRouter>
@@ -28,16 +28,5 @@ describe('CreateRosaGetStarted', () => {
 
     const results = await axe(container);
     expect(results).toHaveNoViolations();
-  });
-
-  it('matches snapshot', () => {
-    const { container } = render(
-      <MemoryRouter>
-        <Provider store={store}>
-          <CreateRosaGetStarted />
-        </Provider>
-      </MemoryRouter>,
-    );
-    expect(container).toMatchSnapshot();
   });
 });

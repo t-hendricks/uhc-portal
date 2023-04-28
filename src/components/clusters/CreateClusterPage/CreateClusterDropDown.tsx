@@ -3,14 +3,19 @@ import {
   Button,
   ButtonVariant,
   Dropdown,
+  DropdownPosition,
   DropdownToggle,
   DropdownItem,
+  HelperText,
+  HelperTextItem,
 } from '@patternfly/react-core';
 import { Link } from 'react-router-dom';
 
 interface CreateClusterDropDownProps {
   toggleId?: string;
 }
+
+const getStartedPath = '/create/rosa/getstarted';
 
 const CreateClusterDropDown = ({ toggleId }: CreateClusterDropDownProps) => {
   const [isOpen, setOpen] = React.useState(false);
@@ -29,8 +34,13 @@ const CreateClusterDropDown = ({ toggleId }: CreateClusterDropDownProps) => {
     <DropdownItem
       key="getstarted"
       component={
-        <Link id="with-cli" to="/create/rosa/getstarted">
-          With CLI{' '}
+        <Link id="with-cli" to={getStartedPath}>
+          With CLI
+          <HelperText>
+            <HelperTextItem variant="indeterminate">
+              Supports ROSA with Hosted Control Plane (HCP) and Classic.
+            </HelperTextItem>
+          </HelperText>
         </Link>
       }
     />,
@@ -40,6 +50,11 @@ const CreateClusterDropDown = ({ toggleId }: CreateClusterDropDownProps) => {
       component={
         <Link id="with-web" to="/create/rosa/wizard">
           With web interface
+          <HelperText>
+            <HelperTextItem variant="indeterminate">
+              Supports ROSA Classic. ROSA with HCP coming soon.
+            </HelperTextItem>
+          </HelperText>
         </Link>
       }
     />,
@@ -62,12 +77,13 @@ const CreateClusterDropDown = ({ toggleId }: CreateClusterDropDownProps) => {
         }
         isOpen={isOpen}
         dropdownItems={dropdownItems}
+        position={DropdownPosition.right}
       />
       <br />
       <Button
         variant="link"
         className="create-button"
-        component={(props: any) => <Link {...props} to="/create/rosa/getstarted" />}
+        component={(props: any) => <Link {...props} to={getStartedPath} />}
       >
         Prerequisites
       </Button>
