@@ -1,5 +1,7 @@
 import React from 'react';
 import {
+  Alert,
+  AlertVariant,
   Grid,
   GridItem,
   TextContent,
@@ -135,6 +137,13 @@ const CreateRosaGetStarted = () => {
               </CardHeader>
 
               <CardBody>
+                <Alert
+                  variant={AlertVariant.info}
+                  isInline
+                  className="pf-u-mb-md"
+                  component="p"
+                  title="For now, you can only create ROSA with Hosted Control Plane (HCP) clusters using the CLI.  You'll be able to create ROSA HCP clusters using the web interface soon."
+                />
                 <Grid hasGutter>
                   <GridItem span={6}>
                     <WithCLICard />
