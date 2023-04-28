@@ -151,6 +151,8 @@ class IDPForm extends React.Component {
     const SelectedProviderRequiredFields = providersRequiredFields[selectedIDP];
     const SelectedProviderAdvancedOptions = providersAdvancedOptions[selectedIDP];
 
+    const span = selectedIDP === IDPformValues.HTPASSWD ? 11 : 8;
+
     const topText = (idp) => {
       let text = null;
       switch (idp) {
@@ -218,13 +220,13 @@ class IDPForm extends React.Component {
         default:
           return null;
       }
-      return <GridItem span={9}>{text}</GridItem>;
+      return <GridItem span={span + 1}>{text}</GridItem>;
     };
 
     return (
       <Form>
         <Grid id="identity-provider-form" hasGutter>
-          <GridItem span={8}>
+          <GridItem span={span}>
             <Title headingLevel="h3" size="xl">
               {formTitle}
             </Title>
@@ -232,13 +234,13 @@ class IDPForm extends React.Component {
           {submissionError && <GridItem span={8}>{submissionError}</GridItem>}
           {topText(selectedIDP)}
           {!isEditForm && (
-            <GridItem span={8}>
+            <GridItem span={span}>
               <ExternalLink href={providerDocumentationLink[selectedIDP]}>
                 Learn more about {idpTypeName} identity providers
               </ExternalLink>
             </GridItem>
           )}
-          <GridItem span={8}>
+          <GridItem span={span}>
             <Field
               component={ReduxVerticalFormGroup}
               name="name"
@@ -252,7 +254,7 @@ class IDPForm extends React.Component {
             />
           </GridItem>
           {IDPNeedsOAuthURL(selectedIDP) && (
-            <GridItem span={8}>
+            <GridItem span={span}>
               <div>
                 <span className="pf-c-form__label pf-c-form__label-text pf-u-mb-sm">
                   OAuth callback URL
@@ -264,7 +266,7 @@ class IDPForm extends React.Component {
             </GridItem>
           )}
           {selectedIDP !== IDPformValues.HTPASSWD && (
-            <GridItem span={8}>
+            <GridItem span={span}>
               <Field
                 component={ReduxFormDropdown}
                 options={mappingMethods}
@@ -292,7 +294,7 @@ class IDPForm extends React.Component {
             />
           )}
           {SelectedProviderAdvancedOptions && (
-            <GridItem span={8}>
+            <GridItem span={span}>
               <ExpandableSection
                 toggleTextCollapsed="Show advanced options"
                 toggleTextExpanded="Hide advanced options"

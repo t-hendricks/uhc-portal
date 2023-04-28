@@ -131,7 +131,7 @@ const HelpTextPassword = ({ passwordErrors }) => {
 };
 
 // https://issues.redhat.com/browse/HAC-2011
-const NewHTPasswdForm = ({
+const HTPasswdForm = ({
   isPending,
   isEditForm,
   idpEdited,
@@ -148,6 +148,7 @@ const NewHTPasswdForm = ({
     <>
       <ReduxFieldArray
         fieldName="users"
+        fieldSpan={11}
         component={RenderCompoundArrayFields}
         compoundFields={[
           {
@@ -156,7 +157,7 @@ const NewHTPasswdForm = ({
             type: 'text',
             isRequired: true,
             getPlaceholderText: (index) => `Unique username ${index + 1}`,
-            validate: [validateHTPasswdUsername],
+            validate: [required, validateHTPasswdUsername],
           },
           {
             name: 'password',
@@ -176,7 +177,7 @@ const NewHTPasswdForm = ({
           (field) => !field?.username || field.username.trim() === '',
         )}
       />
-      <GridItem span={8}>
+      <GridItem span={11}>
         <Alert isInline variant="info" title="Securely store your username and password">
           If you lose these credentials, you will have to delete and recreate the cluster admin
           user.
@@ -185,183 +186,183 @@ const NewHTPasswdForm = ({
     </>
   );
 };
-class HTPasswdForm extends React.Component {
-  state = {
-    useSuggestedUsername: true,
-    suggestedUsername: `admin-${randAlphanumString(6)}`,
-    useSuggestedPassword: true,
-    suggestedPassword: generatePassword(),
-  };
+// class HTPasswdForm extends React.Component {
+//   state = {
+//     useSuggestedUsername: true,
+//     suggestedUsername: `admin-${randAlphanumString(6)}`,
+//     useSuggestedPassword: true,
+//     suggestedPassword: generatePassword(),
+//   };
 
-  componentDidMount() {
-    const { change } = this.props;
-    const { suggestedUsername, suggestedPassword } = this.state;
-    change('htpasswd_password', suggestedPassword);
-    change('htpasswd_username', suggestedUsername);
-  }
+//   componentDidMount() {
+//     const { change } = this.props;
+//     const { suggestedUsername, suggestedPassword } = this.state;
+//     change('htpasswd_password', suggestedPassword);
+//     change('htpasswd_username', suggestedUsername);
+//   }
 
-  componentDidUpdate(prevProps, prevState) {
-    const { clearFields } = this.props;
-    const { useSuggestedPassword } = this.state;
-    // artificially reset the uncontrolled password confirmation field once it's hidden
-    if (useSuggestedPassword && !prevState.useSuggestedPassword) {
-      clearFields(false, false, 'htpasswd_password_confirmation');
-    }
-  }
+//   componentDidUpdate(prevProps, prevState) {
+//     const { clearFields } = this.props;
+//     const { useSuggestedPassword } = this.state;
+//     // artificially reset the uncontrolled password confirmation field once it's hidden
+//     if (useSuggestedPassword && !prevState.useSuggestedPassword) {
+//       clearFields(false, false, 'htpasswd_password_confirmation');
+//     }
+//   }
 
-  radioControlledInputGroup = ({
-    suggestedValueRadioLabel,
-    createOwnRadioLabel,
-    label,
-    helpText,
-    input,
-    isPending,
-    ...extraProps
-  }) => {
-    const { useSuggestedPassword, useSuggestedUsername, suggestedPassword, suggestedUsername } =
-      this.state;
+//   // radioControlledInputGroup = ({
+//   //   suggestedValueRadioLabel,
+//   //   createOwnRadioLabel,
+//   //   label,
+//   //   helpText,
+//   //   input,
+//   //   isPending,
+//   //   ...extraProps
+//   // }) => {
+//   //   const { useSuggestedPassword, useSuggestedUsername, suggestedPassword, suggestedUsername } =
+//   //     this.state;
 
-    const isPassword = extraProps.type === 'password';
-    const suggestedValue = isPassword ? suggestedPassword : suggestedUsername;
-    const useSuggestionIsChecked = isPassword ? useSuggestedPassword : useSuggestedUsername;
+//   //   const isPassword = extraProps.type === 'password';
+//   //   const suggestedValue = isPassword ? suggestedPassword : suggestedUsername;
+//   //   const useSuggestionIsChecked = isPassword ? useSuggestedPassword : useSuggestedUsername;
 
-    const validatePasswordsMatch = useCallback(
-      (value, allValues) =>
-        allValues[input.name] !== value ? 'Passwords do not match' : undefined,
-      [input.name],
-    );
+//   //   const validatePasswordsMatch = useCallback(
+//   //     (value, allValues) =>
+//   //       allValues[input.name] !== value ? 'Passwords do not match' : undefined,
+//   //     [input.name],
+//   //   );
 
-    return (
-      <>
-        <Stack>
-          <StackItem className="pf-c-form__group-label">
-            <p className="pf-c-form__label-text field-label">
-              {label}
-              <span className="pf-c-form__label-required">*</span>
-            </p>
-          </StackItem>
-          <StackItem className="pf-u-mb-sm">
-            <Radio
-              label={suggestedValueRadioLabel}
-              id={`use-suggested-${label.toLowerCase()}`}
-              isChecked={useSuggestionIsChecked}
-              onChange={() => {
-                this.setState({
-                  [isPassword ? 'useSuggestedPassword' : 'useSuggestedUsername']: true,
-                });
-                input.onChange(suggestedValue);
-              }}
-            />
-          </StackItem>
-          <StackItem className="pf-u-mb-sm">
-            <Radio
-              label={createOwnRadioLabel}
-              id={`create-own-${label.toLowerCase()}`}
-              isChecked={!useSuggestionIsChecked}
-              onChange={() => {
-                this.setState({
-                  [isPassword ? 'useSuggestedPassword' : 'useSuggestedUsername']: false,
-                });
-                input.onChange('');
-              }}
-            />
-          </StackItem>
-          {!useSuggestionIsChecked && (
-            <StackItem className="pf-u-mb-sm">
-              <ReduxVerticalFormGroup
-                name={input.name}
-                disabled={isPending}
-                validate={required}
-                helpText={helpText}
-                input={input}
-                {...extraProps}
-              />
-            </StackItem>
-          )}
-          {isPassword && !useSuggestedPassword && (
-            <StackItem className="pf-u-mt-sm pf-u-mb-sm">
-              <Field
-                component={ReduxVerticalFormGroup}
-                name={`${input.name}_confirmation`}
-                label="Confirm password"
-                type="password"
-                disabled={isPending}
-                isRequired={extraProps.isRequired}
-                validate={[required, validatePasswordsMatch]}
-              />
-            </StackItem>
-          )}
-        </Stack>
-      </>
-    );
-  };
+//   //   return (
+//   //     <>
+//   //       <Stack>
+//   //         <StackItem className="pf-c-form__group-label">
+//   //           <p className="pf-c-form__label-text field-label">
+//   //             {label}
+//   //             <span className="pf-c-form__label-required">*</span>
+//   //           </p>
+//   //         </StackItem>
+//   //         <StackItem className="pf-u-mb-sm">
+//   //           <Radio
+//   //             label={suggestedValueRadioLabel}
+//   //             id={`use-suggested-${label.toLowerCase()}`}
+//   //             isChecked={useSuggestionIsChecked}
+//   //             onChange={() => {
+//   //               this.setState({
+//   //                 [isPassword ? 'useSuggestedPassword' : 'useSuggestedUsername']: true,
+//   //               });
+//   //               input.onChange(suggestedValue);
+//   //             }}
+//   //           />
+//   //         </StackItem>
+//   //         <StackItem className="pf-u-mb-sm">
+//   //           <Radio
+//   //             label={createOwnRadioLabel}
+//   //             id={`create-own-${label.toLowerCase()}`}
+//   //             isChecked={!useSuggestionIsChecked}
+//   //             onChange={() => {
+//   //               this.setState({
+//   //                 [isPassword ? 'useSuggestedPassword' : 'useSuggestedUsername']: false,
+//   //               });
+//   //               input.onChange('');
+//   //             }}
+//   //           />
+//   //         </StackItem>
+//   //         {!useSuggestionIsChecked && (
+//   //           <StackItem className="pf-u-mb-sm">
+//   //             <ReduxVerticalFormGroup
+//   //               name={input.name}
+//   //               disabled={isPending}
+//   //               validate={required}
+//   //               helpText={helpText}
+//   //               input={input}
+//   //               {...extraProps}
+//   //             />
+//   //           </StackItem>
+//   //         )}
+//   //         {isPassword && !useSuggestedPassword && (
+//   //           <StackItem className="pf-u-mt-sm pf-u-mb-sm">
+//   //             <Field
+//   //               component={ReduxVerticalFormGroup}
+//   //               name={`${input.name}_confirmation`}
+//   //               label="Confirm password"
+//   //               type="password"
+//   //               disabled={isPending}
+//   //               isRequired={extraProps.isRequired}
+//   //               validate={[required, validatePasswordsMatch]}
+//   //             />
+//   //           </StackItem>
+//   //         )}
+//   //       </Stack>
+//   //     </>
+//   //   );
+//   // };
 
-  render() {
-    const { isPending, HTPasswdPasswordErrors } = this.props;
-    const { suggestedUsername, suggestedPassword } = this.state;
+//   render() {
+//     const { isPending, HTPasswdPasswordErrors } = this.props;
+//     const { suggestedUsername, suggestedPassword } = this.state;
 
-    return (
-      <>
-        <GridItem span={8} className="htpasswd-form">
-          <Field
-            component={this.radioControlledInputGroup}
-            suggestedValueRadioLabel={
-              <span>
-                Use suggested username: <span className="suggestion">{suggestedUsername}</span>
-              </span>
-            }
-            createOwnRadioLabel="Create your own username"
-            name="htpasswd_username"
-            label="Username"
-            type="text"
-            validate={[required, validateHTPasswdUsername]}
-            isRequired
-            disabled={isPending}
-            helpText="Unique name of the user within the cluster. Username must not contain /, :, or %."
-          />
-        </GridItem>
-        <GridItem span={8} className="htpasswd-form">
-          <Field
-            component={this.radioControlledInputGroup}
-            hasOtherValidation
-            suggestedValueRadioLabel={
-              <span>
-                Use suggested password: <span className="suggestion">{suggestedPassword}</span>
-              </span>
-            }
-            createOwnRadioLabel="Create your own password"
-            name="htpasswd_password"
-            label="Password"
-            type="password"
-            validate={validateHTPasswdPassword}
-            isRequired
-            disabled={isPending}
-            helpText={<HelpTextPassword passwordErrors={HTPasswdPasswordErrors} />}
-          />
-        </GridItem>
-        <br />
-        <NewHTPasswdForm {...this.props} />
-      </>
-    );
-  }
-}
+//     return (
+//       <>
+//         <GridItem span={8} className="htpasswd-form">
+//           <Field
+//             component={this.radioControlledInputGroup}
+//             suggestedValueRadioLabel={
+//               <span>
+//                 Use suggested username: <span className="suggestion">{suggestedUsername}</span>
+//               </span>
+//             }
+//             createOwnRadioLabel="Create your own username"
+//             name="htpasswd_username"
+//             label="Username"
+//             type="text"
+//             validate={[required, validateHTPasswdUsername]}
+//             isRequired
+//             disabled={isPending}
+//             helpText="Unique name of the user within the cluster. Username must not contain /, :, or %."
+//           />
+//         </GridItem>
+//         <GridItem span={8} className="htpasswd-form">
+//           <Field
+//             component={this.radioControlledInputGroup}
+//             hasOtherValidation
+//             suggestedValueRadioLabel={
+//               <span>
+//                 Use suggested password: <span className="suggestion">{suggestedPassword}</span>
+//               </span>
+//             }
+//             createOwnRadioLabel="Create your own password"
+//             name="htpasswd_password"
+//             label="Password"
+//             type="password"
+//             validate={validateHTPasswdPassword}
+//             isRequired
+//             disabled={isPending}
+//             helpText={<HelpTextPassword passwordErrors={HTPasswdPasswordErrors} />}
+//           />
+//         </GridItem>
+//         <br />
+//         <NewHTPasswdForm {...this.props} />
+//       </>
+//     );
+//   }
+// }
 
-HTPasswdForm.propTypes = {
-  isPending: PropTypes.bool,
-  change: PropTypes.func,
-  clearFields: PropTypes.func,
-  input: PropTypes.object,
-  HTPasswdPasswordErrors: {
-    emptyPassword: PropTypes.bool,
-    baseRequirements: PropTypes.bool,
-    uppercase: PropTypes.bool,
-    lowercase: PropTypes.bool,
-    numbers: PropTypes.bool,
-  },
-};
+// HTPasswdForm.propTypes = {
+//   isPending: PropTypes.bool,
+//   change: PropTypes.func,
+//   clearFields: PropTypes.func,
+//   input: PropTypes.object,
+//   HTPasswdPasswordErrors: {
+//     emptyPassword: PropTypes.bool,
+//     baseRequirements: PropTypes.bool,
+//     uppercase: PropTypes.bool,
+//     lowercase: PropTypes.bool,
+//     numbers: PropTypes.bool,
+//   },
+// };
 
-HTPasswdForm.defaultProps = {
-  isPending: false,
-};
+// HTPasswdForm.defaultProps = {
+//   isPending: false,
+// };
 
 export default HTPasswdForm;
