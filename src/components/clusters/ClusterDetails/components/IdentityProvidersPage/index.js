@@ -94,12 +94,12 @@ const mapStateToProps = (state, ownProps) => {
     selectedIDP = get(IDPformValues, match.params.idpTypeName.toUpperCase(), false);
   }
 
-  // TODO: Looking for validation errors
-  console.group('mapStateToProps');
-  console.log('state: ', state);
-  console.log('errorsSelector: ', errorSelector(state, 'users'));
-  console.log('errors: ', get(errorSelector(state), 'users'));
-  console.groupEnd();
+  // TODO:
+  // console.group('mapStateToProps');
+  // console.log('state: ', state);
+  // console.log('errorsSelector: ', errorSelector(state, 'users'));
+  // console.log('errors: ', get(errorSelector(state), 'users'));
+  // console.groupEnd();
 
   return {
     clusterDetails: state.clusters.details,
@@ -129,11 +129,11 @@ const mapStateToProps = (state, ownProps) => {
     selectedMappingMethod: valueSelector(state, 'mappingMethod'),
     clusterIDPs,
     IDPList: clusterIDPList,
-    HTPasswdPasswordErrors: get(
-      errorSelector(state, 'htpasswd_password'),
-      'htpasswd_password',
-      undefined,
-    ),
+    // HTPasswdPasswordErrors: get(
+    //   errorSelector(state, 'htpasswd_password'),
+    //   'htpasswd_password',
+    //   undefined,
+    // ),
     HtPasswdErrors: get(errorSelector(state), 'users'),
   };
 };

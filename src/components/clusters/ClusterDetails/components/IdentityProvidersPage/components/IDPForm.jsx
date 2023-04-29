@@ -108,7 +108,6 @@ class IDPForm extends React.Component {
       selectedIDP,
       idpTypeName,
       formTitle,
-      HTPasswdPasswordErrors /* Remove?? */,
       HtPasswdErrors,
       isHypershift,
     } = this.props;
@@ -289,7 +288,6 @@ class IDPForm extends React.Component {
               idpEdited={idpEdited}
               change={change}
               clearFields={clearFields}
-              HTPasswdPasswordErrors={HTPasswdPasswordErrors}
               HtPasswdErrors={HtPasswdErrors}
             />
           )}
@@ -330,7 +328,7 @@ IDPForm.propTypes = {
   isHypershift: PropTypes.bool,
   idpEdited: PropTypes.object,
   idpName: PropTypes.string,
-  HTPasswdPasswordErrors: PropTypes.object,
+  HtPasswdErrors: PropTypes.func.isRequired,
   idpTypeName: PropTypes.string,
   formTitle: PropTypes.string,
 };

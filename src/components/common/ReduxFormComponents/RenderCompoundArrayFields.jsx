@@ -114,40 +114,51 @@ class RenderCompoundFields extends React.Component {
       const { id } = fields.get(index);
 
       const compoundFieldSpan = Math.max(Math.floor(fieldSpan / compoundFields.length), 1);
+
       return (
         <>
-          {compoundFields.map((compoundField) => (
-            <GridItem
-              className="field-grid-item"
-              span={compoundFieldSpan}
-              key={`${id}-${compoundField.name}`}
-            >
-              <Field
-                component={ReduxVerticalFormGroup}
-                name={`${item}.${compoundField.name}`}
-                type={compoundField.type || 'text'}
-                placeholder={
-                  compoundField.getPlaceholderText
-                    ? compoundField.getPlaceholderText(index)
-                    : undefined
-                }
-                validate={compoundField.validate}
-                disabled={disabled}
-                helpText={
-                  compoundField.helpText ||
-                  (compoundField.getHelpText && compoundField.getHelpText(index)) ||
-                  undefined
-                }
-                onChange={(e, value) => this.onFieldChange(e, value, index) /* TODO */}
-                onBlur={() => {
-                  const { touched } = this.state;
-                  if (!touched) {
-                    this.setState({ touched: true });
+          {compoundFields.map((compoundField) => {
+            const compoundFieldId = `${id}-${compoundField.name}`;
+
+            // let onFocus;
+            // if (compoundField.type === 'password' && compoundField.generatePassword) {
+            //   onFocus = () => {
+            //     setIsAutocompleteOpen((isAutocompleteOpen) => {
+            //       isAutocompleteOpen[compoundFieldId] = true;
+            //       return isAutocompleteOpen;
+            //     });
+            //   };
+            // }
+
+            return (
+              <GridItem className="field-grid-item" span={compoundFieldSpan} key={compoundFieldId}>
+                <Field
+                  component={ReduxVerticalFormGroup}
+                  {...compoundField}
+                  name={`${item}.${compoundField.name}`}
+                  type={compoundField.type || 'text'}
+                  disabled={disabled}
+                  placeholder={
+                    compoundField.getPlaceholderText
+                      ? compoundField.getPlaceholderText(index)
+                      : undefined
                   }
-                }}
-              />
-            </GridItem>
-          ))}
+                  helpText={
+                    compoundField.helpText ||
+                    (compoundField.getHelpText && compoundField.getHelpText(index)) ||
+                    undefined
+                  }
+                  onChange={(e, value) => this.onFieldChange(e, value, index)}
+                  onBlur={() => {
+                    const { touched } = this.state;
+                    if (!touched) {
+                      this.setState({ touched: true });
+                    }
+                  }}
+                />
+              </GridItem>
+            );
+          })}
         </>
       );
     };

@@ -1,19 +1,6 @@
-import React, { useCallback } from 'react';
-import { Field } from 'redux-form';
-import {
-  GridItem,
-  Radio,
-  Stack,
-  StackItem,
-  Alert,
-  HelperText,
-  HelperTextItem,
-  Button,
-} from '@patternfly/react-core';
-import { CheckCircleIcon, ExclamationCircleIcon, PlusCircleIcon } from '@patternfly/react-icons';
-import PropTypes from 'prop-types';
-import { randAlphanumString } from '../../../../../../../common/helpers';
-import ReduxVerticalFormGroup from '../../../../../../common/ReduxFormComponents/ReduxVerticalFormGroup';
+import React from 'react';
+import { GridItem, Alert, HelperText, HelperTextItem } from '@patternfly/react-core';
+import { CheckCircleIcon, ExclamationCircleIcon } from '@patternfly/react-icons';
 import {
   atLeastOneRequired,
   required,
@@ -133,16 +120,24 @@ const HelpTextPassword = ({ passwordErrors }) => {
 // https://issues.redhat.com/browse/HAC-2011
 const HTPasswdForm = ({
   isPending,
-  isEditForm,
-  idpEdited,
-  change,
-  clearFields,
+  // isEditForm,
+  // idpEdited,
+  // change,
+  // clearFields,
   HtPasswdErrors,
 }) => {
   const getHelpText = (index) => {
     const passwordErrors = HtPasswdErrors?.[index]?.password;
     return <HelpTextPassword passwordErrors={passwordErrors} />;
   };
+
+  const getAutocompleteText = (value) => (
+    <div>
+      Use suggested password:
+      <br />
+      <b>{`${value}`}</b>
+    </div>
+  );
 
   return (
     <>
@@ -165,6 +160,9 @@ const HTPasswdForm = ({
             type: 'password',
             isRequired: true,
             getHelpText,
+            getAutocompleteValue: generatePassword,
+            getAutocompleteText,
+            // TODO: fix multirow
             validate: validateHTPasswdPassword,
           },
         ]}

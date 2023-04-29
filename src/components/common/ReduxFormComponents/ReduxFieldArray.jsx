@@ -1,4 +1,5 @@
 import React from 'react';
+import { FieldArray } from 'redux-form';
 import RenderArraySingleFields from './RenderArraySingleFields';
 
 function ReduxFieldArray(props) {
