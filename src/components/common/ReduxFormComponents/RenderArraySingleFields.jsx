@@ -9,7 +9,9 @@ import ReduxVerticalFormGroup from './ReduxVerticalFormGroup';
 import { getRandomID } from '../../../common/helpers';
 import ButtonWithTooltip from '../ButtonWithTooltip';
 
-class RenderCompoundFields extends React.Component {
+import './RenderArraySingleFields.scss';
+
+class RenderArraySingleFields extends React.Component {
   state = { areFieldsFilled: [], touched: false };
 
   componentDidMount() {
@@ -80,14 +82,13 @@ class RenderCompoundFields extends React.Component {
     const {
       fields,
       fieldName,
-      compoundFields,
       label,
       helpText,
       isRequired,
       disabled,
       validateField,
       placeholderText,
-      fieldSpan = 11,
+      fieldSpan = 8,
       meta: { error },
     } = this.props;
 
@@ -112,43 +113,25 @@ class RenderCompoundFields extends React.Component {
 
     const fieldGridItem = (item, index) => {
       const { id } = fields.get(index);
-
-      const compoundFieldSpan = Math.max(Math.floor(fieldSpan / compoundFields.length), 1);
       return (
-        <>
-          {compoundFields.map((compoundField) => (
-            <GridItem
-              className="field-grid-item"
-              span={compoundFieldSpan}
-              key={`${id}-${compoundField.name}`}
-            >
-              <Field
-                component={ReduxVerticalFormGroup}
-                name={`${item}.${compoundField.name}`}
-                type={compoundField.type || 'text'}
-                placeholder={
-                  compoundField.getPlaceholderText
-                    ? compoundField.getPlaceholderText(index)
-                    : undefined
-                }
-                validate={compoundField.validate}
-                disabled={disabled}
-                helpText={
-                  compoundField.helpText ||
-                  (compoundField.getHelpText && compoundField.getHelpText(index)) ||
-                  undefined
-                }
-                onChange={(e, value) => this.onFieldChange(e, value, index) /* TODO */}
-                onBlur={() => {
-                  const { touched } = this.state;
-                  if (!touched) {
-                    this.setState({ touched: true });
-                  }
-                }}
-              />
-            </GridItem>
-          ))}
-        </>
+        <GridItem className="field-grid-item" span={fieldSpan}>
+          <Field
+            key={id}
+            component={ReduxVerticalFormGroup}
+            name={`${item}.${fieldName}`}
+            type="text"
+            placeholder={`${placeholderText} ${index + 1}`}
+            validate={validateField}
+            disabled={disabled}
+            onChange={(e, value) => this.onFieldChange(e, value, index)}
+            onBlur={() => {
+              const { touched } = this.state;
+              if (!touched) {
+                this.setState({ touched: true });
+              }
+            }}
+          />
+        </GridItem>
       );
     };
 
@@ -172,11 +155,10 @@ class RenderCompoundFields extends React.Component {
       return null;
     };
 
-    // TODO: update
     const fieldArrayErrorGridItem = (index, errorMessage) => {
       const { touched } = this.state;
       const { isGroupError } = this.props;
-      if (errorMessage && index >= fields.length - 1 && (touched || isGroupError)) {
+      if (errorMessage && index === 0 && (touched || isGroupError)) {
         return (
           <GridItem className="field-grid-item pf-c-form__helper-text pf-m-error">
             {errorMessage}
@@ -186,7 +168,6 @@ class RenderCompoundFields extends React.Component {
       return null;
     };
 
-    // TODO: allign following vertically to the top
     const minusButtonGridItem = (index) => {
       const isOnlyItem = index === 0 && fields.length === 1;
       return (
@@ -218,8 +199,7 @@ class RenderCompoundFields extends React.Component {
   }
 }
 
-// TODO: Review following
-RenderCompoundFields.propTypes = {
+RenderArraySingleFields.propTypes = {
   fieldName: PropTypes.string.isRequired,
   label: PropTypes.string.isRequired,
   helpText: PropTypes.string.isRequired,
@@ -242,4 +222,4 @@ RenderCompoundFields.propTypes = {
   isGroupError: PropTypes.bool,
 };
 
-export default RenderCompoundFields;
+export default RenderArraySingleFields;
