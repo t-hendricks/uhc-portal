@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { Field } from 'redux-form';
 import pullAt from 'lodash/pullAt';
 import last from 'lodash/last';
@@ -9,9 +8,9 @@ import ReduxVerticalFormGroup from './ReduxVerticalFormGroup';
 import { getRandomID } from '../../../common/helpers';
 import ButtonWithTooltip from '../ButtonWithTooltip';
 
-import './RenderArraySingleFields.scss';
+import './RenderArrayFields.scss';
 
-export const LabelGridItem = ({ index, fieldSpan, label, isRequired, helpText }) => {
+const LabelGridItem = ({ index, fieldSpan, label, isRequired, helpText }) => {
   if (index !== 0) {
     return null;
   }
@@ -30,7 +29,7 @@ export const LabelGridItem = ({ index, fieldSpan, label, isRequired, helpText })
   );
 };
 
-export const AddMoreButtonGridItem = ({ index, fields, addNewField, areFieldsFilled }) => {
+const AddMoreButtonGridItem = ({ index, fields, addNewField, areFieldsFilled }) => {
   if (index === fields.length - 1) {
     return (
       <GridItem className="field-grid-item">
@@ -48,7 +47,7 @@ export const AddMoreButtonGridItem = ({ index, fields, addNewField, areFieldsFil
   return null;
 };
 
-export const FieldArrayErrorGridItem = ({ index, errorMessage, touched, isGroupError }) => {
+const FieldArrayErrorGridItem = ({ index, errorMessage, touched, isGroupError }) => {
   if (errorMessage && index === 0 && (touched || isGroupError)) {
     return (
       <GridItem className="field-grid-item pf-c-form__helper-text pf-m-error">
@@ -59,7 +58,7 @@ export const FieldArrayErrorGridItem = ({ index, errorMessage, touched, isGroupE
   return null;
 };
 
-export const MinusButtonGridItem = ({ index, fields, onClick }) => {
+const MinusButtonGridItem = ({ index, fields, onClick }) => {
   const isOnlyItem = index === 0 && fields.length === 1;
   return (
     <GridItem className="field-grid-item minus-button" span={1}>
@@ -74,170 +73,143 @@ export const MinusButtonGridItem = ({ index, fields, onClick }) => {
   );
 };
 
-class RenderArraySingleFields extends React.Component {
-  state = { areFieldsFilled: [], touched: false };
+const FieldGridItem = ({
+  item,
+  index,
+  fields,
+  fieldSpan,
+  fieldName,
+  placeholderText,
+  validateField,
+  disabled,
+  onFieldChange,
+  setTouched,
+}) => {
+  const { id } = fields.get(index);
+  return (
+    <GridItem className="field-grid-item" span={fieldSpan}>
+      <Field
+        key={id}
+        component={ReduxVerticalFormGroup}
+        name={`${item}.${fieldName}`}
+        type="text"
+        placeholder={`${placeholderText} ${index + 1}`}
+        validate={validateField}
+        disabled={disabled}
+        onChange={(e, value) => onFieldChange(e, value, index)}
+        onBlur={() => {
+          setTouched(true);
+        }}
+      />
+    </GridItem>
+  );
+};
 
-  componentDidMount() {
-    const {
-      fields,
-      meta: { submitFailed },
-    } = this.props;
+const RenderArrayFields = (props) => {
+  const {
+    fields,
+    label,
+    helpText,
+    isRequired,
+    onFormChange,
+    fieldSpan = 8,
+    isGroupError,
+    meta: { error, submitFailed },
+    FieldGridItemComponent = FieldGridItem,
+  } = props;
+
+  const [touched, setTouched] = React.useState(false);
+  const [areFieldsFilled, setAreFieldsFilled] = React.useState([]);
+
+  React.useEffect(() => {
     if (submitFailed) {
-      this.setState({ touched: true });
+      setTouched(true);
     }
-    if (fields.length === 0) {
-      this.addNewField();
-    } else {
-      // fields on mount = default values, populate internal state to account for them
-      this.setState({ areFieldsFilled: fields.map((field) => !!field) });
-    }
-  }
+  }, [submitFailed]);
 
-  componentDidUpdate(prevProps) {
-    const {
-      meta: { submitFailed },
-    } = this.props;
-    const prevSubmitFailed = prevProps.meta.submitFailed;
-    // Make sure that the field array is set as touched when form is submitted and it's invalid
-    if (submitFailed && !prevSubmitFailed) {
-      // eslint-disable-next-line react/no-did-update-set-state
-      this.setState({ touched: true });
-    }
-  }
+  React.useEffect(
+    () => {
+      if (fields.length === 0) {
+        addNewField();
+      } else {
+        // fields on mount = default values, populate internal state to account for them
+        setAreFieldsFilled(fields.map((field) => !!field));
+      }
+    },
+    [
+      /* Call once */
+    ],
+  );
 
-  onFieldChange(e, value, index) {
-    const { onFormChange } = this.props;
-    const { touched } = this.state;
+  const onFieldChange = (e, value, index) => {
     if (!touched) {
-      this.setState({ touched: true });
+      setTouched(true);
     }
     if (onFormChange) {
       onFormChange(e, value);
     }
-    this.setState(({ areFieldsFilled }) => {
+    setAreFieldsFilled((areFieldsFilled) => {
       const newFilledStatus = [...areFieldsFilled];
       newFilledStatus[index] = !!value;
-      return { areFieldsFilled: newFilledStatus };
+      return newFilledStatus;
     });
-  }
+  };
 
-  removeField = (index) => {
-    const { fields } = this.props;
+  const removeField = (index) => {
     fields.remove(index);
-    this.setState(({ areFieldsFilled }) => {
+    setAreFieldsFilled((areFieldsFilled) => {
       const newFilledStatus = [...areFieldsFilled];
       pullAt(newFilledStatus, index);
-      return { areFieldsFilled: newFilledStatus };
+      return newFilledStatus;
     });
   };
 
-  addNewField = () => {
-    const { fields } = this.props;
+  const addNewField = () => {
     fields.push({ id: getRandomID() });
-    this.setState(({ areFieldsFilled }) => {
+    setAreFieldsFilled((areFieldsFilled) => {
       const newFilledStatus = [...areFieldsFilled];
       newFilledStatus.push(false);
-      return { areFieldsFilled: newFilledStatus };
+      return newFilledStatus;
     });
   };
 
-  render() {
-    const {
-      fields,
-      fieldName,
-      label,
-      helpText,
-      isRequired,
-      disabled,
-      validateField,
-      placeholderText,
-      fieldSpan = 8,
-      meta: { error },
-    } = this.props;
-
-    const { areFieldsFilled } = this.state;
-
-    const fieldGridItem = (item, index) => {
-      const { id } = fields.get(index);
-      return (
-        <GridItem className="field-grid-item" span={fieldSpan}>
-          <Field
-            key={id}
-            component={ReduxVerticalFormGroup}
-            name={`${item}.${fieldName}`}
-            type="text"
-            placeholder={`${placeholderText} ${index + 1}`}
-            validate={validateField}
-            disabled={disabled}
-            onChange={(e, value) => this.onFieldChange(e, value, index)}
-            onBlur={() => {
-              const { touched } = this.state;
-              if (!touched) {
-                this.setState({ touched: true });
-              }
-            }}
+  return (
+    <>
+      {fields.map((item, index) => (
+        <React.Fragment key={`${fields.get(index).id}`}>
+          <LabelGridItem
+            index={index}
+            fieldSpan={fieldSpan}
+            label={label}
+            isRequired={isRequired}
+            helpText={helpText}
           />
-        </GridItem>
-      );
-    };
-
-    return (
-      <>
-        {fields.map((item, index) => (
-          <React.Fragment key={`${fields.get(index).id}`}>
-            <LabelGridItem
-              index={index}
-              fieldSpan={fieldSpan}
-              label={label}
-              isRequired={isRequired}
-              helpText={helpText}
-            />
-            {fieldGridItem(item, index)}
-            <MinusButtonGridItem
-              index={index}
-              fields={fields}
-              onClick={() => this.removeField(index)}
-            />
-            <FieldArrayErrorGridItem
-              index={index}
-              errorMessage={error}
-              touched={this.state.touched}
-              isGroupError={this.props.isGroupError}
-            />
-            <AddMoreButtonGridItem
-              index={index}
-              fields={fields}
-              addNewField={this.addNewField}
-              areFieldsFilled={areFieldsFilled}
-            />
-          </React.Fragment>
-        ))}
-      </>
-    );
-  }
-}
-
-RenderArraySingleFields.propTypes = {
-  fieldName: PropTypes.string.isRequired,
-  label: PropTypes.string.isRequired,
-  helpText: PropTypes.string.isRequired,
-  isRequired: PropTypes.bool,
-  disabled: PropTypes.bool,
-  fields: PropTypes.object.isRequired,
-  validateField: PropTypes.oneOfType([PropTypes.func, PropTypes.array]),
-  placeholderText: PropTypes.string,
-  fieldSpan: PropTypes.number,
-  /**
-   * This prop is an onChange function that comes from the parent component.
-   * It has to do with upper level changes that need to occur in the form
-   * upon a change inside the fieldArray.
-   */
-  onFormChange: PropTypes.func,
-  meta: PropTypes.shape({
-    error: PropTypes.string,
-    submitFailed: PropTypes.bool,
-  }),
-  isGroupError: PropTypes.bool,
+          <FieldGridItemComponent
+            item={item}
+            index={index}
+            onFieldChange={onFieldChange}
+            setTouched={setTouched}
+            fieldSpan={fieldSpan}
+            {...props}
+          />
+          <MinusButtonGridItem index={index} fields={fields} onClick={() => removeField(index)} />
+          <FieldArrayErrorGridItem
+            index={index}
+            errorMessage={error}
+            touched={touched}
+            isGroupError={isGroupError}
+          />
+          <AddMoreButtonGridItem
+            index={index}
+            fields={fields}
+            addNewField={addNewField}
+            areFieldsFilled={areFieldsFilled}
+          />
+        </React.Fragment>
+      ))}
+    </>
+  );
 };
 
-export default RenderArraySingleFields;
+// TODO: rename to RenderArrayFields
+export default RenderArrayFields;
