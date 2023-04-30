@@ -162,7 +162,6 @@ const HTPasswdForm = ({
             getHelpText,
             getAutocompleteValue: generatePassword,
             getAutocompleteText,
-            // TODO: fix multirow
             validate: validateHTPasswdPassword,
           },
         ]}

@@ -94,13 +94,6 @@ const mapStateToProps = (state, ownProps) => {
     selectedIDP = get(IDPformValues, match.params.idpTypeName.toUpperCase(), false);
   }
 
-  // TODO:
-  // console.group('mapStateToProps');
-  // console.log('state: ', state);
-  // console.log('errorsSelector: ', errorSelector(state, 'users'));
-  // console.log('errors: ', get(errorSelector(state), 'users'));
-  // console.groupEnd();
-
   return {
     clusterDetails: state.clusters.details,
     clusterID: state.clusters.details.cluster.id,
@@ -129,11 +122,6 @@ const mapStateToProps = (state, ownProps) => {
     selectedMappingMethod: valueSelector(state, 'mappingMethod'),
     clusterIDPs,
     IDPList: clusterIDPList,
-    // HTPasswdPasswordErrors: get(
-    //   errorSelector(state, 'htpasswd_password'),
-    //   'htpasswd_password',
-    //   undefined,
-    // ),
     HtPasswdErrors: get(errorSelector(state), 'users'),
   };
 };

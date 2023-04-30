@@ -221,7 +221,6 @@ class IdentityProvidersPage extends React.Component {
                     isDisabled={pristine || invalid}
                     onClick={handleSubmit}
                   >
-                    {/* TODO: Change for multiple */}
                     {isEditForm ? 'Save' : 'Add'}
                   </Button>
                 </SplitItem>

@@ -2,12 +2,15 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Field } from 'redux-form';
 import pullAt from 'lodash/pullAt';
-import last from 'lodash/last';
-import { Button, GridItem } from '@patternfly/react-core';
-import { PlusCircleIcon, MinusCircleIcon } from '@patternfly/react-icons';
+import { GridItem } from '@patternfly/react-core';
 import ReduxVerticalFormGroup from './ReduxVerticalFormGroup';
 import { getRandomID } from '../../../common/helpers';
-import ButtonWithTooltip from '../ButtonWithTooltip';
+import {
+  AddMoreButtonGridItem,
+  FieldArrayErrorGridItem,
+  LabelGridItem,
+  MinusButtonGridItem,
+} from './RenderArraySingleFields';
 
 class RenderCompoundFields extends React.Component {
   state = { areFieldsFilled: [], touched: false };
@@ -79,56 +82,25 @@ class RenderCompoundFields extends React.Component {
   render() {
     const {
       fields,
-      fieldName,
       compoundFields,
       label,
       helpText,
       isRequired,
       disabled,
-      validateField,
-      placeholderText,
       fieldSpan = 11,
       meta: { error },
     } = this.props;
 
-    const labelGridItem = (index) => {
-      if (index === 0) {
-        return (
-          <GridItem className="field-array-title" span={fieldSpan}>
-            <p className="pf-c-form__label-text" id="field-array-label">
-              {label}
-              {isRequired ? <span className="pf-c-form__label-required">*</span> : null}
-            </p>
-            {helpText ? (
-              <p className="pf-c-form__helper-text" id="field-array-help-text">
-                {helpText}
-              </p>
-            ) : null}
-          </GridItem>
-        );
-      }
-      return null;
-    };
+    const { areFieldsFilled } = this.state;
 
     const fieldGridItem = (item, index) => {
       const { id } = fields.get(index);
-
       const compoundFieldSpan = Math.max(Math.floor(fieldSpan / compoundFields.length), 1);
 
       return (
         <>
           {compoundFields.map((compoundField) => {
             const compoundFieldId = `${id}-${compoundField.name}`;
-
-            // let onFocus;
-            // if (compoundField.type === 'password' && compoundField.generatePassword) {
-            //   onFocus = () => {
-            //     setIsAutocompleteOpen((isAutocompleteOpen) => {
-            //       isAutocompleteOpen[compoundFieldId] = true;
-            //       return isAutocompleteOpen;
-            //     });
-            //   };
-            // }
 
             return (
               <GridItem className="field-grid-item" span={compoundFieldSpan} key={compoundFieldId}>
@@ -163,65 +135,35 @@ class RenderCompoundFields extends React.Component {
       );
     };
 
-    const { areFieldsFilled } = this.state;
-
-    const addMoreButtonGridItem = (index) => {
-      if (index === fields.length - 1) {
-        return (
-          <GridItem className="field-grid-item">
-            <Button
-              onClick={this.addNewField}
-              icon={<PlusCircleIcon />}
-              variant="link"
-              isDisabled={!last(areFieldsFilled)} // disabled if last field is empty
-            >
-              Add more
-            </Button>
-          </GridItem>
-        );
-      }
-      return null;
-    };
-
-    // TODO: update
-    const fieldArrayErrorGridItem = (index, errorMessage) => {
-      const { touched } = this.state;
-      const { isGroupError } = this.props;
-      if (errorMessage && index >= fields.length - 1 && (touched || isGroupError)) {
-        return (
-          <GridItem className="field-grid-item pf-c-form__helper-text pf-m-error">
-            {errorMessage}
-          </GridItem>
-        );
-      }
-      return null;
-    };
-
-    // TODO: allign following vertically to the top
-    const minusButtonGridItem = (index) => {
-      const isOnlyItem = index === 0 && fields.length === 1;
-      return (
-        <GridItem className="field-grid-item minus-button" span={1}>
-          <ButtonWithTooltip
-            disableReason={isOnlyItem && 'You cannot delete the only item'}
-            tooltipProps={{ position: 'right', distance: 0 }}
-            onClick={() => this.removeField(index)}
-            icon={<MinusCircleIcon />}
-            variant="link"
-          />
-        </GridItem>
-      );
-    };
-
     return (
       <>
         {fields.map((item, index) => (
           <React.Fragment key={`${fields.get(index).id}`}>
-            {labelGridItem(index)}
+            <LabelGridItem
+              index={index}
+              fieldSpan={fieldSpan}
+              label={label}
+              isRequired={isRequired}
+              helpText={helpText}
+            />
             {fieldGridItem(item, index)}
-            {minusButtonGridItem(index)}
-            {fieldArrayErrorGridItem(index, error)}
-            {addMoreButtonGridItem(index)}
+            <MinusButtonGridItem
+              index={index}
+              fields={fields}
+              onClick={() => this.removeField(index)}
+            />
+            <FieldArrayErrorGridItem
+              index={index}
+              errorMessage={error}
+              touched={this.state.touched}
+              isGroupError={this.props.isGroupError}
+            />
+            <AddMoreButtonGridItem
+              index={index}
+              fields={fields}
+              addNewField={this.addNewField}
+              areFieldsFilled={areFieldsFilled}
+            />
           </React.Fragment>
         ))}
       </>
@@ -229,16 +171,13 @@ class RenderCompoundFields extends React.Component {
   }
 }
 
-// TODO: Review following
 RenderCompoundFields.propTypes = {
-  fieldName: PropTypes.string.isRequired,
+  compoundFields: PropTypes.object.isRequired,
   label: PropTypes.string.isRequired,
   helpText: PropTypes.string.isRequired,
   isRequired: PropTypes.bool,
   disabled: PropTypes.bool,
   fields: PropTypes.object.isRequired,
-  validateField: PropTypes.oneOfType([PropTypes.func, PropTypes.array]),
-  placeholderText: PropTypes.string,
   fieldSpan: PropTypes.number,
   /**
    * This prop is an onChange function that comes from the parent component.

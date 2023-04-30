@@ -228,9 +228,8 @@ const getCreateIDPRequestData = (formData) => {
   });
 
   const htpasswdData = () => {
-    console.log('--- htpasswdData, formData: ', formData);
     return {
-      // TODO: Do these username/password have special meaning over users[]?
+      // TODO: Clarify if these username/password have special meaning over users[].
       // username: formData.htpasswd_username,
       // password: formData.htpasswd_password,
       users: formData.users,

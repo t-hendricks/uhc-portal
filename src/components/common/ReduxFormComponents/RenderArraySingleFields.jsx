@@ -11,6 +11,69 @@ import ButtonWithTooltip from '../ButtonWithTooltip';
 
 import './RenderArraySingleFields.scss';
 
+export const LabelGridItem = ({ index, fieldSpan, label, isRequired, helpText }) => {
+  if (index !== 0) {
+    return null;
+  }
+  return (
+    <GridItem className="field-array-title" span={fieldSpan}>
+      <p className="pf-c-form__label-text" id="field-array-label">
+        {label}
+        {isRequired ? <span className="pf-c-form__label-required">*</span> : null}
+      </p>
+      {helpText ? (
+        <p className="pf-c-form__helper-text" id="field-array-help-text">
+          {helpText}
+        </p>
+      ) : null}
+    </GridItem>
+  );
+};
+
+export const AddMoreButtonGridItem = ({ index, fields, addNewField, areFieldsFilled }) => {
+  if (index === fields.length - 1) {
+    return (
+      <GridItem className="field-grid-item">
+        <Button
+          onClick={addNewField}
+          icon={<PlusCircleIcon />}
+          variant="link"
+          isDisabled={!last(areFieldsFilled)} // disabled if last field is empty
+        >
+          Add more
+        </Button>
+      </GridItem>
+    );
+  }
+  return null;
+};
+
+export const FieldArrayErrorGridItem = ({ index, errorMessage, touched, isGroupError }) => {
+  if (errorMessage && index === 0 && (touched || isGroupError)) {
+    return (
+      <GridItem className="field-grid-item pf-c-form__helper-text pf-m-error">
+        {errorMessage}
+      </GridItem>
+    );
+  }
+  return null;
+};
+
+export const MinusButtonGridItem = ({ index, fields, onClick }) => {
+  const isOnlyItem = index === 0 && fields.length === 1;
+  return (
+    <GridItem className="field-grid-item minus-button" span={1}>
+      <ButtonWithTooltip
+        disableReason={isOnlyItem && 'You cannot delete the only item'}
+        tooltipProps={{ position: 'right', distance: 0 }}
+        onClick={onClick}
+        icon={<MinusCircleIcon />}
+        variant="link"
+      />
+    </GridItem>
+  );
+};
+
 class RenderArraySingleFields extends React.Component {
   state = { areFieldsFilled: [], touched: false };
 
@@ -92,24 +155,7 @@ class RenderArraySingleFields extends React.Component {
       meta: { error },
     } = this.props;
 
-    const labelGridItem = (index) => {
-      if (index === 0) {
-        return (
-          <GridItem className="field-array-title" span={fieldSpan}>
-            <p className="pf-c-form__label-text" id="field-array-label">
-              {label}
-              {isRequired ? <span className="pf-c-form__label-required">*</span> : null}
-            </p>
-            {helpText ? (
-              <p className="pf-c-form__helper-text" id="field-array-help-text">
-                {helpText}
-              </p>
-            ) : null}
-          </GridItem>
-        );
-      }
-      return null;
-    };
+    const { areFieldsFilled } = this.state;
 
     const fieldGridItem = (item, index) => {
       const { id } = fields.get(index);
@@ -135,63 +181,35 @@ class RenderArraySingleFields extends React.Component {
       );
     };
 
-    const { areFieldsFilled } = this.state;
-
-    const addMoreButtonGridItem = (index) => {
-      if (index === fields.length - 1) {
-        return (
-          <GridItem className="field-grid-item">
-            <Button
-              onClick={this.addNewField}
-              icon={<PlusCircleIcon />}
-              variant="link"
-              isDisabled={!last(areFieldsFilled)} // disabled if last field is empty
-            >
-              Add more
-            </Button>
-          </GridItem>
-        );
-      }
-      return null;
-    };
-
-    const fieldArrayErrorGridItem = (index, errorMessage) => {
-      const { touched } = this.state;
-      const { isGroupError } = this.props;
-      if (errorMessage && index === 0 && (touched || isGroupError)) {
-        return (
-          <GridItem className="field-grid-item pf-c-form__helper-text pf-m-error">
-            {errorMessage}
-          </GridItem>
-        );
-      }
-      return null;
-    };
-
-    const minusButtonGridItem = (index) => {
-      const isOnlyItem = index === 0 && fields.length === 1;
-      return (
-        <GridItem className="field-grid-item minus-button" span={1}>
-          <ButtonWithTooltip
-            disableReason={isOnlyItem && 'You cannot delete the only item'}
-            tooltipProps={{ position: 'right', distance: 0 }}
-            onClick={() => this.removeField(index)}
-            icon={<MinusCircleIcon />}
-            variant="link"
-          />
-        </GridItem>
-      );
-    };
-
     return (
       <>
         {fields.map((item, index) => (
           <React.Fragment key={`${fields.get(index).id}`}>
-            {labelGridItem(index)}
+            <LabelGridItem
+              index={index}
+              fieldSpan={fieldSpan}
+              label={label}
+              isRequired={isRequired}
+              helpText={helpText}
+            />
             {fieldGridItem(item, index)}
-            {minusButtonGridItem(index)}
-            {fieldArrayErrorGridItem(index, error)}
-            {addMoreButtonGridItem(index)}
+            <MinusButtonGridItem
+              index={index}
+              fields={fields}
+              onClick={() => this.removeField(index)}
+            />
+            <FieldArrayErrorGridItem
+              index={index}
+              errorMessage={error}
+              touched={this.state.touched}
+              isGroupError={this.props.isGroupError}
+            />
+            <AddMoreButtonGridItem
+              index={index}
+              fields={fields}
+              addNewField={this.addNewField}
+              areFieldsFilled={areFieldsFilled}
+            />
           </React.Fragment>
         ))}
       </>
