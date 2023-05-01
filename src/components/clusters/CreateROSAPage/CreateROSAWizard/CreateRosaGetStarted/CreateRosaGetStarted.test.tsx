@@ -16,7 +16,7 @@ global.insights = {
 };
 
 const hypershiftMessage =
-  /For now, you can only create ROSA with Hosted Control Plane \(HCP\) clusters using the CLI/;
+  /For now, you can only create ROSA with Hosted Control Plane clusters using the CLI/;
 
 describe('<CreateRosaGetStarted />', () => {
   it('is accessible', async () => {

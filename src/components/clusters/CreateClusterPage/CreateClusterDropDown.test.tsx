@@ -85,7 +85,7 @@ describe('<CreateClusterDropDown />', () => {
     expect(screen.getByText(/With CLI/)).toBeInTheDocument();
 
     expect(screen.getByText(/Supports ROSA with Hosted Control Plane/)).toBeInTheDocument();
-    expect(screen.getByText(/ROSA with HCP coming soon/)).toBeInTheDocument();
+    expect(screen.getByText(/ROSA with Hosted Control Plane coming soon/)).toBeInTheDocument();
   });
 
   it('hides hypershift helper text when feature flags are not enabled', () => {
@@ -102,6 +102,8 @@ describe('<CreateClusterDropDown />', () => {
     expect(screen.getByText(/With CLI/)).toBeInTheDocument();
 
     expect(screen.queryByText(/Supports ROSA with Hosted Control Plane/)).not.toBeInTheDocument();
-    expect(screen.queryByText(/ROSA with HCP coming soon/)).not.toBeInTheDocument();
+    expect(
+      screen.queryByText(/ROSA with Hosted Control Plane coming soon/),
+    ).not.toBeInTheDocument();
   });
 });

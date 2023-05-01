@@ -42,7 +42,7 @@ const CreateClusterDropDown = ({ toggleId }: CreateClusterDropDownProps) => {
           {showHCPDirections ? (
             <HelperText>
               <HelperTextItem variant="indeterminate">
-                Supports ROSA with Hosted Control Plane (HCP) and Classic.
+                Supports ROSA with Hosted Control Plane and Classic.
               </HelperTextItem>
             </HelperText>
           ) : null}
@@ -58,7 +58,7 @@ const CreateClusterDropDown = ({ toggleId }: CreateClusterDropDownProps) => {
           {showHCPDirections ? (
             <HelperText>
               <HelperTextItem variant="indeterminate">
-                Supports ROSA Classic. ROSA with HCP coming soon.
+                Supports ROSA Classic. ROSA with Hosted Control Plane coming soon.
               </HelperTextItem>
             </HelperText>
           ) : null}
