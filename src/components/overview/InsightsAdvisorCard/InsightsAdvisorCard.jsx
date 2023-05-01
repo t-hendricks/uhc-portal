@@ -8,6 +8,7 @@ import AdvisorEmptyState from './AdvisorEmptyState';
 import { INSIGHTS_RULE_CATEGORIES } from '../../clusters/ClusterDetails/components/Insights/InsightsConstants';
 
 import './InsightsAdvisorCard.scss';
+import { advisorBaseName } from '~/common/getBaseName';
 
 const InsightsAdvisorCard = ({ overview }) => (
   <Card className="ocm-insights--advisor-card" ouiaId="insightsAdvisor">
@@ -18,10 +19,7 @@ const InsightsAdvisorCard = ({ overview }) => (
         <>
           <ChartByRisks riskHits={overview.hit_by_risk} />
           <ChartByGroups tagHits={overview.hit_by_tag} groups={INSIGHTS_RULE_CATEGORIES} />
-          <a
-            href={`${window.location.origin}/${APP_BETA ? 'beta/' : ''}openshift/insights/advisor`}
-            style={{ marginTop: '1rem' }}
-          >
+          <a href={advisorBaseName()} style={{ marginTop: '1rem' }}>
             View more in Insights Advisor
           </a>
         </>

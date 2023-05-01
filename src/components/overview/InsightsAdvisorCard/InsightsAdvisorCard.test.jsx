@@ -74,7 +74,7 @@ describe('<InsightsAdvisorCard />', () => {
     });
 
     it('renders single "View more" link to OCP Advisor', () => {
-      const link = wrapper.find('a[href="http://localhost/openshift/insights/advisor"]');
+      const link = wrapper.find('a[href="/openshift/insights/advisor"]');
       expect(link).toHaveLength(1);
       expect(link.text()).toContain('View more in Insights Advisor');
     });
@@ -87,7 +87,7 @@ describe('<InsightsAdvisorCard />', () => {
         // check whether low risk is mapped to 1, moderate to 2, important to 3, critical to 4
         (link, index) =>
           expect(link.props().href).toBe(
-            `http://localhost/openshift/insights/advisor/recommendations?total_risk=${4 - index}`,
+            `/openshift/insights/advisor/recommendations?total_risk=${4 - index}`,
           ),
       );
     });
@@ -101,7 +101,7 @@ describe('<InsightsAdvisorCard />', () => {
         const category = title.props().datum.tags;
         // check whether the link is correct with the mapping
         expect(title.find('a').props().href).toBe(
-          `http://localhost/openshift/insights/advisor/recommendations?category=${categoryMapping[category]}`,
+          `/openshift/insights/advisor/recommendations?category=${categoryMapping[category]}`,
         );
       });
     });

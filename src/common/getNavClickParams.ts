@@ -4,14 +4,14 @@ This file contain a function mapping OCM paths to Insights Platform `appNavClick
 This is used both for in-app navigation (see app/Insights.jsx) or on-load (see main.jsx)
 */
 
-import { removeBaseName } from './getBaseName';
+import { removeOcmBaseName } from './getBaseName';
 
 /**
  * Get parameters for `appNavClick` based on the provided path.
  * @param {string} pathname target path
  * */
 export default function getNavClickParams(pathname: string) {
-  const cleanPathName = removeBaseName(pathname).replace(/^\//, '');
+  const cleanPathName = removeOcmBaseName(pathname).replace(/^\//, '');
   const components = cleanPathName.split('/');
 
   // The `id` and `parentId` below correspond to current navigation structure

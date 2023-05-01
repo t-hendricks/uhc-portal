@@ -97,7 +97,7 @@ exports[`<CostCard /> When cost report is available renders cluster costs 1`] = 
   </CardBody>
   <CardFooter>
     <a
-      href="//cost-management"
+      href="/openshift/cost-management"
     >
       View more in Cost management
     </a>
