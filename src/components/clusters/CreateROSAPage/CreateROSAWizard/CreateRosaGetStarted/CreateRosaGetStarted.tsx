@@ -147,7 +147,7 @@ const CreateRosaGetStarted = () => {
                     isInline
                     className="pf-u-mb-md"
                     component="p"
-                    aria-label={''}
+                    aria-label=""
                     title="For now, you can only create ROSA with Hosted Control Plane clusters using the CLI.  You'll be able to create ROSA with Hosted Control Plane clusters using the web interface soon."
                   />
                 ) : null}
