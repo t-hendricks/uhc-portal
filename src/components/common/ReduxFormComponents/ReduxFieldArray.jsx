@@ -1,10 +1,10 @@
 import React from 'react';
 import { FieldArray } from 'redux-form';
-import RenderArraySingleFields from './RenderArraySingleFields';
+import RenderArrayFields from './RenderArrayFields';
 
 function ReduxFieldArray(props) {
   const { fieldName } = props;
-  const fieldArray = <FieldArray name={fieldName} component={RenderArraySingleFields} {...props} />;
+  const fieldArray = <FieldArray name={fieldName} component={RenderArrayFields} {...props} />;
   return fieldArray;
 }
 

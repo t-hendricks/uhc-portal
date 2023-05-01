@@ -1,1 +1,214 @@
-// TODO: move RenderField here
+import React from 'react';
+import { Field } from 'redux-form';
+import pullAt from 'lodash/pullAt';
+import last from 'lodash/last';
+import { Button, GridItem } from '@patternfly/react-core';
+import { PlusCircleIcon, MinusCircleIcon } from '@patternfly/react-icons';
+import ReduxVerticalFormGroup from './ReduxVerticalFormGroup';
+import { getRandomID } from '../../../common/helpers';
+import ButtonWithTooltip from '../ButtonWithTooltip';
+
+import './RenderArrayFields.scss';
+
+const LabelGridItem = ({ index, fieldSpan, label, isRequired, helpText }) => {
+  if (index !== 0) {
+    return null;
+  }
+  return (
+    <GridItem className="field-array-title" span={fieldSpan}>
+      <p className="pf-c-form__label-text" id="field-array-label">
+        {label}
+        {isRequired ? <span className="pf-c-form__label-required">*</span> : null}
+      </p>
+      {helpText ? (
+        <p className="pf-c-form__helper-text" id="field-array-help-text">
+          {helpText}
+        </p>
+      ) : null}
+    </GridItem>
+  );
+};
+
+const AddMoreButtonGridItem = ({ index, fields, addNewField, areFieldsFilled }) => {
+  if (index === fields.length - 1) {
+    return (
+      <GridItem className="field-grid-item">
+        <Button
+          onClick={addNewField}
+          icon={<PlusCircleIcon />}
+          variant="link"
+          isDisabled={!last(areFieldsFilled)} // disabled if last field is empty
+        >
+          Add more
+        </Button>
+      </GridItem>
+    );
+  }
+  return null;
+};
+
+const FieldArrayErrorGridItem = ({ index, errorMessage, touched, isGroupError }) => {
+  if (errorMessage && index === 0 && (touched || isGroupError)) {
+    return (
+      <GridItem className="field-grid-item pf-c-form__helper-text pf-m-error">
+        {errorMessage}
+      </GridItem>
+    );
+  }
+  return null;
+};
+
+const MinusButtonGridItem = ({ index, fields, onClick }) => {
+  const isOnlyItem = index === 0 && fields.length === 1;
+  return (
+    <GridItem className="field-grid-item minus-button" span={1}>
+      <ButtonWithTooltip
+        disableReason={isOnlyItem && 'You cannot delete the only item'}
+        tooltipProps={{ position: 'right', distance: 0 }}
+        onClick={onClick}
+        icon={<MinusCircleIcon />}
+        variant="link"
+      />
+    </GridItem>
+  );
+};
+
+const FieldGridItem = ({
+  item,
+  index,
+  fields,
+  fieldSpan,
+  fieldName,
+  placeholderText,
+  validateField,
+  disabled,
+  onFieldChange,
+  setTouched,
+}) => {
+  const { id } = fields.get(index);
+  return (
+    <GridItem className="field-grid-item" span={fieldSpan}>
+      <Field
+        key={id}
+        component={ReduxVerticalFormGroup}
+        name={`${item}.${fieldName}`}
+        type="text"
+        placeholder={`${placeholderText} ${index + 1}`}
+        validate={validateField}
+        disabled={disabled}
+        onChange={(e, value) => onFieldChange(e, value, index)}
+        onBlur={() => {
+          setTouched(true);
+        }}
+      />
+    </GridItem>
+  );
+};
+
+const RenderArrayFields = (props) => {
+  const {
+    fields,
+    label,
+    helpText,
+    isRequired,
+    onFormChange,
+    fieldSpan = 8,
+    isGroupError,
+    meta: { error, submitFailed },
+    FieldGridItemComponent = FieldGridItem,
+  } = props;
+
+  const [touched, setTouched] = React.useState(false);
+  const [areFieldsFilled, setAreFieldsFilled] = React.useState([]);
+
+  React.useEffect(() => {
+    if (submitFailed) {
+      setTouched(true);
+    }
+  }, [submitFailed]);
+
+  React.useEffect(
+    () => {
+      if (fields.length === 0) {
+        addNewField();
+      } else {
+        // fields on mount = default values, populate internal state to account for them
+        setAreFieldsFilled(fields.map((field) => !!field));
+      }
+    },
+    [
+      /* Call once */
+    ],
+  );
+
+  const onFieldChange = (e, value, index) => {
+    if (!touched) {
+      setTouched(true);
+    }
+    if (onFormChange) {
+      onFormChange(e, value);
+    }
+    setAreFieldsFilled((areFieldsFilled) => {
+      const newFilledStatus = [...areFieldsFilled];
+      newFilledStatus[index] = !!value;
+      return newFilledStatus;
+    });
+  };
+
+  const removeField = (index) => {
+    fields.remove(index);
+    setAreFieldsFilled((areFieldsFilled) => {
+      const newFilledStatus = [...areFieldsFilled];
+      pullAt(newFilledStatus, index);
+      return newFilledStatus;
+    });
+  };
+
+  const addNewField = () => {
+    fields.push({ id: getRandomID() });
+    setAreFieldsFilled((areFieldsFilled) => {
+      const newFilledStatus = [...areFieldsFilled];
+      newFilledStatus.push(false);
+      return newFilledStatus;
+    });
+  };
+
+  return (
+    <>
+      {fields.map((item, index) => (
+        <React.Fragment key={`${fields.get(index).id}`}>
+          <LabelGridItem
+            index={index}
+            fieldSpan={fieldSpan}
+            label={label}
+            isRequired={isRequired}
+            helpText={helpText}
+          />
+          <FieldGridItemComponent
+            item={item}
+            index={index}
+            onFieldChange={onFieldChange}
+            setTouched={setTouched}
+            fieldSpan={fieldSpan}
+            {...props}
+          />
+          <MinusButtonGridItem index={index} fields={fields} onClick={() => removeField(index)} />
+          <FieldArrayErrorGridItem
+            index={index}
+            errorMessage={error}
+            touched={touched}
+            isGroupError={isGroupError}
+          />
+          <AddMoreButtonGridItem
+            index={index}
+            fields={fields}
+            addNewField={addNewField}
+            areFieldsFilled={areFieldsFilled}
+          />
+        </React.Fragment>
+      ))}
+    </>
+  );
+};
+
+export default RenderArrayFields;

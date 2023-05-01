@@ -2,7 +2,7 @@ import React from 'react';
 import { Field } from 'redux-form';
 import { GridItem } from '@patternfly/react-core';
 import ReduxVerticalFormGroup from './ReduxVerticalFormGroup';
-import RenderArraySingleFields from './RenderArraySingleFields';
+import RenderArrayFields from './RenderArrayFields';
 
 const CompoundFieldGridItem = ({
   item,
@@ -53,7 +53,7 @@ const CompoundFieldGridItem = ({
 };
 
 const RenderCompoundFields = (props) => {
-  return <RenderArraySingleFields {...props} FieldGridItemComponent={CompoundFieldGridItem} />;
+  return <RenderArrayFields {...props} FieldGridItemComponent={CompoundFieldGridItem} />;
 };
 
 export default RenderCompoundFields;
