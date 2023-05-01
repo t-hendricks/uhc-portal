@@ -1,4 +1,5 @@
 import React from 'react';
+import { PropTypes } from 'prop-types';
 import { Field } from 'redux-form';
 import pullAt from 'lodash/pullAt';
 import last from 'lodash/last';
@@ -29,6 +30,14 @@ const LabelGridItem = ({ index, fieldSpan, label, isRequired, helpText }) => {
   );
 };
 
+LabelGridItem.propTypes = {
+  index: PropTypes.number.isRequired,
+  fieldSpan: PropTypes.number.isRequired,
+  label: PropTypes.string,
+  isRequired: PropTypes.bool,
+  helpText: PropTypes.string,
+};
+
 const AddMoreButtonGridItem = ({ index, fields, addNewField, areFieldsFilled }) => {
   if (index === fields.length - 1) {
     return (
@@ -47,6 +56,13 @@ const AddMoreButtonGridItem = ({ index, fields, addNewField, areFieldsFilled }) 
   return null;
 };
 
+AddMoreButtonGridItem.propTypes = {
+  index: PropTypes.number.isRequired,
+  fields: PropTypes.array.isRequired,
+  addNewField: PropTypes.func.isRequired,
+  areFieldsFilled: PropTypes.arrayOf(PropTypes.bool).isRequired,
+};
+
 const FieldArrayErrorGridItem = ({ index, errorMessage, touched, isGroupError }) => {
   if (errorMessage && index === 0 && (touched || isGroupError)) {
     return (
@@ -56,6 +72,13 @@ const FieldArrayErrorGridItem = ({ index, errorMessage, touched, isGroupError })
     );
   }
   return null;
+};
+
+FieldArrayErrorGridItem.propTypes = {
+  index: PropTypes.number.isRequired,
+  errorMessage: PropTypes.string,
+  touched: PropTypes.bool,
+  isGroupError: PropTypes.bool,
 };
 
 const MinusButtonGridItem = ({ index, fields, onClick }) => {
@@ -71,6 +94,12 @@ const MinusButtonGridItem = ({ index, fields, onClick }) => {
       />
     </GridItem>
   );
+};
+
+MinusButtonGridItem.propTypes = {
+  index: PropTypes.number.isRequired,
+  fields: PropTypes.array.isRequired,
+  onClick: PropTypes.func.isRequired,
 };
 
 const FieldGridItem = ({
@@ -103,6 +132,20 @@ const FieldGridItem = ({
       />
     </GridItem>
   );
+};
+
+FieldGridItem.propTypes = {
+  item: PropTypes.object.isRequired,
+  index: PropTypes.number.isRequired,
+  fields: PropTypes.array.isRequired,
+  fieldSpan: PropTypes.number,
+  fieldName: PropTypes.string,
+  placeholderText: PropTypes.string,
+
+  validateField: PropTypes.func,
+  disabled: PropTypes.bool,
+  onFieldChange: PropTypes.func,
+  setTouched: PropTypes.func.isRequired,
 };
 
 const RenderArrayFields = (props) => {
@@ -209,6 +252,18 @@ const RenderArrayFields = (props) => {
       ))}
     </>
   );
+};
+
+RenderArrayFields.propTypes = {
+  fields: PropTypes.array.isRequired,
+  label: PropTypes.string,
+  helpText: PropTypes.string,
+  isRequired: PropTypes.bool,
+  onFormChange: PropTypes.func.isRequired,
+  fieldSpan: PropTypes.number,
+  isGroupError: PropTypes.bool,
+  meta: PropTypes.shape({ error: PropTypes.string, submitFailed: PropTypes.bool }),
+  FieldGridItemComponent: PropTypes.func,
 };
 
 export default RenderArrayFields;

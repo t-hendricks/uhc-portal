@@ -64,8 +64,8 @@ const ReduxVerticalFormGroup = ({
 
   const isValid = hasOtherValidation || !touched || !error;
 
-  let onFocus = input.onFocus;
-  let onBlur = input.onBlur;
+  let { onFocus } = input;
+  let { onBlur } = input;
   let autocomplete;
   if (getAutocompleteValue) {
     const onSelect = (event) => {
@@ -169,6 +169,36 @@ const ReduxVerticalFormGroup = ({
       {!getAutocompleteValue && inputGroup}
     </FormGroup>
   );
+};
+
+ReduxVerticalFormGroup.defaultProps = {
+  helpText: '',
+  isRequired: false,
+  showHelpTextOnError: true,
+  inputPrefix: '',
+};
+ReduxVerticalFormGroup.propTypes = {
+  label: PropTypes.string,
+  helpText: PropTypes.string,
+  extendedHelpText: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
+  disabled: PropTypes.bool,
+  // props passed by redux-form
+  // collection of redux-form callbacks to be destructured into an html input element
+  input: PropTypes.object.isRequired,
+  // redux-form metadata like error or active states
+  meta: PropTypes.object.isRequired,
+  // is this a required field?
+  isRequired: PropTypes.bool,
+  // Render a textarea instead of a textinput?
+  isTextArea: PropTypes.bool,
+  hasOtherValidation: PropTypes.bool,
+  // plus other props passed from the <Field> component to the control (extraProps,
+  // incl. children)...
+  showHelpTextOnError: PropTypes.bool,
+  inputPrefix: PropTypes.string,
+  formGroupClass: PropTypes.string,
+  getAutocompleteValue: PropTypes.func,
+  getAutocompleteText: PropTypes.func,
 };
 
 export default ReduxVerticalFormGroup;

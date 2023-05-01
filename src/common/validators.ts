@@ -1000,11 +1000,13 @@ const atLeastOneRequired =
     let nonEmptyValues = 0;
     fields.forEach((field) => {
       if (isEmpty) {
-        isEmpty(field) || nonEmptyValues++;
+        if (!isEmpty(field)) {
+          nonEmptyValues += 1;
+        }
       } else {
         const content = get(field, fieldName, null);
         if (content && content.trim() !== '') {
-          nonEmptyValues++;
+          nonEmptyValues += 1;
         }
       }
     });

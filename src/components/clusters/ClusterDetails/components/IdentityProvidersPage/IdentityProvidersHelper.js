@@ -227,14 +227,13 @@ const getCreateIDPRequestData = (formData) => {
     issuer: formData.issuer,
   });
 
-  const htpasswdData = () => {
-    return {
-      // TODO: Clarify if these username/password have special meaning over users[].
-      // username: formData.htpasswd_username,
-      // password: formData.htpasswd_password,
-      users: formData.users,
-    };
-  };
+  const htpasswdData = () => ({
+    // TODO: Clarify if these username/password have special meaning over users[].
+    // username: formData.htpasswd_username,
+    // password: formData.htpasswd_password,
+    // TODO: No matter following conforms the HTPasswdUser type, the API returns 400 on Go unmarshalling
+    users: formData.users,
+  });
 
   const IDPs = {
     GithubIdentityProvider: { name: 'github', data: githubData },
@@ -251,7 +250,6 @@ const getCreateIDPRequestData = (formData) => {
     id: formData.idpId,
   };
 
-  console.log('--- getCreateIDPRequestData, formData: ', formData);
   const selectedIDPData = IDPs[formData.type].data();
   const selectedIDPName = IDPs[formData.type].name;
 
