@@ -3,6 +3,8 @@ import { render, axe, screen, fireEvent } from '@testUtils';
 import { MemoryRouter, Router } from 'react-router-dom';
 import { createMemoryHistory } from 'history';
 import CreateClusterDropDown from './CreateClusterDropDown';
+import * as hooks from '~/hooks/useFeatureGate';
+import { HCP_ROSA_GETTING_STARTED_PAGE } from '~/redux/constants/featureConstants';
 
 const getStartedPath = '/create/rosa/getstarted';
 
@@ -67,5 +69,39 @@ describe('<CreateClusterDropDown />', () => {
 
     // Assert
     expect(history.location.pathname).toBe(getStartedPath);
+  });
+
+  it('shows hypershift helper text when feature flags are enabled', () => {
+    jest
+      .spyOn(hooks, 'useFeatureGate')
+      .mockImplementation((feature) => feature === HCP_ROSA_GETTING_STARTED_PAGE);
+
+    render(
+      <MemoryRouter>
+        <CreateClusterDropDown />
+      </MemoryRouter>,
+    );
+    fireEvent.click(screen.getByRole('button', { name: 'Create cluster' }));
+    expect(screen.getByText(/With CLI/)).toBeInTheDocument();
+
+    expect(screen.getByText(/Supports ROSA with Hosted Control Plane/)).toBeInTheDocument();
+    expect(screen.getByText(/ROSA with HCP coming soon/)).toBeInTheDocument();
+  });
+
+  it('hides hypershift helper text when feature flags are not enabled', () => {
+    jest
+      .spyOn(hooks, 'useFeatureGate')
+      .mockImplementation((feature) => feature !== HCP_ROSA_GETTING_STARTED_PAGE);
+
+    render(
+      <MemoryRouter>
+        <CreateClusterDropDown />
+      </MemoryRouter>,
+    );
+    fireEvent.click(screen.getByRole('button', { name: 'Create cluster' }));
+    expect(screen.getByText(/With CLI/)).toBeInTheDocument();
+
+    expect(screen.queryByText(/Supports ROSA with Hosted Control Plane/)).not.toBeInTheDocument();
+    expect(screen.queryByText(/ROSA with HCP coming soon/)).not.toBeInTheDocument();
   });
 });
