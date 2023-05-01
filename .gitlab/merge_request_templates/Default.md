@@ -16,6 +16,12 @@ if you only see {all_commits} here but no text was generated, cancel and re-open
 %{all_commits}
 
 
+# how to test
+
+(add any useful information for local testing, like environment or tooling prerequisites,
+specially used CLI options, the user-flow, and so on)
+
+
 # screen captures
 
 | before                                       | after                            |
