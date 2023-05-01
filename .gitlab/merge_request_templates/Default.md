@@ -1,9 +1,9 @@
-# content
+# summary
 
 (add a summarized description of the MR content)
 
 
-### breakdown
+# details
 
 (add a detailed list of changes, and link to the relevant commit-revision on each item.  
 alternatively, use the below generated text to simply show the MR commits' messages)
