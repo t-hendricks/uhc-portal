@@ -233,7 +233,7 @@
   },
   "scripts": {
     "build": "webpack $(run/progress-flag-if-tty.sh)",
-    "start": "concurrently --kill-others --prefix=name --names=SERVER,MOCK --prefix-colors=cyan,reset 'yarn dev-server --env noproxy api-env=staging' 'mockdata/mockserver.py'",
+    "start": "concurrently --kill-others --prefix=name --names=SERVER,MOCK --prefix-colors=cyan,reset --passthrough-arguments 'yarn dev-server --env noproxy api-env=staging {@}' 'mockdata/mockserver.py' --",
     "dev-server": "webpack serve $(run/progress-flag-if-tty.sh)",
     "insights-proxy": "make insights-proxy-check && run/insights-proxy.sh",
     "stop-insights-proxy": "run/podman-or-docker.sh kill insightsproxy; run/podman-or-docker.sh rm --force insightsproxy; true",
