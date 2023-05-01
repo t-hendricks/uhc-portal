@@ -30,6 +30,7 @@ interface SubnetSelectFieldProps {
   isRequired?: boolean;
   className?: string;
   privacy?: 'public' | 'private';
+  selectedVPC?: string;
 }
 
 export const SubnetSelectField = ({
@@ -41,13 +42,18 @@ export const SubnetSelectField = ({
   isRequired,
   className,
   privacy,
+  selectedVPC,
 }: SubnetSelectFieldProps) => {
   const [isExpanded, setIsExpanded] = React.useState(false);
   const [selectedSubnetId, setSelectedSubnetId] = React.useState(input.value);
-  const vpcs = useAWSVPCInquiry();
+  const filterByVpc = () => {
+    let itemsArr = vpcs.data?.items.filter((item: CloudVPC) => item.id === selectedVPC);
+    return itemsArr.length > 0 ? itemsArr : vpcs.data?.items;
+  };
 
+  const vpcs = useAWSVPCInquiry();
   const { pending: isVpcsLoading, fulfilled: isVpcsFulfilled, error: vpcsError } = vpcs;
-  const vpcsItems: CloudVPC[] = vpcs.data?.items;
+  const vpcsItems: CloudVPC[] = filterByVpc();
   const subnetList: Subnetwork[] = [];
   const vpcsSubnetsMap = vpcsItems?.reduce((acc: Record<string, Subnetwork[]>, vpc: CloudVPC) => {
     const { aws_subnets: subnets } = vpc;
