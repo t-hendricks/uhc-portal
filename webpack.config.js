@@ -79,6 +79,12 @@ module.exports = async (_env, argv) => {
     mode: argv.mode || 'development',
     entry,
 
+    infrastructureLogging: {
+      level: 'verbose',
+      // Logs all proxy activity. Is verbose & redundant with mockserver's own logging.
+      // debug: [name => name.includes('webpack-dev-server')],
+    },
+
     output: {
       path: outDir,
       filename: 'bundle.[name].[contenthash].js',
@@ -240,6 +246,13 @@ module.exports = async (_env, argv) => {
           throw new Error('webpack-dev-server is not defined');
         }
 
+        middlewares.unshift({
+          name: 'logging',
+          middleware: (request, response, next) => {
+            console.log('Handling', request.originalUrl);
+            next();
+          },
+        });
         return middlewares;
       },
       proxy: noInsightsProxy
@@ -248,7 +261,10 @@ module.exports = async (_env, argv) => {
             context: ['/mockdata'],
             pathRewrite: { '^/mockdata': '' },
             target: 'http://localhost:8010',
-            logLevel: 'info', // Less necessary because mockserver also logs.
+            onProxyReq(request) {
+              // Redundant with mockserver's own logging.
+              // console.log('  proxying localhost:8010:', request.path);
+            },
           },
           {
             // docs: https://github.com/chimurai/http-proxy-middleware#http-proxy-options
@@ -267,8 +283,8 @@ module.exports = async (_env, argv) => {
             // many APIs do not allow the requests from the foreign origin
             onProxyReq(request) {
               request.setHeader('origin', 'https://console.redhat.com');
+              console.log('  proxying console.redhat.com:', request.path);
             },
-            logLevel: 'debug',
           },
         ]
         : undefined,
