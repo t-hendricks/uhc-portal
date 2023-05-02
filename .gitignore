@@ -20,3 +20,6 @@ backend-config.yml
 /cypress/videos/
 /coverage/
 .nyc_output/out.json
+
+.yalc
+yalc.lock

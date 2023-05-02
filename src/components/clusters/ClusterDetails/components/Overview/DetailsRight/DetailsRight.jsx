@@ -8,7 +8,7 @@ import {
   DescriptionListDescription,
   Flex,
 } from '@patternfly/react-core';
-import { OCM } from 'openshift-assisted-ui-lib';
+import * as OCM from '@openshift-assisted/ui-lib/ocm';
 
 import Timestamp from '../../../../../common/Timestamp';
 import links from '../../../../../../common/installLinks.mjs';

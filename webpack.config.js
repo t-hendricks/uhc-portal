@@ -44,6 +44,7 @@ module.exports = async (_env, argv) => {
   // Otherwise, default to 'development' for backend-proxy users when running in dev server,
   // or 'production' when it's a real build.
   const apiEnv = argv.env['api-env'] || (isDevServer ? 'development' : 'production');
+  // eslint-disable-next-line no-console
   console.log(`Building with apiEnv=${apiEnv}, beta=${betaMode}, isDevServer=${isDevServer}`);
 
   let bundleAnalyzer = null;
@@ -98,15 +99,7 @@ module.exports = async (_env, argv) => {
         APP_DEVMODE: devMode,
         APP_DEV_SERVER: isDevServer,
         APP_API_ENV: JSON.stringify(apiEnv),
-        // For openshift-assisted-ui-lib
-        BASE_PATH: JSON.stringify(process.env.BASE_PATH),
         process: { env: {} },
-      }),
-      // For openshift-assisted-ui-lib
-      new webpack.EnvironmentPlugin({
-        REACT_APP_API_ROOT: '',
-        REACT_APP_BUILD_MODE: argv.mode || 'development',
-        REACT_APP_CLUSTER_PERMISSIONS: '',
       }),
       new CopyWebpackPlugin({
         patterns: [{ from: 'public', to: outDir, toType: 'dir' }],
