@@ -47,19 +47,22 @@ module.exports = async (_env, argv) => {
   // eslint-disable-next-line no-console
   console.log(`Building with apiEnv=${apiEnv}, beta=${betaMode}, isDevServer=${isDevServer}`);
 
-  let bundleAnalyzer = null;
+  // While user-visible URLs are moving /beta/openshift -> /preview/openshift,
+  // the compiled assets will remain at /beta/apps/openshift.
   const appDeployment = betaMode ? 'beta/apps' : 'apps';
+  const publicPath = `/${appDeployment}/${insights.appname}/`;
+
+  let bundleAnalyzer = null;
   if (process.env.BUNDLE_ANALYZER) {
     bundleAnalyzer = new BundleAnalyzerPlugin({ analyzerPort: '5000', openAnalyzer: true });
   }
-  const publicPath = `/${appDeployment}/${insights.appname}/`;
   const entry = path.resolve(srcDir, 'bootstrap.ts');
 
   const noInsightsProxy = argv.env.noproxy;
 
   const getChromeTemplate = async () => {
     const result = await axios.get(
-      `https://console.redhat.com/${betaMode ? 'beta/' : ''}apps/chrome/index.html`,
+      `https://console.redhat.com/${betaMode ? 'preview/' : ''}apps/chrome/index.html`,
     );
     return result.data;
   };
@@ -76,6 +79,12 @@ module.exports = async (_env, argv) => {
   return {
     mode: argv.mode || 'development',
     entry,
+
+    infrastructureLogging: {
+      level: 'verbose',
+      // Logs all proxy activity. Is verbose & redundant with mockserver's own logging.
+      // debug: [name => name.includes('webpack-dev-server')],
+    },
 
     output: {
       path: outDir,
@@ -230,6 +239,13 @@ module.exports = async (_env, argv) => {
           throw new Error('webpack-dev-server is not defined');
         }
 
+        middlewares.unshift({
+          name: 'logging',
+          middleware: (request, response, next) => {
+            console.log('Handling', request.originalUrl);
+            next();
+          },
+        });
         return middlewares;
       },
       proxy: noInsightsProxy
@@ -238,12 +254,21 @@ module.exports = async (_env, argv) => {
             context: ['/mockdata'],
             pathRewrite: { '^/mockdata': '' },
             target: 'http://localhost:8010',
-            logLevel: 'info', // Less necessary because mockserver also logs.
+            onProxyReq(request) {
+              // Redundant with mockserver's own logging.
+              // console.log('  proxying localhost:8010:', request.path);
+            },
           },
           {
             // docs: https://github.com/chimurai/http-proxy-middleware#http-proxy-options
             // proxy everything except our own app, mimicking insights-proxy behaviour
-            context: ['**', `!${publicPath}**`, '!/mockdata'],
+            context: [
+              '**',
+              '!/mockdata/**',
+              `!/apps/${insights.appname}/**`,
+              `!/beta/apps/${insights.appname}/**`,
+              `!/preview/apps/${insights.appname}/**`, // not expected to be used
+            ],
             target: 'https://console.redhat.com',
             // replace the "host" header's URL origin with the origin from the target URL
             changeOrigin: true,
@@ -251,8 +276,8 @@ module.exports = async (_env, argv) => {
             // many APIs do not allow the requests from the foreign origin
             onProxyReq(request) {
               request.setHeader('origin', 'https://console.redhat.com');
+              console.log('  proxying console.redhat.com:', request.path);
             },
-            logLevel: 'debug',
           },
         ]
         : undefined,
