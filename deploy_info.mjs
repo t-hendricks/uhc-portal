@@ -34,6 +34,12 @@ const getUpstreamRemote = async () => {
   throw 'missing remote for uhc-portal repo';
 };
 
+const assistedLibs = [
+  'openshift-assisted-ui-lib',
+  '@openshift-assisted/ui-lib',
+  '@openshift-assisted/locales',
+];
+
 /** @callback getOpenshiftAssistedLibsVersionsFunc
  * @param {string} revision
  * @returns {string}
@@ -42,36 +48,19 @@ const getUpstreamRemote = async () => {
 /** @type {getOpenshiftAssistedLibsVersionsFunc} */
 const getOpenshiftAssistedLibsVersions = async (revision) => {
   const r = await execFilePromise('git', ['cat-file', 'blob', `${revision}:package.json`]);
-  /** 
-   * @typedef {object} OpenshiftAssistedLibsVersionsMap
-   * @prop {string} 'openshift-assisted-ui-lib'
-   * @prop {string} '@openshift-assisted/ui-lib'
-   * @prop {string} '@openshift-assisted/locales' 
-   */
-  /** @type {OpenshiftAssistedLibsVersionsMap|Error} */
-  let returnValue = {
-    'openshift-assisted-ui-lib': null,
-    '@openshift-assisted/ui-lib': null,
-    '@openshift-assisted/locales': null,
-    toString() {
-      return [
-        `openshift-assisted-ui-lib: ${this['openshift-assisted-ui-lib']}`,
-        `@openshift-assisted/ui-lib: ${this['@openshift-assisted/ui-lib']}`,
-        `@openshift-assisted/locales: ${this['@openshift-assisted/locales']}`,
-      ].join('\n');
-    },
-  };
   try {
     const packument = JSON.parse(r.stdout);
     const { dependencies } = packument;
-    returnValue['openshift-assisted-ui-lib'] = dependencies['openshift-assisted-ui-lib'];    
-    returnValue['@openshift-assisted/ui-lib'] = dependencies['@openshift-assisted/ui-lib'];   
-    returnValue['@openshift-assisted/locales'] = dependencies['@openshift-assisted/locales'];    
+    const returnValue = [];
+    assistedLibs.forEach((pkg) => {
+      if (dependencies[pkg]) {
+        returnValue.push(`${pkg}: ${dependencies[pkg]}`);
+      }
+    });
+    return returnValue.join(', ');
   } catch {
-    returnValue = new Error(`Failed to parse package.json in rev:${revision}`);
+    return `Failed to parse package.json in rev:${revision}`;
   }
-
-  return returnValue.toString();
 };
 
 // Helpers returning a promise, should resolve to an object containing *at least* .src_hash.
@@ -94,9 +83,9 @@ const appInfo = async (url) => {
   try {
     // Some contain a trailing comma, making it invalid JSON, so use JSON5.
     const data = JSON5.parse(r.stdout);
-    
+
     const normalizedHash = await gitRev(data.src_hash);
-    return {...data, ...normalizedHash};
+    return { ...data, ...normalizedHash };
   } catch (err) {
     return { ERROR: `${err} - ${r.stdout}` };
   }
@@ -175,7 +164,7 @@ const getEnvs = async (upstream) => {
     // eslint-disable-next-line no-param-reassign
     e.info = await e.info;
     if (e.info.src_hash) {
-      e.info.assisted_ui_lib_version = await getOpenshiftAssistedLibsVersions(e.info.src_hash);
+      e.info.assisted_ui_lib_versions = await getOpenshiftAssistedLibsVersions(e.info.src_hash);
     }
   }));
   return envs;
@@ -204,7 +193,7 @@ const main = async () => {
       envs.forEach((e) => {
         const paddedName = e.name.padStart(widestName, ' ');
         const paddedHash = e.info.src_hash.padEnd(widestHash, ' ');
-        console.log(`${paddedName} ${paddedHash}  [assited-ui ${e.info.assisted_ui_lib_version}]`);
+        console.log(`${paddedName} ${paddedHash}  [${e.info.assisted_ui_lib_versions}]`);
       });
     }
 
@@ -218,10 +207,10 @@ const main = async () => {
         // (would probably be a no-op but safer not to).
         if (e.name.match('build_pushed_.*|live_.*') && e.info.src_hash) {
           const cmd = ['git', 'branch', '--force', e.name, e.info.src_hash];
-          console.log(`git branch --force ${paddedName} ${paddedHash}  # [assited-ui ${e.info.assisted_ui_lib_version}]`);
+          console.log(`git branch --force ${paddedName} ${paddedHash}  # [${e.info.assisted_ui_lib_versions}]`);
           await execFilePromise(cmd[0], cmd.slice(1), { stdio: 'inherit' });
         } else {
-          console.log(`#                  ${paddedName} ${paddedHash}    [assited-ui ${e.info.assisted_ui_lib_version}]`);
+          console.log(`#                  ${paddedName} ${paddedHash}    [${e.info.assisted_ui_lib_versions}]`);
         }
       }
     }
