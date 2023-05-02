@@ -1,7 +1,7 @@
 import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
 // @ts-ignore
-import enTranslation from 'openshift-assisted-ui-lib/locales/en/translation.json';
+import enTranslation from '@openshift-assisted/locales/en/translation.json';
 
 const dateTimeFormatter = new Intl.DateTimeFormat('default', {
   month: 'short',

@@ -4,7 +4,7 @@ import get from 'lodash/get';
 
 import { Grid, GridItem, Card, CardBody, Title, Alert, CardTitle } from '@patternfly/react-core';
 
-import { OCM } from 'openshift-assisted-ui-lib';
+import * as OCM from '@openshift-assisted/ui-lib/ocm';
 import clusterStates, {
   getClusterAIPermissions,
   getClusterStateAndDescription,
