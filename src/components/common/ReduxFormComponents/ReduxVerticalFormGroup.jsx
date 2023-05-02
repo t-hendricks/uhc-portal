@@ -40,8 +40,6 @@ const ReduxVerticalFormGroup = ({
   const [autocompleteValue, setAutocompleteValue] = React.useState(
     getAutocompleteValue ? getAutocompleteValue() : undefined,
   );
-  // const inputRef = React.useRef(null);
-
   const InputComponent = isTextArea ? TextArea : TextInput;
   // TextArea and TextInput has different ways to specify if the component is disabled
   // this forces us to do this trick:

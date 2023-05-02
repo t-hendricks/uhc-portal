@@ -128,9 +128,9 @@ HelpTextPassword.propTypes = {
   },
 };
 
-// https://issues.redhat.com/browse/HAC-2011
 const HTPasswdForm = ({
   isPending,
+  // Let's keep following commented-out code, will be used in a follow-up for the Edit flow
   // isEditForm,
   // idpEdited,
   // change,

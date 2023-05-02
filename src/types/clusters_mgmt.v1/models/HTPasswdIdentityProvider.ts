@@ -19,6 +19,5 @@ export type HTPasswdIdentityProvider = {
   /**
    * Link to the collection of _HTPasswd_ users.
    */
-  // TODO: Use this instead
   users?: Array<HTPasswdUser>;
 };
