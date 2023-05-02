@@ -228,11 +228,12 @@ const getCreateIDPRequestData = (formData) => {
   });
 
   const htpasswdData = () => ({
-    // TODO: Clarify if these username/password have special meaning over users[].
-    // username: formData.htpasswd_username,
-    // password: formData.htpasswd_password,
-    // TODO: No matter following conforms the HTPasswdUser type, the API returns 400 on Go unmarshalling
-    users: formData.users,
+    users: {
+      items: formData.users.map((user) => ({
+        username: user.username,
+        password: user.password,
+      })),
+    },
   });
 
   const IDPs = {
