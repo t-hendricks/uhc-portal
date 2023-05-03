@@ -30,6 +30,7 @@ function CloudProviderSelectionField({
     change('machine_type_force_choice', false);
     change('machine_type', '');
     change('acknowledge_prerequisites', false);
+    change('fips', false);
     onChange(providerValue);
   };
 
