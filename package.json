@@ -10,8 +10,8 @@
   "dependencies": {
     "@axetroy/react-download": "^1.1.1",
     "@babel/eslint-parser": "^7.13.14",
-    "@openshift-assisted/locales": "2.19.5",
-    "@openshift-assisted/ui-lib": "2.19.5",
+    "@openshift-assisted/locales": "2.19.6",
+    "@openshift-assisted/ui-lib": "2.19.6",
     "@patternfly/patternfly": "^4.215.1",
     "@patternfly/react-charts": "^6.59.2",
     "@patternfly/react-code-editor": "^4.47.2",
