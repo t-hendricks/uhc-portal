@@ -7,6 +7,7 @@ import {
   required,
   validateHTPasswdPassword,
   validateHTPasswdUsername,
+  validateUniqueHTPasswdUsername,
 } from '../../../../../../../common/validators';
 import {
   ReduxFieldArray,
@@ -180,10 +181,10 @@ const HTPasswdForm = ({
         helpText="Unique names of the users within the cluster. A username must not contain /, :, or %."
         isRequired
         disabled={isPending}
-        validate={atLeastOneRequired(
-          'users',
-          (field) => !field?.username || field.username.trim() === '',
-        )}
+        validate={[
+          atLeastOneRequired('users', (field) => !field?.username || field.username.trim() === ''),
+          validateUniqueHTPasswdUsername,
+        ]}
       />
       <GridItem span={11}>
         <Alert isInline variant="info" title="Securely store your usernames and passwords">

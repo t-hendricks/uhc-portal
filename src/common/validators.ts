@@ -1389,6 +1389,19 @@ const validateHTPasswdPassword = (
   return errors;
 };
 
+const validateUniqueHTPasswdUsername = (fields: { name: string }[]) => {
+  if (!fields) {
+    return undefined;
+  }
+
+  const dedup = new Set(fields.map((field) => get(field, 'username', null)));
+  if (dedup.size !== fields.length) {
+    return 'Usernames must be unique only.';
+  }
+
+  return undefined;
+};
+
 const validateHTPasswdUsername = (username: string): string | undefined => {
   if (
     indexOf(username, '%') !== -1 ||
@@ -1514,6 +1527,7 @@ export {
   validateAWSKMSKeyARN,
   validateHTPasswdPassword,
   validateHTPasswdUsername,
+  validateUniqueHTPasswdUsername,
   validateUniqueNodeLabel,
   validateLabelKey,
   validateLabelValue,

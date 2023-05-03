@@ -63,8 +63,8 @@ AddMoreButtonGridItem.propTypes = {
   areFieldsFilled: PropTypes.arrayOf(PropTypes.bool).isRequired,
 };
 
-const FieldArrayErrorGridItem = ({ index, errorMessage, touched, isGroupError }) => {
-  if (errorMessage && index === 0 && (touched || isGroupError)) {
+const FieldArrayErrorGridItem = ({ isLast, errorMessage, touched, isGroupError }) => {
+  if (errorMessage && isLast && (touched || isGroupError)) {
     return (
       <GridItem className="field-grid-item pf-c-form__helper-text pf-m-error">
         {errorMessage}
@@ -75,7 +75,7 @@ const FieldArrayErrorGridItem = ({ index, errorMessage, touched, isGroupError })
 };
 
 FieldArrayErrorGridItem.propTypes = {
-  index: PropTypes.number.isRequired,
+  isLast: PropTypes.bool.isRequired,
   errorMessage: PropTypes.string,
   touched: PropTypes.bool,
   isGroupError: PropTypes.bool,
@@ -237,7 +237,7 @@ const RenderArrayFields = (props) => {
           />
           <MinusButtonGridItem index={index} fields={fields} onClick={() => removeField(index)} />
           <FieldArrayErrorGridItem
-            index={index}
+            isLast={index === fields.length - 1}
             errorMessage={error}
             touched={touched}
             isGroupError={isGroupError}
