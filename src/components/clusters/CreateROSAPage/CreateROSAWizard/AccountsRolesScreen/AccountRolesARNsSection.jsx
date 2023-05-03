@@ -63,7 +63,7 @@ function AccountRolesARNsSection({
   const [selectedInstallerRole, setSelectedInstallerRole] = useState(NO_ROLE_DETECTED);
   const [allARNsFound, setAllARNsFound] = useState(false);
   const [hasARNsError, setHasARNsError] = useState(false);
-  const hasManagedRoleRef = React.useRef(false);
+  const [hasManagedPolicies, setHasManagedPolicies] = useState(false);
 
   const touchARNsFields = React.useCallback(() => {
     touch('installer_role_arn');
@@ -134,6 +134,18 @@ function AccountRolesARNsSection({
     });
   }, [selectedInstallerRole]);
 
+  const hasManagedPoliciesByRole = (role) =>
+    isHypershiftSelected ? role.hcpManagedPolicies : role.managedPolicies;
+
+  // Determine whether the current selected role has managed policies and set to state managed value
+  React.useEffect(() => {
+    const selectedRole = accountRoles.find((role) => role.Installer === selectedInstallerRole);
+
+    if (getAWSAccountRolesARNsResponse.fulfilled && selectedRole) {
+      setHasManagedPolicies(hasManagedPoliciesByRole(selectedRole));
+    }
+  }, [selectedAWSAccountID, getAWSAccountRolesARNsResponse, selectedInstallerRole]);
+
   const setSelectedInstallerRoleAndOptions = (accountRolesARNs) => {
     const installerOptions = [];
     if (accountRolesARNs.length === 0) {
@@ -143,18 +155,11 @@ function AccountRolesARNsSection({
       setAllARNsFound(false);
     } else {
       accountRolesARNs.forEach((role) => {
-        const hasManagedPolicies = isHypershiftSelected
-          ? role.hcpManagedPolicies
-          : role.managedPolicies;
-        if (hasManagedPolicies) {
-          hasManagedRoleRef.current = hasManagedPolicies;
-        }
-
         installerOptions.push({
           name: role.Installer,
           value: role.Installer,
           ...(!isHypershiftSelected &&
-            hasManagedPolicies && {
+            hasManagedPoliciesByRole(role) && {
               label: (
                 <Label color="blue" isCompact>
                   Recommended
@@ -228,7 +233,7 @@ function AccountRolesARNsSection({
     setIsExpanded(!isExpanded);
   };
 
-  const handInstallerRoleChange = (_, value) => {
+  const onInstallerRoleChange = (_, value) => {
     // changing to a new set of ARNs, which could have different
     // rosa_max_os_version, so clear the cluster_version which
     // will get a new default on next step of the wizard
@@ -241,16 +246,20 @@ function AccountRolesARNsSection({
 
   const refreshARNs = () => {
     clearGetAWSAccountRolesARNsResponse();
-    change('installer_role_arn', '');
-    change('cluster_version', undefined);
-    setSelectedInstallerRole('');
     getAWSAccountRolesARNs(selectedAWSAccountID);
+
+    // Clear the installer role/version if the latest fetched roles do not possess the previously selected one.
+    if (!accountRoles.some((role) => role.Installer === selectedInstallerRole)) {
+      change('installer_role_arn', '');
+      setSelectedInstallerRole('');
+      change('cluster_version', undefined);
+    }
   };
 
   const [latestOCPVersion, latestVersionLoaded] = useOCPLatestVersion('stable');
   const rolesOutOfDate =
     latestVersionLoaded && !isSupportedMinorVersion(latestOCPVersion, rosaMaxOSVersion);
-  const hasStandaloneManagedRole = !isHypershiftSelected && hasManagedRoleRef.current;
+  const hasStandaloneManagedRole = !isHypershiftSelected && hasManagedPolicies;
 
   const arnsErrorAlert = React.useMemo(() => {
     const alertTitle = resolveARNsErrorTitle(getAWSAccountRolesARNsResponse);
@@ -270,7 +279,7 @@ function AccountRolesARNsSection({
   const arnCompatibilityAlertTitle = React.useMemo(() => {
     if (hasStandaloneManagedRole || isHypershiftSelected) {
       return `The selected account-wide roles are ${
-        !isHypershiftSelected && 'preferred and'
+        !isHypershiftSelected ? 'preferred and' : ''
       } compatible with OpenShift version ${MIN_MANAGED_POLICY_VERSION} and newer.`;
     }
 
@@ -343,7 +352,7 @@ function AccountRolesARNsSection({
                   label="Installer role"
                   type="text"
                   options={installerRoleOptions}
-                  onChange={handInstallerRoleChange}
+                  onChange={onInstallerRoleChange}
                   isDisabled={installerRoleOptions.length <= 1}
                   validate={roleARNRequired}
                   isRequired
