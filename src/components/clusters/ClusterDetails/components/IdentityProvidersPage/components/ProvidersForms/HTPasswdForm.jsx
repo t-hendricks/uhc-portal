@@ -186,9 +186,8 @@ const HTPasswdForm = ({
         )}
       />
       <GridItem span={11}>
-        <Alert isInline variant="info" title="Securely store your username and password">
-          If you lose these credentials, you will have to delete and recreate the cluster admin
-          user.
+        <Alert isInline variant="info" title="Securely store your usernames and passwords">
+          If you lose these credentials, you will have to delete and recreate the users.
         </Alert>
       </GridItem>
     </>
