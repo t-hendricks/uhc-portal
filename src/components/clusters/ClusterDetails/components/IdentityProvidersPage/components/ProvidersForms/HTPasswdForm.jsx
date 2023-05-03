@@ -135,10 +135,10 @@ const HTPasswdForm = ({
   // idpEdited,
   // change,
   // clearFields,
-  HtPasswdErrors,
+  HTPasswdErrors,
 }) => {
   const getHelpText = (index) => {
-    const passwordErrors = HtPasswdErrors?.[index]?.password;
+    const passwordErrors = HTPasswdErrors?.[index]?.password;
     return <HelpTextPassword passwordErrors={passwordErrors} />;
   };
 
@@ -200,7 +200,7 @@ HTPasswdForm.propTypes = {
   // change: PropTypes.func,
   // clearFields: PropTypes.func,
   // input: PropTypes.object,
-  HtPasswdErrors: PropTypes.arrayOf({
+  HTPasswdErrors: PropTypes.arrayOf({
     emptyPassword: PropTypes.bool,
     baseRequirements: PropTypes.bool,
     uppercase: PropTypes.bool,
