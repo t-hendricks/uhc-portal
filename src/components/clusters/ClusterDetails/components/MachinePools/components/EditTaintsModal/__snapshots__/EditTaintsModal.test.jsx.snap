@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`<EditTaintsModal /> renders correctl 1`] = `
+exports[`<EditTaintsModal /> renders correctly 1`] = `
 <Modal
   isPrimaryDisabled={true}
   modalSize="medium"
@@ -31,8 +31,8 @@ exports[`<EditTaintsModal /> renders correctl 1`] = `
                 "value": "mp-with-taints",
               },
               Object {
-                "name": "mp-withot-taints",
-                "value": "mp-withot-taints",
+                "name": "mp-without-taints",
+                "value": "mp-without-taints",
               },
             ]
           }
