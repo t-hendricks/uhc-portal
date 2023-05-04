@@ -22,6 +22,7 @@ export enum FieldId {
   NodesCompute = 'nodes_compute',
   MachineTypeForceChoice = 'machine_type_force_choice',
   FipsCryptography = 'fips',
+  IMDS = 'imds',
 }
 
 export const initialValues: FormikValues = {
@@ -36,4 +37,9 @@ export enum CloudProviderType {
 export enum UpgradePolicyType {
   Automatic = 'automatic',
   Manual = 'manual',
+}
+
+export enum IMDSType {
+  Optional = 'optional', // both v1 and v2
+  Required = 'required', // v2 only
 }

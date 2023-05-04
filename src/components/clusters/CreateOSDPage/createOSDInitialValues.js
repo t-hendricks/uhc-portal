@@ -51,7 +51,7 @@ const createOSDInitialValues = ({
     disable_scp_checks: false,
     billing_model: billingModelValue(),
     product: product || (isTrialDefault ? normalizedProducts.OSDTrial : normalizedProducts.OSD),
-
+    imds: 'optional',
     // Optional fields based on whether Hypershift is selected or not
     ...(isHypershiftSelected
       ? {

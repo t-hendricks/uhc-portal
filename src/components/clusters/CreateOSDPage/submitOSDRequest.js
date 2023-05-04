@@ -141,6 +141,7 @@ export const createClusterRequest = ({ isWizard = true, cloudProviderID, product
       };
     }
   }
+
   if (formData.byoc === 'true') {
     const wasExistingVPCShown = isWizard || formData.network_configuration_toggle === 'advanced';
     const isInstallExistingVPC = wasExistingVPCShown && formData.install_to_vpc;
@@ -281,6 +282,11 @@ export const createClusterRequest = ({ isWizard = true, cloudProviderID, product
       unit: 'B',
       value: parseFloat(formData.persistent_storage),
     };
+  }
+
+  if (actualCloudProviderID === 'aws') {
+    clusterRequest.aws = clusterRequest.aws || {};
+    clusterRequest.aws.http_tokens_state = formData.imds;
   }
 
   if (formData.hypershift) {

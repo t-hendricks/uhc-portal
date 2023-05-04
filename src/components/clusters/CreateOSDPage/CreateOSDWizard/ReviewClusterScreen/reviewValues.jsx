@@ -171,6 +171,13 @@ const reviewValues = {
       false: 'Disabled',
     },
   },
+  imds: {
+    title: 'Instance Metadata Service',
+    values: {
+      optional: 'IMDS v1 or v2',
+      required: 'IMDS v2 only',
+    },
+  },
   nodes_compute: {
     title: 'Compute node count',
     valueTransform: (value, allValues) => {

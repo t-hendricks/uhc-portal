@@ -5,7 +5,9 @@ import { BreadcrumbPath } from '~/components/common/Breadcrumbs';
 import {
   FieldId as CommonFieldId,
   CloudProviderType,
+  IMDSType,
 } from '~/components/clusters/wizards/common/constants';
+import { splitMajorMinor } from '../../common/Upgrades/UpgradeAcknowledge/UpgradeAcknowledgeSelectors';
 
 export enum RosaFieldId {}
 
@@ -59,4 +61,10 @@ export const initialValues: FormikValues = {
   [FieldId.Byoc]: 'true',
   [FieldId.BillingModel]: billingModels.STANDARD,
   [FieldId.NodeLabels]: [{ key: '', value: '' }],
+  [FieldId.IMDS]: IMDSType.Optional,
+};
+
+export const canSelectImds = (clusterVersionRawId: string): boolean => {
+  const [major, minor] = splitMajorMinor(clusterVersionRawId);
+  return major > 4 || (major === 4 && minor >= 11);
 };

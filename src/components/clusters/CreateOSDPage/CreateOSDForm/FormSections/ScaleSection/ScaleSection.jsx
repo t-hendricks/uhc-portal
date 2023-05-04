@@ -11,6 +11,7 @@ import {
 } from '@patternfly/react-core';
 
 import MachineTypeSelection from './MachineTypeSelection';
+import ImdsSection from './ImdsSection';
 
 import { ReduxFormKeyValueList, ReduxFormTaints } from '../../../../../common/ReduxFormComponents';
 import PersistentStorageDropdown from '../../../../common/PersistentStorageDropdown';
@@ -24,6 +25,7 @@ import PopoverHint from '../../../../../common/PopoverHint';
 import { required } from '../../../../../../common/validators';
 import ExternalLink from '../../../../../common/ExternalLink';
 import AutoScaleSection from './AutoScaleSection/AutoScaleSection';
+import { canSelectImds } from '~/components/clusters/wizards/rosa/constants';
 
 function ScaleSection({
   pending,
@@ -43,7 +45,13 @@ function ScaleSection({
   autoScaleMaxNodesValue = '0',
   change,
   billingModel,
+  clusterVersionRawId,
+  imds,
 }) {
+  const onChangeImds = (value) => {
+    change('imds', value);
+  };
+
   const expandableSectionTitle = isMachinePool ? 'Edit node labels and taints' : 'Edit node labels';
 
   const labelsAndTaintsSection = (
@@ -64,6 +72,16 @@ function ScaleSection({
         </>
       )}
     </ExpandableSection>
+  );
+
+  const imdsSection = (
+    <GridItem md={12}>
+      <ImdsSection
+        isDisabled={!canSelectImds(clusterVersionRawId)}
+        value={imds}
+        onChangeImds={onChangeImds}
+      />
+    </GridItem>
   );
 
   const isRosa = product === normalizedProducts.ROSA;
@@ -118,6 +136,7 @@ function ScaleSection({
               minNodesRequired={minNodesRequired}
             />
           </GridItem>
+          {autoscalingEnabled && imdsSection}
           {autoscalingEnabled && labelsAndTaintsSection}
         </>
       )}
@@ -155,6 +174,7 @@ function ScaleSection({
             />
           </GridItem>
           <GridItem md={6} />
+          {imdsSection}
           {labelsAndTaintsSection}
         </>
       )}
@@ -229,6 +249,8 @@ ScaleSection.propTypes = {
   change: PropTypes.func.isRequired,
   autoScaleMinNodesValue: PropTypes.string,
   autoScaleMaxNodesValue: PropTypes.string,
+  clusterVersionRawId: PropTypes.string.isRequired,
+  imds: PropTypes.string.isRequired,
 };
 
 export default ScaleSection;
