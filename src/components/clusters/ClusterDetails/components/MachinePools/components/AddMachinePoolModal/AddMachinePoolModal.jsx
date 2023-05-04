@@ -11,6 +11,7 @@ import ReduxVerticalFormGroup from '../../../../../../common/ReduxFormComponents
 import { checkMachinePoolName, checkNodePoolName } from '../../../../../../../common/validators';
 import CostSavingsSection from './CostSavingsSection';
 import { isMultiAZ } from '../../../../clusterDetailsHelper';
+import { getMinNodesRequired } from '../../machinePoolsHelper';
 
 class AddMachinePoolModal extends Component {
   componentDidMount() {
@@ -193,7 +194,7 @@ class AddMachinePoolModal extends Component {
                 cloudProviderID={cluster.cloud_provider.id}
                 product={cluster?.subscription?.plan?.type}
                 showStorageAndLoadBalancers={false}
-                minNodes={0}
+                minNodesRequired={getMinNodesRequired(isHypershiftCluster)}
                 isMachinePool
                 inModal
                 canAutoScale={canAutoScale}

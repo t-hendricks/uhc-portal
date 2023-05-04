@@ -6,6 +6,7 @@ import { canAutoScaleOnCreateSelector } from '../../../ClusterDetails/components
 import wizardConnector from '../WizardConnector';
 import MachinePoolScreen from './MachinePoolScreen';
 import createOSDInitialValues from '../../createOSDInitialValues';
+import { getMinNodesRequired } from '~/components/clusters/ClusterDetails/components/MachinePools/machinePoolsHelper';
 
 const mapStateToProps = (state, ownProps) => {
   const valueSelector = formValueSelector('CreateCluster');
@@ -16,6 +17,7 @@ const mapStateToProps = (state, ownProps) => {
   const product = valueSelector(state, 'product');
   const billingModel = valueSelector(state, 'billing_model');
   const machineType = valueSelector(state, 'machine_type');
+  const isHypershiftSelected = valueSelector(state, 'hypershift') === 'true';
 
   return {
     cloudProviderID,
@@ -24,6 +26,7 @@ const mapStateToProps = (state, ownProps) => {
     billingModel,
     isByoc,
     machineType,
+    minNodesRequired: getMinNodesRequired(isHypershiftSelected),
     canAutoScale: canAutoScaleOnCreateSelector(state, product),
     autoscalingEnabled: !!valueSelector(state, 'autoscalingEnabled'),
     autoScaleMinNodesValue: valueSelector(state, 'min_replicas'),
