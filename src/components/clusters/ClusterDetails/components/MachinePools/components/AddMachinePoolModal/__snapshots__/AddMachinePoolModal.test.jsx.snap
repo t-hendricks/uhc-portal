@@ -51,7 +51,7 @@ exports[`<AddMachinePoolModal /> renders correctly 1`] = `
         isMachinePool={true}
         isMultiAz={false}
         machineType="r5.2xlarge"
-        minNodes={0}
+        minNodesRequired={0}
         product="OSD"
         showStorageAndLoadBalancers={false}
       />

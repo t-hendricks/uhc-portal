@@ -136,19 +136,29 @@ class AutoScaleSection extends React.Component {
   };
 
   componentDidUpdate(prevProps) {
-    const { autoscalingEnabled, change, isDefaultMachinePool, product, isBYOC, isMultiAz } =
-      this.props;
+    const {
+      autoscalingEnabled,
+      change,
+      isDefaultMachinePool,
+      product,
+      isBYOC,
+      isMultiAz,
+      autoScaleMinNodesValue,
+      minNodesRequired,
+    } = this.props;
     if (!prevProps.autoscalingEnabled && autoscalingEnabled) {
-      const { autoScaleMinNodesValue } = this.props;
       const minAllowed = getMinNodesAllowed({
         isDefaultMachinePool,
         product,
         isBYOC,
         isMultiAz,
         autoScaleMinNodesValue,
+        defaultMinAllowed: minNodesRequired,
       });
-      // updates the min input value
-      change('min_replicas', isMultiAz ? (minAllowed / 3).toString() : minAllowed.toString());
+      const defaultReplicas = isMultiAz ? (minAllowed / 3).toString() : minAllowed.toString();
+
+      change('min_replicas', defaultReplicas);
+      change('max_replicas', defaultReplicas);
     }
   }
 
@@ -158,13 +168,15 @@ class AutoScaleSection extends React.Component {
   hideError = (lim) => this.setState({ [`${lim}ErrorMessage`]: undefined });
 
   minNodes = () => {
-    const { isDefaultMachinePool, product, isBYOC, isMultiAz } = this.props;
+    const { isDefaultMachinePool, product, isBYOC, isMultiAz, minNodesRequired } = this.props;
     return (
       getMinNodesAllowed({
         isDefaultMachinePool,
         product,
         isBYOC,
         isMultiAz,
+        autoScaleMinNodesValue: null,
+        defaultMinAllowed: minNodesRequired,
       }) / (isMultiAz ? 3 : 1)
     );
   };
@@ -346,6 +358,7 @@ AutoScaleSection.propTypes = {
   isDefaultMachinePool: PropTypes.bool.isRequired,
   change: PropTypes.func.isRequired,
   onChange: PropTypes.func,
+  minNodesRequired: PropTypes.number,
 };
 
 AutoScaleSection.defaultProps = {

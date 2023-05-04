@@ -286,7 +286,7 @@ exports[`<CloudTab /> should render correctly with OSD Trial quota 1`] = `
             >
               <td
                 class=""
-                colspan="6"
+                colspan="7"
                 data-key="0"
                 id="expanded-content2"
               >
@@ -460,7 +460,7 @@ exports[`<CloudTab /> should render correctly with OSD Trial quota 1`] = `
             >
               <td
                 class=""
-                colspan="6"
+                colspan="7"
                 data-key="0"
                 id="expanded-content4"
               >
@@ -634,7 +634,7 @@ exports[`<CloudTab /> should render correctly with OSD Trial quota 1`] = `
             >
               <td
                 class=""
-                colspan="6"
+                colspan="7"
                 data-key="0"
                 id="expanded-content6"
               >
@@ -841,7 +841,7 @@ exports[`<CloudTab /> should render correctly with OSD Trial quota 1`] = `
             >
               <td
                 class=""
-                colspan="6"
+                colspan="7"
                 data-key="0"
                 id="expanded-content8"
               >
@@ -1553,7 +1553,7 @@ exports[`<CloudTab /> should render correctly with both trial and quota 1`] = `
             >
               <td
                 class=""
-                colspan="6"
+                colspan="7"
                 data-key="0"
                 id="expanded-content2"
               >
@@ -1727,7 +1727,7 @@ exports[`<CloudTab /> should render correctly with both trial and quota 1`] = `
             >
               <td
                 class=""
-                colspan="6"
+                colspan="7"
                 data-key="0"
                 id="expanded-content4"
               >
@@ -1901,7 +1901,7 @@ exports[`<CloudTab /> should render correctly with both trial and quota 1`] = `
             >
               <td
                 class=""
-                colspan="6"
+                colspan="7"
                 data-key="0"
                 id="expanded-content6"
               >
@@ -2108,7 +2108,7 @@ exports[`<CloudTab /> should render correctly with both trial and quota 1`] = `
             >
               <td
                 class=""
-                colspan="6"
+                colspan="7"
                 data-key="0"
                 id="expanded-content8"
               >
@@ -2744,7 +2744,7 @@ exports[`<CloudTab /> should render correctly with quota 1`] = `
             >
               <td
                 class=""
-                colspan="6"
+                colspan="7"
                 data-key="0"
                 id="expanded-content1"
               >
@@ -2918,7 +2918,7 @@ exports[`<CloudTab /> should render correctly with quota 1`] = `
             >
               <td
                 class=""
-                colspan="6"
+                colspan="7"
                 data-key="0"
                 id="expanded-content3"
               >
@@ -3092,7 +3092,7 @@ exports[`<CloudTab /> should render correctly with quota 1`] = `
             >
               <td
                 class=""
-                colspan="6"
+                colspan="7"
                 data-key="0"
                 id="expanded-content5"
               >
@@ -3299,7 +3299,7 @@ exports[`<CloudTab /> should render correctly with quota 1`] = `
             >
               <td
                 class=""
-                colspan="6"
+                colspan="7"
                 data-key="0"
                 id="expanded-content7"
               >
@@ -3945,7 +3945,7 @@ exports[`<CloudTab /> should render correctly without quota 1`] = `
             >
               <td
                 class=""
-                colspan="6"
+                colspan="7"
                 data-key="0"
                 id="expanded-content1"
               >
@@ -4119,7 +4119,7 @@ exports[`<CloudTab /> should render correctly without quota 1`] = `
             >
               <td
                 class=""
-                colspan="6"
+                colspan="7"
                 data-key="0"
                 id="expanded-content3"
               >
@@ -4293,7 +4293,7 @@ exports[`<CloudTab /> should render correctly without quota 1`] = `
             >
               <td
                 class=""
-                colspan="6"
+                colspan="7"
                 data-key="0"
                 id="expanded-content5"
               >
@@ -4500,7 +4500,7 @@ exports[`<CloudTab /> should render correctly without quota 1`] = `
             >
               <td
                 class=""
-                colspan="6"
+                colspan="7"
                 data-key="0"
                 id="expanded-content7"
               >

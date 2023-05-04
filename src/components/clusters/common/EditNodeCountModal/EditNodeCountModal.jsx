@@ -13,6 +13,7 @@ import {
   SpotInstanceInfoAlert,
   isMachinePoolUsingSpotInstances,
 } from '../../ClusterDetails/components/MachinePools/components/SpotInstanceHelper';
+import { getMinNodesRequired } from '~/components/clusters/ClusterDetails/components/MachinePools/machinePoolsHelper';
 
 import Modal from '../../../common/Modal/Modal';
 import ErrorBox from '../../../common/ErrorBox';
@@ -124,6 +125,7 @@ class EditNodeCountModal extends Component {
       clusterID,
       isHypershiftCluster,
     } = this.props;
+    const minNodesRequired = getMinNodesRequired(isHypershiftCluster, machinePoolId);
 
     const error = editNodeCountResponse.error ? (
       <ErrorBox message="Error editing machine pool" response={editNodeCountResponse} />
@@ -160,13 +162,6 @@ class EditNodeCountModal extends Component {
 
     const pending =
       editNodeCountResponse.pending || organization.pending || machinePoolsList.pending;
-
-    const getMinNodes = () => {
-      if ((!isHypershiftCluster && machinePoolId !== 'Default') || isHypershiftCluster) {
-        return 0;
-      }
-      return undefined;
-    };
 
     return (
       <Modal
@@ -208,6 +203,7 @@ class EditNodeCountModal extends Component {
                       product={product}
                       isBYOC={isByoc}
                       isDefaultMachinePool={machinePoolId === 'Default' && !isHypershiftCluster}
+                      minNodesRequired={minNodesRequired}
                     />
                   </GridItem>
                 </>
@@ -227,7 +223,7 @@ class EditNodeCountModal extends Component {
                       currentNodeCount={initialValues.nodes_compute || 0}
                       cloudProviderID={cloudProviderID}
                       product={product}
-                      minNodes={getMinNodes()}
+                      minNodes={minNodesRequired}
                       isMachinePool
                       billingModel={billingModel}
                     />
