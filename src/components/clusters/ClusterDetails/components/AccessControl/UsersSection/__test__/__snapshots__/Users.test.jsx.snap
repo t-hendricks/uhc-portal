@@ -75,6 +75,7 @@ exports[`<Users /> with users should render 1`] = `
           },
         ]
       }
+      actionsMenuAppendTo="inline"
       areActionsDisabled={[Function]}
       aria-label="Users"
       borders={true}

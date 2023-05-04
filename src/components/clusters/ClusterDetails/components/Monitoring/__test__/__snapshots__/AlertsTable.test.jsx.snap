@@ -16,6 +16,7 @@ exports[`<AlertsTable /> should render empty state when there are no alerts 1`] 
 
 exports[`<AlertsTable /> should render table when there are alerts 1`] = `
 <Table
+  actionsMenuAppendTo="inline"
   aria-label="alerts"
   borders={false}
   canCollapseAll={false}
@@ -179,6 +180,7 @@ exports[`<AlertsTable /> should render table when there are alerts 1`] = `
 
 exports[`<AlertsTable /> should render table with links there are alerts and a console URL 1`] = `
 <Table
+  actionsMenuAppendTo="inline"
   aria-label="alerts"
   borders={false}
   canCollapseAll={false}

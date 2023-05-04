@@ -315,6 +315,7 @@ exports[`<IDPSection /> should render (with IDPs) Hypershift cluster 1`] = `
       <StackItem>
         <Table
           actionResolver={[Function]}
+          actionsMenuAppendTo="inline"
           areActionsDisabled={[Function]}
           aria-label="Identity Providers"
           borders={true}
@@ -553,6 +554,7 @@ exports[`<IDPSection /> should render (with IDPs) non-Hypershift cluster 1`] = `
       <StackItem>
         <Table
           actionResolver={[Function]}
+          actionsMenuAppendTo="inline"
           areActionsDisabled={[Function]}
           aria-label="Identity Providers"
           borders={true}
