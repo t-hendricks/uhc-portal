@@ -10,6 +10,7 @@ exports[`<ClustersWithIssuesTableCard /> renders correctly 1`] = `
   <CardBody>
     <Table
       actionResolver={[Function]}
+      actionsMenuAppendTo="inline"
       aria-label="Clusters with issues"
       borders={true}
       canCollapseAll={false}

@@ -38,6 +38,7 @@ exports[`<NetworkSelfServiceSection /> should notify when a grant fails 1`] = `
             },
           ]
         }
+        actionsMenuAppendTo="inline"
         areActionsDisabled={[Function]}
         aria-label="Grants"
         borders={true}
@@ -235,6 +236,7 @@ exports[`<NetworkSelfServiceSection /> should notify when a grant succeeds 1`] =
             },
           ]
         }
+        actionsMenuAppendTo="inline"
         areActionsDisabled={[Function]}
         aria-label="Grants"
         borders={true}
@@ -442,6 +444,7 @@ exports[`<NetworkSelfServiceSection /> should render with grants 1`] = `
             },
           ]
         }
+        actionsMenuAppendTo="inline"
         areActionsDisabled={[Function]}
         aria-label="Grants"
         borders={true}
