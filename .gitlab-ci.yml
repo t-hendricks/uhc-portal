@@ -126,7 +126,7 @@ stages:
   script:
     - echo "Running cypress tests"
     - node --version
-    - yarn start &
+    - yarn start --env logging=quiet &
     - NODE_TLS_REJECT_UNAUTHORIZED=0 yarn wait-on https://prod.foo.redhat.com:1337/openshift/
     - TERM=xterm LC_ALL=C.UTF-8 LANG=C.UTF-8 yarn e2e-test
   artifacts:
