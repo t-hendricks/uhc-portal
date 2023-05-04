@@ -155,7 +155,6 @@
     "json5": "^2.1.3",
     "lint-staged": "^12.5.0",
     "list-git-remotes": "^1.0.1",
-    "loader-utils": "^2.0.4",
     "mini-css-extract-plugin": "^2.7.5",
     "node-fetch": "^2.6.1",
     "nyc": "^15.1.0",

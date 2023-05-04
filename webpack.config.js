@@ -132,15 +132,6 @@ module.exports = async (_env, argv) => {
     module: {
       rules: [
         {
-          test: new RegExp(entry),
-          loader: require.resolve(
-            '@redhat-cloud-services/frontend-components-config-utilities/chrome-render-loader',
-          ),
-          options: {
-            appName: moduleName,
-          },
-        },
-        {
           test: /\.jsx?$/,
           include: srcDir,
           use: {
@@ -169,6 +160,13 @@ module.exports = async (_env, argv) => {
               },
             },
           ],
+        },
+        {
+          // eslint-disable-next-line max-len
+          // Since we use Insights' upstream PatternFly, we're using null-loader to save about 1MB of CSS
+          test: /\.css$/i,
+          include: reactCSS,
+          use: 'ocm-null-loader',
         },
         {
           test: /\.css$/,
@@ -217,9 +215,11 @@ module.exports = async (_env, argv) => {
       alias: {
         '~': path.resolve(__dirname, 'src/'),
         '@testUtils': path.resolve(__dirname, 'src/testUtils.tsx'),
-        // Since we use Insights' upstream PatternFly, we're excluding it to save about 1MB of CSS
-        '@patternfly/react-styles/css': false,
       },
+    },
+
+    resolveLoader: {
+      modules: ['node_modules', path.resolve(__dirname, 'loaders')],
     },
 
     devServer: {
