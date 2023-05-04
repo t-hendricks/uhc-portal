@@ -4,7 +4,7 @@ import { Grid, GridItem, Title, Form, Text } from '@patternfly/react-core';
 import { normalizedProducts, billingModels } from '../../../../../common/subscriptionTypes';
 import ScaleSection from '../../CreateOSDForm/FormSections/ScaleSection/ScaleSection';
 
-function DefaultMachinePoolScreen({
+function MachinePoolScreen({
   isByoc,
   isMultiAz,
   machineType,
@@ -16,6 +16,7 @@ function DefaultMachinePoolScreen({
   autoScaleMaxNodesValue,
   change,
   billingModel,
+  minNodesRequired,
 }) {
   return (
     <Form
@@ -49,13 +50,14 @@ function DefaultMachinePoolScreen({
           autoScaleMaxNodesValue={autoScaleMaxNodesValue}
           billingModel={billingModel}
           showStorageAndLoadBalancers={false}
+          minNodesRequired={minNodesRequired}
         />
       </Grid>
     </Form>
   );
 }
 
-DefaultMachinePoolScreen.propTypes = {
+MachinePoolScreen.propTypes = {
   isByoc: PropTypes.bool.isRequired,
   isMultiAz: PropTypes.bool.isRequired,
   machineType: PropTypes.string.isRequired,
@@ -67,6 +69,7 @@ DefaultMachinePoolScreen.propTypes = {
   change: PropTypes.func.isRequired,
   autoScaleMinNodesValue: PropTypes.string,
   autoScaleMaxNodesValue: PropTypes.string,
+  minNodesRequired: PropTypes.number,
 };
 
-export default DefaultMachinePoolScreen;
+export default MachinePoolScreen;

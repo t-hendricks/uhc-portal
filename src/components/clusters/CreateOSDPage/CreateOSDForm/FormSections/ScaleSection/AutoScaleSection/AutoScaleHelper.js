@@ -7,6 +7,7 @@ const getMinNodesAllowed = ({
   isBYOC,
   isMultiAz,
   autoScaleMinNodesValue = null,
+  defaultMinAllowed = 0,
 }) => {
   let currMinNodes = parseInt(autoScaleMinNodesValue, 10) || 0;
   if (isMultiAz) {
@@ -20,7 +21,7 @@ const getMinNodesAllowed = ({
       minNodesAllowed = isMultiAz ? 9 : 4;
     }
   } else {
-    minNodesAllowed = 0;
+    minNodesAllowed = defaultMinAllowed;
   }
   return max([currMinNodes, minNodesAllowed]);
 };
