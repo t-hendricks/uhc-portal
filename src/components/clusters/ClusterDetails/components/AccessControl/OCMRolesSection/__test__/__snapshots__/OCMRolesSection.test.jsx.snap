@@ -354,6 +354,7 @@ exports[` 1`] = `
                 },
               ]
             }
+            actionsMenuAppendTo="inline"
             areActionsDisabled={[Function]}
             aria-label="OCM Roles and Access"
             borders={true}
@@ -434,6 +435,7 @@ exports[` 1`] = `
                       "expandId": "expandable-toggle",
                       "firstUserColumnIndex": 0,
                       "isHeaderSelectDisabled": false,
+                      "menuAppendTo": "inline",
                       "onCollapse": undefined,
                       "onExpand": undefined,
                       "onFavorite": undefined,
@@ -493,6 +495,7 @@ exports[` 1`] = `
                       "expandId": "expandable-toggle",
                       "firstUserColumnIndex": 0,
                       "isHeaderSelectDisabled": false,
+                      "menuAppendTo": "inline",
                       "onCollapse": undefined,
                       "onExpand": undefined,
                       "onFavorite": undefined,
@@ -553,6 +556,7 @@ exports[` 1`] = `
                       "expandId": "expandable-toggle",
                       "firstUserColumnIndex": 0,
                       "isHeaderSelectDisabled": false,
+                      "menuAppendTo": "inline",
                       "onCollapse": undefined,
                       "onExpand": undefined,
                       "onFavorite": undefined,
@@ -679,6 +683,7 @@ exports[` 1`] = `
                                     "expandId": "expandable-toggle",
                                     "firstUserColumnIndex": 0,
                                     "isHeaderSelectDisabled": false,
+                                    "menuAppendTo": "inline",
                                     "onCollapse": undefined,
                                     "onExpand": undefined,
                                     "onFavorite": undefined,
@@ -738,6 +743,7 @@ exports[` 1`] = `
                                     "expandId": "expandable-toggle",
                                     "firstUserColumnIndex": 0,
                                     "isHeaderSelectDisabled": false,
+                                    "menuAppendTo": "inline",
                                     "onCollapse": undefined,
                                     "onExpand": undefined,
                                     "onFavorite": undefined,
@@ -798,6 +804,7 @@ exports[` 1`] = `
                                     "expandId": "expandable-toggle",
                                     "firstUserColumnIndex": 0,
                                     "isHeaderSelectDisabled": false,
+                                    "menuAppendTo": "inline",
                                     "onCollapse": undefined,
                                     "onExpand": undefined,
                                     "onFavorite": undefined,
@@ -912,6 +919,7 @@ exports[` 1`] = `
                                             "expandId": "expandable-toggle",
                                             "firstUserColumnIndex": 0,
                                             "isHeaderSelectDisabled": false,
+                                            "menuAppendTo": "inline",
                                             "onCollapse": undefined,
                                             "onExpand": undefined,
                                             "onFavorite": undefined,
@@ -971,6 +979,7 @@ exports[` 1`] = `
                                             "expandId": "expandable-toggle",
                                             "firstUserColumnIndex": 0,
                                             "isHeaderSelectDisabled": false,
+                                            "menuAppendTo": "inline",
                                             "onCollapse": undefined,
                                             "onExpand": undefined,
                                             "onFavorite": undefined,
@@ -1031,6 +1040,7 @@ exports[` 1`] = `
                                             "expandId": "expandable-toggle",
                                             "firstUserColumnIndex": 0,
                                             "isHeaderSelectDisabled": false,
+                                            "menuAppendTo": "inline",
                                             "onCollapse": undefined,
                                             "onExpand": undefined,
                                             "onFavorite": undefined,
@@ -1567,6 +1577,7 @@ exports[` 1`] = `
                                 "expandId": "expandable-toggle",
                                 "firstUserColumnIndex": 0,
                                 "isHeaderSelectDisabled": false,
+                                "menuAppendTo": "inline",
                                 "onCollapse": undefined,
                                 "onExpand": undefined,
                                 "onFavorite": undefined,
@@ -1626,6 +1637,7 @@ exports[` 1`] = `
                                 "expandId": "expandable-toggle",
                                 "firstUserColumnIndex": 0,
                                 "isHeaderSelectDisabled": false,
+                                "menuAppendTo": "inline",
                                 "onCollapse": undefined,
                                 "onExpand": undefined,
                                 "onFavorite": undefined,
@@ -1686,6 +1698,7 @@ exports[` 1`] = `
                                 "expandId": "expandable-toggle",
                                 "firstUserColumnIndex": 0,
                                 "isHeaderSelectDisabled": false,
+                                "menuAppendTo": "inline",
                                 "onCollapse": undefined,
                                 "onExpand": undefined,
                                 "onFavorite": undefined,
@@ -1765,6 +1778,7 @@ exports[` 1`] = `
                                     "expandId": "expandable-toggle",
                                     "firstUserColumnIndex": 0,
                                     "isHeaderSelectDisabled": false,
+                                    "menuAppendTo": "inline",
                                     "onCollapse": undefined,
                                     "onExpand": undefined,
                                     "onFavorite": undefined,
@@ -1824,6 +1838,7 @@ exports[` 1`] = `
                                     "expandId": "expandable-toggle",
                                     "firstUserColumnIndex": 0,
                                     "isHeaderSelectDisabled": false,
+                                    "menuAppendTo": "inline",
                                     "onCollapse": undefined,
                                     "onExpand": undefined,
                                     "onFavorite": undefined,
@@ -1884,6 +1899,7 @@ exports[` 1`] = `
                                     "expandId": "expandable-toggle",
                                     "firstUserColumnIndex": 0,
                                     "isHeaderSelectDisabled": false,
+                                    "menuAppendTo": "inline",
                                     "onCollapse": undefined,
                                     "onExpand": undefined,
                                     "onFavorite": undefined,
@@ -2355,6 +2371,7 @@ exports[`<OCMRolesSection /> should render 1`] = `
                 },
               ]
             }
+            actionsMenuAppendTo="inline"
             areActionsDisabled={[Function]}
             aria-label="OCM Roles and Access"
             borders={true}
@@ -2595,6 +2612,7 @@ exports[`<OCMRolesSection /> should render 1`] = `
                       "expandId": "expandable-toggle",
                       "firstUserColumnIndex": 0,
                       "isHeaderSelectDisabled": false,
+                      "menuAppendTo": "inline",
                       "onCollapse": undefined,
                       "onExpand": undefined,
                       "onFavorite": undefined,
@@ -2654,6 +2672,7 @@ exports[`<OCMRolesSection /> should render 1`] = `
                       "expandId": "expandable-toggle",
                       "firstUserColumnIndex": 0,
                       "isHeaderSelectDisabled": false,
+                      "menuAppendTo": "inline",
                       "onCollapse": undefined,
                       "onExpand": undefined,
                       "onFavorite": undefined,
@@ -2714,6 +2733,7 @@ exports[`<OCMRolesSection /> should render 1`] = `
                       "expandId": "expandable-toggle",
                       "firstUserColumnIndex": 0,
                       "isHeaderSelectDisabled": false,
+                      "menuAppendTo": "inline",
                       "onCollapse": undefined,
                       "onExpand": undefined,
                       "onFavorite": undefined,
@@ -2840,6 +2860,7 @@ exports[`<OCMRolesSection /> should render 1`] = `
                                     "expandId": "expandable-toggle",
                                     "firstUserColumnIndex": 0,
                                     "isHeaderSelectDisabled": false,
+                                    "menuAppendTo": "inline",
                                     "onCollapse": undefined,
                                     "onExpand": undefined,
                                     "onFavorite": undefined,
@@ -2899,6 +2920,7 @@ exports[`<OCMRolesSection /> should render 1`] = `
                                     "expandId": "expandable-toggle",
                                     "firstUserColumnIndex": 0,
                                     "isHeaderSelectDisabled": false,
+                                    "menuAppendTo": "inline",
                                     "onCollapse": undefined,
                                     "onExpand": undefined,
                                     "onFavorite": undefined,
@@ -2959,6 +2981,7 @@ exports[`<OCMRolesSection /> should render 1`] = `
                                     "expandId": "expandable-toggle",
                                     "firstUserColumnIndex": 0,
                                     "isHeaderSelectDisabled": false,
+                                    "menuAppendTo": "inline",
                                     "onCollapse": undefined,
                                     "onExpand": undefined,
                                     "onFavorite": undefined,
@@ -3073,6 +3096,7 @@ exports[`<OCMRolesSection /> should render 1`] = `
                                             "expandId": "expandable-toggle",
                                             "firstUserColumnIndex": 0,
                                             "isHeaderSelectDisabled": false,
+                                            "menuAppendTo": "inline",
                                             "onCollapse": undefined,
                                             "onExpand": undefined,
                                             "onFavorite": undefined,
@@ -3132,6 +3156,7 @@ exports[`<OCMRolesSection /> should render 1`] = `
                                             "expandId": "expandable-toggle",
                                             "firstUserColumnIndex": 0,
                                             "isHeaderSelectDisabled": false,
+                                            "menuAppendTo": "inline",
                                             "onCollapse": undefined,
                                             "onExpand": undefined,
                                             "onFavorite": undefined,
@@ -3192,6 +3217,7 @@ exports[`<OCMRolesSection /> should render 1`] = `
                                             "expandId": "expandable-toggle",
                                             "firstUserColumnIndex": 0,
                                             "isHeaderSelectDisabled": false,
+                                            "menuAppendTo": "inline",
                                             "onCollapse": undefined,
                                             "onExpand": undefined,
                                             "onFavorite": undefined,
@@ -3728,6 +3754,7 @@ exports[`<OCMRolesSection /> should render 1`] = `
                                 "expandId": "expandable-toggle",
                                 "firstUserColumnIndex": 0,
                                 "isHeaderSelectDisabled": false,
+                                "menuAppendTo": "inline",
                                 "onCollapse": undefined,
                                 "onExpand": undefined,
                                 "onFavorite": undefined,
@@ -3787,6 +3814,7 @@ exports[`<OCMRolesSection /> should render 1`] = `
                                 "expandId": "expandable-toggle",
                                 "firstUserColumnIndex": 0,
                                 "isHeaderSelectDisabled": false,
+                                "menuAppendTo": "inline",
                                 "onCollapse": undefined,
                                 "onExpand": undefined,
                                 "onFavorite": undefined,
@@ -3847,6 +3875,7 @@ exports[`<OCMRolesSection /> should render 1`] = `
                                 "expandId": "expandable-toggle",
                                 "firstUserColumnIndex": 0,
                                 "isHeaderSelectDisabled": false,
+                                "menuAppendTo": "inline",
                                 "onCollapse": undefined,
                                 "onExpand": undefined,
                                 "onFavorite": undefined,
@@ -4580,6 +4609,7 @@ exports[`<OCMRolesSection /> should render 1`] = `
                                     "expandId": "expandable-toggle",
                                     "firstUserColumnIndex": 0,
                                     "isHeaderSelectDisabled": false,
+                                    "menuAppendTo": "inline",
                                     "onCollapse": undefined,
                                     "onExpand": undefined,
                                     "onFavorite": undefined,
@@ -4639,6 +4669,7 @@ exports[`<OCMRolesSection /> should render 1`] = `
                                     "expandId": "expandable-toggle",
                                     "firstUserColumnIndex": 0,
                                     "isHeaderSelectDisabled": false,
+                                    "menuAppendTo": "inline",
                                     "onCollapse": undefined,
                                     "onExpand": undefined,
                                     "onFavorite": undefined,
@@ -4699,6 +4730,7 @@ exports[`<OCMRolesSection /> should render 1`] = `
                                     "expandId": "expandable-toggle",
                                     "firstUserColumnIndex": 0,
                                     "isHeaderSelectDisabled": false,
+                                    "menuAppendTo": "inline",
                                     "onCollapse": undefined,
                                     "onExpand": undefined,
                                     "onFavorite": undefined,
@@ -5550,6 +5582,7 @@ exports[`<OCMRolesSection /> should render 1`] = `
                                               "expandId": "expandable-toggle",
                                               "firstUserColumnIndex": 0,
                                               "isHeaderSelectDisabled": false,
+                                              "menuAppendTo": "inline",
                                               "onCollapse": undefined,
                                               "onExpand": undefined,
                                               "onFavorite": undefined,
@@ -5609,6 +5642,7 @@ exports[`<OCMRolesSection /> should render 1`] = `
                                               "expandId": "expandable-toggle",
                                               "firstUserColumnIndex": 0,
                                               "isHeaderSelectDisabled": false,
+                                              "menuAppendTo": "inline",
                                               "onCollapse": undefined,
                                               "onExpand": undefined,
                                               "onFavorite": undefined,
@@ -5669,6 +5703,7 @@ exports[`<OCMRolesSection /> should render 1`] = `
                                               "expandId": "expandable-toggle",
                                               "firstUserColumnIndex": 0,
                                               "isHeaderSelectDisabled": false,
+                                              "menuAppendTo": "inline",
                                               "onCollapse": undefined,
                                               "onExpand": undefined,
                                               "onFavorite": undefined,
@@ -6150,6 +6185,7 @@ exports[`<OCMRolesSection /> should render 1`] = `
                                                                 "expandId": "expandable-toggle",
                                                                 "firstUserColumnIndex": 0,
                                                                 "isHeaderSelectDisabled": false,
+                                                                "menuAppendTo": "inline",
                                                                 "onCollapse": undefined,
                                                                 "onExpand": undefined,
                                                                 "onFavorite": undefined,
@@ -6191,6 +6227,7 @@ exports[`<OCMRolesSection /> should render 1`] = `
                                                             },
                                                           ]
                                                         }
+                                                        menuAppendTo="inline"
                                                         rowData={
                                                           Object {
                                                             "cellsData": Array [
@@ -6290,6 +6327,7 @@ exports[`<OCMRolesSection /> should render 1`] = `
                                                           }
                                                           isOpen={false}
                                                           isPlain={true}
+                                                          menuAppendTo="inline"
                                                           position="right"
                                                           toggle={
                                                             <KebabToggle
@@ -6520,6 +6558,7 @@ exports[`<OCMRolesSection /> should render 1`] = `
                                               "expandId": "expandable-toggle",
                                               "firstUserColumnIndex": 0,
                                               "isHeaderSelectDisabled": false,
+                                              "menuAppendTo": "inline",
                                               "onCollapse": undefined,
                                               "onExpand": undefined,
                                               "onFavorite": undefined,
@@ -6579,6 +6618,7 @@ exports[`<OCMRolesSection /> should render 1`] = `
                                               "expandId": "expandable-toggle",
                                               "firstUserColumnIndex": 0,
                                               "isHeaderSelectDisabled": false,
+                                              "menuAppendTo": "inline",
                                               "onCollapse": undefined,
                                               "onExpand": undefined,
                                               "onFavorite": undefined,
@@ -6639,6 +6679,7 @@ exports[`<OCMRolesSection /> should render 1`] = `
                                               "expandId": "expandable-toggle",
                                               "firstUserColumnIndex": 0,
                                               "isHeaderSelectDisabled": false,
+                                              "menuAppendTo": "inline",
                                               "onCollapse": undefined,
                                               "onExpand": undefined,
                                               "onFavorite": undefined,
@@ -7124,6 +7165,7 @@ exports[`<OCMRolesSection /> should render 1`] = `
                                                                 "expandId": "expandable-toggle",
                                                                 "firstUserColumnIndex": 0,
                                                                 "isHeaderSelectDisabled": false,
+                                                                "menuAppendTo": "inline",
                                                                 "onCollapse": undefined,
                                                                 "onExpand": undefined,
                                                                 "onFavorite": undefined,
@@ -7165,6 +7207,7 @@ exports[`<OCMRolesSection /> should render 1`] = `
                                                             },
                                                           ]
                                                         }
+                                                        menuAppendTo="inline"
                                                         rowData={
                                                           Object {
                                                             "cellsData": Array [
@@ -7266,6 +7309,7 @@ exports[`<OCMRolesSection /> should render 1`] = `
                                                           }
                                                           isOpen={false}
                                                           isPlain={true}
+                                                          menuAppendTo="inline"
                                                           position="right"
                                                           toggle={
                                                             <KebabToggle
@@ -7496,6 +7540,7 @@ exports[`<OCMRolesSection /> should render 1`] = `
                                               "expandId": "expandable-toggle",
                                               "firstUserColumnIndex": 0,
                                               "isHeaderSelectDisabled": false,
+                                              "menuAppendTo": "inline",
                                               "onCollapse": undefined,
                                               "onExpand": undefined,
                                               "onFavorite": undefined,
@@ -7555,6 +7600,7 @@ exports[`<OCMRolesSection /> should render 1`] = `
                                               "expandId": "expandable-toggle",
                                               "firstUserColumnIndex": 0,
                                               "isHeaderSelectDisabled": false,
+                                              "menuAppendTo": "inline",
                                               "onCollapse": undefined,
                                               "onExpand": undefined,
                                               "onFavorite": undefined,
@@ -7615,6 +7661,7 @@ exports[`<OCMRolesSection /> should render 1`] = `
                                               "expandId": "expandable-toggle",
                                               "firstUserColumnIndex": 0,
                                               "isHeaderSelectDisabled": false,
+                                              "menuAppendTo": "inline",
                                               "onCollapse": undefined,
                                               "onExpand": undefined,
                                               "onFavorite": undefined,
@@ -8100,6 +8147,7 @@ exports[`<OCMRolesSection /> should render 1`] = `
                                                                 "expandId": "expandable-toggle",
                                                                 "firstUserColumnIndex": 0,
                                                                 "isHeaderSelectDisabled": false,
+                                                                "menuAppendTo": "inline",
                                                                 "onCollapse": undefined,
                                                                 "onExpand": undefined,
                                                                 "onFavorite": undefined,
@@ -8141,6 +8189,7 @@ exports[`<OCMRolesSection /> should render 1`] = `
                                                             },
                                                           ]
                                                         }
+                                                        menuAppendTo="inline"
                                                         rowData={
                                                           Object {
                                                             "cellsData": Array [
@@ -8242,6 +8291,7 @@ exports[`<OCMRolesSection /> should render 1`] = `
                                                           }
                                                           isOpen={false}
                                                           isPlain={true}
+                                                          menuAppendTo="inline"
                                                           position="right"
                                                           toggle={
                                                             <KebabToggle

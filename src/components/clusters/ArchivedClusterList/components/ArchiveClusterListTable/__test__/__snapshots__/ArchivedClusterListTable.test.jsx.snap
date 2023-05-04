@@ -2,6 +2,7 @@
 
 exports[`<ArchivedClusterListTable /> ArchivedClusterListTable should render 1`] = `
 <Table
+  actionsMenuAppendTo="inline"
   borders={true}
   canCollapseAll={false}
   canSelectAll={true}

@@ -2,7 +2,7 @@ import sample from 'lodash/sample';
 import keys from 'lodash/keys';
 import set from 'lodash/set';
 import forOwn from 'lodash/forOwn';
-import { OCM } from 'openshift-assisted-ui-lib';
+import * as OCM from '@openshift-assisted/ui-lib/ocm';
 import { normalizedProducts, subscriptionStatuses } from '../../../common/subscriptionTypes';
 import clusterStates, { getClusterStateAndDescription } from './clusterStates';
 

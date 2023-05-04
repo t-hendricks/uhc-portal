@@ -20,6 +20,7 @@ exports[`<MachinePools /> OpenShift version for machine pools is shown if hypers
       <Divider />
       <Table
         actionResolver={[Function]}
+        actionsMenuAppendTo="inline"
         areActionsDisabled={[Function]}
         aria-label="Machine pools"
         borders={true}
@@ -161,6 +162,7 @@ exports[`<MachinePools /> renders with a machine pool with autoscaling enabled 1
       <Divider />
       <Table
         actionResolver={[Function]}
+        actionsMenuAppendTo="inline"
         areActionsDisabled={[Function]}
         aria-label="Machine pools"
         borders={true}
@@ -397,6 +399,7 @@ exports[`<MachinePools /> renders with additional machine pools, some with label
       <Divider />
       <Table
         actionResolver={[Function]}
+        actionsMenuAppendTo="inline"
         areActionsDisabled={[Function]}
         aria-label="Machine pools"
         borders={true}
@@ -759,6 +762,7 @@ exports[`<MachinePools /> renders with the default machine pool 1`] = `
       <Divider />
       <Table
         actionResolver={[Function]}
+        actionsMenuAppendTo="inline"
         areActionsDisabled={[Function]}
         aria-label="Machine pools"
         borders={true}
@@ -867,6 +871,7 @@ exports[`<MachinePools /> renders with the default machine pool when it has labe
       <Divider />
       <Table
         actionResolver={[Function]}
+        actionsMenuAppendTo="inline"
         areActionsDisabled={[Function]}
         aria-label="Machine pools"
         borders={true}

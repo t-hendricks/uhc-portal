@@ -1,5 +1,5 @@
 import produce, { Draft } from 'immer';
-import { OCM } from 'openshift-assisted-ui-lib';
+import * as OCM from '@openshift-assisted/ui-lib/ocm';
 import type { AxiosResponse } from 'axios';
 import { versionComparator } from './versionComparator';
 import { normalizedProducts, clustersServiceProducts } from './subscriptionTypes';

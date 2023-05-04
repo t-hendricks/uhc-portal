@@ -24,7 +24,7 @@ import NotificationPortal from '@redhat-cloud-services/frontend-components-notif
 import * as Sentry from '@sentry/browser';
 import { SessionTiming } from '@sentry/integrations';
 
-import { OCM } from 'openshift-assisted-ui-lib';
+import * as OCM from '@openshift-assisted/ui-lib/ocm';
 
 import config from './config';
 

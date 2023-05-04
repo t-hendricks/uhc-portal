@@ -26,7 +26,7 @@ import {
 import { ConnectedRouter } from 'connected-react-router';
 import get from 'lodash/get';
 import { connect } from 'react-redux';
-import { OCM } from 'openshift-assisted-ui-lib';
+import * as OCM from '@openshift-assisted/ui-lib/ocm';
 import useChrome from '@redhat-cloud-services/frontend-components/useChrome';
 
 import TermsGuardedRoute from './TermsGuardedRoute';
@@ -355,7 +355,11 @@ const Router: React.FC<RouterProps> = ({ history, planType, clusterId, externalC
             />
 
             <Redirect from="/create/rosa/welcome" to="/create/rosa/getstarted" />
-            <Route path="/create/rosa/getstarted" component={GetStartedWithROSA} />
+            <TermsGuardedRoute
+              path="/create/rosa/getstarted"
+              history={history}
+              component={GetStartedWithROSA}
+            />
 
             <TermsGuardedRoute
               path="/create/rosa/wizard"
