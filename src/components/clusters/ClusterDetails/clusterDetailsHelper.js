@@ -34,21 +34,22 @@ const isArchivedSubscription = (cluster) => {
   return status === subscriptionStatuses.ARCHIVED || status === subscriptionStatuses.DEPROVISIONED;
 };
 
-const hasValidStatusForActions = (cluster, needsConsoleUrl) =>
+const hasValidStatusForActions = (cluster, { needsConsoleUrl }) =>
   cluster.managed &&
   (!needsConsoleUrl || get(cluster, 'console.url')) &&
   (cluster.state === clusterStates.READY || isHibernating(cluster.state)) &&
   !isArchivedSubscription(cluster);
 
-const isReadyForRoleAccessActions = (cluster) => hasValidStatusForActions(cluster, true);
+const isReadyForRoleAccessActions = (cluster) =>
+  hasValidStatusForActions(cluster, { needsConsoleUrl: true });
 
 const isReadyForAwsAccessActions = (cluster) =>
-  hasValidStatusForActions(cluster, true) &&
+  hasValidStatusForActions(cluster, { needsConsoleUrl: true }) &&
   get(cluster, 'cloud_provider.id') === 'aws' &&
   !get(cluster, 'ccs.enabled', false);
 
 const isReadyForIdpActions = (cluster) =>
-  hasValidStatusForActions(cluster, !isHypershiftCluster(cluster));
+  hasValidStatusForActions(cluster, { needsConsoleUrl: !isHypershiftCluster(cluster) });
 
 export {
   hasCpuAndMemory,
