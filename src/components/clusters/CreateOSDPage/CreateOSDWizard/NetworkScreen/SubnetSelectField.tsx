@@ -13,6 +13,7 @@ import {
 } from '@patternfly/react-core';
 
 import { useAWSVPCInquiry } from '~/components/clusters/CreateOSDPage/CreateOSDWizard/VPCScreen/useVPCInquiry';
+import { useAWSVPCsFromCluster } from '~/components/clusters/ClusterDetails/components/MachinePools/components/AddMachinePoolModal/useAWSVPCsFromCluster';
 import ErrorBox from '~/components/common/ErrorBox';
 import { CloudVPC, Subnetwork } from '~/types/clusters_mgmt.v1';
 
@@ -31,6 +32,7 @@ interface SubnetSelectFieldProps {
   className?: string;
   privacy?: 'public' | 'private';
   selectedVPC?: string;
+  isNewCluster: boolean;
 }
 
 export const SubnetSelectField = ({
@@ -43,10 +45,12 @@ export const SubnetSelectField = ({
   className,
   privacy,
   selectedVPC,
+  isNewCluster,
 }: SubnetSelectFieldProps) => {
   const [isExpanded, setIsExpanded] = React.useState(false);
   const [selectedSubnetId, setSelectedSubnetId] = React.useState(input.value);
-  const vpcs = useAWSVPCInquiry();
+  const vpcs = isNewCluster ? useAWSVPCInquiry() : useAWSVPCsFromCluster();
+
   const { pending: isVpcsLoading, fulfilled: isVpcsFulfilled, error: vpcsError } = vpcs;
   let vpcsItems: CloudVPC[] = vpcs.data?.items || [];
   if (selectedVPC) {
