@@ -54,8 +54,41 @@ describe('VersionSelection', () => {
       />,
     );
 
-    versions.forEach((version) => {
+    const minManagedVersion = '4.11.4';
+    const priorVersions = versions.filter(
+      (version) =>
+        parseFloat(version.raw_id.replace('.', '')) <=
+        parseFloat(minManagedVersion.replace('.', '')),
+    );
+
+    priorVersions.forEach((version) => {
       expect(screen.getByRole('option', { name: version.raw_id })).toBeVisible();
+    });
+  });
+
+  it('shows hosted enabled versions and does not show hosted disabled versions when hypershift is selected', () => {
+    render(
+      <VersionSelection
+        isOpen
+        isRosa
+        isHypershiftSelected
+        rosaMaxOSVersion="4.12"
+        input={{ onChange: jest.fn() }}
+        isDisabled={false}
+        label="Version select label"
+        meta={{ error: false, touched: false }}
+        getInstallableVersions={jest.fn()}
+        getInstallableVersionsResponse={getInstallableVersionsResponse}
+        selectedClusterVersion={undefined}
+      />,
+    );
+
+    versions.forEach((version) => {
+      if (version.hosted_control_plane_enabled) {
+        expect(screen.getByRole('option', { name: version.raw_id })).toBeVisible();
+      } else {
+        expect(screen.queryByRole('option', { name: version.raw_id })).not.toBeInTheDocument();
+      }
     });
   });
 });
@@ -72,6 +105,21 @@ const versions = [
     id: 'openshift-v4.12.1',
     kind: 'Version',
     raw_id: '4.12.1',
+    release_image:
+      'quay.io/openshift-release-dev/ocp-release@sha256:b9d6ccb5ba5a878141e468e56fa62912ad7c04864acfec0c0056d2b41e3259cc',
+    rosa_enabled: true,
+  },
+  {
+    ami_overrides: [],
+    channel_group: 'stable',
+    default: false,
+    enabled: true,
+    end_of_life_timestamp: '2024-03-17T00:00:00Z',
+    hosted_control_plane_enabled: false,
+    href: '/api/clusters_mgmt/v1/versions/openshift-v4.11.5',
+    id: 'openshift-v4.11.5',
+    kind: 'Version',
+    raw_id: '4.11.5',
     release_image:
       'quay.io/openshift-release-dev/ocp-release@sha256:b9d6ccb5ba5a878141e468e56fa62912ad7c04864acfec0c0056d2b41e3259cc',
     rosa_enabled: true,
