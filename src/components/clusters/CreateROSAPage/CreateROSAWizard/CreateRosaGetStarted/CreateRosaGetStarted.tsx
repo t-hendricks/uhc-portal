@@ -1,5 +1,7 @@
 import React from 'react';
 import {
+  Alert,
+  AlertVariant,
   Grid,
   GridItem,
   TextContent,
@@ -36,6 +38,8 @@ import StepVerifyCredentials from './StepVerifyCredentials';
 import '../createROSAWizard.scss';
 import WithCLICard from './WithCLICard';
 import WithWizardCard from './WithWizardCard';
+import { useFeatureGate } from '~/hooks/useFeatureGate';
+import { HCP_ROSA_GETTING_STARTED_PAGE } from '~/redux/constants/featureConstants';
 
 export const productName = 'Red Hat OpenShift Service on AWS';
 const title = (productName: string = '') => `Get started with ${productName} (ROSA)`;
@@ -52,6 +56,8 @@ const breadcrumbs = (
 
 const CreateRosaGetStarted = () => {
   const [isPrereqOpen, setIsPrereqOpen] = React.useState(true);
+  const showHCPDirections = useFeatureGate(HCP_ROSA_GETTING_STARTED_PAGE);
+
   React.useEffect(() => {
     scrollToTop();
   }, []);
@@ -135,6 +141,17 @@ const CreateRosaGetStarted = () => {
               </CardHeader>
 
               <CardBody>
+                {showHCPDirections ? (
+                  <Alert
+                    variant={AlertVariant.info}
+                    isInline
+                    className="pf-u-mb-md"
+                    component="p"
+                    aria-label=""
+                    title="For now, you can only create ROSA with Hosted Control Plane clusters using the CLI.  You'll be able to create ROSA with Hosted Control Plane clusters using the web interface soon."
+                  />
+                ) : null}
+
                 <Grid hasGutter>
                   <GridItem span={6}>
                     <WithCLICard />

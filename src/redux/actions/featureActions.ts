@@ -13,6 +13,7 @@ import {
   OSD_WIZARD_V2_FEATURE,
   ROSA_CREATION_WIZARD_FEATURE,
   HYPERSHIFT_WIZARD_FEATURE,
+  HCP_ROSA_GETTING_STARTED_PAGE,
 } from '../constants/featureConstants';
 import authorizationsService from '../../services/authorizationsService';
 import accountsService from '../../services/accountsService';
@@ -34,6 +35,7 @@ const getSimpleUnleashFeature = (unleashFeatureName: string, name: string) => ({
 export const features = [
   getSimpleUnleashFeature('osd-trial', OSD_TRIAL_FEATURE),
   getSimpleUnleashFeature('hypershift-creation-wizard', HYPERSHIFT_WIZARD_FEATURE),
+  getSimpleUnleashFeature('hcp-rosa-getting-started-page', HCP_ROSA_GETTING_STARTED_PAGE),
   getSimpleUnleashFeature('assisted-installer-sno', ASSISTED_INSTALLER_SNO_FEATURE),
   getSimpleUnleashFeature('assisted-installer-ocs', ASSISTED_INSTALLER_OCS_FEATURE),
   getSimpleUnleashFeature('assisted-installer-cnv', ASSISTED_INSTALLER_CNV_FEATURE),

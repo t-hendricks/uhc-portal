@@ -780,7 +780,7 @@ exports[`<CloudTab /> should render correctly with OSD Trial quota 1`] = `
                 data-label="Get started"
               >
                 <div
-                  class="pf-c-dropdown"
+                  class="pf-c-dropdown pf-m-align-right"
                   data-ouia-component-id="OUIA-Generated-Dropdown-5"
                   data-ouia-component-type="PF4/Dropdown"
                   data-ouia-safe="true"
@@ -2047,7 +2047,7 @@ exports[`<CloudTab /> should render correctly with both trial and quota 1`] = `
                 data-label="Get started"
               >
                 <div
-                  class="pf-c-dropdown"
+                  class="pf-c-dropdown pf-m-align-right"
                   data-ouia-component-id="OUIA-Generated-Dropdown-7"
                   data-ouia-component-type="PF4/Dropdown"
                   data-ouia-safe="true"
@@ -3238,7 +3238,7 @@ exports[`<CloudTab /> should render correctly with quota 1`] = `
                 data-label="Get started"
               >
                 <div
-                  class="pf-c-dropdown"
+                  class="pf-c-dropdown pf-m-align-right"
                   data-ouia-component-id="OUIA-Generated-Dropdown-1"
                   data-ouia-component-type="PF4/Dropdown"
                   data-ouia-safe="true"
@@ -4439,7 +4439,7 @@ exports[`<CloudTab /> should render correctly without quota 1`] = `
                 data-label="Get started"
               >
                 <div
-                  class="pf-c-dropdown"
+                  class="pf-c-dropdown pf-m-align-right"
                   data-ouia-component-id="OUIA-Generated-Dropdown-3"
                   data-ouia-component-type="PF4/Dropdown"
                   data-ouia-safe="true"
