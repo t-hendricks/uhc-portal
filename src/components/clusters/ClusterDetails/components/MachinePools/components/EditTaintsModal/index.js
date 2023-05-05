@@ -38,7 +38,8 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
       editTaints(
         ownProps.clusterId,
         formData.machinePoolId,
-        { taints: formData.taints },
+        // Only empty string is accepted on the API as an empty value. The API then returns it as `null`
+        { taints: formData.taints.map((taint) => (taint.value ? taint : { ...taint, value: '' })) },
         ownProps.isHypershiftCluster,
       ),
     );
