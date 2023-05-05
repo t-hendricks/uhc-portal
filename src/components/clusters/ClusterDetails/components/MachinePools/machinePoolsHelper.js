@@ -1,11 +1,12 @@
 import { checkLabels } from '../../../../../common/validators';
+import { asArray } from '../../../../../common/helpers';
 
 const actionResolver = (
   rowData,
   onClickDelete,
   onClickScale,
   onClickEditTaints,
-  onClickEditLaebls,
+  onClickEditLabels,
   isHypershift,
   machinePoolsCount,
 ) => {
@@ -36,7 +37,7 @@ const actionResolver = (
 
   const editLabelsAction = {
     title: 'Edit labels',
-    onClick: onClickEditLaebls,
+    onClick: onClickEditLabels,
     className: 'hand-pointer',
   };
 
@@ -134,6 +135,17 @@ const normalizeMachinePool = (machinePool) => {
   return machinePool;
 };
 
+const getSubnetIds = (machinePoolOrNodePool) => {
+  // NodePools have "subnet", MachinePools have "subnets"
+  const { subnet, subnets } = machinePoolOrNodePool;
+  return asArray(subnet || subnets || []);
+};
+
+const hasSubnets = (machinePoolOrNodePool) => {
+  const subnetIds = getSubnetIds(machinePoolOrNodePool);
+  return subnetIds.length > 0;
+};
+
 export {
   parseTags,
   parseLabels,
@@ -141,4 +153,6 @@ export {
   validateDuplicateLabels,
   normalizeNodePool,
   normalizeMachinePool,
+  getSubnetIds,
+  hasSubnets,
 };
