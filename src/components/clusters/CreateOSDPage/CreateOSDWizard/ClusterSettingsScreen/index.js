@@ -19,6 +19,7 @@ const mapStateToProps = (state, ownProps) => {
   const kmsKeyArn = valueSelector(state, 'kms_key_arn');
   const etcdKeyArn = valueSelector(state, 'etcd_key_arn');
   const isEtcdEncryptionSelected = valueSelector(state, 'etcd_encryption');
+  const isFipsCryptoSelected = valueSelector(state, 'fips');
 
   const isHypershiftSelected = valueSelector(state, 'hypershift') === 'true';
   const formErrors = {
@@ -37,6 +38,7 @@ const mapStateToProps = (state, ownProps) => {
     kmsKeyArn,
     etcdKeyArn,
     isEtcdEncryptionSelected,
+    isFipsCryptoSelected,
     isHypershiftSelected,
     formErrors,
     touch: (fieldNames) => touch('CreateCluster', ...fieldNames),

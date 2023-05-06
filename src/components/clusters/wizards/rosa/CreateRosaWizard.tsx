@@ -58,7 +58,7 @@ export const CreateRosaWizard = () => {
   };
 
   return (
-    <Formik initialValues={initialValues} onSubmit={onSubmit}>
+    <Formik initialValues={initialValues} validateOnChange={false} onSubmit={onSubmit}>
       <>
         <PageTitle title="Create a ROSA Cluster" breadcrumbs={<Breadcrumbs path={breadcrumbs} />} />
         <PageSection>

@@ -30,7 +30,7 @@ export const AssociateAwsAccountModal = ({ isOpen, onClose }: Props) => (
     className="associate-aws-account-modal"
     onEscapePress={onClose}
   >
-    <Formik initialValues={{}} onSubmit={onClose}>
+    <Formik initialValues={{}} validateOnChange={false} onSubmit={onClose}>
       <Wizard
         onSave={onClose}
         onClose={onClose}
