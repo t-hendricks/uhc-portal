@@ -49,11 +49,15 @@ export const AutoScale = ({ isDefaultMachinePool }: AutoScaleProps) => {
       isMultiAz,
     });
 
-    if (!minReplicas && minAllowed) {
-      setFieldValue(
-        FieldId.MinReplicas,
-        isMultiAz ? (minAllowed / 3).toString() : minAllowed.toString(),
-      );
+    if (minAllowed) {
+      const defaultReplicas = isMultiAz ? (minAllowed / 3).toString() : minAllowed.toString();
+
+      if (!minReplicas) {
+        setFieldValue(FieldId.MinReplicas, defaultReplicas);
+      }
+      if (!maxReplicas) {
+        setFieldValue(FieldId.MaxReplicas, defaultReplicas);
+      }
     }
   }, [minReplicas, isBYOC, isDefaultMachinePool, isMultiAz, product, setFieldValue]);
 
