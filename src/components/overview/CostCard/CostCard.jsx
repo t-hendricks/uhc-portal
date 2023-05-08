@@ -6,24 +6,12 @@ import CostEmptyState from './CostEmptyState';
 import CostSummary from './CostSummary';
 
 import './CostCard.scss';
+import ocmBaseName from '~/common/getBaseName';
 
 class CostCard extends Component {
   componentDidMount() {
     this.refresh();
   }
-
-  getBaseName = () => {
-    let release = '/';
-    const pathName = window.location.pathname.split('/');
-
-    pathName.shift();
-
-    if (pathName[0] === 'beta') {
-      pathName.shift();
-      release = '/beta/';
-    }
-    return `${release}${pathName[0]}`;
-  };
 
   refresh = () => {
     const { getReport, getSources } = this.props;
@@ -48,7 +36,7 @@ class CostCard extends Component {
         </CardBody>
         {hasSources && report.fulfilled && (
           <CardFooter>
-            <a href={`${this.getBaseName()}/cost-management`}>View more in Cost management</a>
+            <a href={`${ocmBaseName()}/cost-management`}>View more in Cost management</a>
           </CardFooter>
         )}
       </Card>

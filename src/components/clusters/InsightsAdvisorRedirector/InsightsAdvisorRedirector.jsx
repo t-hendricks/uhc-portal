@@ -5,6 +5,7 @@ import { Spinner } from '@redhat-cloud-services/frontend-components/Spinner';
 import { Bullseye } from '@patternfly/react-core';
 import { validate as isUuid } from 'uuid';
 import ExternalRedirect from './ExternalRedirect';
+import { advisorBaseName } from '~/common/getBaseName';
 
 // expects the pluginName and errorKey to construct the ruleId recognized by OCP Advisor
 export const composeRuleId = (pluginName, errorKey) =>
@@ -41,13 +42,7 @@ class InsightsAdvisorRedirector extends React.Component {
           exact: true,
         })
       ) {
-        return (
-          <ExternalRedirect
-            url={`${window.location.origin}/${
-              APP_BETA ? 'beta/' : ''
-            }openshift/insights/advisor/clusters/${externalId}`}
-          />
-        );
+        return <ExternalRedirect url={`${advisorBaseName()}/clusters/${externalId}`} />;
       }
       if (
         matchPath(path, {
@@ -63,11 +58,7 @@ class InsightsAdvisorRedirector extends React.Component {
         const { reportId, errorKey } = match.params;
         const ruleId = composeRuleId(reportId, errorKey);
         return (
-          <ExternalRedirect
-            url={`${window.location.origin}/${
-              APP_BETA ? 'beta/' : ''
-            }openshift/insights/advisor/clusters/${externalId}?first=${ruleId}`}
-          />
+          <ExternalRedirect url={`${advisorBaseName()}/clusters/${externalId}?first=${ruleId}`} />
         );
       }
     }

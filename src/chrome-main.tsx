@@ -29,7 +29,7 @@ import { OCM } from 'openshift-assisted-ui-lib';
 import config from './config';
 
 import getNavClickParams from './common/getNavClickParams';
-import getBaseName from './common/getBaseName';
+import ocmBaseName from './common/getBaseName';
 
 import { userInfoResponse } from './redux/actions/userActions';
 import { detectFeatures } from './redux/actions/featureActions';
@@ -107,11 +107,15 @@ class AppEntry extends React.Component {
   render() {
     const { ready } = this.state;
     if (ready) {
+      // HACK: react-router only looks at `basename` prop once on initialization, so this is
+      //    fragile if we later jump between /preview & /beta.
+      const basename = ocmBaseName();
+
       return (
         <Provider store={store}>
           <NotificationPortal />
           <BrowserRouter
-            basename={getBaseName()}
+            basename={basename}
             getUserConfirmation={() => {
               /* Block the default browser prompt (window.confirm). */
             }}
