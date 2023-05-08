@@ -44,7 +44,7 @@ class ClusterDetails extends Page {
   clusterNameTitle = () => cy.get('h1.cl-details-page-title');
 
   waitForEditUrlModalToLoad = () => {
-    cy.get('input[id="edit-console-url-input"]', { timeout: 30000 }).should('exist');
+    cy.get('input[id="edit-console-url-input"]', { timeout: 30000 }).should('be.visible');
   };
 
   waitForEditUrlModalToClear = () => {
