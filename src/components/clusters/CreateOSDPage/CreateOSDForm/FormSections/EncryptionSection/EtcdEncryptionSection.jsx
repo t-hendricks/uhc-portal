@@ -14,6 +14,7 @@ function EtcdEncryptionSection({
   isRosa,
   isHypershiftSelected,
   isEtcdEncryptionSelected,
+  isFipsCryptoSelected,
   selectedRegion,
   etcdKeyArn,
 }) {
@@ -25,6 +26,7 @@ function EtcdEncryptionSection({
           component={ReduxCheckbox}
           name="etcd_encryption"
           label="Enable additional etcd encryption"
+          isDisabled={isFipsCryptoSelected}
           extendedHelpText={
             <>
               {constants.enableAdditionalEtcdHint}{' '}
@@ -58,6 +60,7 @@ EtcdEncryptionSection.propTypes = {
   isRosa: PropTypes.bool.isRequired,
   isHypershiftSelected: PropTypes.bool.isRequired,
   isEtcdEncryptionSelected: PropTypes.bool.isRequired,
+  isFipsCryptoSelected: PropTypes.bool,
   selectedRegion: PropTypes.string,
   etcdKeyArn: PropTypes.string,
 };

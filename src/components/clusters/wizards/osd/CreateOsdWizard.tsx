@@ -113,6 +113,7 @@ export const CreateOsdWizard = ({ product }: CreateOsdWizardProps) => {
     <Formik
       initialValues={{ ...initialValues, ...(product && { product }) }}
       initialTouched={initialTouched}
+      validateOnChange={false}
       onSubmit={onSubmit}
     >
       <>
