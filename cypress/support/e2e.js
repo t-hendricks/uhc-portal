@@ -23,12 +23,10 @@ import '@cypress/code-coverage/support';
 const registerCypressGrep = require('@cypress/grep')
 registerCypressGrep()
 
-before(() => {
+beforeEach(() => {
   cy.log('Setting viewport to "macbook-13"');
   cy.viewport('macbook-13');
-});
 
-beforeEach(() => {
   cy.log('Configuring Cypress to catch all uncaught exceptions & unhandled promise rejections thrown from OCM app.');
   cy.on('uncaught:exception', (err, runnable, promise) => {
     // return false to prevent the error from failing this test
