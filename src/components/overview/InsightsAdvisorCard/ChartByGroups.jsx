@@ -4,6 +4,7 @@ import { Title, Flex, FlexItem } from '@patternfly/react-core';
 import { ChartPie, ChartLegend } from '@patternfly/react-charts';
 
 import { groupTagHitsByGroups } from '../overviewHelpers';
+import { advisorBaseName } from '~/common/getBaseName';
 
 export const categoryMapping = {
   service_availability: 1,
@@ -23,9 +24,7 @@ const TitleComponent = ({ data, index, x, y, style }) => {
       <tspan x={x} y={y}>
         {name}:{' '}
         <a
-          href={`${window.location.origin}/${
-            APP_BETA ? 'beta/' : ''
-          }openshift/insights/advisor/recommendations?category=${categoryMapping[tags]}`}
+          href={`${advisorBaseName()}/recommendations?category=${categoryMapping[tags]}`}
           className="enabled-link"
         >
           {count}

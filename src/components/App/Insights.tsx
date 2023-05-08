@@ -1,7 +1,7 @@
 import React from 'react';
 import { matchPath, useHistory } from 'react-router-dom';
 import getNavClickParams from '../../common/getNavClickParams';
-import { removeBaseName } from '../../common/getBaseName';
+import { removeOcmBaseName } from '../../common/getBaseName';
 
 const Insights = () => {
   const history = useHistory();
@@ -18,7 +18,7 @@ const Insights = () => {
        * That is when nav changes hit prod-stable env
        */
       if (event.domEvent && (event.domEvent?.target?.pathname || event.domEvent?.href)) {
-        const targetPathName = removeBaseName(
+        const targetPathName = removeOcmBaseName(
           event.domEvent?.target?.pathname || event.domEvent?.href,
         );
         if (matchPath(location.pathname, { path: targetPathName, exact: true })) {

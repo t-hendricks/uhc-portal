@@ -120,7 +120,7 @@ const getEnvs = async (upstream) => {
     {
       name: 'live_beta_master',
       ci_job: 'https://***REMOVED***/job/insights-frontend-deployer/job/uhc-portal-frontend-deploy/job/qa-beta/',
-      comment: 'Live at https://qaprodauth.console.redhat.com/beta/openshift/',
+      comment: 'Live at https://qaprodauth.console.redhat.com/preview/openshift/',
       info: appInfo('https://qaprodauth.console.redhat.com/beta/apps/openshift/app.info.json'),
     },
     {
@@ -137,7 +137,7 @@ const getEnvs = async (upstream) => {
     {
       name: 'live_candidate',
       ci_job: 'https://***REMOVED***/job/insights-frontend-deployer/job/uhc-portal-frontend-deploy/job/prod-beta/',
-      comment: 'Live at https://console.redhat.com/beta/openshift/',
+      comment: 'Live at https://console.redhat.com/preview/openshift/',
       info: appInfo('https://console.redhat.com/beta/apps/openshift/app.info.json'),
     },
 
