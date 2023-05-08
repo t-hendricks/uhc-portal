@@ -59,6 +59,8 @@ module.exports = async (_env, argv) => {
   const entry = path.resolve(srcDir, 'bootstrap.ts');
 
   const noInsightsProxy = argv.env.noproxy;
+  // Support `logging=quiet` vs. `logging=verbose`. Default verbose (might change in future).
+  const verboseLogging = argv.env.logging !== 'quiet';
 
   const getChromeTemplate = async () => {
     const result = await axios.get(
@@ -81,7 +83,7 @@ module.exports = async (_env, argv) => {
     entry,
 
     infrastructureLogging: {
-      level: 'verbose',
+      level: verboseLogging ? 'verbose' : 'warn',
       // Logs all proxy activity. Is verbose & redundant with mockserver's own logging.
       // debug: [name => name.includes('webpack-dev-server')],
     },
@@ -233,13 +235,15 @@ module.exports = async (_env, argv) => {
           throw new Error('webpack-dev-server is not defined');
         }
 
-        middlewares.unshift({
-          name: 'logging',
-          middleware: (request, response, next) => {
-            console.log('Handling', request.originalUrl);
-            next();
-          },
-        });
+        if (verboseLogging) {
+          middlewares.unshift({
+            name: 'logging',
+            middleware: (request, response, next) => {
+              console.log('Handling', request.originalUrl);
+              next();
+            },
+          });
+        }
         return middlewares;
       },
       proxy: noInsightsProxy
@@ -249,8 +253,10 @@ module.exports = async (_env, argv) => {
             pathRewrite: { '^/mockdata': '' },
             target: 'http://localhost:8010',
             onProxyReq(request) {
-              // Redundant with mockserver's own logging.
-              // console.log('  proxying localhost:8010:', request.path);
+              if (verboseLogging) {
+                // Redundant with mockserver's own logging.
+                // console.log('  proxying localhost:8010:', request.path);
+              }
             },
           },
           {
@@ -270,7 +276,9 @@ module.exports = async (_env, argv) => {
             // many APIs do not allow the requests from the foreign origin
             onProxyReq(request) {
               request.setHeader('origin', 'https://console.redhat.com');
-              console.log('  proxying console.redhat.com:', request.path);
+              if (verboseLogging) {
+                console.log('  proxying console.redhat.com:', request.path);
+              }
             },
           },
         ]
