@@ -29,9 +29,10 @@ function ClusterSettingsScreen({
   kmsKeyArn,
   etcdKeyArn,
   isEtcdEncryptionSelected,
+  isFipsCryptoSelected,
+  isHypershiftSelected,
   formErrors,
   touch,
-  isHypershiftSelected,
   isNextClicked,
 }) {
   const [isExpanded, setIsExpanded] = useState(false);
@@ -178,11 +179,12 @@ function ClusterSettingsScreen({
             isRosa={isRosa}
             isHypershiftSelected={isHypershiftSelected}
             isEtcdEncryptionSelected={isEtcdEncryptionSelected}
+            isFipsCryptoSelected={isFipsCryptoSelected}
             etcdKeyArn={etcdKeyArn}
             selectedRegion={selectedRegion}
           />
 
-          {!isHypershiftSelected && (
+          {!isHypershiftSelected && isEtcdEncryptionSelected && (
             <GridItem md={6} className="pf-u-mt-lg">
               <FormGroup fieldId="fips" id="fipsCrypto" label="FIPS cryptography">
                 <Field
@@ -217,9 +219,10 @@ ClusterSettingsScreen.propTypes = {
   kmsKeyArn: PropTypes.string,
   etcdKeyArn: PropTypes.string,
   isEtcdEncryptionSelected: PropTypes.bool,
+  isFipsCryptoSelected: PropTypes.bool,
+  isHypershiftSelected: PropTypes.bool,
   formErrors: PropTypes.object,
   touch: PropTypes.func,
-  isHypershiftSelected: PropTypes.bool,
   isNextClicked: PropTypes.bool,
 };
 
