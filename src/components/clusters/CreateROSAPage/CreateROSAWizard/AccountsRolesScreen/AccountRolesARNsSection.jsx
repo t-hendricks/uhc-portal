@@ -211,7 +211,7 @@ function AccountRolesARNsSection({
       setHasARNsError(false);
     } else if (getAWSAccountRolesARNsResponse.fulfilled) {
       const accountRolesARNs = get(getAWSAccountRolesARNsResponse, 'data', []).filter((arn) =>
-        isHypershiftSelected ? arn.hcpManagedPolicies : true,
+        isHypershiftSelected ? arn.hcpManagedPolicies : !arn.hcpManagedPolicies,
       );
       setSelectedInstallerRoleAndOptions(accountRolesARNs);
       setAccountRoles(accountRolesARNs);
