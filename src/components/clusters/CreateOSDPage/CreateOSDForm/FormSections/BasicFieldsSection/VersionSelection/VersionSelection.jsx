@@ -269,7 +269,11 @@ function VersionSelection({
                       <>
                         <span>View only compatible versions</span>
                         <Popover
-                          bodyContent="View only versions that are compatible with the selected ARNs in previous step"
+                          bodyContent={
+                            isHypershiftSelected
+                              ? 'View only versions that are compatible with a Hosted control plane'
+                              : 'View only versions that are compatible with the selected ARNs in previous step'
+                          }
                           enableFlip={false}
                         >
                           <Button variant="plain" className="pf-u-p-0 pf-u-ml-md">
