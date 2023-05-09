@@ -39,11 +39,17 @@ class ClusterDetails extends Page {
   unarchiveClusterButton = () =>
     cy.get('span[id="cl-details-btns"]').contains('button', 'Unarchive');
 
+  waitForUnarchiveClusterModalToLoad = () => {
+    cy.getByTestId(' unarchive-cluster-dialog', { timeout: 30000 }).should('be.visible');
+    cy.contains('button', 'Unarchive cluster').should('be.visible');
+  };
+
   unarchiveClusterDialogConfirm = () => cy.contains('button', 'Unarchive cluster');
 
   clusterNameTitle = () => cy.get('h1.cl-details-page-title');
 
   waitForEditUrlModalToLoad = () => {
+    cy.getByTestId('edit-console-url-dialog', { timeout: 30000 }).should('be.visible');
     cy.get('input[id="edit-console-url-input"]', { timeout: 30000 }).should('be.visible');
   };
 
@@ -52,10 +58,11 @@ class ClusterDetails extends Page {
   };
 
   waitForEditDisplayNamelModalToLoad = () => {
+    cy.getByTestId('edit-displayname-modal', { timeout: 30000 }).should('be.visible');
     cy.get('input[id="edit-display-name-input"]', { timeout: 30000 }).should('exist');
   };
 
-  waitForEditDisplayNamelModalToClear = () => {
+  waitForEditDisplayNameModalToClear = () => {
     cy.getByTestId('edit-displayname-modal', { timeout: 30000 }).should('not.exist');
   };
 
@@ -63,7 +70,8 @@ class ClusterDetails extends Page {
     cy.get('h1.cl-details-page-title', { timeout: 30000 }).should('not.have.text', displayName);
   };
 
-  waitForArchiveClusterDropdownLoad = () => {
+  waitForArchiveClusterModalToLoad = () => {
+    cy.getByTestId('archive-cluster-dialog', { timeout: 30000 }).should('be.visible');
     cy.contains('button', 'Archive cluster', { timeout: 30000 }).should('exist');
   };
 
