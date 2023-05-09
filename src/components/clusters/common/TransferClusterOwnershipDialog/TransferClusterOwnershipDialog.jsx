@@ -13,7 +13,7 @@ import {
 import Modal from '../../../common/Modal/Modal';
 import modals from '../../../common/Modal/modals';
 import ErrorBox from '../../../common/ErrorBox';
-import getBaseName from '../../../../common/getBaseName';
+import ocmBaseName from '../../../../common/getBaseName';
 import { subscriptionStatuses } from '../../../../common/subscriptionTypes';
 import ExternalLink from '../../../common/ExternalLink';
 
@@ -47,7 +47,7 @@ class TransferClusterOwnershipDialog extends Component {
           <TextList component={TextListVariants.ol}>
             <TextListItem>Initiate transfer</TextListItem>
             <TextListItem>
-              <ExternalLink href={`${getBaseName()}/register`}>Register the cluster</ExternalLink>{' '}
+              <ExternalLink href={`${ocmBaseName()}/register`}>Register the cluster</ExternalLink>{' '}
               within 5 days
             </TextListItem>
           </TextList>

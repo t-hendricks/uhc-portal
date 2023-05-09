@@ -167,7 +167,7 @@ if [ "$1" == "staging" ] || [ "$1" == "beta" ]; then
     push_build "qa-stable"
 
     echo "running staging (qa-beta) push"
-    echo "staging branch is available on https://qaprodauth.console.redhat.com/beta/openshift"
+    echo "staging branch is available on https://qaprodauth.console.redhat.com/preview/openshift"
     rm -rf build
     yarn build --mode=production --env api-env=staging beta="true"
     push_build "qa-beta"
@@ -179,7 +179,7 @@ if [ "$1" == "staging" ] || [ "$1" == "beta" ]; then
 
 elif [ "$1" == "candidate" ]; then
     echo "running candidate push"
-    echo "Candidate branch is available on https://console.redhat.com/beta/openshift"
+    echo "Candidate branch is available on https://console.redhat.com/preview/openshift"
     rm -rf build
     yarn build --mode=production --env api-env=production beta="true"
     push_build "prod-beta"
