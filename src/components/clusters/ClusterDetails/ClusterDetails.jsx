@@ -363,10 +363,7 @@ class ClusterDetails extends Component {
       !isClusterWaiting &&
       cluster.managed &&
       !isArchived;
-    const clusterUrls = {
-      console: get(cluster, 'console.url'),
-      api: get(cluster, 'api.url'),
-    };
+
     const displayMonitoringTab =
       !isArchived && !cluster.managed && !isAROCluster && !isUninstalledAICluster(cluster);
     const displayAccessControlTab = !isArchived;
@@ -483,13 +480,7 @@ class ClusterDetails extends Component {
               hidden
             >
               <ErrorBoundary>
-                <AccessControl
-                  cluster={cluster}
-                  clusterUrls={clusterUrls}
-                  cloudProvider={get(cluster, 'cloud_provider.id')}
-                  history={history}
-                  refreshEvent={refreshEvent}
-                />
+                <AccessControl cluster={cluster} history={history} refreshEvent={refreshEvent} />
               </ErrorBoundary>
             </TabContent>
           )}
