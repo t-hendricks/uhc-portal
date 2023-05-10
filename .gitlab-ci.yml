@@ -120,6 +120,7 @@ stages:
   only:
     - merge_requests
   before_script:
+    - apt-get update
     - apt-get -y install make
     - apt-get -y install sudo
     - make dev-env-setup
