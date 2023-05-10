@@ -372,7 +372,7 @@ class ClusterDetails extends Component {
       (isClusterReady || isClusterUpdating || clusterHibernating) &&
       cluster.managed &&
       !!get(cluster, 'api.url') &&
-      ((cloudProvider === 'aws' && !isPrivateCluster) ||
+      ((cloudProvider === 'aws' && (!isPrivateCluster || isHypershift)) ||
         (cloudProvider === 'gcp' &&
           (get(cluster, 'ccs.enabled') || (gotRouters && canCreateGCPNonCCSCluster)))) &&
       !isArchived;
