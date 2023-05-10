@@ -95,7 +95,7 @@ describe('Register cluster flow', () => {
     ClusterDetailsPage.editDisplayNameInput().clear();
     ClusterDetailsPage.editDisplayNameInput().type(`${displayName}-test`).blur();
     ClusterDetailsPage.editDisplaynameConfirm().click();
-    ClusterDetailsPage.waitForEditDisplayNamelModalToClear();
+    ClusterDetailsPage.waitForEditDisplayNameModalToClear();
     ClusterDetailsPage.waitForClusterDetailsLoad();
     ClusterDetailsPage.waitForDisplayNameChange(displayName);
     ClusterDetailsPage.clusterNameTitle().should('have.text', `${displayName}-test`);
@@ -103,8 +103,8 @@ describe('Register cluster flow', () => {
 
   it('successfully archives the newly created cluster', () => {
     ClusterDetailsPage.actionsDropdownToggle().click();
-    ClusterDetailsPage.waitForArchiveClusterDropdownLoad();
     ClusterDetailsPage.archiveClusterDropdownItem().click();
+    ClusterDetailsPage.waitForArchiveClusterModalToLoad();
     ClusterDetailsPage.archiveClusterDialogConfirm().click();
     ClusterDetailsPage.successNotification().should('exist');
     ClusterDetailsPage.waitForClusterDetailsLoad();
@@ -113,17 +113,19 @@ describe('Register cluster flow', () => {
 
   it('successfully unarchives the archived cluster', () => {
     ClusterDetailsPage.unarchiveClusterButton().click();
+    ClusterDetailsPage.waitForUnarchiveClusterModalToLoad();
     ClusterDetailsPage.unarchiveClusterDialogConfirm().click();
     ClusterDetailsPage.successNotification().should('exist');
     ClusterDetailsPage.waitForClusterDetailsLoad();
   });
 
   it('Finally, archive the cluster created', () => {
-    ClusterDetailsPage.actionsDropdownToggle().should('exist');
-    ClusterDetailsPage.actionsDropdownToggle().find('span').first().should('have.text', 'Actions');
     ClusterDetailsPage.actionsDropdownToggle().click();
-    ClusterDetailsPage.waitForArchiveClusterDropdownLoad();
     ClusterDetailsPage.archiveClusterDropdownItem().click();
+    ClusterDetailsPage.waitForArchiveClusterModalToLoad();
     ClusterDetailsPage.archiveClusterDialogConfirm().click();
+    ClusterDetailsPage.successNotification().should('exist');
+    ClusterDetailsPage.waitForClusterDetailsLoad();
+    ClusterDetailsPage.unarchiveClusterButton().should('exist');
   });
 });

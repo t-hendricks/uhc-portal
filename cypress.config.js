@@ -17,4 +17,12 @@ module.exports = defineConfig({
     },
     specPattern: 'cypress/e2e/**/*.{js,jsx,ts,tsx}',
   },
+  retries: {
+    // Configure retry attempts for CI `cypress run`
+    // Default is 0
+    "runMode": 1,
+    // Configure retry attempts for cypress-ui `cypress open`
+    // Default is 0
+    "openMode": 0
+  }
 });
