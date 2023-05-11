@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`<DatacenterTab /> renders correctly with assisted installer 1`] = `
+exports[`<DatacenterTab /> renders correctly with assisted installer and multiarch disabled 1`] = `
 <Fragment>
   <PageSection
     variant="light"
@@ -147,22 +147,230 @@ exports[`<DatacenterTab /> renders correctly with assisted installer 1`] = `
               Array [
                 <React.Fragment>
                   <Link
-                    to="/install/ibmz/user-provisioned"
+                    to="/install/nutanix"
                   >
-                    IBM Z
+                    Nutanix AOS
                   </Link>
                 </React.Fragment>,
-                "Pre-existing infrastructure",
+                "Full stack automation and pre-existing infrastructure",
               ],
               Array [
                 <React.Fragment>
                   <Link
-                    to="/install/power/user-provisioned"
+                    to="/install/openstack"
                   >
-                    Power
+                    Red Hat OpenStack
+                  </Link>
+                </React.Fragment>,
+                "Full stack automation and pre-existing infrastructure",
+              ],
+              Array [
+                <React.Fragment>
+                  <Link
+                    to="/install/rhv"
+                  >
+                    Red Hat Virtualization
+                  </Link>
+                </React.Fragment>,
+                "Full stack automation and pre-existing infrastructure",
+              ],
+              Array [
+                <React.Fragment>
+                  <Link
+                    to="/install/vsphere"
+                  >
+                    vSphere
+                  </Link>
+                </React.Fragment>,
+                "Full stack automation and pre-existing infrastructure",
+              ],
+              Array [
+                <React.Fragment>
+                  <Link
+                    to="/install/platform-agnostic"
+                  >
+                    Platform agnostic (x86_64)
                   </Link>
                 </React.Fragment>,
                 "Pre-existing infrastructure",
+              ],
+            ]
+          }
+          selectVariant="checkbox"
+          variant={null}
+        >
+          <TableHeader />
+          <TableBody />
+        </Table>
+      </StackItem>
+    </Stack>
+  </PageSection>
+</Fragment>
+`;
+
+exports[`<DatacenterTab /> renders correctly with assisted installer and multiarch enabled 1`] = `
+<Fragment>
+  <PageSection
+    variant="light"
+  >
+    <Stack
+      hasGutter={true}
+    >
+      <StackItem>
+        <Title
+          className="ocm-ocp-datacenter-title"
+          headingLevel="h2"
+        >
+          Assisted Installer
+        </Title>
+      </StackItem>
+      <StackItem>
+        The easiest way to install OpenShift on your own infrastructure with step-by-step guidance, preflight validations, and smart defaults. This method supports both x86-64 and arm64 CPU architectures.
+      </StackItem>
+      <StackItem>
+        <Split
+          hasGutter={true}
+        >
+          <SplitItem>
+            <Button
+              component={
+                Object {
+                  "$$typeof": Symbol(react.forward_ref),
+                  "propTypes": Object {
+                    "innerRef": [Function],
+                    "onClick": [Function],
+                    "replace": [Function],
+                    "target": [Function],
+                    "to": [Function],
+                  },
+                  "render": [Function],
+                }
+              }
+              to="/assisted-installer/clusters/~new"
+            >
+              Create cluster
+            </Button>
+          </SplitItem>
+          <SplitItem
+            className="pf-u-align-self-center"
+          >
+            <Link
+              to="/install/metal/agent-based"
+            >
+              Run Agent-based Installer locally
+            </Link>
+            <Popover
+              bodyContent="Runs Assisted Installer securely and locally to create clusters in disconnected or air-gapped environments."
+            >
+              <Button
+                onClick={[Function]}
+                variant="plain"
+              >
+                <OutlinedQuestionCircleIcon
+                  color="currentColor"
+                  noVerticalAlign={false}
+                  size="sm"
+                />
+              </Button>
+            </Popover>
+          </SplitItem>
+        </Split>
+      </StackItem>
+    </Stack>
+  </PageSection>
+  <PageSection>
+    <Stack
+      hasGutter={true}
+    >
+      <StackItem>
+        <Title
+          headingLevel="h2"
+        >
+          Other datacenter options
+        </Title>
+      </StackItem>
+      <StackItem>
+        Create clusters on supported infrastructure using our extensive documentation and installer program.
+      </StackItem>
+      <StackItem>
+        <Table
+          actionsMenuAppendTo="inline"
+          aria-label="Installation options table"
+          borders={true}
+          canCollapseAll={false}
+          canSelectAll={true}
+          canSortFavorites={true}
+          cells={
+            Array [
+              "Infrastructure provider",
+              "Installation options",
+            ]
+          }
+          className="install-options-table"
+          collapseAllAriaLabel=""
+          contentId="expanded-content"
+          dropdownDirection="down"
+          dropdownPosition="right"
+          expandId="expandable-toggle"
+          gridBreakPoint="grid-md"
+          isHeaderSelectDisabled={false}
+          isNested={false}
+          isStickyHeader={false}
+          isTreeTable={false}
+          ouiaSafe={true}
+          role="grid"
+          rowLabeledBy="simple-node"
+          rows={
+            Array [
+              Array [
+                <React.Fragment>
+                  <Link
+                    to="/install/metal"
+                  >
+                    Bare Metal (x86_64)
+                  </Link>
+                </React.Fragment>,
+                "Full stack automation and pre-existing infrastructure",
+              ],
+              Array [
+                <React.Fragment>
+                  <Link
+                    to="/install/arm"
+                  >
+                    Bare Metal (ARM)
+                  </Link>
+                </React.Fragment>,
+                "Full stack automation and pre-existing infrastructure",
+              ],
+              Array [
+                <React.Fragment>
+                  <Link
+                    to="/install/azure-stack-hub"
+                  >
+                    Azure Stack Hub
+                  </Link>
+                </React.Fragment>,
+                "Full stack automation and pre-existing infrastructure",
+              ],
+              Array [
+                <React.Fragment>
+                  <Link
+                    to="/install/ibmz"
+                  >
+                    System/390 64-bit
+                  </Link>
+                </React.Fragment>,
+                "Full stack automation and pre-existing infrastructure",
+              ],
+              Array [
+                <React.Fragment>
+                  <Link
+                    to="/install/power"
+                  >
+                    PowerPC 64-bit LE
+                  </Link>
+                </React.Fragment>,
+                "Full stack automation and pre-existing infrastructure",
               ],
               Array [
                 <React.Fragment>
@@ -228,7 +436,7 @@ exports[`<DatacenterTab /> renders correctly with assisted installer 1`] = `
 </Fragment>
 `;
 
-exports[`<DatacenterTab /> renders correctly without assisted installer 1`] = `
+exports[`<DatacenterTab /> renders correctly without assisted installer and without multiarch 1`] = `
 <Fragment>
   <PageSection>
     <Stack
@@ -303,26 +511,6 @@ exports[`<DatacenterTab /> renders correctly without assisted installer 1`] = `
                   </Link>
                 </React.Fragment>,
                 "Full stack automation and pre-existing infrastructure",
-              ],
-              Array [
-                <React.Fragment>
-                  <Link
-                    to="/install/ibmz/user-provisioned"
-                  >
-                    IBM Z
-                  </Link>
-                </React.Fragment>,
-                "Pre-existing infrastructure",
-              ],
-              Array [
-                <React.Fragment>
-                  <Link
-                    to="/install/power/user-provisioned"
-                  >
-                    Power
-                  </Link>
-                </React.Fragment>,
-                "Pre-existing infrastructure",
               ],
               Array [
                 <React.Fragment>
