@@ -24,10 +24,10 @@ then
     ENVIRONMENT="qaprodauth.console.redhat.com"
   elif [ $1 = 'production' ]; then
     ENVIRONMENT="console.redhat.com"
-  elif [ $1 = 'production-beta' ]; then
-    ENVIRONMENT="console.redhat.com/beta"
+  elif [ $1 = 'production-preview' ]; then
+    ENVIRONMENT="console.redhat.com/preview"
   else
-    ENVIRONMENT="qaprodauth.console.redhat.com/beta"
+    ENVIRONMENT="qaprodauth.console.redhat.com/preview"
   fi
 fi
 if [ $2 ]; then BROWSER="$2"; fi
