@@ -114,6 +114,8 @@ import CreateOSDWizard from '../clusters/CreateOSDPage/CreateOSDWizard';
 import { CreateOsdWizard } from '../clusters/wizards';
 import { metadataByRoute, is404 } from './routeMetadata';
 import { useFeatureGate } from '~/hooks/useFeatureGate';
+import InstallIBMZ from '../clusters/install/InstallIBMZ';
+import InstallPower from '../clusters/install/InstallIPowerIBM';
 
 const { AssistedUiRouter } = OCM;
 
@@ -288,8 +290,10 @@ const Router: React.FC<RouterProps> = ({ history, planType, clusterId, externalC
             <Route path="/install/ibm-cloud" component={ConnectedInstallIBMCloud} />
             <Route path="/install/ibmz/user-provisioned" component={ConnectedInstallIBM} />
             <Route path="/install/ibmz/pre-release" component={ConnectedInstallIBMPreRelease} />
+            <Route path="/install/ibmz" exact component={InstallIBMZ} />
             <Route path="/install/power/user-provisioned" component={ConnectedInstallPower} />
             <Route path="/install/power/pre-release" component={ConnectedInstallPowerPreRelease} />
+            <Route path="/install/power" exact component={InstallPower} />
             <Route
               path="/install/platform-agnostic/agent-based"
               component={ConnectedInstallPlatformAgnosticABI}
