@@ -58,6 +58,8 @@ module.exports = async (_env, argv) => {
   const entry = path.resolve(srcDir, 'bootstrap.ts');
 
   const noInsightsProxy = argv.env.noproxy;
+  // Support `logging=quiet` vs. `logging=verbose`. Default verbose (might change in future).
+  const verboseLogging = argv.env.logging !== 'quiet';
 
   const getChromeTemplate = async () => {
     const result = await axios.get(
@@ -80,7 +82,7 @@ module.exports = async (_env, argv) => {
     entry,
 
     infrastructureLogging: {
-      level: 'verbose',
+      level: verboseLogging ? 'verbose' : 'warn',
       // Logs all proxy activity. Is verbose & redundant with mockserver's own logging.
       // debug: [name => name.includes('webpack-dev-server')],
     },
@@ -141,15 +143,6 @@ module.exports = async (_env, argv) => {
     module: {
       rules: [
         {
-          test: new RegExp(entry),
-          loader: require.resolve(
-            '@redhat-cloud-services/frontend-components-config-utilities/chrome-render-loader',
-          ),
-          options: {
-            appName: moduleName,
-          },
-        },
-        {
           test: /\.jsx?$/,
           include: srcDir,
           use: {
@@ -180,30 +173,29 @@ module.exports = async (_env, argv) => {
           ],
         },
         {
+          // eslint-disable-next-line max-len
+          // Since we use Insights' upstream PatternFly, we're using null-loader to save about 1MB of CSS
+          test: /\.css$/i,
+          include: reactCSS,
+          use: 'ocm-null-loader',
+        },
+        {
           test: /\.css$/,
           exclude: reactCSS,
           use: [MiniCssExtractPlugin.loader, 'css-loader'],
         },
         {
-          // eslint-disable-next-line max-len
-          // Since we use Insights' upstream PatternFly, we're using null-loader to save about 1MB of CSS
-          test: /\.css$/i,
-          include: reactCSS,
-          use: 'null-loader',
-        },
-        {
           test: /(webfont\.svg|\.(eot|ttf|woff|woff2))$/,
-          loader: 'file-loader',
-          options: {
-            name: 'fonts/[name].[hash].[ext]',
+          type: 'asset/resource',
+          generator: {
+            filename: 'fonts/[name].[hash].[ext]'
           },
         },
         {
           test: /(?!webfont)\.(gif|jpg|png|svg)$/,
-          loader: 'url-loader', // Bundle small images in JS as base64 URIs.
-          options: {
-            limit: 8000, // Don't bundle images larger than 8KB in the JS bundle.
-            name: 'images/[name].[hash].[ext]',
+          type: 'asset', // automatically chooses between bundling small images in JS as base64 URIs and emitting separate files based on size
+          generator: {
+            filename: 'images/[name].[hash].[ext]'
           },
         },
         // For react-markdown#unified#vfile
@@ -237,6 +229,10 @@ module.exports = async (_env, argv) => {
       },
     },
 
+    resolveLoader: {
+      modules: ['node_modules', path.resolve(__dirname, 'loaders')],
+    },
+
     devServer: {
       historyApiFallback: {
         index: `${publicPath}index.html`,
@@ -246,13 +242,15 @@ module.exports = async (_env, argv) => {
           throw new Error('webpack-dev-server is not defined');
         }
 
-        middlewares.unshift({
-          name: 'logging',
-          middleware: (request, response, next) => {
-            console.log('Handling', request.originalUrl);
-            next();
-          },
-        });
+        if (verboseLogging) {
+          middlewares.unshift({
+            name: 'logging',
+            middleware: (request, response, next) => {
+              console.log('Handling', request.originalUrl);
+              next();
+            },
+          });
+        }
         return middlewares;
       },
       proxy: noInsightsProxy
@@ -262,8 +260,10 @@ module.exports = async (_env, argv) => {
             pathRewrite: { '^/mockdata': '' },
             target: 'http://localhost:8010',
             onProxyReq(request) {
-              // Redundant with mockserver's own logging.
-              // console.log('  proxying localhost:8010:', request.path);
+              if (verboseLogging) {
+                // Redundant with mockserver's own logging.
+                // console.log('  proxying localhost:8010:', request.path);
+              }
             },
           },
           {
@@ -283,7 +283,9 @@ module.exports = async (_env, argv) => {
             // many APIs do not allow the requests from the foreign origin
             onProxyReq(request) {
               request.setHeader('origin', 'https://console.redhat.com');
-              console.log('  proxying console.redhat.com:', request.path);
+              if (verboseLogging) {
+                console.log('  proxying console.redhat.com:', request.path);
+              }
             },
           },
         ]

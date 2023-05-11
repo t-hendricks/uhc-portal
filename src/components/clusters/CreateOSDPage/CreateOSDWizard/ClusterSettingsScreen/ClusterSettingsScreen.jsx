@@ -14,6 +14,7 @@ import EtcdEncryptionSection from '../../CreateOSDForm/FormSections/EncryptionSe
 import { constants } from '../../CreateOSDForm/CreateOSDFormConstants';
 import BasicFieldsSection from '../../CreateOSDForm/FormSections/BasicFieldsSection';
 import { normalizedProducts } from '../../../../../common/subscriptionTypes';
+import ReduxCheckbox from '~/components/common/ReduxFormComponents/ReduxCheckbox';
 import { validateAWSKMSKeyARN } from '~/common/validators';
 
 function ClusterSettingsScreen({
@@ -28,9 +29,10 @@ function ClusterSettingsScreen({
   kmsKeyArn,
   etcdKeyArn,
   isEtcdEncryptionSelected,
+  isFipsCryptoSelected,
+  isHypershiftSelected,
   formErrors,
   touch,
-  isHypershiftSelected,
   isNextClicked,
 }) {
   const [isExpanded, setIsExpanded] = useState(false);
@@ -172,13 +174,32 @@ function ClusterSettingsScreen({
               kmsKeyArn={kmsKeyArn}
             />
           )}
+
           <EtcdEncryptionSection
             isRosa={isRosa}
             isHypershiftSelected={isHypershiftSelected}
             isEtcdEncryptionSelected={isEtcdEncryptionSelected}
+            isFipsCryptoSelected={isFipsCryptoSelected}
             etcdKeyArn={etcdKeyArn}
             selectedRegion={selectedRegion}
           />
+
+          {!isHypershiftSelected && isEtcdEncryptionSelected && (
+            <GridItem md={6} className="pf-u-mt-lg">
+              <FormGroup fieldId="fips" id="fipsCrypto" label="FIPS cryptography">
+                <Field
+                  component={ReduxCheckbox}
+                  name="fips"
+                  label="Enable FIPS cryptography"
+                  extendedHelpText="Installs and configures your cluster to use only FIPS validated cryptographic libraries for core components and the node operating system."
+                />
+                <div className="ocm-c--reduxcheckbox-description">
+                  Install a cluster that uses FIPS Validated / Modules in Process cryptographic
+                  libraries on the x86_64 architecture.
+                </div>
+              </FormGroup>
+            </GridItem>
+          )}
         </ExpandableSection>
         <GridItem md={6} />
       </Grid>
@@ -198,9 +219,10 @@ ClusterSettingsScreen.propTypes = {
   kmsKeyArn: PropTypes.string,
   etcdKeyArn: PropTypes.string,
   isEtcdEncryptionSelected: PropTypes.bool,
+  isFipsCryptoSelected: PropTypes.bool,
+  isHypershiftSelected: PropTypes.bool,
   formErrors: PropTypes.object,
   touch: PropTypes.func,
-  isHypershiftSelected: PropTypes.bool,
   isNextClicked: PropTypes.bool,
 };
 

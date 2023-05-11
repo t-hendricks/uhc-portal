@@ -24,13 +24,13 @@ import type {
   CloudProvider,
   IdentityProvider,
   Group,
-  AWS,
   GCP,
   Flavour,
   LimitedSupportReason,
   OidcConfig,
 } from '../types/clusters_mgmt.v1';
 import type { Subscription } from '../types/accounts_mgmt.v1';
+import { AWSCredentials } from '~/types/types';
 
 const getClusters = (search: string, size: number = -1) =>
   apiRequest.post<{
@@ -516,8 +516,9 @@ const upgradeTrialCluster = (clusterID: string, data: Cluster) =>
  *    }
  *  }`
  * @param region {string} the region ID.
+ * @param {string} [subnet] - Optimization: If provided, only VPC attached to that subnet id will be included.
  */
-const listAWSVPCs = (credentials: AWS, region: string, subnet?: string) =>
+const listAWSVPCs = (credentials: AWSCredentials, region: string, subnet?: string) =>
   apiRequest.post<{
     /**
      * Retrieved list of cloud VPC.
@@ -642,7 +643,7 @@ const listGCPKeys = (credentials: GCP, location: string, ring: string) =>
  * List AWS regions for given CCS account.
  * @param {*} credentials { accountID, accessKey, secretKey } object
  */
-const listAWSRegions = (credentials: AWS) =>
+const listAWSRegions = (credentials: AWSCredentials) =>
   apiRequest.post<{
     /**
      * Retrieved list of regions.

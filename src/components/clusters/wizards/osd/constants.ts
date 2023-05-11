@@ -19,6 +19,7 @@ export enum OsdFieldId {
   AccountId = 'account_id',
   AccessKeyId = 'access_key_id',
   SecretAccessKey = 'secret_access_key',
+  InstallerRoleArn = 'installer_role_arn',
   GcpServiceAccount = 'gcp_service_account',
   Region = 'region',
   CustomerManagedKey = 'customer_managed_key',

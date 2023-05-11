@@ -26,7 +26,7 @@ function ScaleSection({
   cloudProviderID,
   product,
   showStorageAndLoadBalancers = true,
-  minNodes,
+  minNodesRequired,
   isMachinePool = false,
   canAutoScale = false,
   autoscalingEnabled = false,
@@ -52,7 +52,7 @@ function ScaleSection({
           <Title headingLevel="h3" className="pf-u-mb-md pf-u-mt-lg">
             Taints
           </Title>
-          <FieldArray name="taints" component={ReduxFormTaints} />
+          <FieldArray name="taints" component={ReduxFormTaints} canAddMore />
         </>
       )}
     </ExpandableSection>
@@ -92,6 +92,7 @@ function ScaleSection({
               product={product}
               isBYOC={isBYOC}
               isDefaultMachinePool={!isMachinePool}
+              minNodesRequired={minNodesRequired}
             />
           </GridItem>
           {autoscalingEnabled && labelsAndTaintsSection}
@@ -125,7 +126,7 @@ function ScaleSection({
               }
               cloudProviderID={cloudProviderID}
               product={product}
-              minNodes={minNodes}
+              minNodes={minNodesRequired}
               isMachinePool={isMachinePool}
               billingModel={billingModel}
             />
@@ -197,7 +198,7 @@ ScaleSection.propTypes = {
   cloudProviderID: PropTypes.string.isRequired,
   product: PropTypes.oneOf(Object.keys(normalizedProducts)).isRequired,
   billingModel: PropTypes.oneOf(Object.values(billingModels)),
-  minNodes: PropTypes.number,
+  minNodesRequired: PropTypes.number,
   isMachinePool: PropTypes.bool,
   canAutoScale: PropTypes.bool,
   autoscalingEnabled: PropTypes.bool,

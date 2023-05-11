@@ -29,7 +29,6 @@ class Login extends Page {
     cy.get(this.inputPassword).type(password, {force: true});
     this.clickSubmitBtn();
     this.closePendoIfShowing();
-    this.closeCookieConsentIfShowing();
   }
 
   closePendoIfShowing() {
@@ -41,19 +40,6 @@ class Login extends Page {
           .should('be.visible')
           .click();
         cy.get(closePendoGuideBtn)
-          .should('not.be.visible');
-      }
-    });
-  }
-
-  closeCookieConsentIfShowing() {
-    const closeCookieConsentBtn = 'button#truste-consent-button';
-    cy.get('body').then(($body) => {
-      if ($body.find(closeCookieConsentBtn).length) {
-        cy.get(closeCookieConsentBtn)
-          .should('be.visible')
-          .click();
-        cy.get(closeCookieConsentBtn)
           .should('not.be.visible');
       }
     });

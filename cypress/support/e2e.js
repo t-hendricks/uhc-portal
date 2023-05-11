@@ -24,11 +24,19 @@ const registerCypressGrep = require('@cypress/grep')
 registerCypressGrep()
 
 before(() => {
-  cy.log('Setting viewport to "macbook-13"');
-  cy.viewport('macbook-13');
+  cy.log('Setting session cookies');
+  // disabling CookieConsent dialog
+  // copied from https://gitlab.cee.redhat.com/insights-qe/iqe-platform-ui-plugin/-/blob/master/iqe_platform_ui/__init__.py#L207
+  cy.setCookie('notice_gdpr_prefs', '0,1,2:');
+  cy.setCookie('notice_preferences', '2:');
+  cy.reload();
 });
 
+
 beforeEach(() => {
+  cy.log('Setting viewport to "macbook-13"');
+  cy.viewport('macbook-13');
+
   cy.log('Configuring Cypress to catch all uncaught exceptions & unhandled promise rejections thrown from OCM app.');
   cy.on('uncaught:exception', (err, runnable, promise) => {
     // return false to prevent the error from failing this test
