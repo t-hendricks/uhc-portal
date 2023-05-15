@@ -146,6 +146,26 @@ const hasSubnets = (machinePoolOrNodePool) => {
   return subnetIds.length > 0;
 };
 
+/**
+ * Used to determine the minimum nodes allowed during cluster creation,
+ * and after when adding new machine pools or editing cluster counts.
+ *
+ * @param isHypershiftCluster
+ * @param machinePoolId
+ * @returns number | undefined
+ */
+const getMinNodesRequired = (isHypershiftCluster, machinePoolId) => {
+  if (!isHypershiftCluster && machinePoolId !== 'Default') {
+    return 0;
+  }
+
+  if (isHypershiftCluster) {
+    return 1;
+  }
+
+  return undefined;
+};
+
 export {
   parseTags,
   parseLabels,
@@ -155,4 +175,5 @@ export {
   normalizeMachinePool,
   getSubnetIds,
   hasSubnets,
+  getMinNodesRequired,
 };

@@ -50,7 +50,7 @@ describe('<InsightsAdvisor />', () => {
     expect(links).toHaveLength(4);
     links.forEach((link, index) => {
       expect(link.props().href).toBe(
-        `http://localhost/openshift/insights/advisor/clusters/foo-bar?total_risk=${index + 1}`,
+        `/openshift/insights/advisor/clusters/foo-bar?total_risk=${index + 1}`,
       );
     });
   });
@@ -58,6 +58,6 @@ describe('<InsightsAdvisor />', () => {
   it('should render sub-title link to OCP Advisor', () => {
     const link = chartMounted.find('InsightsSubtitleComponent > a');
     expect(link).toHaveLength(1);
-    expect(link.props().href).toBe('http://localhost/openshift/insights/advisor/clusters/foo-bar');
+    expect(link.props().href).toBe('/openshift/insights/advisor/clusters/foo-bar');
   });
 });

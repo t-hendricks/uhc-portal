@@ -19,7 +19,8 @@ import { useGlobalState } from '~/redux/hooks/useGlobalState';
 import { useFormState } from '~/components/clusters/wizards/hooks';
 import { CloudProviderType } from '~/components/clusters/wizards/common/constants';
 import { FieldId } from '~/components/clusters/wizards/osd/constants';
-import { getCcsCredentials } from '~/components/clusters/wizards/common/utils';
+import { getGcpCcsCredentials } from '~/components/clusters/wizards/common/utils';
+import { CloudVPC } from '~/types/clusters_mgmt.v1';
 
 interface GcpVpcNameSelectFieldProps {
   input: FieldInputProps<FormSelectProps>;
@@ -43,7 +44,7 @@ export const GcpVpcNameSelectField = ({
   const dispatch = useDispatch();
   const { values } = useFormState();
   const { vpcs } = useGlobalState((state) => state.ccsInquiries);
-  const ccsCredentials = getCcsCredentials(values);
+  const ccsCredentials = getGcpCcsCredentials(values);
   const region = values[FieldId.Region];
   const hasDependencies = !!(ccsCredentials && region);
   const matchesDependencies =
@@ -61,8 +62,8 @@ export const GcpVpcNameSelectField = ({
         options = (
           <>
             <FormSelectOption isDisabled isPlaceholder value="" label={placeholder} />
-            {items.map(({ name }: { name: string }) => (
-              <FormSelectOption key={name} value={name} label={name} />
+            {items.map(({ name }) => (
+              <FormSelectOption key={name} value={name} label={name || ''} />
             ))}
           </>
         );
@@ -91,7 +92,7 @@ export const GcpVpcNameSelectField = ({
 
     if (matchesDependencies && vpcs.fulfilled) {
       // Made request and current value is no longer valid.
-      const items: { name: string; value: string }[] = vpcs.data?.items || [];
+      const items: CloudVPC[] = vpcs.data?.items || [];
       return !items.some((item) => item.name === input.value.toString());
     }
 

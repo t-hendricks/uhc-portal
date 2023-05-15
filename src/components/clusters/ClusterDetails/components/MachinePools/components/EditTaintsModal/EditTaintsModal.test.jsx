@@ -6,7 +6,6 @@ import EditTaintsModal from './EditTaintsModal';
 describe('<EditTaintsModal />', () => {
   const closeModal = jest.fn();
   const handleSubmit = jest.fn();
-  const resetGetMachinePoolsResponse = jest.fn();
   const resetEditTaintsResponse = jest.fn();
   const getMachinePools = jest.fn();
   const change = jest.fn();
@@ -29,7 +28,7 @@ describe('<EditTaintsModal />', () => {
       {
         availability_zones: ['us-east-1a'],
         href: '/api/clusters_mgmt/v1/clusters/cluster-id/machine_pools/mp-with-taints2',
-        id: 'mp-withot-taints',
+        id: 'mp-without-taints',
         instance_type: 'm5.xlarge',
         kind: 'MachinePool',
         replicas: 1,
@@ -43,25 +42,50 @@ describe('<EditTaintsModal />', () => {
     editTaintsResponse: {},
     getMachinePools,
     resetEditTaintsResponse,
-    resetGetMachinePoolsResponse,
     machinePoolsList: mockData,
     change,
     reset,
+    invalid: false,
     pristine: true,
     clusterId: 'test-id',
-    selectedMachinePoolId: 'mp-withot-taints',
+    selectedMachinePoolId: 'mp-without-taints',
   };
 
-  const EditTaintsModalWithLabelswrapper = shallow(<EditTaintsModal {...props} />);
+  const getEditTaintsModalWrapper = (testProps) =>
+    shallow(<EditTaintsModal {...props} {...testProps} />);
 
-  it('renders correctl', () => {
-    expect(EditTaintsModalWithLabelswrapper).toMatchSnapshot();
+  it('renders correctly', () => {
+    expect(getEditTaintsModalWrapper()).toMatchSnapshot();
   });
 
   it('should update taints fields when changing machine pool', () => {
-    const mpField = EditTaintsModalWithLabelswrapper.find('Field[name="machinePoolId"]');
+    const mpField = getEditTaintsModalWrapper().find('Field[name="machinePoolId"]');
     const mockEvent = { target: { value: mockData.data[0].id } };
     mpField.props().onChange(mockEvent, mockEvent.target.value);
     expect(change).toHaveBeenCalledWith('taints', mockData.data[0].taints);
+  });
+
+  it('should have enabled buttons when it is valid and has changes', () => {
+    expect(
+      getEditTaintsModalWrapper({ pristine: false }).find('Modal').props().isPrimaryDisabled,
+    ).toBeFalsy();
+  });
+
+  it('should have disabled primary button when it is invalid', () => {
+    expect(
+      getEditTaintsModalWrapper({ invalid: true }).find('Modal').props().isPrimaryDisabled,
+    ).toBeTruthy();
+  });
+
+  it('should have enabled "Add more" button when it is valid', () => {
+    expect(
+      getEditTaintsModalWrapper({ invalid: false }).find('FieldArray').props().canAddMore,
+    ).toBeTruthy();
+  });
+
+  it('should have disabled "Add more" button when it is invalid', () => {
+    expect(
+      getEditTaintsModalWrapper({ invalid: true }).find('FieldArray').props().canAddMore,
+    ).toBeFalsy();
   });
 });

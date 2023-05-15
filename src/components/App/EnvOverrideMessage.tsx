@@ -1,6 +1,7 @@
 import React from 'react';
 import { Alert, Button, ButtonVariant } from '@patternfly/react-core';
 import { ENV_OVERRIDE_LOCALSTORAGE_KEY } from '../../config';
+import ocmBaseName from '~/common/getBaseName';
 
 type Props = {
   env: string;
@@ -9,7 +10,7 @@ type Props = {
 const EnvOverrideMessage = ({ env }: Props) => {
   const goBackToNormal = () => {
     localStorage.removeItem(ENV_OVERRIDE_LOCALSTORAGE_KEY);
-    window.location.href = APP_BETA ? '/beta/openshift' : '/openshift';
+    window.location.href = ocmBaseName();
   };
   return (
     <Alert

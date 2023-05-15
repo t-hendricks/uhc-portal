@@ -133,6 +133,14 @@ const reviewValues = {
       false: 'Disabled',
     },
   },
+  fips: {
+    title: 'FIPS cryptography',
+    isBoolean: true,
+    values: {
+      true: 'Enabled',
+      false: 'Disabled',
+    },
+  },
   etcd_key_arn: {
     title: 'Etcd encryption key ARN',
   },

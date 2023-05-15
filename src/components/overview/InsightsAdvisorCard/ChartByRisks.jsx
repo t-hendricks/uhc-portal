@@ -4,6 +4,7 @@ import { Title, Flex, FlexItem } from '@patternfly/react-core';
 
 import InfoPopover from './InfoPopover';
 import { getSeverityName } from '../overviewHelpers';
+import { advisorBaseName } from '~/common/getBaseName';
 
 function ChartByRisks({ riskHits }) {
   return (
@@ -42,11 +43,7 @@ function ChartByRisks({ riskHits }) {
                 >
                   <FlexItem className="ocm-insights--risk-item__count">
                     <Title size="2xl" headingLevel="h1">
-                      <a
-                        href={`${window.location.origin}/${
-                          APP_BETA ? 'beta/' : ''
-                        }openshift/insights/advisor/recommendations?total_risk=${riskNumber}`}
-                      >
+                      <a href={`${advisorBaseName()}/recommendations?total_risk=${riskNumber}`}>
                         {count}
                       </a>
                     </Title>

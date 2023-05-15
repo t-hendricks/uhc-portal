@@ -229,6 +229,7 @@ exports[`<ReduxFormTaints /> should render when there is no input - initial rend
       index={0}
       isRequired={true}
       name="[object Object].key"
+      validate={[Function]}
     />
   </GridItem>
   <GridItem
@@ -240,6 +241,7 @@ exports[`<ReduxFormTaints /> should render when there is no input - initial rend
       index={0}
       isRequired={true}
       name="[object Object].value"
+      validate={[Function]}
     />
   </GridItem>
   <GridItem
@@ -294,6 +296,7 @@ exports[`<ReduxFormTaints /> should render when there is no input - initial rend
           size="sm"
         />
       }
+      isDisabled={true}
       isInline={true}
       onClick={[Function]}
       variant="link"
@@ -338,6 +341,7 @@ exports[`<ReduxFormTaints /> should render with input 1`] = `
       index={0}
       isRequired={true}
       name="[object Object].key"
+      validate={[Function]}
     />
   </GridItem>
   <GridItem
@@ -349,6 +353,7 @@ exports[`<ReduxFormTaints /> should render with input 1`] = `
       index={0}
       isRequired={true}
       name="[object Object].value"
+      validate={[Function]}
     />
   </GridItem>
   <GridItem
@@ -402,6 +407,7 @@ exports[`<ReduxFormTaints /> should render with input 1`] = `
       index={1}
       isRequired={true}
       name="[object Object].key"
+      validate={[Function]}
     />
   </GridItem>
   <GridItem
@@ -413,6 +419,7 @@ exports[`<ReduxFormTaints /> should render with input 1`] = `
       index={1}
       isRequired={true}
       name="[object Object].value"
+      validate={[Function]}
     />
   </GridItem>
   <GridItem
@@ -467,6 +474,7 @@ exports[`<ReduxFormTaints /> should render with input 1`] = `
           size="sm"
         />
       }
+      isDisabled={true}
       isInline={true}
       onClick={[Function]}
       variant="link"

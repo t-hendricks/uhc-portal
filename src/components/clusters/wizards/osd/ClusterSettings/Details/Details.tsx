@@ -65,6 +65,8 @@ export const Details = () => {
       [FieldId.CloudProvider]: cloudProvider,
       [FieldId.CustomerManagedKey]: hasCustomerManagedKey,
       [FieldId.KmsKeyArn]: kmsKeyArn,
+      [FieldId.EtcdEncryption]: etcdEncryption,
+      [FieldId.FipsCryptography]: fipsCryptography,
     },
     errors,
     isValidating,
@@ -321,13 +323,14 @@ export const Details = () => {
               />
             )}
             <Grid hasGutter>
-              <FormGroup label="etcd encryption" className="pf-u-mt-md">
+              <FormGroup label="etcd encryption">
                 <GridItem>
                   <Split hasGutter>
                     <SplitItem>
                       <CheckboxField
                         name={FieldId.EtcdEncryption}
                         label="Enable additional etcd encryption"
+                        isDisabled={fipsCryptography}
                       />
                     </SplitItem>
                     <SplitItem>
@@ -348,6 +351,21 @@ export const Details = () => {
                   </div>
                 </GridItem>
               </FormGroup>
+
+              {etcdEncryption && (
+                <FormGroup label="FIPS cryptography" className="pf-u-mt-md">
+                  <GridItem>
+                    <CheckboxField
+                      name={FieldId.FipsCryptography}
+                      label="Enable FIPS cryptography"
+                    />
+                    <div className="pf-u-font-size-sm pf-u-color-200 pf-u-ml-lg pf-u-mt-xs">
+                      Install a cluster that uses FIPS Validated / Modules in Process cryptographic
+                      libraries on the x86_64 architecture.
+                    </div>
+                  </GridItem>
+                </FormGroup>
+              )}
             </Grid>
           </ExpandableSection>
         </Flex>

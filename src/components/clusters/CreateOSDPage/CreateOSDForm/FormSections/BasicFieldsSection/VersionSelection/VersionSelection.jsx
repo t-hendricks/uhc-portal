@@ -1,6 +1,7 @@
 // a redux-form Field-compatible component for selecting a cluster version
 
 import React, { useState, useEffect } from 'react';
+import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import get from 'lodash/get';
 import {
@@ -26,6 +27,7 @@ import ErrorBox from '../../../../../../common/ErrorBox';
 import InstructionCommand from '../../../../../../common/InstructionCommand';
 import { isSupportedMinorVersion } from '~/common/helpers';
 import { useOCPLifeCycleStatusData } from '~/components/releases/hooks';
+import { MIN_MANAGED_POLICY_VERSION } from '~/components/clusters/CreateROSAPage/CreateROSAWizard/rosaConstants';
 
 function VersionSelection({
   isRosa,
@@ -37,8 +39,11 @@ function VersionSelection({
   getInstallableVersions,
   getInstallableVersionsResponse,
   selectedClusterVersion,
+  hasManagedArnsSelected,
+  isHypershiftSelected,
+  isOpen: isInitiallyOpen = false,
 }) {
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(isInitiallyOpen);
   const [versions, setVersions] = useState([]);
   const [rosaVersionError, setRosaVersionError] = useState(false);
   const [showOnlyCompatibleVersions, setShowOnlyCompatibleVersions] = useState(isRosa || false);
@@ -148,9 +153,24 @@ function VersionSelection({
     let hasIncompatibleVersions = false;
 
     versions.forEach((version) => {
-      const versionName = version.raw_id.split('.', 2).join('.');
-      const isIncompatibleVersion = isRosa && !isValidRosaVersion(version.raw_id);
+      const { raw_id: versionRawId } = version;
+      const versionName = parseFloat(versionRawId);
+      const minManagedPolicyVersionName = parseFloat(MIN_MANAGED_POLICY_VERSION);
+
+      const versionPatch = Number(versionRawId.split('.')[2]);
+      const minManagedPolicyVersionPatch = Number(MIN_MANAGED_POLICY_VERSION.split('.')[2]);
+
+      const isIncompatibleHostedVersion =
+        isHypershiftSelected &&
+        hasManagedArnsSelected &&
+        (versionName < minManagedPolicyVersionName ||
+          (versionName === minManagedPolicyVersionName &&
+            versionPatch < minManagedPolicyVersionPatch));
+
+      const isIncompatibleVersion =
+        (isRosa && !isValidRosaVersion(version.raw_id)) || isIncompatibleHostedVersion;
       hasIncompatibleVersions = hasIncompatibleVersions || isIncompatibleVersion;
+
       if (isIncompatibleVersion && showOnlyCompatibleVersions) {
         return;
       }
@@ -258,7 +278,10 @@ function VersionSelection({
                   <span className="pf-u-display-none">&nbsp;</span>
                 )}
                 <SelectGroup label="Full support">{selectOptions.fullSupport}</SelectGroup>
-                <SelectGroup label="Maintenance support">
+                <SelectGroup
+                  label="Maintenance support"
+                  className={classNames(!selectOptions.maintenanceSupport?.length && 'pf-u-hidden')}
+                >
                   {selectOptions.maintenanceSupport}
                 </SelectGroup>
               </Select>
@@ -292,6 +315,9 @@ VersionSelection.propTypes = {
     touched: PropTypes.bool,
     error: PropTypes.string,
   }),
+  hasManagedArnsSelected: PropTypes.bool,
+  isHypershiftSelected: PropTypes.bool,
+  isOpen: PropTypes.bool,
 };
 
 export default VersionSelection;

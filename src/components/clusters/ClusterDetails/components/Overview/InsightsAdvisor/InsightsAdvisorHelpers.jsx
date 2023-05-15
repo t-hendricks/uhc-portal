@@ -9,6 +9,7 @@ import { global_palette_red_200 as red200 } from '@patternfly/react-tokens/dist/
 import { ChartLabel } from '@patternfly/react-charts';
 
 import CriticalIcon from './CriticalIcon';
+import { advisorBaseName } from '~/common/getBaseName';
 
 const riskLabels = {
   1: 'Low',
@@ -39,9 +40,7 @@ const InsightsTitleComponent = ({ style, ...props }) => (
 
 const InsightsLabelComponent = ({ style, ...props }) => {
   const { datum, externalId } = props;
-  const link = `${window.location.origin}/${
-    APP_BETA ? 'beta/' : ''
-  }openshift/insights/advisor/clusters/${externalId}?total_risk=${datum.id}`;
+  const link = `${advisorBaseName()}/clusters/${externalId}?total_risk=${datum.id}`;
 
   return (
     <a href={link}>
@@ -65,9 +64,7 @@ const InsightsLegendIconComponent = ({ x, y, datum }) => {
 };
 
 const InsightsSubtitleComponent = ({ externalId, style, ...props }) => {
-  const link = `${window.location.origin}/${
-    APP_BETA ? 'beta/' : ''
-  }openshift/insights/advisor/clusters/${externalId}`;
+  const link = `${advisorBaseName()}/clusters/${externalId}`;
 
   return (
     <a href={link}>

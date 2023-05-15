@@ -32,7 +32,7 @@ describe('redirection to Advisor cluster page: with the external ID', () => {
     const redirect = wrapper.find('ExternalRedirect');
     expect(redirect.length).toBe(1);
     expect(redirect.props().url).toBe(
-      'http://localhost/openshift/insights/advisor/clusters/5d5892d3-1f74-4ccf-91af-548dfc9767aa',
+      '/openshift/insights/advisor/clusters/5d5892d3-1f74-4ccf-91af-548dfc9767aa',
     );
   });
   it('should not call fetchClusterDetails', () => {
@@ -75,7 +75,7 @@ describe('redirection to Advisor recommendation page: with the external ID', () 
     const redirect = wrapper.find('ExternalRedirect');
     expect(redirect.length).toBe(1);
     expect(redirect.props().url).toBe(
-      'http://localhost/openshift/insights/advisor/clusters/5d5892d3-1f74-4ccf-91af-548dfc9767aa?first=ccx_rules_ocp.external.rules.master_defined_as_machinesets%7CMASTER_DEFINED_AS_MACHINESETS',
+      '/openshift/insights/advisor/clusters/5d5892d3-1f74-4ccf-91af-548dfc9767aa?first=ccx_rules_ocp.external.rules.master_defined_as_machinesets%7CMASTER_DEFINED_AS_MACHINESETS',
     );
   });
   it('should not call fetchClusterDetails', () => {
@@ -128,7 +128,7 @@ describe('redirection to Advisor cluster page: with the subscription ID', () => 
     const redirect = wrapper.find('ExternalRedirect');
     expect(redirect.length).toBe(1);
     expect(redirect.props().url).toBe(
-      'http://localhost/openshift/insights/advisor/clusters/5d5892d3-1f74-4ccf-91af-548dfc9767aa',
+      '/openshift/insights/advisor/clusters/5d5892d3-1f74-4ccf-91af-548dfc9767aa',
     );
   });
 });
@@ -184,7 +184,7 @@ describe('redirection to Advisor recommendation page: with the subscription ID',
     const redirect = wrapper.find('ExternalRedirect');
     expect(redirect.length).toBe(1);
     expect(redirect.props().url).toBe(
-      'http://localhost/openshift/insights/advisor/clusters/5d5892d3-1f74-4ccf-91af-548dfc9767aa?first=ccx_rules_ocp.external.rules.master_defined_as_machinesets%7CMASTER_DEFINED_AS_MACHINESETS',
+      '/openshift/insights/advisor/clusters/5d5892d3-1f74-4ccf-91af-548dfc9767aa?first=ccx_rules_ocp.external.rules.master_defined_as_machinesets%7CMASTER_DEFINED_AS_MACHINESETS',
     );
   });
 });

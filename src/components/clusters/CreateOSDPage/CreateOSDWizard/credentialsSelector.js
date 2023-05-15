@@ -4,7 +4,8 @@ import { normalizedProducts } from '../../../../common/subscriptionTypes';
 
 /**
  * Gets AWS or GCP CCS credentials from form state, in form suitable for actions.
- * TODO: consider moving credentialsFromJSON() here, change actions to take object rather than JSON?
+ * In GCP case we return JSON string; parsing it is deferred to action time,
+ * when it's easier to present errors to user.
  * TODO: can/should we reuse these in createClusterRequest()?
  *   Note that creation request puts more fields under 'aws' e.g. 'kms_key_arn'.
  */

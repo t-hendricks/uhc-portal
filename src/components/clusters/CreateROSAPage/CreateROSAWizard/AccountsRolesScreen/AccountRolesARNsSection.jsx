@@ -16,6 +16,7 @@ import {
   TextListItem,
   TextListVariants,
   Title,
+  Label,
 } from '@patternfly/react-core';
 import spacing from '@patternfly/react-styles/css/utilities/Spacing/spacing';
 import { Spinner } from '@redhat-cloud-services/frontend-components/Spinner';
@@ -28,9 +29,10 @@ import { isSupportedMinorVersion, formatMinorVersion } from '~/common/helpers';
 import ErrorBox from '~/components/common/ErrorBox';
 import ExternalLink from '~/components/common/ExternalLink';
 import InstructionCommand from '~/components/common/InstructionCommand';
-import { ReduxFormDropdown } from '~/components/common/ReduxFormComponents';
+import { ReduxSelectDropdown } from '~/components/common/ReduxFormComponents';
 import ReduxVerticalFormGroup from '~/components/common/ReduxFormComponents/ReduxVerticalFormGroup';
 import { AwsRoleErrorAlert } from './AwsRoleErrorAlert';
+import { MIN_MANAGED_POLICY_VERSION } from '~/components/clusters/CreateROSAPage/CreateROSAWizard/rosaConstants';
 
 // todo - WAT!?
 import './AccountsRolesScreen.scss';
@@ -61,15 +63,16 @@ function AccountRolesARNsSection({
   const [selectedInstallerRole, setSelectedInstallerRole] = useState(NO_ROLE_DETECTED);
   const [allARNsFound, setAllARNsFound] = useState(false);
   const [hasARNsError, setHasARNsError] = useState(false);
+  const [hasManagedPolicies, setHasManagedPolicies] = useState(false);
 
-  const touchARNsFields = () => {
+  const touchARNsFields = React.useCallback(() => {
     touch('installer_role_arn');
     touch('support_role_arn');
     touch('worker_role_arn');
     if (!isHypershiftSelected) {
       touch('control_plane_role_arn');
     }
-  };
+  }, [isHypershiftSelected, touch]);
 
   const updateRoleArns = (role) => {
     change('installer_role_arn', role?.Installer || NO_ROLE_DETECTED);
@@ -83,7 +86,7 @@ function AccountRolesARNsSection({
   const hasCompleteRoleSet = (role) =>
     role.Installer && role.Support && role.Worker && (role.ControlPlane || isHypershiftSelected);
 
-  // Order: current selected role > first complete role set > first incomplete role set > 'No Role Detected'
+  // Order: current selected role > first managed policy role > first complete role set > first incomplete role set > 'No Role Detected'
   const getDefaultInstallerRole = (selectedInstallerRoleARN, accountRolesARNs) => {
     if (selectedInstallerRoleARN && selectedInstallerRoleARN !== NO_ROLE_DETECTED) {
       return selectedInstallerRoleARN;
@@ -92,7 +95,13 @@ function AccountRolesARNsSection({
     if (accountRolesARNs.length === 0) {
       return NO_ROLE_DETECTED;
     }
-    const defaultRole = accountRolesARNs.find(hasCompleteRoleSet) || accountRolesARNs[0];
+
+    const firstManagedPolicyRole = accountRolesARNs.find(
+      (role) => role.managedPolicies || role.hcpManagedPolicies,
+    );
+    const firstCompleteRoleSet = accountRolesARNs.find((role) => hasCompleteRoleSet(role));
+    const defaultRole = firstManagedPolicyRole || firstCompleteRoleSet || accountRolesARNs[0];
+
     return defaultRole.Installer;
   };
 
@@ -125,6 +134,18 @@ function AccountRolesARNsSection({
     });
   }, [selectedInstallerRole]);
 
+  const hasManagedPoliciesByRole = (role) =>
+    isHypershiftSelected ? role.hcpManagedPolicies : role.managedPolicies;
+
+  // Determine whether the current selected role has managed policies and set to state managed value
+  React.useEffect(() => {
+    const selectedRole = accountRoles.find((role) => role.Installer === selectedInstallerRole);
+
+    if (getAWSAccountRolesARNsResponse.fulfilled && selectedRole) {
+      setHasManagedPolicies(hasManagedPoliciesByRole(selectedRole));
+    }
+  }, [selectedAWSAccountID, getAWSAccountRolesARNsResponse, selectedInstallerRole]);
+
   const setSelectedInstallerRoleAndOptions = (accountRolesARNs) => {
     const installerOptions = [];
     if (accountRolesARNs.length === 0) {
@@ -137,6 +158,14 @@ function AccountRolesARNsSection({
         installerOptions.push({
           name: role.Installer,
           value: role.Installer,
+          ...(!isHypershiftSelected &&
+            hasManagedPoliciesByRole(role) && {
+              label: (
+                <Label color="blue" isCompact>
+                  Recommended
+                </Label>
+              ),
+            }),
         });
       });
     }
@@ -181,7 +210,9 @@ function AccountRolesARNsSection({
     } else if (getAWSAccountRolesARNsResponse.pending) {
       setHasARNsError(false);
     } else if (getAWSAccountRolesARNsResponse.fulfilled) {
-      const accountRolesARNs = get(getAWSAccountRolesARNsResponse, 'data', []);
+      const accountRolesARNs = get(getAWSAccountRolesARNsResponse, 'data', []).filter((arn) =>
+        isHypershiftSelected ? arn.hcpManagedPolicies : true,
+      );
       setSelectedInstallerRoleAndOptions(accountRolesARNs);
       setAccountRoles(accountRolesARNs);
     } else if (getAWSAccountRolesARNsResponse.error) {
@@ -202,7 +233,7 @@ function AccountRolesARNsSection({
     setIsExpanded(!isExpanded);
   };
 
-  const handInstallerRoleChange = (_, value) => {
+  const onInstallerRoleChange = (_, value) => {
     // changing to a new set of ARNs, which could have different
     // rosa_max_os_version, so clear the cluster_version which
     // will get a new default on next step of the wizard
@@ -215,15 +246,20 @@ function AccountRolesARNsSection({
 
   const refreshARNs = () => {
     clearGetAWSAccountRolesARNsResponse();
-    change('installer_role_arn', '');
-    change('cluster_version', undefined);
-    setSelectedInstallerRole('');
     getAWSAccountRolesARNs(selectedAWSAccountID);
+
+    // Clear the installer role/version if the latest fetched roles do not possess the previously selected one.
+    if (!accountRoles.some((role) => role.Installer === selectedInstallerRole)) {
+      change('installer_role_arn', '');
+      setSelectedInstallerRole('');
+      change('cluster_version', undefined);
+    }
   };
 
   const [latestOCPVersion, latestVersionLoaded] = useOCPLatestVersion('stable');
   const rolesOutOfDate =
     latestVersionLoaded && !isSupportedMinorVersion(latestOCPVersion, rosaMaxOSVersion);
+  const hasStandaloneManagedRole = !isHypershiftSelected && hasManagedPolicies;
 
   const arnsErrorAlert = React.useMemo(() => {
     const alertTitle = resolveARNsErrorTitle(getAWSAccountRolesARNsResponse);
@@ -239,6 +275,18 @@ function AccountRolesARNsSection({
 
     return <ErrorBox message={alertTitle} response={getAWSAccountRolesARNsResponse} />;
   }, [getAWSAccountRolesARNsResponse, openAssociateAwsAccountModal, resolveARNsErrorTitle]);
+
+  const arnCompatibilityAlertTitle = React.useMemo(() => {
+    if (hasStandaloneManagedRole || isHypershiftSelected) {
+      return `The selected account-wide roles are ${
+        !isHypershiftSelected ? 'preferred and' : ''
+      } compatible with OpenShift version ${MIN_MANAGED_POLICY_VERSION} and newer.`;
+    }
+
+    return `The selected account-wide roles are compatible with OpenShift version ${formatMinorVersion(
+      rosaMaxOSVersion,
+    )} and earlier.`;
+  }, [hasStandaloneManagedRole, isHypershiftSelected, rosaMaxOSVersion]);
 
   return (
     <>
@@ -299,12 +347,12 @@ function AccountRolesARNsSection({
             <Grid>
               <GridItem span={8}>
                 <Field
-                  component={ReduxFormDropdown}
+                  component={ReduxSelectDropdown}
                   name="installer_role_arn"
                   label="Installer role"
                   type="text"
                   options={installerRoleOptions}
-                  onChange={handInstallerRoleChange}
+                  onChange={onInstallerRoleChange}
                   isDisabled={installerRoleOptions.length <= 1}
                   validate={roleARNRequired}
                   isRequired
@@ -391,18 +439,16 @@ function AccountRolesARNsSection({
                   </>
                 )}
               </GridItem>
-              {rosaMaxOSVersion && (
+              {(rosaMaxOSVersion || hasStandaloneManagedRole) && (
                 <GridItem>
                   <br />
                   <Alert
                     variant="info"
                     isInline
-                    isPlain={!rolesOutOfDate}
-                    title={`The selected account-wide roles are compatible with OpenShift version ${formatMinorVersion(
-                      rosaMaxOSVersion,
-                    )} and earlier.`}
+                    isPlain={hasStandaloneManagedRole || !rolesOutOfDate}
+                    title={arnCompatibilityAlertTitle}
                   >
-                    {rolesOutOfDate && (
+                    {rolesOutOfDate && !(hasStandaloneManagedRole || isHypershiftSelected) && (
                       <TextContent>
                         <Text component={TextVariants.p} className={spacing.mtSm}>
                           <strong>

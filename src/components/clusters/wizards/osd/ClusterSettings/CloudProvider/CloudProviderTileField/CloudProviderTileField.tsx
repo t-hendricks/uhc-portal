@@ -52,6 +52,7 @@ export const CloudProviderTileField = () => {
     setFieldValue(FieldId.MachineTypeForceChoice, false);
     setFieldValue(FieldId.MachineType, '');
     setFieldValue(FieldId.AcknowledgePrereq, false);
+    setFieldValue(FieldId.FipsCryptography, false);
     setFieldValue(FieldId.CloudProvider, value);
   };
 

@@ -17,6 +17,7 @@ import type { TermsReviewResponse } from '~/types/authorizations.v1';
 import type { PromiseReducerState } from '~/redux/types';
 
 import './TermsGuard.scss';
+import { ViewTermsButton } from './ViewTermsButton';
 
 type Props = {
   children: React.ReactElement;
@@ -100,9 +101,7 @@ const TermsGuard = ({
   );
   const tncAppURL = getTncAppURL(selfTermsReviewResult.redirect_url);
   const actions = [
-    <Button variant="primary" key="view-terms-and-conditions" component="a" href={tncAppURL}>
-      View Terms and Conditions
-    </Button>,
+    <ViewTermsButton href={tncAppURL} key="view-terms-and-conditions" />,
     <Button variant="secondary" key="cancel-terms-and-conditions" onClick={handleCancel}>
       Cancel
     </Button>,
