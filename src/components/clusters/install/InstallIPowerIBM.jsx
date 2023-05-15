@@ -31,18 +31,18 @@ class InstallPower extends Component {
           <InstructionsChooser
             aiPageLink="/assisted-installer/clusters/~new"
             aiLearnMoreLink={links.INSTALL_ASSISTED_LEARN_MORE}
-            upiPageLink="/install/Ibmz/user-provisioned"
+            upiPageLink="/install/Power/user-provisioned"
             upiLearnMoreLink={links.INSTALL_IbmzUPI_GETTING_STARTED}
             hideIPI
             providerSpecificFeatures={{
               abi: ['For connected or air-gapped/restricted networks'],
               ipi: [
-                'Hosts controlled with Ibmz Cloud Provider',
+                'Hosts controlled with PowerPC 64-bit LE Cloud Provider',
                 'For connected or air-gapped/restricted networks',
               ],
               upi: ['For connected or air-gapped/restricted networks'],
             }}
-            name="Ibmz"
+            name="Power"
           />
         </PageSection>
       </>

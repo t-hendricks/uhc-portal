@@ -261,7 +261,7 @@ const instructionsMapping = {
     },
     ppc: {
       upi: {
-        title: 'Install OpenShift on Power with user-provisioned infrastructure',
+        title: 'Install OpenShift on PowerPC 64-bit LE with user-provisioned infrastructure',
         installer: tools.PPCINSTALLER,
         channel: channels.STABLE,
         rhcos: {
@@ -297,7 +297,7 @@ const instructionsMapping = {
     },
     s390x: {
       upi: {
-        title: 'Install OpenShift on IBM Z with user-provisioned infrastructure',
+        title: 'Install OpenShift on System/390 64-bit with user-provisioned infrastructure',
         rhcos: {
           additionalInstructions: (
             <Text component="div">

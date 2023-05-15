@@ -13,6 +13,9 @@ import {
 import { Table, TableHeader, TableBody } from '@patternfly/react-table';
 import { Link } from 'react-router-dom';
 import OutlinedQuestionCircleIcon from '@patternfly/react-icons/dist/esm/icons/outlined-question-circle-icon';
+import { useSelector } from 'react-redux';
+import { ASSISTED_INSTALLER_MULTIARCH_SUPPORTED } from '~/redux/constants/featureConstants';
+import { featureGateSelector } from '~/hooks/useFeatureGate';
 
 const ocpTableColumns = ['Infrastructure provider', 'Installation options'];
 const ocpTableRows = [
@@ -78,11 +81,14 @@ const ocpTableRows = [
   ],
 ];
 
-const DatacenterTab = ({ assistedInstallerFeature, multiArchFeatureEnabled }) => {
+const DatacenterTab = ({ assistedInstallerFeature }) => {
   /**
    *https://issues.redhat.com/browse/MGMT-14597: the links to IBM/Z and Power should be visible only to users
    *with the capability 'capability.organization.bare_metal_installer_multiarch' until the testing will be finished
    */
+  const multiArchFeatureEnabled = useSelector((state) =>
+    featureGateSelector(state, ASSISTED_INSTALLER_MULTIARCH_SUPPORTED),
+  );
   let filteredRows = ocpTableRows;
   if (!multiArchFeatureEnabled) {
     filteredRows = ocpTableRows.filter((row) => {
@@ -155,7 +161,6 @@ const DatacenterTab = ({ assistedInstallerFeature, multiArchFeatureEnabled }) =>
 
 DatacenterTab.propTypes = {
   assistedInstallerFeature: PropTypes.bool,
-  multiArchFeatureEnabled: PropTypes.bool,
 };
 
 export default DatacenterTab;

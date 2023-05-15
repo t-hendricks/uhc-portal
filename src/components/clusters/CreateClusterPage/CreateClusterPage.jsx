@@ -56,7 +56,6 @@ class CreateCluster extends React.Component {
       assistedInstallerFeature,
       osdTrialFeature,
       activeTab,
-      multiArchFeatureEnabled,
     } = this.props;
 
     const activeTabIndex = hashToTabIndex[activeTab] || 0;
@@ -117,10 +116,7 @@ class CreateCluster extends React.Component {
               />
             </Tab>
             <Tab eventKey={1} title={tabTitle(1)}>
-              <DatacenterTab
-                assistedInstallerFeature={assistedInstallerFeature}
-                multiArchFeatureEnabled={multiArchFeatureEnabled}
-              />
+              <DatacenterTab assistedInstallerFeature={assistedInstallerFeature} />
             </Tab>
             <Tab eventKey={2} title={tabTitle(2)}>
               <LocalTab token={token} />
@@ -156,7 +152,6 @@ CreateCluster.propTypes = {
     push: PropTypes.func.isRequired,
   }).isRequired,
   activeTab: PropTypes.string,
-  multiArchFeatureEnabled: PropTypes.bool,
 };
 
 export default CreateCluster;

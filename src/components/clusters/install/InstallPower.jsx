@@ -13,7 +13,7 @@ import PageTitle from '../../common/PageTitle';
 export class InstallPower extends Component {
   componentDidMount() {
     scrollToTop();
-    document.title = 'Install OpenShift 4 | Red Hat OpenShift Cluster Manager | Power';
+    document.title = 'Install OpenShift 4 | Red Hat OpenShift Cluster Manager | PowerPC 64-bit LE';
 
     const { dispatch } = this.props;
     dispatch(tollboothActions.createAuthToken());
@@ -26,7 +26,7 @@ export class InstallPower extends Component {
         path={[
           { label: 'Clusters' },
           { label: 'Cluster Type', path: '/create' },
-          { label: 'Power' },
+          { label: 'PowerPC 64-bit LE' },
         ]}
       />
     );

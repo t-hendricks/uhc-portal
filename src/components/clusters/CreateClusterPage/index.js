@@ -8,7 +8,6 @@ import { tollboothActions } from '../../../redux/actions';
 import {
   OSD_TRIAL_FEATURE,
   ASSISTED_INSTALLER_FEATURE,
-  ASSISTED_INSTALLER_MULTIARCH_SUPPORTED,
 } from '../../../redux/constants/featureConstants';
 
 import { featureGateSelector } from '~/hooks/useFeatureGate';
@@ -20,7 +19,6 @@ const mapStateToProps = (state) => ({
   token: state.tollbooth.token,
   osdTrialFeature: featureGateSelector(state, OSD_TRIAL_FEATURE),
   assistedInstallerFeature: featureGateSelector(state, ASSISTED_INSTALLER_FEATURE),
-  multiArchFeatureEnabled: featureGateSelector(state, ASSISTED_INSTALLER_MULTIARCH_SUPPORTED),
 });
 
 const mapDispatchToProps = () => (dispatch) => ({
