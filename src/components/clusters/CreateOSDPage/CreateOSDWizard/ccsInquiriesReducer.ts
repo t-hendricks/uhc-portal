@@ -108,21 +108,13 @@ export const indexAWSVPCs = (vpcsData: {
 }): Record<string, AugmentedSubnetwork> => {
   const bySubnetID = {} as Record<string, AugmentedSubnetwork>;
   (vpcsData.items || []).forEach((vpcItem) => {
-    let vpcId: string;
-    let vpcName: string | undefined;
-    if (vpcItem.id) {
-      vpcId = vpcItem.id;
-      vpcName = vpcItem.name;
-    } else {
-      // Compatibility to older API returning only id, in `name` field.
-      vpcId = vpcItem.name!;
-      vpcName = undefined;
-    }
     // Work around backend currently returning empty aws_subnets as null.
     (vpcItem.aws_subnets || []).forEach((subnet) => {
+      // for type safety but expected to always be present
       if (subnet.subnet_id) {
-        // for type safety but expected to always be present
-        bySubnetID[subnet.subnet_id] = { ...subnet, vpc_id: vpcId, vpc_name: vpcName };
+        // Note: `aws_inquiries/vpcs` returns VPC `.id` (and optionally `.name`),
+        // while `gcp_inquiries/vpcs` returns VPC `.name`.  But this function deals with AWS.
+        bySubnetID[subnet.subnet_id] = { ...subnet, vpc_id: vpcItem.id!, vpc_name: vpcItem.name };
       }
     });
   });
