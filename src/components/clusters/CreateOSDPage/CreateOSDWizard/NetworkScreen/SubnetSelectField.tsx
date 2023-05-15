@@ -48,8 +48,10 @@ export const SubnetSelectField = ({
   const [selectedSubnetId, setSelectedSubnetId] = React.useState(input.value);
   const vpcs = useAWSVPCInquiry();
   const { pending: isVpcsLoading, fulfilled: isVpcsFulfilled, error: vpcsError } = vpcs;
-  const vpcsItems: CloudVPC[] =
-    vpcs.data?.items.filter((item: CloudVPC) => item.id === selectedVPC) || [];
+  let vpcsItems: CloudVPC[] = vpcs.data?.items || [];
+  if (selectedVPC) {
+    vpcsItems = vpcsItems.filter((item: CloudVPC) => item.id === selectedVPC);
+  }
   const subnetList: Subnetwork[] = [];
   const vpcsSubnetsMap = vpcsItems?.reduce((acc: Record<string, Subnetwork[]>, vpc: CloudVPC) => {
     const { aws_subnets: subnets } = vpc;
