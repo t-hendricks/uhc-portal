@@ -182,7 +182,7 @@ const ClusterLogsDatePicker = ({ setFilter, currentFilter, createdAt }) => {
 
   const pickerFrom = (
     <DatePicker
-      onChange={(dateStr, date) => inputOnChange(dateStr, date, onDateChangeFrom)}
+      onChange={(_, dateStr, date) => inputOnChange(dateStr, date, onDateChangeFrom)}
       value={startDateStr}
       dateParse={dateParse}
       {...commonProps}
@@ -191,7 +191,7 @@ const ClusterLogsDatePicker = ({ setFilter, currentFilter, createdAt }) => {
 
   const pickerTo = (
     <DatePicker
-      onChange={(dateStr, date) => inputOnChange(dateStr, date, onDateChangeTo)}
+      onChange={(_, dateStr, date) => inputOnChange(dateStr, date, onDateChangeTo)}
       value={endDateStr}
       dateParse={dateParse}
       {...commonProps}
