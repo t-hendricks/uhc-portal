@@ -798,14 +798,14 @@ describe('AWS Subnet', () => {
   const formProps = { vpcs: { fulfilled: true, data: processAWSVPCs(awsVPCs) }, vpcsValid: true };
   const goodValues = {
     az_0: 'us-east-1d',
-    private_subnet_id_0: 'subnet-00b3753ab2dd892ac', // All from vpc-08b6f0901ba35262d.
-    public_subnet_id_0: 'subnet-0703ec90283d1fd6b',
-    az_1: 'us-east-1e',
-    private_subnet_id_1: 'subnet-0735da52d658da28b',
-    public_subnet_id_1: 'subnet-09404f4fc139bd94e',
+    private_subnet_id_0: 'subnet-08a2c509ba577f19f', // All from vpc-048a9cb4375326db1.
+    public_subnet_id_0: 'subnet-07d6afea8390d724b',
+    az_1: 'us-east-1c',
+    private_subnet_id_1: 'subnet-04a6c1b455562cc7a',
+    public_subnet_id_1: 'subnet-0739d3017630f47b5',
     az_2: 'us-east-1f',
-    private_subnet_id_2: 'subnet-00327948731118662',
-    public_subnet_id_2: 'subnet-09ad4ef49f2e29996',
+    private_subnet_id_2: 'subnet-01c570904c12f52ae',
+    public_subnet_id_2: 'subnet-0710c0d15361d308c',
   };
 
   test('private/public', () => {
@@ -867,18 +867,19 @@ describe('AWS Subnet', () => {
 
   test('same VPC', () => {
     const values2 = {
-      private_subnet_id_0: 'subnet-0189e68d3126435fb', // Both from vpc-05bb9f093feffe176.
-      public_subnet_id_0: 'subnet-0c2880e587449df55',
+      // Both from vpc-09172b63e4129dee7 (drcluster2-may-11-68fs6-vpc)
+      private_subnet_id_0: 'subnet-0a49e0dd114e51624',
+      public_subnet_id_0: 'subnet-0bdf51b6ee61e0f56',
     };
     expect(validate(values2)).toBe(undefined);
     const values = {
-      private_subnet_id_0: 'subnet-0189e68d3126435fb', // From 3 different VPCs.
+      private_subnet_id_0: 'subnet-0a49e0dd114e51624', // From 3 different VPCs.
       private_subnet_id_1: 'subnet-0d3a4a32658ee415a',
       private_subnet_id_2: 'subnet-id-without-Name',
     };
     expect(
       validateAWSSubnet(values.private_subnet_id_0, values, formProps, 'private_subnet_id_0'),
-    ).toContain('vpc-05bb9f093feffe176');
+    ).toContain('drcluster2-may-11-68fs6-vpc');
     expect(
       validateAWSSubnet(values.private_subnet_id_1, values, formProps, 'private_subnet_id_1'),
     ).toContain('SDA-5333-test-new-API-returning-both-name-and-id');
@@ -890,7 +891,7 @@ describe('AWS Subnet', () => {
   test('AZ matching', () => {
     expect(validate(goodValues)).toBe(undefined);
     const values1 = { ...goodValues, private_subnet_id_2: goodValues.private_subnet_id_1 };
-    expect(validate(values1)).toContain('us-east-1e');
+    expect(validate(values1)).toContain('us-east-1c');
     const values2 = { ...goodValues, public_subnet_id_0: goodValues.public_subnet_id_2 };
     expect(validate(values2)).toContain('us-east-1f');
     expect(validate({ ...values2, az_0: '' })).toBe(undefined);
