@@ -79,15 +79,18 @@ const gitRev = async (branchOrCommit) => {
 
 // app.info.json files generated in push_to_insights.sh & insights-Jenkinsfile
 const appInfo = async (url) => {
-  const r = await execFilePromise('curl', ['--silent', '--show-error', '--fail', url]);
+  let body;
   try {
+    // Using curl to respect system-installed CA certs on all platforms.
+    const cmd = ['curl', '--silent', '--show-error', '--fail', url];
+    body = (await execFilePromise(cmd[0], cmd.slice(1))).stdout;
     // Some contain a trailing comma, making it invalid JSON, so use JSON5.
-    const data = JSON5.parse(r.stdout);
+    const data = JSON5.parse(body);
 
     const normalizedHash = await gitRev(data.src_hash);
     return { ...data, ...normalizedHash };
   } catch (err) {
-    return { ERROR: `${err} - ${r.stdout}` };
+    return { ERROR: err.stderr || err.toString(), body, url };
   }
 };
 
@@ -186,14 +189,19 @@ const main = async () => {
       console.log(JSON.stringify(envs, null, 2));
     }
 
-    const widestName = Math.max(...envs.map(e => e.name.length));
-    const widestHash = Math.max(...envs.map(e => e.info.src_hash.length));
+    const widestName = Math.max(...envs.map((e) => e.name.length));
+    const widestHash = Math.max(...envs.map((e) => (e.info.src_hash || '').length));
 
     if (flags.short) {
       envs.forEach((e) => {
         const paddedName = e.name.padStart(widestName, ' ');
-        const paddedHash = e.info.src_hash.padEnd(widestHash, ' ');
-        console.log(`${paddedName} ${paddedHash}  [${e.info.assisted_ui_lib_versions}]`);
+        const paddedHash = (e.info.src_hash || '').padEnd(widestHash, ' ');
+        if (e.info.src_hash) {
+          console.log(`${paddedName} ${paddedHash}  [${e.info.assisted_ui_lib_versions}]`);
+        } else {
+          // Show details why data is missing.
+          console.log(`${paddedName}    ### ${JSON.stringify(e.info)}`);
+        }
       });
     }
 
@@ -202,22 +210,29 @@ const main = async () => {
       // eslint-disable-next-line no-restricted-syntax
       for (const e of envs) {
         const paddedName = e.name.padStart(widestName, ' ');
-        const paddedHash = e.info.src_hash.padEnd(widestHash, ' ');
+        const paddedHash = (e.info.src_hash || '').padEnd(widestHash, ' ');
         // Don't try overwriting branches taken from git like `upstream/master`
         // (would probably be a no-op but safer not to).
-        if (e.name.match('build_pushed_.*|live_.*') && e.info.src_hash) {
+        if (!e.name.match('build_pushed_.*|live_.*')) {
+          console.log(`#                  ${paddedName} ${paddedHash}    [${e.info.assisted_ui_lib_versions}]`);
+        } else if (e.info.src_hash) {
           const cmd = ['git', 'branch', '--force', e.name, e.info.src_hash];
           console.log(`git branch --force ${paddedName} ${paddedHash}  # [${e.info.assisted_ui_lib_versions}]`);
           await execFilePromise(cmd[0], cmd.slice(1), { stdio: 'inherit' });
         } else {
-          console.log(`#                  ${paddedName} ${paddedHash}    [${e.info.assisted_ui_lib_versions}]`);
+          // Delete branch to avoid relying on stale data. Ignore error if already deleted.
+          const cmd = ['git', 'branch', '-D', e.name];
+          console.log(`git branch -D      ${paddedName}    ### MISSING INFO: ${JSON.stringify(e.info)}`);
+          await execFilePromise(cmd[0], cmd.slice(1), { stdio: 'inherit' }).catch(() => {});
+          // In --git-graph mode, this will cause git to fail with `bad revision` error, but we
+          // print the git command which you're free to edit if you really want a partial graph.
         }
       }
     }
 
     if (flags.gitGraph) {
       const cmd = [
-        'env', 'GIT_PAGER=', 'git', 'log', ...envs.map(e => e.name),
+        'env', 'GIT_PAGER=', 'git', 'log', ...envs.map((e) => e.name),
         // Limit graph scope by omitting everything including 2 prod deploys ago.
         '--not', 'live_stable~2', '--graph',
         // TODO: want MR merges, not internal merge commits done while working on MR content.
@@ -231,6 +246,9 @@ const main = async () => {
         // %w: indents following lines of body.
         '--pretty=%C(auto)%cs %H%d %C(dim)%s — %C(auto)%w(0,0,10)%b',
         '--color=always',
+        // End of revisions, start of paths. This improves git error messages
+        // from 'ambiguous argument ... or path not in the working tree' to 'bad revision'.
+        '--',
       ];
       console.log(quote(cmd));
       console.log('');
