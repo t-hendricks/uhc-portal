@@ -74,7 +74,7 @@ function ScaleSection({
     </ExpandableSection>
   );
 
-  const imdsSection = (
+  const imdsSection = cloudProviderID === 'aws' && (
     <GridItem md={12}>
       <ImdsSection
         isDisabled={!canSelectImds(clusterVersionRawId)}
