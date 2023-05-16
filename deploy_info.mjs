@@ -82,7 +82,7 @@ const appInfo = async (url) => {
   let body;
   try {
     // Using curl to respect system-installed CA certs on all platforms.
-    const cmd = ['curl', '--silent', '--show-error', '--fail', url];
+    const cmd = ['curl', '--silent', '--show-error', '--fail', '--location', url];
     body = (await execFilePromise(cmd[0], cmd.slice(1))).stdout;
     // Some contain a trailing comma, making it invalid JSON, so use JSON5.
     const data = JSON5.parse(body);
