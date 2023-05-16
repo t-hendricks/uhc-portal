@@ -15,13 +15,13 @@ exports[`InstallPower renders correctly 1`] = `
               "path": "/create",
             },
             Object {
-              "label": "Power",
+              "label": "PowerPC 64-bit LE",
             },
           ]
         }
       />
     }
-    title="Install OpenShift on Power with user-provisioned infrastructure"
+    title="Install OpenShift on PowerPC 64-bit LE with user-provisioned infrastructure"
   />
   <PageSection>
     <OCPInstructions
@@ -60,7 +60,7 @@ exports[`InstallPower renders correctly 1`] = `
           "learnMoreURL": "https://docs.openshift.com/container-platform/4.12/installing/installing_ibm_power/installing-ibm-power.html#creating-machines-bare-metal-power",
         }
       }
-      title="Install OpenShift on Power with user-provisioned infrastructure"
+      title="Install OpenShift on PowerPC 64-bit LE with user-provisioned infrastructure"
       token={Object {}}
     />
   </PageSection>

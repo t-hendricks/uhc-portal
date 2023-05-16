@@ -32,7 +32,6 @@ exports[`<DatacenterTab /> renders correctly with assisted installer and multiar
 >
   <DatacenterTab
     assistedInstallerFeature={true}
-    multiArchFeatureEnabled={false}
   />
 </ContextProvider>
 `;
@@ -69,7 +68,6 @@ exports[`<DatacenterTab /> renders correctly with assisted installer and multiar
 >
   <DatacenterTab
     assistedInstallerFeature={true}
-    multiArchFeatureEnabled={true}
   />
 </ContextProvider>
 `;
@@ -106,7 +104,6 @@ exports[`<DatacenterTab /> renders correctly without assisted installer and with
 >
   <DatacenterTab
     assistedInstallerFeature={false}
-    multiArchFeatureEnabled={false}
   />
 </ContextProvider>
 `;
