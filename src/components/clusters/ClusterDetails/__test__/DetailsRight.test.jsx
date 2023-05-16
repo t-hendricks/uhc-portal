@@ -9,6 +9,7 @@ import { screen, render } from '~/testUtils';
 
 describe('<DetailsRight />', () => {
   let { clusterDetails } = fixtures;
+  const { ROSAClusterDetails } = fixtures;
   clusterDetails = {
     ...clusterDetails,
     cluster: {
@@ -125,6 +126,49 @@ describe('<DetailsRight />', () => {
       const awsElem = screen.getByTestId('aws-account');
       expect(awsElem).toContainHTML('Infrastructure AWS account');
       expect(awsElem).toContainHTML('123456789012');
+    });
+  });
+
+  describe('etcd encryption key', () => {
+    it('should render for Hypershift cluster KMS etcd encryption key ARN', () => {
+      render(
+        <DetailsRight
+          cluster={{
+            ...ROSAClusterDetails.cluster,
+            hypershift: {
+              enabled: true,
+            },
+            aws: {
+              etcd_encryption: {
+                kms_key_arn: 'foobar',
+              },
+            },
+          }}
+          cloudProviders={fixtures.cloudProviders}
+        />,
+      );
+      const hsEtcdElem = screen.getByTestId('hs-etcd-encryption');
+      expect(hsEtcdElem).toContainHTML('KMS etcd encryption key ARN');
+      expect(hsEtcdElem).toContainHTML('foobar');
+    });
+    it('should be rendered for ROSA classic', () => {
+      render(
+        <DetailsRight
+          cluster={{
+            ...ROSAClusterDetails.cluster,
+            etcd_encryption: true,
+            aws: {
+              etcd_encryption: {
+                kms_key_arn: undefined,
+              },
+            },
+          }}
+        />,
+      );
+      const etcdElem = screen.getByTestId('etcd-encryption-key');
+      expect(etcdElem).toContainHTML('Additional encryption');
+      expect(etcdElem).toContainHTML('Enabled');
+      expect(screen.queryByTestId('hs-etcd-encryption')).not.toBeInTheDocument();
     });
   });
 
