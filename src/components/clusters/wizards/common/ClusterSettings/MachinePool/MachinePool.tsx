@@ -9,7 +9,7 @@ import { getMachineTypes } from '~/redux/actions/machineTypesActions';
 import { useGlobalState } from '~/redux/hooks/useGlobalState';
 import { canAutoScaleOnCreateSelector } from '~/components/clusters/ClusterDetails/components/MachinePools/MachinePoolsSelectors';
 import MachineTypeSelection from '~/components/clusters/CreateOSDPage/CreateOSDForm/FormSections/ScaleSection/MachineTypeSelection';
-import { FieldId } from '~/components/clusters/wizards/common/constants';
+import { CloudProviderType, FieldId } from '~/components/clusters/wizards/common/constants';
 import { useFormState } from '~/components/clusters/wizards/hooks';
 import { AutoScale } from './AutoScale';
 import ExternalLink from '~/components/common/ExternalLink';
@@ -19,6 +19,7 @@ import NodeCountInput from '~/components/clusters/common/NodeCountInput';
 import { normalizedProducts } from '~/common/subscriptionTypes';
 import { getNodesCount } from '~/components/clusters/CreateOSDPage/CreateOSDForm/FormSections/ScaleSection/AutoScaleSection/AutoScaleHelper';
 import { NodeLabelsFieldArray } from './NodeLabelsFieldArray';
+import { ImdsSectionField } from './ImdsSectionField';
 
 export const MachinePool = () => {
   const dispatch = useDispatch();
@@ -43,6 +44,7 @@ export const MachinePool = () => {
   const isMultiAz = multiAz === 'true';
   const isByoc = byoc === 'true';
   const isRosa = product === normalizedProducts.ROSA;
+  const isAWS = cloudProvider === CloudProviderType.Aws;
   const canAutoScale = useGlobalState((state) => canAutoScaleOnCreateSelector(state, product));
   const [isNodeLabelsExpanded, setIsNodeLabelsExpanded] = React.useState(false);
 
@@ -82,6 +84,12 @@ export const MachinePool = () => {
 
       <NodeLabelsFieldArray />
     </ExpandableSection>
+  );
+
+  const imdsSection = isAWS && (
+    <GridItem md={12}>
+      <ImdsSectionField />
+    </GridItem>
   );
 
   return (
@@ -130,6 +138,7 @@ export const MachinePool = () => {
             <GridItem>
               <AutoScale isDefaultMachinePool />
             </GridItem>
+            {autoscalingEnabled && imdsSection}
             {autoscalingEnabled && nodeLabelsExpandableSection}
           </>
         )}
@@ -168,6 +177,7 @@ export const MachinePool = () => {
                 }}
               />
             </GridItem>
+            {imdsSection}
             {nodeLabelsExpandableSection}
             <GridItem md={6} />
           </>

@@ -286,6 +286,7 @@ export const createClusterRequest = ({ isWizard = true, cloudProviderID, product
 
   if (actualCloudProviderID === 'aws') {
     clusterRequest.aws = clusterRequest.aws || {};
+    // TODO: under discussion on slack, recently failing
     clusterRequest.aws.http_tokens_state = formData.imds;
   }
 
@@ -297,6 +298,7 @@ export const createClusterRequest = ({ isWizard = true, cloudProviderID, product
     clusterRequest.multi_az = true;
   }
 
+  console.log('--- submitOSDRequest, clusterRequest: ', clusterRequest);
   return clusterRequest;
 };
 

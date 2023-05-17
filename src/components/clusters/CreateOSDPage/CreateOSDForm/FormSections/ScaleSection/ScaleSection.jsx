@@ -78,7 +78,7 @@ function ScaleSection({
     <GridItem md={12}>
       <ImdsSection
         isDisabled={!canSelectImds(clusterVersionRawId)}
-        value={imds}
+        imds={imds}
         onChangeImds={onChangeImds}
       />
     </GridItem>

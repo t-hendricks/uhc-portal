@@ -234,7 +234,7 @@ const ReviewClusterScreen = ({
           })}
         {!(formValues.node_labels.length === 1 && isEmpty(formValues.node_labels[0])) &&
           ReviewItem({ name: 'node_labels', formValues })}
-        {canSelectImds(clusterVersionRawId) && ReviewItem({ name: 'imds', formValues })}
+        {isAWS && canSelectImds(clusterVersionRawId) && ReviewItem({ name: 'imds', formValues })}
       </ReviewSection>
       <ReviewSection
         title={getStepName('NETWORKING')}
