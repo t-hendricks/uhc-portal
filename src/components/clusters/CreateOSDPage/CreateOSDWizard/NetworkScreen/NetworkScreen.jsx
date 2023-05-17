@@ -202,6 +202,7 @@ function NetworkScreen(props) {
                       isRequired
                       validate={required}
                       privacy="public"
+                      isNewCluster
                     />
                   ),
                 },

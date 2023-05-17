@@ -25,6 +25,7 @@ export const isVPCInquiryValid = (state) => {
 
 /**
  * React hook fetching VPCs on mount and when dependencies change.
+ * Request args extracted from redux-form state.
  * Does nothing if GCP selected.
  * @returns current vpcs state.
  */
