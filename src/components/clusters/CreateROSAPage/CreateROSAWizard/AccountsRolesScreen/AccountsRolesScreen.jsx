@@ -15,11 +15,12 @@ import useAnalytics from '~/hooks/useAnalytics';
 import ErrorBox from '~/components/common/ErrorBox';
 import { loadOfflineToken } from '~/components/tokens/TokenUtils';
 
-import AWSAccountSelection from './AWSAccountSelection';
 import AccountRolesARNsSection from './AccountRolesARNsSection';
 import { AssociateAwsAccountModal } from './AssociateAWSAccountModal';
 import { productName } from '../CreateRosaGetStarted/CreateRosaGetStarted';
 import { AwsRoleErrorAlert } from './AwsRoleErrorAlert';
+import AWSAccountSelection from './AWSAccountSelection';
+import AWSBillingAccountField from './AWSBillingAccount';
 
 export const isUserRoleForSelectedAWSAccount = (users, awsAcctId) =>
   users.some((user) => user.aws_id === awsAcctId);
@@ -32,6 +33,7 @@ function AccountsRolesScreen({
   change,
   organizationID,
   selectedAWSAccountID,
+  selectedAWSBillingAccountID,
   selectedInstallerRoleARN,
   rosaMaxOSVersion,
   openAssociateAWSAccountModal,
@@ -180,9 +182,12 @@ function AccountsRolesScreen({
             name="associated_aws_id"
             label="Associated AWS infrastructure account"
             launchAssocAWSAcctModal={onAssociateAwsAccountModalOpen}
-            onRefresh={() => {
-              setRefreshButtonClicked(true);
-              resetAWSAccountFields();
+            refresh={{
+              onRefresh: () => {
+                setRefreshButtonClicked(true);
+                resetAWSAccountFields();
+              },
+              text: 'Refresh to view newly associated AWS accounts and account-roles.',
             }}
             validate={!getAWSAccountIDsResponse.fulfilled ? undefined : required}
             extendedHelpText={
@@ -207,7 +212,13 @@ function AccountsRolesScreen({
             How to associate a new account
           </Button>
         </GridItem>
-
+        <GridItem span={7} />
+        {isHypershiftSelected && (
+          <AWSBillingAccountField
+            change={change}
+            selectedAWSBillingAccountID={selectedAWSBillingAccountID}
+          />
+        )}
         {selectedAWSAccountID && hasAWSAccounts && (
           <AccountRolesARNsSection
             touch={touch}
@@ -233,7 +244,6 @@ function AccountsRolesScreen({
           </GridItem>
         )}
       </Grid>
-
       <AssociateAwsAccountModal
         isOpen={isAssocAwsAccountModalOpen}
         onClose={onAssociateAwsAccountModalClose}
@@ -246,6 +256,7 @@ AccountsRolesScreen.propTypes = {
   touch: PropTypes.func,
   change: PropTypes.func,
   selectedAWSAccountID: PropTypes.string,
+  selectedAWSBillingAccountID: PropTypes.string,
   selectedInstallerRoleARN: PropTypes.string,
   getAWSAccountIDs: PropTypes.func.isRequired,
   getAWSAccountIDsResponse: PropTypes.object.isRequired,
@@ -264,7 +275,7 @@ AccountsRolesScreen.propTypes = {
   rosaMaxOSVersion: PropTypes.string,
   offlineToken: PropTypes.string,
   setOfflineToken: PropTypes.func,
-  isHypershiftSelected: PropTypes.bool,
+  isHypershiftSelected: PropTypes.bool.isRequired,
 };
 
 export default AccountsRolesScreen;

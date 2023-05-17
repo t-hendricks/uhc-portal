@@ -365,6 +365,9 @@ const reviewValues = {
   associated_aws_id: {
     title: 'AWS infrastructure account ID',
   },
+  billing_account_id: {
+    title: 'AWS billing account ID',
+  },
   installer_role_arn: {
     title: 'Installer role',
   },

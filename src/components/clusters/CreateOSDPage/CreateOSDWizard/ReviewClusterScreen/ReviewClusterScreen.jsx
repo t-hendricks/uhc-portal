@@ -175,6 +175,7 @@ const ReviewClusterScreen = ({
             initiallyExpanded={errorWithAWSAccountRoles}
           >
             {ReviewItem({ name: 'associated_aws_id', formValues })}
+            {ReviewItem({ name: 'billing_account_id', formValues })}
             {ReviewRoleItem({
               name: 'ocm-role',
               getRoleResponse: getOCMRoleResponse,
