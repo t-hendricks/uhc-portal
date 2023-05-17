@@ -277,11 +277,10 @@ function AccountRolesARNsSection({
   }, [getAWSAccountRolesARNsResponse, openAssociateAwsAccountModal, resolveARNsErrorTitle]);
 
   const arnCompatibilityAlertTitle = React.useMemo(() => {
-    if (hasStandaloneManagedRole || isHypershiftSelected) {
-      return `The selected account-wide roles are ${
-        !isHypershiftSelected ? 'preferred and' : ''
-      } compatible with OpenShift version ${MIN_MANAGED_POLICY_VERSION} and newer.`;
-    }
+    if (isHypershiftSelected)
+      return 'The selected account-wide roles are compatible with all OpenShift versions which support hosted control planes.';
+    if (hasStandaloneManagedRole)
+      return `The selected account-wide roles are preferred and compatible with OpenShift version ${MIN_MANAGED_POLICY_VERSION} and newer.`;
 
     return `The selected account-wide roles are compatible with OpenShift version ${formatMinorVersion(
       rosaMaxOSVersion,
