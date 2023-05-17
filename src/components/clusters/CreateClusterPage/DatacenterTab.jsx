@@ -39,6 +39,18 @@ const ocpTableRows = [
   ],
   [
     <>
+      <Link to="/install/ibmz/user-provisioned">IBM zSystems (s390x)</Link>
+    </>,
+    'Pre-existing infrastructure',
+  ],
+  [
+    <>
+      <Link to="/install/power/user-provisioned">IBM Power (ppc64le)</Link>
+    </>,
+    'Pre-existing infrastructure',
+  ],
+  [
+    <>
       <Link to="/install/ibmz">IBM zSystems (s390x)</Link>
     </>,
     'Full stack automation and pre-existing infrastructure',
@@ -94,6 +106,14 @@ const DatacenterTab = ({ assistedInstallerFeature }) => {
     filteredRows = ocpTableRows.filter((row) => {
       const link = row[0].props.children;
       return link.props.to !== '/install/ibmz' && link.props.to !== '/install/power';
+    });
+  } else {
+    filteredRows = ocpTableRows.filter((row) => {
+      const link = row[0].props.children;
+      return (
+        link.props.to !== '/install/ibmz/user-provisioned' &&
+        link.props.to !== '/install/power/user-provisioned'
+      );
     });
   }
   return (
