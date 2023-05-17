@@ -77,10 +77,12 @@ import ConnectedInstallPlatformAgnosticUPI from '../clusters/install/InstallPlat
 import ConnectedInstallPreRelease from '../clusters/install/InstallPreRelease';
 import ConnectedInstallPullSecret from '../clusters/install/InstallPullSecret';
 import ConnectedInstallPullSecretAzure from '../clusters/install/InstallPullSecretAzure';
-import ConnectedInstallIBM from '../clusters/install/InstallIBM';
-import ConnectedInstallIBMPreRelease from '../clusters/install/InstallIBMPreRelease';
-import ConnectedInstallPower from '../clusters/install/InstallPower';
+import ConnectedInstallIBM from '../clusters/install/InstallIBMZUPI';
+import ConnectedInstallIBMZPreRelease from '../clusters/install/InstallIBMZPreRelease';
+import InstallIBMZ from '../clusters/install/InstallIBMZ';
+import ConnectedInstallPower from '../clusters/install/InstallPowerUPI';
 import ConnectedInstallPowerPreRelease from '../clusters/install/InstallPowerPreRelease';
+import InstallPower from '../clusters/install/InstallPower';
 import ConnectedInstallArmPreRelease from '../clusters/install/InstallArmPreRelease';
 import DownloadsPage from '../downloads/DownloadsPage';
 import Tokens from '../tokens';
@@ -114,8 +116,6 @@ import CreateOSDWizard from '../clusters/CreateOSDPage/CreateOSDWizard';
 import { CreateOsdWizard } from '../clusters/wizards';
 import { metadataByRoute, is404 } from './routeMetadata';
 import { useFeatureGate } from '~/hooks/useFeatureGate';
-import InstallIBMZ from '../clusters/install/InstallIBMZ';
-import InstallPower from '../clusters/install/InstallIPowerIBM';
 
 const { AssistedUiRouter } = OCM;
 
@@ -289,7 +289,7 @@ const Router: React.FC<RouterProps> = ({ history, planType, clusterId, externalC
             />
             <Route path="/install/ibm-cloud" component={ConnectedInstallIBMCloud} />
             <Route path="/install/ibmz/user-provisioned" component={ConnectedInstallIBM} />
-            <Route path="/install/ibmz/pre-release" component={ConnectedInstallIBMPreRelease} />
+            <Route path="/install/ibmz/pre-release" component={ConnectedInstallIBMZPreRelease} />
             <Route path="/install/ibmz" exact component={InstallIBMZ} />
             <Route path="/install/power/user-provisioned" component={ConnectedInstallPower} />
             <Route path="/install/power/pre-release" component={ConnectedInstallPowerPreRelease} />

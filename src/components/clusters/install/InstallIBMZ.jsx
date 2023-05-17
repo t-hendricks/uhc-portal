@@ -10,7 +10,8 @@ import { InstructionsChooserPageTitle } from './instructions/InstructionsChooser
 class InstallIBMZ extends Component {
   componentDidMount() {
     scrollToTop();
-    document.title = 'Install OpenShift 4 | Red Hat OpenShift Cluster Manager | System/390 64-bit';
+    document.title =
+      'Install OpenShift 4 | Red Hat OpenShift Cluster Manager | IBM zSystems (s390x)';
   }
 
   render() {
@@ -19,20 +20,20 @@ class InstallIBMZ extends Component {
         path={[
           { label: 'Clusters' },
           { label: 'Cluster Type', path: '/create' },
-          { label: 'System/390 64-bit' },
+          { label: 'IBM zSystems (s390x)' },
         ]}
       />
     );
 
     return (
       <>
-        <InstructionsChooserPageTitle cloudName="System/390 64-bit" breadcrumbs={breadcrumbs} />
+        <InstructionsChooserPageTitle cloudName="IBM zSystems (s390x)" breadcrumbs={breadcrumbs} />
         <PageSection>
           <InstructionsChooser
             aiPageLink="/assisted-installer/clusters/~new"
             aiLearnMoreLink={links.INSTALL_ASSISTED_LEARN_MORE}
-            upiPageLink="/install/Ibmz/user-provisioned"
-            upiLearnMoreLink={links.INSTALL_IbmzUPI_GETTING_STARTED}
+            upiPageLink="/install/ibmz/user-provisioned"
+            upiLearnMoreLink={links.INSTALL_IBMZ_UPI_GETTING_STARTED}
             hideIPI
             providerSpecificFeatures={{
               abi: ['For connected or air-gapped/restricted networks'],

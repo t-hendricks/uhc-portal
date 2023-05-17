@@ -186,6 +186,7 @@ const links = {
   INSTALL_IBMZ_GETTING_STARTED: `${DOCS_BASE}/installing/installing_ibm_z/installing-ibm-z.html`,
   INSTALL_IBMZ_RHCOS_LEARN_MORE_RHEL_KVM: `${DOCS_BASE}/installing/installing_ibm_z/installing-ibm-z-kvm.html#installation-user-infra-machines-iso-ibm-z_kvm_installing-ibm-z-kvm`,
   INSTALL_IBMZ_LEARN_MORE_ZVM: `${DOCS_BASE}/installing/installing_ibm_z/installing-ibm-z.html#installation-user-infra-machines-iso-ibm-z_installing-ibm-z`,
+  INSTALL_IBMZ_UPI_GETTING_STARTED: `${DOCS_BASE}/installing/installing_ibm_z/preparing-to-install-on-ibm-z.html`,
   RHCOS_IBMZ_ISO: `${MIRROR_RHCOS_LATEST_IBMZ}/rhcos-live.s390x.iso`,
   RHCOS_IBMZ_INITRAMFS: `${MIRROR_RHCOS_LATEST_IBMZ}/rhcos-live-initramfs.s390x.img`,
   RHCOS_IBMZ_KERNEL: `${MIRROR_RHCOS_LATEST_IBMZ}/rhcos-live-kernel-s390x`,
@@ -211,6 +212,7 @@ const links = {
 
   INSTALL_POWER_GETTING_STARTED: `${DOCS_BASE}/installing/installing_ibm_power/installing-ibm-power.html`,
   INSTALL_POWER_RHCOS_LEARN_MORE: `${DOCS_BASE}/installing/installing_ibm_power/installing-ibm-power.html#creating-machines-bare-metal-power`,
+  INSTALL_POWER_UPI_GETTING_STARTED: `${DOCS_BASE}/installing/installing_ibm_power/installing-ibm-power.html`,
   RHCOS_POWER_ISO: `${MIRROR_RHCOS_LATEST_PPC}/rhcos-live.ppc64le.iso`,
   RHCOS_POWER_INITRAMFS: `${MIRROR_RHCOS_LATEST_PPC}/rhcos-live-initramfs.ppc64le.img`,
   RHCOS_POWER_KERNEL: `${MIRROR_RHCOS_LATEST_PPC}/rhcos-live-kernel-ppc64le`,

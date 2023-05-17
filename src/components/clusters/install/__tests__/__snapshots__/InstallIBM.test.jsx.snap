@@ -21,7 +21,7 @@ exports[`InstallIBM renders correctly 1`] = `
         }
       />
     }
-    title="Install OpenShift on System/390 64-bit with user-provisioned infrastructure"
+    title="Install OpenShift on IBM zSystems (s390x) with user-provisioned infrastructure"
   />
   <PageSection>
     <OCPInstructions
@@ -101,7 +101,7 @@ exports[`InstallIBM renders correctly 1`] = `
           ],
         }
       }
-      title="Install OpenShift on System/390 64-bit with user-provisioned infrastructure"
+      title="Install OpenShift on IBM zSystems (s390x) with user-provisioned infrastructure"
       token={Object {}}
     />
   </PageSection>

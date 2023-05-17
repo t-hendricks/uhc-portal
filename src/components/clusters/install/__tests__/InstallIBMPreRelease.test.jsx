@@ -1,11 +1,11 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import { InstallIBMPreRelease } from '../InstallIBMPreRelease';
+import { InstallIBMZPreRelease } from '../InstallIBMZPreRelease';
 
-describe('InstallIBMPreRelease', () => {
+describe('InstallIBMZPreRelease', () => {
   it('renders correctly', () => {
-    const wrapper = shallow(<InstallIBMPreRelease token={{}} dispatch={() => {}} />);
+    const wrapper = shallow(<InstallIBMZPreRelease token={{}} dispatch={() => {}} />);
     expect(wrapper).toMatchSnapshot();
   });
 });

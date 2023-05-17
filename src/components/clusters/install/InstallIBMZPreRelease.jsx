@@ -11,7 +11,7 @@ import InstructionsPreRelease from './instructions/InstructionsPreRelease';
 import { scrollToTop } from '../../../common/helpers';
 import { tools } from '../../../common/installLinks.mjs';
 
-export class InstallIBMPreRelease extends Component {
+export class InstallIBMZPreRelease extends Component {
   componentDidMount() {
     scrollToTop();
     document.title = 'Install OpenShift 4 | IBM Z | Experimental Developer Preview Builds';
@@ -47,11 +47,11 @@ export class InstallIBMPreRelease extends Component {
   }
 }
 
-InstallIBMPreRelease.propTypes = {
+InstallIBMZPreRelease.propTypes = {
   token: PropTypes.object.isRequired,
   dispatch: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({ token: state.tollbooth.token });
 
-export default connect(mapStateToProps)(InstallIBMPreRelease);
+export default connect(mapStateToProps)(InstallIBMZPreRelease);

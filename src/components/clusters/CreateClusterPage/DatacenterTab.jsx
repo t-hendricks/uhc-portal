@@ -39,13 +39,13 @@ const ocpTableRows = [
   ],
   [
     <>
-      <Link to="/install/ibmz">System/390 64-bit</Link>
+      <Link to="/install/ibmz">IBM zSystems (s390x)</Link>
     </>,
     'Full stack automation and pre-existing infrastructure',
   ],
   [
     <>
-      <Link to="/install/power">PowerPC 64-bit LE</Link>
+      <Link to="/install/power">IBM Power (ppc64le)</Link>
     </>,
     'Full stack automation and pre-existing infrastructure',
   ],
