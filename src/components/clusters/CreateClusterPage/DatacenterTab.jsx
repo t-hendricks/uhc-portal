@@ -108,8 +108,8 @@ const DatacenterTab = ({ assistedInstallerFeature }) => {
             </StackItem>
             <StackItem>
               The easiest way to install OpenShift on your own infrastructure with step-by-step
-              guidance, preflight validations, and smart defaults. This method supports both x86-64
-              and arm64 CPU architectures.
+              guidance, preflight validations, and smart defaults. This method supports multiple
+              architectures.
             </StackItem>
             <StackItem>
               <Split hasGutter>
