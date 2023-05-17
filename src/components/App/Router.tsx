@@ -45,6 +45,7 @@ import ConnectedInstallArmAWSUPI from '../clusters/install/InstallArmAWSUPI';
 import InstallAWS from '../clusters/install/InstallAWS';
 import ConnectedInstallAWSUPI from '../clusters/install/InstallAWSUPI';
 import ConnectedInstallAWSIPI from '../clusters/install/InstallAWSIPI';
+import ConnectedInstallMultiAWSIPI from '../clusters/install/InstallMultiAWSIPI';
 import InstallBareMetal from '../clusters/install/InstallBareMetal';
 import InstallASH from '../clusters/install/InstallASH';
 import ConnectedInstallASHIPI from '../clusters/install/InstallASHIPI';
@@ -229,6 +230,10 @@ const Router: React.FC<RouterProps> = ({ history, planType, clusterId, externalC
             />
             <Route path="/install/aws/arm/user-provisioned" component={ConnectedInstallArmAWSUPI} />
             <Route path="/install/aws/arm" component={InstallArmAWS} />
+            <Route
+              path="/install/aws/multi/installer-provisioned"
+              component={ConnectedInstallMultiAWSIPI}
+            />
             <Route path="/install/aws" component={InstallAWS} />
             <Route path="/install/gcp/installer-provisioned" component={ConnectedInstallGCPIPI} />
             <Route path="/install/gcp/user-provisioned" component={ConnectedInstallGCPUPI} />

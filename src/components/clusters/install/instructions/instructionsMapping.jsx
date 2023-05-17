@@ -45,6 +45,14 @@ const instructionsMapping = {
         channel: channels.STABLE,
       },
     },
+    multi: {
+      ipi: {
+        title: 'Install OpenShift on AWS with multi-architecture compute machines',
+        installer: tools.MULTIINSTALLER,
+        channel: channels.STABLE,
+        docURL: links.INSTALL_AWS_MULTI_ARCH,
+      },
+    },
     arm: {
       ipi: {
         title: 'Install OpenShift on AWS with installer-provisioned ARM infrastructure',

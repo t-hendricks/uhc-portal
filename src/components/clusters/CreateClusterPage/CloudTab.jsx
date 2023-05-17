@@ -381,6 +381,12 @@ const runItYourself = () => {
     ],
     [
       <>
+        <Link to="/install/aws/multi/installer-provisioned">AWS (multi-architecture)</Link>
+      </>,
+      'Full stack automation',
+    ],
+    [
+      <>
         <Link to="/install/azure">Azure (x86_64)</Link>
       </>,
       'Full stack automation and pre-existing infrastructure',
