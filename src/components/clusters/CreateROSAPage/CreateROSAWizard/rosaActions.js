@@ -9,9 +9,11 @@ import {
   CLEAR_GET_USER_ROLE_RESPONSE,
   SET_OFFLINE_TOKEN,
   LIST_USER_OIDC_CONFIGURATIONS,
+  GET_AWS_BILLING_ACCOUNTS,
 } from './rosaConstants';
 import { accountsService, clusterService } from '../../../../services';
 import { extractAWSID } from '../../../../common/rosa';
+import { getAwsBillingAccountsFromQuota } from '~/components/clusters/common/quotaSelectors';
 
 export const getAWSIDsFromARNs = (arns) => {
   const ids = arns.map(extractAWSID);
@@ -61,6 +63,17 @@ export const normalizeAWSAccountRoles = (accountRoles) =>
       },
     ),
   );
+
+export const getAWSBillingAccountIDs = (organizationID) => (dispatch) =>
+  dispatch({
+    type: GET_AWS_BILLING_ACCOUNTS,
+    payload: accountsService.getOrganizationQuota(organizationID).then((response) => {
+      if (!response.data || !response.data.items) {
+        return [];
+      }
+      return getAwsBillingAccountsFromQuota(response.data);
+    }),
+  });
 
 export const getAWSAccountIDs = (organizationID) => (dispatch) =>
   dispatch({
