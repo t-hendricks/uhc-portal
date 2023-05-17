@@ -1,11 +1,11 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import InstallPower from '../InstallPower';
+import InstallIBMZ from '../InstallIBMZ';
 
-describe('InstallPower', () => {
+describe('InstallIBMZ', () => {
   it('renders correctly', () => {
-    const wrapper = shallow(<InstallPower />);
+    const wrapper = shallow(<InstallIBMZ />);
     expect(wrapper).toMatchSnapshot();
   });
 });

@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`InstallIBM renders correctly 1`] = `
+exports[`InstallPower renders correctly 1`] = `
 <Fragment>
   <PageTitle
     breadcrumbs={
@@ -15,7 +15,7 @@ exports[`InstallIBM renders correctly 1`] = `
               "path": "/create",
             },
             Object {
-              "label": "IBM Z",
+              "label": "IBM zSystems (s390x)",
             },
           ]
         }
