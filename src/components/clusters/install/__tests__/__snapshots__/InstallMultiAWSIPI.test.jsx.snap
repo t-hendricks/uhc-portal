@@ -31,7 +31,6 @@ exports[`InstallMultiAWSIPI renders correctly 1`] = `
       installer="multi-openshift-install"
       isBMIPI={false}
       isUPI={false}
-      preReleasePageLink="/install/multi/pre-release"
       title="Install OpenShift on AWS with multi-architecture compute machines"
       token={Object {}}
     />

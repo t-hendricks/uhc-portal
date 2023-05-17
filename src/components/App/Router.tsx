@@ -105,6 +105,7 @@ import InstallBMIPI from '../clusters/install/InstallBareMetalIPI';
 import InstallArmBareMetal from '../clusters/install/InstallArmBareMetal';
 import InstallArmBMIPI from '../clusters/install/InstallArmBareMetalIPI';
 import InstallArmBMUPI from '../clusters/install/InstallArmBareMetalUPI';
+import InstallMultiBMUPI from '../clusters/install/InstallMultiBareMetalUPI';
 import { normalizedProducts } from '../../common/subscriptionTypes';
 import Releases from '../releases/index';
 import IdentityProvidersPage from '../clusters/ClusterDetails/components/IdentityProvidersPage';
@@ -280,6 +281,7 @@ const Router: React.FC<RouterProps> = ({ history, planType, clusterId, externalC
             <Route path="/install/metal/user-provisioned" component={InstallBMUPI} />
             <Route path="/install/metal/installer-provisioned" component={InstallBMIPI} />
             <Route path="/install/metal/agent-based" component={InstallBMABI} />
+            <Route path="/install/metal/multi" component={InstallMultiBMUPI} />
             <Route path="/install/metal" component={GatedMetalInstall} />
             <Route path="/install/multi/pre-release" component={ConnectedInstallMultiPreRelease} />
             <Route path="/install/vsphere" exact component={InstallVSphere} />

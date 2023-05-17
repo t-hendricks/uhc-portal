@@ -420,6 +420,13 @@ const runItYourself = () => {
     ],
     [
       <>
+        <Link to="/install/metal/multi"> Baremetal (multi-architecture)</Link>
+        <TechnologyPreview position={PreviewBadgePosition.inline} />
+      </>,
+      'Pre-existing infrastructure',
+    ],
+    [
+      <>
         <Link to="/install/platform-agnostic">Platform agnostic (x86_64)</Link>
       </>,
       'Pre-existing infrastructure',
