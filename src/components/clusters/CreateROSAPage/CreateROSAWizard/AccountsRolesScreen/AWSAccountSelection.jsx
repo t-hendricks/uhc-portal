@@ -18,6 +18,7 @@ import useAnalytics from '~/hooks/useAnalytics';
 import { trackEvents } from '~/common/analytics';
 import PopoverHint from '../../../../common/PopoverHint';
 import './AccountsRolesScreen.scss';
+import links from '~/common/installLinks.mjs';
 
 const AWS_ACCT_ID_PLACEHOLDER = 'Select an account';
 
@@ -46,12 +47,14 @@ function AWSAccountSelection({
   selectedAWSAccountID,
   AWSAccountIDs,
   launchAssocAWSAcctModal,
-  onRefresh,
+  isBillingAccount = false,
+  refresh,
 }) {
   const track = useAnalytics();
   const [isOpen, setIsOpen] = useState(false);
   const associateAWSAccountBtnRef = React.createRef();
   const hasAWSAccounts = AWSAccountIDs.length > 0;
+  const { onRefresh, text } = refresh;
 
   useEffect(() => {
     // only scroll to associateAWSAccountBtn when no AWS accounts
@@ -76,6 +79,19 @@ function AWSAccountSelection({
     launchAssocAWSAcctModal();
   };
 
+  const btnProps = isBillingAccount
+    ? {
+        component: 'a',
+        href: links.AWS_CONSOLE_ROSA_HOME,
+        target: '_blank',
+      }
+    : {
+        onClick: (event) => {
+          track(trackEvents.AssociateAWS);
+          launchModal(event);
+        },
+      };
+
   const footer = (
     <>
       {!hasAWSAccounts && <NoAssociatedAWSAccounts />}
@@ -83,12 +99,11 @@ function AWSAccountSelection({
         ref={associateAWSAccountBtnRef}
         data-testid="launch-associate-account-btn"
         variant="secondary"
-        onClick={(event) => {
-          track(trackEvents.AssociateAWS);
-          launchModal(event);
-        }}
+        {...btnProps}
       >
-        How to associate a new account
+        {isBillingAccount
+          ? 'Connect ROSA to a new AWS billing account'
+          : 'How to associate a new account'}
       </Button>
     </>
   );
@@ -125,12 +140,9 @@ function AWSAccountSelection({
             ))}
           </Select>
         </FlexItem>
-
         {onRefresh && (
           <FlexItem>
-            <Tooltip
-              content={<p>Click icon to refresh associated aws accounts and account-roles.</p>}
-            >
+            <Tooltip content={<p>{text}</p>}>
               <Button
                 data-testid="refresh-aws-accounts"
                 isLoading={isLoading}
@@ -164,13 +176,14 @@ AWSAccountSelection.propTypes = {
   extendedHelpText: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
   AWSAccountIDs: PropTypes.arrayOf(PropTypes.string),
   selectedAWSAccountID: PropTypes.string,
-  launchAssocAWSAcctModal: PropTypes.func.isRequired,
+  launchAssocAWSAcctModal: PropTypes.func,
   initialValue: PropTypes.string,
   meta: PropTypes.shape({
     touched: PropTypes.bool,
     error: PropTypes.string,
   }),
-  onRefresh: PropTypes.func,
+  refresh: PropTypes.shape({ onRefresh: PropTypes.func, text: PropTypes.string }).isRequired,
+  isBillingAccount: PropTypes.bool,
 };
 
 export { AWS_ACCT_ID_PLACEHOLDER };

@@ -38,6 +38,7 @@ const store = createStore(
 export type GlobalState = Omit<ReturnType<typeof store.getState>, 'rosaReducer'> & {
   // TODO temporary overrides for reducers that aren't written in typescript
   rosaReducer: {
+    getAWSBillingAccountsResponse: any;
     getAWSAccountIDsResponse: {
       data: any[];
     };

@@ -159,10 +159,13 @@ export const createClusterRequest = ({ isWizard = true, cloudProviderID, product
       if (formData.customer_managed_key === 'true') {
         clusterRequest.aws.kms_key_arn = formData.kms_key_arn;
       }
-      if (isHypershiftSelected && formData.etcd_key_arn) {
-        clusterRequest.aws.etcd_encryption = {
-          kms_key_arn: formData.etcd_key_arn,
-        };
+      if (isHypershiftSelected) {
+        if (formData.etcd_key_arn) {
+          clusterRequest.aws.etcd_encryption = {
+            kms_key_arn: formData.etcd_key_arn,
+          };
+        }
+        clusterRequest.aws.billing_account_id = formData.billing_account_id;
       }
       clusterRequest.ccs.disable_scp_checks = formData.disable_scp_checks;
 

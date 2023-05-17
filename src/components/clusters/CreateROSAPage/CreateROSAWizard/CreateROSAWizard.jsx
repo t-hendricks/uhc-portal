@@ -280,7 +280,10 @@ class CreateROSAWizardInternal extends React.Component {
         name: stepNameById[accountAndRolesStepId],
         component: (
           <ErrorBoundary>
-            <AccountsRolesScreen organizationID={organization?.details?.id} />
+            <AccountsRolesScreen
+              organizationID={organization?.details?.id}
+              isHypershiftSelected={isHypershiftSelected}
+            />
           </ErrorBoundary>
         ),
         canJumpTo: this.canJumpTo(accountAndRolesStepId),

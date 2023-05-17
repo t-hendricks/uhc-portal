@@ -275,7 +275,7 @@ const links = {
   ROSA_AWS_ACCOUNT_ROLES: `${ROSA_DOCS_BASE}/rosa_architecture/rosa-sts-about-iam-resources.html#rosa-sts-understanding-ocm-role_rosa-sts-about-iam-resources`,
   ROSA_AWS_OPERATOR_ROLE_PREFIX: `${ROSA_DOCS_BASE}/rosa_architecture/rosa-sts-about-iam-resources.html#rosa-sts-about-operator-role-prefixes_rosa-sts-about-iam-resources`,
 
-  AWS_CONSOLE: 'https://console.aws.amazon.com/rosa/home',
+  AWS_CONSOLE_ROSA_HOME: 'https://console.aws.amazon.com/rosa/home',
   AWS_CLI: 'https://aws.amazon.com/cli/',
   AWS_CLI_INSTRUCTIONS:
     'https://docs.aws.amazon.com/ROSA/latest/userguide/getting-started-sts-auto.html',

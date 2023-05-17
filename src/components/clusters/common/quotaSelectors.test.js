@@ -4,6 +4,7 @@ import {
   availableNodesFromQuota,
   addOnBillingQuota,
   quotaTypes,
+  getAwsBillingAccountsFromQuota,
 } from './quotaSelectors';
 import { normalizedProducts, billingModels } from '../../../common/subscriptionTypes';
 import {
@@ -165,6 +166,72 @@ describe('quotaSelectors', () => {
       expect(availableNodesFromQuota(ROSACCSQuotaList, paramsROSA)).toBe(Infinity);
       expect(availableNodesFromQuota(CCSROSAQuotaList, paramsROSA)).toBe(Infinity);
       expect(availableNodesFromQuota(mockQuotaList, paramsROSA)).toBe(Infinity);
+    });
+  });
+
+  describe('getAwsBillingAccountsFromQuota', () => {
+    it('should find the linked aws billing accounts', () => {
+      const quotaWithAccounts = {
+        items: [
+          ...ROSACCSQuotaList.items,
+          {
+            allowed: 1080,
+            cloud_accounts: [
+              {
+                cloud_account_id: '765374464689',
+                cloud_provider_id: 'aws',
+              },
+              {
+                cloud_account_id: 'fakeRHMarketplaceAccount',
+                cloud_provider_id: 'rhm',
+              },
+              {
+                cloud_account_id: 'fakeAzureAccount',
+                cloud_provider_id: 'azure',
+              },
+              {
+                cloud_account_id: 'fakeAwsAccount',
+                cloud_provider_id: 'aws',
+              },
+            ],
+            consumed: 1,
+            href: '/api/accounts_mgmt/v1/organizations/1MK6ieFXd0eu1hERdENAPvpbi7x/quota_cost',
+            kind: 'QuotaCost',
+            organization_id: '1MK6ieFXd0eu1hERdENAPvpbi7x',
+            quota_id: 'cluster|byoc|moa|marketplace',
+            version: '7891248a-fc29-4d27-b6e6-870e9465c2ae',
+          },
+        ],
+      };
+      const expected = ['765374464689', 'fakeAwsAccount'];
+      expect(getAwsBillingAccountsFromQuota(quotaWithAccounts)).toEqual(expected);
+    });
+    it('should return an empty array if there are no accounts', () => {
+      const quotaWithoutAccounts = {
+        items: [
+          ...ROSACCSQuotaList.items,
+          {
+            allowed: 1080,
+            cloud_accounts: [
+              {
+                cloud_account_id: 'fakeRHMarketplaceAccount',
+                cloud_provider_id: 'rhm',
+              },
+              {
+                cloud_account_id: 'fakeAzureAccount',
+                cloud_provider_id: 'azure',
+              },
+            ],
+            consumed: 1,
+            href: '/api/accounts_mgmt/v1/organizations/1MK6ieFXd0eu1hERdENAPvpbi7x/quota_cost',
+            kind: 'QuotaCost',
+            organization_id: '1MK6ieFXd0eu1hERdENAPvpbi7x',
+            quota_id: 'cluster|byoc|moa|marketplace',
+            version: '7891248a-fc29-4d27-b6e6-870e9465c2ae',
+          },
+        ],
+      };
+      expect(getAwsBillingAccountsFromQuota(quotaWithoutAccounts)).toEqual([]);
     });
   });
 });

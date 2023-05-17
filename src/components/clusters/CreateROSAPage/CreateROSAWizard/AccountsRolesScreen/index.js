@@ -39,6 +39,7 @@ const mapStateToProps = (state) => {
   return {
     isHypershiftSelected: valueSelector(state, 'hypershift') === 'true',
     selectedAWSAccountID: valueSelector(state, 'associated_aws_id'),
+    selectedAWSBillingAccountID: valueSelector(state, 'billing_account_id'),
     selectedInstallerRoleARN: valueSelector(state, 'installer_role_arn'),
     rosaMaxOSVersion: valueSelector(state, 'rosa_max_os_version'),
     getAWSAccountIDsResponse,
