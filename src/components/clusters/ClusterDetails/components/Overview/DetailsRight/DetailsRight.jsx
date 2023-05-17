@@ -22,6 +22,7 @@ import PopoverHint from '../../../../../common/PopoverHint';
 import ExternalLink from '../../../../../common/ExternalLink';
 import { isHypershiftCluster } from '../../../clusterDetailsHelper';
 import { ClusterStatus } from './ClusterStatus';
+import { isROSA } from '~/components/clusters/common/clusterStates';
 
 const { ClusterStatus: AIClusterStatus } = OCM;
 function DetailsRight({
@@ -35,8 +36,10 @@ function DetailsRight({
   machinePools,
 }) {
   const isHypershift = isHypershiftCluster(cluster);
+  const isROSACluster = isROSA(cluster);
   const rosaCreatorArn = get(cluster, 'properties.rosa_creator_arn', '');
   const awsInfraAccount = rosaCreatorArn ? extractAWSID(rosaCreatorArn) : null;
+  const hypershiftEtcdEncryptionKey = isHypershift && cluster.aws?.etcd_encryption?.kms_key_arn;
 
   const memoryTotalWithUnit = humanizeValueWithUnit(
     get(cluster, 'metrics.memory.total.value', 0),
@@ -128,6 +131,24 @@ function DetailsRight({
             <DescriptionListGroup data-testid="aws-account">
               <DescriptionListTerm>Infrastructure AWS account</DescriptionListTerm>
               <DescriptionListDescription>{awsInfraAccount}</DescriptionListDescription>
+            </DescriptionListGroup>
+          </>
+        )}
+        {hypershiftEtcdEncryptionKey && (
+          <>
+            <DescriptionListGroup data-testid="hs-etcd-encryption">
+              <DescriptionListTerm>KMS etcd encryption key ARN</DescriptionListTerm>
+              <DescriptionListDescription>{hypershiftEtcdEncryptionKey}</DescriptionListDescription>
+            </DescriptionListGroup>
+          </>
+        )}
+        {isROSACluster && !isHypershift && (
+          <>
+            <DescriptionListGroup data-testid="etcd-encryption-key">
+              <DescriptionListTerm>Additional encryption </DescriptionListTerm>
+              <DescriptionListDescription>
+                {cluster.etcd_encryption ? 'Enabled' : 'Disabled'}
+              </DescriptionListDescription>
             </DescriptionListGroup>
           </>
         )}
