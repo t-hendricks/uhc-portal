@@ -124,12 +124,14 @@ class ClusterDetails extends Component {
       resetClusterHistory,
       clearGetMachinePoolsResponse,
       clearFiltersAndFlags,
+      clearListVpcs,
     } = this.props;
     resetIdentityProvidersState();
     closeModal();
     resetClusterHistory();
     clearGetMachinePoolsResponse();
     clearFiltersAndFlags();
+    clearListVpcs();
   }
 
   onDialogClose = () => {
@@ -633,6 +635,7 @@ ClusterDetails.propTypes = {
   getClusterHistory: PropTypes.func.isRequired,
   getMachineOrNodePools: PropTypes.func.isRequired,
   clearGetMachinePoolsResponse: PropTypes.func.isRequired,
+  clearListVpcs: PropTypes.func.isRequired,
   canSubscribeOCP: PropTypes.bool.isRequired,
   canTransferClusterOwnership: PropTypes.bool.isRequired,
   canHibernateCluster: PropTypes.bool.isRequired,
