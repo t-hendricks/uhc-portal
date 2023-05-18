@@ -9,7 +9,7 @@ type StandAloneTileProps = {
 
 const StandAloneTile = ({ handleChange, isSelected }: StandAloneTileProps) => (
   <Tile
-    title="Standalone"
+    title="Classic"
     isDisplayLarge
     isStacked
     onClick={() => handleChange('false')}

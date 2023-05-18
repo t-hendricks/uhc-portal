@@ -1,15 +1,21 @@
 import React from 'react';
 
-import { Form, Title, Text, TextVariants } from '@patternfly/react-core';
+import { Form, Title, Text, TextVariants, Grid, GridItem } from '@patternfly/react-core';
 
 import { Field, ChangeAction } from 'redux-form';
 import { FormikValues } from 'formik';
+import { Link } from 'react-router-dom';
 import { hypershiftValue } from './ControlPlaneCommon';
 import HostedTile from './HostedTile';
 import StandAloneTile from './StandAloneTile';
 import links from '~/common/installLinks.mjs';
 import './controlPlaneScreen.scss';
 import ExternalLink from '~/components/common/ExternalLink';
+
+import AWSLogo from '~/styles/images/AWS.png';
+import RedHat from '~/styles/images/Logo-Red_Hat-B-Standard-RGB.png';
+
+import { productName } from '../CreateRosaGetStarted/CreateRosaGetStarted';
 
 type ControlPlaneFieldProps = {
   input: {
@@ -78,13 +84,40 @@ const ControlPlaneScreen = ({
       return false;
     }}
   >
-    <Title headingLevel="h3">Select an AWS control plane type</Title>
-    <Text component={TextVariants.p}>
-      Not sure what to choose?{' '}
-      <ExternalLink href={links.AWS_CONTROL_PLANE_URL}>
-        Learn more about AWS control plane types
-      </ExternalLink>
-    </Text>
+    {/* these images use fixed positioning */}
+    <div className="ocm-c-wizard-intro-image-container">
+      <img src={RedHat} className="ocm-c-wizard-intro-image-top" aria-hidden="true" alt="" />
+      <img src={AWSLogo} className="ocm-c-wizard-intro-image-bottom" aria-hidden="true" alt="" />
+    </div>
+    <Grid hasGutter className="pf-u-mt-md">
+      <GridItem span={10}>
+        <Title headingLevel="h2">Welcome to Red Hat OpenShift Service on AWS (ROSA)</Title>
+        <Text component={TextVariants.p} className="pf-u-mt-md pf-u-mb-sm">
+          Create a managed OpenShift cluster on an existing Amazon Web Services (AWS) account.
+        </Text>
+      </GridItem>
+      <GridItem span={10}>
+        <Title headingLevel="h3" className="pf-u-mb-sm">
+          Prerequisites
+        </Title>
+        <Text component={TextVariants.p}>
+          To use the web interface to create a ROSA cluster you will need to have already completed
+          the prerequisite steps to prepare your AWS account on the{' '}
+          <Link to="getstarted">{`Get started with ${productName} (ROSA) page.`}</Link>
+        </Text>
+      </GridItem>
+      <GridItem span={10}>
+        <Title headingLevel="h3" className="pf-u-mb-sm">
+          Select an AWS control plane type
+        </Title>
+        <Text component={TextVariants.p}>
+          Not sure what to choose?{' '}
+          <ExternalLink href={links.AWS_CONTROL_PLANE_URL}>
+            Learn more about AWS control plane types
+          </ExternalLink>
+        </Text>
+      </GridItem>
+    </Grid>
     <Field
       name="hypershift"
       component={ControlPlaneField}
