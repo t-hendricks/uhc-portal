@@ -9,10 +9,11 @@ class CreateRosaCluster extends Page {
   }
 
   isAccountsAndRolesScreen() {
-    cy.contains('h2', 'Welcome to Red Hat OpenShift Service on AWS (ROSA)');
+    cy.contains('h3', 'AWS infrastructure account');
   }
 
   isControlPlaneTypeScreen() {
+    cy.contains('h2', 'Welcome to Red Hat OpenShift Service on AWS (ROSA)');
     cy.contains('h3', 'Select an AWS control plane type');
   }
 
