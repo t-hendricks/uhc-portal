@@ -8,6 +8,7 @@ import { useFormState } from '../../../../hooks';
 import { canSelectImds } from '../../../../rosa/constants';
 import { ImdsSectionHint } from './ImdsSectionHint';
 import { imdsOptions } from './imdsOptions';
+import { ImdsSectionAlert } from './ImdsSectionAlert';
 
 import './ImdsSectionField.scss';
 
@@ -32,11 +33,8 @@ export const ImdsSectionField = () => {
   }, [clusterVersion]);
 
   return (
-    <FormGroup
-      label="Instance Metadata Service"
-      fieldId="imds"
-      labelIcon={<ImdsSectionHint isImdsDisabled={isDisabled} />}
-    >
+    <FormGroup label="Instance Metadata Service" fieldId="imds" labelIcon={<ImdsSectionHint />}>
+      {isDisabled && <ImdsSectionAlert />}
       <Field
         component={RadioButtons}
         name="imds"

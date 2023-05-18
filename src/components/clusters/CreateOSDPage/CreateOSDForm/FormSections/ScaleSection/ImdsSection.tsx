@@ -5,6 +5,7 @@ import RadioButtons from '~/components/common/ReduxFormComponents/RadioButtons';
 import { IMDSType } from '~/components/clusters/wizards/common';
 import { imdsOptions } from '~/components/clusters/wizards/common/ClusterSettings/MachinePool/ImdsSectionField/imdsOptions';
 import { ImdsSectionHint } from '~/components/clusters/wizards/common/ClusterSettings/MachinePool/ImdsSectionField';
+import { ImdsSectionAlert } from '~/components/clusters/wizards/common/ClusterSettings/MachinePool/ImdsSectionField/ImdsSectionAlert';
 
 import './ImdsSection.scss';
 
@@ -25,11 +26,8 @@ const ImdsSection = ({
   }, [isDisabled]);
 
   return (
-    <FormGroup
-      label="Instance Metadata Service"
-      fieldId="imds"
-      labelIcon={<ImdsSectionHint isImdsDisabled={isDisabled} />}
-    >
+    <FormGroup label="Instance Metadata Service" fieldId="imds" labelIcon={<ImdsSectionHint />}>
+      {isDisabled && <ImdsSectionAlert />}
       <Field
         component={RadioButtons}
         name="imds"

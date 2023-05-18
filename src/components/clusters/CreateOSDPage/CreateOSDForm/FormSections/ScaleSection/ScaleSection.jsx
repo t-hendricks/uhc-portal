@@ -75,13 +75,16 @@ function ScaleSection({
   );
 
   const imdsSection = cloudProviderID === 'aws' && (
-    <GridItem md={12}>
-      <ImdsSection
-        isDisabled={!canSelectImds(clusterVersionRawId)}
-        imds={imds}
-        onChangeImds={onChangeImds}
-      />
-    </GridItem>
+    <>
+      <GridItem md={8}>
+        <ImdsSection
+          isDisabled={!canSelectImds(clusterVersionRawId)}
+          imds={imds}
+          onChangeImds={onChangeImds}
+        />
+      </GridItem>
+      <GridItem md={4} />
+    </>
   );
 
   const isRosa = product === normalizedProducts.ROSA;

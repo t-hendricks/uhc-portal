@@ -87,9 +87,12 @@ export const MachinePool = () => {
   );
 
   const imdsSection = isAWS && (
-    <GridItem md={12}>
-      <ImdsSectionField />
-    </GridItem>
+    <>
+      <GridItem md={8}>
+        <ImdsSectionField />
+      </GridItem>
+      <GridItem md={4} />
+    </>
   );
 
   return (
