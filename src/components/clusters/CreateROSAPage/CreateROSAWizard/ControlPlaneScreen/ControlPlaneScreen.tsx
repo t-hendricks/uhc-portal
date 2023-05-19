@@ -1,6 +1,17 @@
 import React from 'react';
 
-import { Form, Title, Text, TextVariants, Grid, GridItem } from '@patternfly/react-core';
+import {
+  Form,
+  Title,
+  Text,
+  TextVariants,
+  Grid,
+  GridItem,
+  Hint,
+  HintTitle,
+  HintBody,
+  HintFooter,
+} from '@patternfly/react-core';
 
 import { Field, ChangeAction } from 'redux-form';
 import { FormikValues } from 'formik';
@@ -92,19 +103,23 @@ const ControlPlaneScreen = ({
     <Grid hasGutter className="pf-u-mt-md">
       <GridItem span={10}>
         <Title headingLevel="h2">Welcome to Red Hat OpenShift Service on AWS (ROSA)</Title>
-        <Text component={TextVariants.p} className="pf-u-mt-md pf-u-mb-sm">
+        <Text component={TextVariants.p} className="pf-u-mt-md">
           Create a managed OpenShift cluster on an existing Amazon Web Services (AWS) account.
         </Text>
       </GridItem>
       <GridItem span={10}>
-        <Title headingLevel="h3" className="pf-u-mb-sm">
-          Prerequisites
-        </Title>
-        <Text component={TextVariants.p}>
-          To use the web interface to create a ROSA cluster you will need to have already completed
-          the prerequisite steps to prepare your AWS account on the{' '}
-          <Link to="getstarted">{`Get started with ${productName} (ROSA) page.`}</Link>
-        </Text>
+        <Hint>
+          <HintTitle>
+            <strong>Did you complete your prerequisites?</strong>
+          </HintTitle>
+          <HintBody>
+            To use the web interface to create a ROSA cluster you will need to have already
+            completed the prerequisite steps on the
+          </HintBody>
+          <HintFooter>
+            <Link to="getstarted">{`Get started with ${productName} (ROSA) page.`}</Link>
+          </HintFooter>
+        </Hint>
       </GridItem>
       <GridItem span={10}>
         <Title headingLevel="h3" className="pf-u-mb-sm">
