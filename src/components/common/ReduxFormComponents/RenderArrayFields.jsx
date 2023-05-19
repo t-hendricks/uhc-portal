@@ -2,8 +2,7 @@ import React from 'react';
 import { PropTypes } from 'prop-types';
 import { Field } from 'redux-form';
 import pullAt from 'lodash/pullAt';
-import last from 'lodash/last';
-import { Button, ButtonVariant, GridItem } from '@patternfly/react-core';
+import { Button, GridItem } from '@patternfly/react-core';
 import { PlusCircleIcon, MinusCircleIcon } from '@patternfly/react-icons';
 import ReduxVerticalFormGroup from './ReduxVerticalFormGroup';
 import { getRandomID } from '../../../common/helpers';
@@ -32,21 +31,24 @@ LabelGridItem.propTypes = {
   helpText: PropTypes.string,
 };
 
-const AddMoreButtonGridItem = ({ addNewField, areFieldsFilled }) => (
-  <GridItem className="field-grid-item">
-    <Button
-      onClick={addNewField}
-      icon={<PlusCircleIcon />}
-      variant="link"
-      isDisabled={!last(areFieldsFilled)} // disabled if last field is empty
-    >
-      Add more
-    </Button>
-  </GridItem>
-);
+const AddMoreButtonGridItem = ({ addNewField, areFieldsFilled }) => {
+  const isDisabled = !areFieldsFilled.length || areFieldsFilled.includes(false);
+
+  return (
+    <GridItem className="field-grid-item">
+      <Button
+        onClick={addNewField}
+        icon={<PlusCircleIcon />}
+        variant="link"
+        isDisabled={isDisabled}
+      >
+        Add more
+      </Button>
+    </GridItem>
+  );
+};
 
 AddMoreButtonGridItem.propTypes = {
-  fields: PropTypes.array.isRequired,
   addNewField: PropTypes.func.isRequired,
   areFieldsFilled: PropTypes.arrayOf(PropTypes.bool).isRequired,
 };
@@ -196,10 +198,9 @@ const RenderArrayFields = (props) => {
   };
 
   const addNewField = () => {
-    fields.push({ id: getRandomID() });
+    fields.insert(0, { id: getRandomID() });
     setAreFieldsFilled((areFieldsFilled) => {
-      const newFilledStatus = [...areFieldsFilled];
-      newFilledStatus.push(false);
+      const newFilledStatus = [false, ...areFieldsFilled];
       return newFilledStatus;
     });
   };
@@ -212,11 +213,7 @@ const RenderArrayFields = (props) => {
         isRequired={isRequired}
         helpText={helpText}
       />
-      <AddMoreButtonGridItem
-        fields={fields}
-        addNewField={addNewField}
-        areFieldsFilled={areFieldsFilled}
-      />
+      <AddMoreButtonGridItem addNewField={addNewField} areFieldsFilled={areFieldsFilled} />
       {fields.map((item, index) => (
         <React.Fragment key={`${fields.get(index).id}`}>
           <FieldGridItemComponent

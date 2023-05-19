@@ -122,7 +122,7 @@ const mapStateToProps = (state, ownProps) => {
     selectedMappingMethod: valueSelector(state, 'mappingMethod'),
     clusterIDPs,
     IDPList: clusterIDPList,
-    HtPasswdErrors: get(errorSelector(state), 'users'),
+    HTPasswdErrors: get(errorSelector(state), 'users'),
   };
 };
 
