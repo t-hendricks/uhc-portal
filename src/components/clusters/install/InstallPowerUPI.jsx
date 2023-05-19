@@ -27,7 +27,8 @@ export class InstallPowerUPI extends Component {
         path={[
           { label: 'Clusters' },
           { label: 'Cluster Type', path: '/create' },
-          { label: 'IBM Power (ppc64le)' },
+          { label: 'IBM Power (ppc64le)', path: '/install/power' },
+          { label: 'User-provisioned infrastructure' },
         ]}
       />
     );

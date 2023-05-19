@@ -13,7 +13,8 @@ import PageTitle from '../../common/PageTitle';
 export class InstallIBMZUPI extends Component {
   componentDidMount() {
     scrollToTop();
-    document.title = 'Install OpenShift 4 | Red Hat OpenShift Cluster Manager | IBM Z';
+    document.title =
+      'Install OpenShift 4 | Red Hat OpenShift Cluster Manager | IBM zSystems (s390x)';
 
     const { dispatch } = this.props;
     dispatch(tollboothActions.createAuthToken());
@@ -26,7 +27,8 @@ export class InstallIBMZUPI extends Component {
         path={[
           { label: 'Clusters' },
           { label: 'Cluster Type', path: '/create' },
-          { label: 'IBM zSystems (s390x)' },
+          { label: 'IBM zSystems (s390x)', path: '/install/ibmz' },
+          { label: 'User-provisioned infrastructure' },
         ]}
       />
     );

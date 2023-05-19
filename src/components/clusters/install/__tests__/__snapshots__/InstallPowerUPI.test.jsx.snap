@@ -16,6 +16,10 @@ exports[`InstallPower renders correctly 1`] = `
             },
             Object {
               "label": "IBM Power (ppc64le)",
+              "path": "/install/power",
+            },
+            Object {
+              "label": "User-provisioned infrastructure",
             },
           ]
         }

@@ -16,6 +16,10 @@ exports[`InstallPower renders correctly 1`] = `
             },
             Object {
               "label": "IBM zSystems (s390x)",
+              "path": "/install/ibmz",
+            },
+            Object {
+              "label": "User-provisioned infrastructure",
             },
           ]
         }
