@@ -162,6 +162,7 @@ const HTPasswdForm = ({
             name: 'username',
             label: 'Username',
             type: 'text',
+            helpText: 'Unique name of the user within the cluster.',
             isRequired: true,
             getPlaceholderText: (index) => `Unique username ${index + 1}`,
             validate: [required, validateHTPasswdUsername],
@@ -177,8 +178,7 @@ const HTPasswdForm = ({
             validate: validateHTPasswdPassword,
           },
         ]}
-        label="Users"
-        helpText="Unique names of the users within the cluster. A username must not contain /, :, or %."
+        label="Users list"
         isRequired
         disabled={isPending}
         validate={[

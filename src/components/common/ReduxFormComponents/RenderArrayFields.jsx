@@ -3,7 +3,7 @@ import { PropTypes } from 'prop-types';
 import { Field } from 'redux-form';
 import pullAt from 'lodash/pullAt';
 import last from 'lodash/last';
-import { Button, GridItem } from '@patternfly/react-core';
+import { Button, ButtonVariant, GridItem } from '@patternfly/react-core';
 import { PlusCircleIcon, MinusCircleIcon } from '@patternfly/react-icons';
 import ReduxVerticalFormGroup from './ReduxVerticalFormGroup';
 import { getRandomID } from '../../../common/helpers';
@@ -11,53 +11,41 @@ import ButtonWithTooltip from '../ButtonWithTooltip';
 
 import './RenderArrayFields.scss';
 
-const LabelGridItem = ({ index, fieldSpan, label, isRequired, helpText }) => {
-  if (index !== 0) {
-    return null;
-  }
-  return (
-    <GridItem className="field-array-title" span={fieldSpan}>
-      <p className="pf-c-form__label-text" id="field-array-label">
-        {label}
-        {isRequired ? <span className="pf-c-form__label-required">*</span> : null}
+const LabelGridItem = ({ fieldSpan, label, isRequired, helpText }) => (
+  <GridItem className="field-array-title" span={fieldSpan}>
+    <p className="pf-c-form__label-text" id="field-array-label">
+      {label}
+      {isRequired ? <span className="pf-c-form__label-required">*</span> : null}
+    </p>
+    {helpText ? (
+      <p className="pf-c-form__helper-text" id="field-array-help-text">
+        {helpText}
       </p>
-      {helpText ? (
-        <p className="pf-c-form__helper-text" id="field-array-help-text">
-          {helpText}
-        </p>
-      ) : null}
-    </GridItem>
-  );
-};
+    ) : null}
+  </GridItem>
+);
 
 LabelGridItem.propTypes = {
-  index: PropTypes.number.isRequired,
   fieldSpan: PropTypes.number.isRequired,
   label: PropTypes.string,
   isRequired: PropTypes.bool,
   helpText: PropTypes.string,
 };
 
-const AddMoreButtonGridItem = ({ index, fields, addNewField, areFieldsFilled }) => {
-  if (index === fields.length - 1) {
-    return (
-      <GridItem className="field-grid-item">
-        <Button
-          onClick={addNewField}
-          icon={<PlusCircleIcon />}
-          variant="link"
-          isDisabled={!last(areFieldsFilled)} // disabled if last field is empty
-        >
-          Add more
-        </Button>
-      </GridItem>
-    );
-  }
-  return null;
-};
+const AddMoreButtonGridItem = ({ addNewField, areFieldsFilled }) => (
+  <GridItem className="field-grid-item">
+    <Button
+      onClick={addNewField}
+      icon={<PlusCircleIcon />}
+      variant="link"
+      isDisabled={!last(areFieldsFilled)} // disabled if last field is empty
+    >
+      Add more
+    </Button>
+  </GridItem>
+);
 
 AddMoreButtonGridItem.propTypes = {
-  index: PropTypes.number.isRequired,
   fields: PropTypes.array.isRequired,
   addNewField: PropTypes.func.isRequired,
   areFieldsFilled: PropTypes.arrayOf(PropTypes.bool).isRequired,
@@ -218,15 +206,19 @@ const RenderArrayFields = (props) => {
 
   return (
     <>
+      <LabelGridItem
+        fieldSpan={fieldSpan}
+        label={`${label} (${fields.length})`}
+        isRequired={isRequired}
+        helpText={helpText}
+      />
+      <AddMoreButtonGridItem
+        fields={fields}
+        addNewField={addNewField}
+        areFieldsFilled={areFieldsFilled}
+      />
       {fields.map((item, index) => (
         <React.Fragment key={`${fields.get(index).id}`}>
-          <LabelGridItem
-            index={index}
-            fieldSpan={fieldSpan}
-            label={label}
-            isRequired={isRequired}
-            helpText={helpText}
-          />
           <FieldGridItemComponent
             item={item}
             index={index}
@@ -241,12 +233,6 @@ const RenderArrayFields = (props) => {
             errorMessage={error}
             touched={touched}
             isGroupError={isGroupError}
-          />
-          <AddMoreButtonGridItem
-            index={index}
-            fields={fields}
-            addNewField={addNewField}
-            areFieldsFilled={areFieldsFilled}
           />
         </React.Fragment>
       ))}
