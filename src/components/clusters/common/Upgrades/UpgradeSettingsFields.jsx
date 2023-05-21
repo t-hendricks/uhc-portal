@@ -26,26 +26,35 @@ function UpgradeSettingsFields({
   isAutomatic,
   showDivider,
   change,
-  initialSceduleValue,
+  initialScheduleValue,
   product,
   isHypershift = false,
 }) {
   const isRosa = product === normalizedProducts.ROSA;
+  const recurringUpdateMessage = (
+    <>
+      The cluster will be automatically updated based on your preferred day and start time when new
+      patch updates (
+      <ExternalLink href={isRosa ? links.ROSA_Z_STREAM : links.OSD_Z_STREAM}>z-stream</ExternalLink>
+      ) are available. When a new minor version is available, you'll be notified and must manually
+      allow the cluster to update to the next minor version.
+    </>
+  );
+  const recurringUpdateHypershift = (
+    <>
+      The cluster control plan will be automatically updated based on your preferred day and start
+      time when new patch updates (
+      <ExternalLink href={isRosa ? links.ROSA_Z_STREAM : links.OSD_Z_STREAM}>z-stream</ExternalLink>
+      ) are available. When a new minor version is available, you'll be notified and must manually
+      allow the cluster to update to the next minor version. The worker nodes will need to be
+      manually updated.
+    </>
+  );
 
   const automatic = {
     value: 'automatic',
     label: 'Recurring updates',
-    description: (
-      <>
-        The cluster will be automatically updated based on your preferred day and start time when
-        new patch updates (
-        <ExternalLink href={isRosa ? links.ROSA_Z_STREAM : links.OSD_Z_STREAM}>
-          z-stream
-        </ExternalLink>
-        ) are available. When a new minor version is available, you'll be notified and must manually
-        allow the cluster to update to the next minor version.
-      </>
-    ),
+    description: isHypershift ? recurringUpdateHypershift : recurringUpdateMessage,
     extraField: isAutomatic && (
       <Grid>
         <GridItem md={6}>
@@ -53,6 +62,7 @@ function UpgradeSettingsFields({
             component={UpgradeScheduleSelection}
             name="automatic_upgrade_schedule"
             isDisabled={isDisabled}
+            isHypershift={isHypershift}
           />
         </GridItem>
       </Grid>
@@ -94,7 +104,7 @@ function UpgradeSettingsFields({
           isDisabled={isDisabled}
           onChange={(_, value) => {
             if (change && value === 'manual') {
-              change('automatic_upgrade_schedule', initialSceduleValue);
+              change('automatic_upgrade_schedule', initialScheduleValue);
             }
           }}
           options={options}
@@ -132,7 +142,7 @@ UpgradeSettingsFields.propTypes = {
   showDivider: PropTypes.bool,
   change: PropTypes.func,
   product: PropTypes.string,
-  initialSceduleValue: PropTypes.string,
+  initialScheduleValue: PropTypes.string,
 };
 
 export default UpgradeSettingsFields;

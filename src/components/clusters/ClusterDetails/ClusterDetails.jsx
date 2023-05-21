@@ -221,7 +221,7 @@ class ClusterDetails extends Component {
       getClusterRouters(clusterID);
       this.refreshIDP();
       getMachineOrNodePools(clusterID, isHypershiftCluster(clusterDetails?.cluster));
-      getSchedules(clusterID);
+      getSchedules(clusterID, isHypershiftCluster(clusterDetails?.cluster));
       fetchUpgradeGates();
 
       if (get(clusterDetails, 'cluster.cloud_provider.id') !== 'gcp') {
@@ -387,7 +387,7 @@ class ClusterDetails extends Component {
       cluster.subscription?.external_cluster_id === undefined;
     const displaySupportTab = !hideSupportTab && !isOSDTrial;
     const displayUpgradeSettingsTab =
-      (cluster.managed || isAROCluster) && cluster.canEdit && !isArchived && !isHypershift;
+      (cluster.managed || isAROCluster) && cluster.canEdit && !isArchived;
 
     let addHostsTabState = { showTab: false, isDisabled: false, tabTooltip: '' };
     if (assistedInstallerEnabled && !isArchived) {
@@ -545,7 +545,7 @@ class ClusterDetails extends Component {
               hidden
             >
               <ErrorBoundary>
-                <MachinePools cluster={cluster} isHypershift={isHypershiftCluster(cluster)} />
+                <MachinePools cluster={cluster} isHypershift={isHypershift} />
               </ErrorBoundary>
             </TabContent>
           )}
@@ -589,7 +589,7 @@ class ClusterDetails extends Component {
           <DeleteIDPDialog refreshParent={this.refreshIDP} />
           <AddNotificationContactDialog />
           <AddGrantModal clusterID={cluster.id} />
-          <CancelUpgradeModal />
+          <CancelUpgradeModal isHypershift={isHypershift} />
         </PageSection>
       </>
     );
