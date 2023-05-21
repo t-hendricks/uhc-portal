@@ -42,6 +42,7 @@ const funcs = () => ({
   getSchedules: jest.fn(),
   getUserAccess: jest.fn(),
   fetchUpgradeGates: jest.fn(),
+  clearListVpcs: jest.fn(),
 });
 
 const clusterDetails = {

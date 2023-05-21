@@ -43,6 +43,8 @@ import { getUpgradeGates } from '../common/Upgrades/UpgradeAcknowledge/UpgradeAc
 import { fetchUpgradeGates } from '../../../redux/actions/upgradeGateActions';
 import { featureGateSelector } from '~/hooks/useFeatureGate';
 
+import { clearListVpcs } from '~/components/clusters/CreateOSDPage/CreateOSDWizard/ccsInquiriesActions';
+
 const mapStateToProps = (state, { location }) => {
   const { details } = state.clusters;
   const { cloudProviders, clusterRouters } = state;
@@ -110,6 +112,7 @@ const mapDispatchToProps = (dispatch) =>
       getClusterRouters,
       getMachineOrNodePools,
       clearGetMachinePoolsResponse,
+      clearListVpcs,
       getClusterHistory,
       toggleSubscriptionReleased,
       getNotificationContacts: supportActions.getNotificationContacts,
