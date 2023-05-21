@@ -3324,6 +3324,7 @@ exports[`<ClusterDetails /> Cluster Details - OSD should render 1`] = `
                 ],
               }
             }
+            clearListVpcs={[MockFunction]}
             closeModal={[MockFunction]}
             cloudProviders={
               Object {

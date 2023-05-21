@@ -147,7 +147,9 @@ export const SubnetSelectField = ({
       isRequired={isRequired}
       className={className}
     >
-      {vpcsError && <ErrorBox message="Failed to fetch subnet IDs." response={vpcs} />}
+      {vpcsError && !isVpcsLoading && (
+        <ErrorBox message="Failed to fetch subnet IDs." response={vpcs} />
+      )}
 
       {!vpcsError && !isVpcsLoading && vpcsItems?.length === 0 && (
         <Alert
