@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`InstallIBM renders correctly 1`] = `
+exports[`InstallPower renders correctly 1`] = `
 <Fragment>
   <PageTitle
     breadcrumbs={
@@ -15,13 +15,17 @@ exports[`InstallIBM renders correctly 1`] = `
               "path": "/create",
             },
             Object {
-              "label": "IBM Z",
+              "label": "IBM zSystems (s390x)",
+              "path": "/install/ibmz",
+            },
+            Object {
+              "label": "User-provisioned infrastructure",
             },
           ]
         }
       />
     }
-    title="Install OpenShift on IBM Z with user-provisioned infrastructure"
+    title="Install OpenShift on IBM zSystems (s390x) with user-provisioned infrastructure"
   />
   <PageSection>
     <OCPInstructions
@@ -101,7 +105,7 @@ exports[`InstallIBM renders correctly 1`] = `
           ],
         }
       }
-      title="Install OpenShift on IBM Z with user-provisioned infrastructure"
+      title="Install OpenShift on IBM zSystems (s390x) with user-provisioned infrastructure"
       token={Object {}}
     />
   </PageSection>

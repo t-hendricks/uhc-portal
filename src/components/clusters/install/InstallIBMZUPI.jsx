@@ -1,21 +1,20 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-
 import { PageSection } from '@patternfly/react-core';
+
 import Breadcrumbs from '../../common/Breadcrumbs';
+import { tollboothActions } from '../../../redux/actions';
+import { scrollToTop } from '../../../common/helpers';
+import instructionsMapping from './instructions/instructionsMapping';
+import OCPInstructions from './instructions/OCPInstructions';
 import PageTitle from '../../common/PageTitle';
 
-import { tollboothActions } from '../../../redux/actions';
-import InstructionsPreRelease from './instructions/InstructionsPreRelease';
-import { scrollToTop } from '../../../common/helpers';
-import { tools } from '../../../common/installLinks.mjs';
-
-export class InstallPowerPreRelease extends Component {
+export class InstallIBMZUPI extends Component {
   componentDidMount() {
     scrollToTop();
     document.title =
-      'Install OpenShift 4 | IBM Power (ppc64le) | Experimental Developer Preview Builds';
+      'Install OpenShift 4 | Red Hat OpenShift Cluster Manager | IBM zSystems (s390x)';
 
     const { dispatch } = this.props;
     dispatch(tollboothActions.createAuthToken());
@@ -28,8 +27,8 @@ export class InstallPowerPreRelease extends Component {
         path={[
           { label: 'Clusters' },
           { label: 'Cluster Type', path: '/create' },
-          { label: 'IBM Power (ppc64le)', path: '/install/power/user-provisioned' },
-          { label: 'Pre-Release Builds' },
+          { label: 'IBM zSystems (s390x)', path: '/install/ibmz' },
+          { label: 'User-provisioned infrastructure' },
         ]}
       />
     );
@@ -37,22 +36,27 @@ export class InstallPowerPreRelease extends Component {
     return (
       <>
         <PageTitle
-          title="Install OpenShift on IBM Power (ppc64le) with user-provisioned infrastructure"
+          title={instructionsMapping.baremetal.s390x.upi.title}
           breadcrumbs={breadcrumbs}
         />
         <PageSection>
-          <InstructionsPreRelease token={token} installer={tools.PPCINSTALLER} />
+          <OCPInstructions
+            token={token}
+            cloudProviderID="baremetal"
+            isUPI
+            {...instructionsMapping.baremetal.s390x.upi}
+          />
         </PageSection>
       </>
     );
   }
 }
 
-InstallPowerPreRelease.propTypes = {
+InstallIBMZUPI.propTypes = {
   token: PropTypes.object.isRequired,
   dispatch: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({ token: state.tollbooth.token });
 
-export default connect(mapStateToProps)(InstallPowerPreRelease);
+export default connect(mapStateToProps)(InstallIBMZUPI);

@@ -10,10 +10,11 @@ import instructionsMapping from './instructions/instructionsMapping';
 import OCPInstructions from './instructions/OCPInstructions';
 import PageTitle from '../../common/PageTitle';
 
-export class InstallIBM extends Component {
+export class InstallPowerUPI extends Component {
   componentDidMount() {
     scrollToTop();
-    document.title = 'Install OpenShift 4 | Red Hat OpenShift Cluster Manager | IBM Z';
+    document.title =
+      'Install OpenShift 4 | Red Hat OpenShift Cluster Manager | IBM Power (ppc64le)';
 
     const { dispatch } = this.props;
     dispatch(tollboothActions.createAuthToken());
@@ -26,23 +27,21 @@ export class InstallIBM extends Component {
         path={[
           { label: 'Clusters' },
           { label: 'Cluster Type', path: '/create' },
-          { label: 'IBM Z' },
+          { label: 'IBM Power (ppc64le)', path: '/install/power' },
+          { label: 'User-provisioned infrastructure' },
         ]}
       />
     );
 
     return (
       <>
-        <PageTitle
-          title={instructionsMapping.baremetal.s390x.upi.title}
-          breadcrumbs={breadcrumbs}
-        />
+        <PageTitle title={instructionsMapping.baremetal.ppc.upi.title} breadcrumbs={breadcrumbs} />
         <PageSection>
           <OCPInstructions
             token={token}
             cloudProviderID="baremetal"
             isUPI
-            {...instructionsMapping.baremetal.s390x.upi}
+            {...instructionsMapping.baremetal.ppc.upi}
           />
         </PageSection>
       </>
@@ -50,11 +49,11 @@ export class InstallIBM extends Component {
   }
 }
 
-InstallIBM.propTypes = {
+InstallPowerUPI.propTypes = {
   token: PropTypes.object.isRequired,
   dispatch: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({ token: state.tollbooth.token });
 
-export default connect(mapStateToProps)(InstallIBM);
+export default connect(mapStateToProps)(InstallPowerUPI);
