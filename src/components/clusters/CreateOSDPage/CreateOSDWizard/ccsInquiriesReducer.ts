@@ -13,13 +13,14 @@ import {
   VALIDATE_CLOUD_PROVIDER_CREDENTIALS,
   LIST_GCP_KEY_RINGS,
   LIST_GCP_KEYS,
+  LIST_REGIONS,
   LIST_VPCS,
   CLEAR_LIST_VPCS,
   CLEAR_ALL_CLOUD_PROVIDER_INQUIRIES,
   CLEAR_CCS_CREDENTIALS_INQUIRY,
   InquiriesAction,
 } from '~/components/clusters/CreateOSDPage/CreateOSDWizard/ccsInquiriesActions';
-import { CloudVPC, EncryptionKey, KeyRing } from '~/types/clusters_mgmt.v1';
+import { CloudRegion, CloudVPC, EncryptionKey, KeyRing } from '~/types/clusters_mgmt.v1';
 import { AugmentedSubnetwork, AWSCredentials } from '~/types/types';
 
 // Credentials are only stored here as part of metadata on requests,
@@ -48,6 +49,16 @@ export type State = {
     keyRing?: string;
     data: {
       items: EncryptionKey[];
+    };
+  }>;
+  regions: PromiseReducerState<{
+    cloudProvider?: string;
+    credentials?: AWSCredentials | GCPCredentialsJSON;
+    openshiftVersionId?: string; // if set on request, only compatibile regions were listed.
+    data: {
+      byID: {
+        [id: string]: CloudRegion;
+      };
     };
   }>;
   vpcs: PromiseReducerState<{
@@ -88,6 +99,15 @@ const initialState: State = {
       items: [],
     },
   },
+  regions: {
+    ...baseRequestState,
+    cloudProvider: undefined,
+    credentials: undefined,
+    openshiftVersionId: undefined,
+    data: {
+      byID: {},
+    },
+  },
   vpcs: {
     ...baseRequestState,
     cloudProvider: undefined,
@@ -126,6 +146,17 @@ export const processAWSVPCs = (vpcsData: { items: CloudVPC[] }) => ({
   ...vpcsData,
   bySubnetID: indexAWSVPCs(vpcsData),
 });
+
+/** Indexes regions by id. */
+export const indexRegions = (data: { items?: CloudRegion[] }) => {
+  const byID: { [id: string]: CloudRegion } = {};
+  (data.items || []).forEach((region) => {
+    if (region.id) {
+      byID[region.id] = region;
+    }
+  });
+  return byID;
+};
 
 function ccsInquiriesReducer(
   state: State = initialState,
@@ -207,6 +238,31 @@ function ccsInquiriesReducer(
           credentials: action.meta?.credentials,
           keyLocation: action.meta?.keyLocation,
           keyRing: action.meta?.keyRing,
+        };
+        break;
+
+      case PENDING_ACTION(LIST_REGIONS):
+        draft.regions.pending = true;
+        break;
+      case FULFILLED_ACTION(LIST_REGIONS):
+        draft.regions = {
+          ...baseRequestState,
+          fulfilled: true,
+          cloudProvider: action.meta?.cloudProvider,
+          credentials: action.meta?.credentials,
+          openshiftVersionId: action.meta?.openshiftVersionId,
+          data: {
+            byID: indexRegions(action.payload.data),
+          },
+        };
+        break;
+      case REJECTED_ACTION(LIST_REGIONS):
+        draft.regions = {
+          ...initialState.regions,
+          ...getErrorState(action),
+          cloudProvider: action.meta?.cloudProvider,
+          credentials: action.meta?.credentials,
+          openshiftVersionId: action.meta?.openshiftVersionId,
         };
         break;
 

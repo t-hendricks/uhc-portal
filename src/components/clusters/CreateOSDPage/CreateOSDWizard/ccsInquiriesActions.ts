@@ -12,6 +12,7 @@ import {
 
 export const VALIDATE_CLOUD_PROVIDER_CREDENTIALS = 'VALIDATE_CLOUD_PROVIDER_CREDENTIALS';
 export const LIST_VPCS = 'LIST_VPCS';
+export const LIST_REGIONS = 'LIST_REGIONS';
 export const LIST_GCP_KEY_RINGS = 'LIST_GCP_KEY_RINGS';
 export const LIST_GCP_KEYS = 'LIST_GCP_KEYS';
 export const CLEAR_LIST_VPCS = 'CLEAR_LIST_VPCS';
@@ -74,16 +75,25 @@ export const getGCPCloudProviderVPCs = (
   );
 
 /**
- * Validate AWS credentials.
+ * List regions, also used as a way to validate AWS credentials.
+ * TODO (SDA-8744): backend allows wrong `account_id`.
+ * @param {Object} credentials
+ * @param {string} [openshiftVersionId] Optional. Exclude regions known to be incompatible
+ *   with this version.
  */
-export const getAWSCloudProviderRegions = (awsCredentials: AWSCredentials) =>
+export const getAWSCloudProviderRegions = (
+  type: 'VALIDATE_CLOUD_PROVIDER_CREDENTIALS' | 'LIST_REGIONS',
+  awsCredentials: AWSCredentials,
+  openshiftVersionId?: string,
+) =>
   action(
-    VALIDATE_CLOUD_PROVIDER_CREDENTIALS,
-    listAWSRegions(awsCredentials),
+    type,
+    listAWSRegions(awsCredentials, openshiftVersionId),
     // meta parameters can be used to check if we need to query again.
     {
       credentials: awsCredentials,
       cloudProvider: 'aws',
+      openshiftVersionId,
     },
   );
 
