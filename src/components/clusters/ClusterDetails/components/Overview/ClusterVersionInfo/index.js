@@ -13,7 +13,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  getSchedules: (clusterID) => dispatch(getSchedules(clusterID)),
+  getSchedules: (clusterID, isHypershift) => dispatch(getSchedules(clusterID, isHypershift)),
   clearSchedulesResponse: () => dispatch(clearSchedulesResponse()),
   // explicit dispatching is annoying, but is a must when using openModal
   // TODO fix openModal so explicit dispatching won't be necessary, like all other actions

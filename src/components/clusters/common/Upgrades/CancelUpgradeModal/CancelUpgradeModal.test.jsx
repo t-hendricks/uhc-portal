@@ -23,6 +23,7 @@ describe('<CancelUpgradeModal />', () => {
           next_run: new Date('2020-11-02').toISOString(),
         }}
         clearDeleteScheduleResponse={clearDeleteScheduleResponse}
+        isHypershift={false}
       />,
     );
   });
@@ -34,7 +35,7 @@ describe('<CancelUpgradeModal />', () => {
   it('correctly calls deleteSchedule', () => {
     const primaryButton = wrapper.find('Button[variant="primary"]');
     primaryButton.simulate('click');
-    expect(deleteSchedule).toBeCalledWith('bar', 'foo');
+    expect(deleteSchedule).toBeCalledWith('bar', 'foo', false);
   });
 
   it('clears request state when fulfilled and closes modal', () => {

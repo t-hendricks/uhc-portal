@@ -6,6 +6,7 @@ exports[`<CancelUpgradeModal /> renders correctly 1`] = `
   closeModal={[MockFunction]}
   deleteSchedule={[MockFunction]}
   deleteScheduleRequest={Object {}}
+  isHypershift={false}
   isOpen={true}
   schedule={
     Object {

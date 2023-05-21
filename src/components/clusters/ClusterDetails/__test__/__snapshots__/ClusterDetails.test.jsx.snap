@@ -4066,6 +4066,7 @@ exports[`<ClusterDetails /> Cluster Details - OSD should render 1`] = `
                 "calls": Array [
                   Array [
                     "1i4counta3holamvo1g5tp6n8p3a03bq",
+                    false,
                   ],
                 ],
                 "results": Array [
@@ -27607,7 +27608,9 @@ exports[`<ClusterDetails /> Cluster Details - OSD should render 1`] = `
                     submit={[Function]}
                   />
                 </Connect(AddGrantModal)>
-                <Connect(CancelUpgradeModal)>
+                <Connect(CancelUpgradeModal)
+                  isHypershift={false}
+                >
                   <CancelUpgradeModal
                     clearDeleteScheduleResponse={[Function]}
                     closeModal={[Function]}
@@ -27619,6 +27622,7 @@ exports[`<ClusterDetails /> Cluster Details - OSD should render 1`] = `
                         "pending": false,
                       }
                     }
+                    isHypershift={false}
                     isOpen={false}
                   />
                 </Connect(CancelUpgradeModal)>
