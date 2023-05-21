@@ -15,7 +15,7 @@ exports[`InstallPowerPreRelease renders correctly 1`] = `
               "path": "/create",
             },
             Object {
-              "label": "Power",
+              "label": "IBM Power (ppc64le)",
               "path": "/install/power/user-provisioned",
             },
             Object {
@@ -25,7 +25,7 @@ exports[`InstallPowerPreRelease renders correctly 1`] = `
         }
       />
     }
-    title="Install OpenShift on Power with user-provisioned infrastructure"
+    title="Install OpenShift on IBM Power (ppc64le) with user-provisioned infrastructure"
   />
   <PageSection>
     <InstructionsPreRelease

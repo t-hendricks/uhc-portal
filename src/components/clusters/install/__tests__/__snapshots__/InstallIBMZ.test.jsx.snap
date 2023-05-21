@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`InstallPower renders correctly 1`] = `
+exports[`InstallIBMZ renders correctly 1`] = `
 <Fragment>
   <InstructionsChooserPageTitle
     breadcrumbs={
@@ -15,27 +15,27 @@ exports[`InstallPower renders correctly 1`] = `
               "path": "/create",
             },
             Object {
-              "label": "IBM Power (ppc64le)",
+              "label": "IBM zSystems (s390x)",
             },
           ]
         }
       />
     }
-    cloudName="IBM Power (ppc64le)"
+    cloudName="IBM zSystems (s390x)"
   />
   <PageSection>
     <InstructionsChooser
       aiLearnMoreLink="https://docs.openshift.com/container-platform/4.12/installing/installing_on_prem_assisted/installing-on-prem-assisted.html"
       aiPageLink="/assisted-installer/clusters/~new"
       hideIPI={true}
-      name="Power"
+      name="Ibmz"
       providerSpecificFeatures={
         Object {
           "abi": Array [
             "For connected or air-gapped/restricted networks",
           ],
           "ipi": Array [
-            "Hosts controlled with IBM Power (ppc64le) Cloud Provider",
+            "Hosts controlled with Ibmz Cloud Provider",
             "For connected or air-gapped/restricted networks",
           ],
           "upi": Array [
@@ -43,8 +43,8 @@ exports[`InstallPower renders correctly 1`] = `
           ],
         }
       }
-      upiLearnMoreLink="https://docs.openshift.com/container-platform/4.12/installing/installing_ibm_power/installing-ibm-power.html"
-      upiPageLink="/install/power/user-provisioned"
+      upiLearnMoreLink="https://docs.openshift.com/container-platform/4.12/installing/installing_ibm_z/preparing-to-install-on-ibm-z.html"
+      upiPageLink="/install/ibmz/user-provisioned"
     />
   </PageSection>
 </Fragment>

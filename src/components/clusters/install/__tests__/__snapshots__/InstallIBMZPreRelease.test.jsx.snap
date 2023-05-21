@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`InstallIBMPreRelease renders correctly 1`] = `
+exports[`InstallIBMZPreRelease renders correctly 1`] = `
 <Fragment>
   <PageTitle
     breadcrumbs={
