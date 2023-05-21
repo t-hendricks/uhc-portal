@@ -27,7 +27,7 @@ exports[`InstallMultiAWSIPI renders correctly 1`] = `
     <OCPInstructions
       channel="stable"
       cloudProviderID="aws"
-      docURL="https://docs.openshift.com/container-platform/4.12/post_installation_configuration/multi-architecture-configuration.html#creating-a-cluster-with-multi-architecture-compute-machines-on-aws"
+      docURL="https://docs.openshift.com/container-platform/4.13/post_installation_configuration/multi-architecture-configuration.html#creating-a-cluster-with-multi-architecture-compute-machines-on-aws"
       installer="multi-openshift-install"
       isBMIPI={false}
       isUPI={false}

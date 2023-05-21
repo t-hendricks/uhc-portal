@@ -25,9 +25,9 @@ exports[`Platform agnostic install renders correctly 1`] = `
   />
   <PageSection>
     <InstructionsChooser
-      agentBasedLearnMoreLink="https://docs.openshift.com/container-platform/4.12/installing/installing_with_agent_based_installer/preparing-to-install-with-agent-based-installer.html"
+      agentBasedLearnMoreLink="https://docs.openshift.com/container-platform/4.13/installing/installing_with_agent_based_installer/preparing-to-install-with-agent-based-installer.html"
       agentBasedPageLink="/install/platform-agnostic/agent-based"
-      aiLearnMoreLink="https://docs.openshift.com/container-platform/4.12/installing/installing_on_prem_assisted/installing-on-prem-assisted.html"
+      aiLearnMoreLink="https://docs.openshift.com/container-platform/4.13/installing/installing_on_prem_assisted/installing-on-prem-assisted.html"
       aiPageLink="/assisted-installer/clusters/~new"
       hideIPI={true}
       name="platform-agnostic"
@@ -69,7 +69,7 @@ exports[`Platform agnostic install renders correctly 1`] = `
           ],
         }
       }
-      upiLearnMoreLink="https://docs.openshift.com/container-platform/4.12/installing/installing_platform_agnostic/installing-platform-agnostic.html"
+      upiLearnMoreLink="https://docs.openshift.com/container-platform/4.13/installing/installing_platform_agnostic/installing-platform-agnostic.html"
       upiPageLink="/install/platform-agnostic/user-provisioned"
     />
   </PageSection>
