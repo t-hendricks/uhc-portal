@@ -26,6 +26,7 @@ import ButtonWithTooltip from '../../../../common/ButtonWithTooltip';
 import MinorVersionUpgradeAlert from '../../../common/Upgrades/MinorVersionUpgradeAlert';
 import UpgradeAcknowledgeWarning from '../../../common/Upgrades/UpgradeAcknowledge/UpgradeAcknowledgeWarning';
 import { isHypershiftCluster } from '../../clusterDetailsHelper';
+import UpdateAllMachinePools from '../MachinePools/UpdateAllMachinePools';
 
 class UpgradeSettingsTab extends React.Component {
   state = { confirmationModalOpen: false };
@@ -212,6 +213,7 @@ class UpgradeSettingsTab extends React.Component {
 
               <UpgradeAcknowledgeWarning />
               <MinorVersionUpgradeAlert />
+              <UpdateAllMachinePools goToMachinePoolTab />
 
               <Form>
                 <Grid hasGutter>

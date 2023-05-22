@@ -22,6 +22,7 @@ import {
 import { Table, TableHeader, TableBody, cellWidth, expandable } from '@patternfly/react-table';
 import Skeleton from '@redhat-cloud-services/frontend-components/Skeleton';
 
+import UpdateAllMachinePools from './UpdateAllMachinePools';
 import AddMachinePoolModal from './components/AddMachinePoolModal';
 import EditTaintsModal from './components/EditTaintsModal';
 import EditLabelsModal from './components/EditLabelsModal';
@@ -466,50 +467,53 @@ class MachinePools extends React.Component {
             </CardFooter>
           </Card>
         ) : (
-          <Card className="ocm-c-machine-pools__card">
-            <CardBody className="ocm-c-machine-pools__card--body">
-              {machinePoolsList.error && (
-                <ErrorBox message="Error retrieving machine pools" response={machinePoolsList} />
-              )}
-              {addMachinePoolBtn}
-              <Divider />
-              {deleteMachinePoolResponse.error && !hideDeleteMachinePoolError && (
-                <ErrorBox
-                  message="Error deleting machine pool"
-                  response={deleteMachinePoolResponse}
-                  showCloseBtn
-                  onCloseAlert={() =>
-                    this.setState(
-                      produce((draft) => {
-                        draft.hideDeleteMachinePoolError = true;
-                      }),
+          <>
+            <UpdateAllMachinePools />
+            <Card className="ocm-c-machine-pools__card">
+              <CardBody className="ocm-c-machine-pools__card--body">
+                {machinePoolsList.error && (
+                  <ErrorBox message="Error retrieving machine pools" response={machinePoolsList} />
+                )}
+                {addMachinePoolBtn}
+                <Divider />
+                {deleteMachinePoolResponse.error && !hideDeleteMachinePoolError && (
+                  <ErrorBox
+                    message="Error deleting machine pool"
+                    response={deleteMachinePoolResponse}
+                    showCloseBtn
+                    onCloseAlert={() =>
+                      this.setState(
+                        produce((draft) => {
+                          draft.hideDeleteMachinePoolError = true;
+                        }),
+                      )
+                    }
+                  />
+                )}
+                <Table
+                  aria-label="Machine pools"
+                  cells={columns}
+                  rows={rows}
+                  onCollapse={this.onCollapse}
+                  actionResolver={(rowData) =>
+                    actionResolver(
+                      rowData,
+                      onClickDeleteAction,
+                      onClickScaleAction,
+                      onClickEditTaintsAction,
+                      onClickEditLabelsAction,
+                      isHypershift,
+                      machinePoolsList.data.length,
                     )
                   }
-                />
-              )}
-              <Table
-                aria-label="Machine pools"
-                cells={columns}
-                rows={rows}
-                onCollapse={this.onCollapse}
-                actionResolver={(rowData) =>
-                  actionResolver(
-                    rowData,
-                    onClickDeleteAction,
-                    onClickScaleAction,
-                    onClickEditTaintsAction,
-                    onClickEditLabelsAction,
-                    isHypershift,
-                    machinePoolsList.data.length,
-                  )
-                }
-                areActionsDisabled={() => tableActionsDisabled}
-              >
-                <TableHeader />
-                <TableBody />
-              </Table>
-            </CardBody>
-          </Card>
+                  areActionsDisabled={() => tableActionsDisabled}
+                >
+                  <TableHeader />
+                  <TableBody />
+                </Table>
+              </CardBody>
+            </Card>
+          </>
         )}
         {isAddMachinePoolModalOpen && (
           <AddMachinePoolModal cluster={cluster} isHypershiftCluster={isHypershift} />
