@@ -318,7 +318,7 @@ class CreateROSAWizardInternal extends React.Component {
         name: stepNameById[stepId.NETWORKING],
         canJumpTo: this.canJumpTo(stepId.NETWORKING),
         steps: [
-          {
+          !isHypershiftSelected && {
             id: stepId.NETWORKING__CONFIGURATION,
             name: stepNameById[stepId.NETWORKING__CONFIGURATION],
             component: (

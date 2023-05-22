@@ -1,11 +1,55 @@
 import pick from 'lodash/pick';
 import isEmpty from 'lodash/isEmpty';
+import uniq from 'lodash/uniq';
 
 import config from '~/config';
 
 import { DEFAULT_FLAVOUR_ID } from '~/redux/actions/flavourActions';
 import { createCluster } from '~/redux/actions/clustersActions';
 import { parseReduxFormKeyValueList } from '~/common/helpers';
+
+const createClusterAzs = ({ formData, isInstallExistingVPC }) => {
+  let AZs = [];
+  if (formData.hypershift === 'true') {
+    AZs = uniq(formData.machine_pools_subnets.map((subnet) => subnet.availability_zone));
+  } else if (isInstallExistingVPC) {
+    AZs.push(formData.az_0);
+    if (formData.multi_az === 'true') {
+      AZs.push(formData.az_1, formData.az_2);
+    }
+  }
+  return AZs;
+};
+
+const createClusterAwsSubnetIds = ({ formData, isInstallExistingVPC }) => {
+  const subnetIds = [];
+
+  if (formData.cluster_privacy_public_subnet_id) {
+    subnetIds.push(formData.cluster_privacy_public_subnet_id);
+  }
+
+  const isHypershiftSelected = formData.hypershift === 'true';
+  if (isHypershiftSelected) {
+    const privateSubnetIds = formData.machine_pools_subnets.map((subnet) => subnet.subnet_id);
+    subnetIds.push(...privateSubnetIds);
+  } else if (isInstallExistingVPC) {
+    const showPublicFields = !formData.use_privatelink;
+
+    subnetIds.push(formData.private_subnet_id_0);
+    if (showPublicFields) {
+      subnetIds.push(formData.public_subnet_id_0);
+    }
+
+    const isMultiAz = formData.multi_az === 'true';
+    if (isMultiAz) {
+      subnetIds.push(formData.private_subnet_id_1, formData.private_subnet_id_2);
+      if (showPublicFields) {
+        subnetIds.push(formData.public_subnet_id_1, formData.public_subnet_id_2);
+      }
+    }
+  }
+  return subnetIds.filter((sn) => !!sn);
+};
 
 export const createClusterRequest = ({ isWizard = true, cloudProviderID, product }, formData) => {
   const isMultiAz = formData.multi_az === 'true';
@@ -98,10 +142,7 @@ export const createClusterRequest = ({ isWizard = true, cloudProviderID, product
     const isInstallExistingVPC = wasExistingVPCShown && formData.install_to_vpc;
     const configureProxySelected = formData.configure_proxy === true;
     const usePrivateLink = formData.use_privatelink;
-    // Hypershift always uses PrivateLink and can also have public subnets if the cluster_privacy === 'external' (Public)
-    const hidePublicFields = isHypershiftSelected
-      ? formData.cluster_privacy === 'internal'
-      : formData.use_privatelink;
+
     clusterRequest.ccs = {
       enabled: true,
     };
@@ -121,9 +162,6 @@ export const createClusterRequest = ({ isWizard = true, cloudProviderID, product
             },
             operator_role_prefix: formData.custom_operator_roles_prefix,
           },
-          ...(formData.cluster_privacy_public_subnet_id && {
-            subnet_ids: [formData.cluster_privacy_public_subnet_id],
-          }),
         };
         // auto mode
         if (formData.rosa_roles_provider_creation_mode === 'auto') {
@@ -168,34 +206,11 @@ export const createClusterRequest = ({ isWizard = true, cloudProviderID, product
         clusterRequest.aws.billing_account_id = formData.billing_account_id;
       }
       clusterRequest.ccs.disable_scp_checks = formData.disable_scp_checks;
-
-      if (isInstallExistingVPC) {
-        const subnetIds = [formData.private_subnet_id_0];
-        if (!hidePublicFields) {
-          subnetIds.push(formData.public_subnet_id_0);
-        }
-
-        if (isMultiAz) {
-          subnetIds.push(formData.private_subnet_id_1);
-          subnetIds.push(formData.private_subnet_id_2);
-          if (!hidePublicFields) {
-            subnetIds.push(formData.public_subnet_id_1);
-            subnetIds.push(formData.public_subnet_id_2);
-          }
-        }
-        // TODO: Temporarily filter out null values, this can happen until the new subnet selector for hypershift is implemented
-        clusterRequest.aws.subnet_ids = [
-          ...(clusterRequest.aws.subnet_ids ?? []),
-          ...subnetIds,
-        ].filter((sn) => sn);
-
-        let AZs = [formData.az_0];
-
-        if (isMultiAz) {
-          AZs = [...AZs, formData.az_1, formData.az_2];
-        }
-        clusterRequest.nodes.availability_zones = AZs;
-      }
+      clusterRequest.aws.subnet_ids = createClusterAwsSubnetIds({ formData, isInstallExistingVPC });
+      clusterRequest.nodes.availability_zones = createClusterAzs({
+        formData,
+        isInstallExistingVPC,
+      });
     } else if (actualCloudProviderID === 'gcp') {
       const parsed = JSON.parse(formData.gcp_service_account);
       clusterRequest.gcp = pick(parsed, [

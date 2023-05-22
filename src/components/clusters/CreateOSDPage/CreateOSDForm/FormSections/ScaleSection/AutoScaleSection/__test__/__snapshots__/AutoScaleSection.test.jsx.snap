@@ -27,6 +27,7 @@ exports[`<AutoScaleSection /> renders correctly for multiAz 1`] = `
     />
     <Field
       component={[Function]}
+      helpText="Autoscaling automatically adds and removes worker (compute) nodes from the cluster based on resource requirements."
       label="Enable autoscaling"
       name="autoscalingEnabled"
       onChange={[Function]}
@@ -146,6 +147,7 @@ exports[`<AutoScaleSection /> renders correctly when autoscale disabled 1`] = `
     />
     <Field
       component={[Function]}
+      helpText="Autoscaling automatically adds and removes worker (compute) nodes from the cluster based on resource requirements."
       label="Enable autoscaling"
       name="autoscalingEnabled"
       onChange={[Function]}
@@ -181,6 +183,7 @@ exports[`<AutoScaleSection /> renders correctly when autoscale enabled 1`] = `
     />
     <Field
       component={[Function]}
+      helpText="Autoscaling automatically adds and removes worker (compute) nodes from the cluster based on resource requirements."
       label="Enable autoscaling"
       name="autoscalingEnabled"
       onChange={[Function]}

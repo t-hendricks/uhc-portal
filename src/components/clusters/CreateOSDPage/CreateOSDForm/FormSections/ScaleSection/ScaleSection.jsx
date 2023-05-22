@@ -1,7 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Field, Fields, FieldArray } from 'redux-form';
-import { FormGroup, GridItem, ExpandableSection, Title } from '@patternfly/react-core';
+import {
+  FormGroup,
+  GridItem,
+  ExpandableSection,
+  Title,
+  Text,
+  TextVariants,
+} from '@patternfly/react-core';
 
 import MachineTypeSelection from './MachineTypeSelection';
 
@@ -22,6 +29,7 @@ function ScaleSection({
   pending,
   isBYOC,
   isMultiAz,
+  showHypershiftTitle = false,
   machineType,
   cloudProviderID,
   product,
@@ -62,6 +70,21 @@ function ScaleSection({
 
   return (
     <>
+      {/* Instance type title (only for Hypershift) */}
+      {showHypershiftTitle && (
+        <>
+          <GridItem>
+            <Title headingLevel="h3">Machine pools settings</Title>
+          </GridItem>
+          <GridItem md={12}>
+            <Text component={TextVariants.p}>
+              These settings apply to all created machine pools. After cluster creation, you can
+              alter your compute machine count at any time, but your selected default machine pool
+              instance type is permanent.
+            </Text>
+          </GridItem>
+        </>
+      )}
       {/* Instance type */}
       <GridItem md={6}>
         <Fields
@@ -192,6 +215,7 @@ ScaleSection.propTypes = {
   pending: PropTypes.bool,
   isBYOC: PropTypes.bool.isRequired,
   isMultiAz: PropTypes.bool.isRequired,
+  showHypershiftTitle: PropTypes.bool,
   inModal: PropTypes.bool,
   showStorageAndLoadBalancers: PropTypes.bool,
   machineType: PropTypes.string.isRequired,

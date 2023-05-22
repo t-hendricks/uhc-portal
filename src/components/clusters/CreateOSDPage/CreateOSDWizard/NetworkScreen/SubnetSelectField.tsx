@@ -12,15 +12,13 @@ import {
   Spinner,
 } from '@patternfly/react-core';
 
-import { useAWSVPCInquiry } from '~/components/clusters/CreateOSDPage/CreateOSDWizard/VPCScreen/useVPCInquiry';
 import { useAWSVPCsFromCluster } from '~/components/clusters/ClusterDetails/components/MachinePools/components/AddMachinePoolModal/useAWSVPCsFromCluster';
+import {
+  isSubnetMatchingPrivacy,
+  useAWSVPCInquiry,
+} from '~/components/clusters/CreateOSDPage/CreateOSDWizard/VPCScreen/useVPCInquiry';
 import ErrorBox from '~/components/common/ErrorBox';
 import { CloudVPC, Subnetwork } from '~/types/clusters_mgmt.v1';
-
-enum Privacy {
-  Public = 'public',
-  Private = 'private',
-}
 
 interface SubnetSelectFieldProps {
   name: string;
@@ -33,6 +31,7 @@ interface SubnetSelectFieldProps {
   privacy?: 'public' | 'private';
   selectedVPC?: string;
   isNewCluster: boolean;
+  withAutoSelect: boolean;
 }
 
 export const SubnetSelectField = ({
@@ -44,11 +43,12 @@ export const SubnetSelectField = ({
   isRequired,
   className,
   privacy,
+  withAutoSelect = true,
   selectedVPC,
   isNewCluster,
 }: SubnetSelectFieldProps) => {
   const [isExpanded, setIsExpanded] = React.useState(false);
-  const [selectedSubnetId, setSelectedSubnetId] = React.useState(input.value);
+  const [selectedSubnet, setSelectedSubnet] = React.useState(input.value);
   const vpcs = isNewCluster ? useAWSVPCInquiry() : useAWSVPCsFromCluster();
 
   const { pending: isVpcsLoading, fulfilled: isVpcsFulfilled, error: vpcsError } = vpcs;
@@ -62,19 +62,12 @@ export const SubnetSelectField = ({
 
     if (subnets && subnets.length > 0) {
       subnets.forEach((subnet) => {
-        if (
-          (privacy === Privacy.Public && subnet.public) ||
-          (privacy === Privacy.Private && !subnet.public) ||
-          !privacy
-        ) {
-          if (subnet.availability_zone) {
-            if (acc[subnet.availability_zone]) {
-              acc[subnet.availability_zone].push(subnet);
-            } else {
-              acc[subnet.availability_zone] = [subnet];
-            }
+        if (subnet.availability_zone && isSubnetMatchingPrivacy(subnet, privacy)) {
+          if (acc[subnet.availability_zone]) {
+            acc[subnet.availability_zone].push(subnet);
+          } else {
+            acc[subnet.availability_zone] = [subnet];
           }
-
           subnetList.push(subnet);
         }
       });
@@ -87,46 +80,57 @@ export const SubnetSelectField = ({
   const selectOptions = Object.entries(vpcsSubnetsMap || {}).map(([region, subnets]) => (
     <SelectGroup label={region} key={region}>
       {subnets.map((subnet) => (
-        <SelectOption value={subnet.subnet_id} key={subnet.subnet_id}>
+        <SelectOption value={subnet} key={subnet.subnet_id}>
           {subnet.subnet_id}
         </SelectOption>
       ))}
     </SelectGroup>
   ));
 
-  // If no value was previously selected or if the current selected ID does not exist in the list,
-  // default to the first selected value.
   React.useEffect(() => {
-    if (
-      isVpcsFulfilled &&
-      (!selectedSubnetId || !subnetList.some((subnet) => subnet.subnet_id === selectedSubnetId))
-    ) {
-      const defaultSubnetId = subnetList[0]?.subnet_id;
+    const isValidCurrentSelection = subnetList.some(
+      (subnet) => subnet.subnet_id === selectedSubnet?.subnet_id,
+    );
 
-      input.onChange(defaultSubnetId);
-      setSelectedSubnetId(defaultSubnetId);
+    let newSelection;
+    if (withAutoSelect) {
+      // When "autoSelect" is enabled, we will set the first subnet as the selected one
+      if (!isValidCurrentSelection && isVpcsFulfilled) {
+        [newSelection] = subnetList;
+      }
+    } else if (!isValidCurrentSelection) {
+      // When "autoSelect" is disabled, we only need to update the selection when the current one is now invalid.
+      // For example, because "selectedVPC" has changed
+      newSelection = { subnet_id: '', availability_zone: '' };
     }
-  }, [isVpcsFulfilled, subnetList, selectedSubnetId]);
+
+    if (newSelection && newSelection.subnet_id !== selectedSubnet?.subnet_id) {
+      input.onChange(newSelection);
+      setSelectedSubnet(newSelection);
+    }
+  }, [withAutoSelect, isVpcsFulfilled, subnetList, selectedSubnet]);
 
   const onSelect = (
     _: React.MouseEvent | React.ChangeEvent,
-    value: string | SelectOptionObject,
+    selectedSubnet: string | SelectOptionObject,
   ) => {
-    input.onChange(value);
-    setSelectedSubnetId(value);
+    input.onChange(selectedSubnet);
+    setSelectedSubnet(selectedSubnet);
     setIsExpanded(false);
   };
 
-  const onFilter = (_: React.ChangeEvent<HTMLInputElement> | null, value: string) => {
-    if (value === '') {
+  const onFilter = (_: React.ChangeEvent<HTMLInputElement> | null, subnetId: string) => {
+    if (subnetId === '') {
       return selectOptions;
     }
 
+    const filterText = subnetId.toLowerCase();
     return selectOptions.reduce((acc: React.ReactElement[], group) => {
       const filteredGroup = React.cloneElement(group, {
-        children: group.props.children.filter((childElement: React.ReactElement) =>
-          childElement.props.value.toLowerCase().includes(value.toLowerCase()),
-        ),
+        children: group.props.children.filter((childElement: React.ReactElement) => {
+          const subnet = childElement.props.value;
+          return subnet.subnet_id.toLowerCase().includes(filterText);
+        }),
       });
 
       if (filteredGroup?.props.children.length > 0) {
@@ -156,7 +160,7 @@ export const SubnetSelectField = ({
           variant="danger"
           isInline
           isPlain
-          title="A VPC with a public subnet must be associated with the selected AWS account ID."
+          title={`A VPC with a ${privacy} subnet must be associated with the selected AWS account ID.`}
           className="pf-u-mb-sm"
         />
       )}
@@ -170,7 +174,7 @@ export const SubnetSelectField = ({
         <Select
           label={label}
           isOpen={isExpanded}
-          selections={selectedSubnetId}
+          selections={selectedSubnet?.subnet_id}
           onToggle={(isExpanded) => setIsExpanded(isExpanded)}
           onSelect={onSelect}
           onFilter={onFilter}

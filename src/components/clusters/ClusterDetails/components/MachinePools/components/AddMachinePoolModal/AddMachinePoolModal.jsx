@@ -11,7 +11,7 @@ import ReduxVerticalFormGroup from '../../../../../../common/ReduxFormComponents
 import {
   checkMachinePoolName,
   checkNodePoolName,
-  required,
+  validateRequiredMachinePoolsSubnet,
 } from '../../../../../../../common/validators';
 import CostSavingsSection from './CostSavingsSection';
 import { isMultiAZ } from '../../../../clusterDetailsHelper';
@@ -120,7 +120,7 @@ class AddMachinePoolModal extends Component {
                     <Field
                       component={SubnetSelectField}
                       name="subnet"
-                      validate={required}
+                      validate={validateRequiredMachinePoolsSubnet}
                       privacy="private"
                       label="Private subnet ID"
                       isRequired
