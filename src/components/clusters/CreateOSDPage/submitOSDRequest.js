@@ -203,6 +203,7 @@ export const createClusterRequest = ({ isWizard = true, cloudProviderID, product
       if (formData.customer_managed_key === 'true') {
         clusterRequest.aws.kms_key_arn = formData.kms_key_arn;
       }
+
       if (isHypershiftSelected) {
         if (formData.etcd_key_arn) {
           clusterRequest.aws.etcd_encryption = {
@@ -210,7 +211,12 @@ export const createClusterRequest = ({ isWizard = true, cloudProviderID, product
           };
         }
         clusterRequest.aws.billing_account_id = formData.billing_account_id;
+      } else {
+        // ROSA Classic and OSD CCS only
+        clusterRequest.aws.ec2_metadata_http_tokens =
+          formData.imds === IMDSType.V2_only ? 'required' : 'optional';
       }
+
       clusterRequest.ccs.disable_scp_checks = formData.disable_scp_checks;
       clusterRequest.aws.subnet_ids = createClusterAwsSubnetIds({ formData, isInstallExistingVPC });
       clusterRequest.nodes.availability_zones = createClusterAzs({
@@ -285,13 +291,6 @@ export const createClusterRequest = ({ isWizard = true, cloudProviderID, product
     };
   }
 
-  if (actualCloudProviderID === 'aws') {
-    clusterRequest.aws = clusterRequest.aws || {};
-    console.log('--- submitOSDRequest formData.imds: ', formData.imds);
-    clusterRequest.aws.http_tokens_state =
-      formData.imds === IMDSType.V2_only ? 'required' : 'optional';
-  }
-
   if (formData.hypershift) {
     clusterRequest.hypershift = { enabled: isHypershiftSelected };
   }
@@ -300,7 +299,6 @@ export const createClusterRequest = ({ isWizard = true, cloudProviderID, product
     clusterRequest.multi_az = true;
   }
 
-  console.log('--- submitOSDRequest, clusterRequest: ', clusterRequest);
   return clusterRequest;
 };
 

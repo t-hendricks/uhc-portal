@@ -21,7 +21,7 @@ const ImdsSection = ({
       // The user can go back and change the cluster version
       onChangeImds(IMDSType.V1_and_V2);
     }
-  }, [isDisabled]);
+  }, [isDisabled, imds]);
 
   return (
     <FormGroup label="Instance Metadata Service" fieldId="imds" labelIcon={<ImdsSectionHint />}>

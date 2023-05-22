@@ -86,7 +86,8 @@ export const MachinePool = () => {
     </ExpandableSection>
   );
 
-  const imdsSection = isAWS && (
+  // OSD CCS only (or ROSA Classic in the future)
+  const imdsSection = isAWS && isByoc && (
     <>
       <GridItem md={8}>
         <ImdsSectionField />

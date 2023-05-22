@@ -75,7 +75,8 @@ function ScaleSection({
     </ExpandableSection>
   );
 
-  const imdsSection = cloudProviderID === 'aws' && !isHypershiftSelected && (
+  // ROSA Classic and OSD CCS only
+  const imdsSection = cloudProviderID === 'aws' && !isHypershiftSelected && isBYOC && (
     <>
       <GridItem md={8}>
         <ImdsSection
