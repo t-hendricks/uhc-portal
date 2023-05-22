@@ -127,7 +127,7 @@ export const ReviewAndCreateContent = ({ isPending }: ReviewAndCreateContentProp
           <ReviewItem name={FieldId.UsePrivateLink} formValues={formValues} />
         )}
         {isByoc && installToVpc && (
-          <ReviewItem name={isAWS ? 'aws_vpc' : 'gpc_vpc'} formValues={formValues} />
+          <ReviewItem name={isAWS ? 'aws_standalone_vpc' : 'gpc_vpc'} formValues={formValues} />
         )}
         {installToVpc && <ReviewItem name={FieldId.ConfigureProxy} formValues={formValues} />}
         {installToVpc && configureProxy && (

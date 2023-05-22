@@ -1,12 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Grid, GridItem, Title, Form, Text } from '@patternfly/react-core';
-import { normalizedProducts, billingModels } from '../../../../../common/subscriptionTypes';
+import { Grid, Form } from '@patternfly/react-core';
+
+import { normalizedProducts, billingModels } from '~/common/subscriptionTypes';
+
 import ScaleSection from '../../CreateOSDForm/FormSections/ScaleSection/ScaleSection';
+import MachinePoolScreenHeader from './MachinePoolScreenHeader';
+import MachinePoolsSubnets from './MachinePoolsSubnets';
 
 function MachinePoolScreen({
   isByoc,
   isMultiAz,
+  isHypershiftSelected,
   machineType,
   cloudProviderID,
   product,
@@ -17,6 +22,7 @@ function MachinePoolScreen({
   change,
   billingModel,
   minNodesRequired,
+  selectedVPCID,
 }) {
   return (
     <Form
@@ -26,17 +32,10 @@ function MachinePoolScreen({
       }}
     >
       <Grid hasGutter>
-        <GridItem>
-          <Title headingLevel="h3">Default machine pool</Title>
-        </GridItem>
-        <GridItem>
-          <Text component="p">
-            Select a compute node instance type and count for your default machine pool.
-          </Text>
-          <Text component="p">
-            After cluster creation, your selected default machine pool instance type is permanent.
-          </Text>
-        </GridItem>
+        <MachinePoolScreenHeader isHypershiftSelected={isHypershiftSelected} />
+
+        {isHypershiftSelected && <MachinePoolsSubnets selectedVPCID={selectedVPCID} />}
+
         <ScaleSection
           isBYOC={isByoc}
           isMultiAz={isMultiAz}
@@ -50,6 +49,7 @@ function MachinePoolScreen({
           autoScaleMaxNodesValue={autoScaleMaxNodesValue}
           billingModel={billingModel}
           showStorageAndLoadBalancers={false}
+          showHypershiftTitle={isHypershiftSelected}
           minNodesRequired={minNodesRequired}
         />
       </Grid>
@@ -60,8 +60,10 @@ function MachinePoolScreen({
 MachinePoolScreen.propTypes = {
   isByoc: PropTypes.bool.isRequired,
   isMultiAz: PropTypes.bool.isRequired,
+  isHypershiftSelected: PropTypes.bool.isRequired,
   machineType: PropTypes.string.isRequired,
   cloudProviderID: PropTypes.string.isRequired,
+  selectedVPCID: PropTypes.string.isRequired,
   product: PropTypes.oneOf(Object.keys(normalizedProducts)).isRequired,
   billingModel: PropTypes.oneOf(Object.values(billingModels)),
   canAutoScale: PropTypes.bool,

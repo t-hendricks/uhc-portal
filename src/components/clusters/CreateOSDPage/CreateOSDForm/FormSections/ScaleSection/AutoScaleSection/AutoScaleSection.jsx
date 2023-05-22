@@ -339,6 +339,7 @@ class AutoScaleSection extends React.Component {
             component={ReduxCheckbox}
             name="autoscalingEnabled"
             label="Enable autoscaling"
+            helpText="Autoscaling automatically adds and removes worker (compute) nodes from the cluster based on resource requirements."
             onChange={onChange}
           />
           {autoscalingEnabled && azFormGroups}

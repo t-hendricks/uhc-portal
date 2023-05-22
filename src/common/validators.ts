@@ -1,8 +1,9 @@
+/* eslint-disable camelcase */
 import { get, indexOf, inRange } from 'lodash';
 import cidrTools from 'cidr-tools';
 import { ValidationError, Validator } from 'jsonschema';
 import { clusterService } from '~/services';
-import type { GCP, Taint } from '../types/clusters_mgmt.v1';
+import type { GCP, Subnetwork, Taint } from '../types/clusters_mgmt.v1';
 import type { AugmentedSubnetwork } from '../types/types';
 import { sqlString } from './queryHelpers';
 import { State as CcsInquiriesState } from '~/components/clusters/CreateOSDPage/CreateOSDWizard/ccsInquiriesReducer';
@@ -1158,7 +1159,7 @@ const validateValueNotPlaceholder = (placeholder: any) => (value: any) =>
   value !== placeholder ? undefined : 'Field is required';
 
 // AWS VPC validators expect the known vpcs to be passed as prop to the form —
-// specifically, the component wrappeed by reduxForm().
+// specifically, the component wrapped by reduxForm().
 //
 // (An alternative would be validator factories `vpcs => value => ...` but Field
 // unregisters and re-registers the field when `validate` prop changes, which would
@@ -1167,6 +1168,7 @@ const validateValueNotPlaceholder = (placeholder: any) => (value: any) =>
 type SubnetFormProps = {
   vpcs: CcsInquiriesState['vpcs'];
   vpcsValid: boolean;
+  pristine?: boolean;
 };
 
 type BySubnetID = { [id: string]: AugmentedSubnetwork };
@@ -1218,6 +1220,34 @@ const validateAWSSubnet = (
     }
   }
   return undefined;
+};
+
+const validateRequiredMachinePoolsSubnet = (
+  subnet: Subnetwork,
+  allValues: unknown,
+  props: SubnetFormProps,
+) => (!props.pristine && subnet.subnet_id === '' ? 'Subnet ID is required' : undefined);
+
+const validateMultipleMachinePoolsSubnets = (
+  subnet: Subnetwork,
+  allValues: { machine_pools_subnets: Subnetwork[] },
+  props: SubnetFormProps,
+) => {
+  if (!subnet) {
+    // Happens when a subnet is deleted, no extra checks are needed
+    return undefined;
+  }
+  if (!props.pristine && subnet.subnet_id === '') {
+    return 'Subnet ID is required';
+  }
+
+  // Validating multiple MPs
+  const hasRepeatedSubnets =
+    allValues.machine_pools_subnets.filter((mpSubnet) => mpSubnet.subnet_id === subnet.subnet_id)
+      .length > 1;
+  return hasRepeatedSubnets
+    ? 'Every machine pool must be associated to a different subnet'
+    : undefined;
 };
 
 const validateAWSSubnetIsPrivate = (
@@ -1469,6 +1499,8 @@ export {
   validateAWSSubnet,
   validateAWSSubnetIsPrivate,
   validateAWSSubnetIsPublic,
+  validateRequiredMachinePoolsSubnet,
+  validateMultipleMachinePoolsSubnets,
   validateGCPSubnet,
   validateGCPKMSServiceAccount,
   validateAWSKMSKeyARN,
