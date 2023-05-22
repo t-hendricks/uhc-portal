@@ -8,6 +8,9 @@ import { clearListVpcs, getAWSCloudProviderVPCs } from '../ccsInquiriesActions';
 
 const valueSelector = formValueSelector('CreateCluster');
 
+export const isSubnetMatchingPrivacy = (subnet, privacy) =>
+  !privacy || (privacy === 'public' && subnet.public) || (privacy === 'private' && !subnet.public);
+
 export const isVPCInquiryValid = (state) => {
   const { vpcs } = state.ccsInquiries;
   if (!vpcs.fulfilled) {
@@ -22,6 +25,37 @@ export const isVPCInquiryValid = (state) => {
     vpcs.region === region
   );
 };
+
+/**
+ * Returns a modified copy of the VPC list where:
+ * - The subnets are filtered, containing those that are private
+ * - The VPC list is sorted, having first the VPCs that have at least 1 private subnet, then the rest
+
+ * @param vpcs list of VPC items
+ * @returns {*} copy of the VPC list
+ */
+export const filterVpcsOnlyPrivateSubnets = (vpcs) =>
+  vpcs
+    .map((vpcItem) => {
+      const filteredSubnets = (vpcItem.aws_subnets || []).filter((subnet) =>
+        isSubnetMatchingPrivacy(subnet, 'private'),
+      );
+      return {
+        ...vpcItem,
+        aws_subnets: filteredSubnets,
+      };
+    })
+    .sort((vpcA, vpcB) => {
+      const hasSubnetsA = vpcA.aws_subnets.length > 0;
+      const hasSubnetsB = vpcB.aws_subnets.length > 0;
+      if (hasSubnetsA && !hasSubnetsB) {
+        return -1;
+      }
+      if (hasSubnetsB && !hasSubnetsA) {
+        return 1;
+      }
+      return 0;
+    });
 
 /**
  * React hook fetching VPCs on mount and when dependencies change.

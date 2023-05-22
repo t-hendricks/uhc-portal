@@ -17,9 +17,10 @@ const ccsCredentialsSelector = (cloudProviderID, state) => {
   switch (cloudProviderID) {
     case 'gcp':
       return valueSelector(state, 'gcp_service_account');
-    case 'aws':
+    case 'aws': {
+      const accountIdSelector = isROSA ? 'associated_aws_id' : 'account_id';
       return {
-        account_id: valueSelector(state, 'account_id'),
+        account_id: valueSelector(state, accountIdSelector),
         ...(isROSA
           ? {
               sts: {
@@ -31,6 +32,8 @@ const ccsCredentialsSelector = (cloudProviderID, state) => {
               secret_access_key: valueSelector(state, 'secret_access_key'),
             }),
       };
+    }
+
     default: // can happen before user selected provider
       return null;
   }
