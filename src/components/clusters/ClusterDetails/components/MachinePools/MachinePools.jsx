@@ -36,6 +36,7 @@ import { noQuotaTooltip } from '../../../../../common/helpers';
 import { versionFormatter } from '../../../../../common/versionFormatter';
 import { isHibernating } from '../../../common/clusterStates';
 import './MachinePools.scss';
+import { isMultiAZ } from '../../clusterDetailsHelper';
 
 const getOpenShiftVersion = (machinePool) => {
   const extractedVersion = get(machinePool, 'version.id', '');
@@ -268,17 +269,17 @@ class MachinePools extends React.Component {
           <Split hasGutter>
             <SplitItem>
               <Title headingLevel="h4" className="autoscale__lim">{`Min nodes ${
-                cluster.multi_az ? 'per zone' : ''
+                isMultiAZ(cluster) ? 'per zone' : ''
               }`}</Title>
-              {cluster.multi_az
+              {isMultiAZ(cluster)
                 ? machinePool.autoscaling.min_replicas / 3
                 : machinePool.autoscaling.min_replicas}
             </SplitItem>
             <SplitItem>
               <Title headingLevel="h4" className="autoscale__lim">{`Max nodes ${
-                cluster.multi_az ? 'per zone' : ''
+                isMultiAZ(cluster) ? 'per zone' : ''
               }`}</Title>
-              {cluster.multi_az
+              {isMultiAZ(cluster)
                 ? machinePool.autoscaling.max_replicas / 3
                 : machinePool.autoscaling.max_replicas}
             </SplitItem>
