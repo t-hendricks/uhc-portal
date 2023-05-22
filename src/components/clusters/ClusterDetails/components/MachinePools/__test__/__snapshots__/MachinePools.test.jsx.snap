@@ -2,6 +2,7 @@
 
 exports[`<MachinePools /> OpenShift version for machine pools is shown if hypershift 1`] = `
 <Fragment>
+  <UpdateAllMachinePools />
   <Card
     className="ocm-c-machine-pools__card"
   >
@@ -144,6 +145,7 @@ exports[`<MachinePools /> OpenShift version for machine pools is shown if hypers
 
 exports[`<MachinePools /> renders with a machine pool with autoscaling enabled 1`] = `
 <Fragment>
+  <UpdateAllMachinePools />
   <Card
     className="ocm-c-machine-pools__card"
   >
@@ -381,6 +383,7 @@ exports[`<MachinePools /> renders with a machine pool with autoscaling enabled 1
 
 exports[`<MachinePools /> renders with additional machine pools, some with labels and/or taints 1`] = `
 <Fragment>
+  <UpdateAllMachinePools />
   <Card
     className="ocm-c-machine-pools__card"
   >
@@ -744,6 +747,7 @@ exports[`<MachinePools /> renders with additional machine pools, some with label
 
 exports[`<MachinePools /> renders with the default machine pool 1`] = `
 <Fragment>
+  <UpdateAllMachinePools />
   <Card
     className="ocm-c-machine-pools__card"
   >
@@ -853,6 +857,7 @@ exports[`<MachinePools /> renders with the default machine pool 1`] = `
 
 exports[`<MachinePools /> renders with the default machine pool when it has labels 1`] = `
 <Fragment>
+  <UpdateAllMachinePools />
   <Card
     className="ocm-c-machine-pools__card"
   >
