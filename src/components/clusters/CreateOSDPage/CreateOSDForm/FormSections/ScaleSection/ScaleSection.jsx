@@ -47,6 +47,7 @@ function ScaleSection({
   billingModel,
   clusterVersionRawId,
   imds,
+  isHypershiftSelected,
 }) {
   const onChangeImds = (value) => {
     change('imds', value);
@@ -74,7 +75,7 @@ function ScaleSection({
     </ExpandableSection>
   );
 
-  const imdsSection = cloudProviderID === 'aws' && (
+  const imdsSection = cloudProviderID === 'aws' && !isHypershiftSelected && (
     <>
       <GridItem md={8}>
         <ImdsSection
@@ -252,6 +253,7 @@ ScaleSection.propTypes = {
   change: PropTypes.func.isRequired,
   autoScaleMinNodesValue: PropTypes.string,
   autoScaleMaxNodesValue: PropTypes.string,
+  isHypershiftSelected: PropTypes.bool,
   clusterVersionRawId: PropTypes.string.isRequired,
   imds: PropTypes.string.isRequired,
 };

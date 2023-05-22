@@ -7,6 +7,7 @@ import {
   CloudProviderType,
   IMDSType,
 } from '~/components/clusters/wizards/common/constants';
+// TODO: use versionHelpers instead
 import { splitMajorMinor } from '../../common/Upgrades/UpgradeAcknowledge/UpgradeAcknowledgeSelectors';
 
 export enum RosaFieldId {}
@@ -61,7 +62,7 @@ export const initialValues: FormikValues = {
   [FieldId.Byoc]: 'true',
   [FieldId.BillingModel]: billingModels.STANDARD,
   [FieldId.NodeLabels]: [{ key: '', value: '' }],
-  [FieldId.IMDS]: IMDSType.Optional,
+  [FieldId.IMDS]: IMDSType.V1_and_V2,
 };
 
 export const canSelectImds = (clusterVersionRawId: string): boolean => {

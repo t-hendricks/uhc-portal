@@ -7,8 +7,6 @@ import { imdsOptions } from '~/components/clusters/wizards/common/ClusterSetting
 import { ImdsSectionHint } from '~/components/clusters/wizards/common/ClusterSettings/MachinePool/ImdsSectionField';
 import { ImdsSectionAlert } from '~/components/clusters/wizards/common/ClusterSettings/MachinePool/ImdsSectionField/ImdsSectionAlert';
 
-import './ImdsSection.scss';
-
 const ImdsSection = ({
   isDisabled,
   onChangeImds,
@@ -19,9 +17,9 @@ const ImdsSection = ({
   imds: IMDSType;
 }) => {
   React.useEffect(() => {
-    if (isDisabled && imds !== IMDSType.Optional) {
+    if (isDisabled && imds !== IMDSType.V1_and_V2) {
       // The user can go back and change the cluster version
-      onChangeImds(IMDSType.Optional);
+      onChangeImds(IMDSType.V1_and_V2);
     }
   }, [isDisabled]);
 
@@ -37,7 +35,7 @@ const ImdsSection = ({
           onChange: onChangeImds,
         }}
         isDisabled={isDisabled}
-        className="imds-section__radio-buttons"
+        className="pf-u-mb-sm"
         options={imdsOptions}
         disableDefaultValueHandling
       />

@@ -1,4 +1,5 @@
 import { normalizedProducts, billingModels } from '../../../common/subscriptionTypes';
+import { IMDSType } from '../wizards/common';
 
 export const AWS_DEFAULT_REGION = 'us-east-1';
 export const GCP_DEFAULT_REGION = 'us-east1';
@@ -51,7 +52,7 @@ const createOSDInitialValues = ({
     disable_scp_checks: false,
     billing_model: billingModelValue(),
     product: product || (isTrialDefault ? normalizedProducts.OSDTrial : normalizedProducts.OSD),
-    imds: 'optional',
+    imds: IMDSType.V1_and_V2,
     // Optional fields based on whether Hypershift is selected or not
     ...(isHypershiftSelected
       ? {

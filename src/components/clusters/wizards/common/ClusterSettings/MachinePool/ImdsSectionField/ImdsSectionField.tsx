@@ -10,8 +10,6 @@ import { ImdsSectionHint } from './ImdsSectionHint';
 import { imdsOptions } from './imdsOptions';
 import { ImdsSectionAlert } from './ImdsSectionAlert';
 
-import './ImdsSectionField.scss';
-
 export const ImdsSectionField = () => {
   const {
     values: { [FieldId.ClusterVersion]: clusterVersion, [FieldId.IMDS]: imds },
@@ -26,11 +24,11 @@ export const ImdsSectionField = () => {
   };
 
   React.useEffect(() => {
-    if (isDisabled && imds !== IMDSType.Optional) {
+    if (isDisabled && imds !== IMDSType.V1_and_V2) {
       // The user can go back and change the cluster version
-      onChange(IMDSType.Optional);
+      onChange(IMDSType.V1_and_V2);
     }
-  }, [clusterVersion]);
+  }, [clusterVersion, isDisabled, imds]);
 
   return (
     <FormGroup label="Instance Metadata Service" fieldId="imds" labelIcon={<ImdsSectionHint />}>
@@ -41,7 +39,7 @@ export const ImdsSectionField = () => {
         id="imds"
         ariaLabel="Instance Metadata Service"
         isDisabled={isDisabled}
-        className="imds-section__radio-buttons"
+        className="pf-u-mb-sm"
         input={{
           ...getFieldProps(FieldId.IMDS),
           onChange,

@@ -3,7 +3,7 @@ import { IMDSType } from '../../../constants';
 
 export const imdsOptions = [
   {
-    value: IMDSType.Optional,
+    value: IMDSType.V1_and_V2,
     ariaLabel: 'Both IMDSv1 and IMDSv2',
     label: (
       <>
@@ -15,7 +15,7 @@ export const imdsOptions = [
     ),
   },
   {
-    value: IMDSType.Required,
+    value: IMDSType.V2_only,
     ariaLabel: 'IMDSv2 only',
     label: (
       <>

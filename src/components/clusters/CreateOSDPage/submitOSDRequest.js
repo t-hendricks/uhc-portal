@@ -8,6 +8,7 @@ import { DEFAULT_FLAVOUR_ID } from '~/redux/actions/flavourActions';
 import { createCluster } from '~/redux/actions/clustersActions';
 import { parseReduxFormKeyValueList } from '~/common/helpers';
 import { billingModels } from '~/common/subscriptionTypes';
+import { IMDSType } from '../wizards/common';
 
 const createClusterAzs = ({ formData, isInstallExistingVPC }) => {
   let AZs = [];
@@ -286,8 +287,9 @@ export const createClusterRequest = ({ isWizard = true, cloudProviderID, product
 
   if (actualCloudProviderID === 'aws') {
     clusterRequest.aws = clusterRequest.aws || {};
-    // TODO: under discussion on slack, recently failing
-    clusterRequest.aws.http_tokens_state = formData.imds;
+    console.log('--- submitOSDRequest formData.imds: ', formData.imds);
+    clusterRequest.aws.http_tokens_state =
+      formData.imds === IMDSType.V2_only ? 'required' : 'optional';
   }
 
   if (formData.hypershift) {

@@ -174,8 +174,8 @@ const reviewValues = {
   imds: {
     title: 'Instance Metadata Service',
     values: {
-      optional: 'IMDSv1 and IMDSv2',
-      required: 'IMDSv2 only',
+      v1_and_v2: 'IMDSv1 and IMDSv2',
+      v2: 'IMDSv2 only',
     },
   },
   nodes_compute: {
