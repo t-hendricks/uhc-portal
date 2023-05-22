@@ -31,7 +31,7 @@ LabelGridItem.propTypes = {
   helpText: PropTypes.string,
 };
 
-const AddMoreButtonGridItem = ({ addNewField, areFieldsFilled }) => {
+const AddMoreButtonGridItem = ({ addNewField, areFieldsFilled, title = 'Add more' }) => {
   const isDisabled = !areFieldsFilled.length || areFieldsFilled.includes(false);
 
   return (
@@ -42,7 +42,7 @@ const AddMoreButtonGridItem = ({ addNewField, areFieldsFilled }) => {
         variant="link"
         isDisabled={isDisabled}
       >
-        Add more
+        {title}
       </Button>
     </GridItem>
   );
@@ -51,6 +51,7 @@ const AddMoreButtonGridItem = ({ addNewField, areFieldsFilled }) => {
 AddMoreButtonGridItem.propTypes = {
   addNewField: PropTypes.func.isRequired,
   areFieldsFilled: PropTypes.arrayOf(PropTypes.bool).isRequired,
+  title: PropTypes.string,
 };
 
 const FieldArrayErrorGridItem = ({ isLast, errorMessage, touched, isGroupError }) => {
@@ -149,6 +150,8 @@ const RenderArrayFields = (props) => {
     isGroupError,
     meta: { error, submitFailed },
     FieldGridItemComponent = FieldGridItem,
+    isFieldFilled = (field) => !!field.name,
+    addMoreTitle,
   } = props;
 
   const [touched, setTouched] = React.useState(false);
@@ -165,8 +168,7 @@ const RenderArrayFields = (props) => {
       if (fields.length === 0) {
         addNewField();
       } else {
-        // fields on mount = default values, populate internal state to account for them
-        setAreFieldsFilled(fields.map((field) => !!field));
+        setAreFieldsFilled(fields.map(isFieldFilled));
       }
     },
     [
@@ -213,7 +215,11 @@ const RenderArrayFields = (props) => {
         isRequired={isRequired}
         helpText={helpText}
       />
-      <AddMoreButtonGridItem addNewField={addNewField} areFieldsFilled={areFieldsFilled} />
+      <AddMoreButtonGridItem
+        addNewField={addNewField}
+        areFieldsFilled={areFieldsFilled}
+        title={addMoreTitle}
+      />
       {fields.map((item, index) => (
         <React.Fragment key={`${fields.get(index).id}`}>
           <FieldGridItemComponent
@@ -247,6 +253,8 @@ RenderArrayFields.propTypes = {
   isGroupError: PropTypes.bool,
   meta: PropTypes.shape({ error: PropTypes.string, submitFailed: PropTypes.bool }),
   FieldGridItemComponent: PropTypes.func,
+  addMoreTitle: PropTypes.string,
+  isFieldFilled: PropTypes.func,
 };
 
 export default RenderArrayFields;

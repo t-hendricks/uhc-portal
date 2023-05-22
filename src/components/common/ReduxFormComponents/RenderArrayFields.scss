@@ -15,7 +15,10 @@
 .field-grid-item {
   margin-top: -16px;
   margin-bottom: 8px;
+
   &.minus-button {
     width: min-content;
+    /* skip the label height */
+    margin-top: 1rem;
   }
 }

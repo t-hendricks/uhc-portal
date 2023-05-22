@@ -129,15 +129,7 @@ HelpTextPassword.propTypes = {
   },
 };
 
-const HTPasswdForm = ({
-  isPending,
-  // Let's keep following commented-out code, will be used in a follow-up for the Edit flow
-  // isEditForm,
-  // idpEdited,
-  // change,
-  // clearFields,
-  HTPasswdErrors,
-}) => {
+const HTPasswdForm = ({ isPending, HTPasswdErrors }) => {
   const getHelpText = (index) => {
     const passwordErrors = HTPasswdErrors?.[index]?.password;
     return <HelpTextPassword passwordErrors={passwordErrors} />;
@@ -179,6 +171,7 @@ const HTPasswdForm = ({
           },
         ]}
         label="Users list"
+        addMoreTitle="Add user"
         isRequired
         disabled={isPending}
         validate={[
@@ -197,9 +190,6 @@ const HTPasswdForm = ({
 
 HTPasswdForm.propTypes = {
   isPending: PropTypes.bool,
-  // change: PropTypes.func,
-  // clearFields: PropTypes.func,
-  // input: PropTypes.object,
   HTPasswdErrors: PropTypes.arrayOf({
     emptyPassword: PropTypes.bool,
     baseRequirements: PropTypes.bool,
