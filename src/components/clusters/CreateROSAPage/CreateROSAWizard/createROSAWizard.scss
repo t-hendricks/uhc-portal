@@ -1,36 +1,40 @@
 @import '~@patternfly/patternfly/sass-utilities/_all';
 
-
-.ocm-c-wizard-get-started--card-icon{
+.ocm-c-wizard-get-started--card-icon {
   display: block;
   color: var(--pf-global--palette--blue-400);
   margin-bottom: 10px;
 }
 
-.ocm-instructions__list-item-contents{
-  .pf-c-alert.pf-m-inline{
-    .pf-c-alert__title{
-      margin-top:0;
+.ocm-instructions__list-item-contents {
+  .pf-c-alert.pf-m-inline {
+    .pf-c-alert__title {
+      margin-top: 0;
     }
   }
-  }
-  
+}
+
 .pf-c-wizard.rosa-wizard {
   min-height: 60vh;
   .pf-c-wizard__footer {
     z-index: 0;
   }
-  .ocm-c-wizard-intro-image-top {
-    width: 90px;
-    right: 46px;
-    top: 36px;
+  .ocm-c-wizard-intro-image-container {
     position: absolute;
-  }
-  .ocm-c-wizard-intro-image-bottom {
-    width: 90px;
-    right: 46px;
-    top: 121px;
-    position: absolute;
+    right: 45px;
+    top: 45px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 24px;
+
+    .ocm-c-wizard-intro-image-top {
+      width: 60px;
+    }
+    .ocm-c-wizard-intro-image-bottom {
+      width: 50px;
+    }
   }
   #node-labels-alert {
     margin-top: var(--pf-global--spacer--md);
@@ -65,12 +69,9 @@
 }
 
 .ocm-instruction-block {
-  border-inline-start:
-          var(--pf-global--BorderWidth--lg)
-          solid
-          var(--pf-global--BorderColor--100);
+  border-inline-start: var(--pf-global--BorderWidth--lg) solid var(--pf-global--BorderColor--100);
   padding: var(--pf-global--spacer--lg);
-  .ocm-instruction-block_alert{
+  .ocm-instruction-block_alert {
     margin-top: var(--pf-global--spacer--lg);
   }
 }
