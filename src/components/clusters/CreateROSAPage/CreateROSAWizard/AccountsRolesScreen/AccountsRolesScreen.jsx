@@ -4,10 +4,7 @@ import get from 'lodash/get';
 
 import { Button, Form, Grid, GridItem, Text, TextVariants, Title } from '@patternfly/react-core';
 import { Field } from 'redux-form';
-import { Link } from 'react-router-dom';
 
-import AWSLogo from '~/styles/images/AWS.png';
-import RedHat from '~/styles/images/Logo-RedHat-Hat-Color-RGB.png';
 import { required } from '~/common/validators';
 import { normalizedProducts } from '~/common/subscriptionTypes';
 import { trackEvents } from '~/common/analytics';
@@ -17,7 +14,6 @@ import { loadOfflineToken } from '~/components/tokens/TokenUtils';
 
 import AccountRolesARNsSection from './AccountRolesARNsSection';
 import { AssociateAwsAccountModal } from './AssociateAWSAccountModal';
-import { productName } from '../CreateRosaGetStarted/CreateRosaGetStarted';
 import { AwsRoleErrorAlert } from './AwsRoleErrorAlert';
 import AWSAccountSelection from './AWSAccountSelection';
 import AWSBillingAccountField from './AWSBillingAccount';
@@ -54,7 +50,6 @@ function AccountsRolesScreen({
   const [awsIDsErrorBox, setAwsIDsErrorBox] = useState(null);
   const [isAssocAwsAccountModalOpen, setIsAssocAwsAccountModalOpen] = useState(false);
   const [refreshButtonClicked, setRefreshButtonClicked] = useState(false);
-  const title = 'Welcome to Red Hat OpenShift Service on AWS (ROSA)';
   const hasAWSAccounts = AWSAccountIDs.length > 0;
   const track = useAnalytics();
 
@@ -147,26 +142,7 @@ function AccountsRolesScreen({
 
   return (
     <Form onSubmit={() => false}>
-      {/* these images use fixed positioning */}
-      <img src={RedHat} className="ocm-c-wizard-intro-image-top" aria-hidden="true" alt="" />
-      <img src={AWSLogo} className="ocm-c-wizard-intro-image-bottom" aria-hidden="true" alt="" />
       <Grid hasGutter className="pf-u-mt-md">
-        <GridItem span={12}>
-          <Title headingLevel="h2">{title}</Title>
-        </GridItem>
-        <GridItem span={12}>
-          <Text component={TextVariants.p}>
-            Create a managed OpenShift cluster on an existing Amazon Web Services (AWS) account.
-          </Text>
-        </GridItem>
-        <GridItem span={9}>
-          <Title headingLevel="h3">Prerequisites</Title>
-          <Text component={TextVariants.p}>
-            To use the web interface to create a ROSA cluster you will need to have already
-            completed the prerequisite steps to prepare your AWS account on the{' '}
-            <Link to="getstarted">{`Get started with a ${productName} (ROSA) page.`}</Link>
-          </Text>
-        </GridItem>
         <GridItem span={8}>
           <Title headingLevel="h3">AWS infrastructure account</Title>
           <Text component={TextVariants.p}>

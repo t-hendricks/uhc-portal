@@ -77,7 +77,7 @@ const reviewValues = {
   hypershift: {
     title: 'Control plane',
     isBoolean: true,
-    values: { true: 'Hosted', false: 'Standalone' },
+    values: { true: 'Hosted', false: 'Classic' },
   },
   region: {
     title: 'Region',
