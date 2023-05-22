@@ -214,7 +214,7 @@ export const createClusterRequest = ({ isWizard = true, cloudProviderID, product
       } else {
         // ROSA Classic and OSD CCS only
         clusterRequest.aws.ec2_metadata_http_tokens =
-          formData.imds === IMDSType.V2_only ? 'required' : 'optional';
+          formData.imds === IMDSType.V2Only ? 'required' : 'optional';
       }
 
       clusterRequest.ccs.disable_scp_checks = formData.disable_scp_checks;

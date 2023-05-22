@@ -24,9 +24,9 @@ export const ImdsSectionField = () => {
   };
 
   React.useEffect(() => {
-    if (isDisabled && imds !== IMDSType.V1_and_V2) {
+    if (isDisabled && imds !== IMDSType.V1AndV2) {
       // The user can go back and change the cluster version
-      onChange(IMDSType.V1_and_V2);
+      onChange(IMDSType.V1AndV2);
     }
   }, [isDisabled, imds]);
 

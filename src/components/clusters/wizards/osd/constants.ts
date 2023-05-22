@@ -126,7 +126,7 @@ export const initialValues: FormikValues = {
   [FieldId.LoadBalancers]: 0,
   [FieldId.DisableScpChecks]: false,
   [FieldId.CustomerManagedKey]: 'false',
-  [FieldId.IMDS]: IMDSType.V1_and_V2,
+  [FieldId.IMDS]: IMDSType.V1AndV2,
 };
 
 export const initialTouched = {

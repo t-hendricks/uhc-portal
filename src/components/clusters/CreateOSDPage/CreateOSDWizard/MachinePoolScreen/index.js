@@ -33,7 +33,6 @@ const mapStateToProps = (state, ownProps) => {
     selectedVPCID,
     imds,
     clusterVersionRawId,
-    isHypershiftSelected,
     minNodesRequired: getMinNodesRequired(isHypershiftSelected),
     canAutoScale: canAutoScaleOnCreateSelector(state, product),
     autoscalingEnabled: !!valueSelector(state, 'autoscalingEnabled'),

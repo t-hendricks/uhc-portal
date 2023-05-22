@@ -62,7 +62,7 @@ export const initialValues: FormikValues = {
   [FieldId.Byoc]: 'true',
   [FieldId.BillingModel]: billingModels.STANDARD,
   [FieldId.NodeLabels]: [{ key: '', value: '' }],
-  [FieldId.IMDS]: IMDSType.V1_and_V2,
+  [FieldId.IMDS]: IMDSType.V1AndV2,
 };
 
 export const canSelectImds = (clusterVersionRawId: string): boolean => {
