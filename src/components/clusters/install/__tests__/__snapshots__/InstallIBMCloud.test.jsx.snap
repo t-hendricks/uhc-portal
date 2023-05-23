@@ -32,6 +32,17 @@ exports[`InstallIBMCloud renders correctly 1`] = `
       installer="x86_64-openshift-install"
       isBMIPI={false}
       isUPI={false}
+      powervs={
+        Object {
+          "ipi": Object {
+            "channel": "preRelease",
+            "docURL": "https://docs.openshift.com/container-platform/4.13/installing/installing_ibm_powervs/preparing-to-install-on-ibm-power-vs.html",
+            "installer": "multi-openshift-install",
+            "prerequisites": "https://docs.openshift.com/container-platform/4.13/installing/installing_ibm_powervs/preparing-to-install-on-ibm-power-vs.html",
+            "title": "Install OpenShift on IBM Power Systems Virtual Server with installer-provisioned infrastructure",
+          },
+        }
+      }
       publicCloud={true}
       title="Install OpenShift on IBM Cloud with installer-provisioned infrastructure"
       token={Object {}}
