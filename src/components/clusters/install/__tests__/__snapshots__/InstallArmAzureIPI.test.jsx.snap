@@ -27,8 +27,8 @@ exports[`InstallArmAzureIPI renders correctly 1`] = `
     <OCPInstructions
       channel="stable"
       cloudProviderID="azure"
-      customizations="https://docs.openshift.com/container-platform/4.12/installing/installing_azure/installing-azure-customizations.html"
-      docURL="https://docs.openshift.com/container-platform/4.12/installing/installing_azure/installing-azure-default.html"
+      customizations="https://docs.openshift.com/container-platform/4.13/installing/installing_azure/installing-azure-customizations.html"
+      docURL="https://docs.openshift.com/container-platform/4.13/installing/installing_azure/installing-azure-default.html"
       installer="aarch64-openshift-install"
       isBMIPI={false}
       isUPI={false}

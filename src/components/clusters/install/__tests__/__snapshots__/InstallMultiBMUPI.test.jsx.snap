@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`InstallAzureUPI renders correctly 1`] = `
+exports[`InstallMultiBMUPI renders correctly 1`] = `
 <Fragment>
   <PageTitle
     breadcrumbs={
@@ -15,17 +15,13 @@ exports[`InstallAzureUPI renders correctly 1`] = `
               "path": "/create",
             },
             Object {
-              "label": "Microsoft Azure",
-              "path": "/install/azure",
-            },
-            Object {
-              "label": "User-provisioned infrastructure",
+              "label": "Baremetal (multi-architecture)",
             },
           ]
         }
       />
     }
-    title="Install OpenShift on Azure with user-provisioned infrastructure"
+    title="Install OpenShift on bare metal with multi-architecture compute machines"
   />
   <PageSection>
     <OCPInstructions
@@ -41,23 +37,21 @@ exports[`InstallAzureUPI renders correctly 1`] = `
                 "path": "/create",
               },
               Object {
-                "label": "Microsoft Azure",
-                "path": "/install/azure",
-              },
-              Object {
-                "label": "User-provisioned infrastructure",
+                "label": "Baremetal (multi-architecture)",
               },
             ]
           }
         />
       }
-      channel="stable"
-      cloudProviderID="azure"
-      docURL="https://docs.openshift.com/container-platform/4.13/installing/installing_azure/installing-azure-user-infra.html"
-      installer="x86_64-openshift-install"
+      channel="preRelease"
+      cloudProviderID="baremetal"
+      docURL="https://docs.openshift.com/container-platform/4.13/post_installation_configuration/multi-architecture-configuration.html#creating-a-cluster-with-multi-architecture-compute-machine-on-bare-metal-technology-preview"
+      installer="multi-openshift-install"
       isBMIPI={false}
       isUPI={true}
-      title="Install OpenShift on Azure with user-provisioned infrastructure"
+      preReleasePageLink="/install/multi/pre-release"
+      showPreReleaseDocs={true}
+      title="Install OpenShift on bare metal with multi-architecture compute machines"
       token={Object {}}
     />
   </PageSection>

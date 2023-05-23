@@ -25,7 +25,7 @@ exports[`InstallPower renders correctly 1`] = `
   />
   <PageSection>
     <InstructionsChooser
-      aiLearnMoreLink="https://docs.openshift.com/container-platform/4.12/installing/installing_on_prem_assisted/installing-on-prem-assisted.html"
+      aiLearnMoreLink="https://docs.openshift.com/container-platform/4.13/installing/installing_on_prem_assisted/installing-on-prem-assisted.html"
       aiPageLink="/assisted-installer/clusters/~new"
       hideIPI={true}
       name="Power"
@@ -43,7 +43,7 @@ exports[`InstallPower renders correctly 1`] = `
           ],
         }
       }
-      upiLearnMoreLink="https://docs.openshift.com/container-platform/4.12/installing/installing_ibm_power/installing-ibm-power.html"
+      upiLearnMoreLink="https://docs.openshift.com/container-platform/4.13/installing/installing_ibm_power/installing-ibm-power.html"
       upiPageLink="/install/power/user-provisioned"
     />
   </PageSection>

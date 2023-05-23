@@ -25,9 +25,9 @@ exports[`ARM Bare Metal install renders correctly 1`] = `
   />
   <PageSection>
     <InstructionsChooser
-      aiLearnMoreLink="https://docs.openshift.com/container-platform/4.12/installing/installing_on_prem_assisted/installing-on-prem-assisted.html"
+      aiLearnMoreLink="https://docs.openshift.com/container-platform/4.13/installing/installing_on_prem_assisted/installing-on-prem-assisted.html"
       aiPageLink="/assisted-installer/clusters/~new?useArm=true"
-      ipiLearnMoreLink="https://docs.openshift.com/container-platform/4.12/installing/installing_bare_metal_ipi/ipi-install-overview.html"
+      ipiLearnMoreLink="https://docs.openshift.com/container-platform/4.13/installing/installing_bare_metal_ipi/ipi-install-overview.html"
       ipiPageLink="/install/arm/installer-provisioned"
       name="arm"
       providerSpecificFeatures={
@@ -41,7 +41,7 @@ exports[`ARM Bare Metal install renders correctly 1`] = `
           ],
         }
       }
-      upiLearnMoreLink="https://docs.openshift.com/container-platform/4.12/installing/installing_bare_metal/installing-bare-metal.html"
+      upiLearnMoreLink="https://docs.openshift.com/container-platform/4.13/installing/installing_bare_metal/installing-bare-metal.html"
       upiPageLink="/install/arm/user-provisioned"
     />
   </PageSection>
