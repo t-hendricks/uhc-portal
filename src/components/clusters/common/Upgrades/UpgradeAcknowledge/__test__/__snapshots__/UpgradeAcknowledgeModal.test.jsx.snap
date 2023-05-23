@@ -141,6 +141,7 @@ exports[`<UpgradeAcknowledgeModal > Error is shown for failed y-stream approval 
                       data-ouia-component-id="OUIA-Generated-Alert-danger-1"
                       data-ouia-component-type="PF4/Alert"
                       data-ouia-safe="true"
+                      role="alert"
                     >
                       <div
                         class="pf-c-alert__icon"
@@ -421,6 +422,7 @@ exports[`<UpgradeAcknowledgeModal > Error is shown for failed y-stream approval 
                               <Alert
                                 className="error-box"
                                 isInline={true}
+                                role="alert"
                                 title="Failed to save administrator acknowledgement."
                                 variant="danger"
                               >
@@ -432,6 +434,7 @@ exports[`<UpgradeAcknowledgeModal > Error is shown for failed y-stream approval 
                                   data-ouia-safe={true}
                                   onMouseEnter={[Function]}
                                   onMouseLeave={[Function]}
+                                  role="alert"
                                 >
                                   <AlertIcon
                                     variant="danger"
@@ -725,6 +728,7 @@ exports[`<UpgradeAcknowledgeModal > Errors are shown for failed gates action 1`]
                       data-ouia-component-id="OUIA-Generated-Alert-danger-2"
                       data-ouia-component-type="PF4/Alert"
                       data-ouia-safe="true"
+                      role="alert"
                     >
                       <div
                         class="pf-c-alert__icon"
@@ -771,6 +775,7 @@ exports[`<UpgradeAcknowledgeModal > Errors are shown for failed gates action 1`]
                       data-ouia-component-id="OUIA-Generated-Alert-danger-3"
                       data-ouia-component-type="PF4/Alert"
                       data-ouia-safe="true"
+                      role="alert"
                     >
                       <div
                         class="pf-c-alert__icon"
@@ -1051,6 +1056,7 @@ exports[`<UpgradeAcknowledgeModal > Errors are shown for failed gates action 1`]
                               <Alert
                                 className="error-box"
                                 isInline={true}
+                                role="alert"
                                 title="Failed to save administrator acknowledgement."
                                 variant="danger"
                               >
@@ -1062,6 +1068,7 @@ exports[`<UpgradeAcknowledgeModal > Errors are shown for failed gates action 1`]
                                   data-ouia-safe={true}
                                   onMouseEnter={[Function]}
                                   onMouseLeave={[Function]}
+                                  role="alert"
                                 >
                                   <AlertIcon
                                     variant="danger"
@@ -1137,6 +1144,7 @@ exports[`<UpgradeAcknowledgeModal > Errors are shown for failed gates action 1`]
                               <Alert
                                 className="error-box"
                                 isInline={true}
+                                role="alert"
                                 title="Failed to save administrator acknowledgement."
                                 variant="danger"
                               >
@@ -1148,6 +1156,7 @@ exports[`<UpgradeAcknowledgeModal > Errors are shown for failed gates action 1`]
                                   data-ouia-safe={true}
                                   onMouseEnter={[Function]}
                                   onMouseLeave={[Function]}
+                                  role="alert"
                                 >
                                   <AlertIcon
                                     variant="danger"

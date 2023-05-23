@@ -275,6 +275,7 @@ exports[` 1`] = `
             <Alert
               className="error-box"
               isInline={true}
+              role="alert"
               title="Error getting OCM roles and access"
               variant="danger"
             >
@@ -286,6 +287,7 @@ exports[` 1`] = `
                 data-ouia-safe={true}
                 onMouseEnter={[Function]}
                 onMouseLeave={[Function]}
+                role="alert"
               >
                 <AlertIcon
                   variant="danger"

@@ -56,6 +56,7 @@ function DetailsRight({
     ? false
     : (!cluster.managed && get(cluster, 'metrics.nodes.infra', null)) ||
       get(cluster, 'nodes.infra', 0) > 0;
+
   const hasSockets = get(cluster, 'metrics.sockets.total.value', 0) > 0;
 
   const humanizedPersistentStorage =
@@ -81,7 +82,9 @@ function DetailsRight({
           <DescriptionListTerm>Status</DescriptionListTerm>
           <DescriptionListDescription style={cluster.state.style}>
             {isAISubscriptionWithoutMetrics(cluster.subscription) ? (
-              <AIClusterStatus status={cluster.metrics.state} className="clusterstate" />
+              <div data-testid="aiSubscriptionWithoutMetric">
+                <AIClusterStatus status={cluster.metrics.state} className="clusterstate" />
+              </div>
             ) : (
               <>
                 <ClusterStatus
@@ -128,7 +131,7 @@ function DetailsRight({
         )}
         {awsInfraAccount && (
           <>
-            <DescriptionListGroup data-testid="aws-account">
+            <DescriptionListGroup>
               <DescriptionListTerm>Infrastructure AWS account</DescriptionListTerm>
               <DescriptionListDescription>{awsInfraAccount}</DescriptionListDescription>
             </DescriptionListGroup>
@@ -154,7 +157,7 @@ function DetailsRight({
         )}
         {billingMarketplaceAccount && (
           <>
-            <DescriptionListGroup data-testid="billing-marketplace-account">
+            <DescriptionListGroup>
               <DescriptionListTerm>Billing marketplace account</DescriptionListTerm>
               <DescriptionListDescription>{billingMarketplaceAccount}</DescriptionListDescription>
             </DescriptionListGroup>
@@ -194,7 +197,7 @@ function DetailsRight({
               <DescriptionListDescription>
                 <dl className="pf-l-stack">
                   {!isHypershift && (
-                    <Flex>
+                    <Flex data-testid="controlPlaneNodesCountContainer">
                       <dt>Control plane: </dt>
                       <dd>
                         {controlPlaneActualNodes !== '-' || controlPlaneDesiredNodes !== '-'
@@ -205,7 +208,7 @@ function DetailsRight({
                   )}
                   {showInfraNodes && (
                     <>
-                      <Flex>
+                      <Flex data-testid="InfraNodesCountContainer">
                         <dt>Infra: </dt>
                         <dd>
                           {infraActualNodes !== '-' || infraDesiredNodes !== '-'
@@ -234,14 +237,14 @@ function DetailsRight({
               <DescriptionListDescription>
                 <dl className="pf-l-stack">
                   {!isHypershift && (
-                    <Flex>
+                    <Flex data-testid="controlPlaneNodesCountContainer">
                       <dt>Control plane: </dt>
                       <dd>{get(cluster, 'metrics.nodes.master', 'N/A')}</dd>
                     </Flex>
                   )}
                   {showInfraNodes && (
                     <>
-                      <Flex>
+                      <Flex data-testid="InfraNodesCountContainer">
                         <dt>Infra: </dt>
                         <dd>{get(cluster, 'metrics.nodes.infra', 'N/A')}</dd>
                       </Flex>

@@ -69,6 +69,7 @@ function VersionSelection({
       className="pf-u-ml-lg"
       variant="danger"
       isInline
+      role="alert"
       title="There is no version compatible with the selected ARNs in previous step"
     >
       <TextList component={TextListVariants.ol} className="ocm-c-wizard-alert-steps">
@@ -244,7 +245,6 @@ function VersionSelection({
             <div className="spinner-fit-container">
               <Spinner />
             </div>
-            <div className="spinner-loading-text">Loading...</div>
           </>
         )}
         {getInstallableVersionsResponse.fulfilled && !rosaVersionError && (
@@ -252,6 +252,7 @@ function VersionSelection({
             <GridItem>
               <Select
                 label={label}
+                aria-label={label}
                 isOpen={isOpen}
                 selections={selectedClusterVersion?.raw_id || getSelection()}
                 onToggle={onToggle}

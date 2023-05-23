@@ -55,7 +55,7 @@ const osdRow = (shouldExpand = true, isOpen = true, hasQuota = true, rowKey = 0)
       className="create-button"
       noIcon
     >
-      <span data-testid="osd-learn-more-button">Learn more</span>
+      <span>Learn more</span>
     </ExternalLink>
   );
 
@@ -139,6 +139,7 @@ const osdTrialRow = () => {
           id="create-trial-cluster"
           to="/create/osdtrial?trial=osd"
           data-testid="osd-create-trial-cluster"
+          role="button"
         />
       )}
     >
@@ -461,9 +462,7 @@ const CloudTab = ({ hasOSDQuota, trialEnabled }) => (
           <Button
             variant={ButtonVariant.link}
             id="subscriptions"
-            component={(props) => (
-              <Link {...props} to="/quota" data-testid="osd-view-available-quota-link" />
-            )}
+            component={(props) => <Link {...props} to="/quota" />}
           >
             View your available OpenShift Dedicated quota <ArrowRightIcon />
           </Button>
