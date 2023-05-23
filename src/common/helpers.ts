@@ -125,10 +125,11 @@ const shouldRefetchQuota = (organization: any) => {
  * @param ids List of element IDs. An ID can be partial.
  * @param focusSelector Used to discover element to focus on, defaults to form elements;
  * input, select, textarea
+ * @return true if a field was found to scroll to, false otherwise.
  */
 const scrollToFirstField = (ids: string[], focusSelector: string = 'input,select,textarea') => {
   if (!ids?.length) {
-    return;
+    return false;
   }
 
   // Use all error selectors, where the first matching element in the document is returned.
@@ -145,7 +146,11 @@ const scrollToFirstField = (ids: string[], focusSelector: string = 'input,select
     // Scroll and focus
     setTimeout(() => scrollElement.scrollIntoView({ behavior: 'smooth', block: 'center' }));
     focusElement?.focus({ preventScroll: true });
+
+    return true;
   }
+
+  return false;
 };
 
 /**

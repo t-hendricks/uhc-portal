@@ -96,10 +96,7 @@ class CreateROSAWizardInternal extends React.Component {
     const { currentStepId, deferredNext } = this.state;
 
     // Track validity of individual steps by id
-    if (
-      (isValid !== prevProps.isValid || isAsyncValidating !== prevProps.isAsyncValidating) &&
-      !isAsyncValidating
-    ) {
+    if (isValid !== prevProps.isValid && !isAsyncValidating) {
       // eslint-disable-next-line react/no-did-update-set-state
       this.setState(() => ({
         validatedSteps: {
@@ -185,17 +182,19 @@ class CreateROSAWizardInternal extends React.Component {
   };
 
   scrolledToFirstError = () => {
-    const { touch, formErrors } = this.props;
+    const { touch, formErrors, formSyncErrors, formAsyncErrors } = this.props;
     const { validatedSteps, currentStepId, isNextClicked } = this.state;
     const isCurrentStepValid = validatedSteps[currentStepId];
     const errorIds = Object.keys(formErrors);
+    const syncErrorIds = Object.keys(formSyncErrors);
+    const asyncErrorIds = Object.keys(formAsyncErrors);
 
     // When errors exist, touch the fields with those errors to trigger validation.
-    if (errorIds?.length > 0 && !isCurrentStepValid) {
+    if (asyncErrorIds?.length || (syncErrorIds?.length && !isCurrentStepValid)) {
       touch(errorIds);
-      scrollToFirstField(errorIds);
+      const hasScrolledTo = scrollToFirstField(errorIds);
       this.setState({ isNextClicked: !isNextClicked });
-      return true;
+      return hasScrolledTo;
     }
     return false;
   };
@@ -573,6 +572,8 @@ CreateROSAWizardInternal.propTypes = {
   onSubmit: PropTypes.func,
   touch: PropTypes.func,
   formErrors: PropTypes.object,
+  formSyncErrors: PropTypes.object,
+  formAsyncErrors: PropTypes.object,
   getUserRoleResponse: PropTypes.object,
   selectedAWSAccountID: PropTypes.string,
   formValues: PropTypes.object,
