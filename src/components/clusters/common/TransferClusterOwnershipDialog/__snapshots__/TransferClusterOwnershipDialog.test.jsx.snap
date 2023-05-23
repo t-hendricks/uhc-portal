@@ -1992,6 +1992,7 @@ exports[`<TransferClusterOwnershipDialog /> should show error 1`] = `
                       data-ouia-component-id="OUIA-Generated-Alert-danger-1"
                       data-ouia-component-type="PF4/Alert"
                       data-ouia-safe="true"
+                      role="alert"
                     >
                       <div
                         class="pf-c-alert__icon"
@@ -2346,6 +2347,7 @@ exports[`<TransferClusterOwnershipDialog /> should show error 1`] = `
                               <Alert
                                 className="error-box"
                                 isInline={true}
+                                role="alert"
                                 title="Error initiating transfer"
                                 variant="danger"
                               >
@@ -2357,6 +2359,7 @@ exports[`<TransferClusterOwnershipDialog /> should show error 1`] = `
                                   data-ouia-safe={true}
                                   onMouseEnter={[Function]}
                                   onMouseLeave={[Function]}
+                                  role="alert"
                                 >
                                   <AlertIcon
                                     variant="danger"
