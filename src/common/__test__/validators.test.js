@@ -977,9 +977,9 @@ test('HTPasswd password', () => {
 
 test('HTPasswd username', () => {
   expect(validateHTPasswdUsername('username1234')).toBeUndefined();
-  expect(validateHTPasswdUsername('username%')).toBe('Username contains disallowed characters.');
-  expect(validateHTPasswdUsername('username:')).toBe('Username contains disallowed characters.');
-  expect(validateHTPasswdUsername('username/')).toBe('Username contains disallowed characters.');
+  expect(validateHTPasswdUsername('username%')).toBe('Username must not contain /, :, or %.');
+  expect(validateHTPasswdUsername('username:')).toBe('Username must not contain /, :, or %.');
+  expect(validateHTPasswdUsername('username/')).toBe('Username must not contain /, :, or %.');
 });
 
 test('Custom operator roles prefix', () => {

@@ -228,8 +228,12 @@ const getCreateIDPRequestData = (formData) => {
   });
 
   const htpasswdData = () => ({
-    username: formData.htpasswd_username,
-    password: formData.htpasswd_password,
+    users: {
+      items: formData.users.map((user) => ({
+        username: user.username,
+        password: user.password,
+      })),
+    },
   });
 
   const IDPs = {

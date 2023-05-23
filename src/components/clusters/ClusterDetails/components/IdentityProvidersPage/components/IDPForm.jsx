@@ -108,7 +108,7 @@ class IDPForm extends React.Component {
       selectedIDP,
       idpTypeName,
       formTitle,
-      HTPasswdPasswordErrors,
+      HTPasswdErrors,
       isHypershift,
     } = this.props;
     const { IDPName, isExpanded } = this.state;
@@ -150,15 +150,17 @@ class IDPForm extends React.Component {
     const SelectedProviderRequiredFields = providersRequiredFields[selectedIDP];
     const SelectedProviderAdvancedOptions = providersAdvancedOptions[selectedIDP];
 
+    const span = selectedIDP === IDPformValues.HTPASSWD ? 11 : 8;
+
     const topText = (idp) => {
       let text = null;
       switch (idp) {
         case IDPformValues.HTPASSWD:
           text = (
             <>
-              Define an <code>htpasswd</code> identity provider for your managed cluster to create a
-              single, static user that can log in to your cluster and troubleshoot it. If this user
-              needs elevated permissions, add it to an{' '}
+              Define an <code>htpasswd</code> identity provider for your managed cluster to create
+              one or multiple static users that can log in to your cluster and troubleshoot it. If
+              these users need elevated permissions, add it to an{' '}
               <ExternalLink href={links.OSD_DEDICATED_ADMIN_ROLE}>
                 administrative group
               </ExternalLink>{' '}
@@ -217,13 +219,13 @@ class IDPForm extends React.Component {
         default:
           return null;
       }
-      return <GridItem span={9}>{text}</GridItem>;
+      return <GridItem span={span + 1}>{text}</GridItem>;
     };
 
     return (
       <Form>
         <Grid id="identity-provider-form" hasGutter>
-          <GridItem span={8}>
+          <GridItem span={span}>
             <Title headingLevel="h3" size="xl">
               {formTitle}
             </Title>
@@ -231,13 +233,13 @@ class IDPForm extends React.Component {
           {submissionError && <GridItem span={8}>{submissionError}</GridItem>}
           {topText(selectedIDP)}
           {!isEditForm && (
-            <GridItem span={8}>
+            <GridItem span={span}>
               <ExternalLink href={providerDocumentationLink[selectedIDP]}>
                 Learn more about {idpTypeName} identity providers
               </ExternalLink>
             </GridItem>
           )}
-          <GridItem span={8}>
+          <GridItem span={span}>
             <Field
               component={ReduxVerticalFormGroup}
               name="name"
@@ -251,7 +253,7 @@ class IDPForm extends React.Component {
             />
           </GridItem>
           {IDPNeedsOAuthURL(selectedIDP) && (
-            <GridItem span={8}>
+            <GridItem span={span}>
               <div>
                 <span className="pf-c-form__label pf-c-form__label-text pf-u-mb-sm">
                   OAuth callback URL
@@ -263,7 +265,7 @@ class IDPForm extends React.Component {
             </GridItem>
           )}
           {selectedIDP !== IDPformValues.HTPASSWD && (
-            <GridItem span={8}>
+            <GridItem span={span}>
               <Field
                 component={ReduxFormDropdown}
                 options={mappingMethods}
@@ -286,11 +288,11 @@ class IDPForm extends React.Component {
               idpEdited={idpEdited}
               change={change}
               clearFields={clearFields}
-              HTPasswdPasswordErrors={HTPasswdPasswordErrors}
+              HTPasswdErrors={HTPasswdErrors}
             />
           )}
           {SelectedProviderAdvancedOptions && (
-            <GridItem span={8}>
+            <GridItem span={span}>
               <ExpandableSection
                 toggleTextCollapsed="Show advanced options"
                 toggleTextExpanded="Hide advanced options"
@@ -326,7 +328,7 @@ IDPForm.propTypes = {
   isHypershift: PropTypes.bool,
   idpEdited: PropTypes.object,
   idpName: PropTypes.string,
-  HTPasswdPasswordErrors: PropTypes.object,
+  HTPasswdErrors: PropTypes.func.isRequired,
   idpTypeName: PropTypes.string,
   formTitle: PropTypes.string,
 };
