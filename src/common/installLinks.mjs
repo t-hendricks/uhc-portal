@@ -189,6 +189,8 @@ const links = {
   INSTALL_IBMZ_RHCOS_LEARN_MORE_RHEL_KVM: `${DOCS_BASE}/installing/installing_ibm_z/installing-ibm-z-kvm.html#installation-user-infra-machines-iso-ibm-z_kvm_installing-ibm-z-kvm`,
   INSTALL_IBMZ_LEARN_MORE_ZVM: `${DOCS_BASE}/installing/installing_ibm_z/installing-ibm-z.html#installation-user-infra-machines-iso-ibm-z_installing-ibm-z`,
   INSTALL_IBMZ_UPI_GETTING_STARTED: `${DOCS_BASE}/installing/installing_ibm_z/preparing-to-install-on-ibm-z.html`,
+  INSTALL_IBMPOWERVS_GETTING_STARTED: `${DOCS_BASE}/installing/installing_ibm_powervs/preparing-to-install-on-ibm-power-vs.html`,
+  INSTALL_IBMPOWERVS_PREREQUISITES: `${DOCS_BASE}/installing/installing_ibm_powervs/preparing-to-install-on-ibm-power-vs.html`,
   RHCOS_IBMZ_ISO: `${MIRROR_RHCOS_LATEST_IBMZ}/rhcos-live.s390x.iso`,
   RHCOS_IBMZ_INITRAMFS: `${MIRROR_RHCOS_LATEST_IBMZ}/rhcos-live-initramfs.s390x.img`,
   RHCOS_IBMZ_KERNEL: `${MIRROR_RHCOS_LATEST_IBMZ}/rhcos-live-kernel-s390x`,

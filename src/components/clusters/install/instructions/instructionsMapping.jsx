@@ -147,6 +147,16 @@ const instructionsMapping = {
     docURL: links.INSTALL_IBM_CLOUD_GETTING_STARTED,
     installer: tools.X86INSTALLER,
     channel: channels.STABLE,
+    powervs: {
+      ipi: {
+        title:
+          'Install OpenShift on IBM Power Systems Virtual Server with installer-provisioned infrastructure',
+        installer: tools.MULTIINSTALLER,
+        channel: channels.PRE_RELEASE,
+        docURL: links.INSTALL_IBMPOWERVS_GETTING_STARTED,
+        prerequisites: links.INSTALL_IBMPOWERVS_PREREQUISITES,
+      },
+    },
   },
   ash: {
     cloudProvider: 'Azure Stack Hub',
