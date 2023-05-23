@@ -25,6 +25,7 @@ const OCPInstructions = (props) => {
     isBMIPI,
     isUPI,
     showPreReleasePageLink,
+    prerequisites,
   } = props;
   const pendoID = window.location.pathname;
   const getStartedTitleText = instructionsMapping[cloudProviderID]?.publicCloud
@@ -64,6 +65,7 @@ const OCPInstructions = (props) => {
                 pendoID={pendoID}
                 cloudProviderID={cloudProviderID}
                 customizations={customizations}
+                prerequisites={prerequisites}
                 isBMIPI={isBMIPI}
                 isUPI={isUPI}
               />
@@ -89,6 +91,7 @@ OCPInstructions.propTypes = {
   showPreReleaseDocs: PropTypes.bool,
   preReleasePageLink: PropTypes.string,
   customizations: PropTypes.string,
+  prerequisites: PropTypes.string,
   isBMIPI: PropTypes.bool,
   isUPI: PropTypes.bool,
   showPreReleasePageLink: PropTypes.bool,
