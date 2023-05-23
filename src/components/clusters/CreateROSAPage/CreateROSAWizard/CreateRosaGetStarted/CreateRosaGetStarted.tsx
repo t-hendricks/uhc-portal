@@ -32,9 +32,7 @@ import Instructions from '~/components/common/Instructions';
 
 import StepEnableROSAService from './StepEnableROSAService';
 import StepDownloadROSACli from './StepDownloadROSACli';
-import StepLinkELBRole from './StepLinkELBRole';
 import StepCreateAWSAccountRoles from './StepCreateAWSAccountRoles';
-import StepVerifyCredentials from './StepVerifyCredentials';
 import '../createROSAWizard.scss';
 import WithCLICard from './WithCLICard';
 import WithWizardCard from './WithWizardCard';
@@ -106,15 +104,7 @@ const CreateRosaGetStarted = () => {
                     </Instruction>
 
                     <Instruction simple>
-                      <StepLinkELBRole />
-                    </Instruction>
-
-                    <Instruction simple>
                       <StepCreateAWSAccountRoles />
-                    </Instruction>
-
-                    <Instruction simple>
-                      <StepVerifyCredentials />
                     </Instruction>
                   </Instructions>
                 </ExpandableSection>
