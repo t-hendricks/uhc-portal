@@ -83,7 +83,7 @@ const ExternalLink = ({
     </>
   );
   return isButton ? (
-    <Button component="a" {...linkProps} variant={variant} data-testid="externalLinkAsButton">
+    <Button component="a" {...linkProps} variant={variant}>
       {childrenComp}
     </Button>
   ) : (

@@ -39,6 +39,7 @@ const ErrorBox = ({
       variant={variant}
       isInline
       title={message}
+      role={variant === 'danger' ? 'alert' : undefined}
       className="error-box"
       {...(showCloseBtn && closeAlertProp)}
     >

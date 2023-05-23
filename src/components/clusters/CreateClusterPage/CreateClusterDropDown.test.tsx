@@ -10,26 +10,31 @@ const getStartedPath = '/create/rosa/getstarted';
 
 describe('<CreateClusterDropDown />', () => {
   it('is accessible', async () => {
+    // Arrange
     const { container } = render(
       <MemoryRouter>
         <CreateClusterDropDown />
       </MemoryRouter>,
     );
 
+    // Assert
     const results = await axe(container);
     expect(results).toHaveNoViolations();
   });
 
   it('is accessible expanded', async () => {
+    // Arrange
     const { container } = render(
       <MemoryRouter>
         <CreateClusterDropDown />
       </MemoryRouter>,
     );
 
+    // Act
     fireEvent.click(screen.getByRole('button', { name: 'Create cluster' }));
     expect(screen.getByText(/With CLI/)).toBeInTheDocument();
 
+    // Assert
     const results = await axe(container);
     expect(results).toHaveNoViolations();
   });
@@ -72,6 +77,7 @@ describe('<CreateClusterDropDown />', () => {
   });
 
   it('shows hypershift helper text when feature flags are enabled', () => {
+    // Arrange
     jest
       .spyOn(hooks, 'useFeatureGate')
       .mockImplementation((feature) => feature === HCP_ROSA_GETTING_STARTED_PAGE);
@@ -81,14 +87,18 @@ describe('<CreateClusterDropDown />', () => {
         <CreateClusterDropDown />
       </MemoryRouter>,
     );
+
+    // Act
     fireEvent.click(screen.getByRole('button', { name: 'Create cluster' }));
     expect(screen.getByText(/With CLI/)).toBeInTheDocument();
 
+    // Arrange
     expect(screen.getByText(/Supports ROSA with Hosted Control Plane/)).toBeInTheDocument();
     expect(screen.getByText(/ROSA with Hosted Control Plane coming soon/)).toBeInTheDocument();
   });
 
   it('hides hypershift helper text when feature flags are not enabled', () => {
+    // Arrange
     jest
       .spyOn(hooks, 'useFeatureGate')
       .mockImplementation((feature) => feature !== HCP_ROSA_GETTING_STARTED_PAGE);
@@ -98,9 +108,12 @@ describe('<CreateClusterDropDown />', () => {
         <CreateClusterDropDown />
       </MemoryRouter>,
     );
+
+    // Act
     fireEvent.click(screen.getByRole('button', { name: 'Create cluster' }));
     expect(screen.getByText(/With CLI/)).toBeInTheDocument();
 
+    // Assert
     expect(screen.queryByText(/Supports ROSA with Hosted Control Plane/)).not.toBeInTheDocument();
     expect(
       screen.queryByText(/ROSA with Hosted Control Plane coming soon/),

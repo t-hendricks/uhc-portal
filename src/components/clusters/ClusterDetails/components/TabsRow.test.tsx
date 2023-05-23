@@ -1,8 +1,8 @@
 import React from 'react';
 import { MemoryRouter } from 'react-router-dom';
-import { render, screen } from '~/testUtils';
+import { render, screen, axe } from '~/testUtils';
 
-import TabsRow from '../components/TabsRow';
+import TabsRow from './TabsRow';
 
 const tabNames = {
   overview: 'Overview',
@@ -36,7 +36,23 @@ describe('<TabsRow />', () => {
     };
   });
 
-  it('should display overview, access control, monitoring, and add-ons tabs', () => {
+  it.skip('is accessible', async () => {
+    // This throws an error because the tabs are not tied to the content in this component.
+    // Arrange
+    const tabProps = { ...props, displayAccessControlTab: true, displayAddOnsTab: true };
+    const { container } = render(
+      <MemoryRouter keyLength={0} initialEntries={[{ pathname: '/details/s/:id', key: 'testKey' }]}>
+        <TabsRow {...tabProps} />
+      </MemoryRouter>,
+    );
+
+    // Assert
+    const results = await axe(container);
+    expect(results).toHaveNoViolations();
+  });
+
+  it('show only overview, access control, monitoring, and add-ons tabs', () => {
+    // Arrange
     const tabProps = { ...props, displayAccessControlTab: true, displayAddOnsTab: true };
     render(
       <MemoryRouter keyLength={0} initialEntries={[{ pathname: '/details/s/:id', key: 'testKey' }]}>
@@ -44,6 +60,7 @@ describe('<TabsRow />', () => {
       </MemoryRouter>,
     );
 
+    // Assert
     expect(screen.getAllByRole('tab')).toHaveLength(4);
 
     expect(
@@ -58,7 +75,8 @@ describe('<TabsRow />', () => {
     expect(screen.getByRole('tab', { name: tabNames.addons, selected: false })).toBeInTheDocument();
   });
 
-  it('should hide monitoring and add-ons tabs if needed (eg. when we archive a cluster)', () => {
+  it('hide monitoring and add-ons tabs based on passed props', () => {
+    // Arrange
     const tabProps = {
       ...props,
       displayAccessControlTab: true,
@@ -71,8 +89,8 @@ describe('<TabsRow />', () => {
       </MemoryRouter>,
     );
 
+    // Assert
     expect(screen.getAllByRole('tab')).toHaveLength(2);
-
     expect(screen.queryByRole('tab', { name: tabNames.monitoring })).not.toBeInTheDocument();
     expect(screen.queryByRole('tab', { name: tabNames.addons })).not.toBeInTheDocument();
 
@@ -84,7 +102,8 @@ describe('<TabsRow />', () => {
     ).toBeInTheDocument();
   });
 
-  it('should render monitoring tab with issues icon', () => {
+  it('shows monitoring tab with issues icon when hasIssues prop is passed', () => {
+    // Arrange
     const tabProps = {
       ...props,
       hasIssues: true,
@@ -94,6 +113,8 @@ describe('<TabsRow />', () => {
         <TabsRow {...tabProps} />
       </MemoryRouter>,
     );
+
+    // Assert
 
     // There is an accessibility issue with the warning icon.
     // It doesn't have an accessible label and is hidden (with aria-hidden) so it is not easily found
