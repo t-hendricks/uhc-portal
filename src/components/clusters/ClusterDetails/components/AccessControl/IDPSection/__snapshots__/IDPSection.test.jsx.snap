@@ -37,7 +37,7 @@ exports[`<IDPSection /> should render (no IDPs) 1`] = `
         <p>
           Configure identity providers to allow users to log into the cluster. 
           <a
-            href="https://docs.openshift.com/container-platform/4.12/authentication/understanding-identity-provider.html"
+            href="https://docs.openshift.com/container-platform/4.13/authentication/understanding-identity-provider.html"
             rel="noopener noreferrer"
             target="_blank"
           >
@@ -186,7 +186,7 @@ exports[`<IDPSection /> should render (with IDPs) Hypershift cluster 1`] = `
         <p>
           Configure identity providers to allow users to log into the cluster. 
           <a
-            href="https://docs.openshift.com/container-platform/4.12/authentication/understanding-identity-provider.html"
+            href="https://docs.openshift.com/container-platform/4.13/authentication/understanding-identity-provider.html"
             rel="noopener noreferrer"
             target="_blank"
           >
@@ -425,7 +425,7 @@ exports[`<IDPSection /> should render (with IDPs) non-Hypershift cluster 1`] = `
         <p>
           Configure identity providers to allow users to log into the cluster. 
           <a
-            href="https://docs.openshift.com/container-platform/4.12/authentication/understanding-identity-provider.html"
+            href="https://docs.openshift.com/container-platform/4.13/authentication/understanding-identity-provider.html"
             rel="noopener noreferrer"
             target="_blank"
           >

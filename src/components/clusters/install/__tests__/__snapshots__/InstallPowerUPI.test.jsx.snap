@@ -31,7 +31,7 @@ exports[`InstallPower renders correctly 1`] = `
     <OCPInstructions
       channel="stable"
       cloudProviderID="baremetal"
-      docURL="https://docs.openshift.com/container-platform/4.12/installing/installing_ibm_power/installing-ibm-power.html"
+      docURL="https://docs.openshift.com/container-platform/4.13/installing/installing_ibm_power/installing-ibm-power.html"
       installer="ppc64le-openshift-install"
       isBMIPI={false}
       isUPI={true}
@@ -61,7 +61,7 @@ exports[`InstallPower renders correctly 1`] = `
               "url": "https://mirror.openshift.com/pub/openshift-v4/ppc64le/dependencies/rhcos/latest/rhcos-live-rootfs.ppc64le.img",
             },
           ],
-          "learnMoreURL": "https://docs.openshift.com/container-platform/4.12/installing/installing_ibm_power/installing-ibm-power.html#creating-machines-bare-metal-power",
+          "learnMoreURL": "https://docs.openshift.com/container-platform/4.13/installing/installing_ibm_power/installing-ibm-power.html#creating-machines-bare-metal-power",
         }
       }
       title="Install OpenShift on IBM Power (ppc64le) with user-provisioned infrastructure"

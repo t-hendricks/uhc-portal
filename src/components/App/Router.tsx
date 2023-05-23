@@ -45,6 +45,7 @@ import ConnectedInstallArmAWSUPI from '../clusters/install/InstallArmAWSUPI';
 import InstallAWS from '../clusters/install/InstallAWS';
 import ConnectedInstallAWSUPI from '../clusters/install/InstallAWSUPI';
 import ConnectedInstallAWSIPI from '../clusters/install/InstallAWSIPI';
+import ConnectedInstallMultiAWSIPI from '../clusters/install/InstallMultiAWSIPI';
 import InstallBareMetal from '../clusters/install/InstallBareMetal';
 import InstallASH from '../clusters/install/InstallASH';
 import ConnectedInstallASHIPI from '../clusters/install/InstallASHIPI';
@@ -104,6 +105,7 @@ import InstallBMIPI from '../clusters/install/InstallBareMetalIPI';
 import InstallArmBareMetal from '../clusters/install/InstallArmBareMetal';
 import InstallArmBMIPI from '../clusters/install/InstallArmBareMetalIPI';
 import InstallArmBMUPI from '../clusters/install/InstallArmBareMetalUPI';
+import InstallMultiBMUPI from '../clusters/install/InstallMultiBareMetalUPI';
 import { normalizedProducts } from '../../common/subscriptionTypes';
 import Releases from '../releases/index';
 import IdentityProvidersPage from '../clusters/ClusterDetails/components/IdentityProvidersPage';
@@ -229,6 +231,10 @@ const Router: React.FC<RouterProps> = ({ history, planType, clusterId, externalC
             />
             <Route path="/install/aws/arm/user-provisioned" component={ConnectedInstallArmAWSUPI} />
             <Route path="/install/aws/arm" component={InstallArmAWS} />
+            <Route
+              path="/install/aws/multi/installer-provisioned"
+              component={ConnectedInstallMultiAWSIPI}
+            />
             <Route path="/install/aws" component={InstallAWS} />
             <Route path="/install/gcp/installer-provisioned" component={ConnectedInstallGCPIPI} />
             <Route path="/install/gcp/user-provisioned" component={ConnectedInstallGCPUPI} />
@@ -275,6 +281,7 @@ const Router: React.FC<RouterProps> = ({ history, planType, clusterId, externalC
             <Route path="/install/metal/user-provisioned" component={InstallBMUPI} />
             <Route path="/install/metal/installer-provisioned" component={InstallBMIPI} />
             <Route path="/install/metal/agent-based" component={InstallBMABI} />
+            <Route path="/install/metal/multi" component={InstallMultiBMUPI} />
             <Route path="/install/metal" component={GatedMetalInstall} />
             <Route path="/install/multi/pre-release" component={ConnectedInstallMultiPreRelease} />
             <Route path="/install/vsphere" exact component={InstallVSphere} />

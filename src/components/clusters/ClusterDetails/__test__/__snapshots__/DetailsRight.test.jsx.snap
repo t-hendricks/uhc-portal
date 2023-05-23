@@ -5145,7 +5145,7 @@ exports[`<DetailsRight /> should render when autoscale enabled 1`] = `
               Autoscaling automatically adds and removes nodes from the cluster based on resource requirements.
                
               <ExternalLink
-                href="https://docs.openshift.com/container-platform/4.12/machine_management/applying-autoscaling.html"
+                href="https://docs.openshift.com/container-platform/4.13/machine_management/applying-autoscaling.html"
               >
                 Learn more about autoscaling
               </ExternalLink>
