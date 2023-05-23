@@ -121,21 +121,18 @@ const shouldRefetchQuota = (organization: any) => {
 };
 
 /**
- * Scroll to and focus on the first error found in the record of errors.
- * @param errorIds List of error IDs
+ * Scroll to and focus on the first field found in the record of IDs.
+ * @param ids List of element IDs. An ID can be partial.
  * @param focusSelector Used to discover element to focus on, defaults to form elements;
  * input, select, textarea
  */
-const scrollToFirstError = (
-  errorIds: string[],
-  focusSelector: string = 'input,select,textarea',
-) => {
-  if (!errorIds?.length) {
+const scrollToFirstField = (ids: string[], focusSelector: string = 'input,select,textarea') => {
+  if (!ids?.length) {
     return;
   }
 
   // Use all error selectors, where the first matching element in the document is returned.
-  const scrollElement = document.querySelector(errorIds.map((id) => `[id*="${id}"]`).join(','));
+  const scrollElement = document.querySelector(ids.map((id) => `[id*="${id}"]`).join(','));
 
   if (scrollElement instanceof HTMLElement) {
     let focusElement: HTMLElement | null = scrollElement;
@@ -259,7 +256,7 @@ export {
   noMachineTypes,
   strToCleanObject,
   shouldRefetchQuota,
-  scrollToFirstError,
+  scrollToFirstField,
   parseReduxFormKeyValueList,
   parseReduxFormTaints,
   goZeroTime2Null,

@@ -18,7 +18,7 @@ import ErrorBoundary from '../../../App/ErrorBoundary';
 import PageTitle from '../../../common/PageTitle';
 import Breadcrumbs from '../../../common/Breadcrumbs';
 
-import { shouldRefetchQuota, scrollToFirstError } from '~/common/helpers';
+import { shouldRefetchQuota, scrollToFirstField } from '~/common/helpers';
 import usePreventBrowserNav from '~/hooks/usePreventBrowserNav';
 
 import { trackEvents, ocmResourceTypeByProduct } from '~/common/analytics';
@@ -240,7 +240,7 @@ class CreateOSDWizardInternal extends React.Component {
     // When errors exist, touch the fields with those errors to trigger validation.
     if (errorIds?.length > 0 && !isCurrentStepValid) {
       touch(errorIds);
-      scrollToFirstError(errorIds);
+      scrollToFirstField(errorIds);
       this.setState({ isNextClicked: !isNextClicked });
       return;
     }

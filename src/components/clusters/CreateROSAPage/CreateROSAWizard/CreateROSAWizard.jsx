@@ -6,7 +6,7 @@ import { Spinner } from '@redhat-cloud-services/frontend-components';
 import { Banner, Wizard, PageSection, WizardContext } from '@patternfly/react-core';
 
 import config from '~/config';
-import { shouldRefetchQuota, scrollToFirstError } from '~/common/helpers';
+import { shouldRefetchQuota, scrollToFirstField } from '~/common/helpers';
 import { normalizedProducts } from '~/common/subscriptionTypes';
 import { trackEvents, ocmResourceType } from '~/common/analytics';
 import withAnalytics from '~/hoc/withAnalytics';
@@ -193,7 +193,7 @@ class CreateROSAWizardInternal extends React.Component {
     // When errors exist, touch the fields with those errors to trigger validation.
     if (errorIds?.length > 0 && !isCurrentStepValid) {
       touch(errorIds);
-      scrollToFirstError(errorIds);
+      scrollToFirstField(errorIds);
       this.setState({ isNextClicked: !isNextClicked });
       return true;
     }
