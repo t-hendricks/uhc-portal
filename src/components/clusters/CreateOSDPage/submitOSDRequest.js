@@ -17,6 +17,9 @@ const createClusterAzs = ({ formData, isInstallExistingVPC }) => {
     if (formData.multi_az === 'true') {
       AZs.push(formData.az_1, formData.az_2);
     }
+  } else {
+    // The backend does not admit an empty list of availability_zones
+    return undefined;
   }
   return AZs;
 };
