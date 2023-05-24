@@ -403,7 +403,6 @@ const runItYourself = () => {
         <Link to="/install/azure/multi/installer-provisioned" className="pf-u-mr-xs">
           Azure (multi-architecture)
         </Link>
-        <TechnologyPreview position={PreviewBadgePosition.inline} />
       </>,
       'Full stack automation',
     ],
