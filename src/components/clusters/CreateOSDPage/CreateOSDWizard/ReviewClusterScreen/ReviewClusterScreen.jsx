@@ -47,6 +47,8 @@ const ReviewClusterScreen = ({
   const isROSA = formValues.product === normalizedProducts.ROSA;
   const hasEtcdEncryption = isHypershiftSelected && !!formValues.etcd_key_arn;
   const showVPCCheckbox = isROSA || isByoc;
+  const hasAWSVPCSettings = showVPCCheckbox && formValues.install_to_vpc && isAWS;
+
   const clusterSettingsFields = [
     ...(!isROSA ? ['cloud_provider'] : []),
     'name',
@@ -217,6 +219,12 @@ const ReviewClusterScreen = ({
         {autoscalingEnabled
           ? ReviewItem({ name: 'min_replicas', formValues })
           : ReviewItem({ name: 'nodes_compute', formValues })}
+        {hasAWSVPCSettings &&
+          isHypershiftSelected &&
+          ReviewItem({
+            name: 'aws_hosted_vpc',
+            formValues,
+          })}
         {!(formValues.node_labels.length === 1 && isEmpty(formValues.node_labels[0])) &&
           ReviewItem({ name: 'node_labels', formValues })}
       </ReviewSection>
@@ -235,11 +243,10 @@ const ReviewClusterScreen = ({
           (formValues.hypershift === 'true' ||
             (formValues.cluster_privacy === 'internal' && formValues.install_to_vpc)) &&
           ReviewItem({ name: 'use_privatelink', formValues })}
-        {showVPCCheckbox &&
-          formValues.install_to_vpc &&
-          isAWS &&
+        {hasAWSVPCSettings &&
+          !isHypershiftSelected &&
           ReviewItem({
-            name: isHypershiftSelected ? 'aws_hosted_vpc' : 'aws_standalone_vpc',
+            name: 'aws_standalone_vpc',
             formValues,
           })}
         {showVPCCheckbox &&

@@ -28,6 +28,7 @@ const mapStateToProps = (state, ownProps) => {
     product,
     isByoc: isCCS,
     formValues,
+    isHypershiftSelected,
     initialValues: createOSDInitialValues({
       cloudProviderID,
       product,
