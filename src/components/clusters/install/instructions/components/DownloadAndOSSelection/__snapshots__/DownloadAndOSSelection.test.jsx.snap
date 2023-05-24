@@ -257,7 +257,7 @@ exports[`DownloadAndOSSelection multi-openshift-install renders correctly 1`] = 
     >
       <DownloadButton
         tool="multi-openshift-install"
-        url="https://mirror.openshift.com/pub/openshift-v4/multi/clients/ocp/latest/amd64/openshift-install-linux.tar.gz"
+        url="https://mirror.openshift.com/pub/openshift-v4/multi/clients/ocp/stable/amd64/openshift-install-linux.tar.gz"
       />
     </GridItem>
   </Grid>

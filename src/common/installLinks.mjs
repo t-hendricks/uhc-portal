@@ -11,8 +11,8 @@ const MIRROR_CLIENTS_STABLE_PPC =
   'https://mirror.openshift.com/pub/openshift-v4/ppc64le/clients/ocp/stable/';
 const MIRROR_CLIENTS_STABLE_ARM =
   'https://mirror.openshift.com/pub/openshift-v4/aarch64/clients/ocp/stable/';
-const MIRROR_CLIENTS_LATEST_TP_MULTI =
-  'https://mirror.openshift.com/pub/openshift-v4/multi/clients/ocp/latest/';
+const MIRROR_CLIENTS_STABLE_TP_MULTI =
+  'https://mirror.openshift.com/pub/openshift-v4/multi/clients/ocp/stable/';
 const MIRROR_CLIENTS_LATEST_PRE_X86 =
   'https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp-dev-preview/pre-release/';
 const MIRROR_CLIENTS_LATEST_PRE_IBMZ =
@@ -638,12 +638,12 @@ const urls = {
   [tools.MULTIINSTALLER]: {
     [channels.STABLE]: {
       [architectures.x86]: {
-        [operatingSystems.linux]: `${MIRROR_CLIENTS_LATEST_TP_MULTI}amd64/openshift-install-linux.tar.gz`,
-        [operatingSystems.mac]: `${MIRROR_CLIENTS_LATEST_TP_MULTI}amd64/openshift-install-mac.tar.gz`,
+        [operatingSystems.linux]: `${MIRROR_CLIENTS_STABLE_TP_MULTI}amd64/openshift-install-linux.tar.gz`,
+        [operatingSystems.mac]: `${MIRROR_CLIENTS_STABLE_TP_MULTI}amd64/openshift-install-mac.tar.gz`,
       },
       [architectures.arm]: {
-        [operatingSystems.linux]: `${MIRROR_CLIENTS_LATEST_TP_MULTI}arm64/openshift-install-linux.tar.gz`,
-        [operatingSystems.mac]: `${MIRROR_CLIENTS_LATEST_TP_MULTI}arm64/openshift-install-mac-arm64.tar.gz`,
+        [operatingSystems.linux]: `${MIRROR_CLIENTS_STABLE_TP_MULTI}arm64/openshift-install-linux.tar.gz`,
+        [operatingSystems.mac]: `${MIRROR_CLIENTS_STABLE_TP_MULTI}arm64/openshift-install-mac-arm64.tar.gz`,
       },
       /*
       [architectures.ppc]: {
