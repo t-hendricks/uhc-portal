@@ -236,9 +236,6 @@ const ReviewClusterScreen = ({
         }
       >
         {ReviewItem({ name: 'cluster_privacy', formValues })}
-        {formValues.cluster_privacy_public_subnet?.subnet_id && (
-          <ReviewItem name="cluster_privacy_public_subnet" formValues={formValues} />
-        )}
         {showVPCCheckbox &&
           !isHypershiftSelected &&
           ReviewItem({ name: 'install_to_vpc', formValues })}

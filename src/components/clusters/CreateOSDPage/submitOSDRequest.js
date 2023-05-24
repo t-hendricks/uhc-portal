@@ -27,12 +27,10 @@ const createClusterAzs = ({ formData, isInstallExistingVPC }) => {
 const createClusterAwsSubnetIds = ({ formData, isInstallExistingVPC }) => {
   const subnetIds = [];
 
-  if (formData.cluster_privacy_public_subnet?.subnet_id) {
-    subnetIds.push(formData.cluster_privacy_public_subnet.subnet_id);
-  }
-
-  const isHypershiftSelected = formData.hypershift === 'true';
-  if (isHypershiftSelected) {
+  if (formData.hypershift === 'true') {
+    if (formData.cluster_privacy === 'external') {
+      subnetIds.push(formData.cluster_privacy_public_subnet.subnet_id);
+    }
     const privateSubnetIds = formData.machine_pools_subnets.map((subnet) => subnet.subnet_id);
     subnetIds.push(...privateSubnetIds);
   } else if (isInstallExistingVPC) {

@@ -264,13 +264,13 @@ const reviewValues = {
   aws_hosted_vpc: {
     title: 'Machine pools',
     valueTransform: (value, allValues) => {
+      const hasPublicSubnet = allValues.cluster_privacy === 'external';
       const vpcs = allValues.machine_pools_subnets.map((machinePool) => ({
-        publicSubnet: '',
+        publicSubnet: hasPublicSubnet ? allValues.cluster_privacy_public_subnet.subnet_id : '',
         privateSubnet: machinePool.subnet_id,
         az: machinePool.availability_zone,
       }));
-
-      return <AwsVpcTable vpcs={vpcs} showPublicFields={false} />;
+      return <AwsVpcTable vpcs={vpcs} showPublicFields={hasPublicSubnet} />;
     },
   },
   gpc_vpc: {
