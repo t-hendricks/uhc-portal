@@ -241,78 +241,60 @@ function NetworkScreen(props) {
           </>
         )}
 
-        {showVPCCheckbox && (
+        {isHypershiftSelected && <GridItem>{configureClusterProxyField}</GridItem>}
+
+        {showVPCCheckbox && !isHypershiftSelected && (
           <>
             <GridItem>
               <Title headingLevel="h4" size="xl" className="privacy-heading">
-                {isHypershiftSelected
-                  ? 'Install into a Virtual Private Cloud (VPC)'
-                  : 'Virtual Private Cloud (VPC)'}
+                Virtual Private Cloud (VPC)
               </Title>
             </GridItem>
             <GridItem>
               <Text>
-                {isHypershiftSelected
-                  ? 'To install a hosted ROSA cluster, you must have a VPC. Specify your VPC details based on your selected region and account.'
-                  : 'By default, a new VPC will be created for your cluster. Alternatively, you may opt to install to an existing VPC below.'}
+                By default, a new VPC will be created for your cluster. Alternatively, you may opt
+                to install to an existing VPC below.
               </Text>
             </GridItem>
-            {isHypershiftSelected ? (
-              <GridItem>
-                <Alert
-                  variant="info"
-                  isInline
-                  title="Hosted control plane for ROSA clusters are installed and managed in your AWS VPC through a fully private connection using AWS PrivateLink."
-                >
-                  <ExternalLink href={links.VIRTUAL_PRIVATE_CLOUD_URL}>
-                    Learn more about networking on hosted clusters
-                  </ExternalLink>
-                </Alert>
-                <FormGroup>
-                  <FormFieldGroup>{configureClusterProxyField}</FormFieldGroup>
-                </FormGroup>
-              </GridItem>
-            ) : (
-              <GridItem>
-                <FormGroup fieldId="install-to-vpc">
-                  {privateClusterSelected ? (
-                    <Tooltip
-                      position="top-start"
-                      enableFlip
-                      content={
-                        <p>
-                          Private clusters must be installed into an existing VPC and have
-                          PrivateLink enabled.
-                        </p>
-                      }
-                    >
-                      {installToVPCCheckbox}
-                    </Tooltip>
-                  ) : (
-                    installToVPCCheckbox
+            <GridItem>
+              <FormGroup fieldId="install-to-vpc">
+                {privateClusterSelected ? (
+                  <Tooltip
+                    position="top-start"
+                    enableFlip
+                    content={
+                      <p>
+                        Private clusters must be installed into an existing VPC and have PrivateLink
+                        enabled.
+                      </p>
+                    }
+                  >
+                    {installToVPCCheckbox}
+                  </Tooltip>
+                ) : (
+                  installToVPCCheckbox
+                )}
+                <FormFieldGroup>
+                  {privateClusterSelected && cloudProviderID === 'aws' && (
+                    <FormGroup>
+                      <Field
+                        component={ReduxCheckbox}
+                        name="use_privatelink"
+                        label="Use a PrivateLink"
+                        onChange={onPrivateLinkChange}
+                        isDisabled={forcePrivateLink && privateClusterSelected}
+                        helpText={
+                          <div className="ocm-c--reduxcheckbox-description">
+                            {constants.privateLinkHint}
+                          </div>
+                        }
+                      />
+                    </FormGroup>
                   )}
-                  <FormFieldGroup>
-                    {privateClusterSelected && cloudProviderID === 'aws' && (
-                      <FormGroup>
-                        <Field
-                          component={ReduxCheckbox}
-                          name="use_privatelink"
-                          label="Use a PrivateLink"
-                          onChange={onPrivateLinkChange}
-                          isDisabled={forcePrivateLink && privateClusterSelected}
-                          helpText={
-                            <div className="ocm-c--reduxcheckbox-description">
-                              {constants.privateLinkHint}
-                            </div>
-                          }
-                        />
-                      </FormGroup>
-                    )}
-                    {showConfigureProxy && <FormGroup>{configureClusterProxyField}</FormGroup>}
-                  </FormFieldGroup>
-                </FormGroup>
-              </GridItem>
-            )}
+                  {showConfigureProxy && <FormGroup>{configureClusterProxyField}</FormGroup>}
+                </FormFieldGroup>
+              </FormGroup>
+            </GridItem>
           </>
         )}
       </Grid>
