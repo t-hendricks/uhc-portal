@@ -41,7 +41,6 @@ const mapStateToProps = (state, ownProps) => {
       isByoc,
       isTrialDefault: ownProps.isTrialDefault,
       isHypershiftSelected,
-      selectedVPCID,
     }),
   };
 };
