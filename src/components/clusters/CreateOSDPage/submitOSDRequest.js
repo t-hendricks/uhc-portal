@@ -27,8 +27,8 @@ const createClusterAzs = ({ formData, isInstallExistingVPC }) => {
 const createClusterAwsSubnetIds = ({ formData, isInstallExistingVPC }) => {
   const subnetIds = [];
 
-  if (formData.cluster_privacy_public_subnet_id) {
-    subnetIds.push(formData.cluster_privacy_public_subnet_id);
+  if (formData.cluster_privacy_public_subnet?.subnet_id) {
+    subnetIds.push(formData.cluster_privacy_public_subnet.subnet_id);
   }
 
   const isHypershiftSelected = formData.hypershift === 'true';

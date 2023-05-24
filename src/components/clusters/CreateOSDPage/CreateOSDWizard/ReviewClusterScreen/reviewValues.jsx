@@ -210,6 +210,7 @@ const reviewValues = {
       </LabelGroup>
     ),
   },
+  // For non-Hypershift
   install_to_vpc: {
     title: 'Install into existing VPC',
     isBoolean: true,
@@ -217,6 +218,10 @@ const reviewValues = {
       true: 'Enabled',
       false: 'Disabled',
     },
+  },
+  // For Hypershift
+  selected_vpc_id: {
+    title: 'Install to selected VPC',
   },
   use_privatelink: {
     title: 'PrivateLink',
@@ -347,8 +352,9 @@ const reviewValues = {
       undefined: 'Public',
     },
   },
-  cluster_privacy_public_subnet_id: {
+  cluster_privacy_public_subnet: {
     title: 'Public subnet ID',
+    valueTransform: (subnet) => subnet.subnet_id,
   },
   associated_aws_id: {
     title: 'AWS infrastructure account ID',

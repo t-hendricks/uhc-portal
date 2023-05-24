@@ -41,7 +41,7 @@ function NetworkScreen(props) {
   } = props;
   const { OSD, OSDTrial } = normalizedProducts;
   const isByocOSD = isByoc && [OSD, OSDTrial].includes(product);
-  const publicSubnetIdRef = React.useRef();
+  const publicSubnetRef = React.useRef();
 
   // show only if the product is ROSA with VPC or BYOC/CCS OSD with VPC
   // Do not need to check for VPC here, since checking the "Configure a cluster-wide proxy" checkbox
@@ -78,7 +78,7 @@ function NetworkScreen(props) {
   };
 
   const onClusterPrivacyChange = (_, value) => {
-    const { cluster_privacy_public_subnet_id: publicSubnetId, cluster_privacy: clusterPrivacy } =
+    const { cluster_privacy_public_subnet: publicSubnet, cluster_privacy: clusterPrivacy } =
       formValues;
     if (value === 'external') {
       if (!isHypershiftSelected) {
@@ -89,12 +89,12 @@ function NetworkScreen(props) {
 
       // When toggling from Private to Public, if a previous public subnet ID was selected,
       // use that previous value to rehydrate the dropdown.
-      if (publicSubnetIdRef.current && clusterPrivacy === 'internal') {
-        change('cluster_privacy_public_subnet_id', publicSubnetIdRef.current);
+      if (publicSubnetRef.current && clusterPrivacy === 'internal') {
+        change('cluster_privacy_public_subnet', publicSubnetRef.current);
       }
     } else {
-      publicSubnetIdRef.current = publicSubnetId;
-      change('cluster_privacy_public_subnet_id', undefined);
+      publicSubnetRef.current = publicSubnet;
+      change('cluster_privacy_public_subnet', { subnet_id: '', availability_zone: '' });
     }
   };
 
@@ -195,10 +195,12 @@ function NetworkScreen(props) {
                   extraField: isHypershiftSelected && !privateClusterSelected && (
                     <Field
                       component={SubnetSelectField}
-                      name="cluster_privacy_public_subnet_id"
+                      name="cluster_privacy_public_subnet"
                       label="Public subnet ID"
                       className="pf-u-mt-md pf-u-ml-lg"
                       isRequired
+                      withAutoSelect={false}
+                      selectedVPC={formValues.selected_vpc_id}
                       privacy="public"
                       isNewCluster
                     />
