@@ -68,9 +68,9 @@ const ControlPlaneField = ({
       change('multi_az', 'false');
     }
 
-    // Reset the cluster privacy public subnet ID when Standalone is chosen.
-    if (isHypershift === 'false' && formValues.cluster_privacy_public_subnet_id) {
-      change('cluster_privacy_public_subnet_id', undefined);
+    // Reset the cluster privacy public subnet when Standalone is chosen.
+    if (isHypershift === 'false' && formValues.cluster_privacy_public_subnet?.subnet_id) {
+      change('cluster_privacy_public_subnet', { subnet_id: '', availability_zone: '' });
     }
   };
 

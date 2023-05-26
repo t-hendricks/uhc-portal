@@ -10,7 +10,6 @@ const createOSDInitialValues = ({
   isMultiAz,
   isTrialDefault,
   isHypershiftSelected,
-  selectedVPCID = '',
 }) => {
   let defaultNodeCount;
   if (isByoc || isTrialDefault) {
@@ -46,7 +45,7 @@ const createOSDInitialValues = ({
     // Optional fields based on whether Hypershift is selected or not
     ...(isHypershiftSelected
       ? {
-          selected_vpc_id: selectedVPCID,
+          selected_vpc_id: '',
           machine_pools_subnets: [{ subnet_id: '', availability_zone: '' }],
         }
       : { enable_user_workload_monitoring: 'true' }),

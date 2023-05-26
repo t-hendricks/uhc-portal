@@ -210,6 +210,7 @@ const reviewValues = {
       </LabelGroup>
     ),
   },
+  // For non-Hypershift
   install_to_vpc: {
     title: 'Install into existing VPC',
     isBoolean: true,
@@ -217,6 +218,10 @@ const reviewValues = {
       true: 'Enabled',
       false: 'Disabled',
     },
+  },
+  // For Hypershift
+  selected_vpc_id: {
+    title: 'Install to selected VPC',
   },
   use_privatelink: {
     title: 'PrivateLink',
@@ -259,13 +264,13 @@ const reviewValues = {
   aws_hosted_vpc: {
     title: 'Machine pools',
     valueTransform: (value, allValues) => {
+      const hasPublicSubnet = allValues.cluster_privacy === 'external';
       const vpcs = allValues.machine_pools_subnets.map((machinePool) => ({
-        publicSubnet: '',
+        publicSubnet: hasPublicSubnet ? allValues.cluster_privacy_public_subnet.subnet_id : '',
         privateSubnet: machinePool.subnet_id,
         az: machinePool.availability_zone,
       }));
-
-      return <AwsVpcTable vpcs={vpcs} showPublicFields={false} />;
+      return <AwsVpcTable vpcs={vpcs} showPublicFields={hasPublicSubnet} />;
     },
   },
   gpc_vpc: {
@@ -347,8 +352,9 @@ const reviewValues = {
       undefined: 'Public',
     },
   },
-  cluster_privacy_public_subnet_id: {
+  cluster_privacy_public_subnet: {
     title: 'Public subnet ID',
+    valueTransform: (subnet) => subnet.subnet_id,
   },
   associated_aws_id: {
     title: 'AWS infrastructure account ID',
