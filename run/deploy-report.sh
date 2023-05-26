@@ -1,17 +1,20 @@
 #!/bin/bash -e
 shopt -s nocasematch
 
-# Declare an array to store the matched jiraKeys
-declare -a jiraKeys
-# Declare arrays to store found, notFoundInReview, notFoundReadyToPromote commits
-# found/notFound meaning if remotes/origin/master's commit message string was found/not found in remotes/origin/candidate log file
-declare -a found
-# associated jira tickets not closed, still in 'Review' most likely
-declare -a notFoundNotClosed
+# An array to store the jiraKeys in a commit
+jiraKeys=()
+# An array of master commits whose message strings where found in remotes/origin/candidate log file
+found=()
+# master commits whose message strings where NOT found in remotes/origin/candidate log file
+# ...and whose associated jira tickets were not all closed; most likely still in 'Review'
+notClosed=()
 # master commits ready to promote to remotes/origin/candidate
-declare -a notFoundReadyToPromote
+readyToPromote=()
+readyToPromoteSHAs=()
 
-jiratoken="${1#--jira-token=}"
+releaseNotes=()
+
+jira_token="${1#--jira-token=}"
 
 # Read each line from stdin (piped CSV data) and convert it to JSON
 while IFS=',' read -r commitHash commitDate commitMessage; do
@@ -32,19 +35,28 @@ while IFS=',' read -r commitHash commitDate commitMessage; do
     # Pattern matching to extract jiraKeys
     regex="(HAC[- ]?[0-9]{4})"
 
+    commitDescription=$(git log --format=%b -n 1 $commitHash)
+    echo "commitDescription=$commitDescription"
+    mrID=$(echo "$commitDescription" | grep -o '![0-9]\{4\}' | tr -d '!')
+    mrDesc=$(echo "$commitDescription" | awk 'NR==1 { print }')
     # Find and store all matching jiraKeys
-    while [[ $commitMessage =~ $regex ]]; do
+    while [[ $commitDescription =~ $regex ]]; do
       matched="${BASH_REMATCH[1]}"
       # Check if the substring already exists in the array
       if [[ ! " ${jiraKeys[*]} " =~ " $matched " ]]; then
         jiraKeys+=("$matched")
       fi
-      commitMessage="${commitMessage#*$matched}"
+      commitDescription="${commitDescription#*$matched}"
     done
 
     # Check if jiraKeys array is empty
+    jiraKeysAsString=""
     if [ "${#jiraKeys[@]}" -eq 0 ]; then
-      notFoundReadyToPromote+=("  $masterLogLine")
+      readyToPromote+=("  $masterLogLine")
+      readyToPromoteSHAs+=("$commitHash")
+      jiraKeysAsString="-"
+      releaseNote="{\"revision\": \"$commitHash\", \"ticket\": \"$jiraKeysAsString\", \"description\": \"$mrDesc\", \"mr\": \"!$mrID\"}"
+      releaseNotes+=("$releaseNote")
     else
       allJirasClosed=true
       # Iterate over the jiraKeys and look them up
@@ -52,10 +64,15 @@ while IFS=',' read -r commitHash commitDate commitMessage; do
         jiraKeyNumber=${jiraKey//[!0-9]}
         if [[ "$jiraKey" == *"hac"* ]]; then
           jiraKey="HAC-$jiraKeyNumber"
+          if [ -n "$jiraKeysAsString" ]; then
+            jiraKeysAsString+=", $jiraKey"
+          else
+            jiraKeysAsString="$jiraKey"
+          fi
           echo "  JIRA info"
           printf "    key: %s\n" "$jiraKey"
 
-          response=$(curl -s -X GET -H "Authorization: Bearer $jiratoken" -H "Content-Type: application/json" "https://issues.redhat.com/rest/api/2/issue/$jiraKey?fields=key,summary,resolutiondate,status")
+          response=$(curl -s -X GET -H "Authorization: Bearer $jira_token" -H "Content-Type: application/json" "https://issues.redhat.com/rest/api/2/issue/$jiraKey?fields=key,summary,resolutiondate,status")
 
           summary=$(echo "$response" | jq -r '.fields.summary')
           printf "    summary: %s\n" "$summary"
@@ -72,50 +89,75 @@ while IFS=',' read -r commitHash commitDate commitMessage; do
         fi
       done
       if [ "$allJirasClosed" = true ]; then
-        notFoundReadyToPromote+=("C $masterLogLine")
+        readyToPromote+=("C $masterLogLine")
+        readyToPromoteSHAs+=("$commitHash")
+        releaseNote="{\"revision\": \"$commitHash\", \"ticket\": \"$jiraKeysAsString\", \"description\": \"$mrDesc\", \"mr\": \"!$mrID\"}"
+        releaseNotes+=("$releaseNote")
       else
-        notFoundNotClosed+=("$masterLogLine")
+        notClosed+=("$masterLogLine")
       fi
     fi 
     jiraKeys=()
   fi
-
-  : '
-  echo "  Candidate branch"
-  echo "    commit msg: $commitMessage"
-  if [[ $(grep -c "$commitHash" "./candidateBranch.txt") -gt 0 ]]; then
-    echo "--> commit hash ${commitHash} found in remotes/origin/candidate"
-  else
-    echo "    commit hash ${commitHash} not found in remotes/origin/candidate"
-  fi
-  '
 done
 
 echo " "
 echo " "
-
 echo "Commits ready to promote to candidate"
 echo "  master commit messages not found in candidate"
 echo "  where 'C' = ...and all associated jira tickets of the commit are Closed"
 echo " "
-for logLine in "${notFoundReadyToPromote[@]}"; do
+for logLine in "${readyToPromote[@]}"; do
   echo "$logLine"
 done
 
+# To create MR
+echo " "
+echo "To create release candidate MR execute these commands:"
 echo " "
 
+# Create a new array to store the reversed elements
+reversedReadyToPromoteSHAs=()
+
+# Iterate over the commitSHA array in reverse
+for ((i=${#readyToPromoteSHAs[@]}-1; i>=0; i--)); do
+    reversedReadyToPromoteSHAs+=("${readyToPromoteSHAs[i]}")
+done
+
+# Create a temporary branch with the desired commits
+tempBranch="candidate-$(date +%Y%m%d)"
+echo git checkout -b "$tempBranch" remotes/origin/candidate
+echo " "
+echo git cherry-pick -m 1 "${reversedReadyToPromoteSHAs[@]}"
+echo " "
+
+# Release Notess
+echo "Release Notes (copy & paste into gitlab wiki page)"
+echo " "
+echo "### Month DD, YYYY"
+echo "| revision | ticket | description | MR |"
+echo "| --- | --- | --- | --- | "
+for releaseNote in "${releaseNotes[@]}"; do
+  revision=$(echo "$releaseNote" | jq -r '.revision')
+  ticket=$(echo "$releaseNote" | jq -r '.ticket')
+  description=$(echo "$releaseNote" | jq -r '.description')
+  mr=$(echo "$releaseNote" | jq -r '.mr')
+  echo "| $revision | $ticket | $description | $mr |"
+done
+
+echo " "
+echo "----- Other Info. -----"
+echo " "
 echo "Master commit messages not found in candidate, but not all associated jira tickets are Closed"
 echo " "
-for logLine in "${notFoundNotClosed[@]}"; do
+for logLine in "${notClosed[@]}"; do
   echo "$logLine"
 done
 
 echo " "
-
 echo "Master commit messages found in candidate"
 echo " "
 for logLine in "${found[@]}"; do
   echo "$logLine"
 done
-
 shopt -u nocasematch
