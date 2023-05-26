@@ -55,7 +55,7 @@ function BasicFieldsSection({
     // Reset the public subnet ID selection associated with cluster privacy on region change,
     // since the list of values there can change entirely based on the selected region.
     if (clusterPrivacy === 'external') {
-      change('cluster_privacy_public_subnet_id', undefined);
+      change('cluster_privacy_public_subnet', { subnet_id: '', availability_zone: '' });
     }
   };
 
