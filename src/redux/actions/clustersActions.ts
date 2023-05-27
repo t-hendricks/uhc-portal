@@ -59,6 +59,7 @@ import type {
   ClusterWithPermissions,
 } from '../../types/types';
 import type { AppThunk, AppThunkDispatch } from '../types';
+import { isHypershiftCluster } from '~/components/clusters/ClusterDetails/clusterDetailsHelper';
 
 const invalidateClusters = () => action(INVALIDATE_ACTION(clustersConstants.GET_CLUSTERS));
 
@@ -70,7 +71,7 @@ const createClusterAndUpgradeSchedule = async (
   const clusterResponse = await clusterService.postNewCluster(cluster);
   if (upgradeSchedule) {
     const clusterID = clusterResponse.data.id;
-    dispatch(postSchedule(clusterID, upgradeSchedule));
+    dispatch(postSchedule(clusterID, upgradeSchedule, isHypershiftCluster(cluster)));
   }
   dispatch(invalidateClusters());
   return clusterResponse;
