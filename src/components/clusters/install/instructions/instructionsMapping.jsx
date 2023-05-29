@@ -51,6 +51,7 @@ const instructionsMapping = {
         installer: tools.MULTIINSTALLER,
         channel: channels.STABLE,
         docURL: links.INSTALL_AWS_MULTI_ARCH,
+        preReleasePageLink: '/install/multi/pre-release',
       },
     },
     arm: {
