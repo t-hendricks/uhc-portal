@@ -683,9 +683,11 @@ const listGCPKeys = (credentials: GCP, location: string, ring: string) =>
 
 /**
  * List AWS regions for given CCS account.
- * @param {*} credentials { accountID, accessKey, secretKey } object
+ * @param {Object} credentials
+ * @param {string} [openshiftVersionId] Optional. Exclude regions known to be incompatible
+ *   with this version.
  */
-const listAWSRegions = (credentials: AWSCredentials) =>
+const listAWSRegions = (credentials: AWSCredentials, openshiftVersionId?: string) =>
   apiRequest.post<{
     /**
      * Retrieved list of regions.
@@ -710,6 +712,11 @@ const listAWSRegions = (credentials: AWSCredentials) =>
     total?: number;
   }>('/api/clusters_mgmt/v1/aws_inquiries/regions', {
     aws: credentials,
+    ...(openshiftVersionId && {
+      version: {
+        id: openshiftVersionId,
+      },
+    }),
   });
 
 const getUpgradeGates = () =>

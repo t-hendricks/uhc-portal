@@ -62,7 +62,9 @@ export const getCloudProverInfo = (values: FormikValues, dispatch: Dispatch) => 
       ),
     );
   }
-  return dispatch(getAWSCloudProviderRegions(getAwsCcsCredentials(values)));
+  return dispatch(
+    getAWSCloudProviderRegions(VALIDATE_CLOUD_PROVIDER_CREDENTIALS, getAwsCcsCredentials(values)),
+  );
 };
 
 export const shouldValidateCcsCredentials = (

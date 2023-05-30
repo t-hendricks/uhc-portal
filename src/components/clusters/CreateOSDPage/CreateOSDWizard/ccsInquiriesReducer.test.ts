@@ -1,6 +1,10 @@
-import { processAWSVPCs } from '~/components/clusters/CreateOSDPage/CreateOSDWizard/ccsInquiriesReducer';
-import { CloudVPC } from '~/types/clusters_mgmt.v1';
+import {
+  processAWSVPCs,
+  indexRegions,
+} from '~/components/clusters/CreateOSDPage/CreateOSDWizard/ccsInquiriesReducer';
+import { CloudRegion, CloudVPC } from '~/types/clusters_mgmt.v1';
 import awsVPCs from '../../../../../mockdata/api/clusters_mgmt/v1/aws_inquiries/vpcs.json';
+import awsRegions from '../../../../../mockdata/api/clusters_mgmt/v1/aws_inquiries/regions.json';
 
 describe('processAWSVPCs', () => {
   it('works', () => {
@@ -31,6 +35,24 @@ describe('processAWSVPCs', () => {
       subnet_id: 'subnet-id-without-Name',
       public: false,
       availability_zone: 'us-west-1a',
+    });
+  });
+});
+
+describe('indexRegions', () => {
+  it('handles null items', () => {
+    // Don't remember if this API may serializes empty `items` as `null` but let's be defensive.
+    // See above about `as` cast.
+    const data = { items: null } as unknown as { items: CloudRegion[] };
+    expect(indexRegions(data)).toEqual({});
+  });
+
+  it('works', () => {
+    const byID = indexRegions(awsRegions);
+    expect(byID[awsRegions.items[0].id]).toEqual(awsRegions.items[0]);
+    expect(byID['ap-east-1']).toMatchObject({
+      id: 'ap-east-1',
+      ccs_only: true,
     });
   });
 });

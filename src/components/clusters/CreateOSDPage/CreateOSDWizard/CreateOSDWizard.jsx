@@ -213,7 +213,7 @@ class CreateOSDWizardInternal extends React.Component {
       );
     }
 
-    return getAWSCloudProviderRegions(ccsCredentials);
+    return getAWSCloudProviderRegions(VALIDATE_CLOUD_PROVIDER_CREDENTIALS, ccsCredentials);
   };
 
   onBeforeNext = async (onNext) => {
