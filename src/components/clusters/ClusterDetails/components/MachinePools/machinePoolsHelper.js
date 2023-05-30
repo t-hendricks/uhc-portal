@@ -154,13 +154,24 @@ const hasSubnets = (machinePoolOrNodePool) => {
  * @param machinePoolId
  * @returns number | undefined
  */
-const getMinNodesRequired = (isHypershiftCluster, machinePoolId) => {
-  if (!isHypershiftCluster && machinePoolId !== 'Default') {
-    return 0;
-  }
-
+const getMinNodesRequired = (isHypershiftCluster, isDefaultMachinePool, isMultiAz) => {
   if (isHypershiftCluster) {
     return 1;
+  }
+
+  if (isDefaultMachinePool) {
+    // Default machine pool
+    if (isMultiAz) {
+      // Classic ROSA, Multi-zone
+      return 3;
+    }
+    // Classic ROSA, Single zone
+    return 2;
+  }
+
+  if (!isDefaultMachinePool) {
+    // Classic ROSA, not the default machine pool
+    return 0;
   }
 
   return undefined;

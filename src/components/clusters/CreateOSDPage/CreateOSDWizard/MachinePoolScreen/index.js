@@ -7,6 +7,7 @@ import wizardConnector from '../WizardConnector';
 import MachinePoolScreen from './MachinePoolScreen';
 import createOSDInitialValues from '../../createOSDInitialValues';
 import { getMinNodesRequired } from '~/components/clusters/ClusterDetails/components/MachinePools/machinePoolsHelper';
+import { normalizedProducts } from '~/common/subscriptionTypes';
 
 const mapStateToProps = (state, ownProps) => {
   const valueSelector = formValueSelector('CreateCluster');
@@ -20,6 +21,8 @@ const mapStateToProps = (state, ownProps) => {
   const isHypershiftSelected = valueSelector(state, 'hypershift') === 'true';
   const selectedVPCID = valueSelector(state, 'selected_vpc_id');
 
+  const isRosa = product === normalizedProducts.ROSA;
+
   return {
     cloudProviderID,
     isMultiAz,
@@ -29,7 +32,9 @@ const mapStateToProps = (state, ownProps) => {
     machineType,
     isHypershiftSelected,
     selectedVPCID,
-    minNodesRequired: getMinNodesRequired(isHypershiftSelected),
+    minNodesRequired: isRosa
+      ? getMinNodesRequired(isHypershiftSelected, true, isMultiAz)
+      : undefined,
     canAutoScale: canAutoScaleOnCreateSelector(state, product),
     autoscalingEnabled: !!valueSelector(state, 'autoscalingEnabled'),
     autoScaleMinNodesValue: valueSelector(state, 'min_replicas'),

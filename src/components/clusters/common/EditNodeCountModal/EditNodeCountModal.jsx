@@ -125,7 +125,7 @@ class EditNodeCountModal extends Component {
       clusterID,
       isHypershiftCluster,
     } = this.props;
-    const minNodesRequired = getMinNodesRequired(isHypershiftCluster, machinePoolId);
+    const minNodesRequired = getMinNodesRequired(isHypershiftCluster, machinePoolId === 'Default');
 
     const error = editNodeCountResponse.error ? (
       <ErrorBox message="Error editing machine pool" response={editNodeCountResponse} />
