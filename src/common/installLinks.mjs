@@ -59,9 +59,9 @@ const ROSA_CP_DOCS_BASE =
   'https://access.redhat.com/documentation/en-us/red_hat_openshift_service_on_aws/4/html';
 
 const COSTMGMT_DOCS_BASE =
-  'https://access.redhat.com/documentation/en-us/cost_management_service/2022';
+  'https://access.redhat.com/documentation/en-us/cost_management_service/2023';
 const OCM_DOCS_BASE =
-  'https://access.redhat.com/documentation/en-us/openshift_cluster_manager/2022';
+  'https://access.redhat.com/documentation/en-us/openshift_cluster_manager/2023';
 
 const links = {
   DOCS_ENTRY: `${DOCS_BASE}/welcome/index.html`,
@@ -286,8 +286,7 @@ const links = {
   AWS_ROSA_GET_STARTED: 'https://docs.aws.amazon.com/ROSA/latest/userguide/getting-started.html',
 
   OCM_DOCS_PULL_SECRETS: `${OCM_DOCS_BASE}/html/managing_clusters/assembly-managing-clusters#downloading_and_updating_pull_secrets`,
-  // TODO OCM RBAC phase 2: update this link once the new chapter is there.
-  OCM_DOCS_ROLES_AND_ACCESS: `${OCM_DOCS_BASE}/html/managing_clusters/index`,
+  OCM_DOCS_ROLES_AND_ACCESS: `${OCM_DOCS_BASE}/html/managing_clusters/assembly-user-management-ocm`,
   OCM_DOCS_SUBSCRIPTIONS: `${OCM_DOCS_BASE}/html/managing_clusters/assembly-cluster-subscriptions`,
   OCM_DOCS_UPGRADING_OSD_TRIAL: `${OCM_DOCS_BASE}/html/managing_clusters/assembly-cluster-subscriptions#upgrading-osd-trial-cluster_assembly-cluster-subscriptions`,
 
