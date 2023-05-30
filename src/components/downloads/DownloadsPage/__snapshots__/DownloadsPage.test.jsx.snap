@@ -11339,7 +11339,7 @@ exports[`<DownloadsPage> renders 1`] = `
                    or
                    
                   <ExternalLink
-                    href="https://access.redhat.com/documentation/en-us/openshift_cluster_manager/2022/html/managing_clusters/assembly-managing-clusters#downloading_and_updating_pull_secrets"
+                    href="https://access.redhat.com/documentation/en-us/openshift_cluster_manager/2023/html/managing_clusters/assembly-managing-clusters#downloading_and_updating_pull_secrets"
                   >
                     learn more about pull secrets
                   </ExternalLink>
