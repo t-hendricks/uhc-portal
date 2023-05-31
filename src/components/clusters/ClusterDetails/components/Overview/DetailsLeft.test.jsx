@@ -307,12 +307,14 @@ describe('<DetailsLeft />', () => {
 
     it('shows Multi-Zone for Hypershift cluster ', () => {
       // NOTE: This tests that the UI shows multi-zone regardless of value
-      // This test will need to be modified once HAC-3176 is done
 
       // Arrange
-      const ROSAHypershiftClusterFixture = fixtures.ROSAHypershiftClusterDetails.cluster;
+      const ROSAHypershiftClusterFixture = {
+        ...fixtures.ROSAHypershiftClusterDetails.cluster,
+        multi_az: true,
+      };
       expect(ROSAHypershiftClusterFixture.hypershift.enabled).toBeTruthy();
-      expect(ROSAHypershiftClusterFixture.multi_az).toBeFalsy();
+      expect(ROSAHypershiftClusterFixture.multi_az).toBe(true);
 
       const props = { ...defaultProps, cluster: ROSAHypershiftClusterFixture };
       render(<DetailsLeft {...props} />);
