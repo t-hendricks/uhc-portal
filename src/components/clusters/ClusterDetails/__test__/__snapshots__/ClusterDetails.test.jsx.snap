@@ -4668,7 +4668,7 @@ exports[`<ClusterDetails /> Cluster Details - OSD should render 1`] = `
                                     className="pf-c-breadcrumb__list"
                                   >
                                     <BreadcrumbItem
-                                      key=".0"
+                                      key=".$Clusters"
                                       render={[Function]}
                                       showDivider={false}
                                     >
