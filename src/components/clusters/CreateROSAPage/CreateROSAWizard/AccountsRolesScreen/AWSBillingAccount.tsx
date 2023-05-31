@@ -1,6 +1,14 @@
 import React, { useEffect, useCallback, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { Button, GridItem, Text, TextVariants, Title } from '@patternfly/react-core';
+import {
+  Button,
+  GridItem,
+  Text,
+  TextVariants,
+  Title,
+  Alert,
+  AlertVariant,
+} from '@patternfly/react-core';
 import { Field } from 'redux-form';
 
 import AWSAccountSelection from './AWSAccountSelection';
@@ -15,9 +23,14 @@ import links from '~/common/installLinks.mjs';
 interface AWSBillingAccountProps {
   change: (field: string, value: string) => void;
   selectedAWSBillingAccountID: string;
+  selectedAWSAccountID: string;
 }
 
-const AWSBillingAccount = ({ change, selectedAWSBillingAccountID }: AWSBillingAccountProps) => {
+const AWSBillingAccount = ({
+  change,
+  selectedAWSBillingAccountID,
+  selectedAWSAccountID,
+}: AWSBillingAccountProps) => {
   const dispatch = useDispatch();
   const organization = useGlobalState((state) => state.userProfile.organization);
   const getAWSBillingAccountsResponse = useGlobalState(
@@ -110,6 +123,20 @@ const AWSBillingAccount = ({ change, selectedAWSBillingAccountID }: AWSBillingAc
         </Button>
       </GridItem>
       <GridItem span={7} />
+      <GridItem sm={12} md={12}>
+        {selectedAWSBillingAccountID !== selectedAWSAccountID &&
+        selectedAWSBillingAccountID &&
+        selectedAWSAccountID ? (
+          <Alert
+            isInline
+            variant={AlertVariant.info}
+            component="p"
+            role="alert"
+            title="The selected AWS billing account is a different account than your AWS infrastructure account.
+            The AWS billing account will be charged for subscription usage.  The AWS infrastructure account will be used for managing the cluster."
+          />
+        ) : null}
+      </GridItem>
     </>
   );
 };
