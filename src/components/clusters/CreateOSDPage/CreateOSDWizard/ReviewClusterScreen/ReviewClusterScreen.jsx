@@ -247,8 +247,8 @@ const ReviewClusterScreen = ({
             formValues,
           })}
         {showVPCCheckbox &&
-          (isHypershiftSelected ||
-            (formValues.cluster_privacy === 'internal' && formValues.install_to_vpc)) &&
+          formValues.cluster_privacy === 'internal' &&
+          formValues.install_to_vpc &&
           ReviewItem({ name: 'use_privatelink', formValues })}
         {hasAWSVPCSettings &&
           !isHypershiftSelected &&
