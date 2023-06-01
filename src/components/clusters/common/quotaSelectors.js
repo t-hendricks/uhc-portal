@@ -227,6 +227,17 @@ const hasManagedQuotaSelector = (state, product) =>
 const availableNodesFromQuota = (quotaList, query) =>
   availableQuota(quotaList, { ...query, resourceType: quotaTypes.NODE });
 
+const getAwsBillingAccountsFromQuota = (quotaList) => {
+  const marketplaceQuota = quotaList.items.find(
+    (quota) => quota.quota_id === 'cluster|byoc|moa|marketplace',
+  );
+  return (
+    marketplaceQuota.cloud_accounts
+      ?.filter((account) => account.cloud_provider_id === 'aws')
+      .map((account) => account.cloud_account_id) || []
+  );
+};
+
 export {
   quotaTypes,
   any,
@@ -237,4 +248,5 @@ export {
   availableClustersFromQuota,
   availableNodesFromQuota,
   addOnBillingQuota,
+  getAwsBillingAccountsFromQuota,
 };

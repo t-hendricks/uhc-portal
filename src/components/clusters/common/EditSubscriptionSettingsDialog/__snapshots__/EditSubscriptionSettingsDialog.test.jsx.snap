@@ -3194,6 +3194,7 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly when an erorr occu
                       data-ouia-component-id="OUIA-Generated-Alert-danger-1"
                       data-ouia-component-type="PF4/Alert"
                       data-ouia-safe="true"
+                      role="alert"
                     >
                       <div
                         class="pf-c-alert__icon"
@@ -4044,6 +4045,7 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly when an erorr occu
                                 <Alert
                                   className="error-box"
                                   isInline={true}
+                                  role="alert"
                                   title="Error updating subscription settings"
                                   variant="danger"
                                 >
@@ -4055,6 +4057,7 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly when an erorr occu
                                     data-ouia-safe={true}
                                     onMouseEnter={[Function]}
                                     onMouseLeave={[Function]}
+                                    role="alert"
                                   >
                                     <AlertIcon
                                       variant="danger"

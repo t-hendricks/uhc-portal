@@ -1,0 +1,37 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`InstallIBMZPreRelease renders correctly 1`] = `
+<Fragment>
+  <PageTitle
+    breadcrumbs={
+      <Breadcrumbs
+        path={
+          Array [
+            Object {
+              "label": "Clusters",
+            },
+            Object {
+              "label": "Cluster Type",
+              "path": "/create",
+            },
+            Object {
+              "label": "IBM Z",
+              "path": "/install/ibmz/user-provisioned",
+            },
+            Object {
+              "label": "Pre-Release Builds",
+            },
+          ]
+        }
+      />
+    }
+    title="Install OpenShift on IBM Z with user-provisioned infrastructure"
+  />
+  <PageSection>
+    <InstructionsPreRelease
+      installer="s390x-openshift-install"
+      token={Object {}}
+    />
+  </PageSection>
+</Fragment>
+`;

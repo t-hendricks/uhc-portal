@@ -396,6 +396,7 @@ exports[`<PersistentStorageDropdown /> when there was an error renders correctly
     <Alert
       className="error-box"
       isInline={true}
+      role="alert"
       title="Error loading persistent storage list"
       variant="danger"
     >
@@ -407,6 +408,7 @@ exports[`<PersistentStorageDropdown /> when there was an error renders correctly
         data-ouia-safe={true}
         onMouseEnter={[Function]}
         onMouseLeave={[Function]}
+        role="alert"
       >
         <AlertIcon
           variant="danger"

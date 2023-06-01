@@ -124,12 +124,14 @@ class ClusterDetails extends Component {
       resetClusterHistory,
       clearGetMachinePoolsResponse,
       clearFiltersAndFlags,
+      clearListVpcs,
     } = this.props;
     resetIdentityProvidersState();
     closeModal();
     resetClusterHistory();
     clearGetMachinePoolsResponse();
     clearFiltersAndFlags();
+    clearListVpcs();
   }
 
   onDialogClose = () => {
@@ -363,10 +365,7 @@ class ClusterDetails extends Component {
       !isClusterWaiting &&
       cluster.managed &&
       !isArchived;
-    const clusterUrls = {
-      console: get(cluster, 'console.url'),
-      api: get(cluster, 'api.url'),
-    };
+
     const displayMonitoringTab =
       !isArchived && !cluster.managed && !isAROCluster && !isUninstalledAICluster(cluster);
     const displayAccessControlTab = !isArchived;
@@ -375,7 +374,7 @@ class ClusterDetails extends Component {
       (isClusterReady || isClusterUpdating || clusterHibernating) &&
       cluster.managed &&
       !!get(cluster, 'api.url') &&
-      ((cloudProvider === 'aws' && !isPrivateCluster) ||
+      ((cloudProvider === 'aws' && (!isPrivateCluster || isHypershift)) ||
         (cloudProvider === 'gcp' &&
           (get(cluster, 'ccs.enabled') || (gotRouters && canCreateGCPNonCCSCluster)))) &&
       !isArchived;
@@ -483,13 +482,7 @@ class ClusterDetails extends Component {
               hidden
             >
               <ErrorBoundary>
-                <AccessControl
-                  cluster={cluster}
-                  clusterUrls={clusterUrls}
-                  cloudProvider={get(cluster, 'cloud_provider.id')}
-                  history={history}
-                  refreshEvent={refreshEvent}
-                />
+                <AccessControl cluster={cluster} history={history} refreshEvent={refreshEvent} />
               </ErrorBoundary>
             </TabContent>
           )}
@@ -642,6 +635,7 @@ ClusterDetails.propTypes = {
   getClusterHistory: PropTypes.func.isRequired,
   getMachineOrNodePools: PropTypes.func.isRequired,
   clearGetMachinePoolsResponse: PropTypes.func.isRequired,
+  clearListVpcs: PropTypes.func.isRequired,
   canSubscribeOCP: PropTypes.bool.isRequired,
   canTransferClusterOwnership: PropTypes.bool.isRequired,
   canHibernateCluster: PropTypes.bool.isRequired,

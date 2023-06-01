@@ -2,7 +2,7 @@
 
 exports[`InstallPower renders correctly 1`] = `
 <Fragment>
-  <PageTitle
+  <InstructionsChooserPageTitle
     breadcrumbs={
       <Breadcrumbs
         path={
@@ -15,53 +15,36 @@ exports[`InstallPower renders correctly 1`] = `
               "path": "/create",
             },
             Object {
-              "label": "Power",
+              "label": "IBM Power (ppc64le)",
             },
           ]
         }
       />
     }
-    title="Install OpenShift on Power with user-provisioned infrastructure"
+    cloudName="IBM Power (ppc64le)"
   />
   <PageSection>
-    <OCPInstructions
-      channel="stable"
-      cloudProviderID="baremetal"
-      docURL="https://docs.openshift.com/container-platform/4.12/installing/installing_ibm_power/installing-ibm-power.html"
-      installer="ppc64le-openshift-install"
-      isBMIPI={false}
-      isUPI={true}
-      preReleasePageLink="/install/power/pre-release"
-      rhcos={
+    <InstructionsChooser
+      aiLearnMoreLink="https://docs.openshift.com/container-platform/4.12/installing/installing_on_prem_assisted/installing-on-prem-assisted.html"
+      aiPageLink="/assisted-installer/clusters/~new"
+      hideIPI={true}
+      name="Power"
+      providerSpecificFeatures={
         Object {
-          "additionalInstructions": "Download either the installer ISO image or for PXE booting the initramfs, the kernel, and the rootfs files.",
-          "downloads": Array [
-            Object {
-              "buttonText": "Download RHCOS ISO",
-              "name": "OCP-Download-RHCOS-ISO",
-              "url": "https://mirror.openshift.com/pub/openshift-v4/ppc64le/dependencies/rhcos/latest/rhcos-live.ppc64le.iso",
-            },
-            Object {
-              "buttonText": "Download RHCOS initramfs",
-              "name": "OCP-Download-RHCOS-initramfs",
-              "url": "https://mirror.openshift.com/pub/openshift-v4/ppc64le/dependencies/rhcos/latest/rhcos-live-initramfs.ppc64le.img",
-            },
-            Object {
-              "buttonText": "Download RHCOS kernel",
-              "name": "OCP-Download-RHCOS-kernel",
-              "url": "https://mirror.openshift.com/pub/openshift-v4/ppc64le/dependencies/rhcos/latest/rhcos-live-kernel-ppc64le",
-            },
-            Object {
-              "buttonText": "Download RHCOS rootfs",
-              "name": "OCP-Download-RHCOS-rootfs",
-              "url": "https://mirror.openshift.com/pub/openshift-v4/ppc64le/dependencies/rhcos/latest/rhcos-live-rootfs.ppc64le.img",
-            },
+          "abi": Array [
+            "For connected or air-gapped/restricted networks",
           ],
-          "learnMoreURL": "https://docs.openshift.com/container-platform/4.12/installing/installing_ibm_power/installing-ibm-power.html#creating-machines-bare-metal-power",
+          "ipi": Array [
+            "Hosts controlled with IBM Power (ppc64le) Cloud Provider",
+            "For connected or air-gapped/restricted networks",
+          ],
+          "upi": Array [
+            "For connected or air-gapped/restricted networks",
+          ],
         }
       }
-      title="Install OpenShift on Power with user-provisioned infrastructure"
-      token={Object {}}
+      upiLearnMoreLink="https://docs.openshift.com/container-platform/4.12/installing/installing_ibm_power/installing-ibm-power.html"
+      upiPageLink="/install/power/user-provisioned"
     />
   </PageSection>
 </Fragment>

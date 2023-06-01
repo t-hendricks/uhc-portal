@@ -18,6 +18,7 @@ const Breadcrumbs = ({ path }: Props) => (
 
         return (
           <BreadcrumbItem
+            key={itemLabel}
             render={({ className, ariaCurrent }) => (
               <Link to={`${itemPath || '/'}`} className={className} aria-current={ariaCurrent}>
                 {itemLabel}

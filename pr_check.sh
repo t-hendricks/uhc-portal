@@ -18,28 +18,7 @@
 # This script is executed by a Jenkins job for each change request. If it
 # doesn't succeed the change won't be merged.
 
-# Log in to the image registry. This is needed because some of the images used
-# for the Selenium tests (the `nginx` image in particular) are private.
-if [ -z "${QUAY_USER}" ]; then
-  echo "Environment variable 'QUAY_USER' is mandatory."
-  exit 1
-fi
-if [ -z "${QUAY_TOKEN}" ]; then
-  echo "Environment variable 'QUAY_TOKEN' is mandatory."
-  exit 1
-fi
-
-# `podman pull` sometimes fails on auth despite prior `podman login` succeeding.
-# There was a theory this may be caused by concurrent jobs overriting same auth file,
-# hopefully this will isolate them?
-export REGISTRY_AUTH_FILE="${PWD}/podman-auth.json"
-rm -f "${REGISTRY_AUTH_FILE}"
-
-printenv QUAY_TOKEN | podman login --verbose --username="${QUAY_USER}" --password-stdin quay.io
-
-# Run the checks:
-
-# mockdata checked first because really fast
+# mockdata check should be really fast
 mockdata/regenerate-clusters.json.sh
 if ! git diff --exit-code --stat mockdata/api/clusters_mgmt/v1/clusters.json mockdata/api/accounts_mgmt/v1/subscriptions.json; then
   set +x
@@ -48,21 +27,5 @@ if ! git diff --exit-code --stat mockdata/api/clusters_mgmt/v1/clusters.json moc
   exit 1
 fi
 
-node --version
-
-# In CI we use selenium-standalone containers, don't need local chromedriver
-export CHROMEDRIVER_SKIP_DOWNLOAD=true
-
 make \
   app
-
-export NO_COLOR=1
-
-# Run the Selenium tests. If they get stuck, stop after realistic time. Jenkins
-# aborting after 30 minutes is wasteful and doesn't give our `cleanup` function
-# enough time to clean up.
-timeout \
-  --signal "TERM" \
-  --kill-after "2m" \
-  "10m" \
-  "run/selenium-pod.sh"

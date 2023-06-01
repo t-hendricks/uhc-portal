@@ -53,7 +53,6 @@ function VersionSelection({
     acc[version.name] = version.type;
     return acc;
   }, {});
-
   const isValidRosaVersion = React.useCallback(
     (version) => isSupportedMinorVersion(version, rosaMaxOSVersion),
     [rosaMaxOSVersion],
@@ -70,6 +69,7 @@ function VersionSelection({
       className="pf-u-ml-lg"
       variant="danger"
       isInline
+      role="alert"
       title="There is no version compatible with the selected ARNs in previous step"
     >
       <TextList component={TextListVariants.ol} className="ocm-c-wizard-alert-steps">
@@ -147,13 +147,21 @@ function VersionSelection({
     return selectedVersion ? selectedVersion.raw_id : '';
   };
 
+  const selectOptionDescription = (isIncompatibleVersion, isHostedDisabled) => {
+    if (isHostedDisabled) return 'This version is not compatible with a Hosted control plane';
+    if (isIncompatibleVersion)
+      return 'This version is not compatible with the selected ARNs in previous step';
+
+    return '';
+  };
+
   const selectOptions = React.useMemo(() => {
     const fullSupport = [];
     const maintenanceSupport = [];
     let hasIncompatibleVersions = false;
 
     versions.forEach((version) => {
-      const { raw_id: versionRawId } = version;
+      const { raw_id: versionRawId, hosted_control_plane_enabled: hostedEnabled } = version;
       const versionName = parseFloat(versionRawId);
       const minManagedPolicyVersionName = parseFloat(MIN_MANAGED_POLICY_VERSION);
 
@@ -167,8 +175,12 @@ function VersionSelection({
           (versionName === minManagedPolicyVersionName &&
             versionPatch < minManagedPolicyVersionPatch));
 
+      const isHostedDisabled = isHypershiftSelected && !hostedEnabled;
+
       const isIncompatibleVersion =
-        (isRosa && !isValidRosaVersion(version.raw_id)) || isIncompatibleHostedVersion;
+        (isRosa && !isValidRosaVersion(version.raw_id)) ||
+        isIncompatibleHostedVersion ||
+        isHostedDisabled;
       hasIncompatibleVersions = hasIncompatibleVersions || isIncompatibleVersion;
 
       if (isIncompatibleVersion && showOnlyCompatibleVersions) {
@@ -183,10 +195,7 @@ function VersionSelection({
           formValue={version.raw_id}
           key={version.id}
           isDisabled={isIncompatibleVersion}
-          description={
-            isIncompatibleVersion &&
-            'This version is not compatible with the selected ARNs in previous step'
-          }
+          description={selectOptionDescription(isIncompatibleVersion, isHostedDisabled)}
         >
           {`${version.raw_id}`}
         </SelectOption>
@@ -236,7 +245,6 @@ function VersionSelection({
             <div className="spinner-fit-container">
               <Spinner />
             </div>
-            <div className="spinner-loading-text">Loading...</div>
           </>
         )}
         {getInstallableVersionsResponse.fulfilled && !rosaVersionError && (
@@ -244,6 +252,7 @@ function VersionSelection({
             <GridItem>
               <Select
                 label={label}
+                aria-label={label}
                 isOpen={isOpen}
                 selections={selectedClusterVersion?.raw_id || getSelection()}
                 onToggle={onToggle}

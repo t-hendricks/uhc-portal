@@ -47,6 +47,8 @@ const ReviewClusterScreen = ({
   const isROSA = formValues.product === normalizedProducts.ROSA;
   const hasEtcdEncryption = isHypershiftSelected && !!formValues.etcd_key_arn;
   const showVPCCheckbox = isROSA || isByoc;
+  const hasAWSVPCSettings = showVPCCheckbox && formValues.install_to_vpc && isAWS;
+
   const clusterSettingsFields = [
     ...(!isROSA ? ['cloud_provider'] : []),
     'name',
@@ -175,6 +177,7 @@ const ReviewClusterScreen = ({
             initiallyExpanded={errorWithAWSAccountRoles}
           >
             {ReviewItem({ name: 'associated_aws_id', formValues })}
+            {isHypershiftSelected && ReviewItem({ name: 'billing_account_id', formValues })}
             {ReviewRoleItem({
               name: 'ocm-role',
               getRoleResponse: getOCMRoleResponse,
@@ -216,6 +219,12 @@ const ReviewClusterScreen = ({
         {autoscalingEnabled
           ? ReviewItem({ name: 'min_replicas', formValues })
           : ReviewItem({ name: 'nodes_compute', formValues })}
+        {hasAWSVPCSettings &&
+          isHypershiftSelected &&
+          ReviewItem({
+            name: 'aws_hosted_vpc',
+            formValues,
+          })}
         {!(formValues.node_labels.length === 1 && isEmpty(formValues.node_labels[0])) &&
           ReviewItem({ name: 'node_labels', formValues })}
       </ReviewSection>
@@ -226,19 +235,21 @@ const ReviewClusterScreen = ({
         }
       >
         {ReviewItem({ name: 'cluster_privacy', formValues })}
-        {formValues.cluster_privacy_public_subnet_id && (
-          <ReviewItem name="cluster_privacy_public_subnet_id" formValues={formValues} />
-        )}
-        {showVPCCheckbox && ReviewItem({ name: 'install_to_vpc', formValues })}
         {showVPCCheckbox &&
-          (formValues.hypershift === 'true' ||
+          ReviewItem({
+            name: isHypershiftSelected ? 'selected_vpc_id' : 'install_to_vpc',
+            formValues,
+          })}
+        {showVPCCheckbox &&
+          (isHypershiftSelected ||
             (formValues.cluster_privacy === 'internal' && formValues.install_to_vpc)) &&
           ReviewItem({ name: 'use_privatelink', formValues })}
-        {showVPCCheckbox &&
-          formValues.install_to_vpc &&
-          isAWS &&
+        {hasAWSVPCSettings &&
           !isHypershiftSelected &&
-          ReviewItem({ name: 'aws_vpc', formValues })}
+          ReviewItem({
+            name: 'aws_standalone_vpc',
+            formValues,
+          })}
         {showVPCCheckbox &&
           formValues.install_to_vpc &&
           isGCP &&

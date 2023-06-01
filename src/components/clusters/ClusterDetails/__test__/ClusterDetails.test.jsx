@@ -1,7 +1,7 @@
 import React from 'react';
 import { shallow, mount } from 'enzyme';
 import { MemoryRouter } from 'react-router-dom';
-import { TestWrapper } from '../../../../testUtils';
+import { TestWrapper, render, screen } from '../../../../testUtils';
 import ClusterDetails from '../ClusterDetails';
 import fixtures, { funcs } from './ClusterDetails.fixtures';
 import clusterStates from '../../common/clusterStates';
@@ -178,6 +178,66 @@ describe('<ClusterDetails />', () => {
         fixtures.ROSAClusterDetails.cluster.id,
         true,
       );
+    });
+
+    it('displays the network tab if private link is true', () => {
+      const cluster = {
+        state: clusterStates.READY,
+        managed: true,
+        cloud_provider: { id: 'aws' },
+        ccs: { enabled: true },
+        hypershift: { enabled: true },
+        aws: { private_link: true },
+      };
+
+      const functions = funcs();
+      const props = {
+        ...fixtures,
+        ...functions,
+        clearFiltersAndFlags: () => {},
+        clusterDetails: {
+          ...fixtures.ROSAClusterDetails,
+          cluster: { ...fixtures.ROSAClusterDetails.cluster, cluster },
+        },
+      };
+
+      render(
+        <RouterWrapper>
+          <ClusterDetails {...props} />
+        </RouterWrapper>,
+      );
+
+      expect(screen.getByRole('tab', { name: 'Networking' })).toBeInTheDocument();
+    });
+
+    it('displays the network tab if private link is false', () => {
+      const cluster = {
+        state: clusterStates.READY,
+        managed: true,
+        cloud_provider: { id: 'aws' },
+        ccs: { enabled: true },
+        hypershift: { enabled: true },
+        aws: { private_link: false },
+      };
+
+      const functions = funcs();
+      const props = {
+        ...fixtures,
+        ...functions,
+        clearFiltersAndFlags: () => {},
+        clusterDetails: {
+          ...fixtures.ROSAClusterDetails,
+          cluster: { ...fixtures.ROSAClusterDetails.cluster, cluster },
+        },
+      };
+
+      render(
+        <RouterWrapper>
+          <ClusterDetails {...props} />
+        </RouterWrapper>,
+      );
+
+      expect(screen.getByRole('tab', { name: 'Networking' })).toBeInTheDocument();
     });
   });
 

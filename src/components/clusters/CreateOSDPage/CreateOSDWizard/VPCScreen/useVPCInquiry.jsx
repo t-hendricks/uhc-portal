@@ -8,6 +8,9 @@ import { clearListVpcs, getAWSCloudProviderVPCs } from '../ccsInquiriesActions';
 
 const valueSelector = formValueSelector('CreateCluster');
 
+export const isSubnetMatchingPrivacy = (subnet, privacy) =>
+  !privacy || (privacy === 'public' && subnet.public) || (privacy === 'private' && !subnet.public);
+
 export const isVPCInquiryValid = (state) => {
   const { vpcs } = state.ccsInquiries;
   if (!vpcs.fulfilled) {
@@ -24,7 +27,39 @@ export const isVPCInquiryValid = (state) => {
 };
 
 /**
+ * Returns a modified copy of the VPC list where:
+ * - The subnets are filtered, containing those that are private
+ * - The VPC list is sorted, having first the VPCs that have at least 1 private subnet, then the rest
+
+ * @param vpcs list of VPC items
+ * @returns {*} copy of the VPC list
+ */
+export const filterVpcsOnlyPrivateSubnets = (vpcs) =>
+  vpcs
+    .map((vpcItem) => {
+      const filteredSubnets = (vpcItem.aws_subnets || []).filter((subnet) =>
+        isSubnetMatchingPrivacy(subnet, 'private'),
+      );
+      return {
+        ...vpcItem,
+        aws_subnets: filteredSubnets,
+      };
+    })
+    .sort((vpcA, vpcB) => {
+      const hasSubnetsA = vpcA.aws_subnets.length > 0;
+      const hasSubnetsB = vpcB.aws_subnets.length > 0;
+      if (hasSubnetsA && !hasSubnetsB) {
+        return -1;
+      }
+      if (hasSubnetsB && !hasSubnetsA) {
+        return 1;
+      }
+      return 0;
+    });
+
+/**
  * React hook fetching VPCs on mount and when dependencies change.
+ * Request args extracted from redux-form state.
  * Does nothing if GCP selected.
  * @returns current vpcs state.
  */
@@ -37,18 +72,9 @@ export const useAWSVPCInquiry = () => {
   );
   const region = useSelector((state) => valueSelector(state, 'region'));
   const vpcs = useSelector((state) => state.ccsInquiries.vpcs);
-  const { credentials: vpcsCredentials, error: vpcsError } = vpcs;
+  const { error: vpcsError } = vpcs;
 
-  // When vpcs subnet availability zones possess the current selected region and current
-  // CCS credentials match what's stored for vpcs, vpcs results can be considered up-to-date.
-  const vpcsHasLatestCredentials =
-    vpcsCredentials?.sts?.role_arn === credentials?.sts?.role_arn ||
-    (vpcsCredentials?.access_key_id === credentials?.access_key_id &&
-      vpcsCredentials?.secret_access_key === credentials?.secret_access_key);
-  const hasLatestVpcs =
-    Object.values(vpcs.data?.bySubnetID || {})?.some((subnet) =>
-      subnet.availability_zone.includes(region),
-    ) && vpcsHasLatestCredentials;
+  const hasLatestVpcs = useSelector(isVPCInquiryValid);
 
   useEffect(() => {
     // The action works similarly for AWS and GCP,
@@ -61,7 +87,7 @@ export const useAWSVPCInquiry = () => {
 
       dispatch(getAWSCloudProviderVPCs(credentials, region));
     }
-  }, [cloudProviderID, credentials, region, hasLatestVpcs]);
+  }, [cloudProviderID, credentials, region, hasLatestVpcs, vpcsError]);
 
   return vpcs;
 };
