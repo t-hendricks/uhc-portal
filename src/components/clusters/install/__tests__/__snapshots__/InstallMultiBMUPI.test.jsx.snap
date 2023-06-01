@@ -43,7 +43,7 @@ exports[`InstallMultiBMUPI renders correctly 1`] = `
           }
         />
       }
-      channel="preRelease"
+      channel="stable"
       cloudProviderID="baremetal"
       docURL="https://docs.openshift.com/container-platform/4.13/post_installation_configuration/multi-architecture-configuration.html#creating-a-cluster-with-multi-architecture-compute-machine-on-bare-metal-technology-preview"
       installer="multi-openshift-install"

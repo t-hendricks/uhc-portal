@@ -191,7 +191,7 @@ const instructionsMapping = {
       upi: {
         title: 'Install OpenShift on bare metal with multi-architecture compute machines',
         installer: tools.MULTIINSTALLER,
-        channel: channels.PRE_RELEASE,
+        channel: channels.STABLE,
         docURL: links.INSTALL_BAREMETAL_MULTI_ARCH,
         preReleasePageLink: '/install/multi/pre-release',
       },
