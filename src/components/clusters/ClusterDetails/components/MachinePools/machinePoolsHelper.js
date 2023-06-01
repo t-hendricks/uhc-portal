@@ -1,31 +1,32 @@
 import { isHibernating } from '~/components/clusters/common/clusterStates';
 import get from 'lodash/get';
+import { normalizeProductID } from '~/common/normalize';
+import { normalizedProducts } from '~/common/subscriptionTypes';
 import { checkLabels } from '../../../../../common/validators';
 import { asArray } from '../../../../../common/helpers';
+import { isHypershiftCluster, isMultiAZ } from '../../clusterDetailsHelper';
 
-const actionResolver = (
-  rowData,
-  onClickDelete,
-  onClickScale,
-  onClickEditTaints,
-  onClickEditLabels,
-  isHypershift,
-  machinePoolsCount,
-  onClickUpdate,
-  canDelete,
-) => {
-  // hide actions kebab for expandable rows
-  if (!rowData.machinePool) {
-    return [];
-  }
+export const STATIC_DEFAULT_MP_ID = 'Default';
+
+const isDeleteDisabled = (canDelete, machinePools, isEnforcedDefaultMP) => {
   const permissionsReason = !canDelete && 'You do not have permissions to delete machine pools';
-  const lastNodePoolReason =
-    isHypershift && machinePoolsCount === 1 && 'The last machine pool cannot be deleted';
-  const deleteDisabled = !!(permissionsReason || lastNodePoolReason);
-  const deleteDisabledTooltip = {
-    tooltip: permissionsReason || lastNodePoolReason,
-  };
+  const lastNodePoolReason = machinePools.length === 1 && 'The last machine pool cannot be deleted';
+  return (
+    permissionsReason ||
+    lastNodePoolReason ||
+    (isEnforcedDefaultMP ? 'Default machine pool cannot be deleted' : undefined)
+  );
+};
 
+const getActions = ({
+  onClickScale,
+  onClickDelete,
+  onClickEditLabels,
+  onClickEditTaints,
+  onClickUpdate,
+  deleteDisabledReason,
+  taintsDisabledReason,
+}) => {
   const scaleAction = {
     title: 'Scale',
     onClick: onClickScale,
@@ -36,8 +37,8 @@ const actionResolver = (
     title: 'Delete',
     onClick: onClickDelete,
     className: 'hand-pointer',
-    isAriaDisabled: deleteDisabled,
-    ...(deleteDisabled && deleteDisabledTooltip),
+    isAriaDisabled: !!deleteDisabledReason,
+    ...(!!deleteDisabledReason && { tooltip: deleteDisabledReason }),
   };
 
   const editLabelsAction = {
@@ -50,6 +51,8 @@ const actionResolver = (
     title: 'Edit taints',
     onClick: onClickEditTaints,
     className: 'hand-pointer',
+    isAriaDisabled: !!taintsDisabledReason,
+    ...(!!taintsDisabledReason && { tooltip: taintsDisabledReason }),
   };
 
   const updateAction = {
@@ -58,12 +61,74 @@ const actionResolver = (
     className: 'hand-pointer',
   };
 
-  return [
+  return {
     scaleAction,
-    ...(rowData.machinePool?.id !== 'Default' || isHypershift
-      ? [editLabelsAction, editTaintsAction, deleteAction]
-      : []),
-    ...(onClickUpdate !== undefined ? [updateAction] : []),
+    deleteAction,
+    editLabelsAction,
+    editTaintsAction,
+    updateAction,
+  };
+};
+
+const actionResolver = (props) => {
+  const { rowData, canDelete, cluster, machinePools, onClickUpdate, ...rest } = props;
+
+  // hide actions kebab for expandable rows
+  if (!rowData.machinePool) {
+    return [];
+  }
+  if (!hasStaticDefaultMachinePool(cluster)) {
+    return actionsResolverNoDefault(props);
+  }
+
+  const deleteDisabledReason = isDeleteDisabled(canDelete, machinePools, false);
+
+  const actions = getActions({
+    ...rest,
+    onClickUpdate,
+    deleteDisabledReason,
+  });
+
+  return [
+    actions.scaleAction,
+    ...(isStaticDefaultMachinePool(rowData.machinePool.id, cluster)
+      ? []
+      : [actions.editLabelsAction, actions.editTaintsAction, actions.deleteAction]),
+    ...(onClickUpdate !== undefined ? [actions.updateAction] : []),
+  ];
+};
+
+const actionsResolverNoDefault = ({
+  rowData,
+  onClickUpdate,
+  canDelete,
+  machinePools,
+  machineTypes,
+  cluster,
+  ...rest
+}) => {
+  const isEnforcedDefaultMP = isEnforcedDefaultMachinePool(
+    rowData.machinePool.id,
+    machinePools,
+    machineTypes,
+    cluster,
+  );
+
+  const actions = getActions({
+    ...rest,
+    onClickUpdate,
+    deleteDisabledReason: isDeleteDisabled(canDelete, machinePools, isEnforcedDefaultMP),
+    taintsDisabledReason: isEnforcedDefaultMP
+      ? 'Default machine pool cannot have taints'
+      : undefined,
+  });
+
+  return [
+    actions.scaleAction,
+    actions.editLabelsAction,
+    actions.editTaintsAction,
+    actions.deleteAction,
+    ...(onClickUpdate !== undefined ? [actions.updateAction] : []),
   ];
 };
 
@@ -240,6 +305,39 @@ const hasDefaultOrExplicitAutoscalingMachinePool = (cluster, machinePools, exclu
   return hasExplicitAutoscalingMachinePool(machinePools, excludeId);
 };
 
+const hasStaticDefaultMachinePool = (cluster) =>
+  isHypershiftCluster(cluster) ||
+  ![normalizedProducts.OSD, normalizedProducts.OSDTrial, normalizedProducts.ROSA].includes(
+    normalizeProductID(cluster?.product?.id),
+  );
+
+const isStaticDefaultMachinePool = (machinePoolId, cluster) =>
+  machinePoolId === STATIC_DEFAULT_MP_ID && hasStaticDefaultMachinePool(cluster);
+
+const isEnforcedDefaultMachinePool = (
+  currentMachinePoolId,
+  machinePools,
+  machineTypes,
+  cluster,
+) => {
+  const minimalMachineType = machineTypes.types?.aws?.find((mt) => mt.id === 'm5.xlarge');
+
+  return !machinePools
+    .filter((mp) => mp.id !== currentMachinePoolId)
+    .some((mp) => {
+      const awsMachineType = machineTypes.types?.aws?.find((mt) => mt.id === mp.instance_type);
+      const minReplicas = getMinNodesRequired(true, cluster?.ccs?.enabled, isMultiAZ(cluster));
+
+      return (
+        awsMachineType &&
+        !mp.taints &&
+        (mp.replicas >= minReplicas || mp.autoscaling?.min_replicas >= minReplicas) &&
+        awsMachineType?.cpu?.value >= minimalMachineType?.cpu?.value &&
+        awsMachineType?.memory?.value >= minimalMachineType?.memory?.value
+      );
+    });
+};
+
 export {
   parseTags,
   parseLabels,
@@ -256,4 +354,7 @@ export {
   getAddMachinePoolDisabledReason,
   hasExplicitAutoscalingMachinePool,
   hasDefaultOrExplicitAutoscalingMachinePool,
+  hasStaticDefaultMachinePool,
+  isStaticDefaultMachinePool,
+  isEnforcedDefaultMachinePool,
 };

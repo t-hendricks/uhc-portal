@@ -2,8 +2,7 @@ import masterResizeAlertThresholdSelector, {
   masterResizeThresholds,
 } from '../EditNodeCountModalSelectors';
 import fixtures from '../../../ClusterDetails/__test__/ClusterDetails.fixtures';
-
-const DEFAULT_MACHINE_POOL_ID = 'Default';
+import { STATIC_DEFAULT_MP_ID } from '../../../ClusterDetails/components/MachinePools/machinePoolsHelper';
 
 describe('masterResizeAlertThreshold Selector', () => {
   const modalState = { data: { cluster: { ...fixtures.clusterDetails.cluster } } };
@@ -30,7 +29,7 @@ describe('masterResizeAlertThreshold Selector', () => {
 
     const requestedNodes = parseInt(state.form.EditNodeCount.values.nodes_compute, 10);
     const result = masterResizeAlertThresholdSelector(
-      DEFAULT_MACHINE_POOL_ID,
+      STATIC_DEFAULT_MP_ID,
       requestedNodes,
       state.clusters.details.cluster,
       state.machinePools.getMachinePools.data,
@@ -65,7 +64,7 @@ describe('masterResizeAlertThreshold Selector', () => {
 
     const requestedNodes = parseInt(state.form.EditNodeCount.values.nodes_compute, 10);
     const result = masterResizeAlertThresholdSelector(
-      DEFAULT_MACHINE_POOL_ID,
+      STATIC_DEFAULT_MP_ID,
       requestedNodes,
       state.clusters.details.cluster,
       state.machinePools.getMachinePools.data,
@@ -113,7 +112,7 @@ describe('masterResizeAlertThreshold Selector', () => {
 
     const requestedNodes = parseInt(state.form.EditNodeCount.values.nodes_compute, 10);
     const result = masterResizeAlertThresholdSelector(
-      DEFAULT_MACHINE_POOL_ID,
+      STATIC_DEFAULT_MP_ID,
       requestedNodes,
       state.clusters.details.cluster,
       state.machinePools.getMachinePools.data,
@@ -246,7 +245,7 @@ describe('masterResizeAlertThreshold Selector', () => {
 
     const requestedNodes = parseInt(state.form.EditNodeCount.values.nodes_compute, 10);
     const result = masterResizeAlertThresholdSelector(
-      DEFAULT_MACHINE_POOL_ID,
+      STATIC_DEFAULT_MP_ID,
       requestedNodes,
       state.clusters.details.cluster,
       state.machinePools.getMachinePools.data,

@@ -22,6 +22,10 @@ import { isHypershiftCluster, isMultiAZ } from '../../ClusterDetails/clusterDeta
 import { canAutoScaleSelector } from '../../ClusterDetails/components/MachinePools/MachinePoolsSelectors';
 import getClusterName from '../../../../common/getClusterName';
 import { getNodesCount } from '../../CreateOSDPage/CreateOSDForm/FormSections/ScaleSection/AutoScaleSection/AutoScaleHelper';
+import {
+  STATIC_DEFAULT_MP_ID,
+  hasStaticDefaultMachinePool,
+} from '../../ClusterDetails/components/MachinePools/machinePoolsHelper';
 
 const reduxFormConfig = {
   form: 'EditNodeCount',
@@ -41,7 +45,7 @@ const mapStateToProps = (state) => {
     valueSelector(state, 'machine_pool') ||
     modalData.machinePool?.id ||
     (isHypershift ? state.machinePools.getMachinePools.data[0]?.id : null) ||
-    (modalData.isDefaultMachinePool ? 'Default' : null) ||
+    (modalData.isDefaultMachinePool ? STATIC_DEFAULT_MP_ID : null) ||
     null;
 
   const cloudProviderID = get(cluster, 'cloud_provider.id', '');
@@ -57,6 +61,7 @@ const mapStateToProps = (state) => {
   }
 
   const commonProps = {
+    cluster,
     resetSection: (values) => resetSection(reduxFormConfig.form, values),
     isValid: isValid(reduxFormConfig.form)(state),
     clusterID: get(cluster, 'id', ''),
@@ -64,11 +69,11 @@ const mapStateToProps = (state) => {
     machinePoolsList: {
       ...state.machinePools.getMachinePools,
       data: [
-        ...(!isHypershift
+        ...(hasStaticDefaultMachinePool(cluster)
           ? [
               {
-                name: 'Default',
-                value: 'Default',
+                name: STATIC_DEFAULT_MP_ID,
+                value: STATIC_DEFAULT_MP_ID,
                 machineType: get(cluster, 'nodes.compute_machine_type.id', ''),
                 nodes: get(cluster, 'nodes.compute', null),
               },
@@ -80,6 +85,7 @@ const mapStateToProps = (state) => {
           machineType: machinePool.instance_type,
           nodes: machinePool.replicas,
           aws: machinePool?.aws,
+          originalResponse: machinePool,
         })),
       ],
     },
@@ -125,20 +131,20 @@ const mapStateToProps = (state) => {
   const initialValuesNodesCompute = getNodesCount(commonProps.isByoc, isMultiAvailZone);
 
   // Cluster's default machine pool case
-  if (selectedMachinePool === 'Default') {
+  if (selectedMachinePool === STATIC_DEFAULT_MP_ID) {
     // eslint-disable-next-line camelcase
     machinePoolWithAutoscale = cluster.nodes?.autoscale_compute;
     return {
       ...commonProps,
       editNodeCountResponse: state.clusters.editedCluster,
       machineType: get(cluster, 'nodes.compute_machine_type.id', ''),
-      machinePoolId: 'Default',
+      machinePoolId: STATIC_DEFAULT_MP_ID,
       initialValues: {
         nodes_compute:
           get(cluster, 'nodes.compute', null) ||
           get(cluster, 'nodes.autoscale_compute.min_replicas') ||
           initialValuesNodesCompute,
-        machine_pool: 'Default',
+        machine_pool: STATIC_DEFAULT_MP_ID,
         autoscalingEnabled: machinePoolWithAutoscale,
         ...(machinePoolWithAutoscale && getMinAndMaxNodesValues(cluster.nodes.autoscale_compute)),
       },
@@ -159,6 +165,7 @@ const mapStateToProps = (state) => {
       ? get(selectedMachinePoolData, 'aws_node_pool.instance_type', '')
       : get(selectedMachinePoolData, 'instance_type', ''),
     machinePoolId: selectedMachinePool,
+    machineTypes: state.machineTypes,
     initialValues: {
       nodes_compute:
         get(selectedMachinePoolData, 'replicas', null) ||
@@ -185,7 +192,7 @@ const mapDispatchToProps = (dispatch) => ({
       max_replicas: isMultiAz ? maxNodes * 3 : maxNodes,
     };
 
-    if (formData.machine_pool === 'Default' && !isHypershiftCluster) {
+    if (formData.machine_pool === STATIC_DEFAULT_MP_ID && !isHypershiftCluster) {
       machinePoolRequest.nodes = formData.autoscalingEnabled
         ? { autoscale_compute: autoScaleLimits }
         : { compute: nodesCount };

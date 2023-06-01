@@ -2,6 +2,7 @@ import { connect } from 'react-redux';
 import { reduxForm, formValueSelector } from 'redux-form';
 
 import { parseReduxFormTaints } from '~/common/helpers';
+import { getMachineTypes } from '~/redux/actions/machineTypesActions';
 import EditTaintsModal from './EditTaintsModal';
 import {
   getMachineOrNodePools,
@@ -30,24 +31,26 @@ const mapStateToProps = (state) => {
       taints: taints ? parseReduxFormTaints(taints) : [{ effect: 'NoSchedule' }],
       machinePoolId: state.modal.data.machinePool?.id,
     },
+    machineTypes: state.machineTypes,
   };
 };
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
   closeModal: () => dispatch(closeModal()),
   getMachinePools: () =>
-    dispatch(getMachineOrNodePools(ownProps.clusterId, ownProps.isHypershiftCluster)),
-  resetEditTaintsResponse: () => dispatch(clearScaleMachinePoolResponse(ownProps.clusterId)),
+    dispatch(getMachineOrNodePools(ownProps.cluster.id, ownProps.isHypershiftCluster)),
+  resetEditTaintsResponse: () => dispatch(clearScaleMachinePoolResponse(ownProps.cluster.id)),
   onSubmit: (formData) => {
     dispatch(
       editTaints(
-        ownProps.clusterId,
+        ownProps.cluster.id,
         formData.machinePoolId,
         { taints: parseReduxFormTaints(formData.taints) },
         ownProps.isHypershiftCluster,
       ),
     );
   },
+  getMachineTypes: () => dispatch(getMachineTypes()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(reduxFormEditTaints);
