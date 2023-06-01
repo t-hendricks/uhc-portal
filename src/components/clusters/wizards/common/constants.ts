@@ -40,6 +40,6 @@ export enum UpgradePolicyType {
 }
 
 export enum IMDSType {
-  V1AndV2 = 'v1_and_v2',
-  V2Only = 'v2',
+  V1AndV2 = 'optional',
+  V2Only = 'required',
 }

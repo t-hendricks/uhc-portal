@@ -211,10 +211,11 @@ export const createClusterRequest = ({ isWizard = true, cloudProviderID, product
           };
         }
         clusterRequest.aws.billing_account_id = formData.billing_account_id;
-      } else {
+      }
+
+      if (formData.imds && !isHypershiftSelected) {
         // ROSA Classic and OSD CCS only
-        clusterRequest.aws.ec2_metadata_http_tokens =
-          formData.imds === IMDSType.V2Only ? 'required' : 'optional';
+        clusterRequest.aws.ec2_metadata_http_tokens = formData.imds;
       }
 
       clusterRequest.ccs.disable_scp_checks = formData.disable_scp_checks;
