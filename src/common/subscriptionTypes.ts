@@ -163,6 +163,7 @@ const productFilterOptions = [
 const billingModels = {
   STANDARD: 'standard', // quota from Red Hat Subscriptions
   MARKETPLACE: 'marketplace', // quota from Red Hat Marketplace
+  MARKETPLACE_AWS: 'marketplace-aws',
   STANDARD_TRIAL: 'standard-trial',
 };
 
