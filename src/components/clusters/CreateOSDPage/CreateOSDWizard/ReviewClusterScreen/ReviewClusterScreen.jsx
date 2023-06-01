@@ -219,10 +219,15 @@ const ReviewClusterScreen = ({
         {autoscalingEnabled
           ? ReviewItem({ name: 'min_replicas', formValues })
           : ReviewItem({ name: 'nodes_compute', formValues })}
+        {showVPCCheckbox &&
+          ReviewItem({
+            name: isHypershiftSelected ? 'selected_vpc_id' : 'install_to_vpc',
+            formValues,
+          })}
         {hasAWSVPCSettings &&
           isHypershiftSelected &&
           ReviewItem({
-            name: 'aws_hosted_vpc',
+            name: 'aws_hosted_machine_pools',
             formValues,
           })}
         {!(formValues.node_labels.length === 1 && isEmpty(formValues.node_labels[0])) &&
@@ -235,9 +240,10 @@ const ReviewClusterScreen = ({
         }
       >
         {ReviewItem({ name: 'cluster_privacy', formValues })}
-        {showVPCCheckbox &&
+        {formValues.cluster_privacy_public_subnet?.subnet_id &&
+          isHypershiftSelected &&
           ReviewItem({
-            name: isHypershiftSelected ? 'selected_vpc_id' : 'install_to_vpc',
+            name: 'cluster_privacy_public_subnet',
             formValues,
           })}
         {showVPCCheckbox &&
