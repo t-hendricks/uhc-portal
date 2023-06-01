@@ -8,7 +8,6 @@ import { DEFAULT_FLAVOUR_ID } from '~/redux/actions/flavourActions';
 import { createCluster } from '~/redux/actions/clustersActions';
 import { parseReduxFormKeyValueList } from '~/common/helpers';
 import { billingModels } from '~/common/subscriptionTypes';
-import { IMDSType } from '../wizards/common';
 
 const createClusterAzs = ({ formData, isInstallExistingVPC }) => {
   let AZs = [];
