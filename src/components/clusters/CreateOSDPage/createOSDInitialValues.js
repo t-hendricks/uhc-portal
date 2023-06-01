@@ -1,4 +1,4 @@
-import { normalizedProducts } from '../../../common/subscriptionTypes';
+import { normalizedProducts, billingModels } from '../../../common/subscriptionTypes';
 
 export const AWS_DEFAULT_REGION = 'us-east-1';
 export const GCP_DEFAULT_REGION = 'us-east1';
@@ -18,6 +18,16 @@ const createOSDInitialValues = ({
     defaultNodeCount = isMultiAz ? 9 : 4;
   }
 
+  const billingModelValue = () => {
+    if (isTrialDefault) {
+      return billingModels.STANDARD_TRIAL;
+    }
+    if (isHypershiftSelected) {
+      return billingModels.MARKETPLACE_AWS;
+    }
+    return billingModels.STANDARD;
+  };
+
   const initialValues = {
     cloud_provider: cloudProviderID,
     node_drain_grace_period: 60,
@@ -36,10 +46,10 @@ const createOSDInitialValues = ({
     network_configuration_toggle: 'basic',
     cluster_privacy: 'external',
     install_to_vpc: isHypershiftSelected,
-    use_privatelink: isHypershiftSelected,
+    use_privatelink: false,
     configure_proxy: false,
     disable_scp_checks: false,
-    billing_model: isTrialDefault ? 'standard-trial' : 'standard',
+    billing_model: billingModelValue(),
     product: product || (isTrialDefault ? normalizedProducts.OSDTrial : normalizedProducts.OSD),
 
     // Optional fields based on whether Hypershift is selected or not

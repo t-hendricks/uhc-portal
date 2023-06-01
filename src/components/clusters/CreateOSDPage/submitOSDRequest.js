@@ -7,6 +7,7 @@ import config from '~/config';
 import { DEFAULT_FLAVOUR_ID } from '~/redux/actions/flavourActions';
 import { createCluster } from '~/redux/actions/clustersActions';
 import { parseReduxFormKeyValueList } from '~/common/helpers';
+import { billingModels } from '~/common/subscriptionTypes';
 
 const createClusterAzs = ({ formData, isInstallExistingVPC }) => {
   let AZs = [];
@@ -83,17 +84,19 @@ export const createClusterRequest = ({ isWizard = true, cloudProviderID, product
       unit: 'minutes',
     },
     etcd_encryption: formData.etcd_encryption,
-    billing_model: 'standard',
+    billing_model: billingModels.STANDARD,
     disable_user_workload_monitoring:
       isHypershiftSelected || !formData.enable_user_workload_monitoring,
     ...(!isHypershiftSelected && { fips: !!formData.fips }),
   };
 
-  if (formData.billing_model) {
+  if (isHypershiftSelected) {
+    clusterRequest.billing_model = billingModels.MARKETPLACE_AWS;
+  } else if (formData.billing_model) {
     const [billing] = formData.billing_model.split('-');
     clusterRequest.billing_model = billing;
   } else {
-    clusterRequest.billing_model = 'standard';
+    clusterRequest.billing_model = billingModels.STANDARD;
   }
 
   if (formData.cluster_version) {
