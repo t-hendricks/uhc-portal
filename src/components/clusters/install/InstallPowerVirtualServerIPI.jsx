@@ -27,7 +27,7 @@ export class InstallPowerVirtualServerIPI extends Component {
         path={[
           { label: 'Clusters' },
           { label: 'Cluster Type', path: '/create' },
-          { label: 'IBM PowerVS' },
+          { label: 'IBM PowerVS (ppc64le)' },
         ]}
       />
     );

@@ -152,8 +152,8 @@ const instructionsMapping = {
       ipi: {
         title:
           'Install OpenShift on IBM Power Systems Virtual Server with installer-provisioned infrastructure',
-        installer: tools.MULTIINSTALLER,
-        channel: channels.PRE_RELEASE,
+        installer: tools.PPCINSTALLER,
+        channel: channels.STABLE,
         docURL: links.INSTALL_IBMPOWERVS_GETTING_STARTED,
         prerequisites: links.INSTALL_IBMPOWERVS_PREREQUISITES,
       },
