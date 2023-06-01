@@ -26,7 +26,6 @@ const createOSDInitialValues = ({
     multi_az: (!!isMultiAz).toString(),
     persistent_storage: '107374182400',
     load_balancers: '0',
-    ...(!isHypershiftSelected ? { enable_user_workload_monitoring: 'true' } : {}),
     nodes_compute: defaultNodeCount,
     node_labels: [{}],
     byoc: (!!isByoc || !!isTrialDefault).toString(),
@@ -42,6 +41,14 @@ const createOSDInitialValues = ({
     disable_scp_checks: false,
     billing_model: isTrialDefault ? 'standard-trial' : 'standard',
     product: product || (isTrialDefault ? normalizedProducts.OSDTrial : normalizedProducts.OSD),
+
+    // Optional fields based on whether Hypershift is selected or not
+    ...(isHypershiftSelected
+      ? {
+          selected_vpc_id: '',
+          machine_pools_subnets: [{ subnet_id: '', availability_zone: '' }],
+        }
+      : { enable_user_workload_monitoring: 'true' }),
   };
 
   if (cloudProviderID) {

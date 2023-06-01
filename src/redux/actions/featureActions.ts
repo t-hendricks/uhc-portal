@@ -20,7 +20,7 @@ import accountsService from '../../services/accountsService';
 import { SelfAccessReview } from '../../types/authorizations.v1/models/SelfAccessReview';
 import type { AppThunk } from '../types';
 
-const setFeatureAction = (feature: string, enabled: boolean) =>
+export const setFeatureAction = (feature: string, enabled: boolean) =>
   action(SET_FEATURE, { feature, enabled });
 
 const getSimpleUnleashFeature = (unleashFeatureName: string, name: string) => ({

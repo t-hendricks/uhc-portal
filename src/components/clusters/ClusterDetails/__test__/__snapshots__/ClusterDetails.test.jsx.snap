@@ -3324,6 +3324,7 @@ exports[`<ClusterDetails /> Cluster Details - OSD should render 1`] = `
                 ],
               }
             }
+            clearListVpcs={[MockFunction]}
             closeModal={[MockFunction]}
             cloudProviders={
               Object {
@@ -4667,7 +4668,7 @@ exports[`<ClusterDetails /> Cluster Details - OSD should render 1`] = `
                                     className="pf-c-breadcrumb__list"
                                   >
                                     <BreadcrumbItem
-                                      key=".0"
+                                      key=".$Clusters"
                                       render={[Function]}
                                       showDivider={false}
                                     >
@@ -7356,6 +7357,7 @@ exports[`<ClusterDetails /> Cluster Details - OSD should render 1`] = `
                                         data-ouia-component-id="OUIA-Generated-Alert-danger-5"
                                         data-ouia-component-type="PF4/Alert"
                                         data-ouia-safe="true"
+                                        role="alert"
                                       >
                                         <div
                                           class="pf-c-alert__icon"
@@ -7454,6 +7456,7 @@ exports[`<ClusterDetails /> Cluster Details - OSD should render 1`] = `
                                   data-ouia-component-id="OUIA-Generated-Alert-danger-9"
                                   data-ouia-component-type="PF4/Alert"
                                   data-ouia-safe="true"
+                                  role="alert"
                                 >
                                   <div
                                     class="pf-c-alert__icon"
@@ -7560,6 +7563,7 @@ exports[`<ClusterDetails /> Cluster Details - OSD should render 1`] = `
                                   data-ouia-component-id="OUIA-Generated-Alert-danger-7"
                                   data-ouia-component-type="PF4/Alert"
                                   data-ouia-safe="true"
+                                  role="alert"
                                 >
                                   <div
                                     class="pf-c-alert__icon"
@@ -8333,6 +8337,7 @@ exports[`<ClusterDetails /> Cluster Details - OSD should render 1`] = `
                                                   >
                                                     <div
                                                       class="pf-l-flex"
+                                                      data-testid="controlPlaneNodesCountContainer"
                                                     >
                                                       <dt>
                                                         Control plane: 
@@ -8343,6 +8348,7 @@ exports[`<ClusterDetails /> Cluster Details - OSD should render 1`] = `
                                                     </div>
                                                     <div
                                                       class="pf-l-flex"
+                                                      data-testid="InfraNodesCountContainer"
                                                     >
                                                       <dt>
                                                         Infra: 
@@ -9008,6 +9014,7 @@ exports[`<ClusterDetails /> Cluster Details - OSD should render 1`] = `
                                           data-ouia-component-id="OUIA-Generated-Alert-danger-5"
                                           data-ouia-component-type="PF4/Alert"
                                           data-ouia-safe="true"
+                                          role="alert"
                                         >
                                           <div
                                             class="pf-c-alert__icon"
@@ -9106,6 +9113,7 @@ exports[`<ClusterDetails /> Cluster Details - OSD should render 1`] = `
                                     data-ouia-component-id="OUIA-Generated-Alert-danger-9"
                                     data-ouia-component-type="PF4/Alert"
                                     data-ouia-safe="true"
+                                    role="alert"
                                   >
                                     <div
                                       class="pf-c-alert__icon"
@@ -9253,6 +9261,7 @@ exports[`<ClusterDetails /> Cluster Details - OSD should render 1`] = `
                                     data-ouia-component-id="OUIA-Generated-Alert-danger-7"
                                     data-ouia-component-type="PF4/Alert"
                                     data-ouia-safe="true"
+                                    role="alert"
                                   >
                                     <div
                                       class="pf-c-alert__icon"
@@ -10034,6 +10043,7 @@ exports[`<ClusterDetails /> Cluster Details - OSD should render 1`] = `
                                                     >
                                                       <div
                                                         class="pf-l-flex"
+                                                        data-testid="controlPlaneNodesCountContainer"
                                                       >
                                                         <dt>
                                                           Control plane: 
@@ -10044,6 +10054,7 @@ exports[`<ClusterDetails /> Cluster Details - OSD should render 1`] = `
                                                       </div>
                                                       <div
                                                         class="pf-l-flex"
+                                                        data-testid="InfraNodesCountContainer"
                                                       >
                                                         <dt>
                                                           Infra: 
@@ -11287,6 +11298,7 @@ exports[`<ClusterDetails /> Cluster Details - OSD should render 1`] = `
                                                 >
                                                   <div
                                                     class="pf-l-flex"
+                                                    data-testid="controlPlaneNodesCountContainer"
                                                   >
                                                     <dt>
                                                       Control plane: 
@@ -11297,6 +11309,7 @@ exports[`<ClusterDetails /> Cluster Details - OSD should render 1`] = `
                                                   </div>
                                                   <div
                                                     class="pf-l-flex"
+                                                    data-testid="InfraNodesCountContainer"
                                                   >
                                                     <dt>
                                                       Infra: 
@@ -16753,9 +16766,12 @@ exports[`<ClusterDetails /> Cluster Details - OSD should render 1`] = `
                                                                         <dl
                                                                           className="pf-l-stack"
                                                                         >
-                                                                          <Flex>
+                                                                          <Flex
+                                                                            data-testid="controlPlaneNodesCountContainer"
+                                                                          >
                                                                             <div
                                                                               className="pf-l-flex"
+                                                                              data-testid="controlPlaneNodesCountContainer"
                                                                             >
                                                                               <dt>
                                                                                 Control plane: 
@@ -16765,9 +16781,12 @@ exports[`<ClusterDetails /> Cluster Details - OSD should render 1`] = `
                                                                               </dd>
                                                                             </div>
                                                                           </Flex>
-                                                                          <Flex>
+                                                                          <Flex
+                                                                            data-testid="InfraNodesCountContainer"
+                                                                          >
                                                                             <div
                                                                               className="pf-l-flex"
+                                                                              data-testid="InfraNodesCountContainer"
                                                                             >
                                                                               <dt>
                                                                                 Infra: 
@@ -17663,6 +17682,7 @@ exports[`<ClusterDetails /> Cluster Details - OSD should render 1`] = `
                                       data-ouia-component-id="OUIA-Generated-Alert-danger-5"
                                       data-ouia-component-type="PF4/Alert"
                                       data-ouia-safe="true"
+                                      role="alert"
                                     >
                                       <div
                                         class="pf-c-alert__icon"
@@ -17725,7 +17745,6 @@ exports[`<ClusterDetails /> Cluster Details - OSD should render 1`] = `
                     >
                       <ErrorBoundary>
                         <AccessControl
-                          cloudProvider="aws"
                           cluster={
                             Object {
                               "activity_timestamp": "2021-01-11T11:55:29Z",
@@ -18084,12 +18103,6 @@ exports[`<ClusterDetails /> Cluster Details - OSD should render 1`] = `
                                 "id": "openshift-v4.6.8",
                                 "kind": "Version",
                               },
-                            }
-                          }
-                          clusterUrls={
-                            Object {
-                              "api": "https://api.test-liza.wiex.s1.devshift.org:6443",
-                              "console": "https://console-openshift-console.apps.test-liza.wiex.s1.devshift.org",
                             }
                           }
                           history={
@@ -22980,6 +22993,7 @@ exports[`<ClusterDetails /> Cluster Details - OSD should render 1`] = `
                                 data-ouia-component-id="OUIA-Generated-Alert-danger-9"
                                 data-ouia-component-type="PF4/Alert"
                                 data-ouia-safe="true"
+                                role="alert"
                               >
                                 <div
                                   class="pf-c-alert__icon"
@@ -25985,6 +25999,7 @@ exports[`<ClusterDetails /> Cluster Details - OSD should render 1`] = `
                                 data-ouia-component-id="OUIA-Generated-Alert-danger-7"
                                 data-ouia-component-type="PF4/Alert"
                                 data-ouia-safe="true"
+                                role="alert"
                               >
                                 <div
                                   class="pf-c-alert__icon"

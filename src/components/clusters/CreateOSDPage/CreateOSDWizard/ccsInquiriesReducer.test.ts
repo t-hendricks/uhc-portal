@@ -16,13 +16,6 @@ describe('processAWSVPCs', () => {
 
     // Contains original items unmodified.
     expect(result.items).toHaveLength(awsVPCs.size);
-    // old API before https://gitlab.cee.redhat.com/service/uhc-clusters-service/-/merge_requests/3852
-    expect(result.bySubnetID['subnet-0c17300787ec127bc']).toEqual({
-      vpc_id: 'vpc-0c79e0e9acafedaef',
-      subnet_id: 'subnet-0c17300787ec127bc',
-      public: true,
-      availability_zone: 'us-east-1b',
-    });
     // new API
     expect(result.bySubnetID['subnet-0d3a4a32658ee415a']).toEqual({
       vpc_id: 'vpc-0d5c8e4d499be6630',

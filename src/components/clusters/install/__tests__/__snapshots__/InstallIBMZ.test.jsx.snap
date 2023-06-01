@@ -1,0 +1,51 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`InstallIBMZ renders correctly 1`] = `
+<Fragment>
+  <InstructionsChooserPageTitle
+    breadcrumbs={
+      <Breadcrumbs
+        path={
+          Array [
+            Object {
+              "label": "Clusters",
+            },
+            Object {
+              "label": "Cluster Type",
+              "path": "/create",
+            },
+            Object {
+              "label": "IBM zSystems (s390x)",
+            },
+          ]
+        }
+      />
+    }
+    cloudName="IBM zSystems (s390x)"
+  />
+  <PageSection>
+    <InstructionsChooser
+      aiLearnMoreLink="https://docs.openshift.com/container-platform/4.12/installing/installing_on_prem_assisted/installing-on-prem-assisted.html"
+      aiPageLink="/assisted-installer/clusters/~new"
+      hideIPI={true}
+      name="Ibmz"
+      providerSpecificFeatures={
+        Object {
+          "abi": Array [
+            "For connected or air-gapped/restricted networks",
+          ],
+          "ipi": Array [
+            "Hosts controlled with Ibmz Cloud Provider",
+            "For connected or air-gapped/restricted networks",
+          ],
+          "upi": Array [
+            "For connected or air-gapped/restricted networks",
+          ],
+        }
+      }
+      upiLearnMoreLink="https://docs.openshift.com/container-platform/4.12/installing/installing_ibm_z/preparing-to-install-on-ibm-z.html"
+      upiPageLink="/install/ibmz/user-provisioned"
+    />
+  </PageSection>
+</Fragment>
+`;

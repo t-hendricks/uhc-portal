@@ -14,7 +14,8 @@ import { tools } from '../../../common/installLinks.mjs';
 export class InstallPowerPreRelease extends Component {
   componentDidMount() {
     scrollToTop();
-    document.title = 'Install OpenShift 4 | Power | Experimental Developer Preview Builds';
+    document.title =
+      'Install OpenShift 4 | IBM Power (ppc64le) | Experimental Developer Preview Builds';
 
     const { dispatch } = this.props;
     dispatch(tollboothActions.createAuthToken());
@@ -27,7 +28,7 @@ export class InstallPowerPreRelease extends Component {
         path={[
           { label: 'Clusters' },
           { label: 'Cluster Type', path: '/create' },
-          { label: 'Power', path: '/install/power/user-provisioned' },
+          { label: 'IBM Power (ppc64le)', path: '/install/power/user-provisioned' },
           { label: 'Pre-Release Builds' },
         ]}
       />
@@ -36,7 +37,7 @@ export class InstallPowerPreRelease extends Component {
     return (
       <>
         <PageTitle
-          title="Install OpenShift on Power with user-provisioned infrastructure"
+          title="Install OpenShift on IBM Power (ppc64le) with user-provisioned infrastructure"
           breadcrumbs={breadcrumbs}
         />
         <PageSection>

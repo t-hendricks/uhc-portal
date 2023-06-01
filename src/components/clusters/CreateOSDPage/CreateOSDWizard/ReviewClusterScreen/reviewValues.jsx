@@ -3,6 +3,7 @@ import { Grid, GridItem, LabelGroup, Label } from '@patternfly/react-core';
 import { billingModels } from '../../../../../common/subscriptionTypes';
 import { humanizeValueWithUnitGiB } from '../../../../../common/units';
 import parseUpdateSchedule from '../../../common/Upgrades/parseUpdateSchedule';
+import AwsVpcTable from './AwsVpcTable';
 
 /**
  * reviewValues structure - key: field name
@@ -77,7 +78,7 @@ const reviewValues = {
   hypershift: {
     title: 'Control plane',
     isBoolean: true,
-    values: { true: 'Hosted', false: 'Standalone' },
+    values: { true: 'Hosted', false: 'Classic' },
   },
   region: {
     title: 'Region',
@@ -209,6 +210,7 @@ const reviewValues = {
       </LabelGroup>
     ),
   },
+  // For non-Hypershift
   install_to_vpc: {
     title: 'Install into existing VPC',
     isBoolean: true,
@@ -216,6 +218,10 @@ const reviewValues = {
       true: 'Enabled',
       false: 'Disabled',
     },
+  },
+  // For Hypershift
+  selected_vpc_id: {
+    title: 'Install to selected VPC',
   },
   use_privatelink: {
     title: 'PrivateLink',
@@ -225,18 +231,14 @@ const reviewValues = {
       false: 'Disabled',
     },
   },
-  aws_vpc: {
+  aws_standalone_vpc: {
     title: 'VPC subnet settings',
     valueTransform: (value, allValues) => {
-      const hidePublicFields =
-        allValues.hypershift === 'true'
-          ? allValues.cluster_privacy === 'internal'
-          : allValues.use_privatelink;
       let vpcs = [
         {
           az: allValues.az_0,
           privateSubnet: allValues.private_subnet_id_0,
-          publicSubnet: hidePublicFields ? undefined : allValues.public_subnet_id_0,
+          publicSubnet: allValues.public_subnet_id_0,
         },
       ];
       if (allValues.multi_az === 'true') {
@@ -245,39 +247,30 @@ const reviewValues = {
           {
             az: allValues.az_1,
             privateSubnet: allValues.private_subnet_id_1,
-            publicSubnet: hidePublicFields ? undefined : allValues.public_subnet_id_1,
+            publicSubnet: allValues.public_subnet_id_1,
           },
           {
             az: allValues.az_2,
             privateSubnet: allValues.private_subnet_id_2,
-            publicSubnet: hidePublicFields ? undefined : allValues.public_subnet_id_2,
+            publicSubnet: allValues.public_subnet_id_2,
           },
         ];
       }
-      return (
-        <Grid>
-          <GridItem md={3}>
-            <strong>Availability zone</strong>
-          </GridItem>
-          <GridItem md={3}>
-            <strong>Private subnet ID</strong>
-          </GridItem>
-          {!hidePublicFields ? (
-            <GridItem md={3}>
-              <strong>Public subnet ID</strong>
-            </GridItem>
-          ) : null}
-          <GridItem md={hidePublicFields ? 6 : 3} />
-          {vpcs.map((vpc) => (
-            <>
-              <GridItem md={3}>{vpc.az}</GridItem>
-              <GridItem md={3}>{vpc.privateSubnet}</GridItem>
-              {!hidePublicFields ? <GridItem md={3}>{vpc.publicSubnet}</GridItem> : null}
-              <GridItem md={hidePublicFields ? 6 : 3} />
-            </>
-          ))}
-        </Grid>
-      );
+
+      const showPublicFields = !allValues.use_privatelink;
+      return <AwsVpcTable vpcs={vpcs} showPublicFields={showPublicFields} />;
+    },
+  },
+  aws_hosted_vpc: {
+    title: 'Machine pools',
+    valueTransform: (value, allValues) => {
+      const hasPublicSubnet = allValues.cluster_privacy === 'external';
+      const vpcs = allValues.machine_pools_subnets.map((machinePool) => ({
+        publicSubnet: hasPublicSubnet ? allValues.cluster_privacy_public_subnet.subnet_id : '',
+        privateSubnet: machinePool.subnet_id,
+        az: machinePool.availability_zone,
+      }));
+      return <AwsVpcTable vpcs={vpcs} showPublicFields={hasPublicSubnet} />;
     },
   },
   gpc_vpc: {
@@ -359,11 +352,15 @@ const reviewValues = {
       undefined: 'Public',
     },
   },
-  cluster_privacy_public_subnet_id: {
+  cluster_privacy_public_subnet: {
     title: 'Public subnet ID',
+    valueTransform: (subnet) => subnet.subnet_id,
   },
   associated_aws_id: {
     title: 'AWS infrastructure account ID',
+  },
+  billing_account_id: {
+    title: 'AWS billing account ID',
   },
   installer_role_arn: {
     title: 'Installer role',

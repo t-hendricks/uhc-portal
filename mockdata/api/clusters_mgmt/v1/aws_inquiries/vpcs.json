@@ -1,8 +1,8 @@
 {
   "kind": "VPCList",
   "page": 1,
-  "size": 28,
-  "total": 28,
+  "size": 26,
+  "total": 26,
   "items": [
     {
       "name": "SDA-5333-test-new-API-returning-both-name-and-id",
@@ -46,1282 +46,1322 @@
       "aws_subnets": []
     },
     {
-      "name": "vpc-08b6f0901ba35262d",
+      "name": "mbouqsim-test-4-12-xkhvt-vpc",
+      "id": "vpc-048a9cb4375326db1",
       "aws_subnets": [
         {
-          "subnet_id": "subnet-09ad4ef49f2e29996",
-          "public": true,
-          "availability_zone": "us-east-1f"
-        },
-        {
-          "subnet_id": "subnet-033df60271dd74464",
-          "public": false,
-          "availability_zone": "us-east-1b"
-        },
-        {
-          "subnet_id": "subnet-0110a5937da99ad57",
-          "public": true,
-          "availability_zone": "us-east-1a"
-        },
-        {
-          "subnet_id": "subnet-00327948731118662",
-          "public": false,
-          "availability_zone": "us-east-1f"
-        },
-        {
-          "subnet_id": "subnet-09404f4fc139bd94e",
-          "public": true,
-          "availability_zone": "us-east-1e"
-        },
-        {
-          "subnet_id": "subnet-0340b7737e5177b80",
-          "public": false,
-          "availability_zone": "us-east-1a"
-        },
-        {
-          "subnet_id": "subnet-0c8db4718922eeb5c",
-          "public": true,
-          "availability_zone": "us-east-1b"
-        },
-        {
-          "subnet_id": "subnet-00b3753ab2dd892ac",
-          "public": false,
-          "availability_zone": "us-east-1d"
-        },
-        {
-          "subnet_id": "subnet-0735da52d658da28b",
-          "public": false,
-          "availability_zone": "us-east-1e"
-        },
-        {
-          "subnet_id": "subnet-0703ec90283d1fd6b",
+          "subnet_id": "subnet-07d6afea8390d724b",
+          "name": "mbouqsim-test-4-12-xkhvt-public-us-east-1d",
           "public": true,
           "availability_zone": "us-east-1d"
         },
         {
-          "subnet_id": "subnet-04d1bc84aeebd3201",
+          "subnet_id": "subnet-022909c34cf143bb4",
+          "name": "mbouqsim-test-4-12-xkhvt-public-us-east-1b",
+          "public": true,
+          "availability_zone": "us-east-1b"
+        },
+        {
+          "subnet_id": "subnet-0dbe1ec4fcb0aeb8e",
+          "name": "mbouqsim-test-4-12-xkhvt-private-us-east-1a",
+          "public": false,
+          "availability_zone": "us-east-1a"
+        },
+        {
+          "subnet_id": "subnet-01c570904c12f52ae",
+          "name": "mbouqsim-test-4-12-xkhvt-private-us-east-1f",
+          "public": false,
+          "availability_zone": "us-east-1f"
+        },
+        {
+          "subnet_id": "subnet-0739d3017630f47b5",
+          "name": "mbouqsim-test-4-12-xkhvt-public-us-east-1c",
+          "public": true,
+          "availability_zone": "us-east-1c"
+        },
+        {
+          "subnet_id": "subnet-0641cf15eec30442a",
+          "name": "mbouqsim-test-4-12-xkhvt-public-us-east-1a",
+          "public": true,
+          "availability_zone": "us-east-1a"
+        },
+        {
+          "subnet_id": "subnet-08a2c509ba577f19f",
+          "name": "mbouqsim-test-4-12-xkhvt-private-us-east-1d",
+          "public": false,
+          "availability_zone": "us-east-1d"
+        },
+        {
+          "subnet_id": "subnet-04a6c1b455562cc7a",
+          "name": "mbouqsim-test-4-12-xkhvt-private-us-east-1c",
           "public": false,
           "availability_zone": "us-east-1c"
         },
         {
-          "subnet_id": "subnet-0cd4e17634ac86d86",
+          "subnet_id": "subnet-0710c0d15361d308c",
+          "name": "mbouqsim-test-4-12-xkhvt-public-us-east-1f",
           "public": true,
-          "availability_zone": "us-east-1c"
+          "availability_zone": "us-east-1f"
+        },
+        {
+          "subnet_id": "subnet-05aa92c06102a07bc",
+          "name": "mbouqsim-test-4-12-xkhvt-private-us-east-1b",
+          "public": false,
+          "availability_zone": "us-east-1b"
         }
       ]
     },
     {
-      "name": "vpc-0c79e0e9acafedaef",
+      "name": "drcluster2-may-11-68fs6-vpc",
+      "id": "vpc-09172b63e4129dee7",
       "aws_subnets": [
         {
-          "subnet_id": "subnet-0ded5559672a92885",
-          "public": false,
-          "availability_zone": "us-east-1f"
-        },
-        {
-          "subnet_id": "subnet-049b8a69488b31be4",
-          "public": false,
-          "availability_zone": "us-east-1c"
-        },
-        {
-          "subnet_id": "subnet-0c17300787ec127bc",
-          "public": true,
-          "availability_zone": "us-east-1b"
-        },
-        {
-          "subnet_id": "subnet-0f441a0356e421188",
+          "subnet_id": "subnet-0640e28b2138377da",
+          "name": "drcluster2-may-11-68fs6-private-us-east-1a",
           "public": false,
           "availability_zone": "us-east-1a"
         },
         {
-          "subnet_id": "subnet-0d6ba7bc01d802bb9",
-          "public": true,
-          "availability_zone": "us-east-1d"
-        },
-        {
-          "subnet_id": "subnet-0e22644561fd3111d",
-          "public": false,
-          "availability_zone": "us-east-1d"
-        },
-        {
-          "subnet_id": "subnet-0b36b900009b6844e",
-          "public": true,
-          "availability_zone": "us-east-1a"
-        },
-        {
-          "subnet_id": "subnet-032c8646b165b26b9",
-          "public": true,
-          "availability_zone": "us-east-1c"
-        },
-        {
-          "subnet_id": "subnet-0c09b279124ad1be7",
+          "subnet_id": "subnet-00fa85eabb8327870",
+          "name": "drcluster2-may-11-68fs6-private-us-east-1b",
           "public": false,
           "availability_zone": "us-east-1b"
         },
         {
-          "subnet_id": "subnet-02bcde7885fb887fb",
+          "subnet_id": "subnet-02a57e9199559701c",
+          "name": "drcluster2-may-11-68fs6-public-us-east-1c",
+          "public": true,
+          "availability_zone": "us-east-1c"
+        },
+        {
+          "subnet_id": "subnet-0fca666321af48bbd",
+          "name": "drcluster2-may-11-68fs6-public-us-east-1a",
+          "public": true,
+          "availability_zone": "us-east-1a"
+        },
+        {
+          "subnet_id": "subnet-0a726d420f5adeaf9",
+          "name": "drcluster2-may-11-68fs6-public-us-east-1f",
           "public": true,
           "availability_zone": "us-east-1f"
+        },
+        {
+          "subnet_id": "subnet-00f9189efcb802b8b",
+          "name": "drcluster2-may-11-68fs6-private-us-east-1c",
+          "public": false,
+          "availability_zone": "us-east-1c"
+        },
+        {
+          "subnet_id": "subnet-0bdf51b6ee61e0f56",
+          "name": "drcluster2-may-11-68fs6-public-us-east-1d",
+          "public": true,
+          "availability_zone": "us-east-1d"
+        },
+        {
+          "subnet_id": "subnet-0a60a5e53367f3842",
+          "name": "drcluster2-may-11-68fs6-private-us-east-1f",
+          "public": false,
+          "availability_zone": "us-east-1f"
+        },
+        {
+          "subnet_id": "subnet-0a49e0dd114e51624",
+          "name": "drcluster2-may-11-68fs6-private-us-east-1d",
+          "public": false,
+          "availability_zone": "us-east-1d"
+        },
+        {
+          "subnet_id": "subnet-02294cc7dc5bf19b9",
+          "name": "drcluster2-may-11-68fs6-public-us-east-1b",
+          "public": true,
+          "availability_zone": "us-east-1b"
         }
       ]
     },
     {
-      "name": "vpc-03e6cd3f6ff4f5493",
+      "name": "ptsiraki-log230511-bddpl-vpc",
+      "id": "vpc-088ee18beb57cc372",
       "aws_subnets": [
         {
-          "subnet_id": "subnet-012cbfb08ebb59979",
+          "subnet_id": "subnet-0674c2d7845a283a7",
+          "name": "ptsiraki-log230511-bddpl-public-us-east-1b",
+          "public": true,
+          "availability_zone": "us-east-1b"
+        },
+        {
+          "subnet_id": "subnet-0f554be28a77882e3",
+          "name": "ptsiraki-log230511-bddpl-private-us-east-1d",
           "public": false,
           "availability_zone": "us-east-1d"
         },
         {
-          "subnet_id": "subnet-0bed271463c72496a",
-          "public": false,
-          "availability_zone": "us-east-1e"
-        },
-        {
-          "subnet_id": "subnet-02fb1e38241d55aba",
-          "public": false,
-          "availability_zone": "us-east-1a"
-        },
-        {
-          "subnet_id": "subnet-098e9be3718da09e3",
-          "public": true,
-          "availability_zone": "us-east-1b"
-        },
-        {
-          "subnet_id": "subnet-05a302c4badd8a861",
-          "public": false,
-          "availability_zone": "us-east-1f"
-        },
-        {
-          "subnet_id": "subnet-042d56492b61d6b9c",
-          "public": false,
-          "availability_zone": "us-east-1b"
-        },
-        {
-          "subnet_id": "subnet-009e51d0d5acc36bc",
-          "public": true,
-          "availability_zone": "us-east-1c"
-        },
-        {
-          "subnet_id": "subnet-0c990fe12e545575a",
-          "public": true,
-          "availability_zone": "us-east-1a"
-        },
-        {
-          "subnet_id": "subnet-0205cfc4ac37a9385",
-          "public": true,
-          "availability_zone": "us-east-1e"
-        },
-        {
-          "subnet_id": "subnet-00dacea14109ea606",
-          "public": true,
-          "availability_zone": "us-east-1f"
-        },
-        {
-          "subnet_id": "subnet-0cdcf0390fd90b8ac",
-          "public": false,
-          "availability_zone": "us-east-1c"
-        },
-        {
-          "subnet_id": "subnet-019eda90fbeaa72f5",
-          "public": true,
-          "availability_zone": "us-east-1d"
-        }
-      ]
-    },
-    {
-      "name": "vpc-0d4ee3ee653a75927",
-      "aws_subnets": [
-        {
-          "subnet_id": "subnet-0474cb6c500d9394e",
-          "public": false,
-          "availability_zone": "us-east-1b"
-        },
-        {
-          "subnet_id": "subnet-06e616d37d5b3004e",
+          "subnet_id": "subnet-0f13377a03b92da80",
+          "name": "ptsiraki-log230511-bddpl-public-us-east-1d",
           "public": true,
           "availability_zone": "us-east-1d"
         },
         {
-          "subnet_id": "subnet-00ca491f7c0eabac9",
-          "public": false,
-          "availability_zone": "us-east-1c"
-        },
-        {
-          "subnet_id": "subnet-09c0331e2373465c5",
-          "public": true,
-          "availability_zone": "us-east-1b"
-        },
-        {
-          "subnet_id": "subnet-0ea68111aaef39a1f",
-          "public": false,
-          "availability_zone": "us-east-1f"
-        },
-        {
-          "subnet_id": "subnet-06d8ab32c8cca5f09",
+          "subnet_id": "subnet-083dbc03458316359",
+          "name": "ptsiraki-log230511-bddpl-private-us-east-1e",
           "public": false,
           "availability_zone": "us-east-1e"
         },
         {
-          "subnet_id": "subnet-060e3dad7c959c606",
+          "subnet_id": "subnet-01156df20fe9d6a09",
+          "name": "ptsiraki-log230511-bddpl-private-us-east-1a",
           "public": false,
           "availability_zone": "us-east-1a"
         },
         {
-          "subnet_id": "subnet-094f581b754824854",
-          "public": true,
+          "subnet_id": "subnet-020a000dc83b87068",
+          "name": "ptsiraki-log230511-bddpl-private-us-east-1c",
+          "public": false,
           "availability_zone": "us-east-1c"
         },
         {
-          "subnet_id": "subnet-057ee36dc3c455221",
+          "subnet_id": "subnet-07377ff704c45cf32",
+          "name": "ptsiraki-log230511-bddpl-public-us-east-1a",
           "public": true,
           "availability_zone": "us-east-1a"
         },
         {
-          "subnet_id": "subnet-04808bc15437c494a",
-          "public": false,
-          "availability_zone": "us-east-1d"
+          "subnet_id": "subnet-0eedc94c9a378b8ff",
+          "name": "ptsiraki-log230511-bddpl-public-us-east-1f",
+          "public": true,
+          "availability_zone": "us-east-1f"
         },
         {
-          "subnet_id": "subnet-010b8e2e6f9ec58a6",
+          "subnet_id": "subnet-0baccea661cc46990",
+          "name": "ptsiraki-log230511-bddpl-public-us-east-1e",
           "public": true,
           "availability_zone": "us-east-1e"
         },
         {
-          "subnet_id": "subnet-0d464333077e6832c",
-          "public": true,
-          "availability_zone": "us-east-1f"
-        }
-      ]
-    },
-    {
-      "name": "vpc-0446a0e6460d0e449",
-      "aws_subnets": [
-        {
-          "subnet_id": "subnet-0e4a15892dd384312",
-          "public": false,
-          "availability_zone": "us-east-1d"
-        },
-        {
-          "subnet_id": "subnet-04953300da46f15ab",
-          "public": true,
-          "availability_zone": "us-east-1f"
-        },
-        {
-          "subnet_id": "subnet-0bda56fe775abe6e1",
-          "public": true,
-          "availability_zone": "us-east-1b"
-        },
-        {
-          "subnet_id": "subnet-0a210c6ec4e408bb5",
+          "subnet_id": "subnet-030c60ec09e865f4c",
+          "name": "ptsiraki-log230511-bddpl-public-us-east-1c",
           "public": true,
           "availability_zone": "us-east-1c"
         },
         {
-          "subnet_id": "subnet-0dd6748ade9a53e26",
+          "subnet_id": "subnet-0927a6e45b8ceae24",
+          "name": "ptsiraki-log230511-bddpl-private-us-east-1f",
           "public": false,
           "availability_zone": "us-east-1f"
         },
         {
-          "subnet_id": "subnet-068a9052cadf5d604",
-          "public": false,
-          "availability_zone": "us-east-1a"
-        },
-        {
-          "subnet_id": "subnet-00566bea4f49b79c4",
-          "public": true,
-          "availability_zone": "us-east-1a"
-        },
-        {
-          "subnet_id": "subnet-04b1c89804caeed27",
-          "public": false,
-          "availability_zone": "us-east-1c"
-        },
-        {
-          "subnet_id": "subnet-0056a73fa6cc1fcc7",
-          "public": false,
-          "availability_zone": "us-east-1b"
-        },
-        {
-          "subnet_id": "subnet-0c4fc4a9f4d04ac9f",
-          "public": true,
-          "availability_zone": "us-east-1d"
-        }
-      ]
-    },
-    {
-      "name": "vpc-060fe87d8b0394a40",
-      "aws_subnets": [
-        {
-          "subnet_id": "subnet-0dc9c0b1ba3effc6e",
-          "public": true,
-          "availability_zone": "us-east-1c"
-        },
-        {
-          "subnet_id": "subnet-0aebe94da16322570",
-          "public": false,
-          "availability_zone": "us-east-1a"
-        },
-        {
-          "subnet_id": "subnet-07809a36b8f0418bf",
-          "public": true,
-          "availability_zone": "us-east-1f"
-        },
-        {
-          "subnet_id": "subnet-0df249fd61eba6225",
-          "public": false,
-          "availability_zone": "us-east-1f"
-        },
-        {
-          "subnet_id": "subnet-0dd1bee51b8e66461",
-          "public": false,
-          "availability_zone": "us-east-1c"
-        },
-        {
-          "subnet_id": "subnet-0f65c3006116c25a1",
-          "public": true,
-          "availability_zone": "us-east-1d"
-        },
-        {
-          "subnet_id": "subnet-0203b3535a82d7bec",
-          "public": true,
-          "availability_zone": "us-east-1e"
-        },
-        {
-          "subnet_id": "subnet-0d21aacbdb8da3cf7",
-          "public": true,
-          "availability_zone": "us-east-1b"
-        },
-        {
-          "subnet_id": "subnet-0fd4049ec4645c35f",
-          "public": true,
-          "availability_zone": "us-east-1a"
-        },
-        {
-          "subnet_id": "subnet-03325559867df42db",
-          "public": false,
-          "availability_zone": "us-east-1d"
-        },
-        {
-          "subnet_id": "subnet-0c273de8becc1f62b",
-          "public": false,
-          "availability_zone": "us-east-1e"
-        },
-        {
-          "subnet_id": "subnet-0c92b5618fa07c1ff",
+          "subnet_id": "subnet-0584f327eab488e40",
+          "name": "ptsiraki-log230511-bddpl-private-us-east-1b",
           "public": false,
           "availability_zone": "us-east-1b"
         }
       ]
     },
     {
-      "name": "vpc-00cfccbbbaceb89ca",
+      "name": "odfcluster-uk-may-11-9c8qx-vpc",
+      "id": "vpc-073994cae90cf56ea",
       "aws_subnets": [
         {
-          "subnet_id": "subnet-07ee08fd53b6b7183",
-          "public": false,
-          "availability_zone": "us-east-1f"
-        },
-        {
-          "subnet_id": "subnet-0590610ddd80c005a",
-          "public": false,
-          "availability_zone": "us-east-1d"
-        },
-        {
-          "subnet_id": "subnet-0aee437e71303d0f6",
-          "public": false,
-          "availability_zone": "us-east-1b"
-        },
-        {
-          "subnet_id": "subnet-035b08e904fb80a7e",
-          "public": true,
-          "availability_zone": "us-east-1c"
-        },
-        {
-          "subnet_id": "subnet-036c5fc941537e170",
-          "public": true,
-          "availability_zone": "us-east-1d"
-        },
-        {
-          "subnet_id": "subnet-0ec60f2ecf9b85edc",
-          "public": false,
-          "availability_zone": "us-east-1a"
-        },
-        {
-          "subnet_id": "subnet-029ec197ba924b94a",
-          "public": true,
-          "availability_zone": "us-east-1f"
-        },
-        {
-          "subnet_id": "subnet-07b425ffa77c34847",
-          "public": true,
-          "availability_zone": "us-east-1a"
-        },
-        {
-          "subnet_id": "subnet-0fefe26ebdeb9273d",
+          "subnet_id": "subnet-005735b8c555d0f8c",
+          "name": "odfcluster-uk-may-11-9c8qx-private-us-east-1c",
           "public": false,
           "availability_zone": "us-east-1c"
         },
         {
-          "subnet_id": "subnet-002ed077b35e91900",
-          "public": true,
-          "availability_zone": "us-east-1b"
-        }
-      ]
-    },
-    {
-      "name": "vpc-0ffeacc22630e814c",
-      "aws_subnets": [
-        {
-          "subnet_id": "subnet-0538c5de4d415bf1a",
-          "public": false,
-          "availability_zone": "us-east-1e"
-        },
-        {
-          "subnet_id": "subnet-0d2ba7cb00dd74a9c",
-          "public": false,
-          "availability_zone": "us-east-1b"
-        },
-        {
-          "subnet_id": "subnet-0d672f0e9b14f8e35",
-          "public": true,
-          "availability_zone": "us-east-1c"
-        },
-        {
-          "subnet_id": "subnet-076912c5e0b20195b",
-          "public": false,
-          "availability_zone": "us-east-1d"
-        },
-        {
-          "subnet_id": "subnet-03b483720ce1a3330",
-          "public": true,
-          "availability_zone": "us-east-1e"
-        },
-        {
-          "subnet_id": "subnet-0b5461508793495fa",
+          "subnet_id": "subnet-0c8253eca80787e9c",
+          "name": "odfcluster-uk-may-11-9c8qx-public-us-east-1a",
           "public": true,
           "availability_zone": "us-east-1a"
         },
         {
-          "subnet_id": "subnet-069bbc569314940c0",
-          "public": false,
+          "subnet_id": "subnet-02a0870cb2bf0fee5",
+          "name": "odfcluster-uk-may-11-9c8qx-public-us-east-1f",
+          "public": true,
           "availability_zone": "us-east-1f"
         },
         {
-          "subnet_id": "subnet-0bed977497f3d78d9",
+          "subnet_id": "subnet-08bf2197abd273421",
+          "name": "odfcluster-uk-may-11-9c8qx-public-us-east-1d",
           "public": true,
           "availability_zone": "us-east-1d"
         },
         {
-          "subnet_id": "subnet-0810f4a325cd8019b",
+          "subnet_id": "subnet-0d13da113adef3d29",
+          "name": "odfcluster-uk-may-11-9c8qx-private-us-east-1d",
+          "public": false,
+          "availability_zone": "us-east-1d"
+        },
+        {
+          "subnet_id": "subnet-0f6c1a30f6369d1a9",
+          "name": "odfcluster-uk-may-11-9c8qx-public-us-east-1b",
           "public": true,
           "availability_zone": "us-east-1b"
         },
         {
-          "subnet_id": "subnet-03af0776b5def3608",
-          "public": false,
-          "availability_zone": "us-east-1c"
-        },
-        {
-          "subnet_id": "subnet-09554d6c6ca8d1cc0",
+          "subnet_id": "subnet-054f849f29d7fe658",
+          "name": "odfcluster-uk-may-11-9c8qx-private-us-east-1a",
           "public": false,
           "availability_zone": "us-east-1a"
         },
         {
-          "subnet_id": "subnet-0d63ab7a70a130870",
-          "public": true,
-          "availability_zone": "us-east-1f"
-        }
-      ]
-    },
-    {
-      "name": "vpc-06d556cf7e98d7862",
-      "aws_subnets": [
-        {
-          "subnet_id": "subnet-0156a092ebda1e992",
-          "public": true,
-          "availability_zone": "us-east-1a"
-        },
-        {
-          "subnet_id": "subnet-023d544ff97cf1fb2",
-          "public": true,
-          "availability_zone": "us-east-1c"
-        },
-        {
-          "subnet_id": "subnet-073ebb6e631a6e2ba",
-          "public": false,
-          "availability_zone": "us-east-1e"
-        },
-        {
-          "subnet_id": "subnet-0fddd8679a4be550a",
-          "public": true,
-          "availability_zone": "us-east-1d"
-        },
-        {
-          "subnet_id": "subnet-01869f3c79c7e3b2c",
-          "public": true,
-          "availability_zone": "us-east-1f"
-        },
-        {
-          "subnet_id": "subnet-08c9e104ddd62e976",
+          "subnet_id": "subnet-007e9e6a47c123711",
+          "name": "odfcluster-uk-may-11-9c8qx-private-us-east-1f",
           "public": false,
           "availability_zone": "us-east-1f"
         },
         {
-          "subnet_id": "subnet-027550a44983fd2a0",
-          "public": true,
-          "availability_zone": "us-east-1e"
-        },
-        {
-          "subnet_id": "subnet-0dbca755456a25fee",
-          "public": false,
-          "availability_zone": "us-east-1c"
-        },
-        {
-          "subnet_id": "subnet-0fffb71c1f073833b",
-          "public": false,
-          "availability_zone": "us-east-1a"
-        },
-        {
-          "subnet_id": "subnet-0a3c708a319d2f146",
-          "public": true,
-          "availability_zone": "us-east-1b"
-        },
-        {
-          "subnet_id": "subnet-04679f26948a26c4c",
-          "public": false,
-          "availability_zone": "us-east-1b"
-        },
-        {
-          "subnet_id": "subnet-0d6995455b09bb035",
-          "public": false,
-          "availability_zone": "us-east-1d"
-        }
-      ]
-    },
-    {
-      "name": "vpc-0d2fcf007dc55d871",
-      "aws_subnets": [
-        {
-          "subnet_id": "subnet-04825a432556e0964",
-          "public": false,
-          "availability_zone": "us-east-1f"
-        },
-        {
-          "subnet_id": "subnet-05e8202a6b9ebedd4",
-          "public": true,
-          "availability_zone": "us-east-1d"
-        },
-        {
-          "subnet_id": "subnet-0192d363b6b4659af",
-          "public": false,
-          "availability_zone": "us-east-1a"
-        },
-        {
-          "subnet_id": "subnet-0af59c7ac9f29c7e1",
-          "public": false,
-          "availability_zone": "us-east-1d"
-        },
-        {
-          "subnet_id": "subnet-0cb861eb6c1a77c9c",
-          "public": false,
-          "availability_zone": "us-east-1b"
-        },
-        {
-          "subnet_id": "subnet-0d34a60ba782da2e6",
-          "public": true,
-          "availability_zone": "us-east-1b"
-        },
-        {
-          "subnet_id": "subnet-0e6f3ece93a6d00b3",
-          "public": true,
-          "availability_zone": "us-east-1f"
-        },
-        {
-          "subnet_id": "subnet-09b635a8d58a57ab2",
-          "public": true,
-          "availability_zone": "us-east-1a"
-        },
-        {
-          "subnet_id": "subnet-089f06190870b8c76",
+          "subnet_id": "subnet-02f5218f27e2d9f2b",
+          "name": "odfcluster-uk-may-11-9c8qx-public-us-east-1c",
           "public": true,
           "availability_zone": "us-east-1c"
         },
         {
-          "subnet_id": "subnet-0b4a20cbaaee2dc3c",
-          "public": false,
-          "availability_zone": "us-east-1c"
-        }
-      ]
-    },
-    {
-      "name": "vpc-091405e6e8f7904cd",
-      "aws_subnets": [
-        {
-          "subnet_id": "subnet-0fdb0b424e2d5c5c4",
-          "public": false,
-          "availability_zone": "us-east-1b"
-        },
-        {
-          "subnet_id": "subnet-0ac24503f30b38b1f",
-          "public": false,
-          "availability_zone": "us-east-1d"
-        },
-        {
-          "subnet_id": "subnet-0a5aea8760d8bc5f2",
-          "public": false,
-          "availability_zone": "us-east-1a"
-        },
-        {
-          "subnet_id": "subnet-014dcf14215359565",
-          "public": true,
-          "availability_zone": "us-east-1d"
-        },
-        {
-          "subnet_id": "subnet-0e490ac49de4f45df",
-          "public": true,
-          "availability_zone": "us-east-1c"
-        },
-        {
-          "subnet_id": "subnet-0288a3ac7d0f443c6",
-          "public": false,
-          "availability_zone": "us-east-1f"
-        },
-        {
-          "subnet_id": "subnet-0d4796be14a76099c",
-          "public": true,
-          "availability_zone": "us-east-1b"
-        },
-        {
-          "subnet_id": "subnet-00d2bb10e0f053f94",
-          "public": true,
-          "availability_zone": "us-east-1a"
-        },
-        {
-          "subnet_id": "subnet-0adaeed92a5a03aaf",
-          "public": false,
-          "availability_zone": "us-east-1c"
-        },
-        {
-          "subnet_id": "subnet-0f5b97b8ccc879b92",
-          "public": true,
-          "availability_zone": "us-east-1f"
-        }
-      ]
-    },
-    {
-      "name": "vpc-05c0166a739c83db1",
-      "aws_subnets": [
-        {
-          "subnet_id": "subnet-042baf4f3d9c9a1f1",
-          "public": true,
-          "availability_zone": "us-east-1a"
-        }
-      ]
-    },
-    {
-      "name": "vpc-0bf40fc6f49f9dca2",
-      "aws_subnets": [
-        {
-          "subnet_id": "subnet-0ea994032e9bc74ac",
-          "public": true,
-          "availability_zone": "us-east-1b"
-        },
-        {
-          "subnet_id": "subnet-0b535f590c5d48ce4",
-          "public": false,
-          "availability_zone": "us-east-1a"
-        },
-        {
-          "subnet_id": "subnet-029517caa1cc3b25b",
-          "public": true,
-          "availability_zone": "us-east-1e"
-        },
-        {
-          "subnet_id": "subnet-0bddde2b7e42c6eb7",
-          "public": true,
-          "availability_zone": "us-east-1c"
-        },
-        {
-          "subnet_id": "subnet-0db13bd57fbf442ef",
-          "public": true,
-          "availability_zone": "us-east-1d"
-        },
-        {
-          "subnet_id": "subnet-093b6794a2772f39a",
-          "public": false,
-          "availability_zone": "us-east-1d"
-        },
-        {
-          "subnet_id": "subnet-051402b3f6ed36e8e",
-          "public": true,
-          "availability_zone": "us-east-1a"
-        },
-        {
-          "subnet_id": "subnet-0b6ecc36b49ab6751",
-          "public": true,
-          "availability_zone": "us-east-1f"
-        },
-        {
-          "subnet_id": "subnet-075dcbb28268ca9cf",
-          "public": false,
-          "availability_zone": "us-east-1c"
-        },
-        {
-          "subnet_id": "subnet-0251f013f950c6e20",
-          "public": false,
-          "availability_zone": "us-east-1e"
-        },
-        {
-          "subnet_id": "subnet-0b6173f055a9431b3",
-          "public": false,
-          "availability_zone": "us-east-1f"
-        },
-        {
-          "subnet_id": "subnet-0e502acc2914a151e",
+          "subnet_id": "subnet-0bf47d90618e14ff2",
+          "name": "odfcluster-uk-may-11-9c8qx-private-us-east-1b",
           "public": false,
           "availability_zone": "us-east-1b"
         }
       ]
     },
     {
-      "name": "vpc-00eeab6fd33fb9dc5",
+      "name": "drcluster1-may-11-25cv8-vpc",
+      "id": "vpc-0ea69d2a78d599d50",
       "aws_subnets": [
         {
-          "subnet_id": "subnet-09ea72461ccf43e32",
-          "public": true,
-          "availability_zone": "us-east-1c"
-        },
-        {
-          "subnet_id": "subnet-0e484e294bf5f0c97",
+          "subnet_id": "subnet-0f4fc9e2143d3d4a2",
+          "name": "drcluster1-may-11-25cv8-private-us-east-1d",
           "public": false,
-          "availability_zone": "us-east-1c"
+          "availability_zone": "us-east-1d"
         },
         {
-          "subnet_id": "subnet-045baac13b3d04307",
+          "subnet_id": "subnet-0890f0eee6ae80e80",
+          "name": "drcluster1-may-11-25cv8-private-us-east-1f",
           "public": false,
           "availability_zone": "us-east-1f"
         },
         {
-          "subnet_id": "subnet-0ce0dfa0e1f8974ef",
+          "subnet_id": "subnet-048c8a1c73d28741a",
+          "name": "drcluster1-may-11-25cv8-private-us-east-1c",
+          "public": false,
+          "availability_zone": "us-east-1c"
+        },
+        {
+          "subnet_id": "subnet-0ede30a601919d0e7",
+          "name": "drcluster1-may-11-25cv8-public-us-east-1f",
           "public": true,
           "availability_zone": "us-east-1f"
         },
         {
-          "subnet_id": "subnet-07ae1bb354a5fa3c2",
+          "subnet_id": "subnet-0550fc53d8ddf192c",
+          "name": "drcluster1-may-11-25cv8-private-us-east-1a",
+          "public": false,
+          "availability_zone": "us-east-1a"
+        },
+        {
+          "subnet_id": "subnet-0e3a24232c26d903d",
+          "name": "drcluster1-may-11-25cv8-public-us-east-1b",
           "public": true,
           "availability_zone": "us-east-1b"
         },
         {
-          "subnet_id": "subnet-0a332ab1b7d8e1ccc",
+          "subnet_id": "subnet-02c205cf66a0d5545",
+          "name": "drcluster1-may-11-25cv8-public-us-east-1d",
           "public": true,
           "availability_zone": "us-east-1d"
         },
         {
-          "subnet_id": "subnet-0b40f4541c224aedd",
-          "public": false,
-          "availability_zone": "us-east-1a"
+          "subnet_id": "subnet-024f406f72cd7f74b",
+          "name": "drcluster1-may-11-25cv8-public-us-east-1c",
+          "public": true,
+          "availability_zone": "us-east-1c"
         },
         {
-          "subnet_id": "subnet-0fc06179ea17f3b85",
+          "subnet_id": "subnet-03a495ffa409a20a9",
+          "name": "drcluster1-may-11-25cv8-public-us-east-1a",
           "public": true,
           "availability_zone": "us-east-1a"
         },
         {
-          "subnet_id": "subnet-06246a69d1b86d932",
-          "public": false,
-          "availability_zone": "us-east-1d"
-        },
-        {
-          "subnet_id": "subnet-0e8a794a62e3521e4",
+          "subnet_id": "subnet-05bdfb8dbbd5295fa",
+          "name": "drcluster1-may-11-25cv8-private-us-east-1b",
           "public": false,
           "availability_zone": "us-east-1b"
         }
       ]
     },
     {
-      "name": "vpc-034d9be90a40974a4",
+      "name": "thn-oc413-v5-mg79r-vpc",
+      "id": "vpc-022f7eec6870769ae",
       "aws_subnets": [
         {
-          "subnet_id": "subnet-0dc7b0150a9019155",
+          "subnet_id": "subnet-005ea6bb67a614d52",
+          "name": "thn-oc413-v5-mg79r-private-us-east-1b",
+          "public": false,
+          "availability_zone": "us-east-1b"
+        },
+        {
+          "subnet_id": "subnet-0f96fd0c6124b1d12",
+          "name": "thn-oc413-v5-mg79r-private-us-east-1f",
+          "public": false,
+          "availability_zone": "us-east-1f"
+        },
+        {
+          "subnet_id": "subnet-0fb64ad0f955676db",
+          "name": "thn-oc413-v5-mg79r-public-us-east-1a",
+          "public": true,
+          "availability_zone": "us-east-1a"
+        },
+        {
+          "subnet_id": "subnet-0742176cbf9a6abab",
+          "name": "thn-oc413-v5-mg79r-private-us-east-1c",
+          "public": false,
+          "availability_zone": "us-east-1c"
+        },
+        {
+          "subnet_id": "subnet-057135b65ef712902",
+          "name": "thn-oc413-v5-mg79r-public-us-east-1d",
+          "public": true,
+          "availability_zone": "us-east-1d"
+        },
+        {
+          "subnet_id": "subnet-0dfe1565e12a11c75",
+          "name": "thn-oc413-v5-mg79r-public-us-east-1c",
+          "public": true,
+          "availability_zone": "us-east-1c"
+        },
+        {
+          "subnet_id": "subnet-04f0ecbb6d06037e3",
+          "name": "thn-oc413-v5-mg79r-private-us-east-1d",
+          "public": false,
+          "availability_zone": "us-east-1d"
+        },
+        {
+          "subnet_id": "subnet-07753350c26e9275f",
+          "name": "thn-oc413-v5-mg79r-public-us-east-1f",
+          "public": true,
+          "availability_zone": "us-east-1f"
+        },
+        {
+          "subnet_id": "subnet-0efd2b316293244d1",
+          "name": "thn-oc413-v5-mg79r-private-us-east-1a",
           "public": false,
           "availability_zone": "us-east-1a"
         },
         {
-          "subnet_id": "subnet-01ae89bdce9e72e49",
+          "subnet_id": "subnet-0e8099a3004fcca39",
+          "name": "thn-oc413-v5-mg79r-public-us-east-1b",
+          "public": true,
+          "availability_zone": "us-east-1b"
+        }
+      ]
+    },
+    {
+      "name": "rhamilto-dhdcm-vpc",
+      "id": "vpc-0a6187c40183b6a18",
+      "aws_subnets": [
+        {
+          "subnet_id": "subnet-0f91b0e6f3354aabe",
+          "name": "rhamilto-dhdcm-public-us-east-1d",
+          "public": true,
+          "availability_zone": "us-east-1d"
+        },
+        {
+          "subnet_id": "subnet-0b7d0bcae6698933c",
+          "name": "rhamilto-dhdcm-private-us-east-1d",
+          "public": false,
+          "availability_zone": "us-east-1d"
+        },
+        {
+          "subnet_id": "subnet-0560531ad4b1745d2",
+          "name": "rhamilto-dhdcm-private-us-east-1a",
+          "public": false,
+          "availability_zone": "us-east-1a"
+        },
+        {
+          "subnet_id": "subnet-0576da7cb548c8b55",
+          "name": "rhamilto-dhdcm-private-us-east-1b",
+          "public": false,
+          "availability_zone": "us-east-1b"
+        },
+        {
+          "subnet_id": "subnet-05b5ca4f68b81cf9f",
+          "name": "rhamilto-dhdcm-private-us-east-1c",
+          "public": false,
+          "availability_zone": "us-east-1c"
+        },
+        {
+          "subnet_id": "subnet-065d7d0462bebb855",
+          "name": "rhamilto-dhdcm-public-us-east-1b",
+          "public": true,
+          "availability_zone": "us-east-1b"
+        },
+        {
+          "subnet_id": "subnet-065608da70c52cb4a",
+          "name": "rhamilto-dhdcm-private-us-east-1f",
+          "public": false,
+          "availability_zone": "us-east-1f"
+        },
+        {
+          "subnet_id": "subnet-0297f14e606a782fa",
+          "name": "rhamilto-dhdcm-public-us-east-1f",
+          "public": true,
+          "availability_zone": "us-east-1f"
+        },
+        {
+          "subnet_id": "subnet-0838fd47f89695a31",
+          "name": "rhamilto-dhdcm-public-us-east-1c",
+          "public": true,
+          "availability_zone": "us-east-1c"
+        },
+        {
+          "subnet_id": "subnet-007584d70732fad5c",
+          "name": "rhamilto-dhdcm-public-us-east-1a",
           "public": true,
           "availability_zone": "us-east-1a"
         }
       ]
     },
     {
-      "name": "vpc-0bc21166404dc482c",
+      "name": "ssheribe-c92-v4pw4-vpc",
+      "id": "vpc-09bfa93a36a608b36",
       "aws_subnets": [
         {
-          "subnet_id": "subnet-028ed1468727ecb6a",
-          "public": false,
-          "availability_zone": "us-east-1d"
-        },
-        {
-          "subnet_id": "subnet-0f6c41a9e6f466011",
-          "public": true,
-          "availability_zone": "us-east-1f"
-        },
-        {
-          "subnet_id": "subnet-05cffa9340882dfdb",
-          "public": false,
-          "availability_zone": "us-east-1c"
-        },
-        {
-          "subnet_id": "subnet-0ed479abe2c4e7669",
-          "public": true,
-          "availability_zone": "us-east-1a"
-        },
-        {
-          "subnet_id": "subnet-0860a1058f956cea5",
-          "public": false,
-          "availability_zone": "us-east-1a"
-        },
-        {
-          "subnet_id": "subnet-0fef0984cf4fd8175",
+          "subnet_id": "subnet-09a1447d274b39b98",
+          "name": "ssheribe-c92-v4pw4-public-us-east-1c",
           "public": true,
           "availability_zone": "us-east-1c"
         },
         {
-          "subnet_id": "subnet-01bd88604155a99b8",
+          "subnet_id": "subnet-08594c6a7634dd79a",
+          "name": "ssheribe-c92-v4pw4-private-us-east-1a",
           "public": false,
-          "availability_zone": "us-east-1f"
+          "availability_zone": "us-east-1a"
         },
         {
-          "subnet_id": "subnet-0681b6c3444737a55",
-          "public": true,
-          "availability_zone": "us-east-1b"
-        },
-        {
-          "subnet_id": "subnet-0ec9fa1deee4ade5e",
+          "subnet_id": "subnet-0455c7b5bd1657890",
+          "name": "ssheribe-c92-v4pw4-public-us-east-1d",
           "public": true,
           "availability_zone": "us-east-1d"
         },
         {
-          "subnet_id": "subnet-06a1013015fc88d29",
+          "subnet_id": "subnet-017ea617c4f59854c",
+          "name": "ssheribe-c92-v4pw4-private-us-east-1b",
           "public": false,
           "availability_zone": "us-east-1b"
+        },
+        {
+          "subnet_id": "subnet-026261c2e51246dc5",
+          "name": "ssheribe-c92-v4pw4-private-us-east-1d",
+          "public": false,
+          "availability_zone": "us-east-1d"
+        },
+        {
+          "subnet_id": "subnet-0fdece7217805e557",
+          "name": "ssheribe-c92-v4pw4-public-us-east-1b",
+          "public": true,
+          "availability_zone": "us-east-1b"
+        },
+        {
+          "subnet_id": "subnet-0c8908e786601cef6",
+          "name": "ssheribe-c92-v4pw4-private-us-east-1c",
+          "public": false,
+          "availability_zone": "us-east-1c"
+        },
+        {
+          "subnet_id": "subnet-03d630057b7340dc0",
+          "name": "ssheribe-c92-v4pw4-public-us-east-1a",
+          "public": true,
+          "availability_zone": "us-east-1a"
+        },
+        {
+          "subnet_id": "subnet-06bce6cac56637d1e",
+          "name": "ssheribe-c92-v4pw4-public-us-east-1f",
+          "public": true,
+          "availability_zone": "us-east-1f"
+        },
+        {
+          "subnet_id": "subnet-0af60280e53ec47b6",
+          "name": "ssheribe-c92-v4pw4-private-us-east-1f",
+          "public": false,
+          "availability_zone": "us-east-1f"
         }
       ]
     },
     {
-      "name": "vpc-06c03c1d239049f03",
+      "name": "jsuber-051123-wkhnr-vpc",
+      "id": "vpc-049c005b1967c8482",
       "aws_subnets": [
         {
-          "subnet_id": "subnet-03fbe15beac48a9d2",
-          "public": true,
-          "availability_zone": "us-east-1e"
-        },
-        {
-          "subnet_id": "subnet-0139c07fe718a1447",
-          "public": true,
-          "availability_zone": "us-east-1a"
-        },
-        {
-          "subnet_id": "subnet-0993790bedf44e2a4",
-          "public": false,
-          "availability_zone": "us-east-1f"
-        },
-        {
-          "subnet_id": "subnet-08073facf639dc301",
-          "public": false,
-          "availability_zone": "us-east-1d"
-        },
-        {
-          "subnet_id": "subnet-03b2ed1d9bf8e7bac",
-          "public": true,
-          "availability_zone": "us-east-1d"
-        },
-        {
-          "subnet_id": "subnet-06d9b4f9defc70c55",
-          "public": false,
-          "availability_zone": "us-east-1a"
-        },
-        {
-          "subnet_id": "subnet-0ecb8b1bf18deb5d8",
-          "public": false,
-          "availability_zone": "us-east-1e"
-        },
-        {
-          "subnet_id": "subnet-066f5a2a688c760dc",
-          "public": true,
-          "availability_zone": "us-east-1c"
-        },
-        {
-          "subnet_id": "subnet-0cde9f4ce5be8955e",
+          "subnet_id": "subnet-01688cff860870080",
+          "name": "jsuber-051123-wkhnr-public-us-east-1f",
           "public": true,
           "availability_zone": "us-east-1f"
         },
         {
-          "subnet_id": "subnet-0e2d7b48bf15debcd",
+          "subnet_id": "subnet-0a126bf3500986580",
+          "name": "jsuber-051123-wkhnr-public-us-east-1c",
           "public": true,
-          "availability_zone": "us-east-1b"
+          "availability_zone": "us-east-1c"
         },
         {
-          "subnet_id": "subnet-0f2abb9fd066c5c16",
+          "subnet_id": "subnet-014cdda485939ca22",
+          "name": "jsuber-051123-wkhnr-private-us-east-1c",
           "public": false,
           "availability_zone": "us-east-1c"
         },
         {
-          "subnet_id": "subnet-066475ca333c2e995",
+          "subnet_id": "subnet-0bc87530f2c885dda",
+          "name": "jsuber-051123-wkhnr-public-us-east-1b",
+          "public": true,
+          "availability_zone": "us-east-1b"
+        },
+        {
+          "subnet_id": "subnet-02a4fd4a05ac2d8b4",
+          "name": "jsuber-051123-wkhnr-private-us-east-1b",
           "public": false,
           "availability_zone": "us-east-1b"
-        }
-      ]
-    },
-    {
-      "name": "vpc-0438da6afd30075ae",
-      "aws_subnets": [
+        },
         {
-          "subnet_id": "subnet-069a043d5075c1ecb",
+          "subnet_id": "subnet-0a2e034b26ce5b5c6",
+          "name": "jsuber-051123-wkhnr-private-us-east-1a",
           "public": false,
           "availability_zone": "us-east-1a"
         },
         {
-          "subnet_id": "subnet-0e55711e3382574d2",
-          "public": false,
-          "availability_zone": "us-east-1c"
-        },
-        {
-          "subnet_id": "subnet-003a7dd81c4b563cb",
-          "public": true,
-          "availability_zone": "us-east-1c"
-        },
-        {
-          "subnet_id": "subnet-0aa41a49a9f652773",
+          "subnet_id": "subnet-064dc5c955c16f190",
+          "name": "jsuber-051123-wkhnr-public-us-east-1d",
           "public": true,
           "availability_zone": "us-east-1d"
         },
         {
-          "subnet_id": "subnet-06333b621e367ec3d",
-          "public": false,
-          "availability_zone": "us-east-1e"
-        },
-        {
-          "subnet_id": "subnet-0f9d0105c2eb0577d",
-          "public": true,
-          "availability_zone": "us-east-1f"
-        },
-        {
-          "subnet_id": "subnet-0653488c07514ac11",
-          "public": true,
-          "availability_zone": "us-east-1e"
-        },
-        {
-          "subnet_id": "subnet-0ecc141a3662da138",
-          "public": true,
-          "availability_zone": "us-east-1b"
-        },
-        {
-          "subnet_id": "subnet-0af9174e111033d37",
-          "public": false,
-          "availability_zone": "us-east-1b"
-        },
-        {
-          "subnet_id": "subnet-0a3cdb7fa1f19c359",
+          "subnet_id": "subnet-0192d8d3e32fcf030",
+          "name": "jsuber-051123-wkhnr-private-us-east-1f",
           "public": false,
           "availability_zone": "us-east-1f"
         },
         {
-          "subnet_id": "subnet-066d4c8611f70f3cb",
+          "subnet_id": "subnet-00d09479e3bddea54",
+          "name": "jsuber-051123-wkhnr-private-us-east-1d",
           "public": false,
           "availability_zone": "us-east-1d"
         },
         {
-          "subnet_id": "subnet-0c396d626651e4b60",
+          "subnet_id": "subnet-09d9a9a477cb41ea8",
+          "name": "jsuber-051123-wkhnr-public-us-east-1a",
           "public": true,
           "availability_zone": "us-east-1a"
         }
       ]
     },
     {
-      "name": "vpc-0fe88b42769bcf567",
+      "name": "jhrozek-cluster-05-11-mrcjj-vpc",
+      "id": "vpc-03beb35489d52de5c",
       "aws_subnets": [
         {
-          "subnet_id": "subnet-0350e94a9b6f865fc",
-          "public": true,
-          "availability_zone": "us-east-1b"
-        },
-        {
-          "subnet_id": "subnet-042779e1ea3c37235",
-          "public": false,
-          "availability_zone": "us-east-1b"
-        },
-        {
-          "subnet_id": "subnet-0afc682f59ced448e",
+          "subnet_id": "subnet-0e83a3fc7112366bc",
+          "name": "jhrozek-cluster-05-11-mrcjj-private-us-east-1a",
           "public": false,
           "availability_zone": "us-east-1a"
         },
         {
-          "subnet_id": "subnet-0b32e17e74cd07a60",
+          "subnet_id": "subnet-003c6497a5bfaa888",
+          "name": "jhrozek-cluster-05-11-mrcjj-public-us-east-1c",
+          "public": true,
+          "availability_zone": "us-east-1c"
+        },
+        {
+          "subnet_id": "subnet-07334cd33dffbb47b",
+          "name": "jhrozek-cluster-05-11-mrcjj-private-us-east-1f",
           "public": false,
           "availability_zone": "us-east-1f"
         },
         {
-          "subnet_id": "subnet-02098dcc6ef5763a9",
+          "subnet_id": "subnet-096e02186d59293f3",
+          "name": "jhrozek-cluster-05-11-mrcjj-public-us-east-1f",
+          "public": true,
+          "availability_zone": "us-east-1f"
+        },
+        {
+          "subnet_id": "subnet-0045277b3f37d9dd0",
+          "name": "jhrozek-cluster-05-11-mrcjj-public-us-east-1d",
+          "public": true,
+          "availability_zone": "us-east-1d"
+        },
+        {
+          "subnet_id": "subnet-04fb3c11b1fedd12e",
+          "name": "jhrozek-cluster-05-11-mrcjj-private-us-east-1b",
+          "public": false,
+          "availability_zone": "us-east-1b"
+        },
+        {
+          "subnet_id": "subnet-0664cf5d5823c0e94",
+          "name": "jhrozek-cluster-05-11-mrcjj-public-us-east-1b",
+          "public": true,
+          "availability_zone": "us-east-1b"
+        },
+        {
+          "subnet_id": "subnet-046a7fe474fe57479",
+          "name": "jhrozek-cluster-05-11-mrcjj-private-us-east-1c",
+          "public": false,
+          "availability_zone": "us-east-1c"
+        },
+        {
+          "subnet_id": "subnet-0d30ff837a22adee4",
+          "name": "jhrozek-cluster-05-11-mrcjj-public-us-east-1a",
           "public": true,
           "availability_zone": "us-east-1a"
         },
         {
-          "subnet_id": "subnet-0c190df32f3483bb7",
-          "public": false,
-          "availability_zone": "us-east-1c"
-        },
-        {
-          "subnet_id": "subnet-0fcba56e074f110bf",
-          "public": true,
-          "availability_zone": "us-east-1c"
-        },
-        {
-          "subnet_id": "subnet-0f4ee1964dac6a2b1",
+          "subnet_id": "subnet-0389f99619fc115cd",
+          "name": "jhrozek-cluster-05-11-mrcjj-private-us-east-1d",
           "public": false,
           "availability_zone": "us-east-1d"
-        },
+        }
+      ]
+    },
+    {
+      "name": "jaosorior-8vns4-vpc",
+      "id": "vpc-046c3e3efea64c91e",
+      "aws_subnets": [
         {
-          "subnet_id": "subnet-06266253a5ef0ff29",
-          "public": true,
-          "availability_zone": "us-east-1d"
-        },
-        {
-          "subnet_id": "subnet-024e93d58a5ebf5ac",
+          "subnet_id": "subnet-0ef3450e32176b7a9",
+          "name": "jaosorior-8vns4-public-us-east-1f",
           "public": true,
           "availability_zone": "us-east-1f"
         }
       ]
     },
     {
-      "name": "vpc-0b19558c6f4810c3e",
+      "name": "viraj-11-05-2023-kpx54-vpc",
+      "id": "vpc-0a682a85d09cb850d",
       "aws_subnets": [
         {
-          "subnet_id": "subnet-081bc6a1acebcb968",
+          "subnet_id": "subnet-05f4244ff56f197fc",
+          "name": "viraj-11-05-2023-kpx54-private-us-east-1a",
           "public": false,
           "availability_zone": "us-east-1a"
         },
         {
-          "subnet_id": "subnet-0d39549dd49f8a6ac",
+          "subnet_id": "subnet-0ddfd94d7ac58b6da",
+          "name": "viraj-11-05-2023-kpx54-public-us-east-1c",
+          "public": true,
+          "availability_zone": "us-east-1c"
+        },
+        {
+          "subnet_id": "subnet-0829480abff44270e",
+          "name": "viraj-11-05-2023-kpx54-private-us-east-1d",
+          "public": false,
+          "availability_zone": "us-east-1d"
+        },
+        {
+          "subnet_id": "subnet-081ca305fdecc4515",
+          "name": "viraj-11-05-2023-kpx54-public-us-east-1b",
           "public": true,
           "availability_zone": "us-east-1b"
         },
         {
-          "subnet_id": "subnet-0890ef37f03f06f63",
+          "subnet_id": "subnet-00c1bcd59ac5dd194",
+          "name": "viraj-11-05-2023-kpx54-private-us-east-1c",
           "public": false,
+          "availability_zone": "us-east-1c"
+        },
+        {
+          "subnet_id": "subnet-003430db91ae268e5",
+          "name": "viraj-11-05-2023-kpx54-public-us-east-1d",
+          "public": true,
           "availability_zone": "us-east-1d"
         },
         {
-          "subnet_id": "subnet-092f4f5f020bdcdd9",
+          "subnet_id": "subnet-0ff18045444cf19e9",
+          "name": "viraj-11-05-2023-kpx54-public-us-east-1a",
           "public": true,
           "availability_zone": "us-east-1a"
         },
         {
-          "subnet_id": "subnet-04d40ea785f03f847",
-          "public": false,
-          "availability_zone": "us-east-1c"
-        },
-        {
-          "subnet_id": "subnet-05b84a7dee7167af8",
-          "public": false,
-          "availability_zone": "us-east-1f"
-        },
-        {
-          "subnet_id": "subnet-06b6fd4bbddef85d2",
-          "public": true,
-          "availability_zone": "us-east-1d"
-        },
-        {
-          "subnet_id": "subnet-063d97211db7ba800",
+          "subnet_id": "subnet-060f9778b8252a938",
+          "name": "viraj-11-05-2023-kpx54-public-us-east-1f",
           "public": true,
           "availability_zone": "us-east-1f"
         },
         {
-          "subnet_id": "subnet-02b8d5ee30eca8515",
-          "public": true,
-          "availability_zone": "us-east-1c"
+          "subnet_id": "subnet-035977eda4d98b0bf",
+          "name": "viraj-11-05-2023-kpx54-private-us-east-1f",
+          "public": false,
+          "availability_zone": "us-east-1f"
         },
         {
-          "subnet_id": "subnet-024c1392b278ad157",
+          "subnet_id": "subnet-09fb52c3b0f7731c5",
+          "name": "viraj-11-05-2023-kpx54-private-us-east-1b",
           "public": false,
           "availability_zone": "us-east-1b"
         }
       ]
     },
     {
-      "name": "vpc-0983a5c371e2e2350",
+      "name": "xcoulon-20230511a-9xpxr-vpc",
+      "id": "vpc-0d68023b519fdef9d",
       "aws_subnets": [
         {
-          "subnet_id": "subnet-06e12de84ba556417",
-          "public": false,
-          "availability_zone": "us-east-1b"
-        },
-        {
-          "subnet_id": "subnet-073dcdad9f3b03e61",
-          "public": true,
-          "availability_zone": "us-east-1d"
-        },
-        {
-          "subnet_id": "subnet-0e5f4c99671d6319f",
+          "subnet_id": "subnet-0f40f4a8c205e3869",
+          "name": "xcoulon-20230511a-9xpxr-public-us-east-1a",
           "public": true,
           "availability_zone": "us-east-1a"
         },
         {
-          "subnet_id": "subnet-05d23cd62dd5b2bf1",
+          "subnet_id": "subnet-0c30f89196cee09be",
+          "name": "xcoulon-20230511a-9xpxr-private-us-east-1a",
           "public": false,
           "availability_zone": "us-east-1a"
         },
         {
-          "subnet_id": "subnet-0b120f784b8545f6f",
+          "subnet_id": "subnet-0c48517a64e3a7445",
+          "name": "xcoulon-20230511a-9xpxr-private-us-east-1c",
           "public": false,
-          "availability_zone": "us-east-1d"
-        },
-        {
-          "subnet_id": "subnet-04d336754e397ddc9",
-          "public": true,
           "availability_zone": "us-east-1c"
         },
         {
-          "subnet_id": "subnet-050f3e217292d921b",
-          "public": true,
-          "availability_zone": "us-east-1f"
-        },
-        {
-          "subnet_id": "subnet-05e0cf7978f511cf8",
-          "public": false,
-          "availability_zone": "us-east-1f"
-        },
-        {
-          "subnet_id": "subnet-0f8cf487cd2510630",
+          "subnet_id": "subnet-00c3c4db12a85b219",
+          "name": "xcoulon-20230511a-9xpxr-public-us-east-1b",
           "public": true,
           "availability_zone": "us-east-1b"
         },
         {
-          "subnet_id": "subnet-0a61483f6f82c5018",
-          "public": false,
+          "subnet_id": "subnet-076c05fe6ac3a1e90",
+          "name": "xcoulon-20230511a-9xpxr-public-us-east-1f",
+          "public": true,
+          "availability_zone": "us-east-1f"
+        },
+        {
+          "subnet_id": "subnet-0afc1de2f5c0e1193",
+          "name": "xcoulon-20230511a-9xpxr-public-us-east-1d",
+          "public": true,
+          "availability_zone": "us-east-1d"
+        },
+        {
+          "subnet_id": "subnet-06c379836ee3f31fb",
+          "name": "xcoulon-20230511a-9xpxr-public-us-east-1c",
+          "public": true,
           "availability_zone": "us-east-1c"
+        },
+        {
+          "subnet_id": "subnet-0ec1ac52a87ed86ce",
+          "name": "xcoulon-20230511a-9xpxr-private-us-east-1d",
+          "public": false,
+          "availability_zone": "us-east-1d"
+        },
+        {
+          "subnet_id": "subnet-03a48350cb6e61707",
+          "name": "xcoulon-20230511a-9xpxr-private-us-east-1f",
+          "public": false,
+          "availability_zone": "us-east-1f"
+        },
+        {
+          "subnet_id": "subnet-0e9b5930bd431d879",
+          "name": "xcoulon-20230511a-9xpxr-private-us-east-1b",
+          "public": false,
+          "availability_zone": "us-east-1b"
         }
       ]
     },
     {
-      "name": "vpc-0d97c920f6f952a8b",
+      "name": "spasquie-20230511-wtfr6-vpc",
+      "id": "vpc-0e57c2dc2dc253e6b",
       "aws_subnets": [
         {
-          "subnet_id": "subnet-0b72f684c5e1fba28",
+          "subnet_id": "subnet-0b660d482456283e4",
+          "name": "spasquie-20230511-wtfr6-public-us-east-1d",
           "public": true,
-          "availability_zone": "us-east-1b"
+          "availability_zone": "us-east-1d"
         },
         {
-          "subnet_id": "subnet-0be6f44975ae600d8",
+          "subnet_id": "subnet-0b5e7fc81fbf13831",
+          "name": "spasquie-20230511-wtfr6-public-us-east-1f",
           "public": true,
           "availability_zone": "us-east-1f"
         },
         {
-          "subnet_id": "subnet-04baa6524d3ac7754",
-          "public": false,
-          "availability_zone": "us-east-1d"
-        },
-        {
-          "subnet_id": "subnet-05942f4f1b163f47d",
+          "subnet_id": "subnet-0de7b21a3ffab25f5",
+          "name": "spasquie-20230511-wtfr6-public-us-east-1a",
           "public": true,
-          "availability_zone": "us-east-1d"
+          "availability_zone": "us-east-1a"
         },
         {
-          "subnet_id": "subnet-0d405d3985ec19111",
+          "subnet_id": "subnet-0e2bf0930b8c0ec3c",
+          "name": "spasquie-20230511-wtfr6-private-us-east-1f",
+          "public": false,
+          "availability_zone": "us-east-1f"
+        },
+        {
+          "subnet_id": "subnet-046e34b1ddc95b707",
+          "name": "spasquie-20230511-wtfr6-private-us-east-1c",
+          "public": false,
+          "availability_zone": "us-east-1c"
+        },
+        {
+          "subnet_id": "subnet-0cd7e648e285c79c9",
+          "name": "spasquie-20230511-wtfr6-public-us-east-1c",
+          "public": true,
+          "availability_zone": "us-east-1c"
+        },
+        {
+          "subnet_id": "subnet-0ce5a03adc6e811bf",
+          "name": "spasquie-20230511-wtfr6-private-us-east-1a",
+          "public": false,
+          "availability_zone": "us-east-1a"
+        },
+        {
+          "subnet_id": "subnet-004d89828e288258a",
+          "name": "spasquie-20230511-wtfr6-private-us-east-1b",
           "public": false,
           "availability_zone": "us-east-1b"
         },
         {
-          "subnet_id": "subnet-0ba8cc28bfa0499a2",
+          "subnet_id": "subnet-00014860c01a5b11c",
+          "name": "spasquie-20230511-wtfr6-public-us-east-1b",
           "public": true,
-          "availability_zone": "us-east-1e"
+          "availability_zone": "us-east-1b"
         },
         {
-          "subnet_id": "subnet-0febbeacfdb5f66c0",
+          "subnet_id": "subnet-0253c156dc0041829",
+          "name": "spasquie-20230511-wtfr6-private-us-east-1d",
+          "public": false,
+          "availability_zone": "us-east-1d"
+        }
+      ]
+    },
+    {
+      "name": "jhrozek-cluster-05-11-6b2x6-vpc",
+      "id": "vpc-0155586867c503486",
+      "aws_subnets": [
+        {
+          "subnet_id": "subnet-083a05e152b458c5e",
+          "name": "jhrozek-cluster-05-11-6b2x6-private-us-east-1d",
+          "public": false,
+          "availability_zone": "us-east-1d"
+        },
+        {
+          "subnet_id": "subnet-0a76071ac45b7397f",
+          "name": "jhrozek-cluster-05-11-6b2x6-private-us-east-1a",
+          "public": false,
+          "availability_zone": "us-east-1a"
+        },
+        {
+          "subnet_id": "subnet-0a6bd0e1ecc843cb7",
+          "name": "jhrozek-cluster-05-11-6b2x6-private-us-east-1f",
+          "public": false,
+          "availability_zone": "us-east-1f"
+        },
+        {
+          "subnet_id": "subnet-097a9e5922e08e75a",
+          "name": "jhrozek-cluster-05-11-6b2x6-public-us-east-1a",
+          "public": true,
+          "availability_zone": "us-east-1a"
+        },
+        {
+          "subnet_id": "subnet-05f8a75d0490d25fd",
+          "name": "jhrozek-cluster-05-11-6b2x6-private-us-east-1b",
+          "public": false,
+          "availability_zone": "us-east-1b"
+        },
+        {
+          "subnet_id": "subnet-074831b2d5e306484",
+          "name": "jhrozek-cluster-05-11-6b2x6-private-us-east-1c",
+          "public": false,
+          "availability_zone": "us-east-1c"
+        },
+        {
+          "subnet_id": "subnet-004cc42257dfa0408",
+          "name": "jhrozek-cluster-05-11-6b2x6-public-us-east-1c",
+          "public": true,
+          "availability_zone": "us-east-1c"
+        },
+        {
+          "subnet_id": "subnet-0c2f0fde44601066f",
+          "name": "jhrozek-cluster-05-11-6b2x6-public-us-east-1d",
+          "public": true,
+          "availability_zone": "us-east-1d"
+        },
+        {
+          "subnet_id": "subnet-0df6db97411fde12a",
+          "name": "jhrozek-cluster-05-11-6b2x6-public-us-east-1f",
+          "public": true,
+          "availability_zone": "us-east-1f"
+        },
+        {
+          "subnet_id": "subnet-0226021b28db64ac1",
+          "name": "jhrozek-cluster-05-11-6b2x6-public-us-east-1b",
+          "public": true,
+          "availability_zone": "us-east-1b"
+        }
+      ]
+    },
+    {
+      "name": "spoke-39ff2f79-d5a5-4-t66gz-vpc",
+      "id": "vpc-034a9abf8e2f16da3",
+      "aws_subnets": [
+        {
+          "subnet_id": "subnet-06a8fc397d7cddd90",
+          "name": "spoke-39ff2f79-d5a5-4-t66gz-private-us-east-1c",
+          "public": false,
+          "availability_zone": "us-east-1c"
+        },
+        {
+          "subnet_id": "subnet-02db2728ef883b8e5",
+          "name": "spoke-39ff2f79-d5a5-4-t66gz-private-us-east-1e",
           "public": false,
           "availability_zone": "us-east-1e"
         },
         {
-          "subnet_id": "subnet-057d7179000eeff68",
+          "subnet_id": "subnet-0e2db76dc699b26ac",
+          "name": "spoke-39ff2f79-d5a5-4-t66gz-private-us-east-1f",
           "public": false,
           "availability_zone": "us-east-1f"
         },
         {
-          "subnet_id": "subnet-0cf3da83d7f7601dd",
+          "subnet_id": "subnet-002cff5962be20659",
+          "name": "spoke-39ff2f79-d5a5-4-t66gz-private-us-east-1d",
+          "public": false,
+          "availability_zone": "us-east-1d"
+        },
+        {
+          "subnet_id": "subnet-0639227cee20273f0",
+          "name": "spoke-39ff2f79-d5a5-4-t66gz-private-us-east-1a",
+          "public": false,
+          "availability_zone": "us-east-1a"
+        },
+        {
+          "subnet_id": "subnet-0c3d90b118dcb0eda",
+          "name": "spoke-39ff2f79-d5a5-4-t66gz-public-us-east-1d",
+          "public": true,
+          "availability_zone": "us-east-1d"
+        },
+        {
+          "subnet_id": "subnet-02c65c80c5bfc29e9",
+          "name": "spoke-39ff2f79-d5a5-4-t66gz-public-us-east-1e",
+          "public": true,
+          "availability_zone": "us-east-1e"
+        },
+        {
+          "subnet_id": "subnet-069c1a98255a9b886",
+          "name": "spoke-39ff2f79-d5a5-4-t66gz-public-us-east-1f",
+          "public": true,
+          "availability_zone": "us-east-1f"
+        },
+        {
+          "subnet_id": "subnet-074ec508f6347ae0d",
+          "name": "spoke-39ff2f79-d5a5-4-t66gz-private-us-east-1b",
+          "public": false,
+          "availability_zone": "us-east-1b"
+        },
+        {
+          "subnet_id": "subnet-013d928105357762b",
+          "name": "spoke-39ff2f79-d5a5-4-t66gz-public-us-east-1a",
+          "public": true,
+          "availability_zone": "us-east-1a"
+        },
+        {
+          "subnet_id": "subnet-0b14f0c16fbe810dd",
+          "name": "spoke-39ff2f79-d5a5-4-t66gz-public-us-east-1c",
+          "public": true,
+          "availability_zone": "us-east-1c"
+        },
+        {
+          "subnet_id": "subnet-098377ba0c6f7f5d7",
+          "name": "spoke-39ff2f79-d5a5-4-t66gz-public-us-east-1b",
+          "public": true,
+          "availability_zone": "us-east-1b"
+        }
+      ]
+    },
+    {
+      "name": "fmuntean-devsandbox3-chkvq-vpc",
+      "id": "vpc-0e500d7661241bc62",
+      "aws_subnets": [
+        {
+          "subnet_id": "subnet-0c7d366068cbc9c43",
+          "name": "fmuntean-devsandbox3-chkvq-private-us-east-1a",
+          "public": false,
+          "availability_zone": "us-east-1a"
+        },
+        {
+          "subnet_id": "subnet-0d73e156eb4e19a51",
+          "name": "fmuntean-devsandbox3-chkvq-public-us-east-1a",
+          "public": true,
+          "availability_zone": "us-east-1a"
+        },
+        {
+          "subnet_id": "subnet-012a0586200c2cfb5",
+          "name": "fmuntean-devsandbox3-chkvq-private-us-east-1c",
           "public": false,
           "availability_zone": "us-east-1c"
         },
         {
-          "subnet_id": "subnet-053c11ea3010db729",
+          "subnet_id": "subnet-0da1d0ffbb53180c4",
+          "name": "fmuntean-devsandbox3-chkvq-public-us-east-1b",
+          "public": true,
+          "availability_zone": "us-east-1b"
+        },
+        {
+          "subnet_id": "subnet-02e61af530216e582",
+          "name": "fmuntean-devsandbox3-chkvq-public-us-east-1d",
+          "public": true,
+          "availability_zone": "us-east-1d"
+        },
+        {
+          "subnet_id": "subnet-0aaf0f0bf0fd5552a",
+          "name": "fmuntean-devsandbox3-chkvq-public-us-east-1c",
+          "public": true,
+          "availability_zone": "us-east-1c"
+        },
+        {
+          "subnet_id": "subnet-0a226b6b5e81ec56e",
+          "name": "fmuntean-devsandbox3-chkvq-public-us-east-1f",
+          "public": true,
+          "availability_zone": "us-east-1f"
+        },
+        {
+          "subnet_id": "subnet-07d91aae717e9401a",
+          "name": "fmuntean-devsandbox3-chkvq-private-us-east-1f",
+          "public": false,
+          "availability_zone": "us-east-1f"
+        },
+        {
+          "subnet_id": "subnet-0e073104b8c2cb55a",
+          "name": "fmuntean-devsandbox3-chkvq-private-us-east-1b",
+          "public": false,
+          "availability_zone": "us-east-1b"
+        },
+        {
+          "subnet_id": "subnet-0f6774ce84f13bd5f",
+          "name": "fmuntean-devsandbox3-chkvq-private-us-east-1d",
+          "public": false,
+          "availability_zone": "us-east-1d"
+        }
+      ]
+    },
+    {
+      "name": "hub-a89cf4a3-3c78-430-rtb6s-vpc",
+      "id": "vpc-024bb11792950ad7c",
+      "aws_subnets": [
+        {
+          "subnet_id": "subnet-0a1a99b68c4909b61",
+          "name": "hub-a89cf4a3-3c78-430-rtb6s-public-us-east-1e",
+          "public": true,
+          "availability_zone": "us-east-1e"
+        },
+        {
+          "subnet_id": "subnet-0cb513a066ff0d613",
+          "name": "hub-a89cf4a3-3c78-430-rtb6s-public-us-east-1a",
+          "public": true,
+          "availability_zone": "us-east-1a"
+        },
+        {
+          "subnet_id": "subnet-0d215a5de1c1463b4",
+          "name": "hub-a89cf4a3-3c78-430-rtb6s-public-us-east-1f",
+          "public": true,
+          "availability_zone": "us-east-1f"
+        },
+        {
+          "subnet_id": "subnet-0a263b1bfca1384d6",
+          "name": "hub-a89cf4a3-3c78-430-rtb6s-private-us-east-1b",
+          "public": false,
+          "availability_zone": "us-east-1b"
+        },
+        {
+          "subnet_id": "subnet-080aab8b24780111b",
+          "name": "hub-a89cf4a3-3c78-430-rtb6s-public-us-east-1c",
+          "public": true,
+          "availability_zone": "us-east-1c"
+        },
+        {
+          "subnet_id": "subnet-04341c97435d1bd74",
+          "name": "hub-a89cf4a3-3c78-430-rtb6s-public-us-east-1d",
+          "public": true,
+          "availability_zone": "us-east-1d"
+        },
+        {
+          "subnet_id": "subnet-006b90b94a7520089",
+          "name": "hub-a89cf4a3-3c78-430-rtb6s-private-us-east-1e",
+          "public": false,
+          "availability_zone": "us-east-1e"
+        },
+        {
+          "subnet_id": "subnet-05ec07160ae028434",
+          "name": "hub-a89cf4a3-3c78-430-rtb6s-private-us-east-1a",
           "public": false,
           "availability_zone": "us-east-1a"
         },
         {
-          "subnet_id": "subnet-0d21e50a816d2df06",
-          "public": true,
-          "availability_zone": "us-east-1a"
+          "subnet_id": "subnet-02c49c571454de0f7",
+          "name": "hub-a89cf4a3-3c78-430-rtb6s-private-us-east-1d",
+          "public": false,
+          "availability_zone": "us-east-1d"
         },
         {
-          "subnet_id": "subnet-0082f61240a7e544c",
+          "subnet_id": "subnet-05d5aced8d534ca5a",
+          "name": "hub-a89cf4a3-3c78-430-rtb6s-public-us-east-1b",
           "public": true,
+          "availability_zone": "us-east-1b"
+        },
+        {
+          "subnet_id": "subnet-081d346e5aa84a4d0",
+          "name": "hub-a89cf4a3-3c78-430-rtb6s-private-us-east-1f",
+          "public": false,
+          "availability_zone": "us-east-1f"
+        },
+        {
+          "subnet_id": "subnet-0931b69333045a3c0",
+          "name": "hub-a89cf4a3-3c78-430-rtb6s-private-us-east-1c",
+          "public": false,
           "availability_zone": "us-east-1c"
         }
       ]
     },
     {
-      "name": "vpc-05bb9f093feffe176",
+      "name": "example-5kqtl-vpc",
+      "id": "vpc-02719dc0176c44199",
       "aws_subnets": [
         {
-          "subnet_id": "subnet-0189e68d3126435fb",
-          "public": false,
-          "availability_zone": "us-east-1d"
-        },
-        {
-          "subnet_id": "subnet-0bc67a95d23552433",
-          "public": false,
-          "availability_zone": "us-east-1f"
-        },
-        {
-          "subnet_id": "subnet-07fd6fe3a0789240a",
-          "public": false,
-          "availability_zone": "us-east-1b"
-        },
-        {
-          "subnet_id": "subnet-018df0e7ee6110ec5",
-          "public": true,
-          "availability_zone": "us-east-1f"
-        },
-        {
-          "subnet_id": "subnet-0c2880e587449df55",
-          "public": true,
-          "availability_zone": "us-east-1d"
-        },
-        {
-          "subnet_id": "subnet-0ee2165f95668817e",
-          "public": true,
-          "availability_zone": "us-east-1a"
-        },
-        {
-          "subnet_id": "subnet-03914354426f784a3",
+          "subnet_id": "subnet-0a883dabe62e19193",
+          "name": "example-5kqtl-private-us-east-1a",
           "public": false,
           "availability_zone": "us-east-1a"
         },
         {
-          "subnet_id": "subnet-0e775749535c96a4a",
+          "subnet_id": "subnet-051a46a9f4f78faae",
+          "name": "example-5kqtl-public-us-east-1a",
           "public": false,
+          "availability_zone": "us-east-1a"
+        }
+      ]
+    },
+    {
+      "name": "odfcluster-common-may-z7flv-vpc",
+      "id": "vpc-0fc8766cc8c589198",
+      "aws_subnets": [
+        {
+          "subnet_id": "subnet-08fd2988276a42261",
+          "name": "odfcluster-common-may-z7flv-public-us-east-1c",
+          "public": true,
           "availability_zone": "us-east-1c"
         },
         {
-          "subnet_id": "subnet-023ee91ccf254d51a",
+          "subnet_id": "subnet-0bbaced8da7ff4aae",
+          "name": "odfcluster-common-may-z7flv-public-us-east-1f",
+          "public": true,
+          "availability_zone": "us-east-1f"
+        },
+        {
+          "subnet_id": "subnet-0b897c08a4600b982",
+          "name": "odfcluster-common-may-z7flv-private-us-east-1a",
+          "public": false,
+          "availability_zone": "us-east-1a"
+        },
+        {
+          "subnet_id": "subnet-0e3762bbc559c15bd",
+          "name": "odfcluster-common-may-z7flv-private-us-east-1d",
+          "public": false,
+          "availability_zone": "us-east-1d"
+        },
+        {
+          "subnet_id": "subnet-0c82e81c45890be7a",
+          "name": "odfcluster-common-may-z7flv-public-us-east-1b",
           "public": true,
           "availability_zone": "us-east-1b"
         },
         {
-          "subnet_id": "subnet-045735ff73c9f01c6",
+          "subnet_id": "subnet-015ffb12899b29061",
+          "name": "odfcluster-common-may-z7flv-public-us-east-1d",
+          "public": true,
+          "availability_zone": "us-east-1d"
+        },
+        {
+          "subnet_id": "subnet-0553fa0884b52a58f",
+          "name": "odfcluster-common-may-z7flv-private-us-east-1b",
+          "public": false,
+          "availability_zone": "us-east-1b"
+        },
+        {
+          "subnet_id": "subnet-0605012b0d4f2fbad",
+          "name": "odfcluster-common-may-z7flv-private-us-east-1c",
+          "public": false,
+          "availability_zone": "us-east-1c"
+        },
+        {
+          "subnet_id": "subnet-052c79efeeee23101",
+          "name": "odfcluster-common-may-z7flv-public-us-east-1a",
+          "public": true,
+          "availability_zone": "us-east-1a"
+        },
+        {
+          "subnet_id": "subnet-0c8a3f22864883ca4",
+          "name": "odfcluster-common-may-z7flv-private-us-east-1f",
+          "public": false,
+          "availability_zone": "us-east-1f"
+        }
+      ]
+    },
+    {
+      "name": "cahartma-0511cluster0-dfkpg-vpc",
+      "id": "vpc-0f6c1f20d94dedb6c",
+      "aws_subnets": [
+        {
+          "subnet_id": "subnet-0810a5125f62070f7",
+          "name": "cahartma-0511cluster0-dfkpg-public-us-east-1c",
           "public": true,
           "availability_zone": "us-east-1c"
+        },
+        {
+          "subnet_id": "subnet-0edac8c5bfba4fe0e",
+          "name": "cahartma-0511cluster0-dfkpg-private-us-east-1c",
+          "public": false,
+          "availability_zone": "us-east-1c"
+        },
+        {
+          "subnet_id": "subnet-021b15af91eff3817",
+          "name": "cahartma-0511cluster0-dfkpg-public-us-east-1a",
+          "public": true,
+          "availability_zone": "us-east-1a"
+        },
+        {
+          "subnet_id": "subnet-0302db0653f319bfd",
+          "name": "cahartma-0511cluster0-dfkpg-private-us-east-1a",
+          "public": false,
+          "availability_zone": "us-east-1a"
+        },
+        {
+          "subnet_id": "subnet-0497b7f376239c73e",
+          "name": "cahartma-0511cluster0-dfkpg-private-us-east-1f",
+          "public": false,
+          "availability_zone": "us-east-1f"
+        },
+        {
+          "subnet_id": "subnet-09519476f82fadda2",
+          "name": "cahartma-0511cluster0-dfkpg-private-us-east-1d",
+          "public": false,
+          "availability_zone": "us-east-1d"
+        },
+        {
+          "subnet_id": "subnet-00fcf805fe2042383",
+          "name": "cahartma-0511cluster0-dfkpg-private-us-east-1b",
+          "public": false,
+          "availability_zone": "us-east-1b"
+        },
+        {
+          "subnet_id": "subnet-098349dd3e561c709",
+          "name": "cahartma-0511cluster0-dfkpg-public-us-east-1b",
+          "public": true,
+          "availability_zone": "us-east-1b"
+        },
+        {
+          "subnet_id": "subnet-07021a9f5a6f9c85f",
+          "name": "cahartma-0511cluster0-dfkpg-public-us-east-1d",
+          "public": true,
+          "availability_zone": "us-east-1d"
+        },
+        {
+          "subnet_id": "subnet-08d24ad1134fccea3",
+          "name": "cahartma-0511cluster0-dfkpg-public-us-east-1f",
+          "public": true,
+          "availability_zone": "us-east-1f"
         }
       ]
     }

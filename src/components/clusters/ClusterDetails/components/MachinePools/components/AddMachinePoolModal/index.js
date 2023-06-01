@@ -8,7 +8,6 @@ import { closeModal } from '../../../../../../common/Modal/ModalActions';
 import { getMachineTypes } from '../../../../../../../redux/actions/machineTypesActions';
 import { getOrganizationAndQuota } from '../../../../../../../redux/actions/userActions';
 import { addMachinePoolOrNodePool, clearAddMachinePoolResponse } from '../../MachinePoolsActions';
-import { getAWSCloudProviderVPCs } from '~/components/clusters/CreateOSDPage/CreateOSDWizard/ccsInquiriesActions';
 import { isMultiAZ } from '../../../../clusterDetailsHelper';
 
 import {
@@ -80,7 +79,7 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
       machinePoolRequest.aws_node_pool = {
         instance_type: formData.machine_type,
       };
-      machinePoolRequest.subnet = formData.subnet;
+      machinePoolRequest.subnet = formData.subnet.id;
     } else {
       machinePoolRequest.instance_type = formData.machine_type;
       if (formData.spot_instances) {
@@ -116,21 +115,6 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
   closeModal: () => dispatch(closeModal()),
   getOrganizationAndQuota: () => dispatch(getOrganizationAndQuota()),
   getMachineTypes: () => dispatch(getMachineTypes()),
-  getAWSVPCs: (cluster) => {
-    const subnet =
-      cluster.aws && cluster.aws.subnet_ids && cluster.aws.subnet_ids[0]
-        ? cluster.aws.subnet_ids[0]
-        : undefined;
-    return dispatch(
-      getAWSCloudProviderVPCs(
-        {
-          sts: { role_arn: cluster.aws.sts.role_arn },
-        },
-        cluster.region.id,
-        subnet,
-      ),
-    );
-  },
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(reduxFormAddMachinePool);

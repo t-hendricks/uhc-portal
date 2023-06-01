@@ -44,7 +44,7 @@ function DetailsLeft({ cluster, cloudProviders, showAssistedId }) {
   }
 
   const { id, idLabel } = getIdFields(cluster, showAssistedId);
-  const controlPlaneType = isHypershift ? 'Hosted' : 'Standalone';
+  const controlPlaneType = isHypershift ? 'Hosted' : 'Classic';
 
   return (
     <>

@@ -17,6 +17,7 @@ import {
   CLEAR_GET_OCM_ROLE_RESPONSE,
   CLEAR_GET_USER_ROLE_RESPONSE,
   SET_OFFLINE_TOKEN,
+  GET_AWS_BILLING_ACCOUNTS,
 } from './rosaConstants';
 
 const initialState = {
@@ -30,6 +31,9 @@ const initialState = {
     ...baseRequestState,
   },
   getUserRoleResponse: {
+    ...baseRequestState,
+  },
+  getAWSBillingAccountsResponse: {
     ...baseRequestState,
   },
   offlineToken: undefined,
@@ -76,6 +80,27 @@ function rosaReducer(state = initialState, action) {
 
       case REJECTED_ACTION(GET_AWS_ACCOUNT_ROLES_ARNS):
         draft.getAWSAccountRolesARNsResponse = {
+          ...baseRequestState,
+          ...getErrorState(action),
+          data: {},
+        };
+        break;
+
+      // GET_AWS_BILLING_ACCOUNTS
+      case PENDING_ACTION(GET_AWS_BILLING_ACCOUNTS):
+        draft.getAWSBillingAccountsResponse.pending = true;
+        break;
+
+      case FULFILLED_ACTION(GET_AWS_BILLING_ACCOUNTS):
+        draft.getAWSBillingAccountsResponse = {
+          ...baseRequestState,
+          fulfilled: true,
+          data: action.payload,
+        };
+        break;
+
+      case REJECTED_ACTION(GET_AWS_BILLING_ACCOUNTS):
+        draft.getAWSBillingAccountsResponse = {
           ...baseRequestState,
           ...getErrorState(action),
           data: {},

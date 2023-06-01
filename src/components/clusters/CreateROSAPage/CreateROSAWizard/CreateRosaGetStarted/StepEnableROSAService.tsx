@@ -10,7 +10,7 @@ const StepEnableROSAService = () => (
       ROSA needs to be enabled on your AWS account to work properly. Open the AWS Console to enable
       ROSA.
     </Text>
-    <ExternalLink href={links.AWS_CONSOLE} isButton variant={ButtonVariant.secondary}>
+    <ExternalLink href={links.AWS_CONSOLE_ROSA_HOME} isButton variant={ButtonVariant.secondary}>
       Open AWS Console
     </ExternalLink>
   </>

@@ -37,7 +37,7 @@ export const RosaServiceScreen = ({ hideTitle = false }: RosaServiceScreenProps)
               Make sure your ROSA service is already enabled in your AWS account.
               <p>
                 Check ROSA service status in the{' '}
-                <ExternalLink noIcon href={links.AWS_CONSOLE}>
+                <ExternalLink noIcon href={links.AWS_CONSOLE_ROSA_HOME}>
                   AWS console
                 </ExternalLink>
                 .

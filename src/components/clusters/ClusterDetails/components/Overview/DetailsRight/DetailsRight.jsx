@@ -22,6 +22,7 @@ import PopoverHint from '../../../../../common/PopoverHint';
 import ExternalLink from '../../../../../common/ExternalLink';
 import { isHypershiftCluster } from '../../../clusterDetailsHelper';
 import { ClusterStatus } from './ClusterStatus';
+import { isROSA } from '~/components/clusters/common/clusterStates';
 
 const { ClusterStatus: AIClusterStatus } = OCM;
 function DetailsRight({
@@ -35,8 +36,10 @@ function DetailsRight({
   machinePools,
 }) {
   const isHypershift = isHypershiftCluster(cluster);
+  const isROSACluster = isROSA(cluster);
   const rosaCreatorArn = get(cluster, 'properties.rosa_creator_arn', '');
   const awsInfraAccount = rosaCreatorArn ? extractAWSID(rosaCreatorArn) : null;
+  const hypershiftEtcdEncryptionKey = isHypershift && cluster.aws?.etcd_encryption?.kms_key_arn;
 
   const memoryTotalWithUnit = humanizeValueWithUnit(
     get(cluster, 'metrics.memory.total.value', 0),
@@ -53,6 +56,7 @@ function DetailsRight({
     ? false
     : (!cluster.managed && get(cluster, 'metrics.nodes.infra', null)) ||
       get(cluster, 'nodes.infra', 0) > 0;
+
   const hasSockets = get(cluster, 'metrics.sockets.total.value', 0) > 0;
 
   const humanizedPersistentStorage =
@@ -78,7 +82,9 @@ function DetailsRight({
           <DescriptionListTerm>Status</DescriptionListTerm>
           <DescriptionListDescription style={cluster.state.style}>
             {isAISubscriptionWithoutMetrics(cluster.subscription) ? (
-              <AIClusterStatus status={cluster.metrics.state} className="clusterstate" />
+              <div data-testid="aiSubscriptionWithoutMetric">
+                <AIClusterStatus status={cluster.metrics.state} className="clusterstate" />
+              </div>
             ) : (
               <>
                 <ClusterStatus
@@ -125,15 +131,33 @@ function DetailsRight({
         )}
         {awsInfraAccount && (
           <>
-            <DescriptionListGroup data-testid="aws-account">
+            <DescriptionListGroup>
               <DescriptionListTerm>Infrastructure AWS account</DescriptionListTerm>
               <DescriptionListDescription>{awsInfraAccount}</DescriptionListDescription>
             </DescriptionListGroup>
           </>
         )}
+        {hypershiftEtcdEncryptionKey && (
+          <>
+            <DescriptionListGroup data-testid="hs-etcd-encryption">
+              <DescriptionListTerm>KMS etcd encryption key ARN</DescriptionListTerm>
+              <DescriptionListDescription>{hypershiftEtcdEncryptionKey}</DescriptionListDescription>
+            </DescriptionListGroup>
+          </>
+        )}
+        {isROSACluster && !isHypershift && (
+          <>
+            <DescriptionListGroup data-testid="etcd-encryption-key">
+              <DescriptionListTerm>Additional encryption </DescriptionListTerm>
+              <DescriptionListDescription>
+                {cluster.etcd_encryption ? 'Enabled' : 'Disabled'}
+              </DescriptionListDescription>
+            </DescriptionListGroup>
+          </>
+        )}
         {billingMarketplaceAccount && (
           <>
-            <DescriptionListGroup data-testid="billing-marketplace-account">
+            <DescriptionListGroup>
               <DescriptionListTerm>Billing marketplace account</DescriptionListTerm>
               <DescriptionListDescription>{billingMarketplaceAccount}</DescriptionListDescription>
             </DescriptionListGroup>
@@ -173,7 +197,7 @@ function DetailsRight({
               <DescriptionListDescription>
                 <dl className="pf-l-stack">
                   {!isHypershift && (
-                    <Flex>
+                    <Flex data-testid="controlPlaneNodesCountContainer">
                       <dt>Control plane: </dt>
                       <dd>
                         {controlPlaneActualNodes !== '-' || controlPlaneDesiredNodes !== '-'
@@ -184,7 +208,7 @@ function DetailsRight({
                   )}
                   {showInfraNodes && (
                     <>
-                      <Flex>
+                      <Flex data-testid="InfraNodesCountContainer">
                         <dt>Infra: </dt>
                         <dd>
                           {infraActualNodes !== '-' || infraDesiredNodes !== '-'
@@ -213,14 +237,14 @@ function DetailsRight({
               <DescriptionListDescription>
                 <dl className="pf-l-stack">
                   {!isHypershift && (
-                    <Flex>
+                    <Flex data-testid="controlPlaneNodesCountContainer">
                       <dt>Control plane: </dt>
                       <dd>{get(cluster, 'metrics.nodes.master', 'N/A')}</dd>
                     </Flex>
                   )}
                   {showInfraNodes && (
                     <>
-                      <Flex>
+                      <Flex data-testid="InfraNodesCountContainer">
                         <dt>Infra: </dt>
                         <dd>{get(cluster, 'metrics.nodes.infra', 'N/A')}</dd>
                       </Flex>

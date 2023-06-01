@@ -4,10 +4,7 @@ import get from 'lodash/get';
 
 import { Button, Form, Grid, GridItem, Text, TextVariants, Title } from '@patternfly/react-core';
 import { Field } from 'redux-form';
-import { Link } from 'react-router-dom';
 
-import AWSLogo from '~/styles/images/AWS.png';
-import RedHat from '~/styles/images/Logo-RedHat-Hat-Color-RGB.png';
 import { required } from '~/common/validators';
 import { normalizedProducts } from '~/common/subscriptionTypes';
 import { trackEvents } from '~/common/analytics';
@@ -15,11 +12,11 @@ import useAnalytics from '~/hooks/useAnalytics';
 import ErrorBox from '~/components/common/ErrorBox';
 import { loadOfflineToken } from '~/components/tokens/TokenUtils';
 
-import AWSAccountSelection from './AWSAccountSelection';
 import AccountRolesARNsSection from './AccountRolesARNsSection';
 import { AssociateAwsAccountModal } from './AssociateAWSAccountModal';
-import { productName } from '../CreateRosaGetStarted/CreateRosaGetStarted';
 import { AwsRoleErrorAlert } from './AwsRoleErrorAlert';
+import AWSAccountSelection from './AWSAccountSelection';
+import AWSBillingAccountField from './AWSBillingAccount';
 
 export const isUserRoleForSelectedAWSAccount = (users, awsAcctId) =>
   users.some((user) => user.aws_id === awsAcctId);
@@ -32,6 +29,7 @@ function AccountsRolesScreen({
   change,
   organizationID,
   selectedAWSAccountID,
+  selectedAWSBillingAccountID,
   selectedInstallerRoleARN,
   rosaMaxOSVersion,
   openAssociateAWSAccountModal,
@@ -52,7 +50,6 @@ function AccountsRolesScreen({
   const [awsIDsErrorBox, setAwsIDsErrorBox] = useState(null);
   const [isAssocAwsAccountModalOpen, setIsAssocAwsAccountModalOpen] = useState(false);
   const [refreshButtonClicked, setRefreshButtonClicked] = useState(false);
-  const title = 'Welcome to Red Hat OpenShift Service on AWS (ROSA)';
   const hasAWSAccounts = AWSAccountIDs.length > 0;
   const track = useAnalytics();
 
@@ -145,26 +142,7 @@ function AccountsRolesScreen({
 
   return (
     <Form onSubmit={() => false}>
-      {/* these images use fixed positioning */}
-      <img src={RedHat} className="ocm-c-wizard-intro-image-top" aria-hidden="true" alt="" />
-      <img src={AWSLogo} className="ocm-c-wizard-intro-image-bottom" aria-hidden="true" alt="" />
       <Grid hasGutter className="pf-u-mt-md">
-        <GridItem span={12}>
-          <Title headingLevel="h2">{title}</Title>
-        </GridItem>
-        <GridItem span={12}>
-          <Text component={TextVariants.p}>
-            Create a managed OpenShift cluster on an existing Amazon Web Services (AWS) account.
-          </Text>
-        </GridItem>
-        <GridItem span={9}>
-          <Title headingLevel="h3">Prerequisites</Title>
-          <Text component={TextVariants.p}>
-            To use the web interface to create a ROSA cluster you will need to have already
-            completed the prerequisite steps to prepare your AWS account on the{' '}
-            <Link to="getstarted">{`Get started with a ${productName} (ROSA) page.`}</Link>
-          </Text>
-        </GridItem>
         <GridItem span={8}>
           <Title headingLevel="h3">AWS infrastructure account</Title>
           <Text component={TextVariants.p}>
@@ -180,9 +158,12 @@ function AccountsRolesScreen({
             name="associated_aws_id"
             label="Associated AWS infrastructure account"
             launchAssocAWSAcctModal={onAssociateAwsAccountModalOpen}
-            onRefresh={() => {
-              setRefreshButtonClicked(true);
-              resetAWSAccountFields();
+            refresh={{
+              onRefresh: () => {
+                setRefreshButtonClicked(true);
+                resetAWSAccountFields();
+              },
+              text: 'Refresh to view newly associated AWS accounts and account-roles.',
             }}
             validate={!getAWSAccountIDsResponse.fulfilled ? undefined : required}
             extendedHelpText={
@@ -207,7 +188,13 @@ function AccountsRolesScreen({
             How to associate a new account
           </Button>
         </GridItem>
-
+        <GridItem span={7} />
+        {isHypershiftSelected && (
+          <AWSBillingAccountField
+            change={change}
+            selectedAWSBillingAccountID={selectedAWSBillingAccountID}
+          />
+        )}
         {selectedAWSAccountID && hasAWSAccounts && (
           <AccountRolesARNsSection
             touch={touch}
@@ -233,7 +220,6 @@ function AccountsRolesScreen({
           </GridItem>
         )}
       </Grid>
-
       <AssociateAwsAccountModal
         isOpen={isAssocAwsAccountModalOpen}
         onClose={onAssociateAwsAccountModalClose}
@@ -246,6 +232,7 @@ AccountsRolesScreen.propTypes = {
   touch: PropTypes.func,
   change: PropTypes.func,
   selectedAWSAccountID: PropTypes.string,
+  selectedAWSBillingAccountID: PropTypes.string,
   selectedInstallerRoleARN: PropTypes.string,
   getAWSAccountIDs: PropTypes.func.isRequired,
   getAWSAccountIDsResponse: PropTypes.object.isRequired,
@@ -264,7 +251,7 @@ AccountsRolesScreen.propTypes = {
   rosaMaxOSVersion: PropTypes.string,
   offlineToken: PropTypes.string,
   setOfflineToken: PropTypes.func,
-  isHypershiftSelected: PropTypes.bool,
+  isHypershiftSelected: PropTypes.bool.isRequired,
 };
 
 export default AccountsRolesScreen;
