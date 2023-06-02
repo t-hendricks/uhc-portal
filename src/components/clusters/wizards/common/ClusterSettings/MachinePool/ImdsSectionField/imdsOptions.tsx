@@ -8,7 +8,7 @@ export const imdsOptions = [
     label: (
       <>
         Use both IMDSv1 and IMDSv2
-        <div className="ocm-c--reduxradiobutton-description">
+        <div className="ocm-c--reduxradiobutton-description pf-u-mb-sm">
           Allows use of both IMDS versions for backward compatibility
         </div>
       </>
@@ -20,7 +20,7 @@ export const imdsOptions = [
     label: (
       <>
         Use IMDSv2 only
-        <div className="ocm-c--reduxradiobutton-description">
+        <div className="ocm-c--reduxradiobutton-description pf-u-mb-sm">
           A session-oriented method with enhanced security
         </div>
       </>

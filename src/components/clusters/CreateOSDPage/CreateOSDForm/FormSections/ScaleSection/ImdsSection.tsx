@@ -25,20 +25,23 @@ const ImdsSection = ({
 
   return (
     <FormGroup label="Instance Metadata Service" fieldId="imds" labelIcon={<ImdsSectionHint />}>
-      {isDisabled && <ImdsSectionAlert />}
-      <Field
-        component={RadioButtons}
-        name="imds"
-        ariaLabel="Instance Metadata Service"
-        props={{
-          value: imds,
-          onChange: onChangeImds,
-        }}
-        isDisabled={isDisabled}
-        className="pf-u-mb-sm"
-        options={imdsOptions}
-        disableDefaultValueHandling
-      />
+      {isDisabled ? (
+        <ImdsSectionAlert />
+      ) : (
+        <Field
+          component={RadioButtons}
+          name="imds"
+          ariaLabel="Instance Metadata Service"
+          props={{
+            value: imds,
+            onChange: onChangeImds,
+          }}
+          isDisabled={isDisabled}
+          className="pf-u-mb-md"
+          options={imdsOptions}
+          disableDefaultValueHandling
+        />
+      )}
     </FormGroup>
   );
 };

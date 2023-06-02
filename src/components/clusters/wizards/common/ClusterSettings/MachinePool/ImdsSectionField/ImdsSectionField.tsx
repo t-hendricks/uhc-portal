@@ -32,21 +32,24 @@ export const ImdsSectionField = () => {
 
   return (
     <FormGroup label="Instance Metadata Service" fieldId="imds" labelIcon={<ImdsSectionHint />}>
-      {isDisabled && <ImdsSectionAlert />}
-      <Field
-        component={RadioButtons}
-        name="imds"
-        id="imds"
-        ariaLabel="Instance Metadata Service"
-        isDisabled={isDisabled}
-        className="pf-u-mb-sm"
-        input={{
-          ...getFieldProps(FieldId.IMDS),
-          onChange,
-        }}
-        options={imdsOptions}
-        disableDefaultValueHandling // To prevent initial onChange with 'undefined' value
-      />
+      {isDisabled ? (
+        <ImdsSectionAlert />
+      ) : (
+        <Field
+          component={RadioButtons}
+          name="imds"
+          id="imds"
+          ariaLabel="Instance Metadata Service"
+          isDisabled={isDisabled}
+          className="pf-u-mb-md"
+          input={{
+            ...getFieldProps(FieldId.IMDS),
+            onChange,
+          }}
+          options={imdsOptions}
+          disableDefaultValueHandling // To prevent initial onChange with 'undefined' value
+        />
+      )}
     </FormGroup>
   );
 };
