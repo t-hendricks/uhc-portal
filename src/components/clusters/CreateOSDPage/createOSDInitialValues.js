@@ -2,6 +2,7 @@ import { normalizedProducts, billingModels } from '../../../common/subscriptionT
 
 export const AWS_DEFAULT_REGION = 'us-east-1';
 export const GCP_DEFAULT_REGION = 'us-east1';
+const newEmptySubnet = () => ({ subnet_id: '', availability_zone: '' });
 
 const createOSDInitialValues = ({
   cloudProviderID = 'aws',
@@ -56,7 +57,8 @@ const createOSDInitialValues = ({
     ...(isHypershiftSelected
       ? {
           selected_vpc_id: '',
-          machine_pools_subnets: [{ subnet_id: '', availability_zone: '' }],
+          machine_pools_subnets: [newEmptySubnet()],
+          cluster_privacy_public_subnet: newEmptySubnet(),
         }
       : { enable_user_workload_monitoring: 'true' }),
   };
