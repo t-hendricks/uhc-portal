@@ -428,7 +428,7 @@ const runItYourself = () => {
     ],
     [
       <>
-        <Link to="/install/powervs/installer-provisioned">IBM PowerVS</Link>
+        <Link to="/install/powervs/installer-provisioned">IBM PowerVS (ppc64le)</Link>
         <TechnologyPreview position={PreviewBadgePosition.inline} />
       </>,
       'Full stack automation',

@@ -540,6 +540,11 @@ exports[`DownloadAndOSSelection ppc64le-openshift-install renders correctly 1`] 
           value="x86"
         />
         <FormSelectOption
+          key="arm"
+          label="aarch64"
+          value="arm"
+        />
+        <FormSelectOption
           key="ppc"
           label="ppc64le"
           value="ppc"

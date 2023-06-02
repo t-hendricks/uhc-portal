@@ -35,9 +35,9 @@ exports[`InstallIBMCloud renders correctly 1`] = `
       powervs={
         Object {
           "ipi": Object {
-            "channel": "preRelease",
+            "channel": "stable",
             "docURL": "https://docs.openshift.com/container-platform/4.13/installing/installing_ibm_powervs/preparing-to-install-on-ibm-power-vs.html",
-            "installer": "multi-openshift-install",
+            "installer": "ppc64le-openshift-install",
             "prerequisites": "https://docs.openshift.com/container-platform/4.13/installing/installing_ibm_powervs/preparing-to-install-on-ibm-power-vs.html",
             "title": "Install OpenShift on IBM Power Systems Virtual Server with installer-provisioned infrastructure",
           },

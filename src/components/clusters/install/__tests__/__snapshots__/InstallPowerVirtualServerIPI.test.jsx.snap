@@ -15,7 +15,7 @@ exports[`InstallPower renders correctly 1`] = `
               "path": "/create",
             },
             Object {
-              "label": "IBM PowerVS",
+              "label": "IBM PowerVS (ppc64le)",
             },
           ]
         }
@@ -37,16 +37,16 @@ exports[`InstallPower renders correctly 1`] = `
                 "path": "/create",
               },
               Object {
-                "label": "IBM PowerVS",
+                "label": "IBM PowerVS (ppc64le)",
               },
             ]
           }
         />
       }
-      channel="preRelease"
+      channel="stable"
       cloudProviderID="ibmCloud"
       docURL="https://docs.openshift.com/container-platform/4.13/installing/installing_ibm_powervs/preparing-to-install-on-ibm-power-vs.html"
-      installer="multi-openshift-install"
+      installer="ppc64le-openshift-install"
       isBMIPI={false}
       isUPI={false}
       prerequisites="https://docs.openshift.com/container-platform/4.13/installing/installing_ibm_powervs/preparing-to-install-on-ibm-power-vs.html"
