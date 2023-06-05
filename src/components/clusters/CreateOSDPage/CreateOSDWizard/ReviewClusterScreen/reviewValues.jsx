@@ -1,6 +1,7 @@
 import React from 'react';
 import { Grid, GridItem, LabelGroup, Label } from '@patternfly/react-core';
 import { billingModels } from '../../../../../common/subscriptionTypes';
+import { IMDSType } from '~/components/clusters/wizards/common';
 import { humanizeValueWithUnitGiB } from '../../../../../common/units';
 import parseUpdateSchedule from '../../../common/Upgrades/parseUpdateSchedule';
 import AwsVpcTable from './AwsVpcTable';
@@ -169,6 +170,13 @@ const reviewValues = {
     values: {
       true: 'Enabled',
       false: 'Disabled',
+    },
+  },
+  imds: {
+    title: 'Instance Metadata Service (IMDS)',
+    values: {
+      [IMDSType.V1AndV2]: 'IMDSv1 and IMDSv2',
+      [IMDSType.V2Only]: 'IMDSv2 only',
     },
   },
   nodes_compute: {

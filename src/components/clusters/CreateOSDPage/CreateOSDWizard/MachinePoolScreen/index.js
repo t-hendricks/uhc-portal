@@ -19,6 +19,8 @@ const mapStateToProps = (state, ownProps) => {
   const machineType = valueSelector(state, 'machine_type');
   const isHypershiftSelected = valueSelector(state, 'hypershift') === 'true';
   const selectedVPCID = valueSelector(state, 'selected_vpc_id');
+  const clusterVersionRawId = valueSelector(state, 'cluster_version.raw_id');
+  const imds = valueSelector(state, 'imds');
 
   return {
     cloudProviderID,
@@ -29,6 +31,8 @@ const mapStateToProps = (state, ownProps) => {
     machineType,
     isHypershiftSelected,
     selectedVPCID,
+    imds,
+    clusterVersionRawId,
     minNodesRequired: getMinNodesRequired(isHypershiftSelected),
     canAutoScale: canAutoScaleOnCreateSelector(state, product),
     autoscalingEnabled: !!valueSelector(state, 'autoscalingEnabled'),
