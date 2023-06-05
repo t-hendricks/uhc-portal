@@ -150,31 +150,60 @@ const hasSubnets = (machinePoolOrNodePool) => {
  * Used to determine the minimum nodes allowed during cluster creation,
  * and after when adding new machine pools or editing cluster counts.
  *
- * @param isHypershiftCluster
- * @param machinePoolId
+ * @param {boolean} isDefaultMachinePool True if it's the default MP
+ * @param {boolean} isByoc True if BYOC/CCS cluster, true for ROSA clusters
+ * @param {boolean} isMultiAz True if multi-zone
  * @returns number | undefined
  */
-const getMinNodesRequired = (isHypershiftCluster, isDefaultMachinePool, isMultiAz) => {
-  if (isHypershiftCluster) {
-    return 1;
-  }
-
+const getMinNodesRequired = (isDefaultMachinePool, isByoc, isMultiAz) => {
   if (isDefaultMachinePool) {
     // Default machine pool
-    if (isMultiAz) {
-      // Classic ROSA, Multi-zone
-      return 3;
+    if (isByoc) {
+      return isMultiAz ? 3 : 2;
     }
-    // Classic ROSA, Single zone
+    return isMultiAz ? 9 : 4;
+  }
+
+  // Custom machine pool
+  return 0;
+};
+
+/**
+ * Node increment
+ * MultiAz requires nodes to be a multiple of 3
+ * @param {boolean} isMultiAz
+ * @returns number
+ */
+const getNodeIncrement = (isMultiAz) => (isMultiAz ? 3 : 1);
+
+/**
+ * Minimum is 2, and if more than 1 node pool, then minimum is num of pools
+ * @param {number} numMachinePools
+ * @returns number
+ */
+const getMinNodesRequiredHypershift = (numMachinePools) => {
+  if (numMachinePools === undefined) {
     return 2;
   }
-
-  if (!isDefaultMachinePool) {
-    // Classic ROSA, not the default machine pool
-    return 0;
+  if (numMachinePools === 1) {
+    return 2;
   }
+  return numMachinePools;
+};
 
-  return undefined;
+/**
+ * Node increment by num of machine pools if there is more than 1 pool
+ * @param {number} numMachinePools
+ * @returns number
+ */
+const getNodeIncrementHypershift = (numMachinePools) => {
+  if (numMachinePools === undefined) {
+    return 1;
+  }
+  if (numMachinePools === 1) {
+    return 1;
+  }
+  return numMachinePools;
 };
 
 export {
@@ -187,4 +216,7 @@ export {
   getSubnetIds,
   hasSubnets,
   getMinNodesRequired,
+  getNodeIncrement,
+  getMinNodesRequiredHypershift,
+  getNodeIncrementHypershift,
 };

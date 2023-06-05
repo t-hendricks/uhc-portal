@@ -13,7 +13,10 @@ import {
   SpotInstanceInfoAlert,
   isMachinePoolUsingSpotInstances,
 } from '../../ClusterDetails/components/MachinePools/components/SpotInstanceHelper';
-import { getMinNodesRequired } from '~/components/clusters/ClusterDetails/components/MachinePools/machinePoolsHelper';
+import {
+  getMinNodesRequired,
+  getMinNodesRequiredHypershift,
+} from '~/components/clusters/ClusterDetails/components/MachinePools/machinePoolsHelper';
 
 import Modal from '../../../common/Modal/Modal';
 import ErrorBox from '../../../common/ErrorBox';
@@ -125,7 +128,9 @@ class EditNodeCountModal extends Component {
       clusterID,
       isHypershiftCluster,
     } = this.props;
-    const minNodesRequired = getMinNodesRequired(isHypershiftCluster, machinePoolId === 'Default');
+    const minNodesRequired = isHypershiftCluster
+      ? getMinNodesRequiredHypershift()
+      : getMinNodesRequired(machinePoolId === 'Default', isByoc, isMultiAz);
 
     const error = editNodeCountResponse.error ? (
       <ErrorBox message="Error editing machine pool" response={editNodeCountResponse} />

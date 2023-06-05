@@ -19,6 +19,7 @@ import NodeCountInput from '~/components/clusters/common/NodeCountInput';
 import { normalizedProducts } from '~/common/subscriptionTypes';
 import { getNodesCount } from '~/components/clusters/CreateOSDPage/CreateOSDForm/FormSections/ScaleSection/AutoScaleSection/AutoScaleHelper';
 import { NodeLabelsFieldArray } from './NodeLabelsFieldArray';
+import { getMinNodesRequired } from '~/components/clusters/ClusterDetails/components/MachinePools/machinePoolsHelper';
 
 export const MachinePool = () => {
   const dispatch = useDispatch();
@@ -166,6 +167,7 @@ export const MachinePool = () => {
                   ...getFieldProps(FieldId.NodesCompute),
                   onChange: (value: string) => setFieldValue(FieldId.NodesCompute, value),
                 }}
+                minNodes={getMinNodesRequired(true, isByoc, isMultiAz)}
               />
             </GridItem>
             {nodeLabelsExpandableSection}

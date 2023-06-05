@@ -22,6 +22,7 @@ function MachinePoolScreen({
   change,
   billingModel,
   minNodesRequired,
+  nodeIncrement,
   selectedVPCID,
 }) {
   return (
@@ -49,8 +50,9 @@ function MachinePoolScreen({
           autoScaleMaxNodesValue={autoScaleMaxNodesValue}
           billingModel={billingModel}
           showStorageAndLoadBalancers={false}
-          showHypershiftTitle={isHypershiftSelected}
+          isHypershiftSelected={isHypershiftSelected}
           minNodesRequired={minNodesRequired}
+          nodeIncrement={nodeIncrement}
         />
       </Grid>
     </Form>
@@ -72,6 +74,7 @@ MachinePoolScreen.propTypes = {
   autoScaleMinNodesValue: PropTypes.string,
   autoScaleMaxNodesValue: PropTypes.string,
   minNodesRequired: PropTypes.number,
+  nodeIncrement: PropTypes.number,
 };
 
 export default MachinePoolScreen;
