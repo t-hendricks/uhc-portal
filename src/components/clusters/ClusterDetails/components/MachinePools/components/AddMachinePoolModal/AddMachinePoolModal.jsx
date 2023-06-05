@@ -147,6 +147,7 @@ class AddMachinePoolModal extends Component {
                 autoScaleMinNodesValue={autoScaleMinNodesValue}
                 autoScaleMaxNodesValue={autoScaleMaxNodesValue}
                 billingModel={billingModel}
+                isHypershiftSelected={isHypershiftCluster}
               />
               {/* Cost savings */}
               {canUseSpotInstances && (
