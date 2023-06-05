@@ -25,7 +25,7 @@ import ExclamationTriangleIcon from '@patternfly/react-icons/dist/js/icons/excla
 import { global_warning_color_100 as warningColor } from '@patternfly/react-tokens';
 
 import { Link } from 'react-router-dom';
-import { OCM } from 'openshift-assisted-ui-lib';
+import * as OCM from '@openshift-assisted/ui-lib/ocm';
 import SearchIcon from '@patternfly/react-icons/dist/esm/icons/search-icon';
 import ClusterStateIcon from '../../common/ClusterStateIcon/ClusterStateIcon';
 import ClusterLocationLabel from '../../common/ClusterLocationLabel';
