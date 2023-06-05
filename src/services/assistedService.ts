@@ -1,4 +1,4 @@
-import { OCM } from 'openshift-assisted-ui-lib';
+import * as OCM from '@openshift-assisted/ui-lib/ocm';
 
 const {
   Services: {

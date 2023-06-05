@@ -17,7 +17,7 @@ import * as Sentry from '@sentry/browser';
 import isEmpty from 'lodash/isEmpty';
 import { action, ActionType } from 'typesafe-actions';
 import axios, { AxiosResponse } from 'axios';
-import type { OCM } from 'openshift-assisted-ui-lib';
+import type { Cluster as AICluster } from '@openshift-assisted/ui-lib/ocm';
 
 import { clustersConstants } from '../constants';
 import {
@@ -215,7 +215,7 @@ const buildSearchQuery = (items: { [field: string]: unknown }[], field: string):
   return `id in (${Array.from(IDs).join(',')})`;
 };
 
-type MapEntry = { aiCluster?: OCM.Cluster; cluster?: Cluster; subscription: Subscription };
+type MapEntry = { aiCluster?: AICluster; cluster?: Cluster; subscription: Subscription };
 
 // Builds an array in the order things were inserted into `subscriptionMap`.
 const createResponseForFetchClusters = (
@@ -391,7 +391,7 @@ const fetchClustersAndPermissions = async (
       });
     }
 
-    let aiClusters = [] as OCM.Cluster[];
+    let aiClusters = [] as AICluster[];
     if (subscriptionIds.length > 0) {
       assistedService
         .getAIClustersBySubscription(subscriptionIds)

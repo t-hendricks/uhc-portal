@@ -34,9 +34,44 @@ const getUpstreamRemote = async () => {
   throw 'missing remote for uhc-portal repo';
 };
 
-const getAssistedUILibVersion = async (revision) => {
+/** @callback getOpenshiftAssistedLibsVersionsFunc
+ * @param {string} revision
+ * @returns {string}
+ */
+
+/** @type {getOpenshiftAssistedLibsVersionsFunc} */
+const getOpenshiftAssistedLibsVersions = async (revision) => {
   const r = await execFilePromise('git', ['cat-file', 'blob', `${revision}:package.json`]);
-  return JSON.parse(r.stdout).dependencies['openshift-assisted-ui-lib'];
+  /** 
+   * @typedef {object} OpenshiftAssistedLibsVersionsMap
+   * @prop {string} 'openshift-assisted-ui-lib'
+   * @prop {string} '@openshift-assisted/ui-lib'
+   * @prop {string} '@openshift-assisted/locales' 
+   */
+  /** @type {OpenshiftAssistedLibsVersionsMap|Error} */
+  let returnValue = {
+    'openshift-assisted-ui-lib': null,
+    '@openshift-assisted/ui-lib': null,
+    '@openshift-assisted/locales': null,
+    toString() {
+      return [
+        `openshift-assisted-ui-lib: ${this['openshift-assisted-ui-lib']}`,
+        `@openshift-assisted/ui-lib: ${this['@openshift-assisted/ui-lib']}`,
+        `@openshift-assisted/locales: ${this['@openshift-assisted/locales']}`,
+      ].join('\n');
+    },
+  };
+  try {
+    const packument = JSON.parse(r.stdout);
+    const { dependencies } = packument;
+    returnValue['openshift-assisted-ui-lib'] = dependencies['openshift-assisted-ui-lib'];    
+    returnValue['@openshift-assisted/ui-lib'] = dependencies['@openshift-assisted/ui-lib'];   
+    returnValue['@openshift-assisted/locales'] = dependencies['@openshift-assisted/locales'];    
+  } catch {
+    returnValue = new Error(`Failed to parse package.json in rev:${revision}`);
+  }
+
+  return returnValue.toString();
 };
 
 // Helpers returning a promise, should resolve to an object containing *at least* .src_hash.
@@ -140,7 +175,7 @@ const getEnvs = async (upstream) => {
     // eslint-disable-next-line no-param-reassign
     e.info = await e.info;
     if (e.info.src_hash) {
-      e.info.assisted_ui_lib_version = await getAssistedUILibVersion(e.info.src_hash);
+      e.info.assisted_ui_lib_version = await getOpenshiftAssistedLibsVersions(e.info.src_hash);
     }
   }));
   return envs;
