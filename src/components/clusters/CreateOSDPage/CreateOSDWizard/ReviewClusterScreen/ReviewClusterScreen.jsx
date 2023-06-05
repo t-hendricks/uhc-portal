@@ -19,6 +19,7 @@ import { useFeatureGate } from '~/hooks/useFeatureGate';
 
 import ReduxHiddenCheckbox from '~/components/common/ReduxFormComponents/ReduxHiddenCheckbox';
 import DebugClusterRequest from '~/components/clusters/CreateOSDPage/DebugClusterRequest';
+import { canSelectImds } from '~/components/clusters/wizards/rosa/constants';
 import ReviewSection, { ReviewItem, ReviewRoleItem } from './ReviewSection';
 
 import './ReviewClusterScreen.scss';
@@ -48,6 +49,7 @@ const ReviewClusterScreen = ({
   const hasEtcdEncryption = isHypershiftSelected && !!formValues.etcd_key_arn;
   const showVPCCheckbox = isROSA || isByoc;
   const hasAWSVPCSettings = showVPCCheckbox && formValues.install_to_vpc && isAWS;
+  const clusterVersionRawId = formValues.cluster_version.raw_id;
 
   const clusterSettingsFields = [
     ...(!isROSA ? ['cloud_provider'] : []),
@@ -219,14 +221,24 @@ const ReviewClusterScreen = ({
         {autoscalingEnabled
           ? ReviewItem({ name: 'min_replicas', formValues })
           : ReviewItem({ name: 'nodes_compute', formValues })}
+        {showVPCCheckbox &&
+          ReviewItem({
+            name: isHypershiftSelected ? 'selected_vpc_id' : 'install_to_vpc',
+            formValues,
+          })}
         {hasAWSVPCSettings &&
           isHypershiftSelected &&
           ReviewItem({
-            name: 'aws_hosted_vpc',
+            name: 'aws_hosted_machine_pools',
             formValues,
           })}
         {!(formValues.node_labels.length === 1 && isEmpty(formValues.node_labels[0])) &&
           ReviewItem({ name: 'node_labels', formValues })}
+        {isAWS &&
+          !isHypershiftSelected &&
+          isByoc &&
+          canSelectImds(clusterVersionRawId) &&
+          ReviewItem({ name: 'imds', formValues })}
       </ReviewSection>
       <ReviewSection
         title={getStepName('NETWORKING')}
@@ -235,14 +247,15 @@ const ReviewClusterScreen = ({
         }
       >
         {ReviewItem({ name: 'cluster_privacy', formValues })}
-        {showVPCCheckbox &&
+        {formValues.cluster_privacy_public_subnet?.subnet_id &&
+          isHypershiftSelected &&
           ReviewItem({
-            name: isHypershiftSelected ? 'selected_vpc_id' : 'install_to_vpc',
+            name: 'cluster_privacy_public_subnet',
             formValues,
           })}
         {showVPCCheckbox &&
-          (isHypershiftSelected ||
-            (formValues.cluster_privacy === 'internal' && formValues.install_to_vpc)) &&
+          formValues.cluster_privacy === 'internal' &&
+          formValues.install_to_vpc &&
           ReviewItem({ name: 'use_privatelink', formValues })}
         {hasAWSVPCSettings &&
           !isHypershiftSelected &&

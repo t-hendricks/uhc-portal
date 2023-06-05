@@ -24,6 +24,8 @@ const mapStateToProps = (state, ownProps) => {
   const machineType = valueSelector(state, 'machine_type');
   const isHypershiftSelected = valueSelector(state, 'hypershift') === 'true';
   const selectedVPCID = valueSelector(state, 'selected_vpc_id');
+  const clusterVersionRawId = valueSelector(state, 'cluster_version.raw_id');
+  const imds = valueSelector(state, 'imds');
   const machinePools = valueSelector(state, 'machine_pools_subnets');
 
   return {
@@ -35,6 +37,8 @@ const mapStateToProps = (state, ownProps) => {
     machineType,
     isHypershiftSelected,
     selectedVPCID,
+    imds,
+    clusterVersionRawId,
     minNodesRequired: isHypershiftSelected
       ? getMinNodesRequiredHypershift(machinePools?.length)
       : getMinNodesRequired(true, isByoc, isMultiAz),

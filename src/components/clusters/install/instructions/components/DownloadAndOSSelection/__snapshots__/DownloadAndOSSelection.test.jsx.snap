@@ -257,7 +257,7 @@ exports[`DownloadAndOSSelection multi-openshift-install renders correctly 1`] = 
     >
       <DownloadButton
         tool="multi-openshift-install"
-        url="https://mirror.openshift.com/pub/openshift-v4/multi/clients/ocp/latest/amd64/openshift-install-linux.tar.gz"
+        url="https://mirror.openshift.com/pub/openshift-v4/multi/clients/ocp/stable/amd64/openshift-install-linux.tar.gz"
       />
     </GridItem>
   </Grid>
@@ -538,6 +538,11 @@ exports[`DownloadAndOSSelection ppc64le-openshift-install renders correctly 1`] 
           key="x86"
           label="x86_64"
           value="x86"
+        />
+        <FormSelectOption
+          key="arm"
+          label="aarch64"
+          value="arm"
         />
         <FormSelectOption
           key="ppc"

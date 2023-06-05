@@ -352,6 +352,7 @@ describe('createClusterRequest', () => {
           product: normalizedProducts.ROSA,
           cloud_provider: 'aws',
           byoc: 'true',
+          hypershift: 'false',
           ...CIDRData,
         };
         const request = createClusterRequest(params, data);
@@ -360,6 +361,41 @@ describe('createClusterRequest', () => {
         expect(request.cloud_provider.id).toEqual('aws');
         expect(request.ccs.enabled).toEqual(true);
         expectCIDR(request);
+      });
+
+      it('sets billing_model to "marketplace-aws" for HCP cluster', () => {
+        const data = {
+          ...rosaFormData,
+          billing_model: 'standard',
+          product: normalizedProducts.ROSA,
+          cloud_provider: 'aws',
+          byoc: 'true',
+          hypershift: 'true',
+          machine_pools_subnets: [
+            {
+              subnet_id: 'subnet1ID',
+              name: 'subnet1',
+              public: false,
+            },
+            {
+              subnet_id: 'subnet2ID',
+              name: 'subnet2',
+              public: false,
+            },
+          ],
+          cluster_privacy: 'external',
+          cluster_privacy_public_subnet: {
+            subnet_id: 'publicSubnet1ID',
+            name: 'publicSubnet1',
+            public: true,
+          },
+          ...CIDRData,
+        };
+        const request = createClusterRequest(params, data);
+
+        expect(request.hypershift.enabled).toBeTruthy();
+        expect(request.billing_model).toEqual('marketplace-aws');
+        expect(request.aws.subnet_ids).toEqual(['publicSubnet1ID', 'subnet1ID', 'subnet2ID']);
       });
     });
   });

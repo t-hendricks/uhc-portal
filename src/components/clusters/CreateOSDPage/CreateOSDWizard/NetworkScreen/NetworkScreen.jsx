@@ -18,6 +18,7 @@ import { constants } from '../../CreateOSDForm/CreateOSDFormConstants';
 import ExternalLink from '../../../../common/ExternalLink';
 import links from '../../../../../common/installLinks.mjs';
 import { normalizedProducts } from '~/common/subscriptionTypes';
+import { validateRequiredMachinePoolsSubnet } from '~/common/validators';
 import { PLACEHOLDER_VALUE } from '../../CreateOSDForm/FormSections/NetworkingSection/AvailabilityZoneSelection';
 import useAnalytics from '~/hooks/useAnalytics';
 import { ocmResourceType, trackEvents } from '~/common/analytics';
@@ -81,9 +82,9 @@ function NetworkScreen(props) {
     const { cluster_privacy_public_subnet: publicSubnet, cluster_privacy: clusterPrivacy } =
       formValues;
     if (value === 'external') {
+      change('use_privatelink', false);
+
       if (!isHypershiftSelected) {
-        // hypershift always uses private link and vpc
-        change('use_privatelink', false);
         shouldUncheckInstallToVPC();
       }
 
@@ -199,6 +200,7 @@ function NetworkScreen(props) {
                       label="Public subnet ID"
                       className="pf-u-mt-md pf-u-ml-lg"
                       isRequired
+                      validate={validateRequiredMachinePoolsSubnet}
                       withAutoSelect={false}
                       selectedVPC={formValues.selected_vpc_id}
                       privacy="public"

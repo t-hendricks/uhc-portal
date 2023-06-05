@@ -11,8 +11,8 @@ const MIRROR_CLIENTS_STABLE_PPC =
   'https://mirror.openshift.com/pub/openshift-v4/ppc64le/clients/ocp/stable/';
 const MIRROR_CLIENTS_STABLE_ARM =
   'https://mirror.openshift.com/pub/openshift-v4/aarch64/clients/ocp/stable/';
-const MIRROR_CLIENTS_LATEST_TP_MULTI =
-  'https://mirror.openshift.com/pub/openshift-v4/multi/clients/ocp/latest/';
+const MIRROR_CLIENTS_STABLE_MULTI =
+  'https://mirror.openshift.com/pub/openshift-v4/multi/clients/ocp/stable/';
 const MIRROR_CLIENTS_LATEST_PRE_X86 =
   'https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp-dev-preview/pre-release/';
 const MIRROR_CLIENTS_LATEST_PRE_IBMZ =
@@ -288,6 +288,8 @@ const links = {
   AWS_CLI_GETTING_STARTED_MANUAL:
     'https://docs.aws.amazon.com/ROSA/latest/userguide/getting-started-sts-manual.html',
   AWS_ROSA_GET_STARTED: 'https://docs.aws.amazon.com/ROSA/latest/userguide/getting-started.html',
+  AWS_IMDS:
+    'https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/configuring-instance-metadata-options.html',
 
   OCM_DOCS_PULL_SECRETS: `${OCM_DOCS_BASE}/html/managing_clusters/assembly-managing-clusters#downloading_and_updating_pull_secrets`,
   OCM_DOCS_ROLES_AND_ACCESS: `${OCM_DOCS_BASE}/html/managing_clusters/assembly-user-management-ocm`,
@@ -592,9 +594,7 @@ const urls = {
         [operatingSystems.linux]: `${MIRROR_CLIENTS_STABLE_PPC}openshift-install-linux.tar.gz`,
       },
       [architectures.arm]: {
-        /* 4.13
         [operatingSystems.linux]: `${MIRROR_CLIENTS_STABLE_PPC}openshift-install-linux-arm64.tar.gz`,
-        */
         [operatingSystems.mac]: `${MIRROR_CLIENTS_STABLE_PPC}openshift-install-mac-arm64.tar.gz`,
       },
     },
@@ -637,12 +637,12 @@ const urls = {
   [tools.MULTIINSTALLER]: {
     [channels.STABLE]: {
       [architectures.x86]: {
-        [operatingSystems.linux]: `${MIRROR_CLIENTS_LATEST_TP_MULTI}amd64/openshift-install-linux.tar.gz`,
-        [operatingSystems.mac]: `${MIRROR_CLIENTS_LATEST_TP_MULTI}amd64/openshift-install-mac.tar.gz`,
+        [operatingSystems.linux]: `${MIRROR_CLIENTS_STABLE_MULTI}amd64/openshift-install-linux.tar.gz`,
+        [operatingSystems.mac]: `${MIRROR_CLIENTS_STABLE_MULTI}amd64/openshift-install-mac.tar.gz`,
       },
       [architectures.arm]: {
-        [operatingSystems.linux]: `${MIRROR_CLIENTS_LATEST_TP_MULTI}arm64/openshift-install-linux.tar.gz`,
-        [operatingSystems.mac]: `${MIRROR_CLIENTS_LATEST_TP_MULTI}arm64/openshift-install-mac-arm64.tar.gz`,
+        [operatingSystems.linux]: `${MIRROR_CLIENTS_STABLE_MULTI}arm64/openshift-install-linux.tar.gz`,
+        [operatingSystems.mac]: `${MIRROR_CLIENTS_STABLE_MULTI}arm64/openshift-install-mac-arm64.tar.gz`,
       },
       /*
       [architectures.ppc]: {
