@@ -46,6 +46,7 @@ const mapStateToProps = (state) => {
     isSTSEnabled,
     clusterHibernating,
     showConsoleLink,
+    isNLB: clusterRouters.default.loadBalancer === 'nlb',
   };
 };
 

@@ -40,6 +40,7 @@ const mapStateToProps = (state) => {
       enable_additional_router: hasAdditionalRouter,
       private_additional_router: !!clusterRouters?.additional?.isPrivate,
       labels_additional_router: routeSelectorsAsString(clusterRouters?.additional?.routeSelectors),
+      load_balancer: clusterRouters.default.loadBalancer === 'nlb',
     },
     clusterID: cluster.id,
     clusterRouters,

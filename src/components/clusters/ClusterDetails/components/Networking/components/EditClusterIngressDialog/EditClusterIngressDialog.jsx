@@ -22,6 +22,8 @@ import ExternalLink from '../../../../../../common/ExternalLink';
 import links from '../../../../../../../common/installLinks.mjs';
 import { checkRouteSelectors } from '../../../../../../../common/validators';
 
+import './EditClusterIngressDialog.scss';
+
 class EditClusterIngressDialog extends React.Component {
   componentDidUpdate(prevProps) {
     const { editClusterRoutersResponse, refreshCluster } = this.props;
@@ -161,6 +163,19 @@ class EditClusterIngressDialog extends React.Component {
                 label="Make router private"
               />
             </FormGroup>
+            <FormGroup
+              fieldId="load_balancer_group"
+              label="Load balancer type"
+              className="ocm-c-load-balancer"
+            >
+              <Field
+                component={ReduxCheckbox}
+                name="load_balancer"
+                label="NLB"
+                labelOff="Classic"
+                isSwitch
+              />
+            </FormGroup>
             {advancedOptions}
           </Form>
         </Modal>
@@ -180,6 +195,7 @@ EditClusterIngressDialog.propTypes = {
     enable_additional_router: PropTypes.bool,
     private_additional_router: PropTypes.bool,
     labels_additional_router: PropTypes.string,
+    load_balancer: PropTypes.bool,
   }).isRequired,
   editClusterRoutersResponse: PropTypes.shape({
     error: PropTypes.bool,

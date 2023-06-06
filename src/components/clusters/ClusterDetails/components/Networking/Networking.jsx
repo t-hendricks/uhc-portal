@@ -6,6 +6,7 @@ import ClusterIngressCard from './components/ClusterIngressCard';
 import NetworkConfigurationCard from './components/NetworkConfigurationCard';
 import VPCDetailsCard from './components/VPCDetailsCard';
 import VPCSubnetsCard from './components/VPCSubnetsCard';
+import ApplicationIngressCard from './components/ApplicationIngressCard/ApplicationIngressCard';
 import './Networking.scss';
 
 class Networking extends React.Component {
@@ -34,6 +35,9 @@ class Networking extends React.Component {
         </GridItem>
         <GridItem lg={3} md={12} className="networking-grid-item">
           <NetworkConfigurationCard network={network} />
+        </GridItem>
+        <GridItem lg={12} md={12} className="networking-grid-item">
+          <ApplicationIngressCard refreshCluster={refreshCluster} provider={provider} />
         </GridItem>
         <GridItem lg={9} md={12} className="networking-grid-item">
           <VPCDetailsCard />

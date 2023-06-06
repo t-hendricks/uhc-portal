@@ -53,10 +53,16 @@ const sendNetworkConfigRequests = async (newData, currentData, clusterID, dispat
   const additionalRouterDeleted = hadAdditionalRouter && !newData.enable_additional_router;
   const additionalRouterCreated = !hadAdditionalRouter && newData.enable_additional_router;
   const defaultRouterEdited = newData.private_default_router !== currentData.default.isPrivate;
+  const defaultRouterLBEdited =
+    newData.load_balancer !== (currentData.default.loadBalancer === 'nlb');
 
   // Edit default router
   if (defaultRouterEdited) {
     requestDefaultRouter.listening = newData.private_default_router ? 'internal' : 'external';
+  }
+
+  if (defaultRouterLBEdited) {
+    requestDefaultRouter.load_balancer = newData.load_balancer ? 'nlb' : 'classic';
   }
 
   // Edit existing additional router
@@ -85,7 +91,7 @@ const sendNetworkConfigRequests = async (newData, currentData, clusterID, dispat
     );
   }
 
-  if (defaultRouterEdited) {
+  if (defaultRouterEdited || defaultRouterLBEdited) {
     result = await clusterService.editIngress(
       clusterID,
       requestDefaultRouter.id,

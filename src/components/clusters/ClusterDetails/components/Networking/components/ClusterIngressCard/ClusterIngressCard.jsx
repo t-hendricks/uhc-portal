@@ -15,6 +15,7 @@ import {
   TextContent,
   TextVariants,
   ClipboardCopy,
+  Switch,
 } from '@patternfly/react-core';
 
 import EditClusterIngressDialog from '../EditClusterIngressDialog';
@@ -58,6 +59,7 @@ class ClusterIngressCard extends React.Component {
       isAdditionalRouterPrivate,
       hasAdditionalRouter,
       showConsoleLink,
+      isNLB,
     } = this.props;
 
     const disableEditReason = this.resolveDisableEditReason();
@@ -106,6 +108,9 @@ class ClusterIngressCard extends React.Component {
                   {`${isDefaultRouterPrivate ? 'Private' : 'Public'} router`}
                 </Text>
               </TextContent>
+            </FormGroup>
+            <FormGroup label="Load balancer type">
+              <Switch label="NLB" labelOff="Classic" isChecked={isNLB} isDisabled />
             </FormGroup>
             {hasAdditionalRouter && (
               <>
