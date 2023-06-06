@@ -29,7 +29,9 @@ const { ClusterStatus: AIClusterStatus } = OCM;
 function DetailsRight({
   cluster,
   totalDesiredComputeNodes,
-  autoscaleEnabled,
+  canAutoscaleCluster,
+  hasAutoscaleMachinePools,
+  hasAutoscaleCluster,
   totalMinNodesCount,
   totalMaxNodesCount,
   limitedSupport,
@@ -194,7 +196,7 @@ function DetailsRight({
         {/* Nodes */}
         {!isRestrictedEnv() && (
           <>
-            {showDesiredNodes && !autoscaleEnabled ? (
+            {showDesiredNodes && !hasAutoscaleMachinePools ? (
               <>
                 <DescriptionListGroup>
                   <DescriptionListTerm>
@@ -290,8 +292,17 @@ function DetailsRight({
             </DescriptionListGroup>
           </>
         )}
-        {/* Autoscaling */}
-        {autoscaleEnabled && (
+        {/* Cluster Autoscaling */}
+        {canAutoscaleCluster && (
+          <DescriptionListGroup>
+            <DescriptionListTerm>Cluster autoscaling</DescriptionListTerm>
+            <DescriptionListDescription>
+              {hasAutoscaleCluster ? 'Enabled' : 'Disabled'}
+            </DescriptionListDescription>
+          </DescriptionListGroup>
+        )}
+        {/* MachinePools Autoscaling */}
+        {hasAutoscaleMachinePools && (
           <>
             <DescriptionListGroup>
               <DescriptionListTerm>
@@ -357,7 +368,9 @@ DetailsRight.propTypes = {
   totalDesiredComputeNodes: PropTypes.number,
   totalMinNodesCount: PropTypes.number,
   totalMaxNodesCount: PropTypes.number,
-  autoscaleEnabled: PropTypes.bool.isRequired,
+  hasAutoscaleMachinePools: PropTypes.bool.isRequired,
+  hasAutoscaleCluster: PropTypes.bool.isRequired,
+  canAutoscaleCluster: PropTypes.bool.isRequired,
   limitedSupport: PropTypes.bool,
   totalActualNodes: PropTypes.oneOfType([PropTypes.number, PropTypes.bool]),
   machinePools: PropTypes.array,

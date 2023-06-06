@@ -2,6 +2,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {
+  Button,
   NumberInput,
   FormGroup,
   GridItem,
@@ -12,7 +13,7 @@ import {
 } from '@patternfly/react-core';
 import { Field } from 'redux-form';
 
-import './AutoScale.scss';
+import EditClusterAutoScalingDialog from '~/components/clusters/common/EditClusterAutoScalingDialog';
 import getMinNodesAllowed from './AutoScaleHelper';
 import ReduxCheckbox from '../../../../../../common/ReduxFormComponents/ReduxCheckbox';
 import ExternalLink from '../../../../../../common/ExternalLink';
@@ -22,6 +23,8 @@ import { validateNumericInput, required } from '../../../../../../../common/vali
 import { constants } from '../../../CreateOSDFormConstants';
 import { normalizedProducts } from '../../../../../../../common/subscriptionTypes';
 import { MAX_NODES } from '../../../../../common/NodeCountInput/NodeCountInput';
+
+import './AutoScale.scss';
 
 const minHypershiftNodesPerPool = (numPools) => (numPools > 1 ? 1 : 2);
 
@@ -251,9 +254,11 @@ class AutoScaleSection extends React.Component {
       autoScaleMinNodesValue,
       autoScaleMaxNodesValue,
       product,
+      change,
       onChange,
       isHypershiftWizard,
       numPools,
+      openEditClusterAutoScalingModal,
     } = this.props;
     const { minErrorMessage, maxErrorMessage } = this.state;
 
@@ -414,9 +419,31 @@ class AutoScaleSection extends React.Component {
             component={ReduxCheckbox}
             name="autoscalingEnabled"
             label="Enable autoscaling"
-            helpText="Autoscaling automatically adds and removes worker (compute) nodes from the cluster based on resource requirements."
+            helpText={
+              openEditClusterAutoScalingModal
+                ? 'The cluster autoscaler uses declarative, Kubernetes-style arguments to adjust the size of the cluster to meet its deployment needs.'
+                : 'Autoscaling automatically adds and removes compute nodes from the cluster based on resource requirements.'
+            }
             onChange={onChange}
           />
+
+          {openEditClusterAutoScalingModal && (
+            <>
+              <GridItem md={3}>
+                <Button
+                  data-testid="set-cluster-autoscaling-btn"
+                  variant="secondary"
+                  className="pf-u-mt-md"
+                  onClick={openEditClusterAutoScalingModal}
+                  isDisabled={!autoscalingEnabled}
+                >
+                  Edit cluster autoscaling settings
+                </Button>
+              </GridItem>
+              <EditClusterAutoScalingDialog isWizard change={change} />
+            </>
+          )}
+
           {autoscalingEnabled && azFormGroups}
         </GridItem>
       </>
@@ -426,6 +453,7 @@ class AutoScaleSection extends React.Component {
 
 AutoScaleSection.propTypes = {
   autoscalingEnabled: PropTypes.bool.isRequired,
+  openEditClusterAutoScalingModal: PropTypes.func,
   isMultiAz: PropTypes.bool.isRequired,
   autoScaleMinNodesValue: PropTypes.string,
   autoScaleMaxNodesValue: PropTypes.string,

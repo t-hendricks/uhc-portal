@@ -9,25 +9,61 @@ interface TextInputFieldProps {
   label?: string;
   validate?: FieldValidator;
   isDisabled?: boolean;
-  isPassword?: boolean;
   helperText?: React.ReactNode;
   tooltip?: React.ReactNode;
   field?: FieldConfig;
   formGroup?: FormGroupProps;
   input?: TextInputProps;
+  type?: TextInputProps['type'];
+  showHelpTextOnError?: boolean;
 }
+
+interface HelperTextInvalidProps {
+  name: string;
+  meta: FieldProps['meta'];
+  helpText: string | React.ReactNode;
+  showHelpTextOnError?: boolean;
+}
+
+const HelperTextInvalid = ({
+  name,
+  meta,
+  showHelpTextOnError,
+  helpText,
+}: HelperTextInvalidProps) => {
+  const { error, touched } = meta;
+  if (touched && error) {
+    if (showHelpTextOnError) {
+      if (typeof helpText === 'string') {
+        return (
+          <>
+            {helpText} {error}
+          </>
+        );
+      }
+      return (
+        <div className="pf-c-form__helper-text pf-m-error" id={`${name}-helper`} aria-live="polite">
+          {helpText} {error}
+        </div>
+      );
+    }
+    return <div className="pf-u-background-color-danger">{error}</div>;
+  }
+  return null;
+};
 
 export const TextInputField = ({
   name,
   label,
   validate,
   isDisabled,
-  isPassword,
   helperText,
   tooltip,
   field,
   formGroup,
   input,
+  type,
+  showHelpTextOnError,
 }: TextInputFieldProps) => (
   <Field name={name} validate={validate} {...field}>
     {({ field, form, meta }: FieldProps) => (
@@ -35,7 +71,14 @@ export const TextInputField = ({
         fieldId={field.name}
         label={label}
         validated={meta.touched && meta.error ? 'error' : 'default'}
-        helperTextInvalid={meta.touched && meta.error}
+        helperTextInvalid={
+          <HelperTextInvalid
+            meta={meta}
+            helpText={helperText}
+            showHelpTextOnError={showHelpTextOnError}
+            name={field.name}
+          />
+        }
         helperText={helperText}
         {...(tooltip && { labelIcon: <PopoverHint hint={tooltip} /> })}
         {...(validate && { isRequired: true })}
@@ -47,8 +90,8 @@ export const TextInputField = ({
           validated={meta.touched && meta.error ? 'error' : 'default'}
           onBlur={() => form.setFieldTouched(name, true)}
           onChange={(_, event) => field.onChange(event)}
-          value={field.value || ''}
-          {...(isPassword && { type: 'password' })}
+          value={field.value || (type === 'number' ? 0 : '')}
+          type={type}
           {...input}
         />
       </FormGroup>

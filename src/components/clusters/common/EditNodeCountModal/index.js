@@ -93,6 +93,7 @@ const mapStateToProps = (state) => {
     organization: state.userProfile.organization,
     machineTypes: state.machineTypes,
     cloudProviderID,
+    hasClusterAutoScaler: state.clusterAutoscaler.hasAutoscaler,
     isByoc: cluster?.ccs?.enabled,
     product: get(cluster, 'subscription.plan.type', ''),
     autoscalingEnabled: !!valueSelector(state, 'autoscalingEnabled'),

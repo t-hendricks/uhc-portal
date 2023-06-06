@@ -13,6 +13,7 @@ import {
   IMDSType,
 } from '~/components/clusters/wizards/common/constants';
 import { BreadcrumbPath } from '~/components/common/Breadcrumbs';
+import { getDefaultClusterAutoScaling } from '~/components/clusters/CreateOSDPage/clusterAutoScalingValues';
 import { ApplicationIngressType, ClusterPrivacyType } from './Networking/constants';
 
 export enum OsdFieldId {
@@ -131,6 +132,7 @@ export const initialValues: FormikValues = {
   [FieldId.DefaultRouterExcludedNamespacesFlag]: '',
   [FieldId.IsDefaultRouterNamespaceOwnershipPolicyStrict]: true,
   [FieldId.IsDefaultRouterWildcardPolicyAllowed]: false,
+  [FieldId.ClusterAutoscaling]: getDefaultClusterAutoScaling(),
 };
 
 export const initialTouched = {

@@ -1,5 +1,6 @@
 import { isRestrictedEnv } from '~/restrictedEnv';
 import { defaultWorkerNodeVolumeSizeGiB } from '~/components/clusters/wizards/rosa/constants';
+import { getDefaultClusterAutoScaling } from '~/components/clusters/CreateOSDPage/clusterAutoScalingValues';
 import { normalizedProducts, billingModels } from '../../../common/subscriptionTypes';
 import { IMDSType } from '../wizards/common';
 
@@ -21,6 +22,9 @@ const createOSDInitialValues = ({
   } else {
     defaultNodeCount = isMultiAz ? 9 : 4;
   }
+
+  const clusterAutoScaling =
+    cloudProviderID === 'aws' && !isHypershiftSelected ? getDefaultClusterAutoScaling() : {};
 
   const billingModelValue = () => {
     if (isTrialDefault) {
@@ -54,6 +58,7 @@ const createOSDInitialValues = ({
     configure_proxy: false,
     disable_scp_checks: false,
     billing_model: billingModelValue(),
+    cluster_autoscaling: clusterAutoScaling,
     product: product || (isTrialDefault ? normalizedProducts.OSDTrial : normalizedProducts.OSD),
     imds: IMDSType.V1AndV2,
 

@@ -1,4 +1,5 @@
 import * as clustersConstants from './clustersConstants';
+import * as clusterAutoscalerConstants from './clusterAutoscalerConstants';
 import * as viewConstants from './viewConstants';
 import * as viewOptionsConstants from './viewOptionsConstants';
 import * as viewPaginationConstants from './viewPaginationConstants';
@@ -17,6 +18,7 @@ import * as featureConstants from './featureConstants';
 
 export {
   clustersConstants,
+  clusterAutoscalerConstants,
   viewConstants,
   viewOptionsConstants,
   viewPaginationConstants,

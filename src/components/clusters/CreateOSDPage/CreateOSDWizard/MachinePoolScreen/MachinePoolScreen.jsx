@@ -18,6 +18,7 @@ function MachinePoolScreen({
   autoscalingEnabled,
   autoScaleMinNodesValue,
   autoScaleMaxNodesValue,
+  openEditClusterAutoScalingModal,
   change,
   billingModel,
   minNodesRequired,
@@ -61,6 +62,7 @@ function MachinePoolScreen({
           poolNumber={poolNumber}
           maxWorkerVolumeSizeGiB={maxWorkerVolumeSizeGiB}
           isHypershift={isHypershift}
+          openEditClusterAutoScalingModal={openEditClusterAutoScalingModal}
         />
       </Grid>
     </Form>
@@ -80,6 +82,7 @@ MachinePoolScreen.propTypes = {
   change: PropTypes.func.isRequired,
   autoScaleMinNodesValue: PropTypes.string,
   autoScaleMaxNodesValue: PropTypes.string,
+  openEditClusterAutoScalingModal: PropTypes.func,
   minNodesRequired: PropTypes.number,
   nodeIncrement: PropTypes.number,
   clusterVersionRawId: PropTypes.string.isRequired,

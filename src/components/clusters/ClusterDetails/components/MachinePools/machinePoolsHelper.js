@@ -1,3 +1,5 @@
+import { isHibernating } from '~/components/clusters/common/clusterStates';
+import get from 'lodash/get';
 import { checkLabels } from '../../../../../common/validators';
 import { asArray } from '../../../../../common/helpers';
 
@@ -213,6 +215,31 @@ const getNodeIncrementHypershift = (numMachinePools) => {
   return numMachinePools;
 };
 
+const getAddMachinePoolDisabledReason = (cluster) => {
+  const isReadOnly = cluster.status?.configuration_mode === 'read_only';
+  if (isReadOnly) {
+    return 'This operation is not available during maintenance.';
+  }
+  if (isHibernating(cluster.state)) {
+    return 'This operation is not available while cluster is hibernating.';
+  }
+  if (!cluster.canEdit) {
+    return 'You do not have permission to add a machine pool. Only cluster owners, cluster editors, and Organization Administrators can add machine pools.';
+  }
+  return undefined;
+};
+
+const hasExplicitAutoscalingMachinePool = (machinePools, excludeId) =>
+  (machinePools || []).some((mp) => !!mp.autoscaling && (!excludeId || excludeId !== mp.id));
+
+const hasDefaultOrExplicitAutoscalingMachinePool = (cluster, machinePools, excludeId) => {
+  const defaultMachineAutoscale = get(cluster, 'nodes.autoscale_compute', false);
+  if (defaultMachineAutoscale) {
+    return true;
+  }
+  return hasExplicitAutoscalingMachinePool(machinePools, excludeId);
+};
+
 export {
   parseTags,
   parseLabels,
@@ -226,4 +253,7 @@ export {
   getNodeIncrement,
   getMinNodesRequiredHypershift,
   getNodeIncrementHypershift,
+  getAddMachinePoolDisabledReason,
+  hasExplicitAutoscalingMachinePool,
+  hasDefaultOrExplicitAutoscalingMachinePool,
 };

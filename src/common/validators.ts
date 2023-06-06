@@ -27,6 +27,9 @@ const DNS_SUBDOMAIN_REGEXP = /^([a-z]([-a-z0-9]*[a-z0-9])?)+(\.[a-z]([-a-z0-9]*[
 // Regular expression used to check UUID as specified in RFC4122.
 const UUID_REGEXP = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
 
+// Regular expression to check k8s "time" parameters (e.g. max_node_provision_time)
+const K8S_TIME_PARAMETER_REGEXP = /^([0-9]+(\.[0-9]+)?(ns|us|µs|ms|s|m|h))+$/;
+
 // Regular expression used to check whether input is a valid IPv4 CIDR range
 const CIDR_REGEXP =
   /^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])(\/(3[0-2]|[1-2][0-9]|[1-9]))$/;
@@ -99,6 +102,8 @@ const LABEL_KEY_NAME_REGEX = /^([a-z0-9][a-z0-9-_.]*)?[a-z0-9]$/i;
 const LABEL_VALUE_REGEX = /^(([a-z0-9][a-z0-9-_.]*)?[a-z0-9])?$/i;
 
 const MAX_CUSTOM_OPERATOR_ROLES_PREFIX_LENGTH = 32;
+
+const AUTOSCALER_MAX_LOG_VERBOSITY = 6;
 
 type Validations = {
   validated: boolean;
@@ -252,6 +257,78 @@ const createAsyncValidationEvaluator =
       validated: validationResults[i],
     }));
   };
+
+const k8sTimeParameter = (timeValue: string): string | undefined => {
+  if (!timeValue) {
+    return 'Field is required.';
+  }
+  if (!K8S_TIME_PARAMETER_REGEXP.test(timeValue)) {
+    return 'Not a valid time value';
+  }
+  return undefined;
+};
+
+/* The input field value becomes the empty string when the field is not a number */
+const isNumeric = (num: string | number) => num !== '' && !Number.isNaN(Number(num));
+
+const k8sNumberParameter = (
+  num: number | string,
+  allValues?: object,
+  props?: object,
+  name?: string,
+): string | undefined => {
+  if (
+    name === 'cluster_autoscaling.log_verbosity' &&
+    (num < 1 || num > AUTOSCALER_MAX_LOG_VERBOSITY)
+  ) {
+    return `Value must be between 1 and ${AUTOSCALER_MAX_LOG_VERBOSITY}.`;
+  }
+  if (name === 'cluster_autoscaling.scale_down.utilization_threshold' && (num < 0 || num > 1)) {
+    return 'Value must be between 0 and 1.';
+  }
+  const number = Number(num);
+  if (number < 0) {
+    return 'Value cannot be a negative number.';
+  }
+  return undefined;
+};
+
+const minMaxBaseFieldExtractorRegExp = /^(.*)(\.min|\.max)+$/;
+
+const k8sMinMaxParameter = (
+  minOrMax: string,
+  allValues: object,
+  props: object,
+  fieldName: string,
+): string | undefined => {
+  // Report the error if it's not a number
+  const numError = isNumeric(minOrMax) ? undefined : 'Value must be a number.';
+  if (numError) {
+    return numError;
+  }
+  const number = Number(minOrMax);
+  if (number < 0) {
+    return 'Value cannot be a negative number';
+  }
+
+  /* Extracts the base field to be able to compare the min and max values to one another */
+  const baseFieldMatch = fieldName.match(minMaxBaseFieldExtractorRegExp);
+  const baseField = baseFieldMatch ? baseFieldMatch[1] : ''; // Should always match
+
+  // Check the validity of the pair of values
+  const minParamValue = get(allValues, `${baseField}.min`);
+  const maxParamValue = get(allValues, `${baseField}.max`);
+
+  return minParamValue <= maxParamValue
+    ? undefined
+    : 'The minimum cannot be above the maximum value.';
+};
+
+const clusterAutoScalingValidators = {
+  k8sTimeParameter,
+  k8sNumberParameter,
+  k8sMinMaxParameter,
+};
 
 const evaluateClusterNameAsyncValidation = createAsyncValidationEvaluator(
   clusterNameAsyncValidation,
@@ -1546,6 +1623,7 @@ export {
   checkDisconnectedSockets,
   checkDisconnectedMemCapacity,
   checkDisconnectedNodeCount,
+  clusterAutoScalingValidators,
   validateARN,
   awsNumericAccountID,
   validateGCPServiceAccount,

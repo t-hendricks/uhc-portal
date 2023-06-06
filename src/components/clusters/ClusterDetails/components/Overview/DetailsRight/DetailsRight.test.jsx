@@ -500,7 +500,7 @@ describe('<DetailsRight />', () => {
   });
 
   describe('Nodes', () => {
-    describe('Is not autoscaled and is managed', () => {
+    describe('Has disabled MachinePool autoscale and is managed', () => {
       describe('Control plane', () => {
         it('hides header if hypershift', () => {
           // Arrange
@@ -508,7 +508,7 @@ describe('<DetailsRight />', () => {
 
           const newProps = {
             ...defaultProps,
-            autoscaleEnabled: false,
+            hasAutoscaleMachinePools: false,
             cluster: {
               ...clusterFixture,
               managed: true,
@@ -528,7 +528,7 @@ describe('<DetailsRight />', () => {
 
           const newProps = {
             ...defaultProps,
-            autoscaleEnabled: false,
+            hasAutoscaleMachinePools: false,
             cluster: {
               ...clusterFixture,
               managed: true,
@@ -550,7 +550,7 @@ describe('<DetailsRight />', () => {
 
           const newProps = {
             ...defaultProps,
-            autoscaleEnabled: false,
+            hasAutoscaleMachinePools: false,
             cluster: {
               ...clusterFixture,
               managed: true,
@@ -572,7 +572,7 @@ describe('<DetailsRight />', () => {
 
           const newProps = {
             ...defaultProps,
-            autoscaleEnabled: false,
+            hasAutoscaleMachinePools: false,
             cluster: {
               ...clusterFixture,
               managed: true,
@@ -594,7 +594,7 @@ describe('<DetailsRight />', () => {
 
           const newProps = {
             ...defaultProps,
-            autoscaleEnabled: false,
+            hasAutoscaleMachinePools: false,
             cluster: {
               ...clusterFixture,
               managed: true,
@@ -622,7 +622,7 @@ describe('<DetailsRight />', () => {
 
           const newProps = {
             ...defaultProps,
-            autoscaleEnabled: false,
+            hasAutoscaleMachinePools: false,
             cluster: {
               ...clusterFixture,
               managed: true,
@@ -642,7 +642,7 @@ describe('<DetailsRight />', () => {
 
           const newProps = {
             ...defaultProps,
-            autoscaleEnabled: false,
+            hasAutoscaleMachinePools: false,
             cluster: {
               ...clusterFixture,
               managed: true,
@@ -663,7 +663,7 @@ describe('<DetailsRight />', () => {
 
           const newProps = {
             ...defaultProps,
-            autoscaleEnabled: false,
+            hasAutoscaleMachinePools: false,
             cluster: {
               ...clusterFixture,
               managed: true,
@@ -684,7 +684,7 @@ describe('<DetailsRight />', () => {
 
           const newProps = {
             ...defaultProps,
-            autoscaleEnabled: false,
+            hasAutoscaleMachinePools: false,
             cluster: {
               ...clusterFixture,
               managed: true,
@@ -706,7 +706,7 @@ describe('<DetailsRight />', () => {
 
           const newProps = {
             ...defaultProps,
-            autoscaleEnabled: false,
+            hasAutoscaleMachinePools: false,
             cluster: {
               ...clusterFixture,
               managed: true,
@@ -730,7 +730,7 @@ describe('<DetailsRight />', () => {
 
           const newProps = {
             ...defaultProps,
-            autoscaleEnabled: false,
+            hasAutoscaleMachinePools: false,
             totalDesiredComputeNodes: 111,
             totalActualNodes: false,
             cluster: {
@@ -752,7 +752,7 @@ describe('<DetailsRight />', () => {
 
           const newProps = {
             ...defaultProps,
-            autoscaleEnabled: false,
+            hasAutoscaleMachinePools: false,
             totalDesiredComputeNodes: undefined,
             totalActualNodes: 222,
             cluster: {
@@ -774,7 +774,7 @@ describe('<DetailsRight />', () => {
 
           const newProps = {
             ...defaultProps,
-            autoscaleEnabled: false,
+            hasAutoscaleMachinePools: false,
             totalDesiredComputeNodes: 111,
             totalActualNodes: 222,
             cluster: {
@@ -796,7 +796,7 @@ describe('<DetailsRight />', () => {
 
           const newProps = {
             ...defaultProps,
-            autoscaleEnabled: false,
+            hasAutoscaleMachinePools: false,
             totalDesiredComputeNodes: undefined,
             totalActualNodes: false,
             cluster: {
@@ -824,7 +824,7 @@ describe('<DetailsRight />', () => {
 
           const newProps = {
             ...defaultProps,
-            autoscaleEnabled: true,
+            hasAutoscaleMachinePools: true,
             cluster: {
               ...clusterFixture,
               hypershift: { enabled: true },
@@ -843,7 +843,7 @@ describe('<DetailsRight />', () => {
 
           const newProps = {
             ...defaultProps,
-            autoscaleEnabled: true,
+            hasAutoscaleMachinePools: true,
             cluster: {
               ...clusterFixture,
               hypershift: { enabled: false },
@@ -863,7 +863,7 @@ describe('<DetailsRight />', () => {
 
           const newProps = {
             ...defaultProps,
-            autoscaleEnabled: true,
+            hasAutoscaleMachinePools: true,
             cluster: {
               ...clusterFixture,
               hypershift: { enabled: false },
@@ -889,7 +889,7 @@ describe('<DetailsRight />', () => {
 
           const newProps = {
             ...defaultProps,
-            autoscaleEnabled: true,
+            hasAutoscaleMachinePools: true,
             cluster: {
               ...clusterFixture,
               hypershift: { enabled: true },
@@ -908,7 +908,7 @@ describe('<DetailsRight />', () => {
 
           const newProps = {
             ...defaultProps,
-            autoscaleEnabled: true,
+            hasAutoscaleMachinePools: true,
             cluster: {
               ...clusterFixture,
 
@@ -929,7 +929,7 @@ describe('<DetailsRight />', () => {
 
           const newProps = {
             ...defaultProps,
-            autoscaleEnabled: true,
+            hasAutoscaleMachinePools: true,
             cluster: {
               ...clusterFixture,
               hypershift: { enabled: false },
@@ -949,7 +949,7 @@ describe('<DetailsRight />', () => {
 
           const newProps = {
             ...defaultProps,
-            autoscaleEnabled: true,
+            hasAutoscaleMachinePools: true,
             cluster: {
               ...clusterFixture,
               hypershift: { enabled: false },
@@ -970,7 +970,7 @@ describe('<DetailsRight />', () => {
 
           const newProps = {
             ...defaultProps,
-            autoscaleEnabled: true,
+            hasAutoscaleMachinePools: true,
             cluster: {
               ...clusterFixture,
               hypershift: { enabled: false },
@@ -997,7 +997,7 @@ describe('<DetailsRight />', () => {
 
           const newProps = {
             ...defaultProps,
-            autoscaleEnabled: true,
+            hasAutoscaleMachinePools: true,
             totalActualNodes: 123,
             cluster: {
               ...clusterFixture,
@@ -1017,7 +1017,7 @@ describe('<DetailsRight />', () => {
 
           const newProps = {
             ...defaultProps,
-            autoscaleEnabled: true,
+            hasAutoscaleMachinePools: true,
             totalActualNodes: false,
             cluster: {
               ...clusterFixture,
@@ -1142,11 +1142,11 @@ describe('<DetailsRight />', () => {
   });
 
   describe('autoscaling', () => {
-    it('hides autoscaling header if not autoscale enabled', () => {
+    it('hides MP autoscaling header if MP autoscale not enabled', () => {
       // Arrange
       const newProps = {
         ...defaultProps,
-        autoscaleEnabled: false,
+        hasAutoscaleMachinePools: false,
       };
 
       render(<DetailsRight {...newProps} />);
@@ -1155,11 +1155,11 @@ describe('<DetailsRight />', () => {
       checkForValueAbsence(componentText.AUTOSCALE.label);
     });
 
-    it('shows "enabled", min node count, and max node count if autoscale is enabled', () => {
+    it('shows "enabled", min node count, and max node count if MP autoscale is enabled', () => {
       // Arrange
       const newProps = {
         ...defaultProps,
-        autoscaleEnabled: true,
+        hasAutoscaleMachinePools: true,
         totalMinNodesCount: 12121212,
         totalMaxNodesCount: 34343434,
       };

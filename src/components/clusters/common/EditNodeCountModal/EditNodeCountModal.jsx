@@ -6,13 +6,16 @@ import { Link } from 'react-router-dom';
 import {
   getMinNodesRequired,
   getMinNodesRequiredHypershift,
+  hasDefaultOrExplicitAutoscalingMachinePool,
 } from '~/components/clusters/ClusterDetails/components/MachinePools/machinePoolsHelper';
+import MachinePoolsAutoScalingWarning from '~/components/clusters/ClusterDetails/components/MachinePools/MachinePoolAutoscalingWarning';
 import NodeCountInput from '../NodeCountInput';
 import { ReduxFormDropdown } from '../../../common/ReduxFormComponents';
 import { normalizedProducts, billingModels } from '../../../../common/subscriptionTypes';
 import links from '../../../../common/installLinks.mjs';
 import ExternalLink from '../../../common/ExternalLink';
 
+import AutoScaleSection from '../../CreateOSDPage/CreateOSDForm/FormSections/ScaleSection/AutoScaleSection/AutoScaleSection';
 import {
   SpotInstanceInfoAlert,
   isMachinePoolUsingSpotInstances,
@@ -21,8 +24,6 @@ import {
 import Modal from '../../../common/Modal/Modal';
 import ErrorBox from '../../../common/ErrorBox';
 import modals from '../../../common/Modal/modals';
-
-import AutoScaleSection from '../../CreateOSDPage/CreateOSDForm/FormSections/ScaleSection/AutoScaleSection/AutoScaleSection';
 
 class EditNodeCountModal extends Component {
   componentDidMount() {
@@ -129,8 +130,10 @@ class EditNodeCountModal extends Component {
       autoScaleMinNodesValue,
       autoScaleMaxNodesValue,
       billingModel,
+      hasClusterAutoScaler,
       shouldDisplayClusterName,
       clusterDisplayName,
+      cluster,
       clusterID,
       isHypershiftCluster,
     } = this.props;
@@ -141,6 +144,21 @@ class EditNodeCountModal extends Component {
     const error = editNodeCountResponse.error ? (
       <ErrorBox message="Error editing machine pool" response={editNodeCountResponse} />
     ) : null;
+
+    const hasAutoscalingMachinePools = hasDefaultOrExplicitAutoscalingMachinePool(
+      cluster,
+      machinePoolsList?.data,
+      machinePoolId,
+    );
+
+    const autoScaleWarning = !isHypershiftCluster && (
+      <MachinePoolsAutoScalingWarning
+        warningType="editMachinePool"
+        hasClusterAutoScaler={hasClusterAutoScaler}
+        hasAutoscalingMachinePools={hasAutoscalingMachinePools}
+        isEnabledOnCurrentPool={autoscalingEnabled}
+      />
+    );
 
     const resizingAlert = (nodes) => (
       <Alert
@@ -161,9 +179,8 @@ class EditNodeCountModal extends Component {
             </ExternalLink>{' '}
             may trigger manual Red Hat SRE intervention to vertically scale your Infrastructure and
             Control Plane instances.{' '}
-            {autoScaleMaxNodesValue
-              ? 'Autoscaling nodes will not trigger manual intervention until the actual node count crosses the threshold. '
-              : null}
+            {autoScaleMaxNodesValue &&
+              'Autoscaling nodes will not trigger manual intervention until the actual node count crosses the threshold. '}
             To request that Red Hat SRE proactively increase your Infrastructure and Control Plane
             instances, please open a <Link to={`/details/${clusterID}#support`}>support case</Link>.
           </p>
@@ -242,6 +259,9 @@ class EditNodeCountModal extends Component {
                   <GridItem span={4} />
                 </>
               )}
+
+              {!!autoScaleWarning && <GridItem md={12}>{autoScaleWarning}</GridItem>}
+
               {!!masterResizeAlertThreshold && resizingAlert(masterResizeAlertThreshold)}
               {isMachinePoolUsingSpotInstances(machinePoolId, machinePoolsList) && (
                 <>
@@ -283,8 +303,10 @@ EditNodeCountModal.propTypes = {
   onClose: PropTypes.func.isRequired,
   change: PropTypes.func.isRequired,
   isByoc: PropTypes.bool,
+  hasClusterAutoScaler: PropTypes.bool,
   isHypershiftCluster: PropTypes.bool.isRequired,
   machinePoolId: PropTypes.string,
+  cluster: PropTypes.object,
   machineType: PropTypes.string,
   clusterID: PropTypes.string,
   cloudProviderID: PropTypes.string.isRequired,

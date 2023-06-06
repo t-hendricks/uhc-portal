@@ -45,6 +45,7 @@ const mapStateToProps = (state, ownProps) => {
     autoScaleMinNodesValue: valueSelector(state, 'min_replicas'),
     autoScaleMaxNodesValue: valueSelector(state, 'max_replicas'),
     canAutoScale: canAutoScaleSelector(state, product),
+    hasClusterAutoScaler: state.clusterAutoscaler.hasAutoscaler,
     canUseSpotInstances: canUseSpotInstances(state, product),
     useSpotInstances: valueSelector(state, 'spot_instances'),
     spotInstancePricing: valueSelector(state, 'spot_instance_pricing'),
