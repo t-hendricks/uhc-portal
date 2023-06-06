@@ -10,6 +10,8 @@
   "dependencies": {
     "@axetroy/react-download": "^1.1.1",
     "@babel/eslint-parser": "^7.13.14",
+    "@openshift-assisted/locales": "2.20.10",
+    "@openshift-assisted/ui-lib": "2.20.10",
     "@patternfly/patternfly": "^4.215.1",
     "@patternfly/react-charts": "^6.59.2",
     "@patternfly/react-code-editor": "^4.47.2",
@@ -49,7 +51,6 @@
     "lodash": "^4.17.19",
     "moment": "^2.24.0",
     "object.fromentries": "^2.0.5",
-    "openshift-assisted-ui-lib": "2.18.7",
     "path-browserify": "^1.0.1",
     "process": "^0.11.10",
     "prop-types": "^15.7.2",
@@ -199,12 +200,14 @@
       "^.+\\.(ts|tsx)$": "ts-jest"
     },
     "transformIgnorePatterns": [
-      "<rootDir>/node_modules/(?!(@patternfly|react-monaco-editor|monaco-editor|lodash-es|openshift-assisted-ui-lib)/)"
+      "<rootDir>/node_modules/(?!(@patternfly|react-monaco-editor|monaco-editor|lodash-es|@openshift-assisted)/)"
     ],
     "testPathIgnorePatterns": [
       "<rootDir>/cache/Cypress/"
     ],
     "moduleNameMapper": {
+      "@openshift-assisted/ui-lib/ocm": "<rootDir>/node_modules/@openshift-assisted/ui-lib/build/ocm",
+      "@openshift-assisted/locales/([a-z]{2,3}/translation.json)": "<rootDir>/node_modules/@openshift-assisted/locales/lib/$1/translation.json",
       "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/__mocks__/fileMock.js",
       "\\.(css|less|scss)$": "<rootDir>/__mocks__/styleMock.js",
       "^@testUtils": "<rootDir>/src/testUtils.tsx",
