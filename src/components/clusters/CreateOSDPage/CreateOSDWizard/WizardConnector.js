@@ -7,12 +7,12 @@
  * and to make it easier for each screen to be self-contained.
  */
 import { reduxForm } from 'redux-form';
-import { scrollToFirstError } from '~/common/helpers';
+import { scrollToFirstField } from '~/common/helpers';
 import { asyncValidateClusterName } from '~/common/validators';
 
 const reduxFormConfig = {
   form: 'CreateCluster',
-  onSubmitFail: scrollToFirstError,
+  onSubmitFail: scrollToFirstField,
   keepDirtyOnReinitialize: true,
   updateUnregisteredFields: true,
   destroyOnUnmount: false,

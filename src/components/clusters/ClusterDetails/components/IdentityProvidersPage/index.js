@@ -21,12 +21,12 @@ import {
   getGitHubTeamsAndOrgsData,
   IDPObjectNames,
 } from './IdentityProvidersHelper';
-import { scrollToFirstError } from '../../../../../common/helpers';
+import { scrollToFirstField } from '../../../../../common/helpers';
 
 const reduxFormConfig = {
   form: 'CreateIdentityProvider',
   enableReinitialize: true,
-  onSubmitFail: scrollToFirstError,
+  onSubmitFail: scrollToFirstField,
 };
 const reduxFormCreateClusterIDP = reduxForm(reduxFormConfig)(IdentityProvidersPage);
 const CLIENT_SECRET = 'CLIENT_SECRET'; // Predefined value

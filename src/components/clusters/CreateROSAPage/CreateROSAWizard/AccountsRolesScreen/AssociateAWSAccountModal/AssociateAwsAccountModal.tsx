@@ -9,7 +9,7 @@ import {
   WizardStep,
   WizardFooterWrapper,
 } from '@patternfly/react-core/next';
-import { scrollToFirstError } from '~/common/helpers';
+import { scrollToFirstField } from '~/common/helpers';
 import { OcmRoleScreen } from './OcmRoleScreen';
 import { UserRoleScreen } from './UserRoleScreen';
 
@@ -71,7 +71,7 @@ const AssociateAwsAccountFooter = () => {
 
     if (errorIds?.length > 0) {
       setTouched(setNestedObjectValues(errors, true));
-      scrollToFirstError(errorIds);
+      scrollToFirstField(errorIds);
       return;
     }
 
