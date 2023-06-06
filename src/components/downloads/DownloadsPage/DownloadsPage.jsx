@@ -23,7 +23,7 @@ import {
 } from '@patternfly/react-table';
 import { ArrowRightIcon } from '@patternfly/react-icons';
 import { Link } from 'react-router-dom';
-import { OCM } from 'openshift-assisted-ui-lib';
+import * as OCM from '@openshift-assisted/ui-lib/ocm';
 
 import produce from 'immer';
 import { has, get } from 'lodash';

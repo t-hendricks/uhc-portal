@@ -18,7 +18,7 @@ import get from 'lodash/get';
 
 import { PageSection, TabContent } from '@patternfly/react-core';
 import { Spinner } from '@redhat-cloud-services/frontend-components/Spinner';
-import { OCM } from 'openshift-assisted-ui-lib';
+import * as OCM from '@openshift-assisted/ui-lib/ocm';
 
 import ClusterDetailsTop from './components/ClusterDetailsTop';
 import TabsRow from './components/TabsRow';
@@ -52,7 +52,7 @@ import { hasCapability, subscriptionCapabilities } from '../../../common/subscri
 import withFeatureGate from '../../features/with-feature-gate';
 import { ASSISTED_INSTALLER_FEATURE } from '../../../redux/constants/featureConstants';
 
-const { HostsClusterDetailTab, getAddHostTabDetails } = OCM;
+const { HostsClusterDetailTab, getAddHostsTabState } = OCM;
 const GatedAIHostsClusterDetailTab = withFeatureGate(
   HostsClusterDetailTab,
   ASSISTED_INSTALLER_FEATURE,
@@ -389,10 +389,10 @@ class ClusterDetails extends Component {
     const displayUpgradeSettingsTab =
       (cluster.managed || isAROCluster) && cluster.canEdit && !isArchived && !isHypershift;
 
-    const addHostTabDetails =
-      assistedInstallerEnabled && !isArchived
-        ? getAddHostTabDetails({ cluster })
-        : { showTab: false, isDisabled: false, tabTooltip: '' };
+    let addHostsTabState = { showTab: false, isDisabled: false, tabTooltip: '' };
+    if (assistedInstallerEnabled && !isArchived) {
+      addHostsTabState = getAddHostsTabState(cluster);
+    }
 
     return (
       <>
@@ -423,7 +423,7 @@ class ClusterDetails extends Component {
               displaySupportTab={displaySupportTab}
               displayMachinePoolsTab={displayMachinePoolsTab}
               displayUpgradeSettingsTab={displayUpgradeSettingsTab}
-              addHostTabDetails={addHostTabDetails}
+              addHostTabDetails={addHostsTabState}
               overviewTabRef={this.overviewTabRef}
               monitoringTabRef={this.monitoringTabRef}
               accessControlTabRef={this.accessControlTabRef}
@@ -563,7 +563,7 @@ class ClusterDetails extends Component {
             </TabContent>
           )}
           {/* If the tab is shown and disabled, it will have a tooltip and no content */}
-          {addHostTabDetails.showTab && !addHostTabDetails.isDisabled && (
+          {addHostsTabState.showTab && !addHostsTabState.isDisabled && (
             <TabContent
               eventKey={9}
               id="addHostsContent"

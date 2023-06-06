@@ -11,7 +11,7 @@ import {
 import { Table, TableHeader, TableBody, expandable, cellWidth } from '@patternfly/react-table';
 import { Link } from 'react-router-dom';
 import { ArrowRightIcon } from '@patternfly/react-icons';
-import { OCM } from 'openshift-assisted-ui-lib';
+import * as OCM from '@openshift-assisted/ui-lib/ocm';
 
 import RedHatLogo from '../../../styles/images/Logo-RedHat-Hat-Color-RGB.png';
 import IBMCloudLogo from '../../../styles/images/ibm_cloud-icon.png';
