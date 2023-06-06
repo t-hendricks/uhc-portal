@@ -183,7 +183,8 @@ const getNodeIncrement = (isMultiAz) => (isMultiAz ? 3 : 1);
  */
 const getMinNodesRequiredHypershift = (numMachinePools) => {
   if (numMachinePools === undefined) {
-    return 2;
+    // day 2 operation (Add/Edit)
+    return 1;
   }
   if (numMachinePools === 1) {
     return 2;
