@@ -31,6 +31,8 @@ const mapStateToProps = (state, ownProps) => {
   const { organization } = state.userProfile;
 
   const valueSelector = formValueSelector('CreateCluster');
+  const formSyncErrors = getFormSyncErrors('CreateCluster')(state) ?? {};
+  const formAsyncErrors = getFormAsyncErrors('CreateCluster')(state) ?? {};
 
   // The user may select a different product after entering the creation page
   // thus it could differ from the product in the URL
@@ -61,9 +63,11 @@ const mapStateToProps = (state, ownProps) => {
     persistentStorageValues: state.persistentStorageValues,
     hasProductQuota: hasManagedQuotaSelector(state, product),
     formErrors: {
-      ...getFormSyncErrors('CreateCluster')(state),
-      ...getFormAsyncErrors('CreateCluster')(state),
+      ...formSyncErrors,
+      ...formAsyncErrors,
     },
+    formSyncErrors,
+    formAsyncErrors,
   };
 };
 

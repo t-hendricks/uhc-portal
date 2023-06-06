@@ -18,7 +18,7 @@ import ErrorBoundary from '../../../App/ErrorBoundary';
 import PageTitle from '../../../common/PageTitle';
 import Breadcrumbs from '../../../common/Breadcrumbs';
 
-import { shouldRefetchQuota, scrollToFirstError } from '~/common/helpers';
+import { shouldRefetchQuota, scrollToFirstField } from '~/common/helpers';
 import usePreventBrowserNav from '~/hooks/usePreventBrowserNav';
 
 import { trackEvents, ocmResourceTypeByProduct } from '~/common/analytics';
@@ -131,10 +131,7 @@ class CreateOSDWizardInternal extends React.Component {
     }
 
     // Track validity of individual steps by id
-    if (
-      (isValid !== prevProps.isValid || isAsyncValidating !== prevProps.isAsyncValidating) &&
-      !isAsyncValidating
-    ) {
+    if (isValid !== prevProps.isValid && !isAsyncValidating) {
       // eslint-disable-next-line react/no-did-update-set-state
       this.setState(() => ({
         validatedSteps: {
@@ -220,6 +217,8 @@ class CreateOSDWizardInternal extends React.Component {
     const {
       touch,
       formErrors,
+      formSyncErrors,
+      formAsyncErrors,
       cloudProviderID,
       isAsyncValidating,
       isCCSCredentialsValidationNeeded,
@@ -227,6 +226,8 @@ class CreateOSDWizardInternal extends React.Component {
     const { currentStepId, validatedSteps, deferredNext, isNextClicked } = this.state;
     const isCurrentStepValid = validatedSteps[currentStepId];
     const errorIds = Object.keys(formErrors);
+    const syncErrorIds = Object.keys(formSyncErrors);
+    const asyncErrorIds = Object.keys(formAsyncErrors);
 
     this.setState({ isNextClicked: true });
 
@@ -238,11 +239,13 @@ class CreateOSDWizardInternal extends React.Component {
     }
 
     // When errors exist, touch the fields with those errors to trigger validation.
-    if (errorIds?.length > 0 && !isCurrentStepValid) {
+    if (asyncErrorIds?.length || (syncErrorIds?.length && !isCurrentStepValid)) {
       touch(errorIds);
-      scrollToFirstError(errorIds);
+      const hasScrolledTo = scrollToFirstField(errorIds);
       this.setState({ isNextClicked: !isNextClicked });
-      return;
+      if (hasScrolledTo) {
+        return;
+      }
     }
 
     if (
@@ -639,6 +642,8 @@ CreateOSDWizardInternal.propTypes = {
   onSubmit: PropTypes.func,
   touch: PropTypes.func,
   formErrors: PropTypes.object,
+  formSyncErrors: PropTypes.object,
+  formAsyncErrors: PropTypes.object,
   track: PropTypes.func,
 
   // for "no quota" redirect

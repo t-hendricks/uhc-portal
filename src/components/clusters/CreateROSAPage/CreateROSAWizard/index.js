@@ -26,6 +26,8 @@ const mapStateToProps = (state) => {
   const { organization } = state.userProfile;
   const { getUserRoleResponse } = state.rosaReducer;
   const valueSelector = formValueSelector('CreateCluster');
+  const formSyncErrors = getFormSyncErrors('CreateCluster')(state) ?? {};
+  const formAsyncErrors = getFormAsyncErrors('CreateCluster')(state) ?? {};
 
   return {
     isValid: isValid('CreateCluster')(state),
@@ -42,9 +44,11 @@ const mapStateToProps = (state) => {
     hasProductQuota: hasManagedQuotaSelector(state, normalizedProducts.ROSA),
     formValues: getFormValues('CreateCluster')(state) ?? {},
     formErrors: {
-      ...getFormSyncErrors('CreateCluster')(state),
-      ...getFormAsyncErrors('CreateCluster')(state),
+      ...formSyncErrors,
+      ...formAsyncErrors,
     },
+    formSyncErrors,
+    formAsyncErrors,
     getUserRoleResponse,
     selectedAWSAccountID: valueSelector(state, 'associated_aws_id'),
     isHypershiftSelected: valueSelector(state, 'hypershift') === 'true',
