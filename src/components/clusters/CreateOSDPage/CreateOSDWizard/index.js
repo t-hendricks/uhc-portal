@@ -89,7 +89,8 @@ const mapDispatchToProps = (dispatch) => ({
   getLoadBalancers: () => dispatch(getLoadBalancerValues()),
   getGCPCloudProviderVPCs: (type, credentials, region) =>
     dispatch(getGCPCloudProviderVPCs(type, credentials, region)),
-  getAWSCloudProviderRegions: (credentials) => dispatch(getAWSCloudProviderRegions(credentials)),
+  getAWSCloudProviderRegions: (type, credentials) =>
+    dispatch(getAWSCloudProviderRegions(type, credentials)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(withRouter(CreateOSDWizard));
