@@ -31,12 +31,12 @@ function ScaleSection({
   pending,
   isBYOC,
   isMultiAz,
-  showHypershiftTitle = false,
   machineType,
   cloudProviderID,
   product,
   showStorageAndLoadBalancers = true,
   minNodesRequired,
+  nodeIncrement,
   isMachinePool = false,
   canAutoScale = false,
   autoscalingEnabled = false,
@@ -94,7 +94,7 @@ function ScaleSection({
   return (
     <>
       {/* Instance type title (only for Hypershift) */}
-      {showHypershiftTitle && (
+      {isHypershiftSelected && (
         <>
           <GridItem>
             <Title headingLevel="h3">Machine pools settings</Title>
@@ -174,8 +174,10 @@ function ScaleSection({
               cloudProviderID={cloudProviderID}
               product={product}
               minNodes={minNodesRequired}
+              increment={nodeIncrement}
               isMachinePool={isMachinePool}
               billingModel={billingModel}
+              isHypershift={isHypershiftSelected}
             />
           </GridItem>
           <GridItem md={6} />
@@ -240,7 +242,6 @@ ScaleSection.propTypes = {
   pending: PropTypes.bool,
   isBYOC: PropTypes.bool.isRequired,
   isMultiAz: PropTypes.bool.isRequired,
-  showHypershiftTitle: PropTypes.bool,
   inModal: PropTypes.bool,
   showStorageAndLoadBalancers: PropTypes.bool,
   machineType: PropTypes.string.isRequired,
@@ -248,6 +249,7 @@ ScaleSection.propTypes = {
   product: PropTypes.oneOf(Object.keys(normalizedProducts)).isRequired,
   billingModel: PropTypes.oneOf(Object.values(billingModels)),
   minNodesRequired: PropTypes.number,
+  nodeIncrement: PropTypes.number,
   isMachinePool: PropTypes.bool,
   canAutoScale: PropTypes.bool,
   autoscalingEnabled: PropTypes.bool,

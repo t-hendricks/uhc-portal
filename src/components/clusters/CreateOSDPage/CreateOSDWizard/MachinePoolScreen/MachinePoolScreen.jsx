@@ -22,6 +22,7 @@ function MachinePoolScreen({
   change,
   billingModel,
   minNodesRequired,
+  nodeIncrement,
   selectedVPCID,
   clusterVersionRawId,
   imds,
@@ -51,8 +52,8 @@ function MachinePoolScreen({
           autoScaleMaxNodesValue={autoScaleMaxNodesValue}
           billingModel={billingModel}
           showStorageAndLoadBalancers={false}
-          showHypershiftTitle={isHypershiftSelected}
           minNodesRequired={minNodesRequired}
+          nodeIncrement={nodeIncrement}
           clusterVersionRawId={clusterVersionRawId}
           imds={imds}
           isHypershiftSelected={isHypershiftSelected}
@@ -77,6 +78,7 @@ MachinePoolScreen.propTypes = {
   autoScaleMinNodesValue: PropTypes.string,
   autoScaleMaxNodesValue: PropTypes.string,
   minNodesRequired: PropTypes.number,
+  nodeIncrement: PropTypes.number,
   clusterVersionRawId: PropTypes.string.isRequired,
   imds: PropTypes.string,
 };
