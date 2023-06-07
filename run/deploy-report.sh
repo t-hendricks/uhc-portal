@@ -36,7 +36,8 @@ while IFS=',' read -r commitHash commitDate commitMessage; do
     regex="(HAC[- ]?[0-9]{4})"
 
     commitDescription=$(git log --format=%b -n 1 $commitHash)
-    echo "commitDescription=$commitDescription"
+    commitDescription="${commitDescription//\"/\\\"}"
+    echo -e "commitDescription=$commitDescription"
     mrID=$(echo "$commitDescription" | grep -o '![0-9]\{4\}' | tr -d '!')
     mrDesc=$(echo "$commitDescription" | awk 'NR==1 { print }')
     # Find and store all matching jiraKeys
@@ -52,7 +53,7 @@ while IFS=',' read -r commitHash commitDate commitMessage; do
     # Check if jiraKeys array is empty
     jiraKeysAsString=""
     if [ "${#jiraKeys[@]}" -eq 0 ]; then
-      readyToPromote+=("  $masterLogLine")
+      readyToPromote+=("  $masterLogLine\\n                       $mrDesc")
       readyToPromoteSHAs+=("$commitHash")
       jiraKeysAsString="-"
       releaseNote="{\"revision\": \"$commitHash\", \"ticket\": \"$jiraKeysAsString\", \"description\": \"$mrDesc\", \"mr\": \"!$mrID\"}"
@@ -89,7 +90,7 @@ while IFS=',' read -r commitHash commitDate commitMessage; do
         fi
       done
       if [ "$allJirasClosed" = true ]; then
-        readyToPromote+=("C $masterLogLine")
+        readyToPromote+=("C $masterLogLine\\n                       $mrDesc")
         readyToPromoteSHAs+=("$commitHash")
         releaseNote="{\"revision\": \"$commitHash\", \"ticket\": \"$jiraKeysAsString\", \"description\": \"$mrDesc\", \"mr\": \"!$mrID\"}"
         releaseNotes+=("$releaseNote")
@@ -108,12 +109,12 @@ echo "  master commit messages not found in candidate"
 echo "  where 'C' = ...and all associated jira tickets of the commit are Closed"
 echo " "
 for logLine in "${readyToPromote[@]}"; do
-  echo "$logLine"
+  echo -e "$logLine"
 done
 
 # To create MR
 echo " "
-echo "To create release candidate MR execute these commands:"
+echo "To create a release candidate branch, execute these commands:"
 echo " "
 
 # Create a new array to store the reversed elements
@@ -142,7 +143,7 @@ for releaseNote in "${releaseNotes[@]}"; do
   ticket=$(echo "$releaseNote" | jq -r '.ticket')
   description=$(echo "$releaseNote" | jq -r '.description')
   mr=$(echo "$releaseNote" | jq -r '.mr')
-  echo "| $revision | $ticket | $description | $mr |"
+  echo -e "| $revision | $ticket | $description | $mr |"
 done
 
 echo " "
