@@ -12,6 +12,7 @@ import FinishedStep from './FinishedStep';
 import './UpgradeWizard.scss';
 
 import clusterService from '../../../../../services/clusterService';
+import { isHypershiftCluster } from '~/components/clusters/ClusterDetails/clusterDetailsHelper';
 
 class UpgradeWizard extends React.Component {
   state = {
@@ -79,12 +80,16 @@ class UpgradeWizard extends React.Component {
 
       Promise.allSettled(promises).then(() => {
         if (!error) {
-          postSchedule(clusterDetails.cluster.id, {
-            schedule_type: 'manual',
-            upgrade_type: 'OSD',
-            next_run: nextRun,
-            version: selectedVersion,
-          });
+          postSchedule(
+            clusterDetails.cluster.id,
+            {
+              schedule_type: 'manual',
+              upgrade_type: isHypershiftCluster(clusterDetails.cluster) ? 'ControlPlane' : 'OSD',
+              next_run: nextRun,
+              version: selectedVersion,
+            },
+            isHypershiftCluster(clusterDetails.cluster),
+          );
         } else {
           rejectGate(error);
         }
@@ -126,7 +131,7 @@ class UpgradeWizard extends React.Component {
         ) : (
           <VersionSelectionGrid
             availableUpgrades={cluster.version?.available_upgrades}
-            clusterVersion={cluster.openshift_version}
+            clusterVersion={cluster.openshift_version || cluster?.version?.id}
             clusterChannel={cluster.version.channel_group}
             selected={selectedVersion}
             onSelect={this.selectVersion}
@@ -262,6 +267,7 @@ UpgradeWizard.propTypes = {
       openshift_version: PropTypes.string,
       version: PropTypes.shape({
         channel_group: PropTypes.string,
+        id: PropTypes.string,
         available_upgrades: PropTypes.arrayOf(PropTypes.string),
       }),
     }),

@@ -19,7 +19,7 @@ function UpdatesScreen({ isAutomaticUpgrade, change, product, isHypershiftSelect
         <UpgradeSettingsFields
           isAutomatic={isAutomaticUpgrade}
           change={change}
-          initialSceduleValue="0 0 * * 0"
+          initialScheduleValue="0 0 * * 0"
           product={product}
           isHypershift={isHypershiftSelected}
         />

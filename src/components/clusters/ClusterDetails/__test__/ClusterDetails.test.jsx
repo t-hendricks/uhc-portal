@@ -64,7 +64,7 @@ describe('<ClusterDetails />', () => {
       });
 
       it('should get schedules', () => {
-        expect(functions.getSchedules).toBeCalledWith(fixtures.clusterDetails.cluster.id);
+        expect(functions.getSchedules).toBeCalledWith(fixtures.clusterDetails.cluster.id, false);
       });
 
       it('should not get on-demand metrics', () => {

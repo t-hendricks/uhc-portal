@@ -261,16 +261,15 @@ const reviewValues = {
       return <AwsVpcTable vpcs={vpcs} showPublicFields={showPublicFields} />;
     },
   },
-  aws_hosted_vpc: {
+  aws_hosted_machine_pools: {
     title: 'Machine pools',
     valueTransform: (value, allValues) => {
-      const hasPublicSubnet = allValues.cluster_privacy === 'external';
       const vpcs = allValues.machine_pools_subnets.map((machinePool) => ({
-        publicSubnet: hasPublicSubnet ? allValues.cluster_privacy_public_subnet.subnet_id : '',
+        publicSubnet: '',
         privateSubnet: machinePool.subnet_id,
         az: machinePool.availability_zone,
       }));
-      return <AwsVpcTable vpcs={vpcs} showPublicFields={hasPublicSubnet} />;
+      return <AwsVpcTable vpcs={vpcs} showPublicFields={false} />;
     },
   },
   gpc_vpc: {

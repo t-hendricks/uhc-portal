@@ -22,6 +22,7 @@ import {
 import { Table, TableHeader, TableBody, cellWidth, expandable } from '@patternfly/react-table';
 import Skeleton from '@redhat-cloud-services/frontend-components/Skeleton';
 
+import UpdateAllMachinePools from './UpdateAllMachinePools';
 import AddMachinePoolModal from './components/AddMachinePoolModal';
 import EditTaintsModal from './components/EditTaintsModal';
 import EditLabelsModal from './components/EditLabelsModal';
@@ -35,6 +36,7 @@ import { noQuotaTooltip } from '../../../../../common/helpers';
 import { versionFormatter } from '../../../../../common/versionFormatter';
 import { isHibernating } from '../../../common/clusterStates';
 import './MachinePools.scss';
+import { isMultiAZ } from '../../clusterDetailsHelper';
 
 const getOpenShiftVersion = (machinePool) => {
   const extractedVersion = get(machinePool, 'version.id', '');
@@ -267,17 +269,17 @@ class MachinePools extends React.Component {
           <Split hasGutter>
             <SplitItem>
               <Title headingLevel="h4" className="autoscale__lim">{`Min nodes ${
-                cluster.multi_az ? 'per zone' : ''
+                isMultiAZ(cluster) ? 'per zone' : ''
               }`}</Title>
-              {cluster.multi_az
+              {isMultiAZ(cluster)
                 ? machinePool.autoscaling.min_replicas / 3
                 : machinePool.autoscaling.min_replicas}
             </SplitItem>
             <SplitItem>
               <Title headingLevel="h4" className="autoscale__lim">{`Max nodes ${
-                cluster.multi_az ? 'per zone' : ''
+                isMultiAZ(cluster) ? 'per zone' : ''
               }`}</Title>
-              {cluster.multi_az
+              {isMultiAZ(cluster)
                 ? machinePool.autoscaling.max_replicas / 3
                 : machinePool.autoscaling.max_replicas}
             </SplitItem>
@@ -466,50 +468,53 @@ class MachinePools extends React.Component {
             </CardFooter>
           </Card>
         ) : (
-          <Card className="ocm-c-machine-pools__card">
-            <CardBody className="ocm-c-machine-pools__card--body">
-              {machinePoolsList.error && (
-                <ErrorBox message="Error retrieving machine pools" response={machinePoolsList} />
-              )}
-              {addMachinePoolBtn}
-              <Divider />
-              {deleteMachinePoolResponse.error && !hideDeleteMachinePoolError && (
-                <ErrorBox
-                  message="Error deleting machine pool"
-                  response={deleteMachinePoolResponse}
-                  showCloseBtn
-                  onCloseAlert={() =>
-                    this.setState(
-                      produce((draft) => {
-                        draft.hideDeleteMachinePoolError = true;
-                      }),
+          <>
+            <UpdateAllMachinePools />
+            <Card className="ocm-c-machine-pools__card">
+              <CardBody className="ocm-c-machine-pools__card--body">
+                {machinePoolsList.error && (
+                  <ErrorBox message="Error retrieving machine pools" response={machinePoolsList} />
+                )}
+                {addMachinePoolBtn}
+                <Divider />
+                {deleteMachinePoolResponse.error && !hideDeleteMachinePoolError && (
+                  <ErrorBox
+                    message="Error deleting machine pool"
+                    response={deleteMachinePoolResponse}
+                    showCloseBtn
+                    onCloseAlert={() =>
+                      this.setState(
+                        produce((draft) => {
+                          draft.hideDeleteMachinePoolError = true;
+                        }),
+                      )
+                    }
+                  />
+                )}
+                <Table
+                  aria-label="Machine pools"
+                  cells={columns}
+                  rows={rows}
+                  onCollapse={this.onCollapse}
+                  actionResolver={(rowData) =>
+                    actionResolver(
+                      rowData,
+                      onClickDeleteAction,
+                      onClickScaleAction,
+                      onClickEditTaintsAction,
+                      onClickEditLabelsAction,
+                      isHypershift,
+                      machinePoolsList.data.length,
                     )
                   }
-                />
-              )}
-              <Table
-                aria-label="Machine pools"
-                cells={columns}
-                rows={rows}
-                onCollapse={this.onCollapse}
-                actionResolver={(rowData) =>
-                  actionResolver(
-                    rowData,
-                    onClickDeleteAction,
-                    onClickScaleAction,
-                    onClickEditTaintsAction,
-                    onClickEditLabelsAction,
-                    isHypershift,
-                    machinePoolsList.data.length,
-                  )
-                }
-                areActionsDisabled={() => tableActionsDisabled}
-              >
-                <TableHeader />
-                <TableBody />
-              </Table>
-            </CardBody>
-          </Card>
+                  areActionsDisabled={() => tableActionsDisabled}
+                >
+                  <TableHeader />
+                  <TableBody />
+                </Table>
+              </CardBody>
+            </Card>
+          </>
         )}
         {isAddMachinePoolModalOpen && (
           <AddMachinePoolModal cluster={cluster} isHypershiftCluster={isHypershift} />

@@ -193,6 +193,7 @@ function AccountsRolesScreen({
           <AWSBillingAccountField
             change={change}
             selectedAWSBillingAccountID={selectedAWSBillingAccountID}
+            selectedAWSAccountID={selectedAWSAccountID}
           />
         )}
         {selectedAWSAccountID && hasAWSAccounts && (

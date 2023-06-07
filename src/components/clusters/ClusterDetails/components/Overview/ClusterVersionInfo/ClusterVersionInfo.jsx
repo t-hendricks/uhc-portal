@@ -8,6 +8,7 @@ import SupportStatusLabel from '../SupportStatusLabel';
 import ClusterUpdateLink from '../../../../common/ClusterUpdateLink';
 import UpgradeStatus from '../../../../common/Upgrades/UpgradeStatus';
 import UpgradeAcknowledgeLink from '../../../../common/Upgrades/UpgradeAcknowledge/UpgradeAcknowledgeLink';
+import { isHypershiftCluster } from '../../../clusterDetailsHelper';
 
 class ClusterVersionInfo extends React.Component {
   state = {
@@ -17,14 +18,14 @@ class ClusterVersionInfo extends React.Component {
   componentDidMount() {
     const { cluster, getSchedules } = this.props;
     if (cluster && cluster.id && cluster.managed) {
-      getSchedules(cluster.id);
+      getSchedules(cluster.id, isHypershiftCluster(cluster));
     }
   }
 
   componentDidUpdate(prevProps) {
     const { cluster, getSchedules } = this.props;
     if (prevProps.cluster.id !== cluster.id && cluster.managed) {
-      getSchedules(cluster.id);
+      getSchedules(cluster.id, isHypershiftCluster(cluster));
     }
   }
 

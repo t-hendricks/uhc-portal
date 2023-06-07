@@ -17,6 +17,7 @@ import { editCluster, fetchClusterDetails } from '../../../../../redux/actions/c
 import { isHibernating } from '../../../common/clusterStates';
 import { openModal } from '../../../../common/Modal/ModalActions';
 import { knownProducts } from '~/common/subscriptionTypes';
+import { isHypershiftCluster } from '../../clusterDetailsHelper';
 
 const reduxFormConfig = {
   form: 'ClusterUpgradeSettings',
@@ -45,6 +46,7 @@ const mapStateToProps = (state) => {
     upgradeScheduleRequest: state.clusterUpgrades.postedUpgradeSchedule,
     deleteScheduleRequest: state.clusterUpgrades.deleteScheduleRequest,
     editClusterRequest: state.clusters.editedCluster,
+    isHypershift: isHypershiftCluster(cluster),
     initialValues: {
       upgrade_policy: automaticUpgradePolicy ? 'automatic' : 'manual',
       automatic_upgrade_schedule: automaticUpgradePolicy?.schedule || '0 0 * * 0',
@@ -60,7 +62,7 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch(clearDeleteScheduleResponse());
   },
   openModal: (modal, data) => dispatch(openModal(modal, data)),
-  getSchedules: (clusterID) => dispatch(getSchedules(clusterID)),
+  getSchedules: (clusterID, isHypershift) => dispatch(getSchedules(clusterID, isHypershift)),
   getClusterDetails: (clusterID) => dispatch(fetchClusterDetails(clusterID)),
   onSubmit: (
     formData,
@@ -68,6 +70,7 @@ const mapDispatchToProps = (dispatch) => ({
     existingSchedules,
     existingGracePeriod,
     enableUserWorkloadMonitoring,
+    isHypershift,
   ) => {
     const currentAutomaticUpgradePolicy = existingSchedules.items.find(
       (policy) => policy.schedule_type === 'automatic',
@@ -83,9 +86,14 @@ const mapDispatchToProps = (dispatch) => ({
       ) {
         // automatic policy needs an update
         dispatch(
-          editSchedule(clusterID, currentAutomaticUpgradePolicy.id, {
-            schedule: formData.automatic_upgrade_schedule,
-          }),
+          editSchedule(
+            clusterID,
+            currentAutomaticUpgradePolicy.id,
+            {
+              schedule: formData.automatic_upgrade_schedule,
+            },
+            isHypershift,
+          ),
         );
       } else if (!currentAutomaticUpgradePolicy) {
         const newSchedule = {
@@ -94,15 +102,17 @@ const mapDispatchToProps = (dispatch) => ({
         };
         if (currentManualUpgradePolicy) {
           // replace manual update schedule with the new automatic schedule
-          dispatch(replaceSchedule(clusterID, currentManualUpgradePolicy.id, newSchedule));
+          dispatch(
+            replaceSchedule(clusterID, currentManualUpgradePolicy.id, newSchedule, isHypershift),
+          );
         } else {
           // create a new automatic policy
-          dispatch(postSchedule(clusterID, newSchedule));
+          dispatch(postSchedule(clusterID, newSchedule, isHypershift));
         }
       }
     } else if (currentAutomaticUpgradePolicy) {
       // delete
-      dispatch(deleteSchedule(clusterID, currentAutomaticUpgradePolicy.id));
+      dispatch(deleteSchedule(clusterID, currentAutomaticUpgradePolicy.id, isHypershift));
     }
     const clusterBody = {};
     if (existingGracePeriod !== formData.node_drain_grace_period) {
@@ -121,6 +131,9 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const mergeProps = (stateProps, dispatchProps, ownProps) => {
+  const getSchedules = (clusterID, isHypershift) => {
+    dispatchProps.getSchedules(clusterID, isHypershift);
+  };
   const onSubmit = (formData) => {
     dispatchProps.onSubmit(
       formData,
@@ -128,12 +141,14 @@ const mergeProps = (stateProps, dispatchProps, ownProps) => {
       stateProps.schedules,
       stateProps.cluster.node_drain_grace_period?.value,
       !stateProps.cluster.disable_user_workload_monitoring,
+      stateProps.isHypershift,
     );
   };
   return {
     ...ownProps,
     ...stateProps,
     ...dispatchProps,
+    getSchedules,
     onSubmit,
   };
 };
