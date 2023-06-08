@@ -156,6 +156,7 @@ const instructionsMapping = {
         channel: channels.STABLE,
         docURL: links.INSTALL_IBMPOWERVS_GETTING_STARTED,
         prerequisites: links.INSTALL_IBMPOWERVS_PREREQUISITES,
+        preReleasePageLink: '/install/power/pre-release',
       },
     },
   },
