@@ -76,7 +76,7 @@ function ScaleSection({
   );
 
   // ROSA Classic and OSD CCS only
-  const imdsSection = cloudProviderID === 'aws' && !isHypershiftSelected && isBYOC && (
+  const imdsSection = cloudProviderID === 'aws' && !isHypershiftSelected && isBYOC && imds && (
     <>
       <GridItem md={8}>
         <ImdsSection
@@ -257,8 +257,8 @@ ScaleSection.propTypes = {
   autoScaleMinNodesValue: PropTypes.string,
   autoScaleMaxNodesValue: PropTypes.string,
   isHypershiftSelected: PropTypes.bool,
-  clusterVersionRawId: PropTypes.string.isRequired,
-  imds: PropTypes.string.isRequired,
+  clusterVersionRawId: PropTypes.string,
+  imds: PropTypes.string,
 };
 
 export default ScaleSection;
