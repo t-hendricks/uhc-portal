@@ -42,6 +42,7 @@ export type FakeCluster = // AICluster &
     | 'ccs'
     | 'external_id'
     | 'name'
+    | 'version'
   > & {
     metrics: OneMetric;
     state?: string | ClusterState;

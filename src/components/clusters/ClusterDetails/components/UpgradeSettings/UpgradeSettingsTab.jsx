@@ -26,6 +26,7 @@ import ButtonWithTooltip from '../../../../common/ButtonWithTooltip';
 import MinorVersionUpgradeAlert from '../../../common/Upgrades/MinorVersionUpgradeAlert';
 import UpgradeAcknowledgeWarning from '../../../common/Upgrades/UpgradeAcknowledge/UpgradeAcknowledgeWarning';
 import { isHypershiftCluster } from '../../clusterDetailsHelper';
+import UpdateAllMachinePools from '../MachinePools/UpdateAllMachinePools';
 
 class UpgradeSettingsTab extends React.Component {
   state = { confirmationModalOpen: false };
@@ -33,7 +34,7 @@ class UpgradeSettingsTab extends React.Component {
   componentDidMount() {
     const { getSchedules, cluster, upgradeScheduleRequest } = this.props;
     if (cluster.id && !upgradeScheduleRequest.pending) {
-      getSchedules(cluster.id);
+      getSchedules(cluster.id, isHypershiftCluster(cluster));
     }
   }
 
@@ -95,20 +96,24 @@ class UpgradeSettingsTab extends React.Component {
     const notReadyReason = cluster.state !== clusterStates.READY && 'This cluster is not ready';
     const pristineReason = pristine && 'No changes to save';
     const formDisableReason = readOnlyReason || hibernatingReason;
+    const isHypershift = isHypershiftCluster(cluster);
 
     const scheduledManualUpgrade = schedules.items.find(
-      (schedule) => schedule.schedule_type === 'manual' && schedule.upgrade_type === 'OSD',
+      (schedule) =>
+        schedule.schedule_type === 'manual' &&
+        schedule.upgrade_type === (isHypershift ? 'ControlPlane' : 'OSD'),
     );
 
     const scheduledUpgrade = schedules.items.find(
       (schedule) =>
-        ['manual', 'automatic'].includes(schedule.schedule_type) && schedule.upgrade_type === 'OSD',
+        ['manual', 'automatic'].includes(schedule.schedule_type) &&
+        schedule.upgrade_type === (isHypershift ? 'ControlPlane' : 'OSD'),
     );
     // eslint-disable-next-line camelcase
     const availableUpgrades = cluster?.version?.available_upgrades;
 
     const showUpdateButton =
-      !!cluster.openshift_version &&
+      (!!cluster.openshift_version || !!cluster?.version?.id) &&
       availableUpgrades?.length > 0 &&
       !scheduledUpgrade &&
       !clusterHibernating;
@@ -147,11 +152,13 @@ class UpgradeSettingsTab extends React.Component {
 
     return (
       <Grid hasGutter className="ocm-c-upgrade-monitoring">
-        <GridItem>
-          {editClusterRequest.error && (
+        {editClusterRequest.error && (
+          <GridItem>
             <ErrorBox response={editClusterRequest} message="Error processing request" />
-          )}
-          {!isAROCluster && (
+          </GridItem>
+        )}
+        {!isAROCluster && !isHypershift && (
+          <GridItem>
             <Card>
               <CardBody>
                 <UserWorkloadMonitoringSection
@@ -161,8 +168,8 @@ class UpgradeSettingsTab extends React.Component {
                 />
               </CardBody>
             </Card>
-          )}
-        </GridItem>
+          </GridItem>
+        )}
         <GridItem lg={9} md={12} className="ocm-c-upgrade-monitoring-top">
           <Card>
             <CardTitle>Update strategy</CardTitle>
@@ -206,6 +213,7 @@ class UpgradeSettingsTab extends React.Component {
 
               <UpgradeAcknowledgeWarning />
               <MinorVersionUpgradeAlert />
+              <UpdateAllMachinePools goToMachinePoolTab />
 
               <Form>
                 <Grid hasGutter>
@@ -213,9 +221,9 @@ class UpgradeSettingsTab extends React.Component {
                     isAutomatic={isAutomatic}
                     isDisabled={!!formDisableReason}
                     change={change}
-                    initialSceduleValue={initialValues.automatic_upgrade_schedule}
+                    initialScheduleValue={initialValues.automatic_upgrade_schedule}
                     showDivider
-                    isHypershift={isHypershiftCluster(cluster)}
+                    isHypershift={isHypershift}
                   />
                 </Grid>
               </Form>
@@ -235,7 +243,7 @@ class UpgradeSettingsTab extends React.Component {
               <UpgradeStatus
                 clusterID={cluster.id}
                 canEdit={cluster.canEdit}
-                clusterVersion={cluster.openshift_version}
+                clusterVersion={cluster.openshift_version || cluster?.version?.id}
                 clusterVersionRawID={cluster?.version?.raw_id}
                 scheduledUpgrade={scheduledUpgrade}
                 availableUpgrades={availableUpgrades}
@@ -280,6 +288,7 @@ UpgradeSettingsTab.propTypes = {
       channel_group: PropTypes.string,
       available_upgrades: PropTypes.arrayOf(PropTypes.string),
       raw_id: PropTypes.string,
+      id: PropTypes.string,
     }),
     state: PropTypes.string,
   }),

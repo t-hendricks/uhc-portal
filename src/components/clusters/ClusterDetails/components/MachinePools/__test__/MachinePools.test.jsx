@@ -1,6 +1,6 @@
 import React from 'react';
 import { shallow, mount } from 'enzyme';
-
+import { TestWrapper } from '@testUtils';
 import MachinePools from '../MachinePools';
 
 import { baseRequestState } from '../../../../../../redux/reduxHelpers';
@@ -219,7 +219,11 @@ describe('<MachinePools />', () => {
         ],
       },
     };
-    const wrapper = mount(<MachinePools {...props} />);
+    const wrapper = mount(
+      <TestWrapper>
+        <MachinePools {...props} />
+      </TestWrapper>,
+    );
     // need to find by classname because action menu doesn't have an accessible label
     const actionMenus = wrapper.find('.pf-c-dropdown__toggle');
     expect(actionMenus).toHaveLength(2);
@@ -274,7 +278,11 @@ describe('<MachinePools />', () => {
         ],
       },
     };
-    const wrapper = mount(<MachinePools {...props} />);
+    const wrapper = mount(
+      <TestWrapper>
+        <MachinePools {...props} />
+      </TestWrapper>,
+    );
     const deleteButton = wrapper.find('ActionsColumn').props().items[3];
     expect(deleteButton.title).toBe('Delete');
     expect(deleteButton.isAriaDisabled).toBeTruthy();
@@ -308,7 +316,11 @@ describe('<MachinePools />', () => {
         ],
       },
     };
-    const wrapper = mount(<MachinePools {...props} />);
+    const wrapper = mount(
+      <TestWrapper>
+        <MachinePools {...props} />
+      </TestWrapper>,
+    );
     // need to find by classname because action menu doesn't have an accessible label
     const actionMenus = wrapper.find('.pf-c-dropdown__toggle');
     expect(actionMenus).toHaveLength(2);

@@ -67,7 +67,12 @@ class UpgradeScheduleSelection extends React.Component {
 
   render() {
     const { daySelectOpen, timeSelectOpen } = this.state;
-    const { isDisabled, input } = this.props;
+    const { isDisabled, input, isHypershift } = this.props;
+    const infoAlert =
+      'Recurring updates occur when a new patch (z-stream) update becomes available at least 2 days prior to your selected start time.';
+    const infoAlertHypershift =
+      'For recurring updates, the control plane will be updated when a new version becomes available at least 2 days prior to your selected start time. Worker nodes will need to be manually updated.';
+
     if (input.value && !VALID_SCHEDULE_REGEX.test(input.value)) {
       return (
         <>
@@ -77,7 +82,7 @@ class UpgradeScheduleSelection extends React.Component {
             isInline
             isPlain
             variant="info"
-            title="Recurring updates occur when a new patch (z-stream) update becomes available at least 2 days prior to your selected start time."
+            title={isHypershift ? infoAlertHypershift : infoAlert}
           />
           <FormGroup label="Select a day and start time" className="ocm-upgrade-schedule-selection">
             This cluster has a custom schedule which can not be modified from this page. Use the API
@@ -113,7 +118,7 @@ class UpgradeScheduleSelection extends React.Component {
           isInline
           isPlain
           variant="info"
-          title="Recurring updates occur when a new patch (z-stream) update becomes available at least 2 days prior to your selected start time."
+          title={isHypershift ? infoAlertHypershift : infoAlert}
         />
         <FormGroup label="Select a day and start time" className="ocm-upgrade-schedule-selection">
           <Grid hasGutter>
@@ -163,6 +168,7 @@ UpgradeScheduleSelection.propTypes = {
     onChange: PropTypes.func.isRequired,
   }).isRequired,
   isDisabled: PropTypes.bool,
+  isHypershift: PropTypes.bool,
 };
 
 export default UpgradeScheduleSelection;

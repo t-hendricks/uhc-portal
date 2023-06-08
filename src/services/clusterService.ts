@@ -386,10 +386,25 @@ const postUpgradeSchedule = (clusterID: string, schedule: UpgradePolicy) =>
     `/api/clusters_mgmt/v1/clusters/${clusterID}/upgrade_policies`,
     schedule,
   );
+const postControlPlaneUpgradeSchedule = (clusterID: string, schedule: UpgradePolicy) =>
+  apiRequest.post<UpgradePolicy>(
+    `/api/clusters_mgmt/v1/clusters/${clusterID}/control_plane/upgrade_policies`,
+    schedule,
+  );
 
 const patchUpgradeSchedule = (clusterID: string, policyID: string, schedule: UpgradePolicy) =>
   apiRequest.patch<UpgradePolicy>(
     `/api/clusters_mgmt/v1/clusters/${clusterID}/upgrade_policies/${policyID}`,
+    schedule,
+  );
+
+const patchControlPlaneUpgradeSchedule = (
+  clusterID: string,
+  policyID: string,
+  schedule: UpgradePolicy,
+) =>
+  apiRequest.patch<UpgradePolicy>(
+    `/api/clusters_mgmt/v1/clusters/${clusterID}/control_plane/upgrade_policies/${policyID}`,
     schedule,
   );
 
@@ -418,6 +433,28 @@ const getUpgradeSchedules = (clusterID: string) =>
     },
   });
 
+const getControlPlaneUpgradeSchedules = (clusterID: string) =>
+  apiRequest.get<{
+    /**
+     * Retrieves the list of upgrade policies for the control plane.
+     */
+    items?: Array<UpgradePolicy>;
+    /**
+     * Index of the requested page, where one corresponds to the first page.
+     */
+    page?: number;
+    /**
+     * Number of items contained in the returned page.
+     */
+    size?: number;
+    /**
+     * Total number of items of the collection.
+     */
+    total?: number;
+  }>(`/api/clusters_mgmt/v1/clusters/${clusterID}/control_plane/upgrade_policies`, {
+    params: {},
+  });
+
 const getUpgradeScheduleState = (clusterID: string, policyID: string) =>
   apiRequest.get<UpgradePolicyState>(
     `/api/clusters_mgmt/v1/clusters/${clusterID}/upgrade_policies/${policyID}/state`,
@@ -426,6 +463,11 @@ const getUpgradeScheduleState = (clusterID: string, policyID: string) =>
 const deleteUpgradeSchedule = (clusterID: string, policyID: string) =>
   apiRequest.delete<unknown>(
     `/api/clusters_mgmt/v1/clusters/${clusterID}/upgrade_policies/${policyID}`,
+  );
+
+const deleteControlPlaneUpgradeSchedule = (clusterID: string, policyID: string) =>
+  apiRequest.delete<unknown>(
+    `/api/clusters_mgmt/v1/clusters/${clusterID}/control_plane/upgrade_policies/${policyID}`,
   );
 
 const getMachinePools = (clusterID: string) =>
@@ -819,10 +861,14 @@ const clusterService = {
 
 export {
   postUpgradeSchedule,
+  postControlPlaneUpgradeSchedule,
   getUpgradeSchedules,
+  getControlPlaneUpgradeSchedules,
   getUpgradeScheduleState,
   deleteUpgradeSchedule,
+  deleteControlPlaneUpgradeSchedule,
   patchUpgradeSchedule,
+  patchControlPlaneUpgradeSchedule,
   listAWSVPCs,
   listGCPVPCs,
   listGCPKeyRings,

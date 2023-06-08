@@ -83,7 +83,7 @@ function DetailsLeft({ cluster, cloudProviders, showAssistedId }) {
               <DescriptionListTerm>Availability</DescriptionListTerm>
               <DescriptionListDescription>
                 <span data-testid="availability">
-                  {cluster.multi_az || isHypershift ? 'Multi-zone' : 'Single zone'}
+                  {cluster.multi_az ? 'Multi-zone' : 'Single zone'}
                 </span>
               </DescriptionListDescription>
             </DescriptionListGroup>
