@@ -302,7 +302,7 @@ function AccountRolesARNsSection({
             <br />
             Create the account roles using the following command in the ROSA CLI
             <InstructionCommand textAriaLabel="Copyable ROSA login command">
-              rosa create account-roles
+              {`rosa create account-roles${isHypershiftSelected ? ' --hosted-cp' : ''}`}
             </InstructionCommand>
             <br />
             After running the command, you may need to refresh using the{' '}
