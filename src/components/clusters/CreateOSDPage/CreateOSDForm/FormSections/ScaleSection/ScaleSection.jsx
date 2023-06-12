@@ -55,25 +55,26 @@ function ScaleSection({
 
   const expandableSectionTitle = isMachinePool ? 'Edit node labels and taints' : 'Edit node labels';
 
-  const labelsAndTaintsSection = (
-    <ExpandableSection
-      toggleTextCollapsed={expandableSectionTitle}
-      toggleTextExpanded={expandableSectionTitle}
-    >
-      <Title headingLevel="h3" className="pf-u-mb-md pf-u-mt-lg">
-        Node labels
-      </Title>
-      <FieldArray name="node_labels" component={ReduxFormKeyValueList} />
-      {isMachinePool && (
-        <>
-          <Title headingLevel="h3" className="pf-u-mb-md pf-u-mt-lg">
-            Taints
-          </Title>
-          <FieldArray name="taints" component={ReduxFormTaints} canAddMore />
-        </>
-      )}
-    </ExpandableSection>
-  );
+  const labelsAndTaintsSection =
+    isHypershiftSelected && !inModal ? null : (
+      <ExpandableSection
+        toggleTextCollapsed={expandableSectionTitle}
+        toggleTextExpanded={expandableSectionTitle}
+      >
+        <Title headingLevel="h3" className="pf-u-mb-md pf-u-mt-lg">
+          Node labels
+        </Title>
+        <FieldArray name="node_labels" component={ReduxFormKeyValueList} />
+        {isMachinePool && (
+          <>
+            <Title headingLevel="h3" className="pf-u-mb-md pf-u-mt-lg">
+              Taints
+            </Title>
+            <FieldArray name="taints" component={ReduxFormTaints} canAddMore />
+          </>
+        )}
+      </ExpandableSection>
+    );
 
   // ROSA Classic and OSD CCS only
   const imdsSection = cloudProviderID === 'aws' && !isHypershiftSelected && isBYOC && imds && (
