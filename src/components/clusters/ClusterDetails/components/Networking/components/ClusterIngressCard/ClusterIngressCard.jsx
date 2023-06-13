@@ -177,6 +177,7 @@ ClusterIngressCard.propTypes = {
   isSTSEnabled: PropTypes.bool.isRequired,
   clusterHibernating: PropTypes.bool.isRequired,
   showConsoleLink: PropTypes.bool.isRequired,
+  isNLB: PropTypes.bool.isRequired,
 };
 
 export default ClusterIngressCard;

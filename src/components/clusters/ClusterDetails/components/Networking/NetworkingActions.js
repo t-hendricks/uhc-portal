@@ -54,7 +54,7 @@ const sendNetworkConfigRequests = async (newData, currentData, clusterID, dispat
   const additionalRouterCreated = !hadAdditionalRouter && newData.enable_additional_router;
   const defaultRouterEdited = newData.private_default_router !== currentData.default.isPrivate;
   const defaultRouterLBEdited =
-    newData.load_balancer !== (currentData.default.loadBalancer === 'nlb');
+    newData.is_nlb_load_balancer !== (currentData.default.loadBalancer === 'nlb');
 
   // Edit default router
   if (defaultRouterEdited) {
@@ -62,7 +62,7 @@ const sendNetworkConfigRequests = async (newData, currentData, clusterID, dispat
   }
 
   if (defaultRouterLBEdited) {
-    requestDefaultRouter.load_balancer = newData.load_balancer ? 'nlb' : 'classic';
+    requestDefaultRouter.load_balancer_type = newData.is_nlb_load_balancer ? 'nlb' : 'classic';
   }
 
   // Edit existing additional router
