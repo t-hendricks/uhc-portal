@@ -203,7 +203,10 @@ describe('quotaSelectors', () => {
           },
         ],
       };
-      const expected = ['765374464689', 'fakeAwsAccount'];
+      const expected = [
+        { cloud_account_id: '765374464689', cloud_provider_id: 'aws' },
+        { cloud_account_id: 'fakeAwsAccount', cloud_provider_id: 'aws' },
+      ];
       expect(getAwsBillingAccountsFromQuota(quotaWithAccounts)).toEqual(expected);
     });
     it('should return an empty array if there are no accounts', () => {

@@ -5,3 +5,8 @@
 .aws-account-selection .pf-c-form__group-control .pf-c-select {
   padding-right: var(--pf-global--spacer--md);
 }
+
+#contract-info.pf-c-description-list {
+  --pf-c-description-list--RowGap: var(--pf-global--gutter--sm);
+}
+
