@@ -3,12 +3,12 @@ shopt -s nocasematch
 
 # An array to store the jiraKeys in a commit
 jiraKeys=()
-# An array of master commits whose message strings where found in remotes/origin/candidate log file
+# An array of master commits whose message strings where found in live_candidate log file
 found=()
-# master commits whose message strings where NOT found in remotes/origin/candidate log file
+# master commits whose message strings where NOT found in live_candidate log file
 # ...and whose associated jira tickets were not all closed; most likely still in 'Review'
 notClosed=()
-# master commits ready to promote to remotes/origin/candidate
+# master commits ready to promote to live_candidate
 readyToPromote=()
 readyToPromoteSHAs=()
 
@@ -19,18 +19,18 @@ jira_token="${1#--jira-token=}"
 # Read each line from stdin (piped CSV data) and convert it to JSON
 while IFS=',' read -r commitHash commitDate commitMessage; do
   echo "------------------------------------------------"
-  echo "|           remotes/origin/master              |"
+  echo "|                 live_master                  |"
   echo "|  commitHash  |  commitDate  |  commitMessage |"
   echo "------------------------------------------------"
   masterLogLine="$commitHash $commitDate $commitMessage"
   echo "$masterLogLine"
 
   if [[ $(grep -cF "$commitMessage" "./candidateBranch.txt") -gt 0 ]]; then
-    echo "--> FOUND string \"$commitMessage\" in remotes/origin/candidate"
+    echo "--> FOUND string \"$commitMessage\" in live_candidate"
     found+=("$masterLogLine")
     continue
   else
-    echo "DID NOT FIND string \"$commitMessage\" in remotes/origin/candidate"
+    echo "DID NOT FIND string \"$commitMessage\" in live_candidate"
 
     # Pattern matching to extract jiraKeys
     regex="(HAC[- ]?[0-9]{4})"
@@ -127,7 +127,7 @@ done
 
 # Create a temporary branch with the desired commits
 tempBranch="candidate-$(date +%Y%m%d)"
-echo git checkout -b "$tempBranch" remotes/origin/candidate
+echo git checkout -b "$tempBranch" live_candidate
 echo " "
 echo git cherry-pick -m 1 "${reversedReadyToPromoteSHAs[@]}"
 echo " "
