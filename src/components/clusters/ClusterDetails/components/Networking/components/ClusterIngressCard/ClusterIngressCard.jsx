@@ -24,6 +24,8 @@ import ButtonWithTooltip from '../../../../../../common/ButtonWithTooltip';
 import modals from '../../../../../../common/Modal/modals';
 
 import './ClusterIngressCard.scss';
+import { LoadBalancerFlavorLabel } from '../constants';
+import { LoadBalancerFlavor } from '~/types/clusters_mgmt.v1';
 
 class ClusterIngressCard extends React.Component {
   handleEditSettings = () => {
@@ -110,7 +112,12 @@ class ClusterIngressCard extends React.Component {
               </TextContent>
             </FormGroup>
             <FormGroup label="Load balancer type">
-              <Switch label="NLB" labelOff="Classic" isChecked={isNLB} isDisabled />
+              <Switch
+                label={LoadBalancerFlavorLabel[LoadBalancerFlavor.NLB]}
+                labelOff={LoadBalancerFlavorLabel[LoadBalancerFlavor.CLASSIC]}
+                isChecked={isNLB}
+                isDisabled
+              />
             </FormGroup>
             {hasAdditionalRouter && (
               <>

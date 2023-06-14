@@ -11,6 +11,8 @@ import {
   ExpandableSection,
 } from '@patternfly/react-core';
 
+import { LoadBalancerFlavor } from '~/types/clusters_mgmt.v1';
+
 import Modal from '../../../../../../common/Modal/Modal';
 import ErrorBox from '../../../../../../common/ErrorBox';
 import {
@@ -21,6 +23,7 @@ import ExternalLink from '../../../../../../common/ExternalLink';
 
 import links from '../../../../../../../common/installLinks.mjs';
 import { checkRouteSelectors } from '../../../../../../../common/validators';
+import { LoadBalancerFlavorLabel } from '../constants';
 
 class EditClusterIngressDialog extends React.Component {
   componentDidUpdate(prevProps) {
@@ -169,8 +172,8 @@ class EditClusterIngressDialog extends React.Component {
               <Field
                 component={ReduxCheckbox}
                 name="is_nlb_load_balancer"
-                label="NLB"
-                labelOff="Classic"
+                label={LoadBalancerFlavorLabel[LoadBalancerFlavor.NLB]}
+                labelOff={LoadBalancerFlavorLabel[LoadBalancerFlavor.CLASSIC]}
                 isSwitch
               />
             </FormGroup>

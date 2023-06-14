@@ -1,5 +1,6 @@
 import has from 'lodash/has';
 import isEmpty from 'lodash/isEmpty';
+import { LoadBalancerFlavor } from '~/types/clusters_mgmt.v1';
 import { strToCleanObject } from '../../../../../common/helpers';
 import { networkingConstants } from './NetworkingConstants';
 import { setClusterDetails } from '../../../../../redux/actions/clustersActions';
@@ -54,7 +55,7 @@ const sendNetworkConfigRequests = async (newData, currentData, clusterID, dispat
   const additionalRouterCreated = !hadAdditionalRouter && newData.enable_additional_router;
   const defaultRouterEdited = newData.private_default_router !== currentData.default.isPrivate;
   const defaultRouterLBEdited =
-    newData.is_nlb_load_balancer !== (currentData.default.loadBalancer === 'nlb');
+    newData.is_nlb_load_balancer !== (currentData.default.loadBalancer === LoadBalancerFlavor.NLB);
 
   // Edit default router
   if (defaultRouterEdited) {
@@ -62,7 +63,9 @@ const sendNetworkConfigRequests = async (newData, currentData, clusterID, dispat
   }
 
   if (defaultRouterLBEdited) {
-    requestDefaultRouter.load_balancer_type = newData.is_nlb_load_balancer ? 'nlb' : 'classic';
+    requestDefaultRouter.load_balancer_type = newData.is_nlb_load_balancer
+      ? LoadBalancerFlavor.NLB
+      : LoadBalancerFlavor.CLASSIC;
   }
 
   // Edit existing additional router

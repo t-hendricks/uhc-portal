@@ -1,5 +1,6 @@
 import { connect } from 'react-redux';
 
+import { LoadBalancerFlavor } from '~/types/clusters_mgmt.v1';
 import { isHibernating, isOffline } from '../../../../../common/clusterStates';
 import { openModal } from '../../../../../../common/Modal/ModalActions';
 import NetworkingSelector, { routeSelectorPairsAsStrings } from '../../NetworkingSelector';
@@ -46,7 +47,7 @@ const mapStateToProps = (state) => {
     isSTSEnabled,
     clusterHibernating,
     showConsoleLink,
-    isNLB: clusterRouters.default.loadBalancer === 'nlb',
+    isNLB: clusterRouters.default.loadBalancer === LoadBalancerFlavor.NLB,
   };
 };
 

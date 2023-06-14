@@ -3,8 +3,9 @@ import { useSelector } from 'react-redux';
 import { Card, CardBody, CardTitle, FormGroup, Switch, Title } from '@patternfly/react-core';
 import { clusterService } from '~/services';
 import { GlobalState } from '~/redux/store';
-import NetworkingSelector from '../../NetworkingSelector';
 import { LoadBalancerFlavor } from '~/types/clusters_mgmt.v1';
+import NetworkingSelector from '../../NetworkingSelector';
+import { LoadBalancerFlavorLabel } from '../constants';
 
 const ApplicationIngressCard = () => {
   const cluster: any = useSelector<GlobalState>((state) => state.clusters.details);
@@ -28,8 +29,8 @@ const ApplicationIngressCard = () => {
         <CardBody>
           <FormGroup fieldId="load_balancer" label="Load balancer type" isStack>
             <Switch
-              label="NLB"
-              labelOff="Classic"
+              label={LoadBalancerFlavorLabel[LoadBalancerFlavor.NLB]}
+              labelOff={LoadBalancerFlavorLabel[LoadBalancerFlavor.CLASSIC]}
               isChecked={ingresses.additional.loadBalancer === LoadBalancerFlavor.NLB}
               onChange={enableNLB}
             />
