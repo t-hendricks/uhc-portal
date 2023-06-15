@@ -15,6 +15,7 @@ import {
 } from '~/components/clusters/wizards/common/constants';
 import { FieldId, StepId } from '~/components/clusters/wizards/osd/constants';
 import { DebugClusterRequest } from './DebugClusterRequest';
+import { canSelectImds } from '../../rosa/constants';
 
 interface ReviewAndCreateContentProps {
   isPending: boolean;
@@ -31,6 +32,7 @@ export const ReviewAndCreateContent = ({ isPending }: ReviewAndCreateContentProp
       [FieldId.CloudProvider]: cloudProvider,
       [FieldId.NodeLabels]: nodeLabels,
       [FieldId.ClusterPrivacy]: clusterPrivacy,
+      [FieldId.ClusterVersion]: clusterVersion,
     },
     values: formValues,
   } = useFormState();
@@ -112,6 +114,9 @@ export const ReviewAndCreateContent = ({ isPending }: ReviewAndCreateContentProp
         )}
         {!(nodeLabels.length === 1 && isEmpty(nodeLabels[0].key)) && (
           <ReviewItem name={FieldId.NodeLabels} formValues={formValues} />
+        )}
+        {isAWS && isByoc && canSelectImds(clusterVersion.raw_id) && (
+          <ReviewItem name={FieldId.IMDS} formValues={formValues} />
         )}
       </ReviewSection>
 

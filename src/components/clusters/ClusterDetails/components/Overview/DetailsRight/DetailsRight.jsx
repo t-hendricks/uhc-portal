@@ -23,6 +23,7 @@ import ExternalLink from '../../../../../common/ExternalLink';
 import { isHypershiftCluster } from '../../../clusterDetailsHelper';
 import { ClusterStatus } from './ClusterStatus';
 import { isROSA } from '~/components/clusters/common/clusterStates';
+import { IMDSType } from '~/components/clusters/wizards/common';
 
 const { ClusterStatus: AIClusterStatus } = OCM;
 function DetailsRight({
@@ -74,6 +75,7 @@ function DetailsRight({
   const workerActualNodes = totalActualNodes === false ? '-' : totalActualNodes;
   const workerDesiredNodes = totalDesiredComputeNodes || '-';
   const oidcConfig = cluster.aws?.sts?.oidc_config;
+  const imdsConfig = cluster.aws?.ec2_metadata_http_tokens;
 
   return (
     <>
@@ -304,9 +306,18 @@ function DetailsRight({
             </DescriptionListGroup>
           </>
         )}
+        {/* IMDS */}
+        {imdsConfig && (
+          <DescriptionListGroup>
+            <DescriptionListTerm>Instance Metadata Service (IMDS)</DescriptionListTerm>
+            <DescriptionListDescription>
+              {imdsConfig === IMDSType.V1AndV2 ? 'IMDSv1 and IMDSv2' : 'IMDSv2 only'}
+            </DescriptionListDescription>
+          </DescriptionListGroup>
+        )}
         {/* Network */}
         <ClusterNetwork cluster={cluster} />
-
+        {/* OIDC config */}
         {oidcConfig && (
           <DescriptionListGroup>
             <DescriptionListTerm>OIDC Configuration</DescriptionListTerm>

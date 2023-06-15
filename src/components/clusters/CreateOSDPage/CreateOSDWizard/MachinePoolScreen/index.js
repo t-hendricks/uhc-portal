@@ -6,7 +6,12 @@ import { canAutoScaleOnCreateSelector } from '../../../ClusterDetails/components
 import wizardConnector from '../WizardConnector';
 import MachinePoolScreen from './MachinePoolScreen';
 import createOSDInitialValues from '../../createOSDInitialValues';
-import { getMinNodesRequired } from '~/components/clusters/ClusterDetails/components/MachinePools/machinePoolsHelper';
+import {
+  getMinNodesRequired,
+  getNodeIncrement,
+  getMinNodesRequiredHypershift,
+  getNodeIncrementHypershift,
+} from '~/components/clusters/ClusterDetails/components/MachinePools/machinePoolsHelper';
 
 const mapStateToProps = (state, ownProps) => {
   const valueSelector = formValueSelector('CreateCluster');
@@ -19,6 +24,9 @@ const mapStateToProps = (state, ownProps) => {
   const machineType = valueSelector(state, 'machine_type');
   const isHypershiftSelected = valueSelector(state, 'hypershift') === 'true';
   const selectedVPCID = valueSelector(state, 'selected_vpc_id');
+  const clusterVersionRawId = valueSelector(state, 'cluster_version.raw_id');
+  const imds = valueSelector(state, 'imds');
+  const machinePools = valueSelector(state, 'machine_pools_subnets');
 
   return {
     cloudProviderID,
@@ -29,7 +37,14 @@ const mapStateToProps = (state, ownProps) => {
     machineType,
     isHypershiftSelected,
     selectedVPCID,
-    minNodesRequired: getMinNodesRequired(isHypershiftSelected),
+    imds,
+    clusterVersionRawId,
+    minNodesRequired: isHypershiftSelected
+      ? getMinNodesRequiredHypershift(machinePools?.length)
+      : getMinNodesRequired(true, isByoc, isMultiAz),
+    nodeIncrement: isHypershiftSelected
+      ? getNodeIncrementHypershift(machinePools?.length)
+      : getNodeIncrement(isMultiAz),
     canAutoScale: canAutoScaleOnCreateSelector(state, product),
     autoscalingEnabled: !!valueSelector(state, 'autoscalingEnabled'),
     autoScaleMinNodesValue: valueSelector(state, 'min_replicas'),

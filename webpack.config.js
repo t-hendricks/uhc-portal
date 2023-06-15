@@ -49,6 +49,8 @@ module.exports = async (_env, argv) => {
 
   // While user-visible URLs are moving /beta/openshift -> /preview/openshift,
   // the compiled assets will remain at /beta/apps/openshift.
+  // (Well, in qaprodauth /beta/apps was hacked as a redirect -> /preview/apps
+  //  but that's implementation detail; browser always requests /beta/apps.)
   const appDeployment = betaMode ? 'beta/apps' : 'apps';
   const publicPath = `/${appDeployment}/${insights.appname}/`;
 

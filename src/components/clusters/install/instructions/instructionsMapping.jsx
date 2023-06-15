@@ -45,6 +45,15 @@ const instructionsMapping = {
         channel: channels.STABLE,
       },
     },
+    multi: {
+      ipi: {
+        title: 'Install OpenShift on AWS with multi-architecture compute machines',
+        installer: tools.MULTIINSTALLER,
+        channel: channels.STABLE,
+        docURL: links.INSTALL_AWS_MULTI_ARCH,
+        preReleasePageLink: '/install/multi/pre-release',
+      },
+    },
     arm: {
       ipi: {
         title: 'Install OpenShift on AWS with installer-provisioned ARM infrastructure',
@@ -139,6 +148,17 @@ const instructionsMapping = {
     docURL: links.INSTALL_IBM_CLOUD_GETTING_STARTED,
     installer: tools.X86INSTALLER,
     channel: channels.STABLE,
+    powervs: {
+      ipi: {
+        title:
+          'Install OpenShift on IBM Power Systems Virtual Server with installer-provisioned infrastructure',
+        installer: tools.PPCINSTALLER,
+        channel: channels.STABLE,
+        docURL: links.INSTALL_IBMPOWERVS_GETTING_STARTED,
+        prerequisites: links.INSTALL_IBMPOWERVS_PREREQUISITES,
+        preReleasePageLink: '/install/power/pre-release',
+      },
+    },
   },
   ash: {
     cloudProvider: 'Azure Stack Hub',
@@ -169,6 +189,15 @@ const instructionsMapping = {
   baremetal: {
     cloudProvider: 'Bare Metal',
     customizations: links.INSTALL_BAREMETAL_CUSTOMIZATIONS,
+    multi: {
+      upi: {
+        title: 'Install OpenShift on bare metal with multi-architecture compute machines',
+        installer: tools.MULTIINSTALLER,
+        channel: channels.STABLE,
+        docURL: links.INSTALL_BAREMETAL_MULTI_ARCH,
+        preReleasePageLink: '/install/multi/pre-release',
+      },
+    },
     x86: {
       abi: {
         title: 'Install OpenShift on Bare Metal locally with Agent',

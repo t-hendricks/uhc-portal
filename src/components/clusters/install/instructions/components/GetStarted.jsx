@@ -8,7 +8,15 @@ import ExternalLink from '../../../../common/ExternalLink';
 import TelemetryDisclaimer from './TelemetryDisclaimer';
 import instructionsMapping from '../instructionsMapping';
 
-const GetStarted = ({ docURL, pendoID, cloudProviderID, customizations, isBMIPI, isUPI }) => {
+const GetStarted = ({
+  docURL,
+  pendoID,
+  cloudProviderID,
+  customizations,
+  prerequisites,
+  isBMIPI,
+  isUPI,
+}) => {
   const track = useAnalytics();
   return (
     <>
@@ -67,6 +75,17 @@ const GetStarted = ({ docURL, pendoID, cloudProviderID, customizations, isBMIPI,
             </TextContent>
           </StackItem>
         )}
+        {prerequisites && (
+          <StackItem>
+            <TextContent>
+              <Text component="p">
+                Please make sure you{' '}
+                <ExternalLink href={prerequisites}>install the pre-requisites</ExternalLink> before
+                proceeding with the cluster installation.
+              </Text>
+            </TextContent>
+          </StackItem>
+        )}
         <StackItem>
           <TelemetryDisclaimer />
         </StackItem>
@@ -85,6 +104,7 @@ GetStarted.propTypes = {
   pendoID: PropTypes.string,
   cloudProviderID: PropTypes.string.isRequired,
   customizations: PropTypes.string,
+  prerequisites: PropTypes.string,
   isBMIPI: PropTypes.bool,
   isUPI: PropTypes.bool,
 };

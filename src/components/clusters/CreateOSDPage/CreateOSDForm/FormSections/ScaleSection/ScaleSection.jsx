@@ -11,6 +11,7 @@ import {
 } from '@patternfly/react-core';
 
 import MachineTypeSelection from './MachineTypeSelection';
+import ImdsSection from './ImdsSection';
 
 import { ReduxFormKeyValueList, ReduxFormTaints } from '../../../../../common/ReduxFormComponents';
 import PersistentStorageDropdown from '../../../../common/PersistentStorageDropdown';
@@ -24,17 +25,18 @@ import PopoverHint from '../../../../../common/PopoverHint';
 import { required } from '../../../../../../common/validators';
 import ExternalLink from '../../../../../common/ExternalLink';
 import AutoScaleSection from './AutoScaleSection/AutoScaleSection';
+import { canSelectImds } from '~/components/clusters/wizards/rosa/constants';
 
 function ScaleSection({
   pending,
   isBYOC,
   isMultiAz,
-  showHypershiftTitle = false,
   machineType,
   cloudProviderID,
   product,
   showStorageAndLoadBalancers = true,
   minNodesRequired,
+  nodeIncrement,
   isMachinePool = false,
   canAutoScale = false,
   autoscalingEnabled = false,
@@ -43,27 +45,49 @@ function ScaleSection({
   autoScaleMaxNodesValue = '0',
   change,
   billingModel,
+  clusterVersionRawId,
+  imds,
+  isHypershiftSelected,
 }) {
+  const onChangeImds = (value) => {
+    change('imds', value);
+  };
+
   const expandableSectionTitle = isMachinePool ? 'Edit node labels and taints' : 'Edit node labels';
 
-  const labelsAndTaintsSection = (
-    <ExpandableSection
-      toggleTextCollapsed={expandableSectionTitle}
-      toggleTextExpanded={expandableSectionTitle}
-    >
-      <Title headingLevel="h3" className="pf-u-mb-md pf-u-mt-lg">
-        Node labels
-      </Title>
-      <FieldArray name="node_labels" component={ReduxFormKeyValueList} />
-      {isMachinePool && (
-        <>
-          <Title headingLevel="h3" className="pf-u-mb-md pf-u-mt-lg">
-            Taints
-          </Title>
-          <FieldArray name="taints" component={ReduxFormTaints} canAddMore />
-        </>
-      )}
-    </ExpandableSection>
+  const labelsAndTaintsSection =
+    isHypershiftSelected && !inModal ? null : (
+      <ExpandableSection
+        toggleTextCollapsed={expandableSectionTitle}
+        toggleTextExpanded={expandableSectionTitle}
+      >
+        <Title headingLevel="h3" className="pf-u-mb-md pf-u-mt-lg">
+          Node labels
+        </Title>
+        <FieldArray name="node_labels" component={ReduxFormKeyValueList} />
+        {isMachinePool && (
+          <>
+            <Title headingLevel="h3" className="pf-u-mb-md pf-u-mt-lg">
+              Taints
+            </Title>
+            <FieldArray name="taints" component={ReduxFormTaints} canAddMore />
+          </>
+        )}
+      </ExpandableSection>
+    );
+
+  // ROSA Classic and OSD CCS only
+  const imdsSection = cloudProviderID === 'aws' && !isHypershiftSelected && isBYOC && imds && (
+    <>
+      <GridItem md={8}>
+        <ImdsSection
+          isDisabled={!canSelectImds(clusterVersionRawId)}
+          imds={imds}
+          onChangeImds={onChangeImds}
+        />
+      </GridItem>
+      <GridItem md={4} />
+    </>
   );
 
   const isRosa = product === normalizedProducts.ROSA;
@@ -71,7 +95,7 @@ function ScaleSection({
   return (
     <>
       {/* Instance type title (only for Hypershift) */}
-      {showHypershiftTitle && (
+      {isHypershiftSelected && (
         <>
           <GridItem>
             <Title headingLevel="h3">Machine pools settings</Title>
@@ -118,6 +142,7 @@ function ScaleSection({
               minNodesRequired={minNodesRequired}
             />
           </GridItem>
+          {autoscalingEnabled && imdsSection}
           {autoscalingEnabled && labelsAndTaintsSection}
         </>
       )}
@@ -150,11 +175,14 @@ function ScaleSection({
               cloudProviderID={cloudProviderID}
               product={product}
               minNodes={minNodesRequired}
+              increment={nodeIncrement}
               isMachinePool={isMachinePool}
               billingModel={billingModel}
+              isHypershift={isHypershiftSelected}
             />
           </GridItem>
           <GridItem md={6} />
+          {imdsSection}
           {labelsAndTaintsSection}
         </>
       )}
@@ -215,7 +243,6 @@ ScaleSection.propTypes = {
   pending: PropTypes.bool,
   isBYOC: PropTypes.bool.isRequired,
   isMultiAz: PropTypes.bool.isRequired,
-  showHypershiftTitle: PropTypes.bool,
   inModal: PropTypes.bool,
   showStorageAndLoadBalancers: PropTypes.bool,
   machineType: PropTypes.string.isRequired,
@@ -223,12 +250,16 @@ ScaleSection.propTypes = {
   product: PropTypes.oneOf(Object.keys(normalizedProducts)).isRequired,
   billingModel: PropTypes.oneOf(Object.values(billingModels)),
   minNodesRequired: PropTypes.number,
+  nodeIncrement: PropTypes.number,
   isMachinePool: PropTypes.bool,
   canAutoScale: PropTypes.bool,
   autoscalingEnabled: PropTypes.bool,
   change: PropTypes.func.isRequired,
   autoScaleMinNodesValue: PropTypes.string,
   autoScaleMaxNodesValue: PropTypes.string,
+  isHypershiftSelected: PropTypes.bool,
+  clusterVersionRawId: PropTypes.string,
+  imds: PropTypes.string,
 };
 
 export default ScaleSection;
