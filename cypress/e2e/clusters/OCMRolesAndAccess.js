@@ -45,8 +45,8 @@ describe('OCM Roles And Access', () => {
     OCMRolesAndAccessPage.grantRoleUserInput().type(v4());
     OCMRolesAndAccessPage.submitButton().click();
     OCMRolesAndAccessPage.userInputError().should(
-      'have.text',
-      'The specified username does not exist.',
+      'contain.text',
+      'The specified username does not exist',
     );
     OCMRolesAndAccessPage.grantRoleUserInput().clear();
     OCMRolesAndAccessPage.grantRoleUserInput().type(username).blur();

@@ -25,7 +25,7 @@ exports[`InstallAzure renders correctly 1`] = `
   />
   <PageSection>
     <InstructionsChooser
-      ipiLearnMoreLink="https://docs.openshift.com/container-platform/4.12/installing/installing_azure/installing-azure-default.html"
+      ipiLearnMoreLink="https://docs.openshift.com/container-platform/4.13/installing/installing_azure/installing-azure-default.html"
       ipiPageLink="/install/azure/installer-provisioned"
       name="azure"
       providerSpecificFeatures={
@@ -35,7 +35,7 @@ exports[`InstallAzure renders correctly 1`] = `
           ],
         }
       }
-      upiLearnMoreLink="https://docs.openshift.com/container-platform/4.12/installing/installing_azure/installing-azure-user-infra.html"
+      upiLearnMoreLink="https://docs.openshift.com/container-platform/4.13/installing/installing_azure/installing-azure-user-infra.html"
       upiPageLink="/install/azure/user-provisioned"
     />
   </PageSection>

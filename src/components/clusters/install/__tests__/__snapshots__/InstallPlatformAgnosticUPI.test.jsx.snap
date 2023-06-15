@@ -53,7 +53,7 @@ exports[`Platform agnostic UPI install renders correctly 1`] = `
       }
       channel="stable"
       cloudProviderID="generic"
-      docURL="https://docs.openshift.com/container-platform/4.12/installing/installing_platform_agnostic/installing-platform-agnostic.html"
+      docURL="https://docs.openshift.com/container-platform/4.13/installing/installing_platform_agnostic/installing-platform-agnostic.html"
       installer="x86_64-openshift-install"
       isBMIPI={false}
       isUPI={true}
@@ -82,7 +82,7 @@ exports[`Platform agnostic UPI install renders correctly 1`] = `
               "url": "https://mirror.openshift.com/pub/openshift-v4/x86_64/dependencies/rhcos/latest/rhcos-live-rootfs.x86_64.img",
             },
           ],
-          "learnMoreURL": "https://docs.openshift.com/container-platform/4.12/installing/installing_platform_agnostic/installing-platform-agnostic.html#creating-machines-platform-agnostic",
+          "learnMoreURL": "https://docs.openshift.com/container-platform/4.13/installing/installing_platform_agnostic/installing-platform-agnostic.html#creating-machines-platform-agnostic",
         }
       }
       title="Install OpenShift on any x86_64 platform with user-provisioned infrastructure"

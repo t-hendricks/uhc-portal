@@ -1,0 +1,59 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`InstallMultiBMUPI renders correctly 1`] = `
+<Fragment>
+  <PageTitle
+    breadcrumbs={
+      <Breadcrumbs
+        path={
+          Array [
+            Object {
+              "label": "Clusters",
+            },
+            Object {
+              "label": "Cluster Type",
+              "path": "/create",
+            },
+            Object {
+              "label": "Baremetal (multi-architecture)",
+            },
+          ]
+        }
+      />
+    }
+    title="Install OpenShift on bare metal with multi-architecture compute machines"
+  />
+  <PageSection>
+    <OCPInstructions
+      breadcrumbs={
+        <Breadcrumbs
+          path={
+            Array [
+              Object {
+                "label": "Clusters",
+              },
+              Object {
+                "label": "Cluster Type",
+                "path": "/create",
+              },
+              Object {
+                "label": "Baremetal (multi-architecture)",
+              },
+            ]
+          }
+        />
+      }
+      channel="stable"
+      cloudProviderID="baremetal"
+      docURL="https://docs.openshift.com/container-platform/4.13/post_installation_configuration/multi-architecture-configuration.html#creating-a-cluster-with-multi-architecture-compute-machine-on-bare-metal-technology-preview"
+      installer="multi-openshift-install"
+      isBMIPI={false}
+      isUPI={true}
+      preReleasePageLink="/install/multi/pre-release"
+      showPreReleaseDocs={true}
+      title="Install OpenShift on bare metal with multi-architecture compute machines"
+      token={Object {}}
+    />
+  </PageSection>
+</Fragment>
+`;

@@ -25,7 +25,7 @@ exports[`InstallArmAWS renders correctly 1`] = `
   />
   <PageSection>
     <InstructionsChooser
-      ipiLearnMoreLink="https://docs.openshift.com/container-platform/4.12/installing/installing_aws/installing-aws-default.html"
+      ipiLearnMoreLink="https://docs.openshift.com/container-platform/4.13/installing/installing_aws/installing-aws-default.html"
       ipiPageLink="/install/aws/arm/installer-provisioned"
       name="aws"
       providerSpecificFeatures={
@@ -35,7 +35,7 @@ exports[`InstallArmAWS renders correctly 1`] = `
           ],
         }
       }
-      upiLearnMoreLink="https://docs.openshift.com/container-platform/4.12/installing/installing_aws/installing-aws-user-infra.html"
+      upiLearnMoreLink="https://docs.openshift.com/container-platform/4.13/installing/installing_aws/installing-aws-user-infra.html"
       upiPageLink="/install/aws/arm/user-provisioned"
     />
   </PageSection>

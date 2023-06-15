@@ -10,6 +10,7 @@ import {
   FieldId as CommonFieldId,
   CloudProviderType,
   UpgradePolicyType,
+  IMDSType,
 } from '~/components/clusters/wizards/common/constants';
 import { BreadcrumbPath } from '~/components/common/Breadcrumbs';
 import { ClusterPrivacyType } from './Networking/constants';
@@ -125,6 +126,7 @@ export const initialValues: FormikValues = {
   [FieldId.LoadBalancers]: 0,
   [FieldId.DisableScpChecks]: false,
   [FieldId.CustomerManagedKey]: 'false',
+  [FieldId.IMDS]: IMDSType.V1AndV2,
 };
 
 export const initialTouched = {

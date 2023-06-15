@@ -31,7 +31,7 @@ exports[`InstallVSphereUPI renders correctly 1`] = `
     <OCPInstructions
       channel="stable"
       cloudProviderID="vsphere"
-      docURL="https://docs.openshift.com/container-platform/4.12/installing/installing_vsphere/installing-vsphere.html"
+      docURL="https://docs.openshift.com/container-platform/4.13/installing/installing_vsphere/installing-vsphere.html"
       installer="x86_64-openshift-install"
       isBMIPI={false}
       isUPI={true}
@@ -44,7 +44,7 @@ exports[`InstallVSphereUPI renders correctly 1`] = `
               "url": "https://mirror.openshift.com/pub/openshift-v4/x86_64/dependencies/rhcos/latest/rhcos-vmware.x86_64.ova",
             },
           ],
-          "learnMoreURL": "https://docs.openshift.com/container-platform/4.12/installing/installing_vsphere/installing-vsphere.html#installation-vsphere-machines_installing-vsphere",
+          "learnMoreURL": "https://docs.openshift.com/container-platform/4.13/installing/installing_vsphere/installing-vsphere.html#installation-vsphere-machines_installing-vsphere",
         }
       }
       title="Install OpenShift on vSphere with user-provisioned infrastructure"

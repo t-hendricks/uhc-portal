@@ -7,31 +7,20 @@ import PopoverHint from '../../../common/PopoverHint';
 import { noQuotaTooltip } from '../../../../common/helpers';
 import { normalizedProducts, billingModels } from '../../../../common/subscriptionTypes';
 import { availableNodesFromQuota } from '../quotaSelectors';
+import { getNodeIncrement } from '~/components/clusters/ClusterDetails/components/MachinePools/machinePoolsHelper';
 
 export const MAX_NODES = 180;
 
 class NodeCountInput extends React.Component {
   componentDidUpdate() {
-    const { input, isEditingCluster } = this.props;
-    const minimum = this.getMinimumValue();
+    const { input, isEditingCluster, minNodes } = this.props;
     const available = this.getAvailableQuota();
-    if (available === 0 && input.value !== minimum && !isEditingCluster) {
+    if (available === 0 && input.value !== minNodes && !isEditingCluster) {
       // set input value to minimum if we don't have quota for it (and will be disabled)
       // this can happen if the user set a value, then switched to a machine type
       // where they have less quota than that value.
-      input.onChange(minimum);
+      input.onChange(minNodes);
     }
-  }
-
-  getMinimumValue() {
-    const { isMultiAz, isByoc, minNodes } = this.props;
-    if (minNodes !== undefined) {
-      return minNodes;
-    }
-    if (isByoc) {
-      return isMultiAz ? 3 : 2;
-    }
-    return isMultiAz ? 9 : 4;
   }
 
   getIncludedNodes() {
@@ -84,12 +73,12 @@ class NodeCountInput extends React.Component {
       machineType,
       isByoc,
       isMachinePool,
+      minNodes,
+      increment = getNodeIncrement(isMultiAz),
     } = this.props;
 
     const included = this.getIncludedNodes();
     const available = this.getAvailableQuota();
-    const minimum = this.getMinimumValue();
-    const increment = isMultiAz ? 3 : 1; // MultiAz requires nodes to be a multiple of 3
     // no extra node quota = only base cluster size is available
     const optionsAvailable = available > 0 || isEditingCluster;
     let maxValue = isEditingCluster ? available + currentNodeCount : available + included;
@@ -97,7 +86,7 @@ class NodeCountInput extends React.Component {
       maxValue = MAX_NODES;
     }
 
-    const options = optionsAvailable ? range(minimum, maxValue + 1, increment) : [minimum];
+    const options = optionsAvailable ? range(minNodes, maxValue + 1, increment) : [minNodes];
 
     let notEnoughQuota = options.length < 1;
 
@@ -172,6 +161,7 @@ NodeCountInput.propTypes = {
   cloudProviderID: PropTypes.string.isRequired,
   product: PropTypes.oneOf(Object.keys(normalizedProducts)).isRequired,
   billingModel: PropTypes.oneOf(Object.values(billingModels)).isRequired,
+  increment: PropTypes.number,
 };
 
 export default NodeCountInput;

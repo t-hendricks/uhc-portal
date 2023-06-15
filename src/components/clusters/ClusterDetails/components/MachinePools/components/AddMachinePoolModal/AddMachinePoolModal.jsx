@@ -15,7 +15,7 @@ import {
 } from '../../../../../../../common/validators';
 import CostSavingsSection from './CostSavingsSection';
 import { isMultiAZ } from '../../../../clusterDetailsHelper';
-import { getMinNodesRequired } from '../../machinePoolsHelper';
+import { getMinNodesRequired, getMinNodesRequiredHypershift } from '../../machinePoolsHelper';
 import { SubnetSelectField } from '~/components/clusters/CreateOSDPage/CreateOSDWizard/NetworkScreen/SubnetSelectField';
 
 class AddMachinePoolModal extends Component {
@@ -138,7 +138,11 @@ class AddMachinePoolModal extends Component {
                 cloudProviderID={cluster.cloud_provider.id}
                 product={cluster?.subscription?.plan?.type}
                 showStorageAndLoadBalancers={false}
-                minNodesRequired={getMinNodesRequired(isHypershiftCluster)}
+                minNodesRequired={
+                  isHypershiftCluster
+                    ? getMinNodesRequiredHypershift()
+                    : getMinNodesRequired(false, !!cluster?.ccs?.enabled, isMultiAZ(cluster))
+                }
                 isMachinePool
                 inModal
                 canAutoScale={canAutoScale}
@@ -147,6 +151,7 @@ class AddMachinePoolModal extends Component {
                 autoScaleMinNodesValue={autoScaleMinNodesValue}
                 autoScaleMaxNodesValue={autoScaleMaxNodesValue}
                 billingModel={billingModel}
+                isHypershiftSelected={isHypershiftCluster}
               />
               {/* Cost savings */}
               {canUseSpotInstances && (

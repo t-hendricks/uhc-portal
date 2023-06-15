@@ -382,6 +382,12 @@ const runItYourself = () => {
     ],
     [
       <>
+        <Link to="/install/aws/multi/installer-provisioned">AWS (multi-architecture)</Link>
+      </>,
+      'Full stack automation',
+    ],
+    [
+      <>
         <Link to="/install/azure">Azure (x86_64)</Link>
       </>,
       'Full stack automation and pre-existing infrastructure',
@@ -409,6 +415,21 @@ const runItYourself = () => {
     [
       <>
         <Link to="/install/ibm-cloud">IBM Cloud</Link>
+      </>,
+      'Full stack automation',
+    ],
+
+    [
+      <>
+        <Link to="/install/metal/multi"> Baremetal (multi-architecture)</Link>
+        <TechnologyPreview position={PreviewBadgePosition.inline} />
+      </>,
+      'Pre-existing infrastructure',
+    ],
+    [
+      <>
+        <Link to="/install/powervs/installer-provisioned">IBM PowerVS (ppc64le)</Link>
+        <TechnologyPreview position={PreviewBadgePosition.inline} />
       </>,
       'Full stack automation',
     ],

@@ -11,8 +11,8 @@ const MIRROR_CLIENTS_STABLE_PPC =
   'https://mirror.openshift.com/pub/openshift-v4/ppc64le/clients/ocp/stable/';
 const MIRROR_CLIENTS_STABLE_ARM =
   'https://mirror.openshift.com/pub/openshift-v4/aarch64/clients/ocp/stable/';
-const MIRROR_CLIENTS_LATEST_TP_MULTI =
-  'https://mirror.openshift.com/pub/openshift-v4/multi/clients/ocp/latest/';
+const MIRROR_CLIENTS_STABLE_MULTI =
+  'https://mirror.openshift.com/pub/openshift-v4/multi/clients/ocp/stable/';
 const MIRROR_CLIENTS_LATEST_PRE_X86 =
   'https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp-dev-preview/pre-release/';
 const MIRROR_CLIENTS_LATEST_PRE_IBMZ =
@@ -52,7 +52,7 @@ const MIRROR_ROSA_LATEST = 'https://mirror.openshift.com/pub/openshift-v4/client
 const MIRROR_MIRROR_REGISTRY_LATEST =
   'https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/mirror-registry/latest';
 
-const DOCS_BASE = 'https://docs.openshift.com/container-platform/4.12';
+const DOCS_BASE = 'https://docs.openshift.com/container-platform/4.13';
 const OSD_DOCS_BASE = 'https://docs.openshift.com/dedicated';
 const ROSA_DOCS_BASE = 'https://docs.openshift.com/rosa';
 const ROSA_CP_DOCS_BASE =
@@ -136,6 +136,7 @@ const links = {
   INSTALL_AWS_CUSTOMIZATIONS: `${DOCS_BASE}/installing/installing_aws/installing-aws-customizations.html`,
   INSTALL_AWS_VPC: `${DOCS_BASE}/installing/installing_aws/installing-aws-vpc.html`,
   INSTALL_AWS_CUSTOM_VPC_REQUIREMENTS: `${DOCS_BASE}/installing/installing_aws/installing-aws-vpc.html#installation-custom-aws-vpc-requirements_installing-aws-vpc`,
+  INSTALL_AWS_MULTI_ARCH: `${DOCS_BASE}/post_installation_configuration/multi-architecture-configuration.html#creating-a-cluster-with-multi-architecture-compute-machines-on-aws`,
 
   INSTALL_AZUREUPI_GETTING_STARTED: `${DOCS_BASE}/installing/installing_azure/installing-azure-user-infra.html`,
   INSTALL_AZUREIPI_GETTING_STARTED: `${DOCS_BASE}/installing/installing_azure/installing-azure-default.html`,
@@ -155,6 +156,7 @@ const links = {
   INSTALL_BAREMETAL_CUSTOMIZATIONS: `${DOCS_BASE}/installing/installing_bare_metal/installing-bare-metal-network-customizations.html`,
   RHCOS_BAREMETAL_ISO_X86: `${MIRROR_RHCOS_LATEST_X86}/rhcos-live.x86_64.iso`,
   RHCOS_BAREMETAL_RAW_X86: `${MIRROR_RHCOS_LATEST_X86}/rhcos-metal.x86_64.raw.gz`,
+  INSTALL_BAREMETAL_MULTI_ARCH: `${DOCS_BASE}/post_installation_configuration/multi-architecture-configuration.html#creating-a-cluster-with-multi-architecture-compute-machine-on-bare-metal-technology-preview`,
 
   INSTALL_CRC_GETTING_STARTED:
     'https://access.redhat.com/documentation/en-us/red_hat_openshift_local',
@@ -187,6 +189,8 @@ const links = {
   INSTALL_IBMZ_RHCOS_LEARN_MORE_RHEL_KVM: `${DOCS_BASE}/installing/installing_ibm_z/installing-ibm-z-kvm.html#installation-user-infra-machines-iso-ibm-z_kvm_installing-ibm-z-kvm`,
   INSTALL_IBMZ_LEARN_MORE_ZVM: `${DOCS_BASE}/installing/installing_ibm_z/installing-ibm-z.html#installation-user-infra-machines-iso-ibm-z_installing-ibm-z`,
   INSTALL_IBMZ_UPI_GETTING_STARTED: `${DOCS_BASE}/installing/installing_ibm_z/preparing-to-install-on-ibm-z.html`,
+  INSTALL_IBMPOWERVS_GETTING_STARTED: `${DOCS_BASE}/installing/installing_ibm_powervs/preparing-to-install-on-ibm-power-vs.html`,
+  INSTALL_IBMPOWERVS_PREREQUISITES: `${DOCS_BASE}/installing/installing_ibm_powervs/preparing-to-install-on-ibm-power-vs.html`,
   RHCOS_IBMZ_ISO: `${MIRROR_RHCOS_LATEST_IBMZ}/rhcos-live.s390x.iso`,
   RHCOS_IBMZ_INITRAMFS: `${MIRROR_RHCOS_LATEST_IBMZ}/rhcos-live-initramfs.s390x.img`,
   RHCOS_IBMZ_KERNEL: `${MIRROR_RHCOS_LATEST_IBMZ}/rhcos-live-kernel-s390x`,
@@ -284,6 +288,8 @@ const links = {
   AWS_CLI_GETTING_STARTED_MANUAL:
     'https://docs.aws.amazon.com/ROSA/latest/userguide/getting-started-sts-manual.html',
   AWS_ROSA_GET_STARTED: 'https://docs.aws.amazon.com/ROSA/latest/userguide/getting-started.html',
+  AWS_IMDS:
+    'https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/configuring-instance-metadata-options.html',
 
   OCM_DOCS_PULL_SECRETS: `${OCM_DOCS_BASE}/html/managing_clusters/assembly-managing-clusters#downloading_and_updating_pull_secrets`,
   OCM_DOCS_ROLES_AND_ACCESS: `${OCM_DOCS_BASE}/html/managing_clusters/assembly-user-management-ocm`,
@@ -588,9 +594,7 @@ const urls = {
         [operatingSystems.linux]: `${MIRROR_CLIENTS_STABLE_PPC}openshift-install-linux.tar.gz`,
       },
       [architectures.arm]: {
-        /* 4.13
         [operatingSystems.linux]: `${MIRROR_CLIENTS_STABLE_PPC}openshift-install-linux-arm64.tar.gz`,
-        */
         [operatingSystems.mac]: `${MIRROR_CLIENTS_STABLE_PPC}openshift-install-mac-arm64.tar.gz`,
       },
     },
@@ -633,12 +637,12 @@ const urls = {
   [tools.MULTIINSTALLER]: {
     [channels.STABLE]: {
       [architectures.x86]: {
-        [operatingSystems.linux]: `${MIRROR_CLIENTS_LATEST_TP_MULTI}amd64/openshift-install-linux.tar.gz`,
-        [operatingSystems.mac]: `${MIRROR_CLIENTS_LATEST_TP_MULTI}amd64/openshift-install-mac.tar.gz`,
+        [operatingSystems.linux]: `${MIRROR_CLIENTS_STABLE_MULTI}amd64/openshift-install-linux.tar.gz`,
+        [operatingSystems.mac]: `${MIRROR_CLIENTS_STABLE_MULTI}amd64/openshift-install-mac.tar.gz`,
       },
       [architectures.arm]: {
-        [operatingSystems.linux]: `${MIRROR_CLIENTS_LATEST_TP_MULTI}arm64/openshift-install-linux.tar.gz`,
-        [operatingSystems.mac]: `${MIRROR_CLIENTS_LATEST_TP_MULTI}arm64/openshift-install-mac-arm64.tar.gz`,
+        [operatingSystems.linux]: `${MIRROR_CLIENTS_STABLE_MULTI}arm64/openshift-install-linux.tar.gz`,
+        [operatingSystems.mac]: `${MIRROR_CLIENTS_STABLE_MULTI}arm64/openshift-install-mac-arm64.tar.gz`,
       },
       /*
       [architectures.ppc]: {

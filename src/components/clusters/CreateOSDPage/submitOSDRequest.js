@@ -138,6 +138,7 @@ export const createClusterRequest = ({ isWizard = true, cloudProviderID, product
       };
     }
   }
+
   if (formData.byoc === 'true') {
     const wasExistingVPCShown = isWizard || formData.network_configuration_toggle === 'advanced';
     const isInstallExistingVPC = wasExistingVPCShown && formData.install_to_vpc;
@@ -198,6 +199,7 @@ export const createClusterRequest = ({ isWizard = true, cloudProviderID, product
       if (formData.customer_managed_key === 'true') {
         clusterRequest.aws.kms_key_arn = formData.kms_key_arn;
       }
+
       if (isHypershiftSelected) {
         if (formData.etcd_key_arn) {
           clusterRequest.aws.etcd_encryption = {
@@ -206,6 +208,12 @@ export const createClusterRequest = ({ isWizard = true, cloudProviderID, product
         }
         clusterRequest.aws.billing_account_id = formData.billing_account_id;
       }
+
+      if (formData.imds && !isHypershiftSelected) {
+        // ROSA Classic and OSD CCS only
+        clusterRequest.aws.ec2_metadata_http_tokens = formData.imds;
+      }
+
       clusterRequest.ccs.disable_scp_checks = formData.disable_scp_checks;
       clusterRequest.aws.subnet_ids = createClusterAwsSubnetIds({ formData, isInstallExistingVPC });
       clusterRequest.nodes.availability_zones = createClusterAzs({
