@@ -16,7 +16,7 @@ import AccountRolesARNsSection from './AccountRolesARNsSection';
 import { AssociateAwsAccountModal } from './AssociateAWSAccountModal';
 import { AwsRoleErrorAlert } from './AwsRoleErrorAlert';
 import AWSAccountSelection from './AWSAccountSelection';
-import AWSBillingAccountField from './AWSBillingAccount';
+import AWSBillingAccount from './AWSBillingAccount';
 
 export const isUserRoleForSelectedAWSAccount = (users, awsAcctId) =>
   users.some((user) => user.aws_id === awsAcctId);
@@ -190,7 +190,7 @@ function AccountsRolesScreen({
         </GridItem>
         <GridItem span={7} />
         {isHypershiftSelected && (
-          <AWSBillingAccountField
+          <AWSBillingAccount
             change={change}
             selectedAWSBillingAccountID={selectedAWSBillingAccountID}
             selectedAWSAccountID={selectedAWSAccountID}
