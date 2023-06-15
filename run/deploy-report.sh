@@ -126,7 +126,7 @@ for ((i=${#readyToPromoteSHAs[@]}-1; i>=0; i--)); do
 done
 
 # Create a temporary branch with the desired commits
-tempBranch="candidate-$(date +%Y%m%d)"
+tempBranch="candidate-$(date +"%B-%d-%Y")"
 echo git checkout -b "$tempBranch" live_candidate
 echo " "
 echo git cherry-pick -m 1 "${reversedReadyToPromoteSHAs[@]}"
