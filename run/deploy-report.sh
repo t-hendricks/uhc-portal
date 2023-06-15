@@ -56,7 +56,7 @@ while IFS=',' read -r commitHash commitDate commitMessage; do
       readyToPromote+=("  $masterLogLine\\n                       $mrDesc")
       readyToPromoteSHAs+=("$commitHash")
       jiraKeysAsString="-"
-      releaseNote="{\"revision\": \"$commitHash\", \"ticket\": \"$jiraKeysAsString\", \"description\": \"$mrDesc\", \"mr\": \"!$mrID\"}"
+      releaseNote="$(jq --null-input --compact-output --arg revision "$commitHash" --arg ticket "$jiraKeysAsString" --arg description "$mrDesc" --arg mr "!$mrID" '$ARGS.named')"
       releaseNotes+=("$releaseNote")
     else
       allJirasClosed=true
@@ -92,7 +92,7 @@ while IFS=',' read -r commitHash commitDate commitMessage; do
       if [ "$allJirasClosed" = true ]; then
         readyToPromote+=("C $masterLogLine\\n                       $mrDesc")
         readyToPromoteSHAs+=("$commitHash")
-        releaseNote="{\"revision\": \"$commitHash\", \"ticket\": \"$jiraKeysAsString\", \"description\": \"$mrDesc\", \"mr\": \"!$mrID\"}"
+        releaseNote="$(jq --null-input --compact-output --arg revision "$commitHash" --arg ticket "$jiraKeysAsString" --arg description "$mrDesc" --arg mr "!$mrID" '$ARGS.named')"
         releaseNotes+=("$releaseNote")
       else
         notClosed+=("$masterLogLine")
