@@ -9,6 +9,7 @@ insightsMock();
 
 const hypershiftMessage =
   /For now, you can only create ROSA with Hosted Control Plane clusters using the CLI/;
+const completeAWSMessage = /complete aws prerequisites/i;
 
 describe('<CreateRosaGetStarted />', () => {
   it('is accessible', async () => {
@@ -51,5 +52,27 @@ describe('<CreateRosaGetStarted />', () => {
     // Assert
     // There is no natural role for this message
     expect(screen.queryByText(hypershiftMessage)).not.toBeInTheDocument();
+  });
+
+  it('navigated to quick start from aws setup', () => {
+    render(
+      <MemoryRouter initialEntries={[{ search: '?source=aws' }]}>
+        <CreateRosaGetStarted />
+      </MemoryRouter>,
+    );
+    expect(
+      screen.getByRole('button', { name: completeAWSMessage }).querySelector('svg.success'),
+    ).toBeInTheDocument();
+  });
+
+  it('navigated to quick start from other site', () => {
+    render(
+      <MemoryRouter>
+        <CreateRosaGetStarted />
+      </MemoryRouter>,
+    );
+    expect(
+      screen.getByRole('button', { name: completeAWSMessage }).querySelector('svg.warning'),
+    ).toBeInTheDocument();
   });
 });
