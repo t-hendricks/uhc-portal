@@ -65,6 +65,7 @@ class ClusterIngressCard extends React.Component {
     } = this.props;
 
     const disableEditReason = this.resolveDisableEditReason();
+    const isAWS = provider === 'aws';
 
     return (
       <Card className="ocm-c-networking-cluster-ingress__card">
@@ -111,14 +112,16 @@ class ClusterIngressCard extends React.Component {
                 </Text>
               </TextContent>
             </FormGroup>
-            <FormGroup label="Load balancer type">
-              <Switch
-                label={LoadBalancerFlavorLabel[LoadBalancerFlavor.NLB]}
-                labelOff={LoadBalancerFlavorLabel[LoadBalancerFlavor.CLASSIC]}
-                isChecked={isNLB}
-                isDisabled
-              />
-            </FormGroup>
+            {isAWS && (
+              <FormGroup label="Load balancer type">
+                <Switch
+                  label={LoadBalancerFlavorLabel[LoadBalancerFlavor.NLB]}
+                  labelOff={LoadBalancerFlavorLabel[LoadBalancerFlavor.CLASSIC]}
+                  isChecked={isNLB}
+                  isDisabled
+                />
+              </FormGroup>
+            )}
             {hasAdditionalRouter && (
               <>
                 <FormGroup fieldId="additional_router_address" label="Additional router" isStack>

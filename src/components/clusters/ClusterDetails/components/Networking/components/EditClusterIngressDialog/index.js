@@ -23,6 +23,8 @@ const mapStateToProps = (state) => {
   const clusterRouters = NetworkingSelector(state);
   const hasAdditionalRouter = Object.keys(clusterRouters).length === 2;
 
+  const provider = cluster.cloud_provider?.id;
+
   const valueSelector = formValueSelector('EditClusterIngress');
   const additionalRouterEnabled = valueSelector(state, 'enable_additional_router');
   const APIPrivate = cluster.api.listening === 'internal';
@@ -48,6 +50,7 @@ const mapStateToProps = (state) => {
     APIPrivate,
     additionalRouterEnabled,
     hideAdvancedOptions: subscriptionPlan === knownProducts.ROSA,
+    provider,
     isOpen: shouldShowModal(state, modals.EDIT_CLUSTER_INGRESS),
     /**
      * an alert should appear if both routers are enabled, at least one is private,

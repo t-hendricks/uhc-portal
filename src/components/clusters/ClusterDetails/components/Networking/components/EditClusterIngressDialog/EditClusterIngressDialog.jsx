@@ -57,6 +57,8 @@ class EditClusterIngressDialog extends React.Component {
       handleSubmit,
     } = this.props;
 
+    const isAWS = provider === 'aws';
+
     const editRoutersError = editClusterRoutersResponse.error ? (
       <ErrorBox message="Error editing cluster ingress" response={editClusterRoutersResponse} />
     ) : null;
@@ -69,11 +71,11 @@ class EditClusterIngressDialog extends React.Component {
         isPlain
         isInline
       >
-        {provider === 'aws' ? (
+        {isAWS && (
           <ExternalLink href={links.OSD_PRIVATE_CLUSTER}>
             Learn more about cluster privacy
           </ExternalLink>
-        ) : null}
+        )}
       </Alert>
     );
 
@@ -164,19 +166,21 @@ class EditClusterIngressDialog extends React.Component {
                 label="Make router private"
               />
             </FormGroup>
-            <FormGroup
-              fieldId="load_balancer_group"
-              label="Load balancer type"
-              className="pf-u-pb-md"
-            >
-              <Field
-                component={ReduxCheckbox}
-                name="is_nlb_load_balancer"
-                label={LoadBalancerFlavorLabel[LoadBalancerFlavor.NLB]}
-                labelOff={LoadBalancerFlavorLabel[LoadBalancerFlavor.CLASSIC]}
-                isSwitch
-              />
-            </FormGroup>
+            {isAWS && (
+              <FormGroup
+                fieldId="load_balancer_group"
+                label="Load balancer type"
+                className="pf-u-pb-md"
+              >
+                <Field
+                  component={ReduxCheckbox}
+                  name="is_nlb_load_balancer"
+                  label={LoadBalancerFlavorLabel[LoadBalancerFlavor.NLB]}
+                  labelOff={LoadBalancerFlavorLabel[LoadBalancerFlavor.CLASSIC]}
+                  isSwitch
+                />
+              </FormGroup>
+            )}
             {advancedOptions}
           </Form>
         </Modal>

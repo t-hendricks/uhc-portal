@@ -22,6 +22,8 @@ const mapStateToProps = (state) => {
     clusterRouters?.additional?.routeSelectors,
   );
 
+  const provider = cluster.cloud_provider?.id;
+
   const isApiPrivate = cluster.api.listening === 'internal';
   const isDefaultRouterPrivate = clusterRouters.default.isPrivate;
   const isAdditionalRouterPrivate = !!clusterRouters?.additional?.isPrivate;
@@ -48,6 +50,7 @@ const mapStateToProps = (state) => {
     clusterHibernating,
     showConsoleLink,
     isNLB: clusterRouters.default.loadBalancer === LoadBalancerFlavor.NLB,
+    provider,
   };
 };
 
