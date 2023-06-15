@@ -7,6 +7,7 @@ import {
   TextContent,
   Text,
   TextVariants,
+  ButtonVariant,
   PageSection,
   Stack,
   StackItem,
@@ -20,7 +21,9 @@ import {
   Split,
   SplitItem,
 } from '@patternfly/react-core';
+import { WarningTriangleIcon, CheckCircleIcon } from '@patternfly/react-icons';
 
+import { useLocation } from 'react-router-dom';
 import PageTitle from '~/components/common/PageTitle';
 import Breadcrumbs from '~/components/common/Breadcrumbs';
 import ExternalLink from '~/components/common/ExternalLink';
@@ -30,7 +33,6 @@ import { scrollToTop } from '~/common/helpers';
 import Instruction from '~/components/common/Instruction';
 import Instructions from '~/components/common/Instructions';
 
-import StepEnableROSAService from './StepEnableROSAService';
 import StepDownloadROSACli from './StepDownloadROSACli';
 import StepCreateAWSAccountRoles from './StepCreateAWSAccountRoles';
 import '../createROSAWizard.scss';
@@ -53,7 +55,9 @@ const breadcrumbs = (
 );
 
 const CreateRosaGetStarted = () => {
-  const [isPrereqOpen, setIsPrereqOpen] = React.useState(true);
+  const { search } = useLocation();
+  const sourceIsAWS = search.indexOf('source=aws') !== -1;
+  const [isAWSPrereqOpen, setIsAWSPrereqOpen] = React.useState(!sourceIsAWS);
   const showHCPDirections = useFeatureGate(HCP_ROSA_GETTING_STARTED_PAGE);
 
   React.useEffect(() => {
@@ -74,40 +78,69 @@ const CreateRosaGetStarted = () => {
       </PageTitle>
       <PageSection>
         <Stack hasGutter>
+          {/* ************ Start of AWS prerequisites section ***************** */}
           <StackItem>
             <Card>
               <CardBody>
                 <ExpandableSection
-                  toggleText={`${isPrereqOpen ? 'Hide' : 'Show'} ROSA Prerequisites`}
-                  onToggle={() => setIsPrereqOpen(!isPrereqOpen)}
-                  isExpanded={isPrereqOpen}
+                  onToggle={() => setIsAWSPrereqOpen(!isAWSPrereqOpen)}
+                  isExpanded={isAWSPrereqOpen}
+                  toggleContent={
+                    <div>
+                      <span>Complete AWS prerequisites</span>
+                      <span className="pf-u-ml-sm">
+                        {isAWSPrereqOpen ? (
+                          <WarningTriangleIcon className="warning" />
+                        ) : (
+                          <CheckCircleIcon className="success" />
+                        )}
+                      </span>
+                    </div>
+                  }
                 >
-                  <Split className="pf-u-mb-lg">
-                    <SplitItem isFilled>
-                      <Title headingLevel="h2">Prepare your AWS account</Title>
-                    </SplitItem>
-                    <SplitItem>
-                      <ExternalLink href={links.AWS_ROSA_GET_STARTED}>
-                        Help with ROSA setup
-                      </ExternalLink>
-                    </SplitItem>
-                  </Split>
-
-                  {/* ************* START OF PREREQ STEPS ******************* */}
-                  <Instructions wide>
-                    <Instruction simple>
-                      <StepEnableROSAService />
-                    </Instruction>
-
-                    <Instruction simple>
-                      <StepDownloadROSACli />
-                    </Instruction>
-
-                    <Instruction simple>
-                      <StepCreateAWSAccountRoles />
-                    </Instruction>
-                  </Instructions>
+                  <TextContent className="pf-u-mt-md">
+                    <Title headingLevel="h2">Have you prepared your AWS account?</Title>
+                    <Text component={TextVariants.p}>
+                      You will need to enable AWS, configure Elastic Load Balancer (ELB), and verify
+                      your quotas on AWS console. If you have already prepared your AWS console, you
+                      can continue to complete ROSA prerequisites below.
+                    </Text>
+                    <ExternalLink
+                      href={links.AWS_CONSOLE_ROSA_HOME}
+                      isButton
+                      variant={ButtonVariant.secondary}
+                    >
+                      Open AWS Console
+                    </ExternalLink>
+                  </TextContent>
                 </ExpandableSection>
+              </CardBody>
+            </Card>
+          </StackItem>
+          <StackItem>
+            <Card>
+              <CardBody>
+                <Split className="pf-u-mb-lg">
+                  <SplitItem isFilled>
+                    <Title headingLevel="h2">Complete ROSA prerequisites</Title>
+                  </SplitItem>
+                  <SplitItem>
+                    <ExternalLink href={links.AWS_ROSA_GET_STARTED}>
+                      Help with ROSA setup
+                    </ExternalLink>
+                  </SplitItem>
+                </Split>
+
+                {/* ************* START OF PREREQ STEPS ******************* */}
+                <Instructions wide>
+                  <Instruction simple>
+                    <StepDownloadROSACli />
+                  </Instruction>
+
+                  <Instruction simple>
+                    <StepCreateAWSAccountRoles />
+                  </Instruction>
+                </Instructions>
               </CardBody>
             </Card>
           </StackItem>
