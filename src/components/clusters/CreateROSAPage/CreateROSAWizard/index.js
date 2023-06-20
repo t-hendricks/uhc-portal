@@ -47,8 +47,6 @@ const mapStateToProps = (state) => {
       ...formSyncErrors,
       ...formAsyncErrors,
     },
-    formSyncErrors,
-    formAsyncErrors,
     getUserRoleResponse,
     selectedAWSAccountID: valueSelector(state, 'associated_aws_id'),
     isHypershiftSelected: valueSelector(state, 'hypershift') === 'true',
