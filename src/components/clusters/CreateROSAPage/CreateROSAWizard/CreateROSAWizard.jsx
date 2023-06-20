@@ -11,6 +11,8 @@ import { normalizedProducts } from '~/common/subscriptionTypes';
 import { trackEvents, ocmResourceType } from '~/common/analytics';
 import withAnalytics from '~/hoc/withAnalytics';
 import usePreventBrowserNav from '~/hooks/usePreventBrowserNav';
+import { useFeatureGate } from '~/hooks/useFeatureGate';
+import { HYPERSHIFT_WIZARD_FEATURE } from '~/redux/constants/featureConstants';
 import { getAccountAndRolesStepId, stepId, stepNameById } from './rosaWizardConstants';
 
 import ClusterSettingsScreen from '../../CreateOSDPage/CreateOSDWizard/ClusterSettingsScreen';
@@ -32,8 +34,6 @@ import ErrorBoundary from '../../../App/ErrorBoundary';
 import ClusterRolesScreen from './ClusterRolesScreen';
 import AccountsRolesScreen from './AccountsRolesScreen';
 import { isUserRoleForSelectedAWSAccount } from './AccountsRolesScreen/AccountsRolesScreen';
-import { HYPERSHIFT_WIZARD_FEATURE } from '../../../../redux/constants/featureConstants';
-import { useFeatureGate } from '~/hooks/useFeatureGate';
 
 import CreateRosaWizardFooter from './CreateRosaWizardFooter';
 
@@ -182,19 +182,19 @@ class CreateROSAWizardInternal extends React.Component {
   };
 
   scrolledToFirstError = () => {
-    const { touch, formErrors, formSyncErrors, formAsyncErrors } = this.props;
+    const { touch, formErrors } = this.props;
     const { validatedSteps, currentStepId, isNextClicked } = this.state;
     const isCurrentStepValid = validatedSteps[currentStepId];
     const errorIds = Object.keys(formErrors);
-    const syncErrorIds = Object.keys(formSyncErrors);
-    const asyncErrorIds = Object.keys(formAsyncErrors);
 
     // When errors exist, touch the fields with those errors to trigger validation.
-    if (asyncErrorIds?.length || (syncErrorIds?.length && !isCurrentStepValid)) {
+    if (errorIds?.length) {
       touch(errorIds);
       const hasScrolledTo = scrollToFirstField(errorIds);
       this.setState({ isNextClicked: !isNextClicked });
-      return hasScrolledTo;
+      // return `true` if errors were registered to the validatedSteps cache, or if the field
+      // was successfully scrolled-to (i.e. found in the current DOM), and `false` otherwise.
+      return !isCurrentStepValid || hasScrolledTo;
     }
     return false;
   };
@@ -575,8 +575,6 @@ CreateROSAWizardInternal.propTypes = {
   onSubmit: PropTypes.func,
   touch: PropTypes.func,
   formErrors: PropTypes.object,
-  formSyncErrors: PropTypes.object,
-  formAsyncErrors: PropTypes.object,
   getUserRoleResponse: PropTypes.object,
   selectedAWSAccountID: PropTypes.string,
   formValues: PropTypes.object,

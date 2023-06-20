@@ -24,6 +24,7 @@ const VPCDropdown = ({
     onBlur: _onBlur,
     ...inputProps
   },
+  meta: { error, touched },
 }: VCPDropdownProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const vpcResponse = useAWSVPCInquiry();
@@ -65,7 +66,11 @@ const VPCDropdown = ({
 
   return (
     <>
-      <FormGroup label="Specify a VPC to install your machine pools into" isRequired>
+      <FormGroup
+        label="Specify a VPC to install your machine pools into"
+        validated={touched && error ? 'error' : undefined}
+        isRequired
+      >
         <Select
           {...inputProps}
           isOpen={isOpen}
@@ -73,6 +78,7 @@ const VPCDropdown = ({
           onToggle={onToggle}
           onSelect={onSelect}
           placeholderText={selectData.placeholder}
+          validated={touched && error ? 'error' : undefined}
           isDisabled={vpcResponse.pending || selectData.items.length === 0}
         >
           {selectData.items.map((vpcItem) => {
