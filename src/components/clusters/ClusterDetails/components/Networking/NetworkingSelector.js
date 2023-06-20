@@ -15,6 +15,7 @@ const NetworkingSelector = (state) => {
       isDefault: r.default,
       isPrivate: r.listening === 'internal',
       address: r.dns_name,
+      loadBalancer: r.load_balancer_type,
     };
     const routeSelectors = !router.isDefault ? r.route_selectors : null;
     if (routeSelectors) {

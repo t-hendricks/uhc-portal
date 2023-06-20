@@ -1,5 +1,6 @@
 import has from 'lodash/has';
 import isEmpty from 'lodash/isEmpty';
+import { LoadBalancerFlavor } from '~/types/clusters_mgmt.v1';
 import { strToCleanObject } from '../../../../../common/helpers';
 import { networkingConstants } from './NetworkingConstants';
 import { setClusterDetails } from '../../../../../redux/actions/clustersActions';
@@ -53,10 +54,18 @@ const sendNetworkConfigRequests = async (newData, currentData, clusterID, dispat
   const additionalRouterDeleted = hadAdditionalRouter && !newData.enable_additional_router;
   const additionalRouterCreated = !hadAdditionalRouter && newData.enable_additional_router;
   const defaultRouterEdited = newData.private_default_router !== currentData.default.isPrivate;
+  const defaultRouterLBEdited =
+    newData.is_nlb_load_balancer !== (currentData.default.loadBalancer === LoadBalancerFlavor.NLB);
 
   // Edit default router
   if (defaultRouterEdited) {
     requestDefaultRouter.listening = newData.private_default_router ? 'internal' : 'external';
+  }
+
+  if (defaultRouterLBEdited) {
+    requestDefaultRouter.load_balancer_type = newData.is_nlb_load_balancer
+      ? LoadBalancerFlavor.NLB
+      : LoadBalancerFlavor.CLASSIC;
   }
 
   // Edit existing additional router
@@ -85,7 +94,7 @@ const sendNetworkConfigRequests = async (newData, currentData, clusterID, dispat
     );
   }
 
-  if (defaultRouterEdited) {
+  if (defaultRouterEdited || defaultRouterLBEdited) {
     result = await clusterService.editIngress(
       clusterID,
       requestDefaultRouter.id,

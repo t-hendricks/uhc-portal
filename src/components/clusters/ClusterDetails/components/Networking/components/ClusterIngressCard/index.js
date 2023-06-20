@@ -1,5 +1,6 @@
 import { connect } from 'react-redux';
 
+import { LoadBalancerFlavor } from '~/types/clusters_mgmt.v1';
 import { isHibernating, isOffline } from '../../../../../common/clusterStates';
 import { openModal } from '../../../../../../common/Modal/ModalActions';
 import NetworkingSelector, { routeSelectorPairsAsStrings } from '../../NetworkingSelector';
@@ -20,6 +21,8 @@ const mapStateToProps = (state) => {
   const additionalRouterLabels = routeSelectorPairsAsStrings(
     clusterRouters?.additional?.routeSelectors,
   );
+
+  const provider = cluster.cloud_provider?.id;
 
   const isApiPrivate = cluster.api.listening === 'internal';
   const isDefaultRouterPrivate = clusterRouters.default.isPrivate;
@@ -46,6 +49,8 @@ const mapStateToProps = (state) => {
     isSTSEnabled,
     clusterHibernating,
     showConsoleLink,
+    isNLB: clusterRouters.default.loadBalancer === LoadBalancerFlavor.NLB,
+    provider,
   };
 };
 
