@@ -15,6 +15,7 @@ import {
   TextContent,
   TextVariants,
   ClipboardCopy,
+  Switch,
 } from '@patternfly/react-core';
 
 import EditClusterIngressDialog from '../EditClusterIngressDialog';
@@ -23,6 +24,8 @@ import ButtonWithTooltip from '../../../../../../common/ButtonWithTooltip';
 import modals from '../../../../../../common/Modal/modals';
 
 import './ClusterIngressCard.scss';
+import { LoadBalancerFlavorLabel } from '../constants';
+import { LoadBalancerFlavor } from '~/types/clusters_mgmt.v1';
 
 class ClusterIngressCard extends React.Component {
   handleEditSettings = () => {
@@ -58,9 +61,11 @@ class ClusterIngressCard extends React.Component {
       isAdditionalRouterPrivate,
       hasAdditionalRouter,
       showConsoleLink,
+      isNLB,
     } = this.props;
 
     const disableEditReason = this.resolveDisableEditReason();
+    const isAWS = provider === 'aws';
 
     return (
       <Card className="ocm-c-networking-cluster-ingress__card">
@@ -107,6 +112,16 @@ class ClusterIngressCard extends React.Component {
                 </Text>
               </TextContent>
             </FormGroup>
+            {isAWS && (
+              <FormGroup label="Load balancer type">
+                <Switch
+                  label={LoadBalancerFlavorLabel[LoadBalancerFlavor.NLB]}
+                  labelOff={LoadBalancerFlavorLabel[LoadBalancerFlavor.CLASSIC]}
+                  isChecked={isNLB}
+                  isDisabled
+                />
+              </FormGroup>
+            )}
             {hasAdditionalRouter && (
               <>
                 <FormGroup fieldId="additional_router_address" label="Additional router" isStack>
@@ -172,6 +187,7 @@ ClusterIngressCard.propTypes = {
   isSTSEnabled: PropTypes.bool.isRequired,
   clusterHibernating: PropTypes.bool.isRequired,
   showConsoleLink: PropTypes.bool.isRequired,
+  isNLB: PropTypes.bool.isRequired,
 };
 
 export default ClusterIngressCard;

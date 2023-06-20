@@ -4,6 +4,7 @@
 
 import type { Cluster } from './Cluster';
 import type { ListeningMethod } from './ListeningMethod';
+import type { LoadBalancerFlavor } from './LoadBalancerFlavor';
 
 /**
  * Representation of an ingress.
@@ -37,6 +38,10 @@ export type Ingress = {
    * Listening method of the ingress
    */
   listening?: ListeningMethod;
+  /**
+   * Load Balancer type of the ingress
+   */
+  load_balancer_type?: LoadBalancerFlavor;
   /**
    * A set of labels for the ingress.
    */

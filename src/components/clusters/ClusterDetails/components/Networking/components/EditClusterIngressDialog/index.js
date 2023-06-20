@@ -1,6 +1,7 @@
 import { connect } from 'react-redux';
 import { formValueSelector, reduxForm } from 'redux-form';
 
+import { LoadBalancerFlavor } from '~/types/clusters_mgmt.v1';
 import { knownProducts } from '../../../../../../../common/subscriptionTypes';
 import modals from '../../../../../../common/Modal/modals';
 import shouldShowModal from '../../../../../../common/Modal/ModalSelectors';
@@ -22,6 +23,8 @@ const mapStateToProps = (state) => {
   const clusterRouters = NetworkingSelector(state);
   const hasAdditionalRouter = Object.keys(clusterRouters).length === 2;
 
+  const provider = cluster.cloud_provider?.id;
+
   const valueSelector = formValueSelector('EditClusterIngress');
   const additionalRouterEnabled = valueSelector(state, 'enable_additional_router');
   const APIPrivate = cluster.api.listening === 'internal';
@@ -40,12 +43,14 @@ const mapStateToProps = (state) => {
       enable_additional_router: hasAdditionalRouter,
       private_additional_router: !!clusterRouters?.additional?.isPrivate,
       labels_additional_router: routeSelectorsAsString(clusterRouters?.additional?.routeSelectors),
+      is_nlb_load_balancer: clusterRouters.default.loadBalancer === LoadBalancerFlavor.NLB,
     },
     clusterID: cluster.id,
     clusterRouters,
     APIPrivate,
     additionalRouterEnabled,
     hideAdvancedOptions: subscriptionPlan === knownProducts.ROSA,
+    provider,
     isOpen: shouldShowModal(state, modals.EDIT_CLUSTER_INGRESS),
     /**
      * an alert should appear if both routers are enabled, at least one is private,
