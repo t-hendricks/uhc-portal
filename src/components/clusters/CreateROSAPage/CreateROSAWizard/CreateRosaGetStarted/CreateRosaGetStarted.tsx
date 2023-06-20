@@ -102,7 +102,7 @@ const CreateRosaGetStarted = () => {
                       can continue to complete ROSA prerequisites below.
                     </Text>
                     <ExternalLink
-                      href={links.AWS_CONSOLE_ROSA_HOME}
+                      href={links.AWS_CONSOLE_ROSA_HOME_GET_STARTED}
                       isButton
                       variant={ButtonVariant.secondary}
                     >
