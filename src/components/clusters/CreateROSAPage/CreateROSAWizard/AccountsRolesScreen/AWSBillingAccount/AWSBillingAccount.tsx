@@ -8,17 +8,26 @@ import {
   Title,
   Alert,
   AlertVariant,
+  Stack,
+  StackItem,
+  Popover,
 } from '@patternfly/react-core';
 import { Field } from 'redux-form';
 
-import AWSAccountSelection from './AWSAccountSelection';
-import ErrorBox from '../../../../common/ErrorBox';
-import { required } from '../../../../../common/validators';
+import { OutlinedQuestionCircleIcon } from '@patternfly/react-icons';
+
+import AWSAccountSelection from '../AWSAccountSelection';
+import ContractInfo from './ContractInfo';
+import { hasContract } from './awsBillingAccountHelper';
+import ErrorBox from '../../../../../common/ErrorBox';
+import { required } from '../../../../../../common/validators';
 import { getAwsBillingAccountsFromQuota } from '~/components/clusters/common/quotaSelectors';
 import { useGlobalState } from '~/redux/hooks/useGlobalState';
-import { getAWSBillingAccountIDs } from '../rosaActions';
+import { getAWSBillingAccountIDs } from '../../rosaActions';
 import { shouldRefetchQuota } from '~/common/helpers';
 import links from '~/common/installLinks.mjs';
+import { CloudAccount } from '~/types/accounts_mgmt.v1/models/CloudAccount';
+import ExternalLink from '../../../../../common/ExternalLink';
 
 interface AWSBillingAccountProps {
   change: (field: string, value: string) => void;
@@ -36,7 +45,8 @@ const AWSBillingAccount = ({
   const getAWSBillingAccountsResponse = useGlobalState(
     (state) => state.rosaReducer.getAWSBillingAccountsResponse,
   );
-  const [accountsIds, setAccountsIds] = useState<string[]>([]);
+
+  const [cloudAccounts, setCloudAccounts] = useState<CloudAccount[]>([]);
 
   const refresh = useCallback(() => {
     dispatch(getAWSBillingAccountIDs(organization.details?.id));
@@ -46,7 +56,7 @@ const AWSBillingAccount = ({
     // if there is (recent) quota data in global state
     if (!shouldRefetchQuota(organization)) {
       // extract billing accounts out of it
-      setAccountsIds(getAwsBillingAccountsFromQuota(organization.quotaList));
+      setCloudAccounts(getAwsBillingAccountsFromQuota(organization.quotaList));
     } else {
       refresh();
     }
@@ -54,7 +64,7 @@ const AWSBillingAccount = ({
 
   useEffect(() => {
     if (getAWSBillingAccountsResponse.fulfilled) {
-      setAccountsIds(getAWSBillingAccountsResponse.data);
+      setCloudAccounts(getAWSBillingAccountsResponse.data);
       // if selected account is not on the list after refresh
       if (
         selectedAWSBillingAccountID &&
@@ -68,10 +78,27 @@ const AWSBillingAccount = ({
 
   // if there's only one account, select it by default
   useEffect(() => {
-    if (accountsIds?.length === 1 && !selectedAWSBillingAccountID) {
-      change('billing_account_id', accountsIds[0]);
+    if (cloudAccounts?.length === 1 && !selectedAWSBillingAccountID) {
+      change('billing_account_id', cloudAccounts[0].cloud_account_id);
     }
-  }, [accountsIds, selectedAWSBillingAccountID]);
+  }, [cloudAccounts, selectedAWSBillingAccountID]);
+
+  const connectNewAcctBtn = (
+    <ExternalLink
+      isButton
+      variant="secondary"
+      className="pf-u-mt-md"
+      href={links.AWS_CONSOLE_ROSA_HOME}
+      noIcon
+    >
+      Connect ROSA to a new AWS billing account
+    </ExternalLink>
+  );
+
+  const selectedAccount = cloudAccounts.find(
+    (account) => account.cloud_account_id === selectedAWSBillingAccountID,
+  );
+  const isContractEnabled = !!selectedAccount && hasContract(selectedAccount);
 
   return (
     <>
@@ -106,21 +133,26 @@ const AWSBillingAccount = ({
               account, and click get started.
             </>
           }
-          AWSAccountIDs={accountsIds}
+          accounts={cloudAccounts}
           selectedAWSAccountID={selectedAWSBillingAccountID}
           isLoading={organization.pending || getAWSBillingAccountsResponse.pending}
           isDisabled={organization.pending || getAWSBillingAccountsResponse.pending}
           isBillingAccount
         />
-        <Button
-          variant="secondary"
-          className="pf-u-mt-md"
-          component="a"
-          href={links.AWS_CONSOLE_ROSA_HOME}
-          target="_blank"
-        >
-          Connect ROSA to a new AWS billing account
-        </Button>
+        {isContractEnabled ? (
+          <Stack>
+            <StackItem>
+              <Popover bodyContent={<ContractInfo {...selectedAccount.contracts[0]} />}>
+                <Button variant="link" icon={<OutlinedQuestionCircleIcon />}>
+                  Contract enabled for this billing account
+                </Button>
+              </Popover>
+            </StackItem>
+            <StackItem>{connectNewAcctBtn}</StackItem>
+          </Stack>
+        ) : (
+          connectNewAcctBtn
+        )}
       </GridItem>
       <GridItem span={7} />
       <GridItem sm={12} md={12}>

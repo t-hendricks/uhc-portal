@@ -4,6 +4,7 @@ import * as helpers from '~/common/helpers';
 import { screen, render, axe, userEvent, within } from '~/testUtils';
 import wizardConnector from '~/components/clusters/CreateOSDPage/CreateOSDWizard/WizardConnector';
 import AWSBillingAccount from './AWSBillingAccount';
+import { CloudAccount } from '~/types/accounts_mgmt.v1/models/CloudAccount';
 
 const defaultProps = {
   change: () => jest.fn(),
@@ -20,10 +21,11 @@ const defaultState = {
             allowed: 2020,
             cloud_accounts: [
               {
+                cloud_account_id: '123',
                 cloud_provider_id: 'aws',
+                contracts: [],
               },
             ],
-
             quota_id: 'cluster|byoc|moa|marketplace',
           },
         ],
@@ -32,7 +34,28 @@ const defaultState = {
   },
   rosaReducer: {
     getAWSBillingAccountsResponse: {
-      data: ['123', '111', '222', '333'],
+      data: [
+        {
+          cloud_account_id: '123',
+          cloud_provider_id: 'aws',
+          contracts: [],
+        },
+        {
+          cloud_account_id: '111',
+          cloud_provider_id: 'aws',
+          contracts: [],
+        },
+        {
+          cloud_account_id: '222',
+          cloud_provider_id: 'aws',
+          contracts: [],
+        },
+        {
+          cloud_account_id: '333',
+          cloud_provider_id: 'aws',
+          contracts: [],
+        },
+      ],
       fulfilled: true,
       pending: false,
       error: false,
@@ -99,8 +122,8 @@ describe('<AWSBillingAccount />', () => {
     // Assert
     expect(screen.getAllByRole('option')).toHaveLength(accountInState.length);
 
-    accountInState.forEach((account: string) => {
-      expect(screen.getByRole('option', { name: account })).toBeInTheDocument();
+    accountInState.forEach((account: CloudAccount) => {
+      expect(screen.getByRole('option', { name: account.cloud_account_id })).toBeInTheDocument();
     });
   });
 
