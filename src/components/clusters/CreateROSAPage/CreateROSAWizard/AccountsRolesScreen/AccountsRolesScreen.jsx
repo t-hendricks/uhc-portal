@@ -16,7 +16,7 @@ import AccountRolesARNsSection from './AccountRolesARNsSection';
 import { AssociateAwsAccountModal } from './AssociateAWSAccountModal';
 import { AwsRoleErrorAlert } from './AwsRoleErrorAlert';
 import AWSAccountSelection from './AWSAccountSelection';
-import AWSBillingAccount from './AWSBillingAccount';
+import AWSBillingAccount from './AWSBillingAccount/AWSBillingAccount';
 
 export const isUserRoleForSelectedAWSAccount = (users, awsAcctId) =>
   users.some((user) => user.aws_id === awsAcctId);
@@ -172,7 +172,7 @@ function AccountsRolesScreen({
                 account to proceed.
               </>
             }
-            AWSAccountIDs={AWSAccountIDs}
+            accounts={AWSAccountIDs.map((account) => ({ cloud_account_id: account }))}
             selectedAWSAccountID={selectedAWSAccountID}
             isLoading={refreshButtonClicked && getAWSAccountIDsResponse.pending}
             isDisabled={getAWSAccountIDsResponse.pending}
