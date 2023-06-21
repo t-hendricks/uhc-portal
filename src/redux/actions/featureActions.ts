@@ -2,6 +2,7 @@ import { action, ActionType } from 'typesafe-actions';
 import {
   SET_FEATURE,
   ASSISTED_INSTALLER_MULTIARCH_SUPPORTED,
+  ASSISTED_INSTALLER_PLATFORM_OCI,
   ASSISTED_INSTALLER_FEATURE,
   ASSISTED_INSTALLER_SNO_FEATURE,
   ASSISTED_INSTALLER_OCS_FEATURE,
@@ -19,6 +20,7 @@ import authorizationsService from '../../services/authorizationsService';
 import accountsService from '../../services/accountsService';
 import { SelfAccessReview } from '../../types/authorizations.v1/models/SelfAccessReview';
 import type { AppThunk } from '../types';
+import { Capability } from '~/types/accounts_mgmt.v1/models/Capability';
 
 export const setFeatureAction = (feature: string, enabled: boolean) =>
   action(SET_FEATURE, { feature, enabled });
@@ -30,6 +32,39 @@ const getSimpleUnleashFeature = (unleashFeatureName: string, name: string) => ({
       .selfFeatureReview(unleashFeatureName)
       .then((unleash) => unleash.data.enabled),
 });
+
+type MapCapabilityToAssistedInstallerFeatureFunc = {
+  (capabilityName: string): Promise<boolean>;
+  cache?: Map<string, Capability[]>;
+};
+
+const mapCapabilityToAssistedInstallerFeature: MapCapabilityToAssistedInstallerFeatureFunc = async (
+  capabilityName: string,
+) => {
+  if (!mapCapabilityToAssistedInstallerFeature.cache) {
+    mapCapabilityToAssistedInstallerFeature.cache = new Map();
+  }
+
+  let isFeatureEnabled = false;
+  const response = await accountsService.getCurrentAccount();
+  const userOrganizationId = response.data?.organization?.id;
+  if (userOrganizationId) {
+    if (!mapCapabilityToAssistedInstallerFeature.cache.has(userOrganizationId)) {
+      const organizationResponse = await accountsService.getOrganization(userOrganizationId);
+      const organization = organizationResponse.data;
+      mapCapabilityToAssistedInstallerFeature.cache.set(
+        userOrganizationId,
+        JSON.parse(JSON.stringify(organization.capabilities ?? [])) as Capability[],
+      );
+    }
+
+    const capabilities = mapCapabilityToAssistedInstallerFeature.cache.get(userOrganizationId);
+    const capabilityEntry = capabilities?.find(({ name }) => name === capabilityName);
+    isFeatureEnabled = capabilityEntry?.value === 'true';
+  }
+
+  return isFeatureEnabled;
+};
 
 // list of features to detect upon app startup
 export const features = [
@@ -64,24 +99,17 @@ export const features = [
   },
   {
     name: ASSISTED_INSTALLER_MULTIARCH_SUPPORTED,
-    action: async () => {
-      let isFeatureEnabled = false;
-      const response = await accountsService.getCurrentAccount();
-      const organizationID = response.data?.organization?.id;
-      if (organizationID) {
-        const organizationResponse = await accountsService.getOrganization(organizationID);
-        const organization = organizationResponse.data;
-        const capabilities = organization.capabilities || [];
-        const bareMetalInstallerMultiarch = capabilities.find(
-          (capability) =>
-            capability.name === 'capability.organization.bare_metal_installer_multiarch',
-        );
-
-        isFeatureEnabled = bareMetalInstallerMultiarch?.value === 'true';
-      }
-
-      return isFeatureEnabled;
-    },
+    action: async () =>
+      mapCapabilityToAssistedInstallerFeature(
+        'capability.organization.bare_metal_installer_multiarch',
+      ),
+  },
+  {
+    name: ASSISTED_INSTALLER_PLATFORM_OCI,
+    action: async () =>
+      mapCapabilityToAssistedInstallerFeature(
+        'capability.organization.bare_metal_installer_platform_oci',
+      ),
   },
 ];
 
