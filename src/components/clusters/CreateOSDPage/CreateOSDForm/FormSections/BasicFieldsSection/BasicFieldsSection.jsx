@@ -64,7 +64,7 @@ function BasicFieldsSection({
     const isValueMultiAz = value === 'true';
     change('nodes_compute', getNodesCount(isBYOC, isValueMultiAz, true));
     change('min_replicas', getMinReplicasCount(isBYOC, isValueMultiAz, true));
-    change('max_replicas', '');
+    change('max_replicas', getMinReplicasCount(isBYOC, isValueMultiAz, true));
     if (handleMultiAZChangeForOldForm) {
       handleMultiAZChangeForOldForm(value);
     }

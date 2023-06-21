@@ -194,14 +194,16 @@ const reviewValues = {
       <>
         <span>
           Minimum nodes
-          {allValues.multi_az === 'true' ? ' per zone' : ''}:
+          {allValues.hypershift === 'true' ? ' per machine pool' : ''}
+          {allValues.multi_az === 'true' && allValues.hypershift !== 'true' ? ' per zone' : ''}:
         </span>{' '}
-        {value}
+        {value || 0}
         <span className="pf-u-ml-lg">
           Maximum nodes
-          {allValues.multi_az === 'true' ? ' per zone' : ''}:
+          {allValues.hypershift === 'true' ? ' per machine pool' : ''}
+          {allValues.multi_az === 'true' && allValues.hypershift !== 'true' ? ' per zone' : ''}:
         </span>{' '}
-        {allValues.max_replicas}
+        {allValues.max_replicas || 0}
       </>
     ),
   },
