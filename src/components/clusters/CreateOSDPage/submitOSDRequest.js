@@ -107,10 +107,17 @@ export const createClusterRequest = ({ isWizard = true, cloudProviderID, product
     const minNodes = parseInt(formData.min_replicas, 10);
     const maxNodes = parseInt(formData.max_replicas, 10);
 
-    clusterRequest.nodes.autoscale_compute = {
-      min_replicas: isMultiAz ? minNodes * 3 : minNodes,
-      max_replicas: isMultiAz ? maxNodes * 3 : maxNodes,
-    };
+    if (formData.hypershift) {
+      clusterRequest.nodes.autoscale_compute = {
+        min_replicas: minNodes * formData.machine_pools_subnets.length,
+        max_replicas: maxNodes * formData.machine_pools_subnets.length,
+      };
+    } else {
+      clusterRequest.nodes.autoscale_compute = {
+        min_replicas: isMultiAz ? minNodes * 3 : minNodes,
+        max_replicas: isMultiAz ? maxNodes * 3 : maxNodes,
+      };
+    }
   } else {
     clusterRequest.nodes.compute = parseInt(formData.nodes_compute, 10);
   }

@@ -48,6 +48,7 @@ function ScaleSection({
   clusterVersionRawId,
   imds,
   isHypershiftSelected,
+  poolNumber,
 }) {
   const onChangeImds = (value) => {
     change('imds', value);
@@ -91,6 +92,20 @@ function ScaleSection({
   );
 
   const isRosa = product === normalizedProducts.ROSA;
+
+  const isHypershiftWizard = isHypershiftSelected && !inModal;
+
+  const nonAutoScaleNodeLabel = () => {
+    const label = 'Compute node count';
+
+    if (isMultiAz) {
+      return `${label} (per zone)`;
+    }
+    if (isHypershiftSelected && !inModal) {
+      return `${label} (per machine pool)`;
+    }
+    return label;
+  };
 
   return (
     <>
@@ -138,8 +153,10 @@ function ScaleSection({
               autoScaleMaxNodesValue={autoScaleMaxNodesValue}
               product={product}
               isBYOC={isBYOC}
-              isDefaultMachinePool={!isMachinePool}
+              isDefaultMachinePool={!isMachinePool && !isHypershiftSelected}
               minNodesRequired={minNodesRequired}
+              isHypershiftWizard={isHypershiftWizard}
+              numPools={nodeIncrement}
             />
           </GridItem>
           {autoscalingEnabled && imdsSection}
@@ -153,7 +170,7 @@ function ScaleSection({
             <Field
               component={NodeCountInput}
               name="nodes_compute"
-              label={isMultiAz ? 'Compute node count (per zone)' : 'Compute node count'}
+              label={nonAutoScaleNodeLabel()}
               isMultiAz={isMultiAz}
               isByoc={isBYOC}
               machineType={machineType}
@@ -178,7 +195,8 @@ function ScaleSection({
               increment={nodeIncrement}
               isMachinePool={isMachinePool}
               billingModel={billingModel}
-              isHypershift={isHypershiftSelected}
+              isHypershiftWizard={isHypershiftWizard}
+              poolNumber={poolNumber}
             />
           </GridItem>
           <GridItem md={6} />
@@ -260,6 +278,7 @@ ScaleSection.propTypes = {
   isHypershiftSelected: PropTypes.bool,
   clusterVersionRawId: PropTypes.string,
   imds: PropTypes.string,
+  poolNumber: PropTypes.number,
 };
 
 export default ScaleSection;

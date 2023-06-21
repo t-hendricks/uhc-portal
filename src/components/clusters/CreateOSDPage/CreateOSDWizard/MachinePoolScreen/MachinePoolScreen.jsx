@@ -26,6 +26,7 @@ function MachinePoolScreen({
   selectedVPCID,
   clusterVersionRawId,
   imds,
+  poolNumber,
 }) {
   return (
     <Form
@@ -57,6 +58,7 @@ function MachinePoolScreen({
           clusterVersionRawId={clusterVersionRawId}
           imds={imds}
           isHypershiftSelected={isHypershiftSelected}
+          poolNumber={poolNumber}
         />
       </Grid>
     </Form>
@@ -81,6 +83,7 @@ MachinePoolScreen.propTypes = {
   nodeIncrement: PropTypes.number,
   clusterVersionRawId: PropTypes.string.isRequired,
   imds: PropTypes.string,
+  poolNumber: PropTypes.number,
 };
 
 export default MachinePoolScreen;
