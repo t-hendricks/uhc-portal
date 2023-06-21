@@ -33,7 +33,7 @@ while IFS=',' read -r commitHash commitDate commitMessage; do
     echo "DID NOT FIND string \"$commitMessage\" in live_candidate"
 
     # Pattern matching to extract jiraKeys
-    regex="(HAC[- ]?[0-9]{4})"
+    regex="(HAC[- ]?[0-9]{4}|MGMT[- ]?[0-9]{5})"
 
     commitDescription=$(git log --format=%b -n 1 $commitHash)
     commitDescription="${commitDescription//\"/\\\"}"
@@ -62,31 +62,27 @@ while IFS=',' read -r commitHash commitDate commitMessage; do
       allJirasClosed=true
       # Iterate over the jiraKeys and look them up
       for jiraKey in "${jiraKeys[@]}"; do
-        jiraKeyNumber=${jiraKey//[!0-9]}
-        if [[ "$jiraKey" == *"hac"* ]]; then
-          jiraKey="HAC-$jiraKeyNumber"
-          if [ -n "$jiraKeysAsString" ]; then
-            jiraKeysAsString+=", $jiraKey"
-          else
-            jiraKeysAsString="$jiraKey"
-          fi
-          echo "  JIRA info"
-          printf "    key: %s\n" "$jiraKey"
+        if [ -n "$jiraKeysAsString" ]; then
+          jiraKeysAsString+=", $jiraKey"
+        else
+          jiraKeysAsString="$jiraKey"
+        fi
+        echo "  JIRA info"
+        printf "    key: %s\n" "$jiraKey"
 
-          response=$(curl -s -X GET -H "Authorization: Bearer $jira_token" -H "Content-Type: application/json" "https://issues.redhat.com/rest/api/2/issue/$jiraKey?fields=key,summary,resolutiondate,status")
+        response=$(curl -s -X GET -H "Authorization: Bearer $jira_token" -H "Content-Type: application/json" "https://issues.redhat.com/rest/api/2/issue/$jiraKey?fields=key,summary,resolutiondate,status")
 
-          summary=$(echo "$response" | jq -r '.fields.summary')
-          printf "    summary: %s\n" "$summary"
+        summary=$(echo "$response" | jq -r '.fields.summary')
+        printf "    summary: %s\n" "$summary"
 
-          status=$(echo "$response" | jq -r '.fields.status.name')
-          printf "    status: %s\n" "$status"
+        status=$(echo "$response" | jq -r '.fields.status.name')
+        printf "    status: %s\n" "$status"
 
-          resolutiondate=$(echo "$response" | jq -r '.fields.resolutiondate')
-          printf "    resolutiondate: %s\n" "$resolutiondate"
+        resolutiondate=$(echo "$response" | jq -r '.fields.resolutiondate')
+        printf "    resolutiondate: %s\n" "$resolutiondate"
 
-          if [ "$status" != "Closed" ]; then
-            allJirasClosed=false
-          fi
+        if [ "$status" != "Closed" ]; then
+          allJirasClosed=false
         fi
       done
       if [ "$allJirasClosed" = true ]; then
