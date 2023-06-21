@@ -24,7 +24,7 @@ import InstructionCommand from '../../../../common/InstructionCommand';
 import RadioButtons from '../../../../common/ReduxFormComponents/RadioButtons';
 import PopoverHint from '../../../../common/PopoverHint';
 import links from '../../../../../common/installLinks.mjs';
-import { required } from '../../../../../common/validators';
+import { required, checkCustomOperatorRolesPrefix } from '../../../../../common/validators';
 import useAnalytics from '~/hooks/useAnalytics';
 import { trackEvents } from '~/common/analytics';
 import ReduxHiddenCheckbox from '~/components/common/ReduxFormComponents/ReduxHiddenCheckbox';
@@ -215,6 +215,20 @@ function ClusterRolesScreen({
       extraField: getOCMRoleResponse.fulfilled && !isAutoModeAvailable && EnableAutoModeTip,
     },
   ];
+
+  let operatorRolesCliCommand;
+  if (
+    !byoOidcConfigID ||
+    !customOperatorRolesPrefix ||
+    checkCustomOperatorRolesPrefix(customOperatorRolesPrefix)
+  ) {
+    operatorRolesCliCommand = '';
+  } else if (isHypershiftSelected) {
+    operatorRolesCliCommand = `rosa create operator-roles --hosted-cp --prefix "${customOperatorRolesPrefix}" --oidc-config-id "${byoOidcConfigID}"`;
+  } else {
+    operatorRolesCliCommand = `rosa create operator-roles --prefix "${customOperatorRolesPrefix}" --oidc-config-id "${byoOidcConfigID}"`;
+  }
+
   return (
     <Form onSubmit={() => false}>
       <Grid hasGutter>
@@ -232,20 +246,20 @@ function ClusterRolesScreen({
           <>
             <GridItem>
               <Text component={TextVariants.p}>
-                Set whether you&apos;d like Red Hat to manage your OIDC configuration or you&apos;d
-                like to manage it yourself.
+                Set whether you&apos;d like to create the OIDC now or wait to create the OIDC until
+                after installation.
               </Text>
             </GridItem>
             <GridItem>
               <ToggleGroup>
                 <ToggleGroupItem
-                  text="Red Hat manage the OIDC"
+                  text="Create OIDC Later"
                   buttonId="managed-oidc-configuration"
                   isSelected={!hasByoOidcConfig}
                   onChange={toggleByoOidcConfig(false)}
                 />
                 <ToggleGroupItem
-                  text="Manage the OIDC myself"
+                  text="Create OIDC Now"
                   buttonId="customer-oidc-configuration"
                   isSelected={hasByoOidcConfig}
                   onChange={toggleByoOidcConfig(true)}
@@ -298,6 +312,7 @@ function ClusterRolesScreen({
             awsAccountID={awsAccountID}
             getUserOidcConfigurations={getUserOidcConfigurations}
             byoOidcConfigID={byoOidcConfigID}
+            operatorRolesCliCommand={operatorRolesCliCommand}
             validate={required}
             onSelect={onSelectOIDCConfig}
           />

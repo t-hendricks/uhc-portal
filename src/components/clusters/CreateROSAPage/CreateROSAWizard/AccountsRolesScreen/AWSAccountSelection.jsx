@@ -113,7 +113,7 @@ function AWSAccountSelection({
       label={label}
       labelIcon={extendedHelpText && <PopoverHint hint={extendedHelpText} />}
       className="aws-account-selection"
-      validated={error ? 'error' : undefined}
+      validated={touched && error ? 'error' : undefined}
       helperTextInvalid={touched && error}
       isRequired
     >
@@ -129,6 +129,7 @@ function AWSAccountSelection({
             onSelect={onSelect}
             isDisabled={isDisabled}
             placeholderText={AWS_ACCT_ID_PLACEHOLDER}
+            validated={touched && error ? 'error' : undefined}
             footer={footer}
           >
             {AWSAccountIDs.map((awsId) => (

@@ -6,11 +6,13 @@ import { Spinner } from '@redhat-cloud-services/frontend-components';
 import { Banner, Wizard, PageSection, WizardContext } from '@patternfly/react-core';
 
 import config from '~/config';
-import { shouldRefetchQuota, scrollToFirstError } from '~/common/helpers';
+import { shouldRefetchQuota, scrollToFirstField } from '~/common/helpers';
 import { normalizedProducts } from '~/common/subscriptionTypes';
 import { trackEvents, ocmResourceType } from '~/common/analytics';
 import withAnalytics from '~/hoc/withAnalytics';
 import usePreventBrowserNav from '~/hooks/usePreventBrowserNav';
+import { useFeatureGate } from '~/hooks/useFeatureGate';
+import { HYPERSHIFT_WIZARD_FEATURE } from '~/redux/constants/featureConstants';
 import { getAccountAndRolesStepId, stepId, stepNameById } from './rosaWizardConstants';
 
 import ClusterSettingsScreen from '../../CreateOSDPage/CreateOSDWizard/ClusterSettingsScreen';
@@ -32,8 +34,6 @@ import ErrorBoundary from '../../../App/ErrorBoundary';
 import ClusterRolesScreen from './ClusterRolesScreen';
 import AccountsRolesScreen from './AccountsRolesScreen';
 import { isUserRoleForSelectedAWSAccount } from './AccountsRolesScreen/AccountsRolesScreen';
-import { HYPERSHIFT_WIZARD_FEATURE } from '../../../../redux/constants/featureConstants';
-import { useFeatureGate } from '~/hooks/useFeatureGate';
 
 import CreateRosaWizardFooter from './CreateRosaWizardFooter';
 
@@ -96,10 +96,7 @@ class CreateROSAWizardInternal extends React.Component {
     const { currentStepId, deferredNext } = this.state;
 
     // Track validity of individual steps by id
-    if (
-      (isValid !== prevProps.isValid || isAsyncValidating !== prevProps.isAsyncValidating) &&
-      !isAsyncValidating
-    ) {
+    if (isValid !== prevProps.isValid && !isAsyncValidating) {
       // eslint-disable-next-line react/no-did-update-set-state
       this.setState(() => ({
         validatedSteps: {
@@ -191,11 +188,13 @@ class CreateROSAWizardInternal extends React.Component {
     const errorIds = Object.keys(formErrors);
 
     // When errors exist, touch the fields with those errors to trigger validation.
-    if (errorIds?.length > 0 && !isCurrentStepValid) {
+    if (errorIds?.length) {
       touch(errorIds);
-      scrollToFirstError(errorIds);
+      const hasScrolledTo = scrollToFirstField(errorIds);
       this.setState({ isNextClicked: !isNextClicked });
-      return true;
+      // return `true` if errors were registered to the validatedSteps cache, or if the field
+      // was successfully scrolled-to (i.e. found in the current DOM), and `false` otherwise.
+      return !isCurrentStepValid || hasScrolledTo;
     }
     return false;
   };

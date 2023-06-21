@@ -4,16 +4,17 @@ import { Field } from 'redux-form';
 import {
   Button,
   ClipboardCopy,
+  ClipboardCopyVariant,
   Flex,
   FlexItem,
   FormGroup,
-  GridItem,
   Popover,
   Select,
   SelectOption,
   Text,
   TextContent,
   TextVariants,
+  Skeleton,
 } from '@patternfly/react-core';
 
 import ReduxVerticalFormGroup from '../../../../common/ReduxFormComponents/ReduxVerticalFormGroup';
@@ -21,6 +22,8 @@ import ExternalLink from '~/components/common/ExternalLink';
 import PopoverHint from '~/components/common/PopoverHint';
 import validators from '../../../../../common/validators';
 import links from '../../../../../common/installLinks.mjs';
+import Instruction from '~/components/common/Instruction';
+import Instructions from '~/components/common/Instructions';
 
 function CreateOIDCProviderInstructions() {
   return (
@@ -40,7 +43,7 @@ function CreateOIDCProviderInstructions() {
       }
     >
       <Button variant="link" isInline>
-        create a new OIDC provider
+        create a new OIDC config id
       </Button>
     </Popover>
   );
@@ -50,6 +53,7 @@ function CustomerOIDCConfiguration({
   awsAccountID,
   getUserOidcConfigurations,
   byoOidcConfigID,
+  operatorRolesCliCommand,
   onSelect: onParentSelect,
   input: {
     // Redux Form's onBlur interferes with Patternfly's Select footer onClick handlers.
@@ -91,98 +95,122 @@ function CustomerOIDCConfiguration({
     refreshOidcConfigs();
   }, []);
 
-  let placeholderOptionText = 'Select the OIDC provider';
+  let placeholderOptionText = 'Select a config id';
   if (oidcConfigs.length === 0) {
     placeholderOptionText = isLoading
       ? 'Loading OIDC configurations...'
-      : 'No OIDC provider configurations have been found';
+      : 'No OIDC configurations have been found';
   }
 
   return (
     <>
-      <TextContent className="ocm-alert-text">
-        <Text component={TextVariants.p}>
-          Select your existing OIDC provider or <CreateOIDCProviderInstructions />.
-        </Text>
-      </TextContent>
+      <Instructions wide>
+        <Instruction simple>
+          <TextContent className="pf-u-pb-md">
+            <Text component={TextVariants.p}>
+              Select your existing OIDC config id or <CreateOIDCProviderInstructions />.
+            </Text>
+          </TextContent>
 
-      <GridItem sm={12} md={7}>
-        <FormGroup
-          label="Config ID"
-          labelIcon={
-            <PopoverHint
-              hint={
-                <span>
-                  The OIDC configuration ID created by running the command{' '}
-                  <pre>rosa create oidc-config</pre>
-                </span>
-              }
-            />
-          }
-          validated={error ? 'error' : undefined}
-          helperTextInvalid={touched && error}
-          isRequired
-        >
-          <Flex>
-            <FlexItem grow={{ default: 'grow' }}>
-              <Select
-                {...inputProps}
-                onToggle={setIsDropdownOpen}
-                onSelect={onSelect}
-                selections={byoOidcConfigID ? [byoOidcConfigID] : []}
-                isDisabled={oidcConfigs.length === 0}
-                isOpen={isDropdownOpen}
-              >
-                <SelectOption value="NO_SELECTION" isSelected isPlaceholder isDisabled>
-                  {placeholderOptionText}
-                </SelectOption>
-                {oidcConfigs.map((oidcConfig) => (
-                  <SelectOption
-                    key={oidcConfig.id}
-                    value={oidcConfig.id}
-                    description={
-                      oidcConfig.issuer_url ? `Issuer URL: ${oidcConfig.issuer_url}` : undefined
-                    }
-                  >
-                    {oidcConfig.id}
+          <FormGroup
+            label="Config ID"
+            labelIcon={
+              <PopoverHint
+                hint={
+                  <span>
+                    The OIDC configuration ID created by running the command{' '}
+                    <pre>rosa create oidc-config</pre>
+                  </span>
+                }
+              />
+            }
+            validated={error ? 'error' : undefined}
+            helperTextInvalid={touched && error}
+            isRequired
+          >
+            <Flex>
+              <FlexItem grow={{ default: 'grow' }}>
+                <Select
+                  {...inputProps}
+                  onToggle={setIsDropdownOpen}
+                  onSelect={onSelect}
+                  selections={byoOidcConfigID ? [byoOidcConfigID] : []}
+                  isDisabled={oidcConfigs.length === 0}
+                  isOpen={isDropdownOpen}
+                >
+                  <SelectOption value="NO_SELECTION" isSelected isPlaceholder isDisabled>
+                    {placeholderOptionText}
                   </SelectOption>
-                ))}
-              </Select>
-            </FlexItem>
-            <FlexItem>
-              <Button variant="secondary" className="pf-u-mt-md" onClick={refreshOidcConfigs}>
-                Refresh
-              </Button>
-            </FlexItem>
-          </Flex>
-        </FormGroup>
-      </GridItem>
+                  {oidcConfigs.map((oidcConfig) => (
+                    <SelectOption
+                      key={oidcConfig.id}
+                      value={oidcConfig.id}
+                      description={
+                        oidcConfig.issuer_url ? `Issuer URL: ${oidcConfig.issuer_url}` : undefined
+                      }
+                    >
+                      {oidcConfig.id}
+                    </SelectOption>
+                  ))}
+                </Select>
+              </FlexItem>
+              <FlexItem>
+                <Button variant="secondary" className="pf-u-mt-md" onClick={refreshOidcConfigs}>
+                  Refresh
+                </Button>
+              </FlexItem>
+            </Flex>
+          </FormGroup>
+        </Instruction>
 
-      <GridItem sm={12} md={7}>
-        <Field
-          component={ReduxVerticalFormGroup}
-          name="custom_operator_roles_prefix"
-          label="Operator roles prefix"
-          type="text"
-          isRequired
-          // eslint-disable-next-line import/no-named-as-default-member
-          validate={validators.checkCustomOperatorRolesPrefix}
-          helpText={`Maximum ${validators.MAX_CUSTOM_OPERATOR_ROLES_PREFIX_LENGTH} characters.  Changing the cluster name will regenerate this value.`}
-          extendedHelpText={
-            <TextContent>
-              <Text component={TextVariants.p}>
-                You can specify a custom prefix for the cluster-specific Operator IAM roles to use.{' '}
-                <br />
-                See examples in{' '}
-                <ExternalLink href={links.ROSA_AWS_OPERATOR_ROLE_PREFIX}>
-                  Defining a custom Operator IAM role prefix
-                </ExternalLink>
-              </Text>
-            </TextContent>
-          }
-          showHelpTextOnError={false}
-        />
-      </GridItem>
+        <Instruction simple>
+          <TextContent className="pf-u-pb-md">
+            <Text component={TextVariants.p}>Enter an Operator role prefix.</Text>
+          </TextContent>
+
+          <Field
+            component={ReduxVerticalFormGroup}
+            name="custom_operator_roles_prefix"
+            label="Operator roles prefix"
+            type="text"
+            isRequired
+            // eslint-disable-next-line import/no-named-as-default-member
+            validate={validators.checkCustomOperatorRolesPrefix}
+            helpText={`Maximum ${validators.MAX_CUSTOM_OPERATOR_ROLES_PREFIX_LENGTH} characters.  Changing the cluster name will regenerate this value.`}
+            extendedHelpText={
+              <TextContent>
+                <Text component={TextVariants.p}>
+                  You can specify a custom prefix for the cluster-specific Operator IAM roles to
+                  use. <br />
+                  See examples in{' '}
+                  <ExternalLink href={links.ROSA_AWS_OPERATOR_ROLE_PREFIX}>
+                    Defining a custom Operator IAM role prefix
+                  </ExternalLink>
+                </Text>
+              </TextContent>
+            }
+            showHelpTextOnError={false}
+            disabled={!byoOidcConfigID}
+          />
+        </Instruction>
+
+        <Instruction simple>
+          <TextContent className="pf-u-pb-md">
+            <Text component={TextVariants.p}>Run the command to create a new Operator Roles.</Text>
+          </TextContent>
+          {operatorRolesCliCommand ? (
+            <ClipboardCopy
+              textAriaLabel="Copyable ROSA create operator-roles"
+              variant={ClipboardCopyVariant.expansion}
+              isReadOnly
+            >
+              {operatorRolesCliCommand}
+            </ClipboardCopy>
+          ) : (
+            <Skeleton fontSize="md" />
+          )}
+        </Instruction>
+      </Instructions>
     </>
   );
 }
@@ -191,6 +219,7 @@ CustomerOIDCConfiguration.propTypes = {
   awsAccountID: PropTypes.string,
   getUserOidcConfigurations: PropTypes.func.isRequired,
   byoOidcConfigID: PropTypes.string,
+  operatorRolesCliCommand: PropTypes.string,
   onSelect: PropTypes.func,
   input: PropTypes.shape({
     value: PropTypes.string,
