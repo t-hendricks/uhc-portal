@@ -205,6 +205,13 @@ function NetworkScreen(props) {
                       selectedVPC={formValues.selected_vpc_id}
                       privacy="public"
                       isNewCluster
+                      allowedAZ={[
+                        ...new Set(
+                          formValues.machine_pools_subnets.map(
+                            (subnet) => subnet.availability_zone,
+                          ),
+                        ),
+                      ]}
                     />
                   ),
                 },
