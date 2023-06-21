@@ -29,6 +29,7 @@ import TransferClusterOwnershipInfo from './TransferClusterOwnershipInfo';
 import TermsAlert from './TermsAlert';
 import ButtonWithTooltip from '../../../common/ButtonWithTooltip';
 import { goZeroTime2Null } from '../../../../common/helpers';
+import { PreviewLabel } from '~/components/clusters/common/PreviewLabel';
 
 function ClusterDetailsTop(props) {
   const {
@@ -47,6 +48,7 @@ function ClusterDetailsTop(props) {
     canHibernateCluster,
     autoRefreshEnabled,
     toggleSubscriptionReleased,
+    showPreviewLabel,
   } = props;
 
   const isProductOSDTrial =
@@ -58,6 +60,7 @@ function ClusterDetailsTop(props) {
   const isROSA = get(cluster, 'subscription.plan.type') === normalizedProducts.ROSA;
   const clusterName = getClusterName(cluster);
   const consoleURL = cluster.console ? cluster.console.url : false;
+  const creationDateStr = get(cluster, 'creation_timestamp', '');
 
   const hasIdentityProviders = clusterIdentityProviders.clusterIDPList.length > 0;
   const showIDPMessage =
@@ -193,6 +196,9 @@ function ClusterDetailsTop(props) {
         <SplitItem>
           <Title size="2xl" headingLevel="h1" className="cl-details-page-title">
             {clusterName}
+            {showPreviewLabel && (
+              <PreviewLabel creationDateStr={creationDateStr} className="pf-u-ml-sm" />
+            )}
           </Title>
         </SplitItem>
         <SplitItem>
@@ -276,6 +282,7 @@ ClusterDetailsTop.propTypes = {
   canTransferClusterOwnership: PropTypes.bool.isRequired,
   autoRefreshEnabled: PropTypes.bool,
   toggleSubscriptionReleased: PropTypes.func.isRequired,
+  showPreviewLabel: PropTypes.bool.isRequired,
 };
 
 export default ClusterDetailsTop;
