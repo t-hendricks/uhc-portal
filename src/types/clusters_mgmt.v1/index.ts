@@ -96,6 +96,7 @@ export type { LDAPIdentityProvider } from './models/LDAPIdentityProvider';
 export type { LimitedSupportReason } from './models/LimitedSupportReason';
 export type { LimitedSupportReasonTemplate } from './models/LimitedSupportReasonTemplate';
 export { ListeningMethod } from './models/ListeningMethod';
+export { LoadBalancerFlavor } from './models/LoadBalancerFlavor';
 export type { Log } from './models/Log';
 export type { MachinePool } from './models/MachinePool';
 export type { MachinePoolAutoscaling } from './models/MachinePoolAutoscaling';

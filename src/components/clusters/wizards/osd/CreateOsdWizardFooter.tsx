@@ -3,7 +3,7 @@ import { setNestedObjectValues } from 'formik';
 
 import { Button } from '@patternfly/react-core';
 import { useWizardContext, WizardFooterWrapper } from '@patternfly/react-core/next';
-import { scrollToFirstError } from '~/common/helpers';
+import { scrollToFirstField } from '~/common/helpers';
 import { getScrollErrorIds } from '~/components/clusters/wizards/form/utils';
 import { useFormState } from '~/components/clusters/wizards/hooks';
 
@@ -35,7 +35,7 @@ export const CreateOsdWizardFooter = ({ isLoading, onNext }: CreateOsdWizardFoot
 
     if (Object.keys(errors || {}).length > 0) {
       setTouched(setNestedObjectValues(errors, true));
-      scrollToFirstError(getScrollErrorIds(errors));
+      scrollToFirstField(getScrollErrorIds(errors));
 
       return;
     }

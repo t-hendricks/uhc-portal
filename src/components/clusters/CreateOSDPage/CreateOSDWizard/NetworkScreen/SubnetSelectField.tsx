@@ -32,6 +32,7 @@ interface SubnetSelectFieldProps {
   selectedVPC?: string;
   isNewCluster: boolean;
   withAutoSelect: boolean;
+  allowedAZ?: string[];
 }
 
 export const SubnetSelectField = ({
@@ -46,6 +47,7 @@ export const SubnetSelectField = ({
   withAutoSelect = true,
   selectedVPC,
   isNewCluster,
+  allowedAZ,
 }: SubnetSelectFieldProps) => {
   const [isExpanded, setIsExpanded] = React.useState(false);
   const [selectedSubnet, setSelectedSubnet] = React.useState(input.value);
@@ -63,12 +65,14 @@ export const SubnetSelectField = ({
     if (subnets && subnets.length > 0) {
       subnets.forEach((subnet) => {
         if (subnet.availability_zone && isSubnetMatchingPrivacy(subnet, privacy)) {
-          if (acc[subnet.availability_zone]) {
-            acc[subnet.availability_zone].push(subnet);
-          } else {
-            acc[subnet.availability_zone] = [subnet];
+          if (allowedAZ === undefined || allowedAZ.includes(subnet.availability_zone)) {
+            if (acc[subnet.availability_zone]) {
+              acc[subnet.availability_zone].push(subnet);
+            } else {
+              acc[subnet.availability_zone] = [subnet];
+            }
+            subnetList.push(subnet);
           }
-          subnetList.push(subnet);
         }
       });
     }
