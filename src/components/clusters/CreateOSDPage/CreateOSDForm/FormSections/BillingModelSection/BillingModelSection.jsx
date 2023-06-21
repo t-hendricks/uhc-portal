@@ -139,7 +139,7 @@ function BillingModelSection({
     const isBYOC = value === 'true';
     change('nodes_compute', getNodesCount(isBYOC, isMultiAz, true));
     change('min_replicas', getMinReplicasCount(isBYOC, isMultiAz, true));
-    change('max_replicas', '');
+    change('max_replicas', getMinReplicasCount(isBYOC, isMultiAz, true));
   };
 
   const subscriptionOptions = [
