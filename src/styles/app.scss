@@ -139,6 +139,8 @@ limitations under the License.
   position: relative;
   top: 50%;
   transform: translateY(-50%);
+  display: flex;
+  align-items: center;
 }
 
 .page-title {

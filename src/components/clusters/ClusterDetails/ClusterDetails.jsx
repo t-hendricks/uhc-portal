@@ -413,6 +413,7 @@ class ClusterDetails extends Component {
             canHibernateCluster={canHibernateCluster}
             autoRefreshEnabled={!anyModalOpen}
             toggleSubscriptionReleased={toggleSubscriptionReleased}
+            showPreviewLabel={isHypershift}
           >
             <TabsRow
               displayMonitoringTab={displayMonitoringTab}

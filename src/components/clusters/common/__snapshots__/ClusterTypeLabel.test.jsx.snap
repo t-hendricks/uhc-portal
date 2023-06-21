@@ -6,6 +6,10 @@ exports[`ClusterTypeLabel for ROSA hypershift 1`] = `
 >
   <span>
     ROSA - Hosted
+    <br />
+    <PreviewLabel
+      creationDateStr="2021-01-10T15:17:16.278663Z"
+    />
   </span>
 </Tooltip>
 `;
