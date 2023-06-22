@@ -17,6 +17,7 @@ import { OutlinedQuestionCircleIcon } from '@patternfly/react-icons';
 import { Link } from 'react-router-dom';
 import semver from 'semver';
 
+import { SUPPORTED_RESTRICTED_ENV_OCP_VERSIONS, isRestrictedEnv } from '~/restrictedEnv';
 import getReleaseNotesLink from './getReleaseNotesLink';
 import ExternalLink from '../common/ExternalLink';
 import ReleaseChannel from './ReleaseChannel';
@@ -24,7 +25,6 @@ import ReleaseChannelName from './ReleaseChannelName';
 import ReleaseChannelDescription from './ReleaseChannelDescription';
 import { useOCPLifeCycleStatusData } from './hooks';
 import { AppPage } from '../App/AppPage';
-import { SUPPORTED_RESTRICTED_ENV_OCP_VERSIONS, isRestrictedEnv } from '~/restrictedEnv';
 
 import './Releases.scss';
 

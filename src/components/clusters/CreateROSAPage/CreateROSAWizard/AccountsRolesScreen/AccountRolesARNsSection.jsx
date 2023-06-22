@@ -31,8 +31,8 @@ import ExternalLink from '~/components/common/ExternalLink';
 import InstructionCommand from '~/components/common/InstructionCommand';
 import { ReduxSelectDropdown } from '~/components/common/ReduxFormComponents';
 import ReduxVerticalFormGroup from '~/components/common/ReduxFormComponents/ReduxVerticalFormGroup';
-import { AwsRoleErrorAlert } from './AwsRoleErrorAlert';
 import { MIN_MANAGED_POLICY_VERSION } from '~/components/clusters/CreateROSAPage/CreateROSAWizard/rosaConstants';
+import { AwsRoleErrorAlert } from './AwsRoleErrorAlert';
 
 // todo - WAT!?
 import './AccountsRolesScreen.scss';

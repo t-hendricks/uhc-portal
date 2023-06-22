@@ -4,8 +4,8 @@ import { matchPath, Redirect } from 'react-router-dom';
 import { Spinner } from '@redhat-cloud-services/frontend-components/Spinner';
 import { Bullseye } from '@patternfly/react-core';
 import { validate as isUuid } from 'uuid';
-import ExternalRedirect from './ExternalRedirect';
 import { advisorBaseName } from '~/common/getBaseName';
+import ExternalRedirect from './ExternalRedirect';
 
 // expects the pluginName and errorKey to construct the ruleId recognized by OCP Advisor
 export const composeRuleId = (pluginName, errorKey) =>

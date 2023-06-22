@@ -17,13 +17,13 @@ import {
   Skeleton,
 } from '@patternfly/react-core';
 
-import ReduxVerticalFormGroup from '../../../../common/ReduxFormComponents/ReduxVerticalFormGroup';
 import ExternalLink from '~/components/common/ExternalLink';
 import PopoverHint from '~/components/common/PopoverHint';
-import validators from '../../../../../common/validators';
-import links from '../../../../../common/installLinks.mjs';
 import Instruction from '~/components/common/Instruction';
 import Instructions from '~/components/common/Instructions';
+import validators from '../../../../../common/validators';
+import links from '../../../../../common/installLinks.mjs';
+import ReduxVerticalFormGroup from '../../../../common/ReduxFormComponents/ReduxVerticalFormGroup';
 
 function CreateOIDCProviderInstructions() {
   return (

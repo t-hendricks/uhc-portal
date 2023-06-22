@@ -1,16 +1,16 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { FormSelect, FormSelectOption, FormGroup, Tooltip } from '@patternfly/react-core';
+import { FormGroup, FormSelect, FormSelectOption, Tooltip } from '@patternfly/react-core';
 import range from 'lodash/range';
+import PropTypes from 'prop-types';
+import React from 'react';
 
-import PopoverHint from '../../../common/PopoverHint';
-import { noQuotaTooltip } from '../../../../common/helpers';
-import { normalizedProducts, billingModels } from '../../../../common/subscriptionTypes';
-import { availableNodesFromQuota } from '../quotaSelectors';
 import {
   getNodeIncrement,
   getNodeIncrementHypershift,
 } from '~/components/clusters/ClusterDetails/components/MachinePools/machinePoolsHelper';
+import { noQuotaTooltip } from '../../../../common/helpers';
+import { billingModels, normalizedProducts } from '../../../../common/subscriptionTypes';
+import PopoverHint from '../../../common/PopoverHint';
+import { availableNodesFromQuota } from '../quotaSelectors';
 
 export const MAX_NODES = 180;
 

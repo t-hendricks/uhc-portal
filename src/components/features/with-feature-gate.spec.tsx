@@ -19,8 +19,6 @@ const getStateMock = store.getState as jest.Mock;
 type Props = {
   // eslint-disable-next-line react/no-unused-prop-types
   test?: string;
-  // eslint-disable-next-line react/no-unused-prop-types
-  allEnabledFeatures: any;
 };
 
 describe('with-feature-gate', () => {

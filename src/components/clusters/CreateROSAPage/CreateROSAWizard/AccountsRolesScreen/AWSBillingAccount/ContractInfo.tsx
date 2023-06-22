@@ -6,8 +6,8 @@ import {
   DescriptionListDescription,
 } from '@patternfly/react-core';
 import { DateFormat } from '@redhat-cloud-services/frontend-components/DateFormat';
-import { getDimensionValue } from './awsBillingAccountHelper';
 import { Contract } from '~/types/accounts_mgmt.v1/models/Contract';
+import { getDimensionValue } from './awsBillingAccountHelper';
 
 // eslint-disable-next-line camelcase
 const ContractInfo: React.FC<Contract> = ({ start_date, end_date, dimensions }) => (

@@ -3,10 +3,10 @@ import { get, indexOf, inRange } from 'lodash';
 import cidrTools from 'cidr-tools';
 import { ValidationError, Validator } from 'jsonschema';
 import { clusterService } from '~/services';
+import { State as CcsInquiriesState } from '~/components/clusters/CreateOSDPage/CreateOSDWizard/ccsInquiriesReducer';
+import { sqlString } from './queryHelpers';
 import type { GCP, Subnetwork, Taint } from '../types/clusters_mgmt.v1';
 import type { AugmentedSubnetwork } from '../types/types';
-import { sqlString } from './queryHelpers';
-import { State as CcsInquiriesState } from '~/components/clusters/CreateOSDPage/CreateOSDWizard/ccsInquiriesReducer';
 
 type Networks = Parameters<typeof cidrTools['overlap']>[0];
 

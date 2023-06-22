@@ -4,10 +4,10 @@ import { Grid, GridItem, FormGroup, Text } from '@patternfly/react-core';
 import { Field } from 'redux-form';
 import ReduxVerticalFormGroup from '~/components/common/ReduxFormComponents/ReduxVerticalFormGroup';
 import { required, validateGCPKMSServiceAccount } from '~/common/validators';
-import { constants } from '../../CreateOSDFormConstants';
 
 import ExternalLink from '~/components/common/ExternalLink';
 import PopoverHint from '~/components/common/PopoverHint';
+import { constants } from '../../CreateOSDFormConstants';
 import KMSKeyLocationComboBox from './KMSKeyLocationComboBox';
 import KMSKeyRingSelect from './KMSKeyRingSelect';
 import KMSKeySelect from './KMSKeySelect';

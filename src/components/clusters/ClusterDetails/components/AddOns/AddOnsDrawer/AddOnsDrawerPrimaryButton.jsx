@@ -208,6 +208,8 @@ AddOnsPrimaryButton.propTypes = {
   hasQuota: PropTypes.bool,
   installedAddOn: PropTypes.object,
   openModal: PropTypes.func,
+  updateClusterAddOn: PropTypes.func,
+  subscriptionModels: PropTypes.object,
 };
 
 export default AddOnsPrimaryButton;

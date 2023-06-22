@@ -22,6 +22,7 @@ import {
 import { Table, TableHeader, TableBody, cellWidth, expandable } from '@patternfly/react-table';
 import Skeleton from '@redhat-cloud-services/frontend-components/Skeleton';
 
+import { isRestrictedEnv } from '~/restrictedEnv';
 import UpdateAllMachinePools from './UpdateAllMachinePools';
 import AddMachinePoolModal from './components/AddMachinePoolModal';
 import EditTaintsModal from './components/EditTaintsModal';
@@ -37,7 +38,6 @@ import { versionFormatter } from '../../../../../common/versionFormatter';
 import { isHibernating } from '../../../common/clusterStates';
 import './MachinePools.scss';
 import { isMultiAZ } from '../../clusterDetailsHelper';
-import { isRestrictedEnv } from '~/restrictedEnv';
 
 const getOpenShiftVersion = (machinePool) => {
   const extractedVersion = get(machinePool, 'version.id', '');

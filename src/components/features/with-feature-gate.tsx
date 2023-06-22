@@ -12,48 +12,45 @@ const mapStateToProps = (feature: string) => (state: GlobalState) => ({
 
 type StateProps = ReturnType<ReturnType<typeof mapStateToProps>>;
 
-type ConnectedProps = {
-  stateProps: StateProps;
-  ownProps: any;
-};
-
-// merge props into separate properties such that stateProps don't override ownProps
-const mergeProps = (
-  stateProps: StateProps,
-  dispatchProps: unknown,
-  ownProps: any,
-): ConnectedProps => ({
-  stateProps,
-  ownProps,
-});
-
-type WrappedProps = {
+export type WithFeatureGateProps = {
   allEnabledFeatures: {
     [feature: string]: boolean | undefined;
   };
 };
 
 const withFeatureGate = <Props = {},>(
-  WrappedComponent: React.ComponentType<Props & WrappedProps>,
+  WrappedComponent: React.ComponentType<Props & WithFeatureGateProps>,
   feature: string,
-  FallbackComponent: React.ComponentType<Props & WrappedProps> = NotFoundError,
-): React.ComponentType<Omit<Props, keyof WrappedProps>> =>
+  FallbackComponent: React.ComponentType<Props & WithFeatureGateProps> = NotFoundError,
+) =>
   connect(
     mapStateToProps(feature),
     undefined,
-    mergeProps,
-  )(({ stateProps: { enabled, allEnabledFeatures }, ownProps }: ConnectedProps) => {
-    if (enabled === undefined) {
-      return (
-        <PageSection>
-          <Spinner centered />
-        </PageSection>
-      );
-    }
-    if (!enabled) {
-      return <FallbackComponent {...ownProps} allEnabledFeatures={allEnabledFeatures} />;
-    }
-    return <WrappedComponent {...ownProps} allEnabledFeatures={allEnabledFeatures} />;
-  });
+    (stateProps, dispatchProps: unknown, ownProps: Props) => ({
+      // merge props into separate properties such that stateProps don't override ownProps
+      stateProps,
+      ownProps,
+    }),
+  )(
+    ({
+      stateProps: { enabled, allEnabledFeatures },
+      ownProps,
+    }: {
+      stateProps: StateProps;
+      ownProps: Props;
+    }) => {
+      if (enabled === undefined) {
+        return (
+          <PageSection>
+            <Spinner centered />
+          </PageSection>
+        );
+      }
+      if (!enabled) {
+        return <FallbackComponent {...ownProps} allEnabledFeatures={allEnabledFeatures} />;
+      }
+      return <WrappedComponent {...ownProps} allEnabledFeatures={allEnabledFeatures} />;
+    },
+  );
 
 export default withFeatureGate;

@@ -2,8 +2,8 @@ import { connect } from 'react-redux';
 import { getFormValues } from 'redux-form';
 
 import { openModal } from '~/components/common/Modal/ModalActions';
-import VPCDetailsCard from './VPCDetailsCard';
 import { stringToArray } from '~/common/helpers';
+import VPCDetailsCard from './VPCDetailsCard';
 
 const mapStateToProps = (state) => {
   const { cluster } = state.clusters.details;

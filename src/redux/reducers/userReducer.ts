@@ -1,4 +1,5 @@
 import produce from 'immer';
+import { TermsReviewResponse } from '~/types/authorizations.v1';
 import { userConstants } from '../constants';
 import {
   REJECTED_ACTION,
@@ -11,7 +12,6 @@ import { UserAction } from '../actions/userActions';
 import { PromiseActionType, PromiseReducerState } from '../types';
 import { Organization, QuotaCost } from '../../types/accounts_mgmt.v1';
 import { UserInfo } from '../../types/types';
-import { TermsReviewResponse } from '~/types/authorizations.v1';
 
 export type OrganizationState = {
   details: Organization;

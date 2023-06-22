@@ -10,6 +10,7 @@ import {
   TextVariants,
 } from '@patternfly/react-core';
 
+import { canSelectImds } from '~/components/clusters/wizards/rosa/constants';
 import MachineTypeSelection from './MachineTypeSelection';
 import ImdsSection from './ImdsSection';
 
@@ -25,7 +26,6 @@ import PopoverHint from '../../../../../common/PopoverHint';
 import { required } from '../../../../../../common/validators';
 import ExternalLink from '../../../../../common/ExternalLink';
 import AutoScaleSection from './AutoScaleSection/AutoScaleSection';
-import { canSelectImds } from '~/components/clusters/wizards/rosa/constants';
 
 function ScaleSection({
   pending,

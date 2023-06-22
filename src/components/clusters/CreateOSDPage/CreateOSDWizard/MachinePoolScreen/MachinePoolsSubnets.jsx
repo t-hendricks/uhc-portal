@@ -4,8 +4,8 @@ import { Grid, GridItem } from '@patternfly/react-core';
 import { Field, FieldArray } from 'redux-form';
 
 import { required } from '~/common/validators';
-import VPCDropdown from './VPCDropdown';
 import ReduxFormMachinePoolSubnets from '~/components/common/ReduxFormComponents/ReduxFormMachinePoolSubnets/ReduxFormMachinePoolSubnets';
+import VPCDropdown from './VPCDropdown';
 
 const subnetWarnings = (value, allValues) => {
   const enteredSubnets = allValues.machine_pools_subnets.filter((subnet) => !!subnet.subnet_id);

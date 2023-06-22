@@ -14,10 +14,10 @@ import {
   TextVariants,
 } from '@patternfly/react-core';
 import { ExclamationCircleIcon } from '@patternfly/react-icons';
-import reviewValues from './reviewValues';
-import { ExpandableReviewItem } from './ExpandableReviewItem';
 import { BackToAssociateAwsAccountLink } from '~/components/clusters/CreateROSAPage/CreateROSAWizard/common/BackToAssociateAwsAccountLink';
 import PopoverHintWithTitle from '~/components/common/PopoverHintWithTitle';
+import reviewValues from './reviewValues';
+import { ExpandableReviewItem } from './ExpandableReviewItem';
 
 export const ReviewItem = ({ name, formValues }) => {
   const reviewValue = reviewValues[name];

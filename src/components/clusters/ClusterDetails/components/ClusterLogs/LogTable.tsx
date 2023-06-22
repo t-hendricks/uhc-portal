@@ -111,20 +111,9 @@ const LogTable = ({ logs, setSorting, pending }: LogTableParams) => {
     const day = moment.utc(timestamp).format('D MMM YYYY, HH:mm UTC');
 
     const md = (
-      <ReactMarkdown
-        className="markdown"
-        source={description}
-        linkTarget="_blank"
-        renderers={{
-          // @ts-ignore
-          linkReference: ({ href, $ref, children }) => {
-            if (!href) {
-              return `[${children[0].props.value}]`;
-            }
-            return <a href={$ref}>{children}</a>;
-          },
-        }}
-      />
+      <ReactMarkdown className="markdown" linkTarget="_blank">
+        {description || ''}
+      </ReactMarkdown>
     );
 
     const isInternal = internal_only; // summary.trim() === 'INTERNAL';

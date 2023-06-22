@@ -35,6 +35,7 @@ import {
   TextContent,
   Title,
 } from '@patternfly/react-core';
+import { isRestrictedEnv } from '~/restrictedEnv';
 import links, { tools, channels } from '../../common/installLinks.mjs';
 import Breadcrumbs from '../common/Breadcrumbs';
 import ExternalLink from '../common/ExternalLink';
@@ -46,7 +47,6 @@ import RevokeTokensInstructions from './RevokeTokensInstructions';
 
 import './Tokens.scss';
 import { AppPage } from '../App/AppPage';
-import { isRestrictedEnv } from '~/restrictedEnv';
 
 const defaultLeadingInfo = (
   <>

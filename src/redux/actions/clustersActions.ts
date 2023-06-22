@@ -19,6 +19,7 @@ import { action, ActionType } from 'typesafe-actions';
 import axios, { AxiosResponse } from 'axios';
 import type { Cluster as AICluster } from '@openshift-assisted/ui-lib/ocm';
 
+import { isHypershiftCluster } from '~/components/clusters/ClusterDetails/clusterDetailsHelper';
 import { clustersConstants } from '../constants';
 import {
   accountsService,
@@ -59,7 +60,6 @@ import type {
   ClusterWithPermissions,
 } from '../../types/types';
 import type { AppThunk, AppThunkDispatch } from '../types';
-import { isHypershiftCluster } from '~/components/clusters/ClusterDetails/clusterDetailsHelper';
 
 const invalidateClusters = () => action(INVALIDATE_ACTION(clustersConstants.GET_CLUSTERS));
 

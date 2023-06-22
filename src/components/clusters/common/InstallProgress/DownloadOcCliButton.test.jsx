@@ -8,6 +8,14 @@ import DownloadOcCliButton from './DownloadOcCliButton';
 
 const downloadButtonText = 'Download OC CLI';
 
+jest.mock('react-redux', () => {
+  const config = {
+    __esModule: true,
+    ...jest.requireActual('react-redux'),
+  };
+  return config;
+});
+
 describe('<DownloadOcCliButton />', () => {
   const useSelectorSpy = jest.spyOn(ReactRedux, 'useSelector');
   const detectOsSpy = jest.spyOn(DownloadUtils, 'detectOS');

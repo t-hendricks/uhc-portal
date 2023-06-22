@@ -4,8 +4,8 @@ import { Tooltip } from '@patternfly/react-core';
 
 import get from 'lodash/get';
 
-import { normalizedProducts } from '../../../common/subscriptionTypes';
 import { PreviewLabel, createdPostGa } from '~/components/clusters/common/PreviewLabel';
+import { normalizedProducts } from '../../../common/subscriptionTypes';
 
 function ClusterTypeLabel({ cluster }) {
   const creationDateStr = get(cluster, 'creation_timestamp', '');

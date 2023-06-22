@@ -1,8 +1,8 @@
+import { checkAccessibility, insightsMock, render, screen, within } from '@testUtils';
 import React from 'react';
-import { screen, render, within, checkAccessibility, insightsMock } from '@testUtils';
-import DetailsRight from './DetailsRight';
-import fixtures from '../../../__test__/ClusterDetails.fixtures';
 import { subscriptionStatuses } from '~/common/subscriptionTypes';
+import fixtures from '../../../__test__/ClusterDetails.fixtures';
+import DetailsRight from './DetailsRight';
 
 const defaultProps = {
   cluster: fixtures.clusterDetails.cluster,

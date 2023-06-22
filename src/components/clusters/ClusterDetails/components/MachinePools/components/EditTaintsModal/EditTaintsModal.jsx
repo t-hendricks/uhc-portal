@@ -3,12 +3,12 @@ import PropTypes from 'prop-types';
 import { Field, FieldArray } from 'redux-form';
 import { Form, Grid, GridItem } from '@patternfly/react-core';
 
+import { validateNoEmptyTaints } from '~/common/validators';
 import Modal from '../../../../../../common/Modal/Modal';
 import ErrorBox from '../../../../../../common/ErrorBox';
 import { SpotInstanceInfoAlert, isMachinePoolUsingSpotInstances } from '../SpotInstanceHelper';
 
 import { ReduxFormDropdown, ReduxFormTaints } from '../../../../../../common/ReduxFormComponents';
-import { validateNoEmptyTaints } from '~/common/validators';
 
 class EditTaintsModal extends Component {
   componentDidMount() {
