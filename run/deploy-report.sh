@@ -125,7 +125,7 @@ done
 tempBranch="candidate-$(date +"%B-%d-%Y")"
 echo git checkout -b "$tempBranch" live_candidate
 echo " "
-echo git cherry-pick -m 1 "${reversedReadyToPromoteSHAs[@]}"
+echo git cherry-pick -x -m 1 "${reversedReadyToPromoteSHAs[@]}"
 echo " "
 
 # Release Notess
