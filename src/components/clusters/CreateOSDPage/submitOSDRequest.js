@@ -107,7 +107,7 @@ export const createClusterRequest = ({ isWizard = true, cloudProviderID, product
     const minNodes = parseInt(formData.min_replicas, 10);
     const maxNodes = parseInt(formData.max_replicas, 10);
 
-    if (formData.hypershift) {
+    if (isHypershiftSelected) {
       clusterRequest.nodes.autoscale_compute = {
         min_replicas: minNodes * formData.machine_pools_subnets.length,
         max_replicas: maxNodes * formData.machine_pools_subnets.length,
@@ -168,9 +168,7 @@ export const createClusterRequest = ({ isWizard = true, cloudProviderID, product
             support_role_arn: formData.support_role_arn,
             instance_iam_roles: {
               worker_role_arn: formData.worker_role_arn,
-              ...(formData.hypershift !== 'true'
-                ? { master_role_arn: formData.control_plane_role_arn }
-                : {}),
+              ...(isHypershiftSelected ? {} : { master_role_arn: formData.control_plane_role_arn }),
             },
             operator_role_prefix: formData.custom_operator_roles_prefix,
           },
@@ -302,7 +300,7 @@ export const createClusterRequest = ({ isWizard = true, cloudProviderID, product
     clusterRequest.hypershift = { enabled: isHypershiftSelected };
   }
 
-  if (formData.hypershift === 'true') {
+  if (isHypershiftSelected) {
     clusterRequest.multi_az = true;
   }
 
