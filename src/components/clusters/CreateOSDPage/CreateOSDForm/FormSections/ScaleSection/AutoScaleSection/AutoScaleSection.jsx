@@ -236,13 +236,11 @@ class AutoScaleSection extends React.Component {
     return undefined;
   };
 
-  validateMaxNodes = (val) => {
-    const { isMultiAz } = this.props;
-    return validateNumericInput(val, {
-      max: isMultiAz ? MAX_NODES / 3 : MAX_NODES,
+  validateMaxNodes = (val) =>
+    validateNumericInput(val, {
+      max: this.maxNodes(),
       allowZero: true,
     });
-  };
 
   render() {
     const {
