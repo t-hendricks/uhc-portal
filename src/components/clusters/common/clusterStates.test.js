@@ -4,7 +4,10 @@ import set from 'lodash/set';
 import forOwn from 'lodash/forOwn';
 import * as OCM from '@openshift-assisted/ui-lib/ocm';
 import { normalizedProducts, subscriptionStatuses } from '../../../common/subscriptionTypes';
-import clusterStates, { getClusterStateAndDescription } from './clusterStates';
+import clusterStates, {
+  getClusterStateAndDescription,
+  isWaitingROSAManualMode,
+} from './clusterStates';
 
 const mockCluster = (data) => {
   const cluster = {
@@ -65,5 +68,46 @@ describe('getClusterStateAndDescription', () => {
     expectDescription(clusterStates.HIBERNATING, 'Hibernating');
     expectDescription(clusterStates.ERROR, 'Error');
     expectDescription(clusterStates.POWERING_DOWN, 'Powering down');
+  });
+
+  describe('isWaitingROSAManualMode()', () => {
+    const ROSAManualCluster = {
+      state: 'waiting',
+      hypershift: { enabled: false },
+      product: { id: 'ROSA' },
+      aws: { sts: { auto_mode: false, oidc_config: {} } },
+    };
+
+    it('returns true when is rosa and has a missing oidc config ', () => {
+      expect(isWaitingROSAManualMode(ROSAManualCluster)).toBeTruthy();
+    });
+
+    it('returns false when state is not in waiting', () => {
+      const readyCluster = { ...ROSAManualCluster, state: 'ready' };
+      expect(isWaitingROSAManualMode(readyCluster)).toBeFalsy();
+    });
+
+    it('return false when is hypershift cluster', () => {
+      const hypershiftCluster = { ...ROSAManualCluster, hypershift: { enabled: true } };
+      expect(isWaitingROSAManualMode(hypershiftCluster)).toBeFalsy();
+    });
+
+    it('returns false when is not a ROSA cluster', () => {
+      const OSDCluster = { ...ROSAManualCluster, product: { id: 'OSD' } };
+      expect(isWaitingROSAManualMode(OSDCluster)).toBeFalsy();
+    });
+
+    it('returns false when it is sts auto mode', () => {
+      const stsAutoModeCluster = { ...ROSAManualCluster, aws: { sts: { auto_mode: true } } };
+      expect(isWaitingROSAManualMode(stsAutoModeCluster)).toBeFalsy();
+    });
+
+    it('returns false when there is a oidc config', () => {
+      const oidcReadyCluster = {
+        ...ROSAManualCluster,
+        aws: { sts: { auto_mode: false, oidc_config: { id: 'my-oidc-id' } } },
+      };
+      expect(isWaitingROSAManualMode(oidcReadyCluster)).toBeFalsy();
+    });
   });
 });
