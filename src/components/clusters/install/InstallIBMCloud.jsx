@@ -5,16 +5,13 @@ import { PageSection } from '@patternfly/react-core';
 
 import Breadcrumbs from '../../common/Breadcrumbs';
 import { tollboothActions } from '../../../redux/actions';
-import { scrollToTop } from '../../../common/helpers';
 import instructionsMapping from './instructions/instructionsMapping';
 import OCPInstructions from './instructions/OCPInstructions';
 import PageTitle from '../../common/PageTitle';
+import { AppPage } from '~/components/App/AppPage';
 
 export class InstallIBMCloud extends Component {
   componentDidMount() {
-    scrollToTop();
-    document.title = 'Install OpenShift 4 | Red Hat OpenShift Cluster Manager | IBM Cloud';
-
     const { dispatch } = this.props;
     dispatch(tollboothActions.createAuthToken());
   }
@@ -32,7 +29,7 @@ export class InstallIBMCloud extends Component {
     );
 
     return (
-      <>
+      <AppPage title="Install OpenShift 4 | Red Hat OpenShift Cluster Manager | IBM Cloud">
         <PageTitle title={instructionsMapping.ibmCloud.title} breadcrumbs={breadcrumbs} />
         <PageSection>
           <OCPInstructions
@@ -41,7 +38,7 @@ export class InstallIBMCloud extends Component {
             {...instructionsMapping.ibmCloud}
           />
         </PageSection>
-      </>
+      </AppPage>
     );
   }
 }

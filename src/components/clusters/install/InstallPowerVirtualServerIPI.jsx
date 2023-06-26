@@ -5,17 +5,13 @@ import { PageSection } from '@patternfly/react-core';
 
 import Breadcrumbs from '../../common/Breadcrumbs';
 import { tollboothActions } from '../../../redux/actions';
-import { scrollToTop } from '../../../common/helpers';
 import instructionsMapping from './instructions/instructionsMapping';
 import OCPInstructions from './instructions/OCPInstructions';
 import PageTitle from '../../common/PageTitle';
+import { AppPage } from '~/components/App/AppPage';
 
 export class InstallPowerVirtualServerIPI extends Component {
   componentDidMount() {
-    scrollToTop();
-    document.title =
-      'Install OpenShift 4 | Red Hat OpenShift Cluster Manager | IBM Power Systems Virtual Server Installer-Provisioned Infrastructure';
-
     const { dispatch } = this.props;
     dispatch(tollboothActions.createAuthToken());
   }
@@ -33,7 +29,7 @@ export class InstallPowerVirtualServerIPI extends Component {
     );
 
     return (
-      <>
+      <AppPage title="Install OpenShift 4 | Red Hat OpenShift Cluster Manager | IBM Power Systems Virtual Server Installer-Provisioned Infrastructure">
         <PageTitle
           title={instructionsMapping.ibmCloud.powervs.ipi.title}
           breadcrumbs={breadcrumbs}
@@ -47,7 +43,7 @@ export class InstallPowerVirtualServerIPI extends Component {
             {...instructionsMapping.ibmCloud.powervs.ipi}
           />
         </PageSection>
-      </>
+      </AppPage>
     );
   }
 }

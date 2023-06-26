@@ -38,6 +38,7 @@ import {
   subscriptionSupportLevels,
 } from '../../../common/subscriptionTypes';
 import validateSubscriptionSettings from './validateSubscriptionSettings';
+import { AppPage } from '~/components/App/AppPage';
 
 const { EVAL } = subscriptionSupportLevels;
 
@@ -137,7 +138,7 @@ class RegisterCluster extends React.Component {
     );
 
     return (
-      <>
+      <AppPage>
         <PageHeader>
           <Breadcrumbs path={[{ label: 'Clusters' }, { label: 'Register disconnected cluster' }]} />
           <PageHeaderTitle title="Register disconnected cluster" />
@@ -226,7 +227,7 @@ class RegisterCluster extends React.Component {
             </CardFooter>
           </Card>
         </PageSection>
-      </>
+      </AppPage>
     );
   }
 }

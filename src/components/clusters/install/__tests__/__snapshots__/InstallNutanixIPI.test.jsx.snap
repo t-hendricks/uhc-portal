@@ -1,7 +1,9 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`InstallNutanixIPI renders correctly 1`] = `
-<Fragment>
+<AppPage
+  title="Install OpenShift 4 | Red Hat OpenShift Cluster Manager | Nutanix AOS Installer-Provisioned Infrastructure"
+>
   <PageTitle
     breadcrumbs={
       <Breadcrumbs
@@ -39,5 +41,5 @@ exports[`InstallNutanixIPI renders correctly 1`] = `
       token={Object {}}
     />
   </PageSection>
-</Fragment>
+</AppPage>
 `;

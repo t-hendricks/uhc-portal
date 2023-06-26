@@ -1,7 +1,9 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`InstallMultiBMUPI renders correctly 1`] = `
-<Fragment>
+<AppPage
+  title="Install OpenShift 4 | Red Hat OpenShift Cluster Manager | Baremetal with Multi-Architecture Compute Machines"
+>
   <PageTitle
     breadcrumbs={
       <Breadcrumbs
@@ -55,5 +57,5 @@ exports[`InstallMultiBMUPI renders correctly 1`] = `
       token={Object {}}
     />
   </PageSection>
-</Fragment>
+</AppPage>
 `;

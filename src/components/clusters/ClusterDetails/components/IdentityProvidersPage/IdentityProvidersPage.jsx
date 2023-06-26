@@ -15,7 +15,7 @@ import {
 } from '@patternfly/react-core';
 import { Spinner } from '@redhat-cloud-services/frontend-components/Spinner';
 import { PageHeader, PageHeaderTitle } from '@redhat-cloud-services/frontend-components/PageHeader';
-import { isValid, scrollToTop } from '../../../../../common/helpers';
+import { isValid } from '../../../../../common/helpers';
 import Breadcrumbs from '../../../../common/Breadcrumbs';
 import IDPForm from './components/IDPForm';
 import Unavailable from '../../../../common/Unavailable';
@@ -23,6 +23,9 @@ import getClusterName from '../../../../../common/getClusterName';
 import { subscriptionStatuses } from '../../../../../common/subscriptionTypes';
 import { IDPTypeNames, singularFormIDP } from './IdentityProvidersHelper';
 import { isHypershiftCluster } from '../../clusterDetailsHelper';
+import { AppPage } from '~/components/App/AppPage';
+
+const PAGE_TITLE = 'Red Hat OpenShift Cluster Manager';
 
 class IdentityProvidersPage extends React.Component {
   componentDidMount() {
@@ -30,7 +33,6 @@ class IdentityProvidersPage extends React.Component {
     const { cluster } = clusterDetails;
 
     document.title = 'Red Hat OpenShift Cluster Manager';
-    scrollToTop();
 
     const subscriptionID = match.params.id;
     if (isValid(subscriptionID) && get(cluster, 'subscription.id', '') !== subscriptionID) {
@@ -109,19 +111,21 @@ class IdentityProvidersPage extends React.Component {
 
     if ((clusterPending || idpsPending) && !clusterDetails.error) {
       return (
-        <div id="clusterdetails-content">
-          <div className="cluster-loading-container">
-            <Spinner centered />
+        <AppPage title={PAGE_TITLE}>
+          <div id="clusterdetails-content">
+            <div className="cluster-loading-container">
+              <Spinner centered />
+            </div>
           </div>
-        </div>
+        </AppPage>
       );
     }
 
     const errorState = () => (
-      <>
+      <AppPage title={PAGE_TITLE}>
         <Unavailable message="Error retrieving IDP page" response={clusterDetails} />
         {clusterPending && <Spinner />}
-      </>
+      </AppPage>
     );
 
     if (
@@ -166,7 +170,7 @@ class IdentityProvidersPage extends React.Component {
       ? title
       : `Add ${singularFormIDP[selectedIDP]} identity provider`;
     return (
-      <>
+      <AppPage title={PAGE_TITLE}>
         <PageHeader>
           <Breadcrumbs
             path={[
@@ -233,7 +237,7 @@ class IdentityProvidersPage extends React.Component {
             </CardFooter>
           </Card>
         </PageSection>
-      </>
+      </AppPage>
     );
   }
 }

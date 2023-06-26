@@ -4,17 +4,13 @@ import { connect } from 'react-redux';
 import { PageSection } from '@patternfly/react-core';
 import Breadcrumbs from '../../common/Breadcrumbs';
 import { tollboothActions } from '../../../redux/actions';
-import { scrollToTop } from '../../../common/helpers';
 import instructionsMapping from './instructions/instructionsMapping';
 import OCPInstructions from './instructions/OCPInstructions';
 import PageTitle from '../../common/PageTitle';
+import { AppPage } from '~/components/App/AppPage';
 
 export class InstallASHIPI extends Component {
   componentDidMount() {
-    scrollToTop();
-    document.title =
-      'Install OpenShift 4 | Red Hat OpenShift Cluster Manager | Azure Stack Hub Installer-Provisioned Infrastructure';
-
     const { dispatch } = this.props;
     dispatch(tollboothActions.createAuthToken());
   }
@@ -33,7 +29,7 @@ export class InstallASHIPI extends Component {
     );
 
     return (
-      <>
+      <AppPage title="Install OpenShift 4 | Red Hat OpenShift Cluster Manager | Azure Stack Hub Installer-Provisioned Infrastructure">
         <PageTitle title={instructionsMapping.ash.ipi.title} breadcrumbs={breadcrumbs} />
         <PageSection>
           <OCPInstructions
@@ -43,7 +39,7 @@ export class InstallASHIPI extends Component {
             {...instructionsMapping.ash.ipi}
           />
         </PageSection>
-      </>
+      </AppPage>
     );
   }
 }

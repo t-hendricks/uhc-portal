@@ -1,7 +1,9 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`<Tokens /> Renders loading screen 1`] = `
-<Fragment>
+<AppPage
+  title="API Token | OpenShift Cluster Manager"
+>
   <PageHeader>
     <Breadcrumbs
       path={
@@ -150,11 +152,13 @@ exports[`<Tokens /> Renders loading screen 1`] = `
       </StackItem>
     </Stack>
   </PageSection>
-</Fragment>
+</AppPage>
 `;
 
 exports[`<Tokens /> Renders screen with button 1`] = `
-<Fragment>
+<AppPage
+  title="API Token | OpenShift Cluster Manager"
+>
   <PageHeader>
     <Breadcrumbs
       path={
@@ -243,11 +247,13 @@ exports[`<Tokens /> Renders screen with button 1`] = `
       </StackItem>
     </Stack>
   </PageSection>
-</Fragment>
+</AppPage>
 `;
 
 exports[`<Tokens /> Renders screen with token 1`] = `
-<Fragment>
+<AppPage
+  title="API Token | OpenShift Cluster Manager"
+>
   <PageHeader>
     <Breadcrumbs
       path={
@@ -401,11 +407,13 @@ exports[`<Tokens /> Renders screen with token 1`] = `
       </StackItem>
     </Stack>
   </PageSection>
-</Fragment>
+</AppPage>
 `;
 
 exports[`<Tokens /> Renders token 1`] = `
-<Fragment>
+<AppPage
+  title="API Token | OpenShift Cluster Manager"
+>
   <PageHeader>
     <Breadcrumbs
       path={
@@ -554,5 +562,5 @@ exports[`<Tokens /> Renders token 1`] = `
       </StackItem>
     </Stack>
   </PageSection>
-</Fragment>
+</AppPage>
 `;
