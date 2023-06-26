@@ -79,7 +79,7 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
       machinePoolRequest.aws_node_pool = {
         instance_type: formData.machine_type,
       };
-      machinePoolRequest.subnet = formData.subnet.id;
+      machinePoolRequest.subnet = formData.subnet.subnet_id;
     } else {
       machinePoolRequest.instance_type = formData.machine_type;
       if (formData.spot_instances) {
