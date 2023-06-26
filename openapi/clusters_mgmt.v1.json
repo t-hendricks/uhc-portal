@@ -180,7 +180,8 @@
             "in": "path",
             "schema": {
               "type": "string"
-            }
+            },
+            "required": true
           }
         ],
         "responses": {
@@ -207,7 +208,8 @@
             "in": "path",
             "schema": {
               "type": "string"
-            }
+            },
+            "required": true
           }
         ],
         "responses": {
@@ -241,7 +243,8 @@
             "in": "path",
             "schema": {
               "type": "string"
-            }
+            },
+            "required": true
           }
         ],
         "requestBody": {
@@ -286,7 +289,8 @@
             "in": "path",
             "schema": {
               "type": "string"
-            }
+            },
+            "required": true
           }
         ],
         "requestBody": {
@@ -329,7 +333,8 @@
             "in": "path",
             "schema": {
               "type": "string"
-            }
+            },
+            "required": true
           },
           {
             "name": "order",
@@ -423,14 +428,16 @@
             "in": "path",
             "schema": {
               "type": "string"
-            }
+            },
+            "required": true
           },
           {
             "name": "version_id",
             "in": "path",
             "schema": {
               "type": "string"
-            }
+            },
+            "required": true
           }
         ],
         "responses": {
@@ -457,14 +464,16 @@
             "in": "path",
             "schema": {
               "type": "string"
-            }
+            },
+            "required": true
           },
           {
             "name": "version_id",
             "in": "path",
             "schema": {
               "type": "string"
-            }
+            },
+            "required": true
           }
         ],
         "responses": {
@@ -498,14 +507,16 @@
             "in": "path",
             "schema": {
               "type": "string"
-            }
+            },
+            "required": true
           },
           {
             "name": "version_id",
             "in": "path",
             "schema": {
               "type": "string"
-            }
+            },
+            "required": true
           }
         ],
         "requestBody": {
@@ -636,7 +647,8 @@
             "in": "path",
             "schema": {
               "type": "string"
-            }
+            },
+            "required": true
           }
         ],
         "responses": {
@@ -1157,7 +1169,8 @@
             "in": "path",
             "schema": {
               "type": "string"
-            }
+            },
+            "required": true
           }
         ],
         "responses": {
@@ -1193,7 +1206,8 @@
             "in": "path",
             "schema": {
               "type": "string"
-            }
+            },
+            "required": true
           },
           {
             "name": "page",
@@ -1272,6 +1286,50 @@
       }
     },
     "/api/clusters_mgmt/v1/cloud_providers/{cloud_provider_id}/regions": {
+      "post": {
+        "description": "Adds a cloud region to the database.",
+        "parameters": [
+          {
+            "name": "cloud_provider_id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CloudRegion"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Success.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CloudRegion"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      },
       "get": {
         "description": "Retrieves the list of regions of the cloud provider.\n\nIMPORTANT: This collection doesn't currently support paging or searching, so the returned\n`page` will always be 1 and `size` and `total` will always be the total number of regions\nof the provider.",
         "parameters": [
@@ -1280,7 +1338,8 @@
             "in": "path",
             "schema": {
               "type": "string"
-            }
+            },
+            "required": true
           },
           {
             "name": "page",
@@ -1350,6 +1409,42 @@
       }
     },
     "/api/clusters_mgmt/v1/cloud_providers/{cloud_provider_id}/regions/{region_id}": {
+      "delete": {
+        "description": "Deletes the region.",
+        "parameters": [
+          {
+            "name": "cloud_provider_id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          },
+          {
+            "name": "region_id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Success."
+          },
+          "default": {
+            "description": "Error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      },
       "get": {
         "description": "Retrieves the details of the region.",
         "parameters": [
@@ -1358,16 +1453,70 @@
             "in": "path",
             "schema": {
               "type": "string"
-            }
+            },
+            "required": true
           },
           {
             "name": "region_id",
             "in": "path",
             "schema": {
               "type": "string"
-            }
+            },
+            "required": true
           }
         ],
+        "responses": {
+          "200": {
+            "description": "Success.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CloudRegion"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "description": "Updates the region.",
+        "parameters": [
+          {
+            "name": "cloud_provider_id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          },
+          {
+            "name": "region_id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CloudRegion"
+              }
+            }
+          }
+        },
         "responses": {
           "200": {
             "description": "Success.",
@@ -1522,7 +1671,8 @@
             "in": "path",
             "schema": {
               "type": "string"
-            }
+            },
+            "required": true
           },
           {
             "name": "deprovision",
@@ -1565,7 +1715,8 @@
             "in": "path",
             "schema": {
               "type": "string"
-            }
+            },
+            "required": true
           }
         ],
         "responses": {
@@ -1599,7 +1750,8 @@
             "in": "path",
             "schema": {
               "type": "string"
-            }
+            },
+            "required": true
           }
         ],
         "requestBody": {
@@ -1644,7 +1796,8 @@
             "in": "path",
             "schema": {
               "type": "string"
-            }
+            },
+            "required": true
           }
         ],
         "responses": {
@@ -1673,7 +1826,8 @@
             "in": "path",
             "schema": {
               "type": "string"
-            }
+            },
+            "required": true
           }
         ],
         "responses": {
@@ -1701,7 +1855,8 @@
             "in": "path",
             "schema": {
               "type": "string"
-            }
+            },
+            "required": true
           },
           {
             "name": "order",
@@ -1794,14 +1949,16 @@
             "in": "path",
             "schema": {
               "type": "string"
-            }
+            },
+            "required": true
           },
           {
             "name": "addon_inquiry_id",
             "in": "path",
             "schema": {
               "type": "string"
-            }
+            },
+            "required": true
           }
         ],
         "responses": {
@@ -1828,6 +1985,359 @@
         }
       }
     },
+    "/api/clusters_mgmt/v1/clusters/{cluster_id}/addon_upgrade_policies": {
+      "post": {
+        "description": "Adds a new addon upgrade policy to the cluster.",
+        "parameters": [
+          {
+            "name": "cluster_id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AddonUpgradePolicy"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Success.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AddonUpgradePolicy"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "description": "Retrieves the list of addon upgrade policies.",
+        "parameters": [
+          {
+            "name": "cluster_id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          },
+          {
+            "name": "page",
+            "description": "Index of the requested page, where one corresponds to the first page.",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "size",
+            "description": "Number of items contained in the returned page.",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "items": {
+                      "description": "Retrieved list of addon upgrade policy.",
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/AddonUpgradePolicy"
+                      }
+                    },
+                    "page": {
+                      "description": "Index of the requested page, where one corresponds to the first page.",
+                      "type": "integer",
+                      "format": "int32"
+                    },
+                    "size": {
+                      "description": "Number of items contained in the returned page.",
+                      "type": "integer",
+                      "format": "int32"
+                    },
+                    "total": {
+                      "description": "Total number of items of the collection.",
+                      "type": "integer",
+                      "format": "int32"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/clusters_mgmt/v1/clusters/{cluster_id}/addon_upgrade_policies/{addon_upgrade_policy_id}": {
+      "delete": {
+        "description": "Deletes the addon upgrade policy.",
+        "parameters": [
+          {
+            "name": "cluster_id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          },
+          {
+            "name": "addon_upgrade_policy_id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Success."
+          },
+          "default": {
+            "description": "Error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "description": "Retrieves the details of the addon upgrade policy.",
+        "parameters": [
+          {
+            "name": "cluster_id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          },
+          {
+            "name": "addon_upgrade_policy_id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AddonUpgradePolicy"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "description": "Update the addon upgrade policy.",
+        "parameters": [
+          {
+            "name": "cluster_id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          },
+          {
+            "name": "addon_upgrade_policy_id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AddonUpgradePolicy"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AddonUpgradePolicy"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/clusters_mgmt/v1/clusters/{cluster_id}/addon_upgrade_policies/{addon_upgrade_policy_id}/state": {
+      "get": {
+        "description": "Retrieves the details of the upgrade policy state.",
+        "parameters": [
+          {
+            "name": "cluster_id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          },
+          {
+            "name": "addon_upgrade_policy_id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AddonUpgradePolicyState"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "description": "Update the upgrade policy state.",
+        "parameters": [
+          {
+            "name": "cluster_id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          },
+          {
+            "name": "addon_upgrade_policy_id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AddonUpgradePolicyState"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AddonUpgradePolicyState"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/clusters_mgmt/v1/clusters/{cluster_id}/addons": {
       "post": {
         "description": "Create a new add-on installation and add it to the collection of add-on installations on the cluster.",
@@ -1837,7 +2347,8 @@
             "in": "path",
             "schema": {
               "type": "string"
-            }
+            },
+            "required": true
           }
         ],
         "requestBody": {
@@ -1880,7 +2391,8 @@
             "in": "path",
             "schema": {
               "type": "string"
-            }
+            },
+            "required": true
           },
           {
             "name": "order",
@@ -1974,14 +2486,16 @@
             "in": "path",
             "schema": {
               "type": "string"
-            }
+            },
+            "required": true
           },
           {
             "name": "addoninstallation_id",
             "in": "path",
             "schema": {
               "type": "string"
-            }
+            },
+            "required": true
           }
         ],
         "responses": {
@@ -2008,14 +2522,16 @@
             "in": "path",
             "schema": {
               "type": "string"
-            }
+            },
+            "required": true
           },
           {
             "name": "addoninstallation_id",
             "in": "path",
             "schema": {
               "type": "string"
-            }
+            },
+            "required": true
           }
         ],
         "responses": {
@@ -2049,14 +2565,16 @@
             "in": "path",
             "schema": {
               "type": "string"
-            }
+            },
+            "required": true
           },
           {
             "name": "addoninstallation_id",
             "in": "path",
             "schema": {
               "type": "string"
-            }
+            },
+            "required": true
           }
         ],
         "requestBody": {
@@ -2092,6 +2610,255 @@
         }
       }
     },
+    "/api/clusters_mgmt/v1/clusters/{cluster_id}/aws/private_link_configuration": {
+      "get": {
+        "description": "Retrieves the details of the configuration for the Private Link.",
+        "parameters": [
+          {
+            "name": "cluster_id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PrivateLinkConfiguration"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/clusters_mgmt/v1/clusters/{cluster_id}/aws/private_link_configuration/principals": {
+      "post": {
+        "description": "Adds a new principal for the Private Link.",
+        "parameters": [
+          {
+            "name": "cluster_id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PrivateLinkPrincipal"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Success.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PrivateLinkPrincipal"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "description": "Retrieves the list of principals.",
+        "parameters": [
+          {
+            "name": "cluster_id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          },
+          {
+            "name": "page",
+            "description": "Index of the requested page, where one corresponds to the first page.",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "search",
+            "description": "Search criteria.\n\nThe syntax of this parameter is similar to the syntax of the _where_ clause\nof an SQL statement, but using the names of the attributes of the role binding\ninstead of the names of the columns of a table. For example, in order to\nretrieve role bindings with role_id AuthenticatedUser:\n\n```sql\nrole_id = 'AuthenticatedUser'\n```\n\nIf the parameter isn't provided, or if the value is empty, then all the\nitems that the user has permission to see will be returned.",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "size",
+            "description": "Number of items contained in the returned page.",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "items": {
+                      "description": "Retrieved list of principals.",
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/PrivateLinkPrincipal"
+                      }
+                    },
+                    "page": {
+                      "description": "Index of the requested page, where one corresponds to the first page.",
+                      "type": "integer",
+                      "format": "int32"
+                    },
+                    "size": {
+                      "description": "Number of items contained in the returned page.",
+                      "type": "integer",
+                      "format": "int32"
+                    },
+                    "total": {
+                      "description": "Total number of items of the collection.",
+                      "type": "integer",
+                      "format": "int32"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/clusters_mgmt/v1/clusters/{cluster_id}/aws/private_link_configuration/principals/{principal_id}": {
+      "delete": {
+        "description": "Deletes the principal.",
+        "parameters": [
+          {
+            "name": "cluster_id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          },
+          {
+            "name": "principal_id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Success."
+          },
+          "default": {
+            "description": "Error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "description": "Retrieves the details of the principal.",
+        "parameters": [
+          {
+            "name": "cluster_id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          },
+          {
+            "name": "principal_id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PrivateLinkPrincipal"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/clusters_mgmt/v1/clusters/{cluster_id}/aws_infrastructure_access_role_grants": {
       "post": {
         "description": "Create a new AWS infrastructure access role grant and add it to the collection of\nAWS infrastructure access role grants on the cluster.",
@@ -2101,7 +2868,8 @@
             "in": "path",
             "schema": {
               "type": "string"
-            }
+            },
+            "required": true
           }
         ],
         "requestBody": {
@@ -2144,7 +2912,8 @@
             "in": "path",
             "schema": {
               "type": "string"
-            }
+            },
+            "required": true
           },
           {
             "name": "order",
@@ -2238,14 +3007,16 @@
             "in": "path",
             "schema": {
               "type": "string"
-            }
+            },
+            "required": true
           },
           {
             "name": "aws_infrastructure_access_role_grant_id",
             "in": "path",
             "schema": {
               "type": "string"
-            }
+            },
+            "required": true
           }
         ],
         "responses": {
@@ -2272,14 +3043,16 @@
             "in": "path",
             "schema": {
               "type": "string"
-            }
+            },
+            "required": true
           },
           {
             "name": "aws_infrastructure_access_role_grant_id",
             "in": "path",
             "schema": {
               "type": "string"
-            }
+            },
+            "required": true
           }
         ],
         "responses": {
@@ -2315,12 +3088,269 @@
             "in": "path",
             "schema": {
               "type": "string"
-            }
+            },
+            "required": true
           }
         ],
         "responses": {
           "204": {
             "description": "Success."
+          },
+          "default": {
+            "description": "Error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/clusters_mgmt/v1/clusters/{cluster_id}/control_plane/upgrade_policies": {
+      "post": {
+        "description": "Adds a new upgrade policy to the control plane of the cluster.",
+        "parameters": [
+          {
+            "name": "cluster_id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ControlPlaneUpgradePolicy"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Success.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ControlPlaneUpgradePolicy"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "description": "Retrieves the list of upgrade policies for the control plane.",
+        "parameters": [
+          {
+            "name": "cluster_id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          },
+          {
+            "name": "page",
+            "description": "Index of the requested page, where one corresponds to the first page.",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "size",
+            "description": "Number of items contained in the returned page.",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "items": {
+                      "description": "Retrieved list of upgrade policy.",
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/ControlPlaneUpgradePolicy"
+                      }
+                    },
+                    "page": {
+                      "description": "Index of the requested page, where one corresponds to the first page.",
+                      "type": "integer",
+                      "format": "int32"
+                    },
+                    "size": {
+                      "description": "Number of items contained in the returned page.",
+                      "type": "integer",
+                      "format": "int32"
+                    },
+                    "total": {
+                      "description": "Total number of items of the collection.",
+                      "type": "integer",
+                      "format": "int32"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/clusters_mgmt/v1/clusters/{cluster_id}/control_plane/upgrade_policies/{control_plane_upgrade_policy_id}": {
+      "delete": {
+        "description": "Deletes the upgrade policy for the control plane.",
+        "parameters": [
+          {
+            "name": "cluster_id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          },
+          {
+            "name": "control_plane_upgrade_policy_id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Success."
+          },
+          "default": {
+            "description": "Error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "description": "Retrieves the details of the upgrade policy for the control plane.",
+        "parameters": [
+          {
+            "name": "cluster_id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          },
+          {
+            "name": "control_plane_upgrade_policy_id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ControlPlaneUpgradePolicy"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "description": "Update the upgrade policy for the control plane.",
+        "parameters": [
+          {
+            "name": "cluster_id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          },
+          {
+            "name": "control_plane_upgrade_policy_id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ControlPlaneUpgradePolicy"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ControlPlaneUpgradePolicy"
+                }
+              }
+            }
           },
           "default": {
             "description": "Error.",
@@ -2344,7 +3374,8 @@
             "in": "path",
             "schema": {
               "type": "string"
-            }
+            },
+            "required": true
           }
         ],
         "responses": {
@@ -2371,6 +3402,85 @@
         }
       }
     },
+    "/api/clusters_mgmt/v1/clusters/{cluster_id}/delete_protection": {
+      "get": {
+        "parameters": [
+          {
+            "name": "cluster_id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DeleteProtection"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "parameters": [
+          {
+            "name": "cluster_id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DeleteProtection"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DeleteProtection"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/clusters_mgmt/v1/clusters/{cluster_id}/external_configuration": {
       "get": {
         "description": "Retrieves the details of the external configuration.",
@@ -2380,7 +3490,8 @@
             "in": "path",
             "schema": {
               "type": "string"
-            }
+            },
+            "required": true
           }
         ],
         "responses": {
@@ -2416,7 +3527,8 @@
             "in": "path",
             "schema": {
               "type": "string"
-            }
+            },
+            "required": true
           }
         ],
         "requestBody": {
@@ -2459,7 +3571,8 @@
             "in": "path",
             "schema": {
               "type": "string"
-            }
+            },
+            "required": true
           },
           {
             "name": "page",
@@ -2537,14 +3650,16 @@
             "in": "path",
             "schema": {
               "type": "string"
-            }
+            },
+            "required": true
           },
           {
             "name": "label_id",
             "in": "path",
             "schema": {
               "type": "string"
-            }
+            },
+            "required": true
           }
         ],
         "responses": {
@@ -2571,14 +3686,16 @@
             "in": "path",
             "schema": {
               "type": "string"
-            }
+            },
+            "required": true
           },
           {
             "name": "label_id",
             "in": "path",
             "schema": {
               "type": "string"
-            }
+            },
+            "required": true
           }
         ],
         "responses": {
@@ -2612,14 +3729,16 @@
             "in": "path",
             "schema": {
               "type": "string"
-            }
+            },
+            "required": true
           },
           {
             "name": "label_id",
             "in": "path",
             "schema": {
               "type": "string"
-            }
+            },
+            "required": true
           }
         ],
         "requestBody": {
@@ -2664,7 +3783,8 @@
             "in": "path",
             "schema": {
               "type": "string"
-            }
+            },
+            "required": true
           }
         ],
         "requestBody": {
@@ -2707,7 +3827,8 @@
             "in": "path",
             "schema": {
               "type": "string"
-            }
+            },
+            "required": true
           },
           {
             "name": "page",
@@ -2785,14 +3906,16 @@
             "in": "path",
             "schema": {
               "type": "string"
-            }
+            },
+            "required": true
           },
           {
             "name": "manifest_id",
             "in": "path",
             "schema": {
               "type": "string"
-            }
+            },
+            "required": true
           }
         ],
         "responses": {
@@ -2819,14 +3942,16 @@
             "in": "path",
             "schema": {
               "type": "string"
-            }
+            },
+            "required": true
           },
           {
             "name": "manifest_id",
             "in": "path",
             "schema": {
               "type": "string"
-            }
+            },
+            "required": true
           }
         ],
         "responses": {
@@ -2860,14 +3985,16 @@
             "in": "path",
             "schema": {
               "type": "string"
-            }
+            },
+            "required": true
           },
           {
             "name": "manifest_id",
             "in": "path",
             "schema": {
               "type": "string"
-            }
+            },
+            "required": true
           }
         ],
         "requestBody": {
@@ -2912,7 +4039,8 @@
             "in": "path",
             "schema": {
               "type": "string"
-            }
+            },
+            "required": true
           }
         ],
         "requestBody": {
@@ -2955,7 +4083,8 @@
             "in": "path",
             "schema": {
               "type": "string"
-            }
+            },
+            "required": true
           },
           {
             "name": "page",
@@ -3033,14 +4162,16 @@
             "in": "path",
             "schema": {
               "type": "string"
-            }
+            },
+            "required": true
           },
           {
             "name": "syncset_id",
             "in": "path",
             "schema": {
               "type": "string"
-            }
+            },
+            "required": true
           }
         ],
         "responses": {
@@ -3067,14 +4198,16 @@
             "in": "path",
             "schema": {
               "type": "string"
-            }
+            },
+            "required": true
           },
           {
             "name": "syncset_id",
             "in": "path",
             "schema": {
               "type": "string"
-            }
+            },
+            "required": true
           }
         ],
         "responses": {
@@ -3108,14 +4241,16 @@
             "in": "path",
             "schema": {
               "type": "string"
-            }
+            },
+            "required": true
           },
           {
             "name": "syncset_id",
             "in": "path",
             "schema": {
               "type": "string"
-            }
+            },
+            "required": true
           }
         ],
         "requestBody": {
@@ -3160,7 +4295,8 @@
             "in": "path",
             "schema": {
               "type": "string"
-            }
+            },
+            "required": true
           }
         ],
         "requestBody": {
@@ -3203,7 +4339,8 @@
             "in": "path",
             "schema": {
               "type": "string"
-            }
+            },
+            "required": true
           },
           {
             "name": "page",
@@ -3281,14 +4418,16 @@
             "in": "path",
             "schema": {
               "type": "string"
-            }
+            },
+            "required": true
           },
           {
             "name": "version_gate_agreement_id",
             "in": "path",
             "schema": {
               "type": "string"
-            }
+            },
+            "required": true
           }
         ],
         "responses": {
@@ -3315,14 +4454,16 @@
             "in": "path",
             "schema": {
               "type": "string"
-            }
+            },
+            "required": true
           },
           {
             "name": "version_gate_agreement_id",
             "in": "path",
             "schema": {
               "type": "string"
-            }
+            },
+            "required": true
           }
         ],
         "responses": {
@@ -3358,7 +4499,8 @@
             "in": "path",
             "schema": {
               "type": "string"
-            }
+            },
+            "required": true
           },
           {
             "name": "page",
@@ -3436,14 +4578,16 @@
             "in": "path",
             "schema": {
               "type": "string"
-            }
+            },
+            "required": true
           },
           {
             "name": "group_id",
             "in": "path",
             "schema": {
               "type": "string"
-            }
+            },
+            "required": true
           }
         ],
         "responses": {
@@ -3479,14 +4623,16 @@
             "in": "path",
             "schema": {
               "type": "string"
-            }
+            },
+            "required": true
           },
           {
             "name": "group_id",
             "in": "path",
             "schema": {
               "type": "string"
-            }
+            },
+            "required": true
           }
         ],
         "requestBody": {
@@ -3529,14 +4675,16 @@
             "in": "path",
             "schema": {
               "type": "string"
-            }
+            },
+            "required": true
           },
           {
             "name": "group_id",
             "in": "path",
             "schema": {
               "type": "string"
-            }
+            },
+            "required": true
           },
           {
             "name": "page",
@@ -3614,21 +4762,24 @@
             "in": "path",
             "schema": {
               "type": "string"
-            }
+            },
+            "required": true
           },
           {
             "name": "group_id",
             "in": "path",
             "schema": {
               "type": "string"
-            }
+            },
+            "required": true
           },
           {
             "name": "user_id",
             "in": "path",
             "schema": {
               "type": "string"
-            }
+            },
+            "required": true
           }
         ],
         "responses": {
@@ -3655,21 +4806,24 @@
             "in": "path",
             "schema": {
               "type": "string"
-            }
+            },
+            "required": true
           },
           {
             "name": "group_id",
             "in": "path",
             "schema": {
               "type": "string"
-            }
+            },
+            "required": true
           },
           {
             "name": "user_id",
             "in": "path",
             "schema": {
               "type": "string"
-            }
+            },
+            "required": true
           }
         ],
         "responses": {
@@ -3705,7 +4859,8 @@
             "in": "path",
             "schema": {
               "type": "string"
-            }
+            },
+            "required": true
           }
         ],
         "responses": {
@@ -3741,7 +4896,8 @@
             "in": "path",
             "schema": {
               "type": "string"
-            }
+            },
+            "required": true
           }
         ],
         "requestBody": {
@@ -3784,7 +4940,8 @@
             "in": "path",
             "schema": {
               "type": "string"
-            }
+            },
+            "required": true
           },
           {
             "name": "page",
@@ -3862,14 +5019,16 @@
             "in": "path",
             "schema": {
               "type": "string"
-            }
+            },
+            "required": true
           },
           {
             "name": "identity_provider_id",
             "in": "path",
             "schema": {
               "type": "string"
-            }
+            },
+            "required": true
           }
         ],
         "responses": {
@@ -3896,14 +5055,16 @@
             "in": "path",
             "schema": {
               "type": "string"
-            }
+            },
+            "required": true
           },
           {
             "name": "identity_provider_id",
             "in": "path",
             "schema": {
               "type": "string"
-            }
+            },
+            "required": true
           }
         ],
         "responses": {
@@ -3937,14 +5098,16 @@
             "in": "path",
             "schema": {
               "type": "string"
-            }
+            },
+            "required": true
           },
           {
             "name": "identity_provider_id",
             "in": "path",
             "schema": {
               "type": "string"
-            }
+            },
+            "required": true
           }
         ],
         "requestBody": {
@@ -3989,14 +5152,16 @@
             "in": "path",
             "schema": {
               "type": "string"
-            }
+            },
+            "required": true
           },
           {
             "name": "identity_provider_id",
             "in": "path",
             "schema": {
               "type": "string"
-            }
+            },
+            "required": true
           }
         ],
         "requestBody": {
@@ -4039,14 +5204,16 @@
             "in": "path",
             "schema": {
               "type": "string"
-            }
+            },
+            "required": true
           },
           {
             "name": "identity_provider_id",
             "in": "path",
             "schema": {
               "type": "string"
-            }
+            },
+            "required": true
           },
           {
             "name": "page",
@@ -4124,14 +5291,16 @@
             "in": "path",
             "schema": {
               "type": "string"
-            }
+            },
+            "required": true
           },
           {
             "name": "identity_provider_id",
             "in": "path",
             "schema": {
               "type": "string"
-            }
+            },
+            "required": true
           }
         ],
         "requestBody": {
@@ -4219,21 +5388,24 @@
             "in": "path",
             "schema": {
               "type": "string"
-            }
+            },
+            "required": true
           },
           {
             "name": "identity_provider_id",
             "in": "path",
             "schema": {
               "type": "string"
-            }
+            },
+            "required": true
           },
           {
             "name": "htpasswd_user_id",
             "in": "path",
             "schema": {
               "type": "string"
-            }
+            },
+            "required": true
           }
         ],
         "responses": {
@@ -4260,21 +5432,24 @@
             "in": "path",
             "schema": {
               "type": "string"
-            }
+            },
+            "required": true
           },
           {
             "name": "identity_provider_id",
             "in": "path",
             "schema": {
               "type": "string"
-            }
+            },
+            "required": true
           },
           {
             "name": "htpasswd_user_id",
             "in": "path",
             "schema": {
               "type": "string"
-            }
+            },
+            "required": true
           }
         ],
         "responses": {
@@ -4308,21 +5483,24 @@
             "in": "path",
             "schema": {
               "type": "string"
-            }
+            },
+            "required": true
           },
           {
             "name": "identity_provider_id",
             "in": "path",
             "schema": {
               "type": "string"
-            }
+            },
+            "required": true
           },
           {
             "name": "htpasswd_user_id",
             "in": "path",
             "schema": {
               "type": "string"
-            }
+            },
+            "required": true
           }
         ],
         "requestBody": {
@@ -4358,6 +5536,130 @@
         }
       }
     },
+    "/api/clusters_mgmt/v1/clusters/{cluster_id}/inflight_checks": {
+      "get": {
+        "description": "Retrieves the list of inflight checks.",
+        "parameters": [
+          {
+            "name": "cluster_id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          },
+          {
+            "name": "page",
+            "description": "Index of the requested page, where one corresponds to the first page.",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "size",
+            "description": "Number of items contained in the returned page.",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "items": {
+                      "description": "Retrieved list of inflight checks.",
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/InflightCheck"
+                      }
+                    },
+                    "page": {
+                      "description": "Index of the requested page, where one corresponds to the first page.",
+                      "type": "integer",
+                      "format": "int32"
+                    },
+                    "size": {
+                      "description": "Number of items contained in the returned page.",
+                      "type": "integer",
+                      "format": "int32"
+                    },
+                    "total": {
+                      "description": "Total number of items of the collection.",
+                      "type": "integer",
+                      "format": "int32"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/clusters_mgmt/v1/clusters/{cluster_id}/inflight_checks/{inflight_check_id}": {
+      "get": {
+        "description": "Retrieves the details of the inflight check.",
+        "parameters": [
+          {
+            "name": "cluster_id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          },
+          {
+            "name": "inflight_check_id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InflightCheck"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/clusters_mgmt/v1/clusters/{cluster_id}/ingresses": {
       "post": {
         "description": "Adds a new ingress to the cluster.",
@@ -4367,7 +5669,8 @@
             "in": "path",
             "schema": {
               "type": "string"
-            }
+            },
+            "required": true
           }
         ],
         "requestBody": {
@@ -4410,7 +5713,8 @@
             "in": "path",
             "schema": {
               "type": "string"
-            }
+            },
+            "required": true
           },
           {
             "name": "page",
@@ -4486,7 +5790,8 @@
             "in": "path",
             "schema": {
               "type": "string"
-            }
+            },
+            "required": true
           }
         ],
         "requestBody": {
@@ -4537,14 +5842,16 @@
             "in": "path",
             "schema": {
               "type": "string"
-            }
+            },
+            "required": true
           },
           {
             "name": "ingress_id",
             "in": "path",
             "schema": {
               "type": "string"
-            }
+            },
+            "required": true
           }
         ],
         "responses": {
@@ -4571,14 +5878,16 @@
             "in": "path",
             "schema": {
               "type": "string"
-            }
+            },
+            "required": true
           },
           {
             "name": "ingress_id",
             "in": "path",
             "schema": {
               "type": "string"
-            }
+            },
+            "required": true
           }
         ],
         "responses": {
@@ -4612,14 +5921,16 @@
             "in": "path",
             "schema": {
               "type": "string"
-            }
+            },
+            "required": true
           },
           {
             "name": "ingress_id",
             "in": "path",
             "schema": {
               "type": "string"
-            }
+            },
+            "required": true
           }
         ],
         "requestBody": {
@@ -4664,7 +5975,8 @@
             "in": "path",
             "schema": {
               "type": "string"
-            }
+            },
+            "required": true
           }
         ],
         "requestBody": {
@@ -4707,7 +6019,8 @@
             "in": "path",
             "schema": {
               "type": "string"
-            }
+            },
+            "required": true
           },
           {
             "name": "page",
@@ -4785,14 +6098,16 @@
             "in": "path",
             "schema": {
               "type": "string"
-            }
+            },
+            "required": true
           },
           {
             "name": "limited_support_reason_id",
             "in": "path",
             "schema": {
               "type": "string"
-            }
+            },
+            "required": true
           }
         ],
         "responses": {
@@ -4819,14 +6134,16 @@
             "in": "path",
             "schema": {
               "type": "string"
-            }
+            },
+            "required": true
           },
           {
             "name": "limited_support_reason_id",
             "in": "path",
             "schema": {
               "type": "string"
-            }
+            },
+            "required": true
           }
         ],
         "responses": {
@@ -4862,7 +6179,8 @@
             "in": "path",
             "schema": {
               "type": "string"
-            }
+            },
+            "required": true
           },
           {
             "name": "page",
@@ -4940,7 +6258,8 @@
             "in": "path",
             "schema": {
               "type": "string"
-            }
+            },
+            "required": true
           },
           {
             "name": "offset",
@@ -4994,7 +6313,8 @@
             "in": "path",
             "schema": {
               "type": "string"
-            }
+            },
+            "required": true
           },
           {
             "name": "offset",
@@ -5048,7 +6368,8 @@
             "in": "path",
             "schema": {
               "type": "string"
-            }
+            },
+            "required": true
           }
         ],
         "requestBody": {
@@ -5091,7 +6412,8 @@
             "in": "path",
             "schema": {
               "type": "string"
-            }
+            },
+            "required": true
           },
           {
             "name": "page",
@@ -5169,14 +6491,16 @@
             "in": "path",
             "schema": {
               "type": "string"
-            }
+            },
+            "required": true
           },
           {
             "name": "machine_pool_id",
             "in": "path",
             "schema": {
               "type": "string"
-            }
+            },
+            "required": true
           }
         ],
         "responses": {
@@ -5203,14 +6527,16 @@
             "in": "path",
             "schema": {
               "type": "string"
-            }
+            },
+            "required": true
           },
           {
             "name": "machine_pool_id",
             "in": "path",
             "schema": {
               "type": "string"
-            }
+            },
+            "required": true
           }
         ],
         "responses": {
@@ -5244,14 +6570,16 @@
             "in": "path",
             "schema": {
               "type": "string"
-            }
+            },
+            "required": true
           },
           {
             "name": "machine_pool_id",
             "in": "path",
             "schema": {
               "type": "string"
-            }
+            },
+            "required": true
           }
         ],
         "requestBody": {
@@ -5295,7 +6623,8 @@
             "in": "path",
             "schema": {
               "type": "string"
-            }
+            },
+            "required": true
           }
         ],
         "responses": {
@@ -5330,7 +6659,8 @@
             "in": "path",
             "schema": {
               "type": "string"
-            }
+            },
+            "required": true
           }
         ],
         "responses": {
@@ -5366,7 +6696,8 @@
             "in": "path",
             "schema": {
               "type": "string"
-            }
+            },
+            "required": true
           }
         ],
         "responses": {
@@ -5401,7 +6732,8 @@
             "in": "path",
             "schema": {
               "type": "string"
-            }
+            },
+            "required": true
           }
         ],
         "responses": {
@@ -5437,7 +6769,8 @@
             "in": "path",
             "schema": {
               "type": "string"
-            }
+            },
+            "required": true
           }
         ],
         "responses": {
@@ -5473,7 +6806,8 @@
             "in": "path",
             "schema": {
               "type": "string"
-            }
+            },
+            "required": true
           }
         ],
         "requestBody": {
@@ -5516,7 +6850,8 @@
             "in": "path",
             "schema": {
               "type": "string"
-            }
+            },
+            "required": true
           },
           {
             "name": "page",
@@ -5594,14 +6929,16 @@
             "in": "path",
             "schema": {
               "type": "string"
-            }
+            },
+            "required": true
           },
           {
             "name": "node_pool_id",
             "in": "path",
             "schema": {
               "type": "string"
-            }
+            },
+            "required": true
           }
         ],
         "responses": {
@@ -5628,14 +6965,16 @@
             "in": "path",
             "schema": {
               "type": "string"
-            }
+            },
+            "required": true
           },
           {
             "name": "node_pool_id",
             "in": "path",
             "schema": {
               "type": "string"
-            }
+            },
+            "required": true
           }
         ],
         "responses": {
@@ -5669,14 +7008,16 @@
             "in": "path",
             "schema": {
               "type": "string"
-            }
+            },
+            "required": true
           },
           {
             "name": "node_pool_id",
             "in": "path",
             "schema": {
               "type": "string"
-            }
+            },
+            "required": true
           }
         ],
         "requestBody": {
@@ -5712,6 +7053,302 @@
         }
       }
     },
+    "/api/clusters_mgmt/v1/clusters/{cluster_id}/node_pools/{node_pool_id}/upgrade_policies": {
+      "post": {
+        "description": "Adds a new upgrade policy to the node pool of the cluster.",
+        "parameters": [
+          {
+            "name": "cluster_id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          },
+          {
+            "name": "node_pool_id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NodePoolUpgradePolicy"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Success.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NodePoolUpgradePolicy"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "description": "Retrieves the list of upgrade policies for the node pool.",
+        "parameters": [
+          {
+            "name": "cluster_id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          },
+          {
+            "name": "node_pool_id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          },
+          {
+            "name": "page",
+            "description": "Index of the requested page, where one corresponds to the first page.",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "size",
+            "description": "Number of items contained in the returned page.",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "items": {
+                      "description": "Retrieved list of upgrade policy.",
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/NodePoolUpgradePolicy"
+                      }
+                    },
+                    "page": {
+                      "description": "Index of the requested page, where one corresponds to the first page.",
+                      "type": "integer",
+                      "format": "int32"
+                    },
+                    "size": {
+                      "description": "Number of items contained in the returned page.",
+                      "type": "integer",
+                      "format": "int32"
+                    },
+                    "total": {
+                      "description": "Total number of items of the collection.",
+                      "type": "integer",
+                      "format": "int32"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/clusters_mgmt/v1/clusters/{cluster_id}/node_pools/{node_pool_id}/upgrade_policies/{node_pool_upgrade_policy_id}": {
+      "delete": {
+        "description": "Deletes the upgrade policy for the node pool.",
+        "parameters": [
+          {
+            "name": "cluster_id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          },
+          {
+            "name": "node_pool_id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          },
+          {
+            "name": "node_pool_upgrade_policy_id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Success."
+          },
+          "default": {
+            "description": "Error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "description": "Retrieves the details of the upgrade policy for the node pool.",
+        "parameters": [
+          {
+            "name": "cluster_id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          },
+          {
+            "name": "node_pool_id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          },
+          {
+            "name": "node_pool_upgrade_policy_id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NodePoolUpgradePolicy"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "description": "Update the upgrade policy for the node pool.",
+        "parameters": [
+          {
+            "name": "cluster_id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          },
+          {
+            "name": "node_pool_id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          },
+          {
+            "name": "node_pool_upgrade_policy_id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NodePoolUpgradePolicy"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NodePoolUpgradePolicy"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/clusters_mgmt/v1/clusters/{cluster_id}/product": {
       "get": {
         "description": "Retrieves the details of the product.",
@@ -5721,7 +7358,8 @@
             "in": "path",
             "schema": {
               "type": "string"
-            }
+            },
+            "required": true
           }
         ],
         "responses": {
@@ -5757,7 +7395,8 @@
             "in": "path",
             "schema": {
               "type": "string"
-            }
+            },
+            "required": true
           }
         ],
         "responses": {
@@ -5784,7 +7423,8 @@
             "in": "path",
             "schema": {
               "type": "string"
-            }
+            },
+            "required": true
           }
         ],
         "responses": {
@@ -5818,7 +7458,8 @@
             "in": "path",
             "schema": {
               "type": "string"
-            }
+            },
+            "required": true
           }
         ],
         "requestBody": {
@@ -5863,7 +7504,8 @@
             "in": "path",
             "schema": {
               "type": "string"
-            }
+            },
+            "required": true
           }
         ],
         "responses": {
@@ -5899,7 +7541,8 @@
             "in": "path",
             "schema": {
               "type": "string"
-            }
+            },
+            "required": true
           }
         ],
         "responses": {
@@ -5934,7 +7577,8 @@
             "in": "path",
             "schema": {
               "type": "string"
-            }
+            },
+            "required": true
           }
         ],
         "responses": {
@@ -5970,7 +7614,8 @@
             "in": "path",
             "schema": {
               "type": "string"
-            }
+            },
+            "required": true
           }
         ],
         "requestBody": {
@@ -6013,7 +7658,8 @@
             "in": "path",
             "schema": {
               "type": "string"
-            }
+            },
+            "required": true
           },
           {
             "name": "page",
@@ -6091,19 +7737,277 @@
             "in": "path",
             "schema": {
               "type": "string"
-            }
+            },
+            "required": true
           },
           {
             "name": "operator_iam_role_id",
             "in": "path",
             "schema": {
               "type": "string"
-            }
+            },
+            "required": true
           }
         ],
         "responses": {
           "204": {
             "description": "Success."
+          },
+          "default": {
+            "description": "Error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/clusters_mgmt/v1/clusters/{cluster_id}/tuning_configs": {
+      "post": {
+        "description": "Adds a new tuning config to the cluster.",
+        "parameters": [
+          {
+            "name": "cluster_id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TuningConfig"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Success.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TuningConfig"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "description": "Retrieves the list of tuning configs.",
+        "parameters": [
+          {
+            "name": "cluster_id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          },
+          {
+            "name": "page",
+            "description": "Index of the requested page, where one corresponds to the first page.",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "size",
+            "description": "Number of items contained in the returned page.",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "items": {
+                      "description": "Retrieved list of tuning configs.",
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/TuningConfig"
+                      }
+                    },
+                    "page": {
+                      "description": "Index of the requested page, where one corresponds to the first page.",
+                      "type": "integer",
+                      "format": "int32"
+                    },
+                    "size": {
+                      "description": "Number of items contained in the returned page.",
+                      "type": "integer",
+                      "format": "int32"
+                    },
+                    "total": {
+                      "description": "Total number of items of the collection.",
+                      "type": "integer",
+                      "format": "int32"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/clusters_mgmt/v1/clusters/{cluster_id}/tuning_configs/{tuning_config_id}": {
+      "delete": {
+        "description": "Deletes the tuning config.",
+        "parameters": [
+          {
+            "name": "cluster_id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          },
+          {
+            "name": "tuning_config_id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Success."
+          },
+          "default": {
+            "description": "Error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "description": "Retrieves the details of the tuning config.",
+        "parameters": [
+          {
+            "name": "cluster_id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          },
+          {
+            "name": "tuning_config_id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TuningConfig"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "description": "Updates the tuning config.",
+        "parameters": [
+          {
+            "name": "cluster_id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          },
+          {
+            "name": "tuning_config_id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TuningConfig"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TuningConfig"
+                }
+              }
+            }
           },
           "default": {
             "description": "Error.",
@@ -6127,7 +8031,8 @@
             "in": "path",
             "schema": {
               "type": "string"
-            }
+            },
+            "required": true
           }
         ],
         "requestBody": {
@@ -6170,7 +8075,8 @@
             "in": "path",
             "schema": {
               "type": "string"
-            }
+            },
+            "required": true
           },
           {
             "name": "page",
@@ -6248,14 +8154,16 @@
             "in": "path",
             "schema": {
               "type": "string"
-            }
+            },
+            "required": true
           },
           {
             "name": "upgrade_policy_id",
             "in": "path",
             "schema": {
               "type": "string"
-            }
+            },
+            "required": true
           }
         ],
         "responses": {
@@ -6282,14 +8190,16 @@
             "in": "path",
             "schema": {
               "type": "string"
-            }
+            },
+            "required": true
           },
           {
             "name": "upgrade_policy_id",
             "in": "path",
             "schema": {
               "type": "string"
-            }
+            },
+            "required": true
           }
         ],
         "responses": {
@@ -6323,14 +8233,16 @@
             "in": "path",
             "schema": {
               "type": "string"
-            }
+            },
+            "required": true
           },
           {
             "name": "upgrade_policy_id",
             "in": "path",
             "schema": {
               "type": "string"
-            }
+            },
+            "required": true
           }
         ],
         "requestBody": {
@@ -6375,14 +8287,16 @@
             "in": "path",
             "schema": {
               "type": "string"
-            }
+            },
+            "required": true
           },
           {
             "name": "upgrade_policy_id",
             "in": "path",
             "schema": {
               "type": "string"
-            }
+            },
+            "required": true
           }
         ],
         "responses": {
@@ -6416,14 +8330,16 @@
             "in": "path",
             "schema": {
               "type": "string"
-            }
+            },
+            "required": true
           },
           {
             "name": "upgrade_policy_id",
             "in": "path",
             "schema": {
               "type": "string"
-            }
+            },
+            "required": true
           }
         ],
         "requestBody": {
@@ -6442,6 +8358,227 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/UpgradePolicyState"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/clusters_mgmt/v1/dns_domains": {
+      "post": {
+        "description": "Adds a DNS domain.",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DNSDomain"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Success.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DNSDomain"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "parameters": [
+          {
+            "name": "page",
+            "description": "Index of the requested page, where one corresponds to the first page.",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "search",
+            "description": "Search criteria.\n\nThe syntax of this parameter is similar to the syntax of the _where_ clause of a\nSQL statement, but using the names of the attributes of the dns domain instead of\nthe names of the columns of a table. For example, in order to retrieve all the\ndns domains with a ID starting with `02a5` should be:\n\n```sql\nid like '02a5%'\n```\n\nIf the parameter isn't provided, or if the value is empty, then all the\ndns domains that the user has permission to see will be returned.",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "size",
+            "description": "Maximum number of items that will be contained in the returned page.",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "items": {
+                      "description": "Retrieved a list of DNS domains.",
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/DNSDomain"
+                      }
+                    },
+                    "page": {
+                      "description": "Index of the requested page, where one corresponds to the first page.",
+                      "type": "integer",
+                      "format": "int32"
+                    },
+                    "size": {
+                      "description": "Maximum number of items that will be contained in the returned page.",
+                      "type": "integer",
+                      "format": "int32"
+                    },
+                    "total": {
+                      "description": "Total number of items of the collection.",
+                      "type": "integer",
+                      "format": "int32"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/clusters_mgmt/v1/dns_domains/{dns_domain_id}": {
+      "delete": {
+        "description": "Delete the DNS domain.",
+        "parameters": [
+          {
+            "name": "dns_domain_id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Success."
+          },
+          "default": {
+            "description": "Error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "description": "Retrieves the details of the DNS domain.",
+        "parameters": [
+          {
+            "name": "dns_domain_id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DNSDomain"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "description": "Updates the details of the DNS domain.",
+        "parameters": [
+          {
+            "name": "dns_domain_id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DNSDomain"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DNSDomain"
                 }
               }
             }
@@ -6685,7 +8822,8 @@
             "in": "path",
             "schema": {
               "type": "string"
-            }
+            },
+            "required": true
           }
         ],
         "responses": {
@@ -6719,7 +8857,8 @@
             "in": "path",
             "schema": {
               "type": "string"
-            }
+            },
+            "required": true
           }
         ],
         "requestBody": {
@@ -7155,7 +9294,8 @@
             "in": "path",
             "schema": {
               "type": "string"
-            }
+            },
+            "required": true
           }
         ],
         "responses": {
@@ -7278,7 +9418,8 @@
             "in": "path",
             "schema": {
               "type": "string"
-            }
+            },
+            "required": true
           }
         ],
         "responses": {
@@ -7305,9 +9446,82 @@
         }
       }
     },
+    "/api/clusters_mgmt/v1/network_verifications": {
+      "post": {
+        "description": "Creates an entry for a network verification for each subnet supplied setting then to initial state.",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NetworkVerification"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Success.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NetworkVerification"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/clusters_mgmt/v1/network_verifications/{network_verification_id}": {
+      "get": {
+        "description": "Retrieves the details of a subnet network verification.",
+        "parameters": [
+          {
+            "name": "network_verification_id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SubnetNetworkVerification"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/clusters_mgmt/v1/oidc_configs": {
       "post": {
-        "description": "Creates a hosting under Red Hat's S3 bucket for byo oidc configuration",
+        "description": "Creates a hosting under Red Hat's S3 bucket for byo oidc configuration.",
         "requestBody": {
           "content": {
             "application/json": {
@@ -7519,6 +9733,174 @@
         }
       }
     },
+    "/api/clusters_mgmt/v1/pending_delete_clusters": {
+      "get": {
+        "description": "Retrieves the list of pending delete clusters.",
+        "parameters": [
+          {
+            "name": "order",
+            "description": "Order criteria.\n\nThe syntax of this parameter is similar to the syntax of the _order by_ clause of\na SQL statement, but using the names of the attributes of the pending delete cluster instead of\nthe names of the columns of a table. For example, in order to sort the pending delete clusters\ndescending by creation timestamp (i.e. their deletion time) the value should be:\n\n```sql\ncreation_timestamp desc\n```\n\nIf the parameter isn't provided, or if the value is empty, then the order of the\nresults is undefined.",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "page",
+            "description": "Index of the requested page, where one corresponds to the first page.",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "search",
+            "description": "Search criteria.\n\nThe syntax of this parameter is similar to the syntax of the _where_ clause of a\nSQL statement, but using the names of the attributes of the pending delete cluster instead of\nthe names of the columns of a table. For example, in order to retrieve all the\npending delete clusters with creation time later than 2023-03-01T00:00:00Z the following is required:\n\n```sql\ncreation_timestamp > '2023-03-01T00:00:00Z'\n```\n\nIf the parameter isn't provided, or if the value is empty, then all the\npending delete clusters that the user has permission to see will be returned.",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "size",
+            "description": "Maximum number of items that will be contained in the returned page.",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "items": {
+                      "description": "Retrieved list of pending delete clusters.",
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/PendingDeleteCluster"
+                      }
+                    },
+                    "page": {
+                      "description": "Index of the requested page, where one corresponds to the first page.",
+                      "type": "integer",
+                      "format": "int32"
+                    },
+                    "size": {
+                      "description": "Maximum number of items that will be contained in the returned page.",
+                      "type": "integer",
+                      "format": "int32"
+                    },
+                    "total": {
+                      "description": "Total number of items of the collection that match the search criteria,\nregardless of the size of the page.",
+                      "type": "integer",
+                      "format": "int32"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/clusters_mgmt/v1/pending_delete_clusters/{pending_delete_cluster_id}": {
+      "get": {
+        "description": "Retrieves the details of the pending delete cluster.",
+        "parameters": [
+          {
+            "name": "pending_delete_cluster_id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PendingDeleteCluster"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "description": "Updates the pending delete cluster entry.",
+        "parameters": [
+          {
+            "name": "pending_delete_cluster_id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PendingDeleteCluster"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PendingDeleteCluster"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/clusters_mgmt/v1/products": {
       "get": {
         "description": "Retrieves the list of products.",
@@ -7615,7 +9997,8 @@
             "in": "path",
             "schema": {
               "type": "string"
-            }
+            },
+            "required": true
           }
         ],
         "responses": {
@@ -7763,7 +10146,8 @@
             "in": "path",
             "schema": {
               "type": "string"
-            }
+            },
+            "required": true
           }
         ],
         "responses": {
@@ -7790,7 +10174,8 @@
             "in": "path",
             "schema": {
               "type": "string"
-            }
+            },
+            "required": true
           }
         ],
         "responses": {
@@ -7824,7 +10209,8 @@
             "in": "path",
             "schema": {
               "type": "string"
-            }
+            },
+            "required": true
           }
         ],
         "requestBody": {
@@ -7990,7 +10376,8 @@
             "in": "path",
             "schema": {
               "type": "string"
-            }
+            },
+            "required": true
           }
         ],
         "responses": {
@@ -8017,7 +10404,8 @@
             "in": "path",
             "schema": {
               "type": "string"
-            }
+            },
+            "required": true
           }
         ],
         "responses": {
@@ -8140,7 +10528,8 @@
             "in": "path",
             "schema": {
               "type": "string"
-            }
+            },
+            "required": true
           }
         ],
         "responses": {
@@ -8198,6 +10587,18 @@
             "description": "AWS account identifier.",
             "type": "string"
           },
+          "audit_log": {
+            "description": "Audit log forwarding configuration",
+            "$ref": "#/components/schemas/AuditLog"
+          },
+          "billing_account_id": {
+            "description": "BillingAccountID is the account used for billing subscriptions purchased via the marketplace",
+            "type": "string"
+          },
+          "ec2_metadata_http_tokens": {
+            "description": "Which Ec2MetadataHttpTokens to use for metadata service interaction options for EC2 instances",
+            "$ref": "#/components/schemas/Ec2MetadataHttpTokens"
+          },
           "etcd_encryption": {
             "description": "Related etcd encryption configuration",
             "$ref": "#/components/schemas/AwsEtcdEncryption"
@@ -8205,6 +10606,10 @@
           "private_link": {
             "description": "Sets cluster to be inaccessible externally.",
             "type": "boolean"
+          },
+          "private_link_configuration": {
+            "description": "Manages additional configuration for Private Links.",
+            "$ref": "#/components/schemas/PrivateLinkClusterConfiguration"
           },
           "secret_access_key": {
             "description": "AWS secret access key.",
@@ -8521,6 +10926,36 @@
           }
         }
       },
+      "DNSDomain": {
+        "description": "Contains the properties of a DNS domain.",
+        "properties": {
+          "kind": {
+            "description": "Indicates the type of this object. Will be 'DNSDomain' if this is a complete object or 'DNSDomainLink' if it is just a link.",
+            "type": "string"
+          },
+          "id": {
+            "description": "Unique identifier of the object.",
+            "type": "string"
+          },
+          "href": {
+            "description": "Self link.",
+            "type": "string"
+          },
+          "cluster_link": {
+            "description": "Link to the cluster that is registered with the DNS domain (optional).",
+            "$ref": "#/components/schemas/ClusterLink"
+          },
+          "organization_link": {
+            "description": "Link to the organization that reserved the DNS domain.",
+            "$ref": "#/components/schemas/OrganizationLink"
+          },
+          "reserved_at": {
+            "description": "Date and time when the DNS domain was reserved.",
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
       "GCP": {
         "description": "Google cloud platform settings of a cluster.",
         "properties": {
@@ -8669,8 +11104,12 @@
             "description": "ID for a secondary user in the _HTPasswd_ data file.",
             "type": "string"
           },
+          "hashed_password": {
+            "description": "HTPasswd Hashed Password for a user in the _HTPasswd_ data file.\nThe value of this field is set as-is in the _HTPasswd_ data file for the HTPasswd IDP",
+            "type": "string"
+          },
           "password": {
-            "description": "Password for a secondary user in the _HTPasswd_ data file.",
+            "description": "Password in plain-text for a  user in the _HTPasswd_ data file.\nThe value of this field is hashed before setting it in the  _HTPasswd_ data file for the HTPasswd IDP",
             "type": "string"
           },
           "username": {
@@ -8738,19 +11177,6 @@
           "insecure": {
             "description": "When `true` no TLS connection is made to the server. When `false` `ldaps://...` URLs\nconnect using TLS and `ldap://...` are upgraded to TLS.",
             "type": "boolean"
-          }
-        }
-      },
-      "SSHCredentials": {
-        "description": "SSH key pair of a cluster.",
-        "properties": {
-          "private_key": {
-            "description": "SSH private key of the cluster.",
-            "type": "string"
-          },
-          "public_key": {
-            "description": "SSH public key of the cluster.",
-            "type": "string"
           }
         }
       },
@@ -9072,10 +11498,6 @@
           "billing": {
             "description": "Billing details for add-on installation resource ",
             "$ref": "#/components/schemas/AddOnInstallationBilling"
-          },
-          "cluster": {
-            "description": "ID used to identify the cluster that this add-on is attached to.",
-            "$ref": "#/components/schemas/Cluster"
           },
           "creation_timestamp": {
             "description": "Date and time when the add-on was initially installed in the cluster.",
@@ -9474,6 +11896,77 @@
           }
         }
       },
+      "AddonUpgradePolicy": {
+        "description": "Representation of an upgrade policy that can be set for a cluster.",
+        "properties": {
+          "kind": {
+            "description": "Indicates the type of this object. Will be 'AddonUpgradePolicy' if this is a complete object or 'AddonUpgradePolicyLink' if it is just a link.",
+            "type": "string"
+          },
+          "id": {
+            "description": "Unique identifier of the object.",
+            "type": "string"
+          },
+          "href": {
+            "description": "Self link.",
+            "type": "string"
+          },
+          "addon_id": {
+            "description": "Addon ID this upgrade policy is defined for",
+            "type": "string"
+          },
+          "cluster_id": {
+            "description": "Cluster ID this upgrade policy is defined for.",
+            "type": "string"
+          },
+          "next_run": {
+            "description": "Next time the upgrade should run.",
+            "type": "string",
+            "format": "date-time"
+          },
+          "schedule": {
+            "description": "Schedule cron expression that defines automatic upgrade scheduling.",
+            "type": "string"
+          },
+          "schedule_type": {
+            "description": "Schedule type can be either \"manual\" (single execution) or \"automatic\" (re-occurring).",
+            "type": "string"
+          },
+          "upgrade_type": {
+            "description": "Upgrade type specify the type of the upgrade. Must be \"ADDON\".",
+            "type": "string"
+          },
+          "version": {
+            "description": "Version is the desired upgrade version.",
+            "type": "string"
+          }
+        }
+      },
+      "AddonUpgradePolicyState": {
+        "description": "Representation of an addon upgrade policy state that that is set for a cluster.",
+        "properties": {
+          "kind": {
+            "description": "Indicates the type of this object. Will be 'AddonUpgradePolicyState' if this is a complete object or 'AddonUpgradePolicyStateLink' if it is just a link.",
+            "type": "string"
+          },
+          "id": {
+            "description": "Unique identifier of the object.",
+            "type": "string"
+          },
+          "href": {
+            "description": "Self link.",
+            "type": "string"
+          },
+          "description": {
+            "description": "Description of the state.",
+            "type": "string"
+          },
+          "value": {
+            "description": "State value can be 'pending', 'scheduled', 'cancelled', 'started', 'delayed',\n'failed' or 'completed'.",
+            "$ref": "#/components/schemas/UpgradePolicyStateValue"
+          }
+        }
+      },
       "AdminCredentials": {
         "description": "Temporary administrator credentials generated during the installation of the\ncluster.",
         "properties": {
@@ -9517,6 +12010,60 @@
             "items": {
               "$ref": "#/components/schemas/AlertInfo"
             }
+          }
+        }
+      },
+      "AuditLog": {
+        "description": "Contains the necessary attributes to support audit log forwarding",
+        "properties": {
+          "role_arn": {
+            "description": "ARN of the CloudWatch audit log forwarding role",
+            "type": "string"
+          }
+        }
+      },
+      "AutoscalerResourceLimits": {
+        "properties": {
+          "cores": {
+            "description": "Minimum and maximum number of cores in cluster, in the format <min>:<max>.\nCluster autoscaler will not scale the cluster beyond these numbers.",
+            "$ref": "#/components/schemas/ResourceRange"
+          },
+          "max_nodes_total": {
+            "description": "Maximum number of nodes in all node groups.\nCluster autoscaler will not grow the cluster beyond this number.",
+            "type": "integer",
+            "format": "int32"
+          },
+          "memory": {
+            "description": "Minimum and maximum number of gigabytes of memory in cluster, in the format <min>:<max>.\nCluster autoscaler will not scale the cluster beyond these numbers.",
+            "$ref": "#/components/schemas/ResourceRange"
+          }
+        }
+      },
+      "AutoscalerScaleDownConfig": {
+        "properties": {
+          "delay_after_add": {
+            "description": "How long after scale up that scale down evaluation resumes.",
+            "type": "string"
+          },
+          "delay_after_delete": {
+            "description": "How long after node deletion that scale down evaluation resumes, defaults to scan-interval.",
+            "type": "string"
+          },
+          "delay_after_failure": {
+            "description": "How long after scale down failure that scale down evaluation resumes.",
+            "type": "string"
+          },
+          "enabled": {
+            "description": "Should cluster-autoscaler scale down the cluster.",
+            "type": "boolean"
+          },
+          "unneeded_time": {
+            "description": "How long a node should be unneeded before it is eligible for scale down.",
+            "type": "string"
+          },
+          "utilization_threshold": {
+            "description": "Node utilization level, defined as sum of requested resources divided by capacity, below which a node can be considered for scale down.",
+            "type": "string"
           }
         }
       },
@@ -9598,10 +12145,6 @@
           "name": {
             "description": "Human friendly identifier of the cloud provider, for example `aws`.",
             "type": "string"
-          },
-          "regions": {
-            "description": "Region",
-            "$ref": "#/components/schemas/CloudRegion"
           }
         }
       },
@@ -9634,6 +12177,13 @@
           "region": {
             "description": "Region",
             "$ref": "#/components/schemas/CloudRegion"
+          },
+          "subnets": {
+            "description": "Subnets",
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
           },
           "version": {
             "description": "Openshift version",
@@ -9683,14 +12233,6 @@
           "supports_multi_az": {
             "description": "Whether the region supports multiple availability zones.",
             "type": "boolean"
-          },
-          "kms_location_name": {
-            "description": "kms_location_name",
-            "type": "string"
-          },
-          "kms_location_id": {
-            "description": "kms_location_id",
-            "type": "string"
           }
         }
       },
@@ -9759,6 +12301,10 @@
               "$ref": "#/components/schemas/AddOnInstallation"
             }
           },
+          "autoscaler": {
+            "description": "Autoscaler.",
+            "$ref": "#/components/schemas/ClusterAutoscaler"
+          },
           "billing_model": {
             "description": "Billing model for cluster resources.",
             "$ref": "#/components/schemas/BillingModel"
@@ -9779,6 +12325,10 @@
             "description": "Date and time when the cluster was initially created, using the\nformat defined in [RFC3339](https://www.ietf.org/rfc/rfc3339.txt).",
             "type": "string",
             "format": "date-time"
+          },
+          "delete_protection": {
+            "description": "Delete protection",
+            "$ref": "#/components/schemas/DeleteProtection"
           },
           "disable_user_workload_monitoring": {
             "description": "Indicates whether the User workload monitoring is enabled or not\nIt is enabled by default",
@@ -9815,6 +12365,10 @@
           "health_state": {
             "description": "HealthState indicates the overall health state of the cluster.",
             "$ref": "#/components/schemas/ClusterHealthState"
+          },
+          "htpasswd": {
+            "description": "Details for `htpasswd` identity provider.",
+            "$ref": "#/components/schemas/HTPasswdIdentityProvider"
           },
           "hypershift": {
             "description": "Hypershift configuration.",
@@ -9954,6 +12508,37 @@
           }
         }
       },
+      "ClusterAutoscaler": {
+        "description": "Cluster-wide autoscaling configuration.",
+        "properties": {
+          "balance_similar_node_groups": {
+            "description": "BalanceSimilarNodeGroups enables/disables the\n`--balance-similar-node-groups` cluster-autocaler feature.\nThis feature will automatically identify node groups with\nthe same instance type and the same set of labels and try\nto keep the respective sizes of those node groups balanced.",
+            "type": "boolean"
+          },
+          "log_verbosity": {
+            "description": "Sets the autoscaler log level.\nDefault value is 1, level 4 is recommended for DEBUGGING and level 6 will enable almost everything.",
+            "type": "integer",
+            "format": "int32"
+          },
+          "max_pod_grace_period": {
+            "description": "Gives pods graceful termination time before scaling down.",
+            "type": "integer",
+            "format": "int32"
+          },
+          "resource_limits": {
+            "description": "Constraints of autoscaling resources.",
+            "$ref": "#/components/schemas/AutoscalerResourceLimits"
+          },
+          "scale_down": {
+            "description": "Configuration of scale down operation.",
+            "$ref": "#/components/schemas/AutoscalerScaleDownConfig"
+          },
+          "skip_nodes_with_local_storage": {
+            "description": "Enables/Disables `--skip-nodes-with-local-storage` CA feature flag. If true cluster autoscaler will never delete nodes with pods with local storage, e.g. EmptyDir or HostPath. true by default at autoscaler.",
+            "type": "boolean"
+          }
+        }
+      },
       "ClusterConfigurationMode": {
         "description": "Configuration mode of a cluster.",
         "type": "string",
@@ -9985,14 +12570,6 @@
           "href": {
             "description": "Self link.",
             "type": "string"
-          },
-          "ssh": {
-            "description": "SSH key pair of the cluster.",
-            "$ref": "#/components/schemas/SSHCredentials"
-          },
-          "admin": {
-            "description": "Temporary administrator credentials generated during the installation\nof the cluster.",
-            "$ref": "#/components/schemas/AdminCredentials"
           },
           "kubeconfig": {
             "description": "Administrator _kubeconfig_ file for the cluster.",
@@ -10030,11 +12607,24 @@
           "unknown"
         ]
       },
+      "ClusterLink": {
+        "description": "Definition of a cluster link.",
+        "properties": {
+          "href": {
+            "description": "HREF for the cluster, filled in response.",
+            "type": "string"
+          },
+          "id": {
+            "description": "The cluster's ID.",
+            "type": "string"
+          }
+        }
+      },
       "ClusterNodes": {
         "description": "Counts of different classes of nodes inside a cluster.",
         "properties": {
           "autoscale_compute": {
-            "description": "Details for auto-scaling the compute machine pool.\nCompute and AutoscaleCompute cannot be used together.    ",
+            "description": "Details for auto-scaling the compute machine pool.\nCompute and AutoscaleCompute cannot be used together.",
             "$ref": "#/components/schemas/MachinePoolAutoscaling"
           },
           "availability_zones": {
@@ -10045,7 +12635,7 @@
             }
           },
           "compute": {
-            "description": "Number of compute nodes of the cluster.\nCompute and AutoscaleCompute cannot be used together.    ",
+            "description": "Number of compute nodes of the cluster.\nCompute and AutoscaleCompute cannot be used together.",
             "type": "integer",
             "format": "int32"
           },
@@ -10060,18 +12650,30 @@
             "description": "The compute machine type to use, for example `r5.xlarge`.",
             "$ref": "#/components/schemas/MachineType"
           },
+          "compute_root_volume": {
+            "description": "The compute machine root volume capabilities.",
+            "$ref": "#/components/schemas/RootVolume"
+          },
           "infra": {
             "description": "Number of infrastructure nodes of the cluster.",
             "type": "integer",
             "format": "int32"
+          },
+          "infra_machine_type": {
+            "description": "The infra machine type to use, for example `r5.xlarge` (Optional).",
+            "$ref": "#/components/schemas/MachineType"
           },
           "master": {
             "description": "Number of master nodes of the cluster.",
             "type": "integer",
             "format": "int32"
           },
+          "master_machine_type": {
+            "description": "The master machine type to use, for example `r5.xlarge` (Optional).",
+            "$ref": "#/components/schemas/MachineType"
+          },
           "security_group_filters": {
-            "description": "List of security groups to be applied to nodes (Optional)",
+            "description": "List of security groups to be applied to nodes (Optional).",
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/MachinePoolSecurityGroupFilter"
@@ -10256,6 +12858,66 @@
           }
         }
       },
+      "ControlPlaneUpgradePolicy": {
+        "description": "Representation of an upgrade policy that can be set for a cluster.",
+        "properties": {
+          "kind": {
+            "description": "Indicates the type of this object. Will be 'ControlPlaneUpgradePolicy' if this is a complete object or 'ControlPlaneUpgradePolicyLink' if it is just a link.",
+            "type": "string"
+          },
+          "id": {
+            "description": "Unique identifier of the object.",
+            "type": "string"
+          },
+          "href": {
+            "description": "Self link.",
+            "type": "string"
+          },
+          "cluster_id": {
+            "description": "Cluster ID this upgrade policy for control plane is defined for.",
+            "type": "string"
+          },
+          "creation_timestamp": {
+            "description": "Timestamp for creation of resource.",
+            "type": "string",
+            "format": "date-time"
+          },
+          "enable_minor_version_upgrades": {
+            "description": "Indicates if minor version upgrades are allowed for automatic upgrades (for manual it's always allowed).",
+            "type": "boolean"
+          },
+          "last_update_timestamp": {
+            "description": "Timestamp for last update that happened to resource.",
+            "type": "string",
+            "format": "date-time"
+          },
+          "next_run": {
+            "description": "Next time the upgrade should run.",
+            "type": "string",
+            "format": "date-time"
+          },
+          "schedule": {
+            "description": "Schedule cron expression that defines automatic upgrade scheduling.",
+            "type": "string"
+          },
+          "schedule_type": {
+            "description": "Schedule type can be either \"manual\" (single execution) or \"automatic\" (re-occurring).",
+            "type": "string"
+          },
+          "state": {
+            "description": "State of the upgrade policy for the hosted control plane.",
+            "$ref": "#/components/schemas/UpgradePolicyState"
+          },
+          "upgrade_type": {
+            "description": "Upgrade type specify the type of the upgrade. Can only be \"ControlPlane\".",
+            "type": "string"
+          },
+          "version": {
+            "description": "Version is the desired upgrade version.",
+            "type": "string"
+          }
+        }
+      },
       "CredentialRequest": {
         "description": "Contains the necessary attributes to allow each operator to access the necessary AWS resources",
         "properties": {
@@ -10280,11 +12942,28 @@
           }
         }
       },
+      "DeleteProtection": {
+        "description": "DeleteProtection configuration.",
+        "properties": {
+          "enabled": {
+            "description": "Boolean flag indicating if the cluster should be be using _DeleteProtection_.\n\nBy default this is `false`.\n\nTo enable it a SREP needs to patch the value through OCM API",
+            "type": "boolean"
+          }
+        }
+      },
       "DetectionType": {
         "type": "string",
         "enum": [
           "auto",
           "manual"
+        ]
+      },
+      "Ec2MetadataHttpTokens": {
+        "description": "Which Ec2MetadataHttpTokens to use for metadata service interaction options for EC2 instances",
+        "type": "string",
+        "enum": [
+          "optional",
+          "required"
         ]
       },
       "EncryptionKey": {
@@ -10691,10 +13370,6 @@
             "description": "DNS Name of the ingress.",
             "type": "string"
           },
-          "cluster": {
-            "description": "ID used to identify the cluster that this ingress is attached to. ",
-            "$ref": "#/components/schemas/Cluster"
-          },
           "default": {
             "description": "Indicates if this is the default ingress.",
             "type": "boolean"
@@ -10895,7 +13570,7 @@
             "$ref": "#/components/schemas/AWSMachinePool"
           },
           "autoscaling": {
-            "description": "Details for auto-scaling the machine pool.\nReplicas and autoscaling cannot be used together.    ",
+            "description": "Details for auto-scaling the machine pool.\nReplicas and autoscaling cannot be used together.",
             "$ref": "#/components/schemas/MachinePoolAutoscaling"
           },
           "availability_zones": {
@@ -10904,10 +13579,6 @@
             "items": {
               "type": "string"
             }
-          },
-          "cluster": {
-            "description": "ID used to identify the cluster that this machinepool is attached to.",
-            "$ref": "#/components/schemas/Cluster"
           },
           "instance_type": {
             "description": "The instance type of Nodes to create.",
@@ -10921,9 +13592,13 @@
             }
           },
           "replicas": {
-            "description": "The number of Machines (and Nodes) to create.\nReplicas and autoscaling cannot be used together.    ",
+            "description": "The number of Machines (and Nodes) to create.\nReplicas and autoscaling cannot be used together.",
             "type": "integer",
             "format": "int32"
+          },
+          "root_volume": {
+            "description": "The machine root volume capabilities.",
+            "$ref": "#/components/schemas/RootVolume"
           },
           "security_group_filters": {
             "description": "List of security groups to be applied to MachinePool (Optional)",
@@ -11113,6 +13788,26 @@
           }
         }
       },
+      "NetworkVerification": {
+        "properties": {
+          "cloud_provider_data": {
+            "description": "Cloud provider data to execute the network verification.",
+            "$ref": "#/components/schemas/CloudProviderData"
+          },
+          "items": {
+            "description": "Details about each subnet network verification.",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SubnetNetworkVerification"
+            }
+          },
+          "total": {
+            "description": "Amount of network verifier executions started.",
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
       "NodeInfo": {
         "description": "Provides information about a node from specific type in the cluster.",
         "properties": {
@@ -11158,9 +13853,12 @@
             "description": "The availability zone upon which the node is created.",
             "type": "string"
           },
-          "cluster": {
-            "description": "ID used to identify the cluster that this nodepool is attached to.",
-            "$ref": "#/components/schemas/Cluster"
+          "labels": {
+            "description": "The labels set on the Nodes created.",
+            "type": "object",
+            "additionalProperties": {
+              "type": "string"
+            }
           },
           "replicas": {
             "description": "The number of Machines (and Nodes) to create.\nReplicas and autoscaling cannot be used together.",
@@ -11174,6 +13872,24 @@
           "subnet": {
             "description": "The subnet upon which the nodes are created.",
             "type": "string"
+          },
+          "taints": {
+            "description": "The taints set on the Nodes created.",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Taint"
+            }
+          },
+          "tuning_configs": {
+            "description": "The names of the tuning configs for this node pool.",
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "version": {
+            "description": "Version of the node pool.",
+            "$ref": "#/components/schemas/Version"
           }
         }
       },
@@ -11226,6 +13942,70 @@
           },
           "message": {
             "description": "Adds additional information about the NodePool status when the node pool doesn't reach the desired replicas.",
+            "type": "string"
+          }
+        }
+      },
+      "NodePoolUpgradePolicy": {
+        "description": "Representation of an upgrade policy that can be set for a node pool.",
+        "properties": {
+          "kind": {
+            "description": "Indicates the type of this object. Will be 'NodePoolUpgradePolicy' if this is a complete object or 'NodePoolUpgradePolicyLink' if it is just a link.",
+            "type": "string"
+          },
+          "id": {
+            "description": "Unique identifier of the object.",
+            "type": "string"
+          },
+          "href": {
+            "description": "Self link.",
+            "type": "string"
+          },
+          "cluster_id": {
+            "description": "Cluster ID this upgrade policy for node pool is defined for.",
+            "type": "string"
+          },
+          "creation_timestamp": {
+            "description": "Timestamp for creation of resource.",
+            "type": "string",
+            "format": "date-time"
+          },
+          "enable_minor_version_upgrades": {
+            "description": "Indicates if minor version upgrades are allowed for automatic upgrades (for manual it's always allowed).",
+            "type": "boolean"
+          },
+          "last_update_timestamp": {
+            "description": "Timestamp for last update that happened to resource.",
+            "type": "string",
+            "format": "date-time"
+          },
+          "next_run": {
+            "description": "Next time the upgrade should run.",
+            "type": "string",
+            "format": "date-time"
+          },
+          "node_pool_id": {
+            "description": "Node Pool ID this upgrade policy is defined for.",
+            "type": "string"
+          },
+          "schedule": {
+            "description": "Schedule cron expression that defines automatic upgrade scheduling.",
+            "type": "string"
+          },
+          "schedule_type": {
+            "description": "Schedule type can be either \"manual\" (single execution) or \"automatic\" (re-occurring).",
+            "type": "string"
+          },
+          "state": {
+            "description": "State of the upgrade policy for the node pool.",
+            "$ref": "#/components/schemas/UpgradePolicyState"
+          },
+          "upgrade_type": {
+            "description": "Upgrade type specify the type of the upgrade. Can only be \"NodePool\".",
+            "type": "string"
+          },
+          "version": {
+            "description": "Version is the desired upgrade version.",
             "type": "string"
           }
         }
@@ -11399,6 +14179,114 @@
           }
         }
       },
+      "OrganizationLink": {
+        "description": "Definition of an organization link.",
+        "properties": {
+          "href": {
+            "description": "HREF for the Organization, filled in response.",
+            "type": "string"
+          },
+          "id": {
+            "description": "The organization's ID.",
+            "type": "string"
+          }
+        }
+      },
+      "PendingDeleteCluster": {
+        "description": "Represents a pending delete entry for a specific cluster.",
+        "properties": {
+          "kind": {
+            "description": "Indicates the type of this object. Will be 'PendingDeleteCluster' if this is a complete object or 'PendingDeleteClusterLink' if it is just a link.",
+            "type": "string"
+          },
+          "id": {
+            "description": "Unique identifier of the object.",
+            "type": "string"
+          },
+          "href": {
+            "description": "Self link.",
+            "type": "string"
+          },
+          "best_effort": {
+            "description": "Flag indicating if the cluster deletion should be best-effort mode or not.",
+            "type": "boolean"
+          },
+          "cluster": {
+            "description": "Cluster is the details of the cluster that is pending deletion.",
+            "$ref": "#/components/schemas/Cluster"
+          },
+          "creation_timestamp": {
+            "description": "Date and time when the cluster was initially created, using the\nformat defined in [RFC3339](https://www.ietf.org/rfc/rfc3339.txt).",
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "PrivateLinkClusterConfiguration": {
+        "description": "Manages the configuration for the Private Links.",
+        "properties": {
+          "principals": {
+            "description": "List of additional principals for the Private Link",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PrivateLinkPrincipal"
+            }
+          }
+        }
+      },
+      "PrivateLinkConfiguration": {
+        "description": "Manages the configuration for the Private Links.",
+        "properties": {
+          "principals": {
+            "description": "List of additional principals for the Private Link",
+            "$ref": "#/components/schemas/PrivateLinkPrincipals"
+          }
+        }
+      },
+      "PrivateLinkPrincipal": {
+        "properties": {
+          "kind": {
+            "description": "Indicates the type of this object. Will be 'PrivateLinkPrincipal' if this is a complete object or 'PrivateLinkPrincipalLink' if it is just a link.",
+            "type": "string"
+          },
+          "id": {
+            "description": "Unique identifier of the object.",
+            "type": "string"
+          },
+          "href": {
+            "description": "Self link.",
+            "type": "string"
+          },
+          "principal": {
+            "description": "ARN for a principal that is allowed for this Private Link.",
+            "type": "string"
+          }
+        }
+      },
+      "PrivateLinkPrincipals": {
+        "description": "Contains a list of principals for the Private Link.",
+        "properties": {
+          "kind": {
+            "description": "Indicates the type of this object. Will be 'PrivateLinkPrincipals' if this is a complete object or 'PrivateLinkPrincipalsLink' if it is just a link.",
+            "type": "string"
+          },
+          "id": {
+            "description": "Unique identifier of the object.",
+            "type": "string"
+          },
+          "href": {
+            "description": "Self link.",
+            "type": "string"
+          },
+          "principals": {
+            "description": "List of additional principals for the Private Link",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PrivateLinkPrincipal"
+            }
+          }
+        }
+      },
       "Product": {
         "description": "Representation of an product that can be selected as a cluster type.",
         "properties": {
@@ -11504,6 +14392,31 @@
           }
         }
       },
+      "ResourceRange": {
+        "properties": {
+          "max": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "min": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "RootVolume": {
+        "description": "Root volume capabilities.",
+        "properties": {
+          "aws": {
+            "description": "AWS volume specification",
+            "$ref": "#/components/schemas/AWSVolume"
+          },
+          "gcp": {
+            "description": "GCP Volume specification",
+            "$ref": "#/components/schemas/GCPVolume"
+          }
+        }
+      },
       "ServerConfig": {
         "description": "Representation of a server config",
         "properties": {
@@ -11562,6 +14475,33 @@
             "items": {
               "$ref": "#/components/schemas/SocketTotalNodeRoleOSMetricNode"
             }
+          }
+        }
+      },
+      "SubnetNetworkVerification": {
+        "properties": {
+          "kind": {
+            "description": "Indicates the type of this object. Will be 'SubnetNetworkVerification' if this is a complete object or 'SubnetNetworkVerificationLink' if it is just a link.",
+            "type": "string"
+          },
+          "id": {
+            "description": "Unique identifier of the object.",
+            "type": "string"
+          },
+          "href": {
+            "description": "Self link.",
+            "type": "string"
+          },
+          "details": {
+            "description": "Slice of failures that happened during a subnet network verification.",
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "state": {
+            "description": "State of the subnet network verification.",
+            "type": "string"
           }
         }
       },
@@ -11641,6 +14581,31 @@
           "value": {
             "description": "The value for the taint.",
             "type": "string"
+          }
+        }
+      },
+      "TuningConfig": {
+        "description": "Representation of a tuning config.",
+        "properties": {
+          "kind": {
+            "description": "Indicates the type of this object. Will be 'TuningConfig' if this is a complete object or 'TuningConfigLink' if it is just a link.",
+            "type": "string"
+          },
+          "id": {
+            "description": "Unique identifier of the object.",
+            "type": "string"
+          },
+          "href": {
+            "description": "Self link.",
+            "type": "string"
+          },
+          "name": {
+            "description": "Name of the tuning config.",
+            "type": "string"
+          },
+          "spec": {
+            "description": "Spec of the tuning config.",
+            "type": "object"
           }
         }
       },
@@ -11802,6 +14767,10 @@
             "type": "string",
             "format": "date-time"
           },
+          "hosted_control_plane_enabled": {
+            "description": "HostedControlPlaneEnabled indicates whether this version can be used to create HCP clusters.",
+            "type": "boolean"
+          },
           "raw_id": {
             "description": "RawID is the id of the version - without channel group and prefix.",
             "type": "string"
@@ -11915,7 +14884,7 @@
           "details": {
             "description": "Extra information about the error.",
             "type": "object",
-            "additionalProperties": "true"
+            "additionalProperties": true
           }
         }
       }
