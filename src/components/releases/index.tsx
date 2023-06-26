@@ -25,13 +25,10 @@ import ReleaseChannelDescription from './ReleaseChannelDescription';
 import { useOCPLifeCycleStatusData } from './hooks';
 
 import './Releases.scss';
+import { AppPage } from '../App/AppPage';
 
 const Releases = () => {
   const [statusData] = useOCPLifeCycleStatusData();
-
-  React.useEffect(() => {
-    document.title = 'Releases | Red Hat OpenShift Cluster Manager';
-  }, []);
 
   const allVersions = statusData?.[0]?.versions;
   const filteredVersions = allVersions?.filter((version) => !version.name.includes('EUS'));
@@ -50,7 +47,7 @@ const Releases = () => {
   const renderProductName = (versionName: string) => <>OpenShift {versionName}</>;
 
   return (
-    <>
+    <AppPage title="Releases | Red Hat OpenShift Cluster Manager">
       <PageHeader>
         <PageHeaderTitle title="Releases" className="page-title" />
       </PageHeader>
@@ -175,7 +172,7 @@ const Releases = () => {
           </StackItem>
         </Stack>
       </PageSection>
-    </>
+    </AppPage>
   );
 };
 

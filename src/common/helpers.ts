@@ -73,13 +73,6 @@ const getRandomID = () => {
 const randAlphanumString = (length: number): string =>
   btoa(String(Math.random())).substr(5, length);
 
-const scrollToTop = () => {
-  const pageTop = document.getElementById('scrollToTop');
-  if (pageTop) {
-    pageTop.scrollIntoView();
-  }
-};
-
 const noQuotaTooltip =
   'You do not have enough quota for this option. Contact sales to purchase additional quota.';
 
@@ -108,7 +101,6 @@ const helpers = {
   isValid,
   strToCleanArray,
   asArray,
-  scrollToTop,
   nestedIsEmpty,
 };
 
@@ -254,7 +246,6 @@ export {
   strToCleanArray,
   asArray,
   multiInputToCleanArray,
-  scrollToTop,
   getRandomID,
   randAlphanumString,
   noQuotaTooltip,

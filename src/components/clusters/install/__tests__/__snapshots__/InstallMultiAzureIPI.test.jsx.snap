@@ -1,7 +1,9 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`InstallMultiAzureIPI renders correctly 1`] = `
-<Fragment>
+<AppPage
+  title="Install OpenShift 4 | Red Hat OpenShift Cluster Manager | Azure with Multi-Architecture Compute Machines"
+>
   <PageTitle
     breadcrumbs={
       <Breadcrumbs
@@ -36,5 +38,5 @@ exports[`InstallMultiAzureIPI renders correctly 1`] = `
       token={Object {}}
     />
   </PageSection>
-</Fragment>
+</AppPage>
 `;

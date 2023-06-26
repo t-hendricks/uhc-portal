@@ -119,10 +119,16 @@ import CreateOSDWizard from '../clusters/CreateOSDPage/CreateOSDWizard';
 import { CreateOsdWizard } from '../clusters/wizards';
 import { metadataByRoute, is404 } from './routeMetadata';
 import { useFeatureGate } from '~/hooks/useFeatureGate';
+import { AppPage } from './AppPage';
 
 const { AssistedUiRouter } = OCM;
+const AssistedUiRouterPage: typeof AssistedUiRouter = (props) => (
+  <AppPage>
+    <AssistedUiRouter {...props} />
+  </AppPage>
+);
 
-const GatedAssistedUiRouter = withFeatureGate(AssistedUiRouter, ASSISTED_INSTALLER_FEATURE);
+const GatedAssistedUiRouter = withFeatureGate(AssistedUiRouterPage, ASSISTED_INSTALLER_FEATURE);
 const GatedMetalInstall = withFeatureGate(
   InstallBareMetal,
   ASSISTED_INSTALLER_FEATURE,
@@ -197,20 +203,20 @@ const Router: React.FC<RouterProps> = ({ history, planType, clusterId, externalC
               path="/token/rosa/show"
               history={history}
               render={() => (
-                <>
+                <AppPage>
                   <TokensROSA show />
                   <EntitlementConfig />
-                </>
+                </AppPage>
               )}
             />
             <TermsGuardedRoute
               path="/token/rosa"
               history={history}
               render={() => (
-                <>
+                <AppPage>
                   <TokensROSA show={false} showPath="/token/rosa/show" />
                   <EntitlementConfig />
-                </>
+                </AppPage>
               )}
             />
             <Route path="/token/show" render={() => <Tokens show />} />

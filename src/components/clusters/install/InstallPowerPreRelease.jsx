@@ -8,15 +8,11 @@ import PageTitle from '../../common/PageTitle';
 
 import { tollboothActions } from '../../../redux/actions';
 import InstructionsPreRelease from './instructions/InstructionsPreRelease';
-import { scrollToTop } from '../../../common/helpers';
 import { tools } from '../../../common/installLinks.mjs';
+import { AppPage } from '~/components/App/AppPage';
 
 export class InstallPowerPreRelease extends Component {
   componentDidMount() {
-    scrollToTop();
-    document.title =
-      'Install OpenShift 4 | IBM Power (ppc64le) | Experimental Developer Preview Builds';
-
     const { dispatch } = this.props;
     dispatch(tollboothActions.createAuthToken());
   }
@@ -35,7 +31,7 @@ export class InstallPowerPreRelease extends Component {
     );
 
     return (
-      <>
+      <AppPage title="Install OpenShift 4 | IBM Power (ppc64le) | Experimental Developer Preview Builds">
         <PageTitle
           title="Install OpenShift on IBM Power (ppc64le) with user-provisioned infrastructure"
           breadcrumbs={breadcrumbs}
@@ -43,7 +39,7 @@ export class InstallPowerPreRelease extends Component {
         <PageSection>
           <InstructionsPreRelease token={token} installer={tools.PPCINSTALLER} />
         </PageSection>
-      </>
+      </AppPage>
     );
   }
 }

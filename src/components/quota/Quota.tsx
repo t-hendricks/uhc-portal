@@ -22,6 +22,7 @@ import SubscriptionNotFulfilled from './SubscriptionNotFulfilled';
 import type { State as SubscriptionState } from '../../redux/reducers/subscriptionsReducer';
 
 import './Quota.scss';
+import { AppPage } from '../App/AppPage';
 
 type Props = {
   fetchAccount: () => void;
@@ -29,6 +30,8 @@ type Props = {
   invalidateClusters: () => void;
   marketplace?: boolean;
 };
+
+const PAGE_TITLE = 'Quota | Red Hat OpenShift Cluster Manager';
 
 const Quota = ({ invalidateClusters, fetchAccount, account, marketplace }: Props) => {
   // store in refs so that we can retrieve the latest value without re-creating the effect
@@ -38,7 +41,6 @@ const Quota = ({ invalidateClusters, fetchAccount, account, marketplace }: Props
   invalidateClustersRef.current = invalidateClusters;
 
   React.useEffect(() => {
-    document.title = 'Quota | Red Hat OpenShift Cluster Manager';
     fetchAccount();
     const cleanupOcmListener = window.insights?.ocm?.on('APP_REFRESH', () =>
       fetchAccountRef.current(),
@@ -56,7 +58,7 @@ const Quota = ({ invalidateClusters, fetchAccount, account, marketplace }: Props
     const title = marketplace ? 'Dedicated (On-Demand Limits)' : 'Dedicated (Annual)';
     const organizationID = account.data.organization.id;
     return (
-      <>
+      <AppPage title={PAGE_TITLE}>
         <PageHeader>
           <PageHeaderTitle title={title} className="page-title" />
         </PageHeader>
@@ -67,19 +69,21 @@ const Quota = ({ invalidateClusters, fetchAccount, account, marketplace }: Props
             </StackItem>
           </Stack>
         </PageSection>
-      </>
+      </AppPage>
     );
   }
   return (
-    <SubscriptionNotFulfilled
-      data={{
-        error: account.error,
-        pending: account.pending,
-        type: 'account',
-        internalErrorCode: account.error ? account.internalErrorCode : undefined,
-      }}
-      refresh={fetchAccount}
-    />
+    <AppPage title={PAGE_TITLE}>
+      <SubscriptionNotFulfilled
+        data={{
+          error: account.error,
+          pending: account.pending,
+          type: 'account',
+          internalErrorCode: account.error ? account.internalErrorCode : undefined,
+        }}
+        refresh={fetchAccount}
+      />
+    </AppPage>
   );
 };
 

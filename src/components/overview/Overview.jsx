@@ -29,6 +29,9 @@ import Unavailable from '../common/Unavailable';
 import InsightsAdvisorCard from './InsightsAdvisorCard/InsightsAdvisorCard';
 
 import './Overview.scss';
+import { AppPage } from '../App/AppPage';
+
+const PAGE_TITLE = 'Overview | Red Hat OpenShift Cluster Manager';
 
 class Overview extends Component {
   componentDidMount() {
@@ -44,7 +47,6 @@ class Overview extends Component {
       insightsOverview,
       fetchOrganizationInsights,
     } = this.props;
-    document.title = 'Overview | Red Hat OpenShift Cluster Manager';
 
     if (!summaryDashboard.fulfilled && !summaryDashboard.pending) {
       getSummaryDashboard();
@@ -108,21 +110,27 @@ class Overview extends Component {
     // Show spinner if while waiting for responses.
     if (isPending && !isError) {
       return (
-        <EmptyState>
-          <EmptyStateBody>
-            <Spinner centered />
-          </EmptyStateBody>
-        </EmptyState>
+        <AppPage title={PAGE_TITLE}>
+          <EmptyState>
+            <EmptyStateBody>
+              <Spinner centered />
+            </EmptyStateBody>
+          </EmptyState>
+        </AppPage>
       );
     }
 
     // Revert to an "empty" state if there are no clusters to show.
     if (summaryDashboard.fulfilled && !totalClusters) {
-      return <OverviewEmptyState />;
+      return (
+        <AppPage title={PAGE_TITLE}>
+          <OverviewEmptyState />
+        </AppPage>
+      );
     }
 
     return (
-      <>
+      <AppPage title={PAGE_TITLE}>
         <PageHeader>
           <PageHeaderTitle title="Overview" className="page-title" />
         </PageHeader>
@@ -208,7 +216,7 @@ class Overview extends Component {
           />
           <ConnectedModal ModalComponent={ArchiveClusterDialog} onClose={invalidateSubscriptions} />
         </PageSection>
-      </>
+      </AppPage>
     );
   }
 }

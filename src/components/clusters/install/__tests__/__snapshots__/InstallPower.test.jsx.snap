@@ -1,7 +1,9 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`InstallPower renders correctly 1`] = `
-<Fragment>
+<AppPage
+  title="Install OpenShift 4 | Red Hat OpenShift Cluster Manager | IBM Power (ppc64le)"
+>
   <InstructionsChooserPageTitle
     breadcrumbs={
       <Breadcrumbs
@@ -47,5 +49,5 @@ exports[`InstallPower renders correctly 1`] = `
       upiPageLink="/install/power/user-provisioned"
     />
   </PageSection>
-</Fragment>
+</AppPage>
 `;

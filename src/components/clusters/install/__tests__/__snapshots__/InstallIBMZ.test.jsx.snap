@@ -1,7 +1,9 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`InstallIBMZ renders correctly 1`] = `
-<Fragment>
+<AppPage
+  title="Install OpenShift 4 | Red Hat OpenShift Cluster Manager | IBM zSystems (s390x)"
+>
   <InstructionsChooserPageTitle
     breadcrumbs={
       <Breadcrumbs
@@ -47,5 +49,5 @@ exports[`InstallIBMZ renders correctly 1`] = `
       upiPageLink="/install/ibmz/user-provisioned"
     />
   </PageSection>
-</Fragment>
+</AppPage>
 `;

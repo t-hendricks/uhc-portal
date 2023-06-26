@@ -1,7 +1,9 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`<Overview /> renders correctly 1`] = `
-<Fragment>
+<AppPage
+  title="Overview | Red Hat OpenShift Cluster Manager"
+>
   <PageHeader>
     <PageHeaderTitle
       className="page-title"
@@ -255,5 +257,5 @@ exports[`<Overview /> renders correctly 1`] = `
       onClose={[MockFunction]}
     />
   </PageSection>
-</Fragment>
+</AppPage>
 `;
