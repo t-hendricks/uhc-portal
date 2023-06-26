@@ -182,7 +182,7 @@ const reviewValues = {
   nodes_compute: {
     title: 'Compute node count',
     valueTransform: (value, allValues) => {
-      if (allValues.multi_az === 'true') {
+      if (allValues.multi_az === 'true' && allValues.hypershift !== 'true') {
         return `${value / 3} (× 3 zones = ${value} compute nodes)`;
       }
       return value;
