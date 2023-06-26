@@ -1,7 +1,9 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`ARM Bare Metal install renders correctly 1`] = `
-<Fragment>
+<AppPage
+  title="Install OpenShift 4 | Red Hat OpenShift Cluster Manager | ARM Bare Metal"
+>
   <InstructionsChooserPageTitle
     breadcrumbs={
       <Breadcrumbs
@@ -45,5 +47,5 @@ exports[`ARM Bare Metal install renders correctly 1`] = `
       upiPageLink="/install/arm/user-provisioned"
     />
   </PageSection>
-</Fragment>
+</AppPage>
 `;

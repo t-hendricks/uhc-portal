@@ -28,7 +28,6 @@ import PageTitle from '~/components/common/PageTitle';
 import Breadcrumbs from '~/components/common/Breadcrumbs';
 import ExternalLink from '~/components/common/ExternalLink';
 import links from '~/common/installLinks.mjs';
-import { scrollToTop } from '~/common/helpers';
 
 import Instruction from '~/components/common/Instruction';
 import Instructions from '~/components/common/Instructions';
@@ -40,6 +39,7 @@ import WithCLICard from './WithCLICard';
 import WithWizardCard from './WithWizardCard';
 import { useFeatureGate } from '~/hooks/useFeatureGate';
 import { HCP_ROSA_GETTING_STARTED_PAGE } from '~/redux/constants/featureConstants';
+import { AppPage } from '~/components/App/AppPage';
 
 export const productName = 'Red Hat OpenShift Service on AWS';
 const title = (productName: string = '') => `Get started with ${productName} (ROSA)`;
@@ -60,12 +60,8 @@ const CreateRosaGetStarted = () => {
   const [isAWSPrereqOpen, setIsAWSPrereqOpen] = React.useState(!sourceIsAWS);
   const showHCPDirections = useFeatureGate(HCP_ROSA_GETTING_STARTED_PAGE);
 
-  React.useEffect(() => {
-    scrollToTop();
-  }, []);
-
   return (
-    <>
+    <AppPage>
       <PageTitle breadcrumbs={breadcrumbs} title={title(productName)}>
         <TextContent className="pf-u-mt-md">
           <Text component={TextVariants.p}>
@@ -188,7 +184,7 @@ const CreateRosaGetStarted = () => {
           </StackItem>
         </Stack>
       </PageSection>
-    </>
+    </AppPage>
   );
 };
 

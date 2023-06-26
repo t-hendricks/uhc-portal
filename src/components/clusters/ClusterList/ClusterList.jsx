@@ -29,6 +29,7 @@ import {
   ToolbarItem,
   ToolbarContent,
 } from '@patternfly/react-core';
+import { AppPage } from '~/components/App/AppPage';
 
 import ReadOnlyBanner from '../common/ReadOnlyBanner';
 import ClusterListFilter from '../common/ClusterListFilter';
@@ -48,7 +49,7 @@ import CommonClusterModals from '../common/CommonClusterModals';
 
 import ViewPaginationRow from '../common/ViewPaginationRow/viewPaginationRow';
 
-import helpers, { scrollToTop } from '../../../common/helpers';
+import helpers from '../../../common/helpers';
 import { productFilterOptions } from '../../../common/subscriptionTypes';
 
 import {
@@ -61,13 +62,14 @@ import { ASSISTED_INSTALLER_MERGE_LISTS_FEATURE } from '../../../redux/constants
 
 import './ClusterList.scss';
 
+const PAGE_TITLE = 'Clusters | Red Hat OpenShift Cluster Manager';
+
 class ClusterList extends Component {
   state = {
     loadingChangedView: false,
   };
 
   componentDidMount() {
-    document.title = 'Clusters | Red Hat OpenShift Cluster Manager';
     const {
       getCloudProviders,
       cloudProviders,
@@ -77,8 +79,6 @@ class ClusterList extends Component {
       getMachineTypes,
       machineTypes,
     } = this.props;
-
-    scrollToTop();
 
     const planIDFilter = getQueryParam('plan_id') || '';
 
@@ -210,7 +210,7 @@ class ClusterList extends Component {
 
     if (error && !size(clusters)) {
       return (
-        <>
+        <AppPage title={PAGE_TITLE}>
           {pageHeader}
           <PageSection>
             <div data-ready>
@@ -225,7 +225,7 @@ class ClusterList extends Component {
               />
             </div>
           </PageSection>
-        </>
+        </AppPage>
       );
     }
 
@@ -237,17 +237,19 @@ class ClusterList extends Component {
 
     if (showEmptyState) {
       return (
-        <PageSection>
-          <GlobalErrorBox />
-          <div data-ready>
-            <ClusterListEmptyState />
-          </div>
-        </PageSection>
+        <AppPage title={PAGE_TITLE}>
+          <PageSection>
+            <GlobalErrorBox />
+            <div data-ready>
+              <ClusterListEmptyState />
+            </div>
+          </PageSection>
+        </AppPage>
       );
     }
 
     return (
-      <>
+      <AppPage title={PAGE_TITLE}>
         {pageHeader}
         <PageSection>
           <Card>
@@ -326,7 +328,7 @@ class ClusterList extends Component {
             </div>
           </Card>
         </PageSection>
-      </>
+      </AppPage>
     );
   }
 }

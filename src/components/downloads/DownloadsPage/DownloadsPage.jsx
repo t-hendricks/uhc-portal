@@ -49,6 +49,7 @@ import DownloadPullSecret from '../DownloadPullSecret';
 import CopyPullSecret from '../CopyPullSecret';
 
 import './DownloadsPage.scss';
+import { AppPage } from '~/components/App/AppPage';
 
 const { TechnologyPreview, PreviewBadgePosition } = OCM;
 
@@ -920,8 +921,6 @@ class DownloadsPage extends React.Component {
   toolRefs = DownloadsPage.makeRefs(); // { [tool]: ref }
 
   componentDidMount() {
-    document.title = 'Downloads | Red Hat OpenShift Cluster Manager';
-
     const { getAuthToken, githubReleases, getLatestRelease } = this.props;
     getAuthToken();
     githubReleasesToFetch.forEach((repo) => {
@@ -1024,7 +1023,7 @@ class DownloadsPage extends React.Component {
     };
 
     return (
-      <>
+      <AppPage title="Downloads | Red Hat OpenShift Cluster Manager">
         <PageHeader className="downloads-page-header">
           <Split>
             <SplitItem isFilled>
@@ -1183,7 +1182,7 @@ class DownloadsPage extends React.Component {
             </DownloadsSection>
           </PageSection>
         </PageSection>
-      </>
+      </AppPage>
     );
   }
 }

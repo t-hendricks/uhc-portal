@@ -209,7 +209,9 @@ exports[`<Quota /> OSDSubscriptionTable should render 1`] = `
 `;
 
 exports[`<Quota /> Quota should render 1`] = `
-<Fragment>
+<AppPage
+  title="Quota | Red Hat OpenShift Cluster Manager"
+>
   <PageHeader>
     <PageHeaderTitle
       className="page-title"
@@ -231,5 +233,5 @@ exports[`<Quota /> Quota should render 1`] = `
       </StackItem>
     </Stack>
   </PageSection>
-</Fragment>
+</AppPage>
 `;

@@ -1,7 +1,9 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`<DownloadsPage> renders 1`] = `
-<Fragment>
+<AppPage
+  title="Downloads | Red Hat OpenShift Cluster Manager"
+>
   <PageHeader
     className="downloads-page-header"
   >
@@ -11621,5 +11623,5 @@ exports[`<DownloadsPage> renders 1`] = `
       </DownloadsSection>
     </PageSection>
   </PageSection>
-</Fragment>
+</AppPage>
 `;

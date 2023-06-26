@@ -62,6 +62,7 @@ import {
   NetworkingCidrRanges,
 } from './Networking';
 import { ReviewAndCreate } from './ReviewAndCreate';
+import { AppPage } from '~/components/App/AppPage';
 
 interface CreateOsdWizardProps {
   product?: string;
@@ -110,25 +111,27 @@ export const CreateOsdWizard = ({ product }: CreateOsdWizardProps) => {
   };
 
   return (
-    <Formik
-      initialValues={{ ...initialValues, ...(product && { product }) }}
-      initialTouched={initialTouched}
-      validateOnChange={false}
-      onSubmit={onSubmit}
-    >
-      <>
-        <PageTitle
-          title="Create an OpenShift Dedicated Cluster"
-          breadcrumbs={<Breadcrumbs path={breadcrumbs} />}
-        />
-        <PageSection>
-          {config.fakeOSD && (
-            <Banner variant="warning">On submit, a fake OSD cluster will be created.</Banner>
-          )}
-          <CreateOsdWizardInternal />
-        </PageSection>
-      </>
-    </Formik>
+    <AppPage title={documentTitle}>
+      <Formik
+        initialValues={{ ...initialValues, ...(product && { product }) }}
+        initialTouched={initialTouched}
+        validateOnChange={false}
+        onSubmit={onSubmit}
+      >
+        <>
+          <PageTitle
+            title="Create an OpenShift Dedicated Cluster"
+            breadcrumbs={<Breadcrumbs path={breadcrumbs} />}
+          />
+          <PageSection>
+            {config.fakeOSD && (
+              <Banner variant="warning">On submit, a fake OSD cluster will be created.</Banner>
+            )}
+            <CreateOsdWizardInternal />
+          </PageSection>
+        </>
+      </Formik>
+    </AppPage>
   );
 };
 
@@ -319,5 +322,3 @@ const CreateOsdWizardInternal = () => {
     </>
   );
 };
-
-document.title = documentTitle;
