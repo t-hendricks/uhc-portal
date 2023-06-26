@@ -50,6 +50,8 @@ describe('Rosa cluster tests', () => {
       it('tests for no associated accounts', () => {
         interceptAndReturnMockAssociatedAccounts('rosa/rosa_no_associated_account.json');
         interceptAndReturnMockARNs('rosa/rosa_no_arns.json');
+
+        CreateRosaWizardPage.isAccountsAndRolesScreen();
         cy.getByTestId('refresh-aws-accounts').click();
         cy.wait('@getMockAssociatedAccounts');
         cy.get(CreateRosaWizardPage.associatedAccountsDropdown).click();
@@ -66,6 +68,7 @@ describe('Rosa cluster tests', () => {
         interceptAndReturnMockAssociatedAccounts('rosa/rosa_one_associated_account.json');
         interceptAndReturnMockARNs('rosa/rosa_no_arns.json');
 
+        CreateRosaWizardPage.isAccountsAndRolesScreen();
         cy.getByTestId('refresh-aws-accounts').click();
         cy.wait('@getMockAssociatedAccounts');
         cy.contains('Loading account roles ARNs').should('not.exist');
