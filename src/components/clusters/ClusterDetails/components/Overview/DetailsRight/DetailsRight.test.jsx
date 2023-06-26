@@ -265,9 +265,9 @@ describe('<DetailsRight />', () => {
         ...defaultProps,
         cluster: {
           ...clusterFixture,
-          properties: {
-            ...clusterFixture.properties,
-            rosa_creator_arn: 'arn:aws:iam::987654321012:role/ManagedOpenShift-OCM-Role-11111111',
+          subscription: {
+            ...clusterFixture.subscription,
+            cloud_account_id: '987654321012',
           },
         },
       };
@@ -286,9 +286,9 @@ describe('<DetailsRight />', () => {
         ...defaultProps,
         cluster: {
           ...clusterFixture,
-          properties: {
-            ...clusterFixture.properties,
-            rosa_creator_arn: undefined,
+          subscription: {
+            ...clusterFixture.subscription,
+            cloud_account_id: undefined,
           },
         },
       };
