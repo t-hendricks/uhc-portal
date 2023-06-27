@@ -1,16 +1,14 @@
 #!/bin/bash -e
 
-# deploy-compare --after="2023-05-17" --jira-token="OTU4.......2dTrk" 
-
-usageMsg="Usage: deploy-compare [--after=\"YYYY-MM-DD\"] [--before=\"YYYY-MM-DD\"] --jira-token=\"<44 char token string>\"\n'--after' will default to 1 month ago if not specified.";
+usageMsg="Usage: deploy-compare [--after=<YYYY-MM-DD>] [--before=<YYYY-MM-DD>] --jira-token=<44 char token string>
+--after will default to 1 month ago if not specified.
+To get a jira token goto your profile in Jira and select 'Personal Access Tokens' and 'Create token'"
 
 if [ $# -eq 0 ]; then
     echo "Please provide the following parameters:"
-    echo -e "$usageMsg"
+    echo "$usageMsg"
     exit 1
 fi
-
-git fetch
 
 # Parse command-line options
 while [[ $# -gt 0 ]]; do
@@ -26,7 +24,7 @@ while [[ $# -gt 0 ]]; do
       ;;
     *)
       echo "Unknown option: $1"
-      echo -e "$usageMsg"
+      echo "$usageMsg"
       exit 1
       ;;
   esac
@@ -37,6 +35,9 @@ if [ -z "$after" ] ; then
     after=$(date -v-1m +%Y-%m-%d)
     echo "Defaulting 'after' to '$after'"
 fi
+
+echo "Creating live branches"
+./deploy_info.mjs --set-git-branches
 
 # write out remotes/origin/master git "Merge branch..." commits (commitHash, commitDate, commitSummary) 'after' and/or 'before' date specified
 git log --grep='^Merge branch.*into '\''master'\''' --after="$after" ${before:+--before="\"$before\""} --pretty=format:"%h %cd %s" --date=short live_master | awk '{ printf "%s,%s,%s\n", substr($0, 1, 9), substr($0, 11, 10), substr($0, 22) }' > masterBranch.txt

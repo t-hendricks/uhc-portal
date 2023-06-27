@@ -97,8 +97,8 @@ while IFS=',' read -r commitHash commitDate commitMessage; do
     jiraKeys=()
   fi
 done
-
 echo " "
+echo "--------------------------------------------------------------------------"
 echo " "
 echo "Commits ready to promote to candidate"
 echo "  master commit messages not found in candidate"
@@ -123,15 +123,16 @@ done
 
 # Create a temporary branch with the desired commits
 tempBranch="candidate-$(date +"%B-%d-%Y")"
-echo git checkout -b "$tempBranch" live_candidate
+echo "git checkout -b $tempBranch live_candidate"
 echo " "
-echo git cherry-pick -x -m 1 "${reversedReadyToPromoteSHAs[@]}"
+echo "git cherry-pick -x -m 1 ${reversedReadyToPromoteSHAs[@]}"
 echo " "
 
-# Release Notess
+# Release Notes
+formattedDate="$(date +"%B %d %Y")"
 echo "Release Notes (copy & paste into gitlab wiki page)"
 echo " "
-echo "### Month DD, YYYY"
+echo "### DRAFT: $formattedDate"
 echo "| revision | ticket | description | MR |"
 echo "| --- | --- | --- | --- | "
 for releaseNote in "${releaseNotes[@]}"; do
@@ -139,11 +140,10 @@ for releaseNote in "${releaseNotes[@]}"; do
   ticket=$(echo "$releaseNote" | jq -r '.ticket')
   description=$(echo "$releaseNote" | jq -r '.description')
   mr=$(echo "$releaseNote" | jq -r '.mr')
-  echo -e "| $revision | $ticket | $description | $mr |"
+  echo "| $revision | $ticket | $description | $mr |"
 done
-
 echo " "
-echo "----- Other Info. -----"
+echo "------- Other Information -------"
 echo " "
 echo "Master commit messages not found in candidate, but not all associated jira tickets are Closed"
 echo " "
