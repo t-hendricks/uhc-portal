@@ -87,7 +87,7 @@ export const useAWSVPCInquiry = () => {
 
       dispatch(getAWSCloudProviderVPCs(credentials, region));
     }
-  }, [cloudProviderID, credentials, region, hasLatestVpcs, vpcsError]);
+  }, [cloudProviderID, credentials, region, hasLatestVpcs]);
 
   return vpcs;
 };
