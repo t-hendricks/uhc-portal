@@ -1,5 +1,6 @@
 import React, { createContext, PropsWithChildren, useCallback, useMemo, useState } from 'react';
 import { Drawer, DrawerContent, DrawerContentBody, DrawerProps } from '@patternfly/react-core';
+import './AppDrawer.scss';
 
 type DrawerSettings = {
   drawerProps?: DrawerProps;
@@ -37,7 +38,7 @@ export const AppDrawer: React.FC<PropsWithChildren<{}>> = ({ children }) => {
     <AppDrawerContext.Provider value={contextValue}>
       <Drawer {...drawerProps}>
         <DrawerContent panelContent={drawerPanelContent}>
-          <DrawerContentBody>{children}</DrawerContentBody>
+          <DrawerContentBody className="app-drawer-body">{children}</DrawerContentBody>
         </DrawerContent>
       </Drawer>
     </AppDrawerContext.Provider>
