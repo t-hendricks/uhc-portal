@@ -33,7 +33,7 @@ while IFS=',' read -r commitHash commitDate commitMessage; do
     echo "DID NOT FIND string \"$commitMessage\" in live_candidate"
 
     # Pattern matching to extract jiraKeys
-    regex="(HAC[- ]?[0-9]{4}|MGMT[- ]?[0-9]{5})"
+    regex="(HAC[- ]?[0-9]+|MGMT[- ]?[0-9]+)"
 
     commitDescription=$(git log --format=%b -n 1 $commitHash)
     commitDescription="${commitDescription//\"/\\\"}"
