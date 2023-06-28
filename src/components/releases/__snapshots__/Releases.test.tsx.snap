@@ -20,9 +20,11 @@ exports[`<Releases /> should render 1`] = `
                 <div
                   className="pf-c-drawer__content"
                 >
-                  <DrawerContentBody>
+                  <DrawerContentBody
+                    className="app-drawer-body"
+                  >
                     <div
-                      className="pf-c-drawer__body"
+                      className="pf-c-drawer__body app-drawer-body"
                     >
                       <ErrorBoundary>
                         <PageHeader>
