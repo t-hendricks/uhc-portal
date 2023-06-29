@@ -1,5 +1,5 @@
 import React from 'react';
-import { screen, render, axe, within } from '~/testUtils';
+import { screen, render, checkAccessibility, within, insightsMock } from '~/testUtils';
 import DetailsLeft from './DetailsLeft';
 import fixtures from '../../__test__/ClusterDetails.fixtures';
 
@@ -39,15 +39,7 @@ const checkForValueAbsence = (label, value) => {
   }
 };
 
-global.insights = {
-  chrome: {
-    on: () => () => {},
-    auth: {
-      getUser: () => Promise.resolve({ data: {} }),
-      getToken: () => Promise.resolve(),
-    },
-  },
-};
+insightsMock();
 
 describe('<DetailsLeft />', () => {
   it('is accessible', async () => {
@@ -58,8 +50,7 @@ describe('<DetailsLeft />', () => {
     const { container } = render(<DetailsLeft {...props} />);
 
     // Assert
-    const results = await axe(container);
-    expect(results).toHaveNoViolations();
+    await checkAccessibility(container);
   });
 
   describe('Cluster id', () => {

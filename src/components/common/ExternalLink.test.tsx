@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, screen, fireEvent, axe, within } from '@testUtils';
+import { render, screen, fireEvent, checkAccessibility, within } from '@testUtils';
 import '@testing-library/jest-dom';
 import ExternalLink from './ExternalLink';
 
@@ -14,8 +14,7 @@ describe('<ExternalLink />', () => {
     );
 
     // Assert
-    const results = await axe(container);
-    expect(results).toHaveNoViolations();
+    await checkAccessibility(container);
   });
 
   it('is accessible as a button', async () => {
@@ -27,8 +26,7 @@ describe('<ExternalLink />', () => {
     );
 
     // Assert
-    const results = await axe(container);
-    expect(results).toHaveNoViolations();
+    await checkAccessibility(container);
   });
 
   it('shows as a secondary button but is still a link', () => {

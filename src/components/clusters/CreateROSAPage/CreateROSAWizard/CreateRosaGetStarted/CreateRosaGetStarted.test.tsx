@@ -1,19 +1,11 @@
 import React from 'react';
-import { render, axe, screen } from '@testUtils';
+import { render, checkAccessibility, insightsMock, screen } from '@testUtils';
 import { MemoryRouter } from 'react-router-dom';
 import * as hooks from '~/hooks/useFeatureGate';
 import { HCP_ROSA_GETTING_STARTED_PAGE } from '~/redux/constants/featureConstants';
 import CreateRosaGetStarted from './CreateRosaGetStarted';
 
-global.insights = {
-  chrome: {
-    on: () => () => {},
-    appNavClick: () => {},
-    auth: {
-      getOfflineToken: () => Promise.resolve({ data: { refresh_token: 'hello' } }),
-    },
-  },
-};
+insightsMock();
 
 const hypershiftMessage =
   /For now, you can only create ROSA with Hosted Control Plane clusters using the CLI/;
@@ -26,8 +18,7 @@ describe('<CreateRosaGetStarted />', () => {
       </MemoryRouter>,
     );
 
-    const results = await axe(container);
-    expect(results).toHaveNoViolations();
+    await checkAccessibility(container);
   });
 
   it('shows hypershift info alert if feature flag is enabled', () => {

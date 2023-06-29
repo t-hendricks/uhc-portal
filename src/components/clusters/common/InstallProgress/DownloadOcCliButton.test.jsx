@@ -1,7 +1,7 @@
 import React from 'react';
 import * as ReactRedux from 'react-redux';
 
-import { render, screen, axe } from '@testUtils';
+import { render, screen, checkAccessibility } from '@testUtils';
 
 import * as DownloadUtils from '../../../downloads/DownloadsPage/DownloadsPage';
 import DownloadOcCliButton from './DownloadOcCliButton';
@@ -34,8 +34,7 @@ describe('<DownloadOcCliButton />', () => {
 
     // Assert
     expect(screen.getByRole('link', { name: downloadButtonText })).toBeInTheDocument();
-    const results = await axe(container);
-    expect(results).toHaveNoViolations();
+    await checkAccessibility(container);
   });
 
   it('hides download link when unable to detect an OS', () => {

@@ -1,7 +1,7 @@
 import React from 'react';
 import * as ReactRedux from 'react-redux';
 
-import { render, screen, axe } from '@testUtils';
+import { render, screen, checkAccessibility } from '@testUtils';
 import CreateClusterErrorModal from './CreateClusterErrorModal';
 
 describe('<CreateClusterErrorModal />', () => {
@@ -20,8 +20,7 @@ describe('<CreateClusterErrorModal />', () => {
 
     // Assert
     expect(screen.getByRole('heading', { name: 'Error creating cluster' })).toBeInTheDocument();
-    const results = await axe(container);
-    expect(results).toHaveNoViolations();
+    await checkAccessibility(container);
   });
 
   it('shows missing prereq error modal when errorDetails contains the corresponding key and is accessible', async () => {
@@ -37,7 +36,6 @@ describe('<CreateClusterErrorModal />', () => {
 
     // Assert
     expect(screen.getByRole('heading', { name: 'Missing prerequisite' })).toBeInTheDocument();
-    const results = await axe(container);
-    expect(results).toHaveNoViolations();
+    await checkAccessibility(container);
   });
 });

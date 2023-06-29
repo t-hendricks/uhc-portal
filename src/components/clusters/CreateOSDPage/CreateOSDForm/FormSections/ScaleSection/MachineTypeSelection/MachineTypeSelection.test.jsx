@@ -1,6 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import { render, screen, waitFor, userEvent } from '@testUtils';
+import { render, screen, waitFor } from '@testUtils';
 import MachineTypeSelection from './MachineTypeSelection';
 
 import {
@@ -416,7 +416,7 @@ describe('MachineTypeSelection', () => {
       });
 
       it('does not display ccs_only machine types, only machines with quota', async () => {
-        render(
+        const { user } = render(
           <MachineTypeSelection
             flavours={fulfilledFlavoursState}
             machineTypes={fulfilledMachineState}
@@ -436,7 +436,7 @@ describe('MachineTypeSelection', () => {
         );
 
         const optionsMenu = screen.getByLabelText('Options menu');
-        await userEvent.click(optionsMenu);
+        await user.click(optionsMenu);
 
         const options = screen
           .getAllByRole('option')
@@ -527,7 +527,7 @@ describe('MachineTypeSelection', () => {
       });
 
       it('does not display ccs_only machine types, only machines with quota', async () => {
-        render(
+        const { user } = render(
           <MachineTypeSelection
             flavours={fulfilledFlavoursState}
             machineTypes={fulfilledMachineState}
@@ -547,7 +547,7 @@ describe('MachineTypeSelection', () => {
         );
 
         const optionsMenu = screen.getByLabelText('Options menu');
-        await userEvent.click(optionsMenu);
+        await user.click(optionsMenu);
 
         const options = screen
           .getAllByRole('option')
@@ -589,7 +589,7 @@ describe('MachineTypeSelection', () => {
       });
 
       it('displays only machine types with quota', async () => {
-        render(
+        const { user } = render(
           <MachineTypeSelection
             flavours={fulfilledFlavoursState}
             machineTypes={fulfilledMachineState}
@@ -609,7 +609,7 @@ describe('MachineTypeSelection', () => {
         );
 
         const optionsMenu = screen.getByLabelText('Options menu');
-        userEvent.click(optionsMenu);
+        user.click(optionsMenu);
 
         await waitFor(() =>
           expect(screen.getByText('m5.xlarge', { exact: false })).toBeInTheDocument(),
@@ -695,7 +695,7 @@ describe('MachineTypeSelection', () => {
       });
 
       it('displays only machine types with quota from known categories', async () => {
-        render(
+        const { user } = render(
           <MachineTypeSelection
             flavours={fulfilledFlavoursState}
             machineTypes={state}
@@ -715,7 +715,7 @@ describe('MachineTypeSelection', () => {
         );
 
         const optionsMenu = screen.getByLabelText('Options menu');
-        await userEvent.click(optionsMenu);
+        await user.click(optionsMenu);
 
         const options = screen
           .getAllByRole('option')

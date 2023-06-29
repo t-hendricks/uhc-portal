@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, screen, userEvent, within, axe } from '@testUtils';
+import { render, screen, within, checkAccessibility } from '@testUtils';
 import * as ReleaseHooks from '~/components/releases/hooks';
 import * as helpers from '~/common/helpers';
 import VersionSelection from './VersionSelection';
@@ -122,8 +122,7 @@ describe('<VersionSelection />', () => {
     const { container } = render(<VersionSelection {...newProps} />);
 
     // Assert
-    const results = await axe(container);
-    expect(results).toHaveNoViolations();
+    await checkAccessibility(container);
   });
 
   it('is accessible when closed', async () => {
@@ -135,8 +134,7 @@ describe('<VersionSelection />', () => {
     const { container } = render(<VersionSelection {...newProps} />);
 
     // Assert
-    const results = await axe(container);
-    expect(results).toHaveNoViolations();
+    await checkAccessibility(container);
   });
 
   describe('when Hypershfit', () => {
@@ -286,13 +284,12 @@ describe('<VersionSelection />', () => {
 
     it('toggling view compatible switch hides/shows compatible versions', async () => {
       // Arrange
-      const user = userEvent.setup();
       const newProps = {
         ...defaultProps,
         isRosa: true,
         rosaMaxOSVersion: '4.11.3',
       };
-      render(<VersionSelection {...newProps} />);
+      const { user } = render(<VersionSelection {...newProps} />);
 
       expect(screen.getByLabelText('View only compatible versions')).toBeInTheDocument();
       expect(screen.queryByRole('option', { name: '4.12.1' })).not.toBeInTheDocument();
@@ -384,12 +381,11 @@ describe('<VersionSelection />', () => {
 
     it('opens/closes the user clicks on main menu button', async () => {
       // Arrange
-      const user = userEvent.setup();
       const newProps = {
         ...defaultProps,
         isOpen: false,
       };
-      render(<VersionSelection {...newProps} />);
+      const { user } = render(<VersionSelection {...newProps} />);
 
       expect(screen.queryByRole('listbox')).not.toBeInTheDocument();
 
@@ -409,7 +405,6 @@ describe('<VersionSelection />', () => {
 
     it('calls getInstallableVersions when there was an error and the menu is opened', async () => {
       // Arrange
-      const user = userEvent.setup();
       const mockGetInstallableVersions = jest.fn();
       const newProps = {
         ...defaultProps,
@@ -423,7 +418,7 @@ describe('<VersionSelection />', () => {
         getInstallableVersions: mockGetInstallableVersions,
       };
 
-      render(<VersionSelection {...newProps} />);
+      const { user } = render(<VersionSelection {...newProps} />);
       expect(mockGetInstallableVersions.mock.calls).toHaveLength(0);
 
       // Act
@@ -438,7 +433,6 @@ describe('<VersionSelection />', () => {
       const selectedClusterVersion = versions.find((version) => version.raw_id === '4.12.1');
       expect(selectedClusterVersion).not.toBeUndefined();
 
-      const user = userEvent.setup();
       const mockInputOnChange = jest.fn();
       const newProps = {
         ...defaultProps,
@@ -446,7 +440,7 @@ describe('<VersionSelection />', () => {
         input: { onChange: mockInputOnChange },
       };
 
-      render(<VersionSelection {...newProps} />);
+      const { user } = render(<VersionSelection {...newProps} />);
 
       // this is due to preselecting an item
       expect(mockInputOnChange.mock.calls).toHaveLength(1);
