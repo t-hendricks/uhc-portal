@@ -1,6 +1,6 @@
 import React from 'react';
 import { MemoryRouter } from 'react-router-dom';
-import { render, screen, axe } from '~/testUtils';
+import { render, screen, checkAccessibility } from '~/testUtils';
 
 import TabsRow from './TabsRow';
 
@@ -47,8 +47,7 @@ describe('<TabsRow />', () => {
     );
 
     // Assert
-    const results = await axe(container);
-    expect(results).toHaveNoViolations();
+    await checkAccessibility(container);
   });
 
   it('show only overview, access control, monitoring, and add-ons tabs', () => {
