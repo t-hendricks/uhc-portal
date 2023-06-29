@@ -18,6 +18,7 @@ import {
 import { Table, TableHeader, TableBody, cellWidth, expandable } from '@patternfly/react-table';
 import Skeleton from '@redhat-cloud-services/frontend-components/Skeleton';
 
+import { isRestrictedEnv } from '~/restrictedEnv';
 import {
   UpdateAllMachinePools,
   UpdatePoolButton,
@@ -400,7 +401,7 @@ class MachinePools extends React.Component {
                 {machinePoolsList.error && (
                   <ErrorBox message="Error retrieving machine pools" response={machinePoolsList} />
                 )}
-                {addMachinePoolBtn}
+                {!isRestrictedEnv && addMachinePoolBtn}
                 <Divider />
                 {deleteMachinePoolResponse.error && !hideDeleteMachinePoolError && (
                   <ErrorBox
@@ -422,20 +423,23 @@ class MachinePools extends React.Component {
                     cells={columns}
                     rows={rows}
                     onCollapse={this.onCollapse}
-                    actionResolver={(rowData) =>
-                      actionResolver(
-                        rowData,
-                        onClickDeleteAction,
-                        onClickScaleAction,
-                        onClickEditTaintsAction,
-                        onClickEditLabelsAction,
-                        isHypershift,
-                        machinePoolsList.data.length,
-                        canMachinePoolBeUpdated(rowData.machinePool)
-                          ? onClickUpdateAction
-                          : undefined,
-                        machinePoolsActions.delete,
-                      )
+                    actionResolver={
+                      !isRestrictedEnv
+                        ? (rowData) =>
+                            actionResolver(
+                              rowData,
+                              onClickDeleteAction,
+                              onClickScaleAction,
+                              onClickEditTaintsAction,
+                              onClickEditLabelsAction,
+                              isHypershift,
+                              machinePoolsList.data.length,
+                              canMachinePoolBeUpdated(rowData.machinePool)
+                                ? onClickUpdateAction
+                                : undefined,
+                              machinePoolsActions.delete,
+                            )
+                        : undefined
                     }
                     areActionsDisabled={() => tableActionsDisabled}
                   >

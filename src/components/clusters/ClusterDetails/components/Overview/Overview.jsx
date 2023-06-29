@@ -7,6 +7,7 @@ import { Alert, Card, CardBody, CardTitle, Grid, GridItem, Title } from '@patter
 import * as OCM from '@openshift-assisted/ui-lib/ocm';
 import { subscriptionStatuses } from '~/common/subscriptionTypes';
 import { ASSISTED_INSTALLER_FEATURE } from '~/redux/constants/featureConstants';
+import { isRestrictedEnv } from '~/restrictedEnv';
 import isAssistedInstallSubscription, {
   isAvailableAssistedInstallCluster,
   isUninstalledAICluster,
@@ -94,13 +95,18 @@ class Overview extends React.Component {
       cluster.state === clusterStates.UNINSTALLING;
 
     const showInsightsAdvisor =
-      insightsData?.status === 200 && insightsData?.data && !isDeprovisioned && !isArchived;
+      !isRestrictedEnv &&
+      insightsData?.status === 200 &&
+      insightsData?.data &&
+      !isDeprovisioned &&
+      !isArchived;
     const showResourceUsage =
       !isHibernating(cluster.state) &&
       !isAssistedInstallSubscription(cluster.subscription) &&
       !shouldShowLogs(cluster) &&
       !isDeprovisioned &&
-      !isArchived;
+      !isArchived &&
+      !isRestrictedEnv;
     const showCostBreakdown =
       !cluster.managed &&
       userAccess.fulfilled &&

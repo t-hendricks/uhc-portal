@@ -19,6 +19,7 @@ import {
 } from '@patternfly/react-core';
 
 import { LoadBalancerFlavor } from '~/types/clusters_mgmt.v1';
+import { isRestrictedEnv } from '~/restrictedEnv';
 import EditClusterIngressDialog from '../EditClusterIngressDialog';
 import ButtonWithTooltip from '../../../../../../common/ButtonWithTooltip';
 
@@ -97,7 +98,7 @@ class ClusterIngressCard extends React.Component {
               </ClipboardCopy>
               <TextContent>
                 <Text component={TextVariants.small}>
-                  {`${isApiPrivate ? 'Private' : 'Public'} API`}
+                  {`${isApiPrivate || isRestrictedEnv ? 'Private' : 'Public'} API`}
                 </Text>
               </TextContent>
             </FormGroup>
@@ -109,7 +110,7 @@ class ClusterIngressCard extends React.Component {
               />
               <TextContent>
                 <Text component={TextVariants.small}>
-                  {`${isDefaultRouterPrivate ? 'Private' : 'Public'} router`}
+                  {`${isDefaultRouterPrivate || isRestrictedEnv ? 'Private' : 'Public'} router`}
                 </Text>
               </TextContent>
             </FormGroup>
@@ -133,7 +134,9 @@ class ClusterIngressCard extends React.Component {
                   />
                   <TextContent>
                     <Text component={TextVariants.small}>
-                      {`${isAdditionalRouterPrivate ? 'Private' : 'Public'} router`}
+                      {`${
+                        isAdditionalRouterPrivate || isRestrictedEnv ? 'Private' : 'Public'
+                      } router`}
                     </Text>
                   </TextContent>
                 </FormGroup>
@@ -153,18 +156,20 @@ class ClusterIngressCard extends React.Component {
             <EditClusterIngressDialog provider={provider} refreshCluster={refreshCluster} />
           </Form>
         </CardBody>
-        <CardFooter>
-          <ActionList>
-            <ButtonWithTooltip
-              variant="secondary"
-              onClick={this.handleEditSettings}
-              disableReason={disableEditReason}
-              isAriaDisabled={!!disableEditReason}
-            >
-              Edit cluster ingress
-            </ButtonWithTooltip>
-          </ActionList>
-        </CardFooter>
+        {!isRestrictedEnv && (
+          <CardFooter>
+            <ActionList>
+              <ButtonWithTooltip
+                variant="secondary"
+                onClick={this.handleEditSettings}
+                disableReason={disableEditReason}
+                isAriaDisabled={!!disableEditReason}
+              >
+                Edit cluster ingress
+              </ButtonWithTooltip>
+            </ActionList>
+          </CardFooter>
+        )}
       </Card>
     );
   }

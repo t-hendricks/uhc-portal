@@ -35,6 +35,7 @@ import {
   TextContent,
   Title,
 } from '@patternfly/react-core';
+import { isRestrictedEnv } from '~/restrictedEnv';
 import links, { tools, channels } from '../../common/installLinks.mjs';
 import Breadcrumbs from '../common/Breadcrumbs';
 import ExternalLink from '../common/ExternalLink';
@@ -116,7 +117,9 @@ const Tokens = (props: Props) => {
           <StackItem>
             <Card className="ocm-c-api-token__card">
               <CardTitle>
-                <Title headingLevel="h2">Connect with offline tokens</Title>
+                <Title headingLevel="h2">
+                  {`Connect with ${isRestrictedEnv ? 'refresh' : 'offline'} tokens`}
+                </Title>
               </CardTitle>
               <CardBody className="ocm-c-api-token__card--body">
                 <TextContent>{leadingInfo}</TextContent>
@@ -151,7 +154,11 @@ const Tokens = (props: Props) => {
                         </ListItem>
                       </List>
 
-                      <Title headingLevel="h3">Need help connecting with your offline token?</Title>
+                      <Title headingLevel="h3">
+                        {`Need help connecting with your ${
+                          isRestrictedEnv ? 'refresh' : 'offline'
+                        } token?`}
+                      </Title>
                       <Text component="p">
                         Run <code>{commandName} login --help</code> for in-terminal guidance, or{' '}
                         {docsLink} for more information about setting up the{' '}

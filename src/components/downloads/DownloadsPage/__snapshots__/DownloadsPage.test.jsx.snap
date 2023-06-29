@@ -5411,7 +5411,8 @@ exports[`<DownloadsPage> renders 1`] = `
             >
               create cluster
             </Link>
-             page to install an OpenShift cluster.
+             
+            page to install an OpenShift cluster.
           </Text>
         }
         selectedCategory="ALL"
