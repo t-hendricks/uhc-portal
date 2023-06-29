@@ -1,8 +1,8 @@
 import React from 'react';
+import { screen, render, within, checkAccessibility, insightsMock } from '@testUtils';
 import DetailsRight from './DetailsRight';
 import fixtures from '../../../__test__/ClusterDetails.fixtures';
 import { subscriptionStatuses } from '~/common/subscriptionTypes';
-import { screen, render, within, axe } from '~/testUtils';
 
 const defaultProps = {
   cluster: fixtures.clusterDetails.cluster,
@@ -60,15 +60,7 @@ const checkForValueAbsence = (label, value, testId) => {
   }
 };
 
-global.insights = {
-  chrome: {
-    on: () => () => {},
-    auth: {
-      getUser: () => Promise.resolve({ data: {} }),
-      getToken: () => Promise.resolve(),
-    },
-  },
-};
+insightsMock();
 
 describe('<DetailsRight />', () => {
   it('is accessible on initial render', async () => {
@@ -77,8 +69,7 @@ describe('<DetailsRight />', () => {
     const { container } = render(<DetailsRight {...newProps} />);
 
     // Assert
-    const results = await axe(container);
-    expect(results).toHaveNoViolations();
+    await checkAccessibility(container);
   });
 
   describe('status', () => {

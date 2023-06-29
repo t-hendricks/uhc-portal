@@ -1,7 +1,7 @@
 import React from 'react';
 import * as reactRedux from 'react-redux';
 import * as helpers from '~/common/helpers';
-import { screen, render, axe, userEvent, within } from '~/testUtils';
+import { screen, render, checkAccessibility, userEvent, within } from '~/testUtils';
 import wizardConnector from '~/components/clusters/CreateOSDPage/CreateOSDWizard/WizardConnector';
 import AWSBillingAccount from './AWSBillingAccount';
 
@@ -61,8 +61,7 @@ describe('<AWSBillingAccount />', () => {
     );
 
     // Assert
-    const results = await axe(container);
-    expect(results).toHaveNoViolations();
+    await checkAccessibility(container);
   });
 
   it('calls dispatch to get billing account IDs when shouldRefreshQuota returns true called on load', () => {
@@ -189,8 +188,7 @@ describe('<AWSBillingAccount />', () => {
       within(screen.getByRole('alert')).getByText('I am an org error', { exact: false }),
     ).toBeInTheDocument();
 
-    const results = await axe(container);
-    expect(results).toHaveNoViolations();
+    await checkAccessibility(container);
   });
 
   it('displays an error if getting billing account returns an error and is accessible', async () => {
@@ -215,8 +213,7 @@ describe('<AWSBillingAccount />', () => {
       within(screen.getByRole('alert')).getByText('I am a billing account error', { exact: false }),
     ).toBeInTheDocument();
 
-    const results = await axe(container);
-    expect(results).toHaveNoViolations();
+    await checkAccessibility(container);
   });
 
   it('displays info alert if the billing and infrastructure account are different and is accessible', async () => {
@@ -239,8 +236,7 @@ describe('<AWSBillingAccount />', () => {
       ),
     ).toBeInTheDocument();
 
-    const results = await axe(container);
-    expect(results).toHaveNoViolations();
+    await checkAccessibility(container);
   });
 
   it('hides info alert if billing and infrastructure are the same', () => {

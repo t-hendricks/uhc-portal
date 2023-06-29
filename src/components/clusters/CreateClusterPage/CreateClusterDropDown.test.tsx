@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, axe, screen, fireEvent } from '@testUtils';
+import { render, checkAccessibility, screen, fireEvent } from '@testUtils';
 import { MemoryRouter, Router } from 'react-router-dom';
 import { createMemoryHistory } from 'history';
 import CreateClusterDropDown from './CreateClusterDropDown';
@@ -18,8 +18,7 @@ describe('<CreateClusterDropDown />', () => {
     );
 
     // Assert
-    const results = await axe(container);
-    expect(results).toHaveNoViolations();
+    await checkAccessibility(container);
   });
 
   it('is accessible expanded', async () => {
@@ -35,8 +34,7 @@ describe('<CreateClusterDropDown />', () => {
     expect(screen.getByText(/With CLI/)).toBeInTheDocument();
 
     // Assert
-    const results = await axe(container);
-    expect(results).toHaveNoViolations();
+    await checkAccessibility(container);
   });
 
   it('CLI option goes to getting started page', () => {
