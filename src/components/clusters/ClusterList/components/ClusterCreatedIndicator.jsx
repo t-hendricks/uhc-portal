@@ -7,6 +7,7 @@ import { ExclamationTriangleIcon, ExclamationCircleIcon } from '@patternfly/reac
 import { DateFormat } from '@redhat-cloud-services/frontend-components/DateFormat';
 // eslint-disable-next-line camelcase
 import { global_warning_color_100, global_danger_color_100 } from '@patternfly/react-tokens';
+import ExternalLink from '../../../common/ExternalLink';
 import {
   subscriptionSupportLevels,
   normalizedProducts,
@@ -90,13 +91,20 @@ function ClusterCreatedIndicator({ cluster }) {
         <strong>OCP Cluster</strong>
       </h1>
       <p>
-        Your OCP cluster will expire in&nbsp;
+        Your OCP cluster subscription will expire in&nbsp;
         {OCPTrialExpiresStr}
         &nbsp;on&nbsp;
         <strong>
           <DateFormat date={subscription.eval_expiration_date} type="onlyDate" />
         </strong>
-        &nbsp;once expired, your cluster will remain unsupported.
+        .&nbsp;After it expires, your cluster will not be&nbsp;
+        <ExternalLink
+          href="https://access.redhat.com/support/policy/updates/openshift/policies"
+          noIcon
+        >
+          supported
+        </ExternalLink>
+        .
       </p>
     </>
   );
