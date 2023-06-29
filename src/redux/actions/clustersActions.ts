@@ -535,7 +535,10 @@ const fetchSingleClusterAndPermissions = async (
       }
     }
     try {
-      const { data: featureSupportLevels } = await assistedService.getAIFeatureSupportLevels();
+      const featureSupportLevels = await assistedService.getAIFeatureSupportLevels(
+        cluster.openshift_version || '',
+        cluster.cpu_architecture,
+      );
       cluster.aiSupportLevels = featureSupportLevels;
     } catch (e) {
       Sentry.captureException(

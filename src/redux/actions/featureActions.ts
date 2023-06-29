@@ -1,7 +1,6 @@
 import { action, ActionType } from 'typesafe-actions';
 import {
   SET_FEATURE,
-  ASSISTED_INSTALLER_MULTIARCH_SUPPORTED,
   ASSISTED_INSTALLER_PLATFORM_OCI,
   ASSISTED_INSTALLER_FEATURE,
   ASSISTED_INSTALLER_SNO_FEATURE,
@@ -96,13 +95,6 @@ export const features = [
         }),
         authorizationsService.selfFeatureReview('assisted-installer'),
       ]).then(([resource, unleash]) => resource.data.allowed && unleash.data.enabled),
-  },
-  {
-    name: ASSISTED_INSTALLER_MULTIARCH_SUPPORTED,
-    action: async () =>
-      mapCapabilityToAssistedInstallerFeature(
-        'capability.organization.bare_metal_installer_multiarch',
-      ),
   },
   {
     name: ASSISTED_INSTALLER_PLATFORM_OCI,
