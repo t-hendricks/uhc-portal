@@ -82,9 +82,9 @@ function NetworkScreen(props) {
     const { cluster_privacy_public_subnet: publicSubnet, cluster_privacy: clusterPrivacy } =
       formValues;
     if (value === 'external') {
+      change('use_privatelink', false);
+
       if (!isHypershiftSelected) {
-        // hypershift always uses private link and vpc
-        change('use_privatelink', false);
         shouldUncheckInstallToVPC();
       }
 

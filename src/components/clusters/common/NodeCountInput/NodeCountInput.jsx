@@ -7,15 +7,29 @@ import PopoverHint from '../../../common/PopoverHint';
 import { noQuotaTooltip } from '../../../../common/helpers';
 import { normalizedProducts, billingModels } from '../../../../common/subscriptionTypes';
 import { availableNodesFromQuota } from '../quotaSelectors';
-import { getNodeIncrement } from '~/components/clusters/ClusterDetails/components/MachinePools/machinePoolsHelper';
+import {
+  getNodeIncrement,
+  getNodeIncrementHypershift,
+} from '~/components/clusters/ClusterDetails/components/MachinePools/machinePoolsHelper';
 
 export const MAX_NODES = 180;
 
 class NodeCountInput extends React.Component {
-  componentDidUpdate() {
-    const { input, isEditingCluster, minNodes } = this.props;
+  componentDidUpdate(prevProps) {
+    const { input, isEditingCluster, minNodes, isHypershiftWizard, poolNumber } = this.props;
+
     const available = this.getAvailableQuota();
-    if (available === 0 && input.value !== minNodes && !isEditingCluster) {
+    if (isHypershiftWizard && poolNumber !== prevProps.poolNumber) {
+      // Keep value the user sees (nodes per pool) unless the number of total nodes
+      // is less than the minimum total nodes
+      const prevSelected = prevProps.input?.value / prevProps.poolNumber || minNodes;
+      const newValue = prevSelected * poolNumber;
+      if (newValue > minNodes && newValue <= MAX_NODES) {
+        input.onChange(newValue);
+      } else {
+        input.onChange(minNodes);
+      }
+    } else if (available === 0 && input.value !== minNodes && !isEditingCluster) {
       // set input value to minimum if we don't have quota for it (and will be disabled)
       // this can happen if the user set a value, then switched to a machine type
       // where they have less quota than that value.
@@ -74,7 +88,11 @@ class NodeCountInput extends React.Component {
       isByoc,
       isMachinePool,
       minNodes,
-      increment = getNodeIncrement(isMultiAz),
+      increment = isHypershiftWizard
+        ? getNodeIncrementHypershift(poolNumber)
+        : getNodeIncrement(isMultiAz),
+      isHypershiftWizard,
+      poolNumber = isMultiAz ? 3 : 1,
     } = this.props;
 
     const included = this.getIncludedNodes();
@@ -96,6 +114,16 @@ class NodeCountInput extends React.Component {
     }
     const disabled = isDisabled || notEnoughQuota;
 
+    const optionLabel = (value) => {
+      let labelNumber = value;
+      if (isHypershiftWizard) {
+        labelNumber = value / increment;
+      } else if (isMultiAz) {
+        labelNumber = value / 3;
+      }
+      return labelNumber.toString();
+    };
+
     // Set up options for nodes
     const option = (value) => (
       <FormSelectOption
@@ -104,7 +132,7 @@ class NodeCountInput extends React.Component {
         // we want the value to be the actual value sent to the server,
         // but for multiAz the user selects the amount of nodes per zone, instead of total
         // so it needs to be divided by 3 for display
-        label={isMultiAz ? (value / 3).toString() : value.toString()}
+        label={optionLabel(value)}
       />
     );
 
@@ -118,6 +146,20 @@ class NodeCountInput extends React.Component {
         {options.map((value) => option(value))}
       </FormSelect>
     );
+
+    const showTotalNodes = () => {
+      if (isHypershiftWizard) {
+        return (
+          <span>
+            x {poolNumber} machine pools = {input.value} compute nodes
+          </span>
+        );
+      }
+      if (isMultiAz) {
+        return <span>× 3 zones = {input.value} compute nodes</span>;
+      }
+      return null;
+    };
 
     return (
       <FormGroup
@@ -133,7 +175,7 @@ class NodeCountInput extends React.Component {
         ) : (
           formSelect
         )}
-        {isMultiAz && <span>× 3 zones = {input.value} compute nodes</span>}
+        {showTotalNodes()}
       </FormGroup>
     );
   }
@@ -162,6 +204,8 @@ NodeCountInput.propTypes = {
   product: PropTypes.oneOf(Object.keys(normalizedProducts)).isRequired,
   billingModel: PropTypes.oneOf(Object.values(billingModels)).isRequired,
   increment: PropTypes.number,
+  isHypershiftWizard: PropTypes.bool,
+  poolNumber: PropTypes.number,
 };
 
 export default NodeCountInput;

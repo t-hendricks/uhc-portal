@@ -7,6 +7,7 @@ import config from '~/config';
 import { DEFAULT_FLAVOUR_ID } from '~/redux/actions/flavourActions';
 import { createCluster } from '~/redux/actions/clustersActions';
 import { parseReduxFormKeyValueList } from '~/common/helpers';
+import { billingModels } from '~/common/subscriptionTypes';
 
 const createClusterAzs = ({ formData, isInstallExistingVPC }) => {
   let AZs = [];
@@ -83,17 +84,19 @@ export const createClusterRequest = ({ isWizard = true, cloudProviderID, product
       unit: 'minutes',
     },
     etcd_encryption: formData.etcd_encryption,
-    billing_model: 'standard',
+    billing_model: billingModels.STANDARD,
     disable_user_workload_monitoring:
       isHypershiftSelected || !formData.enable_user_workload_monitoring,
     ...(!isHypershiftSelected && { fips: !!formData.fips }),
   };
 
-  if (formData.billing_model) {
+  if (isHypershiftSelected) {
+    clusterRequest.billing_model = billingModels.MARKETPLACE_AWS;
+  } else if (formData.billing_model) {
     const [billing] = formData.billing_model.split('-');
     clusterRequest.billing_model = billing;
   } else {
-    clusterRequest.billing_model = 'standard';
+    clusterRequest.billing_model = billingModels.STANDARD;
   }
 
   if (formData.cluster_version) {
@@ -104,10 +107,17 @@ export const createClusterRequest = ({ isWizard = true, cloudProviderID, product
     const minNodes = parseInt(formData.min_replicas, 10);
     const maxNodes = parseInt(formData.max_replicas, 10);
 
-    clusterRequest.nodes.autoscale_compute = {
-      min_replicas: isMultiAz ? minNodes * 3 : minNodes,
-      max_replicas: isMultiAz ? maxNodes * 3 : maxNodes,
-    };
+    if (isHypershiftSelected) {
+      clusterRequest.nodes.autoscale_compute = {
+        min_replicas: minNodes * formData.machine_pools_subnets.length,
+        max_replicas: maxNodes * formData.machine_pools_subnets.length,
+      };
+    } else {
+      clusterRequest.nodes.autoscale_compute = {
+        min_replicas: isMultiAz ? minNodes * 3 : minNodes,
+        max_replicas: isMultiAz ? maxNodes * 3 : maxNodes,
+      };
+    }
   } else {
     clusterRequest.nodes.compute = parseInt(formData.nodes_compute, 10);
   }
@@ -158,9 +168,7 @@ export const createClusterRequest = ({ isWizard = true, cloudProviderID, product
             support_role_arn: formData.support_role_arn,
             instance_iam_roles: {
               worker_role_arn: formData.worker_role_arn,
-              ...(formData.hypershift !== 'true'
-                ? { master_role_arn: formData.control_plane_role_arn }
-                : {}),
+              ...(isHypershiftSelected ? {} : { master_role_arn: formData.control_plane_role_arn }),
             },
             operator_role_prefix: formData.custom_operator_roles_prefix,
           },
@@ -292,7 +300,7 @@ export const createClusterRequest = ({ isWizard = true, cloudProviderID, product
     clusterRequest.hypershift = { enabled: isHypershiftSelected };
   }
 
-  if (formData.hypershift === 'true') {
+  if (isHypershiftSelected) {
     clusterRequest.multi_az = true;
   }
 

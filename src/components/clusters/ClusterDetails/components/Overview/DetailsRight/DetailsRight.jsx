@@ -16,7 +16,6 @@ import { isAISubscriptionWithoutMetrics } from '../../../../../../common/isAssis
 import ClusterNetwork from '../ClusterNetwork';
 import { constants } from '../../../../CreateOSDPage/CreateOSDForm/CreateOSDFormConstants';
 import { humanizeValueWithUnit, humanizeValueWithUnitGiB } from '../../../../../../common/units';
-import { extractAWSID } from '../../../../../../common/rosa';
 import { subscriptionStatuses } from '../../../../../../common/subscriptionTypes';
 import PopoverHint from '../../../../../common/PopoverHint';
 import ExternalLink from '../../../../../common/ExternalLink';
@@ -38,8 +37,7 @@ function DetailsRight({
 }) {
   const isHypershift = isHypershiftCluster(cluster);
   const isROSACluster = isROSA(cluster);
-  const rosaCreatorArn = get(cluster, 'properties.rosa_creator_arn', '');
-  const awsInfraAccount = rosaCreatorArn ? extractAWSID(rosaCreatorArn) : null;
+  const awsInfraAccount = cluster.subscription?.cloud_account_id || null;
   const hypershiftEtcdEncryptionKey = isHypershift && cluster.aws?.etcd_encryption?.kms_key_arn;
 
   const memoryTotalWithUnit = humanizeValueWithUnit(
