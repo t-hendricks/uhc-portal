@@ -46,9 +46,6 @@ exports[`<MachinePools /> OpenShift version for machine pools is shown if hypers
               ],
             },
             Object {
-              "title": "Subnets",
-            },
-            Object {
               "title": "Node count",
             },
             Object {
@@ -92,18 +89,12 @@ exports[`<MachinePools /> OpenShift version for machine pools is shown if hypers
                 },
                 "us-east-1b",
                 Object {
-                  "title": <React.Fragment>
-                    <div>
-                      subnet-049f90721559000de
-                    </div>
-                  </React.Fragment>,
-                },
-                Object {
                   "title": "2",
                 },
                 "Disabled",
                 "4.12.5-candidate",
               ],
+              "isOpen": false,
               "key": "workers",
               "machinePool": Object {
                 "auto_repair": true,
@@ -129,6 +120,48 @@ exports[`<MachinePools /> OpenShift version for machine pools is shown if hypers
                   "kind": "VersionLink",
                 },
               },
+            },
+            Object {
+              "cells": Array [
+                Object {
+                  "title": <ExpandableRow
+                    cluster={
+                      Object {
+                        "canEdit": true,
+                      }
+                    }
+                    machinePool={
+                      Object {
+                        "auto_repair": true,
+                        "availability_zone": "us-east-1b",
+                        "aws_node_pool": Object {
+                          "instance_profile": "staging-21gitfhopbgmmfhlu65v93n4g4n3djde-jknhystj27-worker",
+                          "instance_type": "m5.xlarge",
+                          "tags": Object {
+                            "api.openshift.com/environment": "staging",
+                          },
+                        },
+                        "href": "/api/clusters_mgmt/v1/clusters/21gitfhopbgmmfhlu65v93n4g4n3djde/node_pools/workers",
+                        "id": "workers",
+                        "kind": "NodePool",
+                        "replicas": 2,
+                        "status": Object {
+                          "current_replicas": 2,
+                        },
+                        "subnet": "subnet-049f90721559000de",
+                        "version": Object {
+                          "href": "/api/clusters_mgmt/v1/versions/openshift-v4.12.5-candidate",
+                          "id": "openshift-v4.12.5-candidate",
+                          "kind": "VersionLink",
+                        },
+                      }
+                    }
+                  />,
+                },
+              ],
+              "fullWidth": true,
+              "key": "workers-child",
+              "parent": 0,
             },
           ]
         }

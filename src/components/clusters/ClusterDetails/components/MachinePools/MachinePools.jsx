@@ -23,7 +23,7 @@ import UpdateAllMachinePools from './UpdateAllMachinePools';
 import AddMachinePoolModal from './components/AddMachinePoolModal';
 import EditTaintsModal from './components/EditTaintsModal';
 import EditLabelsModal from './components/EditLabelsModal';
-import { actionResolver } from './machinePoolsHelper';
+import { actionResolver, hasSubnets } from './machinePoolsHelper';
 import ExpandableRow from './components/ExpandableRow';
 
 import ButtonWithTooltip from '../../../../common/ButtonWithTooltip';
@@ -157,7 +157,7 @@ class MachinePools extends React.Component {
     const columns = [
       { title: 'Machine pool', cellFormatters: [expandable] },
       { title: 'Instance type' },
-      { title: 'Availability zones', transforms: [cellWidth(20)] },
+      { title: 'Availability zones', transforms: [cellWidth(15)] },
     ];
     columns.push({ title: 'Node count' });
     columns.push({ title: 'Autoscaling', transforms: [cellWidth(15)] });
@@ -238,7 +238,8 @@ class MachinePools extends React.Component {
       !isEmpty(machinePool.labels) ||
       machinePool.taints?.length > 0 ||
       machinePool.autoscaling ||
-      machinePool.aws;
+      machinePool.aws ||
+      hasSubnets(machinePool);
 
     const rows = [];
 
