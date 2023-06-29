@@ -29,6 +29,7 @@ import isAssistedInstallSubscription, {
 } from '../../../../../common/isAssistedInstallerCluster';
 import withFeatureGate from '../../../../features/with-feature-gate';
 import { ASSISTED_INSTALLER_FEATURE } from '~/redux/constants/featureConstants';
+import { isRestrictedEnv } from '~/restrictedEnv';
 
 import './Overview.scss';
 
@@ -94,13 +95,18 @@ class Overview extends React.Component {
       cluster.state === clusterStates.UNINSTALLING;
 
     const showInsightsAdvisor =
-      insightsData?.status === 200 && insightsData?.data && !isDeprovisioned && !isArchived;
+      !isRestrictedEnv &&
+      insightsData?.status === 200 &&
+      insightsData?.data &&
+      !isDeprovisioned &&
+      !isArchived;
     const showResourceUsage =
       !isHibernating(cluster.state) &&
       !isAssistedInstallSubscription(cluster.subscription) &&
       !shouldShowLogs(cluster) &&
       !isDeprovisioned &&
-      !isArchived;
+      !isArchived &&
+      !isRestrictedEnv;
     const showCostBreakdown =
       !cluster.managed &&
       userAccess.fulfilled &&

@@ -7417,7 +7417,7 @@ exports[`<ClusterDetails /> Cluster Details - OSD should render 1`] = `
                                                                 class="pf-c-alert__description"
                                                               >
                                                                 <span>
-                                                                  ReferenceError: insights is not defined
+                                                                  TypeError: Cannot read properties of undefined (reading 'getUser')
                                                                 </span>
                                                                 <br />
                                                                 <span>
@@ -7516,7 +7516,7 @@ exports[`<ClusterDetails /> Cluster Details - OSD should render 1`] = `
                                                           class="pf-c-alert__description"
                                                         >
                                                           <span>
-                                                            ReferenceError: insights is not defined
+                                                            TypeError: Cannot read properties of undefined (reading 'getUser')
                                                           </span>
                                                           <br />
                                                           <span>
@@ -7623,7 +7623,7 @@ exports[`<ClusterDetails /> Cluster Details - OSD should render 1`] = `
                                                           class="pf-c-alert__description"
                                                         >
                                                           <span>
-                                                            ReferenceError: insights is not defined
+                                                            TypeError: Cannot read properties of undefined (reading 'getUser')
                                                           </span>
                                                           <br />
                                                           <span>
@@ -9074,7 +9074,7 @@ exports[`<ClusterDetails /> Cluster Details - OSD should render 1`] = `
                                                                   class="pf-c-alert__description"
                                                                 >
                                                                   <span>
-                                                                    ReferenceError: insights is not defined
+                                                                    TypeError: Cannot read properties of undefined (reading 'getUser')
                                                                   </span>
                                                                   <br />
                                                                   <span>
@@ -9173,7 +9173,7 @@ exports[`<ClusterDetails /> Cluster Details - OSD should render 1`] = `
                                                             class="pf-c-alert__description"
                                                           >
                                                             <span>
-                                                              ReferenceError: insights is not defined
+                                                              TypeError: Cannot read properties of undefined (reading 'getUser')
                                                             </span>
                                                             <br />
                                                             <span>
@@ -9321,7 +9321,7 @@ exports[`<ClusterDetails /> Cluster Details - OSD should render 1`] = `
                                                             class="pf-c-alert__description"
                                                           >
                                                             <span>
-                                                              ReferenceError: insights is not defined
+                                                              TypeError: Cannot read properties of undefined (reading 'getUser')
                                                             </span>
                                                             <br />
                                                             <span>
@@ -17742,7 +17742,7 @@ exports[`<ClusterDetails /> Cluster Details - OSD should render 1`] = `
                                                               class="pf-c-alert__description"
                                                             >
                                                               <span>
-                                                                ReferenceError: insights is not defined
+                                                                TypeError: Cannot read properties of undefined (reading 'getUser')
                                                               </span>
                                                               <br />
                                                               <span>
@@ -23069,7 +23069,7 @@ exports[`<ClusterDetails /> Cluster Details - OSD should render 1`] = `
                                                         class="pf-c-alert__description"
                                                       >
                                                         <span>
-                                                          ReferenceError: insights is not defined
+                                                          TypeError: Cannot read properties of undefined (reading 'getUser')
                                                         </span>
                                                         <br />
                                                         <span>
@@ -26106,7 +26106,7 @@ exports[`<ClusterDetails /> Cluster Details - OSD should render 1`] = `
                                                         class="pf-c-alert__description"
                                                       >
                                                         <span>
-                                                          ReferenceError: insights is not defined
+                                                          TypeError: Cannot read properties of undefined (reading 'getUser')
                                                         </span>
                                                         <br />
                                                         <span>

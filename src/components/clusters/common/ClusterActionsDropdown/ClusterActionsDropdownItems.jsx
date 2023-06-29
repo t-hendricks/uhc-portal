@@ -7,6 +7,7 @@ import getClusterName from '../../../../common/getClusterName';
 import modals from '../../../common/Modal/modals';
 import { isAssistedInstallCluster } from '../../../../common/isAssistedInstallerCluster';
 import { isHypershiftCluster } from '../../ClusterDetails/clusterDetailsHelper';
+import { isRestrictedEnv } from '~/restrictedEnv';
 
 /**
  * Helper using reason message why it's disabled as source-of-truth
@@ -335,6 +336,10 @@ function actionResolver(
     isAllowedProducts &&
     get(cluster, 'subscription.status') !== subscriptionStatuses.ARCHIVED;
   const showUpgradeTrialCluster = isClusterReady && cluster.canEdit && isProductOSDTrial;
+
+  if (isRestrictedEnv) {
+    return [showConsoleButton && adminConsoleItemProps].filter(Boolean);
+  }
 
   return [
     showConsoleButton && adminConsoleItemProps,

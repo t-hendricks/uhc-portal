@@ -37,6 +37,7 @@ import { versionFormatter } from '../../../../../common/versionFormatter';
 import { isHibernating } from '../../../common/clusterStates';
 import './MachinePools.scss';
 import { isMultiAZ } from '../../clusterDetailsHelper';
+import { isRestrictedEnv } from '~/restrictedEnv';
 
 const getOpenShiftVersion = (machinePool) => {
   const extractedVersion = get(machinePool, 'version.id', '');
@@ -475,7 +476,7 @@ class MachinePools extends React.Component {
                 {machinePoolsList.error && (
                   <ErrorBox message="Error retrieving machine pools" response={machinePoolsList} />
                 )}
-                {addMachinePoolBtn}
+                {!isRestrictedEnv && addMachinePoolBtn}
                 <Divider />
                 {deleteMachinePoolResponse.error && !hideDeleteMachinePoolError && (
                   <ErrorBox
@@ -496,16 +497,19 @@ class MachinePools extends React.Component {
                   cells={columns}
                   rows={rows}
                   onCollapse={this.onCollapse}
-                  actionResolver={(rowData) =>
-                    actionResolver(
-                      rowData,
-                      onClickDeleteAction,
-                      onClickScaleAction,
-                      onClickEditTaintsAction,
-                      onClickEditLabelsAction,
-                      isHypershift,
-                      machinePoolsList.data.length,
-                    )
+                  actionResolver={
+                    !isRestrictedEnv
+                      ? (rowData) =>
+                          actionResolver(
+                            rowData,
+                            onClickDeleteAction,
+                            onClickScaleAction,
+                            onClickEditTaintsAction,
+                            onClickEditLabelsAction,
+                            isHypershift,
+                            machinePoolsList.data.length,
+                          )
+                      : undefined
                   }
                   areActionsDisabled={() => tableActionsDisabled}
                 >

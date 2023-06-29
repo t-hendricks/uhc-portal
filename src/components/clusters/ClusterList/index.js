@@ -5,7 +5,7 @@ import { clustersActions } from '../../../redux/actions/clustersActions';
 import { cloudProviderActions } from '../../../redux/actions/cloudProviderActions';
 import { machineTypesActions } from '../../../redux/actions/machineTypesActions';
 import { viewConstants } from '../../../redux/constants';
-import { viewActions } from '../../../redux/actions/viewOptionsActions';
+import { onListFlagsSet, viewActions } from '../../../redux/actions/viewOptionsActions';
 import { userActions } from '../../../redux/actions/userActions';
 import { modalActions } from '../../common/Modal/ModalActions';
 import canSubscribeOCPListSelector from '../common/EditSubscriptionSettingsDialog/CanSubscribeOCPListSelector';
@@ -28,6 +28,7 @@ const mapDispatchToProps = {
   closeModal: modalActions.closeModal,
   toggleSubscriptionReleased,
   clearGlobalError,
+  onListFlagsSet,
 };
 
 const mapStateToProps = (state) => ({

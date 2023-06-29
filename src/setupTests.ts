@@ -44,4 +44,11 @@ useChromeSpy.mockImplementation(() => ({
   },
 }));
 
+global.insights = {
+  chrome: {
+    ...window.insights?.chrome,
+    getEnvironment: window.insights?.chrome?.getEnvironment || (() => ''),
+  },
+};
+
 configure({ adapter: new Adapter() });
