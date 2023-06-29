@@ -30,6 +30,7 @@ import TermsAlert from './TermsAlert';
 import ButtonWithTooltip from '../../../common/ButtonWithTooltip';
 import { goZeroTime2Null } from '../../../../common/helpers';
 import { PreviewLabel } from '~/components/clusters/common/PreviewLabel';
+import { isRestrictedEnv } from '~/restrictedEnv';
 
 function ClusterDetailsTop(props) {
   const {
@@ -140,7 +141,7 @@ function ClusterDetailsTop(props) {
     );
   }
 
-  const actions = !isUninstalledAICluster(cluster) && (
+  const actions = !isRestrictedEnv && !isUninstalledAICluster(cluster) && (
     <ClusterActionsDropdown
       disabled={!cluster.canEdit && !cluster.canDelete}
       cluster={cluster}

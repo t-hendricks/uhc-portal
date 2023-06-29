@@ -52,6 +52,7 @@ import { hasCapability, subscriptionCapabilities } from '../../../common/subscri
 import withFeatureGate from '../../features/with-feature-gate';
 import { ASSISTED_INSTALLER_FEATURE } from '../../../redux/constants/featureConstants';
 import { AppPage } from '~/components/App/AppPage';
+import { isRestrictedEnv } from '~/restrictedEnv';
 
 const { HostsClusterDetailTab, getAddHostsTabState } = OCM;
 const GatedAIHostsClusterDetailTab = withFeatureGate(
@@ -366,7 +367,8 @@ class ClusterDetails extends Component {
       !isClusterPending &&
       !isClusterWaiting &&
       cluster.managed &&
-      !isArchived;
+      !isArchived &&
+      !isRestrictedEnv;
 
     const displayMonitoringTab =
       !isArchived && !cluster.managed && !isAROCluster && !isUninstalledAICluster(cluster);
@@ -387,9 +389,9 @@ class ClusterDetails extends Component {
       // The (managed) cluster has not yet reported its cluster ID to AMS
       // eslint-disable-next-line camelcase
       cluster.subscription?.external_cluster_id === undefined;
-    const displaySupportTab = !hideSupportTab && !isOSDTrial;
+    const displaySupportTab = !hideSupportTab && !isOSDTrial && !isRestrictedEnv;
     const displayUpgradeSettingsTab =
-      (cluster.managed || isAROCluster) && cluster.canEdit && !isArchived;
+      (cluster.managed || isAROCluster) && cluster.canEdit && !isArchived && !isRestrictedEnv;
 
     let addHostsTabState = { showTab: false, isDisabled: false, tabTooltip: '' };
     if (assistedInstallerEnabled && !isArchived) {
