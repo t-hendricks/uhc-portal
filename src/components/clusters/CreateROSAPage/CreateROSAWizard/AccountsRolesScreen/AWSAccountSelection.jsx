@@ -14,8 +14,6 @@ import {
   Flex,
   FlexItem,
 } from '@patternfly/react-core';
-import useAnalytics from '~/hooks/useAnalytics';
-import { trackEvents } from '~/common/analytics';
 import PopoverHint from '../../../../common/PopoverHint';
 import './AccountsRolesScreen.scss';
 import links from '~/common/installLinks.mjs';
@@ -47,11 +45,10 @@ function AWSAccountSelection({
   extendedHelpText,
   selectedAWSAccountID,
   accounts,
-  launchAssocAWSAcctModal,
+  toggleAssociateAccountDrawer,
   isBillingAccount = false,
   refresh,
 }) {
-  const track = useAnalytics();
   const [isOpen, setIsOpen] = useState(false);
   const associateAWSAccountBtnRef = React.createRef();
   const hasAWSAccounts = accounts?.length > 0;
@@ -73,11 +70,11 @@ function AWSAccountSelection({
     inputProps.onChange(selection);
   };
 
-  const launchModal = () => {
+  const openDrawer = () => {
     // close dropdown
     setIsOpen(false);
     // will cause window reload on first time, then open assoc aws modal with new token
-    launchAssocAWSAcctModal();
+    toggleAssociateAccountDrawer();
   };
 
   const btnProps = isBillingAccount
@@ -87,9 +84,8 @@ function AWSAccountSelection({
         target: '_blank',
       }
     : {
-        onClick: (event) => {
-          track(trackEvents.AssociateAWS);
-          launchModal(event);
+        onClick: () => {
+          openDrawer();
         },
       };
 
@@ -104,7 +100,7 @@ function AWSAccountSelection({
       >
         {isBillingAccount
           ? 'Connect ROSA to a new AWS billing account'
-          : 'How to associate a new account'}
+          : 'How to associate a new AWS account'}
       </Button>
     </>
   );
@@ -183,7 +179,7 @@ AWSAccountSelection.propTypes = {
   extendedHelpText: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
   accounts: PropTypes.array,
   selectedAWSAccountID: PropTypes.string,
-  launchAssocAWSAcctModal: PropTypes.func,
+  toggleAssociateAccountDrawer: PropTypes.func,
   initialValue: PropTypes.string,
   meta: PropTypes.shape({
     touched: PropTypes.bool,
