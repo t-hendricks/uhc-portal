@@ -6,10 +6,12 @@ const associatedAccountsSelector = '**/api/accounts_mgmt/v1/organizations/*/labe
 const ARNsSelector = '**/api/clusters_mgmt/v1/aws_inquiries/sts_account_roles';
 const userRoleSelector = '**/api/accounts_mgmt/v1/accounts/*/labels/sts_user_role';
 
-const interceptAndReturnMockAssociatedAccounts = mockFile => cy.intercept({ method: 'GET', url: associatedAccountsSelector },
-  { fixture: mockFile }).as('getMockAssociatedAccounts');
-const interceptAndReturnMockARNs = mockFile => cy.intercept({ method: 'POST', url: ARNsSelector },
-  { fixture: mockFile }).as('getMockARNs');
+const interceptAndReturnMockAssociatedAccounts = (mockFile) =>
+  cy
+    .intercept({ method: 'GET', url: associatedAccountsSelector }, { fixture: mockFile })
+    .as('getMockAssociatedAccounts');
+const interceptAndReturnMockARNs = (mockFile) =>
+  cy.intercept({ method: 'POST', url: ARNsSelector }, { fixture: mockFile }).as('getMockARNs');
 
 describe('Rosa cluster tests', { tags: ['ci'] }, () => {
   before(() => {
@@ -24,7 +26,6 @@ describe('Rosa cluster tests', { tags: ['ci'] }, () => {
 
   describe('Create Rosa cluster', () => {
     it('navigates to create Rosa cluster wizard', () => {
-
       cy.getByTestId('create_cluster_btn').click();
       // couldn't pass data-testids to composite PF Dropdown component :-(
       cy.get('#rosa-create-cluster-dropdown').scrollIntoView().should('be.visible');
@@ -57,10 +58,10 @@ describe('Rosa cluster tests', { tags: ['ci'] }, () => {
         CreateRosaWizardPage.showsNoAssociatedAccounts();
       });
 
-      // the double load of the assoc. aws accounts dialog is causing issues with cypress
-      it.skip('test associate aws account dialog', () => {
+      it('test associate aws account drawer', () => {
         cy.getByTestId('launch-associate-account-btn').click();
-        CreateRosaWizardPage.isAssociateAccountsDialog();
+        CreateRosaWizardPage.isAssociateAccountsDrawer();
+        cy.getByTestId('close-associate-account-btn').click();
       });
 
       it('tests for a single associated account,  "no ARNs" alert, and 4 ARNs required messages', () => {
@@ -89,14 +90,16 @@ describe('Rosa cluster tests', { tags: ['ci'] }, () => {
       });
 
       it('tests preventing Next if no user role, shows alert', () => {
-        cy.intercept({ method: 'GET', url: userRoleSelector },
+        cy.intercept(
+          { method: 'GET', url: userRoleSelector },
           {
             statusCode: 404,
             body: '404 Not Found!',
             headers: {
               'x-not-found': 'true',
             },
-          }).as('noUserRole');
+          },
+        ).as('noUserRole');
 
         cy.get(CreateRosaWizardPage.primaryButton).click({ force: true });
         cy.wait('@noUserRole');
@@ -108,7 +111,8 @@ describe('Rosa cluster tests', { tags: ['ci'] }, () => {
       it('tests if no ocm role, shows alert', () => {
         interceptAndReturnMockAssociatedAccounts('rosa/rosa_one_associated_account.json');
 
-        cy.intercept({ method: 'POST', url: ARNsSelector },
+        cy.intercept(
+          { method: 'POST', url: ARNsSelector },
           {
             statusCode: 400,
             body: {
@@ -116,7 +120,8 @@ describe('Rosa cluster tests', { tags: ['ci'] }, () => {
               id: '400',
               href: '/api/clusters_mgmt/v1/errors/400',
               code: 'CLUSTERS-MGMT-400',
-              reason: "Add 'arn:aws:iam::8888:role/RH-Managed-OpenShift-Installer' to the trust policy on IAM role 'ManagedOpenShift-OCM-Role-151515'",
+              reason:
+                "Add 'arn:aws:iam::8888:role/RH-Managed-OpenShift-Installer' to the trust policy on IAM role 'ManagedOpenShift-OCM-Role-151515'",
               details: [
                 {
                   Error_Key: 'NoTrustedRelationshipOnClusterRole',
@@ -124,7 +129,8 @@ describe('Rosa cluster tests', { tags: ['ci'] }, () => {
               ],
               operation_id: 'f15efc24-e3c6-436f-be01-7e8be1009265',
             },
-          }).as('noOcmRole');
+          },
+        ).as('noOcmRole');
 
         cy.getByTestId('refresh-aws-accounts').click();
 
@@ -142,11 +148,15 @@ describe('Rosa cluster tests', { tags: ['ci'] }, () => {
         interceptAndReturnMockAssociatedAccounts('rosa/rosa_one_associated_account.json');
         interceptAndReturnMockARNs('rosa/rosa_all_arns.json');
 
-        cy.intercept({ method: 'GET', url: userRoleSelector },
-          { fixture: 'rosa/rosa_user_role.json' }).as('getMockUserRole');
+        cy.intercept(
+          { method: 'GET', url: userRoleSelector },
+          { fixture: 'rosa/rosa_user_role.json' },
+        ).as('getMockUserRole');
 
-        cy.intercept({ method: 'GET', url: '**/api.openshift.com/api/clusters_mgmt/v1/versions/**' },
-          { fixture: 'rosa/rosa_installable_cluster_versions.json' }).as('getMockVersions');
+        cy.intercept(
+          { method: 'GET', url: '**/api.openshift.com/api/clusters_mgmt/v1/versions/**' },
+          { fixture: 'rosa/rosa_installable_cluster_versions.json' },
+        ).as('getMockVersions');
 
         cy.getByTestId('refresh-aws-accounts').click();
         cy.wait('@getMockAssociatedAccounts');

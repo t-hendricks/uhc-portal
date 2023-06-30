@@ -54,7 +54,7 @@ function AccountRolesARNsSection({
   clearGetAWSAccountRolesARNsResponse,
   isHypershiftSelected,
   onAccountChanged,
-  openAssociateAwsAccountModal,
+  toggleAssociateAccountDrawer,
 }) {
   const track = useAnalytics();
   const [isExpanded, setIsExpanded] = useState(true);
@@ -270,13 +270,13 @@ function AccountRolesARNsSection({
       return (
         <AwsRoleErrorAlert
           title={alertTitle}
-          openAssociateAwsAccountModal={openAssociateAwsAccountModal}
+          toggleAssociateAccountDrawer={toggleAssociateAccountDrawer}
         />
       );
     }
 
     return <ErrorBox message={alertTitle} response={getAWSAccountRolesARNsResponse} />;
-  }, [getAWSAccountRolesARNsResponse, openAssociateAwsAccountModal, resolveARNsErrorTitle]);
+  }, [getAWSAccountRolesARNsResponse, toggleAssociateAccountDrawer, resolveARNsErrorTitle]);
 
   const arnCompatibilityAlertTitle = React.useMemo(() => {
     if (isHypershiftSelected)
@@ -507,7 +507,7 @@ AccountRolesARNsSection.propTypes = {
   clearGetAWSAccountRolesARNsResponse: PropTypes.func.isRequired,
   isHypershiftSelected: PropTypes.bool,
   onAccountChanged: PropTypes.func.isRequired,
-  openAssociateAwsAccountModal: PropTypes.func.isRequired,
+  toggleAssociateAccountDrawer: PropTypes.func.isRequired,
 };
 
 export default AccountRolesARNsSection;
