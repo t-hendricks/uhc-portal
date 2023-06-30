@@ -57,6 +57,7 @@ const mapStateToProps = (state, ownProps) => {
       isTrialDefault: ownProps.isTrialDefault,
       isHypershiftSelected,
     }),
+    poolNumber: machinePools?.length,
   };
 };
 

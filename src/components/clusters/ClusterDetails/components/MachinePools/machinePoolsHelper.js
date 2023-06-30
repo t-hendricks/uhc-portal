@@ -193,15 +193,11 @@ const getMinNodesRequiredHypershift = (numMachinePools) => {
 };
 
 /**
- * Node increment by num of machine pools if there is more than 1 pool
- * @param {number} numMachinePools
+ * Node increment for Hypershift machine pools
  * @returns number
  */
 const getNodeIncrementHypershift = (numMachinePools) => {
   if (numMachinePools === undefined) {
-    return 1;
-  }
-  if (numMachinePools === 1) {
     return 1;
   }
   return numMachinePools;

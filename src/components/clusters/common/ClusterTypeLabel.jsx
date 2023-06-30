@@ -5,8 +5,10 @@ import { Tooltip } from '@patternfly/react-core';
 import get from 'lodash/get';
 
 import { normalizedProducts } from '../../../common/subscriptionTypes';
+import { PreviewLabel, createdPostGa } from '~/components/clusters/common/PreviewLabel';
 
 function ClusterTypeLabel({ cluster }) {
+  const creationDateStr = get(cluster, 'creation_timestamp', '');
   const clusterTypes = {
     [normalizedProducts.OCP]: {
       name: 'OCP',
@@ -35,6 +37,9 @@ function ClusterTypeLabel({ cluster }) {
     [normalizedProducts.ROSA_HyperShift]: {
       name: 'ROSA - Hosted',
       tooltip: 'Red Hat OpenShift Service on AWS - Hosted control plane',
+      label: createdPostGa(creationDateStr) ? null : (
+        <PreviewLabel creationDateStr={creationDateStr} />
+      ),
     },
     [normalizedProducts.ARO]: {
       name: 'ARO',
@@ -49,9 +54,18 @@ function ClusterTypeLabel({ cluster }) {
   const planType = get(cluster, 'subscription.plan.id', normalizedProducts.UNKNOWN);
 
   const type = clusterTypes[planType] || clusterTypes[normalizedProducts.UNKNOWN];
+
   return (
     <Tooltip content={type.tooltip}>
-      <span>{type.name}</span>
+      <span>
+        {type.name}
+        {type.label && (
+          <>
+            <br />
+            {type.label}
+          </>
+        )}
+      </span>
     </Tooltip>
   );
 }

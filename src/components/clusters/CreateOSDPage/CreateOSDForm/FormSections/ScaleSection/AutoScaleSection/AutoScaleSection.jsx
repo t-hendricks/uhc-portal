@@ -23,6 +23,8 @@ import { constants } from '../../../CreateOSDFormConstants';
 import { normalizedProducts } from '../../../../../../../common/subscriptionTypes';
 import { MAX_NODES } from '../../../../../common/NodeCountInput/NodeCountInput';
 
+const minHypershiftNodesPerPool = (numPools) => (numPools > 1 ? 1 : 2);
+
 class NodesInput extends React.Component {
   componentDidUpdate() {
     const {
@@ -144,21 +146,37 @@ class AutoScaleSection extends React.Component {
       isBYOC,
       isMultiAz,
       autoScaleMinNodesValue,
+      autoScaleMaxNodesValue,
       minNodesRequired,
+      isHypershiftWizard,
+      numPools,
     } = this.props;
+
     if (!prevProps.autoscalingEnabled && autoscalingEnabled) {
+      const defaultMinAllowed = isHypershiftWizard
+        ? minHypershiftNodesPerPool(numPools)
+        : minNodesRequired;
+
       const minAllowed = getMinNodesAllowed({
         isDefaultMachinePool,
         product,
         isBYOC,
         isMultiAz,
         autoScaleMinNodesValue,
-        defaultMinAllowed: minNodesRequired,
+        defaultMinAllowed,
       });
       const defaultReplicas = isMultiAz ? (minAllowed / 3).toString() : minAllowed.toString();
 
       change('min_replicas', defaultReplicas);
       change('max_replicas', defaultReplicas);
+    }
+
+    if (isHypershiftWizard && numPools !== prevProps.numPools) {
+      const defaultMinPools = minHypershiftNodesPerPool(numPools);
+      if (autoScaleMinNodesValue < defaultMinPools || autoScaleMaxNodesValue > this.maxNodes()) {
+        change('min_replicas', defaultMinPools.toString());
+        change('max_replicas', defaultMinPools.toString());
+      }
     }
   }
 
@@ -168,7 +186,20 @@ class AutoScaleSection extends React.Component {
   hideError = (lim) => this.setState({ [`${lim}ErrorMessage`]: undefined });
 
   minNodes = () => {
-    const { isDefaultMachinePool, product, isBYOC, isMultiAz, minNodesRequired } = this.props;
+    const {
+      isDefaultMachinePool,
+      product,
+      isBYOC,
+      isMultiAz,
+      minNodesRequired,
+      isHypershiftWizard,
+      numPools,
+    } = this.props;
+
+    const defaultMinAllowed = isHypershiftWizard
+      ? minHypershiftNodesPerPool(numPools)
+      : minNodesRequired;
+
     return (
       getMinNodesAllowed({
         isDefaultMachinePool,
@@ -176,9 +207,21 @@ class AutoScaleSection extends React.Component {
         isBYOC,
         isMultiAz,
         autoScaleMinNodesValue: null,
-        defaultMinAllowed: minNodesRequired,
+        defaultMinAllowed,
       }) / (isMultiAz ? 3 : 1)
     );
+  };
+
+  maxNodes = () => {
+    const { isMultiAz, isHypershiftWizard, numPools } = this.props;
+
+    if (isHypershiftWizard) {
+      return MAX_NODES / numPools;
+    }
+    if (isMultiAz) {
+      return MAX_NODES / 3;
+    }
+    return MAX_NODES;
   };
 
   validateMinNodes = (val) => {
@@ -193,13 +236,11 @@ class AutoScaleSection extends React.Component {
     return undefined;
   };
 
-  validateMaxNodes = (val) => {
-    const { isMultiAz } = this.props;
-    return validateNumericInput(val, {
-      max: isMultiAz ? MAX_NODES / 3 : MAX_NODES,
+  validateMaxNodes = (val) =>
+    validateNumericInput(val, {
+      max: this.maxNodes(),
       allowZero: true,
     });
-  };
 
   render() {
     const {
@@ -209,6 +250,8 @@ class AutoScaleSection extends React.Component {
       autoScaleMaxNodesValue,
       product,
       onChange,
+      isHypershiftWizard,
+      numPools,
     } = this.props;
     const { minErrorMessage, maxErrorMessage } = this.state;
 
@@ -223,7 +266,7 @@ class AutoScaleSection extends React.Component {
         hideError={this.hideError}
         limit="min"
         min={this.minNodes()}
-        max={isMultiAz ? MAX_NODES / 3 : MAX_NODES}
+        max={this.maxNodes()}
       />
     );
 
@@ -243,7 +286,7 @@ class AutoScaleSection extends React.Component {
         hideError={this.hideError}
         limit="max"
         min={this.minNodes()}
-        max={isMultiAz ? MAX_NODES / 3 : MAX_NODES}
+        max={this.maxNodes()}
       />
     );
 
@@ -258,18 +301,48 @@ class AutoScaleSection extends React.Component {
 
     const autoScalingUrl = isRosa ? links.ROSA_AUTOSCALING : links.APPLYING_AUTOSCALING;
 
+    const minNodesLabel = () => {
+      if (isHypershiftWizard) {
+        return 'Minimum nodes per machine pool';
+      }
+      if (isMultiAz) {
+        return 'Minimum nodes per zone';
+      }
+      return 'Minimum node count';
+    };
+
+    const maxNodesLabel = () => {
+      if (isHypershiftWizard) {
+        return 'Maximum nodes per machine pool';
+      }
+      if (isMultiAz) {
+        return 'Maximum nodes per zone';
+      }
+      return 'Maximum node count';
+    };
+
+    const nodesHelpText = (nodes) => {
+      if (isHypershiftWizard) {
+        return helpText(`x ${numPools} machine pools = ${parseInt(nodes, 10) * numPools}`);
+      }
+      if (isMultiAz) {
+        return helpText(`x 3 zones = ${parseInt(nodes, 10) * 3}`);
+      }
+      return null;
+    };
+
     const azFormGroups = (
       <>
         <Split hasGutter className="autoscaling__container">
           <SplitItem>
             <FormGroup
-              label={isMultiAz ? 'Minimum nodes per zone' : 'Minimum node count'}
+              label={minNodesLabel()}
               isRequired
               fieldId="nodes_min"
               className="autoscaling__nodes-formGroup"
               helperText={
                 <HelperText>
-                  {isMultiAz && helpText(`x 3 zones = ${parseInt(autoScaleMinNodesValue, 10) * 3}`)}
+                  {nodesHelpText(autoScaleMinNodesValue)}
                   {minErrorMessage && errorText(minErrorMessage)}
                 </HelperText>
               }
@@ -279,13 +352,13 @@ class AutoScaleSection extends React.Component {
           </SplitItem>
           <SplitItem>
             <FormGroup
-              label={isMultiAz ? 'Maximum nodes per zone' : 'Maximum node count'}
+              label={maxNodesLabel()}
               isRequired
               fieldId="nodes_max"
               className="autoscaling__nodes-formGroup"
               helperText={
                 <HelperText>
-                  {isMultiAz && helpText(`x 3 zones = ${parseInt(autoScaleMaxNodesValue, 10) * 3}`)}
+                  {nodesHelpText(autoScaleMaxNodesValue)}
                   {maxErrorMessage && errorText(maxErrorMessage)}
                 </HelperText>
               }
@@ -360,6 +433,8 @@ AutoScaleSection.propTypes = {
   change: PropTypes.func.isRequired,
   onChange: PropTypes.func,
   minNodesRequired: PropTypes.number,
+  isHypershiftWizard: PropTypes.bool,
+  numPools: PropTypes.number,
 };
 
 AutoScaleSection.defaultProps = {

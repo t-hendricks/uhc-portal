@@ -19,6 +19,7 @@ import { trackEvents } from '~/common/analytics';
 import PopoverHint from '../../../../common/PopoverHint';
 import './AccountsRolesScreen.scss';
 import links from '~/common/installLinks.mjs';
+import { hasContract } from './AWSBillingAccount/awsBillingAccountHelper';
 
 const AWS_ACCT_ID_PLACEHOLDER = 'Select an account';
 
@@ -45,7 +46,7 @@ function AWSAccountSelection({
   meta: { error, touched },
   extendedHelpText,
   selectedAWSAccountID,
-  AWSAccountIDs,
+  accounts,
   launchAssocAWSAcctModal,
   isBillingAccount = false,
   refresh,
@@ -53,7 +54,7 @@ function AWSAccountSelection({
   const track = useAnalytics();
   const [isOpen, setIsOpen] = useState(false);
   const associateAWSAccountBtnRef = React.createRef();
-  const hasAWSAccounts = AWSAccountIDs.length > 0;
+  const hasAWSAccounts = accounts?.length > 0;
   const { onRefresh, text } = refresh;
 
   useEffect(() => {
@@ -132,12 +133,17 @@ function AWSAccountSelection({
             validated={touched && error ? 'error' : undefined}
             footer={footer}
           >
-            {AWSAccountIDs.map((awsId) => (
+            {accounts?.map((cloudAccount) => (
               <SelectOption
                 className="pf-c-dropdown__menu-item"
-                key={awsId}
-                value={awsId}
-              >{`${awsId}`}</SelectOption>
+                key={cloudAccount.cloud_account_id}
+                value={cloudAccount.cloud_account_id}
+                description={
+                  isBillingAccount && hasContract(cloudAccount) ? 'Contract enabled' : ''
+                }
+              >
+                {cloudAccount.cloud_account_id}
+              </SelectOption>
             ))}
           </Select>
         </FlexItem>
@@ -175,7 +181,7 @@ AWSAccountSelection.propTypes = {
     onBlur: PropTypes.func,
   }),
   extendedHelpText: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
-  AWSAccountIDs: PropTypes.arrayOf(PropTypes.string),
+  accounts: PropTypes.array,
   selectedAWSAccountID: PropTypes.string,
   launchAssocAWSAcctModal: PropTypes.func,
   initialValue: PropTypes.string,
