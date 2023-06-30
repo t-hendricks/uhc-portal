@@ -24,6 +24,7 @@ import ExternalLink from '../../../../../../common/ExternalLink';
 import links from '../../../../../../../common/installLinks.mjs';
 import { checkRouteSelectors } from '../../../../../../../common/validators';
 import { LoadBalancerFlavorLabel } from '../constants';
+import LoadBalancerPopover from '../LoadBalancerPopover';
 
 class EditClusterIngressDialog extends React.Component {
   componentDidUpdate(prevProps) {
@@ -171,6 +172,7 @@ class EditClusterIngressDialog extends React.Component {
                 fieldId="load_balancer_group"
                 label="Load balancer type"
                 className="pf-u-pb-md"
+                labelIcon={<LoadBalancerPopover />}
               >
                 <Field
                   component={ReduxCheckbox}

@@ -22,11 +22,12 @@ import EditClusterIngressDialog from '../EditClusterIngressDialog';
 import ButtonWithTooltip from '../../../../../../common/ButtonWithTooltip';
 
 import modals from '../../../../../../common/Modal/modals';
-
-import './ClusterIngressCard.scss';
 import { LoadBalancerFlavorLabel } from '../constants';
 import { LoadBalancerFlavor } from '~/types/clusters_mgmt.v1';
 import { isRestrictedEnv } from '~/restrictedEnv';
+import LoadBalancerPopover from '../LoadBalancerPopover';
+
+import './ClusterIngressCard.scss';
 
 class ClusterIngressCard extends React.Component {
   handleEditSettings = () => {
@@ -114,7 +115,7 @@ class ClusterIngressCard extends React.Component {
               </TextContent>
             </FormGroup>
             {isAWS && (
-              <FormGroup label="Load balancer type">
+              <FormGroup label="Load balancer type" labelIcon={<LoadBalancerPopover />}>
                 <Switch
                   label={LoadBalancerFlavorLabel[LoadBalancerFlavor.NLB]}
                   labelOff={LoadBalancerFlavorLabel[LoadBalancerFlavor.CLASSIC]}
