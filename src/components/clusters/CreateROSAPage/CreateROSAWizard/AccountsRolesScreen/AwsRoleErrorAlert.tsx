@@ -3,18 +3,18 @@ import { Alert, Text, TextContent, TextVariants, Button } from '@patternfly/reac
 
 interface AwsRoleErrorAlertProps {
   title: React.ReactNode;
-  openAssociateAwsAccountModal(): void;
+  toggleAssociateAccountDrawer(): void;
 }
 
 export const AwsRoleErrorAlert = ({
   title,
-  openAssociateAwsAccountModal,
+  toggleAssociateAccountDrawer,
 }: AwsRoleErrorAlertProps) => (
   <Alert variant="danger" isInline title={title}>
     <TextContent className="pf-u-font-size-sm">
       <Text component={TextVariants.p}>
         To continue,{' '}
-        <Button variant="link" isInline onClick={openAssociateAwsAccountModal}>
+        <Button variant="link" isInline onClick={toggleAssociateAccountDrawer}>
           create the required role
         </Button>{' '}
         with the Red Hat cluster installer.

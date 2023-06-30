@@ -37,6 +37,8 @@ import { isUserRoleForSelectedAWSAccount } from './AccountsRolesScreen/AccountsR
 
 import CreateRosaWizardFooter from './CreateRosaWizardFooter';
 
+import AssociateAWSAccountDrawer from './AccountsRolesScreen/AssociateAWSAccountDrawer';
+
 import './createROSAWizard.scss';
 import { AppPage } from '~/components/App/AppPage';
 
@@ -48,6 +50,7 @@ class CreateROSAWizardInternal extends React.Component {
     // Dictionary of step IDs; { [stepId: number]: boolean },
     // where entry values indicate the latest form validation state for those respective steps.
     validatedSteps: {},
+    isDrawerOpen: false,
   };
 
   componentDidMount() {
@@ -138,6 +141,7 @@ class CreateROSAWizardInternal extends React.Component {
   // next / back / nav-links / imperative (e.g. "edit step" links in the review step)
   onCurrentStepChanged = ({ id }) => {
     this.setState({ currentStepId: id });
+    this.setDrawerOpen(false);
   };
 
   onNext = ({ id }, { prevId }) => {
@@ -244,6 +248,8 @@ class CreateROSAWizardInternal extends React.Component {
     });
   };
 
+  setDrawerOpen = (shouldBeOpen) => this.setState({ isDrawerOpen: shouldBeOpen || false });
+
   render() {
     const {
       onSubmit,
@@ -260,7 +266,8 @@ class CreateROSAWizardInternal extends React.Component {
       isHypershiftEnabled,
       isHypershiftSelected,
     } = this.props;
-    const { accountAndRolesStepId, deferredNext, isNextClicked, currentStepId } = this.state;
+    const { accountAndRolesStepId, deferredNext, isDrawerOpen, isNextClicked, currentStepId } =
+      this.state;
 
     const steps = [
       isHypershiftEnabled && {
@@ -281,6 +288,8 @@ class CreateROSAWizardInternal extends React.Component {
             <AccountsRolesScreen
               organizationID={organization?.details?.id}
               isHypershiftSelected={isHypershiftSelected}
+              setDrawerIsOpen={this.setDrawerOpen}
+              isDrawerOpen={isDrawerOpen}
             />
           </ErrorBoundary>
         ),
@@ -483,35 +492,37 @@ class CreateROSAWizardInternal extends React.Component {
           {config.fakeOSD && ( // TODO Is ?fake=true supported for ROSA clusters?
             <Banner variant="warning">On submit, a fake ROSA cluster will be created.</Banner>
           )}
-          <div className="ocm-page">
-            {isErrorModalOpen && <CreateClusterErrorModal />}
-            <Wizard
-              className="rosa-wizard"
-              navAriaLabel={`${ariaTitle} steps`}
-              mainAriaLabel={`${ariaTitle} content`}
-              steps={steps}
-              isNavExpandable
-              onNext={this.onNext}
-              onBack={this.onBack}
-              onGoToStep={this.onGoToStep}
-              onCurrentStepChanged={this.onCurrentStepChanged}
-              onClose={() => history.push('/')}
-              footer={
-                !createClusterResponse.pending ? (
-                  <CreateRosaWizardFooter
-                    firstStepId={steps[0].id}
-                    onSubmit={onSubmit}
-                    onBeforeNext={this.onBeforeNext}
-                    onBeforeSubmit={this.onBeforeSubmit}
-                    isNextDisabled={!!deferredNext}
-                    currentStepId={currentStepId}
-                  />
-                ) : (
-                  <></>
-                )
-              }
-            />
-          </div>
+          <AssociateAWSAccountDrawer isOpen={isDrawerOpen} setIsOpen={this.setDrawerOpen}>
+            <div className="ocm-page">
+              {isErrorModalOpen && <CreateClusterErrorModal />}
+              <Wizard
+                className="rosa-wizard"
+                navAriaLabel={`${ariaTitle} steps`}
+                mainAriaLabel={`${ariaTitle} content`}
+                steps={steps}
+                isNavExpandable
+                onNext={this.onNext}
+                onBack={this.onBack}
+                onGoToStep={this.onGoToStep}
+                onCurrentStepChanged={this.onCurrentStepChanged}
+                onClose={() => history.push('/')}
+                footer={
+                  !createClusterResponse.pending ? (
+                    <CreateRosaWizardFooter
+                      firstStepId={steps[0].id}
+                      onSubmit={onSubmit}
+                      onBeforeNext={this.onBeforeNext}
+                      onBeforeSubmit={this.onBeforeSubmit}
+                      isNextDisabled={!!deferredNext}
+                      currentStepId={currentStepId}
+                    />
+                  ) : (
+                    <></>
+                  )
+                }
+              />
+            </div>
+          </AssociateAWSAccountDrawer>
         </PageSection>
       </>
     );

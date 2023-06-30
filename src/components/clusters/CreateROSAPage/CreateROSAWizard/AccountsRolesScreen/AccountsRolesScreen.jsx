@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useCallback, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import get from 'lodash/get';
 
@@ -13,7 +13,6 @@ import ErrorBox from '~/components/common/ErrorBox';
 import { loadOfflineToken } from '~/components/tokens/TokenUtils';
 
 import AccountRolesARNsSection from './AccountRolesARNsSection';
-import { AssociateAwsAccountModal } from './AssociateAWSAccountModal';
 import { AwsRoleErrorAlert } from './AwsRoleErrorAlert';
 import AWSAccountSelection from './AWSAccountSelection';
 import AWSBillingAccount from './AWSBillingAccount/AWSBillingAccount';
@@ -32,7 +31,6 @@ function AccountsRolesScreen({
   selectedAWSBillingAccountID,
   selectedInstallerRoleARN,
   rosaMaxOSVersion,
-  openAssociateAWSAccountModal,
   getAWSAccountIDs,
   getAWSAccountIDsResponse,
   getAWSAccountRolesARNs,
@@ -43,13 +41,16 @@ function AccountsRolesScreen({
   clearGetUserRoleResponse,
   offlineToken,
   setOfflineToken,
+  setDrawerIsOpen,
+  isDrawerOpen,
   isHypershiftSelected,
 }) {
   const [AWSAccountIDs, setAWSAccountIDs] = useState([]);
   const [noUserForSelectedAWSAcct, setNoUserForSelectedAWSAcct] = useState(false);
   const [awsIDsErrorBox, setAwsIDsErrorBox] = useState(null);
-  const [isAssocAwsAccountModalOpen, setIsAssocAwsAccountModalOpen] = useState(false);
   const [refreshButtonClicked, setRefreshButtonClicked] = useState(false);
+  const openDrawerButtonRef = useRef(null);
+  const prevDrawerState = useRef(false);
   const hasAWSAccounts = AWSAccountIDs.length > 0;
   const track = useAnalytics();
 
@@ -130,15 +131,17 @@ function AccountsRolesScreen({
     }
   }, [getUserRoleResponse?.error, noUserForSelectedAWSAcct]);
 
-  const onAssociateAwsAccountModalClose = () => {
-    setIsAssocAwsAccountModalOpen(false);
-    clearGetAWSAccountIDsResponse();
-  };
+  useEffect(() => {
+    if (!isDrawerOpen && prevDrawerState.current) {
+      openDrawerButtonRef.current.focus();
+      clearGetAWSAccountIDsResponse();
+    }
+    prevDrawerState.current = isDrawerOpen;
+  }, [isDrawerOpen]);
 
-  const onAssociateAwsAccountModalOpen = () => {
-    openAssociateAWSAccountModal();
-    setIsAssocAwsAccountModalOpen(true);
-  };
+  const toggleAssociateAccountDrawer = useCallback(() => {
+    setDrawerIsOpen(!isDrawerOpen);
+  }, [isDrawerOpen, setDrawerIsOpen]);
 
   return (
     <Form onSubmit={() => false}>
@@ -157,7 +160,7 @@ function AccountsRolesScreen({
             component={AWSAccountSelection}
             name="associated_aws_id"
             label="Associated AWS infrastructure account"
-            launchAssocAWSAcctModal={onAssociateAwsAccountModalOpen}
+            toggleAssociateAccountDrawer={toggleAssociateAccountDrawer}
             refresh={{
               onRefresh: () => {
                 setRefreshButtonClicked(true);
@@ -180,12 +183,10 @@ function AccountsRolesScreen({
           <Button
             variant="secondary"
             className="pf-u-mt-md"
-            onClick={() => {
-              track(trackEvents.AssociateAWS);
-              onAssociateAwsAccountModalOpen();
-            }}
+            ref={openDrawerButtonRef}
+            onClick={toggleAssociateAccountDrawer}
           >
-            How to associate a new account
+            How to associate a new AWS account
           </Button>
         </GridItem>
         <GridItem span={7} />
@@ -208,7 +209,7 @@ function AccountsRolesScreen({
             clearGetAWSAccountRolesARNsResponse={clearGetAWSAccountRolesARNsResponse}
             isHypershiftSelected={isHypershiftSelected}
             onAccountChanged={resetUserRoleFields}
-            openAssociateAwsAccountModal={onAssociateAwsAccountModalOpen}
+            toggleAssociateAccountDrawer={toggleAssociateAccountDrawer}
           />
         )}
 
@@ -216,15 +217,11 @@ function AccountsRolesScreen({
           <GridItem span={8} className="pf-u-mt-sm">
             <AwsRoleErrorAlert
               title="A user-role could not be detected"
-              openAssociateAwsAccountModal={onAssociateAwsAccountModalOpen}
+              toggleAssociateAccountDrawer={toggleAssociateAccountDrawer}
             />
           </GridItem>
         )}
       </Grid>
-      <AssociateAwsAccountModal
-        isOpen={isAssocAwsAccountModalOpen}
-        onClose={onAssociateAwsAccountModalClose}
-      />
     </Form>
   );
 }
@@ -237,7 +234,6 @@ AccountsRolesScreen.propTypes = {
   selectedInstallerRoleARN: PropTypes.string,
   getAWSAccountIDs: PropTypes.func.isRequired,
   getAWSAccountIDsResponse: PropTypes.object.isRequired,
-  openAssociateAWSAccountModal: PropTypes.func.isRequired,
   getAWSAccountRolesARNs: PropTypes.func.isRequired,
   getAWSAccountRolesARNsResponse: PropTypes.object.isRequired,
   getUserRoleResponse: PropTypes.object.isRequired,
@@ -253,6 +249,8 @@ AccountsRolesScreen.propTypes = {
   offlineToken: PropTypes.string,
   setOfflineToken: PropTypes.func,
   isHypershiftSelected: PropTypes.bool.isRequired,
+  setDrawerIsOpen: PropTypes.func,
+  isDrawerOpen: PropTypes.bool,
 };
 
 export default AccountsRolesScreen;

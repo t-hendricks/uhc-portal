@@ -1,0 +1,49 @@
+.associate-roles-drawer__tabs {
+  --pf-c-tabs__link--Color: --pf-global--Color--100;
+
+  &::before {
+    border: none;
+  }
+
+  &.pf-m-box {
+    --pf-c-tabs__link--BackgroundColor: --pf-global--BackgroundColor--100;
+  }
+
+  *[role='tablist'] {
+    *[role='tab'] {
+      border: var(--pf-global--BorderWidth--sm) solid var(--pf-global--BorderColor--100);
+      &::before,
+      &::after {
+        border: none;
+      }
+      &[aria-selected='false'] {
+        &:hover,
+        &:focus {
+          background-color: var(--pf-global--BackgroundColor--200);
+          border-color: var(--pf-global--BorderColor--200);
+        }
+      }
+      &[aria-selected='true'] {
+        background-color: var(--pf-global--palette--blue-50);
+        border-color: var(--pf-global--primary-color--100);
+        z-index: var(--pf-global--ZIndex--xs);
+      }
+    }
+
+    .pf-c-tabs__item {
+      &:first-child *[role='tab'] {
+        border-top-left-radius: var(--pf-global--BorderRadius--sm);
+        border-bottom-left-radius: var(--pf-global--BorderRadius--sm);
+      }
+
+      &:last-child *[role='tab'] {
+        border-top-right-radius: var(--pf-global--BorderRadius--sm);
+        border-bottom-right-radius: var(--pf-global--BorderRadius--sm);
+      }
+
+      &:not(:first-child) *[role='tab'] {
+        margin-left: calc(-1 * var(--pf-global--BorderWidth--sm));
+      }
+    }
+  }
+}
