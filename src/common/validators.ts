@@ -1413,6 +1413,20 @@ const validateHTPasswdUsername = (username: string): string | undefined => {
   return undefined;
 };
 
+const validateHTPasswdPasswordConfirm = (
+  passwordConfirm: string,
+  allValues: { [key: string]: string },
+  _unused: unknown,
+  confirmField: string,
+): string | undefined => {
+  const pwdField = confirmField.substring(0, confirmField.lastIndexOf('-confirm'));
+  const password = get(allValues, pwdField);
+  if (passwordConfirm !== password) {
+    return 'The passwords do not match';
+  }
+  return undefined;
+};
+
 const shouldSkipLabelKeyValidation = (allValues: Record<string, unknown>): boolean => {
   const nodeLabels = (allValues?.node_labels as {
     key: string;
@@ -1528,6 +1542,7 @@ export {
   validateHTPasswdPassword,
   validateHTPasswdUsername,
   validateUniqueHTPasswdUsername,
+  validateHTPasswdPasswordConfirm,
   validateUniqueNodeLabel,
   validateLabelKey,
   validateLabelValue,

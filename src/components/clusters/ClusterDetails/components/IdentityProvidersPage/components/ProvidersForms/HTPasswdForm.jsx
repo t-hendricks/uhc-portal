@@ -6,6 +6,7 @@ import {
   atLeastOneRequired,
   required,
   validateHTPasswdPassword,
+  validateHTPasswdPasswordConfirm,
   validateHTPasswdUsername,
   validateUniqueHTPasswdUsername,
 } from '../../../../../../../common/validators';
@@ -129,7 +130,7 @@ HelpTextPassword.propTypes = {
   },
 };
 
-const HTPasswdForm = ({ isPending, HTPasswdErrors }) => {
+const HTPasswdForm = ({ isPending, HTPasswdErrors, change }) => {
   const getHelpText = (index) => {
     const passwordErrors = HTPasswdErrors?.[index]?.password;
     return <HelpTextPassword passwordErrors={passwordErrors} />;
@@ -142,6 +143,10 @@ const HTPasswdForm = ({ isPending, HTPasswdErrors }) => {
       <b>{`${value}`}</b>
     </div>
   );
+
+  const onAutocomplete = (value, pwdField) => {
+    change(`${pwdField}-confirm`, value);
+  };
 
   return (
     <>
@@ -165,9 +170,18 @@ const HTPasswdForm = ({ isPending, HTPasswdErrors }) => {
             type: 'password',
             isRequired: true,
             getHelpText,
+            onAutocomplete,
             getAutocompleteValue: generatePassword,
             getAutocompleteText,
             validate: validateHTPasswdPassword,
+          },
+          {
+            name: 'password-confirm',
+            label: 'Confirm password',
+            type: 'password',
+            isRequired: true,
+            helpText: 'Retype the password to confirm.',
+            validate: [required, validateHTPasswdPasswordConfirm],
           },
         ]}
         label="Users list"
@@ -190,6 +204,7 @@ const HTPasswdForm = ({ isPending, HTPasswdErrors }) => {
 
 HTPasswdForm.propTypes = {
   isPending: PropTypes.bool,
+  change: PropTypes.func.isRequired,
   HTPasswdErrors: PropTypes.arrayOf({
     emptyPassword: PropTypes.bool,
     baseRequirements: PropTypes.bool,
