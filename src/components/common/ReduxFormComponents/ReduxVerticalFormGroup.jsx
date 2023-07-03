@@ -31,6 +31,7 @@ const ReduxVerticalFormGroup = ({
   inputPrefix,
   formGroupClass,
   hasOtherValidation = false,
+  onAutocomplete,
   getAutocompleteValue,
   getAutocompleteText = (value) => value,
   ...extraProps // any extra props not specified above
@@ -69,7 +70,9 @@ const ReduxVerticalFormGroup = ({
     const onSelect = (event) => {
       event.stopPropagation();
       input.onChange(autocompleteValue);
-      // inputRef.current.value=autocompleteValue;
+      if (onAutocomplete) {
+        onAutocomplete(autocompleteValue, input.name);
+      }
       setIsAutocompleteOpen(false);
     };
 
@@ -198,6 +201,7 @@ ReduxVerticalFormGroup.propTypes = {
   showHelpTextOnError: PropTypes.bool,
   inputPrefix: PropTypes.string,
   formGroupClass: PropTypes.string,
+  onAutocomplete: PropTypes.func,
   getAutocompleteValue: PropTypes.func,
   getAutocompleteText: PropTypes.func,
 };
