@@ -63,8 +63,8 @@ function BasicFieldsSection({
     // when multiAz changes, reset node count
     const isValueMultiAz = value === 'true';
     change('nodes_compute', getNodesCount(isBYOC, isValueMultiAz, true));
-    change('min_replicas', getMinReplicasCount(isBYOC, isValueMultiAz, true));
-    change('max_replicas', getMinReplicasCount(isBYOC, isValueMultiAz, true));
+    change('min_replicas', getMinReplicasCount(isBYOC, isValueMultiAz, true, isHypershiftSelected));
+    change('max_replicas', getMinReplicasCount(isBYOC, isValueMultiAz, true, isHypershiftSelected));
     if (handleMultiAZChangeForOldForm) {
       handleMultiAZChangeForOldForm(value);
     }
