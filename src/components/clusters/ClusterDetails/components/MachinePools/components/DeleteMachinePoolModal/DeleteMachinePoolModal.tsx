@@ -15,13 +15,15 @@ const DeleteMachinePoolModal = ({ closeModal, machinePoolId, performDeleteAction
 
   return (
     <Modal
-      title="Delete Machine Pool"
+      title="Permanently delete machine pool?"
+      primaryText="Delete"
       onPrimaryClick={handleConfirmDelete}
+      secondaryText="Cancel"
       onSecondaryClick={closeModal}
       isOpen
       onClose={closeModal}
     >
-      Are you sure you want to delete &quot;{machinePoolId}&quot;?
+      &quot;{machinePoolId}&quot; will be lost.
     </Modal>
   );
 };

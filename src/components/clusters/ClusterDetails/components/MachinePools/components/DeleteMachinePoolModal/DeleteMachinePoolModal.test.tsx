@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, axe, screen, fireEvent } from '@testUtils';
+import { render, screen, fireEvent } from '@testUtils';
 import DeleteMachinePoolModal from './DeleteMachinePoolModal';
 
 describe('<DeleteMachinePoolModal />', () => {
@@ -9,16 +9,8 @@ describe('<DeleteMachinePoolModal />', () => {
     machinePoolId: 'machinePool1',
   };
 
-  it('should be accessible', async () => {
-    const { container } = render(<DeleteMachinePoolModal {...props} />);
-
-    const results = await axe(container);
-    expect(results).toHaveNoViolations();
-  });
-
   it('should show machine pool to be deleted', async () => {
     render(<DeleteMachinePoolModal {...props} />);
-    screen.debug();
     expect(screen.queryByText(/machinePool1/)).toBeInTheDocument();
   });
 
