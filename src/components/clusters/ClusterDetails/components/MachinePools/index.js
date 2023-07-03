@@ -26,9 +26,11 @@ import modals from '../../../../common/Modal/modals';
 const mapStateToProps = (state, ownProps) => {
   const cluster = get(state, 'clusters.details.cluster', {});
   const nodes = get(cluster, 'nodes', {});
+  const getModalDataFromState = (state) => state.modal.data;
 
   const props = {
     isAddMachinePoolModalOpen: shouldShowModal(state, 'add-machine-pool'),
+    isDeleteMachinePoolModalOpen: shouldShowModal(state, 'delete-machine-pool'),
     isEditTaintsModalOpen: shouldShowModal(state, modals.EDIT_TAINTS),
     isEditLabelsModalOpen: shouldShowModal(state, modals.EDIT_LABELS),
     machinePoolsList: state.machinePools.getMachinePools,
@@ -58,6 +60,7 @@ const mapStateToProps = (state, ownProps) => {
     instance_type: nodes.compute_machine_type?.id,
     availability_zones: nodes.availability_zones,
     labels: nodes.compute_labels,
+    modalState: getModalDataFromState(state),
   };
 
   if (nodes.autoscale_compute) {
