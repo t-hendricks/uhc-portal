@@ -8,9 +8,10 @@ const getMinNodesAllowed = ({
   isMultiAz,
   autoScaleMinNodesValue = null,
   defaultMinAllowed = 0,
+  isHypershiftWizard = false,
 }) => {
   let currMinNodes = parseInt(autoScaleMinNodesValue, 10) || 0;
-  if (isMultiAz) {
+  if (isMultiAz && !isHypershiftWizard) {
     currMinNodes *= 3;
   }
   let minNodesAllowed;
@@ -27,6 +28,9 @@ const getMinNodesAllowed = ({
 };
 
 export const getNodesCount = (isBYOC, isMultiAz, asString) => {
+  // TODO: if this used for a ROSA wizard/cluster:
+  // verify that this is returning correct results ...
+  // it is possible to be both isMultiAZ and isHypershfit
   let computeNodes;
   if (isBYOC) {
     computeNodes = isMultiAz ? 3 : 2;
@@ -36,9 +40,9 @@ export const getNodesCount = (isBYOC, isMultiAz, asString) => {
   return asString ? `${computeNodes}` : computeNodes;
 };
 
-export const getMinReplicasCount = (isBYOC, isMultiAz, asString) => {
+export const getMinReplicasCount = (isBYOC, isMultiAz, asString, isHypershiftSelected = false) => {
   let minReplicas;
-  if (isMultiAz) {
+  if (isMultiAz && !isHypershiftSelected) {
     minReplicas = getNodesCount(isBYOC, isMultiAz) / 3;
   } else {
     minReplicas = getNodesCount(isBYOC, isMultiAz);

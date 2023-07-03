@@ -164,6 +164,7 @@ class AutoScaleSection extends React.Component {
         isMultiAz,
         autoScaleMinNodesValue,
         defaultMinAllowed,
+        isHypershiftWizard,
       });
       const defaultReplicas =
         isMultiAz && !isHypershiftWizard ? (minAllowed / 3).toString() : minAllowed.toString();
