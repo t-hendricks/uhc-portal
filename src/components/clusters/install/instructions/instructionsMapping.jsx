@@ -326,7 +326,7 @@ const instructionsMapping = {
     },
     s390x: {
       upi: {
-        title: 'Install OpenShift on IBM zSystems (s390x) with user-provisioned infrastructure',
+        title: 'Install OpenShift on IBM Z (s390x) with user-provisioned infrastructure',
         rhcos: {
           additionalInstructions: (
             <Text component="div">
