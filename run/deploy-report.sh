@@ -32,16 +32,23 @@ while IFS=',' read -r commitHash commitDate commitMessage; do
   else
     echo "DID NOT FIND string \"$commitMessage\" in live_candidate"
 
-    # Pattern matching to extract jiraKeys
-    regex="(HAC[- ]?[0-9]+|MGMT[- ]?[0-9]+)"
-
     commitDescription=$(git log --format=%b -n 1 $commitHash)
     commitDescription="${commitDescription//\"/\\\"}"
     echo -e "commitDescription=$commitDescription"
+
+    # Pattern to match a assisted installer version bump/update MR
+    assistedInstallerRegex="^(Bump|Update).*openshift-assisted"
+    if [[ $commitDescription =~ $assistedInstallerRegex ]]; then
+      echo "Skipping Assisted Installer version bump/update."
+      continue  # goto next MR
+    fi
+
     mrID=$(echo "$commitDescription" | grep -o '![0-9]\{4\}' | tr -d '!')
     mrDesc=$(echo "$commitDescription" | awk 'NR==1 { print }')
+    # Pattern matching to extract jiraKeys
+    jiraTicketRegex="(HAC[- ]?[0-9]+|MGMT[- ]?[0-9]+)"
     # Find and store all matching jiraKeys
-    while [[ $commitDescription =~ $regex ]]; do
+    while [[ $commitDescription =~ $jiraTicketRegex ]]; do
       matched="${BASH_REMATCH[1]}"
       # Check if the substring already exists in the array
       if [[ ! " ${jiraKeys[*]} " =~ " $matched " ]]; then
