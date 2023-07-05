@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, screen, axe } from '@testUtils';
+import { render, screen, checkAccessibility } from '@testUtils';
 import { MemoryRouter } from 'react-router-dom';
 
 import CloudTab from './CloudTab';
@@ -59,8 +59,7 @@ describe('<CloudTab />', () => {
       );
 
       // Assert
-      const results = await axe(container);
-      expect(results).toHaveNoViolations();
+      await checkAccessibility(container);
     });
 
     it('is accessible when trial is disabled and no quota', async () => {
@@ -72,8 +71,7 @@ describe('<CloudTab />', () => {
       );
 
       // Assert
-      const results = await axe(container);
-      expect(results).toHaveNoViolations();
+      await checkAccessibility(container);
     });
 
     it('shows two sections, create cluster, and quota link when it has OSD quota', () => {

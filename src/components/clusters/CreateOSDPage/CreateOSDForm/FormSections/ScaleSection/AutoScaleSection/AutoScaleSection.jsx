@@ -164,8 +164,10 @@ class AutoScaleSection extends React.Component {
         isMultiAz,
         autoScaleMinNodesValue,
         defaultMinAllowed,
+        isHypershiftWizard,
       });
-      const defaultReplicas = isMultiAz ? (minAllowed / 3).toString() : minAllowed.toString();
+      const defaultReplicas =
+        isMultiAz && !isHypershiftWizard ? (minAllowed / 3).toString() : minAllowed.toString();
 
       change('min_replicas', defaultReplicas);
       change('max_replicas', defaultReplicas);
@@ -208,7 +210,7 @@ class AutoScaleSection extends React.Component {
         isMultiAz,
         autoScaleMinNodesValue: null,
         defaultMinAllowed,
-      }) / (isMultiAz ? 3 : 1)
+      }) / (isMultiAz && !isHypershiftWizard ? 3 : 1)
     );
   };
 

@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { render, screen, within, userEvent, axe } from '@testUtils';
+import { render, screen, within, checkAccessibility } from '@testUtils';
 
 import CancelClusterButton from './CancelClusterButton';
 
@@ -12,8 +12,7 @@ const cluster = {
 describe('<CancelClusterButton />', () => {
   it('is accessible by default', async () => {
     const { container } = render(<CancelClusterButton cluster={cluster} />);
-    const results = await axe(container);
-    expect(results).toHaveNoViolations();
+    await checkAccessibility(container);
   });
 
   it('hides modal shown by default', () => {
@@ -26,8 +25,7 @@ describe('<CancelClusterButton />', () => {
 
   it('shows modal after button click and is accessible', async () => {
     // Arrange
-    const user = userEvent.setup();
-    const { container } = render(<CancelClusterButton cluster={cluster} />);
+    const { container, user } = render(<CancelClusterButton cluster={cluster} />);
     expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
 
     // Act
@@ -35,14 +33,12 @@ describe('<CancelClusterButton />', () => {
 
     // Assert
     expect(await screen.findByRole('dialog')).toBeInTheDocument();
-    const results = await axe(container);
-    expect(results).toHaveNoViolations();
+    await checkAccessibility(container);
   });
 
   it('closes the modal on Close button click', async () => {
     // Arrange
-    const user = userEvent.setup();
-    render(<CancelClusterButton cluster={cluster} />);
+    const { user } = render(<CancelClusterButton cluster={cluster} />);
 
     // Act
     await user.click(screen.getByRole('button', { name: 'Cancel cluster creation' }));
@@ -56,8 +52,7 @@ describe('<CancelClusterButton />', () => {
 
   it('closes the modal on Cancel button click', async () => {
     // Arrange
-    const user = userEvent.setup();
-    render(<CancelClusterButton cluster={cluster} />);
+    const { user } = render(<CancelClusterButton cluster={cluster} />);
 
     // Act
     await user.click(screen.getByRole('button', { name: 'Cancel cluster creation' }));

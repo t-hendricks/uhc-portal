@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, screen, axe } from '@testUtils';
+import { render, screen, checkAccessibility } from '@testUtils';
 import { ClusterStatus } from './ClusterStatus';
 
 const cluster = {
@@ -45,8 +45,7 @@ describe('<ClusterStatus />', () => {
       const { container } = render(<ClusterStatus cluster={cluster} limitedSupport={false} />);
 
       // Assert
-      const results = await axe(container);
-      expect(results).toHaveNoViolations();
+      await checkAccessibility(container);
     });
 
     it('shows only the cluster-wide status', () => {
@@ -72,8 +71,7 @@ describe('<ClusterStatus />', () => {
       );
 
       // Assert
-      const results = await axe(container);
-      expect(results).toHaveNoViolations();
+      await checkAccessibility(container);
     });
 
     it('shows control plane and machine pools statuses', () => {

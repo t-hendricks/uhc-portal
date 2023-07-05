@@ -98,12 +98,14 @@ function ScaleSection({
   const nonAutoScaleNodeLabel = () => {
     const label = 'Compute node count';
 
-    if (isMultiAz) {
-      return `${label} (per zone)`;
-    }
     if (isHypershiftSelected && !inModal) {
       return `${label} (per machine pool)`;
     }
+
+    if (isMultiAz) {
+      return `${label} (per zone)`;
+    }
+
     return label;
   };
 
