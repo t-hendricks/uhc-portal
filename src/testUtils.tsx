@@ -2,9 +2,10 @@ import React from 'react';
 import { Provider } from 'react-redux';
 import { createStore, Store } from 'redux';
 import { render, RenderOptions } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import '@testing-library/jest-dom';
 
-import { toHaveNoViolations } from 'jest-axe';
+import { toHaveNoViolations, axe } from 'jest-axe';
 
 import { createBrowserHistory } from 'history';
 import { store } from './redux/store';
@@ -30,7 +31,7 @@ const renderWithState = (
   const Wrapper = ({ children }: { children: React.ReactNode }) => (
     <TestWrapper initialStore={newStore}>{children}</TestWrapper>
   );
-  return render(ui, { wrapper: Wrapper, ...options });
+  return { ...render(ui, { wrapper: Wrapper, ...options }), user: userEvent.setup() };
 };
 
 export * from '@testing-library/react';
@@ -39,14 +40,21 @@ export { renderWithState as render };
 
 /* ***** Items outside of React Test Library ************ */
 expect.extend(toHaveNoViolations);
-export { axe } from 'jest-axe'; // Accessibility testing
+
+export const checkAccessibility = async (container: HTMLElement | string) => {
+  const results = await axe(container);
+  expect(results).toHaveNoViolations();
+};
 
 export const insightsMock = () => {
   global.insights = {
     chrome: {
+      on: () => () => {},
+      appNavClick: () => {},
       auth: {
-        getUser: () => {},
-        getToken: () => {},
+        getUser: () => Promise.resolve({ data: {} }),
+        getToken: () => Promise.resolve(),
+        getOfflineToken: () => Promise.resolve({ data: { refresh_token: 'hello' } }),
       },
     },
   };

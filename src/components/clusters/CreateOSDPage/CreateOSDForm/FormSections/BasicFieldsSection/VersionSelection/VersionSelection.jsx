@@ -168,8 +168,7 @@ function VersionSelection({
       const versionPatch = Number(versionRawId.split('.')[2]);
       const minManagedPolicyVersionPatch = Number(MIN_MANAGED_POLICY_VERSION.split('.')[2]);
 
-      const isIncompatibleHostedVersion =
-        isHypershiftSelected &&
+      const isIncompatibleManagedVersion =
         hasManagedArnsSelected &&
         (versionName < minManagedPolicyVersionName ||
           (versionName === minManagedPolicyVersionName &&
@@ -179,7 +178,7 @@ function VersionSelection({
 
       const isIncompatibleVersion =
         (isRosa && !isValidRosaVersion(version.raw_id)) ||
-        isIncompatibleHostedVersion ||
+        isIncompatibleManagedVersion ||
         isHostedDisabled;
       hasIncompatibleVersions = hasIncompatibleVersions || isIncompatibleVersion;
 

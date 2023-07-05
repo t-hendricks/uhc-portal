@@ -3,7 +3,7 @@ import MockAdapter from 'axios-mock-adapter';
 import * as reactRedux from 'react-redux';
 import { MemoryRouter } from 'react-router-dom';
 import apiRequest from '~/services/apiRequest';
-import { screen, render, axe, userEvent, within, insightsMock } from '~/testUtils';
+import { screen, render, checkAccessibility, within, insightsMock } from '~/testUtils';
 
 import UpdateAllMachinePools from './UpdateAllMachinePools';
 
@@ -37,8 +37,8 @@ const expectUpdateButtonAbsence = (container?: HTMLElement) => {
   if (container) expect(container.firstChild).toBeNull();
 };
 
-const clickUpdateButton = async () => {
-  const user = userEvent.setup();
+// The type for the user isn't easily available
+const clickUpdateButton = async (user: any) => {
   await user.click(screen.getByRole('button', { name: updateButtonText }));
 };
 
@@ -300,13 +300,12 @@ describe('<UpdateNodePools />', () => {
       const { container } = render(<UpdateAllMachinePools />, {}, newState);
 
       expectUpdateButtonPresence();
-      const results = await axe(container);
-      expect(results).toHaveNoViolations();
+      await checkAccessibility(container);
     });
 
     it('shows update link  and control plane version if at least one machine pool is behind the control plane', async () => {
       // Arrange
-      const user = userEvent.setup();
+
       const newState = {
         ...defaultStore,
         machinePools: {
@@ -317,7 +316,7 @@ describe('<UpdateNodePools />', () => {
         },
       };
 
-      render(<UpdateAllMachinePools />, {}, newState);
+      const { user } = render(<UpdateAllMachinePools />, {}, newState);
       expectUpdateButtonPresence();
 
       // Act
@@ -357,14 +356,14 @@ describe('<UpdateNodePools />', () => {
         },
       };
 
-      render(<UpdateAllMachinePools />, {}, newState);
+      const { user } = render(<UpdateAllMachinePools />, {}, newState);
 
       expect(mock.history.patch.length).toBe(0);
       expect(dummyDispatch).toHaveBeenCalledTimes(0);
       expectUpdateButtonPresence();
 
       // ACT
-      await clickUpdateButton();
+      await clickUpdateButton(user);
 
       // ASSERT
       // Ensure single call to patch machine pool
@@ -393,8 +392,6 @@ describe('<UpdateNodePools />', () => {
       const dummyDispatch = jest.fn();
       useDispatchMock.mockReturnValue(dummyDispatch);
 
-      const user = userEvent.setup();
-
       const newState = {
         ...defaultStore,
         machinePools: {
@@ -405,7 +402,7 @@ describe('<UpdateNodePools />', () => {
         },
       };
 
-      const { container } = render(<UpdateAllMachinePools />, {}, newState);
+      const { container, user } = render(<UpdateAllMachinePools />, {}, newState);
 
       expect(mock.history.patch.length).toBe(0);
       expect(dummyDispatch).toHaveBeenCalledTimes(0);
@@ -413,7 +410,7 @@ describe('<UpdateNodePools />', () => {
       expect(screen.queryByRole('alert', { name: errorBannerHeader })).not.toBeInTheDocument();
 
       // ACT
-      await clickUpdateButton();
+      await clickUpdateButton(user);
 
       // ASSERT
       // Ensure two calls to patch machine pools
@@ -447,8 +444,7 @@ describe('<UpdateNodePools />', () => {
       ).toEqual('1234 - I am a bad server');
 
       // Check for accessibility
-      const results = await axe(container);
-      expect(results).toHaveNoViolations();
+      await checkAccessibility(container);
     });
 
     it('hides error messages when user clicks on the update machine pool links', async () => {
@@ -467,12 +463,16 @@ describe('<UpdateNodePools />', () => {
         },
       };
 
-      render(<UpdateAllMachinePools initialErrorMessage="This is an error" />, {}, newState);
+      const { user } = render(
+        <UpdateAllMachinePools initialErrorMessage="This is an error" />,
+        {},
+        newState,
+      );
       expectUpdateButtonPresence();
       expect(screen.getByRole('alert', { name: errorAlertLabel })).toBeInTheDocument();
 
       // ACT
-      await clickUpdateButton();
+      await clickUpdateButton(user);
 
       // ASSERT
       expect(screen.queryByRole('alert', { name: errorAlertLabel })).not.toBeInTheDocument();
@@ -501,11 +501,11 @@ describe('<UpdateNodePools />', () => {
           },
         },
       };
-      render(<UpdateAllMachinePools />, {}, newState);
+      const { user } = render(<UpdateAllMachinePools />, {}, newState);
       expectUpdateButtonPresence();
 
       // ACT
-      await clickUpdateButton();
+      await clickUpdateButton(user);
 
       // ASSERT
       expect(await screen.findByLabelText('Updating machine pools')).toBeInTheDocument();
