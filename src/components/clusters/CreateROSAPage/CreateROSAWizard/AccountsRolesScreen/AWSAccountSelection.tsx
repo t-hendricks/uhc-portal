@@ -29,6 +29,7 @@ import links from '~/common/installLinks.mjs';
 import { CloudAccount } from '~/types/accounts_mgmt.v1';
 import PopoverHint from '../../../../common/PopoverHint';
 import { hasContract } from './AWSBillingAccount/awsBillingAccountHelper';
+import { useAssociateAWSAccountDrawer } from './AssociateAWSAccountDrawer/AssociateAWSAccountDrawer';
 
 const AWS_ACCT_ID_PLACEHOLDER = 'Select an account';
 export const AWS_ACCOUNT_ROSA_LOCALSTORAGE_KEY = 'rosaAwsAccount';
@@ -56,7 +57,6 @@ export interface AWSAccountSelectionProps {
   extendedHelpText: string | ReactElement;
   accounts: CloudAccount[];
   selectedAWSAccountID?: string;
-  toggleAssociateAccountDrawer?: any;
   initialValue?: string;
   meta: {
     touched?: boolean;
@@ -67,6 +67,7 @@ export interface AWSAccountSelectionProps {
     text: string;
   };
   isBillingAccount?: boolean;
+  clearGetAWSAccountIDsResponse: () => void;
 }
 
 function AWSAccountSelection({
@@ -82,9 +83,9 @@ function AWSAccountSelection({
   extendedHelpText,
   selectedAWSAccountID,
   accounts,
-  toggleAssociateAccountDrawer,
   isBillingAccount = false,
   refresh,
+  clearGetAWSAccountIDsResponse,
 }: AWSAccountSelectionProps) {
   const [isOpen, setIsOpen] = useState(false);
   const associateAWSAccountBtnRef = createRef<HTMLInputElement>();
@@ -92,6 +93,7 @@ function AWSAccountSelection({
   const { onRefresh, text } = refresh;
   const { onChange } = inputProps;
   const ref = useRef<Select>(null);
+  const { openDrawer } = useAssociateAWSAccountDrawer();
 
   useEffect(() => {
     // only scroll to associateAWSAccountBtn when no AWS accounts
@@ -209,12 +211,12 @@ function AWSAccountSelection({
     [accounts, selectOptions],
   );
 
-  const openDrawer = useCallback(() => {
+  const onClick = useCallback(() => {
     // close dropdown
     setIsOpen(false);
     // will cause window reload on first time, then open assoc aws modal with new token
-    toggleAssociateAccountDrawer();
-  }, [setIsOpen, toggleAssociateAccountDrawer]);
+    openDrawer({ onClose: clearGetAWSAccountIDsResponse });
+  }, [openDrawer, setIsOpen]);
 
   const footer = useMemo<ReactElement>(() => {
     const btnProps: ButtonProps = isBillingAccount
@@ -224,9 +226,7 @@ function AWSAccountSelection({
           target: '_blank',
         }
       : {
-          onClick: () => {
-            openDrawer();
-          },
+          onClick,
         };
 
     return (
