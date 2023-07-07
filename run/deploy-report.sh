@@ -37,7 +37,7 @@ while IFS=',' read -r commitHash commitDate commitMessage; do
     echo -e "commitDescription=$commitDescription"
 
     # Pattern to match a assisted installer version bump/update MR
-    assistedInstallerRegex="^(Bump|Update).*openshift-assisted"
+    assistedInstallerRegex="^([Bb][Uu][Mm][Pp]|[Uu][Pp][Dd][Aa][Tt][Ee]).*openshift-assisted"
     if [[ $commitDescription =~ $assistedInstallerRegex ]]; then
       echo "Skipping Assisted Installer version bump/update."
       continue  # goto next MR
