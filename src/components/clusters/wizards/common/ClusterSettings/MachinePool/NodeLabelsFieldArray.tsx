@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { FieldArray } from 'formik';
 import classNames from 'classnames';
 
@@ -18,6 +18,10 @@ export interface NodeLabel {
 export const NodeLabelsFieldArray = () => {
   const { values } = useFormState();
   const nodeLabels: NodeLabel[] = values[FieldId.NodeLabels];
+  const hasCompleteNodeLabel = useMemo(
+    () => nodeLabels.some((nodeLabel) => nodeLabel.key && nodeLabel.value),
+    [nodeLabels],
+  );
 
   const validateNodeKey = (index: number) => (value: string) => {
     if (nodeLabels.length > 1) {
@@ -89,16 +93,19 @@ export const NodeLabelsFieldArray = () => {
                 </Grid>
               );
             })}
-            <GridItem>
-              <Button
-                onClick={() => push({ key: '', value: '' })}
-                icon={<PlusCircleIcon />}
-                variant="link"
-                isInline
-              >
-                Add label
-              </Button>
-            </GridItem>
+
+            {hasCompleteNodeLabel && (
+              <GridItem>
+                <Button
+                  onClick={() => push({ key: '', value: '' })}
+                  icon={<PlusCircleIcon />}
+                  variant="link"
+                  isInline
+                >
+                  Add additional label
+                </Button>
+              </GridItem>
+            )}
           </>
         )}
       />

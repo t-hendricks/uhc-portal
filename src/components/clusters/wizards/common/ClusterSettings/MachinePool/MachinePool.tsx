@@ -79,10 +79,10 @@ export const MachinePool = () => {
       onToggle={(isExpanded) => setIsNodeLabelsExpanded(isExpanded)}
       isExpanded={isNodeLabelsExpanded}
     >
-      <Title headingLevel="h3" className="pf-u-mb-md">
-        Node labels
-      </Title>
-
+      <Title headingLevel="h3">Node labels (optional)</Title>
+      <p className="pf-u-mb-md">
+        Configure labels that will apply to all labels in this machine pool
+      </p>
       <NodeLabelsFieldArray />
     </ExpandableSection>
   );
