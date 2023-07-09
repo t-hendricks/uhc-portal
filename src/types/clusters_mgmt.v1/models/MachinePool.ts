@@ -3,9 +3,9 @@
 /* eslint-disable */
 
 import type { AWSMachinePool } from './AWSMachinePool';
-import type { Cluster } from './Cluster';
 import type { MachinePoolAutoscaling } from './MachinePoolAutoscaling';
 import type { MachinePoolSecurityGroupFilter } from './MachinePoolSecurityGroupFilter';
+import type { RootVolume } from './RootVolume';
 import type { Taint } from './Taint';
 
 /**
@@ -38,10 +38,6 @@ export type MachinePool = {
    */
   availability_zones?: Array<string>;
   /**
-   * ID used to identify the cluster that this machinepool is attached to.
-   */
-  cluster?: Cluster;
-  /**
    * The instance type of Nodes to create.
    */
   instance_type?: string;
@@ -54,6 +50,10 @@ export type MachinePool = {
    * Replicas and autoscaling cannot be used together.
    */
   replicas?: number;
+  /**
+   * The machine root volume capabilities.
+   */
+  root_volume?: RootVolume;
   /**
    * List of security groups to be applied to MachinePool (Optional)
    */

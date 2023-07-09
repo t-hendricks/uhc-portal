@@ -47,6 +47,10 @@ export type Version = {
    */
   end_of_life_timestamp?: string;
   /**
+   * HostedControlPlaneEnabled indicates whether this version can be used to create HCP clusters.
+   */
+  hosted_control_plane_enabled?: boolean;
+  /**
    * RawID is the id of the version - without channel group and prefix.
    */
   raw_id?: string;
