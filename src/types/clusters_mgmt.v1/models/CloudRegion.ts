@@ -25,6 +25,17 @@ export type CloudRegion = {
    */
   ccs_only?: boolean;
   /**
+   * (GCP only) Comma-separated list of KMS location IDs that can be used with this region.
+   * E.g. "global,nam4,us". Order is not guaranteed.
+   */
+  kms_location_id?: string;
+  /**
+   * (GCP only) Comma-separated list of display names corresponding to KMSLocationID.
+   * E.g. "Global,nam4 (Iowa, South Carolina, and Oklahoma),US". Order is not guaranteed but will match KMSLocationID.
+   * Unfortunately, this API doesn't allow robust splitting - Contact ocm-feedback@redhat.com if you want to rely on this.
+   */
+  kms_location_name?: string;
+  /**
    * Link to the cloud provider that the region belongs to.
    */
   cloud_provider?: CloudProvider;
@@ -33,9 +44,13 @@ export type CloudRegion = {
    */
   display_name?: string;
   /**
-   * Whether the region is enabled for deploying an OSD cluster.
+   * Whether the region is enabled for deploying a managed cluster.
    */
   enabled?: boolean;
+  /**
+   * Whether the region is an AWS GovCloud region.
+   */
+  govcloud?: boolean;
   /**
    * Human friendly identifier of the region, for example `us-east-1`.
    *
@@ -51,12 +66,4 @@ export type CloudRegion = {
    * Whether the region supports multiple availability zones.
    */
   supports_multi_az?: boolean;
-  /**
-   * kms_location_name
-   */
-  kms_location_name?: string;
-  /**
-   * kms_location_id
-   */
-  kms_location_id?: string;
 };
