@@ -36,7 +36,7 @@ const ocpTableRows = [
   ],
   [
     <>
-      <Link to="/install/ibmz">IBM zSystems (s390x)</Link>
+      <Link to="/install/ibmz">IBM Z (s390x)</Link>
     </>,
     'Full stack automation and pre-existing infrastructure',
   ],

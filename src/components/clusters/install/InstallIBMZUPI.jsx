@@ -23,14 +23,14 @@ export class InstallIBMZUPI extends Component {
         path={[
           { label: 'Clusters' },
           { label: 'Cluster Type', path: '/create' },
-          { label: 'IBM zSystems (s390x)', path: '/install/ibmz' },
+          { label: 'IBM Z (s390x)', path: '/install/ibmz' },
           { label: 'User-provisioned infrastructure' },
         ]}
       />
     );
 
     return (
-      <AppPage title="Install OpenShift 4 | Red Hat OpenShift Cluster Manager | IBM zSystems (s390x)">
+      <AppPage title="Install OpenShift 4 | Red Hat OpenShift Cluster Manager | IBM Z (s390x)">
         <PageTitle
           title={instructionsMapping.baremetal.s390x.upi.title}
           breadcrumbs={breadcrumbs}
