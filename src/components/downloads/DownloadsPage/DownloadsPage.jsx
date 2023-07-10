@@ -599,13 +599,13 @@ const installationRows = (expanded, setExpanded, selections, setSelections, tool
         {...commonProps}
         tool={tools.IBMZINSTALLER}
         channel={channels.STABLE}
-        name="OpenShift for IBM zSystems (s390x) Installer"
+        name="OpenShift for IBM Z (s390x) Installer"
         description={
           <TextContent>
             <Text>
               Download and extract your operating system&apos;s installation program and place the
               file in the directory where you&apos;ll store your configuration details. Then, create
-              clusters on supported IBM zSystems (s390x) infrastructure using our{' '}
+              clusters on supported IBM Z (s390x) infrastructure using our{' '}
               <ExternalLink href={links.INSTALL_DOCS_ENTRY}>documentation</ExternalLink> as a guide.
             </Text>
             <Text>
