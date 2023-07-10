@@ -2,9 +2,10 @@
 # This script starts a podman pod that runs the Cypress tests.
 # Specially designed for QE related pipeline runs.
 
-#TODO: Replace them with QE specific credentials for tests.
-export CYPRESS_TEST_WITHQUOTA_USER="${CYPRESS_TEST_WITHQUOTA_USER:-$TEST_SELENIUM_WITHQUOTA_USER}"
-export CYPRESS_TEST_WITHQUOTA_PASSWORD="${CYPRESS_TEST_WITHQUOTA_PASSWORD:-$TEST_SELENIUM_WITHQUOTA_PASSWORD}"
+export CYPRESS_TEST_WITHQUOTA_USER="${CYPRESS_TEST_WITHQUOTA_USER:-TEST_CYPRESS_QE_ORGADMIN_USER}"
+export CYPRESS_TEST_WITHQUOTA_PASSWORD="${CYPRESS_TEST_WITHQUOTA_PASSWORD:-TEST_CYPRESS_QE_ORGADMIN_PASSWORD}"
+export CYPRESS_TEST_QE_ORGADMIN_OFFLINE_TOKEN="${CYPRESS_TEST_QE_ORGADMIN_OFFLINE_TOKEN:-TEST_CYPRESS_QE_ORGADMIN_OFFLINE_TOKEN}"
+
 export ELECTRON_RUN_AS_NODE=1
 
 # Check that the required environment variables are set:
@@ -14,6 +15,10 @@ if [ -z "${CYPRESS_TEST_WITHQUOTA_USER}" ]; then
 fi
 if [ -z "${CYPRESS_TEST_WITHQUOTA_PASSWORD}" ]; then
   echo "Environment variable 'CYPRESS_TEST_WITHQUOTA_PASSWORD' is mandatory."
+  exit 1
+fi
+if [ -z "${CYPRESS_TEST_QE_ORGADMIN_OFFLINE_TOKEN}" ]; then
+  echo "Environment variable 'CYPRESS_TEST_QE_ORGADMIN_OFFLINE_TOKEN' is mandatory."
   exit 1
 fi
 
@@ -101,6 +106,7 @@ browser_container_id=$(
     --env "CYPRESS_BASE_URL=https://${ENVIRONMENT}/openshift/" \
     --env "CYPRESS_TEST_WITHQUOTA_USER=${CYPRESS_TEST_WITHQUOTA_USER}" \
     --env "CYPRESS_TEST_WITHQUOTA_PASSWORD=${CYPRESS_TEST_WITHQUOTA_PASSWORD}" \
+    --env "CYPRESS_TEST_QE_ORGADMIN_OFFLINE_TOKEN=${CYPRESS_TEST_QE_ORGADMIN_OFFLINE_TOKEN}" \
     --env NO_COLOR=1 \
     --env "CYPRESS_grepTags=${TAGS}" \
     --entrypoint=cypress \
