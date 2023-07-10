@@ -6,6 +6,8 @@ import ReduxFormKeyValueList from './ReduxFormKeyValueList/ReduxFormKeyValueList
 import ReduxFormTaints from './ReduxFormTaints/ReduxFormTaints';
 import ReduxFormTagsInput from './ReduxFormTagsInput';
 import { ReduxSelectDropdown } from './ReduxSelectDropdown';
+import ReduxFieldArray from './ReduxFieldArray';
+import RenderCompoundArrayFields from './RenderCompoundArrayFields';
 
 export {
   ReduxCheckbox,
@@ -16,4 +18,6 @@ export {
   ReduxFormKeyValueList,
   ReduxFormTaints,
   ReduxFormTagsInput,
+  ReduxFieldArray,
+  RenderCompoundArrayFields,
 };

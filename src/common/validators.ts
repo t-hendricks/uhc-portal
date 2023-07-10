@@ -992,22 +992,30 @@ const validateARN = (value: string): string | undefined => {
  *
  * @param {*} values array of value objects, from redux-form
  */
-const atLeastOneRequired = (fieldName: string) => (fields: { name: string }[]) => {
-  if (!fields) {
-    return undefined;
-  }
-  let nonEmptyValues = 0;
-  fields.forEach((field) => {
-    const content = get(field, fieldName, null);
-    if (content && content.trim() !== '') {
-      nonEmptyValues += 1;
+const atLeastOneRequired =
+  (fieldName: string, isEmpty?: (value: unknown) => boolean) => (fields: { name: string }[]) => {
+    if (!fields) {
+      return undefined;
     }
-  });
-  if (nonEmptyValues === 0) {
-    return 'At least one is required.';
-  }
-  return undefined;
-};
+    let nonEmptyValues = 0;
+    fields.forEach((field) => {
+      if (isEmpty) {
+        if (!isEmpty(field)) {
+          nonEmptyValues += 1;
+        }
+      } else {
+        const content = get(field, fieldName, null);
+        if (content && content.trim() !== '') {
+          nonEmptyValues += 1;
+        }
+      }
+    });
+
+    if (nonEmptyValues === 0) {
+      return 'At least one is required.';
+    }
+    return undefined;
+  };
 
 const awsNumericAccountID = (input: string): string | undefined => {
   if (!input) {
@@ -1381,13 +1389,40 @@ const validateHTPasswdPassword = (
   return errors;
 };
 
+const validateUniqueHTPasswdUsername = (fields: { name: string }[]) => {
+  if (!fields) {
+    return undefined;
+  }
+
+  const dedup = new Set(fields.map((field) => get(field, 'username', null)));
+  if (dedup.size !== fields.length) {
+    return 'Usernames must be unique only.';
+  }
+
+  return undefined;
+};
+
 const validateHTPasswdUsername = (username: string): string | undefined => {
   if (
     indexOf(username, '%') !== -1 ||
     indexOf(username, ':') !== -1 ||
     indexOf(username, '/') !== -1
   ) {
-    return 'Username contains disallowed characters.';
+    return 'Username must not contain /, :, or %.';
+  }
+  return undefined;
+};
+
+const validateHTPasswdPasswordConfirm = (
+  passwordConfirm: string,
+  allValues: { [key: string]: string },
+  _unused: unknown,
+  confirmField: string,
+): string | undefined => {
+  const pwdField = confirmField.substring(0, confirmField.lastIndexOf('-confirm'));
+  const password = get(allValues, pwdField);
+  if (passwordConfirm !== password) {
+    return 'The passwords do not match';
   }
   return undefined;
 };
@@ -1506,6 +1541,8 @@ export {
   validateAWSKMSKeyARN,
   validateHTPasswdPassword,
   validateHTPasswdUsername,
+  validateUniqueHTPasswdUsername,
+  validateHTPasswdPasswordConfirm,
   validateUniqueNodeLabel,
   validateLabelKey,
   validateLabelValue,
