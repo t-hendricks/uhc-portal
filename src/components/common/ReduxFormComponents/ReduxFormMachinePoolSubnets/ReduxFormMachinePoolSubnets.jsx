@@ -20,7 +20,7 @@ const ReduxFormMachinePoolSubnets = ({ fields, selectedVPCID, meta: { warning } 
       Machine pool
     </GridItem>
     <GridItem span={4} className="pf-c-form__label pf-c-form__label-text">
-      Private subnet ID
+      Private subnet name
     </GridItem>
     <GridItem span={6} />
 

@@ -122,7 +122,7 @@ class AddMachinePoolModal extends Component {
                       name="subnet"
                       validate={validateRequiredMachinePoolsSubnet}
                       privacy="private"
-                      label="Private subnet ID"
+                      label="Private subnet name"
                       isRequired
                     />
                   </GridItem>
