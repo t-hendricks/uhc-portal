@@ -197,7 +197,7 @@ function NetworkScreen(props) {
                     <Field
                       component={SubnetSelectField}
                       name="cluster_privacy_public_subnet"
-                      label="Public subnet ID"
+                      label="Public subnet name"
                       className="pf-u-mt-md pf-u-ml-lg"
                       isRequired
                       validate={validateRequiredMachinePoolsSubnet}
