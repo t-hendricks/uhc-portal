@@ -1,14 +1,17 @@
 import React from 'react';
 import './AWSLogo.scss';
 
-const AWSLogo = () => (
+const AWSLogo = (height, width, className) => (
   // eslint-disable-next-line max-len
   <svg
+    className={className}
+    alt="Amazon Web Service logo"
     role="img"
     title="AWS"
     version="1.1"
     id="Layer_1"
-    height=".9em"
+    height={height || '.9em'}
+    width={width}
     viewBox="0 0 304 182"
     style={{ enableBackground: '0 0 304 182' }}
   >
