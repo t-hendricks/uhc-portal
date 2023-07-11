@@ -1921,15 +1921,15 @@
     "@nodelib/fs.scandir" "2.1.4"
     fastq "^1.6.0"
 
-"@openshift-assisted/locales@2.21.8":
-  version "2.21.8"
-  resolved "https://registry.yarnpkg.com/@openshift-assisted/locales/-/locales-2.21.8.tgz#09f348e26a67ff0710637a0ea74280bb076ca2e6"
-  integrity sha512-iueHOZpebU77SOvIMxMyUEV0iix6wD6NOfHJvTiPHeGX2euy1JWk3e8fc+eG3AOZh7eu4GtVas1ch0dG1pWmCA==
+"@openshift-assisted/locales@2.22.2":
+  version "2.22.2"
+  resolved "https://registry.yarnpkg.com/@openshift-assisted/locales/-/locales-2.22.2.tgz#ee4b81c85aee3f90f007f716d6616d0eaf5832e9"
+  integrity sha512-197C1CtvgBDPF5+WSWO0i//6/6fV6XzcpPqED+SJrnvBocu8pZk6acyIFv7wcs7vP8/SNrtYL+rb/7o+XSZklQ==
 
-"@openshift-assisted/ui-lib@2.21.8":
-  version "2.21.8"
-  resolved "https://registry.yarnpkg.com/@openshift-assisted/ui-lib/-/ui-lib-2.21.8.tgz#b3d31e00651ec86234a0f756b34f965e62abb532"
-  integrity sha512-SjHmnSqFBIsLWPnuoNbOpu8W15/F3Gl9iBxnsBgRnFylUkSMSjhh9IIUWlZ+tUUUgyLDzvLJcl/NU1kNyAubJg==
+"@openshift-assisted/ui-lib@2.22.2":
+  version "2.22.2"
+  resolved "https://registry.yarnpkg.com/@openshift-assisted/ui-lib/-/ui-lib-2.22.2.tgz#4b2cabc3d064153a52bbebdce297612cc194febd"
+  integrity sha512-cQ6RgaBlWLJK5AYPbb0/RTp0Y+zhlWZ7gg1Ds6saVfjx4k8kxW2leRGot4JCaMj8lFpRLW7acYfM5LCyKuXW3Q==
   dependencies:
     axios-case-converter "^0.11.1"
     camel-case "^4.1.2"
@@ -1949,7 +1949,6 @@
     prism-react-renderer "^1.1.1"
     react-error-boundary "^3.1.4"
     react-measure "^2.5.2"
-    semver "^7.5.2"
     swr "^2"
     unique-names-generator "^4.2.0"
 
@@ -12094,13 +12093,6 @@ semver@^7.3.8:
   version "7.5.0"
   resolved "https://registry.yarnpkg.com/semver/-/semver-7.5.0.tgz#ed8c5dc8efb6c629c88b23d41dc9bf40c1d96cd0"
   integrity sha512-+XC0AD/R7Q2mPSRuy2Id0+CGTZ98+8f+KvwirxOKIEyid+XSx6HbC63p+O4IndTHuX5Z+JxQ0TghCkO5Cg/2HA==
-  dependencies:
-    lru-cache "^6.0.0"
-
-semver@^7.5.2:
-  version "7.5.2"
-  resolved "https://registry.yarnpkg.com/semver/-/semver-7.5.2.tgz#5b851e66d1be07c1cdaf37dfc856f543325a2beb"
-  integrity sha512-SoftuTROv/cRjCze/scjGyiDtcUyxw1rgYQSZY7XTmtR5hX+dm76iDbTH8TkLPHCQmlbQVSSbNZCPM2hb0knnQ==
   dependencies:
     lru-cache "^6.0.0"
 
