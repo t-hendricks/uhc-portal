@@ -871,34 +871,36 @@ const tokenRows = (expanded, setExpanded, toolRefs, token) => (
       }
     />
 
-    <ExpandableRowPair
-      expanded={expanded}
-      setExpanded={setExpanded}
-      toolRefs={toolRefs}
-      expandKey={expandKeys.TOKEN_OCM}
-      cells={[
-        <Td>OpenShift Cluster Manager API Token</Td>,
-        <Td>
-          <AlignRight>
-            <Link to="/token">
-              <Button
-                variant="secondary"
-                icon={<ArrowRightIcon />}
-                data-testid="view-api-token-btn"
-                iconPosition="right"
-              >
-                View API token
-              </Button>
-            </Link>
-          </AlignRight>
-        </Td>,
-      ]}
-      description={
-        <Text>
-          Use your API token to authenticate against your OpenShift Cluster Manager account.
-        </Text>
-      }
-    />
+    {!isRestrictedEnv && (
+      <ExpandableRowPair
+        expanded={expanded}
+        setExpanded={setExpanded}
+        toolRefs={toolRefs}
+        expandKey={expandKeys.TOKEN_OCM}
+        cells={[
+          <Td>OpenShift Cluster Manager API Token</Td>,
+          <Td>
+            <AlignRight>
+              <Link to="/token">
+                <Button
+                  variant="secondary"
+                  icon={<ArrowRightIcon />}
+                  data-testid="view-api-token-btn"
+                  iconPosition="right"
+                >
+                  View API token
+                </Button>
+              </Link>
+            </AlignRight>
+          </Td>,
+        ]}
+        description={
+          <Text>
+            Use your API token to authenticate against your OpenShift Cluster Manager account.
+          </Text>
+        }
+      />
+    )}
   </>
 );
 
