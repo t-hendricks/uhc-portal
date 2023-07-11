@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 import http.server
+import socket
 import urllib.parse
 import os.path
 import sys
@@ -190,13 +191,17 @@ def main():
     # earlier versions serve current dir.
     os.chdir(os.path.dirname(os.path.realpath(__file__)))
     output_line_buffering()
-    server_address = ('localhost', 8010)
     try:
         # new in Python 3.7
         Server = http.server.ThreadingHTTPServer
     except AttributeError:
         Server = http.server.HTTPServer
-    httpd = Server(server_address, Handler)
+
+    class ServerV6(Server):
+      # Handles both IPv4 & IPv6 localhost with '::' - https://stackoverflow.com/a/32621449
+      address_family = socket.AF_INET6
+
+    httpd = ServerV6(('::', 8010), Handler)
     print("Listening on http://localhost:8010")
     httpd.serve_forever()
 
