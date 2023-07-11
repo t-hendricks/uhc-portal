@@ -157,6 +157,7 @@ exports[`<Quota /> OSDSubscriptionCard should render 1`] = `
 exports[`<Quota /> OSDSubscriptionTable should render 1`] = `
 <Fragment>
   <Table
+    actionsMenuAppendTo="inline"
     aria-label="Quota Table"
     borders={true}
     canCollapseAll={false}
