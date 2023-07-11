@@ -112,3 +112,10 @@ $ocm-c-marketing-banner--breakpoint-map: build-breakpoint-map();
     margin-top: var(--pf-global--spacer--md);
   }
 }
+
+#create-cluster-card-image {
+  height: 12em;
+  width: 18em;
+  padding-right: 1em;
+  padding-top: 1em;
+}
