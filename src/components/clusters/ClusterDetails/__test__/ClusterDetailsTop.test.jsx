@@ -82,6 +82,23 @@ describe('<ClusterDetailsTop />', () => {
     });
   });
 
+  it('should show expiration alert based on expiration_time', () => {
+    const { cluster } = fixtures.OSDTrialClusterDetails;
+    const expDate = new Date();
+    expDate.setDate(expDate.getDate() - (365 * 2 + 1)); // should have expired 2 years ago
+
+    const expirationTimestamp = expDate.toISOString();
+    cluster.subscription.trial_end_date = '';
+    cluster.subscription.billing_expiration_date = '';
+    cluster.expiration_timestamp = expirationTimestamp;
+    wrapper.setProps({ cluster }, () => {
+      const alert = wrapper.find('ExpirationAlert');
+      expect(alert.length).toEqual(1);
+      expect(alert.props()).toBeTruthy();
+      expect(alert.props().expirationTimestamp).toBe(expirationTimestamp);
+    });
+  });
+
   it('should show expiration alert for OSDTrial', () => {
     const { cluster } = fixtures.OSDTrialClusterDetails;
     const expDate = new Date();
