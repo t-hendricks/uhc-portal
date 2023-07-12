@@ -26,6 +26,7 @@ import { OutlinedQuestionCircleIcon } from '@patternfly/react-icons';
 import { isSupportedMinorVersion } from '~/common/helpers';
 import { useOCPLifeCycleStatusData } from '~/components/releases/hooks';
 import { MIN_MANAGED_POLICY_VERSION } from '~/components/clusters/CreateROSAPage/CreateROSAWizard/rosaConstants';
+import { RosaCliCommand } from '~/components/clusters/CreateROSAPage/CreateROSAWizard/AccountsRolesScreen/constants/cliCommands';
 import InstructionCommand from '../../../../../../common/InstructionCommand';
 import ErrorBox from '../../../../../../common/ErrorBox';
 
@@ -54,7 +55,17 @@ function VersionSelection({
     return acc;
   }, {});
   const isValidRosaVersion = React.useCallback(
-    (version) => isSupportedMinorVersion(version, rosaMaxOSVersion),
+    (version) => isSupportedMinorVersion(version.raw_id, rosaMaxOSVersion) && version.rosa_enabled,
+    [rosaMaxOSVersion],
+  );
+
+  const isValidHypershiftVersion = React.useCallback(
+    // rosaMaxOSVersion - is actually the max version allowed by the chosen AccountRoles
+    // if Hypershift is used outside of ROSA, the logic to determine the max version (aka rosaMaxOSVersion)
+    // may need to change
+    (version) =>
+      isSupportedMinorVersion(version.raw_id, rosaMaxOSVersion) &&
+      version.hosted_control_plane_enabled,
     [rosaMaxOSVersion],
   );
 
@@ -82,7 +93,9 @@ function VersionSelection({
         <TextListItem className="pf-u-mb-sm">
           <Text component={TextVariants.p} className="pf-u-mb-sm">
             <InstructionCommand textAriaLabel="Copyable ROSA create account-roles command">
-              rosa create account-roles
+              {isHypershiftSelected
+                ? RosaCliCommand.CreateAccountRolesHCP
+                : RosaCliCommand.CreateAccountRoles}
             </InstructionCommand>
           </Text>
         </TextListItem>
@@ -104,18 +117,23 @@ function VersionSelection({
 
   useEffect(() => {
     if (versions.length && !selectedClusterVersion?.raw_id) {
-      const defaultVersionIndex = versions.findIndex((version) => version.default === true);
-      const defaultRosaVersionIndex = isRosa
-        ? versions.findIndex((version) => isValidRosaVersion(version.raw_id))
-        : -1;
-      const defaultRosaVersionFound = defaultRosaVersionIndex !== -1;
-      if (isRosa && !defaultRosaVersionFound) {
+      const defaultVersion = versions.find((version) => version.default === true);
+
+      const defaultRosaVersion = isRosa && versions.find((version) => isValidRosaVersion(version));
+
+      const defaultHypershiftVersion =
+        isHypershiftSelected && versions.find((version) => isValidHypershiftVersion(version));
+
+      if ((isRosa && !defaultRosaVersion) || (isHypershiftSelected && !defaultHypershiftVersion)) {
         setRosaVersionError(true);
         return;
       }
-      // default to max rosa version supported, version.default, or first version in list
-      const versionIndex = defaultRosaVersionFound ? defaultRosaVersionIndex : defaultVersionIndex;
-      input.onChange(versions[versionIndex !== -1 ? versionIndex : 0]);
+
+      // default to max: hypershift version supported (if hypershift), rosa version supported, version.default, or first version in list
+      const version =
+        defaultHypershiftVersion || defaultRosaVersion || defaultVersion || versions[0];
+
+      input.onChange(version);
     }
   }, [
     versions,
@@ -177,7 +195,7 @@ function VersionSelection({
       const isHostedDisabled = isHypershiftSelected && !hostedEnabled;
 
       const isIncompatibleVersion =
-        (isRosa && !isValidRosaVersion(version.raw_id)) ||
+        (isRosa && !isValidRosaVersion(version)) ||
         isIncompatibleManagedVersion ||
         isHostedDisabled;
       hasIncompatibleVersions = hasIncompatibleVersions || isIncompatibleVersion;
