@@ -7,7 +7,7 @@ Fetches cluster info from API into mockdata/ files.
 Happily overwrites any existing file!  Use git to undo :-P
 
 The set of paths requested is likely to get outdated with time.
-Please open in UI afterwards, look for 404 errors, and update this script.
+Please open in UI afterwards, look for 404 errors, and update these record-*.sh scripts.
 END-OF-USAGE
   exit 2
 fi
@@ -88,33 +88,14 @@ else
 fi
 
 echo
-echo "# Trying to get CLUSTER's account & org (may need UHCSupport role):"
-account_href=$(jq .creator.href "mockdata/$subscription_href.json" --raw-output)
-if LOG_PREFIX+="  " mockdata/record.sh "$account_href"; then
-  cp -v "mockdata/$account_href.json" "mockdata/api/accounts_mgmt/v1/current_account.json"
-else
-  echo "# Falling back to YOUR account & org:"
-  LOG_PREFIX+="  " record "/api/accounts_mgmt/v1/current_account"
-fi
-
-org_href=$(jq .organization.href "mockdata/api/accounts_mgmt/v1/current_account.json" --raw-output)
-LOG_PREFIX+="    " record "$org_href" --parameter=fetchCapabilities=true
-LOG_PREFIX+="    " record "$org_href/quota_cost" --parameter=fetchRelatedResources=true --parameter=size=-1
-
-echo
-echo "# Global data"
-request "" "/api/clusters_mgmt/v1/version_gates" --parameter=size=-1
-
-record "/api/clusters_mgmt/v1/cloud_providers" --parameter=size=-1 --parameter=fetchRegions=true
-# Not fetching sub-resources (specific provider / regions collection / specific region) —
-# not currently queried by UI, would duplicate cloud_providers.json and be a chore to maintain.
-
-record "/api/clusters_mgmt/v1/limited_support_reason_templates" --parameter=size=-1
-
 mockdata/regenerate-clusters.json.sh || true
 
-git status --short --untracked-files=all mockdata/
-
 echo
-echo "NOTE: Overwrote current_account.json to let you see fetched org & quota."
-echo "      Normally you DO NOT want to commit it."
+creator_id="$(jq .creator.id "mockdata/$subscription_href.json" --raw-output)"
+if
+  echo "# Trying to get CLUSTER's account & org (may need UHCSupport role):"
+  ! LOG_PREFIX+="  " OCM_ACCOUNT_ID="$creator_id" mockdata/record-global-data.sh
+then
+  echo "# Falling back to YOUR account & org:"
+  LOG_PREFIX+="  " mockdata/record-global-data.sh
+fi
