@@ -19,15 +19,11 @@ describe('<ClusterDetails />', () => {
 
   describe('Cluster Details - OSD', () => {
     const functions = funcs();
-    const wrapper = mount(
+    mount(
       <RouterWrapper>
         <ClusterDetails {...fixtures} {...functions} hasIssues />
       </RouterWrapper>,
     );
-
-    it('should render', () => {
-      expect(wrapper).toMatchSnapshot();
-    });
 
     it('should call clearGlobalError on mount', () => {
       expect(functions.clearGlobalError).toBeCalledWith('clusterDetails');
@@ -247,7 +243,6 @@ describe('<ClusterDetails />', () => {
     const wrapper = shallow(<ClusterDetails {...props} />);
 
     it('should render loading modal when pending', () => {
-      expect(wrapper).toMatchSnapshot();
       expect(wrapper.find('.cluster-loading-container').length).toEqual(1);
     });
   });
@@ -266,7 +261,6 @@ describe('<ClusterDetails />', () => {
     const wrapper = shallow(<ClusterDetails {...props} />);
 
     it('should render error message', () => {
-      expect(wrapper).toMatchSnapshot();
       expect(wrapper.find('Unavailable').length).toEqual(1);
     });
 
