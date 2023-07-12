@@ -60,7 +60,7 @@ const clusterDetails = {
     display_name: 'test-liza',
     creation_timestamp: '2021-01-10T15:17:16.278663Z',
     activity_timestamp: '2021-01-11T11:55:29Z',
-    expiration_timestamp: '2021-01-12T03:17:14.999204Z',
+    expiration_timestamp: '',
     cloud_provider: {
       kind: 'CloudProviderLink',
       id: 'aws',
