@@ -41,6 +41,10 @@ function request {
   try_request "$@" || return 0
 }
 
+echo ENV: $(ocm config get url)
+echo WHOAMI: $(ocm whoami | jq '.username, .organization.href')
+echo
+
 subscription_id="$1"
 subscription_href="/api/accounts_mgmt/v1/subscriptions/$subscription_id"
 
