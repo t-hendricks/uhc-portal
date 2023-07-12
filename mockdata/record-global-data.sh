@@ -41,9 +41,15 @@ org_href=$(jq .organization.href "mockdata/api/accounts_mgmt/v1/current_account.
 record "$org_href" --parameter=fetchCapabilities=true
 LOG_PREFIX+="  " record "$org_href/quota_cost" --parameter=fetchRelatedResources=true --parameter=size=-1
 
+# In ROSA wizard, additionally filtered by "aws.account_id" but here grab everything.
+record "/api/clusters_mgmt/v1/oidc_configs" --parameter=size=-1
+
 echo
 echo "# Global data"
 record "/api/clusters_mgmt/v1/version_gates" --parameter=size=-1
+
+# In ROSA wizard, versions are additionally filtered by "AND rosa_enabled='t'", can't reflect that here.
+record "/api/clusters_mgmt/v1/versions" --parameter=search="enabled='t' AND channel_group='stable'" --parameter=order="end_of_life_timestamp desc" --parameter=size=-1
 
 record "/api/clusters_mgmt/v1/cloud_providers" --parameter=size=-1 --parameter=fetchRegions=true
 # Not fetching sub-resources (specific provider / regions collection / specific region) —
