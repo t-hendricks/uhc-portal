@@ -2,12 +2,12 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { PageSection } from '@patternfly/react-core';
+import { AppPage } from '~/components/App/AppPage';
 import Breadcrumbs from '../../common/Breadcrumbs';
 import { tollboothActions } from '../../../redux/actions';
 import instructionsMapping from './instructions/instructionsMapping';
 import OCPInstructions from './instructions/OCPInstructions';
 import PageTitle from '../../common/PageTitle';
-import { AppPage } from '~/components/App/AppPage';
 
 export class InstallMultiAWSIPI extends Component {
   componentDidMount() {

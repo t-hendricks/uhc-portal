@@ -10,9 +10,9 @@ import {
   Title,
 } from '@patternfly/react-core';
 import React from 'react';
+import ExternalLink from '~/components/common/ExternalLink';
 import OpenShiftProductIcon from '../../../../styles/images/OpenShiftProductIcon.svg';
 import docLinks from '../../../../common/installLinks.mjs';
-import ExternalLink from '~/components/common/ExternalLink';
 
 type Props = {
   children: React.ReactNode;

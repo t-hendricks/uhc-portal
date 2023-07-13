@@ -13,13 +13,13 @@ import { Link } from 'react-router-dom';
 import { ArrowRightIcon } from '@patternfly/react-icons';
 import * as OCM from '@openshift-assisted/ui-lib/ocm';
 
+import ExternalLink from '~/components/common/ExternalLink';
 import RedHatLogo from '../../../styles/images/Logo-RedHat-Hat-Color-RGB.png';
 import IBMCloudLogo from '../../../styles/images/ibm_cloud-icon.png';
 import MicrosoftLogo from '../../../styles/images/Microsoft_logo.svg';
 import AWSLogo from '../../../styles/images/AWS.png';
 import links from './CreateClusterConsts';
 import CreateClusterDropDown from './CreateClusterDropDown';
-import ExternalLink from '~/components/common/ExternalLink';
 
 const { TechnologyPreview, PreviewBadgePosition } = OCM;
 

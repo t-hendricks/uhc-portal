@@ -1,4 +1,6 @@
 import { AxiosResponse } from 'axios';
+import { ViewOptions } from '~/types/types';
+import { ClusterLogList } from '~/types/service_logs.v1';
 import { FULFILLED_ACTION, REJECTED_ACTION } from '../reduxHelpers';
 import {
   clustersConstants,
@@ -14,8 +16,6 @@ import type { PromiseActionType } from '../types';
 import type { DashboardsAction } from '../actions/dashboardsActions';
 import type { ClusterAction } from '../actions/clustersActions';
 import type { SubscriptionsAction } from '../actions/subscriptionsActions';
-import { ViewOptions } from '~/types/types';
-import { ClusterLogList } from '~/types/service_logs.v1';
 
 type ViewState = ViewOptions;
 

@@ -3,9 +3,9 @@ import { Title } from '@patternfly/react-core';
 import { ExclamationCircleIcon } from '@patternfly/react-icons';
 // eslint-disable-next-line camelcase
 import { global_danger_color_100 } from '@patternfly/react-tokens';
+import { ErrorState } from '~/types/types';
 import { formatErrorDetails } from '../../../common/errors';
 import Modal from '../Modal/Modal';
-import { ErrorState } from '~/types/types';
 
 type Props = {
   title: string;

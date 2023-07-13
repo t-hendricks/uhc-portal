@@ -4,12 +4,12 @@ import get from 'lodash/get';
 import { Button, Flex, Popover } from '@patternfly/react-core';
 
 import { OutlinedQuestionCircleIcon } from '@patternfly/react-icons';
+import { isRestrictedEnv } from '~/restrictedEnv';
 import SupportStatusLabel from '../SupportStatusLabel';
 import ClusterUpdateLink from '../../../../common/ClusterUpdateLink';
 import UpgradeStatus from '../../../../common/Upgrades/UpgradeStatus';
 import UpgradeAcknowledgeLink from '../../../../common/Upgrades/UpgradeAcknowledge/UpgradeAcknowledgeLink';
 import { isHypershiftCluster } from '../../../clusterDetailsHelper';
-import { isRestrictedEnv } from '~/restrictedEnv';
 
 class ClusterVersionInfo extends React.Component {
   state = {

@@ -1,9 +1,9 @@
 import React from 'react';
 import { Alert, AlertVariant, Title } from '@patternfly/react-core';
 import InstructionCommand from '~/components/common/InstructionCommand';
-import { RosaCliCommand } from '../constants/cliCommands';
 import PopoverHint from '~/components/common/PopoverHint';
 import { trackEvents } from '~/common/analytics';
+import { RosaCliCommand } from '../constants/cliCommands';
 import AssociateAWSAccountStep from './common/AssociateAWSAccountStep';
 import ToggleGroupTabs from './common/ToggleGroupTabs';
 

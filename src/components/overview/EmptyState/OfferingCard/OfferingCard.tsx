@@ -18,11 +18,11 @@ import {
   Title,
 } from '@patternfly/react-core';
 import { Link } from 'react-router-dom';
+import ExternalLink from '~/components/common/ExternalLink';
 import microsoftLogo from '../../../../styles/images/Microsoft_logo.svg';
 import awsLogo from '../../../../styles/images/AWSLogo';
 import redhatLogo from '../../../../styles/images/redhat-logo.svg';
 import docLinks from '../../../../common/installLinks.mjs';
-import ExternalLink from '~/components/common/ExternalLink';
 
 type OfferingCardProps = {
   offeringType?: 'AWS' | 'Azure' | 'RHOSD';

@@ -5,8 +5,8 @@ import modals from '~/components/common/Modal/modals';
 import shouldShowModal from '~/components/common/Modal/ModalSelectors';
 import { closeModal } from '~/components/common/Modal/ModalActions';
 import { editCluster, clearClusterResponse } from '~/redux/actions/clustersActions';
-import EditClusterWideProxyDialog from './EditClusterWideProxyDialog';
 import { arrayToString, stringToArray } from '~/common/helpers';
+import EditClusterWideProxyDialog from './EditClusterWideProxyDialog';
 
 const reduxFormConfig = {
   form: 'EditClusterWideProxy',

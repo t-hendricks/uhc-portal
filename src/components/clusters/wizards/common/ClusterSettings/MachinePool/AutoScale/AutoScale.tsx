@@ -11,7 +11,7 @@ import { normalizedProducts } from '~/common/subscriptionTypes';
 import { MAX_NODES } from '~/components/clusters/common/NodeCountInput/NodeCountInput';
 import { required, validateNumericInput } from '~/common/validators';
 import getMinNodesAllowed from '~/components/clusters/CreateOSDPage/CreateOSDForm/FormSections/ScaleSection/AutoScaleSection/AutoScaleHelper';
-import { CheckboxField } from '~/components/clusters/wizards/form';
+import { CheckboxField } from '~/components/clusters/wizards/form/CheckboxField';
 import { useFormState } from '~/components/clusters/wizards/hooks';
 import { NodesInput } from './NodesInput';
 

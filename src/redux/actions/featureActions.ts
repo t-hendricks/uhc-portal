@@ -1,4 +1,5 @@
 import { action, ActionType } from 'typesafe-actions';
+import { Capability } from '~/types/accounts_mgmt.v1/models/Capability';
 import {
   SET_FEATURE,
   ASSISTED_INSTALLER_PLATFORM_OCI,
@@ -19,7 +20,6 @@ import authorizationsService from '../../services/authorizationsService';
 import accountsService from '../../services/accountsService';
 import { SelfAccessReview } from '../../types/authorizations.v1/models/SelfAccessReview';
 import type { AppThunk } from '../types';
-import { Capability } from '~/types/accounts_mgmt.v1/models/Capability';
 
 export const setFeatureAction = (feature: string, enabled: boolean) =>
   action(SET_FEATURE, { feature, enabled });

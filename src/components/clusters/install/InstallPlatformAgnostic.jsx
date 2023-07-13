@@ -1,12 +1,12 @@
 import React from 'react';
 import { PageSection } from '@patternfly/react-core';
 
+import { AppPage } from '~/components/App/AppPage';
 import Breadcrumbs from '../../common/Breadcrumbs';
 import ExternalLink from '../../common/ExternalLink';
 import links from '../../../common/installLinks.mjs';
 import { InstructionsChooser } from './instructions/InstructionsChooser';
 import { InstructionsChooserPageTitle } from './instructions/InstructionsChooserPageTitle';
-import { AppPage } from '~/components/App/AppPage';
 
 const breadcrumbs = (
   <Breadcrumbs

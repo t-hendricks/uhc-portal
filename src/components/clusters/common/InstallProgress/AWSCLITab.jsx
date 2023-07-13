@@ -105,7 +105,7 @@ function AWSCLITab({ cluster }) {
     });
   }
 
-  async function downloadZip() {
+  const downloadZip = async () => {
     try {
       const zip = new JSZip();
       zip.file(
@@ -127,7 +127,7 @@ the roles and OIDC provider are available.
     } catch (e) {
       setError(e.message || 'An error occurred creating the ZIP file.');
     }
-  }
+  };
 
   return (
     <Stack hasGutter>

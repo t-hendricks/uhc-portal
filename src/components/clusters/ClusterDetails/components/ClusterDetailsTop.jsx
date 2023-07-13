@@ -5,6 +5,8 @@ import get from 'lodash/get';
 import { Spinner } from '@redhat-cloud-services/frontend-components/Spinner';
 import { Button, Alert, Split, SplitItem, Title } from '@patternfly/react-core';
 
+import { PreviewLabel } from '~/components/clusters/common/PreviewLabel';
+import { isRestrictedEnv } from '~/restrictedEnv';
 import clusterStates, { isOffline } from '../../common/clusterStates';
 import modals from '../../../common/Modal/modals';
 import ClusterActionsDropdown from '../../common/ClusterActionsDropdown';
@@ -29,8 +31,6 @@ import TransferClusterOwnershipInfo from './TransferClusterOwnershipInfo';
 import TermsAlert from './TermsAlert';
 import ButtonWithTooltip from '../../../common/ButtonWithTooltip';
 import { goZeroTime2Null } from '../../../../common/helpers';
-import { PreviewLabel } from '~/components/clusters/common/PreviewLabel';
-import { isRestrictedEnv } from '~/restrictedEnv';
 
 function ClusterDetailsTop(props) {
   const {

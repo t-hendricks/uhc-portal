@@ -4,7 +4,7 @@ import { FormGroup } from '@patternfly/react-core';
 import RadioButtons from '~/components/common/ReduxFormComponents/RadioButtons';
 import { IMDSType } from '~/components/clusters/wizards/common';
 import { imdsOptions } from '~/components/clusters/wizards/common/ClusterSettings/MachinePool/ImdsSectionField/imdsOptions';
-import { ImdsSectionHint } from '~/components/clusters/wizards/common/ClusterSettings/MachinePool/ImdsSectionField';
+import { ImdsSectionHint } from '~/components/clusters/wizards/common/ClusterSettings/MachinePool/ImdsSectionField/ImdsSectionHint';
 import { ImdsSectionAlert } from '~/components/clusters/wizards/common/ClusterSettings/MachinePool/ImdsSectionField/ImdsSectionAlert';
 
 const ImdsSection = ({

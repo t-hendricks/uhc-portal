@@ -3,8 +3,8 @@ import * as reactRedux from 'react-redux';
 import * as helpers from '~/common/helpers';
 import { screen, render, checkAccessibility, userEvent, within } from '~/testUtils';
 import wizardConnector from '~/components/clusters/CreateOSDPage/CreateOSDWizard/WizardConnector';
-import AWSBillingAccount from './AWSBillingAccount';
 import { CloudAccount } from '~/types/accounts_mgmt.v1/models/CloudAccount';
+import AWSBillingAccount from './AWSBillingAccount';
 
 const defaultProps = {
   change: () => jest.fn(),
@@ -62,6 +62,14 @@ const defaultState = {
     },
   },
 };
+
+jest.mock('react-redux', () => {
+  const config = {
+    __esModule: true,
+    ...jest.requireActual('react-redux'),
+  };
+  return config;
+});
 
 describe('<AWSBillingAccount />', () => {
   const useDispatchMock = jest.spyOn(reactRedux, 'useDispatch');

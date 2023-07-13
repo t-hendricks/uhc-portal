@@ -12,16 +12,16 @@ import {
   Tooltip,
 } from '@patternfly/react-core';
 import { Field } from 'redux-form';
+import { normalizedProducts } from '~/common/subscriptionTypes';
+import { validateRequiredMachinePoolsSubnet } from '~/common/validators';
+import useAnalytics from '~/hooks/useAnalytics';
+import { ocmResourceType, trackEvents } from '~/common/analytics';
 import { ReduxCheckbox } from '../../../../common/ReduxFormComponents';
 import RadioButtons from '../../../../common/ReduxFormComponents/RadioButtons';
 import { constants } from '../../CreateOSDForm/CreateOSDFormConstants';
 import ExternalLink from '../../../../common/ExternalLink';
 import links from '../../../../../common/installLinks.mjs';
-import { normalizedProducts } from '~/common/subscriptionTypes';
-import { validateRequiredMachinePoolsSubnet } from '~/common/validators';
 import { PLACEHOLDER_VALUE } from '../../CreateOSDForm/FormSections/NetworkingSection/AvailabilityZoneSelection';
-import useAnalytics from '~/hooks/useAnalytics';
-import { ocmResourceType, trackEvents } from '~/common/analytics';
 import { SubnetSelectField } from './SubnetSelectField';
 
 function NetworkScreen(props) {

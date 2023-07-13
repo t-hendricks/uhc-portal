@@ -8,7 +8,7 @@ import { MinusCircleIcon, PlusCircleIcon } from '@patternfly/react-icons';
 import { checkLabelKey, checkLabelValue } from '~/common/validators';
 import { FieldId } from '~/components/clusters/wizards/common/constants';
 import { useFormState } from '~/components/clusters/wizards/hooks';
-import { TextInputField } from '~/components/clusters/wizards/form';
+import { TextInputField } from '~/components/clusters/wizards/form/TextInputField';
 
 export interface NodeLabel {
   key: string;

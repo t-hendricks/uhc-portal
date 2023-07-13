@@ -4,6 +4,14 @@ import * as ReactRedux from 'react-redux';
 import { render, screen, checkAccessibility } from '@testUtils';
 import CreateClusterErrorModal from './CreateClusterErrorModal';
 
+jest.mock('react-redux', () => {
+  const config = {
+    __esModule: true,
+    ...jest.requireActual('react-redux'),
+  };
+  return config;
+});
+
 describe('<CreateClusterErrorModal />', () => {
   const useSelectorSpy = jest.spyOn(ReactRedux, 'useSelector');
 

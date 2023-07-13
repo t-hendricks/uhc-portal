@@ -14,112 +14,111 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { useEffect } from 'react';
-import {
-  Route,
-  RouteComponentProps,
-  Redirect,
-  Switch,
-  withRouter,
-  useLocation,
-} from 'react-router-dom';
-import { ConnectedRouter } from 'connected-react-router';
-import get from 'lodash/get';
-import { connect } from 'react-redux';
 import * as OCM from '@openshift-assisted/ui-lib/ocm';
 import useChrome from '@redhat-cloud-services/frontend-components/useChrome';
-
-import TermsGuardedRoute from './TermsGuardedRoute';
+import { ConnectedRouter } from 'connected-react-router';
+import get from 'lodash/get';
+import React, { useEffect } from 'react';
+import { connect } from 'react-redux';
+import {
+  Redirect,
+  Route,
+  RouteComponentProps,
+  Switch,
+  useLocation,
+  withRouter,
+} from 'react-router-dom';
+import { useFeatureGate } from '~/hooks/useFeatureGate';
+import { normalizedProducts } from '../../common/subscriptionTypes';
+import {
+  ASSISTED_INSTALLER_FEATURE,
+  HYPERSHIFT_WIZARD_FEATURE,
+  OSD_WIZARD_V1,
+  OSD_WIZARD_V2_FEATURE,
+} from '../../redux/constants/featureConstants';
 import apiRequest from '../../services/apiRequest';
-import ApiError from './ApiError';
-import Overview from '../overview';
-import ClustersList from '../clusters/ClusterList';
 import ArchivedClusterList from '../clusters/ArchivedClusterList';
+import ClusterDetailsClusterOrExternalId from '../clusters/ClusterDetails/ClusterDetailsClusterOrExternalId';
+import ClusterDetailsSubscriptionId from '../clusters/ClusterDetails/ClusterDetailsSubscriptionId';
+import IdentityProvidersPage from '../clusters/ClusterDetails/components/IdentityProvidersPage';
+import ClustersList from '../clusters/ClusterList';
 import CreateClusterPage from '../clusters/CreateClusterPage';
-import RegisterCluster from '../clusters/RegisterCluster';
+import CreateOSDWizard from '../clusters/CreateOSDPage/CreateOSDWizard';
 import CreateROSAWizard from '../clusters/CreateROSAPage/CreateROSAWizard';
+import GetStartedWithROSA from '../clusters/CreateROSAPage/CreateROSAWizard/CreateRosaGetStarted';
+import InsightsAdvisorRedirector from '../clusters/InsightsAdvisorRedirector';
+import RegisterCluster from '../clusters/RegisterCluster';
+import InstallASH from '../clusters/install/InstallASH';
+import ConnectedInstallASHIPI from '../clusters/install/InstallASHIPI';
+import ConnectedInstallASHUPI from '../clusters/install/InstallASHUPI';
+import InstallAWS from '../clusters/install/InstallAWS';
+import ConnectedInstallAWSIPI from '../clusters/install/InstallAWSIPI';
+import ConnectedInstallAWSUPI from '../clusters/install/InstallAWSUPI';
 import ConnectedInstallAlibaba from '../clusters/install/InstallAlibaba';
 import InstallArmAWS from '../clusters/install/InstallArmAWS';
 import ConnectedInstallArmAWSIPI from '../clusters/install/InstallArmAWSIPI';
 import ConnectedInstallArmAWSUPI from '../clusters/install/InstallArmAWSUPI';
-import InstallAWS from '../clusters/install/InstallAWS';
-import ConnectedInstallAWSUPI from '../clusters/install/InstallAWSUPI';
-import ConnectedInstallAWSIPI from '../clusters/install/InstallAWSIPI';
-import ConnectedInstallMultiAWSIPI from '../clusters/install/InstallMultiAWSIPI';
-import InstallBareMetal from '../clusters/install/InstallBareMetal';
-import InstallASH from '../clusters/install/InstallASH';
-import ConnectedInstallASHIPI from '../clusters/install/InstallASHIPI';
-import ConnectedInstallASHUPI from '../clusters/install/InstallASHUPI';
 import ConnectedInstallArmAzureIPI from '../clusters/install/InstallArmAzureIPI';
+import InstallArmBareMetal from '../clusters/install/InstallArmBareMetal';
+import InstallArmBMIPI from '../clusters/install/InstallArmBareMetalIPI';
+import InstallArmBMUPI from '../clusters/install/InstallArmBareMetalUPI';
+import ConnectedInstallArmPreRelease from '../clusters/install/InstallArmPreRelease';
 import InstallAzure from '../clusters/install/InstallAzure';
 import ConnectedInstallAzureIPI from '../clusters/install/InstallAzureIPI';
 import ConnectedInstallAzureUPI from '../clusters/install/InstallAzureUPI';
+import InstallBareMetal from '../clusters/install/InstallBareMetal';
+import InstallBMABI from '../clusters/install/InstallBareMetalABI';
+import InstallBMIPI from '../clusters/install/InstallBareMetalIPI';
+import InstallBMUPI from '../clusters/install/InstallBareMetalUPI';
 import InstallGCP from '../clusters/install/InstallGCP';
 import ConnectedInstallGCPIPI from '../clusters/install/InstallGCPIPI';
 import ConnectedInstallGCPUPI from '../clusters/install/InstallGCPUPI';
 import ConnectedInstallIBMCloud from '../clusters/install/InstallIBMCloud';
+import InstallIBMZ from '../clusters/install/InstallIBMZ';
+import ConnectedInstallIBMZPreRelease from '../clusters/install/InstallIBMZPreRelease';
+import ConnectedInstallIBMZUPI from '../clusters/install/InstallIBMZUPI';
+import ConnectedInstallMultiAWSIPI from '../clusters/install/InstallMultiAWSIPI';
 import ConnectedInstallMultiAzureIPI from '../clusters/install/InstallMultiAzureIPI';
+import InstallMultiBMUPI from '../clusters/install/InstallMultiBareMetalUPI';
 import ConnectedInstallMultiPreRelease from '../clusters/install/InstallMultiPreRelease';
+import InstallNutanix from '../clusters/install/InstallNutanix';
 import ConnectedInstallNutanixIPI from '../clusters/install/InstallNutanixIPI';
 import InstallOSP from '../clusters/install/InstallOSP';
 import ConnectedInstallOSPIPI from '../clusters/install/InstallOSPIPI';
 import ConnectedInstallOSPUPI from '../clusters/install/InstallOSPUPI';
-import InstallRHV from '../clusters/install/InstallRHV';
-import ConnectedInstallRHVIPI from '../clusters/install/InstallRHVIPI';
-import ConnectedInstallRHVUPI from '../clusters/install/InstallRHVUPI';
-import ConnectedInstallVSphereABI from '../clusters/install/InstallVSphereABI';
-import ConnectedInstallVSphereUPI from '../clusters/install/InstallVSphereUPI';
-import ConnectedInstallVSphereIPI from '../clusters/install/InstallVSphereIPI';
-import InstallNutanix from '../clusters/install/InstallNutanix';
-import InstallVSphere from '../clusters/install/InstallVSphere';
 import InstallPlatformAgnostic from '../clusters/install/InstallPlatformAgnostic';
 import ConnectedInstallPlatformAgnosticABI from '../clusters/install/InstallPlatformAgnosticABI';
 import ConnectedInstallPlatformAgnosticUPI from '../clusters/install/InstallPlatformAgnosticUPI';
+import InstallPower from '../clusters/install/InstallPower';
+import ConnectedInstallPowerPreRelease from '../clusters/install/InstallPowerPreRelease';
+import ConnectedInstallPowerUPI from '../clusters/install/InstallPowerUPI';
+import InstallPowerVSIPI from '../clusters/install/InstallPowerVirtualServerIPI';
 import ConnectedInstallPreRelease from '../clusters/install/InstallPreRelease';
 import ConnectedInstallPullSecret from '../clusters/install/InstallPullSecret';
 import ConnectedInstallPullSecretAzure from '../clusters/install/InstallPullSecretAzure';
-import ConnectedInstallIBMZUPI from '../clusters/install/InstallIBMZUPI';
-import ConnectedInstallIBMZPreRelease from '../clusters/install/InstallIBMZPreRelease';
-import InstallIBMZ from '../clusters/install/InstallIBMZ';
-import ConnectedInstallPowerUPI from '../clusters/install/InstallPowerUPI';
-import ConnectedInstallPowerPreRelease from '../clusters/install/InstallPowerPreRelease';
-import InstallPower from '../clusters/install/InstallPower';
-import ConnectedInstallArmPreRelease from '../clusters/install/InstallArmPreRelease';
+import InstallRHV from '../clusters/install/InstallRHV';
+import ConnectedInstallRHVIPI from '../clusters/install/InstallRHVIPI';
+import ConnectedInstallRHVUPI from '../clusters/install/InstallRHVUPI';
+import InstallVSphere from '../clusters/install/InstallVSphere';
+import ConnectedInstallVSphereABI from '../clusters/install/InstallVSphereABI';
+import ConnectedInstallVSphereIPI from '../clusters/install/InstallVSphereIPI';
+import ConnectedInstallVSphereUPI from '../clusters/install/InstallVSphereUPI';
+import { CreateOsdWizard } from '../clusters/wizards';
+import EntitlementConfig from '../common/EntitlementConfig/index';
 import DownloadsPage from '../downloads/DownloadsPage';
+import withFeatureGate from '../features/with-feature-gate';
+import Overview from '../overview';
+import Quota from '../quota';
+import Releases from '../releases/index';
 import Tokens from '../tokens';
 import TokensROSA from '../tokens/TokensROSA';
-import NotFoundError from './NotFoundError';
-import Quota from '../quota';
-import Insights from './Insights';
-import withFeatureGate from '../features/with-feature-gate';
-import { useFeatures } from './hooks/useFeatures';
-import {
-  ASSISTED_INSTALLER_FEATURE,
-  OSD_WIZARD_V1,
-  OSD_WIZARD_V2_FEATURE,
-  HYPERSHIFT_WIZARD_FEATURE,
-} from '../../redux/constants/featureConstants';
-import InstallBMABI from '../clusters/install/InstallBareMetalABI';
-import InstallBMUPI from '../clusters/install/InstallBareMetalUPI';
-import InstallBMIPI from '../clusters/install/InstallBareMetalIPI';
-import InstallArmBareMetal from '../clusters/install/InstallArmBareMetal';
-import InstallArmBMIPI from '../clusters/install/InstallArmBareMetalIPI';
-import InstallArmBMUPI from '../clusters/install/InstallArmBareMetalUPI';
-import InstallMultiBMUPI from '../clusters/install/InstallMultiBareMetalUPI';
-import InstallPowerVSIPI from '../clusters/install/InstallPowerVirtualServerIPI';
-import { normalizedProducts } from '../../common/subscriptionTypes';
-import Releases from '../releases/index';
-import IdentityProvidersPage from '../clusters/ClusterDetails/components/IdentityProvidersPage';
-import GetStartedWithROSA from '../clusters/CreateROSAPage/CreateROSAWizard/CreateRosaGetStarted';
-import EntitlementConfig from '../common/EntitlementConfig/index';
-import InsightsAdvisorRedirector from '../clusters/InsightsAdvisorRedirector';
-import ClusterDetailsSubscriptionId from '../clusters/ClusterDetails/ClusterDetailsSubscriptionId';
-import ClusterDetailsClusterOrExternalId from '../clusters/ClusterDetails/ClusterDetailsClusterOrExternalId';
-import CreateOSDWizard from '../clusters/CreateOSDPage/CreateOSDWizard';
-import { CreateOsdWizard } from '../clusters/wizards';
-import { metadataByRoute, is404 } from './routeMetadata';
-import { useFeatureGate } from '~/hooks/useFeatureGate';
+import ApiError from './ApiError';
 import { AppPage } from './AppPage';
+import Insights from './Insights';
+import NotFoundError from './NotFoundError';
+import TermsGuardedRoute from './TermsGuardedRoute';
+import { useFeatures } from './hooks/useFeatures';
+import { is404, metadataByRoute } from './routeMetadata';
 
 const { AssistedUiRouter } = OCM;
 const AssistedUiRouterPage: typeof AssistedUiRouter = (props) => (

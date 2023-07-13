@@ -9,8 +9,8 @@ import {
   TextContent,
 } from '@patternfly/react-core';
 import { WrappedFieldMetaProps, WrappedFieldInputProps } from 'redux-form';
-import ErrorBox from './ErrorBox';
 import { PromiseReducerState } from '~/redux/types';
+import ErrorBox from './ErrorBox';
 
 type Props = {
   input: Pick<WrappedFieldInputProps, 'value' | 'onChange'> & { name?: string };
