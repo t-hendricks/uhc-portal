@@ -8,14 +8,11 @@ import PageTitle from '../../common/PageTitle';
 
 import { tollboothActions } from '../../../redux/actions';
 import InstructionsPreRelease from './instructions/InstructionsPreRelease';
-import { scrollToTop } from '../../../common/helpers';
 import { tools } from '../../../common/installLinks.mjs';
+import { AppPage } from '~/components/App/AppPage';
 
 export class InstallArmPreRelease extends Component {
   componentDidMount() {
-    scrollToTop();
-    document.title = 'Install OpenShift 4 | ARM | Experimental Developer Preview Builds';
-
     const { dispatch } = this.props;
     dispatch(tollboothActions.createAuthToken());
   }
@@ -33,7 +30,7 @@ export class InstallArmPreRelease extends Component {
     );
 
     return (
-      <>
+      <AppPage title="Install OpenShift 4 | ARM | Experimental Developer Preview Builds">
         <PageTitle
           title="Install OpenShift Container Platform 4 on ARM"
           breadcrumbs={breadcrumbs}
@@ -41,7 +38,7 @@ export class InstallArmPreRelease extends Component {
         <PageSection>
           <InstructionsPreRelease token={token} installer={tools.ARMINSTALLER} />
         </PageSection>
-      </>
+      </AppPage>
     );
   }
 }

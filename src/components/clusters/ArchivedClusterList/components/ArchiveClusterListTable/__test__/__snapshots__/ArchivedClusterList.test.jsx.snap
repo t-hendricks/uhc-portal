@@ -1,7 +1,9 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`<ArchivedClusterList /> ArchivedClusterList should render 1`] = `
-<Fragment>
+<AppPage
+  title="Cluster Archives | Red Hat OpenShift Cluster Manager"
+>
   <PageHeader>
     <Breadcrumbs
       path={
@@ -170,5 +172,5 @@ exports[`<ArchivedClusterList /> ArchivedClusterList should render 1`] = `
       </div>
     </Card>
   </PageSection>
-</Fragment>
+</AppPage>
 `;

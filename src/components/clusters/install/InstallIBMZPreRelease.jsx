@@ -8,14 +8,11 @@ import PageTitle from '../../common/PageTitle';
 
 import { tollboothActions } from '../../../redux/actions';
 import InstructionsPreRelease from './instructions/InstructionsPreRelease';
-import { scrollToTop } from '../../../common/helpers';
 import { tools } from '../../../common/installLinks.mjs';
+import { AppPage } from '~/components/App/AppPage';
 
 export class InstallIBMZPreRelease extends Component {
   componentDidMount() {
-    scrollToTop();
-    document.title = 'Install OpenShift 4 | IBM Z | Experimental Developer Preview Builds';
-
     const { dispatch } = this.props;
     dispatch(tollboothActions.createAuthToken());
   }
@@ -34,7 +31,7 @@ export class InstallIBMZPreRelease extends Component {
     );
 
     return (
-      <>
+      <AppPage title="Install OpenShift 4 | IBM Z | Experimental Developer Preview Builds">
         <PageTitle
           title="Install OpenShift on IBM Z with user-provisioned infrastructure"
           breadcrumbs={breadcrumbs}
@@ -42,7 +39,7 @@ export class InstallIBMZPreRelease extends Component {
         <PageSection>
           <InstructionsPreRelease token={token} installer={tools.IBMZINSTALLER} />
         </PageSection>
-      </>
+      </AppPage>
     );
   }
 }

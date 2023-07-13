@@ -5,17 +5,13 @@ import { PageSection } from '@patternfly/react-core';
 
 import Breadcrumbs from '../../common/Breadcrumbs';
 import { tollboothActions } from '../../../redux/actions';
-import { scrollToTop } from '../../../common/helpers';
 import instructionsMapping from './instructions/instructionsMapping';
 import OCPInstructions from './instructions/OCPInstructions';
 import PageTitle from '../../common/PageTitle';
+import { AppPage } from '~/components/App/AppPage';
 
 export class InstallVSphereIPI extends Component {
   componentDidMount() {
-    scrollToTop();
-    document.title =
-      'Install OpenShift 4 | Red Hat OpenShift Cluster Manager | vSphere Installer-Provisioned Infrastructure';
-
     const { dispatch } = this.props;
     dispatch(tollboothActions.createAuthToken());
   }
@@ -33,7 +29,7 @@ export class InstallVSphereIPI extends Component {
       />
     );
     return (
-      <>
+      <AppPage title="Install OpenShift 4 | Red Hat OpenShift Cluster Manager | vSphere Installer-Provisioned Infrastructure">
         <PageTitle title={instructionsMapping.vsphere.ipi.title} breadcrumbs={breadcrumbs} />
         <PageSection>
           <OCPInstructions
@@ -43,7 +39,7 @@ export class InstallVSphereIPI extends Component {
             {...instructionsMapping.vsphere.ipi}
           />
         </PageSection>
-      </>
+      </AppPage>
     );
   }
 }

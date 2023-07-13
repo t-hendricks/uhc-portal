@@ -9,13 +9,10 @@ import PageTitle from '../../common/PageTitle';
 import { tollboothActions } from '../../../redux/actions';
 import InstructionsPullSecret from './instructions/InstructionsPullSecret';
 
-import { scrollToTop } from '../../../common/helpers';
+import { AppPage } from '~/components/App/AppPage';
 
 export class InstallPullSecret extends Component {
   componentDidMount() {
-    scrollToTop();
-    document.title = 'Install OpenShift 4 | Pull Secret';
-
     const { dispatch } = this.props;
     dispatch(tollboothActions.createAuthToken());
   }
@@ -27,12 +24,12 @@ export class InstallPullSecret extends Component {
     );
 
     return (
-      <>
+      <AppPage title="Install OpenShift 4 | Pull Secret">
         <PageTitle title="Install OpenShift Container Platform 4" breadcrumbs={breadcrumbs} />
         <PageSection className="ocp-instructions">
           <InstructionsPullSecret token={token} />
         </PageSection>
-      </>
+      </AppPage>
     );
   }
 }

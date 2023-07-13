@@ -38,6 +38,7 @@ import { isUserRoleForSelectedAWSAccount } from './AccountsRolesScreen/AccountsR
 import CreateRosaWizardFooter from './CreateRosaWizardFooter';
 
 import './createROSAWizard.scss';
+import { AppPage } from '~/components/App/AppPage';
 
 class CreateROSAWizardInternal extends React.Component {
   state = {
@@ -59,8 +60,6 @@ class CreateROSAWizardInternal extends React.Component {
       getCloudProviders,
       isHypershiftEnabled,
     } = this.props;
-
-    document.title = 'Create OpenShift ROSA Cluster';
 
     if (shouldRefetchQuota(organization)) {
       getOrganizationAndQuota();
@@ -523,10 +522,10 @@ function CreateROSAWizard(props) {
   usePreventBrowserNav();
   const isHypershiftEnabled = useFeatureGate(HYPERSHIFT_WIZARD_FEATURE);
   return (
-    <>
+    <AppPage title="Create OpenShift ROSA Cluster">
       <CreateROSAWizardInternal {...props} isHypershiftEnabled={isHypershiftEnabled} />
       <LeaveCreateClusterPrompt product={normalizedProducts.ROSA} />
-    </>
+    </AppPage>
   );
 }
 

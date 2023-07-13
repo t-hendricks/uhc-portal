@@ -37,7 +37,7 @@ import ReadOnlyBanner from '../common/ReadOnlyBanner';
 import CommonClusterModals from '../common/CommonClusterModals';
 import CancelUpgradeModal from '../common/Upgrades/CancelUpgradeModal';
 
-import { isValid, scrollToTop, shouldRefetchQuota } from '../../../common/helpers';
+import { isValid, shouldRefetchQuota } from '../../../common/helpers';
 import { isHypershiftCluster } from './clusterDetailsHelper';
 import getClusterName from '../../../common/getClusterName';
 import { subscriptionStatuses, knownProducts } from '../../../common/subscriptionTypes';
@@ -51,12 +51,15 @@ import { isUninstalledAICluster } from '../../../common/isAssistedInstallerClust
 import { hasCapability, subscriptionCapabilities } from '../../../common/subscriptionCapabilities';
 import withFeatureGate from '../../features/with-feature-gate';
 import { ASSISTED_INSTALLER_FEATURE } from '../../../redux/constants/featureConstants';
+import { AppPage } from '~/components/App/AppPage';
 
 const { HostsClusterDetailTab, getAddHostsTabState } = OCM;
 const GatedAIHostsClusterDetailTab = withFeatureGate(
   HostsClusterDetailTab,
   ASSISTED_INSTALLER_FEATURE,
 );
+const PAGE_TITLE = 'Red Hat OpenShift Cluster Manager';
+
 class ClusterDetails extends Component {
   state = {
     selectedTab: '',
@@ -83,9 +86,6 @@ class ClusterDetails extends Component {
   }
 
   componentDidMount() {
-    document.title = 'Red Hat OpenShift Cluster Manager';
-    scrollToTop();
-
     const { cloudProviders, getCloudProviders, clearGlobalError, getUserAccess } = this.props;
 
     clearGlobalError('clusterDetails');
@@ -297,21 +297,23 @@ class ClusterDetails extends Component {
       get(cluster, 'subscription.id') !== requestedSubscriptionID && !clusterDetails.error;
 
     const errorState = () => (
-      <>
+      <AppPage title={PAGE_TITLE}>
         <Unavailable message="Error retrieving cluster details" response={clusterDetails} />
         {isPending && <Spinner />}
-      </>
+      </AppPage>
     );
 
     // organization.details is required by canCreateGCPNonCCSCluster below
     // and must be loaded so the Networking tab displays properly
     if (isPending || (!organization.fulfilled && !clusterDetails.error)) {
       return (
-        <div id="clusterdetails-content">
-          <div className="cluster-loading-container">
-            <Spinner centered />
+        <AppPage title={PAGE_TITLE}>
+          <div id="clusterdetails-content">
+            <div className="cluster-loading-container">
+              <Spinner centered />
+            </div>
           </div>
-        </div>
+        </AppPage>
       );
     }
 
@@ -395,7 +397,7 @@ class ClusterDetails extends Component {
     }
 
     return (
-      <>
+      <AppPage title={PAGE_TITLE}>
         <ReadOnlyBanner isReadOnly={isReadOnly} />
         <PageSection id="clusterdetails-content">
           <ClusterDetailsTop
@@ -592,7 +594,7 @@ class ClusterDetails extends Component {
           <AddGrantModal clusterID={cluster.id} />
           <CancelUpgradeModal isHypershift={isHypershift} />
         </PageSection>
-      </>
+      </AppPage>
     );
   }
 }

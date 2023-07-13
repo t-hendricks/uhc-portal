@@ -8,10 +8,11 @@ import { ServerIcon, CloudIcon, LaptopIcon } from '@patternfly/react-icons';
 import './CreateClusterPage.scss';
 import PageTitle from '../../common/PageTitle';
 import Breadcrumbs from '../../common/Breadcrumbs';
-import { scrollToTop, shouldRefetchQuota } from '../../../common/helpers';
+import { shouldRefetchQuota } from '../../../common/helpers';
 import DatacenterTab from './DatacenterTab';
 import CloudTab from './CloudTab';
 import LocalTab from './LocalTab';
+import { AppPage } from '~/components/App/AppPage';
 
 const hashToTabIndex = {
   cloud: 0,
@@ -28,12 +29,9 @@ const tabIndexToHash = Object.entries(hashToTabIndex).reduce((acc, tabIndex) => 
 
 class CreateCluster extends React.Component {
   componentDidMount() {
-    scrollToTop();
-
     // Try to get quota or organization when the component is first mounted.
     const { getOrganizationAndQuota, organization, getAuthToken } = this.props;
 
-    document.title = 'Create an OpenShift cluster | Red Hat OpenShift Cluster Manager';
     if (shouldRefetchQuota(organization)) {
       getOrganizationAndQuota();
     }
@@ -103,34 +101,38 @@ class CreateCluster extends React.Component {
 
     const quotaRequestComplete = organization.fulfilled || organization.error;
 
-    return quotaRequestComplete ? (
-      <>
-        {title}
-        <PageSection variant="light" className="cluster-create-page">
-          <Tabs isFilled activeKey={activeTabIndex} onSelect={this.handleTabClick}>
-            <Tab eventKey={0} title={tabTitle(0)}>
-              <CloudTab
-                hasOSDQuota={hasOSDQuota}
-                rosaCreationWizardFeature={rosaCreationWizardFeature}
-                trialEnabled={hasOSDTrialQuota && osdTrialFeature}
-              />
-            </Tab>
-            <Tab eventKey={1} title={tabTitle(1)}>
-              <DatacenterTab assistedInstallerFeature={assistedInstallerFeature} />
-            </Tab>
-            <Tab eventKey={2} title={tabTitle(2)}>
-              <LocalTab token={token} />
-            </Tab>
-          </Tabs>
-        </PageSection>
-      </>
-    ) : (
-      <>
-        {title}
-        <PageSection variant="light">
-          <Spinner centered />
-        </PageSection>
-      </>
+    return (
+      <AppPage title="Create an OpenShift cluster | Red Hat OpenShift Cluster Manager">
+        {quotaRequestComplete ? (
+          <>
+            {title}
+            <PageSection variant="light" className="cluster-create-page">
+              <Tabs isFilled activeKey={activeTabIndex} onSelect={this.handleTabClick}>
+                <Tab eventKey={0} title={tabTitle(0)}>
+                  <CloudTab
+                    hasOSDQuota={hasOSDQuota}
+                    rosaCreationWizardFeature={rosaCreationWizardFeature}
+                    trialEnabled={hasOSDTrialQuota && osdTrialFeature}
+                  />
+                </Tab>
+                <Tab eventKey={1} title={tabTitle(1)}>
+                  <DatacenterTab assistedInstallerFeature={assistedInstallerFeature} />
+                </Tab>
+                <Tab eventKey={2} title={tabTitle(2)}>
+                  <LocalTab token={token} />
+                </Tab>
+              </Tabs>
+            </PageSection>
+          </>
+        ) : (
+          <>
+            {title}
+            <PageSection variant="light">
+              <Spinner centered />
+            </PageSection>
+          </>
+        )}
+      </AppPage>
     );
   }
 }

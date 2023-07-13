@@ -1,7 +1,9 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`InstallVSphere renders correctly 1`] = `
-<Fragment>
+<AppPage
+  title="Install OpenShift 4 | Red Hat OpenShift Cluster Manager | vSphere"
+>
   <InstructionsChooserPageTitle
     breadcrumbs={
       <Breadcrumbs
@@ -50,5 +52,5 @@ exports[`InstallVSphere renders correctly 1`] = `
       upiPageLink="/install/vsphere/user-provisioned"
     />
   </PageSection>
-</Fragment>
+</AppPage>
 `;

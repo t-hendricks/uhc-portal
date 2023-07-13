@@ -5,17 +5,13 @@ import { PageSection } from '@patternfly/react-core';
 
 import Breadcrumbs from '../../common/Breadcrumbs';
 import { tollboothActions } from '../../../redux/actions';
-import { scrollToTop } from '../../../common/helpers';
 import instructionsMapping from './instructions/instructionsMapping';
 import OCPInstructions from './instructions/OCPInstructions';
 import PageTitle from '../../common/PageTitle';
+import { AppPage } from '~/components/App/AppPage';
 
 export class InstallPowerUPI extends Component {
   componentDidMount() {
-    scrollToTop();
-    document.title =
-      'Install OpenShift 4 | Red Hat OpenShift Cluster Manager | IBM Power (ppc64le)';
-
     const { dispatch } = this.props;
     dispatch(tollboothActions.createAuthToken());
   }
@@ -34,7 +30,7 @@ export class InstallPowerUPI extends Component {
     );
 
     return (
-      <>
+      <AppPage title="Install OpenShift 4 | Red Hat OpenShift Cluster Manager | IBM Power (ppc64le)">
         <PageTitle title={instructionsMapping.baremetal.ppc.upi.title} breadcrumbs={breadcrumbs} />
         <PageSection>
           <OCPInstructions
@@ -44,7 +40,7 @@ export class InstallPowerUPI extends Component {
             {...instructionsMapping.baremetal.ppc.upi}
           />
         </PageSection>
-      </>
+      </AppPage>
     );
   }
 }

@@ -45,6 +45,9 @@ import { viewPropsChanged, createViewQueryObject } from '../../../common/queryHe
 import { viewConstants } from '../../../redux/constants';
 
 import './ArchivedClusterList.scss';
+import { AppPage } from '~/components/App/AppPage';
+
+const PAGE_TITLE = 'Cluster Archives | Red Hat OpenShift Cluster Manager';
 
 class ArchivedClusterList extends Component {
   constructor(props) {
@@ -55,7 +58,6 @@ class ArchivedClusterList extends Component {
   }
 
   componentDidMount() {
-    document.title = 'Cluster Archives | Red Hat OpenShift Cluster Manager';
     const { getCloudProviders, cloudProviders, setListFlag, invalidateClusters } = this.props;
 
     setListFlag('showArchived', true);
@@ -114,22 +116,24 @@ class ArchivedClusterList extends Component {
 
     if (error && !size(clusters)) {
       return (
-        <PageSection>
-          <Unavailable
-            message="Error retrieving cluster archives"
-            response={{
-              errorMessage,
-              operationID,
-              errorCode,
-            }}
-          />
-        </PageSection>
+        <AppPage title={PAGE_TITLE}>
+          <PageSection>
+            <Unavailable
+              message="Error retrieving cluster archives"
+              response={{
+                errorMessage,
+                operationID,
+                errorCode,
+              }}
+            />
+          </PageSection>
+        </AppPage>
       );
     }
 
     if ((!size(clusters) && pending && isEmpty(viewOptions.filter)) || !valid) {
       return (
-        <>
+        <AppPage title={PAGE_TITLE}>
           {pageHeader}
           <PageSection>
             <Card>
@@ -140,12 +144,12 @@ class ArchivedClusterList extends Component {
               </div>
             </Card>
           </PageSection>
-        </>
+        </AppPage>
       );
     }
 
     return (
-      <>
+      <AppPage title={PAGE_TITLE}>
         {pageHeader}
         <PageSection>
           <Card>
@@ -224,7 +228,7 @@ class ArchivedClusterList extends Component {
             </div>
           </Card>
         </PageSection>
-      </>
+      </AppPage>
     );
   }
 }

@@ -1,7 +1,9 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`<IdentityProvidersPage /> renders correctly (Google IDP) 1`] = `
-<Fragment>
+<AppPage
+  title="Red Hat OpenShift Cluster Manager"
+>
   <PageHeader>
     <Breadcrumbs
       path={
@@ -108,5 +110,5 @@ exports[`<IdentityProvidersPage /> renders correctly (Google IDP) 1`] = `
       </CardFooter>
     </Card>
   </PageSection>
-</Fragment>
+</AppPage>
 `;

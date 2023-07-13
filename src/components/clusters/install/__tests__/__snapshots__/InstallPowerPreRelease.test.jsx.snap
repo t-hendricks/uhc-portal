@@ -1,7 +1,9 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`InstallPowerPreRelease renders correctly 1`] = `
-<Fragment>
+<AppPage
+  title="Install OpenShift 4 | IBM Power (ppc64le) | Experimental Developer Preview Builds"
+>
   <PageTitle
     breadcrumbs={
       <Breadcrumbs
@@ -33,5 +35,5 @@ exports[`InstallPowerPreRelease renders correctly 1`] = `
       token={Object {}}
     />
   </PageSection>
-</Fragment>
+</AppPage>
 `;
