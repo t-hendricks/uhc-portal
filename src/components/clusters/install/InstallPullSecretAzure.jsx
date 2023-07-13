@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import { PageSection, Card, Title, Alert } from '@patternfly/react-core';
+import { AppPage } from '~/components/App/AppPage';
 import PageTitle from '../../common/PageTitle';
 
 import TokenErrorAlert from './instructions/components/TokenErrorAlert';
@@ -10,7 +11,6 @@ import PullSecretSection from './instructions/components/PullSecretSection';
 
 import { tollboothActions } from '../../../redux/actions';
 import ExternalLink from '../../common/ExternalLink';
-import { AppPage } from '~/components/App/AppPage';
 
 class InstallPullSecretAzure extends Component {
   componentDidMount() {

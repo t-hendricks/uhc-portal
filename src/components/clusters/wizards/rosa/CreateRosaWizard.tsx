@@ -34,7 +34,7 @@ export const CreateRosaWizard = () => {
 
   React.useEffect(() => {
     if (shouldRefetchQuota(organization)) {
-      dispatch(getOrganizationAndQuota());
+      dispatch(getOrganizationAndQuota() as any);
     }
 
     return () => {

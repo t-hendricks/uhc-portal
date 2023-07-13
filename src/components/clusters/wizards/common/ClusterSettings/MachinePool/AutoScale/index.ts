@@ -1,1 +1,0 @@
-export { AutoScale } from './AutoScale';

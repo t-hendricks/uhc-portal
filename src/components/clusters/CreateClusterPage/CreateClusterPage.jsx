@@ -6,13 +6,13 @@ import { Spinner } from '@redhat-cloud-services/frontend-components/Spinner';
 import { ServerIcon, CloudIcon, LaptopIcon } from '@patternfly/react-icons';
 
 import './CreateClusterPage.scss';
+import { AppPage } from '~/components/App/AppPage';
 import PageTitle from '../../common/PageTitle';
 import Breadcrumbs from '../../common/Breadcrumbs';
 import { shouldRefetchQuota } from '../../../common/helpers';
 import DatacenterTab from './DatacenterTab';
 import CloudTab from './CloudTab';
 import LocalTab from './LocalTab';
-import { AppPage } from '~/components/App/AppPage';
 
 const hashToTabIndex = {
   cloud: 0,
@@ -141,7 +141,7 @@ CreateCluster.propTypes = {
   hasOSDQuota: PropTypes.bool.isRequired,
   hasOSDTrialQuota: PropTypes.bool.isRequired,
   osdTrialFeature: PropTypes.bool.isRequired,
-  rosaCreationWizardFeature: PropTypes.bool.isRequired,
+  rosaCreationWizardFeature: PropTypes.bool,
   organization: PropTypes.shape({
     fulfilled: PropTypes.bool,
     error: PropTypes.bool,

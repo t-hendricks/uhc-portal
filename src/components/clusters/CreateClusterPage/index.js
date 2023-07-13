@@ -1,4 +1,5 @@
 import { connect } from 'react-redux';
+import { featureGateSelector } from '~/hooks/useFeatureGate';
 import CreateClusterPage from './CreateClusterPage';
 import { modalActions } from '../../common/Modal/ModalActions';
 import { getOrganizationAndQuota } from '../../../redux/actions/userActions';
@@ -9,8 +10,6 @@ import {
   OSD_TRIAL_FEATURE,
   ASSISTED_INSTALLER_FEATURE,
 } from '../../../redux/constants/featureConstants';
-
-import { featureGateSelector } from '~/hooks/useFeatureGate';
 
 const mapStateToProps = (state) => ({
   hasOSDQuota: hasManagedQuotaSelector(state, normalizedProducts.OSD),

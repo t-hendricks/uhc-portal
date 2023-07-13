@@ -10,11 +10,11 @@ import {
 import { Spinner } from '@redhat-cloud-services/frontend-components/Spinner';
 import { RouteComponentProps } from 'react-router-dom';
 
+import type { TermsReviewResponse } from '~/types/authorizations.v1';
+import type { PromiseReducerState } from '~/redux/types';
 import Modal from '../Modal/Modal';
 import Unavailable from '../Unavailable';
 import getTermsAppLink from '../../../common/getTermsAppLink';
-import type { TermsReviewResponse } from '~/types/authorizations.v1';
-import type { PromiseReducerState } from '~/redux/types';
 
 import './TermsGuard.scss';
 import { ViewTermsButton } from './ViewTermsButton';

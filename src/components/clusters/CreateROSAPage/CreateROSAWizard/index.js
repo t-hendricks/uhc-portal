@@ -14,13 +14,13 @@ import { resetCreatedClusterResponse } from '~/redux/actions/clustersActions';
 import { getMachineTypes } from '~/redux/actions/machineTypesActions';
 import { getOrganizationAndQuota } from '~/redux/actions/userActions';
 import { getCloudProviders } from '~/redux/actions/cloudProviderActions';
+import { normalizedProducts } from '~/common/subscriptionTypes';
 import { getUserRole, clearGetUserRoleResponse } from './rosaActions';
 import CreateROSAWizard from './CreateROSAWizard';
 import shouldShowModal from '../../../common/Modal/ModalSelectors';
 import { openModal, closeModal } from '../../../common/Modal/ModalActions';
 import { hasManagedQuotaSelector } from '../../common/quotaSelectors';
 import submitOSDRequest from '../../CreateOSDPage/submitOSDRequest';
-import { normalizedProducts } from '~/common/subscriptionTypes';
 
 const mapStateToProps = (state) => {
   const { organization } = state.userProfile;

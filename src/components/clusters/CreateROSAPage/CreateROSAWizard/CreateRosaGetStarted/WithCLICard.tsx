@@ -11,9 +11,9 @@ import {
 import { CodeIcon } from '@patternfly/react-icons';
 import InstructionCommand from '~/components/common/InstructionCommand';
 import { trackEvents } from '~/common/analytics';
-import { RosaCliCommand } from '../AccountsRolesScreen/constants/cliCommands';
 import ExternalLink from '~/components/common/ExternalLink';
 import links from '~/common/installLinks.mjs';
+import { RosaCliCommand } from '../AccountsRolesScreen/constants/cliCommands';
 
 const WithCLICard = () => (
   <Card>

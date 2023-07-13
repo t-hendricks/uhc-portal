@@ -1,8 +1,8 @@
 import { connect } from 'react-redux';
-import { subscriptionsActions } from '../../redux/actions/subscriptionsActions';
-import { clustersActions } from '../../redux/actions/clustersActions';
-import Quota from './Quota';
 import { GlobalState } from '~/redux/store';
+import { clustersActions } from '../../redux/actions/clustersActions';
+import { subscriptionsActions } from '../../redux/actions/subscriptionsActions';
+import Quota from './Quota';
 
 const mapDispatchToProps = {
   fetchAccount: subscriptionsActions.fetchAccount,

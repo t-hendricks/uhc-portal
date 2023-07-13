@@ -3,6 +3,9 @@ import { bindActionCreators } from 'redux';
 import get from 'lodash/get';
 
 import { addNotification } from '@redhat-cloud-services/frontend-components-notifications/redux';
+import { featureGateSelector } from '~/hooks/useFeatureGate';
+import { clearListVpcs } from '~/components/clusters/CreateOSDPage/CreateOSDWizard/ccsInquiriesActions';
+import { onClearFiltersAndFlags } from '~/redux/actions/viewOptionsActions';
 
 import ClusterDetails from './ClusterDetails';
 import { fetchClusterDetails, invalidateClusters } from '../../../redux/actions/clustersActions';
@@ -23,7 +26,6 @@ import { clusterLogActions, getClusterHistory } from './components/ClusterLogs/c
 import { getClusterRouters } from './components/Networking/NetworkingActions';
 import { getSchedules } from '../common/Upgrades/clusterUpgradeActions';
 import { viewConstants } from '../../../redux/constants';
-import { onClearFiltersAndFlags } from '~/redux/actions/viewOptionsActions';
 import { fetchClusterInsights } from './components/Insights/InsightsActions';
 import {
   getMachineOrNodePools,
@@ -41,9 +43,6 @@ import { getUserAccess } from '../../../redux/actions/costActions';
 
 import { getUpgradeGates } from '../common/Upgrades/UpgradeAcknowledge/UpgradeAcknowledgeSelectors';
 import { fetchUpgradeGates } from '../../../redux/actions/upgradeGateActions';
-import { featureGateSelector } from '~/hooks/useFeatureGate';
-
-import { clearListVpcs } from '~/components/clusters/CreateOSDPage/CreateOSDWizard/ccsInquiriesActions';
 
 const mapStateToProps = (state, { location }) => {
   const { details } = state.clusters;

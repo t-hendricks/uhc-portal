@@ -1,4 +1,4 @@
-import { renderHook } from '@testing-library/react-hooks';
+import { renderHook } from '@testing-library/react';
 import useChrome from '@redhat-cloud-services/frontend-components/useChrome';
 import useAnalytics from '../useAnalytics';
 import { getTrackEvent } from '../../common/analytics';

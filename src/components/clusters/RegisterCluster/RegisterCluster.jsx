@@ -20,6 +20,7 @@ import {
 } from '@patternfly/react-core';
 import { PageHeader, PageHeaderTitle } from '@redhat-cloud-services/frontend-components/PageHeader';
 import Spinner from '@redhat-cloud-services/frontend-components/Spinner';
+import { AppPage } from '~/components/App/AppPage';
 import ReduxVerticalFormGroup from '../../common/ReduxFormComponents/ReduxVerticalFormGroup';
 import ErrorModal from '../../common/ErrorModal';
 import Breadcrumbs from '../../common/Breadcrumbs';
@@ -38,7 +39,6 @@ import {
   subscriptionSupportLevels,
 } from '../../../common/subscriptionTypes';
 import validateSubscriptionSettings from './validateSubscriptionSettings';
-import { AppPage } from '~/components/App/AppPage';
 
 const { EVAL } = subscriptionSupportLevels;
 

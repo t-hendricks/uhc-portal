@@ -1,6 +1,7 @@
 import get from 'lodash/get';
 import React from 'react';
 import { DropdownItem } from '@patternfly/react-core';
+import { isRestrictedEnv } from '~/restrictedEnv';
 import clusterStates, { isHibernating } from '../clusterStates';
 import { subscriptionStatuses, normalizedProducts } from '../../../../common/subscriptionTypes';
 import getClusterName from '../../../../common/getClusterName';

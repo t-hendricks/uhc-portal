@@ -1,44 +1,44 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { Redirect } from 'react-router-dom';
-import { isMatch } from 'lodash';
+import { Banner, PageSection, Wizard, WizardContext } from '@patternfly/react-core';
 import { Spinner } from '@redhat-cloud-services/frontend-components';
-import { Banner, Wizard, PageSection, WizardContext } from '@patternfly/react-core';
+import { isMatch } from 'lodash';
+import PropTypes from 'prop-types';
+import React from 'react';
+import { Redirect } from 'react-router-dom';
 
-import config from '~/config';
-import { shouldRefetchQuota, scrollToFirstField } from '~/common/helpers';
+import { ocmResourceType, trackEvents } from '~/common/analytics';
+import { scrollToFirstField, shouldRefetchQuota } from '~/common/helpers';
 import { normalizedProducts } from '~/common/subscriptionTypes';
-import { trackEvents, ocmResourceType } from '~/common/analytics';
+import config from '~/config';
 import withAnalytics from '~/hoc/withAnalytics';
-import usePreventBrowserNav from '~/hooks/usePreventBrowserNav';
 import { useFeatureGate } from '~/hooks/useFeatureGate';
+import usePreventBrowserNav from '~/hooks/usePreventBrowserNav';
 import { HYPERSHIFT_WIZARD_FEATURE } from '~/redux/constants/featureConstants';
+import { AppPage } from '~/components/App/AppPage';
 import { getAccountAndRolesStepId, stepId, stepNameById } from './rosaWizardConstants';
 
+import CIDRScreen from '../../CreateOSDPage/CreateOSDWizard/CIDRScreen';
+import ClusterProxyScreen from '../../CreateOSDPage/CreateOSDWizard/ClusterProxyScreen';
 import ClusterSettingsScreen from '../../CreateOSDPage/CreateOSDWizard/ClusterSettingsScreen';
-import ControlPlaneScreen from './ControlPlaneScreen';
 import MachinePoolScreen from '../../CreateOSDPage/CreateOSDWizard/MachinePoolScreen';
 import NetworkScreen from '../../CreateOSDPage/CreateOSDWizard/NetworkScreen';
-import VPCScreen from '../../CreateOSDPage/CreateOSDWizard/VPCScreen';
-import ClusterProxyScreen from '../../CreateOSDPage/CreateOSDWizard/ClusterProxyScreen';
-import CIDRScreen from '../../CreateOSDPage/CreateOSDWizard/CIDRScreen';
-import UpdatesScreen from '../../CreateOSDPage/CreateOSDWizard/UpdatesScreen';
 import ReviewClusterScreen from '../../CreateOSDPage/CreateOSDWizard/ReviewClusterScreen';
+import UpdatesScreen from '../../CreateOSDPage/CreateOSDWizard/UpdatesScreen';
+import VPCScreen from '../../CreateOSDPage/CreateOSDWizard/VPCScreen';
+import ControlPlaneScreen from './ControlPlaneScreen';
 
-import PageTitle from '../../../common/PageTitle';
+import ErrorBoundary from '../../../App/ErrorBoundary';
 import Breadcrumbs from '../../../common/Breadcrumbs';
+import PageTitle from '../../../common/PageTitle';
 import Unavailable from '../../../common/Unavailable';
 import CreateClusterErrorModal from '../../common/CreateClusterErrorModal';
 import LeaveCreateClusterPrompt from '../../common/LeaveCreateClusterPrompt';
-import ErrorBoundary from '../../../App/ErrorBoundary';
-import ClusterRolesScreen from './ClusterRolesScreen';
 import AccountsRolesScreen from './AccountsRolesScreen';
 import { isUserRoleForSelectedAWSAccount } from './AccountsRolesScreen/AccountsRolesScreen';
+import ClusterRolesScreen from './ClusterRolesScreen';
 
 import CreateRosaWizardFooter from './CreateRosaWizardFooter';
 
 import './createROSAWizard.scss';
-import { AppPage } from '~/components/App/AppPage';
 
 class CreateROSAWizardInternal extends React.Component {
   state = {

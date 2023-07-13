@@ -18,12 +18,13 @@ import {
   Switch,
 } from '@patternfly/react-core';
 
+import { LoadBalancerFlavor } from '~/types/clusters_mgmt.v1';
+import { isRestrictedEnv } from '~/restrictedEnv';
 import EditClusterIngressDialog from '../EditClusterIngressDialog';
 import ButtonWithTooltip from '../../../../../../common/ButtonWithTooltip';
 
 import modals from '../../../../../../common/Modal/modals';
 import { LoadBalancerFlavorLabel } from '../constants';
-import { LoadBalancerFlavor } from '~/types/clusters_mgmt.v1';
 import LoadBalancerPopover from '../LoadBalancerPopover';
 
 import './ClusterIngressCard.scss';

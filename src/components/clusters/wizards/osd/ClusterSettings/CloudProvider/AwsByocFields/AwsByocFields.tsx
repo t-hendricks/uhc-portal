@@ -12,7 +12,7 @@ import {
 
 import links from '~/common/installLinks.mjs';
 import ExternalLink from '~/components/common/ExternalLink';
-import { Prerequisites } from '~/components/clusters/wizards/common/Prerequisites';
+import { Prerequisites } from '~/components/clusters/wizards/common/Prerequisites/Prerequisites';
 import { AwsAccountDetails } from './AwsAccountDetails';
 
 export const AwsByocFields = () => (
