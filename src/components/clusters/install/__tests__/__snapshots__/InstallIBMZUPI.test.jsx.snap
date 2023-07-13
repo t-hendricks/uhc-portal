@@ -1,7 +1,9 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`InstallPower renders correctly 1`] = `
-<Fragment>
+<AppPage
+  title="Install OpenShift 4 | Red Hat OpenShift Cluster Manager | IBM zSystems (s390x)"
+>
   <PageTitle
     breadcrumbs={
       <Breadcrumbs
@@ -109,5 +111,5 @@ exports[`InstallPower renders correctly 1`] = `
       token={Object {}}
     />
   </PageSection>
-</Fragment>
+</AppPage>
 `;

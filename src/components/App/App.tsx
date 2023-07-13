@@ -14,23 +14,31 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { ReactNode } from 'react';
+import React, { ReactNode, useState } from 'react';
+import useResizeObserver from '@react-hook/resize-observer';
 import Router from './Router';
-import ErrorBoundary from './ErrorBoundary';
-import EnvOverrideMessage from './EnvOverrideMessage';
-
-import config from '../../config';
+import './App.scss';
 
 type Props = {
   children?: ReactNode | undefined;
 };
 
-const App = ({ children }: Props) => (
-  <>
-    <span id="scrollToTop" />
-    {config.envOverride && <EnvOverrideMessage env={config.envOverride} />}
-    <ErrorBoundary>{children || <Router />}</ErrorBoundary>
-  </>
-);
+const App = ({ children }: Props) => {
+  const header = document.getElementsByTagName('header')[0];
+  const [headerHeight, setHeaderHeight] = useState(header.getBoundingClientRect().height);
+
+  useResizeObserver(header, (entry) => {
+    const { contentRect } = entry;
+    if (headerHeight !== contentRect.height) {
+      setHeaderHeight(contentRect.height);
+    }
+  });
+
+  return (
+    <div id="app-outer-div" style={{ height: `calc(100vh - ${headerHeight}px` }}>
+      <Router />
+    </div>
+  );
+};
 
 export default App;

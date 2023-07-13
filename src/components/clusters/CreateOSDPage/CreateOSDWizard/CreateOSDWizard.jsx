@@ -42,6 +42,7 @@ import { normalizedProducts } from '~/common/subscriptionTypes';
 import { VALIDATE_CLOUD_PROVIDER_CREDENTIALS } from './ccsInquiriesActions';
 
 import './createOSDWizard.scss';
+import { AppPage } from '~/components/App/AppPage';
 
 class CreateOSDWizardInternal extends React.Component {
   state = {
@@ -71,8 +72,6 @@ class CreateOSDWizardInternal extends React.Component {
        and experienced form errors.
      */
     resetForm();
-
-    document.title = 'Create an OpenShift Dedicated cluster | Red Hat OpenShift Cluster Manager';
 
     if (shouldRefetchQuota(organization)) {
       getOrganizationAndQuota();
@@ -586,10 +585,10 @@ function CreateOSDWizard(props) {
   const { product } = props;
 
   return (
-    <>
+    <AppPage title="Create an OpenShift Dedicated cluster | Red Hat OpenShift Cluster Manager">
       <CreateOSDWizardInternal {...props} />
       <LeaveCreateClusterPrompt product={product} />
-    </>
+    </AppPage>
   );
 }
 

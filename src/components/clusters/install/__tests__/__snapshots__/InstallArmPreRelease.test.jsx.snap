@@ -1,7 +1,9 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`InstallArmPreRelease renders correctly 1`] = `
-<Fragment>
+<AppPage
+  title="Install OpenShift 4 | ARM | Experimental Developer Preview Builds"
+>
   <PageTitle
     breadcrumbs={
       <Breadcrumbs
@@ -29,5 +31,5 @@ exports[`InstallArmPreRelease renders correctly 1`] = `
       token={Object {}}
     />
   </PageSection>
-</Fragment>
+</AppPage>
 `;

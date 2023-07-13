@@ -9,14 +9,11 @@ import TokenErrorAlert from './instructions/components/TokenErrorAlert';
 import PullSecretSection from './instructions/components/PullSecretSection';
 
 import { tollboothActions } from '../../../redux/actions';
-import { scrollToTop } from '../../../common/helpers';
 import ExternalLink from '../../common/ExternalLink';
+import { AppPage } from '~/components/App/AppPage';
 
 class InstallPullSecretAzure extends Component {
   componentDidMount() {
-    scrollToTop();
-    document.title = 'Install OpenShift 4 | Pull Secret';
-
     const { dispatch } = this.props;
     dispatch(tollboothActions.createAuthToken());
   }
@@ -28,7 +25,7 @@ class InstallPullSecretAzure extends Component {
     const msDocLink =
       'https://docs.microsoft.com/en-us/azure/openshift/howto-add-update-pull-secret';
     return (
-      <>
+      <AppPage title="Install OpenShift 4 | Pull Secret">
         <PageTitle title="Azure Red Hat OpenShift" />
         <PageSection className="ocp-instructions">
           <>
@@ -59,7 +56,7 @@ class InstallPullSecretAzure extends Component {
             </Card>
           </>
         </PageSection>
-      </>
+      </AppPage>
     );
   }
 }

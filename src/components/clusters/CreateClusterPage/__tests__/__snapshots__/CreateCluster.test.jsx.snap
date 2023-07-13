@@ -1,7 +1,9 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`<CreateClusterPage /> Quota not fetched yet should render 1`] = `
-<Fragment>
+<AppPage
+  title="Create an OpenShift cluster | Red Hat OpenShift Cluster Manager"
+>
   <PageTitle
     breadcrumbs={
       <Breadcrumbs
@@ -26,11 +28,13 @@ exports[`<CreateClusterPage /> Quota not fetched yet should render 1`] = `
       centered={true}
     />
   </PageSection>
-</Fragment>
+</AppPage>
 `;
 
 exports[`<CreateClusterPage /> User with no quota should render 1`] = `
-<Fragment>
+<AppPage
+  title="Create an OpenShift cluster | Red Hat OpenShift Cluster Manager"
+>
   <PageTitle
     breadcrumbs={
       <Breadcrumbs
@@ -133,11 +137,13 @@ exports[`<CreateClusterPage /> User with no quota should render 1`] = `
       </Tab>
     </Tabs>
   </PageSection>
-</Fragment>
+</AppPage>
 `;
 
 exports[`<CreateClusterPage /> renders correctly 1`] = `
-<Fragment>
+<AppPage
+  title="Create an OpenShift cluster | Red Hat OpenShift Cluster Manager"
+>
   <PageTitle
     breadcrumbs={
       <Breadcrumbs
@@ -240,11 +246,13 @@ exports[`<CreateClusterPage /> renders correctly 1`] = `
       </Tab>
     </Tabs>
   </PageSection>
-</Fragment>
+</AppPage>
 `;
 
 exports[`<CreateClusterPage /> renders correctly for specific tabs cloud tab 1`] = `
-<Fragment>
+<AppPage
+  title="Create an OpenShift cluster | Red Hat OpenShift Cluster Manager"
+>
   <PageTitle
     breadcrumbs={
       <Breadcrumbs
@@ -347,11 +355,13 @@ exports[`<CreateClusterPage /> renders correctly for specific tabs cloud tab 1`]
       </Tab>
     </Tabs>
   </PageSection>
-</Fragment>
+</AppPage>
 `;
 
 exports[`<CreateClusterPage /> renders correctly for specific tabs datacenter tab 1`] = `
-<Fragment>
+<AppPage
+  title="Create an OpenShift cluster | Red Hat OpenShift Cluster Manager"
+>
   <PageTitle
     breadcrumbs={
       <Breadcrumbs
@@ -454,11 +464,13 @@ exports[`<CreateClusterPage /> renders correctly for specific tabs datacenter ta
       </Tab>
     </Tabs>
   </PageSection>
-</Fragment>
+</AppPage>
 `;
 
 exports[`<CreateClusterPage /> renders correctly for specific tabs local tab 1`] = `
-<Fragment>
+<AppPage
+  title="Create an OpenShift cluster | Red Hat OpenShift Cluster Manager"
+>
   <PageTitle
     breadcrumbs={
       <Breadcrumbs
@@ -561,5 +573,5 @@ exports[`<CreateClusterPage /> renders correctly for specific tabs local tab 1`]
       </Tab>
     </Tabs>
   </PageSection>
-</Fragment>
+</AppPage>
 `;

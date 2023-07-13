@@ -1,7 +1,9 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`InstallMultiPreRelease renders correctly 1`] = `
-<Fragment>
+<AppPage
+  title="Install OpenShift 4 | Multi-architecture clusters | Experimental Developer Preview Builds"
+>
   <PageTitle
     breadcrumbs={
       <Breadcrumbs
@@ -32,5 +34,5 @@ exports[`InstallMultiPreRelease renders correctly 1`] = `
       token={Object {}}
     />
   </PageSection>
-</Fragment>
+</AppPage>
 `;

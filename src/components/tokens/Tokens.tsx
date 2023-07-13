@@ -45,6 +45,7 @@ import TokenBox from './TokenBox';
 import RevokeTokensInstructions from './RevokeTokensInstructions';
 
 import './Tokens.scss';
+import { AppPage } from '../App/AppPage';
 
 const defaultLeadingInfo = (
   <>
@@ -93,7 +94,6 @@ const Tokens = (props: Props) => {
   React.useEffect(() => {
     // After requesting token, we might need to reload page doing stronger auth;
     // after that we want the token to show, but we just loaded.
-    document.title = 'API Token | OpenShift Cluster Manager';
     if (!blockedByTerms && show && !offlineToken) {
       // eslint-disable-next-line no-console
       console.log('Tokens: componentDidMount, props =', props);
@@ -106,7 +106,7 @@ const Tokens = (props: Props) => {
 
   const pageTitle = 'OpenShift Cluster Manager API Token';
   return (
-    <>
+    <AppPage title="API Token | OpenShift Cluster Manager">
       <PageHeader>
         <Breadcrumbs path={[{ label: 'Downloads', path: '/downloads' }, { label: pageTitle }]} />
         <PageHeaderTitle title={pageTitle} />
@@ -190,7 +190,7 @@ const Tokens = (props: Props) => {
           </StackItem>
         </Stack>
       </PageSection>
-    </>
+    </AppPage>
   );
 };
 

@@ -1,7 +1,9 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`InstallASH renders correctly 1`] = `
-<Fragment>
+<AppPage
+  title="Install OpenShift 4 | Red Hat OpenShift Cluster Manager | Azure Stack Hub"
+>
   <InstructionsChooserPageTitle
     breadcrumbs={
       <Breadcrumbs
@@ -39,5 +41,5 @@ exports[`InstallASH renders correctly 1`] = `
       upiPageLink="/install/azure-stack-hub/user-provisioned"
     />
   </PageSection>
-</Fragment>
+</AppPage>
 `;
