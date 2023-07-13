@@ -2,25 +2,18 @@
 # This script starts a podman pod that runs the Cypress tests.
 # Specially designed for QE related pipeline runs.
 
-export CYPRESS_TEST_WITHQUOTA_USER="${CYPRESS_TEST_WITHQUOTA_USER:-TEST_CYPRESS_QE_ORGADMIN_USER}"
-export CYPRESS_TEST_WITHQUOTA_PASSWORD="${CYPRESS_TEST_WITHQUOTA_PASSWORD:-TEST_CYPRESS_QE_ORGADMIN_PASSWORD}"
-export CYPRESS_TEST_QE_ORGADMIN_OFFLINE_TOKEN="${CYPRESS_TEST_QE_ORGADMIN_OFFLINE_TOKEN:-TEST_CYPRESS_QE_ORGADMIN_OFFLINE_TOKEN}"
+# Writing env variables used for QE tests to cypress.env.json.
+cat > cypress.env.json << EOF
+{
+"TEST_WITHQUOTA_USER": "${TEST_CYPRESS_QE_ORGADMIN_USER}",
+"TEST_WITHQUOTA_PASSWORD": "${TEST_CYPRESS_QE_ORGADMIN_PASSWORD}",
+"QE_ORGADMIN_USER": "${TEST_CYPRESS_QE_ORGADMIN_USER}",
+"QE_ORGADMIN_PASSWORD": "${TEST_CYPRESS_QE_ORGADMIN_PASSWORD}",
+"QE_ORGADMIN_OFFLINE_TOKEN": "${TEST_CYPRESS_QE_ORGADMIN_OFFLINE_TOKEN}"
+}
+EOF
 
 export ELECTRON_RUN_AS_NODE=1
-
-# Check that the required environment variables are set:
-if [ -z "${CYPRESS_TEST_WITHQUOTA_USER}" ]; then
-  echo "Environment variable 'CYPRESS_TEST_WITHQUOTA_USER' is mandatory."
-  exit 1
-fi
-if [ -z "${CYPRESS_TEST_WITHQUOTA_PASSWORD}" ]; then
-  echo "Environment variable 'CYPRESS_TEST_WITHQUOTA_PASSWORD' is mandatory."
-  exit 1
-fi
-if [ -z "${CYPRESS_TEST_QE_ORGADMIN_OFFLINE_TOKEN}" ]; then
-  echo "Environment variable 'CYPRESS_TEST_QE_ORGADMIN_OFFLINE_TOKEN' is mandatory."
-  exit 1
-fi
 
 # Checks on Different flavours w.r.t ENVIRONMENT, BROWSER, TAGS
 if [ $1 ]
@@ -101,12 +94,10 @@ browser_container_id=$(
     --security-opt label="disable" \
     --volume "${PWD}/cypress.config.js:/cypress.config.js" \
     --volume "${PWD}/tsconfig.json:/tsconfig.json" \
+    --volume "${PWD}/cypress.env.json:/cypress.env.json" \
     --volume "${PWD}/cypress:/cypress" \
     --volume "${PWD}/node_modules:/node_modules" \
     --env "CYPRESS_BASE_URL=https://${ENVIRONMENT}/openshift/" \
-    --env "CYPRESS_TEST_WITHQUOTA_USER=${CYPRESS_TEST_WITHQUOTA_USER}" \
-    --env "CYPRESS_TEST_WITHQUOTA_PASSWORD=${CYPRESS_TEST_WITHQUOTA_PASSWORD}" \
-    --env "CYPRESS_TEST_QE_ORGADMIN_OFFLINE_TOKEN=${CYPRESS_TEST_QE_ORGADMIN_OFFLINE_TOKEN}" \
     --env NO_COLOR=1 \
     --env "CYPRESS_grepTags=${TAGS}" \
     --entrypoint=cypress \
