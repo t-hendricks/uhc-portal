@@ -1,7 +1,8 @@
 import React from 'react';
 import './AWSLogo.scss';
+import PropTypes from 'prop-types';
 
-const AWSLogo = (height, width, className) => (
+const AWSLogo = ({ height, width, className }) => (
   // eslint-disable-next-line max-len
   <svg
     className={className}
@@ -55,4 +56,10 @@ const AWSLogo = (height, width, className) => (
     </g>
   </svg>
 );
+
+AWSLogo.propTypes = {
+  height: PropTypes.string,
+  width: PropTypes.string,
+  className: PropTypes.string,
+};
 export default AWSLogo;
