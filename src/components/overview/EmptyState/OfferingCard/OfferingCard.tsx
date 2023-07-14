@@ -20,7 +20,7 @@ import {
 import { Link } from 'react-router-dom';
 import ExternalLink from '~/components/common/ExternalLink';
 import microsoftLogo from '../../../../styles/images/Microsoft_logo.svg';
-import awsLogo from '../../../../styles/images/AWSLogo';
+import AWSLogo from '../../../../styles/images/AWSLogo';
 import redhatLogo from '../../../../styles/images/redhat-logo.svg';
 import docLinks from '../../../../common/installLinks.mjs';
 
@@ -84,7 +84,7 @@ export function OfferingCard(props: OfferingCardProps) {
         <Split hasGutter style={{ width: '100%' }}>
           <SplitItem>
             {offeringType === 'AWS' ? (
-              awsLogo('40px', '40px', 'logo-aws')
+              <AWSLogo height="40px" width="40px" className="logo-aws" />
             ) : (
               <img className="offering-logo" src={offeringLogoString} alt={logoAlt} />
             )}
