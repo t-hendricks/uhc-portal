@@ -14,7 +14,7 @@ import { constants } from '~/components/clusters/CreateOSDPage/CreateOSDForm/Cre
 import { CloudProviderType } from '~/components/clusters/wizards/common/constants';
 import { required } from '~/common/validators';
 import ExternalLink from '~/components/common/ExternalLink';
-import { getGcpCcsCredentials } from '~/components/clusters/wizards/common/utils';
+import { getGcpCcsCredentials } from '~/components/clusters/wizards/common/utils/ccsCredentials';
 import { FieldId } from '~/components/clusters/wizards/osd/constants';
 import { KeyRing } from '~/types/clusters_mgmt.v1';
 
