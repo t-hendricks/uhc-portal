@@ -1,0 +1,132 @@
+import React from 'react';
+import { Label, Title, Split, SplitItem, Flex, FlexItem } from '@patternfly/react-core';
+import isEmpty from 'lodash/isEmpty';
+
+import { MachinePool } from '~/types/clusters_mgmt.v1/models/MachinePool';
+import { ClusterFromSubscription } from '~/types/types';
+import { Taint } from '~/types/clusters_mgmt.v1/models/Taint';
+import chunk from 'lodash/chunk';
+import { hasSubnets, getSubnetIds } from '../machinePoolsHelper';
+import { isMultiAZ } from '../../../clusterDetailsHelper';
+
+const ExpandableRow = ({
+  cluster,
+  machinePool,
+}: {
+  cluster: ClusterFromSubscription;
+  machinePool: MachinePool;
+}) => {
+  let labels = null;
+  let taints = null;
+  let autoscaling = null;
+  let subnets = null;
+  let spotInstance = null;
+
+  if (machinePool.labels) {
+    const { labels: labelsData } = machinePool;
+    const labelsKeys = !isEmpty(labelsData) ? Object.keys(labelsData) : [];
+    if (labelsKeys.length > 0) {
+      labels = (
+        <>
+          <Title headingLevel="h4">Labels</Title>
+          {labelsKeys.map((key) => (
+            <React.Fragment key={`label-${key}`}>
+              <Label color="blue">{`${[key]} ${labelsData[key] ? '=' : ''} ${
+                labelsData[key]
+              }`}</Label>{' '}
+            </React.Fragment>
+          ))}
+        </>
+      );
+    }
+  }
+
+  if (machinePool.taints) {
+    const { taints: taintsData } = machinePool;
+    taints = (
+      <>
+        <Title headingLevel="h4">Taints</Title>
+        {taintsData?.map((taint: Taint) => (
+          <React.Fragment key={`taint-${taint.key}`}>
+            <Label color="blue" className="pf-c-label--break-word">
+              {`${taint.key} = ${taint.value}:${taint.effect}`}
+            </Label>{' '}
+          </React.Fragment>
+        ))}
+      </>
+    );
+  }
+
+  if (machinePool.autoscaling) {
+    autoscaling = (
+      <>
+        <Title headingLevel="h4">Autoscaling</Title>
+        <Split hasGutter>
+          <SplitItem>
+            <Title headingLevel="h4" className="autoscale__lim">{`Min nodes ${
+              isMultiAZ(cluster) ? 'per zone' : ''
+            }`}</Title>
+            {machinePool.autoscaling.min_replicas &&
+              (isMultiAZ(cluster)
+                ? machinePool.autoscaling.min_replicas / 3
+                : machinePool.autoscaling.min_replicas)}
+          </SplitItem>
+          <SplitItem>
+            <Title headingLevel="h4" className="autoscale__lim">{`Max nodes ${
+              isMultiAZ(cluster) ? 'per zone' : ''
+            }`}</Title>
+            {machinePool.autoscaling.max_replicas &&
+              (isMultiAZ(cluster)
+                ? machinePool.autoscaling.max_replicas / 3
+                : machinePool.autoscaling.max_replicas)}
+          </SplitItem>
+        </Split>
+      </>
+    );
+  }
+
+  const awsSpotInstance = machinePool?.aws?.spot_market_options;
+  if (awsSpotInstance) {
+    const awsPrice = awsSpotInstance?.max_price
+      ? `Maximum hourly price: ${awsSpotInstance?.max_price}`
+      : 'On-Demand';
+    spotInstance = (
+      <>
+        <Title headingLevel="h4">Spot instance pricing</Title>
+        {awsPrice}
+      </>
+    );
+  }
+
+  if (hasSubnets(machinePool)) {
+    subnets = (
+      <>
+        <Title headingLevel="h4">Subnets</Title>
+        {getSubnetIds(machinePool).map((subnetId, idx) => (
+          <span key={`subnet-${subnetId || idx}`}>{subnetId}</span>
+        ))}
+      </>
+    );
+  }
+
+  const sections = [labels, taints, autoscaling, spotInstance, subnets].filter(
+    (section) => section !== null,
+  );
+  const columns = chunk(sections, 3);
+
+  return (
+    <>
+      <Flex>
+        {columns.map((column) => (
+          <Flex direction={{ default: 'column' }} spaceItems={{ default: 'spaceItemsXl' }}>
+            {column.map((section) => (
+              <FlexItem>{section}</FlexItem>
+            ))}
+          </Flex>
+        ))}
+      </Flex>
+    </>
+  );
+};
+
+export default ExpandableRow;
