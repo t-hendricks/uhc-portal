@@ -27,7 +27,7 @@ const mapStateToProps = (state) => {
 
   const valueSelector = formValueSelector('EditClusterIngress');
   const additionalRouterEnabled = valueSelector(state, 'enable_additional_router');
-  const APIPrivate = cluster.api.listening === 'internal';
+  const APIPrivate = cluster.api?.listening === 'internal';
   const subscriptionPlan = cluster.subscription?.plan?.type;
 
   return {
