@@ -14,6 +14,7 @@ import {
   getMachineOrNodePools,
   patchMachinePoolOrNodePool,
   clearScaleMachinePoolResponse,
+  clearGetMachinePoolsResponse,
 } from '../../ClusterDetails/components/MachinePools/MachinePoolsActions';
 
 import { isHypershiftCluster, isMultiAZ } from '../../ClusterDetails/clusterDetailsHelper';
@@ -39,8 +40,9 @@ const mapStateToProps = (state) => {
   const selectedMachinePool =
     valueSelector(state, 'machine_pool') ||
     modalData.machinePool?.id ||
-    (isHypershift && state.machinePools.getMachinePools.data[0]?.id) ||
-    (modalData.isDefaultMachinePool && 'Default');
+    (isHypershift ? state.machinePools.getMachinePools.data[0]?.id : null) ||
+    (modalData.isDefaultMachinePool ? 'Default' : null) ||
+    null;
 
   const cloudProviderID = get(cluster, 'cloud_provider.id', '');
 
@@ -102,6 +104,7 @@ const mapStateToProps = (state) => {
       ? modalData.shouldDisplayClusterName
       : false,
     clusterDisplayName: getClusterName(cluster),
+    clearMachinePoolDataOnExit: modalData.clearMachinePoolDataOnExit,
   };
 
   let machinePoolWithAutoscale = false;
@@ -138,6 +141,7 @@ const mapStateToProps = (state) => {
       },
     };
   }
+
   // Any other machine pool
   const selectedMachinePoolData =
     get(state, 'machinePools.getMachinePools.data', []).find(
@@ -201,6 +205,7 @@ const mapDispatchToProps = (dispatch) => ({
   },
   getMachinePools: (clusterID, isHypershift) =>
     dispatch(getMachineOrNodePools(clusterID, isHypershift)),
+  resetGetMachinePoolsResponse: () => dispatch(clearGetMachinePoolsResponse()),
   resetScaleMachinePoolResponse: () => dispatch(clearScaleMachinePoolResponse()),
   resetScaleDefaultMachinePoolResponse: () => dispatch(clearClusterResponse()),
   closeModal: () => dispatch(closeModal()),
