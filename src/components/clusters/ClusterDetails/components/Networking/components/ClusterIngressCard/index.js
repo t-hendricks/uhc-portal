@@ -13,7 +13,7 @@ const mapStateToProps = (state) => {
   const hasAdditionalRouter = Object.keys(clusterRouters).length === 2;
 
   const consoleURL = cluster.console?.url;
-  const controlPlaneAPIEndpoint = cluster.api.url;
+  const controlPlaneAPIEndpoint = cluster.api?.url;
   const defaultRouterAddress = clusterRouters.default.address;
   const additionalRouterAddress = hasAdditionalRouter
     ? clusterRouters.additional.address
@@ -24,7 +24,7 @@ const mapStateToProps = (state) => {
 
   const provider = cluster.cloud_provider?.id;
 
-  const isApiPrivate = cluster.api.listening === 'internal';
+  const isApiPrivate = cluster.api?.listening === 'internal';
   const isDefaultRouterPrivate = clusterRouters.default.isPrivate;
   const isAdditionalRouterPrivate = !!clusterRouters?.additional?.isPrivate;
 
