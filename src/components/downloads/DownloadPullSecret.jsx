@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Button } from '@patternfly/react-core';
-import Download from '@axetroy/react-download';
+import FileSaver from 'file-saver';
 import isEmpty from 'lodash/isEmpty';
 
 import useAnalytics from '~/hooks/useAnalytics';
@@ -12,24 +12,21 @@ function DownloadPullSecret({ token, pendoID, text }) {
   const isDisabled = !token || !!token.error || isEmpty(token);
   const tokenView = token.error ? '' : `${JSON.stringify(token)}\n`;
 
-  const downloadButton = (
+  const downloadPullSecret = () => {
+    track(trackEvents.DownloadPullSecret, { path: pendoID });
+    const blob = new Blob([tokenView], { type: 'text/plain;charset=utf-8' });
+    FileSaver.saveAs(blob, 'pull-secret');
+  };
+
+  return (
     <Button
       variant="secondary"
+      onClick={downloadPullSecret}
       isDisabled={isDisabled}
-      onClick={() => {
-        track(trackEvents.DownloadPullSecret, { path: pendoID });
-      }}
+      style={{ display: 'inline' }}
     >
       {text}
     </Button>
-  );
-
-  return isDisabled ? (
-    downloadButton
-  ) : (
-    <Download file="pull-secret" content={tokenView} style={{ display: 'inline' }}>
-      {downloadButton}
-    </Download>
   );
 }
 DownloadPullSecret.propTypes = {

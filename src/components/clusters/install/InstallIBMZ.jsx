@@ -1,11 +1,11 @@
 import React from 'react';
 import { PageSection } from '@patternfly/react-core';
 
+import { AppPage } from '~/components/App/AppPage';
 import Breadcrumbs from '../../common/Breadcrumbs';
 import links from '../../../common/installLinks.mjs';
 import { InstructionsChooser } from './instructions/InstructionsChooser';
 import { InstructionsChooserPageTitle } from './instructions/InstructionsChooserPageTitle';
-import { AppPage } from '~/components/App/AppPage';
 
 const InstallIBMZ = () => {
   const breadcrumbs = (
@@ -13,14 +13,14 @@ const InstallIBMZ = () => {
       path={[
         { label: 'Clusters' },
         { label: 'Cluster Type', path: '/create' },
-        { label: 'IBM zSystems (s390x)' },
+        { label: 'IBM Z (s390x)' },
       ]}
     />
   );
 
   return (
-    <AppPage title="Install OpenShift 4 | Red Hat OpenShift Cluster Manager | IBM zSystems (s390x)">
-      <InstructionsChooserPageTitle cloudName="IBM zSystems (s390x)" breadcrumbs={breadcrumbs} />
+    <AppPage title="Install OpenShift 4 | Red Hat OpenShift Cluster Manager | IBM Z (s390x)">
+      <InstructionsChooserPageTitle cloudName="IBM Z (s390x)" breadcrumbs={breadcrumbs} />
       <PageSection>
         <InstructionsChooser
           aiPageLink="/assisted-installer/clusters/~new"

@@ -1,1 +1,0 @@
-export { RichInputField } from './RichInputField';

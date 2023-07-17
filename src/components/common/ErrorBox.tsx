@@ -1,7 +1,7 @@
 import React from 'react';
 import { Alert, ExpandableSection, AlertActionCloseButton } from '@patternfly/react-core';
-import { formatErrorDetails } from '../../common/errors';
 import { ErrorState } from '~/types/types';
+import { formatErrorDetails } from '../../common/errors';
 
 type Props<R extends Response = Response> = {
   message: string;

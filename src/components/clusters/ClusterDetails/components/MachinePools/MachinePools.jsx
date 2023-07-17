@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import produce from 'immer';
 import isEmpty from 'lodash/isEmpty';
 import get from 'lodash/get';
-import cx from 'classnames';
 
 import {
   Card,
@@ -14,19 +13,18 @@ import {
   Divider,
   EmptyState,
   Label,
-  Title,
-  Split,
-  SplitItem,
   Popover,
 } from '@patternfly/react-core';
 import { Table, TableHeader, TableBody, cellWidth, expandable } from '@patternfly/react-table';
 import Skeleton from '@redhat-cloud-services/frontend-components/Skeleton';
 
+import { isRestrictedEnv } from '~/restrictedEnv';
 import UpdateAllMachinePools from './UpdateAllMachinePools';
 import AddMachinePoolModal from './components/AddMachinePoolModal';
 import EditTaintsModal from './components/EditTaintsModal';
 import EditLabelsModal from './components/EditLabelsModal';
-import { actionResolver, getSubnetIds, hasSubnets } from './machinePoolsHelper';
+import { actionResolver, hasSubnets } from './machinePoolsHelper';
+import ExpandableRow from './components/ExpandableRow';
 
 import ButtonWithTooltip from '../../../../common/ButtonWithTooltip';
 import ErrorBox from '../../../../common/ErrorBox';
@@ -36,8 +34,6 @@ import { noQuotaTooltip } from '../../../../../common/helpers';
 import { versionFormatter } from '../../../../../common/versionFormatter';
 import { isHibernating } from '../../../common/clusterStates';
 import './MachinePools.scss';
-import { isMultiAZ } from '../../clusterDetailsHelper';
-import { isRestrictedEnv } from '~/restrictedEnv';
 
 const getOpenShiftVersion = (machinePool) => {
   const extractedVersion = get(machinePool, 'version.id', '');
@@ -158,16 +154,11 @@ class MachinePools extends React.Component {
       );
     }
 
-    const showSubnetColumn = machinePoolsList.data.some(hasSubnets);
-
     const columns = [
       { title: 'Machine pool', cellFormatters: [expandable] },
       { title: 'Instance type' },
-      { title: 'Availability zones', transforms: [cellWidth(20)] },
+      { title: 'Availability zones', transforms: [cellWidth(15)] },
     ];
-    if (showSubnetColumn) {
-      columns.push({ title: 'Subnets' });
-    }
     columns.push({ title: 'Node count' });
     columns.push({ title: 'Autoscaling', transforms: [cellWidth(15)] });
     if (isHypershift) {
@@ -215,17 +206,6 @@ class MachinePools extends React.Component {
           ),
         },
         machinePool.availability_zones?.join(', ') || machinePool.availability_zone,
-        showSubnetColumn
-          ? {
-              title: (
-                <>
-                  {getSubnetIds(machinePool).map((subnetId, idx) => (
-                    <div key={`subnet-${subnetId || idx}`}>{subnetId}</div>
-                  ))}
-                </>
-              ),
-            }
-          : null,
         { title: nodes },
         autoscalingEnabled ? 'Enabled' : 'Disabled',
         isHypershift ? getOpenShiftVersion(machinePool) : null,
@@ -242,105 +222,24 @@ class MachinePools extends React.Component {
       return row;
     };
 
-    const getExpandableRow = (machinePool = {}, parentIndex) => {
-      const { labels, taints } = machinePool;
-      const labelsKeys = !isEmpty(labels) ? Object.keys(labels) : [];
-
-      const labelsList = labelsKeys.length
-        ? labelsKeys.map((key) => (
-            <React.Fragment key={`label-${key}`}>
-              <Label color="blue">{`${[key]} ${labels[key] ? '=' : ''} ${labels[key]}`}</Label>{' '}
-            </React.Fragment>
-          ))
-        : null;
-
-      const taintsList = taints?.map((taint) => (
-        <React.Fragment key={`taint-${taint.key}`}>
-          <Label color="blue" className="pf-c-label--break-word">
-            {`${taint.key} = ${taint.value}:${taint.effect}`}
-          </Label>{' '}
-        </React.Fragment>
-      ));
-
-      const autoScaling = machinePool.autoscaling && (
-        <>
-          <Title headingLevel="h4" className="pf-u-mb-sm pf-u-mt-lg">
-            Autoscaling
-          </Title>
-          <Split hasGutter>
-            <SplitItem>
-              <Title headingLevel="h4" className="autoscale__lim">{`Min nodes ${
-                isMultiAZ(cluster) ? 'per zone' : ''
-              }`}</Title>
-              {isMultiAZ(cluster)
-                ? machinePool.autoscaling.min_replicas / 3
-                : machinePool.autoscaling.min_replicas}
-            </SplitItem>
-            <SplitItem>
-              <Title headingLevel="h4" className="autoscale__lim">{`Max nodes ${
-                isMultiAZ(cluster) ? 'per zone' : ''
-              }`}</Title>
-              {isMultiAZ(cluster)
-                ? machinePool.autoscaling.max_replicas / 3
-                : machinePool.autoscaling.max_replicas}
-            </SplitItem>
-          </Split>
-        </>
-      );
-
-      const awsSpotInstance = machinePool?.aws?.spot_market_options;
-      const awsPrice = awsSpotInstance?.max_price
-        ? `Maximum hourly price: ${awsSpotInstance?.max_price}`
-        : 'On-Demand';
-
-      const expandableRowContent = (
-        <>
-          {labelsList && (
-            <>
-              <Title headingLevel="h4" className="pf-u-mb-sm">
-                Labels
-              </Title>
-              {labelsList}
-            </>
-          )}
-          {taintsList && (
-            <>
-              <Title headingLevel="h4" className={cx('pf-u-mb-sm', labelsList && 'pf-u-mt-lg')}>
-                Taints
-              </Title>
-              {taintsList}
-            </>
-          )}
-          {autoScaling}
-          {awsSpotInstance && (
-            <>
-              <Title headingLevel="h4" className={cx('pf-u-mb-sm', labelsList && 'pf-u-mt-lg')}>
-                Spot instance pricing
-              </Title>
-              {awsPrice}
-            </>
-          )}
-        </>
-      );
-
-      return {
-        parent: parentIndex,
-        fullWidth: true,
-        cells: [
-          {
-            title: expandableRowContent,
-          },
-        ],
-        key: `${machinePool.id}-child`,
-      };
-    };
+    const getExpandableRow = (machinePool, parentIndex) => ({
+      parent: parentIndex,
+      fullWidth: true,
+      cells: [
+        {
+          title: <ExpandableRow cluster={cluster} machinePool={machinePool} />,
+        },
+      ],
+      key: `${machinePool.id}-child`,
+    });
 
     // row is expandable if autoscaling enabled, or it has lables, or taints
     const isExpandable = (machinePool = {}) =>
       !isEmpty(machinePool.labels) ||
       machinePool.taints?.length > 0 ||
       machinePool.autoscaling ||
-      machinePool.aws;
+      machinePool.aws ||
+      hasSubnets(machinePool);
 
     const rows = [];
 
@@ -365,7 +264,6 @@ class MachinePools extends React.Component {
 
       if (isExpandableRow) {
         const expandableRow = getExpandableRow(machinePool, rows.length - 1);
-
         rows.push(expandableRow);
       }
     });

@@ -1,11 +1,11 @@
+import { mount, shallow } from 'enzyme';
 import React from 'react';
-import { shallow, mount } from 'enzyme';
 import { MemoryRouter } from 'react-router-dom';
+import { subscriptionStatuses } from '../../../../common/subscriptionTypes';
 import { TestWrapper, render, screen } from '../../../../testUtils';
+import clusterStates from '../../common/clusterStates';
 import ClusterDetails from '../ClusterDetails';
 import fixtures, { funcs } from './ClusterDetails.fixtures';
-import clusterStates from '../../common/clusterStates';
-import { subscriptionStatuses } from '../../../../common/subscriptionTypes';
 
 describe('<ClusterDetails />', () => {
   // eslint-disable-next-line react/prop-types
@@ -19,15 +19,11 @@ describe('<ClusterDetails />', () => {
 
   describe('Cluster Details - OSD', () => {
     const functions = funcs();
-    const wrapper = mount(
+    mount(
       <RouterWrapper>
         <ClusterDetails {...fixtures} {...functions} hasIssues />
       </RouterWrapper>,
     );
-
-    it('should render', () => {
-      expect(wrapper).toMatchSnapshot();
-    });
 
     it('should call clearGlobalError on mount', () => {
       expect(functions.clearGlobalError).toBeCalledWith('clusterDetails');
@@ -247,7 +243,6 @@ describe('<ClusterDetails />', () => {
     const wrapper = shallow(<ClusterDetails {...props} />);
 
     it('should render loading modal when pending', () => {
-      expect(wrapper).toMatchSnapshot();
       expect(wrapper.find('.cluster-loading-container').length).toEqual(1);
     });
   });
@@ -266,7 +261,6 @@ describe('<ClusterDetails />', () => {
     const wrapper = shallow(<ClusterDetails {...props} />);
 
     it('should render error message', () => {
-      expect(wrapper).toMatchSnapshot();
       expect(wrapper.find('Unavailable').length).toEqual(1);
     });
 

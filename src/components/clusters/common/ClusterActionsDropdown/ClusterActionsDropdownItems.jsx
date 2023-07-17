@@ -1,13 +1,13 @@
 import get from 'lodash/get';
 import React from 'react';
 import { DropdownItem } from '@patternfly/react-core';
+import { isRestrictedEnv } from '~/restrictedEnv';
 import clusterStates, { isHibernating } from '../clusterStates';
 import { subscriptionStatuses, normalizedProducts } from '../../../../common/subscriptionTypes';
 import getClusterName from '../../../../common/getClusterName';
 import modals from '../../../common/Modal/modals';
 import { isAssistedInstallCluster } from '../../../../common/isAssistedInstallerCluster';
 import { isHypershiftCluster } from '../../ClusterDetails/clusterDetailsHelper';
-import { isRestrictedEnv } from '~/restrictedEnv';
 
 /**
  * Helper using reason message why it's disabled as source-of-truth

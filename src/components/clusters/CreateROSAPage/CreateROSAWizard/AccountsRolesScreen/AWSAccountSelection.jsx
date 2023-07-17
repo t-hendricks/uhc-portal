@@ -1,23 +1,23 @@
 // a redux-form Field-compatible component for selecting an associated AWS account id
 
-import React, { useState, useEffect } from 'react';
-import PropTypes from 'prop-types';
 import {
   Button,
-  Select,
-  SelectOption,
-  FormGroup,
-  Title,
-  EmptyStateBody,
   EmptyState,
-  Tooltip,
+  EmptyStateBody,
   Flex,
   FlexItem,
+  FormGroup,
+  Select,
+  SelectOption,
+  Title,
+  Tooltip,
 } from '@patternfly/react-core';
+import PropTypes from 'prop-types';
+import React, { useEffect, useState } from 'react';
+import Links from '~/common/installLinks.mjs';
 import PopoverHint from '../../../../common/PopoverHint';
-import './AccountsRolesScreen.scss';
-import links from '~/common/installLinks.mjs';
 import { hasContract } from './AWSBillingAccount/awsBillingAccountHelper';
+import './AccountsRolesScreen.scss';
 
 const AWS_ACCT_ID_PLACEHOLDER = 'Select an account';
 
@@ -80,7 +80,7 @@ function AWSAccountSelection({
   const btnProps = isBillingAccount
     ? {
         component: 'a',
-        href: links.AWS_CONSOLE_ROSA_HOME,
+        href: Links.AWS_CONSOLE_ROSA_HOME,
         target: '_blank',
       }
     : {

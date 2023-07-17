@@ -12,6 +12,7 @@ import {
   WizardContext,
 } from '@patternfly/react-core';
 
+import { stringToArray } from '~/common/helpers';
 import { constants } from '../../CreateOSDForm/CreateOSDFormConstants';
 import { validateUrl, validateCA, checkNoProxyDomains } from '../../../../../common/validators';
 import ReduxVerticalFormGroup from '../../../../common/ReduxFormComponents/ReduxVerticalFormGroup';
@@ -19,7 +20,6 @@ import ReduxFileUpload from '../../../../common/ReduxFormComponents/ReduxFileUpl
 import ExternalLink from '../../../../common/ExternalLink';
 import links from '../../../../../common/installLinks.mjs';
 import { normalizedProducts } from '../../../../../common/subscriptionTypes';
-import { stringToArray } from '~/common/helpers';
 import {
   HTTP_PROXY_PLACEHOLDER,
   HTTPS_PROXY_PLACEHOLDER,

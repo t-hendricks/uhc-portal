@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import { Title, Grid, GridItem, FormGroup, Form, ExpandableSection } from '@patternfly/react-core';
 import { Field } from 'redux-form';
 
+import ReduxCheckbox from '~/components/common/ReduxFormComponents/ReduxCheckbox';
+import { validateAWSKMSKeyARN } from '~/common/validators';
 import PopoverHint from '../../../../common/PopoverHint';
 import PersistentStorageDropdown from '../../../common/PersistentStorageDropdown';
 import LoadBalancersDropdown from '../../../common/LoadBalancersDropdown';
@@ -14,8 +16,6 @@ import EtcdEncryptionSection from '../../CreateOSDForm/FormSections/EncryptionSe
 import { constants } from '../../CreateOSDForm/CreateOSDFormConstants';
 import BasicFieldsSection from '../../CreateOSDForm/FormSections/BasicFieldsSection';
 import { normalizedProducts } from '../../../../../common/subscriptionTypes';
-import ReduxCheckbox from '~/components/common/ReduxFormComponents/ReduxCheckbox';
-import { validateAWSKMSKeyARN } from '~/common/validators';
 
 function ClusterSettingsScreen({
   isByoc,

@@ -15,6 +15,7 @@ import {
 } from '@patternfly/react-core';
 import { Spinner } from '@redhat-cloud-services/frontend-components/Spinner';
 import { PageHeader, PageHeaderTitle } from '@redhat-cloud-services/frontend-components/PageHeader';
+import { AppPage } from '~/components/App/AppPage';
 import { isValid } from '../../../../../common/helpers';
 import Breadcrumbs from '../../../../common/Breadcrumbs';
 import IDPForm from './components/IDPForm';
@@ -23,7 +24,6 @@ import getClusterName from '../../../../../common/getClusterName';
 import { subscriptionStatuses } from '../../../../../common/subscriptionTypes';
 import { IDPTypeNames, singularFormIDP } from './IdentityProvidersHelper';
 import { isHypershiftCluster } from '../../clusterDetailsHelper';
-import { AppPage } from '~/components/App/AppPage';
 
 const PAGE_TITLE = 'Red Hat OpenShift Cluster Manager';
 

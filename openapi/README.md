@@ -5,8 +5,8 @@ Run `make openapi` (at the root level) to grab new ones and `yarn gen-types` to 
 
 As of this writing we carry several manual patches to JSON and to types, that above commands overwrite:
 
-- commit 56d37e7fa6cc571712ff1615880fce14dda1f170 added stuff into openapi/clusters_mgmt.v1.json
-  (TODO: add in ocm-api-model)
+- commit 640443293396d3c132189016589f61ea36b9eec5 added stuff into openapi/clusters_mgmt.v1.json
+  (pending upstream https://github.com/openshift-online/ocm-api-model/pull/775)
 - commit 52b7661c5249590f2e20fbd0910e78b08de5553d added manually written type files under
   src/types/clusters_mgmt.v1/models_/ + imports into generated clusters_mgmt.v1/index.ts
   (TODO: add in ocm-api-model)

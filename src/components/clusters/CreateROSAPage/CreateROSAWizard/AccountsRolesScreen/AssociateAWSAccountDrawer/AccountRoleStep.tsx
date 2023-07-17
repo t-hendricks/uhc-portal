@@ -1,11 +1,11 @@
 import React from 'react';
 import { Alert, AlertVariant, Text, TextVariants } from '@patternfly/react-core';
 import InstructionCommand from '~/components/common/InstructionCommand';
-import { RosaCliCommand } from '../constants/cliCommands';
 
 import { trackEvents } from '~/common/analytics';
 import ExternalLink from '~/components/common/ExternalLink';
 import links from '~/common/installLinks.mjs';
+import { RosaCliCommand } from '../constants/cliCommands';
 import AssociateAWSAccountStep from './common/AssociateAWSAccountStep';
 
 type AccountRoleStepProps = {

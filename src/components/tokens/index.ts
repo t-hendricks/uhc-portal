@@ -1,8 +1,8 @@
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
-import Tokens from './Tokens';
 import { setOfflineToken } from '~/components/clusters/CreateROSAPage/CreateROSAWizard/rosaActions';
 import { GlobalState } from '~/redux/store';
+import Tokens from './Tokens';
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   setOfflineToken: (token: string) => dispatch(setOfflineToken(token)),

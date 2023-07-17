@@ -11,7 +11,7 @@ import {
   UpgradePolicyType,
 } from '~/components/clusters/wizards/common/constants';
 import { useFormState } from '~/components/clusters/wizards/hooks';
-import { RadioGroupField } from '~/components/clusters/wizards/form';
+import { RadioGroupField } from '~/components/clusters/wizards/form/RadioGroupField';
 import UpgradeScheduleSelection from '~/components/clusters/common/Upgrades/UpgradeScheduleSelection';
 import PodDistruptionBudgetGraceSelect from '~/components/clusters/common/Upgrades/PodDistruptionBudgetGraceSelect';
 

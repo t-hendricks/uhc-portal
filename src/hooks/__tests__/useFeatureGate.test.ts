@@ -1,4 +1,4 @@
-import { renderHook } from '@testing-library/react-hooks';
+import { renderHook } from '@testing-library/react';
 
 import { useGlobalState } from '~/redux/hooks/useGlobalState';
 import { useFeatureGate, featureGateSelector } from '../useFeatureGate';

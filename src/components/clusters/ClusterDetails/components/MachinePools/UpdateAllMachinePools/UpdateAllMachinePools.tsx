@@ -6,14 +6,14 @@ import semver from 'semver';
 import { GlobalState } from '~/redux/store';
 import clusterService from '~/services/clusterService';
 import ExternalLink from '~/components/common/ExternalLink';
-import { isHypershiftCluster } from '../../../clusterDetailsHelper';
-import { getMachineOrNodePools } from '../MachinePoolsActions';
 import { NodePool } from '~/types/clusters_mgmt.v1/models/NodePool';
 import links from '~/common/installLinks.mjs';
 import {
   hasAvailableUpdatesSelector,
   updateStartedSelector,
 } from '~/components/clusters/common/Upgrades/upgradeHelpers';
+import { isHypershiftCluster } from '../../../clusterDetailsHelper';
+import { getMachineOrNodePools } from '../MachinePoolsActions';
 
 const updateAllMachinePools = async (
   machinePools: NodePool[],
@@ -108,7 +108,7 @@ const UpdateAllMachinePools = ({
     );
     setPending(false);
     setErrors(errors);
-    dispatch(getMachineOrNodePools(clusterId, isHypershift));
+    dispatch(getMachineOrNodePools(clusterId, isHypershift) as any);
   };
 
   return (

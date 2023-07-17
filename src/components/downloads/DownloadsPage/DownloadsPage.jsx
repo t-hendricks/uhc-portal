@@ -27,6 +27,8 @@ import * as OCM from '@openshift-assisted/ui-lib/ocm';
 
 import produce from 'immer';
 import { has, get } from 'lodash';
+import { AppPage } from '~/components/App/AppPage';
+import { isRestrictedEnv } from '~/restrictedEnv';
 
 import ExternalLink from '../../common/ExternalLink';
 import links, {
@@ -49,8 +51,6 @@ import DownloadPullSecret from '../DownloadPullSecret';
 import CopyPullSecret from '../CopyPullSecret';
 
 import './DownloadsPage.scss';
-import { AppPage } from '~/components/App/AppPage';
-import { isRestrictedEnv } from '~/restrictedEnv';
 
 const { TechnologyPreview, PreviewBadgePosition } = OCM;
 
@@ -599,13 +599,13 @@ const installationRows = (expanded, setExpanded, selections, setSelections, tool
         {...commonProps}
         tool={tools.IBMZINSTALLER}
         channel={channels.STABLE}
-        name="OpenShift for IBM zSystems (s390x) Installer"
+        name="OpenShift for IBM Z (s390x) Installer"
         description={
           <TextContent>
             <Text>
               Download and extract your operating system&apos;s installation program and place the
               file in the directory where you&apos;ll store your configuration details. Then, create
-              clusters on supported IBM zSystems (s390x) infrastructure using our{' '}
+              clusters on supported IBM Z (s390x) infrastructure using our{' '}
               <ExternalLink href={links.INSTALL_DOCS_ENTRY}>documentation</ExternalLink> as a guide.
             </Text>
             <Text>
@@ -871,34 +871,36 @@ const tokenRows = (expanded, setExpanded, toolRefs, token) => (
       }
     />
 
-    <ExpandableRowPair
-      expanded={expanded}
-      setExpanded={setExpanded}
-      toolRefs={toolRefs}
-      expandKey={expandKeys.TOKEN_OCM}
-      cells={[
-        <Td>OpenShift Cluster Manager API Token</Td>,
-        <Td>
-          <AlignRight>
-            <Link to="/token">
-              <Button
-                variant="secondary"
-                icon={<ArrowRightIcon />}
-                data-testid="view-api-token-btn"
-                iconPosition="right"
-              >
-                View API token
-              </Button>
-            </Link>
-          </AlignRight>
-        </Td>,
-      ]}
-      description={
-        <Text>
-          Use your API token to authenticate against your OpenShift Cluster Manager account.
-        </Text>
-      }
-    />
+    {!isRestrictedEnv && (
+      <ExpandableRowPair
+        expanded={expanded}
+        setExpanded={setExpanded}
+        toolRefs={toolRefs}
+        expandKey={expandKeys.TOKEN_OCM}
+        cells={[
+          <Td>OpenShift Cluster Manager API Token</Td>,
+          <Td>
+            <AlignRight>
+              <Link to="/token">
+                <Button
+                  variant="secondary"
+                  icon={<ArrowRightIcon />}
+                  data-testid="view-api-token-btn"
+                  iconPosition="right"
+                >
+                  View API token
+                </Button>
+              </Link>
+            </AlignRight>
+          </Td>,
+        ]}
+        description={
+          <Text>
+            Use your API token to authenticate against your OpenShift Cluster Manager account.
+          </Text>
+        }
+      />
+    )}
   </>
 );
 

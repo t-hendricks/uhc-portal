@@ -123,7 +123,6 @@ exports[`<UpgradeAcknowledgeModal > Error is shown for failed y-stream approval 
                       class="pf-c-modal-box__title"
                       id="pf-modal-part-3"
                     >
-                      
                       <span
                         class="pf-c-modal-box__title-text"
                       >
@@ -710,7 +709,6 @@ exports[`<UpgradeAcknowledgeModal > Errors are shown for failed gates action 1`]
                       class="pf-c-modal-box__title"
                       id="pf-modal-part-4"
                     >
-                      
                       <span
                         class="pf-c-modal-box__title-text"
                       >

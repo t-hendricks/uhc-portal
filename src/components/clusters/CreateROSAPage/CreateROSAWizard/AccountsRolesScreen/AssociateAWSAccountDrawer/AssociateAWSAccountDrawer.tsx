@@ -14,12 +14,12 @@ import {
   PageSection,
 } from '@patternfly/react-core';
 
-import OCMRoleStep from './OCMRoleStep';
-import UserRoleStep from './UserRoleStep';
-import AccountRoleStep from './AccountRoleStep';
 import { trackEvents } from '~/common/analytics';
 import useAnalytics from '~/hooks/useAnalytics';
 import { AppDrawerContext } from '~/components/App/AppDrawer';
+import OCMRoleStep from './OCMRoleStep';
+import UserRoleStep from './UserRoleStep';
+import AccountRoleStep from './AccountRoleStep';
 
 type AssociateRolesDrawerProps = {
   onClose: () => void;
@@ -103,11 +103,13 @@ const AssociateRolesDrawer: React.FC<
 
   useEffect(() => {
     if (isOpen) {
-      appDrawerContext.openDrawer({
+      const { openDrawer } = appDrawerContext;
+      openDrawer({
         drawerPanelContent: panelContent,
       });
     } else {
-      appDrawerContext.closeDrawer();
+      const { closeDrawer } = appDrawerContext;
+      closeDrawer();
     }
   }, [appDrawerContext, isOpen]);
 

@@ -1,13 +1,12 @@
 import { connect } from 'react-redux';
 import { formValueSelector } from 'redux-form';
 
+import { featureGateSelector } from '~/hooks/useFeatureGate';
 import { OSD_TRIAL_FEATURE } from '../../../../../../redux/constants/featureConstants';
 
 import { billingModels, normalizedProducts } from '../../../../../../common/subscriptionTypes';
 
 import { availableQuota, quotaTypes } from '../../../../common/quotaSelectors';
-
-import { featureGateSelector } from '~/hooks/useFeatureGate';
 
 import BillingModelSection from './BillingModelSection';
 

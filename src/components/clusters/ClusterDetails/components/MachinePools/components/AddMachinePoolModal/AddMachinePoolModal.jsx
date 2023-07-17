@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { Field } from 'redux-form';
 import { Form, GridItem, Grid, FormGroup } from '@patternfly/react-core';
 
+import { SubnetSelectField } from '~/components/clusters/CreateOSDPage/CreateOSDWizard/NetworkScreen/SubnetSelectField';
 import Modal from '../../../../../../common/Modal/Modal';
 import ErrorBox from '../../../../../../common/ErrorBox';
 import ScaleSection from '../../../../../CreateOSDPage/CreateOSDForm/FormSections/ScaleSection/ScaleSection';
@@ -16,7 +17,6 @@ import {
 import CostSavingsSection from './CostSavingsSection';
 import { isMultiAZ } from '../../../../clusterDetailsHelper';
 import { getMinNodesRequired, getMinNodesRequiredHypershift } from '../../machinePoolsHelper';
-import { SubnetSelectField } from '~/components/clusters/CreateOSDPage/CreateOSDWizard/NetworkScreen/SubnetSelectField';
 
 class AddMachinePoolModal extends Component {
   componentDidMount() {
@@ -122,7 +122,7 @@ class AddMachinePoolModal extends Component {
                       name="subnet"
                       validate={validateRequiredMachinePoolsSubnet}
                       privacy="private"
-                      label="Private subnet ID"
+                      label="Private subnet name"
                       isRequired
                     />
                   </GridItem>

@@ -63,8 +63,12 @@ const COSTMGMT_DOCS_BASE =
 const OCM_DOCS_BASE =
   'https://access.redhat.com/documentation/en-us/openshift_cluster_manager/2023';
 
+const OCP_DOC_BASE =
+  'https://access.redhat.com/documentation/en-us/openshift_container_platform/4.13';
+
 const links = {
   DOCS_ENTRY: `${DOCS_BASE}/welcome/index.html`,
+  WHAT_IS_OPENSHIFT: 'https://www.redhat.com/en/technologies/cloud-computing/openshift',
   WHAT_IS_ROSA: 'https://www.redhat.com/en/technologies/cloud-computing/openshift/aws',
   ROSA_COMMUNITY_SLACK:
     'https://join.slack.com/t/rosa-community/shared_invite/zt-1c5v1njip-dj70G3EoIX4HDR_famOx3Q',
@@ -87,6 +91,7 @@ const links = {
   MIGRATING_FROM_3_TO_4: `${DOCS_BASE}/migrating_from_ocp_3_to_4/about-migrating-from-3-to-4.html`,
   SERVERLESS_ABOUT: `${DOCS_BASE}/serverless/about/about-serverless.html`,
   SERVICE_MESH_ABOUT: `${DOCS_BASE}/service_mesh/v2x/ossm-architecture.html`,
+  SERVICE_MESH_OCP_DOC: `${OCP_DOC_BASE}/html/service_mesh/index`,
   VIRT_ABOUT: `${DOCS_BASE}/virt/about-virt.html`,
 
   SUBSCRIPTION_EVAL_INFORMATION: 'https://access.redhat.com/articles/4389911',
@@ -254,6 +259,13 @@ const links = {
   INSTALL_MIRROR_REGISTRY_LEARN_MORE: `${DOCS_BASE}/installing/disconnected_install/installing-mirroring-installation-images.html#installation-about-mirror-registry_installing-mirroring-installation-images`,
   INSTALL_OC_MIRROR_PLUGIN_LEARN_MORE: `${DOCS_BASE}/installing/disconnected_install/installing-mirroring-disconnected.html`,
 
+  OPENSHIFT_DEDICATED_LEARN_MORE:
+    'https://www.redhat.com/en/technologies/cloud-computing/openshift/dedicated',
+
+  AWS_OPENSHIFT_LEARN_MORE: 'https://cloud.redhat.com/products/amazon-openshift',
+
+  AZURE_OPENSHIFT_GET_STARTED: 'https://azure.microsoft.com/en-us/products/openshift/',
+
   ROSA_GET_STARTED: `https://cloud.redhat.com/learn/getting-started-red-hat-openshift-service-aws-rosa`,
   ROSA_DOCS_ENTRY: `${ROSA_DOCS_BASE}/welcome/index.html`,
   ROSA_MONITORING: `${ROSA_DOCS_BASE}/monitoring/rosa-understanding-the-monitoring-stack.html`,
@@ -294,6 +306,7 @@ const links = {
   AWS_LOAD_BALANCER_FEATURES:
     'https://aws.amazon.com/elasticloadbalancing/features/#Product_comparisons',
 
+  OCM_DOCS_MANAGING_CLUSTERS: `${OCM_DOCS_BASE}/html/managing_clusters/assembly-managing-clusters`,
   OCM_DOCS_PULL_SECRETS: `${OCM_DOCS_BASE}/html/managing_clusters/assembly-managing-clusters#downloading_and_updating_pull_secrets`,
   OCM_DOCS_ROLES_AND_ACCESS: `${OCM_DOCS_BASE}/html/managing_clusters/assembly-user-management-ocm`,
   OCM_DOCS_SUBSCRIPTIONS: `${OCM_DOCS_BASE}/html/managing_clusters/assembly-cluster-subscriptions`,

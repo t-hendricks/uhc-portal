@@ -1,8 +1,8 @@
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
+import { GlobalState } from '~/redux/store';
 import EntitlementConfig from './EntitlementConfig';
 import { createRosaEntitlement } from '../../../redux/actions/tokensActions';
-import { GlobalState } from '~/redux/store';
 
 const mapStateToProps = (state: GlobalState) => ({
   fulfilled: state.entitlementConfig.fulfilled,

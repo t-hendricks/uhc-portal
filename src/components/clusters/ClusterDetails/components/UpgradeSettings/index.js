@@ -3,6 +3,7 @@ import { reduxForm, formValueSelector } from 'redux-form';
 import isEmpty from 'lodash/isEmpty';
 import get from 'lodash/get';
 
+import { knownProducts } from '~/common/subscriptionTypes';
 import UpgradeSettingsTab from './UpgradeSettingsTab';
 import {
   getSchedules,
@@ -16,7 +17,6 @@ import {
 import { editCluster, fetchClusterDetails } from '../../../../../redux/actions/clustersActions';
 import { isHibernating } from '../../../common/clusterStates';
 import { openModal } from '../../../../common/Modal/ModalActions';
-import { knownProducts } from '~/common/subscriptionTypes';
 import { isHypershiftCluster } from '../../clusterDetailsHelper';
 
 const reduxFormConfig = {

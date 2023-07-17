@@ -1,45 +1,48 @@
-import React from 'react';
 import {
   Alert,
   AlertVariant,
-  Grid,
-  GridItem,
-  TextContent,
-  Text,
-  TextVariants,
   ButtonVariant,
-  PageSection,
-  Stack,
-  StackItem,
   Card,
+  CardActions,
   CardBody,
   CardHeader,
-  CardActions,
   CardTitle,
-  Title,
   ExpandableSection,
+  Grid,
+  GridItem,
+  PageSection,
   Split,
   SplitItem,
+  Stack,
+  StackItem,
+  Text,
+  TextContent,
+  TextVariants,
+  Title,
 } from '@patternfly/react-core';
-import { WarningTriangleIcon, CheckCircleIcon } from '@patternfly/react-icons';
+import { CheckCircleIcon, WarningTriangleIcon } from '@patternfly/react-icons';
+import React from 'react';
 
 import { useLocation } from 'react-router-dom';
-import PageTitle from '~/components/common/PageTitle';
+import links from '~/common/installLinks.mjs';
 import Breadcrumbs from '~/components/common/Breadcrumbs';
 import ExternalLink from '~/components/common/ExternalLink';
-import links from '~/common/installLinks.mjs';
+import PageTitle from '~/components/common/PageTitle';
 
 import Instruction from '~/components/common/Instruction';
 import Instructions from '~/components/common/Instructions';
 
-import StepDownloadROSACli from './StepDownloadROSACli';
+import { useFeatureGate } from '~/hooks/useFeatureGate';
+import { isRestrictedEnv } from '~/restrictedEnv';
+import { HCP_ROSA_GETTING_STARTED_PAGE } from '~/redux/constants/featureConstants';
+
+import { AppPage } from '~/components/App/AppPage';
 import StepCreateAWSAccountRoles from './StepCreateAWSAccountRoles';
-import '../createROSAWizard.scss';
+import StepDownloadROSACli from './StepDownloadROSACli';
 import WithCLICard from './WithCLICard';
 import WithWizardCard from './WithWizardCard';
-import { useFeatureGate } from '~/hooks/useFeatureGate';
-import { HCP_ROSA_GETTING_STARTED_PAGE } from '~/redux/constants/featureConstants';
-import { AppPage } from '~/components/App/AppPage';
+
+import '../createROSAWizard.scss';
 
 export const productName = 'Red Hat OpenShift Service on AWS';
 const title = (productName: string = '') => `Get started with ${productName} (ROSA)`;
@@ -175,9 +178,11 @@ const CreateRosaGetStarted = () => {
                   <GridItem span={6}>
                     <WithCLICard />
                   </GridItem>
-                  <GridItem span={6}>
-                    <WithWizardCard />
-                  </GridItem>
+                  {!isRestrictedEnv && (
+                    <GridItem span={6}>
+                      <WithWizardCard />
+                    </GridItem>
+                  )}
                 </Grid>
               </CardBody>
             </Card>

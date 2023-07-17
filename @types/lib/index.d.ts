@@ -28,6 +28,11 @@ declare module '*.png' {
   export = value;
 }
 
+declare module '*.svg' {
+  const value: any;
+  export = value;
+}
+
 // polyfilled
 interface ObjectConstructor {
   /**

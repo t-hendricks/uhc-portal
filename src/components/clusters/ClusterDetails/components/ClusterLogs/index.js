@@ -1,9 +1,9 @@
 import { connect } from 'react-redux';
 import get from 'lodash/get';
-import ClusterLogs from './ClusterLogs';
-import { clusterLogActions } from './clusterLogActions';
 import { viewConstants } from '~/redux/constants';
 import { viewActions } from '~/redux/actions/viewOptionsActions';
+import ClusterLogs from './ClusterLogs';
+import { clusterLogActions } from './clusterLogActions';
 
 const getClusterHistory = (externalClusterID, queryObj) =>
   clusterLogActions.getClusterHistory(externalClusterID, queryObj);

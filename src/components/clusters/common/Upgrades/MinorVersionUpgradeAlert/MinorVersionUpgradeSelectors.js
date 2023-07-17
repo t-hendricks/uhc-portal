@@ -28,4 +28,4 @@ export const isNextMinorVersionAvailable = (state) => {
 
 // eslint-disable-next-line max-len
 export const isRosa = (state) =>
-  state.clusters.details.cluster.subscription.plan.type === normalizedProducts.ROSA;
+  state.clusters.details.cluster.subscription?.plan.type === normalizedProducts.ROSA;

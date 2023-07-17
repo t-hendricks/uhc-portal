@@ -3,13 +3,12 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import { PageSection } from '@patternfly/react-core';
+import { AppPage } from '~/components/App/AppPage';
 import Breadcrumbs from '../../common/Breadcrumbs';
 import PageTitle from '../../common/PageTitle';
 
 import { tollboothActions } from '../../../redux/actions';
 import InstructionsPullSecret from './instructions/InstructionsPullSecret';
-
-import { AppPage } from '~/components/App/AppPage';
 
 export class InstallPullSecret extends Component {
   componentDidMount() {

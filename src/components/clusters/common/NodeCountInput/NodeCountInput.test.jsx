@@ -1,10 +1,10 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
+import { getMinNodesRequired } from '~/components/clusters/ClusterDetails/components/MachinePools/machinePoolsHelper';
 import NodeCountInput from './NodeCountInput';
 import * as quotaSelectors from '../quotaSelectors';
 import { normalizedProducts, billingModels } from '../../../../common/subscriptionTypes';
-import { getMinNodesRequired } from '~/components/clusters/ClusterDetails/components/MachinePools/machinePoolsHelper';
 
 const baseProps = (isByoc = false, isMultiAz = false) => ({
   isDisabled: false,

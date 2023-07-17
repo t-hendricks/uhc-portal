@@ -2,9 +2,6 @@
 /* tslint:disable */
 /* eslint-disable */
 
-import type { AdminCredentials } from './AdminCredentials';
-import type { SSHCredentials } from './SSHCredentials';
-
 /**
  * Credentials of the a cluster.
  */
@@ -21,15 +18,6 @@ export type ClusterCredentials = {
    * Self link.
    */
   href?: string;
-  /**
-   * SSH key pair of the cluster.
-   */
-  ssh?: SSHCredentials;
-  /**
-   * Temporary administrator credentials generated during the installation
-   * of the cluster.
-   */
-  admin?: AdminCredentials;
   /**
    * Administrator _kubeconfig_ file for the cluster.
    */

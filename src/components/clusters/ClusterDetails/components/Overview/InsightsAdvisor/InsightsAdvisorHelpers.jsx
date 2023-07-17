@@ -7,9 +7,9 @@ import { global_palette_gold_400 as gold400 } from '@patternfly/react-tokens/dis
 import { global_palette_orange_300 as orange300 } from '@patternfly/react-tokens/dist/js/global_palette_orange_300';
 import { global_palette_red_200 as red200 } from '@patternfly/react-tokens/dist/js/global_palette_red_200';
 import { ChartLabel } from '@patternfly/react-charts';
+import { advisorBaseName } from '~/common/getBaseName';
 
 import CriticalIcon from './CriticalIcon';
-import { advisorBaseName } from '~/common/getBaseName';
 
 const riskLabels = {
   1: 'Low',

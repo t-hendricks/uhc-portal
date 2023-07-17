@@ -23,11 +23,11 @@ import {
 } from '@patternfly/react-core';
 import { Spinner } from '@redhat-cloud-services/frontend-components/Spinner';
 import { OutlinedQuestionCircleIcon } from '@patternfly/react-icons';
-import ErrorBox from '../../../../../../common/ErrorBox';
-import InstructionCommand from '../../../../../../common/InstructionCommand';
 import { isSupportedMinorVersion } from '~/common/helpers';
 import { useOCPLifeCycleStatusData } from '~/components/releases/hooks';
 import { MIN_MANAGED_POLICY_VERSION } from '~/components/clusters/CreateROSAPage/CreateROSAWizard/rosaConstants';
+import InstructionCommand from '../../../../../../common/InstructionCommand';
+import ErrorBox from '../../../../../../common/ErrorBox';
 
 function VersionSelection({
   isRosa,

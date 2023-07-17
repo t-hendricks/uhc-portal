@@ -24,7 +24,7 @@ const mapStateToProps = (state) => {
 
   const provider = cluster.cloud_provider?.id;
 
-  const isApiPrivate = cluster.api.listening === 'internal';
+  const isApiPrivate = cluster.api?.listening === 'internal';
   const isDefaultRouterPrivate = clusterRouters.default.isPrivate;
   const isAdditionalRouterPrivate = !!clusterRouters?.additional?.isPrivate;
 
