@@ -86,6 +86,7 @@ describe('Rosa cluster tests', { tags: ['ci'] }, () => {
         cy.get(CreateRosaWizardPage.primaryButton).should('not.be.disabled');
         cy.get(CreateRosaWizardPage.associatedAccountsDropdown).click();
         cy.get(CreateRosaWizardPage.accountIdMenuItem).should('have.length', 1);
+        cy.get(CreateRosaWizardPage.associatedAccountsDropdown).click();
         CreateRosaWizardPage.showsNoARNsDetectedAlert();
         cy.get(CreateRosaWizardPage.ARNFieldRequiredMsg).should('have.length', 4); // all 4 ARN fields are empty
 
