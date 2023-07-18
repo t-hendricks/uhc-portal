@@ -20,10 +20,10 @@ const AccountRoleStep = ({ title }: AccountRoleStepProps) => (
     </Text>
     <InstructionCommand
       trackEvent={trackEvents.CopyCreateAccountRoles}
-      textAriaLabel={`Copyable ROSA ${RosaCliCommand.CreateAccountRoles}command`}
+      textAriaLabel={`Copyable ROSA ${RosaCliCommand.CreateAccountRolesAuto}command`}
       className="pf-u-mb-lg"
     >
-      {RosaCliCommand.CreateAccountRoles}
+      {RosaCliCommand.CreateAccountRolesAuto}
     </InstructionCommand>
 
     <Alert
