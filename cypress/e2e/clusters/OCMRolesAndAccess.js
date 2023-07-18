@@ -6,7 +6,7 @@ import ClusterDetailsPage from '../../pageobjects/ClusterDetails.page';
 import RegisterClusterPage from '../../pageobjects/RegisterCluster.page';
 import OCMRolesAndAccessPage from '../../pageobjects/OCMRolesAndAccess.page';
 
-describe('OCM Roles And Access', () => {
+describe('OCM Roles And Access', { tags: ['ci'] }, () => {
   const clusterID = v4();
   const displayName = `cypress-${clusterID}`;
   const { username } = getAuthConfig();
