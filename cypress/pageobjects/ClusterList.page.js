@@ -9,7 +9,7 @@ class ClusterList extends Page {
     super.assertUrlIncludes('/openshift/');
   }
 
-  filterTxtField = () => cy.get('input[placeholder="Filter by name or ID..."]');
+  filterTxtField = () => cy.get('input[placeholder="Filter by name or ID..."]', { timeout: 10000 });
   viewOnlyMyCluster = () => cy.get('label > input[id="view-only-my-clusters"]');
   viewOnlyMyClusterHelp = () => cy.get('label[for="view-only-my-clusters"]').find('button').first();
   tooltipviewOnlyMyCluster = () => cy.get('div.pf-c-popover__body');
@@ -101,7 +101,7 @@ class ClusterList extends Page {
   }
 
   scrollClusterListPageTo(direction) {
-    cy.get('main.pf-c-page__main').scrollTo(direction);
+    cy.get('main.pf-c-page__main').find('div.pf-c-drawer__content').scrollTo(direction);
   }
 
   clickPerPageItem(count) {

@@ -7,7 +7,7 @@ import LeaveCreateClusterPrompt from '../../pageobjects/LeaveCreateClusterPrompt
 
 const clusterName = `test-${Math.random().toString(36).substr(2, 10)}`;
 
-describe('OSD cluster tests', () => {
+describe('OSD cluster tests', { tags: ['ci'] }, () => {
   before(() => {
     // visiting '/' will goto baseUrl defined in package.json
     // baseUrl ends in '.../openshift/'.  To goto sub-pages you
