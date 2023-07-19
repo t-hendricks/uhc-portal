@@ -14,12 +14,12 @@ import {
   CardHeader,
 } from '@patternfly/react-core';
 import { Link } from 'react-router-dom';
+import ExternalLink from '~/components/common/ExternalLink';
 import OpenShiftBanner from './OpenShiftBanner/OpenShiftBanner';
 import docLinks from '../../../common/installLinks.mjs';
 import { OfferingCard } from './OfferingCard/OfferingCard';
 import { ListTextLabelLinkCard } from '../../common/ListTextLabelLinkCard/ListTextLabelLinkCard';
 import createAWSCluster from '../../../styles/images/Create-AWS-cluster.png';
-import ExternalLink from '~/components/common/ExternalLink';
 
 const getStartedMessage =
   "You have 0 clusters detected. Let's create a new cluster or register your existing ones.";
@@ -117,7 +117,9 @@ function OverviewEmptyState() {
           Recommended Content
         </Title>
         <ListTextLabelLinkCard {...LinkTextLabelLinkCardContents} />
-        <a href="/openshift/learning-resources"> See all OpenShift learning resources</a>
+        <ExternalLink href="/openshift/learning-resources">
+          See all OpenShift learning resources
+        </ExternalLink>
       </PageSection>
     </>
   );
