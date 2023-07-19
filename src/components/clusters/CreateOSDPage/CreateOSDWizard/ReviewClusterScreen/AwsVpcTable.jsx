@@ -10,7 +10,7 @@ const AwsVpcTable = ({ vpcs, showPublicFields }) => {
         <strong>Availability zone</strong>
       </GridItem>
       <GridItem md={colSize}>
-        <strong>Private subnet ID</strong>
+        <strong>Private subnet</strong>
       </GridItem>
       {showPublicFields && (
         <>
