@@ -66,11 +66,13 @@ export const SubnetSelectField = ({
 
   const { pending: isVpcsLoading, fulfilled: isVpcsFulfilled, error: vpcsError } = vpcs;
 
-  const { vpcsItems, subnetList, vpcsSubnetsMap, hasNoOptions } = useMemo<{
+  // if subnets have the more descriptive name, use that
+  const { vpcsItems, subnetList, vpcsSubnetsMap, hasNoOptions, hasSubnetNames } = useMemo<{
     vpcsItems: CloudVPC[];
     subnetList: Subnetwork[];
     vpcsSubnetsMap: Record<string, Subnetwork[]>;
     hasNoOptions: boolean;
+    hasSubnetNames: boolean;
   }>(() => {
     let vpcsItems: CloudVPC[] = vpcs.data?.items || [];
     if (selectedVPC) {
@@ -99,7 +101,8 @@ export const SubnetSelectField = ({
       return acc;
     }, {});
     const hasNoOptions = subnetList?.length === 0;
-    return { vpcsItems, subnetList, vpcsSubnetsMap, hasNoOptions };
+    const hasSubnetNames = !hasNoOptions && subnetList.every((subnet) => !!subnet.name);
+    return { vpcsItems, subnetList, vpcsSubnetsMap, hasNoOptions, hasSubnetNames };
   }, [vpcs.data?.items, selectedVPC]);
 
   const selectOptions = useMemo<ReactElement[]>(
@@ -110,7 +113,7 @@ export const SubnetSelectField = ({
           <SelectGroup label={region} key={region}>
             {subnets.map((subnet) => (
               <SelectOption value={subnet} key={subnet.subnet_id}>
-                {subnet.name}
+                {hasSubnetNames ? subnet.name : subnet.subnet_id}
               </SelectOption>
             ))}
           </SelectGroup>
@@ -160,10 +163,10 @@ export const SubnetSelectField = ({
       const filterText = subnetName.toLowerCase();
       const fuse = new Fuse(subnetList, {
         ignoreLocation: true,
-        threshold: 0.3,
+        threshold: 0.05,
         includeScore: true,
         includeMatches: true,
-        keys: ['name'],
+        keys: [hasSubnetNames ? 'name' : 'subnet_id'],
       });
       const filteredVpcsSubnetsMap: Record<string, Subnetwork[]> = {};
       const matchMap: Record<string, Array<string | ReactElement>> = {};
@@ -180,17 +183,27 @@ export const SubnetSelectField = ({
             if (subnet.subnet_id && subnet.name && matches) {
               let pos = 0;
               const subnetId = subnet.subnet_id;
-              const subnetName = subnet.name;
+              const subnetName = hasSubnetNames ? subnet.name : subnet.subnet_id;
               matchMap[subnetId] = [];
-              matches[0].indices
-                .filter(([beg, end]) => end - beg > 0)
-                .forEach(([beg, end]) => {
+
+              // highlight matches in boldface
+              const arr = subnetName.split(filterText);
+              if (arr.length > 1) {
+                // if exact matches
+                arr.forEach((seg, inx) => {
+                  matchMap[subnetId].push(seg);
+                  if (inx < arr.length - 1) matchMap[subnetId].push(<b>{filterText}</b>);
+                });
+              } else {
+                // fuzzy matches
+                matches[0].indices.forEach(([beg, end]) => {
                   matchMap[subnetId].push(subnetName.slice(pos, beg));
                   matchMap[subnetId].push(<b>{subnetName.slice(beg, end + 1)}</b>);
                   pos = end + 1;
                 });
-              if (pos < subnetName.length) {
-                matchMap[subnetId].push(subnetName.slice(pos));
+                if (pos < subnetName.length) {
+                  matchMap[subnetId].push(subnetName.slice(pos));
+                }
               }
             }
             if (subnet.availability_zone) {
@@ -206,13 +219,16 @@ export const SubnetSelectField = ({
       // create filtered select options
       return Object.entries(filteredVpcsSubnetsMap).map(([region, subnets]) => (
         <SelectGroup label={region} key={region}>
-          {subnets.map((subnet) => (
-            <SelectOption value={subnet} key={subnet.subnet_id}>
-              {subnet.subnet_id && matchMap[subnet.subnet_id] && matchMap[subnet.subnet_id].length
-                ? matchMap[subnet.subnet_id]
-                : subnet.name}
-            </SelectOption>
-          ))}
+          {subnets.map((subnet) => {
+            const otherName = hasSubnetNames ? subnet.name : subnet.subnet_id;
+            return (
+              <SelectOption value={subnet} key={subnet.subnet_id}>
+                {subnet.subnet_id && matchMap[subnet.subnet_id] && matchMap[subnet.subnet_id].length
+                  ? matchMap[subnet.subnet_id]
+                  : otherName}
+              </SelectOption>
+            );
+          })}
         </SelectGroup>
       ));
     },
@@ -266,8 +282,10 @@ export const SubnetSelectField = ({
           onSelect={onSelect}
           onFilter={onFilter}
           isDisabled={isDisabled || hasNoOptions}
-          inlineFilterPlaceholderText="Filter by subnet name"
-          placeholderText={hasNoOptions ? 'No data found.' : 'Subnet name'}
+          inlineFilterPlaceholderText={`Filter by subnet ${hasSubnetNames ? 'name' : 'ID'}`}
+          placeholderText={
+            hasNoOptions ? 'No data found.' : `${hasSubnetNames ? 'Subnet name' : 'Subnet ID'}`
+          }
           validated={inputError ? 'error' : undefined}
           isGrouped
           hasInlineFilter

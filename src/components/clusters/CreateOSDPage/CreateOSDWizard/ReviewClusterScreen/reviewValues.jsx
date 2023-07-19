@@ -276,7 +276,7 @@ const reviewValues = {
     valueTransform: (value, allValues) => {
       const vpcs = allValues.machine_pools_subnets.map((machinePool) => ({
         publicSubnet: '',
-        privateSubnet: machinePool.subnet_id,
+        privateSubnet: machinePool.name || machinePool.subnet_id,
         az: machinePool.availability_zone,
       }));
       return <AwsVpcTable vpcs={vpcs} showPublicFields={false} />;
@@ -362,8 +362,8 @@ const reviewValues = {
     },
   },
   cluster_privacy_public_subnet: {
-    title: 'Public subnet ID',
-    valueTransform: (subnet) => subnet.subnet_id,
+    title: 'Public subnet',
+    valueTransform: (subnet) => subnet.name || subnet.subnet_id,
   },
   associated_aws_id: {
     title: 'AWS infrastructure account ID',
