@@ -1234,7 +1234,7 @@ const validateRequiredMachinePoolsSubnet = (
   subnet: Subnetwork,
   allValues: unknown,
   props: SubnetFormProps,
-) => (!props.pristine && subnet.subnet_id === '' ? 'Subnet ID is required' : undefined);
+) => (!props.pristine && subnet.subnet_id === '' ? 'Subnet is required' : undefined);
 
 const validateMultipleMachinePoolsSubnets = (
   subnet: Subnetwork,
@@ -1246,7 +1246,7 @@ const validateMultipleMachinePoolsSubnets = (
     return undefined;
   }
   if (!props.pristine && subnet.subnet_id === '') {
-    return 'Subnet ID is required';
+    return 'Subnet is required';
   }
 
   // Validating multiple MPs

@@ -7,7 +7,7 @@ describe('SubnetSelectField tests', () => {
     jest.clearAllMocks();
   });
 
-  it('select subnet name', async () => {
+  it('select subnet', async () => {
     // render dropdown
     const { container, user } = render(
       <SubnetSelectField {...defaultProps} />, // get defaultProps by putting bp at top of SubnetSelectField in dev mode and capturing the properties
@@ -21,14 +21,14 @@ describe('SubnetSelectField tests', () => {
     );
 
     // click it open
-    const dropdown = screen.getByText(/subnet name/i);
+    const dropdown = screen.getByText(/subnet/i);
     user.click(dropdown);
     await waitFor(() =>
-      expect(screen.getByPlaceholderText(/Filter by subnet name/i)).toBeInTheDocument(),
+      expect(screen.getByPlaceholderText(/Filter by subnet/i)).toBeInTheDocument(),
     );
 
     // type something into search
-    const searchbox = screen.getByPlaceholderText(/Filter by subnet name/i);
+    const searchbox = screen.getByPlaceholderText(/Filter by subnet/i);
     user.type(searchbox, '1c');
 
     // click option
@@ -53,12 +53,12 @@ describe('SubnetSelectField tests', () => {
     await waitFor(() =>
       expect(
         screen.getByRole('option', {
-          name: /ddonati-test403-bsrnf- make -this-big-private-us- ea st-1d/i,
+          name: /ddonati-test403-bsrnf- make -this-big-private-us-east-1d/i,
         }),
       ).toBeInTheDocument(),
     );
     option = screen.getByRole('option', {
-      name: /ddonati-test403-bsrnf- make -this-big-private-us- ea st-1d/i,
+      name: /ddonati-test403-bsrnf- make -this-big-private-us-east-1d/i,
     });
     user.click(option);
     await waitFor(() =>
@@ -88,7 +88,7 @@ const defaultProps: SubnetSelectFieldProps = {
     onFocus: jest.fn(),
   },
   meta: {
-    error: 'Subnet ID is required',
+    error: 'Subnet is required',
     touched: false,
     autofilled: false,
     asyncValidating: false,
