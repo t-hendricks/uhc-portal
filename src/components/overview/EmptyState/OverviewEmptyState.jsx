@@ -117,7 +117,9 @@ function OverviewEmptyState() {
           Recommended Content
         </Title>
         <ListTextLabelLinkCard {...LinkTextLabelLinkCardContents} />
-        <a href="/openshift/learning-resources"> See all OpenShift learning resources</a>
+        <ExternalLink href="/openshift/learning-resources">
+          See all OpenShift learning resources
+        </ExternalLink>
       </PageSection>
     </>
   );
