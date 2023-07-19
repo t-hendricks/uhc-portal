@@ -50,9 +50,15 @@ while IFS=',' read -r commitHash commitDate commitMessage; do
     # Find and store all matching jiraKeys
     while [[ $commitDescription =~ $jiraTicketRegex ]]; do
       matched="${BASH_REMATCH[1]}"
+      # Ensure the matched jira key has a dash '-' after the initial letters
+      if [[ $matched =~ ^([A-Z]{3})([0-9]+)$ ]]; then
+        formattedMatched="${BASH_REMATCH[1]}-${BASH_REMATCH[2]}"
+      else
+        formattedMatched="$matched"
+      fi
       # Check if the substring already exists in the array
-      if [[ ! " ${jiraKeys[*]} " =~ " $matched " ]]; then
-        jiraKeys+=("$matched")
+      if [[ ! " ${jiraKeys[*]} " =~ " formattedMatched " ]]; then
+        jiraKeys+=("$formattedMatched")
       fi
       commitDescription="${commitDescription#*$matched}"
     done
