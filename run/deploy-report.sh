@@ -79,6 +79,14 @@ while IFS=',' read -r commitHash commitDate commitMessage; do
 
         response=$(curl -s -X GET -H "Authorization: Bearer $jira_token" -H "Content-Type: application/json" "https://issues.redhat.com/rest/api/2/issue/$jiraKey?fields=key,summary,resolutiondate,status")
 
+        # Check if the response contains an error
+        if [[ $(echo "$response" | jq -r '.errorMessages') != "null" ]]; then
+          # Error response
+          errorMessages=$(echo "$response" | jq -r '.errorMessages | join(", ")')
+          echo "Error: $errorMessages"
+          exit 1  # Exit the script with an error status
+        fi
+
         summary=$(echo "$response" | jq -r '.fields.summary')
         printf "    summary: %s\n" "$summary"
 
