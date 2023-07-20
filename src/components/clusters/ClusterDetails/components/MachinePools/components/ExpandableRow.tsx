@@ -102,9 +102,7 @@ const ExpandableRow = ({
     subnets = (
       <>
         <Title headingLevel="h4">Subnets</Title>
-        {getSubnetIds(machinePool).map((subnetId, idx) => (
-          <span key={`subnet-${subnetId || idx}`}>{subnetId}</span>
-        ))}
+        {getSubnetIds(machinePool).join(', ')}
       </>
     );
   }
