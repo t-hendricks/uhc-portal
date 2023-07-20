@@ -46,7 +46,7 @@ while IFS=',' read -r commitHash commitDate commitMessage; do
     mrID=$(echo "$commitDescription" | grep -o '![0-9]\{4\}' | tr -d '!')
     mrDesc=$(echo "$commitDescription" | awk 'NR==1 { print }')
     # Pattern matching to extract jiraKeys
-    jiraTicketRegex="(HAC[- ]?[0-9]+|MGMT[- ]?[0-9]+)"
+    jiraTicketRegex="(RHBKAAS[- ]?[0-9]+|HAC[- ]?[0-9]+|MGMT[- ]?[0-9]+)"
     # Find and store all matching jiraKeys
     while [[ $commitDescription =~ $jiraTicketRegex ]]; do
       matched="${BASH_REMATCH[1]}"
@@ -102,7 +102,7 @@ while IFS=',' read -r commitHash commitDate commitMessage; do
         resolutiondate=$(echo "$response" | jq -r '.fields.resolutiondate')
         printf "    resolutiondate: %s\n" "$resolutiondate"
 
-        if [ "$status" != "Closed" ]; then
+        if [[ "$status" != "Closed" && "$status" != "Verified" ]]; then
           allJirasClosed=false
         fi
       done
