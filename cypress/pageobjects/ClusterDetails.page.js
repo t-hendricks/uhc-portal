@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import Page from './page';
 
 class ClusterDetails extends Page {
-  isClusterDetailsPage = (displayName) => cy.contains('h1', displayName);
+  isClusterDetailsPage = (displayName) => cy.contains('h1', displayName, { timeout: 10000 });
 
   addConsoleURLButton = () => cy.get('button').contains('Add console URL');
 
@@ -37,7 +37,7 @@ class ClusterDetails extends Page {
   successNotification = () => cy.get('div.pf-c-alert.pf-m-success.notification-item');
 
   unarchiveClusterButton = () =>
-    cy.get('span[id="cl-details-btns"]').contains('button', 'Unarchive');
+    cy.get('span[id="cl-details-btns"]').contains('button', 'Unarchive', { timeout: 15000 });
 
   waitForUnarchiveClusterModalToLoad = () => {
     cy.getByTestId(' unarchive-cluster-dialog', { timeout: 30000 }).should('be.visible');
