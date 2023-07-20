@@ -5,6 +5,8 @@ type EnvConfig = {
   insightsGateway?: string;
   sentryDSN?: string;
   showOldMetrics?: boolean;
+  fedrampGateway?: string;
+  fedrampS3?: string;
 };
 
 const configs: { [env: string]: Promise<EnvConfig> | undefined } = {};
