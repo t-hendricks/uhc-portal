@@ -8,6 +8,7 @@ import React, {
   useCallback,
   ChangeEvent,
   useMemo,
+  useRef,
 } from 'react';
 import {
   Button,
@@ -90,6 +91,7 @@ function AWSAccountSelection({
   const hasAWSAccounts = accounts?.length > 0;
   const { onRefresh, text } = refresh;
   const { onChange } = inputProps;
+  const ref = useRef<Select>(null);
 
   useEffect(() => {
     // only scroll to associateAWSAccountBtn when no AWS accounts
@@ -258,6 +260,13 @@ function AWSAccountSelection({
             selections={hasAWSAccounts ? selectedAWSAccountID : ''}
             onToggle={onToggle}
             onSelect={onSelect}
+            onBlur={() => {
+              // filter doesn't always clean up
+              if (ref.current) {
+                ref.current?.onClose();
+              }
+            }}
+            ref={ref}
             onFilter={onFilter}
             isDisabled={isDisabled}
             placeholderText={AWS_ACCT_ID_PLACEHOLDER}
