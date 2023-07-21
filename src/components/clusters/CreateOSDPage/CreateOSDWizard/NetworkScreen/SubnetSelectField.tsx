@@ -235,7 +235,7 @@ export const SubnetSelectField = ({
     [subnetList, selectOptions],
   );
 
-  let selectedSubnetName = selectedSubnet?.name;
+  let selectedSubnetName = hasSubnetNames ? selectedSubnet?.name : selectedSubnet?.subnet_id;
   if (selectedSubnetName && selectedSubnetName.length > TRUNCATE_THRESHOLD) {
     selectedSubnetName = `${selectedSubnetName.slice(
       0,
