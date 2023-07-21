@@ -46,19 +46,13 @@ while IFS=',' read -r commitHash commitDate commitMessage; do
     mrID=$(echo "$commitDescription" | grep -o '![0-9]\{4\}' | tr -d '!')
     mrDesc=$(echo "$commitDescription" | awk 'NR==1 { print }')
     # Pattern matching to extract jiraKeys
-    jiraTicketRegex="(RHBKAAS[- ]?[0-9]+|HAC[- ]?[0-9]+|MGMT[- ]?[0-9]+)"
+    jiraTicketRegex="(HAC|MGMT|OCM|SDA|SDB|RHBKAAS)[- ]?([0-9]+)"
     # Find and store all matching jiraKeys
     while [[ $commitDescription =~ $jiraTicketRegex ]]; do
-      matched="${BASH_REMATCH[1]}"
-      # Ensure the matched jira key has a dash '-' after the initial letters
-      if [[ $matched =~ ^([A-Z]{3})([0-9]+)$ ]]; then
-        formattedMatched="${BASH_REMATCH[1]}-${BASH_REMATCH[2]}"
-      else
-        formattedMatched="$matched"
-      fi
+      matched="${BASH_REMATCH[1]}-${BASH_REMATCH[2]}"
       # Check if the substring already exists in the array
-      if [[ ! " ${jiraKeys[*]} " =~ " formattedMatched " ]]; then
-        jiraKeys+=("$formattedMatched")
+      if [[ ! " ${jiraKeys[*]} " =~ " $matched " ]]; then
+        jiraKeys+=("$matched")
       fi
       commitDescription="${commitDescription#*$matched}"
     done
