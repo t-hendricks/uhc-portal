@@ -43,22 +43,29 @@ git status --short "$SUBSCRIPTIONS.json"
 
 echo
 echo "Checking consistency between '$SUBSCRIPTIONS.json' and '$CLUSTERS.json':"
-echo "# sid = subscription id, cid = cluster id, eid = external id, dn = display name."
-echo "# both sides should be sorted by subscription id."
+
+DIFF="$(mktemp)"
+trap 'rm "$DIFF"' EXIT
 
 # During install, clusters-service can know external_id while account-manager still has null.
 # To allow the comparison to pass, those ids were edited to contain `EXPECT-AMS-null`.
-diff --brief --report-identical-files --side-by-side --width=150 \
+if diff --report-identical-files --side-by-side --width=150 \
   --ignore-matching-lines='EXPECT-AMS-null\|null,' \
   --ignore-matching-lines='"dn":' \
   --label="from $SUBSCRIPTIONS.json" --label="from $CLUSTERS.json" \
   <(jq '.items | sort_by(.id)[] | { sid: .id, cid: .cluster_id, eid: .external_cluster_id, dn: .display_name }' "$SUBSCRIPTIONS.json") \
   <(jq '.items | sort_by(.subscription.id)[] | { sid: .subscription.id, cid: .id, eid: .external_id, dn: "N/A" }' "$CLUSTERS.json") \
-  |
-  (colordiff || cat)
-
-# exit status is diff's status
-if [ "${PIPESTATUS[0]}" != 0 ]; then
+  > "$DIFF"
+then
+  echo "good."
+else
+  echo "# sid = subscription id, cid = cluster id, eid = external id, dn = display name."
+  echo "# both sides should be sorted by subscription id."
+  if which colordiff > /dev/null; then
+    colordiff < "$DIFF"
+  else
+    cat "$DIFF"
+  fi
   echo "ERROR: $SUBSCRIPTIONS/*.json <-> $CLUSTERS/*.json inconsistent, see diff ^^^"
   exit 1
 fi
