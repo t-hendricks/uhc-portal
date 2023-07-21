@@ -14,7 +14,60 @@ import { availableNodesFromQuota } from '../quotaSelectors';
 
 export const MAX_NODES = 180;
 
+const incrementValue = ({ isHypershiftWizard, poolNumber, isMultiAz }) =>
+  isHypershiftWizard ? getNodeIncrementHypershift(poolNumber) : getNodeIncrement(isMultiAz);
+
+const buildOptions = ({
+  included,
+  available,
+  isEditingCluster,
+  currentNodeCount,
+  minNodes,
+  increment,
+}) => {
+  // no extra node quota = only base cluster size is available
+  const optionsAvailable = available > 0 || isEditingCluster;
+  let maxValue = isEditingCluster ? available + currentNodeCount : available + included;
+  if (maxValue > MAX_NODES) {
+    maxValue = MAX_NODES;
+  }
+
+  return optionsAvailable ? range(minNodes, maxValue + 1, increment) : [minNodes];
+};
+
 class NodeCountInput extends React.Component {
+  componentDidMount() {
+    const {
+      input,
+      minNodes,
+      isEditingCluster,
+      currentNodeCount,
+      increment,
+      isHypershiftWizard,
+      poolNumber,
+      isMultiAz,
+    } = this.props;
+    const included = this.getIncludedNodes();
+    const available = this.getAvailableQuota();
+
+    const optionValueIncrement =
+      increment || incrementValue({ isHypershiftWizard, poolNumber, isMultiAz });
+
+    const options = buildOptions({
+      included,
+      available,
+      isEditingCluster,
+      currentNodeCount,
+      minNodes,
+      optionValueIncrement,
+    });
+
+    if (!options.includes(input.value)) {
+      // if the value isn't an option, then just set to minNode (the value the user sees as the setting )
+      input.onChange(minNodes);
+    }
+  }
+
   componentDidUpdate(prevProps) {
     const { input, isEditingCluster, minNodes, isHypershiftWizard, poolNumber } = this.props;
 
@@ -88,23 +141,25 @@ class NodeCountInput extends React.Component {
       isByoc,
       isMachinePool,
       minNodes,
-      increment = isHypershiftWizard
-        ? getNodeIncrementHypershift(poolNumber)
-        : getNodeIncrement(isMultiAz),
+      increment,
       isHypershiftWizard,
       poolNumber = isMultiAz ? 3 : 1,
     } = this.props;
 
+    const optionValueIncrement =
+      increment || incrementValue({ isHypershiftWizard, poolNumber, isMultiAz });
+
     const included = this.getIncludedNodes();
     const available = this.getAvailableQuota();
-    // no extra node quota = only base cluster size is available
-    const optionsAvailable = available > 0 || isEditingCluster;
-    let maxValue = isEditingCluster ? available + currentNodeCount : available + included;
-    if (maxValue > MAX_NODES) {
-      maxValue = MAX_NODES;
-    }
 
-    const options = optionsAvailable ? range(minNodes, maxValue + 1, increment) : [minNodes];
+    const options = buildOptions({
+      included,
+      available,
+      isEditingCluster,
+      currentNodeCount,
+      minNodes,
+      increment: optionValueIncrement,
+    });
 
     let notEnoughQuota = options.length < 1;
 
@@ -117,7 +172,7 @@ class NodeCountInput extends React.Component {
     const optionLabel = (value) => {
       let labelNumber = value;
       if (isHypershiftWizard) {
-        labelNumber = value / increment;
+        labelNumber = value / optionValueIncrement;
       } else if (isMultiAz) {
         labelNumber = value / 3;
       }
