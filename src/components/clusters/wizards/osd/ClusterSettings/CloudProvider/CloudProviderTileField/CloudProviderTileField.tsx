@@ -11,7 +11,7 @@ import { CloudProviderType } from '~/components/clusters/wizards/common/constant
 import * as osdInitialValues from '~/components/clusters/CreateOSDPage/createOSDInitialValues';
 import { noQuotaTooltip } from '~/common/helpers';
 import { FieldId } from '~/components/clusters/wizards/osd/constants';
-import { quotaParams, hasAvailableQuota } from '~/components/clusters/wizards/common/utils';
+import { quotaParams, hasAvailableQuota } from '~/components/clusters/wizards/common/utils/quotas';
 
 import './cloudProviderTileField.scss';
 
