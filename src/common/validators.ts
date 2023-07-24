@@ -354,13 +354,12 @@ const parseNodeLabels = (input: string | string[] | undefined) => {
   return parseNodeLabelTags(labels);
 };
 
-const labelKeyValidations = (value: string): Validations => {
+const labelAndTaintKeyValidations = (value: string): Validations => {
   const { prefix, name } = parseNodeLabelKey(value);
-
   return [
     {
       validated: typeof prefix === 'undefined' || DNS_SUBDOMAIN_REGEXP.test(prefix),
-      text: 'Key prefix must be a DNS subdomain: a series of DNS labels separated by dots (.)',
+      text: 'Key prefix must be a DNS subdomain: a series of DNS labels separated by dots (.), and must end with a "/"',
     },
     {
       validated: typeof prefix === 'undefined' || prefix.length <= LABEL_KEY_PREFIX_MAX_LENGTH,
@@ -400,15 +399,9 @@ const taintValueValidations = (value: string): Validations => [
 ];
 
 const taintKeyValidations = (value: string, allValues: { taints?: Taint[] }): Validations => {
-  const parts = value ? value.split('/') : [];
-  let formatErrors: Validations = [];
-  parts.forEach((part) => {
-    const errors = labelKeyValidations(part).find((validation) => !validation.validated);
-    if (errors) {
-      formatErrors = [errors];
-    }
-  });
-  if (formatErrors.length > 0) {
+  const formatErrors = labelAndTaintKeyValidations(value);
+  const hasFormatErrors = formatErrors.find((validation) => !validation.validated) !== undefined;
+  if (hasFormatErrors) {
     return formatErrors;
   }
 
@@ -422,7 +415,7 @@ const taintKeyValidations = (value: string, allValues: { taints?: Taint[] }): Va
   ];
 };
 
-const checkLabelKey = createPessimisticValidator(labelKeyValidations);
+const checkLabelKey = createPessimisticValidator(labelAndTaintKeyValidations);
 const checkLabelValue = createPessimisticValidator(labelValueValidations);
 
 const checkTaintKey = createPessimisticValidator(taintKeyValidations);
