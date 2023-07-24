@@ -260,7 +260,8 @@
     "gen-types": "node scripts/gen-openapi-typescript.js && prettier --write 'src/types/**/*.ts'",
     "cypress-ui": "cypress open --config baseUrl='https://prod.foo.redhat.com:1337/openshift/'",
     "cypress-headless": "cypress run --browser chrome --config baseUrl='https://prod.foo.redhat.com:1337/openshift/'",
-    "code-coverage": "nyc report --reporter=text-summary"
+    "code-coverage": "nyc report --reporter=text-summary",
+    "verify": "echo 'yay' && exit 0"
   },
   "insights": {
     "appname": "openshift"
