@@ -120,7 +120,10 @@ function AWSAccountSelection({
     () =>
       // assume largest numbers are the latest
       accounts
-        .sort(({ cloud_account_id: a }, { cloud_account_id: b }) => b.localeCompare(a))
+        .sort(({ cloud_account_id: a }, { cloud_account_id: b }) => {
+          const ret = b.length - a.length;
+          return ret || b.localeCompare(a);
+        })
         .map((cloudAccount) => (
           <SelectOption
             className="pf-c-dropdown__menu-item"
@@ -156,7 +159,7 @@ function AWSAccountSelection({
           (
             { score: ax = 0, item: { cloud_account_id: aid = '' } },
             { score: bx = 0, item: { cloud_account_id: bid = '' } },
-          ) => ax - bx || bid.localeCompare(aid),
+          ) => ax - bx || bid.length - aid.length || bid.localeCompare(aid),
         )
         .forEach(({ item: account, matches }) => {
           if (account) {
