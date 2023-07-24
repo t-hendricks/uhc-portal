@@ -3,8 +3,9 @@ import PropTypes from 'prop-types';
 import { Field } from 'redux-form';
 import { Button, Grid, GridItem, TextInput } from '@patternfly/react-core';
 import { PlusCircleIcon, MinusCircleIcon } from '@patternfly/react-icons';
+import ButtonWithTooltip from '../../ButtonWithTooltip';
 
-import { getRandomID } from '../../../../common/helpers';
+import { getRandomID, nodeKeyValueTooltipText } from '../../../../common/helpers';
 import { validateLabelKey, validateLabelValue } from '../../../../common/validators';
 
 import './ReduxFormKeyValueList.scss';
@@ -96,15 +97,18 @@ const ReduxFormKeyValueList = ({ fields, meta: { error, submitFailed } }) => (
       );
     })}
     <GridItem>
-      <Button
+      <ButtonWithTooltip
         onClick={() => fields.push({ id: getRandomID() })}
         icon={<PlusCircleIcon />}
         variant="link"
         isInline
         className="reduxFormKeyValueList-addBtn"
+        disableReason={
+          !fields.getAll().some((field) => field.key && field.value) && nodeKeyValueTooltipText
+        }
       >
-        Add label
-      </Button>
+        Add additional label
+      </ButtonWithTooltip>
       {submitFailed && error && <span>{error}</span>}
     </GridItem>
   </Grid>

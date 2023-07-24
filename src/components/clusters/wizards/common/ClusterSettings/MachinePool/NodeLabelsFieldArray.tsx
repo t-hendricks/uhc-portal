@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React from 'react';
 import { FieldArray } from 'formik';
 import classNames from 'classnames';
 
@@ -9,6 +9,8 @@ import { checkLabelKey, checkLabelValue } from '~/common/validators';
 import { FieldId } from '~/components/clusters/wizards/common/constants';
 import { useFormState } from '~/components/clusters/wizards/hooks';
 import { TextInputField } from '~/components/clusters/wizards/form/TextInputField';
+import { nodeKeyValueTooltipText } from '~/common/helpers';
+import ButtonWithTooltip from '~/components/common/ButtonWithTooltip';
 
 export interface NodeLabel {
   key: string;
@@ -18,10 +20,8 @@ export interface NodeLabel {
 export const NodeLabelsFieldArray = () => {
   const { values } = useFormState();
   const nodeLabels: NodeLabel[] = values[FieldId.NodeLabels];
-  const hasCompleteNodeLabel = useMemo(
-    () => nodeLabels.some((nodeLabel) => nodeLabel.key && nodeLabel.value),
-    [nodeLabels],
-  );
+  const hasCompleteNodeLabel = () =>
+    nodeLabels.some((nodeLabel) => nodeLabel.key && nodeLabel.value);
 
   const validateNodeKey = (index: number) => (value: string) => {
     if (nodeLabels.length > 1) {
@@ -93,19 +93,17 @@ export const NodeLabelsFieldArray = () => {
                 </Grid>
               );
             })}
-
-            {hasCompleteNodeLabel && (
-              <GridItem>
-                <Button
-                  onClick={() => push({ key: '', value: '' })}
-                  icon={<PlusCircleIcon />}
-                  variant="link"
-                  isInline
-                >
-                  Add additional label
-                </Button>
-              </GridItem>
-            )}
+            <GridItem>
+              <ButtonWithTooltip
+                onClick={() => push({ key: '', value: '' })}
+                icon={<PlusCircleIcon />}
+                variant="link"
+                isInline
+                disableReason={!hasCompleteNodeLabel() && nodeKeyValueTooltipText}
+              >
+                Add additional label
+              </ButtonWithTooltip>
+            </GridItem>
           </>
         )}
       />

@@ -81,7 +81,7 @@ export const MachinePool = () => {
     >
       <Title headingLevel="h3">Node labels (optional)</Title>
       <p className="pf-u-mb-md">
-        Configure labels that will apply to all labels in this machine pool
+        Configure labels that will apply to all nodes in this machine pool
       </p>
       <NodeLabelsFieldArray />
     </ExpandableSection>
