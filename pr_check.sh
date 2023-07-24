@@ -48,9 +48,9 @@ export NODE_BUILD_VERSION=16
 
 # use a custom script instead of the default one ('build'),
 # to avoid passing environment variables.
-BUILD_SCRIPT="build --mode=production --env api-env=staging"
-export NPM_BUILD_SCRIPT="$BUILD_SCRIPT"
-export YARN_BUILD_SCRIPT="$BUILD_SCRIPT"
+#BUILD_SCRIPT="build --mode=production --env api-env=staging"
+#export NPM_BUILD_SCRIPT="$BUILD_SCRIPT"
+#export YARN_BUILD_SCRIPT="$BUILD_SCRIPT"
 
 COMMON_BUILDER=https://raw.githubusercontent.com/RedHatInsights/insights-frontend-builder-common/master
 
