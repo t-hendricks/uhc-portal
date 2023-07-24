@@ -1,9 +1,11 @@
 import React from 'react';
 import { shallow } from 'enzyme';
+import { screen } from '@testing-library/dom';
 
 import { subscriptionStatuses } from '../../../../common/subscriptionTypes';
 import Overview from '../components/Overview/Overview';
 import fixtures from './ClusterDetails.fixtures';
+import { mockRestrictedEnv, render } from '../../../../testUtils';
 
 describe('<Overview />', () => {
   describe('for an OSD cluster', () => {
@@ -106,6 +108,37 @@ describe('<Overview />', () => {
     const wrapper = shallow(<Overview {...props} />);
     it('should render', () => {
       expect(wrapper).toMatchSnapshot();
+    });
+  });
+
+  describe('in Restricted env', () => {
+    const isRestrictedEnv = mockRestrictedEnv();
+
+    afterEach(() => {
+      isRestrictedEnv.mockReturnValue(false);
+    });
+
+    it('should not render insights and resource usage', () => {
+      const props = {
+        cluster: fixtures.ROSAClusterDetails.cluster,
+        cloudProviders: fixtures.cloudProviders,
+        history: {},
+        displayClusterLogs: true,
+        openModal: jest.fn(),
+        insightsData: {
+          status: 200,
+          data: [],
+        },
+        userAccess: fixtures.userAccess,
+      };
+
+      const { rerender } = render(<Overview {...props} />);
+      expect(screen.queryByTestId('insights-advisor')).toBeInTheDocument();
+      expect(screen.queryByTestId('resource-usage')).toBeInTheDocument();
+      isRestrictedEnv.mockReturnValue(true);
+      rerender(<Overview {...props} />);
+      expect(screen.queryByTestId('insights-advisor')).not.toBeInTheDocument();
+      expect(screen.queryByTestId('resource-usage')).not.toBeInTheDocument();
     });
   });
 });

@@ -227,7 +227,11 @@ const ExpandableRowPair = ({ expanded, setExpanded, expandKey, cells, descriptio
     setExpanded({ ...expanded, [expandKey]: newOpen });
   };
   return (
-    <Tbody isExpanded={isExpanded} ref={get(toolRefs, expandKey)}>
+    <Tbody
+      isExpanded={isExpanded}
+      ref={get(toolRefs, expandKey)}
+      data-testid={`expandable-row-${expandKey}`}
+    >
       <Tr>
         <Td expand={{ isExpanded, onToggle, rowIndex: 0 }} />
         {cells}
@@ -350,7 +354,7 @@ const cliToolRows = (expanded, setExpanded, selections, setSelections, toolRefs,
         }
       />
 
-      {!isRestrictedEnv && (
+      {!isRestrictedEnv() && (
         <ToolAndDescriptionRows
           {...commonProps}
           tool={tools.OCM}
@@ -391,7 +395,7 @@ const cliToolRows = (expanded, setExpanded, selections, setSelections, toolRefs,
         }
       />
 
-      {!isRestrictedEnv && (
+      {!isRestrictedEnv() && (
         <>
           <ToolAndDescriptionRows
             {...commonProps}
@@ -871,7 +875,7 @@ const tokenRows = (expanded, setExpanded, toolRefs, token) => (
       }
     />
 
-    {!isRestrictedEnv && (
+    {!isRestrictedEnv() && (
       <ExpandableRowPair
         expanded={expanded}
         setExpanded={setExpanded}
@@ -1086,7 +1090,7 @@ class DownloadsPage extends React.Component {
               </TableComposable>
             </DownloadsSection>
 
-            {!isRestrictedEnv && (
+            {!isRestrictedEnv() && (
               <>
                 <DownloadsSection
                   selectedCategory={selectedCategory}

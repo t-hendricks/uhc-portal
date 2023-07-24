@@ -11,6 +11,7 @@ jest.mock('../../services/apiRequest');
 
 global.insights = {
   chrome: {
+    ...global.insights.chrome,
     on: () => () => {}, // a function that returns a function
     appNavClick: () => {},
     auth: {

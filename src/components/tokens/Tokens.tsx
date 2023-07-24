@@ -118,7 +118,7 @@ const Tokens = (props: Props) => {
             <Card className="ocm-c-api-token__card">
               <CardTitle>
                 <Title headingLevel="h2">
-                  {`Connect with ${isRestrictedEnv ? 'refresh' : 'offline'} tokens`}
+                  {`Connect with ${isRestrictedEnv() ? 'refresh' : 'offline'} tokens`}
                 </Title>
               </CardTitle>
               <CardBody className="ocm-c-api-token__card--body">
@@ -156,7 +156,7 @@ const Tokens = (props: Props) => {
 
                       <Title headingLevel="h3">
                         {`Need help connecting with your ${
-                          isRestrictedEnv ? 'refresh' : 'offline'
+                          isRestrictedEnv() ? 'refresh' : 'offline'
                         } token?`}
                       </Title>
                       <Text component="p">

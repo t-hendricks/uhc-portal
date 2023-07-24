@@ -35,7 +35,7 @@ const Releases = () => {
   const filteredVersions = allVersions?.filter(
     (version) =>
       !version.name.includes('EUS') &&
-      (isRestrictedEnv ? SUPPORTED_RESTRICTED_ENV_OCP_VERSIONS.includes(version.name) : true),
+      (isRestrictedEnv() ? SUPPORTED_RESTRICTED_ENV_OCP_VERSIONS.includes(version.name) : true),
   );
   const versionsToDisplay = filteredVersions?.splice(0, 6);
   const hasEUSChannel = (versionName: string) => {
@@ -102,7 +102,7 @@ const Releases = () => {
                     {versionsToDisplay?.map((version) => {
                       const releaseNotesLink = getReleaseNotesLink(version.name);
                       return (
-                        <GalleryItem key={version.name}>
+                        <GalleryItem key={version.name} data-testid={`version-${version.name}`}>
                           <Card isFlat className="ocm-l-ocp-releases__card">
                             <CardTitle>
                               <div className="ocm-l-ocp-releases__card-title pf-u-mb-sm">
@@ -123,7 +123,7 @@ const Releases = () => {
                                   channel={`stable-${version.name}`}
                                   status={version.type}
                                 />
-                                {!isRestrictedEnv && (
+                                {!isRestrictedEnv() && (
                                   <ReleaseChannel
                                     channel={`fast-${version.name}`}
                                     status={version.type}
@@ -142,7 +142,7 @@ const Releases = () => {
                                     </ReleaseChannelDescription>
                                   </>
                                 )}
-                                {!isRestrictedEnv && (
+                                {!isRestrictedEnv() && (
                                   <ReleaseChannel channel={`candidate-${version.name}`} />
                                 )}
                               </dl>
