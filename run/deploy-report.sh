@@ -49,16 +49,15 @@ while IFS=',' read -r commitHash commitDate commitMessage; do
     # Pattern matching to extract jiraKeys
     jiraTicketRegex="(HAC|MGMT|OCM|SDA|SDB|RHBKAAS)[- ]?([0-9]+)"
     # Find and store all matching jiraKeys
-    while [[ $commitDescription =~ $jiraTicketRegex ]]; do
-      matchedWithDash="${BASH_REMATCH[1]}-${BASH_REMATCH[2]}"
-      matchedNoDash="${BASH_REMATCH[1]}${BASH_REMATCH[2]}"
+    startIndex=0
+    while [[ ${commitDescription:startIndex} =~ $jiraTicketRegex ]]; do
+      matched="${BASH_REMATCH[1]}-${BASH_REMATCH[2]}"
       # Check if the substring already exists in the array
-      if [[ ! " ${jiraKeys[*]} " =~ " $matchedWithDash " ]]; then
-        jiraKeys+=("$matchedWithDash")
+      if [[ ! " ${jiraKeys[*]} " =~ " ${matched} " ]]; then
+        jiraKeys+=("$matched")
       fi
-      # remove matched jira key from commitDescription for while loop
-      commitDescription="${commitDescription//$matchedWithDash/}"
-      commitDescription="${commitDescription//$matchedNoDash/}"
+      # update start index for the next match
+      startIndex=$((startIndex + ${#BASH_REMATCH[0]}))
     done
 
     # Check if jiraKeys array is empty
