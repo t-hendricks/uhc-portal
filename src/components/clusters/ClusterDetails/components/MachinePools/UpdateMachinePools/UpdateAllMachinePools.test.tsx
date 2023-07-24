@@ -5,7 +5,7 @@ import { MemoryRouter } from 'react-router-dom';
 import apiRequest from '~/services/apiRequest';
 import { screen, render, checkAccessibility, within, insightsMock } from '~/testUtils';
 
-import UpdateAllMachinePools from './UpdateAllMachinePools';
+import { UpdateAllMachinePools } from './index';
 
 const mock = new MockAdapter(apiRequest); // adds ability to mock axios calls
 
