@@ -21,7 +21,7 @@ export const NodeLabelsFieldArray = () => {
   const { values } = useFormState();
   const nodeLabels: NodeLabel[] = values[FieldId.NodeLabels];
   const hasCompleteNodeLabel = () =>
-    nodeLabels.some((nodeLabel) => nodeLabel.key && nodeLabel.value);
+    nodeLabels.every((nodeLabel) => nodeLabel.key && nodeLabel.value);
 
   const validateNodeKey = (index: number) => (value: string) => {
     if (nodeLabels.length > 1) {

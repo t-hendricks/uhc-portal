@@ -104,7 +104,7 @@ const ReduxFormKeyValueList = ({ fields, meta: { error, submitFailed } }) => (
         isInline
         className="reduxFormKeyValueList-addBtn"
         disableReason={
-          !fields.getAll().some((field) => field.key && field.value) && nodeKeyValueTooltipText
+          !fields.getAll().every((field) => field.key && field.value) && nodeKeyValueTooltipText
         }
       >
         Add additional label
