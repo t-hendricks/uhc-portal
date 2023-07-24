@@ -8,6 +8,11 @@ import {
   clearGetMachinePoolsResponse,
   clearDeleteMachinePoolResponse,
 } from './MachinePoolsActions';
+
+import {
+  isControlPlaneUpToDate,
+  isMachinePoolBehindControlPlane,
+} from './UpdateMachinePools/updateMachinePoolsHelpers';
 import { hasMachinePoolsQuotaSelector } from './MachinePoolsSelectors';
 import { normalizeNodePool } from './machinePoolsHelper';
 
@@ -33,6 +38,8 @@ const mapStateToProps = (state, ownProps) => {
     hasMachinePoolsQuota: hasMachinePoolsQuotaSelector(state),
     machineTypes: state.machineTypes,
     organization: state.userProfile.organization,
+    canMachinePoolBeUpdated: (machinePool) =>
+      isControlPlaneUpToDate(state) && isMachinePoolBehindControlPlane(state, machinePool),
   };
 
   if (ownProps.isHypershift) {
