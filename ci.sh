@@ -4,7 +4,7 @@
 USES_NPM=false
 
 # install dependencies
-npm ci
+yarn install
 
 # build
 if [ $IS_PR = true ]; then
