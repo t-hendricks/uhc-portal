@@ -18,7 +18,11 @@ import {
 import { Table, TableHeader, TableBody, cellWidth, expandable } from '@patternfly/react-table';
 import Skeleton from '@redhat-cloud-services/frontend-components/Skeleton';
 
-import UpdateAllMachinePools from './UpdateAllMachinePools';
+import {
+  UpdateAllMachinePools,
+  UpdatePoolButton,
+  UpdateMachinePoolModal,
+} from './UpdateMachinePools';
 import AddMachinePoolModal from './components/AddMachinePoolModal';
 import EditTaintsModal from './components/EditTaintsModal';
 import EditLabelsModal from './components/EditLabelsModal';
@@ -34,12 +38,17 @@ import { versionFormatter } from '../../../../../common/versionFormatter';
 import { isHibernating } from '../../../common/clusterStates';
 import './MachinePools.scss';
 
-const getOpenShiftVersion = (machinePool) => {
+const getOpenShiftVersion = (machinePool, isDisabled) => {
   const extractedVersion = get(machinePool, 'version.id', '');
   if (!extractedVersion) {
     return 'N/A';
   }
-  return versionFormatter(extractedVersion) || extractedVersion;
+  return (
+    <>
+      {versionFormatter(extractedVersion) || extractedVersion}{' '}
+      {!isDisabled ? <UpdatePoolButton machinePool={machinePool} /> : null}
+    </>
+  );
 };
 
 const initialState = {
@@ -139,6 +148,7 @@ class MachinePools extends React.Component {
       addMachinePoolResponse,
       hasMachinePoolsQuota,
       isHypershift,
+      canMachinePoolBeUpdated,
     } = this.props;
 
     const { deletedRowIndex, openedRows, hideDeleteMachinePoolError } = this.state;
@@ -163,6 +173,30 @@ class MachinePools extends React.Component {
     if (isHypershift) {
       columns.push({ title: 'Version', transforms: [cellWidth(15)] });
     }
+
+    const isReadOnly = cluster?.status?.configuration_mode === 'read_only';
+    const readOnlyReason = isReadOnly && 'This operation is not available during maintenance';
+    const hibernatingReason =
+      isHibernating(cluster.state) &&
+      'This operation is not available while cluster is hibernating';
+    const canNotEditReason =
+      !cluster.canEdit &&
+      'You do not have permission to add a machine pool. Only cluster owners, cluster editors, and Organization Administrators can add machine pools.';
+    const quotaReason = !hasMachinePoolsQuota && noQuotaTooltip;
+
+    const addMachinePoolBtn = (
+      <ButtonWithTooltip
+        disableReason={readOnlyReason || hibernatingReason || canNotEditReason || quotaReason}
+        id="add-machine-pool"
+        onClick={() => openModal('add-machine-pool')}
+        variant="secondary"
+        className="pf-u-mb-lg"
+      >
+        Add machine pool
+      </ButtonWithTooltip>
+    );
+
+    const tableActionsDisabled = !!(readOnlyReason || hibernatingReason || canNotEditReason);
 
     const getMachinePoolRow = (machinePool = {}, isExpandableRow) => {
       const autoscalingEnabled = machinePool.autoscaling;
@@ -207,7 +241,7 @@ class MachinePools extends React.Component {
         machinePool.availability_zones?.join(', ') || machinePool.availability_zone,
         { title: nodes },
         autoscalingEnabled ? 'Enabled' : 'Disabled',
-        isHypershift ? getOpenShiftVersion(machinePool) : null,
+        isHypershift ? { title: getOpenShiftVersion(machinePool, tableActionsDisabled) } : null,
       ].filter((column) => column !== null);
 
       const row = {
@@ -299,6 +333,11 @@ class MachinePools extends React.Component {
         machinePool: rowData.machinePool,
       });
 
+    const onClickUpdateAction = (_, __, rowData) =>
+      openModal(modals.UPDATE_MACHINE_POOL_VERSION, {
+        machinePool: rowData.machinePool,
+      });
+
     const showSkeleton = !hasMachinePools && machinePoolsList.pending;
     const skeletonRow = {
       cells: [
@@ -327,30 +366,6 @@ class MachinePools extends React.Component {
       rows[deletedRowIndex] = skeletonRow;
     }
 
-    const isReadOnly = cluster?.status?.configuration_mode === 'read_only';
-    const readOnlyReason = isReadOnly && 'This operation is not available during maintenance';
-    const hibernatingReason =
-      isHibernating(cluster.state) &&
-      'This operation is not available while cluster is hibernating';
-    const canNotEditReason =
-      !cluster.canEdit &&
-      'You do not have permission to add a machine pool. Only cluster owners, cluster editors, and Organization Administrators can add machine pools.';
-    const quotaReason = !hasMachinePoolsQuota && noQuotaTooltip;
-
-    const addMachinePoolBtn = (
-      <ButtonWithTooltip
-        disableReason={readOnlyReason || hibernatingReason || canNotEditReason || quotaReason}
-        id="add-machine-pool"
-        onClick={() => openModal('add-machine-pool')}
-        variant="secondary"
-        className="pf-u-mb-lg"
-      >
-        Add machine pool
-      </ButtonWithTooltip>
-    );
-
-    const tableActionsDisabled = !!(readOnlyReason || hibernatingReason || canNotEditReason);
-
     return (
       <>
         {showSkeleton ? (
@@ -367,7 +382,7 @@ class MachinePools extends React.Component {
           </Card>
         ) : (
           <>
-            <UpdateAllMachinePools />
+            {!tableActionsDisabled ? <UpdateAllMachinePools /> : null}
             <Card className="ocm-c-machine-pools__card">
               <CardBody className="ocm-c-machine-pools__card--body">
                 {machinePoolsList.error && (
@@ -403,6 +418,9 @@ class MachinePools extends React.Component {
                       onClickEditLabelsAction,
                       isHypershift,
                       machinePoolsList.data.length,
+                      canMachinePoolBeUpdated(rowData.machinePool)
+                        ? onClickUpdateAction
+                        : undefined,
                     )
                   }
                   areActionsDisabled={() => tableActionsDisabled}
@@ -423,6 +441,7 @@ class MachinePools extends React.Component {
         {isEditLabelsModalOpen && (
           <EditLabelsModal clusterId={cluster.id} isHypershiftCluster={isHypershift} />
         )}
+        <UpdateMachinePoolModal />
       </>
     );
   }
@@ -463,6 +482,7 @@ MachinePools.propTypes = {
   getMachineTypes: PropTypes.func.isRequired,
   machineTypes: PropTypes.object.isRequired,
   isHypershift: PropTypes.bool,
+  canMachinePoolBeUpdated: PropTypes.func,
 };
 
 export default MachinePools;

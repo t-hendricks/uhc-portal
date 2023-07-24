@@ -26,7 +26,7 @@ import ButtonWithTooltip from '../../../../common/ButtonWithTooltip';
 import MinorVersionUpgradeAlert from '../../../common/Upgrades/MinorVersionUpgradeAlert';
 import UpgradeAcknowledgeWarning from '../../../common/Upgrades/UpgradeAcknowledge/UpgradeAcknowledgeWarning';
 import { isHypershiftCluster } from '../../clusterDetailsHelper';
-import UpdateAllMachinePools from '../MachinePools/UpdateAllMachinePools';
+import { UpdateAllMachinePools } from '../MachinePools/UpdateMachinePools';
 
 class UpgradeSettingsTab extends React.Component {
   state = { confirmationModalOpen: false };
