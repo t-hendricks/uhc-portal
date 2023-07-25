@@ -10,7 +10,7 @@ function HypershiftMachinePoolHeader() {
       </GridItem>
       <GridItem>
         <Text component="p">
-          Create machine pools and specify the private subnet ID for each machine pool. To make your
+          Create machine pools and specify the private subnet for each machine pool. To make your
           cluster highly available, add machine pools on different availability zones. Additional
           machine pools can be created after cluster creation.
         </Text>

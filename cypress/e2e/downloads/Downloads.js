@@ -8,7 +8,7 @@ const OCRowTitle = 'Create applications and manage OpenShift projects from the c
 const HELMRowTitle = 'Define, install, and upgrade application packages as Helm charts using Helm';
 const OSLocalTitle = 'Download and open the OpenShift Local';
 
-describe('Downloads page', () => {
+describe('Downloads page', { tags: ['ci', 'smoke'] }, () => {
   before(() => {
     cy.visit('/');
     Login.isLoginPageUrl();

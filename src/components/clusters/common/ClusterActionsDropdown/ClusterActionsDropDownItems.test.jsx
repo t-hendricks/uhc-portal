@@ -39,6 +39,7 @@ describe('Cluster Actions Dropdown Items', () => {
         cluster: Fixtures.cluster,
         isDefaultMachinePool: true,
         isHypershiftCluster: false,
+        clearMachinePoolDataOnExit: false,
       });
     });
 

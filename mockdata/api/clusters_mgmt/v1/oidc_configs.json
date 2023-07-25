@@ -1,0 +1,30 @@
+{
+  "href": "/api/clusters_mgmt/v1/oidc_configs",
+  "page": 1,
+  "size": 2,
+  "total": 2,
+  "items": [
+    {
+      "href": "/api/clusters_mgmt/v1/oidc_configs/23ov7lq99ttljb2180rohvtshpt19o1p",
+      "id": "23ov7lq99ttljb2180rohvtshpt19o1p",
+      "organization_id": "1HAXGgCYqHpednsRDiwWsZBmDlA",
+      "issuer_url": "https://d3gt1gce2zmg3d.cloudfront.net/23ov7lq99ttljb2180rohvtshpt19o1p",
+      "creation_timestamp": "2023-05-17T02:54:15.895782Z",
+      "last_used_timestamp": "2023-05-17T03:07:35.118957Z",
+      "last_update_timestamp": "2023-05-17T03:07:35.118957Z",
+      "managed": true,
+      "reusable": true
+    },
+    {
+      "href": "/api/clusters_mgmt/v1/oidc_configs/24jk7g5jsakl8pv7gbhnb74fvq483vad",
+      "id": "24jk7g5jsakl8pv7gbhnb74fvq483vad",
+      "organization_id": "1HAXGgCYqHpednsRDiwWsZBmDlA",
+      "issuer_url": "https://d3gt1gce2zmg3d.cloudfront.net/24jk7g5jsakl8pv7gbhnb74fvq483vad",
+      "creation_timestamp": "2023-06-26T13:25:20.09931Z",
+      "last_used_timestamp": "2023-06-26T13:43:48.117861Z",
+      "last_update_timestamp": "2023-06-26T13:43:48.117861Z",
+      "managed": true,
+      "reusable": true
+    }
+  ]
+}

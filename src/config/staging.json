@@ -1,5 +1,7 @@
 {
   "apiGateway": "https://api.stage.openshift.com",
   "insightsGateway": "https://$SELF_PATH$/api",
-  "sentryDSN": "https://***REMOVED***/17"
+  "sentryDSN": "https://***REMOVED***/17",
+  "fedrampGateway": "https://console.stage.redhat.com/api",
+  "fedrampS3": "https://fedramp-customer-interest-rob-stage.s3.us-east-1.amazonaws.com"
 }

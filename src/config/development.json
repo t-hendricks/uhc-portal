@@ -1,4 +1,6 @@
 {
   "apiGateway": "https://$SELF_PATH$/openshift_api",
-  "insightsGateway": "https://$SELF_PATH$/api"
+  "insightsGateway": "https://$SELF_PATH$/api",
+  "fedrampGateway": "https://console.stage.redhat.com/api",
+  "fedrampS3": "https://fedramp-customer-interest-rob-stage.s3.us-east-1.amazonaws.com"
 }
