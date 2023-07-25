@@ -46,7 +46,6 @@ class EditNodeCountModal extends Component {
 
   componentDidUpdate() {
     const { getOrganizationAndQuota, onClose, editNodeCountResponse } = this.props;
-
     if (
       editNodeCountResponse.fulfilled &&
       !editNodeCountResponse.pending &&
@@ -84,10 +83,14 @@ class EditNodeCountModal extends Component {
   };
 
   resetResponse() {
-    const { resetScaleDefaultMachinePoolResponse, resetScaleMachinePoolResponse, machinePoolId } =
-      this.props;
+    const {
+      resetScaleDefaultMachinePoolResponse,
+      resetScaleMachinePoolResponse,
+      machinePoolId,
+      isHypershiftCluster,
+    } = this.props;
 
-    if (machinePoolId === 'Default') {
+    if (machinePoolId === 'Default' && !isHypershiftCluster) {
       resetScaleDefaultMachinePoolResponse();
     } else {
       resetScaleMachinePoolResponse();
@@ -119,6 +122,7 @@ class EditNodeCountModal extends Component {
       shouldDisplayClusterName,
       clusterDisplayName,
       clusterID,
+      isHypershiftCluster,
     } = this.props;
 
     const error = editNodeCountResponse.error ? (
@@ -169,6 +173,7 @@ class EditNodeCountModal extends Component {
         isPrimaryDisabled={pending || pristine || !isValid}
         isPending={pending}
         isSmall
+        isHypershift={isHypershiftCluster}
       >
         <>
           {error}
@@ -195,7 +200,7 @@ class EditNodeCountModal extends Component {
                       autoScaleMaxNodesValue={autoScaleMaxNodesValue}
                       product={product}
                       isBYOC={isByoc}
-                      isDefaultMachinePool={machinePoolId === 'Default'}
+                      isDefaultMachinePool={machinePoolId === 'Default' && !isHypershiftCluster}
                     />
                   </GridItem>
                 </>
@@ -215,7 +220,7 @@ class EditNodeCountModal extends Component {
                       currentNodeCount={initialValues.nodes_compute || 0}
                       cloudProviderID={cloudProviderID}
                       product={product}
-                      minNodes={machinePoolId !== 'Default' ? 0 : undefined}
+                      minNodes={machinePoolId !== 'Default' && !isHypershiftCluster ? 0 : undefined}
                       isMachinePool
                       billingModel={billingModel}
                     />
