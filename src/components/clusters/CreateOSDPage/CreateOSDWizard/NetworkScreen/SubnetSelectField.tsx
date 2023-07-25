@@ -5,6 +5,7 @@ import React, {
   useCallback,
   useEffect,
   useMemo,
+  useRef,
   useState,
 } from 'react';
 
@@ -13,6 +14,7 @@ import {
   Alert,
   Flex,
   FormGroup,
+  KeyTypes,
   Select,
   SelectGroup,
   SelectOption,
@@ -63,6 +65,7 @@ export const SubnetSelectField = ({
   const [isExpanded, setIsExpanded] = useState(false);
   const [selectedSubnet, setSelectedSubnet] = useState(input.value);
   const vpcs = isNewCluster ? useAWSVPCInquiry() : useAWSVPCsFromCluster();
+  const containerRef = useRef<HTMLDivElement>(null);
 
   const { pending: isVpcsLoading, fulfilled: isVpcsFulfilled, error: vpcsError } = vpcs;
 
@@ -104,6 +107,24 @@ export const SubnetSelectField = ({
     const hasSubnetNames = !hasNoOptions && subnetList.every((subnet) => !!subnet.name);
     return { vpcsItems, subnetList, vpcsSubnetsMap, hasNoOptions, hasSubnetNames };
   }, [vpcs.data?.items, selectedVPC]);
+
+  useEffect(() => {
+    if (isExpanded) {
+      if (containerRef.current) {
+        // Patternfly's inline filter up/down arrow keys are captured and used for navigating the options
+        // unfortunately it also captures left/right which means you can't move the caret around your filter input text
+        // this code grabs left/right arrows before they bubble up to the input and PF kills them
+        const input = containerRef.current.getElementsByClassName(
+          'pf-c-form-control pf-m-search',
+        )[0] as HTMLInputElement;
+        input.onkeydown = (e) => {
+          if (e.key === KeyTypes.ArrowLeft || e.key === KeyTypes.ArrowRight) {
+            e.stopPropagation();
+          }
+        };
+      }
+    }
+  }, [isExpanded]);
 
   const selectOptions = useMemo<ReactElement[]>(
     () =>
@@ -273,25 +294,27 @@ export const SubnetSelectField = ({
           <span>Loading...</span>
         </Flex>
       ) : (
-        <Select
-          label={label}
-          aria-label={label}
-          isOpen={isExpanded}
-          selections={selectedSubnetName}
-          onToggle={(isExpanded) => setIsExpanded(isExpanded)}
-          onSelect={onSelect}
-          onFilter={onFilter}
-          isDisabled={isDisabled || hasNoOptions}
-          inlineFilterPlaceholderText={`Filter by subnet ${hasSubnetNames ? 'name' : 'ID'}`}
-          placeholderText={
-            hasNoOptions ? 'No data found.' : `${hasSubnetNames ? 'Subnet name' : 'Subnet ID'}`
-          }
-          validated={inputError ? 'error' : undefined}
-          isGrouped
-          hasInlineFilter
-        >
-          {selectOptions}
-        </Select>
+        <div ref={containerRef}>
+          <Select
+            label={label}
+            aria-label={label}
+            isOpen={isExpanded}
+            selections={selectedSubnetName}
+            onToggle={(isExpanded) => setIsExpanded(isExpanded)}
+            onSelect={onSelect}
+            onFilter={onFilter}
+            isDisabled={isDisabled || hasNoOptions}
+            inlineFilterPlaceholderText={`Filter by subnet ${hasSubnetNames ? 'name' : 'ID'}`}
+            placeholderText={
+              hasNoOptions ? 'No data found.' : `${hasSubnetNames ? 'Subnet name' : 'Subnet ID'}`
+            }
+            validated={inputError ? 'error' : undefined}
+            isGrouped
+            hasInlineFilter
+          >
+            {selectOptions}
+          </Select>
+        </div>
       )}
     </FormGroup>
   );
