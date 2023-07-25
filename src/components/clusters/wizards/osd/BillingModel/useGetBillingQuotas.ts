@@ -3,7 +3,7 @@ import {
   quotaParams,
   hasAvailableQuota,
   QuotaType,
-} from '~/components/clusters/wizards/common/utils';
+} from '~/components/clusters/wizards/common/utils/quotas';
 
 export const useGetBillingQuotas = (product: string) => {
   const quotaList = useGlobalState((state) => state.userProfile.organization.quotaList);

@@ -13,7 +13,7 @@ const interceptAndReturnMockAssociatedAccounts = (mockFile) =>
 const interceptAndReturnMockARNs = (mockFile) =>
   cy.intercept({ method: 'POST', url: ARNsSelector }, { fixture: mockFile }).as('getMockARNs');
 
-describe('Rosa cluster tests', () => {
+describe('Rosa cluster tests', { tags: ['ci'] }, () => {
   before(() => {
     cy.visit('/');
     Login.isLoginPageUrl();

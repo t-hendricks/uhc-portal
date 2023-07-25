@@ -4,7 +4,7 @@ import ClusterListPage from '../../pageobjects/ClusterList.page';
 import RegisterClusterPage from '../../pageobjects/RegisterCluster.page';
 import ClusterDetailsPage from '../../pageobjects/ClusterDetails.page';
 
-describe('Register cluster flow', () => {
+describe('Register cluster flow', { tags: ['ci', 'smoke'] }, () => {
   const clusterID = v4();
   const displayName = `cypress-${clusterID}`;
 

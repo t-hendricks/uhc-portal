@@ -13,7 +13,7 @@ import {
 import { useGlobalState } from '~/redux/hooks/useGlobalState';
 import { useFormState } from '~/components/clusters/wizards/hooks';
 import { FieldId } from '~/components/clusters/wizards/osd/constants';
-import { getGcpCcsCredentials } from '~/components/clusters/wizards/common/utils';
+import { getGcpCcsCredentials } from '~/components/clusters/wizards/common/utils/ccsCredentials';
 import { CloudVPC } from '~/types/clusters_mgmt.v1';
 
 interface GcpVpcSubnetSelectFieldProps {

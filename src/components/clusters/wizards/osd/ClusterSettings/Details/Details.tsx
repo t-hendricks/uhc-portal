@@ -47,7 +47,7 @@ import {
   hasAvailableQuota,
   quotaParams,
   QuotaParams,
-} from '~/components/clusters/wizards/common/utils';
+} from '~/components/clusters/wizards/common/utils/quotas';
 import { FieldId } from '~/components/clusters/wizards/osd/constants';
 import { VersionSelectField } from './VersionSelectField';
 import CloudRegionSelectField from './CloudRegionSelectField';

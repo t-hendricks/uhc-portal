@@ -114,6 +114,7 @@ import Tokens from '../tokens';
 import TokensROSA from '../tokens/TokensROSA';
 import ApiError from './ApiError';
 import { AppPage } from './AppPage';
+import GovCloudPage from '../clusters/GovCloud/GovCloudPage';
 import Insights from './Insights';
 import NotFoundError from './NotFoundError';
 import TermsGuardedRoute from './TermsGuardedRoute';
@@ -378,6 +379,7 @@ const Router: React.FC<RouterProps> = ({ history, planType, clusterId, externalC
               history={history}
               component={GetStartedWithROSA}
             />
+            <Route path="/create/rosa/govcloud" component={GovCloudPage} />
 
             <TermsGuardedRoute
               path="/create/rosa/wizard"

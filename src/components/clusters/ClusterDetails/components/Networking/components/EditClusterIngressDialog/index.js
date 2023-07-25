@@ -32,7 +32,7 @@ const mapStateToProps = (state) => {
 
   return {
     editClusterRoutersResponse: state.clusterRouters.editRouters,
-    controlPlaneAPIEndpoint: cluster.api.url,
+    controlPlaneAPIEndpoint: cluster.api?.url,
     defaultRouterAddress: clusterRouters.default.address,
     additionalRouterAddress: hasAdditionalRouter
       ? clusterRouters.additional.address
