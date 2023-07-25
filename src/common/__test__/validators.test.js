@@ -709,7 +709,7 @@ test('Field is a valid key value pair', () => {
     'ffffffffffffffffffffffffffffffffkkkkddddddddddddddddddddffffffffffffffffffffffffffffffffffffffffkkkkddddddddddddddddddddffffffffffffffffffffffffffffffffffffffffkkkkddddddddddddddddddddffffffffffffffffffffffffffffffffffffffffkkkkddddddddddddddddddddffffffffffffffffffffffffffffffffffffffffkkkkddddddddddddddddddddffffffffffffffffffffffffffffffffffffffffkkkkddddddddddddddddddddffffffffffffffffffffffffffffffffffffffffkkkkddddddddddddddddddddffffffffffffffffffffffffffffffffffffffffkkkkddddddddddddddddddddffffffffffffffffffffffffffffffffffffffffkkkkddddddddddddddddddddffffffffffffffffffffffffffffffffffffffffkkkkddddddddddddddddddddffffffffffffffffffffffffffffffffffffffffkkkkddddddddddddddddddddffffffffffffffffffffffffffffffffffffffffkkkkddddddddddddddddddddffffffff/a=val';
   const longValStr = 'key=ffffffffffffffffffffffffffffffffkkkkddddddddddddddddddddffffffff';
   const prefixError =
-    'Key prefix must be a DNS subdomain: a series of DNS labels separated by dots (.)';
+    'Key prefix must be a DNS subdomain: a series of DNS labels separated by dots (.), and must end with a "/"';
 
   expect(checkLabels(undefined)).toBeUndefined();
   expect(checkLabels('')).toBeUndefined();
@@ -736,11 +736,15 @@ test('Field is a valid key value pair', () => {
   expect(checkLabels('foo=bar_')).toBe(validValueError);
   expect(checkLabels('foo=bar.wat.')).toBe(validValueError);
 
-  expect(checkLabels(longKeyStr)).toBe(maxLenKeyError);
   expect(checkLabels(longKeyPrefixStr)).toBe(maxLenKeyPrefixError);
   expect(checkLabels(longValStr)).toBe(maxLenValueError);
+
   expect(checkLabels('/foo')).toBe(prefixError);
+  expect(checkLabels(`prefixError./not-a-prefix-domain}`)).toBe(prefixError);
+  expect(checkLabels(`prefixError..com/not-a-prefix-domain}`)).toBe(prefixError);
   expect(checkLabels('prefixError/foo')).toBe(prefixError);
+
+  expect(checkLabels(longKeyStr)).toBe(maxLenKeyError);
   expect(checkLabels(`some.prefix/${longKeyStr}`)).toBe(maxLenKeyError);
 });
 
