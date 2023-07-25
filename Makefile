@@ -18,14 +18,6 @@
 .PHONY: setup
 setup: node_modules insights-proxy-check
 
-.PHONY: js-lint
-js-lint: node_modules
-	yarn lint
-
-.PHONY: test
-test: node_modules
-	yarn test
-
 .PHONY: node_modules
 node_modules:
 	yarn install
