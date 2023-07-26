@@ -115,6 +115,7 @@ function AWSAccountSelection({
         // Patternfly's inline filter up/down arrow keys are captured and used for navigating the options
         // unfortunately it also captures left/right which means you can't move the caret around your filter input text
         // this code grabs left/right arrows before they bubble up to the input and PF kills them
+        // fix request: https://github.com/patternfly/patternfly-react/issues/9404
         const input = containerRef.current.getElementsByClassName(
           'pf-c-form-control pf-m-search',
         )[0] as HTMLInputElement;
