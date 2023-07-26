@@ -354,8 +354,13 @@ const parseNodeLabels = (input: string | string[] | undefined) => {
   return parseNodeLabelTags(labels);
 };
 
-const labelAndTaintKeyValidations = (value: string): Validations => {
+const labelAndTaintKeyValidations = (
+  value: string,
+  items: { key?: string; value?: string }[],
+): Validations => {
   const { prefix, name } = parseNodeLabelKey(value);
+  const isEmptyValid = items?.length === 1 && !items[0].key && !items[0].value;
+
   return [
     {
       validated: typeof prefix === 'undefined' || DNS_SUBDOMAIN_REGEXP.test(prefix),
@@ -366,17 +371,21 @@ const labelAndTaintKeyValidations = (value: string): Validations => {
       text: `A valid key prefix must be ${LABEL_KEY_PREFIX_MAX_LENGTH} characters or less`,
     },
     {
-      validated: typeof name !== 'undefined' && LABEL_KEY_NAME_REGEX.test(name),
+      validated: typeof name === 'undefined' || LABEL_KEY_NAME_REGEX.test(name),
       text: "A valid key name must consist of alphanumeric characters, '-', '.' or '_' and must start and end with an alphanumeric character",
     },
     {
-      validated: typeof name !== 'undefined' && name.length <= LABEL_KEY_NAME_MAX_LENGTH,
+      validated: typeof name === 'undefined' || name.length <= LABEL_KEY_NAME_MAX_LENGTH,
       text: `A valid key name must be ${LABEL_KEY_NAME_MAX_LENGTH} characters or less`,
+    },
+    {
+      validated: isEmptyValid || value?.length > 0,
+      text: 'Required',
     },
   ];
 };
 
-const labelValueValidations = (value: string): Validations => [
+const labelAndTaintValueValidations = (value: string): Validations => [
   {
     validated: typeof value === 'undefined' || value.length <= LABEL_VALUE_MAX_LENGTH,
     text: `A valid value must be ${LABEL_VALUE_MAX_LENGTH} characters or less`,
@@ -387,47 +396,24 @@ const labelValueValidations = (value: string): Validations => [
   },
 ];
 
-const taintValueValidations = (value: string): Validations => [
-  {
-    validated: !value || value.length <= LABEL_VALUE_MAX_LENGTH,
-    text: `A valid value must be ${LABEL_VALUE_MAX_LENGTH} characters or less`,
-  },
-  {
-    validated: !value || LABEL_VALUE_REGEX.test(value),
-    text: "A valid value must consist of alphanumeric characters, '-', '.' or '_' and must start and end with an alphanumeric character",
-  },
-];
-
 const taintKeyValidations = (value: string, allValues: { taints?: Taint[] }): Validations => {
-  const formatErrors = labelAndTaintKeyValidations(value);
-  const hasFormatErrors = formatErrors.find((validation) => !validation.validated) !== undefined;
-  if (hasFormatErrors) {
-    return formatErrors;
-  }
-
-  const { taints } = allValues;
-  const isEmptyValid = taints?.length === 1 && !taints[0].key && !taints[0].value;
-  return [
-    {
-      validated: isEmptyValid || value?.length > 0,
-      text: 'Required',
-    },
-  ];
+  const items = allValues?.taints || [];
+  return labelAndTaintKeyValidations(value, items);
 };
 
-const checkLabelKey = createPessimisticValidator(labelAndTaintKeyValidations);
-const checkLabelValue = createPessimisticValidator(labelValueValidations);
+const nodeLabelKeyValidations = (
+  value: string,
+  allValues: { node_labels?: Taint[] },
+): Validations => {
+  const items = allValues?.node_labels || [];
+  return labelAndTaintKeyValidations(value, items);
+};
+
+const checkLabelKey = createPessimisticValidator(nodeLabelKeyValidations);
+const checkLabelValue = createPessimisticValidator(labelAndTaintValueValidations);
 
 const checkTaintKey = createPessimisticValidator(taintKeyValidations);
-const checkTaintValue = createPessimisticValidator(taintValueValidations);
-
-const validateNoEmptyTaints = (
-  value: string,
-  allValues: { taints: { key: string; value: string }[] },
-): string | undefined => {
-  const hasIncomplete = allValues.taints?.find((item) => !item.key);
-  return hasIncomplete ? 'Empty taints' : undefined;
-};
+const checkTaintValue = createPessimisticValidator(labelAndTaintValueValidations);
 
 const checkLabels = (input: string | string[]) =>
   parseNodeLabels(input)
@@ -1527,7 +1513,6 @@ export {
   checkLabelValue,
   checkTaintKey,
   checkTaintValue,
-  validateNoEmptyTaints,
 };
 
 export default validators;

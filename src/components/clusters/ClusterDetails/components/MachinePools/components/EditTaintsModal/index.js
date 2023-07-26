@@ -18,15 +18,23 @@ const reduxFormEditTaints = reduxForm(reduxFormConfig)(EditTaintsModal);
 
 const valueSelector = formValueSelector('editTaints');
 
-const mapStateToProps = (state) => ({
-  machinePoolsList: state.machinePools.getMachinePools,
-  selectedMachinePoolId: valueSelector(state, 'machinePoolId') || state.modal.data.machinePool?.id,
-  editTaintsResponse: state.machinePools.scaleMachinePoolResponse,
-  initialValues: {
-    taints: state.modal.data.machinePool?.taints || [{ effect: 'NoSchedule' }],
-    machinePoolId: state.modal.data.machinePool?.id,
-  },
-});
+// Only empty string is accepted on the API as an empty value. The API then returns it as `null`
+const adaptApiTaints = (taints) =>
+  taints.map((taint) => (taint.value === null ? { ...taint, value: '' } : taint));
+
+const mapStateToProps = (state) => {
+  const taints = state.modal.data.machinePool?.taints;
+  return {
+    machinePoolsList: state.machinePools.getMachinePools,
+    selectedMachinePoolId:
+      valueSelector(state, 'machinePoolId') || state.modal.data.machinePool?.id,
+    editTaintsResponse: state.machinePools.scaleMachinePoolResponse,
+    initialValues: {
+      taints: taints ? adaptApiTaints(taints) : [{ effect: 'NoSchedule' }],
+      machinePoolId: state.modal.data.machinePool?.id,
+    },
+  };
+};
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
   closeModal: () => dispatch(closeModal()),
@@ -38,8 +46,7 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
       editTaints(
         ownProps.clusterId,
         formData.machinePoolId,
-        // Only empty string is accepted on the API as an empty value. The API then returns it as `null`
-        { taints: formData.taints.map((taint) => (taint.value ? taint : { ...taint, value: '' })) },
+        { taints: adaptApiTaints(formData.taints) },
         ownProps.isHypershiftCluster,
       ),
     );
