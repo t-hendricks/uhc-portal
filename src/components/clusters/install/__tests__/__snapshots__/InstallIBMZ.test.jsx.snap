@@ -2,7 +2,7 @@
 
 exports[`InstallIBMZ renders correctly 1`] = `
 <AppPage
-  title="Install OpenShift 4 | Red Hat OpenShift Cluster Manager | IBM zSystems (s390x)"
+  title="Install OpenShift 4 | Red Hat OpenShift Cluster Manager | IBM Z (s390x)"
 >
   <InstructionsChooserPageTitle
     breadcrumbs={
@@ -17,13 +17,13 @@ exports[`InstallIBMZ renders correctly 1`] = `
               "path": "/create",
             },
             Object {
-              "label": "IBM zSystems (s390x)",
+              "label": "IBM Z (s390x)",
             },
           ]
         }
       />
     }
-    cloudName="IBM zSystems (s390x)"
+    cloudName="IBM Z (s390x)"
   />
   <PageSection>
     <InstructionsChooser

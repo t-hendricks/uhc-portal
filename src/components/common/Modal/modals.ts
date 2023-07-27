@@ -20,5 +20,6 @@ const modals = {
   EDIT_TAINTS: 'edit-taints',
   EDIT_LABELS: 'edit-labels',
   OCM_ROLES: 'ocm-roles',
+  UPDATE_MACHINE_POOL_VERSION: 'update-machine-pool-version',
 };
 export default modals;

@@ -9,6 +9,7 @@ const actionResolver = (
   onClickEditLabels,
   isHypershift,
   machinePoolsCount,
+  onClickUpdate,
 ) => {
   // hide actions kebab for expandable rows
   if (!rowData.machinePool) {
@@ -47,11 +48,18 @@ const actionResolver = (
     className: 'hand-pointer',
   };
 
+  const updateAction = {
+    title: 'Update version',
+    onClick: onClickUpdate,
+    className: 'hand-pointer',
+  };
+
   return [
     scaleAction,
     ...(rowData.machinePool?.id !== 'Default' || isHypershift
       ? [editLabelsAction, editTaintsAction, deleteAction]
       : []),
+    ...(onClickUpdate !== undefined ? [updateAction] : []),
   ];
 };
 

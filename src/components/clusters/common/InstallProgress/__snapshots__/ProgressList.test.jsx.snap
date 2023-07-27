@@ -52,7 +52,7 @@ exports[`<ProgressList /> should render for ROSA manual mode 1`] = `
               "base_domain": "wiex.s1.devshift.org",
             },
             "etcd_encryption": false,
-            "expiration_timestamp": "2021-01-12T03:17:14.999204Z",
+            "expiration_timestamp": "",
             "external_configuration": Object {
               "href": "/api/clusters_mgmt/v1/clusters/1i4counta3holamvo1g5tp6n8p3a03bq/external_configuration",
               "kind": "ExternalConfiguration",
