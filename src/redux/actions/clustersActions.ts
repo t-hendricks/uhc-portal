@@ -436,6 +436,8 @@ const fetchSingleClusterAndPermissions = async (
   let canEdit = false;
   let canEditOCMRoles = false;
   let canViewOCMRoles = false;
+  let canEditMachinePool = false;
+  let canCreateMachinePool = false;
 
   const subscription = await accountsService.getSubscription(subscriptionID);
   subscription.data = normalizeSubscription(subscription.data);
@@ -468,6 +470,24 @@ const fetchSingleClusterAndPermissions = async (
       })
       .then((response) => {
         canViewOCMRoles = response.data.allowed;
+      });
+    await authorizationsService
+      .selfAccessReview({
+        action: SelfAccessReview.action.UPDATE,
+        resource_type: SelfAccessReview.resource_type.MACHINE_POOL,
+        subscription_id: subscriptionID,
+      })
+      .then((response) => {
+        canEditMachinePool = response.data.allowed;
+      });
+    await authorizationsService
+      .selfAccessReview({
+        action: SelfAccessReview.action.CREATE,
+        resource_type: SelfAccessReview.resource_type.MACHINE_POOL,
+        subscription_id: subscriptionID,
+      })
+      .then((response) => {
+        canCreateMachinePool = response.data.allowed;
       });
   }
 
@@ -510,6 +530,8 @@ const fetchSingleClusterAndPermissions = async (
     cluster.data.canEdit = canEdit;
     cluster.data.canEditOCMRoles = canEditOCMRoles;
     cluster.data.canViewOCMRoles = canViewOCMRoles;
+    cluster.data.canEditMachinePool = canEditMachinePool;
+    cluster.data.canCreateMachinePool = canCreateMachinePool;
     cluster.data.canDelete = !!canDeleteAccessReviewResponse?.data?.allowed;
 
     return cluster;
