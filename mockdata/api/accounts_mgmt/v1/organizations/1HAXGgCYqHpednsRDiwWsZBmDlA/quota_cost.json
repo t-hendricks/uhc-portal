@@ -3848,24 +3848,78 @@
       ]
     },
     {
-      "kind": "QuotaCost",
-      "href": "/api/accounts_mgmt/v1/organizations/1MK6ieFXd0eu1hERdENAPvpbi7x/quota_cost",
-      "organization_id": "1MK6ieFXd0eu1hERdENAPvpbi7x",
-      "quota_id": "cluster|byoc|moa",
-      "allowed": 0,
-      "consumed": 0,
+      "allowed": 2020,
+      "cloud_accounts": [
+        {
+          "cloud_account_id": "000000000006",
+          "cloud_provider_id": "aws",
+          "contracts": [
+            {
+              "dimensions": [
+                {
+                  "name": "four_vcpu_hour",
+                  "value": "1"
+                },
+                {
+                  "name": "premium_support",
+                  "value": "1"
+                }
+              ],
+              "end_date": "2024-06-12T11:17:23.443Z",
+              "start_date": "2023-06-12T11:18:09.08633Z"
+            }
+          ]
+        }
+      ],
+      "consumed": 1,
+      "href":"/api/accounts_mgmt/v1/organizations/1HAXGgCYqHpednsRDiwWsZBmDlA/quota_cost",
+      "kind":"QuotaCost",
+      "organization_id":"1HAXGgCYqHpednsRDiwWsZBmDlA",
+      "quota_id":"cluster|byoc|moa|marketplace",
       "related_resources": [
         {
-          "cloud_provider": "aws",
-          "resource_name": "any",
-          "resource_type": "cluster",
-          "byoc": "byoc",
-          "availability_zone_type": "any",
-          "product": "MOA",
-          "billing_model": "standard",
-          "cost": 0
+          "availability_zone_type":"any",
+          "billing_model":"marketplace",
+          "byoc":"byoc",
+          "cloud_provider":"aws",
+          "cost":1,
+          "product":"MOA",
+          "resource_name":"any",
+          "resource_type":"cluster"
         }
-      ]
+      ],
+      "version":"23990920-f7a5-4451-ad55-5eabbdb23254"
+    },
+    {
+      "allowed":0,
+      "consumed":0,
+      "href":"/api/accounts_mgmt/v1/organizations/1HAXGgCYqHpednsRDiwWsZBmDlA/quota_cost",
+      "kind":"QuotaCost",
+      "organization_id":"1HAXGgCYqHpednsRDiwWsZBmDlA",
+      "quota_id":"cluster|byoc|moa|standard",
+      "related_resources": [
+        {
+          "availability_zone_type":"any",
+          "billing_model":"standard",
+          "byoc":"byoc",
+          "cloud_provider":"aws",
+          "cost":0,
+          "product":"MOA",
+          "resource_name":"any",
+          "resource_type":"cluster"
+        },
+        {
+          "availability_zone_type":"any",
+          "billing_model":"standard",
+          "byoc":"byoc",
+          "cloud_provider":"aws",
+          "cost":0,
+          "product":"MOA",
+          "resource_name":"any",
+          "resource_type":"cluster"
+        }
+      ],
+      "version":"23990920-f7a5-4451-ad55-5eabbdb23254"
     },
     {
       "kind": "QuotaCost",
@@ -6984,12 +7038,4586 @@
       ]
     },
     {
+      "allowed": 204000,
+      "cloud_accounts": [
+        {
+          "cloud_account_id": "000000000006",
+          "cloud_provider_id": "aws",
+          "contracts": [
+            {
+              "dimensions": [
+                {
+                  "name": "four_vcpu_hour",
+                  "value": "1"
+                },
+                {
+                  "name": "premium_support",
+                  "value": "1"
+                }
+              ],
+              "end_date": "2024-06-12T11:17:23.443Z",
+              "start_date": "2023-06-12T11:18:09.08633Z"
+            }
+          ]
+        }
+      ],
+      "consumed": 20,
+      "href": "/api/accounts_mgmt/v1/organizations/1wuVGGV6SCmD8ya6yRGEJzvmVuC/quota_cost",
+      "kind": "QuotaCost",
+      "organization_id": "1wuVGGV6SCmD8ya6yRGEJzvmVuC",
+      "quota_id": "compute.node|cpu|byoc|moa|marketplace",
+      "related_resources": [
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 8,
+          "product": "MOA",
+          "resource_name": "burst-8-t3",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 4,
+          "product": "MOA",
+          "resource_name": "burst-4-t3",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 8,
+          "product": "MOA",
+          "resource_name": "burst-8-t3a",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 4,
+          "product": "MOA",
+          "resource_name": "burst-4-t3a",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 48,
+          "product": "MOA",
+          "resource_name": "highcpu-48",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 48,
+          "product": "MOA",
+          "resource_name": "cpu.xxlarge",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 72,
+          "product": "MOA",
+          "resource_name": "highcpu-72",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 72,
+          "product": "MOA",
+          "resource_name": "cpu.xxxlarge",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 96,
+          "product": "MOA",
+          "resource_name": "highcpu-96",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 96,
+          "product": "MOA",
+          "resource_name": "cpu.xxxxlarge",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 8,
+          "product": "MOA",
+          "resource_name": "highcpu-8",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 8,
+          "product": "MOA",
+          "resource_name": "cpu.medium",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 16,
+          "product": "MOA",
+          "resource_name": "highcpu-16",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 16,
+          "product": "MOA",
+          "resource_name": "cpu.large",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 36,
+          "product": "MOA",
+          "resource_name": "highcpu-36",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 36,
+          "product": "MOA",
+          "resource_name": "cpu.xlarge",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 4,
+          "product": "MOA",
+          "resource_name": "highcpu-4",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 48,
+          "product": "MOA",
+          "resource_name": "highcpu-48-5a",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 64,
+          "product": "MOA",
+          "resource_name": "highcpu-64-5a",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 96,
+          "product": "MOA",
+          "resource_name": "highcpu-96-5a",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 8,
+          "product": "MOA",
+          "resource_name": "highcpu-8-5a",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 16,
+          "product": "MOA",
+          "resource_name": "highcpu-16-5a",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 32,
+          "product": "MOA",
+          "resource_name": "highcpu-32-5a",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 4,
+          "product": "MOA",
+          "resource_name": "highcpu-4-5a",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 48,
+          "product": "MOA",
+          "resource_name": "highcpu-48-5d",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 72,
+          "product": "MOA",
+          "resource_name": "highcpu-72-5d",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 96,
+          "product": "MOA",
+          "resource_name": "highcpu-96-5d",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 8,
+          "product": "MOA",
+          "resource_name": "highcpu-8-5d",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 16,
+          "product": "MOA",
+          "resource_name": "highcpu-16-5d",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 36,
+          "product": "MOA",
+          "resource_name": "highcpu-36-5d",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 4,
+          "product": "MOA",
+          "resource_name": "highcpu-4-5d",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 48,
+          "product": "MOA",
+          "resource_name": "highcpu-48-6i",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 64,
+          "product": "MOA",
+          "resource_name": "highcpu-64",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 96,
+          "product": "MOA",
+          "resource_name": "highcpu-96-6i",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 8,
+          "product": "MOA",
+          "resource_name": "highcpu-8-6i",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 128,
+          "product": "MOA",
+          "resource_name": "highcpu-128",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 16,
+          "product": "MOA",
+          "resource_name": "highcpu-16-6i",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 32,
+          "product": "MOA",
+          "resource_name": "highcpu-32",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 4,
+          "product": "MOA",
+          "resource_name": "highcpu-4-6i",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 48,
+          "product": "MOA",
+          "resource_name": "standard-48",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 48,
+          "product": "MOA",
+          "resource_name": "gp.xxlarge",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 64,
+          "product": "MOA",
+          "resource_name": "standard-64",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 64,
+          "product": "MOA",
+          "resource_name": "gp.xxxlarge",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 96,
+          "product": "MOA",
+          "resource_name": "standard-96",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 96,
+          "product": "MOA",
+          "resource_name": "gp.xxxxlarge",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 8,
+          "product": "MOA",
+          "resource_name": "standard-8",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 8,
+          "product": "MOA",
+          "resource_name": "gp.medium",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 16,
+          "product": "MOA",
+          "resource_name": "standard-16",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 16,
+          "product": "MOA",
+          "resource_name": "gp.large",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 32,
+          "product": "MOA",
+          "resource_name": "standard-32",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 32,
+          "product": "MOA",
+          "resource_name": "gp.xlarge",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 4,
+          "product": "MOA",
+          "resource_name": "standard-4",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 4,
+          "product": "MOA",
+          "resource_name": "gp.small",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 48,
+          "product": "MOA",
+          "resource_name": "standard-48-5a",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 64,
+          "product": "MOA",
+          "resource_name": "standard-64-5a",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 96,
+          "product": "MOA",
+          "resource_name": "standard-96-5a",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 8,
+          "product": "MOA",
+          "resource_name": "standard-8-5a",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 16,
+          "product": "MOA",
+          "resource_name": "standard-16-5a",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 32,
+          "product": "MOA",
+          "resource_name": "standard-32-5a",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 4,
+          "product": "MOA",
+          "resource_name": "standard-4-5a",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 48,
+          "product": "MOA",
+          "resource_name": "standard-48-6a",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 64,
+          "product": "MOA",
+          "resource_name": "standard-64-6a",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 96,
+          "product": "MOA",
+          "resource_name": "standard-96-6a",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 8,
+          "product": "MOA",
+          "resource_name": "standard-8-6a",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 128,
+          "product": "MOA",
+          "resource_name": "standard-128-6a",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 192,
+          "product": "MOA",
+          "resource_name": "standard-192",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 16,
+          "product": "MOA",
+          "resource_name": "standard-16-6a",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 32,
+          "product": "MOA",
+          "resource_name": "standard-32-6a",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 4,
+          "product": "MOA",
+          "resource_name": "standard-4-6a",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 48,
+          "product": "MOA",
+          "resource_name": "standard-48-6i",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 64,
+          "product": "MOA",
+          "resource_name": "standard-64-6i",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 96,
+          "product": "MOA",
+          "resource_name": "standard-96-6i",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 8,
+          "product": "MOA",
+          "resource_name": "standard-8-6i",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 128,
+          "product": "MOA",
+          "resource_name": "standard-128-6i",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 16,
+          "product": "MOA",
+          "resource_name": "standard-16-6i",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 32,
+          "product": "MOA",
+          "resource_name": "standard-32-6i",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 4,
+          "product": "MOA",
+          "resource_name": "standard-4-6i",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 64,
+          "product": "MOA",
+          "resource_name": "highmem-64-r4",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 8,
+          "product": "MOA",
+          "resource_name": "highmem-8-r4",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 16,
+          "product": "MOA",
+          "resource_name": "highmem-16-r4",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 32,
+          "product": "MOA",
+          "resource_name": "highmem-32-r4",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 4,
+          "product": "MOA",
+          "resource_name": "highmem-4-r4",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 48,
+          "product": "MOA",
+          "resource_name": "highmem-48",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 48,
+          "product": "MOA",
+          "resource_name": "mem.xxlarge",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 64,
+          "product": "MOA",
+          "resource_name": "highmem-64",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 64,
+          "product": "MOA",
+          "resource_name": "mem.xxxlarge",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 96,
+          "product": "MOA",
+          "resource_name": "highmem-96",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 96,
+          "product": "MOA",
+          "resource_name": "mem.xxxxlarge",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 8,
+          "product": "MOA",
+          "resource_name": "highmem-8",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 8,
+          "product": "MOA",
+          "resource_name": "mem.medium",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 16,
+          "product": "MOA",
+          "resource_name": "highmem-16",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 16,
+          "product": "MOA",
+          "resource_name": "mem.large",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 32,
+          "product": "MOA",
+          "resource_name": "highmem-32",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 32,
+          "product": "MOA",
+          "resource_name": "mem.xlarge",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 4,
+          "product": "MOA",
+          "resource_name": "highmem-4",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 4,
+          "product": "MOA",
+          "resource_name": "mem.small",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 48,
+          "product": "MOA",
+          "resource_name": "highmem-48-5a",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 64,
+          "product": "MOA",
+          "resource_name": "highmem-64-5a",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 96,
+          "product": "MOA",
+          "resource_name": "highmem-96-5a",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 8,
+          "product": "MOA",
+          "resource_name": "highmem-8-5a",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 16,
+          "product": "MOA",
+          "resource_name": "highmem-16-5a",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 32,
+          "product": "MOA",
+          "resource_name": "highmem-32-5a",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 4,
+          "product": "MOA",
+          "resource_name": "highmem-4-5a",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 48,
+          "product": "MOA",
+          "resource_name": "highmem-48-5ad",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 64,
+          "product": "MOA",
+          "resource_name": "highmem-64-5ad",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 96,
+          "product": "MOA",
+          "resource_name": "highmem-96-5ad",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 8,
+          "product": "MOA",
+          "resource_name": "highmem-8-5ad",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 16,
+          "product": "MOA",
+          "resource_name": "highmem-16-5ad",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 32,
+          "product": "MOA",
+          "resource_name": "highmem-32-5ad",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 4,
+          "product": "MOA",
+          "resource_name": "highmem-4-5ad",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 48,
+          "product": "MOA",
+          "resource_name": "highmem-48-5d",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 64,
+          "product": "MOA",
+          "resource_name": "highmem-64-5d",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 96,
+          "product": "MOA",
+          "resource_name": "highmem-96-5d",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 8,
+          "product": "MOA",
+          "resource_name": "highmem-8-5d",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 16,
+          "product": "MOA",
+          "resource_name": "highmem-16-5d",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 32,
+          "product": "MOA",
+          "resource_name": "highmem-32-5d",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 4,
+          "product": "MOA",
+          "resource_name": "highmem-4-5d",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 48,
+          "product": "MOA",
+          "resource_name": "highmem-48-5dn",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 64,
+          "product": "MOA",
+          "resource_name": "highmem-64-5dn",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 96,
+          "product": "MOA",
+          "resource_name": "highmem-96-5dn",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 8,
+          "product": "MOA",
+          "resource_name": "highmem-8-5dn",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 16,
+          "product": "MOA",
+          "resource_name": "highmem-16-5dn",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 32,
+          "product": "MOA",
+          "resource_name": "highmem-32-5dn",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 4,
+          "product": "MOA",
+          "resource_name": "highmem-4-5dn",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 48,
+          "product": "MOA",
+          "resource_name": "highmem-48-5n",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 64,
+          "product": "MOA",
+          "resource_name": "highmem-64-5n",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 96,
+          "product": "MOA",
+          "resource_name": "highmem-96-5n",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 8,
+          "product": "MOA",
+          "resource_name": "highmem-8-5n",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 16,
+          "product": "MOA",
+          "resource_name": "highmem-16-5n",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 32,
+          "product": "MOA",
+          "resource_name": "highmem-32-5n",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 4,
+          "product": "MOA",
+          "resource_name": "highmem-4-5n",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 48,
+          "product": "MOA",
+          "resource_name": "highmem-48-6i",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 64,
+          "product": "MOA",
+          "resource_name": "highmem-64-6i",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 96,
+          "product": "MOA",
+          "resource_name": "highmem-96-6i",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 8,
+          "product": "MOA",
+          "resource_name": "highmem-8-6i",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 128,
+          "product": "MOA",
+          "resource_name": "highmem-128",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 16,
+          "product": "MOA",
+          "resource_name": "highmem-16-6i",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 32,
+          "product": "MOA",
+          "resource_name": "highmem-32-6i",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 4,
+          "product": "MOA",
+          "resource_name": "highmem-4-6i",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 48,
+          "product": "MOA",
+          "resource_name": "highmem-48-1d",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 8,
+          "product": "MOA",
+          "resource_name": "highmem-8-1d",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 12,
+          "product": "MOA",
+          "resource_name": "highmem-12",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 24,
+          "product": "MOA",
+          "resource_name": "highmem-24",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 4,
+          "product": "MOA",
+          "resource_name": "highmem-4-1d",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 72,
+          "product": "MOA",
+          "resource_name": "highnet-72-c5n",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 8,
+          "product": "MOA",
+          "resource_name": "highnet-8-c5n",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 16,
+          "product": "MOA",
+          "resource_name": "highnet-16-c5n",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 36,
+          "product": "MOA",
+          "resource_name": "highnet-36-c5n",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 4,
+          "product": "MOA",
+          "resource_name": "highnet-4-c5n",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 48,
+          "product": "MOA",
+          "resource_name": "highstorage-48-5ad",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 64,
+          "product": "MOA",
+          "resource_name": "highstorage-64-5ad",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 96,
+          "product": "MOA",
+          "resource_name": "highstorage-96",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 8,
+          "product": "MOA",
+          "resource_name": "highstorage-8-5ad",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 16,
+          "product": "MOA",
+          "resource_name": "highstorage-16-5ad",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 32,
+          "product": "MOA",
+          "resource_name": "highstorage-32-5ad",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 4,
+          "product": "MOA",
+          "resource_name": "highstorage-4-5ad",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 64,
+          "product": "MOA",
+          "resource_name": "highstorage-64",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 8,
+          "product": "MOA",
+          "resource_name": "highstorage-8",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 16,
+          "product": "MOA",
+          "resource_name": "highstorage-16",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 32,
+          "product": "MOA",
+          "resource_name": "highstorage-32",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 4,
+          "product": "MOA",
+          "resource_name": "highstorage-4",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 48,
+          "product": "MOA",
+          "resource_name": "highstorage-48",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 96,
+          "product": "MOA",
+          "resource_name": "highstorage-96-3en",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 8,
+          "product": "MOA",
+          "resource_name": "highstorage-8-3en",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 12,
+          "product": "MOA",
+          "resource_name": "highstorage-12",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 24,
+          "product": "MOA",
+          "resource_name": "highstorage-24",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 4,
+          "product": "MOA",
+          "resource_name": "highstorage-4-3en",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 64,
+          "product": "MOA",
+          "resource_name": "highmem-x116",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 128,
+          "product": "MOA",
+          "resource_name": "highmem-x132",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 64,
+          "product": "MOA",
+          "resource_name": "highmem-x1e16x",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 8,
+          "product": "MOA",
+          "resource_name": "highmem-x1e2x",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 128,
+          "product": "MOA",
+          "resource_name": "highmem-x1e32x",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 16,
+          "product": "MOA",
+          "resource_name": "highmem-x1e4x",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 32,
+          "product": "MOA",
+          "resource_name": "highmem-x1e8x",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 4,
+          "product": "MOA",
+          "resource_name": "highmem-x1ex",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 64,
+          "product": "MOA",
+          "resource_name": "highmem-x2idn16",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 96,
+          "product": "MOA",
+          "resource_name": "highmem-x2idn24",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 128,
+          "product": "MOA",
+          "resource_name": "highmem-x2idn32",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 64,
+          "product": "MOA",
+          "resource_name": "highmem-x2iedn16x",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 96,
+          "product": "MOA",
+          "resource_name": "highmem-x2iedn24x",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 8,
+          "product": "MOA",
+          "resource_name": "highmem-x2iedn2x",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 128,
+          "product": "MOA",
+          "resource_name": "highmem-x2iedn32x",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 16,
+          "product": "MOA",
+          "resource_name": "highmem-x2iedn4x",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 32,
+          "product": "MOA",
+          "resource_name": "highmem-x2iedn8x",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 4,
+          "product": "MOA",
+          "resource_name": "highmem-x2iednx",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 48,
+          "product": "MOA",
+          "resource_name": "highmem-x2iezn12x",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 8,
+          "product": "MOA",
+          "resource_name": "highmem-x2iezn2x",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 16,
+          "product": "MOA",
+          "resource_name": "highmem-x2iezn4x",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 24,
+          "product": "MOA",
+          "resource_name": "highmem-x2iezn6x",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 32,
+          "product": "MOA",
+          "resource_name": "highmem-x2iezn8x",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 128,
+          "product": "MOA",
+          "resource_name": "highcpu-128-m",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 96,
+          "product": "MOA",
+          "resource_name": "highcpu-96-5dm",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 96,
+          "product": "MOA",
+          "resource_name": "highcpu-96-m",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 72,
+          "product": "MOA",
+          "resource_name": "highnet-72-c5nm",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 48,
+          "product": "MOA",
+          "resource_name": "highcpu-48-5znm",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 96,
+          "product": "MOA",
+          "resource_name": "highnet-96-5dnm",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 96,
+          "product": "MOA",
+          "resource_name": "highnet-96-5nm",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 96,
+          "product": "MOA",
+          "resource_name": "highstorage-96-5dm",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 128,
+          "product": "MOA",
+          "resource_name": "standard-128-6im",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 96,
+          "product": "MOA",
+          "resource_name": "standard-96-m",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 128,
+          "product": "MOA",
+          "resource_name": "highmem-128-m",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 48,
+          "product": "MOA",
+          "resource_name": "highmem-48-1dm",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 96,
+          "product": "MOA",
+          "resource_name": "highmem-96-5dm",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 96,
+          "product": "MOA",
+          "resource_name": "highmem-96-5dnm",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 96,
+          "product": "MOA",
+          "resource_name": "highmem-96-5nm",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 96,
+          "product": "MOA",
+          "resource_name": "highmem-96-m",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 48,
+          "product": "MOA",
+          "resource_name": "highmem-x2iezn12xm",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 72,
+          "product": "MOA",
+          "resource_name": "highstorage-72-m",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 96,
+          "product": "MOA",
+          "resource_name": "highstorage-96-enm",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 192,
+          "product": "MOA",
+          "resource_name": "highcpu-192-am",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 192,
+          "product": "MOA",
+          "resource_name": "standard-192-am",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 96,
+          "product": "MOA",
+          "resource_name": "highperf-48xa",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 4,
+          "product": "MOA",
+          "resource_name": "highcpu-4-6a",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 8,
+          "product": "MOA",
+          "resource_name": "highcpu-8-6a",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 16,
+          "product": "MOA",
+          "resource_name": "highcpu-16-6a",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 32,
+          "product": "MOA",
+          "resource_name": "highcpu-32-6a",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 48,
+          "product": "MOA",
+          "resource_name": "highcpu-48-6a",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 64,
+          "product": "MOA",
+          "resource_name": "highcpu-64-6a",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 96,
+          "product": "MOA",
+          "resource_name": "highcpu-96-6a",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 128,
+          "product": "MOA",
+          "resource_name": "highcpu-128-6a",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 192,
+          "product": "MOA",
+          "resource_name": "highcpu-192-6a",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 4,
+          "product": "MOA",
+          "resource_name": "highstorage-4-m5ad",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 8,
+          "product": "MOA",
+          "resource_name": "highstorage-8-m5ad",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 16,
+          "product": "MOA",
+          "resource_name": "highstorage-16-m5ad",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 32,
+          "product": "MOA",
+          "resource_name": "highstorage-32-m5ad",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 48,
+          "product": "MOA",
+          "resource_name": "highstorage-48-m5ad",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 64,
+          "product": "MOA",
+          "resource_name": "highstorage-64-m5ad",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 96,
+          "product": "MOA",
+          "resource_name": "highstorage-96-m5ad",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 48,
+          "product": "MOA",
+          "resource_name": "highcpu-48-5zn",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 8,
+          "product": "MOA",
+          "resource_name": "highcpu-8-5zn",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 16,
+          "product": "MOA",
+          "resource_name": "highcpu-12-5zn",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 32,
+          "product": "MOA",
+          "resource_name": "highcpu-24-5zn",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 4,
+          "product": "MOA",
+          "resource_name": "highcpu-4-5zn",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 48,
+          "product": "MOA",
+          "resource_name": "highnet-48-5dn",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 64,
+          "product": "MOA",
+          "resource_name": "highnet-64-5dn",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 96,
+          "product": "MOA",
+          "resource_name": "highnet-96-5dn",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 8,
+          "product": "MOA",
+          "resource_name": "highnet-8-5dn",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 16,
+          "product": "MOA",
+          "resource_name": "highnet-16-5dn",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 32,
+          "product": "MOA",
+          "resource_name": "highnet-32-5dn",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 4,
+          "product": "MOA",
+          "resource_name": "highnet-4-5dn",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 48,
+          "product": "MOA",
+          "resource_name": "highnet-48-5n",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 64,
+          "product": "MOA",
+          "resource_name": "highnet-64-5n",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 96,
+          "product": "MOA",
+          "resource_name": "highnet-96-5n",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 8,
+          "product": "MOA",
+          "resource_name": "highnet-8-5n",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 16,
+          "product": "MOA",
+          "resource_name": "highnet-16-5n",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 32,
+          "product": "MOA",
+          "resource_name": "highnet-32-5n",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 4,
+          "product": "MOA",
+          "resource_name": "highnet-4-5n",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 48,
+          "product": "MOA",
+          "resource_name": "highstorage-48-5d",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 64,
+          "product": "MOA",
+          "resource_name": "highstorage-64-5d",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 96,
+          "product": "MOA",
+          "resource_name": "highstorage-96-5d",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 8,
+          "product": "MOA",
+          "resource_name": "highstorage-8-5d",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 16,
+          "product": "MOA",
+          "resource_name": "highstorage-16-5d",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 32,
+          "product": "MOA",
+          "resource_name": "highstorage-32-5d",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 4,
+          "product": "MOA",
+          "resource_name": "highstorage-4-5d",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 4,
+          "product": "MOA",
+          "resource_name": "highmem-4-6id",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 8,
+          "product": "MOA",
+          "resource_name": "highmem-8-6id",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 16,
+          "product": "MOA",
+          "resource_name": "highmem-16-6id",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 32,
+          "product": "MOA",
+          "resource_name": "highmem-32-6id",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 48,
+          "product": "MOA",
+          "resource_name": "highmem-48-6id",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 64,
+          "product": "MOA",
+          "resource_name": "highmem-64-6id",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 96,
+          "product": "MOA",
+          "resource_name": "highmem-96-6id",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 128,
+          "product": "MOA",
+          "resource_name": "highmem-128d",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 128,
+          "product": "MOA",
+          "resource_name": "highmem-128-md",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 4,
+          "product": "MOA",
+          "resource_name": "highcpu-4-6id",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 8,
+          "product": "MOA",
+          "resource_name": "highcpu-8-6id",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 16,
+          "product": "MOA",
+          "resource_name": "highcpu-16-6id",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 32,
+          "product": "MOA",
+          "resource_name": "highcpu-32d",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 48,
+          "product": "MOA",
+          "resource_name": "highcpu-48-6id",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 64,
+          "product": "MOA",
+          "resource_name": "highcpu-64d",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 96,
+          "product": "MOA",
+          "resource_name": "highcpu-96-6id",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 128,
+          "product": "MOA",
+          "resource_name": "highcpu-128d",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 128,
+          "product": "MOA",
+          "resource_name": "highcpu-128-md",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 4,
+          "product": "MOA",
+          "resource_name": "standard-4-6id",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 8,
+          "product": "MOA",
+          "resource_name": "standard-8-6id",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 16,
+          "product": "MOA",
+          "resource_name": "standard-16-6id",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 32,
+          "product": "MOA",
+          "resource_name": "standard-32-6id",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 48,
+          "product": "MOA",
+          "resource_name": "standard-48-6id",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 64,
+          "product": "MOA",
+          "resource_name": "standard-64-6id",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 96,
+          "product": "MOA",
+          "resource_name": "standard-96-6id",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 128,
+          "product": "MOA",
+          "resource_name": "standard-128-6id",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 128,
+          "product": "MOA",
+          "resource_name": "standard-128-6imd",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 224,
+          "product": "MOA",
+          "resource_name": "highmem-u3tb1-56x",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 224,
+          "product": "MOA",
+          "resource_name": "highmem-u6tb1-56x",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 448,
+          "product": "MOA",
+          "resource_name": "highmem-u6tb1-112x",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 448,
+          "product": "MOA",
+          "resource_name": "highmem-u6tb1-metal",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 448,
+          "product": "MOA",
+          "resource_name": "highmem-u9tb1-112x",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 448,
+          "product": "MOA",
+          "resource_name": "highmem-u9tb1-metal",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 448,
+          "product": "MOA",
+          "resource_name": "highmem-u12tb1-112x",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 448,
+          "product": "MOA",
+          "resource_name": "highmem-u12tb1-metal",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 448,
+          "product": "MOA",
+          "resource_name": "highmem-u18tb1-metal",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 448,
+          "product": "MOA",
+          "resource_name": "highmem-u24tb1-metal",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 128,
+          "product": "MOA",
+          "resource_name": "highmem-x2idn-metal",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 128,
+          "product": "MOA",
+          "resource_name": "highmem-x2iedn-metal",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 4,
+          "product": "MOA",
+          "resource_name": "highmem-4-6a",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 8,
+          "product": "MOA",
+          "resource_name": "highmem-8-6a",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 16,
+          "product": "MOA",
+          "resource_name": "highmem-16-6a",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 32,
+          "product": "MOA",
+          "resource_name": "highmem-32-6a",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 48,
+          "product": "MOA",
+          "resource_name": "highmem-48-6a",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 64,
+          "product": "MOA",
+          "resource_name": "highmem-64-6a",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 96,
+          "product": "MOA",
+          "resource_name": "highmem-96-6a",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 128,
+          "product": "MOA",
+          "resource_name": "highmem-128-6a",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 192,
+          "product": "MOA",
+          "resource_name": "highmem-192-6a",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 192,
+          "product": "MOA",
+          "resource_name": "highmem-m192-6a",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 4,
+          "product": "MOA",
+          "resource_name": "highstori4ix",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 8,
+          "product": "MOA",
+          "resource_name": "highstori4ix2",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 16,
+          "product": "MOA",
+          "resource_name": "highstori4ix4",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 32,
+          "product": "MOA",
+          "resource_name": "highstori4ix8",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 64,
+          "product": "MOA",
+          "resource_name": "highstori4ix16",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 128,
+          "product": "MOA",
+          "resource_name": "highstori4ix32",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 128,
+          "product": "MOA",
+          "resource_name": "highstori4imetal",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 448,
+          "product": "MOA",
+          "resource_name": "highmem-u18tb1-112x",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 448,
+          "product": "MOA",
+          "resource_name": "highmem-u24tb1-112x",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 4,
+          "product": "MOA",
+          "resource_name": "standard-4-6in",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 8,
+          "product": "MOA",
+          "resource_name": "standard-8-6in",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 16,
+          "product": "MOA",
+          "resource_name": "standard-16-6in",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 32,
+          "product": "MOA",
+          "resource_name": "standard-32-6in",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 48,
+          "product": "MOA",
+          "resource_name": "standard-48-6in",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 64,
+          "product": "MOA",
+          "resource_name": "standard-64-6in",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 96,
+          "product": "MOA",
+          "resource_name": "standard-96-6in",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 128,
+          "product": "MOA",
+          "resource_name": "standard-128-6in",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 4,
+          "product": "MOA",
+          "resource_name": "standard-4-6idn",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 8,
+          "product": "MOA",
+          "resource_name": "standard-8-6idn",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 16,
+          "product": "MOA",
+          "resource_name": "standard-16-6idn",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 32,
+          "product": "MOA",
+          "resource_name": "standard-32-6idn",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 48,
+          "product": "MOA",
+          "resource_name": "standard-48-6idn",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 64,
+          "product": "MOA",
+          "resource_name": "standard-64-6idn",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 96,
+          "product": "MOA",
+          "resource_name": "standard-96-6idn",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 128,
+          "product": "MOA",
+          "resource_name": "standard-128-6idn",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 4,
+          "product": "MOA",
+          "resource_name": "highcpu-4-6in",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 8,
+          "product": "MOA",
+          "resource_name": "highcpu-8-6in",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 16,
+          "product": "MOA",
+          "resource_name": "highcpu-16-6in",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 32,
+          "product": "MOA",
+          "resource_name": "highcpu-32-6in",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 48,
+          "product": "MOA",
+          "resource_name": "highcpu-48-6in",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 64,
+          "product": "MOA",
+          "resource_name": "highcpu-64-6in",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 96,
+          "product": "MOA",
+          "resource_name": "highcpu-96-6in",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 128,
+          "product": "MOA",
+          "resource_name": "highcpu-128-6in",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 4,
+          "product": "MOA",
+          "resource_name": "highmem-4-6in",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 8,
+          "product": "MOA",
+          "resource_name": "highmem-8-6in",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 16,
+          "product": "MOA",
+          "resource_name": "highmem-16-6in",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 32,
+          "product": "MOA",
+          "resource_name": "highmem-32-6in",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 48,
+          "product": "MOA",
+          "resource_name": "highmem-48-6in",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 64,
+          "product": "MOA",
+          "resource_name": "highmem-64-6in",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 96,
+          "product": "MOA",
+          "resource_name": "highmem-96-6in",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 128,
+          "product": "MOA",
+          "resource_name": "highmem-128-6in",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 4,
+          "product": "MOA",
+          "resource_name": "highmem-4-6idn",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 8,
+          "product": "MOA",
+          "resource_name": "highmem-8-6idn",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 16,
+          "product": "MOA",
+          "resource_name": "highmem-16-6idn",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 32,
+          "product": "MOA",
+          "resource_name": "highmem-32-6idn",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 48,
+          "product": "MOA",
+          "resource_name": "highmem-48-6idn",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 64,
+          "product": "MOA",
+          "resource_name": "highmem-64-6idn",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 96,
+          "product": "MOA",
+          "resource_name": "highmem-96-6idn",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 128,
+          "product": "MOA",
+          "resource_name": "highmem-128-6idn",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 4,
+          "product": "MOA",
+          "resource_name": "standard-4-6g",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 8,
+          "product": "MOA",
+          "resource_name": "standard-8-6g",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 16,
+          "product": "MOA",
+          "resource_name": "standard-16-6g",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 32,
+          "product": "MOA",
+          "resource_name": "standard-32-6g",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 48,
+          "product": "MOA",
+          "resource_name": "standard-48-6g",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 64,
+          "product": "MOA",
+          "resource_name": "standard-64-6g",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 64,
+          "product": "MOA",
+          "resource_name": "standard-64m-6g",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 4,
+          "product": "MOA",
+          "resource_name": "standard-4-6gd",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 8,
+          "product": "MOA",
+          "resource_name": "standard-8-6gd",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 16,
+          "product": "MOA",
+          "resource_name": "standard-16-6gd",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 32,
+          "product": "MOA",
+          "resource_name": "standard-32-6gd",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 48,
+          "product": "MOA",
+          "resource_name": "standard-48-6gd",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 64,
+          "product": "MOA",
+          "resource_name": "standard-64-6gd",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 64,
+          "product": "MOA",
+          "resource_name": "standard-64m-6gd",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 4,
+          "product": "MOA",
+          "resource_name": "standard-4-a1",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 8,
+          "product": "MOA",
+          "resource_name": "standard-8-a1",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 16,
+          "product": "MOA",
+          "resource_name": "standard-16-a1",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 16,
+          "product": "MOA",
+          "resource_name": "standard-16m-a1",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 4,
+          "product": "MOA",
+          "resource_name": "burst-4-t4g",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 8,
+          "product": "MOA",
+          "resource_name": "burst-8-t4g",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 4,
+          "product": "MOA",
+          "resource_name": "highcpu-4-6g",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 8,
+          "product": "MOA",
+          "resource_name": "highcpu-8-6g",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 16,
+          "product": "MOA",
+          "resource_name": "highcpu-16-6g",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 32,
+          "product": "MOA",
+          "resource_name": "highcpu-32-6g",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 48,
+          "product": "MOA",
+          "resource_name": "highcpu-48-6g",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 64,
+          "product": "MOA",
+          "resource_name": "highcpu-64-6g",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 64,
+          "product": "MOA",
+          "resource_name": "highcpu-64m-6g",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 4,
+          "product": "MOA",
+          "resource_name": "highcpu-4-6dg",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 8,
+          "product": "MOA",
+          "resource_name": "highcpu-8-6dg",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 16,
+          "product": "MOA",
+          "resource_name": "highcpu-16-6dg",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 32,
+          "product": "MOA",
+          "resource_name": "highcpu-32-6dg",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 48,
+          "product": "MOA",
+          "resource_name": "highcpu-48-6dg",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 64,
+          "product": "MOA",
+          "resource_name": "highcpu-64-6dg",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 64,
+          "product": "MOA",
+          "resource_name": "highcpu-64m-6dg",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 4,
+          "product": "MOA",
+          "resource_name": "highcpu-4-6gn",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 8,
+          "product": "MOA",
+          "resource_name": "highcpu-8-6gn",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 16,
+          "product": "MOA",
+          "resource_name": "highcpu-16-6gn",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 32,
+          "product": "MOA",
+          "resource_name": "highcpu-32-6gn",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 48,
+          "product": "MOA",
+          "resource_name": "highcpu-48-6gn",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 64,
+          "product": "MOA",
+          "resource_name": "highcpu-64-6gn",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 4,
+          "product": "MOA",
+          "resource_name": "highmem-4-6g",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 8,
+          "product": "MOA",
+          "resource_name": "highmem-8-6g",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 16,
+          "product": "MOA",
+          "resource_name": "highmem-16-6g",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 32,
+          "product": "MOA",
+          "resource_name": "highmem-32-6g",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 48,
+          "product": "MOA",
+          "resource_name": "highmem-48-6g",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 64,
+          "product": "MOA",
+          "resource_name": "highmem-64-6g",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 64,
+          "product": "MOA",
+          "resource_name": "highmem-64m-6g",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 4,
+          "product": "MOA",
+          "resource_name": "highmem-4-6gd",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 8,
+          "product": "MOA",
+          "resource_name": "highmem-8-6gd",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 16,
+          "product": "MOA",
+          "resource_name": "highmem-16-6gd",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 32,
+          "product": "MOA",
+          "resource_name": "highmem-32-6gd",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 48,
+          "product": "MOA",
+          "resource_name": "highmem-48-6gd",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 64,
+          "product": "MOA",
+          "resource_name": "highmem-64-6gd",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 64,
+          "product": "MOA",
+          "resource_name": "highmem-64m-6gd",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 4,
+          "product": "MOA",
+          "resource_name": "highmem-4-x2gd",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 8,
+          "product": "MOA",
+          "resource_name": "highmem-8-x2gd",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 16,
+          "product": "MOA",
+          "resource_name": "highmem-16-x2gd",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 32,
+          "product": "MOA",
+          "resource_name": "highmem-32-x2gd",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 48,
+          "product": "MOA",
+          "resource_name": "highmem-48-x2gd",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 64,
+          "product": "MOA",
+          "resource_name": "highmem-64-x2gd",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 64,
+          "product": "MOA",
+          "resource_name": "highmem-64m-x2gd",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 4,
+          "product": "MOA",
+          "resource_name": "highstor-4-is4gen",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 8,
+          "product": "MOA",
+          "resource_name": "highstor-8-is4gen",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 16,
+          "product": "MOA",
+          "resource_name": "highstor-16-is4gen",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 32,
+          "product": "MOA",
+          "resource_name": "highstor-32-is4gen",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 4,
+          "product": "MOA",
+          "resource_name": "highstor-4-im4gn",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 8,
+          "product": "MOA",
+          "resource_name": "highstor-8-im4gn",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 16,
+          "product": "MOA",
+          "resource_name": "highstor-16-im4gn",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 32,
+          "product": "MOA",
+          "resource_name": "highstor-32-im4gn",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 64,
+          "product": "MOA",
+          "resource_name": "highstor-64-im4gn",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 4,
+          "product": "MOA",
+          "resource_name": "standard-4-7g",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 8,
+          "product": "MOA",
+          "resource_name": "standard-8-7g",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 16,
+          "product": "MOA",
+          "resource_name": "standard-16-7g",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 32,
+          "product": "MOA",
+          "resource_name": "standard-32-7g",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 48,
+          "product": "MOA",
+          "resource_name": "standard-48-7g",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 64,
+          "product": "MOA",
+          "resource_name": "standard-64-7g",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 64,
+          "product": "MOA",
+          "resource_name": "standard-64m-7g",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 4,
+          "product": "MOA",
+          "resource_name": "highcpu-4-7g",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 8,
+          "product": "MOA",
+          "resource_name": "highcpu-8-7g",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 16,
+          "product": "MOA",
+          "resource_name": "highcpu-16-7g",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 32,
+          "product": "MOA",
+          "resource_name": "highcpu-32-7g",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 48,
+          "product": "MOA",
+          "resource_name": "highcpu-48-7g",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 64,
+          "product": "MOA",
+          "resource_name": "highcpu-64-7g",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 64,
+          "product": "MOA",
+          "resource_name": "highcpu-64m-7g",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 4,
+          "product": "MOA",
+          "resource_name": "highmem-4-7g",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 8,
+          "product": "MOA",
+          "resource_name": "highmem-8-7g",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 16,
+          "product": "MOA",
+          "resource_name": "highmem-16-7g",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 32,
+          "product": "MOA",
+          "resource_name": "highmem-32-7g",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 48,
+          "product": "MOA",
+          "resource_name": "highmem-48-7g",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 64,
+          "product": "MOA",
+          "resource_name": "highmem-64-7g",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 64,
+          "product": "MOA",
+          "resource_name": "highmem-64m-7g",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 4,
+          "product": "MOA",
+          "resource_name": "highmem-4-5b",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 8,
+          "product": "MOA",
+          "resource_name": "highmem-8-5b",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 16,
+          "product": "MOA",
+          "resource_name": "highmem-16-5b",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 32,
+          "product": "MOA",
+          "resource_name": "highmem-32-5b",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 48,
+          "product": "MOA",
+          "resource_name": "highmem-48-5b",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 64,
+          "product": "MOA",
+          "resource_name": "highmem-64-5b",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 96,
+          "product": "MOA",
+          "resource_name": "highmem-96-5b",
+          "resource_type": "compute.node"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "marketplace",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 96,
+          "product": "MOA",
+          "resource_name": "highmem-96m-5b",
+          "resource_type": "compute.node"
+        }
+      ],
+      "version": "1ef7f99e-bcb5-42ff-9c00-181e160c9102"
+    },
+    {
+      "allowed": 0,
+      "consumed": 0,
+      "href": "/api/accounts_mgmt/v1/organizations/1HAXGgCYqHpednsRDiwWsZBmDlA/quota_cost",
+      "kind": "QuotaCost",
+      "organization_id": "1HAXGgCYqHpednsRDiwWsZBmDlA",
+      "quota_id": "cluster|byoc|moa|standard",
+      "related_resources": [
+        {
+          "availability_zone_type": "any",
+          "billing_model": "standard",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 0,
+          "product": "MOA",
+          "resource_name": "any",
+          "resource_type": "cluster"
+        },
+        {
+          "availability_zone_type": "any",
+          "billing_model": "standard",
+          "byoc": "byoc",
+          "cloud_provider": "aws",
+          "cost": 0,
+          "product": "MOA",
+          "resource_name": "any",
+          "resource_type": "cluster"
+        }
+      ],
+      "version": "23990920-f7a5-4451-ad55-5eabbdb23254"
+    },
+    {
       "allowed": 0,
       "consumed": 0,
       "href": "/api/accounts_mgmt/v1/organizations/1H1PQMDtwzAUsjPxgoWRjhSpNGD/quota_cost",
       "kind": "QuotaCost",
       "organization_id": "1H1PQMDtwzAUsjPxgoWRjhSpNGD",
-      "quota_id": "compute.node|cpu|byoc|moa",
+      "quota_id": "compute.node|cpu|byoc|moa|standard",
       "related_resources": [
         {
           "availability_zone_type": "any",

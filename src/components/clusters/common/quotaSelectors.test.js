@@ -209,6 +209,12 @@ describe('quotaSelectors', () => {
       ];
       expect(getAwsBillingAccountsFromQuota(quotaWithAccounts)).toEqual(expected);
     });
+
+    it('should return an empty array if there is no moa|marketplace item', () => {
+      expect(getAwsBillingAccountsFromQuota(emptyQuotaList)).toEqual([]);
+      expect(getAwsBillingAccountsFromQuota(CCSQuotaList)).toEqual([]);
+    });
+
     it('should return an empty array if there are no accounts', () => {
       const quotaWithoutAccounts = {
         items: [

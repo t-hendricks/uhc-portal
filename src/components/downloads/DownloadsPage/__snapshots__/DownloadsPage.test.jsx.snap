@@ -6510,7 +6510,7 @@ exports[`<DownloadsPage> renders 1`] = `
             description={
               <TextContent>
                 <Text>
-                  Download and extract your operating system's installation program and place the file in the directory where you'll store your configuration details. Then, create clusters on supported IBM zSystems (s390x) infrastructure using our
+                  Download and extract your operating system's installation program and place the file in the directory where you'll store your configuration details. Then, create clusters on supported IBM Z (s390x) infrastructure using our
                    
                   <ExternalLink
                     href="https://docs.openshift.com/container-platform/4.13/installing/index.html"
@@ -6559,7 +6559,7 @@ exports[`<DownloadsPage> renders 1`] = `
                 "x86_64-openshift-install": false,
               }
             }
-            name="OpenShift for IBM zSystems (s390x) Installer"
+            name="OpenShift for IBM Z (s390x) Installer"
             selections={Object {}}
             setExpanded={[Function]}
             setSelections={[Function]}

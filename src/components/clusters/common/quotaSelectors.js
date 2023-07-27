@@ -232,7 +232,7 @@ const getAwsBillingAccountsFromQuota = (quotaList) => {
     (quota) => quota.quota_id === 'cluster|byoc|moa|marketplace',
   );
   return (
-    marketplaceQuota.cloud_accounts?.filter((account) => account.cloud_provider_id === 'aws') || []
+    marketplaceQuota?.cloud_accounts?.filter((account) => account.cloud_provider_id === 'aws') || []
   );
 };
 

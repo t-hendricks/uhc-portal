@@ -46,9 +46,6 @@ exports[`<MachinePools /> OpenShift version for machine pools is shown if hypers
               ],
             },
             Object {
-              "title": "Subnets",
-            },
-            Object {
               "title": "Node count",
             },
             Object {
@@ -92,18 +89,45 @@ exports[`<MachinePools /> OpenShift version for machine pools is shown if hypers
                 },
                 "us-east-1b",
                 Object {
-                  "title": <React.Fragment>
-                    <div>
-                      subnet-049f90721559000de
-                    </div>
-                  </React.Fragment>,
-                },
-                Object {
                   "title": "2",
                 },
                 "Disabled",
-                "4.12.5-candidate",
+                Object {
+                  "title": <React.Fragment>
+                    4.12.5-candidate
+                     
+                    <UpdatePoolButton
+                      machinePool={
+                        Object {
+                          "auto_repair": true,
+                          "availability_zone": "us-east-1b",
+                          "aws_node_pool": Object {
+                            "instance_profile": "staging-21gitfhopbgmmfhlu65v93n4g4n3djde-jknhystj27-worker",
+                            "instance_type": "m5.xlarge",
+                            "tags": Object {
+                              "api.openshift.com/environment": "staging",
+                            },
+                          },
+                          "href": "/api/clusters_mgmt/v1/clusters/21gitfhopbgmmfhlu65v93n4g4n3djde/node_pools/workers",
+                          "id": "workers",
+                          "kind": "NodePool",
+                          "replicas": 2,
+                          "status": Object {
+                            "current_replicas": 2,
+                          },
+                          "subnet": "subnet-049f90721559000de",
+                          "version": Object {
+                            "href": "/api/clusters_mgmt/v1/versions/openshift-v4.12.5-candidate",
+                            "id": "openshift-v4.12.5-candidate",
+                            "kind": "VersionLink",
+                          },
+                        }
+                      }
+                    />
+                  </React.Fragment>,
+                },
               ],
+              "isOpen": false,
               "key": "workers",
               "machinePool": Object {
                 "auto_repair": true,
@@ -130,6 +154,48 @@ exports[`<MachinePools /> OpenShift version for machine pools is shown if hypers
                 },
               },
             },
+            Object {
+              "cells": Array [
+                Object {
+                  "title": <ExpandableRow
+                    cluster={
+                      Object {
+                        "canEdit": true,
+                      }
+                    }
+                    machinePool={
+                      Object {
+                        "auto_repair": true,
+                        "availability_zone": "us-east-1b",
+                        "aws_node_pool": Object {
+                          "instance_profile": "staging-21gitfhopbgmmfhlu65v93n4g4n3djde-jknhystj27-worker",
+                          "instance_type": "m5.xlarge",
+                          "tags": Object {
+                            "api.openshift.com/environment": "staging",
+                          },
+                        },
+                        "href": "/api/clusters_mgmt/v1/clusters/21gitfhopbgmmfhlu65v93n4g4n3djde/node_pools/workers",
+                        "id": "workers",
+                        "kind": "NodePool",
+                        "replicas": 2,
+                        "status": Object {
+                          "current_replicas": 2,
+                        },
+                        "subnet": "subnet-049f90721559000de",
+                        "version": Object {
+                          "href": "/api/clusters_mgmt/v1/versions/openshift-v4.12.5-candidate",
+                          "id": "openshift-v4.12.5-candidate",
+                          "kind": "VersionLink",
+                        },
+                      }
+                    }
+                  />,
+                },
+              ],
+              "fullWidth": true,
+              "key": "workers-child",
+              "parent": 0,
+            },
           ]
         }
         selectVariant="checkbox"
@@ -140,6 +206,7 @@ exports[`<MachinePools /> OpenShift version for machine pools is shown if hypers
       </Table>
     </CardBody>
   </Card>
+  <UpdateMachinePoolModal />
 </Fragment>
 `;
 
@@ -288,80 +355,43 @@ exports[`<MachinePools /> renders with a machine pool with autoscaling enabled 1
             Object {
               "cells": Array [
                 Object {
-                  "title": <React.Fragment>
-                    <React.Fragment>
-                      <Title
-                        className="pf-u-mb-sm"
-                        headingLevel="h4"
-                      >
-                        Labels
-                      </Title>
-                      <React.Fragment>
-                        <Label
-                          color="blue"
-                        >
-                          foo = bar
-                        </Label>
-                         
-                      </React.Fragment>
-                    </React.Fragment>
-                    <React.Fragment>
-                      <Title
-                        className="pf-u-mb-sm pf-u-mt-lg"
-                        headingLevel="h4"
-                      >
-                        Taints
-                      </Title>
-                      <React.Fragment>
-                        <Label
-                          className="pf-c-label--break-word"
-                          color="blue"
-                        >
-                          foo1 = bazz1:NoSchedule
-                        </Label>
-                         
-                      </React.Fragment>
-                      <React.Fragment>
-                        <Label
-                          className="pf-c-label--break-word"
-                          color="blue"
-                        >
-                          foo2 = bazz2:NoSchedule
-                        </Label>
-                         
-                      </React.Fragment>
-                    </React.Fragment>
-                    <React.Fragment>
-                      <Title
-                        className="pf-u-mb-sm pf-u-mt-lg"
-                        headingLevel="h4"
-                      >
-                        Autoscaling
-                      </Title>
-                      <Split
-                        hasGutter={true}
-                      >
-                        <SplitItem>
-                          <Title
-                            className="autoscale__lim"
-                            headingLevel="h4"
-                          >
-                            Min nodes 
-                          </Title>
-                          1
-                        </SplitItem>
-                        <SplitItem>
-                          <Title
-                            className="autoscale__lim"
-                            headingLevel="h4"
-                          >
-                            Max nodes 
-                          </Title>
-                          2
-                        </SplitItem>
-                      </Split>
-                    </React.Fragment>
-                  </React.Fragment>,
+                  "title": <ExpandableRow
+                    cluster={
+                      Object {
+                        "canEdit": true,
+                      }
+                    }
+                    machinePool={
+                      Object {
+                        "autoscaling": Object {
+                          "max_replicas": 2,
+                          "min_replicas": 1,
+                        },
+                        "availability_zones": Array [
+                          "us-east-1a",
+                        ],
+                        "href": "/api/clusters_mgmt/v1/clusters/cluster-id/machine_pools/mp-autoscaling",
+                        "id": "mp-autoscaling",
+                        "instance_type": "m5.xlarge",
+                        "kind": "MachinePool",
+                        "labels": Object {
+                          "foo": "bar",
+                        },
+                        "taints": Array [
+                          Object {
+                            "effect": "NoSchedule",
+                            "key": "foo1",
+                            "value": "bazz1",
+                          },
+                          Object {
+                            "effect": "NoSchedule",
+                            "key": "foo2",
+                            "value": "bazz2",
+                          },
+                        ],
+                      }
+                    }
+                  />,
                 },
               ],
               "fullWidth": true,
@@ -378,6 +408,7 @@ exports[`<MachinePools /> renders with a machine pool with autoscaling enabled 1
       </Table>
     </CardBody>
   </Card>
+  <UpdateMachinePoolModal />
 </Fragment>
 `;
 
@@ -523,50 +554,40 @@ exports[`<MachinePools /> renders with additional machine pools, some with label
             Object {
               "cells": Array [
                 Object {
-                  "title": <React.Fragment>
-                    <React.Fragment>
-                      <Title
-                        className="pf-u-mb-sm"
-                        headingLevel="h4"
-                      >
-                        Labels
-                      </Title>
-                      <React.Fragment>
-                        <Label
-                          color="blue"
-                        >
-                          foo = bar
-                        </Label>
-                         
-                      </React.Fragment>
-                    </React.Fragment>
-                    <React.Fragment>
-                      <Title
-                        className="pf-u-mb-sm pf-u-mt-lg"
-                        headingLevel="h4"
-                      >
-                        Taints
-                      </Title>
-                      <React.Fragment>
-                        <Label
-                          className="pf-c-label--break-word"
-                          color="blue"
-                        >
-                          foo1 = bazz1:NoSchedule
-                        </Label>
-                         
-                      </React.Fragment>
-                      <React.Fragment>
-                        <Label
-                          className="pf-c-label--break-word"
-                          color="blue"
-                        >
-                          foo2 = bazz2:NoSchedule
-                        </Label>
-                         
-                      </React.Fragment>
-                    </React.Fragment>
-                  </React.Fragment>,
+                  "title": <ExpandableRow
+                    cluster={
+                      Object {
+                        "canEdit": true,
+                      }
+                    }
+                    machinePool={
+                      Object {
+                        "availability_zones": Array [
+                          "us-east-1a",
+                        ],
+                        "href": "/api/clusters_mgmt/v1/clusters/cluster-id/machine_pools/mp-with-labels-and-taints",
+                        "id": "mp-with-labels-and-taints",
+                        "instance_type": "m5.xlarge",
+                        "kind": "MachinePool",
+                        "labels": Object {
+                          "foo": "bar",
+                        },
+                        "replicas": 1,
+                        "taints": Array [
+                          Object {
+                            "effect": "NoSchedule",
+                            "key": "foo1",
+                            "value": "bazz1",
+                          },
+                          Object {
+                            "effect": "NoSchedule",
+                            "key": "foo2",
+                            "value": "bazz2",
+                          },
+                        ],
+                      }
+                    }
+                  />,
                 },
               ],
               "fullWidth": true,
@@ -606,24 +627,28 @@ exports[`<MachinePools /> renders with additional machine pools, some with label
             Object {
               "cells": Array [
                 Object {
-                  "title": <React.Fragment>
-                    <React.Fragment>
-                      <Title
-                        className="pf-u-mb-sm"
-                        headingLevel="h4"
-                      >
-                        Labels
-                      </Title>
-                      <React.Fragment>
-                        <Label
-                          color="blue"
-                        >
-                          foo = bar
-                        </Label>
-                         
-                      </React.Fragment>
-                    </React.Fragment>
-                  </React.Fragment>,
+                  "title": <ExpandableRow
+                    cluster={
+                      Object {
+                        "canEdit": true,
+                      }
+                    }
+                    machinePool={
+                      Object {
+                        "availability_zones": Array [
+                          "us-east-1a",
+                        ],
+                        "href": "/api/clusters_mgmt/v1/clusters/cluster-id/machine_pools/mp-with-labels",
+                        "id": "mp-with-label",
+                        "instance_type": "m5.xlarge",
+                        "kind": "MachinePool",
+                        "labels": Object {
+                          "foo": "bar",
+                        },
+                        "replicas": 1,
+                      }
+                    }
+                  />,
                 },
               ],
               "fullWidth": true,
@@ -672,34 +697,37 @@ exports[`<MachinePools /> renders with additional machine pools, some with label
             Object {
               "cells": Array [
                 Object {
-                  "title": <React.Fragment>
-                    <React.Fragment>
-                      <Title
-                        className="pf-u-mb-sm"
-                        headingLevel="h4"
-                      >
-                        Taints
-                      </Title>
-                      <React.Fragment>
-                        <Label
-                          className="pf-c-label--break-word"
-                          color="blue"
-                        >
-                          foo1 = bazz1:NoSchedule
-                        </Label>
-                         
-                      </React.Fragment>
-                      <React.Fragment>
-                        <Label
-                          className="pf-c-label--break-word"
-                          color="blue"
-                        >
-                          foo2 = bazz2:NoSchedule
-                        </Label>
-                         
-                      </React.Fragment>
-                    </React.Fragment>
-                  </React.Fragment>,
+                  "title": <ExpandableRow
+                    cluster={
+                      Object {
+                        "canEdit": true,
+                      }
+                    }
+                    machinePool={
+                      Object {
+                        "availability_zones": Array [
+                          "us-east-1a",
+                        ],
+                        "href": "/api/clusters_mgmt/v1/clusters/cluster-id/machine_pools/mp-with-taints",
+                        "id": "mp-with-taints",
+                        "instance_type": "m5.xlarge",
+                        "kind": "MachinePool",
+                        "replicas": 1,
+                        "taints": Array [
+                          Object {
+                            "effect": "NoSchedule",
+                            "key": "foo1",
+                            "value": "bazz1",
+                          },
+                          Object {
+                            "effect": "NoSchedule",
+                            "key": "foo2",
+                            "value": "bazz2",
+                          },
+                        ],
+                      }
+                    }
+                  />,
                 },
               ],
               "fullWidth": true,
@@ -742,6 +770,7 @@ exports[`<MachinePools /> renders with additional machine pools, some with label
       </Table>
     </CardBody>
   </Card>
+  <UpdateMachinePoolModal />
 </Fragment>
 `;
 
@@ -852,6 +881,7 @@ exports[`<MachinePools /> renders with the default machine pool 1`] = `
       </Table>
     </CardBody>
   </Card>
+  <UpdateMachinePoolModal />
 </Fragment>
 `;
 
@@ -960,32 +990,27 @@ exports[`<MachinePools /> renders with the default machine pool when it has labe
             Object {
               "cells": Array [
                 Object {
-                  "title": <React.Fragment>
-                    <React.Fragment>
-                      <Title
-                        className="pf-u-mb-sm"
-                        headingLevel="h4"
-                      >
-                        Labels
-                      </Title>
-                      <React.Fragment>
-                        <Label
-                          color="blue"
-                        >
-                          foo = bar
-                        </Label>
-                         
-                      </React.Fragment>
-                      <React.Fragment>
-                        <Label
-                          color="blue"
-                        >
-                          hello = world
-                        </Label>
-                         
-                      </React.Fragment>
-                    </React.Fragment>
-                  </React.Fragment>,
+                  "title": <ExpandableRow
+                    cluster={
+                      Object {
+                        "canEdit": true,
+                      }
+                    }
+                    machinePool={
+                      Object {
+                        "availability_zones": Array [
+                          "us-east-1",
+                        ],
+                        "desired": 1,
+                        "id": "some-id",
+                        "instance_type": "m5.xlarge",
+                        "labels": Object {
+                          "foo": "bar",
+                          "hello": "world",
+                        },
+                      }
+                    }
+                  />,
                 },
               ],
               "fullWidth": true,
@@ -1002,6 +1027,7 @@ exports[`<MachinePools /> renders with the default machine pool when it has labe
       </Table>
     </CardBody>
   </Card>
+  <UpdateMachinePoolModal />
 </Fragment>
 `;
 
@@ -1024,5 +1050,6 @@ exports[`<MachinePools /> should render skeleton while fetching machine pools 1`
       />
     </CardFooter>
   </Card>
+  <UpdateMachinePoolModal />
 </Fragment>
 `;
