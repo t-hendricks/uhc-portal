@@ -104,7 +104,9 @@ const mapStateToProps = (state) => {
       ? modalData.shouldDisplayClusterName
       : false,
     clusterDisplayName: getClusterName(cluster),
-    clearMachinePoolDataOnExit: modalData.clearMachinePoolDataOnExit,
+    // when launched from cluster list, clear data upon modal exit to prevent stale data
+    // should not be true when modal is launched from cluster details > Machine pools tab
+    clearMachineOrNodePoolsOnExit: modalData.clearMachineOrNodePoolsOnExit,
   };
 
   let machinePoolWithAutoscale = false;

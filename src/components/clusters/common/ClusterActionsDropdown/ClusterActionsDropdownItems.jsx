@@ -152,7 +152,7 @@ function actionResolver(
             isDefaultMachinePool: !isHypershiftCluster(cluster),
             shouldDisplayClusterName: inClusterList,
             isHypershiftCluster: isHypershiftCluster(cluster),
-            clearMachinePoolDataOnExit: isHypershiftCluster(cluster),
+            clearMachineOrNodePoolsOnExit: true,
           }),
       },
     ),
