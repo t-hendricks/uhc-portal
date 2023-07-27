@@ -1,16 +1,26 @@
 import React from 'react';
 import Modal from '~/components/common/Modal/Modal';
+import { useGlobalState } from '~/redux/hooks';
+import { useDispatch } from 'react-redux';
+import { closeModal } from '~/components/common/Modal/ModalActions';
 
-type Props = {
-  performDeleteAction: () => void;
-  closeModal: () => void;
-  machinePoolId: string;
-};
+const DeleteMachinePoolModal = () => {
+  function isModalData(obj: any): obj is {
+    machinePool: any;
+    performDeleteAction: any;
+  } {
+    return typeof obj === 'object' && obj !== null;
+  }
 
-const DeleteMachinePoolModal = ({ closeModal, machinePoolId, performDeleteAction }: Props) => {
+  const modalData = useGlobalState((state) => state.modal.data);
+  const machinePoolModalText =
+    isModalData(modalData) && `"${modalData.machinePool?.id}" will be lost.`;
+  const performDeleteAction = isModalData(modalData) && modalData.performDeleteAction;
+  const dispatch = useDispatch();
+
   const handleConfirmDelete = () => {
+    dispatch(closeModal());
     performDeleteAction();
-    closeModal();
   };
 
   return (
@@ -19,11 +29,11 @@ const DeleteMachinePoolModal = ({ closeModal, machinePoolId, performDeleteAction
       primaryText="Delete"
       onPrimaryClick={handleConfirmDelete}
       secondaryText="Cancel"
-      onSecondaryClick={closeModal}
+      onSecondaryClick={() => dispatch(closeModal())}
       isOpen
-      onClose={closeModal}
+      onClose={() => dispatch(closeModal())}
     >
-      &quot;{machinePoolId}&quot; will be lost.
+      {machinePoolModalText}
     </Modal>
   );
 };

@@ -1,31 +1,54 @@
 import React from 'react';
 import { render, screen, fireEvent } from '@testUtils';
+import { useGlobalState } from '~/redux/hooks';
+import { useDispatch } from 'react-redux';
+import { closeModal } from '~/components/common/Modal/ModalActions';
 import DeleteMachinePoolModal from './DeleteMachinePoolModal';
 
-describe('<DeleteMachinePoolModal />', () => {
-  const props = {
-    closeModal: jest.fn(),
-    performDeleteAction: jest.fn(),
-    machinePoolId: 'machinePool1',
-  };
+jest.mock('react-redux', () => ({
+  ...jest.requireActual('react-redux'),
+  useDispatch: jest.fn(),
+}));
 
-  it('should show machine pool to be deleted', async () => {
-    render(<DeleteMachinePoolModal {...props} />);
-    expect(screen.queryByText(/machinePool1/)).toBeInTheDocument();
+jest.mock('~/components/common/Modal/ModalActions');
+
+jest.mock('~/redux/hooks', () => ({
+  useGlobalState: jest.fn(),
+}));
+
+describe('<DeleteMachinePoolModal />', () => {
+  it('should show correct title and content', async () => {
+    const mockModalData = {
+      machinePool: { id: 'machinePool1' },
+      performDeleteAction: jest.fn(),
+    };
+    (useGlobalState as jest.Mock).mockReturnValue(mockModalData);
+
+    render(<DeleteMachinePoolModal />);
+
+    expect(screen.queryByText(/Permanently delete machine pool\?/i)).toBeInTheDocument();
+    expect(screen.queryByText(/"machinePool1" will be lost\./i)).toBeInTheDocument();
   });
 
   it('closes modal on cancel', () => {
-    render(<DeleteMachinePoolModal {...props} />);
+    useDispatch.mockReturnValue(jest.fn());
+    render(<DeleteMachinePoolModal />);
 
-    fireEvent.click(screen.getByRole('button', { name: 'Close' }));
-    expect(props.closeModal).toBeCalled();
+    fireEvent.click(screen.getByRole('button', { name: 'Cancel' }));
+    expect(closeModal).toBeCalled();
   });
 
   it('calls delete function on confirm', () => {
-    render(<DeleteMachinePoolModal {...props} />);
+    const mockModalData = {
+      machinePool: { id: 'machinePool1' },
+      performDeleteAction: jest.fn(),
+    };
+    (useGlobalState as jest.Mock).mockReturnValue(mockModalData);
+
+    render(<DeleteMachinePoolModal />);
 
     fireEvent.click(screen.getByRole('button', { name: 'Delete' }));
-    expect(props.performDeleteAction).toBeCalled();
-    expect(props.closeModal).toBeCalled();
+    expect(closeModal).toBeCalled();
+    expect(mockModalData.performDeleteAction).toBeCalled();
   });
 });

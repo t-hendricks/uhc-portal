@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import produce from 'immer';
-import { bind } from 'lodash';
 import isEmpty from 'lodash/isEmpty';
 import get from 'lodash/get';
 
@@ -30,7 +29,7 @@ import EditTaintsModal from './components/EditTaintsModal';
 import EditLabelsModal from './components/EditLabelsModal';
 import { actionResolver, hasSubnets } from './machinePoolsHelper';
 import ExpandableRow from './components/ExpandableRow';
-import DeleteMachinePoolModal from './components/DeleteMachinePoolModal';
+import DeleteMachinePoolModal from './components/DeleteMachinePoolModal/DeleteMachinePoolModal';
 
 import ButtonWithTooltip from '../../../../common/ButtonWithTooltip';
 import ErrorBox from '../../../../common/ErrorBox';
@@ -322,7 +321,7 @@ class MachinePools extends React.Component {
     const onClickDeleteAction = (_, rowID, rowData) => {
       openModal(modals.DELETE_MACHINE_POOL, {
         machinePool: rowData.machinePool,
-        performDeleteAction: () => bind(performDeleteAction, this)(rowID, rowData),
+        performDeleteAction: () => performDeleteAction(rowID, rowData),
       });
     };
 
