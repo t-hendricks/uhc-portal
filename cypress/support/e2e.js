@@ -30,13 +30,12 @@ before(() => {
   cy.setCookie('notice_gdpr_prefs', '0,1,2:');
   cy.setCookie('notice_preferences', '2:');
   cy.reload();
+  cy.log('Setting viewport to "macbook-13"');
+  cy.viewport('macbook-13');
 });
 
 
 beforeEach(() => {
-  cy.log('Setting viewport to "macbook-13"');
-  cy.viewport('macbook-13');
-
   cy.log('Configuring Cypress to catch all uncaught exceptions & unhandled promise rejections thrown from OCM app.');
   cy.on('uncaught:exception', (err, runnable, promise) => {
     // return false to prevent the error from failing this test

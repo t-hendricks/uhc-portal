@@ -21,7 +21,7 @@ describe('OCM Roles And Access', { tags: ['ci'] }, () => {
     cy.getByTestId('create_cluster_btn').should('be.visible');
   });
 
-  it('successfully creates a new cluster and redirects to its details page', () => {
+  it('successfully registers a new cluster and redirects to its details page', () => {
     ClusterListPage.registerCluster().should('be.visible').click();
     ClusterListPage.isRegisterClusterUrl();
     ClusterListPage.isRegisterClusterScreen();
@@ -33,6 +33,7 @@ describe('OCM Roles And Access', { tags: ['ci'] }, () => {
 
   it('successfully navigates to OCM Roles And Access', () => {
     OCMRolesAndAccessPage.accessControlTabButton().click();
+    OCMRolesAndAccessPage.assertUrlIncludes('#accessControl');
     OCMRolesAndAccessPage.grantRoleButton().should('exist');
     OCMRolesAndAccessPage.OCMRolesAndAccessTable().should('exist');
   });
