@@ -69,7 +69,7 @@ const GovCloudForm = ({
             <TextContent>
               <Text component={TextVariants.p}>
                 By checking the following boxes, you are agreeing to the requirements for accessing
-                the FedRAMP Red Hat OpenShift on AWS (ROSA) GovCloud instance.
+                the FedRAMP Red Hat OpenShift Service on AWS (ROSA) GovCloud instance.
               </Text>
             </TextContent>
           </StackItem>
