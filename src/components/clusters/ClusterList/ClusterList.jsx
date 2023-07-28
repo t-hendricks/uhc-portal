@@ -283,21 +283,19 @@ class ClusterList extends Component {
                     />
                   </ToolbarItem>
                   {!isRestrictedEnv() && (
-                    <>
-                      <ToolbarItem
-                        className="ocm-c-toolbar__item-cluster-list-filter-dropdown"
-                        data-testid="cluster-list-filter-dropdown"
-                      >
-                        <ClusterListFilterDropdown
-                          view={viewConstants.CLUSTERS_VIEW}
-                          isDisabled={pending}
-                          history={history}
-                          className="cluster-filter-dropdown"
-                        />
-                      </ToolbarItem>
-                      <ClusterListActions />
-                    </>
+                    <ToolbarItem
+                      className="ocm-c-toolbar__item-cluster-list-filter-dropdown"
+                      data-testid="cluster-list-filter-dropdown"
+                    >
+                      <ClusterListFilterDropdown
+                        view={viewConstants.CLUSTERS_VIEW}
+                        isDisabled={pending}
+                        history={history}
+                        className="cluster-filter-dropdown"
+                      />
+                    </ToolbarItem>
                   )}
+                  <ClusterListActions />
                   <ViewOnlyMyClustersToggle
                     view={viewConstants.CLUSTERS_VIEW}
                     bodyContent="Show only the clusters you previously created, or all clusters in your organization."

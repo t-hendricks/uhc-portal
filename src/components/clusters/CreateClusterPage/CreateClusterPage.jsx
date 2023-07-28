@@ -4,6 +4,7 @@ import { Tabs, Tab, TabTitleText, TabTitleIcon, PageSection } from '@patternfly/
 
 import { Spinner } from '@redhat-cloud-services/frontend-components/Spinner';
 import { ServerIcon, CloudIcon, LaptopIcon } from '@patternfly/react-icons';
+import { isRestrictedEnv } from '~/restrictedEnv';
 
 import './CreateClusterPage.scss';
 import { AppPage } from '~/components/App/AppPage';
@@ -115,12 +116,16 @@ class CreateCluster extends React.Component {
                     trialEnabled={hasOSDTrialQuota && osdTrialFeature}
                   />
                 </Tab>
-                <Tab eventKey={1} title={tabTitle(1)}>
-                  <DatacenterTab assistedInstallerFeature={assistedInstallerFeature} />
-                </Tab>
-                <Tab eventKey={2} title={tabTitle(2)}>
-                  <LocalTab token={token} />
-                </Tab>
+                {!isRestrictedEnv() && (
+                  <>
+                    <Tab eventKey={1} title={tabTitle(1)}>
+                      <DatacenterTab assistedInstallerFeature={assistedInstallerFeature} />
+                    </Tab>
+                    <Tab eventKey={2} title={tabTitle(2)}>
+                      <LocalTab token={token} />
+                    </Tab>
+                  </>
+                )}
               </Tabs>
             </PageSection>
           </>

@@ -3,25 +3,43 @@ import PropTypes from 'prop-types';
 import moment from 'moment';
 import { Button, EmptyState, EmptyStateBody, EmptyStateVariant } from '@patternfly/react-core';
 import { Table, TableBody, TableHeader, TableVariant } from '@patternfly/react-table';
+import { SUPPORT_CASE_URL, isRestrictedEnv } from '~/restrictedEnv';
 import { normalizedProducts } from '../../../../../../../common/subscriptionTypes';
+
+const productMap = {
+  OSD: 'OpenShift Dedicated',
+  ROSA: 'Red Hat OpenShift Service on AWS',
+  ARO: 'OpenShift Managed (Azure)',
+  OCP: 'OpenShift Container Platform',
+};
+
+const getSupportCaseURL = (product, version, clusterUUID) => {
+  if (isRestrictedEnv()) {
+    return SUPPORT_CASE_URL;
+  }
+
+  let openshiftVersion = version;
+  if (product !== 'OCP') {
+    openshiftVersion = encodeURIComponent(productMap[product]);
+  }
+
+  return `https://access.redhat.com/support/cases/#/case/new/open-case/describe-issue?clusterId=${clusterUUID}&caseCreate=true&product=${encodeURIComponent(
+    productMap[product],
+  )}&version=${openshiftVersion}`;
+};
 
 class SupportCasesCard extends React.Component {
   componentDidMount() {
-    const { subscriptionID, supportCases, getSupportCases } = this.props;
-    if (supportCases.subscriptionID !== subscriptionID || !supportCases.pending) {
-      getSupportCases(subscriptionID);
+    if (!isRestrictedEnv()) {
+      const { subscriptionID, supportCases, getSupportCases } = this.props;
+      if (supportCases.subscriptionID !== subscriptionID || !supportCases.pending) {
+        getSupportCases(subscriptionID);
+      }
     }
   }
 
   render() {
     const { supportCases, clusterUUID, product, version, isDisabled = false } = this.props;
-
-    const productMap = {
-      OSD: 'OpenShift Dedicated',
-      ROSA: 'Red Hat OpenShift Service on AWS',
-      ARO: 'OpenShift Managed (Azure)',
-      OCP: 'OpenShift Container Platform',
-    };
 
     const columns = [
       { title: 'Case ID' },
@@ -31,15 +49,6 @@ class SupportCasesCard extends React.Component {
       { title: 'Severity' },
       { title: 'Status' },
     ];
-
-    let openshiftVersion = version;
-    if (product !== 'OCP') {
-      openshiftVersion = encodeURIComponent(productMap[product]);
-    }
-
-    const url = `https://access.redhat.com/support/cases/#/case/new/open-case/describe-issue?clusterId=${clusterUUID}&caseCreate=true&product=${encodeURIComponent(
-      productMap[product],
-    )}&version=${openshiftVersion}`;
 
     const supportCaseRow = (supportCase) => {
       const caseIdURL = `https://access.redhat.com/support/cases/#/case/${supportCase.caseID}`;
@@ -80,23 +89,33 @@ class SupportCasesCard extends React.Component {
     return (
       <>
         {showOpenSupportCaseButton && (
-          <a href={url} target="_blank" rel="noopener noreferrer">
+          <a
+            href={getSupportCaseURL(product, version, clusterUUID)}
+            target="_blank"
+            rel="noopener noreferrer"
+            data-testid="support-case-btn"
+          >
             <Button variant="secondary">Open support case</Button>
           </a>
         )}
-        <Table
-          aria-label="Support Cases"
-          variant={TableVariant.compact}
-          cells={columns}
-          rows={rows}
-        >
-          <TableHeader />
-          <TableBody />
-        </Table>
-        {!hasRows && (
-          <EmptyState variant={EmptyStateVariant.small}>
-            <EmptyStateBody>You have no open support cases</EmptyStateBody>
-          </EmptyState>
+        {!isRestrictedEnv() && (
+          <>
+            <Table
+              aria-label="Support Cases"
+              variant={TableVariant.compact}
+              cells={columns}
+              rows={rows}
+              data-testid="support-cases-table"
+            >
+              <TableHeader />
+              <TableBody />
+            </Table>
+            {!hasRows && (
+              <EmptyState variant={EmptyStateVariant.small}>
+                <EmptyStateBody>You have no open support cases</EmptyStateBody>
+              </EmptyState>
+            )}
+          </>
         )}
       </>
     );

@@ -1,8 +1,8 @@
 import React from 'react';
 import { mount, ReactWrapper } from 'enzyme';
 import axios from 'axios';
-import { screen } from '@testing-library/dom';
 import { act } from 'react-dom/test-utils';
+import { screen } from '@testing-library/react';
 import { mockRestrictedEnv, render } from '~/testUtils';
 import Releases from './index';
 import ReleaseChannel from './ReleaseChannel';
@@ -53,16 +53,16 @@ describe('<Releases />', () => {
       isRestrictedEnv.mockReturnValue(false);
     });
 
-    it('should render only 4.11 releases', async () => {
+    it('should render only stable releases', async () => {
       isRestrictedEnv.mockReturnValue(true);
 
       await act(async () => {
         render(<Releases />);
       });
       expect(axios.get).toHaveBeenCalledTimes(1);
-
-      expect(screen.getByTestId('version-4.11')).toBeInTheDocument();
-      expect(screen.getAllByTestId(/version-.*/)).toHaveLength(1);
+      expect(screen.queryAllByText(/^stable/).length > 0).toBeTruthy();
+      expect(screen.queryAllByText(/^fast/)).toHaveLength(0);
+      expect(screen.queryAllByText(/^eus/).length > 0).toBeTruthy();
     });
   });
 });

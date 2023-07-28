@@ -12,6 +12,7 @@ import { Table, TableHeader, TableBody, expandable, cellWidth } from '@patternfl
 import { Link } from 'react-router-dom';
 import { ArrowRightIcon } from '@patternfly/react-icons';
 import * as OCM from '@openshift-assisted/ui-lib/ocm';
+import { isRestrictedEnv } from '~/restrictedEnv';
 
 import ExternalLink from '~/components/common/ExternalLink';
 import RedHatLogo from '../../../styles/images/Logo-RedHat-Hat-Color-RGB.png';
@@ -46,7 +47,7 @@ const getColumns = () => [
   },
 ];
 
-const osdRow = (shouldExpand = true, isOpen = true, hasQuota = true, rowKey = 0) => {
+const osdRow = (hasQuota = true) => {
   let contents = (
     <ExternalLink
       href={links.OSD_LEARN_MORE}
@@ -98,7 +99,6 @@ const osdRow = (shouldExpand = true, isOpen = true, hasQuota = true, rowKey = 0)
     ],
   };
   const descriptionRow = {
-    parent: rowKey,
     fullWidth: true,
     cells: [
       {
@@ -121,11 +121,7 @@ const osdRow = (shouldExpand = true, isOpen = true, hasQuota = true, rowKey = 0)
       },
     ],
   };
-  if (shouldExpand) {
-    offeringRow.isOpen = isOpen;
-    return [offeringRow, descriptionRow];
-  }
-  return [offeringRow];
+  return [offeringRow, descriptionRow];
 };
 
 const osdTrialRow = () => {
@@ -147,7 +143,7 @@ const osdTrialRow = () => {
     </Button>
   );
 
-  const offeringRow = {
+  return {
     cells: [
       {
         title: (
@@ -166,7 +162,6 @@ const osdTrialRow = () => {
       <>{contents}</>,
     ],
   };
-  return offeringRow;
 };
 
 const managedServices = (hasQuota, trialEnabled) => {
@@ -179,24 +174,50 @@ const managedServices = (hasQuota, trialEnabled) => {
     }
   };
 
-  const rowKeys = trialEnabled
-    ? {
-        osdTrial: 0,
-        osd: 1,
-        azure: 3,
-        ibm: 5,
-        aws: 7,
-      }
-    : {
-        osd: 0,
-        azure: 2,
-        ibm: 4,
-        aws: 6,
-      };
+  const rosaRow = [
+    {
+      cells: [
+        <>
+          <img className="partner-logo" src={AWSLogo} alt="AWS" />
+        </>,
+        <>
+          <ExternalLink noIcon href={links.AWS}>
+            Red Hat OpenShift Service on AWS (ROSA)
+          </ExternalLink>
+        </>,
+        'Amazon Web Services',
+        'Flexible hourly billing',
+        <>
+          <CreateClusterDropDown toggleId="rosa-create-cluster-dropdown" />
+        </>,
+      ],
+    },
+    {
+      fullWidth: true,
+      cells: [
+        {
+          title: (
+            <Stack hasGutter>
+              <StackItem>
+                Build, deploy, and manage Kubernetes applications with Red Hat OpenShift running
+                natively on AWS.
+                <br />
+                Hosted on AWS.
+              </StackItem>
+              <StackItem>
+                <ExternalLink href={links.AWS}>
+                  Learn more about Red Hat OpenShift Service on AWS
+                </ExternalLink>
+              </StackItem>
+            </Stack>
+          ),
+        },
+      ],
+    },
+  ];
 
   const defaultRows = [
     {
-      isOpen: openRows.includes(rowKeys.azure),
       cells: [
         <>
           <img className="partner-logo" src={MicrosoftLogo} alt="Microsoft" />
@@ -222,7 +243,6 @@ const managedServices = (hasQuota, trialEnabled) => {
       ],
     },
     {
-      parent: rowKeys.azure,
       fullWidth: true,
       cells: [
         {
@@ -245,7 +265,6 @@ const managedServices = (hasQuota, trialEnabled) => {
       ],
     },
     {
-      isOpen: openRows.includes(rowKeys.ibm),
       cells: [
         <>
           <img className="partner-logo" src={IBMCloudLogo} alt="IBM Cloud" />
@@ -271,7 +290,6 @@ const managedServices = (hasQuota, trialEnabled) => {
       ],
     },
     {
-      parent: rowKeys.ibm,
       fullWidth: true,
       cells: [
         {
@@ -293,54 +311,24 @@ const managedServices = (hasQuota, trialEnabled) => {
         },
       ],
     },
-    {
-      isOpen: openRows.includes(rowKeys.aws),
-      cells: [
-        <>
-          <img className="partner-logo" src={AWSLogo} alt="AWS" />
-        </>,
-        <>
-          <ExternalLink noIcon href={links.AWS}>
-            Red Hat OpenShift Service on AWS (ROSA)
-          </ExternalLink>
-        </>,
-        'Amazon Web Services',
-        'Flexible hourly billing',
-        <>
-          <CreateClusterDropDown toggleId="rosa-create-cluster-dropdown" />
-        </>,
-      ],
-    },
-    {
-      parent: rowKeys.aws,
-      fullWidth: true,
-      cells: [
-        {
-          title: (
-            <Stack hasGutter>
-              <StackItem>
-                Build, deploy, and manage Kubernetes applications with Red Hat OpenShift running
-                natively on AWS.
-                <br />
-                Hosted on AWS.
-              </StackItem>
-              <StackItem>
-                <ExternalLink href={links.AWS}>
-                  Learn more about Red Hat OpenShift Service on AWS
-                </ExternalLink>
-              </StackItem>
-            </Stack>
-          ),
-        },
-      ],
-    },
+    ...rosaRow,
   ];
 
-  const rows = osdRow(true, openRows.includes(rowKeys.osd), hasQuota, rowKeys.osd).concat(
-    defaultRows,
-  );
-  if (trialEnabled) {
-    rows.unshift(osdTrialRow());
+  let rows = rosaRow;
+  let initialIndex = 1;
+
+  if (!isRestrictedEnv()) {
+    rows = osdRow(hasQuota).concat(defaultRows);
+    if (trialEnabled) {
+      rows.unshift(osdTrialRow());
+      initialIndex = 2;
+    }
+  }
+
+  for (let i = initialIndex; i < rows.length; i += 2) {
+    const parent = i - 1;
+    rows[i].parent = parent;
+    rows[parent].isOpen = openRows.includes(parent);
   }
 
   return (
@@ -458,27 +446,31 @@ const CloudTab = ({ hasOSDQuota, trialEnabled }) => (
         <StackItem>
           Create clusters in the cloud using a managed service.
           {managedServices(hasOSDQuota, trialEnabled)}
-          <Button
-            variant={ButtonVariant.link}
-            id="subscriptions"
-            component={(props) => <Link {...props} to="/quota" />}
-          >
-            View your available OpenShift Dedicated quota <ArrowRightIcon />
-          </Button>
+          {!isRestrictedEnv() && (
+            <Button
+              variant={ButtonVariant.link}
+              id="subscriptions"
+              component={(props) => <Link {...props} to="/quota" />}
+            >
+              View your available OpenShift Dedicated quota <ArrowRightIcon />
+            </Button>
+          )}
         </StackItem>
       </Stack>
     </PageSection>
-    <PageSection>
-      <Stack hasGutter>
-        <StackItem>
-          <Title headingLevel="h2">Run it yourself</Title>
-        </StackItem>
-        <StackItem>
-          Run OpenShift clusters on your own by installing from another cloud provider.
-          {runItYourself()}
-        </StackItem>
-      </Stack>
-    </PageSection>
+    {!isRestrictedEnv() && (
+      <PageSection>
+        <Stack hasGutter>
+          <StackItem>
+            <Title headingLevel="h2">Run it yourself</Title>
+          </StackItem>
+          <StackItem>
+            Run OpenShift clusters on your own by installing from another cloud provider.
+            {runItYourself()}
+          </StackItem>
+        </Stack>
+      </PageSection>
+    )}
   </>
 );
 
