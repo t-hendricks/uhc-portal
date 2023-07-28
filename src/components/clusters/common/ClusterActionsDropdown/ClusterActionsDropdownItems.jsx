@@ -304,7 +304,8 @@ function actionResolver(
     cluster.managed &&
     canHibernateCluster &&
     !isProductOSDTrial &&
-    !isHypershiftCluster(cluster);
+    !isHypershiftCluster(cluster) &&
+    !isRestrictedEnv();
   const showEditNodeCount = cluster.canEdit && cluster.managed;
   const isArchived = get(cluster, 'subscription.status', false) === subscriptionStatuses.ARCHIVED;
   const showArchive = cluster.canEdit && !cluster.managed && cluster.subscription && !isArchived;
@@ -324,10 +325,6 @@ function actionResolver(
     isAllowedProducts &&
     get(cluster, 'subscription.status') !== subscriptionStatuses.ARCHIVED;
   const showUpgradeTrialCluster = isClusterReady && cluster.canEdit && isProductOSDTrial;
-
-  if (isRestrictedEnv()) {
-    return [showConsoleButton && getAdminConsoleProps()].filter(Boolean);
-  }
 
   return [
     showConsoleButton && getAdminConsoleProps(),
