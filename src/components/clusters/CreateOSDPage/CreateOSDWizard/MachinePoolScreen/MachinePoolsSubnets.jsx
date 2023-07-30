@@ -26,6 +26,7 @@ function MachinePoolsSubnets({ selectedVPCID }) {
           name="selected_vpc_id"
           validate={required}
           selectedVPCID={selectedVPCID}
+          showRefresh
         />
       </GridItem>
       {selectedVPCID && (

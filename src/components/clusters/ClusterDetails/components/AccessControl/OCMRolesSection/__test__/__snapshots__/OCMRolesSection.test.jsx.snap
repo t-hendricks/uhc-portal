@@ -225,17 +225,20 @@ exports[` 1`] = `
           </p>
           <ButtonWithTooltip
             className="access-control-add"
+            data-testid="grant-role-btn"
             disableReason=""
             onClick={[Function]}
             variant="secondary"
           >
             <Button
               className="access-control-add"
+              data-testid="grant-role-btn"
               onClick={[Function]}
               variant="secondary"
             >
               <ButtonBase
                 className="access-control-add"
+                data-testid="grant-role-btn"
                 innerRef={null}
                 onClick={[Function]}
                 variant="secondary"
@@ -247,6 +250,7 @@ exports[` 1`] = `
                   data-ouia-component-id="OUIA-Generated-Button-secondary-1"
                   data-ouia-component-type="PF4/Button"
                   data-ouia-safe={true}
+                  data-testid="grant-role-btn"
                   disabled={false}
                   onClick={[Function]}
                   role={null}
@@ -2324,17 +2328,20 @@ exports[`<OCMRolesSection /> should render 1`] = `
           </p>
           <ButtonWithTooltip
             className="access-control-add"
+            data-testid="grant-role-btn"
             disableReason=""
             onClick={[Function]}
             variant="secondary"
           >
             <Button
               className="access-control-add"
+              data-testid="grant-role-btn"
               onClick={[Function]}
               variant="secondary"
             >
               <ButtonBase
                 className="access-control-add"
+                data-testid="grant-role-btn"
                 innerRef={null}
                 onClick={[Function]}
                 variant="secondary"
@@ -2346,6 +2353,7 @@ exports[`<OCMRolesSection /> should render 1`] = `
                   data-ouia-component-id="OUIA-Generated-Button-secondary-2"
                   data-ouia-component-type="PF4/Button"
                   data-ouia-safe={true}
+                  data-testid="grant-role-btn"
                   disabled={false}
                   onClick={[Function]}
                   role={null}

@@ -94,10 +94,10 @@ class EditNodeCountModal extends Component {
       resetScaleMachinePoolResponse,
       machinePoolId,
       isHypershiftCluster,
-      clearMachinePoolDataOnExit,
+      clearMachineOrNodePoolsOnExit,
     } = this.props;
 
-    if (clearMachinePoolDataOnExit) {
+    if (clearMachineOrNodePoolsOnExit) {
       resetGetMachinePoolsResponse();
     }
     if (machinePoolId === 'Default' && !isHypershiftCluster) {
@@ -298,7 +298,7 @@ EditNodeCountModal.propTypes = {
   shouldDisplayClusterName: PropTypes.bool,
   clusterDisplayName: PropTypes.string,
   resetSection: PropTypes.func.isRequired,
-  clearMachinePoolDataOnExit: PropTypes.bool,
+  clearMachineOrNodePoolsOnExit: PropTypes.bool,
 };
 
 EditNodeCountModal.defaultProps = {

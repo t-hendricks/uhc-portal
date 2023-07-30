@@ -7,9 +7,9 @@ import { TimesCircleIcon } from '@patternfly/react-icons';
 
 import DeleteClusterDialog from '../DeleteClusterDialog';
 
-function CancelClusterButton({ cluster }) {
+function CancelClusterButton({ cluster, defaultOpen }) {
   const history = useHistory();
-  const [isCancelModalOpen, setIsCancelModalOpen] = React.useState(false);
+  const [isCancelModalOpen, setIsCancelModalOpen] = React.useState(defaultOpen);
 
   return (
     <>
@@ -43,6 +43,9 @@ function CancelClusterButton({ cluster }) {
 
 CancelClusterButton.propTypes = {
   cluster: PropTypes.object.isRequired,
+  defaultOpen: PropTypes.bool,
 };
-
+CancelClusterButton.defaultProps = {
+  defaultOpen: false,
+};
 export default CancelClusterButton;

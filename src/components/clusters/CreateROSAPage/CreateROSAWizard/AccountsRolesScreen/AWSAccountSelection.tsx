@@ -277,6 +277,7 @@ function AWSAccountSelection({
             hasInlineFilter
             validated={touched && error ? 'error' : undefined}
             footer={footer}
+            aria-describedby="aws-infra-accounts"
           >
             {selectOptions}
           </Select>
