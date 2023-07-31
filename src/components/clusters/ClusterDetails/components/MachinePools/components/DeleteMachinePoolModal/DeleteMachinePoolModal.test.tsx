@@ -1,14 +1,9 @@
 import React from 'react';
 import { render, screen, fireEvent } from '@testUtils';
 import { useGlobalState } from '~/redux/hooks';
-import { useDispatch } from 'react-redux';
+import * as reactRedux from 'react-redux';
 import { closeModal } from '~/components/common/Modal/ModalActions';
 import DeleteMachinePoolModal from './DeleteMachinePoolModal';
-
-jest.mock('react-redux', () => ({
-  ...jest.requireActual('react-redux'),
-  useDispatch: jest.fn(),
-}));
 
 jest.mock('~/components/common/Modal/ModalActions');
 
@@ -31,7 +26,10 @@ describe('<DeleteMachinePoolModal />', () => {
   });
 
   it('closes modal on cancel', () => {
-    useDispatch.mockReturnValue(jest.fn());
+    const useDispatchMock = jest.spyOn(reactRedux, 'useDispatch');
+    const mockedDispatch = jest.fn();
+
+    useDispatchMock.mockReturnValue(mockedDispatch);
     render(<DeleteMachinePoolModal />);
 
     fireEvent.click(screen.getByRole('button', { name: 'Cancel' }));
