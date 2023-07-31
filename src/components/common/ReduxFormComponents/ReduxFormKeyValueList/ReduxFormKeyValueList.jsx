@@ -48,6 +48,9 @@ LabelValue.propTypes = {
   }),
 };
 
+const allFields = (fields) =>
+  fields.getAll().every((field) => field.key && field.value) && nodeKeyValueTooltipText;
+
 const ReduxFormKeyValueList = ({ fields, meta: { error, submitFailed } }) => (
   <Grid hasGutter>
     <GridItem span={4} className="pf-c-form__label pf-c-form__label-text">
@@ -103,9 +106,7 @@ const ReduxFormKeyValueList = ({ fields, meta: { error, submitFailed } }) => (
         variant="link"
         isInline
         className="reduxFormKeyValueList-addBtn"
-        disableReason={
-          !fields.getAll().every((field) => field.key && field.value) && nodeKeyValueTooltipText
-        }
+        disableReason={() => !allFields}
       >
         Add additional label
       </ButtonWithTooltip>
