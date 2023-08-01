@@ -10,7 +10,8 @@ yarn install
 if [ $IS_PR = true ]; then
   echo "is PR!"
 fi
-yarn build --mode=production --env api-env=staging
+
+yarn build --mode=production --env api-env=staging --output-path ./dist
 
 # do not use dev dockerfile
 #rm $APP_ROOT/Dockerfile
