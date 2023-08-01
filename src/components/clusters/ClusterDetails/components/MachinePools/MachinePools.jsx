@@ -180,14 +180,19 @@ class MachinePools extends React.Component {
     const hibernatingReason =
       isHibernating(cluster.state) &&
       'This operation is not available while cluster is hibernating';
+    const canNotCreateReason =
+      !cluster.canEdit &&
+      !cluster.canCreateMachinePools &&
+      'You do not have permission to add a machine pool. Only cluster owners, cluster editors, machine pool editors and Organization Administrators can add machine pools.';
+    const quotaReason = !hasMachinePoolsQuota && noQuotaTooltip;
     const canNotEditReason =
       !cluster.canEdit &&
-      'You do not have permission to add a machine pool. Only cluster owners, cluster editors, and Organization Administrators can add machine pools.';
-    const quotaReason = !hasMachinePoolsQuota && noQuotaTooltip;
+      !cluster.canEditMachinePools &&
+      'You do not have permission to edit machine pools. Only cluster owners, cluster editors, machine pool editors and Organization Administrators can edit machine pools.';
 
     const addMachinePoolBtn = (
       <ButtonWithTooltip
-        disableReason={readOnlyReason || hibernatingReason || canNotEditReason || quotaReason}
+        disableReason={readOnlyReason || hibernatingReason || canNotCreateReason || quotaReason}
         id="add-machine-pool"
         onClick={() => openModal('add-machine-pool')}
         variant="secondary"

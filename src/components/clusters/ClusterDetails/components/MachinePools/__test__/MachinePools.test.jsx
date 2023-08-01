@@ -475,4 +475,63 @@ describe('<MachinePools />', () => {
     expect(screen.getAllByRole('menuitem').length).not.toEqual(0);
     expect(screen.queryByRole('menuitem', { name: 'Update version' })).not.toBeInTheDocument();
   });
+
+  it('Should disable actions on machine pools if user does not have permissions', () => {
+    const props = {
+      ...baseProps,
+      cluster: {
+        ...baseProps.cluster,
+        canEditMachinePools: false,
+        canEdit: false,
+        canCreateMachinePools: false,
+      },
+      isHypershift: true,
+      machinePoolsList: {
+        data: [
+          {
+            availability_zones: ['us-east-1a'],
+            href: '/api/clusters_mgmt/v1/clusters/cluster-id/machine_pools/test-mp',
+            id: 'test-mp',
+            instance_type: 'm5.xlarge',
+            kind: 'MachinePool',
+            replicas: 1,
+          },
+        ],
+      },
+    };
+    const { container } = render(<MachinePools {...props} />);
+    // add machine pool button is disabled
+    expect(container.querySelector('#add-machine-pool')).toHaveAttribute('aria-disabled', 'true');
+    // table actions are disabled
+    expect(container.querySelector('.pf-c-dropdown__toggle')).toBeDisabled();
+  });
+
+  it('Should allow actions on machine pools if user has permissions', () => {
+    const props = {
+      ...baseProps,
+      cluster: {
+        ...baseProps.cluster,
+        canEditMachinePools: true,
+        canCreateMachinePools: true,
+      },
+      isHypershift: true,
+      machinePoolsList: {
+        data: [
+          {
+            availability_zones: ['us-east-1a'],
+            href: '/api/clusters_mgmt/v1/clusters/cluster-id/machine_pools/test-mp',
+            id: 'test-mp',
+            instance_type: 'm5.xlarge',
+            kind: 'MachinePool',
+            replicas: 1,
+          },
+        ],
+      },
+    };
+    const { container } = render(<MachinePools {...props} />);
+    // add machine pool button is enabled
+    expect(container.querySelector('#add-machine-pool')).toHaveAttribute('aria-disabled', 'false');
+    // table actions are enabled
+    expect(container.querySelector('.pf-c-dropdown__toggle')).toBeEnabled();
+  });
 });
