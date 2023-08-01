@@ -74,19 +74,21 @@ export const AppDrawer: React.FC<PropsWithChildren<{}>> = ({ children }) => {
         } else {
           // set up drawer initially closed so it can transition open properly
           setDrawerSettings({
-            drawerProps: { ...drawerProps, isExpanded: false },
+            drawerProps: { ...drawerProps, isExpanded: false, onExpand: undefined },
             ...otherSettings,
           });
         }
         setTimeout(
           () => {
             setDrawerSettings({
-              drawerProps: { ...drawerProps, isExpanded: true },
+              drawerProps: { ...drawerProps, isExpanded: true, onExpand: undefined },
               ...otherSettings,
             });
             // wait for drawer to transition open before calling onExpand callback
+            // call onExpand manually to avoid https://github.com/patternfly/patternfly-react/issues/8510 (fixed in PF 5)
             setTimeout(() => {
               setIsOpening(false);
+              drawerProps?.onExpand?.();
             }, drawerTransitionDuration);
           },
           // if drawer was previously open, wait for it to transition closed before re-opening
