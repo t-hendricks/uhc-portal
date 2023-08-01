@@ -443,13 +443,21 @@ const fetchSingleClusterAndPermissions = async (
   let canEdit = false;
   let canEditOCMRoles = false;
   let canViewOCMRoles = false;
-  const idpActions = actions.reduce((obj: any, action: SelfAccessReview.action) => {
+
+  const buildPermissionsByActionObj = (obj: any, action: SelfAccessReview.action) => {
     // eslint-disable-next-line no-param-reassign
     obj[action] = false;
     return obj;
-  }, {} as Record<SelfAccessReview.action, boolean>);
-  let canEditMachinePool = false;
-  let canCreateMachinePool = false;
+  };
+
+  const idpActions = actions.reduce(
+    buildPermissionsByActionObj,
+    {} as Record<SelfAccessReview.action, boolean>,
+  );
+  const machinePoolsActions = actions.reduce(
+    buildPermissionsByActionObj,
+    {} as Record<SelfAccessReview.action, boolean>,
+  );
 
   const subscription = await accountsService.getSubscription(subscriptionID);
   subscription.data = normalizeSubscription(subscription.data);
@@ -494,24 +502,18 @@ const fetchSingleClusterAndPermissions = async (
       .then((response) => {
         canViewOCMRoles = response.data.allowed;
       });
-    await authorizationsService
-      .selfAccessReview({
-        action: SelfAccessReview.action.UPDATE,
-        resource_type: SelfAccessReview.resource_type.MACHINE_POOL,
-        subscription_id: subscriptionID,
-      })
-      .then((response) => {
-        canEditMachinePool = response.data.allowed;
-      });
-    await authorizationsService
-      .selfAccessReview({
-        action: SelfAccessReview.action.CREATE,
-        resource_type: SelfAccessReview.resource_type.MACHINE_POOL,
-        subscription_id: subscriptionID,
-      })
-      .then((response) => {
-        canCreateMachinePool = response.data.allowed;
-      });
+
+    actions.forEach(async (action) => {
+      await authorizationsService
+        .selfAccessReview({
+          action,
+          resource_type: SelfAccessReview.resource_type.MACHINE_POOL,
+          subscription_id: subscriptionID,
+        })
+        .then((response) => {
+          machinePoolsActions[action] = response.data.allowed;
+        });
+    });
   }
 
   if (
@@ -554,8 +556,7 @@ const fetchSingleClusterAndPermissions = async (
     cluster.data.idpActions = idpActions;
     cluster.data.canEditOCMRoles = canEditOCMRoles;
     cluster.data.canViewOCMRoles = canViewOCMRoles;
-    cluster.data.canEditMachinePool = canEditMachinePool;
-    cluster.data.canCreateMachinePool = canCreateMachinePool;
+    cluster.data.machinePoolsActions = machinePoolsActions;
     cluster.data.canDelete = !!canDeleteAccessReviewResponse?.data?.allowed;
 
     return cluster;

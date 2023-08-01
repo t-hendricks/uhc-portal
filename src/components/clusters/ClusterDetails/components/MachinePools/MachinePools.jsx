@@ -155,6 +155,7 @@ class MachinePools extends React.Component {
     } = this.props;
 
     const { deletedRowIndex, openedRows, hideDeleteMachinePoolError } = this.state;
+    const { machinePoolsActions } = cluster;
     const hasMachinePools = !!machinePoolsList.data.length;
 
     if (hasMachinePools && machinePoolsList.error) {
@@ -182,13 +183,11 @@ class MachinePools extends React.Component {
       isHibernating(cluster.state) &&
       'This operation is not available while cluster is hibernating';
     const canNotCreateReason =
-      !cluster.canEdit &&
-      !cluster.canCreateMachinePools &&
+      !machinePoolsActions.create &&
       'You do not have permission to add a machine pool. Only cluster owners, cluster editors, machine pool editors and Organization Administrators can add machine pools.';
     const quotaReason = !hasMachinePoolsQuota && noQuotaTooltip;
     const canNotEditReason =
-      !cluster.canEdit &&
-      !cluster.canEditMachinePools &&
+      !machinePoolsActions.update &&
       'You do not have permission to edit machine pools. Only cluster owners, cluster editors, machine pool editors and Organization Administrators can edit machine pools.';
 
     const addMachinePoolBtn = (
@@ -418,33 +417,36 @@ class MachinePools extends React.Component {
                     }
                   />
                 )}
-                <Table
-                  aria-label="Machine pools"
-                  cells={columns}
-                  rows={rows}
-                  onCollapse={this.onCollapse}
-                  actionResolver={
-                    !isRestrictedEnv()
-                      ? (rowData) =>
-                          actionResolver(
-                            rowData,
-                            onClickDeleteAction,
-                            onClickScaleAction,
-                            onClickEditTaintsAction,
-                            onClickEditLabelsAction,
-                            isHypershift,
-                            machinePoolsList.data.length,
-                            canMachinePoolBeUpdated(rowData.machinePool)
-                              ? onClickUpdateAction
-                              : undefined,
-                          )
-                      : undefined
-                  }
-                  areActionsDisabled={() => tableActionsDisabled}
-                >
-                  <TableHeader />
-                  <TableBody />
-                </Table>
+                {machinePoolsActions.list && (
+                  <Table
+                    aria-label="Machine pools"
+                    cells={columns}
+                    rows={rows}
+                    onCollapse={this.onCollapse}
+                    actionResolver={
+                      !isRestrictedEnv()
+                        ? (rowData) =>
+                            actionResolver(
+                              rowData,
+                              onClickDeleteAction,
+                              onClickScaleAction,
+                              onClickEditTaintsAction,
+                              onClickEditLabelsAction,
+                              isHypershift,
+                              machinePoolsList.data.length,
+                              canMachinePoolBeUpdated(rowData.machinePool)
+                                ? onClickUpdateAction
+                                : undefined,
+                              machinePoolsActions.delete,
+                            )
+                        : undefined
+                    }
+                    areActionsDisabled={() => tableActionsDisabled}
+                  >
+                    <TableHeader />
+                    <TableBody />
+                  </Table>
+                )}
               </CardBody>
             </Card>
           </>
