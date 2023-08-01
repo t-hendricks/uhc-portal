@@ -32,18 +32,12 @@ describe('OCM Mainpage - cluster list page', () => {
             ClusterListPage.clickClusterTypes("ARO");
         });
         it('Cluster list page : extra options & its actions', () => {
-            ClusterListPage.clickClusterListExtraActions();
             ClusterListPage.viewClusterArchives().click();
             ClusterListPage.isClusterArchivesUrl();
             ClusterListPage.isClusterArchivesScreen();
             cy.go('back')
-            ClusterListPage.waitForDataReady();
-            ClusterListPage.clickClusterListExtraActions();
-            ClusterListPage.assistedInstallerClusters().click();
-            cy.go('back')
         });
         it('Cluster list page : view only cluster options & its actions', () => {
-            ClusterListPage.clickClusterListExtraActions();
             ClusterListPage.viewOnlyMyCluster().click({ force: true });
             ClusterListPage.viewOnlyMyClusterHelp().click();
             ClusterListPage.tooltipviewOnlyMyCluster().contains("Show only the clusters you previously created, or all clusters in your organization.")
