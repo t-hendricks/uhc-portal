@@ -4,15 +4,13 @@ import InstructionCommand from '~/components/common/InstructionCommand';
 import PopoverHint from '~/components/common/PopoverHint';
 import { trackEvents } from '~/common/analytics';
 import { RosaCliCommand } from '../constants/cliCommands';
-import AssociateAWSAccountStep from './common/AssociateAWSAccountStep';
+import AssociateAWSAccountStep, {
+  AssociateAWSAccountStepProps,
+} from './common/AssociateAWSAccountStep';
 import ToggleGroupTabs from './common/ToggleGroupTabs';
 
-type UserRoleStepProps = {
-  title: string;
-};
-
-const UserRoleStep = ({ title }: UserRoleStepProps) => (
-  <AssociateAWSAccountStep title={title} contentId="AssociateAWSAccountUserRoleStep">
+const UserRoleStep = (props: AssociateAWSAccountStepProps) => (
+  <AssociateAWSAccountStep {...props}>
     <Title headingLevel="h3" className="pf-u-mb-md" size="md">
       First, check if a role exists and is linked with:
     </Title>
