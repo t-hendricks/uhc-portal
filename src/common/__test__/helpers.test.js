@@ -69,14 +69,17 @@ describe('parseReduxFormTaints', () => {
     expect(parseReduxFormTaints(reduxFormInput)).toEqual(expected);
   });
 
-  it('returns only non empty items', () => {
+  it('returns only with "key" field', () => {
     const reduxFormInput = [
       { key: undefined, value: 'world', effect: 'NoExecute' },
       { key: 'hello', value: 'world', effect: undefined },
       { key: 'foo', value: 'bar', effect: 'NoExecute' },
-      { key: 'hello', value: undefined, effect: undefined },
+      { key: 'hello', value: undefined, effect: 'NoExecute' },
     ];
-    const expected = [{ key: 'foo', value: 'bar', effect: 'NoExecute' }];
+    const expected = [
+      { key: 'foo', value: 'bar', effect: 'NoExecute' },
+      { key: 'hello', value: '', effect: 'NoExecute' },
+    ];
     expect(parseReduxFormTaints(reduxFormInput)).toEqual(expected);
   });
 
