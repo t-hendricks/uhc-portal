@@ -26,7 +26,6 @@ import modals from '../../../../common/Modal/modals';
 const mapStateToProps = (state, ownProps) => {
   const cluster = get(state, 'clusters.details.cluster', {});
   const nodes = get(cluster, 'nodes', {});
-  const getModalDataFromState = (state) => state.modal.data;
 
   const props = {
     isAddMachinePoolModalOpen: shouldShowModal(state, 'add-machine-pool'),
@@ -60,7 +59,6 @@ const mapStateToProps = (state, ownProps) => {
     instance_type: nodes.compute_machine_type?.id,
     availability_zones: nodes.availability_zones,
     labels: nodes.compute_labels,
-    modalState: getModalDataFromState(state),
   };
 
   if (nodes.autoscale_compute) {

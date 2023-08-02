@@ -12,17 +12,19 @@ const DeleteMachinePoolModal = () => {
     return typeof obj === 'object' && obj !== null;
   }
 
-  const modalData = useGlobalState((state) => state.modal.data);
-  const machinePoolModalText =
-    isModalData(modalData) && `"${modalData.machinePool?.id}" will be lost.`;
-  const performDeleteAction = isModalData(modalData) && modalData.performDeleteAction;
   const dispatch = useDispatch();
+  const modalData = useGlobalState((state) => state.modal.data);
+  const modalDataValid = isModalData(modalData);
+  const { performDeleteAction } = modalData as {
+    performDeleteAction: any;
+  };
 
   const handleConfirmDelete = () => {
     dispatch(closeModal());
     performDeleteAction();
   };
 
+  if (!modalDataValid) return null;
   return (
     <Modal
       title="Permanently delete machine pool?"
@@ -33,7 +35,7 @@ const DeleteMachinePoolModal = () => {
       isOpen
       onClose={() => dispatch(closeModal())}
     >
-      {machinePoolModalText}
+      &quot;{modalData.machinePool?.id}&quot; will be lost.
     </Modal>
   );
 };
