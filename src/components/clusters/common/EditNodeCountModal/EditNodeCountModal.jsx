@@ -36,7 +36,6 @@ class EditNodeCountModal extends Component {
       clusterID,
       isHypershiftCluster,
     } = this.props;
-
     if (!machineTypes.fulfilled && !machineTypes.pending) {
       getMachineTypes();
     }
@@ -61,22 +60,9 @@ class EditNodeCountModal extends Component {
     }
   }
 
-  getSelectedMachinePoolNodes(machinePoolId) {
-    const { machinePoolsList } = this.props;
-    return machinePoolsList.data.find((machinePool) => machinePool.name === machinePoolId)?.nodes;
-  }
-
-  handleMachinePoolChange = (_, value) => {
-    const { change } = this.props;
-
-    change('nodes_compute', this.getSelectedMachinePoolNodes(value));
-  };
-
-  cancelEdit = () => {
-    const { closeModal, resetSection } = this.props;
+  componentWillUnmount() {
+    const { resetSection } = this.props;
     this.resetResponse();
-
-    closeModal();
     resetSection(
       'machine_pool',
       'nodes_compute',
@@ -84,16 +70,36 @@ class EditNodeCountModal extends Component {
       'min_replicas',
       'max_replicas',
     );
+  }
+
+  getSelectedMachinePoolNodes(machinePoolId) {
+    const { machinePoolsList } = this.props;
+    return machinePoolsList.data.find((machinePool) => machinePool.name === machinePoolId)?.nodes;
+  }
+
+  handleMachinePoolChange = (_, value) => {
+    const { change } = this.props;
+    change('nodes_compute', this.getSelectedMachinePoolNodes(value));
+  };
+
+  cancelEdit = () => {
+    const { closeModal } = this.props;
+    closeModal();
   };
 
   resetResponse() {
     const {
+      resetGetMachinePoolsResponse,
       resetScaleDefaultMachinePoolResponse,
       resetScaleMachinePoolResponse,
       machinePoolId,
       isHypershiftCluster,
+      clearMachineOrNodePoolsOnExit,
     } = this.props;
 
+    if (clearMachineOrNodePoolsOnExit) {
+      resetGetMachinePoolsResponse();
+    }
     if (machinePoolId === 'Default' && !isHypershiftCluster) {
       resetScaleDefaultMachinePoolResponse();
     } else {
@@ -257,6 +263,7 @@ EditNodeCountModal.propTypes = {
   isValid: PropTypes.bool,
   closeModal: PropTypes.func.isRequired,
   handleSubmit: PropTypes.func.isRequired,
+  resetGetMachinePoolsResponse: PropTypes.func.isRequired,
   resetScaleDefaultMachinePoolResponse: PropTypes.func.isRequired,
   resetScaleMachinePoolResponse: PropTypes.func.isRequired,
   editNodeCountResponse: PropTypes.object,
@@ -291,6 +298,7 @@ EditNodeCountModal.propTypes = {
   shouldDisplayClusterName: PropTypes.bool,
   clusterDisplayName: PropTypes.string,
   resetSection: PropTypes.func.isRequired,
+  clearMachineOrNodePoolsOnExit: PropTypes.bool,
 };
 
 EditNodeCountModal.defaultProps = {

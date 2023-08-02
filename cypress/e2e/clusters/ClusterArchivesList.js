@@ -15,7 +15,6 @@ describe('OCM Cluster archives page', () => {
 
         it('Cluster archives page : ui options & its actions', () => {
             ClusterListPage.isClusterListScreen();
-            ClusterListPage.clickClusterListExtraActions();
             ClusterListPage.viewClusterArchives().click();
             ClusterListPage.isClusterArchivesUrl();
             ClusterListPage.isClusterArchivesScreen();
@@ -37,7 +36,6 @@ describe('OCM Cluster archives page', () => {
         it('Cluster archives page : navigations', () => {
             ClusterListPage.showActiveClusters().click();
             ClusterListPage.isClusterListScreen();
-            ClusterListPage.clickClusterListExtraActions();
             ClusterListPage.viewClusterArchives().click();
 
         })
