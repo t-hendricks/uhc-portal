@@ -267,6 +267,7 @@ describe('<DetailsRight />', () => {
 
       // Assert
       checkForValue(componentText.AWS_INFRA_ACCOUNT.label, '987654321012');
+      expect(screen.getByText('Infrastructure AWS account')).toBeInTheDocument();
     });
 
     it('hides aws infrastructure account if aws account is not known', () => {
@@ -288,6 +289,32 @@ describe('<DetailsRight />', () => {
 
       // Assert
       checkForValueAbsence(componentText.AWS_INFRA_ACCOUNT.label);
+    });
+
+    it('shows correct text for GCP', () => {
+      // Arrange
+      const clusterFixture = defaultProps.cluster;
+
+      const newProps = {
+        ...defaultProps,
+        cluster: {
+          ...clusterFixture,
+          cloud_provider: {
+            kind: 'CloudProviderLink',
+            id: 'gcp',
+            href: '/api/clusters_mgmt/v1/cloud_providers/gcp',
+          },
+          subscription: {
+            ...clusterFixture.subscription,
+            cloud_account_id: 'fake-id',
+          },
+        },
+      };
+
+      render(<DetailsRight {...newProps} />);
+
+      // Assert
+      expect(screen.getByText('Infrastructure GCP account')).toBeInTheDocument();
     });
   });
 
