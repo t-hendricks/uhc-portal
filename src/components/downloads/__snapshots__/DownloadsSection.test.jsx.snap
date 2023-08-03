@@ -4,6 +4,7 @@ exports[`<DownloadsSection /> with ALL category selected should render 1`] = `
 <Fragment>
   <div
     className="downloads-section-header"
+    data-testid="downloads-section-DEV"
   >
     <Title
       headingLevel="h2"
@@ -23,6 +24,7 @@ exports[`<DownloadsSection /> with same category selected should render 1`] = `
 <Fragment>
   <div
     className="downloads-section-header"
+    data-testid="downloads-section-DEV"
   >
     <Title
       headingLevel="h2"

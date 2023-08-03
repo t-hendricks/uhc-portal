@@ -12,7 +12,7 @@ export const expandKeys = {
 /**
  * Represents the sections and entries of downloads page.
  */
-export const downloadsCategories = isRestrictedEnv
+export const downloadsCategories = isRestrictedEnv()
   ? [
       {
         key: 'CLI',

@@ -401,7 +401,7 @@ class MachinePools extends React.Component {
                 {machinePoolsList.error && (
                   <ErrorBox message="Error retrieving machine pools" response={machinePoolsList} />
                 )}
-                {!isRestrictedEnv && addMachinePoolBtn}
+                {!isRestrictedEnv() && addMachinePoolBtn}
                 <Divider />
                 {deleteMachinePoolResponse.error && !hideDeleteMachinePoolError && (
                   <ErrorBox
@@ -424,7 +424,7 @@ class MachinePools extends React.Component {
                     rows={rows}
                     onCollapse={this.onCollapse}
                     actionResolver={
-                      !isRestrictedEnv
+                      !isRestrictedEnv()
                         ? (rowData) =>
                             actionResolver(
                               rowData,

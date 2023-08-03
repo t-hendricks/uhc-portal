@@ -338,7 +338,7 @@ function actionResolver(
     get(cluster, 'subscription.status') !== subscriptionStatuses.ARCHIVED;
   const showUpgradeTrialCluster = isClusterReady && cluster.canEdit && isProductOSDTrial;
 
-  if (isRestrictedEnv) {
+  if (isRestrictedEnv()) {
     return [showConsoleButton && adminConsoleItemProps].filter(Boolean);
   }
 

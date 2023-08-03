@@ -141,7 +141,7 @@ function ClusterDetailsTop(props) {
     );
   }
 
-  const actions = !isRestrictedEnv && !isUninstalledAICluster(cluster) && (
+  const actions = !isRestrictedEnv() && !isUninstalledAICluster(cluster) && (
     <ClusterActionsDropdown
       disabled={!cluster.canEdit && !cluster.canDelete}
       cluster={cluster}

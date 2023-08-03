@@ -1502,6 +1502,7 @@ exports[`<Overview /> for an ARO cluster should render 1`] = `
       >
         <Card
           className="ocm-c-overview-resource-usage__card"
+          data-testid="resource-usage"
         >
           <CardTitle
             className="ocm-c-overview-resource-usage__card--header"
@@ -2096,6 +2097,7 @@ exports[`<Overview /> for an OCP cluster should render 1`] = `
       >
         <Card
           className="ocm-c-overview-resource-usage__card"
+          data-testid="resource-usage"
         >
           <CardTitle
             className="ocm-c-overview-resource-usage__card--header"
@@ -2148,6 +2150,7 @@ exports[`<Overview /> for an OCP cluster should render 1`] = `
       >
         <Card
           className="ocm-c-overview-advisor--card"
+          data-testid="insights-advisor"
           ouiaId="insightsAdvisor"
         >
           <CardBody>
@@ -2228,6 +2231,7 @@ exports[`<Overview /> for an OSD cluster should render 1`] = `
     >
       <Card
         className="ocm-c-overview-resource-usage__card"
+        data-testid="resource-usage"
       >
         <CardTitle
           className="ocm-c-overview-resource-usage__card--header"
