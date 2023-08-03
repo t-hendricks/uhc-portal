@@ -26,6 +26,7 @@ class ClusterDetails extends Page {
 
   editDisplayNameInput = () => cy.get('input[id="edit-display-name-input"]');
 
+
   editDisplaynameConfirm = () =>
     cy.get('div[aria-label="Edit display name"]').find('footer').find('button').first();
 
@@ -46,12 +47,30 @@ class ClusterDetails extends Page {
 
   unarchiveClusterDialogConfirm = () => cy.contains('button', 'Unarchive cluster');
 
+  deleteClusterDropdownItem = () => cy.contains('button', 'Delete cluster');
+
+  deleteClusterNameInput = () => cy.get('input[aria-label="cluster name"]');
+
+  deleteClusterConfirm = () => cy.get('div[aria-label="Delete cluster"]').find('footer').find('button').first();
+
   clusterNameTitle = () => cy.get('h1.cl-details-page-title');
+
+  clusterTypeLabelValue = () => cy.get('span[class="pf-c-description-list__text"]').contains('Type').parent().siblings().get('dd').find('span');
+
+  clusterRegionLabelValue = () => cy.get('span[class="pf-c-description-list__text"]').contains('Region').parent().siblings().get('dd').find('div');
+
+  clusterAvailabilityLabelValue = () => cy.get('span[data-testid="availability"]');
+
+  clusterInfrastructureAWSaccountLabelValue = () => cy.get('span[class="pf-c-description-list__text"]').contains('Infrastructure AWS account').parent().siblings().get('dd').find('div');
 
   waitForEditUrlModalToLoad = () => {
     cy.getByTestId('edit-console-url-dialog', { timeout: 30000 }).should('be.visible');
     cy.get('input[id="edit-console-url-input"]', { timeout: 30000 }).should('be.visible');
   };
+
+  clusterDetailsPageRefresh() {
+    cy.get('button[aria-label="Refresh"]').click();
+  }
 
   waitForEditUrlModalToClear = () => {
     cy.getByTestId('edit-console-url-dialog', { timeout: 30000 }).should('not.exist');
@@ -78,7 +97,47 @@ class ClusterDetails extends Page {
   waitForClusterDetailsLoad = () => {
     cy.get('div.ins-c-spinner.cluster-details-spinner', { timeout: 30000 }).should('not.exist');
   };
+
+  waitForAccountSetupToSuccess() {
+    cy.get('li[id="awsAccountSetup"]', { timeout: 80000 }).should('have.class', 'pf-m-success');
+    this.checkInstallationStepStatus('Account setup', 'Completed');
+  }
+
+  waitForOidcAndOperatorRolesSetupToSuccess() {
+    cy.get('li[id="oidcAndOperatorRolesSetup"]', { timeout: 80000 }).should('have.class', 'pf-m-success');
+    this.checkInstallationStepStatus('OIDC and operator roles', 'Completed');
+  }
+
+  waitForDNSSetupToSuccess() {
+    cy.get('li[id="DNSSetup"]', { timeout: 80000 }).should('have.class', 'pf-m-success');
+    this.checkInstallationStepStatus('DNS setup', 'Completed');
+  }
+
+  waitForClusterInstallationToSuccess() {
+    cy.get('li[id="clusterInstallation"]', { timeout: 80000 }).should('have.class', 'pf-m-success');
+    this.checkInstallationStepStatus('Cluster installation', 'Completed');
+  }
+
+  checkInstallationStepStatus(step, status = '') {
+    let installStep = cy.get('div.pf-c-progress-stepper__step-title').contains(step);
+    if (status == "") {
+      installStep.should('be.visible');
+    }
+    else {
+      installStep.siblings().find('div').contains(status);
+    }
+  }
+
+  waitForInstallerScreenToLoad = () => {
+    cy.get('.pf-c-spinner', { timeout: 30000 }).should('not.exist');
+    cy.get('div.cluster-loading-container', { timeout: 100000 }).should('not.exist');
+  };
+
+  waitForDeleteClusterActionComplete = () => {
+    cy.get('div[data-testid="delete-cluster-dialog"]').get('div.ins-c-spinner', { timeout: 50000 }).should('not.exist');
+  };
 }
+
 
 ClusterDetails.propTypes = {
   displayName: PropTypes.string.isRequired,

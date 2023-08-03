@@ -4,12 +4,43 @@ import ClusterListPage from './ClusterList.page';
 import CreateClusterPage from './CreateCluster.page';
 
 class CreateRosaCluster extends Page {
+
+  clusterDetailsTree = () => cy.get('li.pf-c-wizard__nav-item').find('button').contains('Details');
+
+  machineCIDRInput = () => cy.get('input[id="network_machine_cidr"]');
+
+  serviceCIDRInput = () => cy.get('input[id="network_service_cidr"]');
+
+  podCIDRInput = () => cy.get('input[id="network_pod_cidr"]');
+
+  hostPrefixInput = () => cy.get('input[id="network_host_prefix"]');
+
+  customOperatorPrefixInput = () => cy.get('input[id="custom_operator_roles_prefix"]');
+
+  enableAdditionalEtcdEncryptionCheckbox = () => cy.get('input[id="etcd_encryption"]');
+
+  enableFIPSCryptographyCheckbox = () => cy.get('input[id="fips"]');
+
+  createClusterButton = () => cy.get('button[type="submit"]').contains('Create cluster');
+
+  refreshInfrastructureAWSAccountButton = () => cy.get('button[data-testid="refresh-aws-accounts"]').first();
+
+  refreshBillingAWSAccountButton = () => cy.get('button[data-testid="refresh-aws-accounts"]').second();
+
   isCreateRosaPage() {
     super.assertUrlIncludes('/openshift/create/rosa/wizard');
   }
 
   isAccountsAndRolesScreen() {
     cy.contains('h3', 'AWS infrastructure account');
+  }
+
+  isClusterDetailsScreen() {
+    cy.contains('h3', 'Cluster details');
+  }
+
+  isClusterMachinepoolsScreen() {
+    cy.contains('h3', 'Default machine pool');
   }
 
   isControlPlaneTypeScreen() {
@@ -72,6 +103,10 @@ class CreateRosaCluster extends Page {
       .should('eq', testVersion);
   };
 
+  get clusterNameInput() {
+    return 'input#name';
+  }
+
   get accountIdMenuItem() {
     return '.pf-c-select__menu-item';
   }
@@ -108,6 +143,113 @@ class CreateRosaCluster extends Page {
         expect(isSelected).to.eq('true');
       });
   }
+
+  selectHostedControlPlaneTypeOption() {
+    cy.getByTestId('hosted-control-planes').click();
+    cy.getByTestId('hosted-control-planes').should('have.attr', 'aria-selected').then((isSelected) => {
+      expect(isSelected).to.eq('true');
+    });
+  }
+
+  selectAWSInfrastructureAccount(accountID) {
+    cy.get('button').contains('How to associate a new AWS account').siblings().find('div').find('button.pf-c-select__toggle').click();
+    cy.get('input.pf-m-search', { timeout: 50000 }).clear().type(accountID);
+    cy.get('div[label="Associated AWS infrastructure account"]').find('button').contains(accountID).click();
+  }
+  waitForARNList() {
+    cy.get('span.pf-c-button__progress', { timeout: 80000 }).should('not.exist');
+  }
+
+  selectInstallerRole(roleName) {
+    cy.get('span').contains('Installer role').parent().parent().siblings().find('div').find('button.pf-c-select__toggle').click();
+    cy.get('ul[id="installer_role_arn"]').find('button').contains(roleName).click();
+  }
+  selectClusterVersion(version) {
+    cy.get('div[name="cluster_version"]').find('button.pf-c-select__toggle').click();
+    cy.get('ul[label="Version"]').find('button').contains(version).click();
+  }
+
+  selectRegion(region) {
+    cy.get('select[name="region"]').select(region);
+  }
+
+  selectComputeNodeType(computeNodeType) {
+    cy.get('label[for="node_type"]').parent().siblings().find('div').find('button.pf-c-select__toggle').click();
+    cy.get('li').contains(computeNodeType).click();
+  }
+
+  enableAutoScaling() {
+    cy.get('input[id="autoscalingEnabled"]').check();
+  }
+
+  disabledAutoScaling() {
+    cy.get('input[id="autoscalingEnabled"]').uncheck();
+  }
+
+  selectComputeNodeCount(count) {
+    cy.get('select[name="nodes_compute"]').select(count);
+  }
+
+  selectClusterPrivacy(privacy) {
+    let privacyRadio = cy.get('input[id="cluster_privacy-external"]');
+    if (privacy == "private") {
+      privacyRadio.last().check();
+    }
+    else {
+      privacyRadio.first().check();
+    }
+  }
+
+  selectUpdateStratergy(stratergy) {
+    let updateStratergy = cy.get('input[name="upgrade_policy"]');
+    if (stratergy == "Recurring updates") {
+      updateStratergy.last().check();
+    }
+    else {
+      updateStratergy.first().check();
+    }
+  }
+
+  selectAvailabilityZone(az) {
+    let avilabilityZone = cy.get('input[name="multi_az"]');
+    if (az == "Single zone") {
+      avilabilityZone.first().check();
+    }
+    else {
+      avilabilityZone.last().check();
+    }
+  }
+
+  selectRoleProviderMode(mode) {
+    let modeRadio = cy.get('input[name="rosa_roles_provider_creation_mode"]');
+    if (mode == "Auto") {
+      modeRadio.last().check();
+    }
+    else {
+      modeRadio.first().check();
+    }
+  }
+
+  useCIDRDefaultValues(value = true) {
+    let cidrDefaultValuesCheckBox = cy.get('input[id="cidr_default_values_toggle"]');
+    if (value) {
+      cidrDefaultValuesCheckBox.check();
+    }
+    else {
+      cidrDefaultValuesCheckBox.uncheck();
+    }
+  }
+
+  selectOIDCConfigID(configID) {
+    cy.get('span').contains('Select a config id').click({ force: true });
+    cy.get('ul[name="byo_oidc_config_id"]').find('span').contains(configID).click();
+  }
+
+  isClusterPropertyMatchesValue(property, value) {
+    cy.get('span.pf-c-description-list__text').contains(property).parent().siblings().find('div').contains(value);
+  }
+
 }
+
 
 export default new CreateRosaCluster();
