@@ -178,7 +178,7 @@ const CreateRosaGetStarted = () => {
                   <GridItem span={6}>
                     <WithCLICard />
                   </GridItem>
-                  {!isRestrictedEnv && (
+                  {!isRestrictedEnv() && (
                     <GridItem span={6}>
                       <WithWizardCard />
                     </GridItem>

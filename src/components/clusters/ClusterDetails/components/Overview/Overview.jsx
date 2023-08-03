@@ -95,7 +95,7 @@ class Overview extends React.Component {
       cluster.state === clusterStates.UNINSTALLING;
 
     const showInsightsAdvisor =
-      !isRestrictedEnv &&
+      !isRestrictedEnv() &&
       insightsData?.status === 200 &&
       insightsData?.data &&
       !isDeprovisioned &&
@@ -106,7 +106,7 @@ class Overview extends React.Component {
       !shouldShowLogs(cluster) &&
       !isDeprovisioned &&
       !isArchived &&
-      !isRestrictedEnv;
+      !isRestrictedEnv();
     const showCostBreakdown =
       !cluster.managed &&
       userAccess.fulfilled &&
@@ -126,7 +126,7 @@ class Overview extends React.Component {
     }
 
     const resourceUsage = (
-      <Card className="ocm-c-overview-resource-usage__card">
+      <Card className="ocm-c-overview-resource-usage__card" data-testid="resource-usage">
         <CardTitle className="ocm-c-overview-resource-usage__card--header">
           <Title headingLevel="h2" className="card-title">
             Resource usage
@@ -205,7 +205,11 @@ class Overview extends React.Component {
               )}
               {showInsightsAdvisor && (
                 <GridItem sm={6} xl2={12}>
-                  <Card className="ocm-c-overview-advisor--card" ouiaId="insightsAdvisor">
+                  <Card
+                    className="ocm-c-overview-advisor--card"
+                    ouiaId="insightsAdvisor"
+                    data-testid="insights-advisor"
+                  >
                     <CardBody>
                       <InsightsAdvisor
                         insightsData={insightsData}

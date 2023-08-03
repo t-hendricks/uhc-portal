@@ -82,7 +82,7 @@ class ClusterList extends Component {
       onListFlagsSet,
     } = this.props;
 
-    if (isRestrictedEnv) {
+    if (isRestrictedEnv()) {
       onListFlagsSet(
         'subscriptionFilter',
         {
@@ -282,9 +282,12 @@ class ClusterList extends Component {
                       view={viewConstants.CLUSTERS_VIEW}
                     />
                   </ToolbarItem>
-                  {!isRestrictedEnv && (
+                  {!isRestrictedEnv() && (
                     <>
-                      <ToolbarItem className="ocm-c-toolbar__item-cluster-list-filter-dropdown">
+                      <ToolbarItem
+                        className="ocm-c-toolbar__item-cluster-list-filter-dropdown"
+                        data-testid="cluster-list-filter-dropdown"
+                      >
                         <ClusterListFilterDropdown
                           view={viewConstants.CLUSTERS_VIEW}
                           isDisabled={pending}
@@ -316,7 +319,7 @@ class ClusterList extends Component {
                   </ToolbarItem>
                 </ToolbarContent>
               </Toolbar>
-              {!isRestrictedEnv && (
+              {!isRestrictedEnv() && (
                 <ClusterListFilterChipGroup view={viewConstants.CLUSTERS_VIEW} history={history} />
               )}
               <ClusterListTable

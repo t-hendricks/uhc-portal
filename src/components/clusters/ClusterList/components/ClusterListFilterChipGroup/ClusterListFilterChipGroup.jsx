@@ -32,7 +32,7 @@ function ClusterListFilterChipGroup({ currentFilters, setFilter, history }) {
   ];
 
   return (
-    <Split>
+    <Split data-testid="cluster-list-filter-chipgroup">
       <SplitItem>
         <ChipGroup>
           {groups

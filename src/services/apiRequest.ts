@@ -6,7 +6,7 @@ import { isRestrictedEnv, restrictedEnvApi } from '~/restrictedEnv';
 import config from '../config';
 
 const getBaseUrl = (baseUrl: string | undefined) => {
-  if (isRestrictedEnv) {
+  if (isRestrictedEnv()) {
     return restrictedEnvApi;
   }
   return baseUrl || (config.configData.apiGateway ? config.configData.apiGateway : '');
