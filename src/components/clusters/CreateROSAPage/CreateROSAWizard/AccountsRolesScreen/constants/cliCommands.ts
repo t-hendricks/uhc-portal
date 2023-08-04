@@ -8,9 +8,7 @@ export enum RosaCliCommand {
   ListUserRole = 'rosa list user-role',
   VerifyQuota = 'rosa verify quota',
   WhoAmI = 'rosa whoami',
-  CreateAccountRolesAuto = 'rosa create account-roles --mode auto',
-  CreateAccountRoles = 'rosa create account-roles',
-  CreateAccountRolesHCP = 'rosa create account-roles --hosted-cp',
-  CreateAccountRolesHCPAuto = 'rosa create account-roles --hosted-cp --mode auto',
+  CreateAccountRoles = 'rosa create account-roles --mode auto',
+  CreateAccountRolesHCP = 'rosa create account-roles --hosted-cp --mode auto',
   CreateCluster = 'rosa create cluster',
 }

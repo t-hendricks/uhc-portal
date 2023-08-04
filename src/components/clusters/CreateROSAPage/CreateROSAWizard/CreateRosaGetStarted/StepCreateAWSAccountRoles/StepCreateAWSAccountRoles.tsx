@@ -53,7 +53,7 @@ const StepCreateAWSAccountRoles = ({
             textAriaLabel="Copyable ROSA create account-roles command"
             className="pf-u-mt-md"
           >
-            {RosaCliCommand.CreateAccountRolesAuto}
+            {RosaCliCommand.CreateAccountRoles}
           </InstructionCommand>
           {/* TODO: PatternFly incorrectly puts the content of an alert as a h4 - this text should not be a heading */}
           <Alert
