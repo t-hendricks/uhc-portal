@@ -19,7 +19,6 @@ import {
 } from '@patternfly/react-core';
 
 import { LoadBalancerFlavor } from '~/types/clusters_mgmt.v1';
-import { isRestrictedEnv } from '~/restrictedEnv';
 import EditClusterIngressDialog from '../EditClusterIngressDialog';
 import ButtonWithTooltip from '../../../../../../common/ButtonWithTooltip';
 

@@ -21,7 +21,6 @@ import { Spinner } from '@redhat-cloud-services/frontend-components/Spinner';
 import * as OCM from '@openshift-assisted/ui-lib/ocm';
 
 import { AppPage } from '~/components/App/AppPage';
-import { isRestrictedEnv } from '~/restrictedEnv';
 import ClusterDetailsTop from './components/ClusterDetailsTop';
 import TabsRow from './components/TabsRow';
 import Overview from './components/Overview/Overview';

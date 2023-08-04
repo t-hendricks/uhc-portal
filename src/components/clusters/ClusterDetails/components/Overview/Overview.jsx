@@ -7,7 +7,6 @@ import { Alert, Card, CardBody, CardTitle, Grid, GridItem, Title } from '@patter
 import * as OCM from '@openshift-assisted/ui-lib/ocm';
 import { subscriptionStatuses } from '~/common/subscriptionTypes';
 import { ASSISTED_INSTALLER_FEATURE } from '~/redux/constants/featureConstants';
-import { isRestrictedEnv } from '~/restrictedEnv';
 import isAssistedInstallSubscription, {
   isAvailableAssistedInstallCluster,
   isUninstalledAICluster,
