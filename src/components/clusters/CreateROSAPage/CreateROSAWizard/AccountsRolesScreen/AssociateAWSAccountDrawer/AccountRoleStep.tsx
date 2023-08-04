@@ -26,7 +26,7 @@ const AccountRoleStep = (props: AssociateAWSAccountStepProps) => {
         className="pf-u-mb-lg"
       >
         {isHypershiftSelected
-          ? RosaCliCommand.CreateAccountRolesHCP
+          ? RosaCliCommand.CreateAccountRolesHCPAuto
           : RosaCliCommand.CreateAccountRolesAuto}
       </InstructionCommand>
 
