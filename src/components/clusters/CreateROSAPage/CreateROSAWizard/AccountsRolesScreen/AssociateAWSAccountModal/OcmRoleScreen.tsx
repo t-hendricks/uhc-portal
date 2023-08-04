@@ -19,9 +19,9 @@ import links from '~/common/installLinks.mjs';
 import PopoverHintWithTitle from '~/components/common/PopoverHintWithTitle';
 import ExternalLink from '~/components/common/ExternalLink';
 import InstructionCommand from '~/components/common/InstructionCommand';
+import { useGlobalState } from '~/redux/hooks/useGlobalState';
 import { RosaCliCommand } from '../constants/cliCommands';
 import MultipleAccountsInfoBox from './MultipleAccountsInfoBox';
-import { useGlobalState } from '~/redux/hooks/useGlobalState';
 
 export const OcmRoleScreen = () => {
   const hasAwsAccounts = useGlobalState(
