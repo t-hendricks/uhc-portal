@@ -41,7 +41,9 @@ function MachinePoolScreen({
       <Grid hasGutter>
         <MachinePoolScreenHeader isHypershiftSelected={isHypershift} />
 
-        {isHypershift && <MachinePoolsSubnets selectedVPC={selectedVPC} />}
+        {isHypershift && (
+          <MachinePoolsSubnets selectedVPC={selectedVPC} isHypershift={isHypershift} />
+        )}
 
         <ScaleSection
           isBYOC={isByoc}
