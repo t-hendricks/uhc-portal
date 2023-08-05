@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { Field } from 'redux-form';
 import {
@@ -9,18 +9,16 @@ import {
   FlexItem,
   FormGroup,
   Popover,
-  Select,
-  SelectOption,
   Text,
   TextContent,
   TextVariants,
   Skeleton,
 } from '@patternfly/react-core';
-
 import ExternalLink from '~/components/common/ExternalLink';
 import PopoverHint from '~/components/common/PopoverHint';
 import Instruction from '~/components/common/Instruction';
 import Instructions from '~/components/common/Instructions';
+import FuzzySelect from '~/components/common/FuzzySelect';
 import validators from '../../../../../common/validators';
 import links from '../../../../../common/installLinks.mjs';
 import ReduxVerticalFormGroup from '../../../../common/ReduxFormComponents/ReduxVerticalFormGroup';
@@ -65,6 +63,7 @@ function CustomerOIDCConfiguration({
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [oidcConfigs, setOidcConfigs] = useState([]);
+  const [selectedConfig, setSelectedConfig] = useState(byoOidcConfigID);
 
   const refreshOidcConfigs = React.useCallback(() => {
     setIsLoading(true);
@@ -90,9 +89,10 @@ function CustomerOIDCConfiguration({
   }, [byoOidcConfigID, onParentSelect]);
 
   const onSelect = (_, configId) => {
-    const selectedConfig = oidcConfigs.find((config) => config.id === configId);
+    const selected = oidcConfigs.find((config) => config.id === configId);
     setIsDropdownOpen(false);
-    onParentSelect(selectedConfig);
+    setSelectedConfig(configId);
+    onParentSelect(selected);
   };
 
   useEffect(() => {
@@ -100,12 +100,15 @@ function CustomerOIDCConfiguration({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  let placeholderOptionText = 'Select a config id';
-  if (oidcConfigs.length === 0) {
-    placeholderOptionText = isLoading
-      ? 'Loading OIDC configurations...'
-      : 'No OIDC configurations have been found';
-  }
+  const selectionData = useMemo(
+    () =>
+      oidcConfigs.map((oidcConfig) => ({
+        key: oidcConfig.id,
+        value: oidcConfig.id,
+        description: oidcConfig.issuer_url ? `Issuer URL: ${oidcConfig.issuer_url}` : undefined,
+      })),
+    [oidcConfigs],
+  );
 
   return (
     <>
@@ -135,29 +138,21 @@ function CustomerOIDCConfiguration({
           >
             <Flex>
               <FlexItem grow={{ default: 'grow' }}>
-                <Select
+                <FuzzySelect
                   {...inputProps}
+                  label="Config ID"
+                  aria-label="Config ID"
+                  isOpen={isDropdownOpen}
                   onToggle={setIsDropdownOpen}
                   onSelect={onSelect}
-                  selections={byoOidcConfigID ? [byoOidcConfigID] : []}
+                  selected={selectedConfig}
+                  selectionData={selectionData}
                   isDisabled={oidcConfigs.length === 0 || isLoading}
-                  isOpen={isDropdownOpen}
-                >
-                  <SelectOption value="NO_SELECTION" isSelected isPlaceholder isDisabled>
-                    {placeholderOptionText}
-                  </SelectOption>
-                  {oidcConfigs.map((oidcConfig) => (
-                    <SelectOption
-                      key={oidcConfig.id}
-                      value={oidcConfig.id}
-                      description={
-                        oidcConfig.issuer_url ? `Issuer URL: ${oidcConfig.issuer_url}` : undefined
-                      }
-                    >
-                      {oidcConfig.id}
-                    </SelectOption>
-                  ))}
-                </Select>
+                  placeholderText={
+                    oidcConfigs.length > 0 ? 'Select a config id' : 'No OIDC configurations found'
+                  }
+                  inlineFilterPlaceholderText="Filter by config ID"
+                />
               </FlexItem>
               <FlexItem>
                 <Button
