@@ -102,6 +102,7 @@ const VPCDropdown = ({
         key: vpcItem.name! || vpcItem.id!,
         value: vpcItem.name || vpcItem.id,
         description: vpcItem.aws_subnets?.length === 0 ? 'This VPC has no private subnets' : '',
+        disabled: vpcItem.aws_subnets?.length === 0,
       })),
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [selectData.items],
