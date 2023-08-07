@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { Field, FieldArray } from 'redux-form';
 import { Form, Grid, GridItem } from '@patternfly/react-core';
 
-import { validateNoEmptyTaints } from '~/common/validators';
 import Modal from '../../../../../../common/Modal/Modal';
 import ErrorBox from '../../../../../../common/ErrorBox';
 import { SpotInstanceInfoAlert, isMachinePoolUsingSpotInstances } from '../SpotInstanceHelper';
@@ -93,7 +92,6 @@ class EditTaintsModal extends Component {
                   component={ReduxFormTaints}
                   isEditing
                   canAddMore={!invalid}
-                  warn={validateNoEmptyTaints}
                 />
               </GridItem>
               {isMachinePoolUsingSpotInstances(selectedMachinePoolId, machinePoolsList) && (
