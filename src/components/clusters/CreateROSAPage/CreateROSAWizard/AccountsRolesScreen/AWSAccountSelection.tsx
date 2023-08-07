@@ -24,6 +24,7 @@ import {
   ButtonProps,
   KeyTypes,
 } from '@patternfly/react-core';
+import { ErrorCircleOIcon } from '@patternfly/react-icons';
 import Fuse from 'fuse.js';
 import './AccountsRolesScreen.scss';
 import links from '~/common/installLinks.mjs';
@@ -164,6 +165,24 @@ function AWSAccountSelection({
     (_: ChangeEvent<HTMLInputElement> | null, account: string) => {
       if (account === '') {
         return selectOptions;
+      }
+      // feature requested: https://github.com/patternfly/patternfly-react/issues/9407
+      if (/[\D]/g.test(account)) {
+        return [
+          <SelectOption
+            isDisabled
+            key={0}
+            style={{ color: 'var(--pf-global--danger-color--100)' }}
+            isNoResultsOption
+          >
+            <div>
+              <span className="pf-u-mr-sm">
+                <ErrorCircleOIcon />
+              </span>
+              <span>Please enter numeric digits only.</span>
+            </div>
+          </SelectOption>,
+        ];
       }
       // create filtered map and sort by relevance
       const filterText = account.toLowerCase();
