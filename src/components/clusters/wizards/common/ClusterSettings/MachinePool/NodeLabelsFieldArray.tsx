@@ -20,8 +20,7 @@ export interface NodeLabel {
 export const NodeLabelsFieldArray = () => {
   const { values } = useFormState();
   const nodeLabels: NodeLabel[] = values[FieldId.NodeLabels];
-  const hasCompleteNodeLabel = () =>
-    nodeLabels.every((nodeLabel) => nodeLabel.key && nodeLabel.value);
+  const hasCompleteNodeKey = () => !nodeLabels.every((nodeLabel) => nodeLabel.key);
 
   const validateNodeKey = (index: number) => (value: string) => {
     if (nodeLabels.length > 1) {
@@ -99,7 +98,7 @@ export const NodeLabelsFieldArray = () => {
                 icon={<PlusCircleIcon />}
                 variant="link"
                 isInline
-                disableReason={!hasCompleteNodeLabel() && nodeKeyValueTooltipText}
+                disableReason={hasCompleteNodeKey() && nodeKeyValueTooltipText}
               >
                 Add additional label
               </ButtonWithTooltip>
