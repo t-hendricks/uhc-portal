@@ -368,7 +368,7 @@ class ClusterDetails extends Component {
       !isClusterWaiting &&
       cluster.managed &&
       !isArchived &&
-      !isRestrictedEnv;
+      !isRestrictedEnv();
 
     const displayMonitoringTab =
       !isArchived && !cluster.managed && !isAROCluster && !isUninstalledAICluster(cluster);
@@ -389,9 +389,9 @@ class ClusterDetails extends Component {
       // The (managed) cluster has not yet reported its cluster ID to AMS
       // eslint-disable-next-line camelcase
       cluster.subscription?.external_cluster_id === undefined;
-    const displaySupportTab = !hideSupportTab && !isOSDTrial && !isRestrictedEnv;
+    const displaySupportTab = !hideSupportTab && !isOSDTrial && !isRestrictedEnv();
     const displayUpgradeSettingsTab =
-      (cluster.managed || isAROCluster) && cluster.canEdit && !isArchived && !isRestrictedEnv;
+      (cluster.managed || isAROCluster) && cluster.canEdit && !isArchived && !isRestrictedEnv();
 
     let addHostsTabState = { showTab: false, isDisabled: false, tabTooltip: '' };
     if (assistedInstallerEnabled && !isArchived) {

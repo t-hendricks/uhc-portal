@@ -110,7 +110,7 @@ const VPCDetailsCard = (props) => {
         </DescriptionList>
         <EditClusterWideProxyDialog />
       </CardBody>
-      {!isRestrictedEnv && (
+      {!isRestrictedEnv() && (
         <CardFooter>
           <Button variant="secondary" onClick={handleEditClusterProxy}>
             Edit cluster-wide proxy

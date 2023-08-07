@@ -1,7 +1,9 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`<ClusterListFilterChipGroup /> should render 1`] = `
-<Split>
+<Split
+  data-testid="cluster-list-filter-chipgroup"
+>
   <SplitItem>
     <ChipGroup
       aria-label="Chip group category"

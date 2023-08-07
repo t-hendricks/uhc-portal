@@ -299,6 +299,7 @@ function OCMRolesSection({
           variant="secondary"
           className="access-control-add"
           disableReason={disableReason}
+          data-testid="grant-role-btn"
         >
           Grant role
         </ButtonWithTooltip>

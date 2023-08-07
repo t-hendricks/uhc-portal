@@ -98,7 +98,7 @@ class ClusterIngressCard extends React.Component {
               </ClipboardCopy>
               <TextContent>
                 <Text component={TextVariants.small}>
-                  {`${isApiPrivate || isRestrictedEnv ? 'Private' : 'Public'} API`}
+                  {`${isApiPrivate || isRestrictedEnv() ? 'Private' : 'Public'} API`}
                 </Text>
               </TextContent>
             </FormGroup>
@@ -110,7 +110,7 @@ class ClusterIngressCard extends React.Component {
               />
               <TextContent>
                 <Text component={TextVariants.small}>
-                  {`${isDefaultRouterPrivate || isRestrictedEnv ? 'Private' : 'Public'} router`}
+                  {`${isDefaultRouterPrivate || isRestrictedEnv() ? 'Private' : 'Public'} router`}
                 </Text>
               </TextContent>
             </FormGroup>
@@ -135,7 +135,7 @@ class ClusterIngressCard extends React.Component {
                   <TextContent>
                     <Text component={TextVariants.small}>
                       {`${
-                        isAdditionalRouterPrivate || isRestrictedEnv ? 'Private' : 'Public'
+                        isAdditionalRouterPrivate || isRestrictedEnv() ? 'Private' : 'Public'
                       } router`}
                     </Text>
                   </TextContent>
@@ -156,7 +156,7 @@ class ClusterIngressCard extends React.Component {
             <EditClusterIngressDialog provider={provider} refreshCluster={refreshCluster} />
           </Form>
         </CardBody>
-        {!isRestrictedEnv && (
+        {!isRestrictedEnv() && (
           <CardFooter>
             <ActionList>
               <ButtonWithTooltip

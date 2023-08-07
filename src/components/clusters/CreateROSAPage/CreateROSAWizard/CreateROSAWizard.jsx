@@ -14,6 +14,7 @@ import { useFeatureGate } from '~/hooks/useFeatureGate';
 import usePreventBrowserNav from '~/hooks/usePreventBrowserNav';
 import { HYPERSHIFT_WIZARD_FEATURE } from '~/redux/constants/featureConstants';
 import { AppPage } from '~/components/App/AppPage';
+import { AppDrawerContext } from '~/components/App/AppDrawer';
 import { getAccountAndRolesStepId, stepId, stepNameById } from './rosaWizardConstants';
 
 import CIDRScreen from '../../CreateOSDPage/CreateOSDWizard/CIDRScreen';
@@ -38,8 +39,6 @@ import ClusterRolesScreen from './ClusterRolesScreen';
 
 import CreateRosaWizardFooter from './CreateRosaWizardFooter';
 
-import AssociateAWSAccountDrawer from './AccountsRolesScreen/AssociateAWSAccountDrawer';
-
 import './createROSAWizard.scss';
 
 class CreateROSAWizardInternal extends React.Component {
@@ -50,7 +49,6 @@ class CreateROSAWizardInternal extends React.Component {
     // Dictionary of step IDs; { [stepId: number]: boolean },
     // where entry values indicate the latest form validation state for those respective steps.
     validatedSteps: {},
-    isDrawerOpen: false,
   };
 
   componentDidMount() {
@@ -140,8 +138,9 @@ class CreateROSAWizardInternal extends React.Component {
   // triggered by all forms of navigation;
   // next / back / nav-links / imperative (e.g. "edit step" links in the review step)
   onCurrentStepChanged = ({ id }) => {
+    const { closeDrawer } = this.props;
     this.setState({ currentStepId: id });
-    this.setDrawerOpen(false);
+    closeDrawer({ skipOnClose: true });
   };
 
   onNext = ({ id }, { prevId }) => {
@@ -248,8 +247,6 @@ class CreateROSAWizardInternal extends React.Component {
     });
   };
 
-  setDrawerOpen = (shouldBeOpen) => this.setState({ isDrawerOpen: shouldBeOpen || false });
-
   render() {
     const {
       onSubmit,
@@ -266,8 +263,7 @@ class CreateROSAWizardInternal extends React.Component {
       isHypershiftEnabled,
       isHypershiftSelected,
     } = this.props;
-    const { accountAndRolesStepId, deferredNext, isDrawerOpen, isNextClicked, currentStepId } =
-      this.state;
+    const { accountAndRolesStepId, deferredNext, isNextClicked, currentStepId } = this.state;
 
     const steps = [
       isHypershiftEnabled && {
@@ -288,8 +284,6 @@ class CreateROSAWizardInternal extends React.Component {
             <AccountsRolesScreen
               organizationID={organization?.details?.id}
               isHypershiftSelected={isHypershiftSelected}
-              setDrawerIsOpen={this.setDrawerOpen}
-              isDrawerOpen={isDrawerOpen}
             />
           </ErrorBoundary>
         ),
@@ -492,37 +486,35 @@ class CreateROSAWizardInternal extends React.Component {
           {config.fakeOSD && ( // TODO Is ?fake=true supported for ROSA clusters?
             <Banner variant="warning">On submit, a fake ROSA cluster will be created.</Banner>
           )}
-          <AssociateAWSAccountDrawer isOpen={isDrawerOpen} setIsOpen={this.setDrawerOpen}>
-            <div className="ocm-page">
-              {isErrorModalOpen && <CreateClusterErrorModal />}
-              <Wizard
-                className="rosa-wizard"
-                navAriaLabel={`${ariaTitle} steps`}
-                mainAriaLabel={`${ariaTitle} content`}
-                steps={steps}
-                isNavExpandable
-                onNext={this.onNext}
-                onBack={this.onBack}
-                onGoToStep={this.onGoToStep}
-                onCurrentStepChanged={this.onCurrentStepChanged}
-                onClose={() => history.push('/')}
-                footer={
-                  !createClusterResponse.pending ? (
-                    <CreateRosaWizardFooter
-                      firstStepId={steps[0].id}
-                      onSubmit={onSubmit}
-                      onBeforeNext={this.onBeforeNext}
-                      onBeforeSubmit={this.onBeforeSubmit}
-                      isNextDisabled={!!deferredNext}
-                      currentStepId={currentStepId}
-                    />
-                  ) : (
-                    <></>
-                  )
-                }
-              />
-            </div>
-          </AssociateAWSAccountDrawer>
+          <div className="ocm-page">
+            {isErrorModalOpen && <CreateClusterErrorModal />}
+            <Wizard
+              className="rosa-wizard"
+              navAriaLabel={`${ariaTitle} steps`}
+              mainAriaLabel={`${ariaTitle} content`}
+              steps={steps}
+              isNavExpandable
+              onNext={this.onNext}
+              onBack={this.onBack}
+              onGoToStep={this.onGoToStep}
+              onCurrentStepChanged={this.onCurrentStepChanged}
+              onClose={() => history.push('/')}
+              footer={
+                !createClusterResponse.pending ? (
+                  <CreateRosaWizardFooter
+                    firstStepId={steps[0].id}
+                    onSubmit={onSubmit}
+                    onBeforeNext={this.onBeforeNext}
+                    onBeforeSubmit={this.onBeforeSubmit}
+                    isNextDisabled={!!deferredNext}
+                    currentStepId={currentStepId}
+                  />
+                ) : (
+                  <></>
+                )
+              }
+            />
+          </div>
         </PageSection>
       </>
     );
@@ -534,7 +526,16 @@ function CreateROSAWizard(props) {
   const isHypershiftEnabled = useFeatureGate(HYPERSHIFT_WIZARD_FEATURE);
   return (
     <AppPage title="Create OpenShift ROSA Cluster">
-      <CreateROSAWizardInternal {...props} isHypershiftEnabled={isHypershiftEnabled} />
+      <AppDrawerContext.Consumer>
+        {({ closeDrawer }) => (
+          <CreateROSAWizardInternal
+            {...props}
+            closeDrawer={closeDrawer}
+            isHypershiftEnabled={isHypershiftEnabled}
+          />
+        )}
+      </AppDrawerContext.Consumer>
+
       <LeaveCreateClusterPrompt product={normalizedProducts.ROSA} />
     </AppPage>
   );
@@ -597,6 +598,8 @@ CreateROSAWizardInternal.propTypes = {
     push: PropTypes.func.isRequired,
     block: PropTypes.func,
   }).isRequired,
+
+  closeDrawer: PropTypes.func,
 };
 
 CreateROSAWizard.propTypes = { ...CreateROSAWizardInternal.propTypes };

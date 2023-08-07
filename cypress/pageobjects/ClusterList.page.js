@@ -13,7 +13,7 @@ class ClusterList extends Page {
   viewOnlyMyCluster = () => cy.get('label > input[id="view-only-my-clusters"]');
   viewOnlyMyClusterHelp = () => cy.get('label[for="view-only-my-clusters"]').find('button').first();
   tooltipviewOnlyMyCluster = () => cy.get('div.pf-c-popover__body');
-  viewClusterArchives = () => cy.get('ul.pf-c-dropdown__menu').find('a').contains("View cluster archives");
+  viewClusterArchives = () => cy.get('div.pf-c-toolbar__item').find('a').contains("View cluster archives");
   assistedInstallerClusters = () => cy.get('ul.pf-c-dropdown__menu').find('a').contains("Assisted Installer clusters");
   registerCluster = () => cy.getByTestId('register-cluster-item')
   showActiveClusters = () => cy.get('a').contains('Show active clusters');

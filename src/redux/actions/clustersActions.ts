@@ -433,9 +433,23 @@ const fetchClusters =
 const fetchSingleClusterAndPermissions = async (
   subscriptionID: string,
 ): Promise<AugmentedClusterResponse> => {
+  const actions = [
+    SelfAccessReview.action.CREATE,
+    SelfAccessReview.action.UPDATE,
+    SelfAccessReview.action.GET,
+    SelfAccessReview.action.LIST,
+    SelfAccessReview.action.DELETE,
+  ];
   let canEdit = false;
   let canEditOCMRoles = false;
   let canViewOCMRoles = false;
+  const idpActions = actions.reduce((obj: any, action: SelfAccessReview.action) => {
+    // eslint-disable-next-line no-param-reassign
+    obj[action] = false;
+    return obj;
+  }, {} as Record<SelfAccessReview.action, boolean>);
+  let canEditMachinePool = false;
+  let canCreateMachinePool = false;
 
   const subscription = await accountsService.getSubscription(subscriptionID);
   subscription.data = normalizeSubscription(subscription.data);
@@ -451,6 +465,17 @@ const fetchSingleClusterAndPermissions = async (
       .then((response) => {
         canEdit = response.data.allowed;
       });
+    actions.forEach(async (action) => {
+      await authorizationsService
+        .selfAccessReview({
+          action,
+          resource_type: SelfAccessReview.resource_type.IDP,
+          subscription_id: subscriptionID,
+        })
+        .then((response) => {
+          idpActions[action] = response.data.allowed;
+        });
+    });
     await authorizationsService
       .selfAccessReview({
         action: SelfAccessReview.action.CREATE,
@@ -468,6 +493,24 @@ const fetchSingleClusterAndPermissions = async (
       })
       .then((response) => {
         canViewOCMRoles = response.data.allowed;
+      });
+    await authorizationsService
+      .selfAccessReview({
+        action: SelfAccessReview.action.UPDATE,
+        resource_type: SelfAccessReview.resource_type.MACHINE_POOL,
+        subscription_id: subscriptionID,
+      })
+      .then((response) => {
+        canEditMachinePool = response.data.allowed;
+      });
+    await authorizationsService
+      .selfAccessReview({
+        action: SelfAccessReview.action.CREATE,
+        resource_type: SelfAccessReview.resource_type.MACHINE_POOL,
+        subscription_id: subscriptionID,
+      })
+      .then((response) => {
+        canCreateMachinePool = response.data.allowed;
       });
   }
 
@@ -508,8 +551,11 @@ const fetchSingleClusterAndPermissions = async (
     cluster.data.limitedSupportReasons = limitedSupportReasons.data?.items || [];
 
     cluster.data.canEdit = canEdit;
+    cluster.data.idpActions = idpActions;
     cluster.data.canEditOCMRoles = canEditOCMRoles;
     cluster.data.canViewOCMRoles = canViewOCMRoles;
+    cluster.data.canEditMachinePool = canEditMachinePool;
+    cluster.data.canCreateMachinePool = canCreateMachinePool;
     cluster.data.canDelete = !!canDeleteAccessReviewResponse?.data?.allowed;
 
     return cluster;

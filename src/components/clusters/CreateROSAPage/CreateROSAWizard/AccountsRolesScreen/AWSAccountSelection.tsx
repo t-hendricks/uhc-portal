@@ -24,12 +24,14 @@ import {
   ButtonProps,
   KeyTypes,
 } from '@patternfly/react-core';
+import { ErrorCircleOIcon } from '@patternfly/react-icons';
 import Fuse from 'fuse.js';
 import './AccountsRolesScreen.scss';
 import links from '~/common/installLinks.mjs';
 import { CloudAccount } from '~/types/accounts_mgmt.v1';
 import PopoverHint from '../../../../common/PopoverHint';
 import { hasContract } from './AWSBillingAccount/awsBillingAccountHelper';
+import { useAssociateAWSAccountDrawer } from './AssociateAWSAccountDrawer/AssociateAWSAccountDrawer';
 
 const AWS_ACCT_ID_PLACEHOLDER = 'Select an account';
 export const AWS_ACCOUNT_ROSA_LOCALSTORAGE_KEY = 'rosaAwsAccount';
@@ -57,7 +59,6 @@ export interface AWSAccountSelectionProps {
   extendedHelpText: string | ReactElement;
   accounts: CloudAccount[];
   selectedAWSAccountID?: string;
-  toggleAssociateAccountDrawer?: any;
   initialValue?: string;
   meta: {
     touched?: boolean;
@@ -68,6 +69,7 @@ export interface AWSAccountSelectionProps {
     text: string;
   };
   isBillingAccount?: boolean;
+  clearGetAWSAccountIDsResponse: () => void;
 }
 
 function AWSAccountSelection({
@@ -83,9 +85,9 @@ function AWSAccountSelection({
   extendedHelpText,
   selectedAWSAccountID,
   accounts,
-  toggleAssociateAccountDrawer,
   isBillingAccount = false,
   refresh,
+  clearGetAWSAccountIDsResponse,
 }: AWSAccountSelectionProps) {
   const [isOpen, setIsOpen] = useState(false);
   const associateAWSAccountBtnRef = createRef<HTMLInputElement>();
@@ -94,6 +96,7 @@ function AWSAccountSelection({
   const { onChange } = inputProps;
   const ref = useRef<Select>(null);
   const containerRef = useRef<HTMLDivElement>(null);
+  const { openDrawer } = useAssociateAWSAccountDrawer();
 
   useEffect(() => {
     // only scroll to associateAWSAccountBtn when no AWS accounts
@@ -141,7 +144,10 @@ function AWSAccountSelection({
     () =>
       // assume largest numbers are the latest
       accounts
-        .sort(({ cloud_account_id: a }, { cloud_account_id: b }) => b.localeCompare(a))
+        .sort(({ cloud_account_id: a }, { cloud_account_id: b }) => {
+          const ret = b.length - a.length;
+          return ret || b.localeCompare(a);
+        })
         .map((cloudAccount) => (
           <SelectOption
             className="pf-c-dropdown__menu-item"
@@ -160,6 +166,24 @@ function AWSAccountSelection({
       if (account === '') {
         return selectOptions;
       }
+      // feature requested: https://github.com/patternfly/patternfly-react/issues/9407
+      if (/[\D]/g.test(account)) {
+        return [
+          <SelectOption
+            isDisabled
+            key={0}
+            style={{ color: 'var(--pf-global--danger-color--100)' }}
+            isNoResultsOption
+          >
+            <div>
+              <span className="pf-u-mr-sm">
+                <ErrorCircleOIcon />
+              </span>
+              <span>Please enter numeric digits only.</span>
+            </div>
+          </SelectOption>,
+        ];
+      }
       // create filtered map and sort by relevance
       const filterText = account.toLowerCase();
       const fuse = new Fuse(accounts, {
@@ -177,7 +201,7 @@ function AWSAccountSelection({
           (
             { score: ax = 0, item: { cloud_account_id: aid = '' } },
             { score: bx = 0, item: { cloud_account_id: bid = '' } },
-          ) => ax - bx || bid.localeCompare(aid),
+          ) => ax - bx || bid.length - aid.length || bid.localeCompare(aid),
         )
         .forEach(({ item: account, matches }) => {
           if (account) {
@@ -227,12 +251,12 @@ function AWSAccountSelection({
     [accounts, selectOptions],
   );
 
-  const openDrawer = useCallback(() => {
+  const onClick = useCallback(() => {
     // close dropdown
     setIsOpen(false);
     // will cause window reload on first time, then open assoc aws modal with new token
-    toggleAssociateAccountDrawer();
-  }, [setIsOpen, toggleAssociateAccountDrawer]);
+    openDrawer({ onClose: clearGetAWSAccountIDsResponse });
+  }, [openDrawer, setIsOpen]);
 
   const footer = useMemo<ReactElement>(() => {
     const btnProps: ButtonProps = isBillingAccount
@@ -242,9 +266,7 @@ function AWSAccountSelection({
           target: '_blank',
         }
       : {
-          onClick: () => {
-            openDrawer();
-          },
+          onClick,
         };
 
     return (
@@ -298,6 +320,7 @@ function AWSAccountSelection({
               hasInlineFilter
               validated={touched && error ? 'error' : undefined}
               footer={footer}
+              aria-describedby="aws-infra-accounts"
             >
               {selectOptions}
             </Select>

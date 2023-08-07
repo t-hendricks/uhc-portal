@@ -1,11 +1,11 @@
 import React from 'react';
 import { Label, Title, Split, SplitItem, Flex, FlexItem } from '@patternfly/react-core';
 import isEmpty from 'lodash/isEmpty';
+import chunk from 'lodash/chunk';
 
 import { MachinePool } from '~/types/clusters_mgmt.v1/models/MachinePool';
 import { ClusterFromSubscription } from '~/types/types';
 import { Taint } from '~/types/clusters_mgmt.v1/models/Taint';
-import chunk from 'lodash/chunk';
 import { hasSubnets, getSubnetIds } from '../machinePoolsHelper';
 import { isMultiAZ } from '../../../clusterDetailsHelper';
 

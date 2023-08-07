@@ -51,15 +51,21 @@ describe('Rosa cluster tests', { tags: ['ci'] }, () => {
         interceptAndReturnMockAssociatedAccounts('rosa/rosa_no_associated_account.json');
         interceptAndReturnMockARNs('rosa/rosa_no_arns.json');
 
+        cy.get(CreateRosaWizardPage.primaryButton).should('not.be.disabled');
         CreateRosaWizardPage.isAccountsAndRolesScreen();
         cy.getByTestId('refresh-aws-accounts').click();
         cy.wait('@getMockAssociatedAccounts');
+        // everytime we click on a Refresh button, the Next button becomes disabled w/ spinner
+        // added checks to wait for Next button to become enabled again before testing assertions
+        cy.get(CreateRosaWizardPage.primaryButton).should('not.be.disabled');
         cy.get(CreateRosaWizardPage.associatedAccountsDropdown).click();
+        cy.get(CreateRosaWizardPage.primaryButton).should('not.be.disabled');
         CreateRosaWizardPage.showsNoAssociatedAccounts();
       });
 
       it('test associate aws account drawer', () => {
         cy.getByTestId('launch-associate-account-btn').click();
+        cy.get(CreateRosaWizardPage.primaryButton).should('not.be.disabled');
         CreateRosaWizardPage.isAssociateAccountsDrawer();
         cy.getByTestId('close-associate-account-btn').click();
       });
@@ -68,22 +74,32 @@ describe('Rosa cluster tests', { tags: ['ci'] }, () => {
         interceptAndReturnMockAssociatedAccounts('rosa/rosa_one_associated_account.json');
         interceptAndReturnMockARNs('rosa/rosa_no_arns.json');
 
+        cy.get(CreateRosaWizardPage.primaryButton).should('not.be.disabled');
         CreateRosaWizardPage.isAccountsAndRolesScreen();
         cy.getByTestId('refresh-aws-accounts').click();
         cy.wait('@getMockAssociatedAccounts');
+        cy.get(CreateRosaWizardPage.primaryButton).should('not.be.disabled');
         cy.contains('Loading account roles ARNs').should('not.exist');
         cy.getByTestId('refresh_arns_btn').click();
         cy.wait('@getMockARNs');
 
+        cy.get(CreateRosaWizardPage.primaryButton).should('not.be.disabled');
         cy.get(CreateRosaWizardPage.associatedAccountsDropdown).click();
         cy.get(CreateRosaWizardPage.accountIdMenuItem).should('have.length', 1);
+        cy.get(CreateRosaWizardPage.associatedAccountsDropdown).click();
         CreateRosaWizardPage.showsNoARNsDetectedAlert();
         cy.get(CreateRosaWizardPage.ARNFieldRequiredMsg).should('have.length', 4); // all 4 ARN fields are empty
+
+        // Confirm alert opens drawer with correct content
+        cy.contains('create the required role').click();
+        cy.contains('h2', 'Create account roles');
+        cy.getByTestId('close-associate-account-btn').click();
       });
 
       it('tests for all ARNs and no "ARN required" messages', () => {
         interceptAndReturnMockARNs('rosa/rosa_all_arns.json');
         cy.getByTestId('refresh_arns_btn').click();
+        cy.get(CreateRosaWizardPage.primaryButton).should('not.be.disabled');
         cy.contains('Loading account roles ARNs').should('not.exist');
         cy.wait('@getMockARNs');
         cy.get(CreateRosaWizardPage.ARNFieldRequiredMsg).should('have.length', 0); // no ARN validation alerts
@@ -104,8 +120,14 @@ describe('Rosa cluster tests', { tags: ['ci'] }, () => {
         cy.get(CreateRosaWizardPage.primaryButton).click({ force: true });
         cy.wait('@noUserRole');
 
+        cy.get(CreateRosaWizardPage.primaryButton).should('not.be.disabled');
         CreateRosaWizardPage.isAccountsAndRolesScreen();
         CreateRosaWizardPage.showsNoUserRoleAlert();
+
+        // Confirm alert opens drawer with correct content
+        cy.contains('create the required role').click();
+        cy.contains('h2', 'Create user role');
+        cy.getByTestId('close-associate-account-btn').click();
       });
 
       it('tests if no ocm role, shows alert', () => {
@@ -137,8 +159,14 @@ describe('Rosa cluster tests', { tags: ['ci'] }, () => {
         cy.wait('@getMockAssociatedAccounts');
         cy.wait('@noOcmRole');
 
+        cy.get(CreateRosaWizardPage.primaryButton).should('not.be.disabled');
         CreateRosaWizardPage.isAccountsAndRolesScreen();
         CreateRosaWizardPage.showsNoOcmRoleAlert();
+
+        // Confirm alert opens drawer with correct content
+        cy.contains('create the required role').click();
+        cy.contains('h2', 'Create OCM role');
+        cy.getByTestId('close-associate-account-btn').click();
       });
 
       // TODO: resolve timing and mock data issues

@@ -16,10 +16,12 @@ limitations under the License.
 
 import React from 'react';
 import { mount, shallow } from 'enzyme';
-import { BrowserRouter } from 'react-router-dom';
+import { BrowserRouter, MemoryRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
-import { store } from '../../../redux/store';
+import { screen } from '@testing-library/react';
+import { mockRestrictedEnv, render } from '~/testUtils';
 
+import { store } from '../../../redux/store';
 import Tokens from '../Tokens';
 
 const mockGetToken = jest
@@ -79,5 +81,22 @@ describe('<Tokens />', () => {
   it('Renders token', () => {
     const component = shallow(<Tokens show setOfflineToken={() => {}} />);
     expect(component).toMatchSnapshot();
+  });
+
+  describe('in restricted env', () => {
+    const isRestrictedEnv = mockRestrictedEnv();
+    afterAll(() => {
+      isRestrictedEnv.mockReturnValue(false);
+    });
+    it('Renders screen with refresh token', () => {
+      isRestrictedEnv.mockReturnValue(true);
+
+      render(
+        <MemoryRouter>
+          <Tokens offlineToken="refresh-token" setOfflineToken={() => {}} />
+        </MemoryRouter>,
+      );
+      expect(screen.getByText('Connect with refresh tokens')).toBeInTheDocument();
+    });
   });
 });

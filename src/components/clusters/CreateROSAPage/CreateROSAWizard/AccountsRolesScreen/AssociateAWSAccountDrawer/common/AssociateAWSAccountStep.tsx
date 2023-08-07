@@ -1,42 +1,45 @@
 import React, { PropsWithChildren } from 'react';
-import { ExpandableSection, ExpandableSectionToggle, Title } from '@patternfly/react-core';
+import { ExpandableSection, Title } from '@patternfly/react-core';
 
-type AssociateAWSAccountStepProps = {
+const AWSAccountRoles = ['ocm', 'user', 'account'] as const;
+export type AWSAccountRole = typeof AWSAccountRoles[number];
+
+export type AssociateAWSAccountStepProps = {
   title: string;
-  contentId: string;
   headingLevel?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5';
+  expandable?: boolean;
+  initiallyExpanded?: boolean;
 };
 
 const AssociateAWSAccountStep: React.FC<PropsWithChildren<AssociateAWSAccountStepProps>> = ({
   title,
-  contentId,
   headingLevel,
   children,
+  expandable,
+  initiallyExpanded,
 }) => {
-  const [isExpanded, setIsExpanded] = React.useState(true);
-
+  const [isExpanded, setIsExpanded] = React.useState(initiallyExpanded);
   const onToggle = (isExpanded: boolean) => {
     setIsExpanded(isExpanded);
   };
 
   const level = headingLevel || 'h3';
 
-  return (
-    <>
-      <Title headingLevel={level} size="md">
-        <ExpandableSectionToggle isExpanded={isExpanded} contentId={contentId} onToggle={onToggle}>
+  return expandable ? (
+    <ExpandableSection
+      onToggle={onToggle}
+      isExpanded={isExpanded}
+      isActive={isExpanded}
+      toggleContent={
+        <Title headingLevel={level} size="md">
           {title}
-        </ExpandableSectionToggle>
-      </Title>
-      <ExpandableSection
-        isExpanded={isExpanded}
-        isDetached
-        contentId={contentId}
-        className="pf-u-mb-xl"
-      >
-        {children}
-      </ExpandableSection>
-    </>
+        </Title>
+      }
+    >
+      {children}
+    </ExpandableSection>
+  ) : (
+    <>{children}</>
   );
 };
 

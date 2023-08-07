@@ -77,7 +77,7 @@ class CreateRosaCluster extends Page {
   }
 
   get associatedAccountsDropdown() {
-    return 'button.pf-c-select__toggle';
+    return 'button.pf-c-select__toggle:not(.pf-m-disabled)[aria-describedby="aws-infra-accounts"]';
   }
 
   get versionsDropdown() {

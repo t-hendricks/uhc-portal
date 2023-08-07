@@ -16,6 +16,7 @@ import AccountRolesARNsSection from './AccountRolesARNsSection';
 import { AwsRoleErrorAlert } from './AwsRoleErrorAlert';
 import AWSAccountSelection, { AWS_ACCOUNT_ROSA_LOCALSTORAGE_KEY } from './AWSAccountSelection';
 import AWSBillingAccount from './AWSBillingAccount/AWSBillingAccount';
+import { useAssociateAWSAccountDrawer } from './AssociateAWSAccountDrawer/AssociateAWSAccountDrawer';
 
 export const isUserRoleForSelectedAWSAccount = (users: any[], awsAcctId: any) =>
   users.some((user: { aws_id: any }) => user.aws_id === awsAcctId);
@@ -42,8 +43,6 @@ export interface AccountsRolesScreenProps {
   offlineToken?: string;
   setOfflineToken?: any;
   isHypershiftSelected: boolean;
-  setDrawerIsOpen?: any;
-  isDrawerOpen?: boolean;
 }
 
 function AccountsRolesScreen({
@@ -64,18 +63,16 @@ function AccountsRolesScreen({
   clearGetUserRoleResponse,
   offlineToken,
   setOfflineToken,
-  setDrawerIsOpen,
-  isDrawerOpen,
   isHypershiftSelected,
 }: AccountsRolesScreenProps) {
   const [AWSAccountIDs, setAWSAccountIDs] = useState<string[]>([]);
   const [noUserForSelectedAWSAcct, setNoUserForSelectedAWSAcct] = useState(false);
   const [awsIDsErrorBox, setAwsIDsErrorBox] = useState<ReactElement | null>(null);
   const [refreshButtonClicked, setRefreshButtonClicked] = useState(false);
-  const openDrawerButtonRef = useRef<HTMLInputElement>(null);
-  const prevDrawerState = useRef<boolean | undefined>(false);
+  const openDrawerButtonRef = useRef(null);
   const hasAWSAccounts = AWSAccountIDs.length > 0;
   const track = useAnalytics();
+  const { openDrawer } = useAssociateAWSAccountDrawer();
 
   const resetAWSAccountFields = () => {
     // clear certain responses; causes refetch of AWS acct info.
@@ -158,17 +155,12 @@ function AccountsRolesScreen({
     }
   }, [getUserRoleResponse?.error, noUserForSelectedAWSAcct]);
 
-  useEffect(() => {
-    if (!isDrawerOpen && prevDrawerState.current) {
-      openDrawerButtonRef.current?.focus();
-      clearGetAWSAccountIDsResponse();
-    }
-    prevDrawerState.current = isDrawerOpen;
-  }, [isDrawerOpen]);
-
-  const toggleAssociateAccountDrawer = useCallback(() => {
-    setDrawerIsOpen(!isDrawerOpen);
-  }, [isDrawerOpen, setDrawerIsOpen]);
+  const onClick = useCallback(
+    (event) => {
+      openDrawer({ focusOnClose: event.target, onClose: clearGetAWSAccountIDsResponse });
+    },
+    [clearGetAWSAccountIDsResponse, openDrawer],
+  );
 
   return (
     <Form onSubmit={() => false}>
@@ -187,7 +179,6 @@ function AccountsRolesScreen({
             component={AWSAccountSelection}
             name="associated_aws_id"
             label="Associated AWS infrastructure account"
-            toggleAssociateAccountDrawer={toggleAssociateAccountDrawer}
             refresh={{
               onRefresh: () => {
                 setRefreshButtonClicked(true);
@@ -206,12 +197,13 @@ function AccountsRolesScreen({
             selectedAWSAccountID={selectedAWSAccountID}
             isLoading={refreshButtonClicked && getAWSAccountIDsResponse.pending}
             isDisabled={getAWSAccountIDsResponse.pending}
+            clearGetAWSAccountIDsResponse={clearGetAWSAccountIDsResponse}
           />
           <Button
             variant="secondary"
             className="pf-u-mt-md"
             ref={openDrawerButtonRef}
-            onClick={toggleAssociateAccountDrawer}
+            onClick={onClick}
           >
             How to associate a new AWS account
           </Button>
@@ -236,16 +228,12 @@ function AccountsRolesScreen({
             clearGetAWSAccountRolesARNsResponse={clearGetAWSAccountRolesARNsResponse}
             isHypershiftSelected={isHypershiftSelected}
             onAccountChanged={resetUserRoleFields}
-            toggleAssociateAccountDrawer={toggleAssociateAccountDrawer}
           />
         )}
 
         {(getUserRoleResponse?.error || noUserForSelectedAWSAcct) && (
           <GridItem span={8} className="pf-u-mt-sm">
-            <AwsRoleErrorAlert
-              title="A user-role could not be detected"
-              toggleAssociateAccountDrawer={toggleAssociateAccountDrawer}
-            />
+            <AwsRoleErrorAlert title="A user-role could not be detected" targetRole="user" />
           </GridItem>
         )}
       </Grid>

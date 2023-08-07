@@ -1,4 +1,4 @@
-image: 
+image:
     # node:18.12.1
     name: $REGISTRY/node@sha256:53f699f1e6171e725e854cd5a75a6968acaf0a8010630ea430de0d3058a491fb
 
@@ -51,7 +51,7 @@ cache: &global_cache
     - if [ "$CI_JOB_STATUS" == "failed" ]; then echo "$JOB_NAME=$NOTE_BODY" > .env; else echo "$JOB_NAME=" > .env; fi;
   artifacts:
     reports:
-      dotenv: 
+      dotenv:
         - .env
 
 stages:
@@ -88,7 +88,7 @@ stages:
   script:
     - echo "Running unit tests..."
     - node --version
-    - yarn test
+    - yarn test-no-cache
 
 👀 Linting:
   <<: *store-note
@@ -137,7 +137,7 @@ stages:
       - cypress/screenshots/**/*.png
     expire_in: 1 day
     reports:
-      dotenv: 
+      dotenv:
         - .env
 
 Pipeline failure:
@@ -152,7 +152,7 @@ Pipeline failure:
     - *send-note
   artifacts:
     reports:
-      dotenv: 
+      dotenv:
         - .env
   when: on_failure
 

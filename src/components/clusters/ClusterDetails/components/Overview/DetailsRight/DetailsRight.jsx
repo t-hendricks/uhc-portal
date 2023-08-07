@@ -37,7 +37,7 @@ function DetailsRight({
 }) {
   const isHypershift = isHypershiftCluster(cluster);
   const isROSACluster = isROSA(cluster);
-  const awsInfraAccount = cluster.subscription?.cloud_account_id || null;
+  const infraAccount = cluster.subscription?.cloud_account_id || null;
   const hypershiftEtcdEncryptionKey = isHypershift && cluster.aws?.etcd_encryption?.kms_key_arn;
 
   const memoryTotalWithUnit = humanizeValueWithUnit(
@@ -69,12 +69,12 @@ function DetailsRight({
 
   const infraActualNodes = get(cluster, 'metrics.nodes.infra', '-');
   const infraDesiredNodes = get(cluster, 'nodes.infra', '-');
+  const cloudProviderId = get(cluster, 'cloud_provider.id', '-');
 
   const workerActualNodes = totalActualNodes === false ? '-' : totalActualNodes;
   const workerDesiredNodes = totalDesiredComputeNodes || '-';
   const oidcConfig = cluster.aws?.sts?.oidc_config;
   const imdsConfig = cluster.aws?.ec2_metadata_http_tokens;
-
   return (
     <>
       <DescriptionList>
@@ -129,11 +129,11 @@ function DetailsRight({
             </DescriptionListGroup>
           </>
         )}
-        {awsInfraAccount && (
+        {infraAccount && (
           <>
             <DescriptionListGroup>
-              <DescriptionListTerm>Infrastructure AWS account</DescriptionListTerm>
-              <DescriptionListDescription>{awsInfraAccount}</DescriptionListDescription>
+              <DescriptionListTerm>{`Infrastructure ${cloudProviderId.toUpperCase()} account`}</DescriptionListTerm>
+              <DescriptionListDescription>{infraAccount}</DescriptionListDescription>
             </DescriptionListGroup>
           </>
         )}

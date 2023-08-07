@@ -153,7 +153,7 @@ function actionResolver(
             isDefaultMachinePool: !isHypershiftCluster(cluster),
             shouldDisplayClusterName: inClusterList,
             isHypershiftCluster: isHypershiftCluster(cluster),
-            clearMachinePoolDataOnExit: isHypershiftCluster(cluster),
+            clearMachineOrNodePoolsOnExit: true,
           }),
       },
     ),
@@ -338,7 +338,7 @@ function actionResolver(
     get(cluster, 'subscription.status') !== subscriptionStatuses.ARCHIVED;
   const showUpgradeTrialCluster = isClusterReady && cluster.canEdit && isProductOSDTrial;
 
-  if (isRestrictedEnv) {
+  if (isRestrictedEnv()) {
     return [showConsoleButton && adminConsoleItemProps].filter(Boolean);
   }
 
