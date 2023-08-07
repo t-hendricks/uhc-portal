@@ -47,7 +47,7 @@ exports[`<IDPSection /> should render (no IDPs) 1`] = `
       </StackItem>
       <StackItem>
         <Tooltip
-          content="You do not have permission to add an identity provider. Only cluster owners, cluster editors, and Organization Administrators can add identity providers."
+          content="You do not have permission to add an identity provider. Only cluster owners, cluster editors, identity provider editors, and Organization Administrators can add identity providers."
         >
           <Dropdown
             dropdownItems={
@@ -154,7 +154,7 @@ exports[`<IDPSection /> should render (no IDPs) 1`] = `
             toggle={
               <DropdownToggle
                 id="add-identity-provider"
-                isDisabled="You do not have permission to add an identity provider. Only cluster owners, cluster editors, and Organization Administrators can add identity providers."
+                isDisabled="You do not have permission to add an identity provider. Only cluster owners, cluster editors, identity provider editors, and Organization Administrators can add identity providers."
                 onToggle={[Function]}
               >
                 Add identity provider
@@ -196,7 +196,7 @@ exports[`<IDPSection /> should render (with IDPs) Hypershift cluster 1`] = `
       </StackItem>
       <StackItem>
         <Tooltip
-          content="You do not have permission to add an identity provider. Only cluster owners, cluster editors, and Organization Administrators can add identity providers."
+          content="You do not have permission to add an identity provider. Only cluster owners, cluster editors, identity provider editors, and Organization Administrators can add identity providers."
         >
           <Dropdown
             dropdownItems={
@@ -303,7 +303,7 @@ exports[`<IDPSection /> should render (with IDPs) Hypershift cluster 1`] = `
             toggle={
               <DropdownToggle
                 id="add-identity-provider"
-                isDisabled="You do not have permission to add an identity provider. Only cluster owners, cluster editors, and Organization Administrators can add identity providers."
+                isDisabled="You do not have permission to add an identity provider. Only cluster owners, cluster editors, identity provider editors, and Organization Administrators can add identity providers."
                 onToggle={[Function]}
               >
                 Add identity provider
@@ -435,7 +435,7 @@ exports[`<IDPSection /> should render (with IDPs) non-Hypershift cluster 1`] = `
       </StackItem>
       <StackItem>
         <Tooltip
-          content="You do not have permission to add an identity provider. Only cluster owners, cluster editors, and Organization Administrators can add identity providers."
+          content="You do not have permission to add an identity provider. Only cluster owners, cluster editors, identity provider editors, and Organization Administrators can add identity providers."
         >
           <Dropdown
             dropdownItems={
@@ -542,7 +542,7 @@ exports[`<IDPSection /> should render (with IDPs) non-Hypershift cluster 1`] = `
             toggle={
               <DropdownToggle
                 id="add-identity-provider"
-                isDisabled="You do not have permission to add an identity provider. Only cluster owners, cluster editors, and Organization Administrators can add identity providers."
+                isDisabled="You do not have permission to add an identity provider. Only cluster owners, cluster editors, identity provider editors, and Organization Administrators can add identity providers."
                 onToggle={[Function]}
               >
                 Add identity provider
