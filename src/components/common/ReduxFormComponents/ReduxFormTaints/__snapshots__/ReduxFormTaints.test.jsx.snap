@@ -61,7 +61,6 @@ exports[`<ReduxFormKeyValueList /> should render when there is no input - initia
   <GridItem>
     <ButtonWithTooltip
       className="reduxFormKeyValueList-addBtn"
-      disableReason={[Function]}
       icon={
         <PlusCircleIcon
           color="currentColor"
@@ -179,7 +178,6 @@ exports[`<ReduxFormKeyValueList /> should render with input 1`] = `
   <GridItem>
     <ButtonWithTooltip
       className="reduxFormKeyValueList-addBtn"
-      disableReason={[Function]}
       icon={
         <PlusCircleIcon
           color="currentColor"
