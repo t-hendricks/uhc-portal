@@ -19,7 +19,9 @@ describe('<IDPSection />', () => {
     const openModal = jest.fn();
     const wrapper = shallow(
       <IDPSection
-        canEdit={false}
+        idpActions={{
+          list: true,
+        }}
         clusterID="fake id"
         subscriptionID="fake sub"
         identityProviders={baseIDPs}
@@ -42,7 +44,9 @@ describe('<IDPSection />', () => {
 
     const wrapper = shallow(
       <IDPSection
-        canEdit={false}
+        idpActions={{
+          list: true,
+        }}
         clusterHibernating={false}
         isReadOnly={false}
         clusterID="fake id"
@@ -78,7 +82,9 @@ describe('<IDPSection />', () => {
       const openModal = jest.fn();
       return shallow(
         <IDPSection
-          canEdit={false}
+          idpActions={{
+            list: true,
+          }}
           clusterID="fake id"
           subscriptionID="fake sub"
           identityProviders={IDPs}
