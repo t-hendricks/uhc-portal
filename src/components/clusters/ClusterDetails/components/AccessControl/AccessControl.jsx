@@ -95,7 +95,7 @@ function AccessControl({ cluster, history, refreshEvent = null }) {
               isHypershift={isHypershiftCluster(cluster)}
               history={history}
               clusterUrls={clusterUrls}
-              canEdit={cluster.canEdit}
+              idpActions={cluster.idpActions}
               clusterHibernating={isHibernating(cluster.state)}
               isReadOnly={isReadOnly}
             />

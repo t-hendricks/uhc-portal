@@ -38,7 +38,7 @@ class IDPSection extends React.Component {
       clusterUrls,
       identityProviders,
       openModal,
-      canEdit,
+      idpActions = {},
       clusterHibernating,
       isReadOnly,
       isHypershift,
@@ -76,6 +76,7 @@ class IDPSection extends React.Component {
     const idpActionResolver = (rowData) => {
       const editIDPAction = {
         title: 'Edit',
+        isDisabled: !idpActions.update,
         onClick: (_, rowId, row) => {
           history.push(`/details/s/${subscriptionID}/edit-idp/${row.idpName}`);
         },
@@ -83,6 +84,7 @@ class IDPSection extends React.Component {
       };
       const deleteIDPAction = {
         title: 'Delete',
+        isDisabled: !idpActions.delete,
         onClick: (_, __, row) =>
           openModal('delete-idp', {
             clusterID,
@@ -112,10 +114,10 @@ class IDPSection extends React.Component {
     const readOnlyReason = isReadOnly && 'This operation is not available during maintenance';
     const hibernatingReason =
       clusterHibernating && 'This operation is not available while cluster is hibernating';
-    const canNotEditReason =
-      !canEdit &&
-      'You do not have permission to add an identity provider. Only cluster owners, cluster editors, and Organization Administrators can add identity providers.';
-    const disableReason = readOnlyReason || hibernatingReason || canNotEditReason;
+    const notAllowedReason = (action) =>
+      `You do not have permission to ${action} an identity provider. Only cluster owners, cluster editors, identity provider editors, and Organization Administrators can ${action} identity providers.`;
+    const disableReason = readOnlyReason || hibernatingReason;
+    const cannotCreateReason = disableReason || (!idpActions.create && notAllowedReason('add'));
 
     const IDPDropdownOptions = Object.values(IDPTypeNames).map((idpName) => (
       <DropdownItem
@@ -137,7 +139,7 @@ class IDPSection extends React.Component {
         toggle={
           <DropdownToggle
             id="add-identity-provider"
-            isDisabled={disableReason}
+            isDisabled={cannotCreateReason}
             onToggle={(isOpen) => {
               this.setState({ dropdownOpen: isOpen });
             }}
@@ -149,8 +151,8 @@ class IDPSection extends React.Component {
         dropdownItems={IDPDropdownOptions}
       />
     );
-    if (disableReason) {
-      addIDPDropdown = <Tooltip content={disableReason}>{addIDPDropdown}</Tooltip>;
+    if (cannotCreateReason) {
+      addIDPDropdown = <Tooltip content={cannotCreateReason}>{addIDPDropdown}</Tooltip>;
     }
 
     return pending ? (
@@ -179,7 +181,7 @@ class IDPSection extends React.Component {
             </StackItem>
             <StackItem>{addIDPDropdown}</StackItem>
             <StackItem>
-              {hasIDPs && (
+              {hasIDPs && idpActions.list && (
                 <Table
                   aria-label="Identity Providers"
                   actionResolver={idpActionResolver}
@@ -209,7 +211,13 @@ IDPSection.propTypes = {
   }).isRequired,
   identityProviders: PropTypes.object.isRequired,
   openModal: PropTypes.func.isRequired,
-  canEdit: PropTypes.bool.isRequired,
+  idpActions: PropTypes.shape({
+    get: PropTypes.bool,
+    list: PropTypes.bool,
+    create: PropTypes.bool,
+    update: PropTypes.bool,
+    delete: PropTypes.bool,
+  }).isRequired,
   clusterHibernating: PropTypes.bool.isRequired,
   isReadOnly: PropTypes.bool.isRequired,
   isHypershift: PropTypes.bool.isRequired,
