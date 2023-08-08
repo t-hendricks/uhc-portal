@@ -73,7 +73,7 @@ const ClusterProgressCard = ({ cluster = {}, history, refresh }: ClusterProgress
         )}
       </CardTitle>
       <CardBody>
-        <ClusterStatusMonitor cluster={cluster} refresh={refresh} history={history} />
+        <ClusterStatusMonitor cluster={cluster} refresh={refresh as any} history={history as any} />
         {isUninstalling ? (
           <UninstallProgress cluster={cluster} />
         ) : (

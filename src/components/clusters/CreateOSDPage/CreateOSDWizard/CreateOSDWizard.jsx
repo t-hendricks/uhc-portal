@@ -14,15 +14,17 @@ import {
 
 import { Spinner } from '@redhat-cloud-services/frontend-components';
 
+import { shouldRefetchQuota, scrollToFirstField } from '~/common/helpers';
+import usePreventBrowserNav from '~/hooks/usePreventBrowserNav';
+import { trackEvents, ocmResourceTypeByProduct } from '~/common/analytics';
+import withAnalytics from '~/hoc/withAnalytics';
+import config from '~/config';
+import { normalizedProducts } from '~/common/subscriptionTypes';
+import { AppPage } from '~/components/App/AppPage';
 import ErrorBoundary from '../../../App/ErrorBoundary';
 import PageTitle from '../../../common/PageTitle';
 import Breadcrumbs from '../../../common/Breadcrumbs';
 
-import { shouldRefetchQuota, scrollToFirstField } from '~/common/helpers';
-import usePreventBrowserNav from '~/hooks/usePreventBrowserNav';
-
-import { trackEvents, ocmResourceTypeByProduct } from '~/common/analytics';
-import withAnalytics from '~/hoc/withAnalytics';
 import { stepId, stepNameById } from './osdWizardConstants';
 import BillingModelScreen from './BillingModelScreen';
 import CloudProviderScreen from './CloudProviderScreen';
@@ -34,15 +36,12 @@ import VPCScreen from './VPCScreen';
 import ClusterProxyScreen from './ClusterProxyScreen';
 import CIDRScreen from './CIDRScreen';
 import UpdatesScreen from './UpdatesScreen';
-import config from '~/config';
 import Unavailable from '../../../common/Unavailable';
 import CreateClusterErrorModal from '../../common/CreateClusterErrorModal';
 import LeaveCreateClusterPrompt from '../../common/LeaveCreateClusterPrompt';
-import { normalizedProducts } from '~/common/subscriptionTypes';
 import { VALIDATE_CLOUD_PROVIDER_CREDENTIALS } from './ccsInquiriesActions';
 
 import './createOSDWizard.scss';
-import { AppPage } from '~/components/App/AppPage';
 
 class CreateOSDWizardInternal extends React.Component {
   state = {

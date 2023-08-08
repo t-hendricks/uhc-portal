@@ -11,16 +11,16 @@ import { canAutoScaleOnCreateSelector } from '~/components/clusters/ClusterDetai
 import MachineTypeSelection from '~/components/clusters/CreateOSDPage/CreateOSDForm/FormSections/ScaleSection/MachineTypeSelection';
 import { CloudProviderType, FieldId } from '~/components/clusters/wizards/common/constants';
 import { useFormState } from '~/components/clusters/wizards/hooks';
-import { AutoScale } from './AutoScale';
 import ExternalLink from '~/components/common/ExternalLink';
 import { constants } from '~/components/clusters/CreateOSDPage/CreateOSDForm/CreateOSDFormConstants';
 import links from '~/common/installLinks.mjs';
 import NodeCountInput from '~/components/clusters/common/NodeCountInput';
 import { normalizedProducts } from '~/common/subscriptionTypes';
 import { getNodesCount } from '~/components/clusters/CreateOSDPage/CreateOSDForm/FormSections/ScaleSection/AutoScaleSection/AutoScaleHelper';
-import { NodeLabelsFieldArray } from './NodeLabelsFieldArray';
-import { ImdsSectionField } from './ImdsSectionField';
 import { getMinNodesRequired } from '~/components/clusters/ClusterDetails/components/MachinePools/machinePoolsHelper';
+import { NodeLabelsFieldArray } from './NodeLabelsFieldArray';
+import { ImdsSectionField } from './ImdsSectionField/ImdsSectionField';
+import { AutoScale } from './AutoScale/AutoScale';
 
 export const MachinePool = () => {
   const dispatch = useDispatch();

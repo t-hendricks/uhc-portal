@@ -1,3 +1,4 @@
+import { getAwsBillingAccountsFromQuota } from '~/components/clusters/common/quotaSelectors';
 import {
   LIST_ASSOCIATED_AWS_IDS,
   GET_AWS_ACCOUNT_ROLES_ARNS,
@@ -13,7 +14,6 @@ import {
 } from './rosaConstants';
 import { accountsService, clusterService } from '../../../../services';
 import { extractAWSID } from '../../../../common/rosa';
-import { getAwsBillingAccountsFromQuota } from '~/components/clusters/common/quotaSelectors';
 
 export const getAWSIDsFromARNs = (arns) => {
   const ids = arns.map(extractAWSID);

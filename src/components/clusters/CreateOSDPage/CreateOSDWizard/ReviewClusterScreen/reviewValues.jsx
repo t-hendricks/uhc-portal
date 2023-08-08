@@ -1,7 +1,7 @@
 import React from 'react';
 import { Grid, GridItem, LabelGroup, Label } from '@patternfly/react-core';
-import { billingModels } from '../../../../../common/subscriptionTypes';
 import { IMDSType } from '~/components/clusters/wizards/common';
+import { billingModels } from '../../../../../common/subscriptionTypes';
 import { humanizeValueWithUnitGiB } from '../../../../../common/units';
 import parseUpdateSchedule from '../../../common/Upgrades/parseUpdateSchedule';
 import AwsVpcTable from './AwsVpcTable';

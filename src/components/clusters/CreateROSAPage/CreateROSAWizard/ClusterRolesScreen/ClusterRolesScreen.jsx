@@ -18,6 +18,9 @@ import {
   ToggleGroupItem,
 } from '@patternfly/react-core';
 
+import useAnalytics from '~/hooks/useAnalytics';
+import { trackEvents } from '~/common/analytics';
+import ReduxHiddenCheckbox from '~/components/common/ReduxFormComponents/ReduxHiddenCheckbox';
 import ExternalLink from '../../../../common/ExternalLink';
 import ErrorBox from '../../../../common/ErrorBox';
 import InstructionCommand from '../../../../common/InstructionCommand';
@@ -25,9 +28,6 @@ import RadioButtons from '../../../../common/ReduxFormComponents/RadioButtons';
 import PopoverHint from '../../../../common/PopoverHint';
 import links from '../../../../../common/installLinks.mjs';
 import { required, checkCustomOperatorRolesPrefix } from '../../../../../common/validators';
-import useAnalytics from '~/hooks/useAnalytics';
-import { trackEvents } from '~/common/analytics';
-import ReduxHiddenCheckbox from '~/components/common/ReduxFormComponents/ReduxHiddenCheckbox';
 import { BackToAssociateAwsAccountLink } from '../common/BackToAssociateAwsAccountLink';
 import CustomOperatorRoleNames from './CustomOperatorRoleNames';
 import CustomerOIDCConfiguration from './CustomerOIDCConfiguration';

@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Skeleton from '@redhat-cloud-services/frontend-components/Skeleton';
 import { Title } from '@patternfly/react-core';
+import { ChartLabel, ChartLegend, ChartPie } from '@patternfly/react-charts';
 
 import './CostBreakdownCard.scss';
-import { ChartLabel, ChartLegend, ChartPie } from '@patternfly/react-charts';
 
 const CHART_HEIGHT = 185;
 const CHART_WIDTH = 350;
@@ -150,6 +150,7 @@ CostBreakdownSummary.propTypes = {
     pending: PropTypes.bool,
     fulfilled: PropTypes.bool,
   }).isRequired,
+  values: PropTypes.array,
 };
 
 export default CostBreakdownSummary;

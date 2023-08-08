@@ -1,7 +1,7 @@
 import get from 'lodash/get';
 
-import { normalizedProducts, billingModels } from '../../../common/subscriptionTypes';
 import { BillingModel } from '~/types/clusters_mgmt.v1';
+import { normalizedProducts, billingModels } from '../../../common/subscriptionTypes';
 
 /**
  * Known quota resourceType values.

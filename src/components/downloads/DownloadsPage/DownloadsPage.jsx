@@ -27,6 +27,7 @@ import * as OCM from '@openshift-assisted/ui-lib/ocm';
 
 import produce from 'immer';
 import { has, get } from 'lodash';
+import { AppPage } from '~/components/App/AppPage';
 
 import ExternalLink from '../../common/ExternalLink';
 import links, {
@@ -49,7 +50,6 @@ import DownloadPullSecret from '../DownloadPullSecret';
 import CopyPullSecret from '../CopyPullSecret';
 
 import './DownloadsPage.scss';
-import { AppPage } from '~/components/App/AppPage';
 
 const { TechnologyPreview, PreviewBadgePosition } = OCM;
 

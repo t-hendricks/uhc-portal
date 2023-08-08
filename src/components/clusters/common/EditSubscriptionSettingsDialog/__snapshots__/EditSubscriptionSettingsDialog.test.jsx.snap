@@ -132,7 +132,6 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly 1`] = `
                       class="pf-c-modal-box__title"
                       id="pf-modal-part-1"
                     >
-                      
                       <span
                         class="pf-c-modal-box__title-text"
                       >
@@ -335,7 +334,6 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly 1`] = `
                               Self-Support
                             </label>
                           </div>
-                          
                         </div>
                       </div>
                       <div
@@ -431,7 +429,6 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly 1`] = `
                               Partner support (L3)
                             </label>
                           </div>
-                          
                         </div>
                       </div>
                       <div
@@ -548,7 +545,6 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly 1`] = `
                               Disaster Recovery
                             </label>
                           </div>
-                          
                         </div>
                       </div>
                       <div
@@ -644,7 +640,6 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly 1`] = `
                               Sockets
                             </label>
                           </div>
-                          
                         </div>
                       </div>
                       <div
@@ -699,7 +694,6 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly 1`] = `
                               </svg>
                             </span>
                           </button>
-                          
                         </div>
                       </div>
                     </form>
@@ -3176,7 +3170,6 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly when an erorr occu
                       class="pf-c-modal-box__title"
                       id="pf-modal-part-8"
                     >
-                      
                       <span
                         class="pf-c-modal-box__title-text"
                       >
@@ -3426,7 +3419,6 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly when an erorr occu
                               Self-Support
                             </label>
                           </div>
-                          
                         </div>
                       </div>
                       <div
@@ -3522,7 +3514,6 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly when an erorr occu
                               Partner support (L3)
                             </label>
                           </div>
-                          
                         </div>
                       </div>
                       <div
@@ -3639,7 +3630,6 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly when an erorr occu
                               Disaster Recovery
                             </label>
                           </div>
-                          
                         </div>
                       </div>
                       <div
@@ -3735,7 +3725,6 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly when an erorr occu
                               Sockets
                             </label>
                           </div>
-                          
                         </div>
                       </div>
                       <div
@@ -3790,7 +3779,6 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly when an erorr occu
                               </svg>
                             </span>
                           </button>
-                          
                         </div>
                       </div>
                     </form>
@@ -6354,7 +6342,6 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly with billing_model
                       class="pf-c-modal-box__title"
                       id="pf-modal-part-5"
                     >
-                      
                       <span
                         class="pf-c-modal-box__title-text"
                       >
@@ -6454,7 +6441,6 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly with billing_model
                               On-Demand (Hourly): Flexible usage billed through the Red Hat Marketplace
                             </label>
                           </div>
-                          
                         </div>
                       </div>
                       <div
@@ -6652,7 +6638,6 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly with billing_model
                               Self-Support 60-day evaluation
                             </label>
                           </div>
-                          
                         </div>
                       </div>
                       <div
@@ -6750,7 +6735,6 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly with billing_model
                               Partner support (L3)
                             </label>
                           </div>
-                          
                         </div>
                       </div>
                       <div
@@ -6870,7 +6854,6 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly with billing_model
                               Disaster Recovery
                             </label>
                           </div>
-                          
                         </div>
                       </div>
                       <div
@@ -6968,7 +6951,6 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly with billing_model
                               Sockets
                             </label>
                           </div>
-                          
                         </div>
                       </div>
                       <div
@@ -7023,7 +7005,6 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly with billing_model
                               </svg>
                             </span>
                           </button>
-                          
                         </div>
                       </div>
                     </form>
@@ -9686,7 +9667,6 @@ exports[`<EditSubscriptionSettingsDialog /> renders eval support correctly 1`] =
                       class="pf-c-modal-box__title"
                       id="pf-modal-part-2"
                     >
-                      
                       <span
                         class="pf-c-modal-box__title-text"
                       >
@@ -9910,7 +9890,6 @@ exports[`<EditSubscriptionSettingsDialog /> renders eval support correctly 1`] =
                               Self-Support 60-day evaluation
                             </label>
                           </div>
-                          
                         </div>
                       </div>
                       <div
@@ -10008,7 +9987,6 @@ exports[`<EditSubscriptionSettingsDialog /> renders eval support correctly 1`] =
                               Partner support (L3)
                             </label>
                           </div>
-                          
                         </div>
                       </div>
                       <div
@@ -10128,7 +10106,6 @@ exports[`<EditSubscriptionSettingsDialog /> renders eval support correctly 1`] =
                               Disaster Recovery
                             </label>
                           </div>
-                          
                         </div>
                       </div>
                       <div
@@ -10226,7 +10203,6 @@ exports[`<EditSubscriptionSettingsDialog /> renders eval support correctly 1`] =
                               Sockets
                             </label>
                           </div>
-                          
                         </div>
                       </div>
                       <div
@@ -10281,7 +10257,6 @@ exports[`<EditSubscriptionSettingsDialog /> renders eval support correctly 1`] =
                               </svg>
                             </span>
                           </button>
-                          
                         </div>
                       </div>
                     </form>

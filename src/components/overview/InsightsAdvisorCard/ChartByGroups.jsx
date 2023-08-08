@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import { Title, Flex, FlexItem } from '@patternfly/react-core';
 import { ChartPie, ChartLegend } from '@patternfly/react-charts';
 
-import { groupTagHitsByGroups } from '../overviewHelpers';
 import { advisorBaseName } from '~/common/getBaseName';
+import { groupTagHitsByGroups } from '../overviewHelpers';
 
 export const categoryMapping = {
   service_availability: 1,

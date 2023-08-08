@@ -11,12 +11,12 @@ import {
   OutlinedCircleIcon,
 } from '@patternfly/react-icons';
 import { IRowCell } from '@patternfly/react-table';
+import type { GlobalState } from '~/redux/store';
 import ExternalLink from '../../common/ExternalLink';
 
 import { billingModels } from '../../../common/subscriptionTypes';
 import SubscriptionNotFulfilled from '../SubscriptionNotFulfilled';
 import OSDSubscriptionTable from './OSDSubscriptionTable';
-import type { GlobalState } from '~/redux/store';
 
 const { MARKETPLACE } = billingModels;
 

@@ -9,9 +9,9 @@ import {
 } from '@patternfly/react-core';
 import { Unavailable as FcUnavailable } from '@redhat-cloud-services/frontend-components/Unavailable';
 import * as Sentry from '@sentry/browser';
+import { ErrorState } from '~/types/types';
 import { formatErrorDetails } from '../../common/errors';
 import './Unavailable.scss';
-import { ErrorState } from '~/types/types';
 
 type ErrorProp = { key?: string; message: string; response: ErrorState };
 

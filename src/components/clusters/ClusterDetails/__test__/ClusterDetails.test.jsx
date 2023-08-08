@@ -1,11 +1,11 @@
+import { mount, shallow } from 'enzyme';
 import React from 'react';
-import { shallow, mount } from 'enzyme';
 import { MemoryRouter } from 'react-router-dom';
+import { subscriptionStatuses } from '../../../../common/subscriptionTypes';
 import { TestWrapper, render, screen } from '../../../../testUtils';
+import clusterStates from '../../common/clusterStates';
 import ClusterDetails from '../ClusterDetails';
 import fixtures, { funcs } from './ClusterDetails.fixtures';
-import clusterStates from '../../common/clusterStates';
-import { subscriptionStatuses } from '../../../../common/subscriptionTypes';
 
 describe('<ClusterDetails />', () => {
   // eslint-disable-next-line react/prop-types

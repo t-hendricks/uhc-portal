@@ -115,7 +115,6 @@ exports[`<TransferClusterOwnershipDialog /> should not crash when subscription i
                       class="pf-c-modal-box__title"
                       id="pf-modal-part-5"
                     >
-                      
                       <span
                         class="pf-c-modal-box__title-text"
                       >
@@ -743,7 +742,6 @@ exports[`<TransferClusterOwnershipDialog /> should release clusters 1`] = `
                       class="pf-c-modal-box__title"
                       id="pf-modal-part-1"
                     >
-                      
                       <span
                         class="pf-c-modal-box__title-text"
                       >
@@ -1371,7 +1369,6 @@ exports[`<TransferClusterOwnershipDialog /> should show dialog for transferring 
                       class="pf-c-modal-box__title"
                       id="pf-modal-part-3"
                     >
-                      
                       <span
                         class="pf-c-modal-box__title-text"
                       >
@@ -1974,7 +1971,6 @@ exports[`<TransferClusterOwnershipDialog /> should show error 1`] = `
                       class="pf-c-modal-box__title"
                       id="pf-modal-part-4"
                     >
-                      
                       <span
                         class="pf-c-modal-box__title-text"
                       >

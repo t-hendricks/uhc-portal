@@ -5,8 +5,8 @@ exports[`<ReduxFormTagsInput /> should render with error 1`] = `
   <TagsInput
     addKeys={
       Array [
-        9,
-        13,
+        "Tab",
+        "Enter",
       ]
     }
     addOnBlur={false}
@@ -26,7 +26,7 @@ exports[`<ReduxFormTagsInput /> should render with error 1`] = `
     preventSubmit={true}
     removeKeys={
       Array [
-        8,
+        "Backspace",
       ]
     }
     renderInput={[Function]}
@@ -39,6 +39,7 @@ exports[`<ReduxFormTagsInput /> should render with error 1`] = `
         "classNameRemove": "react-tagsinput-remove",
       }
     }
+    validate={[Function]}
     validationRegex={/\\.\\*/}
     value={
       Array [
@@ -60,8 +61,8 @@ exports[`<ReduxFormTagsInput /> should render with tags 1`] = `
   <TagsInput
     addKeys={
       Array [
-        9,
-        13,
+        "Tab",
+        "Enter",
       ]
     }
     addOnBlur={false}
@@ -81,7 +82,7 @@ exports[`<ReduxFormTagsInput /> should render with tags 1`] = `
     preventSubmit={true}
     removeKeys={
       Array [
-        8,
+        "Backspace",
       ]
     }
     renderInput={[Function]}
@@ -94,6 +95,7 @@ exports[`<ReduxFormTagsInput /> should render with tags 1`] = `
         "classNameRemove": "react-tagsinput-remove",
       }
     }
+    validate={[Function]}
     validationRegex={/\\.\\*/}
     value={
       Array [
@@ -110,8 +112,8 @@ exports[`<ReduxFormTagsInput /> should render without tags 1`] = `
   <TagsInput
     addKeys={
       Array [
-        9,
-        13,
+        "Tab",
+        "Enter",
       ]
     }
     addOnBlur={false}
@@ -131,7 +133,7 @@ exports[`<ReduxFormTagsInput /> should render without tags 1`] = `
     preventSubmit={true}
     removeKeys={
       Array [
-        8,
+        "Backspace",
       ]
     }
     renderInput={[Function]}
@@ -144,6 +146,7 @@ exports[`<ReduxFormTagsInput /> should render without tags 1`] = `
         "classNameRemove": "react-tagsinput-remove",
       }
     }
+    validate={[Function]}
     validationRegex={/\\.\\*/}
     value={Array []}
   />

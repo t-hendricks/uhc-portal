@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { FormGroup, Select, SelectOption, SelectOptionObject } from '@patternfly/react-core';
-import { filterVpcsOnlyPrivateSubnets, useAWSVPCInquiry } from '../VPCScreen/useVPCInquiry';
 import ErrorBox from '~/components/common/ErrorBox';
 import { CloudVPC } from '~/types/clusters_mgmt.v1';
+import { filterVpcsOnlyPrivateSubnets, useAWSVPCInquiry } from '../VPCScreen/useVPCInquiry';
 
 interface VCPDropdownProps {
   selectedVPCID: string;

@@ -2,10 +2,10 @@ import React from 'react';
 import { Card, CardBody, Text, TextContent, TextVariants, Title } from '@patternfly/react-core';
 import TokenBox from '~/components/tokens/TokenBox';
 import { trackEvents } from '~/common/analytics';
+import { useGlobalState } from '~/redux/hooks/useGlobalState';
 import ExternalLink from '../../../../../common/ExternalLink';
 import DownloadAndOSSelection from '../../../../install/instructions/components/DownloadAndOSSelection';
 import links, { channels, tools } from '../../../../../../common/installLinks.mjs';
-import { useGlobalState } from '~/redux/hooks/useGlobalState';
 
 const AuthenticateScreen = () => {
   const token = useGlobalState((state) => state.rosaReducer.offlineToken);

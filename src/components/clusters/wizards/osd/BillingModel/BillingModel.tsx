@@ -24,8 +24,8 @@ import {
 import { FieldId } from '~/components/clusters/wizards/osd/constants';
 import { useFormState } from '~/components/clusters/wizards/hooks';
 import { RadioGroupField, RadioGroupOption } from '~/components/clusters/wizards/form';
-import { useGetBillingQuotas } from './useGetBillingQuotas';
 import { useFeatureGate } from '~/hooks/useFeatureGate';
+import { useGetBillingQuotas } from './useGetBillingQuotas';
 
 import './BillingModel.scss';
 
