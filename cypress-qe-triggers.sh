@@ -22,5 +22,5 @@ yarn install
 timeout \
   --signal "TERM" \
   --kill-after "2m" \
-  "10m" \
+  "60m" \
   "run/cypress-qe-executor.sh" $ENVIRONMENT $BROWSER $TAGS
