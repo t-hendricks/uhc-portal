@@ -193,6 +193,9 @@
     "@cypress/webpack-preprocessor": "5.17.0"
   },
   "jest": {
+    "roots": [
+      "<rootDir>/src"
+    ],
     "verbose": true,
     "snapshotSerializers": [
       "enzyme-to-json/serializer"
