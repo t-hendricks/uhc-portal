@@ -160,7 +160,13 @@ exports[`<MachinePools /> OpenShift version for machine pools is shown if hypers
                   "title": <ExpandableRow
                     cluster={
                       Object {
-                        "canEdit": true,
+                        "machinePoolsActions": Object {
+                          "create": true,
+                          "delete": true,
+                          "edit": true,
+                          "list": true,
+                          "update": true,
+                        },
                       }
                     }
                     machinePool={
@@ -358,7 +364,13 @@ exports[`<MachinePools /> renders with a machine pool with autoscaling enabled 1
                   "title": <ExpandableRow
                     cluster={
                       Object {
-                        "canEdit": true,
+                        "machinePoolsActions": Object {
+                          "create": true,
+                          "delete": true,
+                          "edit": true,
+                          "list": true,
+                          "update": true,
+                        },
                       }
                     }
                     machinePool={
@@ -557,7 +569,13 @@ exports[`<MachinePools /> renders with additional machine pools, some with label
                   "title": <ExpandableRow
                     cluster={
                       Object {
-                        "canEdit": true,
+                        "machinePoolsActions": Object {
+                          "create": true,
+                          "delete": true,
+                          "edit": true,
+                          "list": true,
+                          "update": true,
+                        },
                       }
                     }
                     machinePool={
@@ -630,7 +648,13 @@ exports[`<MachinePools /> renders with additional machine pools, some with label
                   "title": <ExpandableRow
                     cluster={
                       Object {
-                        "canEdit": true,
+                        "machinePoolsActions": Object {
+                          "create": true,
+                          "delete": true,
+                          "edit": true,
+                          "list": true,
+                          "update": true,
+                        },
                       }
                     }
                     machinePool={
@@ -700,7 +724,13 @@ exports[`<MachinePools /> renders with additional machine pools, some with label
                   "title": <ExpandableRow
                     cluster={
                       Object {
-                        "canEdit": true,
+                        "machinePoolsActions": Object {
+                          "create": true,
+                          "delete": true,
+                          "edit": true,
+                          "list": true,
+                          "update": true,
+                        },
                       }
                     }
                     machinePool={
@@ -993,7 +1023,13 @@ exports[`<MachinePools /> renders with the default machine pool when it has labe
                   "title": <ExpandableRow
                     cluster={
                       Object {
-                        "canEdit": true,
+                        "machinePoolsActions": Object {
+                          "create": true,
+                          "delete": true,
+                          "edit": true,
+                          "list": true,
+                          "update": true,
+                        },
                       }
                     }
                     machinePool={

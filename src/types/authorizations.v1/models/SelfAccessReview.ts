@@ -62,5 +62,6 @@ export namespace SelfAccessReview {
     SELF_ACCESS_REVIEW = 'SelfAccessReview',
     SUBSCRIPTION_INTERNAL = 'SubscriptionInternal',
     SUBSCRIPTION_ROLE_BINDING = 'SubscriptionRoleBinding',
+    MACHINE_POOL = 'MachinePool',
   }
 }

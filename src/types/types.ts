@@ -75,6 +75,9 @@ export type AugmentedCluster = ClusterWithPermissions & {
   idpActions?: {
     [action: string]: boolean;
   };
+  machinePoolsActions?: {
+    [action: string]: boolean;
+  };
   upgradeGates?: VersionGateAgreement[];
   aiCluster?: AICluster;
   limitedSupportReasons?: LimitedSupportReason[];
