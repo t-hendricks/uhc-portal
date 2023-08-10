@@ -10,6 +10,7 @@ import { toHaveNoViolations, axe } from 'jest-axe';
 import { createBrowserHistory } from 'history';
 import { store } from './redux/store';
 import { reduxReducers } from './redux/reducers';
+import * as restrictedEnv from './restrictedEnv';
 
 const history = createBrowserHistory();
 
@@ -49,6 +50,7 @@ export const checkAccessibility = async (container: HTMLElement | string) => {
 export const insightsMock = () => {
   global.insights = {
     chrome: {
+      ...global.insights.chrome,
       on: () => () => {},
       appNavClick: () => {},
       auth: {
@@ -58,4 +60,10 @@ export const insightsMock = () => {
       },
     },
   };
+};
+
+export const mockRestrictedEnv = () => {
+  const mock = jest.spyOn(restrictedEnv, 'isRestrictedEnv');
+  mock.mockReturnValue(false);
+  return mock;
 };

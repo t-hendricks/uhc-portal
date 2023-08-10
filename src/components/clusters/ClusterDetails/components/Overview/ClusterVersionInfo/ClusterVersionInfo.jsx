@@ -56,7 +56,7 @@ class ClusterVersionInfo extends React.Component {
             <dt>OpenShift: </dt>
             <dd>
               {clusterVersion}
-              {!isRestrictedEnv && (
+              {!isRestrictedEnv() && (
                 <>
                   <ClusterUpdateLink
                     cluster={cluster}

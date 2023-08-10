@@ -147,7 +147,7 @@ const scrollToFirstField = (ids: string[], focusSelector: string = 'input,select
 
 /**
  * Converts redux form structure to the structure expected by OCM API.
- * pairs with missing keys are omitted.
+ * Pairs with missing keys are omitted.
  *
  * @example
  * parseReduxFormKeyValueList([
@@ -172,8 +172,9 @@ const parseReduxFormKeyValueList = (
   );
 
 /**
- * only return non-empty taints (temporary untill proper fields validation will be implemented)
- * and remove the 'id' property
+ * Converts redux form structure to the structure expected by OCM API.
+ * Pairs with missing keys are omitted, and the 'id' property is removed
+ *
  * @param {Array} taintsFormData Array of taints. Example:
  * [{ key: 'foo', value: 'bar', effect: 'NoSchedule'},
  * { id: '1a2b3c', key: 'foo1', value: 'bar1', effect: 'NoExecute'},]
@@ -185,8 +186,11 @@ const parseReduxFormTaints = (
     .map(
       (taint) =>
         taint.key &&
-        taint.value &&
-        taint.effect && { key: taint.key, value: taint.value, effect: taint.effect },
+        taint.effect && {
+          key: taint.key,
+          value: taint.value === null || taint.value === undefined ? '' : taint.value,
+          effect: taint.effect,
+        },
     )
     .filter(Boolean);
 

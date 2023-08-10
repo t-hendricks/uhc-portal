@@ -75,4 +75,5 @@ const defaultProps: AWSAccountSelectionProps = {
     touched: false,
     error: '',
   },
+  clearGetAWSAccountIDsResponse: () => {},
 };

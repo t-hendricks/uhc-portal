@@ -6,15 +6,13 @@ import ExternalLink from '~/components/common/ExternalLink';
 import links from '~/common/installLinks.mjs';
 import { trackEvents } from '~/common/analytics';
 import { RosaCliCommand } from '../constants/cliCommands';
-import AssociateAWSAccountStep from './common/AssociateAWSAccountStep';
+import AssociateAWSAccountStep, {
+  AssociateAWSAccountStepProps,
+} from './common/AssociateAWSAccountStep';
 import ToggleGroupTabs from './common/ToggleGroupTabs';
 
-type OCMRoleStepProps = {
-  title: string;
-};
-
-const OCMRoleStep = ({ title }: OCMRoleStepProps) => (
-  <AssociateAWSAccountStep title={title} contentId="AssociateAWSAccountOCMRoleStep">
+const OCMRoleStep = (props: AssociateAWSAccountStepProps) => (
+  <AssociateAWSAccountStep {...props}>
     <Title headingLevel="h4" className="pf-u-mb-md" size="md">
       First, check if a role exists and is linked with:
     </Title>

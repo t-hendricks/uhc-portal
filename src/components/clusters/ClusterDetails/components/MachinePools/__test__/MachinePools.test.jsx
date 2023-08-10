@@ -20,7 +20,13 @@ const defaultMachinePool = {
 
 const baseProps = {
   cluster: {
-    canEdit: true,
+    machinePoolsActions: {
+      create: true,
+      update: true,
+      delete: true,
+      edit: true,
+      list: true,
+    },
   },
   openModal,
   isAddMachinePoolModalOpen: false,
@@ -158,13 +164,6 @@ describe('<MachinePools />', () => {
     wrapper.setProps({ machinePoolsList: { ...baseRequestState, pending: true, data: [] } });
     expect(wrapper).toMatchSnapshot();
     expect(wrapper.find('Skeleton').length).toBeGreaterThan(0);
-  });
-
-  it('should not allow adding machine pools to users without permissions', () => {
-    const props = { ...osdProps, cluster: { canEdit: false } };
-    const wrapper = shallow(<MachinePools {...props} />);
-
-    expect(wrapper.find('#add-machine-pool').props().disableReason).toBeTruthy();
   });
 
   it('should not allow adding machine pools to users without enough quota', () => {
@@ -481,9 +480,13 @@ describe('<MachinePools />', () => {
       ...baseProps,
       cluster: {
         ...baseProps.cluster,
-        canEditMachinePools: false,
-        canEdit: false,
-        canCreateMachinePools: false,
+        machinePoolsActions: {
+          create: false,
+          update: false,
+          delete: false,
+          edit: false,
+          list: true,
+        },
       },
       isHypershift: true,
       machinePoolsList: {
@@ -506,14 +509,45 @@ describe('<MachinePools />', () => {
     expect(container.querySelector('.pf-c-dropdown__toggle')).toBeDisabled();
   });
 
-  it('Should allow actions on machine pools if user has permissions', () => {
+  it('Should disable delete action if user does not have permissions', async () => {
+    const user = userEvent.setup();
     const props = {
       ...baseProps,
       cluster: {
         ...baseProps.cluster,
-        canEditMachinePools: true,
-        canCreateMachinePools: true,
+        machinePoolsActions: {
+          create: false,
+          update: true,
+          delete: false,
+          edit: true,
+          list: true,
+        },
       },
+      isHypershift: true,
+      machinePoolsList: {
+        data: [
+          {
+            availability_zones: ['us-east-1a'],
+            href: '/api/clusters_mgmt/v1/clusters/cluster-id/machine_pools/test-mp',
+            id: 'test-mp',
+            instance_type: 'm5.xlarge',
+            kind: 'MachinePool',
+            replicas: 1,
+          },
+        ],
+      },
+    };
+    render(<MachinePools {...props} />);
+    await user.click(screen.getByRole('button', { name: 'Actions' }));
+    expect(screen.queryByRole('menuitem', { name: 'Delete' })).toHaveAttribute(
+      'aria-disabled',
+      'true',
+    );
+  });
+
+  it('Should allow actions on machine pools if user has permissions', () => {
+    const props = {
+      ...baseProps,
       isHypershift: true,
       machinePoolsList: {
         data: [

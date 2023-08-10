@@ -1,3 +1,3 @@
-import AssociateAWSAccountDrawer from './AssociateAWSAccountDrawer';
+import { useAssociateAWSAccountDrawer } from './AssociateAWSAccountDrawer';
 
-export default AssociateAWSAccountDrawer;
+export default useAssociateAWSAccountDrawer;

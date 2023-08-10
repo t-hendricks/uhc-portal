@@ -14,7 +14,7 @@ import '../ReduxFormKeyValueList/ReduxFormKeyValueList.scss';
 
 const ReduxFormTaints = ({
   fields,
-  meta: { error, submitFailed, warning },
+  meta: { error, submitFailed },
   isEditing = false,
   canAddMore,
 }) => (
@@ -88,7 +88,7 @@ const ReduxFormTaints = ({
         icon={<PlusCircleIcon />}
         variant="link"
         isInline
-        isDisabled={!canAddMore || !!warning}
+        isDisabled={!canAddMore}
         className="reduxFormKeyValueList-addBtn pf-u-mb-lg"
       >
         Add taint
