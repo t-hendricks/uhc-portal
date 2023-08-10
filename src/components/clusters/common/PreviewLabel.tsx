@@ -2,7 +2,7 @@ import React from 'react';
 import { Label, LabelProps } from '@patternfly/react-core';
 import InfoCircleIcon from '@patternfly/react-icons/dist/esm/icons/info-circle-icon';
 
-export const GA_DATE = new Date('2023-08-01T00:00:00Z');
+export const GA_DATE = new Date('2023-11-01T00:00:00Z');
 
 export const createdPostGa = (creationDateStr: string) => {
   const creationDate = creationDateStr ? new Date(creationDateStr) : new Date();
