@@ -49,7 +49,7 @@ if [ ! -z $orphen_userroles ];then
   rosa unlink user-role --role-arn $orphen_userroles  -y
   userroles_success_msg=$(rosa create user-role --prefix cypress-user-role --mode auto -y)
 fi
-echo $ocmroles_success_msg
+echo $userroles_success_msg
 rosa create account-roles --prefix cypress-account-roles --mode auto -y
 
 echo "Completed ROSA pre-config commands!"
