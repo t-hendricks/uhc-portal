@@ -97,6 +97,11 @@ const LABEL_VALUE_REGEX = /^(([a-z0-9][a-z0-9-_.]*)?[a-z0-9])?$/i;
 
 const MAX_CUSTOM_OPERATOR_ROLES_PREFIX_LENGTH = 32;
 
+type Validations = {
+  validated: boolean;
+  text: string;
+}[];
+
 // Function to validate that a field is mandatory, i.e. must be a non whitespace string
 const required = (value: string): string | undefined =>
   value && value.trim() ? undefined : 'Field is required';
@@ -267,24 +272,13 @@ const createPessimisticValidator =
       allValues?: any,
       props?: any,
       name?: any,
-    ) =>
-      | {
-          validated: boolean;
-          text: string;
-        }[]
-      | undefined = () => undefined,
+    ) => Validations | undefined = () => undefined,
   ) =>
   (value: V, allValues?: any, props?: any, name?: any) =>
     findFirstFailureMessage(validationProvider(value, allValues, props, name));
 
-const findFirstFailureMessage = (
-  populatedValidation:
-    | {
-        validated: boolean;
-        text: string;
-      }[]
-    | undefined,
-) => populatedValidation?.find((validation) => validation.validated === false)?.text;
+const findFirstFailureMessage = (populatedValidation: Validations | undefined) =>
+  populatedValidation?.find((validation) => validation.validated === false)?.text;
 
 const checkCustomOperatorRolesPrefix = (value: string): string | undefined => {
   const label = 'Custom operator roles prefix';
@@ -360,40 +354,38 @@ const parseNodeLabels = (input: string | string[] | undefined) => {
   return parseNodeLabelTags(labels);
 };
 
-const labelKeyValidations = (
+const labelAndTaintKeyValidations = (
   value: string,
-): {
-  validated: boolean;
-  text: string;
-}[] => {
+  items: { key?: string; value?: string }[],
+): Validations => {
   const { prefix, name } = parseNodeLabelKey(value);
+  const isEmptyValid = items?.length === 1 && !items[0].key && !items[0].value;
 
   return [
     {
       validated: typeof prefix === 'undefined' || DNS_SUBDOMAIN_REGEXP.test(prefix),
-      text: 'Key prefix must be a DNS subdomain: a series of DNS labels separated by dots (.)',
+      text: 'Key prefix must be a DNS subdomain: a series of DNS labels separated by dots (.), and must end with a "/"',
     },
     {
       validated: typeof prefix === 'undefined' || prefix.length <= LABEL_KEY_PREFIX_MAX_LENGTH,
       text: `A valid key prefix must be ${LABEL_KEY_PREFIX_MAX_LENGTH} characters or less`,
     },
     {
-      validated: typeof name !== 'undefined' && LABEL_KEY_NAME_REGEX.test(name),
+      validated: typeof name === 'undefined' || LABEL_KEY_NAME_REGEX.test(name),
       text: "A valid key name must consist of alphanumeric characters, '-', '.' or '_' and must start and end with an alphanumeric character",
     },
     {
-      validated: typeof name !== 'undefined' && name.length <= LABEL_KEY_NAME_MAX_LENGTH,
+      validated: typeof name === 'undefined' || name.length <= LABEL_KEY_NAME_MAX_LENGTH,
       text: `A valid key name must be ${LABEL_KEY_NAME_MAX_LENGTH} characters or less`,
+    },
+    {
+      validated: isEmptyValid || value?.length > 0,
+      text: 'Required',
     },
   ];
 };
 
-const labelValueValidations = (
-  value: string,
-): {
-  validated: boolean;
-  text: string;
-}[] => [
+const labelAndTaintValueValidations = (value: string): Validations => [
   {
     validated: typeof value === 'undefined' || value.length <= LABEL_VALUE_MAX_LENGTH,
     text: `A valid value must be ${LABEL_VALUE_MAX_LENGTH} characters or less`,
@@ -404,58 +396,24 @@ const labelValueValidations = (
   },
 ];
 
-const taintValueValidations = (
-  value: string,
-): {
-  validated: boolean;
-  text: string;
-}[] => [
-  {
-    validated: !value || value.length <= LABEL_VALUE_MAX_LENGTH,
-    text: `A valid value must be ${LABEL_VALUE_MAX_LENGTH} characters or less`,
-  },
-  {
-    validated: !value || LABEL_VALUE_REGEX.test(value),
-    text: "A valid value must consist of alphanumeric characters, '-', '.' or '_' and must start and end with an alphanumeric character",
-  },
-];
-
-const taintKeyValidations = (
-  value: string,
-  allValues: { taints?: Taint[] },
-): {
-  validated: boolean;
-  text: string;
-}[] => {
-  const formatErrors = taintValueValidations(value);
-  const hasFormatErrors = formatErrors.find((validation) => !validation.validated) !== undefined;
-  if (hasFormatErrors) {
-    return formatErrors;
-  }
-
-  const { taints } = allValues;
-  const isEmptyValid = taints?.length === 1 && !taints[0].key && !taints[0].value;
-  return [
-    {
-      validated: isEmptyValid || value?.length > 0,
-      text: 'Required',
-    },
-  ];
+const taintKeyValidations = (value: string, allValues: { taints?: Taint[] }): Validations => {
+  const items = allValues?.taints || [];
+  return labelAndTaintKeyValidations(value, items);
 };
 
-const checkLabelKey = createPessimisticValidator(labelKeyValidations);
-const checkLabelValue = createPessimisticValidator(labelValueValidations);
+const nodeLabelKeyValidations = (
+  value: string,
+  allValues: { node_labels?: Taint[] },
+): Validations => {
+  const items = allValues?.node_labels || [];
+  return labelAndTaintKeyValidations(value, items);
+};
+
+const checkLabelKey = createPessimisticValidator(nodeLabelKeyValidations);
+const checkLabelValue = createPessimisticValidator(labelAndTaintValueValidations);
 
 const checkTaintKey = createPessimisticValidator(taintKeyValidations);
-const checkTaintValue = createPessimisticValidator(taintValueValidations);
-
-const validateNoEmptyTaints = (
-  value: string,
-  allValues: { taints: { key: string; value: string }[] },
-): string | undefined => {
-  const hasIncomplete = allValues.taints?.find((item) => !item.key);
-  return hasIncomplete ? 'Empty taints' : undefined;
-};
+const checkTaintValue = createPessimisticValidator(labelAndTaintValueValidations);
 
 const checkLabels = (input: string | string[]) =>
   parseNodeLabels(input)
@@ -1555,7 +1513,6 @@ export {
   checkLabelValue,
   checkTaintKey,
   checkTaintValue,
-  validateNoEmptyTaints,
 };
 
 export default validators;
