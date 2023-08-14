@@ -93,6 +93,7 @@ describe('Rosa cluster tests', { tags: ['ci'] }, () => {
         // Confirm alert opens drawer with correct content
         cy.contains('create the required role').click();
         cy.contains('h2', 'Create account roles');
+        cy.contains('continue to step').should('not.exist');
         cy.getByTestId('close-associate-account-btn').click();
       });
 
@@ -127,6 +128,7 @@ describe('Rosa cluster tests', { tags: ['ci'] }, () => {
         // Confirm alert opens drawer with correct content
         cy.contains('create the required role').click();
         cy.contains('h2', 'Create user role');
+        cy.contains('continue to step').should('not.exist');
         cy.getByTestId('close-associate-account-btn').click();
       });
 
@@ -166,6 +168,7 @@ describe('Rosa cluster tests', { tags: ['ci'] }, () => {
         // Confirm alert opens drawer with correct content
         cy.contains('create the required role').click();
         cy.contains('h2', 'Create OCM role');
+        cy.contains('continue to step').should('not.exist');
         cy.getByTestId('close-associate-account-btn').click();
       });
 
