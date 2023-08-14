@@ -14,6 +14,9 @@ import AssociateAWSAccountStep, {
 const AccountRoleStep = (props: AssociateAWSAccountStepProps) => {
   const isHypershiftSelected =
     useGlobalState((state) => state.form.CreateCluster?.values?.hypershift) === 'true';
+  const accountRolesCommand = isHypershiftSelected
+    ? RosaCliCommand.CreateAccountRolesHCP
+    : RosaCliCommand.CreateAccountRoles;
   return (
     <AssociateAWSAccountStep {...props}>
       <Text component={TextVariants.p} className="pf-u-mb-lg">
@@ -22,12 +25,10 @@ const AccountRoleStep = (props: AssociateAWSAccountStepProps) => {
       </Text>
       <InstructionCommand
         trackEvent={trackEvents.CopyCreateAccountRoles}
-        textAriaLabel={`Copyable ROSA ${RosaCliCommand.CreateAccountRolesAuto} command`}
+        textAriaLabel={`Copyable ROSA ${accountRolesCommand} command`}
         className="pf-u-mb-lg"
       >
-        {isHypershiftSelected
-          ? RosaCliCommand.CreateAccountRolesHCP
-          : RosaCliCommand.CreateAccountRolesAuto}
+        {accountRolesCommand}
       </InstructionCommand>
 
       <Alert
