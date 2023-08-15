@@ -15,6 +15,7 @@ import usePreventBrowserNav from '~/hooks/usePreventBrowserNav';
 import { HYPERSHIFT_WIZARD_FEATURE } from '~/redux/constants/featureConstants';
 import { AppPage } from '~/components/App/AppPage';
 import { AppDrawerContext } from '~/components/App/AppDrawer';
+import { isRestrictedEnv } from '~/restrictedEnv';
 import { getAccountAndRolesStepId, stepId, stepNameById } from './rosaWizardConstants';
 
 import CIDRScreen from '../../CreateOSDPage/CreateOSDWizard/CIDRScreen';
@@ -523,7 +524,7 @@ class CreateROSAWizardInternal extends React.Component {
 
 function CreateROSAWizard(props) {
   usePreventBrowserNav();
-  const isHypershiftEnabled = useFeatureGate(HYPERSHIFT_WIZARD_FEATURE);
+  const isHypershiftEnabled = useFeatureGate(HYPERSHIFT_WIZARD_FEATURE) && !isRestrictedEnv();
   return (
     <AppPage title="Create OpenShift ROSA Cluster">
       <AppDrawerContext.Consumer>

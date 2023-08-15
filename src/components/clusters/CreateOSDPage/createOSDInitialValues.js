@@ -1,3 +1,4 @@
+import { isRestrictedEnv } from '~/restrictedEnv';
 import { normalizedProducts, billingModels } from '../../../common/subscriptionTypes';
 import { IMDSType } from '../wizards/common';
 
@@ -46,7 +47,7 @@ const createOSDInitialValues = ({
     aws_access_key_id: '',
     aws_secret_access_key: '',
     network_configuration_toggle: 'basic',
-    cluster_privacy: 'external',
+    cluster_privacy: isRestrictedEnv() ? 'internal' : 'external',
     install_to_vpc: isHypershiftSelected,
     use_privatelink: false,
     configure_proxy: false,

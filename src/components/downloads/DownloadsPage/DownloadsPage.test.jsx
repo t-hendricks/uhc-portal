@@ -176,7 +176,7 @@ describe('<DownloadsPage>', () => {
       expect(screen.getByTestId('downloads-section-CLI')).toBeInTheDocument();
       expect(screen.getByTestId('downloads-section-TOKENS')).toBeInTheDocument();
 
-      expect(screen.getAllByTestId(/expandable-row-.*/)).toHaveLength(3);
+      expect(screen.getAllByTestId(/expandable-row-.*/)).toHaveLength(4);
       expect(screen.getByTestId('expandable-row-oc')).toBeInTheDocument();
       expect(screen.getByTestId('expandable-row-rosa')).toBeInTheDocument();
     });

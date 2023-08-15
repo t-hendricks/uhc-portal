@@ -11,6 +11,7 @@ import {
 import * as OCM from '@openshift-assisted/ui-lib/ocm';
 import { isROSA } from '~/components/clusters/common/clusterStates';
 import { IMDSType } from '~/components/clusters/wizards/common';
+import { isRestrictedEnv } from '~/restrictedEnv';
 
 import Timestamp from '../../../../../common/Timestamp';
 import links from '../../../../../../common/installLinks.mjs';
@@ -62,7 +63,8 @@ function DetailsRight({
     cluster.managed &&
     cluster.storage_quota &&
     humanizeValueWithUnitGiB(cluster.storage_quota.value);
-  const showVCPU = !isDisconnected && !hasSockets;
+  const showVCPU = !isDisconnected && !hasSockets && !isRestrictedEnv();
+  const showMemory = !isDisconnected && !isRestrictedEnv();
 
   const controlPlaneActualNodes = get(cluster, 'metrics.nodes.master', '-');
   const controlPlaneDesiredNodes = get(cluster, 'nodes.master', '-');
@@ -119,7 +121,7 @@ function DetailsRight({
             </DescriptionListGroup>
           </>
         )}
-        {!isDisconnected && (
+        {showMemory && (
           <>
             <DescriptionListGroup>
               <DescriptionListTerm>Total memory</DescriptionListTerm>
@@ -182,81 +184,85 @@ function DetailsRight({
           </>
         )}
         {/* Nodes */}
-        {showDesiredNodes && !autoscaleEnabled ? (
+        {!isRestrictedEnv() && (
           <>
-            <DescriptionListGroup>
-              <DescriptionListTerm>
-                Nodes
-                <span className="font-weight-normal"> (actual/desired)</span>
-                <PopoverHint
-                  id="cluster-scaling-hint"
-                  iconClassName="nodes-hint"
-                  hint="The actual number of compute nodes may not always match with the number of desired when the cluster is scaling."
-                />
-              </DescriptionListTerm>
-              <DescriptionListDescription>
-                <dl className="pf-l-stack">
-                  {!isHypershift && (
-                    <Flex data-testid="controlPlaneNodesCountContainer">
-                      <dt>Control plane: </dt>
-                      <dd>
-                        {controlPlaneActualNodes !== '-' || controlPlaneDesiredNodes !== '-'
-                          ? `${controlPlaneActualNodes}/${controlPlaneDesiredNodes}`
-                          : 'N/A'}
-                      </dd>
-                    </Flex>
-                  )}
-                  {showInfraNodes && (
-                    <>
-                      <Flex data-testid="InfraNodesCountContainer">
-                        <dt>Infra: </dt>
+            {showDesiredNodes && !autoscaleEnabled ? (
+              <>
+                <DescriptionListGroup>
+                  <DescriptionListTerm>
+                    Nodes
+                    <span className="font-weight-normal"> (actual/desired)</span>
+                    <PopoverHint
+                      id="cluster-scaling-hint"
+                      iconClassName="nodes-hint"
+                      hint="The actual number of compute nodes may not always match with the number of desired when the cluster is scaling."
+                    />
+                  </DescriptionListTerm>
+                  <DescriptionListDescription>
+                    <dl className="pf-l-stack">
+                      {!isHypershift && (
+                        <Flex data-testid="controlPlaneNodesCountContainer">
+                          <dt>Control plane: </dt>
+                          <dd>
+                            {controlPlaneActualNodes !== '-' || controlPlaneDesiredNodes !== '-'
+                              ? `${controlPlaneActualNodes}/${controlPlaneDesiredNodes}`
+                              : 'N/A'}
+                          </dd>
+                        </Flex>
+                      )}
+                      {showInfraNodes && (
+                        <>
+                          <Flex data-testid="InfraNodesCountContainer">
+                            <dt>Infra: </dt>
+                            <dd>
+                              {infraActualNodes !== '-' || infraDesiredNodes !== '-'
+                                ? `${infraActualNodes}/${infraDesiredNodes}`
+                                : 'N/A'}
+                            </dd>
+                          </Flex>
+                        </>
+                      )}
+                      <Flex>
+                        <dt>Compute: </dt>
                         <dd>
-                          {infraActualNodes !== '-' || infraDesiredNodes !== '-'
-                            ? `${infraActualNodes}/${infraDesiredNodes}`
+                          {workerActualNodes !== '-' || workerDesiredNodes !== '-'
+                            ? `${workerActualNodes}/${workerDesiredNodes}`
                             : 'N/A'}
                         </dd>
                       </Flex>
-                    </>
-                  )}
-                  <Flex>
-                    <dt>Compute: </dt>
-                    <dd>
-                      {workerActualNodes !== '-' || workerDesiredNodes !== '-'
-                        ? `${workerActualNodes}/${workerDesiredNodes}`
-                        : 'N/A'}
-                    </dd>
-                  </Flex>
-                </dl>
-              </DescriptionListDescription>
-            </DescriptionListGroup>
-          </>
-        ) : (
-          <>
-            <DescriptionListGroup>
-              <DescriptionListTerm>Nodes</DescriptionListTerm>
-              <DescriptionListDescription>
-                <dl className="pf-l-stack">
-                  {!isHypershift && (
-                    <Flex data-testid="controlPlaneNodesCountContainer">
-                      <dt>Control plane: </dt>
-                      <dd>{get(cluster, 'metrics.nodes.master', 'N/A')}</dd>
-                    </Flex>
-                  )}
-                  {showInfraNodes && (
-                    <>
-                      <Flex data-testid="InfraNodesCountContainer">
-                        <dt>Infra: </dt>
-                        <dd>{get(cluster, 'metrics.nodes.infra', 'N/A')}</dd>
+                    </dl>
+                  </DescriptionListDescription>
+                </DescriptionListGroup>
+              </>
+            ) : (
+              <>
+                <DescriptionListGroup>
+                  <DescriptionListTerm>Nodes</DescriptionListTerm>
+                  <DescriptionListDescription>
+                    <dl className="pf-l-stack">
+                      {!isHypershift && (
+                        <Flex data-testid="controlPlaneNodesCountContainer">
+                          <dt>Control plane: </dt>
+                          <dd>{get(cluster, 'metrics.nodes.master', 'N/A')}</dd>
+                        </Flex>
+                      )}
+                      {showInfraNodes && (
+                        <>
+                          <Flex data-testid="InfraNodesCountContainer">
+                            <dt>Infra: </dt>
+                            <dd>{get(cluster, 'metrics.nodes.infra', 'N/A')}</dd>
+                          </Flex>
+                        </>
+                      )}
+                      <Flex>
+                        <dt>Compute: </dt>
+                        <dd>{totalActualNodes || 'N/A'}</dd>
                       </Flex>
-                    </>
-                  )}
-                  <Flex>
-                    <dt>Compute: </dt>
-                    <dd>{totalActualNodes || 'N/A'}</dd>
-                  </Flex>
-                </dl>
-              </DescriptionListDescription>
-            </DescriptionListGroup>
+                    </dl>
+                  </DescriptionListDescription>
+                </DescriptionListGroup>
+              </>
+            )}
           </>
         )}
         {cluster.aiCluster && (
