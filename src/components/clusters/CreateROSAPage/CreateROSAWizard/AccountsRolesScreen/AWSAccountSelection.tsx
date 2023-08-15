@@ -68,6 +68,7 @@ export interface AWSAccountSelectionProps {
   };
   isBillingAccount?: boolean;
   clearGetAWSAccountIDsResponse: () => void;
+  required?: boolean;
 }
 
 function AWSAccountSelection({
@@ -86,6 +87,7 @@ function AWSAccountSelection({
   isBillingAccount = false,
   refresh,
   clearGetAWSAccountIDsResponse,
+  required = true,
 }: AWSAccountSelectionProps) {
   const [isOpen, setIsOpen] = useState(false);
   const associateAWSAccountBtnRef = createRef<HTMLInputElement>();
@@ -253,7 +255,7 @@ function AWSAccountSelection({
       className="aws-account-selection"
       validated={touched && error ? 'error' : undefined}
       helperTextInvalid={touched && error}
-      isRequired
+      isRequired={required}
     >
       <Flex>
         <FlexItem grow={{ default: 'grow' }}>
