@@ -33,6 +33,7 @@ import { ReduxSelectDropdown } from '~/components/common/ReduxFormComponents';
 import ReduxVerticalFormGroup from '~/components/common/ReduxFormComponents/ReduxVerticalFormGroup';
 import { MIN_MANAGED_POLICY_VERSION } from '~/components/clusters/CreateROSAPage/CreateROSAWizard/rosaConstants';
 import { AwsRoleErrorAlert } from './AwsRoleErrorAlert';
+import { RosaCliCommand } from './constants/cliCommands';
 
 // todo - WAT!?
 import './AccountsRolesScreen.scss';
@@ -54,7 +55,7 @@ function AccountRolesARNsSection({
   clearGetAWSAccountRolesARNsResponse,
   isHypershiftSelected,
   onAccountChanged,
-  openAssociateAwsAccountModal,
+  toggleAssociateAccountDrawer,
 }) {
   const track = useAnalytics();
   const [isExpanded, setIsExpanded] = useState(true);
@@ -270,13 +271,13 @@ function AccountRolesARNsSection({
       return (
         <AwsRoleErrorAlert
           title={alertTitle}
-          openAssociateAwsAccountModal={openAssociateAwsAccountModal}
+          toggleAssociateAccountDrawer={toggleAssociateAccountDrawer}
         />
       );
     }
 
     return <ErrorBox message={alertTitle} response={getAWSAccountRolesARNsResponse} />;
-  }, [getAWSAccountRolesARNsResponse, openAssociateAwsAccountModal, resolveARNsErrorTitle]);
+  }, [getAWSAccountRolesARNsResponse, toggleAssociateAccountDrawer, resolveARNsErrorTitle]);
 
   const arnCompatibilityAlertTitle = React.useMemo(() => {
     if (isHypershiftSelected)
@@ -302,7 +303,9 @@ function AccountRolesARNsSection({
             <br />
             Create the account roles using the following command in the ROSA CLI
             <InstructionCommand textAriaLabel="Copyable ROSA login command">
-              {`rosa create account-roles${isHypershiftSelected ? ' --hosted-cp' : ''}`}
+              {isHypershiftSelected
+                ? RosaCliCommand.CreateAccountRolesHCP
+                : RosaCliCommand.CreateAccountRoles}
             </InstructionCommand>
             <br />
             After running the command, you may need to refresh using the{' '}
@@ -469,7 +472,7 @@ function AccountRolesARNsSection({
                             <Text component={TextVariants.p}>Recreate ARNs using</Text>
                             <Text component={TextVariants.p}>
                               <InstructionCommand textAriaLabel="Copyable ROSA create account-roles command">
-                                rosa create account-roles
+                                {RosaCliCommand.CreateAccountRoles}
                               </InstructionCommand>
                             </Text>
                           </TextListItem>
@@ -507,7 +510,7 @@ AccountRolesARNsSection.propTypes = {
   clearGetAWSAccountRolesARNsResponse: PropTypes.func.isRequired,
   isHypershiftSelected: PropTypes.bool,
   onAccountChanged: PropTypes.func.isRequired,
-  openAssociateAwsAccountModal: PropTypes.func.isRequired,
+  toggleAssociateAccountDrawer: PropTypes.func.isRequired,
 };
 
 export default AccountRolesARNsSection;

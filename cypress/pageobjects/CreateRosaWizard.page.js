@@ -17,8 +17,8 @@ class CreateRosaCluster extends Page {
     cy.contains('h3', 'Select an AWS control plane type');
   }
 
-  isAssociateAccountsDialog() {
-    cy.contains('h2', 'Associate AWS Account');
+  isAssociateAccountsDrawer() {
+    cy.contains('h2', 'How to associate a new AWS account');
   }
 
   cancelWizard() {
@@ -77,7 +77,7 @@ class CreateRosaCluster extends Page {
   }
 
   get associatedAccountsDropdown() {
-    return 'button.pf-c-select__toggle';
+    return 'button.pf-c-select__toggle[aria-describedby="aws-infra-accounts"]';
   }
 
   get versionsDropdown() {
@@ -102,9 +102,11 @@ class CreateRosaCluster extends Page {
 
   selectStandaloneControlPlaneTypeOption() {
     cy.getByTestId('standalone-control-planes').click();
-    cy.getByTestId('standalone-control-planes').should('have.attr', 'aria-selected').then((isSelected) => {
-      expect(isSelected).to.eq('true');
-    });
+    cy.getByTestId('standalone-control-planes')
+      .should('have.attr', 'aria-selected')
+      .then((isSelected) => {
+        expect(isSelected).to.eq('true');
+      });
   }
 }
 
