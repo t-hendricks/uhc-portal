@@ -1,18 +1,17 @@
 #!/bin/bash
 
+# this script is sourced during the execution of pr_check/build_deploy
+
+
 # setNpmOrYarn
-USES_NPM=false
+USES_YARN=true
 
 # install dependencies
 yarn install
 
 # build
-if [ $IS_PR = true ]; then
-  echo "is PR!"
+if [ $IS_PR = false ]; then
+  yarn lint
 fi
 
 yarn build --mode=production --env api-env=staging --output-path ./dist
-
-# do not use dev dockerfile
-#rm $APP_ROOT/Dockerfile
-#rm $APP_ROOT/.dockerignore
