@@ -238,6 +238,7 @@ class EditNodeCountModal extends Component {
                       product={product}
                       isBYOC={isByoc}
                       minNodesRequired={minNodesRequired}
+                      isHypershiftMachinePool={isHypershiftCluster}
                     />
                   </GridItem>
                 </>
