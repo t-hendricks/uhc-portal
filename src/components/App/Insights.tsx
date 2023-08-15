@@ -1,7 +1,7 @@
 import React from 'react';
 import { matchPath, useHistory } from 'react-router-dom';
 import getNavClickParams from '../../common/getNavClickParams';
-import { removeOcmBaseName } from '../../common/getBaseName';
+import ocmBaseName, { removeOcmBaseName } from '../../common/getBaseName';
 
 const Insights = () => {
   const history = useHistory();
@@ -17,14 +17,17 @@ const Insights = () => {
        * Condition won't be necessary after July 26th 2021.
        * That is when nav changes hit prod-stable env
        */
-      if (event.domEvent && (event.domEvent?.target?.pathname || event.domEvent?.href)) {
-        const targetPathName = removeOcmBaseName(
-          event.domEvent?.target?.pathname || event.domEvent?.href,
-        );
-        if (matchPath(location.pathname, { path: targetPathName, exact: true })) {
-          dispatchOcmEvent('APP_REFRESH');
-        } else {
-          history.push(targetPathName);
+      if (event.domEvent) {
+        const path = event.domEvent.target?.pathname || event.domEvent.href;
+        if (path && path.startsWith(ocmBaseName())) {
+          const targetPathName = removeOcmBaseName(
+            event.domEvent?.target?.pathname || event.domEvent?.href,
+          );
+          if (matchPath(location.pathname, { path: targetPathName, exact: true })) {
+            dispatchOcmEvent('APP_REFRESH');
+          } else {
+            history.push(targetPathName);
+          }
         }
       }
     };
