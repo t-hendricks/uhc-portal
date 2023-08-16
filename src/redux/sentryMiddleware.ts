@@ -1,8 +1,8 @@
 /* Sentry middleware for redux, adds "breadcrumbs" logging the redux events in case of an error */
 
 import * as Sentry from '@sentry/browser';
-import type { AnyAction, Middleware } from 'redux';
 import { LOCATION_CHANGE } from 'connected-react-router';
+import type { AnyAction, Middleware } from 'redux';
 import { actionTypes } from 'redux-form';
 import { OPEN_MODAL } from '~/components/common/Modal/ModalConstants';
 
@@ -26,7 +26,7 @@ const sentryMiddleware: Middleware = () => (next) => (action: AnyAction) => {
     category: 'redux',
     message: `Dispatching ${action.type}`,
     data,
-    level: Sentry.Severity.Info,
+    level: Sentry?.Severity?.Info || 'info', // Handle when Sentry in updated to v7
   });
   return next(action);
 };
