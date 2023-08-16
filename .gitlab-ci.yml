@@ -88,7 +88,13 @@ stages:
   script:
     - echo "Running unit tests..."
     - node --version
-    - yarn test-no-cache
+    # Record `top` output every 10sec as long as test is running, to track resource usage in CI.
+    # (If running locally, note these are Linux top flags, OSX would need different flags.)
+    - time yarn concurrently --success=first --kill-others --raw 'yarn test-no-cache' 'top -b -c -d10 -i -w > jest-top.log'
+  artifacts:
+    when: always
+    paths:
+      - '*.log'
 
 👀 Linting:
   <<: *store-note
