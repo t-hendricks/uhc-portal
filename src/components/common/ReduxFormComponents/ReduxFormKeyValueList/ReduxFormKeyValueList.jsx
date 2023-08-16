@@ -48,7 +48,7 @@ LabelValue.propTypes = {
   }),
 };
 
-const hasOnlyValidKeys = (fieldsArray) => fieldsArray && !fieldsArray.every((field) => field.key);
+const hasInvalidKeys = (fieldsArray) => fieldsArray && fieldsArray.some((field) => !field.key);
 const ReduxFormKeyValueList = ({ fields, meta: { error, submitFailed } }) => (
   <Grid hasGutter>
     <GridItem span={4} className="pf-c-form__label pf-c-form__label-text">
@@ -105,7 +105,7 @@ const ReduxFormKeyValueList = ({ fields, meta: { error, submitFailed } }) => (
         isInline
         className="reduxFormKeyValueList-addBtn"
         // .getAll() is a redux-form method that takes the field values and puts them in an array
-        disableReason={hasOnlyValidKeys(fields.getAll()) && nodeKeyValueTooltipText}
+        disableReason={hasInvalidKeys(fields.getAll()) && nodeKeyValueTooltipText}
       >
         Add additional label
       </ButtonWithTooltip>

@@ -80,7 +80,7 @@ const noMachineTypes =
   'You do not have enough quota to create a cluster with the minimum required worker capacity. Contact sales to purchase additional quota.';
 
 const nodeKeyValueTooltipText =
-  'To add an additional label, you must already have 1 label defined.';
+  "To add an additional label, make sure all of your labels'  keys and values are filled out.";
 
 /**
  * Returns true if an object is empty or if all its direct children are empty.
