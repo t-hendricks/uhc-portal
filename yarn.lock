@@ -2471,7 +2471,7 @@
 
 "@sentry/integrations@^5.19.1":
   version "5.30.0"
-  resolved "https://registry.npmjs.org/@sentry/integrations/-/integrations-5.30.0.tgz"
+  resolved "https://registry.yarnpkg.com/@sentry/integrations/-/integrations-5.30.0.tgz#2f25fb998cb19c76b3803d84c1a577b3d837010f"
   integrity sha512-Fqh4ALLoQWdd+1ih0iBduANWFyNmFWMxwvBu3V/wLDRi8OcquI0lEzWai1InzTJTiNhRHPnhuU++l/vkO0OCww==
   dependencies:
     "@sentry/types" "5.30.0"
@@ -10098,7 +10098,7 @@ loader-runner@^4.2.0:
 
 localforage@1.8.1:
   version "1.8.1"
-  resolved "https://registry.npmjs.org/localforage/-/localforage-1.8.1.tgz"
+  resolved "https://registry.yarnpkg.com/localforage/-/localforage-1.8.1.tgz#f6c0a24b41ab33b10e4dc84342dd696f6f3e3433"
   integrity sha512-azSSJJfc7h4bVpi0PGi+SmLQKJl2/8NErI+LhJsrORNikMZnhaQ7rv9fHj+ofwgSHrKRlsDCL/639a6nECIKuQ==
   dependencies:
     lie "3.1.1"
