@@ -17,7 +17,9 @@ const Insights = () => {
         if (matchPath(location.pathname, { path: targetPathName, exact: true })) {
           dispatchOcmEvent('APP_REFRESH');
         } else {
-          history.push(targetPathName);
+          // AppNavigationCB called before new history entry is added;
+          // schedule history to be replaced afterwards so that Router notices change
+          setTimeout(() => history.replace(targetPathName), 0);
         }
       }
     };
