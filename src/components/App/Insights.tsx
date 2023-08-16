@@ -11,23 +11,13 @@ const Insights = () => {
     const navigateToApp = (event: any) => {
       const { location } = history;
       // update route only when it's clicked by the user and can have route change
-      /**
-       * Chrome is no longer sending the target object.
-       * Now it the link href is directly sent under "event.domEvent.href" path
-       * Condition won't be necessary after July 26th 2021.
-       * That is when nav changes hit prod-stable env
-       */
-      if (event.domEvent) {
-        const path = event.domEvent.target?.pathname || event.domEvent.href;
-        if (path && path.startsWith(ocmBaseName())) {
-          const targetPathName = removeOcmBaseName(
-            event.domEvent?.target?.pathname || event.domEvent?.href,
-          );
-          if (matchPath(location.pathname, { path: targetPathName, exact: true })) {
-            dispatchOcmEvent('APP_REFRESH');
-          } else {
-            history.push(targetPathName);
-          }
+      const path = event.domEvent?.href;
+      if (path && path.startsWith(ocmBaseName())) {
+        const targetPathName = removeOcmBaseName(path);
+        if (matchPath(location.pathname, { path: targetPathName, exact: true })) {
+          dispatchOcmEvent('APP_REFRESH');
+        } else {
+          history.push(targetPathName);
         }
       }
     };
