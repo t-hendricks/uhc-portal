@@ -1,10 +1,12 @@
 import has from 'lodash/has';
-import isEmpty from 'lodash/isEmpty';
+import isEqual from 'lodash/isEqual';
 import { LoadBalancerFlavor } from '~/types/clusters_mgmt.v1';
-import { strToCleanObject } from '../../../../../common/helpers';
-import { networkingConstants } from './NetworkingConstants';
+import { NamespaceOwnershipPolicy } from '~/types/clusters_mgmt.v1/models/NamespaceOwnershipPolicy';
+import { WildcardPolicy } from '~/types/clusters_mgmt.v1/models/WildcardPolicy';
+import { arrayToString, strToKeyValueObject, stringToArrayTrimmed } from '~/common/helpers';
 import { setClusterDetails } from '../../../../../redux/actions/clustersActions';
 import { clusterService } from '../../../../../services';
+import { networkingConstants } from './NetworkingConstants';
 
 const getClusterRouters = (clusterID) => (dispatch) =>
   dispatch({
@@ -49,52 +51,82 @@ const sendNetworkConfigRequests = async (newData, currentData, clusterID, dispat
   const requestDefaultRouter = {
     id: currentData.default.routerID,
   };
-  const requestAdditionalRouter = {};
   const hadAdditionalRouter = has(currentData, 'additional');
   const additionalRouterDeleted = hadAdditionalRouter && !newData.enable_additional_router;
-  const additionalRouterCreated = !hadAdditionalRouter && newData.enable_additional_router;
-  const defaultRouterEdited = newData.private_default_router !== currentData.default.isPrivate;
-  const defaultRouterLBEdited =
-    newData.is_nlb_load_balancer !== (currentData.default.loadBalancer === LoadBalancerFlavor.NLB);
 
   // Edit default router
-  if (defaultRouterEdited) {
+  if (newData.private_default_router !== currentData.default.isPrivate) {
     requestDefaultRouter.listening = newData.private_default_router ? 'internal' : 'external';
   }
 
-  if (defaultRouterLBEdited) {
+  if (
+    newData.defaultRouterSelectors !== undefined &&
+    !isEqual(
+      strToKeyValueObject(newData.defaultRouterSelectors),
+      currentData.default.routeSelectors,
+    )
+  ) {
+    requestDefaultRouter.route_selectors = newData.defaultRouterSelectors
+      ? strToKeyValueObject(newData.defaultRouterSelectors)
+      : {};
+  }
+
+  if (
+    newData.defaultRouterExcludedNamespacesFlag !== undefined &&
+    newData.defaultRouterExcludedNamespacesFlag !==
+      arrayToString(currentData.default.excludedNamespaces)
+  ) {
+    requestDefaultRouter.excluded_namespaces = newData.defaultRouterExcludedNamespacesFlag
+      ? stringToArrayTrimmed(newData.defaultRouterExcludedNamespacesFlag)
+      : [];
+  }
+
+  if (
+    newData.isDefaultRouterNamespaceOwnershipPolicyStrict !== undefined &&
+    newData.isDefaultRouterNamespaceOwnershipPolicyStrict !==
+      currentData.default.isNamespaceOwnershipPolicyStrict
+  ) {
+    requestDefaultRouter.route_namespace_ownership_policy =
+      newData.isDefaultRouterNamespaceOwnershipPolicyStrict
+        ? NamespaceOwnershipPolicy.STRICT
+        : NamespaceOwnershipPolicy.INTER_NAMESPACE_ALLOWED;
+  }
+
+  if (
+    newData.isDefaultRouterWildcardPolicyAllowed !== undefined &&
+    newData.isDefaultRouterWildcardPolicyAllowed !== currentData.default.isWildcardPolicyAllowed
+  ) {
+    requestDefaultRouter.route_wildcard_policy = newData.isDefaultRouterWildcardPolicyAllowed
+      ? WildcardPolicy.WILDCARDS_ALLOWED
+      : WildcardPolicy.WILDCARDS_DISALLOWED;
+  }
+
+  if (
+    newData.is_nlb_load_balancer !== undefined &&
+    newData.is_nlb_load_balancer !== (currentData.default.loadBalancer === LoadBalancerFlavor.NLB)
+  ) {
     requestDefaultRouter.load_balancer_type = newData.is_nlb_load_balancer
       ? LoadBalancerFlavor.NLB
       : LoadBalancerFlavor.CLASSIC;
   }
 
-  // Edit existing additional router
-  if (!additionalRouterDeleted && hadAdditionalRouter) {
-    if (newData.private_additional_router !== currentData.additional.isPrivate) {
-      requestAdditionalRouter.listening = newData.private_additional_router
-        ? 'internal'
-        : 'external';
-      requestAdditionalRouter.id = currentData.additional.routerID;
-    }
-    if (newData.labels_additional_router !== currentData.additional.routeSelectors) {
-      requestAdditionalRouter.route_selectors = strToCleanObject(
-        newData.labels_additional_router,
-        '=',
-      );
-      requestAdditionalRouter.id = currentData.additional.routerID;
-    }
+  if (
+    newData.clusterRoutesTlsSecretRef !== undefined &&
+    newData.clusterRoutesTlsSecretRef !== currentData.default.tlsSecretRef
+  ) {
+    requestDefaultRouter.cluster_routes_tls_secret_ref = newData.clusterRoutesTlsSecretRef;
   }
 
-  // Add new additional router
-  if (additionalRouterCreated) {
-    requestAdditionalRouter.listening = newData.private_additional_router ? 'internal' : 'external';
-    requestAdditionalRouter.route_selectors = strToCleanObject(
-      newData.labels_additional_router,
-      '=',
-    );
+  if (
+    newData.clusterRoutesHostname !== undefined &&
+    newData.clusterRoutesHostname !== currentData.default.hostname
+  ) {
+    // The API does not allow to PATCH the field without the secret ref
+    requestDefaultRouter.cluster_routes_hostname = newData.clusterRoutesHostname;
+    requestDefaultRouter.cluster_routes_tls_secret_ref = newData.clusterRoutesTlsSecretRef;
   }
 
-  if (defaultRouterEdited || defaultRouterLBEdited) {
+  if (Object.getOwnPropertyNames(requestDefaultRouter).length > 1 /* more than just the "id" ? */) {
     result = await clusterService.editIngress(
       clusterID,
       requestDefaultRouter.id,
@@ -108,17 +140,9 @@ const sendNetworkConfigRequests = async (newData, currentData, clusterID, dispat
       requestDefaultRouter,
     );
   }
-  if (!isEmpty(requestAdditionalRouter)) {
-    if (additionalRouterCreated) {
-      result = await clusterService.addAdditionalIngress(clusterID, requestAdditionalRouter);
-    } else {
-      result = await clusterService.editIngress(
-        clusterID,
-        requestAdditionalRouter.id,
-        requestAdditionalRouter,
-      );
-    }
-  }
+
+  // All changes to the additional router are disabled due to deprecation. Delete only.
+
   return result;
 };
 

@@ -102,3 +102,7 @@ export const canConfigureLoadBalancer = (
 
 export const canConfigureAdditionalRouter = (clusterVersionRawId: string): boolean =>
   isExactMajorMinor(clusterVersionRawId, 4, 11) || isExactMajorMinor(clusterVersionRawId, 4, 12);
+
+// TODO: Should be removed in favor of canConfigureDayTwoManagedIngress
+export const canConfigureManagedIngress = (clusterVersionRawId: string): boolean =>
+  isMajorMinorEqualOrGreater(clusterVersionRawId, 4, 13);

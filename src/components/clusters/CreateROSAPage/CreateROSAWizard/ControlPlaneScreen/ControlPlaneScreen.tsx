@@ -12,6 +12,7 @@ import AWSLogo from '~/styles/images/AWS.png';
 import RedHat from '~/styles/images/Logo-Red_Hat-B-Standard-RGB.png';
 import { PrerequisitesInfoBox } from '~/components/clusters/CreateROSAPage/CreateROSAWizard/common/PrerequisitesInfoBox';
 import { WelcomeMessage } from '~/components/clusters/CreateROSAPage/CreateROSAWizard/common/WelcomeMessage';
+import { ApplicationIngressType } from '~/components/clusters/wizards/osd/Networking/constants';
 import StandAloneTile from './StandAloneTile';
 import HostedTile from './HostedTile';
 import { hypershiftValue } from './ControlPlaneCommon';
@@ -60,8 +61,13 @@ const ControlPlaneField = ({
       }
     });
 
-    if (isHypershift === 'true' && formValues.multi_az === 'true') {
-      change('multi_az', 'false');
+    if (isHypershift === 'true') {
+      if (formValues.multi_az === 'true') {
+        change('multi_az', 'false');
+      }
+      if (formValues.applicationIngress === ApplicationIngressType.Custom) {
+        change('applicationIngress', ApplicationIngressType.Default);
+      }
     }
 
     // Reset the cluster privacy public subnet when Standalone is chosen.

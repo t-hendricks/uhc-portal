@@ -3,7 +3,7 @@
 /* eslint-disable */
 
 /**
- * Type of node received via telemetry.
+ * Type of load balancer for AWS cloud provider parameters.
  */
 export enum LoadBalancerFlavor {
   CLASSIC = 'classic',
