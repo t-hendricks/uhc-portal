@@ -15,11 +15,15 @@
 # limitations under the License.
 #
 
-# This script is executed by a Jenkins job for each change request. If it
-# doesn't succeed the change won't be merged.
+# -----------------------------------------------------------------
+# This script is executed by a Jenkins job for each change request.
+# If it doesn't succeed the change won't be merged.
+# -----------------------------------------------------------------
 
 
-# mockdata check should be really fast
+# run sanity checks
+# -----------------
+
 mockdata/regenerate-clusters.json.sh
 if ! git diff --exit-code --stat mockdata/api/clusters_mgmt/v1/clusters.json mockdata/api/accounts_mgmt/v1/subscriptions.json; then
   set +x
@@ -29,34 +33,26 @@ if ! git diff --exit-code --stat mockdata/api/clusters_mgmt/v1/clusters.json moc
 fi
 
 
-# --------------------------------------------
-# Export vars for helper scripts to use
-# --------------------------------------------
+# build app & push to image repository
+# ------------------------------------
+
 # name of app-sre "application" folder this component lives in; needs to match for quay
 export COMPONENT="uhc-portal"
 # IMAGE should match the quay repo set by app.yaml in app-interface
 export IMAGE="quay.io/app-sre/uhc-portal"
-export WORKSPACE=${WORKSPACE:-$APP_ROOT} # if running in jenkins, use the build's workspace
+# if running in jenkins, use the build's workspace
+export WORKSPACE=${WORKSPACE:-$APP_ROOT}
 export APP_ROOT=$(pwd)
-#16 is the default Node version. Change this to override it.
+# 16 is the default Node version. change this to override it
 export NODE_BUILD_VERSION=16
 
 COMMON_BUILDER=https://raw.githubusercontent.com/RedHatInsights/insights-frontend-builder-common/master
 
-
-# --------------------------------------------
-# Options that must be configured by app owner
-# --------------------------------------------
-#API_ENV="staging"
-
-
 set -exv
-
-# source is preferred to | bash -s in this case to avoid a subshell
 source <(curl -sSL $COMMON_BUILDER/src/frontend-build.sh)
 BUILD_RESULTS=$?
 
-# Stubbed out for now
+# stubbed out for now
 mkdir -p $WORKSPACE/artifacts
 cat << EOF > $WORKSPACE/artifacts/junit-dummy.xml
 <testsuite tests="1">
@@ -64,5 +60,5 @@ cat << EOF > $WORKSPACE/artifacts/junit-dummy.xml
 </testsuite>
 EOF
 
-# teardown_docker
+
 exit $BUILD_RESULTS
