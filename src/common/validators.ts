@@ -55,6 +55,8 @@ const MAX_MACHINE_POOL_NAME_LENGTH = 30;
 
 const MAX_NODE_POOL_NAME_LENGTH = 15;
 
+const MAX_OBJECT_NAME_LENGTH = 63;
+
 // Maximum length of a cluster display name
 const MAX_CLUSTER_DISPLAY_NAME_LENGTH = 63;
 
@@ -397,6 +399,14 @@ const labelAndTaintValueValidations = (value: string): Validations => [
   },
 ];
 
+const labelValueValidationsRequired = (value?: string): Validations => [
+  {
+    validated: typeof value !== 'undefined' && value.trim().length > 0,
+    text: 'A valid value is required',
+  },
+  ...labelAndTaintValueValidations(value || ''),
+];
+
 const taintKeyValidations = (value: string, allValues: { taints?: Taint[] }): Validations => {
   const items = allValues?.taints || [];
   return labelAndTaintKeyValidations(value, items);
@@ -425,7 +435,17 @@ const checkLabels = (input: string | string[]) =>
       undefined,
     );
 
-const checkRouteSelectors = checkLabels;
+const checkLabelValueRequired = createPessimisticValidator(labelValueValidationsRequired);
+
+/** Similar to checkLabels but does not allow keys without values */
+const checkRouteSelectors = (input: string | string[]) =>
+  parseNodeLabels(input)
+    // collect the first error found
+    ?.reduce<string | undefined>(
+      (accum, [key, value]) => accum ?? checkLabelKey(key) ?? checkLabelValueRequired(value),
+      // defaulting to undefined
+      undefined,
+    );
 
 // Function to validate that the cluster ID field is a UUID:
 const checkClusterUUID = (value: string): string | undefined => {
@@ -1412,6 +1432,39 @@ const validateLabelKey = (
 
 const validateLabelValue = checkLabelValue;
 
+type Tls = {
+  clusterRoutesTlsSecretRef?: string;
+  clusterRoutesHostname?: string;
+};
+
+const validateTlsPair = (tlsSecret?: string, tlsHostname?: string) => {
+  if (!tlsSecret && !tlsHostname) {
+    return undefined;
+  }
+  if (!tlsSecret || !tlsHostname) {
+    return 'You cannot provide only one of TLS secret name and Hostname';
+  }
+  return checkObjectName(tlsSecret, 'TLS secret', MAX_OBJECT_NAME_LENGTH);
+};
+
+const validateTlsSecretName = (value: string, allValues: Tls) =>
+  validateTlsPair(value, allValues.clusterRoutesHostname);
+
+const validateTlsHostname = (value: string, allValues: Tls) =>
+  validateTlsPair(value, allValues.clusterRoutesTlsSecretRef);
+
+const validateNamespacesList = (value = '') => {
+  const namespaces = value.split(',');
+  const incorrect = namespaces.find(
+    (namespace) => !!checkObjectName(namespace, 'Namespace', MAX_OBJECT_NAME_LENGTH),
+  );
+  if (incorrect) {
+    return checkObjectName(incorrect, 'Namespace', MAX_OBJECT_NAME_LENGTH);
+  }
+
+  return undefined;
+};
+
 const validateWorkerVolumeSize = (
   size: number,
   allValues: object,
@@ -1528,6 +1581,9 @@ export {
   checkTaintKey,
   checkTaintValue,
   validateWorkerVolumeSize,
+  validateTlsSecretName,
+  validateTlsHostname,
+  validateNamespacesList,
 };
 
 export default validators;

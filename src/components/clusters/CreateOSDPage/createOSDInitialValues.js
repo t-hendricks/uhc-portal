@@ -56,6 +56,13 @@ const createOSDInitialValues = ({
     billing_model: billingModelValue(),
     product: product || (isTrialDefault ? normalizedProducts.OSDTrial : normalizedProducts.OSD),
     imds: IMDSType.V1AndV2,
+
+    applicationIngress: 'default',
+    defaultRouterSelectors: '',
+    defaultRouterExcludedNamespacesFlag: '',
+    isDefaultRouterWildcardPolicyAllowed: false,
+    isDefaultRouterNamespaceOwnershipPolicyStrict: true,
+
     // Optional fields based on whether Hypershift is selected or not
     ...(isHypershiftSelected
       ? {
