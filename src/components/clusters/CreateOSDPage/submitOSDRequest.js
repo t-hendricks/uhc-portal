@@ -6,8 +6,16 @@ import config from '~/config';
 
 import { DEFAULT_FLAVOUR_ID } from '~/redux/actions/flavourActions';
 import { createCluster } from '~/redux/actions/clustersActions';
-import { parseReduxFormKeyValueList } from '~/common/helpers';
+import {
+  parseReduxFormKeyValueList,
+  strToKeyValueObject,
+  stringToArrayTrimmed,
+} from '~/common/helpers';
 import { billingModels } from '~/common/subscriptionTypes';
+import { WildcardPolicy } from '~/types/clusters_mgmt.v1/models/WildcardPolicy';
+import { NamespaceOwnershipPolicy } from '~/types/clusters_mgmt.v1/models/NamespaceOwnershipPolicy';
+import { ApplicationIngressType } from '~/components/clusters/wizards/osd/Networking/constants';
+import { canConfigureManagedIngress } from '../wizards/rosa/constants';
 
 const createClusterAzs = ({ formData, isInstallExistingVPC }) => {
   let AZs = [];
@@ -237,6 +245,32 @@ export const createClusterRequest = ({ isWizard = true, cloudProviderID, product
         formData,
         isInstallExistingVPC,
       });
+
+      if (
+        formData.applicationIngress === ApplicationIngressType.Custom &&
+        canConfigureManagedIngress(formData.cluster_version?.raw_id)
+      ) {
+        clusterRequest.ingresses = {
+          items: [
+            {
+              default: true,
+              excluded_namespaces: formData.defaultRouterExcludedNamespacesFlag
+                ? stringToArrayTrimmed(formData.defaultRouterExcludedNamespacesFlag)
+                : undefined,
+              route_selectors: formData.defaultRouterSelectors
+                ? strToKeyValueObject(formData.defaultRouterSelectors)
+                : undefined,
+              route_wildcard_policy: formData.isDefaultRouterWildcardPolicyAllowed
+                ? WildcardPolicy.WILDCARDS_ALLOWED
+                : WildcardPolicy.WILDCARDS_DISALLOWED,
+              route_namespace_ownership_policy:
+                formData.isDefaultRouterNamespaceOwnershipPolicyStrict
+                  ? NamespaceOwnershipPolicy.STRICT
+                  : NamespaceOwnershipPolicy.INTER_NAMESPACE_ALLOWED,
+            },
+          ],
+        };
+      }
     } else if (actualCloudProviderID === 'gcp') {
       const parsed = JSON.parse(formData.gcp_service_account);
       clusterRequest.gcp = pick(parsed, [

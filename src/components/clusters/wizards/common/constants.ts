@@ -23,6 +23,11 @@ export enum FieldId {
   MachineTypeForceChoice = 'machine_type_force_choice',
   FipsCryptography = 'fips',
   IMDS = 'imds',
+  ApplicationIngress = 'applicationIngress',
+  DefaultRouterSelectors = 'defaultRouterSelectors',
+  DefaultRouterExcludedNamespacesFlag = 'defaultRouterExcludedNamespacesFlag',
+  IsDefaultRouterNamespaceOwnershipPolicyStrict = 'isDefaultRouterNamespaceOwnershipPolicyStrict',
+  IsDefaultRouterWildcardPolicyAllowed = 'isDefaultRouterWildcardPolicyAllowed',
 }
 
 export const initialValues: FormikValues = {

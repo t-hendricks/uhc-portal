@@ -286,6 +286,26 @@ const reviewValues = {
       return <AwsVpcTable vpcs={vpcs} showPublicFields={false} />;
     },
   },
+  applicationIngress: {
+    title: 'Application ingress',
+    valueTransform: (value) => (value === 'default' ? 'Use default settings' : 'Custom settings'),
+  },
+  defaultRouterSelectors: {
+    title: 'Route selectors',
+    valueTransform: (value) => value || 'None specified',
+  },
+  defaultRouterExcludedNamespacesFlag: {
+    title: 'Excluded namespaces',
+    valueTransform: (value) => value || 'None specified',
+  },
+  isDefaultRouterWildcardPolicyAllowed: {
+    title: 'Wildcard policy',
+    valueTransform: (value) => (value ? 'Allowed' : 'Disallowed'),
+  },
+  isDefaultRouterNamespaceOwnershipPolicyStrict: {
+    title: 'Namespace ownership policy',
+    valueTransform: (value) => (value ? 'Strict' : 'Inter-namespace ownership'),
+  },
   gpc_vpc: {
     title: 'VPC subnet settings',
     valueTransform: (value, allValues) => (

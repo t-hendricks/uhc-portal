@@ -79,3 +79,8 @@ export const getWorkerNodeVolumeSizeMaxGiB = (clusterVersionRawId: string): numb
   const [major, minor] = splitMajorMinor(clusterVersionRawId);
   return (major > 4 || (major === 4 && minor >= 14) ? 16 : 1) * 1024;
 };
+
+export const canConfigureManagedIngress = (clusterVersionRawId: string): boolean => {
+  const [major, minor] = splitMajorMinor(clusterVersionRawId);
+  return major > 4 || (major === 4 && minor >= 13);
+};

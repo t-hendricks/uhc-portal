@@ -292,6 +292,19 @@ const ReviewClusterScreen = ({
         {ReviewItem({ name: 'network_service_cidr', formValues })}
         {ReviewItem({ name: 'network_pod_cidr', formValues })}
         {ReviewItem({ name: 'network_host_prefix', formValues })}
+
+        {isAWS &&
+          !isHypershiftSelected &&
+          isByoc &&
+          ReviewItem({ name: 'applicationIngress', formValues })}
+        {formValues.applicationIngress !== 'default' && isAWS && !isHypershiftSelected && isByoc && (
+          <>
+            {ReviewItem({ name: 'defaultRouterSelectors', formValues })}
+            {ReviewItem({ name: 'defaultRouterExcludedNamespacesFlag', formValues })}
+            {ReviewItem({ name: 'isDefaultRouterWildcardPolicyAllowed', formValues })}
+            {ReviewItem({ name: 'isDefaultRouterNamespaceOwnershipPolicyStrict', formValues })}
+          </>
+        )}
       </ReviewSection>
       {isROSA && (
         <ReviewSection

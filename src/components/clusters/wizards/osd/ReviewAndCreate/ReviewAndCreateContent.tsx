@@ -33,6 +33,7 @@ export const ReviewAndCreateContent = ({ isPending }: ReviewAndCreateContentProp
       [FieldId.NodeLabels]: nodeLabels,
       [FieldId.ClusterPrivacy]: clusterPrivacy,
       [FieldId.ClusterVersion]: clusterVersion,
+      [FieldId.ApplicationIngress]: applicationIngress,
     },
     values: formValues,
   } = useFormState();
@@ -147,6 +148,28 @@ export const ReviewAndCreateContent = ({ isPending }: ReviewAndCreateContentProp
         <ReviewItem name={FieldId.NetworkServiceCidr} formValues={formValues} />
         <ReviewItem name={FieldId.NetworkPodCidr} formValues={formValues} />
         <ReviewItem name={FieldId.NetworkHostPrefix} formValues={formValues} />
+
+        {isAWS && isByoc && (
+          <ReviewItem name={FieldId.ApplicationIngress} formValues={formValues} />
+        )}
+
+        {applicationIngress !== 'default' && isAWS && isByoc && (
+          <>
+            <ReviewItem name={FieldId.DefaultRouterSelectors} formValues={formValues} />
+            <ReviewItem
+              name={FieldId.DefaultRouterExcludedNamespacesFlag}
+              formValues={formValues}
+            />
+            <ReviewItem
+              name={FieldId.IsDefaultRouterWildcardPolicyAllowed}
+              formValues={formValues}
+            />
+            <ReviewItem
+              name={FieldId.IsDefaultRouterNamespaceOwnershipPolicyStrict}
+              formValues={formValues}
+            />
+          </>
+        )}
       </ReviewSection>
 
       <ReviewSection title="Updates" onGoToStep={() => goToStepById(StepId.ClusterUpdates)}>
