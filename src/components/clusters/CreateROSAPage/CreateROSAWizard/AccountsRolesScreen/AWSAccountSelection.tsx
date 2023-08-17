@@ -1,19 +1,8 @@
 // a redux-form Field-compatible component for selecting an associated AWS account id
 
-import React, {
-  useState,
-  useEffect,
-  createRef,
-  ReactElement,
-  useCallback,
-  ChangeEvent,
-  useMemo,
-  useRef,
-} from 'react';
+import React, { useState, useEffect, createRef, ReactElement, useCallback, useMemo } from 'react';
 import {
   Button,
-  Select,
-  SelectOption,
   FormGroup,
   Title,
   EmptyStateBody,
@@ -22,16 +11,14 @@ import {
   Flex,
   FlexItem,
   ButtonProps,
-  KeyTypes,
 } from '@patternfly/react-core';
-import { ErrorCircleOIcon } from '@patternfly/react-icons';
-import Fuse from 'fuse.js';
 import './AccountsRolesScreen.scss';
 import links from '~/common/installLinks.mjs';
 import { CloudAccount } from '~/types/accounts_mgmt.v1';
 import PopoverHint from '../../../../common/PopoverHint';
 import { hasContract } from './AWSBillingAccount/awsBillingAccountHelper';
 import { useAssociateAWSAccountDrawer } from './AssociateAWSAccountDrawer/AssociateAWSAccountDrawer';
+import FuzzySelect, { FuzzyDataType, FuzzyEntryType } from '../../../../common/FuzzySelect';
 
 const AWS_ACCT_ID_PLACEHOLDER = 'Select an account';
 export const AWS_ACCOUNT_ROSA_LOCALSTORAGE_KEY = 'rosaAwsAccount';
@@ -47,6 +34,10 @@ function NoAssociatedAWSAccounts() {
   );
 }
 
+function sortFn(a: FuzzyEntryType, b: FuzzyEntryType) {
+  const ret = b.key.length - a.key.length;
+  return ret || b.key.localeCompare(a.key);
+}
 export interface AWSAccountSelectionProps {
   isDisabled?: boolean;
   isLoading?: boolean;
@@ -96,8 +87,6 @@ function AWSAccountSelection({
   const hasAWSAccounts = accounts?.length > 0;
   const { onRefresh, text } = refresh;
   const { onChange } = inputProps;
-  const ref = useRef<Select>(null);
-  const containerRef = useRef<HTMLDivElement>(null);
   const { openDrawer } = useAssociateAWSAccountDrawer();
 
   useEffect(() => {
@@ -114,25 +103,6 @@ function AWSAccountSelection({
     [setIsOpen],
   );
 
-  useEffect(() => {
-    if (isOpen) {
-      if (containerRef.current) {
-        // Patternfly's inline filter up/down arrow keys are captured and used for navigating the options
-        // unfortunately it also captures left/right which means you can't move the caret around your filter input text
-        // this code grabs left/right arrows before they bubble up to the input and PF kills them
-        // fix request: https://github.com/patternfly/patternfly-react/issues/9404
-        const input = containerRef.current.getElementsByClassName(
-          'pf-c-form-control pf-m-search',
-        )[0] as HTMLInputElement;
-        input.onkeydown = (e) => {
-          if (e.key === KeyTypes.ArrowLeft || e.key === KeyTypes.ArrowRight) {
-            e.stopPropagation();
-          }
-        };
-      }
-    }
-  }, [isOpen]);
-
   const onSelect = useCallback(
     (_: any, selection: any) => {
       setIsOpen(false);
@@ -142,115 +112,14 @@ function AWSAccountSelection({
     [setIsOpen, onChange],
   );
 
-  const selectOptions = useMemo<ReactElement[]>(
+  const selectionData = useMemo<FuzzyDataType>(
     () =>
-      // assume largest numbers are the latest
-      accounts
-        .sort(({ cloud_account_id: a }, { cloud_account_id: b }) => {
-          const ret = b.length - a.length;
-          return ret || b.localeCompare(a);
-        })
-        .map((cloudAccount) => (
-          <SelectOption
-            className="pf-c-dropdown__menu-item"
-            key={cloudAccount.cloud_account_id}
-            value={cloudAccount.cloud_account_id}
-            description={isBillingAccount && hasContract(cloudAccount) ? 'Contract enabled' : ''}
-          >
-            {cloudAccount.cloud_account_id}
-          </SelectOption>
-        )),
+      accounts.map((cloudAccount) => ({
+        key: cloudAccount.cloud_account_id,
+        value: cloudAccount.cloud_account_id,
+        description: isBillingAccount && hasContract(cloudAccount) ? 'Contract enabled' : '',
+      })),
     [accounts],
-  );
-
-  const onFilter = useCallback(
-    (_: ChangeEvent<HTMLInputElement> | null, account: string) => {
-      if (account === '') {
-        return selectOptions;
-      }
-      // feature requested: https://github.com/patternfly/patternfly-react/issues/9407
-      if (/[\D]/g.test(account)) {
-        return [
-          <SelectOption
-            isDisabled
-            key={0}
-            style={{ color: 'var(--pf-global--danger-color--100)' }}
-            isNoResultsOption
-          >
-            <div>
-              <span className="pf-u-mr-sm">
-                <ErrorCircleOIcon />
-              </span>
-              <span>Please enter numeric digits only.</span>
-            </div>
-          </SelectOption>,
-        ];
-      }
-      // create filtered map and sort by relevance
-      const filterText = account.toLowerCase();
-      const fuse = new Fuse(accounts, {
-        ignoreLocation: true,
-        threshold: 0.3,
-        includeScore: true,
-        includeMatches: true,
-        keys: ['cloud_account_id'],
-      });
-      const matched: Array<Record<string, Array<string | ReactElement>>> = [];
-      fuse
-        .search<CloudAccount>(filterText)
-        // most relevent towards top, then by number
-        .sort(
-          (
-            { score: ax = 0, item: { cloud_account_id: aid = '' } },
-            { score: bx = 0, item: { cloud_account_id: bid = '' } },
-          ) => ax - bx || bid.length - aid.length || bid.localeCompare(aid),
-        )
-        .forEach(({ item: account, matches }) => {
-          if (account) {
-            if (account.cloud_account_id && matches) {
-              let pos = 0;
-              const accountId = account.cloud_account_id;
-              const slicedId: Array<string | ReactElement> = [];
-              matched.push({
-                [account.cloud_account_id]: slicedId,
-              });
-
-              // highlight matches in boldface
-              const arr = accountId.split(filterText);
-              if (arr.length > 1) {
-                // if exact matches
-                arr.forEach((seg, inx) => {
-                  slicedId.push(seg);
-                  if (inx < arr.length - 1) slicedId.push(<b>{filterText}</b>);
-                });
-              } else {
-                // fuzzy matches
-                matches[0].indices
-                  .filter(([beg, end]) => end - beg > 0)
-                  .forEach(([beg, end]) => {
-                    slicedId.push(accountId.slice(pos, beg));
-                    slicedId.push(<b>{accountId.slice(beg, end + 1)}</b>);
-                    pos = end + 1;
-                  });
-                if (pos < accountId.length) {
-                  slicedId.push(accountId.slice(pos));
-                }
-              }
-            }
-          }
-        });
-      // create filtered select options
-      return matched.map((cloudAccount) => (
-        <SelectOption
-          className="pf-c-dropdown__menu-item"
-          key={Object.keys(cloudAccount)[0]}
-          value={Object.keys(cloudAccount)[0]}
-        >
-          {Object.values(cloudAccount)}
-        </SelectOption>
-      ));
-    },
-    [accounts, selectOptions],
   );
 
   const onClick = useCallback(() => {
@@ -299,34 +168,23 @@ function AWSAccountSelection({
     >
       <Flex>
         <FlexItem grow={{ default: 'grow' }}>
-          <div ref={containerRef}>
-            <Select
-              label={label}
-              isOpen={isOpen}
-              selections={hasAWSAccounts ? selectedAWSAccountID : ''}
-              onToggle={onToggle}
-              onSelect={onSelect}
-              onBlur={() => {
-                // since we disable the onBlur up top
-                // we need to do the important things it used to do
-                // like resetting the state of Select
-                if (ref.current) {
-                  ref.current?.onClose();
-                }
-              }}
-              ref={ref}
-              onFilter={onFilter}
-              isDisabled={isDisabled}
-              placeholderText={AWS_ACCT_ID_PLACEHOLDER}
-              inlineFilterPlaceholderText="Filter by account ID"
-              hasInlineFilter
-              validated={touched && error ? 'error' : undefined}
-              footer={footer}
-              aria-describedby="aws-infra-accounts"
-            >
-              {selectOptions}
-            </Select>
-          </div>
+          <FuzzySelect
+            label={label}
+            isOpen={isOpen}
+            selected={hasAWSAccounts ? selectedAWSAccountID : ''}
+            selectionData={selectionData}
+            onToggle={onToggle}
+            onSelect={onSelect}
+            sortFn={sortFn}
+            isDisabled={isDisabled}
+            placeholderText={AWS_ACCT_ID_PLACEHOLDER}
+            inlineFilterPlaceholderText="Filter by account ID"
+            filterValidate={{ pattern: /[\D]/g, message: 'Please enter numeric digits only.' }}
+            validated={touched && error ? 'error' : undefined}
+            // lastValueStorageKey={AWS_ACCOUNT_ROSA_LOCALSTORAGE_KEY}
+            footer={footer}
+            aria-describedby="aws-infra-accounts"
+          />
         </FlexItem>
         {onRefresh && (
           <FlexItem>
