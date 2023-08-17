@@ -245,6 +245,8 @@ const ReviewClusterScreen = ({
           isByoc &&
           canSelectImds(clusterVersionRawId) &&
           ReviewItem({ name: 'imds', formValues })}
+        {formValues.worker_volume_size_gib &&
+          ReviewItem({ name: 'worker_volume_size_gib', formValues })}
       </ReviewSection>
       <ReviewSection
         title={getStepName('NETWORKING')}
