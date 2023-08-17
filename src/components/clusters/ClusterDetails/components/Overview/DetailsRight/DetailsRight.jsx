@@ -36,6 +36,7 @@ function DetailsRight({
   totalActualNodes,
   machinePools,
 }) {
+  const isAWS = cluster.subscription?.cloud_provider_id === 'aws';
   const isHypershift = isHypershiftCluster(cluster);
   const isROSACluster = isROSA(cluster);
   const infraAccount = cluster.subscription?.cloud_account_id || null;
@@ -76,7 +77,8 @@ function DetailsRight({
   const workerActualNodes = totalActualNodes === false ? '-' : totalActualNodes;
   const workerDesiredNodes = totalDesiredComputeNodes || '-';
   const oidcConfig = cluster.aws?.sts?.oidc_config;
-  const imdsConfig = cluster.aws?.ec2_metadata_http_tokens;
+  const imdsConfig = cluster.aws?.ec2_metadata_http_tokens || IMDSType.V1AndV2;
+
   return (
     <>
       <DescriptionList>
@@ -311,7 +313,7 @@ function DetailsRight({
           </>
         )}
         {/* IMDS */}
-        {imdsConfig && (
+        {isAWS && !isHypershift && (
           <DescriptionListGroup>
             <DescriptionListTerm>Instance Metadata Service (IMDS)</DescriptionListTerm>
             <DescriptionListDescription>
