@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -ex
 
 # build app & push to image repository
 # ------------------------------------
@@ -15,7 +15,6 @@ export NODE_BUILD_VERSION=16
 
 COMMON_BUILDER=https://raw.githubusercontent.com/RedHatInsights/insights-frontend-builder-common/master
 
-set -exv
 source <(curl -sSL $COMMON_BUILDER/src/frontend-build.sh)
 BUILD_RESULTS=$?
 
