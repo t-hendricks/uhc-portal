@@ -3,7 +3,7 @@ import { screen, render, waitFor, checkAccessibility, fireEvent } from '~/testUt
 import AWSAccountSelection, { AWSAccountSelectionProps } from './AWSAccountSelection';
 
 describe('AWSAccountSelection tests', () => {
-  beforeEach(() => {
+  afterEach(() => {
     jest.clearAllMocks();
   });
 
@@ -45,6 +45,54 @@ describe('AWSAccountSelection tests', () => {
 
     // Assert
     await checkAccessibility(container);
+  });
+
+  it('field is required if required prop is set to true', () => {
+    const onChangeMock = jest.fn();
+
+    defaultProps.input.onChange = onChangeMock;
+    const newProps = {
+      ...defaultProps,
+      isBillingAccount: true,
+      label: 'AWS billing account',
+      required: true,
+    };
+    const { container } = render(<AWSAccountSelection {...newProps} />);
+
+    // Unfortunately the only way to tell if the field is required is to find the hidden "*" in the label tag
+    expect(container.querySelector('label')?.textContent).toEqual('AWS billing account *');
+  });
+
+  it('field is not required if required prop is set to false', () => {
+    const onChangeMock = jest.fn();
+
+    defaultProps.input.onChange = onChangeMock;
+    const newProps = {
+      ...defaultProps,
+      isBillingAccount: true,
+      label: 'AWS billing account',
+      required: false,
+    };
+    const { container } = render(<AWSAccountSelection {...newProps} />);
+
+    // Unfortunately the only way to tell if the field is required is to find the hidden "*" in the label tag
+    expect(container.querySelector('label')?.textContent).toEqual('AWS billing account');
+  });
+
+  it('field is required if required prop is not set (aka default to required)', () => {
+    const onChangeMock = jest.fn();
+
+    defaultProps.input.onChange = onChangeMock;
+    const newProps = {
+      ...defaultProps,
+      isBillingAccount: true,
+      label: 'AWS billing account',
+    };
+    expect(newProps.required).toBeUndefined();
+    const { container } = render(<AWSAccountSelection {...newProps} />);
+
+    // Unfortunately the only way to tell if the field is required is to find the hidden "*" in the label tag
+    expect(container.querySelector('label')?.textContent).toEqual('AWS billing account *');
   });
 });
 

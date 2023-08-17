@@ -50,6 +50,7 @@ class CreateRosaCluster extends Page {
 
   isAssociateAccountsDrawer() {
     cy.contains('h2', 'How to associate a new AWS account');
+    cy.contains('continue to step');
   }
 
   cancelWizard() {

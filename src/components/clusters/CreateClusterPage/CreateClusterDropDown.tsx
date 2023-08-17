@@ -12,6 +12,7 @@ import {
 import { Link } from 'react-router-dom';
 import { useFeatureGate } from '~/hooks/useFeatureGate';
 import { HCP_ROSA_GETTING_STARTED_PAGE } from '~/redux/constants/featureConstants';
+import { isRestrictedEnv } from '~/restrictedEnv';
 
 interface CreateClusterDropDownProps {
   toggleId?: string;
@@ -22,7 +23,7 @@ const getStartedPath = '/create/rosa/getstarted';
 const CreateClusterDropDown = ({ toggleId }: CreateClusterDropDownProps) => {
   const [isOpen, setOpen] = React.useState(false);
   const dropDownRef = React.useRef<HTMLButtonElement>(null);
-  const showHCPDirections = useFeatureGate(HCP_ROSA_GETTING_STARTED_PAGE);
+  const showHCPDirections = useFeatureGate(HCP_ROSA_GETTING_STARTED_PAGE) && !isRestrictedEnv();
 
   const onDropDownFocus = () => {
     dropDownRef.current?.focus();
@@ -40,7 +41,7 @@ const CreateClusterDropDown = ({ toggleId }: CreateClusterDropDownProps) => {
         <Link id="with-cli" to={getStartedPath}>
           With CLI
           {showHCPDirections ? (
-            <HelperText>
+            <HelperText data-testid="cli-helper">
               <HelperTextItem variant="indeterminate">
                 Supports ROSA with Hosted Control Plane and Classic.
               </HelperTextItem>
@@ -56,7 +57,7 @@ const CreateClusterDropDown = ({ toggleId }: CreateClusterDropDownProps) => {
         <Link id="with-web" to="/create/rosa/wizard">
           With web interface
           {showHCPDirections ? (
-            <HelperText>
+            <HelperText data-testid="wizard-helper">
               <HelperTextItem variant="indeterminate">
                 Supports ROSA Classic. ROSA with Hosted Control Plane coming soon.
               </HelperTextItem>
@@ -85,6 +86,7 @@ const CreateClusterDropDown = ({ toggleId }: CreateClusterDropDownProps) => {
         isOpen={isOpen}
         dropdownItems={dropdownItems}
         position={DropdownPosition.right}
+        data-testid="rosa-create-cluster-button"
       />
       <br />
       <Button

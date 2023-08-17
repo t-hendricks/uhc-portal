@@ -16,6 +16,7 @@ import { normalizedProducts } from '~/common/subscriptionTypes';
 import { validateRequiredMachinePoolsSubnet } from '~/common/validators';
 import useAnalytics from '~/hooks/useAnalytics';
 import { ocmResourceType, trackEvents } from '~/common/analytics';
+import { isRestrictedEnv } from '~/restrictedEnv';
 import { ReduxCheckbox } from '../../../../common/ReduxFormComponents';
 import RadioButtons from '../../../../common/ReduxFormComponents/RadioButtons';
 import { constants } from '../../CreateOSDForm/CreateOSDFormConstants';
@@ -178,6 +179,7 @@ function NetworkScreen(props) {
             </GridItem>
             <Field
               component={RadioButtons}
+              isDisabled={isRestrictedEnv()}
               name="cluster_privacy"
               ariaLabel="Cluster privacy"
               onChange={onClusterPrivacyChange}

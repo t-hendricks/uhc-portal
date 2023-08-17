@@ -9,62 +9,67 @@ import AssociateAWSAccountStep, {
 } from './common/AssociateAWSAccountStep';
 import ToggleGroupTabs from './common/ToggleGroupTabs';
 
-const UserRoleStep = (props: AssociateAWSAccountStepProps) => (
-  <AssociateAWSAccountStep {...props}>
-    <Title headingLevel="h3" className="pf-u-mb-md" size="md">
-      First, check if a role exists and is linked with:
-    </Title>
+const UserRoleStep = (props: AssociateAWSAccountStepProps) => {
+  const { expandable } = props;
+  return (
+    <AssociateAWSAccountStep {...props}>
+      <Title headingLevel="h3" className="pf-u-mb-md" size="md">
+        First, check if a role exists and is linked with:
+      </Title>
 
-    <InstructionCommand
-      textAriaLabel={`Copyable ROSA ${RosaCliCommand.ListUserRole} command`}
-      className="pf-u-mb-lg"
-    >
-      {RosaCliCommand.ListUserRole}
-    </InstructionCommand>
+      <InstructionCommand
+        textAriaLabel={`Copyable ROSA ${RosaCliCommand.ListUserRole} command`}
+        className="pf-u-mb-lg"
+      >
+        {RosaCliCommand.ListUserRole}
+      </InstructionCommand>
 
-    <Alert
-      variant={AlertVariant.info}
-      isInline
-      isPlain
-      title="If there is an existing role and it's already linked to your Red Hat account, you can continue to step 3."
-      className="pf-u-mb-lg"
-    />
+      <Alert
+        variant={AlertVariant.info}
+        isInline
+        isPlain
+        title={`If there is an existing role and it's already linked to your Red Hat account, ${
+          expandable ? 'you can continue to step 3' : 'no further action is needed'
+        }.`}
+        className="pf-u-mb-lg"
+      />
 
-    <Title headingLevel="h3" size="md" className="pf-u-mb-lg">
-      Next, is there an existing role that isn&apos;t linked?
-    </Title>
+      <Title headingLevel="h3" size="md" className="pf-u-mb-lg">
+        Next, is there an existing role that isn&apos;t linked?
+      </Title>
 
-    <ToggleGroupTabs
-      tabs={[
-        {
-          title: 'No, create new role',
-          body: (
-            <>
-              <strong>User role </strong>
-              <PopoverHint bodyContent="The user role is necessary to validate that your Red Hat user account has permissions to install a cluster in the AWS account." />
+      <ToggleGroupTabs
+        tabs={[
+          {
+            title: 'No, create new role',
+            body: (
+              <>
+                <strong>User role </strong>
+                <PopoverHint bodyContent="The user role is necessary to validate that your Red Hat user account has permissions to install a cluster in the AWS account." />
+                <InstructionCommand
+                  textAriaLabel="Copyable ROSA create user-role"
+                  trackEvent={trackEvents.CopyUserRoleCreate}
+                >
+                  {RosaCliCommand.UserRole}
+                </InstructionCommand>
+              </>
+            ),
+          },
+          {
+            title: 'Yes, link existing role',
+            body: (
               <InstructionCommand
-                textAriaLabel="Copyable ROSA create user-role"
-                trackEvent={trackEvents.CopyUserRoleCreate}
+                textAriaLabel="Copyable ROSA link user-role --arn"
+                trackEvent={trackEvents.CopyUserRoleLink}
               >
-                {RosaCliCommand.UserRole}
+                {RosaCliCommand.LinkUserRole}
               </InstructionCommand>
-            </>
-          ),
-        },
-        {
-          title: 'Yes, link existing role',
-          body: (
-            <InstructionCommand
-              textAriaLabel="Copyable ROSA link user-role --arn"
-              trackEvent={trackEvents.CopyUserRoleLink}
-            >
-              {RosaCliCommand.LinkUserRole}
-            </InstructionCommand>
-          ),
-        },
-      ]}
-    />
-  </AssociateAWSAccountStep>
-);
+            ),
+          },
+        ]}
+      />
+    </AssociateAWSAccountStep>
+  );
+};
 
 export default UserRoleStep;

@@ -371,14 +371,18 @@ class ClusterDetails extends Component {
       !isRestrictedEnv();
 
     const displayMonitoringTab =
-      !isArchived && !cluster.managed && !isAROCluster && !isUninstalledAICluster(cluster);
+      !isArchived &&
+      !cluster.managed &&
+      !isAROCluster &&
+      !isUninstalledAICluster(cluster) &&
+      !isRestrictedEnv();
     const displayAccessControlTab = !isArchived;
     const cloudProvider = get(cluster, 'cloud_provider.id');
     const displayNetworkingTab =
       (isClusterReady || isClusterUpdating || clusterHibernating) &&
       cluster.managed &&
       !!get(cluster, 'api.url') &&
-      ((cloudProvider === 'aws' && (!isPrivateCluster || isHypershift)) ||
+      ((cloudProvider === 'aws' && (!isPrivateCluster || isHypershift || isRestrictedEnv())) ||
         (cloudProvider === 'gcp' &&
           (get(cluster, 'ccs.enabled') || (gotRouters && canCreateGCPNonCCSCluster)))) &&
       !isArchived;
@@ -389,9 +393,9 @@ class ClusterDetails extends Component {
       // The (managed) cluster has not yet reported its cluster ID to AMS
       // eslint-disable-next-line camelcase
       cluster.subscription?.external_cluster_id === undefined;
-    const displaySupportTab = !hideSupportTab && !isOSDTrial && !isRestrictedEnv();
+    const displaySupportTab = !hideSupportTab && !isOSDTrial;
     const displayUpgradeSettingsTab =
-      (cluster.managed || isAROCluster) && cluster.canEdit && !isArchived && !isRestrictedEnv();
+      (cluster.managed || isAROCluster) && cluster.canEdit && !isArchived;
 
     let addHostsTabState = { showTab: false, isDisabled: false, tabTooltip: '' };
     if (assistedInstallerEnabled && !isArchived) {

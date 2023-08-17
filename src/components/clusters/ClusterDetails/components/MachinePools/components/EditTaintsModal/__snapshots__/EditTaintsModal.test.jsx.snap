@@ -47,7 +47,6 @@ exports[`<EditTaintsModal /> renders correctly 1`] = `
           component={[Function]}
           isEditing={true}
           name="taints"
-          warn={[Function]}
         />
       </GridItem>
     </Grid>

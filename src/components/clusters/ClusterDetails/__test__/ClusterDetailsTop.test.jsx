@@ -2,14 +2,11 @@ import React from 'react';
 import { shallow } from 'enzyme';
 // TODO: Remove this import when PF team fixes the issue causing tests to break without it
 import { Button } from '@patternfly/react-core';
-import { screen } from '@testing-library/dom';
-import { MemoryRouter } from 'react-router';
 
 import ClusterDetailsTop from '../components/ClusterDetailsTop';
 import fixtures, { funcs } from './ClusterDetails.fixtures';
 import clusterStates from '../../common/clusterStates';
 import ButtonWithTooltip from '../../../common/ButtonWithTooltip';
-import { mockRestrictedEnv, render } from '../../../../testUtils';
 
 describe('<ClusterDetailsTop />', () => {
   let wrapper;
@@ -142,26 +139,6 @@ describe('<ClusterDetailsTop />', () => {
     wrapper.setProps({ cluster }, () => {
       const alert = wrapper.find('ClusterNonEditableAlert');
       expect(alert.length).toEqual(0);
-    });
-  });
-
-  describe('in restricted env', () => {
-    const isRestrictedEnv = mockRestrictedEnv();
-    it('Actions wont be rendered', () => {
-      const { rerender } = render(
-        <MemoryRouter>
-          <ClusterDetailsTop {...props} />
-        </MemoryRouter>,
-      );
-      expect(screen.queryByTestId('cluster-actions-dropdown')).toBeInTheDocument();
-
-      isRestrictedEnv.mockReturnValueOnce(true);
-      rerender(
-        <MemoryRouter>
-          <ClusterDetailsTop {...props} />
-        </MemoryRouter>,
-      );
-      expect(screen.queryByTestId('cluster-actions-dropdown')).not.toBeInTheDocument();
     });
   });
 });

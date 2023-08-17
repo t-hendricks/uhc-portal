@@ -1,9 +1,11 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 import { DropdownItem } from '@patternfly/react-core';
+import { screen } from '@testing-library/react';
 
 import { dropDownItems } from './ClusterActionsDropdownItems';
 import * as Fixtures from './ClusterActionsDropdown.fixtures';
+import { mockRestrictedEnv, render } from '../../../../testUtils';
 
 function DropDownItemsRenderHelper(props) {
   return <>{dropDownItems(props).map((item) => item)}</>;
@@ -39,7 +41,7 @@ describe('Cluster Actions Dropdown Items', () => {
         cluster: Fixtures.cluster,
         isDefaultMachinePool: true,
         isHypershiftCluster: false,
-        clearMachineOrNodePoolsOnExit: true,
+        clearMachineOrNodePoolsOnExit: undefined,
       });
     });
 
@@ -218,6 +220,22 @@ describe('Cluster Actions Dropdown Items', () => {
           expect(option.props().isAriaDisabled).toBeFalsy();
         }
       });
+    });
+  });
+  describe('in restricted env', () => {
+    const isRestrictedEnv = mockRestrictedEnv();
+
+    afterEach(() => {
+      isRestrictedEnv.mockReturnValue(false);
+    });
+
+    it('does not show hibernate btn', () => {
+      const { rerender } = render(<DropDownItemsRenderHelper {...Fixtures.managedReadyProps} />);
+      expect(screen.queryByTitle('Hibernate cluster')).toBeInTheDocument();
+
+      isRestrictedEnv.mockReturnValue(true);
+      rerender(<DropDownItemsRenderHelper {...Fixtures.managedReadyProps} />);
+      expect(screen.queryByTitle('Hibernate cluster')).not.toBeInTheDocument();
     });
   });
 });

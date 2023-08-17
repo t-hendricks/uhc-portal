@@ -22,7 +22,9 @@ import {
   Flex,
   FlexItem,
   ButtonProps,
+  KeyTypes,
 } from '@patternfly/react-core';
+import { ErrorCircleOIcon } from '@patternfly/react-icons';
 import Fuse from 'fuse.js';
 import './AccountsRolesScreen.scss';
 import links from '~/common/installLinks.mjs';
@@ -68,6 +70,7 @@ export interface AWSAccountSelectionProps {
   };
   isBillingAccount?: boolean;
   clearGetAWSAccountIDsResponse: () => void;
+  required?: boolean;
 }
 
 function AWSAccountSelection({
@@ -86,6 +89,7 @@ function AWSAccountSelection({
   isBillingAccount = false,
   refresh,
   clearGetAWSAccountIDsResponse,
+  required = true,
 }: AWSAccountSelectionProps) {
   const [isOpen, setIsOpen] = useState(false);
   const associateAWSAccountBtnRef = createRef<HTMLInputElement>();
@@ -93,6 +97,7 @@ function AWSAccountSelection({
   const { onRefresh, text } = refresh;
   const { onChange } = inputProps;
   const ref = useRef<Select>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
   const { openDrawer } = useAssociateAWSAccountDrawer();
 
   useEffect(() => {
@@ -108,6 +113,25 @@ function AWSAccountSelection({
     },
     [setIsOpen],
   );
+
+  useEffect(() => {
+    if (isOpen) {
+      if (containerRef.current) {
+        // Patternfly's inline filter up/down arrow keys are captured and used for navigating the options
+        // unfortunately it also captures left/right which means you can't move the caret around your filter input text
+        // this code grabs left/right arrows before they bubble up to the input and PF kills them
+        // fix request: https://github.com/patternfly/patternfly-react/issues/9404
+        const input = containerRef.current.getElementsByClassName(
+          'pf-c-form-control pf-m-search',
+        )[0] as HTMLInputElement;
+        input.onkeydown = (e) => {
+          if (e.key === KeyTypes.ArrowLeft || e.key === KeyTypes.ArrowRight) {
+            e.stopPropagation();
+          }
+        };
+      }
+    }
+  }, [isOpen]);
 
   const onSelect = useCallback(
     (_: any, selection: any) => {
@@ -143,6 +167,24 @@ function AWSAccountSelection({
     (_: ChangeEvent<HTMLInputElement> | null, account: string) => {
       if (account === '') {
         return selectOptions;
+      }
+      // feature requested: https://github.com/patternfly/patternfly-react/issues/9407
+      if (/[\D]/g.test(account)) {
+        return [
+          <SelectOption
+            isDisabled
+            key={0}
+            style={{ color: 'var(--pf-global--danger-color--100)' }}
+            isNoResultsOption
+          >
+            <div>
+              <span className="pf-u-mr-sm">
+                <ErrorCircleOIcon />
+              </span>
+              <span>Please enter numeric digits only.</span>
+            </div>
+          </SelectOption>,
+        ];
       }
       // create filtered map and sort by relevance
       const filterText = account.toLowerCase();
@@ -253,34 +295,38 @@ function AWSAccountSelection({
       className="aws-account-selection"
       validated={touched && error ? 'error' : undefined}
       helperTextInvalid={touched && error}
-      isRequired
+      isRequired={required}
     >
       <Flex>
         <FlexItem grow={{ default: 'grow' }}>
-          <Select
-            label={label}
-            isOpen={isOpen}
-            selections={hasAWSAccounts ? selectedAWSAccountID : ''}
-            onToggle={onToggle}
-            onSelect={onSelect}
-            onBlur={() => {
-              // filter doesn't always clean up
-              if (ref.current) {
-                ref.current?.onClose();
-              }
-            }}
-            ref={ref}
-            onFilter={onFilter}
-            isDisabled={isDisabled}
-            placeholderText={AWS_ACCT_ID_PLACEHOLDER}
-            inlineFilterPlaceholderText="Filter by account ID"
-            hasInlineFilter
-            validated={touched && error ? 'error' : undefined}
-            footer={footer}
-            aria-describedby="aws-infra-accounts"
-          >
-            {selectOptions}
-          </Select>
+          <div ref={containerRef}>
+            <Select
+              label={label}
+              isOpen={isOpen}
+              selections={hasAWSAccounts ? selectedAWSAccountID : ''}
+              onToggle={onToggle}
+              onSelect={onSelect}
+              onBlur={() => {
+                // since we disable the onBlur up top
+                // we need to do the important things it used to do
+                // like resetting the state of Select
+                if (ref.current) {
+                  ref.current?.onClose();
+                }
+              }}
+              ref={ref}
+              onFilter={onFilter}
+              isDisabled={isDisabled}
+              placeholderText={AWS_ACCT_ID_PLACEHOLDER}
+              inlineFilterPlaceholderText="Filter by account ID"
+              hasInlineFilter
+              validated={touched && error ? 'error' : undefined}
+              footer={footer}
+              aria-describedby="aws-infra-accounts"
+            >
+              {selectOptions}
+            </Select>
+          </div>
         </FlexItem>
         {onRefresh && (
           <FlexItem>

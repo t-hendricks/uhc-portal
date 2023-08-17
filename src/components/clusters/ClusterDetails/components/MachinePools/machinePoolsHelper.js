@@ -10,16 +10,18 @@ const actionResolver = (
   isHypershift,
   machinePoolsCount,
   onClickUpdate,
+  canDelete,
 ) => {
   // hide actions kebab for expandable rows
   if (!rowData.machinePool) {
     return [];
   }
-
-  const deleteDisabled = isHypershift && machinePoolsCount === 1;
-
-  const hypershiftTooltip = {
-    delete: { tooltip: 'The last machine pool cannot be deleted' },
+  const permissionsReason = !canDelete && 'You do not have permissions to delete machine pools';
+  const lastNodePoolReason =
+    isHypershift && machinePoolsCount === 1 && 'The last machine pool cannot be deleted';
+  const deleteDisabled = !!(permissionsReason || lastNodePoolReason);
+  const deleteDisabledTooltip = {
+    tooltip: permissionsReason || lastNodePoolReason,
   };
 
   const scaleAction = {
@@ -33,7 +35,7 @@ const actionResolver = (
     onClick: onClickDelete,
     className: 'hand-pointer',
     isAriaDisabled: deleteDisabled,
-    ...(deleteDisabled && hypershiftTooltip.delete),
+    ...(deleteDisabled && deleteDisabledTooltip),
   };
 
   const editLabelsAction = {

@@ -1,4 +1,11 @@
-import { checkAccessibility, insightsMock, render, screen, within } from '@testUtils';
+import {
+  checkAccessibility,
+  insightsMock,
+  render,
+  screen,
+  within,
+  mockRestrictedEnv,
+} from '@testUtils';
 import React from 'react';
 import { subscriptionStatuses } from '~/common/subscriptionTypes';
 import fixtures from '../../../__test__/ClusterDetails.fixtures';
@@ -1253,6 +1260,21 @@ describe('<DetailsRight />', () => {
       // Assert
       checkForValue(componentText.OIDC.label);
       checkForValue(componentText.OIDC.TYPE, componentText.OIDC.SELF);
+    });
+  });
+
+  describe('in restricted env', () => {
+    const isRestrictedEnv = mockRestrictedEnv();
+
+    afterAll(() => {
+      isRestrictedEnv.mockReturnValue(false);
+    });
+    it('Wont show telemetry fields', () => {
+      isRestrictedEnv.mockReturnValue(true);
+      render(<DetailsRight {...defaultProps} />);
+      expect(screen.queryByText(componentText.VCPU.label)).not.toBeInTheDocument();
+      expect(screen.queryByText(componentText.TOTAL_MEMORY.label)).not.toBeInTheDocument();
+      expect(screen.queryByText(componentText.NODES.label)).not.toBeInTheDocument();
     });
   });
 });
