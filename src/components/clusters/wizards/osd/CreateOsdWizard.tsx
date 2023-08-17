@@ -36,6 +36,7 @@ import {
   NodeLabel,
 } from '~/components/clusters/wizards/common';
 import { useFormState } from '~/components/clusters/wizards/hooks';
+import { AppPage } from '~/components/App/AppPage';
 import {
   ariaLabel,
   breadcrumbs,
@@ -62,7 +63,6 @@ import {
   NetworkingCidrRanges,
 } from './Networking';
 import { ReviewAndCreate } from './ReviewAndCreate';
-import { AppPage } from '~/components/App/AppPage';
 
 interface CreateOsdWizardProps {
   product?: string;
@@ -78,7 +78,7 @@ export const CreateOsdWizard = ({ product }: CreateOsdWizardProps) => {
 
   React.useEffect(() => {
     if (shouldRefetchQuota(organization)) {
-      dispatch(getOrganizationAndQuota());
+      dispatch(getOrganizationAndQuota() as any);
     }
     if (!persistentStorageValues.fulfilled && !persistentStorageValues.pending) {
       dispatch(getPersistentStorageValues());
@@ -107,7 +107,7 @@ export const CreateOsdWizard = ({ product }: CreateOsdWizardProps) => {
       FieldId.AcknowledgePrereq,
       ...(!hasNodeLabels ? [FieldId.NodeLabels] : []),
     ]);
-    dispatch(() => submitOSDRequest(dispatch, { isWizard: true })(submitValues));
+    dispatch((() => submitOSDRequest(dispatch, { isWizard: true })(submitValues)) as any);
   };
 
   return (

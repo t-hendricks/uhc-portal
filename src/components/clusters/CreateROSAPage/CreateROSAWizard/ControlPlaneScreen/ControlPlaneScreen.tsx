@@ -16,15 +16,15 @@ import {
 import { Field, ChangeAction } from 'redux-form';
 import { FormikValues } from 'formik';
 import { Link } from 'react-router-dom';
-import { hypershiftValue } from './ControlPlaneCommon';
-import HostedTile from './HostedTile';
-import StandAloneTile from './StandAloneTile';
 import links from '~/common/installLinks.mjs';
 import './controlPlaneScreen.scss';
 import ExternalLink from '~/components/common/ExternalLink';
 
 import AWSLogo from '~/styles/images/AWS.png';
 import RedHat from '~/styles/images/Logo-Red_Hat-B-Standard-RGB.png';
+import StandAloneTile from './StandAloneTile';
+import HostedTile from './HostedTile';
+import { hypershiftValue } from './ControlPlaneCommon';
 
 import { productName } from '../CreateRosaGetStarted/CreateRosaGetStarted';
 

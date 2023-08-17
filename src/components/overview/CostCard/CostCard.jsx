@@ -2,11 +2,11 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Card, CardBody, CardFooter, CardTitle, Title } from '@patternfly/react-core';
 
+import ocmBaseName from '~/common/getBaseName';
 import CostEmptyState from './CostEmptyState';
 import CostSummary from './CostSummary';
 
 import './CostCard.scss';
-import ocmBaseName from '~/common/getBaseName';
 
 class CostCard extends Component {
   componentDidMount() {

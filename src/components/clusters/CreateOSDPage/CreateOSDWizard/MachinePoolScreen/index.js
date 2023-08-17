@@ -1,17 +1,17 @@
 import { connect } from 'react-redux';
 import { formValueSelector } from 'redux-form';
 
-import { canAutoScaleOnCreateSelector } from '../../../ClusterDetails/components/MachinePools/MachinePoolsSelectors';
-
-import wizardConnector from '../WizardConnector';
-import MachinePoolScreen from './MachinePoolScreen';
-import createOSDInitialValues from '../../createOSDInitialValues';
 import {
   getMinNodesRequired,
   getNodeIncrement,
   getMinNodesRequiredHypershift,
   getNodeIncrementHypershift,
 } from '~/components/clusters/ClusterDetails/components/MachinePools/machinePoolsHelper';
+import { canAutoScaleOnCreateSelector } from '../../../ClusterDetails/components/MachinePools/MachinePoolsSelectors';
+
+import wizardConnector from '../WizardConnector';
+import MachinePoolScreen from './MachinePoolScreen';
+import createOSDInitialValues from '../../createOSDInitialValues';
 
 const mapStateToProps = (state, ownProps) => {
   const valueSelector = formValueSelector('CreateCluster');

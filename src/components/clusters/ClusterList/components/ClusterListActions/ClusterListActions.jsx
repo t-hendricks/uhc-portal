@@ -25,8 +25,8 @@ import {
 } from '@patternfly/react-core';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import { featureConstants } from '../../../../../redux/constants';
 import { useFeatureGate } from '~/hooks/useFeatureGate';
+import { featureConstants } from '../../../../../redux/constants';
 
 const useMediaQuery = (query) => {
   if (typeof window === 'undefined' || typeof window.matchMedia === 'undefined') {

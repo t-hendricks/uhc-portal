@@ -3,6 +3,10 @@ import PropTypes from 'prop-types';
 import { Field } from 'redux-form';
 import { Form, Alert, Grid, GridItem } from '@patternfly/react-core';
 import { Link } from 'react-router-dom';
+import {
+  getMinNodesRequired,
+  getMinNodesRequiredHypershift,
+} from '~/components/clusters/ClusterDetails/components/MachinePools/machinePoolsHelper';
 import NodeCountInput from '../NodeCountInput';
 import { ReduxFormDropdown } from '../../../common/ReduxFormComponents';
 import { normalizedProducts, billingModels } from '../../../../common/subscriptionTypes';
@@ -13,10 +17,6 @@ import {
   SpotInstanceInfoAlert,
   isMachinePoolUsingSpotInstances,
 } from '../../ClusterDetails/components/MachinePools/components/SpotInstanceHelper';
-import {
-  getMinNodesRequired,
-  getMinNodesRequiredHypershift,
-} from '~/components/clusters/ClusterDetails/components/MachinePools/machinePoolsHelper';
 
 import Modal from '../../../common/Modal/Modal';
 import ErrorBox from '../../../common/ErrorBox';

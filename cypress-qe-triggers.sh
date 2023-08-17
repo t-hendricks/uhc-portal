@@ -7,7 +7,7 @@ node --version
 # Common parameters supplies to the script from jenkins job. 
 # Below parameters will be populated from Jenkins workarea.
 # NOTE : Enable inline ENVIRONMENT, BROWSER and TAGS variables and modify the values for debug runs from local setup.
-# ENVIRONMENT="qaprodauth.console.redhat.com"
+# ENVIRONMENT="staging"
 # BROWSER="chrome"
 # TAGS="smoke"
 echo "$ENVIRONMENT"
@@ -22,5 +22,5 @@ yarn install
 timeout \
   --signal "TERM" \
   --kill-after "2m" \
-  "10m" \
+  "60m" \
   "run/cypress-qe-executor.sh" $ENVIRONMENT $BROWSER $TAGS

@@ -40,6 +40,7 @@ describe('<UpgradeAcknowledgeModal >', () => {
   });
   afterEach(() => {
     jest.clearAllMocks();
+    wrapper.unmount();
   });
 
   test('Returns empty if is not open', () => {

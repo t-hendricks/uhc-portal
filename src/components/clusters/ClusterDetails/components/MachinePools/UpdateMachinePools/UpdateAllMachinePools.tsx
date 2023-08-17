@@ -5,10 +5,10 @@ import { Link } from 'react-router-dom';
 import semver from 'semver';
 import { GlobalState } from '~/redux/store';
 import ExternalLink from '~/components/common/ExternalLink';
-import { isHypershiftCluster } from '../../../clusterDetailsHelper';
-import { getMachineOrNodePools } from '../MachinePoolsActions';
 import { NodePool } from '~/types/clusters_mgmt.v1/models/NodePool';
 import links from '~/common/installLinks.mjs';
+import { isHypershiftCluster } from '../../../clusterDetailsHelper';
+import { getMachineOrNodePools } from '../MachinePoolsActions';
 import {
   updateAllMachinePools as updateAllPools,
   useControlPlaneUpToDate,
@@ -58,7 +58,7 @@ const UpdateAllMachinePools = ({
     const errors = await updateAllPools(machinePoolsToUpdate, clusterId, controlPlaneVersion || '');
     setPending(false);
     setErrors(errors);
-    dispatch(getMachineOrNodePools(clusterId, isHypershift));
+    dispatch(getMachineOrNodePools(clusterId, isHypershift) as any);
   };
 
   return (

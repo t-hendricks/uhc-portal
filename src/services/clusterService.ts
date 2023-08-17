@@ -1,3 +1,4 @@
+import { AWSCredentials } from '~/types/types';
 import apiRequest from './apiRequest';
 import type {
   AddOn,
@@ -30,7 +31,6 @@ import type {
   OidcConfig,
 } from '../types/clusters_mgmt.v1';
 import type { Subscription } from '../types/accounts_mgmt.v1';
-import { AWSCredentials } from '~/types/types';
 
 const getClusters = (search: string, size: number = -1) =>
   apiRequest.post<{

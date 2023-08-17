@@ -20,6 +20,7 @@ import { PageSection, TabContent } from '@patternfly/react-core';
 import { Spinner } from '@redhat-cloud-services/frontend-components/Spinner';
 import * as OCM from '@openshift-assisted/ui-lib/ocm';
 
+import { AppPage } from '~/components/App/AppPage';
 import ClusterDetailsTop from './components/ClusterDetailsTop';
 import TabsRow from './components/TabsRow';
 import Overview from './components/Overview/Overview';
@@ -51,7 +52,6 @@ import { isUninstalledAICluster } from '../../../common/isAssistedInstallerClust
 import { hasCapability, subscriptionCapabilities } from '../../../common/subscriptionCapabilities';
 import withFeatureGate from '../../features/with-feature-gate';
 import { ASSISTED_INSTALLER_FEATURE } from '../../../redux/constants/featureConstants';
-import { AppPage } from '~/components/App/AppPage';
 
 const { HostsClusterDetailTab, getAddHostsTabState } = OCM;
 const GatedAIHostsClusterDetailTab = withFeatureGate(

@@ -20,9 +20,9 @@ import ExternalLink from '~/components/common/ExternalLink';
 import InstructionCommand from '~/components/common/InstructionCommand';
 import links from '~/common/installLinks.mjs';
 import { trackEvents } from '~/common/analytics';
+import { useGlobalState } from '~/redux/hooks/useGlobalState';
 import { RosaCliCommand } from '../constants/cliCommands';
 import MultipleAccountsInfoBox from './MultipleAccountsInfoBox';
-import { useGlobalState } from '~/redux/hooks/useGlobalState';
 
 interface UserRoleScreenProps {
   hideTitle?: boolean;

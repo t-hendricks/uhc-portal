@@ -1,15 +1,15 @@
 import { connect } from 'react-redux';
 import { formValueSelector, getFormValues } from 'redux-form';
 
-import wizardConnector from '../WizardConnector';
-import ReviewClusterScreen from './ReviewClusterScreen';
-import { canAutoScaleOnCreateSelector } from '../../../ClusterDetails/components/MachinePools/MachinePoolsSelectors';
 import {
   clearGetUserRoleResponse,
   getUserRole,
   getOCMRole,
   clearGetOcmRoleResponse,
 } from '~/components/clusters/CreateROSAPage/CreateROSAWizard/rosaActions';
+import wizardConnector from '../WizardConnector';
+import ReviewClusterScreen from './ReviewClusterScreen';
+import { canAutoScaleOnCreateSelector } from '../../../ClusterDetails/components/MachinePools/MachinePoolsSelectors';
 
 const mapStateToProps = (state) => {
   const valueSelector = formValueSelector('CreateCluster');

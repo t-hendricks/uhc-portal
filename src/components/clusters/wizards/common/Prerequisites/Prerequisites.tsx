@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 
 import { ExpandableSection, ExpandableSectionProps } from '@patternfly/react-core';
 import { acknowledgePrerequisites } from '~/common/validators';
-import { CheckboxField } from '~/components/clusters/wizards/form';
+import { CheckboxField } from '~/components/clusters/wizards/form/CheckboxField';
 import { FieldId } from '~/components/clusters/wizards/common/constants';
 
 import './Prerequisites.scss';

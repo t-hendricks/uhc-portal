@@ -1,8 +1,19 @@
 import React, { useState } from 'react';
-import { FormGroup, Select, SelectOption, SelectOptionObject } from '@patternfly/react-core';
-import { filterVpcsOnlyPrivateSubnets, useAWSVPCInquiry } from '../VPCScreen/useVPCInquiry';
+import { useDispatch } from 'react-redux';
+import {
+  Button,
+  Flex,
+  FlexItem,
+  FormGroup,
+  Select,
+  SelectOption,
+  SelectOptionObject,
+  Tooltip,
+} from '@patternfly/react-core';
 import ErrorBox from '~/components/common/ErrorBox';
 import { CloudVPC } from '~/types/clusters_mgmt.v1';
+import { filterVpcsOnlyPrivateSubnets, useAWSVPCInquiry } from '../VPCScreen/useVPCInquiry';
+import { getAWSCloudProviderVPCs } from '../ccsInquiriesActions';
 
 interface VCPDropdownProps {
   selectedVPCID: string;
@@ -15,6 +26,7 @@ interface VCPDropdownProps {
     touched: boolean;
     error: string;
   };
+  showRefresh?: boolean;
 }
 
 const VPCDropdown = ({
@@ -25,10 +37,12 @@ const VPCDropdown = ({
     ...inputProps
   },
   meta: { error, touched },
+  showRefresh = false,
 }: VCPDropdownProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const vpcResponse = useAWSVPCInquiry();
   const { items } = vpcResponse.data as { items: CloudVPC[] };
+  const dispatch = useDispatch();
 
   const onToggle = () => {
     setIsOpen(!isOpen);
@@ -64,6 +78,12 @@ const VPCDropdown = ({
     }
   }, [selectedVPCID, items]);
 
+  const refreshVPCs = () => {
+    if (vpcResponse.cloudProvider === 'aws') {
+      dispatch(getAWSCloudProviderVPCs(vpcResponse.credentials, vpcResponse.region));
+    }
+  };
+
   return (
     <>
       <FormGroup
@@ -71,34 +91,55 @@ const VPCDropdown = ({
         validated={touched && error ? 'error' : undefined}
         isRequired
       >
-        <Select
-          {...inputProps}
-          isOpen={isOpen}
-          selections={selectedVPCID}
-          onToggle={onToggle}
-          onSelect={onSelect}
-          placeholderText={selectData.placeholder}
-          validated={touched && error ? 'error' : undefined}
-          isDisabled={vpcResponse.pending || selectData.items.length === 0}
-        >
-          {selectData.items.map((vpcItem) => {
-            const key = vpcItem.name || vpcItem.id;
-            const vpcDescription =
-              vpcItem.aws_subnets?.length === 0 ? 'This VPC has no private subnets' : '';
-            return (
-              <SelectOption
-                className="pf-c-dropdown__menu-item"
-                key={key}
-                value={vpcItem.id}
-                description={vpcDescription}
-                isDisabled={!!vpcDescription}
-              >
-                {key}
-              </SelectOption>
-            );
-          })}
-        </Select>
-        {vpcResponse.error && <ErrorBox message="Error retrieving VPCs" response={vpcResponse} />}
+        <Flex>
+          <FlexItem grow={{ default: 'grow' }}>
+            <Select
+              {...inputProps}
+              isOpen={isOpen}
+              selections={selectedVPCID}
+              onToggle={onToggle}
+              onSelect={onSelect}
+              placeholderText={selectData.placeholder}
+              validated={touched && error ? 'error' : undefined}
+              isDisabled={vpcResponse.pending || selectData.items.length === 0}
+            >
+              {selectData.items.map((vpcItem) => {
+                const key = vpcItem.name || vpcItem.id;
+                const vpcDescription =
+                  vpcItem.aws_subnets?.length === 0 ? 'This VPC has no private subnets' : '';
+                return (
+                  <SelectOption
+                    className="pf-c-dropdown__menu-item"
+                    key={key}
+                    value={vpcItem.id}
+                    description={vpcDescription}
+                    isDisabled={!!vpcDescription}
+                  >
+                    {key}
+                  </SelectOption>
+                );
+              })}
+            </Select>
+          </FlexItem>
+          {showRefresh && (
+            <FlexItem>
+              <Tooltip content={<p>Refresh</p>}>
+                <Button
+                  data-testid="refresh-aws-accounts"
+                  isLoading={vpcResponse.pending}
+                  isDisabled={vpcResponse.pending}
+                  isInline
+                  isSmall
+                  variant="secondary"
+                  onClick={refreshVPCs}
+                >
+                  Refresh
+                </Button>
+              </Tooltip>
+            </FlexItem>
+          )}
+          {vpcResponse.error && <ErrorBox message="Error retrieving VPCs" response={vpcResponse} />}
+        </Flex>
       </FormGroup>
     </>
   );

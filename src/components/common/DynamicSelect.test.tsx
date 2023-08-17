@@ -1,8 +1,8 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import DynamicSelect from './DynamicSelect';
 import { PromiseReducerState } from '~/redux/types';
+import DynamicSelect from './DynamicSelect';
 
 type DynamicSelectProps = React.ComponentProps<typeof DynamicSelect>;
 

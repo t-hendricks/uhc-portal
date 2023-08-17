@@ -1,5 +1,5 @@
 export { TextInputField } from './TextInputField';
 export { CheckboxField } from './CheckboxField';
 export { FileUploadField } from './FileUploadField';
-export { RichInputField } from './RichInputField';
+export { RichInputField } from './RichInputField/RichInputField';
 export * from './RadioGroupField';

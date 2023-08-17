@@ -3,13 +3,13 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import { PageSection } from '@patternfly/react-core';
+import { AppPage } from '~/components/App/AppPage';
 import Breadcrumbs from '../../common/Breadcrumbs';
 import PageTitle from '../../common/PageTitle';
 
 import { tollboothActions } from '../../../redux/actions';
 import InstructionsPreRelease from './instructions/InstructionsPreRelease';
 import { tools } from '../../../common/installLinks.mjs';
-import { AppPage } from '~/components/App/AppPage';
 
 export class InstallMultiPreRelease extends Component {
   componentDidMount() {

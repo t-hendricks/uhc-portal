@@ -17,7 +17,7 @@ import Spinner from '@redhat-cloud-services/frontend-components/Spinner';
 
 import ConnectedModal from '../common/Modal/ConnectedModal';
 import SmallClusterChart from '../clusters/common/ResourceUsage/SmallClusterChart';
-import OverviewEmptyState from './OverviewEmptyState';
+import OverviewEmptyState from './EmptyState/OverviewEmptyState';
 import ExpiredTrialsCard from './ExpiredTrialsCard';
 import ClustersWithIssuesTableCard from './ClustersWithIssuesTableCard';
 import CostCard from './CostCard';

@@ -8,7 +8,6 @@ import ErrorBox from '../../../../../../common/ErrorBox';
 import { SpotInstanceInfoAlert, isMachinePoolUsingSpotInstances } from '../SpotInstanceHelper';
 
 import { ReduxFormDropdown, ReduxFormTaints } from '../../../../../../common/ReduxFormComponents';
-import { validateNoEmptyTaints } from '~/common/validators';
 
 class EditTaintsModal extends Component {
   componentDidMount() {
@@ -93,7 +92,6 @@ class EditTaintsModal extends Component {
                   component={ReduxFormTaints}
                   isEditing
                   canAddMore={!invalid}
-                  warn={validateNoEmptyTaints}
                 />
               </GridItem>
               {isMachinePoolUsingSpotInstances(selectedMachinePoolId, machinePoolsList) && (

@@ -25,6 +25,7 @@ import { Link } from 'react-router-dom';
 
 import { Card, Toolbar, ToolbarItem, ToolbarContent, PageSection } from '@patternfly/react-core';
 
+import { AppPage } from '~/components/App/AppPage';
 import ClusterListFilter from '../common/ClusterListFilter';
 import ClusterListFilterDropDown from '../ClusterList/components/ClusterListFilterDropdown';
 import ClusterListFilterChipGroup from '../ClusterList/components/ClusterListFilterChipGroup';
@@ -45,7 +46,6 @@ import { viewPropsChanged, createViewQueryObject } from '../../../common/queryHe
 import { viewConstants } from '../../../redux/constants';
 
 import './ArchivedClusterList.scss';
-import { AppPage } from '~/components/App/AppPage';
 
 const PAGE_TITLE = 'Cluster Archives | Red Hat OpenShift Cluster Manager';
 

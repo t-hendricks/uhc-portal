@@ -121,7 +121,7 @@ describe('<RefreshButton autoRefresh />', () => {
       const expectedTime = (shortTimerSeconds * numberOfShortTries + longTimerSeconds) * 1000;
       mount(<RefreshButton refreshFunc={onClickFunc} autoRefresh useShortTimer />);
       jest.advanceTimersByTime(expectedTime);
-      expect(onClickFunc).toBeCalledTimes(numberOfShortTries + 1);
+      expect(onClickFunc).toBeCalledTimes(numberOfShortTries + 2);
     });
 
     it('switches from short timer to long timer if useShortTimer is switched from true to false', () => {

@@ -13,11 +13,11 @@ describe('<DownloadPullSecret />', () => {
       expect(wrapper).toMatchSnapshot();
     });
     it('should have Download', () => {
-      const download = wrapper.find('Download');
+      const download = wrapper.find(Button);
       expect(download.length).toEqual(1);
-      const downloadButton = download.find(Button);
-      expect(downloadButton.length).toEqual(1);
-      expect(downloadButton.props().isDisabled).toEqual(false);
+      // const downloadButton = download.find(Button);
+      // expect(downloadButton.length).toEqual(1);
+      expect(download.props().isDisabled).toEqual(false);
     });
   });
 

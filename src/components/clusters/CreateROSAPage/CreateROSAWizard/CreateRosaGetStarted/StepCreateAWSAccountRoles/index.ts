@@ -1,9 +1,8 @@
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
 import { GlobalState } from '~/redux/store';
-import StepCreateAWSAccountRoles from './StepCreateAWSAccountRoles';
-
 import { setOfflineToken } from '~/components/clusters/CreateROSAPage/CreateROSAWizard/rosaActions';
+import StepCreateAWSAccountRoles from './StepCreateAWSAccountRoles';
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   setOfflineToken: (token: string) => dispatch(setOfflineToken(token)),
