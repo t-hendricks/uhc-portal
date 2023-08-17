@@ -1,0 +1,72 @@
+import React from 'react';
+import { Alert, AlertVariant, Title } from '@patternfly/react-core';
+import InstructionCommand from '~/components/common/InstructionCommand';
+import PopoverHint from '~/components/common/PopoverHint';
+import { trackEvents } from '~/common/analytics';
+import { RosaCliCommand } from '../constants/cliCommands';
+import AssociateAWSAccountStep from './common/AssociateAWSAccountStep';
+import ToggleGroupTabs from './common/ToggleGroupTabs';
+
+type UserRoleStepProps = {
+  title: string;
+};
+
+const UserRoleStep = ({ title }: UserRoleStepProps) => (
+  <AssociateAWSAccountStep title={title} contentId="AssociateAWSAccountUserRoleStep">
+    <Title headingLevel="h3" className="pf-u-mb-md" size="md">
+      First, check if a role exists and is linked with:
+    </Title>
+
+    <InstructionCommand
+      textAriaLabel={`Copyable ROSA ${RosaCliCommand.ListUserRole} command`}
+      className="pf-u-mb-lg"
+    >
+      {RosaCliCommand.ListUserRole}
+    </InstructionCommand>
+
+    <Alert
+      variant={AlertVariant.info}
+      isInline
+      isPlain
+      title="If there is an existing role and it's already linked to your Red Hat account, you can continue to step 3."
+      className="pf-u-mb-lg"
+    />
+
+    <Title headingLevel="h3" size="md" className="pf-u-mb-lg">
+      Next, is there an existing role that isn&apos;t linked?
+    </Title>
+
+    <ToggleGroupTabs
+      tabs={[
+        {
+          title: 'No, create new role',
+          body: (
+            <>
+              <strong>User role </strong>
+              <PopoverHint bodyContent="The user role is necessary to validate that your Red Hat user account has permissions to install a cluster in the AWS account." />
+              <InstructionCommand
+                textAriaLabel="Copyable ROSA create user-role"
+                trackEvent={trackEvents.CopyUserRoleCreate}
+              >
+                {RosaCliCommand.UserRole}
+              </InstructionCommand>
+            </>
+          ),
+        },
+        {
+          title: 'Yes, link existing role',
+          body: (
+            <InstructionCommand
+              textAriaLabel="Copyable ROSA link user-role --arn"
+              trackEvent={trackEvents.CopyUserRoleLink}
+            >
+              {RosaCliCommand.LinkUserRole}
+            </InstructionCommand>
+          ),
+        },
+      ]}
+    />
+  </AssociateAWSAccountStep>
+);
+
+export default UserRoleStep;

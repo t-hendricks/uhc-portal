@@ -168,6 +168,110 @@ describe('<VersionSelection />', () => {
         expect(screen.getByRole('option', { name: version.raw_id })).toBeInTheDocument();
       });
     });
+
+    it('Selects latest version when it is both rosa and hypershift enabled', () => {
+      const onChangeMock = jest.fn();
+      const newVersions = [...versions];
+
+      const latestVersion = {
+        ...versions[0],
+        raw_id: '4.12.99',
+        id: 'openshift-v4.12.99',
+        default: false,
+        enabled: true,
+        rosa_enabled: true,
+        hosted_control_plane_enabled: true,
+      };
+
+      newVersions.unshift(latestVersion);
+
+      const newProps = {
+        ...defaultProps,
+        isHypershiftSelected: true,
+        getInstallableVersionsResponse: {
+          ...defaultProps.getInstallableVersionsResponse,
+          versions: newVersions,
+        },
+        input: { onChange: onChangeMock },
+      };
+      render(<VersionSelection {...newProps} />);
+
+      // onChange is called on render to set the default version
+      expect(onChangeMock).toBeCalled();
+      expect(onChangeMock).toBeCalledWith(latestVersion);
+    });
+
+    it('Selects version that is hypershift enabled when the latest is not hypershift enabled', () => {
+      const onChangeMock = jest.fn();
+      const newVersions = [...versions];
+
+      const latestVersion = {
+        ...versions[0],
+        raw_id: '4.12.99',
+        id: 'openshift-v4.12.99',
+        default: false,
+        enabled: true,
+        rosa_enabled: true,
+        hosted_control_plane_enabled: false,
+      };
+
+      newVersions.unshift(latestVersion);
+
+      const newProps = {
+        ...defaultProps,
+        isHypershiftSelected: true,
+        getInstallableVersionsResponse: {
+          ...defaultProps.getInstallableVersionsResponse,
+          versions: newVersions,
+        },
+        input: { onChange: onChangeMock },
+      };
+      render(<VersionSelection {...newProps} />);
+
+      // onChange is called on render to set the default version
+      expect(onChangeMock).toBeCalled();
+
+      expect(newVersions[1].rosa_enabled).toBeTruthy();
+      expect(newVersions[1].hosted_control_plane_enabled).toBeTruthy();
+      expect(onChangeMock).not.toBeCalledWith(latestVersion);
+      expect(onChangeMock).toBeCalledWith(newVersions[1]);
+    });
+
+    it('Selects version that is hypershift enabled when the latest is neither hypershift nor rosa enabled', () => {
+      const onChangeMock = jest.fn();
+      const newVersions = [...versions];
+
+      const latestVersion = {
+        ...versions[0],
+        raw_id: '4.12.99',
+        id: 'openshift-v4.12.99',
+        default: false,
+        enabled: true,
+        rosa_enabled: false,
+        hosted_control_plane_enabled: false,
+      };
+
+      newVersions.unshift(latestVersion);
+
+      const newProps = {
+        ...defaultProps,
+        isHypershiftSelected: true,
+        getInstallableVersionsResponse: {
+          ...defaultProps.getInstallableVersionsResponse,
+          versions: newVersions,
+        },
+        input: { onChange: onChangeMock },
+      };
+      render(<VersionSelection {...newProps} />);
+
+      // onChange is called on render to set the default version
+      expect(onChangeMock).toBeCalled();
+
+      expect(newVersions[1].rosa_enabled).toBeTruthy();
+      expect(newVersions[1].hosted_control_plane_enabled).toBeTruthy();
+      expect(onChangeMock).not.toBeCalledWith(latestVersion);
+      expect(onChangeMock).toBeCalledWith(newVersions[1]);
+    });
   });
 
   describe('all clusters', () => {
@@ -377,6 +481,73 @@ describe('<VersionSelection />', () => {
       // Assert
       expect(screen.getAllByRole('option', { selected: true })).toHaveLength(1);
       expect(screen.getByRole('option', { selected: true, name: '4.12.1' })).toBeInTheDocument();
+    });
+
+    it('Selects the latest version if it is rosa enabled', () => {
+      const onChangeMock = jest.fn();
+      const newVersions = [...versions];
+
+      const latestVersion = {
+        ...versions[0],
+        raw_id: '4.12.99',
+        id: 'openshift-v4.12.99',
+        default: false,
+        enabled: true,
+        rosa_enabled: true,
+        hosted_control_plane_enabled: false,
+      };
+
+      newVersions.unshift(latestVersion);
+
+      const newProps = {
+        ...defaultProps,
+        isHypershiftSelected: false,
+        getInstallableVersionsResponse: {
+          ...defaultProps.getInstallableVersionsResponse,
+          versions: newVersions,
+        },
+        input: { onChange: onChangeMock },
+      };
+      render(<VersionSelection {...newProps} />);
+
+      // onChange is called on render to set the default version
+      expect(onChangeMock).toBeCalled();
+      expect(onChangeMock).toBeCalledWith(latestVersion);
+    });
+
+    it('Selects the first rosa enabled version when the latest version is not rosa enabled', () => {
+      const onChangeMock = jest.fn();
+      const newVersions = [...versions];
+
+      const latestVersion = {
+        ...versions[0],
+        raw_id: '4.12.99',
+        id: 'openshift-v4.12.99',
+        default: false,
+        enabled: true,
+        rosa_enabled: false,
+        hosted_control_plane_enabled: false,
+      };
+
+      newVersions.unshift(latestVersion);
+
+      const newProps = {
+        ...defaultProps,
+        isHypershiftSelected: false,
+        getInstallableVersionsResponse: {
+          ...defaultProps.getInstallableVersionsResponse,
+          versions: newVersions,
+        },
+        input: { onChange: onChangeMock },
+      };
+      render(<VersionSelection {...newProps} />);
+
+      // onChange is called on render to set the default version
+      expect(onChangeMock).toBeCalled();
+      expect(onChangeMock).not.toBeCalledWith(latestVersion);
+
+      expect(newVersions[1].rosa_enabled).toBeTruthy();
+      expect(onChangeMock).toBeCalledWith(newVersions[1]);
     });
 
     it('opens/closes the user clicks on main menu button', async () => {
