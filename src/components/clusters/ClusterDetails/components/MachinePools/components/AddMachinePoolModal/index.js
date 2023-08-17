@@ -2,6 +2,11 @@ import { connect } from 'react-redux';
 import { reduxForm, formValueSelector } from 'redux-form';
 import isEmpty from 'lodash/isEmpty';
 
+import {
+  defaultWorkerNodeVolumeSizeGiB,
+  getWorkerNodeVolumeSizeMaxGiB,
+} from '~/components/clusters/wizards/rosa/constants';
+import { normalizedProducts } from '~/common/subscriptionTypes';
 import AddMachinePoolModal from './AddMachinePoolModal';
 import { canAutoScaleSelector, canUseSpotInstances } from '../../MachinePoolsSelectors';
 import { closeModal } from '../../../../../../common/Modal/ModalActions';
@@ -23,6 +28,13 @@ const reduxFormAddMachinePool = reduxForm(reduxFormConfig)(AddMachinePoolModal);
 
 const mapStateToProps = (state, ownProps) => {
   const valueSelector = formValueSelector('AddMachinePool');
+  const clusterVersionRawId = valueSelector(state, 'cluster_version.raw_id');
+  const product = ownProps.cluster.subscription.plan.type;
+  const maxWorkerVolumeSizeGiB = getWorkerNodeVolumeSizeMaxGiB(clusterVersionRawId);
+  const workerVolumeSize =
+    product === normalizedProducts.ROSA && !ownProps.isHypershiftCluster
+      ? defaultWorkerNodeVolumeSizeGiB
+      : undefined;
 
   return {
     addMachinePoolResponse: state.machinePools.addMachinePoolResponse,
@@ -32,17 +44,19 @@ const mapStateToProps = (state, ownProps) => {
     autoscalingEnabled: !!valueSelector(state, 'autoscalingEnabled'),
     autoScaleMinNodesValue: valueSelector(state, 'min_replicas'),
     autoScaleMaxNodesValue: valueSelector(state, 'max_replicas'),
-    canAutoScale: canAutoScaleSelector(state, ownProps.cluster.subscription.plan.type),
-    canUseSpotInstances: canUseSpotInstances(state, ownProps.cluster.subscription.plan.type),
+    canAutoScale: canAutoScaleSelector(state, product),
+    canUseSpotInstances: canUseSpotInstances(state, product),
     useSpotInstances: valueSelector(state, 'spot_instances'),
     spotInstancePricing: valueSelector(state, 'spot_instance_pricing'),
     spotInstanceMaxHourlyPrice: valueSelector(state, 'spot_instance_max_hourly_price') || 0.01,
+    maxWorkerVolumeSizeGiB,
     initialValues: {
       name: '',
       subnet: '',
       nodes_compute: '0',
       node_labels: [{}],
       taints: [{ effect: 'NoSchedule' }],
+      worker_volume_size_gib: workerVolumeSize,
     },
     vpcListPending: state.ccsInquiries?.vpcs?.pending,
     vpcListBySubnet: state.ccsInquiries?.vpcs?.data?.bySubnetID,
@@ -101,6 +115,14 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
 
     if (parsedTaints.length > 0) {
       machinePoolRequest.taints = parsedTaints;
+    }
+
+    if (formData.worker_volume_size_gib) {
+      machinePoolRequest.root_volume = {
+        aws: {
+          size: formData.worker_volume_size_gib,
+        },
+      };
     }
 
     dispatch(

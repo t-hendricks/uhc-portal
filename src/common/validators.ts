@@ -4,9 +4,10 @@ import cidrTools from 'cidr-tools';
 import { ValidationError, Validator } from 'jsonschema';
 import { clusterService } from '~/services';
 import { State as CcsInquiriesState } from '~/components/clusters/CreateOSDPage/CreateOSDWizard/ccsInquiriesReducer';
-import { sqlString } from './queryHelpers';
+import { workerNodeVolumeSizeMinGiB } from '~/components/clusters/wizards/rosa/constants';
 import type { GCP, Subnetwork, Taint } from '../types/clusters_mgmt.v1';
 import type { AugmentedSubnetwork } from '../types/types';
+import { sqlString } from './queryHelpers';
 
 type Networks = Parameters<typeof cidrTools['overlap']>[0];
 
@@ -1411,6 +1412,18 @@ const validateLabelKey = (
 
 const validateLabelValue = checkLabelValue;
 
+const validateWorkerVolumeSize = (
+  size: number,
+  allValues: object,
+  { maxWorkerVolumeSizeGiB }: { maxWorkerVolumeSizeGiB: number },
+) => {
+  if (size < workerNodeVolumeSizeMinGiB || size > maxWorkerVolumeSizeGiB) {
+    return `The worker root disk size must be between ${workerNodeVolumeSizeMinGiB} GiB and ${maxWorkerVolumeSizeGiB} GiB.`;
+  }
+
+  return undefined;
+};
+
 const validators = {
   required,
   acknowledgePrerequisites,
@@ -1436,6 +1449,7 @@ const validators = {
   validateNumericInput,
   validateLabelKey,
   validateLabelValue,
+  validateWorkerVolumeSize,
   checkOpenIDIssuer,
   checkGithubTeams,
   checkRouteSelectors,
@@ -1513,6 +1527,7 @@ export {
   checkLabelValue,
   checkTaintKey,
   checkTaintValue,
+  validateWorkerVolumeSize,
 };
 
 export default validators;

@@ -188,6 +188,10 @@ const reviewValues = {
       return value;
     },
   },
+  worker_volume_size_gib: {
+    title: 'Worker root disk size',
+    valueTransform: (value) => `${value} GiB`,
+  },
   min_replicas: {
     title: 'Compute node range',
     valueTransform: (value, allValues) => (

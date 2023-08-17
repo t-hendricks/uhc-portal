@@ -35,7 +35,7 @@ import ErrorBox from '../../../../common/ErrorBox';
 import modals from '../../../../common/Modal/modals';
 
 import { noQuotaTooltip } from '../../../../../common/helpers';
-import { versionFormatter } from '../../../../../common/versionFormatter';
+import { versionFormatter } from '../../../../../common/versionHelpers';
 import { isHibernating } from '../../../common/clusterStates';
 import './MachinePools.scss';
 

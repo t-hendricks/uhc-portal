@@ -26,6 +26,7 @@ import PopoverHint from '../../../../../common/PopoverHint';
 import { required } from '../../../../../../common/validators';
 import ExternalLink from '../../../../../common/ExternalLink';
 import AutoScaleSection from './AutoScaleSection/AutoScaleSection';
+import WorkerNodeVolumeSizeSection from './WorkerNodeVolumeSizeSection/WorkerNodeVolumeSizeSection';
 
 function ScaleSection({
   pending,
@@ -47,8 +48,9 @@ function ScaleSection({
   billingModel,
   clusterVersionRawId,
   imds,
-  isHypershiftSelected,
   poolNumber,
+  maxWorkerVolumeSizeGiB,
+  isHypershift,
 }) {
   const onChangeImds = (value) => {
     change('imds', value);
@@ -57,7 +59,7 @@ function ScaleSection({
   const expandableSectionTitle = isMachinePool ? 'Edit node labels and taints' : 'Edit node labels';
 
   const labelsAndTaintsSection =
-    isHypershiftSelected && !inModal ? null : (
+    isHypershift && !inModal ? null : (
       <ExpandableSection
         toggleTextCollapsed={expandableSectionTitle}
         toggleTextExpanded={expandableSectionTitle}
@@ -78,7 +80,7 @@ function ScaleSection({
     );
 
   // ROSA Classic and OSD CCS only
-  const imdsSection = cloudProviderID === 'aws' && !isHypershiftSelected && isBYOC && imds && (
+  const imdsSection = cloudProviderID === 'aws' && !isHypershift && isBYOC && imds && (
     <>
       <GridItem md={8}>
         <ImdsSection
@@ -92,13 +94,12 @@ function ScaleSection({
   );
 
   const isRosa = product === normalizedProducts.ROSA;
-
-  const isHypershiftWizard = isHypershiftSelected && !inModal;
+  const isHypershiftWizard = isHypershift && !inModal;
 
   const nonAutoScaleNodeLabel = () => {
     const label = 'Compute node count';
 
-    if (isHypershiftSelected && !inModal) {
+    if (isHypershiftWizard) {
       return `${label} (per machine pool)`;
     }
 
@@ -109,10 +110,19 @@ function ScaleSection({
     return label;
   };
 
+  const workerNodeVolumeSizeSection = isRosa && !isHypershift && (
+    <>
+      <GridItem md={6}>
+        <WorkerNodeVolumeSizeSection maxWorkerVolumeSizeGiB={maxWorkerVolumeSizeGiB} />
+      </GridItem>
+      <GridItem md={6} />
+    </>
+  );
+
   return (
     <>
       {/* Instance type title (only for Hypershift) */}
-      {isHypershiftSelected && (
+      {isHypershift && (
         <>
           <GridItem>
             <Title headingLevel="h3">Machine pools settings</Title>
@@ -155,13 +165,14 @@ function ScaleSection({
               autoScaleMaxNodesValue={autoScaleMaxNodesValue}
               product={product}
               isBYOC={isBYOC}
-              isDefaultMachinePool={!isMachinePool && !isHypershiftSelected}
+              isDefaultMachinePool={!isMachinePool && !isHypershift}
               minNodesRequired={minNodesRequired}
               isHypershiftWizard={isHypershiftWizard}
               numPools={nodeIncrement}
             />
           </GridItem>
           {autoscalingEnabled && imdsSection}
+          {autoscalingEnabled && workerNodeVolumeSizeSection}
           {autoscalingEnabled && labelsAndTaintsSection}
         </>
       )}
@@ -199,10 +210,12 @@ function ScaleSection({
               billingModel={billingModel}
               isHypershiftWizard={isHypershiftWizard}
               poolNumber={poolNumber}
+              isHypershift={isHypershift}
             />
           </GridItem>
           <GridItem md={6} />
           {imdsSection}
+          {workerNodeVolumeSizeSection}
           {labelsAndTaintsSection}
         </>
       )}
@@ -263,6 +276,7 @@ ScaleSection.propTypes = {
   pending: PropTypes.bool,
   isBYOC: PropTypes.bool.isRequired,
   isMultiAz: PropTypes.bool.isRequired,
+  isHypershift: PropTypes.bool,
   inModal: PropTypes.bool,
   showStorageAndLoadBalancers: PropTypes.bool,
   machineType: PropTypes.string.isRequired,
@@ -277,10 +291,10 @@ ScaleSection.propTypes = {
   change: PropTypes.func.isRequired,
   autoScaleMinNodesValue: PropTypes.string,
   autoScaleMaxNodesValue: PropTypes.string,
-  isHypershiftSelected: PropTypes.bool,
   clusterVersionRawId: PropTypes.string,
   imds: PropTypes.string,
   poolNumber: PropTypes.number,
+  maxWorkerVolumeSizeGiB: PropTypes.number.isRequired,
 };
 
 export default ScaleSection;
