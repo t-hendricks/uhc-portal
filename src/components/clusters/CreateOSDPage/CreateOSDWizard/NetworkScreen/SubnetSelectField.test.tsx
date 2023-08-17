@@ -62,9 +62,7 @@ describe('SubnetSelectField tests', () => {
     });
     user.click(option);
     await waitFor(() =>
-      expect(
-        screen.getByText(/ddonati-test403-... -make-this-big-private-us-east-1d/i),
-      ).toBeInTheDocument(),
+      expect(screen.getByText(/ddonati-test4... his-big-private-us-east-1d/i)).toBeInTheDocument(),
     );
 
     // Assert
