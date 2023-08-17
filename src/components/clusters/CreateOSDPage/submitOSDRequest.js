@@ -192,6 +192,15 @@ export const createClusterRequest = ({ isWizard = true, cloudProviderID, product
             id: formData.byo_oidc_config_id,
           };
         }
+
+        // Worker volume size
+        if (formData.worker_volume_size_gib) {
+          clusterRequest.nodes.compute_root_volume = {
+            aws: {
+              size: formData.worker_volume_size_gib,
+            },
+          };
+        }
       } else {
         // AWS CCS credentials
         clusterRequest.aws = {

@@ -20,3 +20,13 @@ export const versionFormatter = (version: string): string => {
   const textTokens = prerelease.find((item): item is string => typeof item === 'string');
   return `${rawVersion.raw}${textTokens ? `-${textTokens.split('-')[0]}` : ''}`;
 };
+
+export const splitMajorMinor = (version: string): number[] => {
+  let versionArray = [];
+  try {
+    versionArray = version.split('.').map((num) => parseInt(num, 10));
+  } catch (error) {
+    return [];
+  }
+  return versionArray;
+};

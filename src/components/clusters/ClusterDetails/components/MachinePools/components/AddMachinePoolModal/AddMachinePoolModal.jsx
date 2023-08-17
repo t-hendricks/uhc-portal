@@ -66,6 +66,7 @@ class AddMachinePoolModal extends Component {
       useSpotInstances,
       spotInstancePricing,
       spotInstanceMaxHourlyPrice,
+      maxWorkerVolumeSizeGiB,
     } = this.props;
 
     const billingModel = get(cluster, 'billing_model');
@@ -151,7 +152,8 @@ class AddMachinePoolModal extends Component {
                 autoScaleMinNodesValue={autoScaleMinNodesValue}
                 autoScaleMaxNodesValue={autoScaleMaxNodesValue}
                 billingModel={billingModel}
-                isHypershiftSelected={isHypershiftCluster}
+                isHypershift={isHypershiftCluster}
+                maxWorkerVolumeSizeGiB={maxWorkerVolumeSizeGiB}
               />
               {/* Cost savings */}
               {canUseSpotInstances && (
@@ -195,6 +197,7 @@ AddMachinePoolModal.propTypes = {
   useSpotInstances: PropTypes.bool.isRequired,
   spotInstancePricing: PropTypes.string,
   spotInstanceMaxHourlyPrice: PropTypes.number,
+  maxWorkerVolumeSizeGiB: PropTypes.number,
 };
 
 AddMachinePoolModal.defaultProps = {

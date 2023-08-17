@@ -1,4 +1,5 @@
 import { isRestrictedEnv } from '~/restrictedEnv';
+import { defaultWorkerNodeVolumeSizeGiB } from '~/components/clusters/wizards/rosa/constants';
 import { normalizedProducts, billingModels } from '../../../common/subscriptionTypes';
 import { IMDSType } from '../wizards/common';
 
@@ -61,8 +62,12 @@ const createOSDInitialValues = ({
           selected_vpc_id: '',
           machine_pools_subnets: [newEmptySubnet()],
           cluster_privacy_public_subnet: newEmptySubnet(),
+          worker_volume_size_gib: undefined,
         }
-      : { enable_user_workload_monitoring: 'true' }),
+      : {
+          enable_user_workload_monitoring: 'true',
+          worker_volume_size_gib: defaultWorkerNodeVolumeSizeGiB,
+        }),
   };
 
   if (cloudProviderID) {
