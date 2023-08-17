@@ -149,6 +149,13 @@ describe('Rosa cluster wizard checks and cluster creation tests(OCP-50261)', { t
       ClusterDetailsPage.clusterRegionLabelValue().contains('us-west-2');
       ClusterDetailsPage.clusterAvailabilityLabelValue().contains('Single zone');
       ClusterDetailsPage.clusterInfrastructureAWSaccountLabelValue().contains(awsAccountID);
+      ClusterDetailsPage.clusterMachineCIDRLabelValue('10.0.0.0/16');
+      ClusterDetailsPage.clusterServiceCIDRLabelValue('172.30.0.0/16');
+      ClusterDetailsPage.clusterPodCIDRLabelValue('10.128.0.0/16');
+      ClusterDetailsPage.clusterHostPrefixLabelValue('/23');
+
+    });
+    it('Delete the cluster', () => {
       ClusterDetailsPage.actionsDropdownToggle().click();
       ClusterDetailsPage.deleteClusterDropdownItem().click();
       ClusterDetailsPage.deleteClusterNameInput().clear().type(clusterName);

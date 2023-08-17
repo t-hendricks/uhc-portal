@@ -51,7 +51,9 @@ function DetailsLeft({ cluster, cloudProviders, showAssistedId }) {
       <DescriptionList>
         <DescriptionListGroup>
           <DescriptionListTerm>{idLabel}</DescriptionListTerm>
-          <DescriptionListDescription>{id}</DescriptionListDescription>
+          <DescriptionListDescription>
+            <span data-testid="clusterID">{id}</span>
+          </DescriptionListDescription>
         </DescriptionListGroup>
         <DescriptionListGroup>
           <DescriptionListTerm>Type</DescriptionListTerm>
@@ -63,18 +65,22 @@ function DetailsLeft({ cluster, cloudProviders, showAssistedId }) {
           <DescriptionListGroup>
             <DescriptionListTerm>Control plane type</DescriptionListTerm>
             <DescriptionListDescription data-testid="controlType">
-              {controlPlaneType}
+              <span data-testid="controlPlaneType">{controlPlaneType}</span>
             </DescriptionListDescription>
           </DescriptionListGroup>
         )}
         <DescriptionListGroup>
           <DescriptionListTerm>Region</DescriptionListTerm>
-          <DescriptionListDescription>{region}</DescriptionListDescription>
+          <DescriptionListDescription>
+            <span data-testid="region">{region}</span>
+          </DescriptionListDescription>
         </DescriptionListGroup>
         {!isROSA && (
           <DescriptionListGroup>
             <DescriptionListTerm>Provider</DescriptionListTerm>
-            <DescriptionListDescription>{cloudProvider}</DescriptionListDescription>
+            <DescriptionListDescription>
+              <span data-testid="provider">{cloudProvider}</span>
+            </DescriptionListDescription>
           </DescriptionListGroup>
         )}
         {cluster.managed && (

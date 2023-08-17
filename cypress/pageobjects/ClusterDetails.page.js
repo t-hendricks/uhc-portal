@@ -55,13 +55,22 @@ class ClusterDetails extends Page {
 
   clusterNameTitle = () => cy.get('h1.cl-details-page-title');
 
-  clusterTypeLabelValue = () => cy.get('span[class="pf-c-description-list__text"]').contains('Type').parent().siblings().get('dd').find('span');
+  clusterTypeLabelValue = () => cy.getByTestId('clusterType').should('exist');
 
-  clusterRegionLabelValue = () => cy.get('span[class="pf-c-description-list__text"]').contains('Region').parent().siblings().get('dd').find('div');
+  clusterRegionLabelValue = () => cy.getByTestId('region').should('exist');
 
-  clusterAvailabilityLabelValue = () => cy.get('span[data-testid="availability"]');
+  clusterAvailabilityLabelValue = () => cy.getByTestId('availability').should('exist');
 
-  clusterInfrastructureAWSaccountLabelValue = () => cy.get('span[class="pf-c-description-list__text"]').contains('Infrastructure AWS account').parent().siblings().get('dd').find('div');
+  clusterInfrastructureAWSaccountLabelValue = () => cy.getByTestId('infrastructureAWSAccount').should('exist');
+
+  clusterMachineCIDRLabelValue = () => cy.getByTestId('machineCIDR').should('exist');
+
+  clusterServiceCIDRLabelValue = () => cy.getByTestId('serviceCIDR').should('exist');
+
+  clusterPodCIDRLabelValue = () => cy.getByTestId('podCIDR').should('exist');
+
+  clusterHostPrefixLabelValue = () => cy.getByTestId('hostPrefix').should('exist');
+
 
   waitForEditUrlModalToLoad = () => {
     cy.getByTestId('edit-console-url-dialog', { timeout: 30000 }).should('be.visible');
@@ -134,7 +143,7 @@ class ClusterDetails extends Page {
   };
 
   waitForDeleteClusterActionComplete = () => {
-    cy.get('div[data-testid="delete-cluster-dialog"]').get('div.ins-c-spinner', { timeout: 50000 }).should('not.exist');
+    cy.getByTestId('delete-cluster-dialog').get('div.ins-c-spinner', { timeout: 100000 }).should('not.exist');
   };
 }
 

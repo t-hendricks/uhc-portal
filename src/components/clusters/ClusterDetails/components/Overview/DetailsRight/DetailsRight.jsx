@@ -135,7 +135,11 @@ function DetailsRight({
           <>
             <DescriptionListGroup>
               <DescriptionListTerm>{`Infrastructure ${cloudProviderId.toUpperCase()} account`}</DescriptionListTerm>
-              <DescriptionListDescription>{infraAccount}</DescriptionListDescription>
+              <DescriptionListDescription>
+                <span data-testid={`infrastructure${cloudProviderId.toUpperCase()}Account`}>
+                  {infraAccount}
+                </span>
+              </DescriptionListDescription>
             </DescriptionListGroup>
           </>
         )}
@@ -161,7 +165,9 @@ function DetailsRight({
           <>
             <DescriptionListGroup>
               <DescriptionListTerm>Billing marketplace account</DescriptionListTerm>
-              <DescriptionListDescription>{billingMarketplaceAccount}</DescriptionListDescription>
+              <DescriptionListDescription>
+                <span data-testid="billingMarketplaceAccount">{billingMarketplaceAccount}</span>
+              </DescriptionListDescription>
             </DescriptionListGroup>
           </>
         )}
@@ -203,7 +209,7 @@ function DetailsRight({
                       {!isHypershift && (
                         <Flex data-testid="controlPlaneNodesCountContainer">
                           <dt>Control plane: </dt>
-                          <dd>
+                          <dd data-testid="controlPlaneNodesCount">
                             {controlPlaneActualNodes !== '-' || controlPlaneDesiredNodes !== '-'
                               ? `${controlPlaneActualNodes}/${controlPlaneDesiredNodes}`
                               : 'N/A'}
@@ -214,7 +220,7 @@ function DetailsRight({
                         <>
                           <Flex data-testid="InfraNodesCountContainer">
                             <dt>Infra: </dt>
-                            <dd>
+                            <dd data-testid="infraNodesCount">
                               {infraActualNodes !== '-' || infraDesiredNodes !== '-'
                                 ? `${infraActualNodes}/${infraDesiredNodes}`
                                 : 'N/A'}
@@ -224,7 +230,7 @@ function DetailsRight({
                       )}
                       <Flex>
                         <dt>Compute: </dt>
-                        <dd>
+                        <dd data-testid="computeNodeCount">
                           {workerActualNodes !== '-' || workerDesiredNodes !== '-'
                             ? `${workerActualNodes}/${workerDesiredNodes}`
                             : 'N/A'}
