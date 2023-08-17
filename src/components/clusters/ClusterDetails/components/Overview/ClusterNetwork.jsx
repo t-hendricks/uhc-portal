@@ -18,25 +18,25 @@ function ClusterNetwork({ cluster }) {
               {cluster.network.machine_cidr && (
                 <Flex>
                   <dt>Machine CIDR: </dt>
-                  <dd>{cluster.network.machine_cidr}</dd>
+                  <dd data-testid="machineCIDR">{cluster.network.machine_cidr}</dd>
                 </Flex>
               )}
               {cluster.network.service_cidr && (
                 <Flex>
                   <dt>Service CIDR: </dt>
-                  <dd>{cluster.network.service_cidr}</dd>
+                  <dd data-testid="serviceCIDR">{cluster.network.service_cidr}</dd>
                 </Flex>
               )}
               {cluster.network.pod_cidr && (
                 <Flex>
                   <dt>Pod CIDR: </dt>
-                  <dd>{cluster.network.pod_cidr}</dd>
+                  <dd data-testid="podCIDR">{cluster.network.pod_cidr}</dd>
                 </Flex>
               )}
               {cluster.network.host_prefix && (
                 <Flex>
                   <dt>Host prefix: </dt>
-                  <dd>{cluster.network.host_prefix}</dd>
+                  <dd data-testid="hostPrefix">{cluster.network.host_prefix}</dd>
                 </Flex>
               )}
             </dl>
