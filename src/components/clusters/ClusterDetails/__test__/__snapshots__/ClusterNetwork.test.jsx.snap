@@ -14,7 +14,9 @@ exports[`<ClusterNetwork /> should render 1`] = `
           <dt>
             Machine CIDR: 
           </dt>
-          <dd>
+          <dd
+            data-testid="machineCIDR"
+          >
             10.0.0.0/16
           </dd>
         </Flex>
@@ -22,7 +24,9 @@ exports[`<ClusterNetwork /> should render 1`] = `
           <dt>
             Service CIDR: 
           </dt>
-          <dd>
+          <dd
+            data-testid="serviceCIDR"
+          >
             172.30.0.0/16
           </dd>
         </Flex>
@@ -30,7 +34,9 @@ exports[`<ClusterNetwork /> should render 1`] = `
           <dt>
             Pod CIDR: 
           </dt>
-          <dd>
+          <dd
+            data-testid="podCIDR"
+          >
             10.128.0.0/14
           </dd>
         </Flex>
@@ -38,7 +44,9 @@ exports[`<ClusterNetwork /> should render 1`] = `
           <dt>
             Host prefix: 
           </dt>
-          <dd>
+          <dd
+            data-testid="hostPrefix"
+          >
             23
           </dd>
         </Flex>
