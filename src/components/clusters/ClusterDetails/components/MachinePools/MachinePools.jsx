@@ -424,10 +424,9 @@ class MachinePools extends React.Component {
                   <ButtonWithTooltip
                     id="edit-existing-cluster-autoscaling"
                     isDisabled={
-                      canNotEditReason || (
-                      clusterAutoscalerResponse.hasAutoscaler &&
-                      !clusterAutoscalerResponse.getAutoscaler.data
-                      )
+                      canNotEditReason ||
+                      (clusterAutoscalerResponse.hasAutoscaler &&
+                        !clusterAutoscalerResponse.getAutoscaler.data)
                     }
                     onClick={() => openModal(modals.EDIT_CLUSTER_AUTOSCALING_V1)}
                     variant="secondary"
@@ -485,7 +484,7 @@ class MachinePools extends React.Component {
         {openModalId === modals.ADD_MACHINE_POOL && (
           <AddMachinePoolModal cluster={cluster} isHypershiftCluster={isHypershift} />
         )}
-        {modals.DELETE_MACHINE_POOL && <DeleteMachinePoolModal />}
+        {openModalId === modals.DELETE_MACHINE_POOL && <DeleteMachinePoolModal />}
         {openModalId === modals.EDIT_TAINTS && (
           <EditTaintsModal clusterId={cluster.id} isHypershiftCluster={isHypershift} />
         )}
