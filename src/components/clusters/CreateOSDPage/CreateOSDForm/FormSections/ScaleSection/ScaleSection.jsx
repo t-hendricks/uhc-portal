@@ -64,9 +64,10 @@ function ScaleSection({
         toggleTextCollapsed={expandableSectionTitle}
         toggleTextExpanded={expandableSectionTitle}
       >
-        <Title headingLevel="h3" className="pf-u-mb-md pf-u-mt-lg">
-          Node labels
-        </Title>
+        <Title headingLevel="h3">Node labels (optional)</Title>
+        <p className="pf-u-mb-md">
+          Configure labels that will apply to all nodes in this machine pool.
+        </p>
         <FieldArray name="node_labels" component={ReduxFormKeyValueList} />
         {isMachinePool && (
           <>

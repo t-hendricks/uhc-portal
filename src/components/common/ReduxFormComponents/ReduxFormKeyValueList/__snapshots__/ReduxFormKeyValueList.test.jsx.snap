@@ -59,7 +59,7 @@ exports[`<ReduxFormKeyValueList /> should render when there is no input - initia
     />
   </GridItem>
   <GridItem>
-    <Button
+    <ButtonWithTooltip
       className="reduxFormKeyValueList-addBtn"
       icon={
         <PlusCircleIcon
@@ -72,8 +72,8 @@ exports[`<ReduxFormKeyValueList /> should render when there is no input - initia
       onClick={[Function]}
       variant="link"
     >
-      Add label
-    </Button>
+      Add additional label
+    </ButtonWithTooltip>
   </GridItem>
 </Grid>
 `;
@@ -176,7 +176,7 @@ exports[`<ReduxFormKeyValueList /> should render with input 1`] = `
     />
   </GridItem>
   <GridItem>
-    <Button
+    <ButtonWithTooltip
       className="reduxFormKeyValueList-addBtn"
       icon={
         <PlusCircleIcon
@@ -189,8 +189,8 @@ exports[`<ReduxFormKeyValueList /> should render with input 1`] = `
       onClick={[Function]}
       variant="link"
     >
-      Add label
-    </Button>
+      Add additional label
+    </ButtonWithTooltip>
   </GridItem>
 </Grid>
 `;
