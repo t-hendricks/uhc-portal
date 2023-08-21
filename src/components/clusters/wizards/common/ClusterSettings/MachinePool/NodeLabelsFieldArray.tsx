@@ -9,6 +9,8 @@ import { checkLabelKey, checkLabelValue } from '~/common/validators';
 import { FieldId } from '~/components/clusters/wizards/common/constants';
 import { useFormState } from '~/components/clusters/wizards/hooks';
 import { TextInputField } from '~/components/clusters/wizards/form/TextInputField';
+import { nodeKeyValueTooltipText } from '~/common/helpers';
+import ButtonWithTooltip from '~/components/common/ButtonWithTooltip';
 
 export interface NodeLabel {
   key: string;
@@ -18,6 +20,7 @@ export interface NodeLabel {
 export const NodeLabelsFieldArray = () => {
   const { values } = useFormState();
   const nodeLabels: NodeLabel[] = values[FieldId.NodeLabels];
+  const hasIncompleteNodeKeys = () => nodeLabels.some((nodeLabel) => !nodeLabel.key);
 
   const validateNodeKey = (index: number) => (value: string) => {
     if (nodeLabels.length > 1) {
@@ -90,14 +93,15 @@ export const NodeLabelsFieldArray = () => {
               );
             })}
             <GridItem>
-              <Button
+              <ButtonWithTooltip
                 onClick={() => push({ key: '', value: '' })}
                 icon={<PlusCircleIcon />}
                 variant="link"
                 isInline
+                disableReason={hasIncompleteNodeKeys() && nodeKeyValueTooltipText}
               >
-                Add label
-              </Button>
+                Add additional label
+              </ButtonWithTooltip>
             </GridItem>
           </>
         )}
