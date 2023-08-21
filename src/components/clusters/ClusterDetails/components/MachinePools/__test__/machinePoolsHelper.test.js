@@ -47,7 +47,7 @@ describe('machine pools action resolver', () => {
     ).toEqual([]);
   });
 
-  it('should only have scale section for the default machine pool', () => {
+  it('should only have scale action for the default machine pool', () => {
     const defaultMachinePoolRowData = {
       cells: ['Default', 'm5.xlarge', 'us-east-1a', '4'],
       machinePool: { id: 'Default' },

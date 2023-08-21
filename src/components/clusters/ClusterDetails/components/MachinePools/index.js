@@ -29,6 +29,7 @@ const mapStateToProps = (state, ownProps) => {
 
   const props = {
     isAddMachinePoolModalOpen: shouldShowModal(state, 'add-machine-pool'),
+    isDeleteMachinePoolModalOpen: shouldShowModal(state, 'delete-machine-pool'),
     isEditTaintsModalOpen: shouldShowModal(state, modals.EDIT_TAINTS),
     isEditLabelsModalOpen: shouldShowModal(state, modals.EDIT_LABELS),
     machinePoolsList: state.machinePools.getMachinePools,
