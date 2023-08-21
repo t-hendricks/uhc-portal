@@ -2,19 +2,19 @@
 
 exports[`PreviewLabel post GA date 1`] = `
 <PreviewLabel
-  creationDateStr="2023-08-01T00:00:00.000Z"
+  creationDateStr="2023-11-01T00:00:00.000Z"
 />
 `;
 
 exports[`PreviewLabel post GA date 2`] = `
 <PreviewLabel
-  creationDateStr="2023-08-01T00:00:00.000Z"
+  creationDateStr="2023-11-01T00:00:00.000Z"
 />
 `;
 
 exports[`PreviewLabel pre GA date 1`] = `
 <PreviewLabel
-  creationDateStr="2023-07-31T23:59:59.000Z"
+  creationDateStr="2023-10-31T23:59:59.000Z"
 >
   <Label
     color="green"

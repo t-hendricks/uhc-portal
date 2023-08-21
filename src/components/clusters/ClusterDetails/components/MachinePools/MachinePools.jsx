@@ -28,6 +28,7 @@ import EditTaintsModal from './components/EditTaintsModal';
 import EditLabelsModal from './components/EditLabelsModal';
 import { actionResolver, hasSubnets } from './machinePoolsHelper';
 import ExpandableRow from './components/ExpandableRow';
+import DeleteMachinePoolModal from './components/DeleteMachinePoolModal/DeleteMachinePoolModal';
 
 import ButtonWithTooltip from '../../../../common/ButtonWithTooltip';
 import ErrorBox from '../../../../common/ErrorBox';
@@ -140,6 +141,7 @@ class MachinePools extends React.Component {
       machinePoolsList,
       openModal,
       isAddMachinePoolModalOpen,
+      isDeleteMachinePoolModalOpen,
       isEditTaintsModalOpen,
       isEditLabelsModalOpen,
       deleteMachinePool,
@@ -152,7 +154,7 @@ class MachinePools extends React.Component {
     } = this.props;
 
     const { deletedRowIndex, openedRows, hideDeleteMachinePoolError } = this.state;
-
+    const { machinePoolsActions } = cluster;
     const hasMachinePools = !!machinePoolsList.data.length;
 
     if (hasMachinePools && machinePoolsList.error) {
@@ -179,14 +181,17 @@ class MachinePools extends React.Component {
     const hibernatingReason =
       isHibernating(cluster.state) &&
       'This operation is not available while cluster is hibernating';
-    const canNotEditReason =
-      !cluster.canEdit &&
-      'You do not have permission to add a machine pool. Only cluster owners, cluster editors, and Organization Administrators can add machine pools.';
+    const canNotCreateReason =
+      !machinePoolsActions.create &&
+      'You do not have permission to add a machine pool. Only cluster owners, cluster editors, machine pool editors and Organization Administrators can add machine pools.';
     const quotaReason = !hasMachinePoolsQuota && noQuotaTooltip;
+    const canNotEditReason =
+      !machinePoolsActions.update &&
+      'You do not have permission to edit machine pools. Only cluster owners, cluster editors, machine pool editors and Organization Administrators can edit machine pools.';
 
     const addMachinePoolBtn = (
       <ButtonWithTooltip
-        disableReason={readOnlyReason || hibernatingReason || canNotEditReason || quotaReason}
+        disableReason={readOnlyReason || hibernatingReason || canNotCreateReason || quotaReason}
         id="add-machine-pool"
         onClick={() => openModal('add-machine-pool')}
         variant="secondary"
@@ -301,7 +306,7 @@ class MachinePools extends React.Component {
       }
     });
 
-    const onClickDeleteAction = (_, rowID, rowData) => {
+    const performDeleteAction = (rowID, rowData) => {
       this.setState(
         produce((draft) => {
           if (deleteMachinePoolResponse.error) {
@@ -314,6 +319,13 @@ class MachinePools extends React.Component {
         }),
       );
       deleteMachinePool(rowData.machinePool.id);
+    };
+
+    const onClickDeleteAction = (_, rowID, rowData) => {
+      openModal(modals.DELETE_MACHINE_POOL, {
+        machinePool: rowData.machinePool,
+        performDeleteAction: () => performDeleteAction(rowID, rowData),
+      });
     };
 
     const onClickScaleAction = (_, __, rowData) =>
@@ -404,30 +416,33 @@ class MachinePools extends React.Component {
                     }
                   />
                 )}
-                <Table
-                  aria-label="Machine pools"
-                  cells={columns}
-                  rows={rows}
-                  onCollapse={this.onCollapse}
-                  actionResolver={(rowData) =>
-                    actionResolver(
-                      rowData,
-                      onClickDeleteAction,
-                      onClickScaleAction,
-                      onClickEditTaintsAction,
-                      onClickEditLabelsAction,
-                      isHypershift,
-                      machinePoolsList.data.length,
-                      canMachinePoolBeUpdated(rowData.machinePool)
-                        ? onClickUpdateAction
-                        : undefined,
-                    )
-                  }
-                  areActionsDisabled={() => tableActionsDisabled}
-                >
-                  <TableHeader />
-                  <TableBody />
-                </Table>
+                {machinePoolsActions.list && (
+                  <Table
+                    aria-label="Machine pools"
+                    cells={columns}
+                    rows={rows}
+                    onCollapse={this.onCollapse}
+                    actionResolver={(rowData) =>
+                      actionResolver(
+                        rowData,
+                        onClickDeleteAction,
+                        onClickScaleAction,
+                        onClickEditTaintsAction,
+                        onClickEditLabelsAction,
+                        isHypershift,
+                        machinePoolsList.data.length,
+                        canMachinePoolBeUpdated(rowData.machinePool)
+                          ? onClickUpdateAction
+                          : undefined,
+                        machinePoolsActions.delete,
+                      )
+                    }
+                    areActionsDisabled={() => tableActionsDisabled}
+                  >
+                    <TableHeader />
+                    <TableBody />
+                  </Table>
+                )}
               </CardBody>
             </Card>
           </>
@@ -435,6 +450,7 @@ class MachinePools extends React.Component {
         {isAddMachinePoolModalOpen && (
           <AddMachinePoolModal cluster={cluster} isHypershiftCluster={isHypershift} />
         )}
+        {isDeleteMachinePoolModalOpen && <DeleteMachinePoolModal />}
         {isEditTaintsModalOpen && (
           <EditTaintsModal clusterId={cluster.id} isHypershiftCluster={isHypershift} />
         )}
@@ -460,6 +476,7 @@ MachinePools.propTypes = {
   openModal: PropTypes.func.isRequired,
   hasMachinePoolsQuota: PropTypes.bool.isRequired,
   isAddMachinePoolModalOpen: PropTypes.bool.isRequired,
+  isDeleteMachinePoolModalOpen: PropTypes.bool.isRequired,
   isEditTaintsModalOpen: PropTypes.bool.isRequired,
   isEditLabelsModalOpen: PropTypes.bool.isRequired,
   deleteMachinePoolResponse: PropTypes.object.isRequired,

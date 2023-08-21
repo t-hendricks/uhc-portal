@@ -26,6 +26,7 @@ export namespace SelfAccessReview {
     ACCOUNT = 'Account',
     ACCOUNT_POOL = 'AccountPool',
     CLUSTER = 'Cluster',
+    IDP = 'Idp',
     PLAN = 'Plan',
     SUBSCRIPTION = 'Subscription',
     ORGANIZATION = 'Organization',
@@ -61,5 +62,6 @@ export namespace SelfAccessReview {
     SELF_ACCESS_REVIEW = 'SelfAccessReview',
     SUBSCRIPTION_INTERNAL = 'SubscriptionInternal',
     SUBSCRIPTION_ROLE_BINDING = 'SubscriptionRoleBinding',
+    MACHINE_POOL = 'MachinePool',
   }
 }
