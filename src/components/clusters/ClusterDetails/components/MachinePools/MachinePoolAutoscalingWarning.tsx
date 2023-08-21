@@ -21,7 +21,7 @@ const MachinePoolsAutoScalingWarning = ({
       if (!hasClusterAutoScaler && hasAutoscalingMachinePools) {
         title = 'Machine pools will not autoscale';
         message =
-          'No machine pools can autoscale because of your autoscaling settings. To apply autoscaling to the machine pools, enable cluster autoscaling.';
+          'No machine pools can autoscale because of your autoscaling settings. To apply autoscaling to the machine pools, click on the "Autoscale cluster" toggle above.';
       } else if (hasClusterAutoScaler && !hasAutoscalingMachinePools) {
         title = 'Cluster will not autoscale';
         message =
