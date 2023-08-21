@@ -15,8 +15,8 @@ fi
 cd "$(dirname "$(dirname "$0")")"  # repo root directory (above run/ that contains this script)
 
 # Check that the application has been built:
-if [ ! -d "build" ]; then
-  echo "Directory 'build' doesn't exist. Has the application been built?"
+if [ ! -d "dist" ]; then
+  echo "Directory 'dist' doesn't exist. Has the application been built?"
   echo "Make sure to run 'make app' before running this script."
   exit 1
 fi
@@ -162,7 +162,7 @@ http {
 # use a simple web server that only handles static content.
 site_data=$(mktemp -d)
 mkdir "${site_data}/apps"
-cp --recursive "build/openshift" "${site_data}/apps"
+cp --recursive "dist/openshift" "${site_data}/apps"
 mkdir "${site_data}/openshift"
 mv "${site_data}/apps/openshift/index.html" "${site_data}/openshift"
 

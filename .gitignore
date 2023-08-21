@@ -3,7 +3,7 @@
 .vscode
 *.log
 /backend
-/build/
+/dist/
 /node_modules/
 /run/ocm-api-model/
 /run/ocm-api-metamodel/
