@@ -14,4 +14,4 @@ if [ $IS_PR = false ]; then
   yarn lint
 fi
 
-yarn build --mode=production --env api-env=staging --output-path ./dist
+yarn build --mode=production --env api-env=staging
