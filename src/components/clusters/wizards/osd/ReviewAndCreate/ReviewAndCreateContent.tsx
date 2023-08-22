@@ -14,6 +14,7 @@ import {
   UpgradePolicyType,
 } from '~/components/clusters/wizards/common/constants';
 import { FieldId, StepId } from '~/components/clusters/wizards/osd/constants';
+import { canAutoScaleOnCreateSelector } from '~/components/clusters/ClusterDetails/components/MachinePools/MachinePoolsSelectors';
 import { DebugClusterRequest } from './DebugClusterRequest';
 import { canSelectImds } from '../../rosa/constants';
 
@@ -33,20 +34,13 @@ export const ReviewAndCreateContent = ({ isPending }: ReviewAndCreateContentProp
       [FieldId.NodeLabels]: nodeLabels,
       [FieldId.ClusterPrivacy]: clusterPrivacy,
       [FieldId.ClusterVersion]: clusterVersion,
+      [FieldId.ApplicationIngress]: applicationIngress,
     },
     values: formValues,
   } = useFormState();
-  const capabilities = useGlobalState(
-    (state) => state.userProfile.organization.details?.capabilities,
-  );
-
-  const canAutoScale = React.useMemo(() => {
-    const autoScaleClusters = capabilities?.find(
-      (capability) => capability.name === 'capability.cluster.autoscale_clusters',
-    );
-    return !!(autoScaleClusters && autoScaleClusters.value === 'true');
-  }, [capabilities]);
+  const canAutoScale = useGlobalState((state) => canAutoScaleOnCreateSelector(state, product));
   const autoscalingEnabled = canAutoScale && !!formValues[FieldId.AutoscalingEnabled];
+
   const isByoc = byoc === 'true';
   const isAWS = cloudProvider === CloudProviderType.Aws;
 
@@ -147,6 +141,28 @@ export const ReviewAndCreateContent = ({ isPending }: ReviewAndCreateContentProp
         <ReviewItem name={FieldId.NetworkServiceCidr} formValues={formValues} />
         <ReviewItem name={FieldId.NetworkPodCidr} formValues={formValues} />
         <ReviewItem name={FieldId.NetworkHostPrefix} formValues={formValues} />
+
+        {isAWS && isByoc && (
+          <ReviewItem name={FieldId.ApplicationIngress} formValues={formValues} />
+        )}
+
+        {applicationIngress !== 'default' && isAWS && isByoc && (
+          <>
+            <ReviewItem name={FieldId.DefaultRouterSelectors} formValues={formValues} />
+            <ReviewItem
+              name={FieldId.DefaultRouterExcludedNamespacesFlag}
+              formValues={formValues}
+            />
+            <ReviewItem
+              name={FieldId.IsDefaultRouterWildcardPolicyAllowed}
+              formValues={formValues}
+            />
+            <ReviewItem
+              name={FieldId.IsDefaultRouterNamespaceOwnershipPolicyStrict}
+              formValues={formValues}
+            />
+          </>
+        )}
       </ReviewSection>
 
       <ReviewSection title="Updates" onGoToStep={() => goToStepById(StepId.ClusterUpdates)}>

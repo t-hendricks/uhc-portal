@@ -10,7 +10,7 @@ exports[`<MachinePools /> OpenShift version for machine pools is shown if hypers
       className="ocm-c-machine-pools__card--body"
     >
       <ButtonWithTooltip
-        className="pf-u-mb-lg"
+        className="pf-u-mb-lg pf-u-mr-md"
         disableReason={false}
         id="add-machine-pool"
         onClick={[Function]}
@@ -89,9 +89,41 @@ exports[`<MachinePools /> OpenShift version for machine pools is shown if hypers
                 },
                 "us-east-1b",
                 Object {
-                  "title": "2",
+                  "title": <MachinePoolNodesSummary
+                    isMultiZoneCluster={false}
+                    machinePool={
+                      Object {
+                        "auto_repair": true,
+                        "availability_zone": "us-east-1b",
+                        "aws_node_pool": Object {
+                          "instance_profile": "staging-21gitfhopbgmmfhlu65v93n4g4n3djde-jknhystj27-worker",
+                          "instance_type": "m5.xlarge",
+                          "tags": Object {
+                            "api.openshift.com/environment": "staging",
+                          },
+                        },
+                        "href": "/api/clusters_mgmt/v1/clusters/21gitfhopbgmmfhlu65v93n4g4n3djde/node_pools/workers",
+                        "id": "workers",
+                        "kind": "NodePool",
+                        "replicas": 2,
+                        "status": Object {
+                          "current_replicas": 2,
+                        },
+                        "subnet": "subnet-049f90721559000de",
+                        "version": Object {
+                          "href": "/api/clusters_mgmt/v1/versions/openshift-v4.12.5-candidate",
+                          "id": "openshift-v4.12.5-candidate",
+                          "kind": "VersionLink",
+                        },
+                      }
+                    }
+                  />,
                 },
-                "Disabled",
+                Object {
+                  "title": <MachinePoolAutoScalingSummary
+                    hasMachinePoolAutoscale={false}
+                  />,
+                },
                 Object {
                   "title": <React.Fragment>
                     4.12.5-candidate
@@ -158,17 +190,7 @@ exports[`<MachinePools /> OpenShift version for machine pools is shown if hypers
               "cells": Array [
                 Object {
                   "title": <ExpandableRow
-                    cluster={
-                      Object {
-                        "machinePoolsActions": Object {
-                          "create": true,
-                          "delete": true,
-                          "edit": true,
-                          "list": true,
-                          "update": true,
-                        },
-                      }
-                    }
+                    isMultiZoneCluster={false}
                     machinePool={
                       Object {
                         "auto_repair": true,
@@ -226,13 +248,21 @@ exports[`<MachinePools /> renders with a machine pool with autoscaling enabled 1
       className="ocm-c-machine-pools__card--body"
     >
       <ButtonWithTooltip
-        className="pf-u-mb-lg"
+        className="pf-u-mb-lg pf-u-mr-md"
         disableReason={false}
         id="add-machine-pool"
         onClick={[Function]}
         variant="secondary"
       >
         Add machine pool
+      </ButtonWithTooltip>
+      <ButtonWithTooltip
+        className="pf-u-mb-lg"
+        id="edit-existing-cluster-autoscaling"
+        onClick={[Function]}
+        variant="secondary"
+      >
+        Edit cluster autoscaling
       </ButtonWithTooltip>
       <Divider />
       <Table
@@ -299,9 +329,25 @@ exports[`<MachinePools /> renders with a machine pool with autoscaling enabled 1
                 },
                 "us-east-1",
                 Object {
-                  "title": "1",
+                  "title": <MachinePoolNodesSummary
+                    isMultiZoneCluster={false}
+                    machinePool={
+                      Object {
+                        "availability_zones": Array [
+                          "us-east-1",
+                        ],
+                        "desired": 1,
+                        "id": "some-id",
+                        "instance_type": "m5.xlarge",
+                      }
+                    }
+                  />,
                 },
-                "Disabled",
+                Object {
+                  "title": <MachinePoolAutoScalingSummary
+                    hasMachinePoolAutoscale={false}
+                  />,
+                },
               ],
               "key": "some-id",
               "machinePool": Object {
@@ -323,9 +369,45 @@ exports[`<MachinePools /> renders with a machine pool with autoscaling enabled 1
                 },
                 "us-east-1a",
                 Object {
-                  "title": "Min: 1, Max: 2",
+                  "title": <MachinePoolNodesSummary
+                    isMultiZoneCluster={false}
+                    machinePool={
+                      Object {
+                        "autoscaling": Object {
+                          "max_replicas": 2,
+                          "min_replicas": 1,
+                        },
+                        "availability_zones": Array [
+                          "us-east-1a",
+                        ],
+                        "href": "/api/clusters_mgmt/v1/clusters/cluster-id/machine_pools/mp-autoscaling",
+                        "id": "mp-autoscaling",
+                        "instance_type": "m5.xlarge",
+                        "kind": "MachinePool",
+                        "labels": Object {
+                          "foo": "bar",
+                        },
+                        "taints": Array [
+                          Object {
+                            "effect": "NoSchedule",
+                            "key": "foo1",
+                            "value": "bazz1",
+                          },
+                          Object {
+                            "effect": "NoSchedule",
+                            "key": "foo2",
+                            "value": "bazz2",
+                          },
+                        ],
+                      }
+                    }
+                  />,
                 },
-                "Enabled",
+                Object {
+                  "title": <MachinePoolAutoScalingSummary
+                    hasMachinePoolAutoscale={true}
+                  />,
+                },
               ],
               "isOpen": false,
               "key": "mp-autoscaling",
@@ -362,17 +444,7 @@ exports[`<MachinePools /> renders with a machine pool with autoscaling enabled 1
               "cells": Array [
                 Object {
                   "title": <ExpandableRow
-                    cluster={
-                      Object {
-                        "machinePoolsActions": Object {
-                          "create": true,
-                          "delete": true,
-                          "edit": true,
-                          "list": true,
-                          "update": true,
-                        },
-                      }
-                    }
+                    isMultiZoneCluster={false}
                     machinePool={
                       Object {
                         "autoscaling": Object {
@@ -434,13 +506,21 @@ exports[`<MachinePools /> renders with additional machine pools, some with label
       className="ocm-c-machine-pools__card--body"
     >
       <ButtonWithTooltip
-        className="pf-u-mb-lg"
+        className="pf-u-mb-lg pf-u-mr-md"
         disableReason={false}
         id="add-machine-pool"
         onClick={[Function]}
         variant="secondary"
       >
         Add machine pool
+      </ButtonWithTooltip>
+      <ButtonWithTooltip
+        className="pf-u-mb-lg"
+        id="edit-existing-cluster-autoscaling"
+        onClick={[Function]}
+        variant="secondary"
+      >
+        Edit cluster autoscaling
       </ButtonWithTooltip>
       <Divider />
       <Table
@@ -507,9 +587,25 @@ exports[`<MachinePools /> renders with additional machine pools, some with label
                 },
                 "us-east-1",
                 Object {
-                  "title": "1",
+                  "title": <MachinePoolNodesSummary
+                    isMultiZoneCluster={false}
+                    machinePool={
+                      Object {
+                        "availability_zones": Array [
+                          "us-east-1",
+                        ],
+                        "desired": 1,
+                        "id": "some-id",
+                        "instance_type": "m5.xlarge",
+                      }
+                    }
+                  />,
                 },
-                "Disabled",
+                Object {
+                  "title": <MachinePoolAutoScalingSummary
+                    hasMachinePoolAutoscale={false}
+                  />,
+                },
               ],
               "key": "some-id",
               "machinePool": Object {
@@ -531,9 +627,42 @@ exports[`<MachinePools /> renders with additional machine pools, some with label
                 },
                 "us-east-1a",
                 Object {
-                  "title": "1",
+                  "title": <MachinePoolNodesSummary
+                    isMultiZoneCluster={false}
+                    machinePool={
+                      Object {
+                        "availability_zones": Array [
+                          "us-east-1a",
+                        ],
+                        "href": "/api/clusters_mgmt/v1/clusters/cluster-id/machine_pools/mp-with-labels-and-taints",
+                        "id": "mp-with-labels-and-taints",
+                        "instance_type": "m5.xlarge",
+                        "kind": "MachinePool",
+                        "labels": Object {
+                          "foo": "bar",
+                        },
+                        "replicas": 1,
+                        "taints": Array [
+                          Object {
+                            "effect": "NoSchedule",
+                            "key": "foo1",
+                            "value": "bazz1",
+                          },
+                          Object {
+                            "effect": "NoSchedule",
+                            "key": "foo2",
+                            "value": "bazz2",
+                          },
+                        ],
+                      }
+                    }
+                  />,
                 },
-                "Disabled",
+                Object {
+                  "title": <MachinePoolAutoScalingSummary
+                    hasMachinePoolAutoscale={false}
+                  />,
+                },
               ],
               "isOpen": false,
               "key": "mp-with-labels-and-taints",
@@ -567,17 +696,7 @@ exports[`<MachinePools /> renders with additional machine pools, some with label
               "cells": Array [
                 Object {
                   "title": <ExpandableRow
-                    cluster={
-                      Object {
-                        "machinePoolsActions": Object {
-                          "create": true,
-                          "delete": true,
-                          "edit": true,
-                          "list": true,
-                          "update": true,
-                        },
-                      }
-                    }
+                    isMultiZoneCluster={false}
                     machinePool={
                       Object {
                         "availability_zones": Array [
@@ -622,9 +741,30 @@ exports[`<MachinePools /> renders with additional machine pools, some with label
                 },
                 "us-east-1a",
                 Object {
-                  "title": "1",
+                  "title": <MachinePoolNodesSummary
+                    isMultiZoneCluster={false}
+                    machinePool={
+                      Object {
+                        "availability_zones": Array [
+                          "us-east-1a",
+                        ],
+                        "href": "/api/clusters_mgmt/v1/clusters/cluster-id/machine_pools/mp-with-labels",
+                        "id": "mp-with-label",
+                        "instance_type": "m5.xlarge",
+                        "kind": "MachinePool",
+                        "labels": Object {
+                          "foo": "bar",
+                        },
+                        "replicas": 1,
+                      }
+                    }
+                  />,
                 },
-                "Disabled",
+                Object {
+                  "title": <MachinePoolAutoScalingSummary
+                    hasMachinePoolAutoscale={false}
+                  />,
+                },
               ],
               "isOpen": false,
               "key": "mp-with-label",
@@ -646,17 +786,7 @@ exports[`<MachinePools /> renders with additional machine pools, some with label
               "cells": Array [
                 Object {
                   "title": <ExpandableRow
-                    cluster={
-                      Object {
-                        "machinePoolsActions": Object {
-                          "create": true,
-                          "delete": true,
-                          "edit": true,
-                          "list": true,
-                          "update": true,
-                        },
-                      }
-                    }
+                    isMultiZoneCluster={false}
                     machinePool={
                       Object {
                         "availability_zones": Array [
@@ -689,9 +819,39 @@ exports[`<MachinePools /> renders with additional machine pools, some with label
                 },
                 "us-east-1a",
                 Object {
-                  "title": "1",
+                  "title": <MachinePoolNodesSummary
+                    isMultiZoneCluster={false}
+                    machinePool={
+                      Object {
+                        "availability_zones": Array [
+                          "us-east-1a",
+                        ],
+                        "href": "/api/clusters_mgmt/v1/clusters/cluster-id/machine_pools/mp-with-taints",
+                        "id": "mp-with-taints",
+                        "instance_type": "m5.xlarge",
+                        "kind": "MachinePool",
+                        "replicas": 1,
+                        "taints": Array [
+                          Object {
+                            "effect": "NoSchedule",
+                            "key": "foo1",
+                            "value": "bazz1",
+                          },
+                          Object {
+                            "effect": "NoSchedule",
+                            "key": "foo2",
+                            "value": "bazz2",
+                          },
+                        ],
+                      }
+                    }
+                  />,
                 },
-                "Disabled",
+                Object {
+                  "title": <MachinePoolAutoScalingSummary
+                    hasMachinePoolAutoscale={false}
+                  />,
+                },
               ],
               "isOpen": false,
               "key": "mp-with-taints",
@@ -722,17 +882,7 @@ exports[`<MachinePools /> renders with additional machine pools, some with label
               "cells": Array [
                 Object {
                   "title": <ExpandableRow
-                    cluster={
-                      Object {
-                        "machinePoolsActions": Object {
-                          "create": true,
-                          "delete": true,
-                          "edit": true,
-                          "list": true,
-                          "update": true,
-                        },
-                      }
-                    }
+                    isMultiZoneCluster={false}
                     machinePool={
                       Object {
                         "availability_zones": Array [
@@ -774,9 +924,27 @@ exports[`<MachinePools /> renders with additional machine pools, some with label
                 },
                 "us-east-1a",
                 Object {
-                  "title": "1",
+                  "title": <MachinePoolNodesSummary
+                    isMultiZoneCluster={false}
+                    machinePool={
+                      Object {
+                        "availability_zones": Array [
+                          "us-east-1a",
+                        ],
+                        "href": "/api/clusters_mgmt/v1/clusters/cluster-id/machine_pools/mp-with-no-labels-no-taints",
+                        "id": "mp-with-no-labels-no-taints",
+                        "instance_type": "m5.xlarge",
+                        "kind": "MachinePool",
+                        "replicas": 1,
+                      }
+                    }
+                  />,
                 },
-                "Disabled",
+                Object {
+                  "title": <MachinePoolAutoScalingSummary
+                    hasMachinePoolAutoscale={false}
+                  />,
+                },
               ],
               "key": "mp-with-no-labels-no-taints",
               "machinePool": Object {
@@ -814,13 +982,21 @@ exports[`<MachinePools /> renders with the default machine pool 1`] = `
       className="ocm-c-machine-pools__card--body"
     >
       <ButtonWithTooltip
-        className="pf-u-mb-lg"
+        className="pf-u-mb-lg pf-u-mr-md"
         disableReason={false}
         id="add-machine-pool"
         onClick={[Function]}
         variant="secondary"
       >
         Add machine pool
+      </ButtonWithTooltip>
+      <ButtonWithTooltip
+        className="pf-u-mb-lg"
+        id="edit-existing-cluster-autoscaling"
+        onClick={[Function]}
+        variant="secondary"
+      >
+        Edit cluster autoscaling
       </ButtonWithTooltip>
       <Divider />
       <Table
@@ -887,9 +1063,25 @@ exports[`<MachinePools /> renders with the default machine pool 1`] = `
                 },
                 "us-east-1",
                 Object {
-                  "title": "1",
+                  "title": <MachinePoolNodesSummary
+                    isMultiZoneCluster={false}
+                    machinePool={
+                      Object {
+                        "availability_zones": Array [
+                          "us-east-1",
+                        ],
+                        "desired": 1,
+                        "id": "some-id",
+                        "instance_type": "m5.xlarge",
+                      }
+                    }
+                  />,
                 },
-                "Disabled",
+                Object {
+                  "title": <MachinePoolAutoScalingSummary
+                    hasMachinePoolAutoscale={false}
+                  />,
+                },
               ],
               "key": "some-id",
               "machinePool": Object {
@@ -925,13 +1117,21 @@ exports[`<MachinePools /> renders with the default machine pool when it has labe
       className="ocm-c-machine-pools__card--body"
     >
       <ButtonWithTooltip
-        className="pf-u-mb-lg"
+        className="pf-u-mb-lg pf-u-mr-md"
         disableReason={false}
         id="add-machine-pool"
         onClick={[Function]}
         variant="secondary"
       >
         Add machine pool
+      </ButtonWithTooltip>
+      <ButtonWithTooltip
+        className="pf-u-mb-lg"
+        id="edit-existing-cluster-autoscaling"
+        onClick={[Function]}
+        variant="secondary"
+      >
+        Edit cluster autoscaling
       </ButtonWithTooltip>
       <Divider />
       <Table
@@ -998,9 +1198,29 @@ exports[`<MachinePools /> renders with the default machine pool when it has labe
                 },
                 "us-east-1",
                 Object {
-                  "title": "1",
+                  "title": <MachinePoolNodesSummary
+                    isMultiZoneCluster={false}
+                    machinePool={
+                      Object {
+                        "availability_zones": Array [
+                          "us-east-1",
+                        ],
+                        "desired": 1,
+                        "id": "some-id",
+                        "instance_type": "m5.xlarge",
+                        "labels": Object {
+                          "foo": "bar",
+                          "hello": "world",
+                        },
+                      }
+                    }
+                  />,
                 },
-                "Disabled",
+                Object {
+                  "title": <MachinePoolAutoScalingSummary
+                    hasMachinePoolAutoscale={false}
+                  />,
+                },
               ],
               "isOpen": false,
               "key": "some-id",
@@ -1021,17 +1241,7 @@ exports[`<MachinePools /> renders with the default machine pool when it has labe
               "cells": Array [
                 Object {
                   "title": <ExpandableRow
-                    cluster={
-                      Object {
-                        "machinePoolsActions": Object {
-                          "create": true,
-                          "delete": true,
-                          "edit": true,
-                          "list": true,
-                          "update": true,
-                        },
-                      }
-                    }
+                    isMultiZoneCluster={false}
                     machinePool={
                       Object {
                         "availability_zones": Array [

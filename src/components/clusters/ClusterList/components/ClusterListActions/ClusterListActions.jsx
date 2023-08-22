@@ -25,6 +25,7 @@ import {
 } from '@patternfly/react-core';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import { isRestrictedEnv } from '~/restrictedEnv';
 
 const useMediaQuery = (query) => {
   if (typeof window === 'undefined' || typeof window.matchMedia === 'undefined') {
@@ -90,12 +91,14 @@ const useItems = () => {
   const dropdownItems = [];
 
   toolbarItems.push(toolbarCreateCluster);
-  if (wide) {
-    toolbarItems.push(toolbarRegisterCluster);
-    toolbarItems.push(toolbarViewArchivedClusters);
-  } else {
-    dropdownItems.push(dropdownRegisterCluster);
-    dropdownItems.push(dropdownArchived);
+  if (!isRestrictedEnv()) {
+    if (wide) {
+      toolbarItems.push(toolbarRegisterCluster);
+      toolbarItems.push(toolbarViewArchivedClusters);
+    } else {
+      dropdownItems.push(dropdownRegisterCluster);
+      dropdownItems.push(dropdownArchived);
+    }
   }
 
   return [dropdownItems, toolbarItems];

@@ -4,7 +4,9 @@ exports[`ClusterTypeLabel for ROSA hypershift 1`] = `
 <Tooltip
   content="Red Hat OpenShift Service on AWS - Hosted control plane"
 >
-  <span>
+  <span
+    data-testid="clusterType"
+  >
     ROSA - Hosted
     <br />
     <PreviewLabel
@@ -18,7 +20,9 @@ exports[`ClusterTypeLabel for classic ROSA 1`] = `
 <Tooltip
   content="Red Hat OpenShift Service on AWS"
 >
-  <span>
+  <span
+    data-testid="clusterType"
+  >
     ROSA
   </span>
 </Tooltip>

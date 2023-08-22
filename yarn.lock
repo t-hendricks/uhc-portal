@@ -2151,15 +2151,15 @@
     "@nodelib/fs.scandir" "2.1.4"
     fastq "^1.6.0"
 
-"@openshift-assisted/locales@2.24.0":
-  version "2.24.0"
-  resolved "https://registry.yarnpkg.com/@openshift-assisted/locales/-/locales-2.24.0.tgz#021430c4f6bfb9bd2df8f9329d0decfda0900ba9"
-  integrity sha512-vmXm7gnksTMQR4wGyMhESH4T2IWEuTrOaJPjcenMCt77YTKHKQBzCoI7eIX0GJhcux/0d/b7Qb5khm0DlqywLg==
+"@openshift-assisted/locales@2.24.1":
+  version "2.24.1"
+  resolved "https://registry.yarnpkg.com/@openshift-assisted/locales/-/locales-2.24.1.tgz#63de5ec5ea901e41d1de57c945dcca366326ab34"
+  integrity sha512-AdhY0ZuoTrnHY7DjjXgNiTS5zBbgLtu1GqcxvpVxb+Ui37Xw4hB6zHcAfw0nhlBTVNicqddzpiAxVBUBVw5fUQ==
 
-"@openshift-assisted/ui-lib@2.24.0":
-  version "2.24.0"
-  resolved "https://registry.yarnpkg.com/@openshift-assisted/ui-lib/-/ui-lib-2.24.0.tgz#945c7731bc238da5722b7a0467d3b6a3fbf323c5"
-  integrity sha512-mfocHKUhnrD7skkLhSOYSudMOFtvmEvcN2+nBIRoGLjorWeJ+8n2/QIpzQQO4yDYJY+IErPq6xY58pj/Fl42Xw==
+"@openshift-assisted/ui-lib@2.24.1":
+  version "2.24.1"
+  resolved "https://registry.yarnpkg.com/@openshift-assisted/ui-lib/-/ui-lib-2.24.1.tgz#c771381687cac57fb6e684e3d297bfe101acb720"
+  integrity sha512-4JYWnwY1WXm+u8Txq7Ork4uxwLYbNVFinUfoKvus/nFQW3ifNylwWnQwC5p5/r474BjZaMLgA9UqHvr+ZCY5gQ==
   dependencies:
     axios-case-converter "^0.11.1"
     camel-case "^4.1.2"
@@ -2471,7 +2471,7 @@
 
 "@sentry/integrations@^5.19.1":
   version "5.30.0"
-  resolved "https://registry.npmjs.org/@sentry/integrations/-/integrations-5.30.0.tgz"
+  resolved "https://registry.yarnpkg.com/@sentry/integrations/-/integrations-5.30.0.tgz#2f25fb998cb19c76b3803d84c1a577b3d837010f"
   integrity sha512-Fqh4ALLoQWdd+1ih0iBduANWFyNmFWMxwvBu3V/wLDRi8OcquI0lEzWai1InzTJTiNhRHPnhuU++l/vkO0OCww==
   dependencies:
     "@sentry/types" "5.30.0"
@@ -10098,7 +10098,7 @@ loader-runner@^4.2.0:
 
 localforage@1.8.1:
   version "1.8.1"
-  resolved "https://registry.npmjs.org/localforage/-/localforage-1.8.1.tgz"
+  resolved "https://registry.yarnpkg.com/localforage/-/localforage-1.8.1.tgz#f6c0a24b41ab33b10e4dc84342dd696f6f3e3433"
   integrity sha512-azSSJJfc7h4bVpi0PGi+SmLQKJl2/8NErI+LhJsrORNikMZnhaQ7rv9fHj+ofwgSHrKRlsDCL/639a6nECIKuQ==
   dependencies:
     lie "3.1.1"

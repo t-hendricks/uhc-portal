@@ -4,7 +4,10 @@ import isEmpty from 'lodash/isEmpty';
 import { Title, Bullseye, Stack, StackItem, Spinner } from '@patternfly/react-core';
 
 import config from '~/config';
-import { HYPERSHIFT_WIZARD_FEATURE } from '~/redux/constants/featureConstants';
+import {
+  HYPERSHIFT_WIZARD_FEATURE,
+  HCP_AWS_BILLING_SHOW,
+} from '~/redux/constants/featureConstants';
 import { normalizedProducts } from '~/common/subscriptionTypes';
 import { getUserRoleForSelectedAWSAccount } from '~/components/clusters/CreateROSAPage/CreateROSAWizard/AccountsRolesScreen/AccountsRolesScreen';
 import {
@@ -89,6 +92,7 @@ const ReviewClusterScreen = ({
   const [userRole, setUserRole] = useState('');
   const [ocmRole, setOcmRole] = useState('');
   const isHypershiftEnabled = useFeatureGate(HYPERSHIFT_WIZARD_FEATURE);
+  const viewAWSBillingAcct = useFeatureGate(HCP_AWS_BILLING_SHOW);
 
   useEffect(() => {
     clearGetUserRoleResponse();
@@ -179,7 +183,9 @@ const ReviewClusterScreen = ({
             initiallyExpanded={errorWithAWSAccountRoles}
           >
             {ReviewItem({ name: 'associated_aws_id', formValues })}
-            {isHypershiftSelected && ReviewItem({ name: 'billing_account_id', formValues })}
+            {isHypershiftSelected &&
+              viewAWSBillingAcct &&
+              ReviewItem({ name: 'billing_account_id', formValues })}
             {ReviewRoleItem({
               name: 'ocm-role',
               getRoleResponse: getOCMRoleResponse,
@@ -239,6 +245,8 @@ const ReviewClusterScreen = ({
           isByoc &&
           canSelectImds(clusterVersionRawId) &&
           ReviewItem({ name: 'imds', formValues })}
+        {formValues.worker_volume_size_gib &&
+          ReviewItem({ name: 'worker_volume_size_gib', formValues })}
       </ReviewSection>
       <ReviewSection
         title={getStepName('NETWORKING')}
@@ -284,6 +292,19 @@ const ReviewClusterScreen = ({
         {ReviewItem({ name: 'network_service_cidr', formValues })}
         {ReviewItem({ name: 'network_pod_cidr', formValues })}
         {ReviewItem({ name: 'network_host_prefix', formValues })}
+
+        {isAWS &&
+          !isHypershiftSelected &&
+          isByoc &&
+          ReviewItem({ name: 'applicationIngress', formValues })}
+        {formValues.applicationIngress !== 'default' && isAWS && !isHypershiftSelected && isByoc && (
+          <>
+            {ReviewItem({ name: 'defaultRouterSelectors', formValues })}
+            {ReviewItem({ name: 'defaultRouterExcludedNamespacesFlag', formValues })}
+            {ReviewItem({ name: 'isDefaultRouterWildcardPolicyAllowed', formValues })}
+            {ReviewItem({ name: 'isDefaultRouterNamespaceOwnershipPolicyStrict', formValues })}
+          </>
+        )}
       </ReviewSection>
       {isROSA && (
         <ReviewSection

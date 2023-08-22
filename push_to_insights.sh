@@ -119,7 +119,7 @@ function push_build {
     --archive \
     --delete \
     --exclude=.git \
-    build/openshift/ \
+    dist/openshift/ \
     target/
 
   # Copy the Insights deployment jenkins file to the target
@@ -162,31 +162,31 @@ yarn install
 if [ "$1" == "staging" ] || [ "$1" == "beta" ]; then
     echo "running staging push"
     echo "staging branch is available on https://qaprodauth.console.redhat.com/openshift"
-    rm -rf build
+    rm -rf dist
     yarn build --mode=production --env api-env=staging
     push_build "qa-stable"
 
     echo "running staging (qa-beta) push"
     echo "staging branch is available on https://qaprodauth.console.redhat.com/preview/openshift"
-    rm -rf build
+    rm -rf dist
     yarn build --mode=production --env api-env=staging beta="true"
     push_build "qa-beta"
 
     echo "running push to secondary environment - ci-beta (not supported)"
-    rm -rf build
+    rm -rf dist
     yarn build --mode=production --env api-env=disabled beta="true"
     push_build "ci-beta"
 
 elif [ "$1" == "candidate" ]; then
     echo "running candidate push"
     echo "Candidate branch is available on https://console.redhat.com/preview/openshift"
-    rm -rf build
+    rm -rf dist
     yarn build --mode=production --env api-env=production beta="true"
     push_build "prod-beta"
 elif [ "$1" == "stable" ]; then
     echo "running stable push"
     echo "stable branch is available on https://console.redhat.com/openshift"
-    rm -rf build
+    rm -rf dist
     yarn build --mode=production --env api-env=production beta="false"
     push_build "prod-stable"
 else

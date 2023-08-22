@@ -1,12 +1,22 @@
 import React from 'react';
-import { FormGroup, GridItem, HelperText, HelperTextItem, Flex } from '@patternfly/react-core';
+import {
+  FormGroup,
+  GridItem,
+  HelperText,
+  HelperTextItem,
+  Flex,
+  Button,
+} from '@patternfly/react-core';
 import { Field } from 'formik';
+import { useDispatch } from 'react-redux';
 
 import { FieldId } from '~/components/clusters/wizards/common/constants';
 import PopoverHint from '~/components/common/PopoverHint';
 import { constants } from '~/components/clusters/CreateOSDPage/CreateOSDForm/CreateOSDFormConstants';
 import ExternalLink from '~/components/common/ExternalLink';
 import links from '~/common/installLinks.mjs';
+import { openModal } from '~/components/common/Modal/ModalActions';
+import modals from '~/components/common/Modal/modals';
 import { normalizedProducts } from '~/common/subscriptionTypes';
 import { MAX_NODES } from '~/components/clusters/common/NodeCountInput/NodeCountInput';
 import { required, validateNumericInput } from '~/common/validators';
@@ -14,6 +24,7 @@ import getMinNodesAllowed from '~/components/clusters/CreateOSDPage/CreateOSDFor
 import { CheckboxField } from '~/components/clusters/wizards/form/CheckboxField';
 import { useFormState } from '~/components/clusters/wizards/hooks';
 import { NodesInput } from './NodesInput';
+import ClusterAutoScaleSettingsDialog from './ClusterAutoScaleSettingsDialog';
 
 interface AutoScaleProps {
   isDefaultMachinePool: boolean;
@@ -33,6 +44,9 @@ export const AutoScale = ({ isDefaultMachinePool }: AutoScaleProps) => {
       [FieldId.Byoc]: byoc,
     },
   } = useFormState();
+  const dispatch = useDispatch();
+  const openEditClusterAutoScalingModal = () =>
+    dispatch(openModal(modals.EDIT_CLUSTER_AUTOSCALING_V2));
 
   const [minErrorMessage, setMinErrorMessage] = React.useState<string>();
   const [maxErrorMessage, setMaxErrorMessage] = React.useState<string>();
@@ -232,6 +246,19 @@ export const AutoScale = ({ isDefaultMachinePool }: AutoScaleProps) => {
         />
 
         <CheckboxField name={FieldId.AutoscalingEnabled} label="Enable autoscaling" />
+
+        <GridItem md={3}>
+          <Button
+            data-testid="set-cluster-autoscaling-btn"
+            variant="secondary"
+            className="pf-u-mt-md"
+            onClick={openEditClusterAutoScalingModal}
+            isDisabled={!autoscalingEnabled}
+          >
+            Edit cluster autoscaling settings
+          </Button>
+        </GridItem>
+        <ClusterAutoScaleSettingsDialog isWizard />
         {autoscalingEnabled && azFormGroups}
       </GridItem>
     </>

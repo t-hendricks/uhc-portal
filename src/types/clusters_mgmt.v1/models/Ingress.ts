@@ -4,6 +4,8 @@
 
 import type { ListeningMethod } from './ListeningMethod';
 import type { LoadBalancerFlavor } from './LoadBalancerFlavor';
+import type { NamespaceOwnershipPolicy } from './NamespaceOwnershipPolicy';
+import type { WildcardPolicy } from './WildcardPolicy';
 
 /**
  * Representation of an ingress.
@@ -26,9 +28,21 @@ export type Ingress = {
    */
   dns_name?: string;
   /**
+   * Cluster routes hostname.
+   */
+  cluster_routes_hostname?: string;
+  /**
+   * Cluster routes TLS Secret reference.
+   */
+  cluster_routes_tls_secret_ref?: string;
+  /**
    * Indicates if this is the default ingress.
    */
   default?: boolean;
+  /**
+   * A set of excluded namespaces for the ingress.
+   */
+  excluded_namespaces?: Array<string>;
   /**
    * Listening method of the ingress
    */
@@ -38,7 +52,15 @@ export type Ingress = {
    */
   load_balancer_type?: LoadBalancerFlavor;
   /**
+   * Namespace Ownership Policy for the ingress.
+   */
+  route_namespace_ownership_policy?: NamespaceOwnershipPolicy;
+  /**
    * A set of labels for the ingress.
    */
   route_selectors?: Record<string, string>;
+  /**
+   * Wildcard policy for the ingress.
+   */
+  route_wildcard_policy?: WildcardPolicy;
 };

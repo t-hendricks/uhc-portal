@@ -1,6 +1,7 @@
 import { connect } from 'react-redux';
 import { formValueSelector, getFormValues } from 'redux-form';
 
+import { openModal } from '~/components/common/Modal/ModalActions';
 import createOSDInitialValues from '../../createOSDInitialValues';
 
 import wizardConnector from '../WizardConnector';
@@ -18,6 +19,7 @@ const mapStateToProps = (state, ownProps) => {
   const formValues = getFormValues('CreateCluster')(state);
   // hosted ROSA cluster
   const isHypershiftSelected = valueSelector(state, 'hypershift') === 'true';
+  const applicationIngress = valueSelector(state, 'applicationIngress');
 
   return {
     cloudProviderID,
@@ -25,10 +27,12 @@ const mapStateToProps = (state, ownProps) => {
     privateClusterSelected,
     configureProxySelected: valueSelector(state, 'configure_proxy'),
     selectedRegion,
+    clusterVersionRawId: valueSelector(state, 'cluster_version.raw_id'),
     product,
     isByoc: isCCS,
     formValues,
     isHypershiftSelected,
+    applicationIngress,
     initialValues: createOSDInitialValues({
       cloudProviderID,
       product,
@@ -40,4 +44,8 @@ const mapStateToProps = (state, ownProps) => {
   };
 };
 
-export default connect(mapStateToProps)(wizardConnector(NetworkScreen));
+const mapDispatchToProps = (dispatch) => ({
+  openModal: (modalName) => dispatch(openModal(modalName)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(wizardConnector(NetworkScreen));

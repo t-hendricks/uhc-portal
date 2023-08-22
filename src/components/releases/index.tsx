@@ -17,7 +17,7 @@ import { OutlinedQuestionCircleIcon } from '@patternfly/react-icons';
 import { Link } from 'react-router-dom';
 import semver from 'semver';
 
-import { SUPPORTED_RESTRICTED_ENV_OCP_VERSIONS, isRestrictedEnv } from '~/restrictedEnv';
+import { isRestrictedEnv } from '~/restrictedEnv';
 import getReleaseNotesLink from './getReleaseNotesLink';
 import ExternalLink from '../common/ExternalLink';
 import ReleaseChannel from './ReleaseChannel';
@@ -32,11 +32,7 @@ const Releases = () => {
   const [statusData] = useOCPLifeCycleStatusData();
 
   const allVersions = statusData?.[0]?.versions;
-  const filteredVersions = allVersions?.filter(
-    (version) =>
-      !version.name.includes('EUS') &&
-      (isRestrictedEnv() ? SUPPORTED_RESTRICTED_ENV_OCP_VERSIONS.includes(version.name) : true),
-  );
+  const filteredVersions = allVersions?.filter((version) => !version.name.includes('EUS'));
   const versionsToDisplay = filteredVersions?.splice(0, 6);
   const hasEUSChannel = (versionName: string) => {
     const parsed = semver.coerce(versionName);

@@ -11,6 +11,7 @@ import {
 import * as OCM from '@openshift-assisted/ui-lib/ocm';
 import { isROSA } from '~/components/clusters/common/clusterStates';
 import { IMDSType } from '~/components/clusters/wizards/common';
+import { isRestrictedEnv } from '~/restrictedEnv';
 
 import Timestamp from '../../../../../common/Timestamp';
 import links from '../../../../../../common/installLinks.mjs';
@@ -28,13 +29,16 @@ const { ClusterStatus: AIClusterStatus } = OCM;
 function DetailsRight({
   cluster,
   totalDesiredComputeNodes,
-  autoscaleEnabled,
+  canAutoscaleCluster,
+  hasAutoscaleMachinePools,
+  hasAutoscaleCluster,
   totalMinNodesCount,
   totalMaxNodesCount,
   limitedSupport,
   totalActualNodes,
   machinePools,
 }) {
+  const isAWS = cluster.subscription?.cloud_provider_id === 'aws';
   const isHypershift = isHypershiftCluster(cluster);
   const isROSACluster = isROSA(cluster);
   const infraAccount = cluster.subscription?.cloud_account_id || null;
@@ -62,7 +66,8 @@ function DetailsRight({
     cluster.managed &&
     cluster.storage_quota &&
     humanizeValueWithUnitGiB(cluster.storage_quota.value);
-  const showVCPU = !isDisconnected && !hasSockets;
+  const showVCPU = !isDisconnected && !hasSockets && !isRestrictedEnv();
+  const showMemory = !isDisconnected && !isRestrictedEnv();
 
   const controlPlaneActualNodes = get(cluster, 'metrics.nodes.master', '-');
   const controlPlaneDesiredNodes = get(cluster, 'nodes.master', '-');
@@ -74,7 +79,8 @@ function DetailsRight({
   const workerActualNodes = totalActualNodes === false ? '-' : totalActualNodes;
   const workerDesiredNodes = totalDesiredComputeNodes || '-';
   const oidcConfig = cluster.aws?.sts?.oidc_config;
-  const imdsConfig = cluster.aws?.ec2_metadata_http_tokens;
+  const imdsConfig = cluster.aws?.ec2_metadata_http_tokens || IMDSType.V1AndV2;
+
   return (
     <>
       <DescriptionList>
@@ -119,7 +125,7 @@ function DetailsRight({
             </DescriptionListGroup>
           </>
         )}
-        {!isDisconnected && (
+        {showMemory && (
           <>
             <DescriptionListGroup>
               <DescriptionListTerm>Total memory</DescriptionListTerm>
@@ -133,7 +139,11 @@ function DetailsRight({
           <>
             <DescriptionListGroup>
               <DescriptionListTerm>{`Infrastructure ${cloudProviderId.toUpperCase()} account`}</DescriptionListTerm>
-              <DescriptionListDescription>{infraAccount}</DescriptionListDescription>
+              <DescriptionListDescription>
+                <span data-testid={`infrastructure${cloudProviderId.toUpperCase()}Account`}>
+                  {infraAccount}
+                </span>
+              </DescriptionListDescription>
             </DescriptionListGroup>
           </>
         )}
@@ -159,7 +169,9 @@ function DetailsRight({
           <>
             <DescriptionListGroup>
               <DescriptionListTerm>Billing marketplace account</DescriptionListTerm>
-              <DescriptionListDescription>{billingMarketplaceAccount}</DescriptionListDescription>
+              <DescriptionListDescription>
+                <span data-testid="billingMarketplaceAccount">{billingMarketplaceAccount}</span>
+              </DescriptionListDescription>
             </DescriptionListGroup>
           </>
         )}
@@ -182,81 +194,85 @@ function DetailsRight({
           </>
         )}
         {/* Nodes */}
-        {showDesiredNodes && !autoscaleEnabled ? (
+        {!isRestrictedEnv() && (
           <>
-            <DescriptionListGroup>
-              <DescriptionListTerm>
-                Nodes
-                <span className="font-weight-normal"> (actual/desired)</span>
-                <PopoverHint
-                  id="cluster-scaling-hint"
-                  iconClassName="nodes-hint"
-                  hint="The actual number of compute nodes may not always match with the number of desired when the cluster is scaling."
-                />
-              </DescriptionListTerm>
-              <DescriptionListDescription>
-                <dl className="pf-l-stack">
-                  {!isHypershift && (
-                    <Flex data-testid="controlPlaneNodesCountContainer">
-                      <dt>Control plane: </dt>
-                      <dd>
-                        {controlPlaneActualNodes !== '-' || controlPlaneDesiredNodes !== '-'
-                          ? `${controlPlaneActualNodes}/${controlPlaneDesiredNodes}`
-                          : 'N/A'}
-                      </dd>
-                    </Flex>
-                  )}
-                  {showInfraNodes && (
-                    <>
-                      <Flex data-testid="InfraNodesCountContainer">
-                        <dt>Infra: </dt>
-                        <dd>
-                          {infraActualNodes !== '-' || infraDesiredNodes !== '-'
-                            ? `${infraActualNodes}/${infraDesiredNodes}`
+            {showDesiredNodes && !hasAutoscaleMachinePools ? (
+              <>
+                <DescriptionListGroup>
+                  <DescriptionListTerm>
+                    Nodes
+                    <span className="font-weight-normal"> (actual/desired)</span>
+                    <PopoverHint
+                      id="cluster-scaling-hint"
+                      iconClassName="nodes-hint"
+                      hint="The actual number of compute nodes may not always match with the number of desired when the cluster is scaling."
+                    />
+                  </DescriptionListTerm>
+                  <DescriptionListDescription>
+                    <dl className="pf-l-stack">
+                      {!isHypershift && (
+                        <Flex data-testid="controlPlaneNodesCountContainer">
+                          <dt>Control plane: </dt>
+                          <dd data-testid="controlPlaneNodesCount">
+                            {controlPlaneActualNodes !== '-' || controlPlaneDesiredNodes !== '-'
+                              ? `${controlPlaneActualNodes}/${controlPlaneDesiredNodes}`
+                              : 'N/A'}
+                          </dd>
+                        </Flex>
+                      )}
+                      {showInfraNodes && (
+                        <>
+                          <Flex data-testid="InfraNodesCountContainer">
+                            <dt>Infra: </dt>
+                            <dd data-testid="infraNodesCount">
+                              {infraActualNodes !== '-' || infraDesiredNodes !== '-'
+                                ? `${infraActualNodes}/${infraDesiredNodes}`
+                                : 'N/A'}
+                            </dd>
+                          </Flex>
+                        </>
+                      )}
+                      <Flex>
+                        <dt>Compute: </dt>
+                        <dd data-testid="computeNodeCount">
+                          {workerActualNodes !== '-' || workerDesiredNodes !== '-'
+                            ? `${workerActualNodes}/${workerDesiredNodes}`
                             : 'N/A'}
                         </dd>
                       </Flex>
-                    </>
-                  )}
-                  <Flex>
-                    <dt>Compute: </dt>
-                    <dd>
-                      {workerActualNodes !== '-' || workerDesiredNodes !== '-'
-                        ? `${workerActualNodes}/${workerDesiredNodes}`
-                        : 'N/A'}
-                    </dd>
-                  </Flex>
-                </dl>
-              </DescriptionListDescription>
-            </DescriptionListGroup>
-          </>
-        ) : (
-          <>
-            <DescriptionListGroup>
-              <DescriptionListTerm>Nodes</DescriptionListTerm>
-              <DescriptionListDescription>
-                <dl className="pf-l-stack">
-                  {!isHypershift && (
-                    <Flex data-testid="controlPlaneNodesCountContainer">
-                      <dt>Control plane: </dt>
-                      <dd>{get(cluster, 'metrics.nodes.master', 'N/A')}</dd>
-                    </Flex>
-                  )}
-                  {showInfraNodes && (
-                    <>
-                      <Flex data-testid="InfraNodesCountContainer">
-                        <dt>Infra: </dt>
-                        <dd>{get(cluster, 'metrics.nodes.infra', 'N/A')}</dd>
+                    </dl>
+                  </DescriptionListDescription>
+                </DescriptionListGroup>
+              </>
+            ) : (
+              <>
+                <DescriptionListGroup>
+                  <DescriptionListTerm>Nodes</DescriptionListTerm>
+                  <DescriptionListDescription>
+                    <dl className="pf-l-stack">
+                      {!isHypershift && (
+                        <Flex data-testid="controlPlaneNodesCountContainer">
+                          <dt>Control plane: </dt>
+                          <dd>{get(cluster, 'metrics.nodes.master', 'N/A')}</dd>
+                        </Flex>
+                      )}
+                      {showInfraNodes && (
+                        <>
+                          <Flex data-testid="InfraNodesCountContainer">
+                            <dt>Infra: </dt>
+                            <dd>{get(cluster, 'metrics.nodes.infra', 'N/A')}</dd>
+                          </Flex>
+                        </>
+                      )}
+                      <Flex>
+                        <dt>Compute: </dt>
+                        <dd>{totalActualNodes || 'N/A'}</dd>
                       </Flex>
-                    </>
-                  )}
-                  <Flex>
-                    <dt>Compute: </dt>
-                    <dd>{totalActualNodes || 'N/A'}</dd>
-                  </Flex>
-                </dl>
-              </DescriptionListDescription>
-            </DescriptionListGroup>
+                    </dl>
+                  </DescriptionListDescription>
+                </DescriptionListGroup>
+              </>
+            )}
           </>
         )}
         {cluster.aiCluster && (
@@ -276,8 +292,17 @@ function DetailsRight({
             </DescriptionListGroup>
           </>
         )}
-        {/* Autoscaling */}
-        {autoscaleEnabled && (
+        {/* Cluster Autoscaling */}
+        {canAutoscaleCluster && (
+          <DescriptionListGroup>
+            <DescriptionListTerm>Cluster autoscaling</DescriptionListTerm>
+            <DescriptionListDescription>
+              {hasAutoscaleCluster ? 'Enabled' : 'Disabled'}
+            </DescriptionListDescription>
+          </DescriptionListGroup>
+        )}
+        {/* MachinePools Autoscaling */}
+        {hasAutoscaleMachinePools && (
           <>
             <DescriptionListGroup>
               <DescriptionListTerm>
@@ -305,7 +330,7 @@ function DetailsRight({
           </>
         )}
         {/* IMDS */}
-        {imdsConfig && (
+        {isAWS && !isHypershift && (
           <DescriptionListGroup>
             <DescriptionListTerm>Instance Metadata Service (IMDS)</DescriptionListTerm>
             <DescriptionListDescription>
@@ -343,7 +368,9 @@ DetailsRight.propTypes = {
   totalDesiredComputeNodes: PropTypes.number,
   totalMinNodesCount: PropTypes.number,
   totalMaxNodesCount: PropTypes.number,
-  autoscaleEnabled: PropTypes.bool.isRequired,
+  hasAutoscaleMachinePools: PropTypes.bool.isRequired,
+  hasAutoscaleCluster: PropTypes.bool.isRequired,
+  canAutoscaleCluster: PropTypes.bool.isRequired,
   limitedSupport: PropTypes.bool,
   totalActualNodes: PropTypes.oneOfType([PropTypes.number, PropTypes.bool]),
   machinePools: PropTypes.array,

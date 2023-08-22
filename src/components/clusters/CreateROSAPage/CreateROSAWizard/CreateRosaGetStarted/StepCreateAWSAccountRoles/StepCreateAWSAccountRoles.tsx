@@ -7,6 +7,7 @@ import InstructionCommand from '~/components/common/InstructionCommand';
 import ExternalLink from '~/components/common/ExternalLink';
 import links from '~/common/installLinks.mjs';
 import { RosaCliCommand } from '~/components/clusters/CreateROSAPage/CreateROSAWizard/AccountsRolesScreen/constants/cliCommands';
+import { isRestrictedEnv } from '~/restrictedEnv';
 
 type StepCreateAWSAccountRolesProps = {
   offlineToken?: string;
@@ -17,7 +18,9 @@ const StepCreateAWSAccountRoles = ({
   offlineToken,
   setOfflineToken,
 }: StepCreateAWSAccountRolesProps) => {
-  const loginCommand = `rosa login --token="${offlineToken}"`;
+  const loginCommand = `rosa login${
+    isRestrictedEnv() ? ' --govcloud' : ''
+  } --token="${offlineToken}"`;
 
   React.useEffect(() => {
     if (!offlineToken) {
@@ -53,7 +56,7 @@ const StepCreateAWSAccountRoles = ({
             textAriaLabel="Copyable ROSA create account-roles command"
             className="pf-u-mt-md"
           >
-            {RosaCliCommand.CreateAccountRolesAuto}
+            {RosaCliCommand.CreateAccountRoles}
           </InstructionCommand>
           {/* TODO: PatternFly incorrectly puts the content of an alert as a h4 - this text should not be a heading */}
           <Alert
