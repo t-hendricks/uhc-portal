@@ -37,6 +37,7 @@ import {
 } from '~/components/clusters/wizards/common';
 import { useFormState } from '~/components/clusters/wizards/hooks';
 import { AppPage } from '~/components/App/AppPage';
+import { osdWizardFormValidator } from '~/components/clusters/wizards/osd/formValidators';
 import {
   ariaLabel,
   breadcrumbs,
@@ -115,6 +116,7 @@ export const CreateOsdWizard = ({ product }: CreateOsdWizardProps) => {
       <Formik
         initialValues={{ ...initialValues, ...(product && { product }) }}
         initialTouched={initialTouched}
+        validate={osdWizardFormValidator}
         validateOnChange={false}
         onSubmit={onSubmit}
       >

@@ -1,0 +1,182 @@
+import React, { FormEvent } from 'react';
+import { Form, FormSection, Grid, GridItem, Text } from '@patternfly/react-core';
+import { useDispatch } from 'react-redux';
+
+import { useGlobalState } from '~/redux/hooks';
+import ExternalLink from '~/components/common/ExternalLink';
+import installLinks from '~/common/installLinks.mjs';
+import Modal from '~/components/common/Modal/Modal';
+import modals from '~/components/common/Modal/modals';
+import { closeModal } from '~/components/common/Modal/ModalActions';
+import { clusterAutoScalingValidators } from '~/common/validators';
+import { useFormState } from '~/components/clusters/wizards/hooks';
+import { FieldId } from '~/components/clusters/wizards/osd/constants';
+import { TextInputField } from '~/components/clusters/wizards/form/TextInputField';
+import { BooleanDropdownField } from '~/components/clusters/wizards/form/BooleanDropdownField';
+import {
+  FieldDefinition,
+  balancerFields,
+  resourceLimitsFields,
+  scaleDownFields,
+} from '~/components/clusters/common/EditClusterAutoScalingDialog/fieldDefinitions';
+import { getDefaultClusterAutoScaling } from '~/components/clusters/CreateOSDPage/clusterAutoScalingValues';
+
+import {
+  utilizationThresholdValidator,
+  logVerbosityValidator,
+  numberValidator,
+} from './validators';
+
+import './ClusterAutoScaleSettingsDialog.scss';
+
+interface ClusterAutoScaleSettingsDialogProps {
+  isWizard: boolean;
+}
+
+const getValidator = (field: FieldDefinition) => {
+  let validator;
+  // Check for particular validators for specific fields
+  switch (field.name) {
+    case 'log_verbosity':
+      validator = logVerbosityValidator;
+      break;
+    case 'scale_down.utilization_threshold':
+      validator = utilizationThresholdValidator;
+      break;
+    default:
+      break;
+  }
+  if (validator) {
+    return validator;
+  }
+
+  // Check for generic validators for the rest of the fields
+  switch (field.type) {
+    case 'time':
+      validator = clusterAutoScalingValidators.k8sTimeParameter;
+      break;
+    default:
+      if (field.type === 'number' || field.type === 'min-max') {
+        validator = numberValidator;
+      }
+      break;
+  }
+  return validator;
+};
+
+const mapField = (field: FieldDefinition, isDisabled?: boolean) => {
+  if (field.type === 'boolean') {
+    return (
+      <BooleanDropdownField
+        name={`cluster_autoscaling.${field.name}`}
+        label={field.label}
+        helperText={<span className="default-value">Default value: {`${field.defaultValue}`}</span>}
+      />
+    );
+  }
+
+  const inputType = field.type === 'number' || field.type === 'min-max' ? 'number' : 'text';
+  const validator = getValidator(field);
+
+  return (
+    <TextInputField
+      name={`cluster_autoscaling.${field.name}`}
+      label={field.label}
+      type={inputType}
+      isDisabled={isDisabled}
+      showHelpTextOnError
+      helperText={<span className="default-value">Default value: {`${field.defaultValue}`}</span>}
+      validate={validator}
+    />
+  );
+};
+
+const ClusterAutoScaleSettingsDialog = ({ isWizard }: ClusterAutoScaleSettingsDialogProps) => {
+  const dispatch = useDispatch();
+  const closeScalerModal = () => dispatch(closeModal());
+
+  const isOpen = useGlobalState(
+    (state) => state.modal.modalName === modals.EDIT_CLUSTER_AUTOSCALING_V2,
+  );
+
+  const {
+    values: { [FieldId.ClusterAutoscaling]: clusterAutoScaling },
+    errors: { [FieldId.ClusterAutoscaling]: autoScalingErrors },
+    setFieldValue,
+  } = useFormState();
+
+  const handleSave = (e?: FormEvent<HTMLFormElement>) => {
+    if (isWizard) {
+      closeScalerModal();
+    }
+    if (e) {
+      e.preventDefault();
+    }
+  };
+
+  const handleReset = () => {
+    setFieldValue(FieldId.ClusterAutoscaling, getDefaultClusterAutoScaling(), true);
+  };
+
+  const hasAutoScalingErrors = Object.keys(autoScalingErrors || {}).length > 0;
+  const isScaleDownDisabled = clusterAutoScaling?.scale_down?.enabled === false;
+
+  return (
+    <Modal
+      variant="large"
+      isOpen={isOpen}
+      title="Edit cluster autoscaling settings"
+      data-testid="cluster-autoscaling-dialog"
+      primaryText="Close"
+      secondaryText="Revert all to defaults"
+      onPrimaryClick={handleSave}
+      onSecondaryClick={handleReset}
+      isPrimaryDisabled={hasAutoScalingErrors}
+      showClose={false}
+    >
+      <>
+        <Text component="p">
+          The cluster autoscaler adjusts the size of a cluster to meet its current deployment needs.
+          Learn more about{' '}
+          <ExternalLink href={installLinks.APPLYING_AUTOSCALING}>cluster autoscaling</ExternalLink>{' '}
+          or
+          <ExternalLink href={installLinks.APPLYING_AUTOSCALING_API_DETAIL}> APIs</ExternalLink>.
+        </Text>
+        <Form onSubmit={handleSave} className="cluster-autoscaling-form">
+          <FormSection title="Balacing behavior">
+            <Grid hasGutter>
+              {balancerFields.map((field) => (
+                <GridItem span={6} key={field.name}>
+                  {mapField(field)}
+                </GridItem>
+              ))}
+            </Grid>
+          </FormSection>
+          <FormSection title="Resource limits">
+            <Grid hasGutter>
+              {resourceLimitsFields.map((field) => (
+                <GridItem span={6} key={field.name}>
+                  {mapField(field)}
+                </GridItem>
+              ))}
+            </Grid>
+          </FormSection>
+          <FormSection title="Scale down configuration">
+            <Grid hasGutter>
+              {scaleDownFields.map((field) => {
+                const isDisabled = isScaleDownDisabled && field.name !== 'scale_down.enabled';
+                return (
+                  <GridItem span={6} key={field.name}>
+                    {mapField(field, isDisabled)}
+                  </GridItem>
+                );
+              })}
+            </Grid>
+          </FormSection>
+        </Form>
+      </>
+    </Modal>
+  );
+};
+
+export default ClusterAutoScaleSettingsDialog;

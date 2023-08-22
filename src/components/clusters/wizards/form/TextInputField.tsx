@@ -9,12 +9,13 @@ interface TextInputFieldProps {
   label?: string;
   validate?: FieldValidator;
   isDisabled?: boolean;
-  isPassword?: boolean;
   helperText?: React.ReactNode;
   tooltip?: React.ReactNode;
   field?: FieldConfig;
   formGroup?: FormGroupProps;
   input?: TextInputProps;
+  type?: TextInputProps['type'];
+  showHelpTextOnError?: boolean;
 }
 
 interface HelperTextInvalidProps {
@@ -63,12 +64,13 @@ export const TextInputField = ({
   label,
   validate,
   isDisabled,
-  isPassword,
   helperText,
   tooltip,
   field,
   formGroup,
   input,
+  type,
+  showHelpTextOnError,
 }: TextInputFieldProps) => (
   <Field name={name} validate={validate} {...field}>
     {({ field, form, meta }: FieldProps) => (
@@ -76,7 +78,14 @@ export const TextInputField = ({
         fieldId={field.name}
         label={label}
         validated={meta.touched && meta.error ? 'error' : 'default'}
-        helperTextInvalid={meta.touched && meta.error}
+        helperTextInvalid={
+          <HelperTextInvalid
+            meta={meta}
+            helpText={helperText}
+            showHelpTextOnError={showHelpTextOnError}
+            name={field.name}
+          />
+        }
         helperText={helperText}
         {...(tooltip && { labelIcon: <PopoverHint hint={tooltip} /> })}
         {...(validate && { isRequired: true })}
@@ -88,8 +97,8 @@ export const TextInputField = ({
           validated={meta.touched && meta.error ? 'error' : 'default'}
           onBlur={() => form.setFieldTouched(name, true)}
           onChange={(_, event) => field.onChange(event)}
-          value={field.value || ''}
-          {...(isPassword && { type: 'password' })}
+          value={field.value || (type === 'number' ? 0 : '')}
+          type={type}
           {...input}
         />
       </FormGroup>

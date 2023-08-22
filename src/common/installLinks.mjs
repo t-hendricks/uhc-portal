@@ -82,6 +82,7 @@ const links = {
   UNDERSTANDING_AUTHENTICATION: `${DOCS_BASE}/authentication/understanding-authentication.html`,
   UNDERSTANDING_IDENTITY_PROVIDER: `${DOCS_BASE}/authentication/understanding-identity-provider.html`,
   APPLYING_AUTOSCALING: `${DOCS_BASE}/machine_management/applying-autoscaling.html`,
+  APPLYING_AUTOSCALING_API_DETAIL: `${DOCS_BASE}/rest_api/autoscale_apis/clusterautoscaler-autoscaling-openshift-io-v1.html`,
   AWS_SPOT_INSTANCES: `${DOCS_BASE}/machine_management/creating_machinesets/creating-machineset-aws.html#machineset-non-guaranteed-instance_creating-machineset-aws`,
   ENCRYPTING_ETCD: `${DOCS_BASE}/security/encrypting-etcd.html`,
   GETTING_SUPPORT: `${DOCS_BASE}/support/getting-support.html`,

@@ -46,6 +46,7 @@ function ScaleSection({
   autoScaleMinNodesValue,
   autoScaleMaxNodesValue,
   change,
+  openEditClusterAutoScalingModal,
   billingModel,
   clusterVersionRawId,
   imds,
@@ -82,8 +83,8 @@ function ScaleSection({
       </ExpandableSection>
     );
 
-  // ROSA Classic and OSD CCS only
-  const imdsSection = cloudProviderID === 'aws' && !isHypershift && isBYOC && imds && (
+  const isRosaClassicOrOsdCss = cloudProviderID === 'aws' && !isHypershift && isBYOC;
+  const imdsSection = isRosaClassicOrOsdCss && imds && (
     <>
       <GridItem md={8}>
         <ImdsSection
@@ -157,11 +158,14 @@ function ScaleSection({
         />
       </GridItem>
       <GridItem md={6} />
-      {/* autoscale */}
+      {/* Cluster and default machine pool autoScaling (they use the same form prop) */}
       {canAutoScale && (
         <>
           <GridItem md={12}>
             <AutoScaleSection
+              openEditClusterAutoScalingModal={
+                isRosaClassicOrOsdCss ? openEditClusterAutoScalingModal : undefined
+              }
               autoscalingEnabled={autoscalingEnabled}
               isMultiAz={isMultiAz}
               change={change}
@@ -176,9 +180,6 @@ function ScaleSection({
               numPools={nodeIncrement}
             />
           </GridItem>
-          {autoscalingEnabled && imdsSection}
-          {autoscalingEnabled && workerNodeVolumeSizeSection}
-          {autoscalingEnabled && labelsAndTaintsSection}
         </>
       )}
       {/* Worker nodes */}
@@ -220,11 +221,16 @@ function ScaleSection({
             />
           </GridItem>
           <GridItem md={6} />
-          {imdsSection}
-          {workerNodeVolumeSizeSection}
-          {labelsAndTaintsSection}
         </>
       )}
+
+      {/* IMDS */}
+      {imdsSection}
+      {/* Worker node disk size */}
+      {workerNodeVolumeSizeSection}
+      {/* Labels and Taints */}
+      {labelsAndTaintsSection}
+
       {/* Persistent Storage & Load Balancers */}
       {showStorageAndLoadBalancers && !isBYOC && (
         <>
@@ -298,6 +304,7 @@ ScaleSection.propTypes = {
   autoScaleMinNodesValue: PropTypes.string,
   autoScaleMaxNodesValue: PropTypes.string,
   clusterVersionRawId: PropTypes.string,
+  openEditClusterAutoScalingModal: PropTypes.func,
   imds: PropTypes.string,
   poolNumber: PropTypes.number,
   maxWorkerVolumeSizeGiB: PropTypes.number.isRequired,

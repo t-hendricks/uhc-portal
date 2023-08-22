@@ -76,7 +76,7 @@ export const AwsAccountDetails = () => {
             validate={required}
             isDisabled={isValidating}
             helperText={isValidating ? 'Validating...' : ''}
-            isPassword
+            type="password"
           />
         </GridItem>
 
