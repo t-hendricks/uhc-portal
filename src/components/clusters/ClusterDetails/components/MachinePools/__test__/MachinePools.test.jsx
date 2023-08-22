@@ -1,6 +1,7 @@
 import React from 'react';
 import { shallow, mount } from 'enzyme';
 import { TestWrapper, screen, render, userEvent } from '@testUtils';
+import modals from '~/components/common/Modal/modals';
 import MachinePools from '../MachinePools';
 
 import { baseRequestState } from '../../../../../../redux/reduxHelpers';
@@ -32,6 +33,7 @@ const baseProps = {
   isAddMachinePoolModalOpen: false,
   isEditTaintsModalOpen: false,
   isEditLabelsModalOpen: false,
+  clusterAutoscalerResponse: { ...baseRequestState, autoscaler: undefined },
   deleteMachinePoolResponse: { ...baseRequestState },
   addMachinePoolResponse: { ...baseRequestState },
   scaleMachinePoolResponse: { ...baseRequestState },
@@ -155,7 +157,7 @@ describe('<MachinePools />', () => {
     const wrapper = shallow(<MachinePools {...osdProps} />);
 
     wrapper.find('#add-machine-pool').simulate('click');
-    expect(openModal).toBeCalledWith('add-machine-pool');
+    expect(openModal).toBeCalledWith(modals.ADD_MACHINE_POOL);
   });
 
   it('should render skeleton while fetching machine pools', () => {

@@ -54,7 +54,18 @@ const ReduxVerticalFormGroup = ({
   const helperTextInvalid = () => {
     if (touched && error && typeof error === 'string') {
       if (showHelpTextOnError) {
-        return `${helpText} ${error}`;
+        if (typeof helpText === 'string') {
+          return `${helpText} ${error}`;
+        }
+        return (
+          <div
+            className="pf-c-form__helper-text pf-m-error"
+            id={`${input.name}-helper`}
+            aria-live="polite"
+          >
+            {helpText} {error}
+          </div>
+        );
       }
       return error;
     }
@@ -138,6 +149,7 @@ const ReduxVerticalFormGroup = ({
         type={isPassword && !inputValueHidden ? 'text' : extraProps.type}
         onFocus={onFocus}
         onBlur={onBlur}
+        className={formGroupClass}
       />
       {isPassword && (
         <Button
@@ -183,7 +195,7 @@ ReduxVerticalFormGroup.defaultProps = {
 };
 ReduxVerticalFormGroup.propTypes = {
   label: PropTypes.string,
-  helpText: PropTypes.string,
+  helpText: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
   extendedHelpText: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
   disabled: PropTypes.bool,
   // props passed by redux-form

@@ -6,37 +6,45 @@ import get from 'lodash/get';
 
 import {
   Card,
-  Button,
   CardBody,
   CardFooter,
   CardTitle,
   Divider,
   EmptyState,
   Label,
-  Popover,
 } from '@patternfly/react-core';
 import { Table, TableHeader, TableBody, cellWidth, expandable } from '@patternfly/react-table';
 import Skeleton from '@redhat-cloud-services/frontend-components/Skeleton';
 
+import { isRestrictedEnv } from '~/restrictedEnv';
+import { EditClusterAutoScalerForDay2 } from '~/components/clusters/common/EditClusterAutoScalingDialog';
+import { isMultiAZ } from '~/components/clusters/ClusterDetails/clusterDetailsHelper';
+import MachinePoolNodesSummary from './MachinePoolNodesSummary';
+import MachinePoolAutoScalingSummary from './MachinePoolAutoscalingSummary';
 import {
   UpdateAllMachinePools,
   UpdatePoolButton,
   UpdateMachinePoolModal,
 } from './UpdateMachinePools';
+
 import AddMachinePoolModal from './components/AddMachinePoolModal';
 import EditTaintsModal from './components/EditTaintsModal';
 import EditLabelsModal from './components/EditLabelsModal';
-import { actionResolver, hasSubnets } from './machinePoolsHelper';
 import ExpandableRow from './components/ExpandableRow';
 import DeleteMachinePoolModal from './components/DeleteMachinePoolModal/DeleteMachinePoolModal';
+import {
+  actionResolver,
+  hasDefaultOrExplicitAutoscalingMachinePool,
+  hasSubnets,
+} from './machinePoolsHelper';
 
 import ButtonWithTooltip from '../../../../common/ButtonWithTooltip';
 import ErrorBox from '../../../../common/ErrorBox';
 import modals from '../../../../common/Modal/modals';
-
 import { noQuotaTooltip } from '../../../../../common/helpers';
 import { versionFormatter } from '../../../../../common/versionHelpers';
 import { isHibernating } from '../../../common/clusterStates';
+
 import './MachinePools.scss';
 
 const getOpenShiftVersion = (machinePool, isDisabled) => {
@@ -69,6 +77,7 @@ class MachinePools extends React.Component {
       machineTypes,
       getMachineTypes,
     } = this.props;
+
     if (!machinePoolsList.pending) {
       getMachinePools();
     }
@@ -83,9 +92,12 @@ class MachinePools extends React.Component {
       deleteMachinePoolResponse,
       addMachinePoolResponse,
       scaleMachinePoolResponse,
+      getClusterAutoscaler,
+      clusterAutoscalerResponse,
       getMachinePools,
       machinePoolsList,
       getOrganizationAndQuota,
+      isHypershift,
     } = this.props;
     const { deletedRowIndex } = this.state;
 
@@ -110,6 +122,17 @@ class MachinePools extends React.Component {
           draft.deletedRowIndex = null;
         }),
       );
+    }
+
+    // Initially, we check the "cluster.autoscaler" to see if there should be data.
+    // We must combine this with the actions that the user can do to enable / delete the autoscaler in the modal
+    if (
+      !isHypershift &&
+      clusterAutoscalerResponse.hasAutoscaler &&
+      !clusterAutoscalerResponse.getAutoscaler.data &&
+      !clusterAutoscalerResponse.getAutoscaler.pending
+    ) {
+      getClusterAutoscaler();
     }
   }
 
@@ -140,15 +163,13 @@ class MachinePools extends React.Component {
       cluster,
       machinePoolsList,
       openModal,
-      isAddMachinePoolModalOpen,
-      isDeleteMachinePoolModalOpen,
-      isEditTaintsModalOpen,
-      isEditLabelsModalOpen,
+      openModalId,
       deleteMachinePool,
       defaultMachinePool,
       deleteMachinePoolResponse,
       addMachinePoolResponse,
       hasMachinePoolsQuota,
+      clusterAutoscalerResponse,
       isHypershift,
       canMachinePoolBeUpdated,
     } = this.props;
@@ -156,6 +177,11 @@ class MachinePools extends React.Component {
     const { deletedRowIndex, openedRows, hideDeleteMachinePoolError } = this.state;
     const { machinePoolsActions } = cluster;
     const hasMachinePools = !!machinePoolsList.data.length;
+    const isMultiZoneCluster = isMultiAZ(cluster);
+    const hasAutoscalingMachinePools = hasDefaultOrExplicitAutoscalingMachinePool(
+      cluster,
+      machinePoolsList?.data,
+    );
 
     if (hasMachinePools && machinePoolsList.error) {
       return (
@@ -189,44 +215,9 @@ class MachinePools extends React.Component {
       !machinePoolsActions.update &&
       'You do not have permission to edit machine pools. Only cluster owners, cluster editors, machine pool editors and Organization Administrators can edit machine pools.';
 
-    const addMachinePoolBtn = (
-      <ButtonWithTooltip
-        disableReason={readOnlyReason || hibernatingReason || canNotCreateReason || quotaReason}
-        id="add-machine-pool"
-        onClick={() => openModal('add-machine-pool')}
-        variant="secondary"
-        className="pf-u-mb-lg"
-      >
-        Add machine pool
-      </ButtonWithTooltip>
-    );
-
     const tableActionsDisabled = !!(readOnlyReason || hibernatingReason || canNotEditReason);
 
     const getMachinePoolRow = (machinePool = {}, isExpandableRow) => {
-      const autoscalingEnabled = machinePool.autoscaling;
-      let nodes;
-
-      if (autoscalingEnabled) {
-        const autoScaleNodesText = `Min: ${machinePool.autoscaling.min_replicas}, Max: ${machinePool.autoscaling.max_replicas}`;
-        nodes = cluster.multi_az ? (
-          <>
-            <Popover
-              bodyContent="Minimum and maximum node totals are calculated based on the number of zones."
-              aria-label="help"
-            >
-              <Button className="nodes-count" variant="link">
-                {autoScaleNodesText}
-              </Button>
-            </Popover>
-          </>
-        ) : (
-          autoScaleNodesText
-        );
-      } else {
-        nodes = `${machinePool.desired || machinePool.replicas}`;
-      }
-
       const cells = [
         machinePool.id,
         {
@@ -244,8 +235,22 @@ class MachinePools extends React.Component {
           ),
         },
         machinePool.availability_zones?.join(', ') || machinePool.availability_zone,
-        { title: nodes },
-        autoscalingEnabled ? 'Enabled' : 'Disabled',
+        {
+          title: (
+            <MachinePoolNodesSummary
+              isMultiZoneCluster={isMultiZoneCluster}
+              machinePool={machinePool}
+            />
+          ),
+        },
+        {
+          title: (
+            <MachinePoolAutoScalingSummary
+              hasClusterAutoscale={clusterAutoscalerResponse.hasAutoscaler}
+              hasMachinePoolAutoscale={!!machinePool.autoscaling}
+            />
+          ),
+        },
         isHypershift ? { title: getOpenShiftVersion(machinePool, tableActionsDisabled) } : null,
       ].filter((column) => column !== null);
 
@@ -265,13 +270,15 @@ class MachinePools extends React.Component {
       fullWidth: true,
       cells: [
         {
-          title: <ExpandableRow cluster={cluster} machinePool={machinePool} />,
+          title: (
+            <ExpandableRow isMultiZoneCluster={isMultiZoneCluster} machinePool={machinePool} />
+          ),
         },
       ],
       key: `${machinePool.id}-child`,
     });
 
-    // row is expandable if autoscaling enabled, or it has lables, or taints
+    // row is expandable if there are extra details to show
     const isExpandable = (machinePool = {}) =>
       !isEmpty(machinePool.labels) ||
       machinePool.taints?.length > 0 ||
@@ -394,13 +401,40 @@ class MachinePools extends React.Component {
           </Card>
         ) : (
           <>
-            {!tableActionsDisabled ? <UpdateAllMachinePools /> : null}
+            {!tableActionsDisabled && <UpdateAllMachinePools />}
             <Card className="ocm-c-machine-pools__card">
               <CardBody className="ocm-c-machine-pools__card--body">
                 {machinePoolsList.error && (
                   <ErrorBox message="Error retrieving machine pools" response={machinePoolsList} />
                 )}
-                {addMachinePoolBtn}
+                {!isRestrictedEnv() && (
+                  <ButtonWithTooltip
+                    disableReason={
+                      readOnlyReason || hibernatingReason || canNotCreateReason || quotaReason
+                    }
+                    id="add-machine-pool"
+                    onClick={() => openModal(modals.ADD_MACHINE_POOL)}
+                    variant="secondary"
+                    className="pf-u-mb-lg pf-u-mr-md"
+                  >
+                    Add machine pool
+                  </ButtonWithTooltip>
+                )}
+                {!isRestrictedEnv() && !isHypershift && (
+                  <ButtonWithTooltip
+                    id="edit-existing-cluster-autoscaling"
+                    isDisabled={
+                      canNotEditReason ||
+                      (clusterAutoscalerResponse.hasAutoscaler &&
+                        !clusterAutoscalerResponse.getAutoscaler.data)
+                    }
+                    onClick={() => openModal(modals.EDIT_CLUSTER_AUTOSCALING_V1)}
+                    variant="secondary"
+                    className="pf-u-mb-lg"
+                  >
+                    Edit cluster autoscaling
+                  </ButtonWithTooltip>
+                )}
                 <Divider />
                 {deleteMachinePoolResponse.error && !hideDeleteMachinePoolError && (
                   <ErrorBox
@@ -447,17 +481,25 @@ class MachinePools extends React.Component {
             </Card>
           </>
         )}
-        {isAddMachinePoolModalOpen && (
+        {openModalId === modals.ADD_MACHINE_POOL && (
           <AddMachinePoolModal cluster={cluster} isHypershiftCluster={isHypershift} />
         )}
-        {isDeleteMachinePoolModalOpen && <DeleteMachinePoolModal />}
-        {isEditTaintsModalOpen && (
+        {openModalId === modals.DELETE_MACHINE_POOL && <DeleteMachinePoolModal />}
+        {openModalId === modals.EDIT_TAINTS && (
           <EditTaintsModal clusterId={cluster.id} isHypershiftCluster={isHypershift} />
         )}
-        {isEditLabelsModalOpen && (
+        {openModalId === modals.EDIT_LABELS && (
           <EditLabelsModal clusterId={cluster.id} isHypershiftCluster={isHypershift} />
         )}
         <UpdateMachinePoolModal />
+        {openModalId === modals.EDIT_CLUSTER_AUTOSCALING_V1 && (
+          <EditClusterAutoScalerForDay2
+            isWizard={false}
+            clusterId={cluster.id}
+            hasAutoscalingMachinePools={hasAutoscalingMachinePools}
+            clusterAutoscalerResponse={clusterAutoscalerResponse}
+          />
+        )}
       </>
     );
   }
@@ -473,12 +515,14 @@ const checkNodesAtLeastOne = (props) => {
 
 MachinePools.propTypes = {
   cluster: PropTypes.object.isRequired,
+  clusterAutoscalerResponse: PropTypes.shape({
+    editAction: PropTypes.object.isRequired,
+    getAutoscaler: PropTypes.object.isRequired,
+    hasAutoscaler: PropTypes.bool,
+  }).isRequired,
   openModal: PropTypes.func.isRequired,
   hasMachinePoolsQuota: PropTypes.bool.isRequired,
-  isAddMachinePoolModalOpen: PropTypes.bool.isRequired,
-  isDeleteMachinePoolModalOpen: PropTypes.bool.isRequired,
-  isEditTaintsModalOpen: PropTypes.bool.isRequired,
-  isEditLabelsModalOpen: PropTypes.bool.isRequired,
+  openModalId: PropTypes.string,
   deleteMachinePoolResponse: PropTypes.object.isRequired,
   addMachinePoolResponse: PropTypes.object.isRequired,
   scaleMachinePoolResponse: PropTypes.object.isRequired,
@@ -493,6 +537,7 @@ MachinePools.propTypes = {
   }),
   getMachinePools: PropTypes.func.isRequired,
   deleteMachinePool: PropTypes.func.isRequired,
+  getClusterAutoscaler: PropTypes.func.isRequired,
   clearGetMachinePoolsResponse: PropTypes.func.isRequired,
   clearDeleteMachinePoolResponse: PropTypes.func.isRequired,
   getOrganizationAndQuota: PropTypes.func.isRequired,

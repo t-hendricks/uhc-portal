@@ -58,6 +58,15 @@ exports[`<EditNodeCountModal /> renders correctly 1`] = `
       <GridItem
         span={4}
       />
+      <GridItem
+        md={12}
+      >
+        <MachinePoolsAutoScalingWarning
+          hasAutoscalingMachinePools={false}
+          isEnabledOnCurrentPool={false}
+          warningType="editMachinePool"
+        />
+      </GridItem>
     </Grid>
   </Form>
 </Modal>

@@ -14,6 +14,7 @@ import {
   UpgradePolicyType,
 } from '~/components/clusters/wizards/common/constants';
 import { FieldId, StepId } from '~/components/clusters/wizards/osd/constants';
+import { canAutoScaleOnCreateSelector } from '~/components/clusters/ClusterDetails/components/MachinePools/MachinePoolsSelectors';
 import { DebugClusterRequest } from './DebugClusterRequest';
 import { canSelectImds } from '../../rosa/constants';
 
@@ -37,17 +38,9 @@ export const ReviewAndCreateContent = ({ isPending }: ReviewAndCreateContentProp
     },
     values: formValues,
   } = useFormState();
-  const capabilities = useGlobalState(
-    (state) => state.userProfile.organization.details?.capabilities,
-  );
-
-  const canAutoScale = React.useMemo(() => {
-    const autoScaleClusters = capabilities?.find(
-      (capability) => capability.name === 'capability.cluster.autoscale_clusters',
-    );
-    return !!(autoScaleClusters && autoScaleClusters.value === 'true');
-  }, [capabilities]);
+  const canAutoScale = useGlobalState((state) => canAutoScaleOnCreateSelector(state, product));
   const autoscalingEnabled = canAutoScale && !!formValues[FieldId.AutoscalingEnabled];
+
   const isByoc = byoc === 'true';
   const isAWS = cloudProvider === CloudProviderType.Aws;
 

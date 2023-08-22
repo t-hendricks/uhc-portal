@@ -16,6 +16,7 @@ import { billingModels } from '~/common/subscriptionTypes';
 import { WildcardPolicy } from '~/types/clusters_mgmt.v1/models/WildcardPolicy';
 import { NamespaceOwnershipPolicy } from '~/types/clusters_mgmt.v1/models/NamespaceOwnershipPolicy';
 import { ApplicationIngressType } from '~/components/clusters/wizards/osd/Networking/constants';
+import { getClusterAutoScalingSubmitSettings } from '~/components/clusters/CreateOSDPage/clusterAutoScalingValues';
 import { canConfigureManagedIngress } from '../wizards/rosa/constants';
 
 const createClusterAzs = ({ formData, isInstallExistingVPC }) => {
@@ -128,6 +129,7 @@ export const createClusterRequest = ({ isWizard = true, cloudProviderID, product
         max_replicas: maxNodes * formData.machine_pools_subnets.length,
       };
     } else {
+      clusterRequest.autoscaler = getClusterAutoScalingSubmitSettings(formData.cluster_autoscaling);
       clusterRequest.nodes.autoscale_compute = {
         min_replicas: isMultiAz ? minNodes * 3 : minNodes,
         max_replicas: isMultiAz ? maxNodes * 3 : maxNodes,
