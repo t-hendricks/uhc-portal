@@ -212,7 +212,7 @@ function AccountRolesARNsSection({
     } else if (getAWSAccountRolesARNsResponse.fulfilled) {
       const accountRolesARNs = get(getAWSAccountRolesARNsResponse, 'data', []).filter((arn) =>
         // TODO: restore when managed policies are in place
-        // isHypershiftSelected ? arn.hcpManagedPolicies : (!arn.hcpManagedPolicies && !arn.managedPolicies);
+        // isHypershiftSelected ? (arn.hcpManagedPolicies && arn.managedPolicies) : (!arn.hcpManagedPolicies && !arn.managedPolicies);
 
         // Per usage of backend `hcpManagedPolicies` and `managedPolicies` fields:
         // For hypershift managed policies both fields are true
