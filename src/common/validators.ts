@@ -1306,7 +1306,7 @@ const validateRequiredMachinePoolsSubnet = (
   subnet: Subnetwork,
   allValues: unknown,
   props: SubnetFormProps,
-) => (!props.pristine && subnet.subnet_id === '' ? 'Subnet is required' : undefined);
+) => (!props.pristine && !subnet?.subnet_id ? 'Subnet is required' : undefined);
 
 const validateMultipleMachinePoolsSubnets = (
   subnet: Subnetwork,
