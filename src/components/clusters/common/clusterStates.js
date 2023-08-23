@@ -93,9 +93,7 @@ const isROSA = (cluster) => cluster.product.id === normalizedProducts.ROSA;
 
 // Indicates that this is a ROSA cluster with manual mode
 const isROSAManualMode = (cluster) =>
-  isROSA(cluster) &&
-  !cluster?.aws?.sts?.auto_mode &&
-  !cluster?.aws?.sts?.oidc_config?.id;
+  isROSA(cluster) && !cluster?.aws?.sts?.auto_mode && !cluster?.aws?.sts?.oidc_config?.id;
 
 const isHypershiftCluster = (cluster) =>
   get(cluster, 'hypershift.enabled', false) ||
