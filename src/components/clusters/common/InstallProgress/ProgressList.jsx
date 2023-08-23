@@ -6,14 +6,15 @@ import './ProgressList.scss';
 import ActionRequiredLink from './ActionRequiredLink';
 import clusterStates, {
   isROSA,
-  isWaitingHypershiftCluster,
   isWaitingROSAManualMode,
+  isWaitingForOIDCProviderOrOperatorRolesMode,
 } from '../clusterStates';
 
 function ProgressList({ cluster, actionRequiredInitialOpen }) {
   const isROSACluster = isROSA(cluster);
   const isWaitingAndROSAManual = isWaitingROSAManualMode(cluster);
-  const isWaitingHypershift = isWaitingHypershiftCluster(cluster);
+  const isWaitingForOIDCProviderOrOperatorRoles =
+    isWaitingForOIDCProviderOrOperatorRolesMode(cluster);
 
   const getProgressData = () => {
     const pending = { variant: 'pending' };
@@ -37,14 +38,15 @@ function ProgressList({ cluster, actionRequiredInitialOpen }) {
     }
 
     if (isROSACluster) {
-      if (isWaitingHypershift) {
-        // Show waiting status for creation of ROSA operator roles and
-        // OIDC provider.
+      if (isWaitingForOIDCProviderOrOperatorRoles) {
+        // Show link to Action required modal for creation of ROSA operator roles and
+        // OIDC provider via oidc_config.id.
         return {
           awsAccountSetup: completed,
           oidcAndOperatorRolesSetup: {
-            text: 'Waiting',
-            ...inProcess,
+            variant: 'warning',
+            text: <ActionRequiredLink cluster={cluster} />,
+            isCurrent: true,
           },
           DNSSetup: pending,
           clusterInstallation: pending,
@@ -66,20 +68,16 @@ function ProgressList({ cluster, actionRequiredInitialOpen }) {
           clusterInstallation: pending,
         };
       }
-      // Rosa cluster when pending means waiting on OIDC and operator roles to be detected
-      // This state occurs for auto mode or after manual mode cli instructions have been executed
+      // Rosa cluster when pending means it has completed OIDC and operator roles step
       if (cluster.state === clusterStates.PENDING) {
         return {
           awsAccountSetup: completed,
-          oidcAndOperatorRolesSetup: {
-            text: 'Pending',
-            ...inProcess,
-          },
-          DNSSetup: pending,
+          oidcAndOperatorRolesSetup: completed,
+          DNSSetup: inProcess,
           clusterInstallation: pending,
         };
       }
-    }
+    } // end if isRosaCluster
 
     // first steps completed
     if (cluster.state === clusterStates.INSTALLING || cluster.state === clusterStates.VALIDATING) {
