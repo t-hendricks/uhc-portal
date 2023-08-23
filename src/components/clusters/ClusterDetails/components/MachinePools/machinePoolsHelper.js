@@ -325,8 +325,15 @@ const isEnforcedDefaultMachinePool = (
   return !machinePools
     .filter((mp) => mp.id !== currentMachinePoolId)
     .some((mp) => {
-      const awsMachineType = machineTypes.types?.aws?.find((mt) => mt.id === mp.instance_type);
-      const minReplicas = getMinNodesRequired(true, cluster?.ccs?.enabled, isMultiAZ(cluster));
+      const instanceType =
+        mp.kind === 'NodePool' ? mp.aws_node_pool?.instance_type : mp.instance_type;
+
+      const awsMachineType = machineTypes.types?.aws?.find((mt) => mt.id === instanceType);
+      const minReplicas = getMinNodesRequired(
+        true,
+        cluster?.ccs?.enabled || isHypershiftCluster(cluster),
+        isMultiAZ(cluster),
+      );
 
       return (
         awsMachineType &&

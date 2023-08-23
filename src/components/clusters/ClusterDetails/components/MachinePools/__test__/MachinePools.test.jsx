@@ -180,6 +180,21 @@ describe('<MachinePools />', () => {
   it('Should disable unavailable actions in kebab menu if hypershift', () => {
     const props = {
       ...baseProps(true),
+      machineTypes: {
+        types: {
+          aws: [
+            {
+              id: 'm5.xlarge',
+              cpu: {
+                value: 4,
+              },
+              memory: {
+                value: 4,
+              },
+            },
+          ],
+        },
+      },
       machinePoolsList: {
         data: [
           {

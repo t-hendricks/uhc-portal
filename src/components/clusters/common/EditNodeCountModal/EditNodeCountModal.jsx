@@ -144,9 +144,11 @@ class EditNodeCountModal extends Component {
     } = this.props;
     let minNodesRequired = 0;
     if (hasStaticDefaultMachinePool(cluster)) {
-      minNodesRequired = isHypershiftCluster
-        ? getMinNodesRequiredHypershift()
-        : getMinNodesRequired(machinePoolId === STATIC_DEFAULT_MP_ID, isByoc, isMultiAz);
+      minNodesRequired = getMinNodesRequired(
+        machinePoolId === STATIC_DEFAULT_MP_ID,
+        isByoc,
+        isMultiAz,
+      );
     } else {
       const isEnforcedDefaultMP = isEnforcedDefaultMachinePool(
         machinePoolId,
@@ -156,7 +158,11 @@ class EditNodeCountModal extends Component {
         machineTypes,
         cluster,
       );
-      minNodesRequired = getMinNodesRequired(isEnforcedDefaultMP, isByoc, isMultiAz);
+      if (isHypershiftCluster && !isEnforcedDefaultMP) {
+        minNodesRequired = getMinNodesRequiredHypershift();
+      } else {
+        minNodesRequired = getMinNodesRequired(isEnforcedDefaultMP, isByoc, isMultiAz);
+      }
     }
 
     const error = editNodeCountResponse.error ? (
