@@ -32,6 +32,7 @@ import ClusterLocationLabel from '../../common/ClusterLocationLabel';
 import clusterStates, {
   getClusterStateAndDescription,
   isWaitingROSAManualMode,
+  isWaitingForOIDCProviderOrOperatorRolesMode,
 } from '../../common/clusterStates';
 import ClusterUpdateLink from '../../common/ClusterUpdateLink';
 import ClusterCreatedIndicator from './ClusterCreatedIndicator';
@@ -146,7 +147,10 @@ function ClusterListTable(props) {
           </span>
         );
       }
-      if (isWaitingROSAManualMode(cluster)) {
+      if (
+        isWaitingROSAManualMode(cluster) ||
+        isWaitingForOIDCProviderOrOperatorRolesMode(cluster)
+      ) {
         // Show a popover for manual creation of ROSA operator roles and OIDC provider.
         return (
           <ActionRequiredLink
