@@ -2151,15 +2151,15 @@
     "@nodelib/fs.scandir" "2.1.4"
     fastq "^1.6.0"
 
-"@openshift-assisted/locales@2.24.1":
-  version "2.24.1"
-  resolved "https://registry.yarnpkg.com/@openshift-assisted/locales/-/locales-2.24.1.tgz#63de5ec5ea901e41d1de57c945dcca366326ab34"
-  integrity sha512-AdhY0ZuoTrnHY7DjjXgNiTS5zBbgLtu1GqcxvpVxb+Ui37Xw4hB6zHcAfw0nhlBTVNicqddzpiAxVBUBVw5fUQ==
+"@openshift-assisted/locales@2.24.2":
+  version "2.24.2"
+  resolved "https://registry.yarnpkg.com/@openshift-assisted/locales/-/locales-2.24.2.tgz#3c56587edd19aefaae289bd35713a01cdf3b52a4"
+  integrity sha512-fAjVp3dPBZaDBAcU7moCpoGwdCuWC6vzdgFNeTVWWgJXjTWrYiOlE3erLhb2ZqtYOJoct3I/+nFPEJ/bAFkYZg==
 
-"@openshift-assisted/ui-lib@2.24.1":
-  version "2.24.1"
-  resolved "https://registry.yarnpkg.com/@openshift-assisted/ui-lib/-/ui-lib-2.24.1.tgz#c771381687cac57fb6e684e3d297bfe101acb720"
-  integrity sha512-4JYWnwY1WXm+u8Txq7Ork4uxwLYbNVFinUfoKvus/nFQW3ifNylwWnQwC5p5/r474BjZaMLgA9UqHvr+ZCY5gQ==
+"@openshift-assisted/ui-lib@2.24.2":
+  version "2.24.2"
+  resolved "https://registry.yarnpkg.com/@openshift-assisted/ui-lib/-/ui-lib-2.24.2.tgz#91a47837d561dde2a3dea1490a1bd2dc0a032c62"
+  integrity sha512-MIdYe+kDpSoayBp5WbNF0NnjR7z+C1zOl2gB8Dumee1qD963/jiapeNpz+aJocDFoxmv6MWOPloYYxMJeRv7YA==
   dependencies:
     axios-case-converter "^0.11.1"
     camel-case "^4.1.2"
