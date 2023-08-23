@@ -306,7 +306,7 @@ const hasDefaultOrExplicitAutoscalingMachinePool = (cluster, machinePools, exclu
 };
 
 const hasStaticDefaultMachinePool = (cluster) =>
-  isHypershiftCluster(cluster) ||
+  !isHypershiftCluster(cluster) &&
   ![normalizedProducts.OSD, normalizedProducts.OSDTrial, normalizedProducts.ROSA].includes(
     normalizeProductID(cluster?.product?.id),
   );

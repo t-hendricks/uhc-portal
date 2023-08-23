@@ -53,11 +53,6 @@ describe('<EditTaintsModal />', () => {
       fulfilled: true,
       pending: false,
     },
-    cluster: {
-      hypershift: {
-        enabled: true,
-      },
-    },
   };
 
   const getEditTaintsModalWrapper = (testProps) =>
@@ -121,13 +116,13 @@ describe('<EditTaintsModal />', () => {
   });
 
   it('should have enabled "Add more" button when does not have enforced default MP', () => {
-    const machinePoolList = {
+    const machinePoolsList = {
       data: [
         ...mockData.data,
         {
           availability_zones: ['us-east-1a'],
           href: '/api/clusters_mgmt/v1/clusters/cluster-id/machine_pools/mp-with-taints3',
-          id: 'mp-without-taints-2',
+          id: 'mp-without-taints-3',
           instance_type: 'm5.xlarge',
           kind: 'MachinePool',
           replicas: 3,
@@ -139,20 +134,47 @@ describe('<EditTaintsModal />', () => {
       product: {
         id: normalizedProducts.ROSA,
       },
+      ccs: {
+        enabled: true,
+      },
+    };
+
+    const machineTypes = {
+      fulfilled: true,
+      pending: false,
+      types: {
+        aws: [
+          {
+            id: 'm5.xlarge',
+            cpu: {
+              value: 4,
+            },
+            memory: {
+              value: 4,
+            },
+          },
+        ],
+      },
     };
 
     expect(
-      getEditTaintsModalWrapper({ cluster, machinePoolList }).find('FieldArray').props().canAddMore,
-    ).toBeFalsy();
+      getEditTaintsModalWrapper({ cluster, machinePoolsList, machineTypes })
+        .find('FieldArray')
+        .props().canAddMore,
+    ).toBeTruthy();
 
     cluster.product.id = normalizedProducts.OSD;
     expect(
-      getEditTaintsModalWrapper({ cluster, machinePoolList }).find('FieldArray').props().canAddMore,
-    ).toBeFalsy();
+      getEditTaintsModalWrapper({ cluster, machinePoolsList, machineTypes })
+        .find('FieldArray')
+        .props().canAddMore,
+    ).toBeTruthy();
 
     cluster.product.id = normalizedProducts.OSDTrial;
     expect(
-      getEditTaintsModalWrapper({ cluster, machinePoolList }).find('FieldArray').props().canAddMore,
-    ).toBeFalsy();
+      getEditTaintsModalWrapper({ cluster, machinePoolsList, machineTypes })
+        .find('FieldArray')
+        .props().canAddMore,
+    ).toBeTruthy();
   });
 });
