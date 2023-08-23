@@ -17,6 +17,7 @@ describe('<CreateClusterPage />', () => {
           fulfilled: true,
         },
         getAuthToken: () => {},
+        token: {},
       };
 
       const { rerender } = render(
