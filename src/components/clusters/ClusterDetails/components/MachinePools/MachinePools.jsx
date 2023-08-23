@@ -246,6 +246,7 @@ class MachinePools extends React.Component {
         {
           title: (
             <MachinePoolAutoScalingSummary
+              isHypershift={isHypershift}
               hasClusterAutoscale={clusterAutoscalerResponse.hasAutoscaler}
               hasMachinePoolAutoscale={!!machinePool.autoscaling}
             />
