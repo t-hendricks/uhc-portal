@@ -271,6 +271,12 @@ const ReviewClusterScreen = ({
             name: 'aws_standalone_vpc',
             formValues,
           })}
+        {formValues.shared_vpc.is_selected &&
+          !isHypershiftSelected &&
+          ReviewItem({
+            name: 'shared_vpc',
+            formValues,
+          })}
         {showVPCCheckbox &&
           formValues.install_to_vpc &&
           isGCP &&

@@ -130,6 +130,15 @@ function NetworkScreen(props) {
 
   const onInstallIntoVPCchange = (checked) => {
     change('install_to_vpc', checked);
+    if (!checked && formValues.shared_vpc.is_allowed) {
+      change('shared_vpc', {
+        is_allowed: true,
+        is_selected: false,
+        base_dns_domain: '',
+        hosted_zone_id: '',
+        hosted_zone_role_arn: '',
+      });
+    }
     trackCheckedState(trackEvents.InstallIntoVPC, checked);
   };
 
