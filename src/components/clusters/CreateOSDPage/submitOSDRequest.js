@@ -208,6 +208,19 @@ export const createClusterRequest = ({ isWizard = true, cloudProviderID, product
             },
           };
         }
+
+        // Shared VPC
+        const sharedVpc = formData.shared_vpc;
+        if (isInstallExistingVPC && sharedVpc.is_selected && !isHypershiftSelected) {
+          clusterRequest.aws = {
+            ...clusterRequest.aws,
+            private_hosted_zone_id: sharedVpc.hosted_zone_id,
+            private_hosted_zone_role_arn: sharedVpc.hosted_zone_role_arn,
+          };
+          clusterRequest.dns = {
+            base_domain: sharedVpc.base_dns_domain,
+          };
+        }
       } else {
         // AWS CCS credentials
         clusterRequest.aws = {

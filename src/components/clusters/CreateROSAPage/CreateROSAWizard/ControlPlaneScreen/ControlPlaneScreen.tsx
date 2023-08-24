@@ -52,6 +52,13 @@ const ControlPlaneField = ({
     onChange(isHypershift);
     // Uncheck the following Network checkboxes when switching Control plane selection
     change('install_to_vpc', false);
+    change('shared_vpc', {
+      is_allowed: !isHypershift,
+      is_selected: false,
+      base_dns_domain: '',
+      hosted_zone_id: '',
+      hosted_zone_role_arn: '',
+    });
     change('configure_proxy', false);
     // Reset VPC settings in case they were configured and then came back to the Control plane step
     Object.keys(formValues).forEach((formValue) => {

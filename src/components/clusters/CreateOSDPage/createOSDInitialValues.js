@@ -62,10 +62,18 @@ const createOSDInitialValues = ({
           machine_pools_subnets: [newEmptySubnet()],
           cluster_privacy_public_subnet: newEmptySubnet(),
           worker_volume_size_gib: undefined,
+          shared_vpc: { is_allowed: false },
         }
       : {
           enable_user_workload_monitoring: 'true',
           worker_volume_size_gib: defaultWorkerNodeVolumeSizeGiB,
+          shared_vpc: {
+            is_allowed: true,
+            is_selected: false,
+            base_dns_domain: '',
+            hosted_zone_id: '',
+            hosted_zone_role_arn: '',
+          },
         }),
   };
 

@@ -52,6 +52,7 @@ export default {
     },
     custom_operator_roles_prefix: 'my-cluster-cu1f',
     selected_vpc_id: 'vpc-0cf6c1b4e2a234863',
+    shared_vpc: { is_allowed: false },
     machine_pools_subnets: [
       {
         subnet_id: 'subnet-03e91a20f67277c7a',

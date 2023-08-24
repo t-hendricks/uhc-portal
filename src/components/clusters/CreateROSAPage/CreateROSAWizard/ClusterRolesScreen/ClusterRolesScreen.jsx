@@ -21,13 +21,17 @@ import {
 import useAnalytics from '~/hooks/useAnalytics';
 import { trackEvents } from '~/common/analytics';
 import ReduxHiddenCheckbox from '~/components/common/ReduxFormComponents/ReduxHiddenCheckbox';
+import {
+  getForcedByoOidcReason,
+  getOperatorRolesCommand,
+} from '~/components/clusters/CreateROSAPage/CreateROSAWizard/ClusterRolesScreen/clusterRolesHelper';
 import ExternalLink from '../../../../common/ExternalLink';
 import ErrorBox from '../../../../common/ErrorBox';
 import InstructionCommand from '../../../../common/InstructionCommand';
 import RadioButtons from '../../../../common/ReduxFormComponents/RadioButtons';
 import PopoverHint from '../../../../common/PopoverHint';
 import links from '../../../../../common/installLinks.mjs';
-import { required, checkCustomOperatorRolesPrefix } from '../../../../../common/validators';
+import { required } from '../../../../../common/validators';
 import { BackToAssociateAwsAccountLink } from '../common/BackToAssociateAwsAccountLink';
 import CustomOperatorRoleNames from './CustomOperatorRoleNames';
 import CustomerOIDCConfiguration from './CustomerOIDCConfiguration';
@@ -53,17 +57,18 @@ function ClusterRolesScreen({
   awsAccountID,
   rosaCreationMode,
   byoOidcConfigID,
+  installerRoleArn,
+  sharedVpcRoleArn,
   customOperatorRolesPrefix,
   getOCMRole,
   getOCMRoleResponse,
   clearGetOcmRoleResponse,
   getUserOidcConfigurations,
-  isHypershiftSelected,
+  forcedByoOidcType,
 }) {
   const [isAutoModeAvailable, setIsAutoModeAvailable] = useState(false);
-  const isMandatoryByoOidc = isHypershiftSelected;
   const [hasByoOidcConfig, setHasByoOidcConfig] = useState(
-    isHypershiftSelected || !!byoOidcConfigID,
+    !!(forcedByoOidcType || byoOidcConfigID),
   );
   const [getOCMRoleErrorBox, setGetOCMRoleErrorBox] = useState(null);
   const track = useAnalytics();
@@ -216,18 +221,15 @@ function ClusterRolesScreen({
     },
   ];
 
-  let operatorRolesCliCommand;
-  if (
-    !byoOidcConfigID ||
-    !customOperatorRolesPrefix ||
-    checkCustomOperatorRolesPrefix(customOperatorRolesPrefix)
-  ) {
-    operatorRolesCliCommand = '';
-  } else if (isHypershiftSelected) {
-    operatorRolesCliCommand = `rosa create operator-roles --hosted-cp --prefix "${customOperatorRolesPrefix}" --oidc-config-id "${byoOidcConfigID}"`;
-  } else {
-    operatorRolesCliCommand = `rosa create operator-roles --prefix "${customOperatorRolesPrefix}" --oidc-config-id "${byoOidcConfigID}"`;
-  }
+  const operatorRolesCliCommand = getOperatorRolesCommand({
+    forcedByoOidcType,
+    byoOidcConfigID,
+    customOperatorRolesPrefix,
+    installerRoleArn,
+    sharedVpcRoleArn,
+  });
+
+  const forcedByoOidcReason = getForcedByoOidcReason(forcedByoOidcType);
 
   return (
     <Form onSubmit={() => false}>
@@ -235,13 +237,8 @@ function ClusterRolesScreen({
         <GridItem>
           <Title headingLevel="h3">Cluster roles and policies</Title>
         </GridItem>
-        {isMandatoryByoOidc ? (
-          <Alert
-            isInline
-            id="rosa-hypershift-require-byo-oidc"
-            variant="info"
-            title="Hosted control plane clusters require a specified OIDC provider."
-          />
+        {forcedByoOidcType ? (
+          <Alert isInline id="rosa-require-byo-oidc" variant="info" title={forcedByoOidcReason} />
         ) : (
           <>
             <GridItem>
@@ -329,13 +326,15 @@ ClusterRolesScreen.propTypes = {
   awsAccountID: PropTypes.string,
   rosaCreationMode: PropTypes.string,
   byoOidcConfigID: PropTypes.string,
+  installerRoleArn: PropTypes.string,
+  sharedVpcRoleArn: PropTypes.string,
   customOperatorRolesPrefix: PropTypes.string,
   getOCMRole: PropTypes.func.isRequired,
   getOCMRoleResponse: PropTypes.func.isRequired,
   getUserOidcConfigurations: PropTypes.func.isRequired,
   clearGetOcmRoleResponse: PropTypes.func.isRequired,
   clusterName: PropTypes.string,
-  isHypershiftSelected: PropTypes.bool,
+  forcedByoOidcType: PropTypes.oneOf(['Hypershift', 'SharedVPC']),
 };
 
 export default ClusterRolesScreen;
