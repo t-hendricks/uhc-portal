@@ -57,7 +57,7 @@ function ScaleSection({
     change('imds', value);
   };
 
-  const expandableSectionTitle = isMachinePool ? 'Edit node labels and taints' : 'Edit node labels';
+  const expandableSectionTitle = isMachinePool ? 'Edit node labels and taints' : 'Add node labels';
 
   const labelsAndTaintsSection =
     isHypershift && !inModal ? null : (
