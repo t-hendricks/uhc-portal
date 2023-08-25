@@ -69,8 +69,16 @@ class Overview extends React.Component {
   }
 
   render() {
-    const { cluster, cloudProviders, history, refresh, openModal, insightsData, userAccess } =
-      this.props;
+    const {
+      cluster,
+      inflightChecks,
+      cloudProviders,
+      history,
+      refresh,
+      openModal,
+      insightsData,
+      userAccess,
+    } = this.props;
     let topCard;
 
     const { showInstallSuccessAlert } = this.state;
@@ -92,6 +100,7 @@ class Overview extends React.Component {
       cluster.state === clusterStates.WAITING ||
       cluster.state === clusterStates.PENDING ||
       cluster.state === clusterStates.INSTALLING ||
+      cluster.state === clusterStates.ERROR ||
       cluster.state === clusterStates.UNINSTALLING;
 
     const showInsightsAdvisor =
@@ -122,7 +131,14 @@ class Overview extends React.Component {
     if (isHibernating(cluster.state)) {
       topCard = <HibernatingClusterCard cluster={cluster} openModal={openModal} />;
     } else if (!isAssistedInstallSubscription(cluster.subscription) && shouldShowLogs(cluster)) {
-      topCard = <ClusterProgressCard cluster={cluster} refresh={refresh} history={history} />;
+      topCard = (
+        <ClusterProgressCard
+          cluster={cluster}
+          inflightChecks={inflightChecks}
+          refresh={refresh}
+          history={history}
+        />
+      );
     }
 
     const resourceUsage = (
@@ -159,6 +175,9 @@ class Overview extends React.Component {
           <Grid hasGutter>
             {showInstallSuccessAlert && (
               <Alert variant="success" isInline title="Cluster installed successfully" />
+            )}
+            {shouldMonitorStatus && (
+              <ClusterStatusMonitor refresh={refresh} cluster={cluster} history={history} />
             )}
             {topCard}
             {showAssistedInstallerDetailCard && (
@@ -239,6 +258,12 @@ Overview.propTypes = {
   refresh: PropTypes.func,
   openModal: PropTypes.func.isRequired,
   insightsData: PropTypes.object,
+  inflightChecks: PropTypes.shape({
+    pending: PropTypes.bool,
+    fulfilled: PropTypes.bool,
+    error: PropTypes.bool,
+    checks: PropTypes.array,
+  }),
   userAccess: PropTypes.shape({
     data: PropTypes.bool,
     pending: PropTypes.bool,

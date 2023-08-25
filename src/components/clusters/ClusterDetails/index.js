@@ -45,7 +45,7 @@ import { getUpgradeGates } from '../common/Upgrades/UpgradeAcknowledge/UpgradeAc
 import { fetchUpgradeGates } from '../../../redux/actions/upgradeGateActions';
 
 const mapStateToProps = (state, { location }) => {
-  const { details } = state.clusters;
+  const { details, inflightChecks } = state.clusters;
   const { cloudProviders, clusterRouters } = state;
   const { addOns } = state.addOns;
   const { clusterIdentityProviders } = state.identityProviders;
@@ -65,6 +65,7 @@ const mapStateToProps = (state, { location }) => {
   return {
     cloudProviders,
     clusterDetails: details,
+    inflightChecks,
     addOns,
     clusterIdentityProviders,
     organization,

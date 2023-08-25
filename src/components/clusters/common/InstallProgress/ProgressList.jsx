@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import PropTypes from 'prop-types';
 import { ProgressStepper, ProgressStep, Spinner } from '@patternfly/react-core';
 import UnknownIcon from '@patternfly/react-icons/dist/js/icons/unknown-icon';
+import { InflightCheckState } from '~/types/clusters_mgmt.v1';
 import './ProgressList.scss';
 import ActionRequiredLink from './ActionRequiredLink';
 import clusterStates, {
@@ -10,7 +11,8 @@ import clusterStates, {
   isWaitingROSAManualMode,
 } from '../clusterStates';
 
-function ProgressList({ cluster, actionRequiredInitialOpen }) {
+function ProgressList({ cluster, inflightChecks, actionRequiredInitialOpen }) {
+  const inflightRef = useRef([]);
   const isROSACluster = isROSA(cluster);
   const isWaitingAndROSAManual = isWaitingROSAManualMode(cluster);
   const isWaitingHypershift = isWaitingHypershiftCluster(cluster);
@@ -19,6 +21,8 @@ function ProgressList({ cluster, actionRequiredInitialOpen }) {
     const pending = { variant: 'pending' };
     const inProcess = { variant: 'info', icon: <Spinner size="sm" />, isCurrent: true };
     const completed = { variant: 'success', text: 'Completed' };
+    const warning = { variant: 'warning', text: 'Some steps failed' };
+    const failed = { variant: 'danger', text: 'Failed' };
     const unknown = { icon: <UnknownIcon className="icon-space-right" />, text: 'Unknown' };
 
     // first step in progress
@@ -46,6 +50,7 @@ function ProgressList({ cluster, actionRequiredInitialOpen }) {
             text: 'Waiting',
             ...inProcess,
           },
+          networkSettings: pending,
           DNSSetup: pending,
           clusterInstallation: pending,
         };
@@ -62,6 +67,7 @@ function ProgressList({ cluster, actionRequiredInitialOpen }) {
             ),
             isCurrent: true,
           },
+          networkSettings: pending,
           DNSSetup: pending,
           clusterInstallation: pending,
         };
@@ -75,10 +81,23 @@ function ProgressList({ cluster, actionRequiredInitialOpen }) {
             text: 'Pending',
             ...inProcess,
           },
+          networkSettings: pending,
           DNSSetup: pending,
           clusterInstallation: pending,
         };
       }
+    }
+
+    // inflight checks are asynchronous
+    // so dns/install status is running parallel with network settings
+    if (inflightChecks.fulfilled) {
+      inflightRef.current = inflightChecks.checks;
+    }
+    let networkSettings = completed;
+    if (inflightRef.current.some((check) => check.state === InflightCheckState.FAILED)) {
+      networkSettings = failed;
+    } else if (inflightRef.current.some((check) => check.state === InflightCheckState.RUNNING)) {
+      networkSettings = inProcess;
     }
 
     // first steps completed
@@ -91,6 +110,7 @@ function ProgressList({ cluster, actionRequiredInitialOpen }) {
             text: 'Setting up DNS',
             ...inProcess,
           },
+          networkSettings: pending,
           clusterInstallation: pending,
         };
       }
@@ -99,16 +119,31 @@ function ProgressList({ cluster, actionRequiredInitialOpen }) {
         awsAccountSetup: completed,
         oidcAndOperatorRolesSetup: completed,
         DNSSetup: completed,
+        // because inflight runs asynchronously, both network and cluster install can be running at same time
+        networkSettings,
         clusterInstallation: {
           text: 'Installing cluster',
           ...inProcess,
         },
       };
     }
+    if (networkSettings !== completed) {
+      return {
+        awsAccountSetup: completed,
+        oidcAndOperatorRolesSetup: completed,
+        DNSSetup: completed,
+        networkSettings,
+        // if backend lets install proceed to end even though network setup was a failure, show warning
+        // else don't show anything for install to emphysis network setting error
+        clusterInstallation:
+          networkSettings === failed && cluster.state === clusterStates.READY ? warning : pending,
+      };
+    }
     return {
       awsAccountSetup: unknown,
       oidcAndOperatorRolesSetup: unknown,
       DNSSetup: unknown,
+      networkSettings: unknown,
       clusterInstallation: unknown,
     };
   };
@@ -149,6 +184,18 @@ function ProgressList({ cluster, actionRequiredInitialOpen }) {
       >
         DNS setup
       </ProgressStep>
+      {isROSACluster && (
+        <ProgressStep
+          variant={progressData.networkSettings.variant}
+          icon={progressData.networkSettings.icon}
+          isCurrent={progressData.networkSettings.isCurrent}
+          description={progressData.networkSettings.text}
+          id="networkSettings"
+          titleId="networkSettings-title"
+        >
+          Network settings
+        </ProgressStep>
+      )}
       <ProgressStep
         variant={progressData.clusterInstallation.variant}
         icon={progressData.clusterInstallation.icon}
@@ -165,6 +212,12 @@ function ProgressList({ cluster, actionRequiredInitialOpen }) {
 
 ProgressList.propTypes = {
   cluster: PropTypes.object.isRequired,
+  inflightChecks: PropTypes.shape({
+    pending: PropTypes.bool,
+    fulfilled: PropTypes.bool,
+    error: PropTypes.bool,
+    checks: PropTypes.array,
+  }),
   actionRequiredInitialOpen: PropTypes.bool,
 };
 

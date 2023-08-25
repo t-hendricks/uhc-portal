@@ -262,6 +262,7 @@ class ClusterDetails extends Component {
   render() {
     const {
       clusterDetails,
+      inflightChecks,
       cloudProviders,
       invalidateClusters,
       openModal,
@@ -464,6 +465,7 @@ class ClusterDetails extends Component {
                 history={history}
                 refresh={this.refresh}
                 openModal={openModal}
+                inflightChecks={inflightChecks}
                 insightsData={insightsData[cluster.external_id]}
                 userAccess={userAccess}
               />
@@ -627,6 +629,12 @@ ClusterDetails.propTypes = {
   insightsData: PropTypes.object,
   clusterIdentityProviders: PropTypes.object.isRequired,
   organization: PropTypes.object.isRequired,
+  inflightChecks: PropTypes.shape({
+    pending: PropTypes.bool,
+    fulfilled: PropTypes.bool,
+    error: PropTypes.bool,
+    checks: PropTypes.array,
+  }),
   clusterDetails: PropTypes.shape({
     cluster: PropTypes.object,
     error: PropTypes.bool,

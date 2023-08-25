@@ -623,6 +623,9 @@ const resetCreatedClusterResponse = () => action(clustersConstants.RESET_CREATED
 const getClusterStatus = (clusterID: string) =>
   action(clustersConstants.GET_CLUSTER_STATUS, clusterService.getClusterStatus(clusterID));
 
+const getInflightChecks = (clusterID: string) =>
+  action(clustersConstants.GET_INFLIGHT_CHECKS, clusterService.getInflightChecks(clusterID));
+
 const getInstallableVersions = (isRosa: boolean) =>
   action(clustersConstants.GET_CLUSTER_VERSIONS, clusterService.getInstallableVersions(isRosa));
 
@@ -650,6 +653,7 @@ type ClusterAction = ActionType<
   | typeof clearClusterDetails
   | typeof resetCreatedClusterResponse
   | typeof getClusterStatus
+  | typeof getInflightChecks
   | typeof getInstallableVersions
 >;
 
@@ -668,6 +672,7 @@ const clustersActions = {
   archiveCluster,
   unarchiveCluster,
   getClusterStatus,
+  getInflightChecks,
   getInstallableVersions,
 };
 
@@ -693,6 +698,7 @@ export {
   clearClusterUnarchiveResponse,
   editClusterConsoleURL,
   getClusterStatus,
+  getInflightChecks,
   upgradeTrialCluster,
   clearUpgradeTrialClusterResponse,
   ClusterAction,

@@ -28,7 +28,6 @@ import type { Group } from './Group';
 import type { HTPasswdIdentityProvider } from './HTPasswdIdentityProvider';
 import type { Hypershift } from './Hypershift';
 import type { IdentityProvider } from './IdentityProvider';
-import type { InflightCheck } from './InflightCheck';
 import type { Ingress } from './Ingress';
 import type { MachinePool } from './MachinePool';
 import type { ManagedService } from './ManagedService';
@@ -214,10 +213,6 @@ export type Cluster = {
    * Link to the collection of identity providers of the cluster.
    */
   identity_providers?: Array<IdentityProvider>;
-  /**
-   * List of inflight checks on this cluster.
-   */
-  inflight_checks?: Array<InflightCheck>;
   /**
    * InfraID is used for example to name the VPCs.
    */
