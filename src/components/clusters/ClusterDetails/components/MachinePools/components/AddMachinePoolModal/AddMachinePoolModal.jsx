@@ -2,9 +2,10 @@ import React, { Component } from 'react';
 import get from 'lodash/get';
 import PropTypes from 'prop-types';
 import { Field } from 'redux-form';
-import { Form, GridItem, Grid, FormGroup } from '@patternfly/react-core';
+import { Form, FormGroup, Grid, GridItem } from '@patternfly/react-core';
 
 import { SubnetSelectField } from '~/components/clusters/CreateOSDPage/CreateOSDWizard/NetworkScreen/SubnetSelectField';
+import MachinePoolsAutoScalingWarning from '../../MachinePoolAutoscalingWarning';
 import Modal from '../../../../../../common/Modal/Modal';
 import ErrorBox from '../../../../../../common/ErrorBox';
 import ScaleSection from '../../../../../CreateOSDPage/CreateOSDForm/FormSections/ScaleSection/ScaleSection';
@@ -57,6 +58,7 @@ class AddMachinePoolModal extends Component {
       invalid,
       organization,
       canAutoScale,
+      hasClusterAutoScaler,
       autoscalingEnabled,
       change,
       selectedMachineType,
@@ -66,6 +68,7 @@ class AddMachinePoolModal extends Component {
       useSpotInstances,
       spotInstancePricing,
       spotInstanceMaxHourlyPrice,
+      maxWorkerVolumeSizeGiB,
     } = this.props;
 
     const billingModel = get(cluster, 'billing_model');
@@ -78,6 +81,20 @@ class AddMachinePoolModal extends Component {
       'A machine pool is a group of machines that are all clones of the same configuration, that can be used on demand by an application running on a pod.';
 
     const isPending = addMachinePoolResponse.pending || (organization && organization.pending);
+    const hasAutoscalingMachinePools = !!get(
+      cluster,
+      'nodes.autoscale_compute.max_replicas',
+      false,
+    );
+
+    const autoScaleWarning = !isHypershiftCluster && (
+      <MachinePoolsAutoScalingWarning
+        warningType="addMachinePool"
+        hasClusterAutoScaler={hasClusterAutoScaler}
+        hasAutoscalingMachinePools={hasAutoscalingMachinePools}
+        isEnabledOnCurrentPool={autoscalingEnabled}
+      />
+    );
 
     return (
       <Modal
@@ -151,8 +168,11 @@ class AddMachinePoolModal extends Component {
                 autoScaleMinNodesValue={autoScaleMinNodesValue}
                 autoScaleMaxNodesValue={autoScaleMaxNodesValue}
                 billingModel={billingModel}
-                isHypershiftSelected={isHypershiftCluster}
+                isHypershift={isHypershiftCluster}
+                maxWorkerVolumeSizeGiB={maxWorkerVolumeSizeGiB}
               />
+              {!!autoScaleWarning && <GridItem md={12}>{autoScaleWarning}</GridItem>}
+
               {/* Cost savings */}
               {canUseSpotInstances && (
                 <>
@@ -187,6 +207,7 @@ AddMachinePoolModal.propTypes = {
   organization: PropTypes.object,
   selectedMachineType: PropTypes.string,
   canAutoScale: PropTypes.bool.isRequired,
+  hasClusterAutoScaler: PropTypes.bool.isRequired,
   autoscalingEnabled: PropTypes.bool.isRequired,
   change: PropTypes.func.isRequired,
   autoScaleMinNodesValue: PropTypes.string,
@@ -195,6 +216,7 @@ AddMachinePoolModal.propTypes = {
   useSpotInstances: PropTypes.bool.isRequired,
   spotInstancePricing: PropTypes.string,
   spotInstanceMaxHourlyPrice: PropTypes.number,
+  maxWorkerVolumeSizeGiB: PropTypes.number,
 };
 
 AddMachinePoolModal.defaultProps = {

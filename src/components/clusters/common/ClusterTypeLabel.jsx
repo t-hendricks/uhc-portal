@@ -57,7 +57,7 @@ function ClusterTypeLabel({ cluster }) {
 
   return (
     <Tooltip content={type.tooltip}>
-      <span>
+      <span data-testid="clusterType">
         {type.name}
         {type.label && (
           <>

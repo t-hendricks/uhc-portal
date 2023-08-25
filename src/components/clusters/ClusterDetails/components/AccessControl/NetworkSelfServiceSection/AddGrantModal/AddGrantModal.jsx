@@ -6,7 +6,7 @@ import { Form, TextInput, FormGroup, Radio } from '@patternfly/react-core';
 import Modal from '../../../../../../common/Modal/Modal';
 import ErrorBox from '../../../../../../common/ErrorBox';
 import PopoverHint from '../../../../../../common/PopoverHint';
-import { validateARN } from '../../../../../../../common/validators';
+import { validateUserOrGroupARN } from '../../../../../../../common/validators';
 import './AddGrantModal.scss';
 
 const initialState = {
@@ -58,7 +58,7 @@ class AddGrantModal extends Component {
       <ErrorBox message="Error adding grant" response={addGrantResponse} />
     );
 
-    const validationMessage = validateARN(arn);
+    const validationMessage = validateUserOrGroupARN(arn);
 
     const handleSubmit = () => {
       if (!validationMessage && !!selectedRole) {

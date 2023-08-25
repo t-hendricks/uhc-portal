@@ -7,8 +7,7 @@ import {
   CloudProviderType,
   IMDSType,
 } from '~/components/clusters/wizards/common/constants';
-// TODO: use versionHelpers instead
-import { splitMajorMinor } from '../../common/Upgrades/UpgradeAcknowledge/UpgradeAcknowledgeSelectors';
+import { splitMajorMinor } from '~/common/versionHelpers';
 
 export enum RosaFieldId {}
 
@@ -68,4 +67,20 @@ export const initialValues: FormikValues = {
 export const canSelectImds = (clusterVersionRawId: string): boolean => {
   const [major, minor] = splitMajorMinor(clusterVersionRawId);
   return major > 4 || (major === 4 && minor >= 11);
+};
+
+export const defaultWorkerNodeVolumeSizeGiB = 300;
+export const workerNodeVolumeSizeMinGiB = 128;
+/**
+ * Returns ROSA/AWS OSD max worker node volume size, varies per cluster version.
+ * In GiB.
+ */
+export const getWorkerNodeVolumeSizeMaxGiB = (clusterVersionRawId: string): number => {
+  const [major, minor] = splitMajorMinor(clusterVersionRawId);
+  return (major > 4 || (major === 4 && minor >= 14) ? 16 : 1) * 1024;
+};
+
+export const canConfigureManagedIngress = (clusterVersionRawId: string): boolean => {
+  const [major, minor] = splitMajorMinor(clusterVersionRawId);
+  return major > 4 || (major === 4 && minor >= 13);
 };

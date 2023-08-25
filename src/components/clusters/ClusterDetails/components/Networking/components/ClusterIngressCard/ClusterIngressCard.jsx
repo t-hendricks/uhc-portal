@@ -15,59 +15,58 @@ import {
   TextContent,
   TextVariants,
   ClipboardCopy,
-  Switch,
 } from '@patternfly/react-core';
 
-import { LoadBalancerFlavor } from '~/types/clusters_mgmt.v1';
 import { isRestrictedEnv } from '~/restrictedEnv';
 import EditClusterIngressDialog from '../EditClusterIngressDialog';
 import ButtonWithTooltip from '../../../../../../common/ButtonWithTooltip';
 
 import modals from '../../../../../../common/Modal/modals';
-import { LoadBalancerFlavorLabel } from '../constants';
-import LoadBalancerPopover from '../LoadBalancerPopover';
 
 import './ClusterIngressCard.scss';
 
+const resolveDisableEditReason = ({ canEdit, isReadOnly, isSTSEnabled, clusterHibernating }) => {
+  const readOnlyReason = isReadOnly && 'This operation is not available during maintenance';
+  const STSEnabledReason =
+    isSTSEnabled &&
+    'This operation is not available for clusters using Security Token Service (STS)';
+  const hibernatingReason =
+    clusterHibernating && 'This operation is not available while cluster is hibernating';
+  const canNotEditReason =
+    !canEdit &&
+    'You do not have permission to edit routers. Only cluster owners, cluster editors, and organization administrators can edit routers.';
+  return STSEnabledReason || readOnlyReason || hibernatingReason || canNotEditReason;
+};
 class ClusterIngressCard extends React.Component {
   handleEditSettings = () => {
     const { openModal } = this.props;
     openModal(modals.EDIT_CLUSTER_INGRESS);
   };
 
-  resolveDisableEditReason() {
-    const { canEdit, isReadOnly, isSTSEnabled, clusterHibernating } = this.props;
-    const readOnlyReason = isReadOnly && 'This operation is not available during maintenance';
-    const STSEnabledReason =
-      isSTSEnabled &&
-      'This operation is not available for clusters using Security Token Service (STS)';
-    const hibernatingReason =
-      clusterHibernating && 'This operation is not available while cluster is hibernating';
-    const canNotEditReason =
-      !canEdit &&
-      'You do not have permission to edit routers. Only cluster owners, cluster editors, and organization administrators can edit routers.';
-    return STSEnabledReason || readOnlyReason || hibernatingReason || canNotEditReason;
-  }
-
   render() {
     const {
       provider,
       consoleURL,
       controlPlaneAPIEndpoint,
-      defaultRouterAddress,
       additionalRouterAddress,
       additionalRouterLabels,
       refreshCluster,
       isApiPrivate,
-      isDefaultRouterPrivate,
       isAdditionalRouterPrivate,
       hasAdditionalRouter,
       showConsoleLink,
-      isNLB,
+      canEdit,
+      isReadOnly,
+      isSTSEnabled,
+      clusterHibernating,
     } = this.props;
 
-    const disableEditReason = this.resolveDisableEditReason();
-    const isAWS = provider === 'aws';
+    const disableEditReason = resolveDisableEditReason({
+      canEdit,
+      isReadOnly,
+      isSTSEnabled,
+      clusterHibernating,
+    });
 
     return (
       <Card className="ocm-c-networking-cluster-ingress__card">
@@ -102,35 +101,13 @@ class ClusterIngressCard extends React.Component {
                 </Text>
               </TextContent>
             </FormGroup>
-            <FormGroup fieldId="default_router_address" label="Default application router" isStack>
-              <TextInput
-                id="default_router_address"
-                value={`*.${defaultRouterAddress}`}
-                isReadOnly
-              />
-              <TextContent>
-                <Text component={TextVariants.small}>
-                  {`${isDefaultRouterPrivate || isRestrictedEnv() ? 'Private' : 'Public'} router`}
-                </Text>
-              </TextContent>
-            </FormGroup>
-            {isAWS && (
-              <FormGroup label="Load balancer type" labelIcon={<LoadBalancerPopover />}>
-                <Switch
-                  label={LoadBalancerFlavorLabel[LoadBalancerFlavor.NLB]}
-                  labelOff={LoadBalancerFlavorLabel[LoadBalancerFlavor.CLASSIC]}
-                  isChecked={isNLB}
-                  isDisabled
-                />
-              </FormGroup>
-            )}
             {hasAdditionalRouter && (
               <>
                 <FormGroup fieldId="additional_router_address" label="Additional router" isStack>
                   <TextInput
                     id="additional_router_address"
                     value={`*.${additionalRouterAddress}`}
-                    isReadOnly
+                    readOnlyVariant="default"
                   />
                   <TextContent>
                     <Text component={TextVariants.small}>
@@ -179,13 +156,11 @@ ClusterIngressCard.propTypes = {
   provider: PropTypes.string,
   consoleURL: PropTypes.string,
   controlPlaneAPIEndpoint: PropTypes.string.isRequired,
-  defaultRouterAddress: PropTypes.string.isRequired,
   additionalRouterAddress: PropTypes.string.isRequired,
   additionalRouterLabels: PropTypes.arrayOf(PropTypes.string),
   openModal: PropTypes.func.isRequired,
   refreshCluster: PropTypes.func.isRequired,
   isApiPrivate: PropTypes.bool.isRequired,
-  isDefaultRouterPrivate: PropTypes.bool.isRequired,
   isAdditionalRouterPrivate: PropTypes.bool.isRequired,
   hasAdditionalRouter: PropTypes.bool.isRequired,
   canEdit: PropTypes.bool.isRequired,
@@ -193,7 +168,6 @@ ClusterIngressCard.propTypes = {
   isSTSEnabled: PropTypes.bool.isRequired,
   clusterHibernating: PropTypes.bool.isRequired,
   showConsoleLink: PropTypes.bool.isRequired,
-  isNLB: PropTypes.bool.isRequired,
 };
 
 export default ClusterIngressCard;

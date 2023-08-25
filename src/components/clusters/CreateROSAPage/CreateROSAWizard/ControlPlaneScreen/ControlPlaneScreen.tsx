@@ -22,6 +22,7 @@ import ExternalLink from '~/components/common/ExternalLink';
 
 import AWSLogo from '~/styles/images/AWS.png';
 import RedHat from '~/styles/images/Logo-Red_Hat-B-Standard-RGB.png';
+import { ApplicationIngressType } from '~/components/clusters/wizards/osd/Networking/constants';
 import StandAloneTile from './StandAloneTile';
 import HostedTile from './HostedTile';
 import { hypershiftValue } from './ControlPlaneCommon';
@@ -52,6 +53,13 @@ const ControlPlaneField = ({
     onChange(isHypershift);
     // Uncheck the following Network checkboxes when switching Control plane selection
     change('install_to_vpc', false);
+    change('shared_vpc', {
+      is_allowed: !isHypershift,
+      is_selected: false,
+      base_dns_domain: '',
+      hosted_zone_id: '',
+      hosted_zone_role_arn: '',
+    });
     change('configure_proxy', false);
     // Reset VPC settings in case they were configured and then came back to the Control plane step
     Object.keys(formValues).forEach((formValue) => {
@@ -64,8 +72,13 @@ const ControlPlaneField = ({
       }
     });
 
-    if (isHypershift === 'true' && formValues.multi_az === 'true') {
-      change('multi_az', 'false');
+    if (isHypershift === 'true') {
+      if (formValues.multi_az === 'true') {
+        change('multi_az', 'false');
+      }
+      if (formValues.applicationIngress === ApplicationIngressType.Custom) {
+        change('applicationIngress', ApplicationIngressType.Default);
+      }
     }
 
     // Reset the cluster privacy public subnet when Standalone is chosen.

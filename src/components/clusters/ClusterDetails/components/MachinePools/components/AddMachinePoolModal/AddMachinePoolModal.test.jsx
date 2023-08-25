@@ -49,6 +49,7 @@ describe('<AddMachinePoolModal />', () => {
       change={change}
       canUseSpotInstances={false}
       useSpotInstances={false}
+      isHypershiftCluster={false}
     />,
   );
   it('renders correctly', () => {

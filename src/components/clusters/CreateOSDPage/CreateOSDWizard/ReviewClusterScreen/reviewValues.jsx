@@ -188,6 +188,10 @@ const reviewValues = {
       return value;
     },
   },
+  worker_volume_size_gib: {
+    title: 'Worker root disk size',
+    valueTransform: (value) => `${value} GiB`,
+  },
   min_replicas: {
     title: 'Compute node range',
     valueTransform: (value, allValues) => (
@@ -241,6 +245,28 @@ const reviewValues = {
       false: 'Disabled',
     },
   },
+  shared_vpc: {
+    title: 'Shared VPC settings',
+    valueTransform: (sharedVpcSettings) => (
+      <Grid>
+        {/* Three columns to match the layout of VPC subnet settings */}
+        <GridItem md={3}>
+          <strong>Base DNS domain</strong>
+        </GridItem>
+        <GridItem md={3}>
+          <strong>Private hosted zone ID</strong>
+        </GridItem>
+        <GridItem md={3}>
+          <strong>Shared VPC role</strong>
+        </GridItem>
+        <GridItem />
+        <GridItem md={3}>{sharedVpcSettings.base_dns_domain}</GridItem>
+        <GridItem md={3}>{sharedVpcSettings.hosted_zone_id}</GridItem>
+        <GridItem md={3}>{sharedVpcSettings.hosted_zone_role_arn}</GridItem>
+        <GridItem />
+      </Grid>
+    ),
+  },
   aws_standalone_vpc: {
     title: 'VPC subnet settings',
     valueTransform: (value, allValues) => {
@@ -281,6 +307,26 @@ const reviewValues = {
       }));
       return <AwsVpcTable vpcs={vpcs} showPublicFields={false} />;
     },
+  },
+  applicationIngress: {
+    title: 'Application ingress',
+    valueTransform: (value) => (value === 'default' ? 'Use default settings' : 'Custom settings'),
+  },
+  defaultRouterSelectors: {
+    title: 'Route selectors',
+    valueTransform: (value) => value || 'None specified',
+  },
+  defaultRouterExcludedNamespacesFlag: {
+    title: 'Excluded namespaces',
+    valueTransform: (value) => value || 'None specified',
+  },
+  isDefaultRouterWildcardPolicyAllowed: {
+    title: 'Wildcard policy',
+    valueTransform: (value) => (value ? 'Allowed' : 'Disallowed'),
+  },
+  isDefaultRouterNamespaceOwnershipPolicyStrict: {
+    title: 'Namespace ownership policy',
+    valueTransform: (value) => (value ? 'Strict' : 'Inter-namespace ownership'),
   },
   gpc_vpc: {
     title: 'VPC subnet settings',

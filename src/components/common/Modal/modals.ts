@@ -10,6 +10,10 @@ const modals = {
   EDIT_DISPLAY_NAME: 'edit-display-name',
   EDIT_CONSOLE_URL: 'edit-console-url',
   EDIT_CLUSTER_INGRESS: 'edit-cluster-ingress',
+  EDIT_APPLICATION_INGRESS: 'edit-application-ingress',
+  EDIT_CLUSTER_AUTOSCALING_V1: 'edit-cluster-autoscaling-v1', // redux-form
+  EDIT_CLUSTER_AUTOSCALING_V2: 'edit-cluster-autoscaling-v2', // formik
+  ADD_MACHINE_POOL: 'add-machine-pool',
   DELETE_CLUSTER: 'delete-cluster',
   UPGRADE_WIZARD: 'upgrade-wizard',
   TRANSFER_CLUSTER_OWNERSHIP: 'transfer-cluster-ownership',

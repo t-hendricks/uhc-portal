@@ -12,18 +12,22 @@ import {
   Tooltip,
 } from '@patternfly/react-core';
 import { Field } from 'redux-form';
+
 import { normalizedProducts } from '~/common/subscriptionTypes';
 import { validateRequiredMachinePoolsSubnet } from '~/common/validators';
 import useAnalytics from '~/hooks/useAnalytics';
 import { ocmResourceType, trackEvents } from '~/common/analytics';
 import { isRestrictedEnv } from '~/restrictedEnv';
+import { canConfigureManagedIngress } from '~/components/clusters/wizards/rosa/constants';
 import { ReduxCheckbox } from '../../../../common/ReduxFormComponents';
 import RadioButtons from '../../../../common/ReduxFormComponents/RadioButtons';
 import { constants } from '../../CreateOSDForm/CreateOSDFormConstants';
 import ExternalLink from '../../../../common/ExternalLink';
 import links from '../../../../../common/installLinks.mjs';
 import { PLACEHOLDER_VALUE } from '../../CreateOSDForm/FormSections/NetworkingSection/AvailabilityZoneSelection';
+
 import { SubnetSelectField } from './SubnetSelectField';
+import { DefaultIngressFields } from './DefaultIngressFields';
 
 function NetworkScreen(props) {
   const {
@@ -40,6 +44,8 @@ function NetworkScreen(props) {
     product,
     formValues,
     isHypershiftSelected,
+    clusterVersionRawId,
+    applicationIngress,
   } = props;
   const { OSD, OSDTrial } = normalizedProducts;
   const isByocOSD = isByoc && [OSD, OSDTrial].includes(product);
@@ -49,6 +55,8 @@ function NetworkScreen(props) {
   // Do not need to check for VPC here, since checking the "Configure a cluster-wide proxy" checkbox
   // automatically checks the "Install into an existing VPC" checkbox in the UI
   const showConfigureProxy = showClusterWideProxyCheckbox || isByocOSD;
+
+  const isManagedIngresAllowed = canConfigureManagedIngress(clusterVersionRawId);
 
   const track = useAnalytics();
 
@@ -122,6 +130,15 @@ function NetworkScreen(props) {
 
   const onInstallIntoVPCchange = (checked) => {
     change('install_to_vpc', checked);
+    if (!checked && formValues.shared_vpc.is_allowed) {
+      change('shared_vpc', {
+        is_allowed: true,
+        is_selected: false,
+        base_dns_domain: '',
+        hosted_zone_id: '',
+        hosted_zone_role_arn: '',
+      });
+    }
     trackCheckedState(trackEvents.InstallIntoVPC, checked);
   };
 
@@ -308,6 +325,51 @@ function NetworkScreen(props) {
             </GridItem>
           </>
         )}
+
+        {cloudProviderID === 'aws' && !isHypershiftSelected && (
+          <>
+            <GridItem>
+              <Title headingLevel="h4" size="xl">
+                Application ingress settings
+              </Title>
+              <Text className="pf-u-mt-sm">
+                Ingress is configured by default.{' '}
+                {isManagedIngresAllowed
+                  ? 'Customize settings if needed.'
+                  : 'It can be customized for clusters 4.13 or newer.'}
+              </Text>
+            </GridItem>
+
+            {isManagedIngresAllowed && (
+              <Field
+                component={RadioButtons}
+                name="applicationIngress"
+                ariaLabel="Use application ingress defaults"
+                isDisabled={!isManagedIngresAllowed}
+                disableDefaultValueHandling
+                options={[
+                  {
+                    value: 'default',
+                    ariaLabel: 'Default settings',
+                    label: 'Default settings',
+                    // Do not show the form when "default" is requested
+                  },
+                  {
+                    value: 'custom',
+                    ariaLabel: 'Custom settings',
+                    label: 'Custom settings',
+                    extraField: applicationIngress !== 'default' && (
+                      <DefaultIngressFields
+                        hasSufficientIngressEditVersion
+                        className="pf-u-mt-md pf-u-ml-lg"
+                      />
+                    ),
+                  },
+                ]}
+              />
+            )}
+          </>
+        )}
       </Grid>
     </Form>
   );
@@ -327,6 +389,8 @@ NetworkScreen.propTypes = {
   product: PropTypes.string,
   formValues: PropTypes.object,
   isHypershiftSelected: PropTypes.bool,
+  clusterVersionRawId: PropTypes.string.isRequired,
+  applicationIngress: PropTypes.string,
 };
 
 export default NetworkScreen;

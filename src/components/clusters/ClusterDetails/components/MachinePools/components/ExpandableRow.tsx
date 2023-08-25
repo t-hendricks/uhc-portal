@@ -1,19 +1,18 @@
 import React from 'react';
-import { Label, Title, Split, SplitItem, Flex, FlexItem } from '@patternfly/react-core';
+import { Label, Title, Flex, FlexItem } from '@patternfly/react-core';
 import isEmpty from 'lodash/isEmpty';
 import chunk from 'lodash/chunk';
 
 import { MachinePool } from '~/types/clusters_mgmt.v1/models/MachinePool';
-import { ClusterFromSubscription } from '~/types/types';
 import { Taint } from '~/types/clusters_mgmt.v1/models/Taint';
 import { hasSubnets, getSubnetIds } from '../machinePoolsHelper';
-import { isMultiAZ } from '../../../clusterDetailsHelper';
+import MachinePoolAutoScalingDetail from '../MachinePoolAutoscalingDetail';
 
 const ExpandableRow = ({
-  cluster,
+  isMultiZoneCluster,
   machinePool,
 }: {
-  cluster: ClusterFromSubscription;
+  isMultiZoneCluster: boolean;
   machinePool: MachinePool;
 }) => {
   let labels = null;
@@ -59,29 +58,10 @@ const ExpandableRow = ({
 
   if (machinePool.autoscaling) {
     autoscaling = (
-      <>
-        <Title headingLevel="h4">Autoscaling</Title>
-        <Split hasGutter>
-          <SplitItem>
-            <Title headingLevel="h4" className="autoscale__lim">{`Min nodes ${
-              isMultiAZ(cluster) ? 'per zone' : ''
-            }`}</Title>
-            {machinePool.autoscaling.min_replicas &&
-              (isMultiAZ(cluster)
-                ? machinePool.autoscaling.min_replicas / 3
-                : machinePool.autoscaling.min_replicas)}
-          </SplitItem>
-          <SplitItem>
-            <Title headingLevel="h4" className="autoscale__lim">{`Max nodes ${
-              isMultiAZ(cluster) ? 'per zone' : ''
-            }`}</Title>
-            {machinePool.autoscaling.max_replicas &&
-              (isMultiAZ(cluster)
-                ? machinePool.autoscaling.max_replicas / 3
-                : machinePool.autoscaling.max_replicas)}
-          </SplitItem>
-        </Split>
-      </>
+      <MachinePoolAutoScalingDetail
+        isMultiZoneCluster={isMultiZoneCluster}
+        autoscaling={machinePool.autoscaling}
+      />
     );
   }
 

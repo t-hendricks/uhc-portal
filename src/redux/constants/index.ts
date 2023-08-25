@@ -1,4 +1,5 @@
 import * as clustersConstants from './clustersConstants';
+import * as clusterAutoscalerConstants from './clusterAutoscalerConstants';
 import * as viewConstants from './viewConstants';
 import * as viewOptionsConstants from './viewOptionsConstants';
 import * as viewPaginationConstants from './viewPaginationConstants';
@@ -13,10 +14,12 @@ import * as persistentStorageConstants from './persistentStorageConstants';
 import * as loadBalancerConstants from './loadBalancerConstants';
 import * as subscriptionSettingsConstants from './subscriptionSettingsConstants';
 import * as dashboardsConstants from './dashboardsConstants';
+import * as dnsDomainsConstants from './dnsDomainsConstants';
 import * as featureConstants from './featureConstants';
 
 export {
   clustersConstants,
+  clusterAutoscalerConstants,
   viewConstants,
   viewOptionsConstants,
   viewPaginationConstants,
@@ -31,5 +34,6 @@ export {
   loadBalancerConstants,
   subscriptionSettingsConstants,
   dashboardsConstants,
+  dnsDomainsConstants,
   featureConstants,
 };

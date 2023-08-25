@@ -4,10 +4,20 @@ import uniq from 'lodash/uniq';
 
 import config from '~/config';
 
+import { store } from '~/redux/store';
 import { DEFAULT_FLAVOUR_ID } from '~/redux/actions/flavourActions';
 import { createCluster } from '~/redux/actions/clustersActions';
-import { parseReduxFormKeyValueList } from '~/common/helpers';
+import {
+  parseReduxFormKeyValueList,
+  strToKeyValueObject,
+  stringToArrayTrimmed,
+} from '~/common/helpers';
 import { billingModels } from '~/common/subscriptionTypes';
+import { WildcardPolicy } from '~/types/clusters_mgmt.v1/models/WildcardPolicy';
+import { NamespaceOwnershipPolicy } from '~/types/clusters_mgmt.v1/models/NamespaceOwnershipPolicy';
+import { ApplicationIngressType } from '~/components/clusters/wizards/osd/Networking/constants';
+import { getClusterAutoScalingSubmitSettings } from '~/components/clusters/CreateOSDPage/clusterAutoScalingValues';
+import { canConfigureManagedIngress } from '../wizards/rosa/constants';
 
 const createClusterAzs = ({ formData, isInstallExistingVPC }) => {
   let AZs = [];
@@ -61,6 +71,12 @@ export const createClusterRequest = ({ isWizard = true, cloudProviderID, product
   const actualProduct = formData.product || product;
   const isHypershiftSelected = formData.hypershift === 'true';
 
+  const state = store.getState();
+  const isAWSBillingAccountVisible =
+    state.features?.HCP_AWS_BILLING_SHOW !== undefined
+      ? state.features?.HCP_AWS_BILLING_SHOW
+      : true;
+
   const clusterRequest = {
     name: formData.name,
     region: {
@@ -113,6 +129,7 @@ export const createClusterRequest = ({ isWizard = true, cloudProviderID, product
         max_replicas: maxNodes * formData.machine_pools_subnets.length,
       };
     } else {
+      clusterRequest.autoscaler = getClusterAutoScalingSubmitSettings(formData.cluster_autoscaling);
       clusterRequest.nodes.autoscale_compute = {
         min_replicas: isMultiAz ? minNodes * 3 : minNodes,
         max_replicas: isMultiAz ? maxNodes * 3 : maxNodes,
@@ -192,6 +209,28 @@ export const createClusterRequest = ({ isWizard = true, cloudProviderID, product
             id: formData.byo_oidc_config_id,
           };
         }
+
+        // Worker volume size
+        if (formData.worker_volume_size_gib) {
+          clusterRequest.nodes.compute_root_volume = {
+            aws: {
+              size: formData.worker_volume_size_gib,
+            },
+          };
+        }
+
+        // Shared VPC
+        const sharedVpc = formData.shared_vpc;
+        if (isInstallExistingVPC && sharedVpc.is_selected && !isHypershiftSelected) {
+          clusterRequest.aws = {
+            ...clusterRequest.aws,
+            private_hosted_zone_id: sharedVpc.hosted_zone_id,
+            private_hosted_zone_role_arn: sharedVpc.hosted_zone_role_arn,
+          };
+          clusterRequest.dns = {
+            base_domain: sharedVpc.base_dns_domain,
+          };
+        }
       } else {
         // AWS CCS credentials
         clusterRequest.aws = {
@@ -214,7 +253,9 @@ export const createClusterRequest = ({ isWizard = true, cloudProviderID, product
             kms_key_arn: formData.etcd_key_arn,
           };
         }
-        clusterRequest.aws.billing_account_id = formData.billing_account_id;
+        if (isAWSBillingAccountVisible) {
+          clusterRequest.aws.billing_account_id = formData.billing_account_id;
+        }
       }
 
       if (formData.imds && !isHypershiftSelected) {
@@ -228,6 +269,32 @@ export const createClusterRequest = ({ isWizard = true, cloudProviderID, product
         formData,
         isInstallExistingVPC,
       });
+
+      if (
+        formData.applicationIngress === ApplicationIngressType.Custom &&
+        canConfigureManagedIngress(formData.cluster_version?.raw_id)
+      ) {
+        clusterRequest.ingresses = {
+          items: [
+            {
+              default: true,
+              excluded_namespaces: formData.defaultRouterExcludedNamespacesFlag
+                ? stringToArrayTrimmed(formData.defaultRouterExcludedNamespacesFlag)
+                : undefined,
+              route_selectors: formData.defaultRouterSelectors
+                ? strToKeyValueObject(formData.defaultRouterSelectors)
+                : undefined,
+              route_wildcard_policy: formData.isDefaultRouterWildcardPolicyAllowed
+                ? WildcardPolicy.WILDCARDS_ALLOWED
+                : WildcardPolicy.WILDCARDS_DISALLOWED,
+              route_namespace_ownership_policy:
+                formData.isDefaultRouterNamespaceOwnershipPolicyStrict
+                  ? NamespaceOwnershipPolicy.STRICT
+                  : NamespaceOwnershipPolicy.INTER_NAMESPACE_ALLOWED,
+            },
+          ],
+        };
+      }
     } else if (actualCloudProviderID === 'gcp') {
       const parsed = JSON.parse(formData.gcp_service_account);
       clusterRequest.gcp = pick(parsed, [

@@ -1,4 +1,6 @@
 import { isRestrictedEnv } from '~/restrictedEnv';
+import { defaultWorkerNodeVolumeSizeGiB } from '~/components/clusters/wizards/rosa/constants';
+import { getDefaultClusterAutoScaling } from '~/components/clusters/CreateOSDPage/clusterAutoScalingValues';
 import { normalizedProducts, billingModels } from '../../../common/subscriptionTypes';
 import { IMDSType } from '../wizards/common';
 
@@ -20,6 +22,9 @@ const createOSDInitialValues = ({
   } else {
     defaultNodeCount = isMultiAz ? 9 : 4;
   }
+
+  const clusterAutoScaling =
+    cloudProviderID === 'aws' && !isHypershiftSelected ? getDefaultClusterAutoScaling() : {};
 
   const billingModelValue = () => {
     if (isTrialDefault) {
@@ -53,16 +58,36 @@ const createOSDInitialValues = ({
     configure_proxy: false,
     disable_scp_checks: false,
     billing_model: billingModelValue(),
+    cluster_autoscaling: clusterAutoScaling,
     product: product || (isTrialDefault ? normalizedProducts.OSDTrial : normalizedProducts.OSD),
     imds: IMDSType.V1AndV2,
+
+    applicationIngress: 'default',
+    defaultRouterSelectors: '',
+    defaultRouterExcludedNamespacesFlag: '',
+    isDefaultRouterWildcardPolicyAllowed: false,
+    isDefaultRouterNamespaceOwnershipPolicyStrict: true,
+
     // Optional fields based on whether Hypershift is selected or not
     ...(isHypershiftSelected
       ? {
           selected_vpc_id: '',
           machine_pools_subnets: [newEmptySubnet()],
           cluster_privacy_public_subnet: newEmptySubnet(),
+          worker_volume_size_gib: undefined,
+          shared_vpc: { is_allowed: false },
         }
-      : { enable_user_workload_monitoring: 'true' }),
+      : {
+          enable_user_workload_monitoring: 'true',
+          worker_volume_size_gib: defaultWorkerNodeVolumeSizeGiB,
+          shared_vpc: {
+            is_allowed: true,
+            is_selected: false,
+            base_dns_domain: '',
+            hosted_zone_id: '',
+            hosted_zone_role_arn: '',
+          },
+        }),
   };
 
   if (cloudProviderID) {

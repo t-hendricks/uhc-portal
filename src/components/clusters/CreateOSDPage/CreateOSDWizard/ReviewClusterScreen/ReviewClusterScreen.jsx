@@ -245,6 +245,8 @@ const ReviewClusterScreen = ({
           isByoc &&
           canSelectImds(clusterVersionRawId) &&
           ReviewItem({ name: 'imds', formValues })}
+        {formValues.worker_volume_size_gib &&
+          ReviewItem({ name: 'worker_volume_size_gib', formValues })}
       </ReviewSection>
       <ReviewSection
         title={getStepName('NETWORKING')}
@@ -269,6 +271,12 @@ const ReviewClusterScreen = ({
             name: 'aws_standalone_vpc',
             formValues,
           })}
+        {formValues.shared_vpc.is_selected &&
+          !isHypershiftSelected &&
+          ReviewItem({
+            name: 'shared_vpc',
+            formValues,
+          })}
         {showVPCCheckbox &&
           formValues.install_to_vpc &&
           isGCP &&
@@ -290,6 +298,19 @@ const ReviewClusterScreen = ({
         {ReviewItem({ name: 'network_service_cidr', formValues })}
         {ReviewItem({ name: 'network_pod_cidr', formValues })}
         {ReviewItem({ name: 'network_host_prefix', formValues })}
+
+        {isAWS &&
+          !isHypershiftSelected &&
+          isByoc &&
+          ReviewItem({ name: 'applicationIngress', formValues })}
+        {formValues.applicationIngress !== 'default' && isAWS && !isHypershiftSelected && isByoc && (
+          <>
+            {ReviewItem({ name: 'defaultRouterSelectors', formValues })}
+            {ReviewItem({ name: 'defaultRouterExcludedNamespacesFlag', formValues })}
+            {ReviewItem({ name: 'isDefaultRouterWildcardPolicyAllowed', formValues })}
+            {ReviewItem({ name: 'isDefaultRouterNamespaceOwnershipPolicyStrict', formValues })}
+          </>
+        )}
       </ReviewSection>
       {isROSA && (
         <ReviewSection

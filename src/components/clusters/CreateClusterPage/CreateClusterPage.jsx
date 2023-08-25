@@ -109,23 +109,25 @@ class CreateCluster extends React.Component {
             {title}
             <PageSection variant="light" className="cluster-create-page">
               <Tabs isFilled activeKey={activeTabIndex} onSelect={this.handleTabClick}>
-                <Tab eventKey={0} title={tabTitle(0)}>
-                  <CloudTab
-                    hasOSDQuota={hasOSDQuota}
-                    rosaCreationWizardFeature={rosaCreationWizardFeature}
-                    trialEnabled={hasOSDTrialQuota && osdTrialFeature}
-                  />
-                </Tab>
-                {!isRestrictedEnv() && (
-                  <>
-                    <Tab eventKey={1} title={tabTitle(1)}>
-                      <DatacenterTab assistedInstallerFeature={assistedInstallerFeature} />
-                    </Tab>
-                    <Tab eventKey={2} title={tabTitle(2)}>
-                      <LocalTab token={token} />
-                    </Tab>
-                  </>
-                )}
+                {[
+                  <Tab eventKey={0} title={tabTitle(0)}>
+                    <CloudTab
+                      hasOSDQuota={hasOSDQuota}
+                      rosaCreationWizardFeature={rosaCreationWizardFeature}
+                      trialEnabled={hasOSDTrialQuota && osdTrialFeature}
+                    />
+                  </Tab>,
+                  ...(isRestrictedEnv()
+                    ? []
+                    : [
+                        <Tab eventKey={1} title={tabTitle(1)}>
+                          <DatacenterTab assistedInstallerFeature={assistedInstallerFeature} />
+                        </Tab>,
+                        <Tab eventKey={2} title={tabTitle(2)}>
+                          <LocalTab token={token} />
+                        </Tab>,
+                      ]),
+                ]}
               </Tabs>
             </PageSection>
           </>

@@ -82,6 +82,7 @@ const links = {
   UNDERSTANDING_AUTHENTICATION: `${DOCS_BASE}/authentication/understanding-authentication.html`,
   UNDERSTANDING_IDENTITY_PROVIDER: `${DOCS_BASE}/authentication/understanding-identity-provider.html`,
   APPLYING_AUTOSCALING: `${DOCS_BASE}/machine_management/applying-autoscaling.html`,
+  APPLYING_AUTOSCALING_API_DETAIL: `${DOCS_BASE}/rest_api/autoscale_apis/clusterautoscaler-autoscaling-openshift-io-v1.html`,
   AWS_SPOT_INSTANCES: `${DOCS_BASE}/machine_management/creating_machinesets/creating-machineset-aws.html#machineset-non-guaranteed-instance_creating-machineset-aws`,
   ENCRYPTING_ETCD: `${DOCS_BASE}/security/encrypting-etcd.html`,
   GETTING_SUPPORT: `${DOCS_BASE}/support/getting-support.html`,
@@ -282,6 +283,7 @@ const links = {
   ROSA_CLUSTER_WIDE_PROXY: `${ROSA_DOCS_BASE}/networking/configuring-cluster-wide-proxy.html`,
   ROSA_UPGRADES: `${ROSA_DOCS_BASE}/upgrading/rosa-upgrading-sts.html`,
   ROSA_LIMITED_SUPPORT_DEFINITION: `${ROSA_DOCS_BASE}/rosa_architecture/rosa_policy_service_definition/rosa-service-definition.html#rosa-limited-support_rosa-service-definition`,
+  ROSA_SHARED_VPC: `${ROSA_DOCS_BASE}/networking/rosa-shared-vpc-config.html`,
 
   ROSA_AWS_STS_PREREQUISITES: `${ROSA_DOCS_BASE}/rosa_planning/rosa-sts-aws-prereqs.html`,
   ROSA_AWS_ACCOUNT_ASSOCIATION: `${ROSA_DOCS_BASE}/rosa_planning/rosa-sts-aws-prereqs.html#rosa-associating-account_rosa-sts-aws-prereqs`,
@@ -295,6 +297,7 @@ const links = {
 
   AWS_CONSOLE_ROSA_HOME: 'https://console.aws.amazon.com/rosa/home',
   AWS_CONSOLE_ROSA_HOME_GET_STARTED: 'https://console.aws.amazon.com/rosa/home#/get-started',
+  AWS_CONSOLE_HOSTED_ZONES: 'https://console.aws.amazon.com/route53/v2/hostedzones',
   AWS_CLI: 'https://aws.amazon.com/cli/',
   AWS_CLI_INSTRUCTIONS:
     'https://docs.aws.amazon.com/ROSA/latest/userguide/getting-started-sts-auto.html',
@@ -305,6 +308,7 @@ const links = {
     'https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/configuring-instance-metadata-options.html',
   AWS_LOAD_BALANCER_FEATURES:
     'https://aws.amazon.com/elasticloadbalancing/features/#Product_comparisons',
+  AWS_SHARED_VPC: 'https://docs.aws.amazon.com/vpc/latest/userguide/vpc-sharing.html',
 
   OCM_DOCS_MANAGING_CLUSTERS: `${OCM_DOCS_BASE}/html/managing_clusters/assembly-managing-clusters`,
   OCM_DOCS_PULL_SECRETS: `${OCM_DOCS_BASE}/html/managing_clusters/assembly-managing-clusters#downloading_and_updating_pull_secrets`,

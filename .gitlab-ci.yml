@@ -88,7 +88,13 @@ stages:
   script:
     - echo "Running unit tests..."
     - node --version
-    - yarn test-no-cache
+    # Record `top` output every 10sec as long as test is running, to track resource usage in CI.
+    # (If running locally, note these are Linux top flags, OSX would need different flags.)
+    - time yarn concurrently --success=first --kill-others --raw 'yarn test-no-cache' 'top -b -c -d10 -i -w > jest-top.log'
+  artifacts:
+    when: always
+    paths:
+      - '*.log'
 
 👀 Linting:
   <<: *store-note
@@ -144,22 +150,25 @@ Pipeline failure:
   stage: report
   only:
     - merge_requests
+  variables:
+    GIT_STRATEGY: none # This step doesn't need access to the source code.
+  cache: {}
   script:
     # ${CI_JOB_NAME_SLUG^^} used as variable key
     # INSTALL_AND_CACHE_DEPENDENCIES | LINTING | UNIT_TESTING | CYPRESS_TESTING
     - |
       NOTE_BODY="Pipeline failed, pipeline url: $CI_PIPELINE_URL<br>$INSTALL_AND_CACHE_DEPENDENCIES$LINTING$UNIT_TESTING$CYPRESS_TESTING"
     - *send-note
-  artifacts:
-    reports:
-      dotenv:
-        - .env
   when: on_failure
 
 Pipeline success:
   stage: report
   only:
     - merge_requests
+  # This step doesn't need access to the source code nor save/restore cache.
+  variables:
+    GIT_STRATEGY: none
+  cache: {}
   script:
     - |
       NOTE_BODY="Pipeline success, pipeline url: $CI_PIPELINE_URL"

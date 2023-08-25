@@ -93,26 +93,27 @@ const isROSA = (cluster) => cluster.product.id === normalizedProducts.ROSA;
 
 // Indicates that this is a ROSA cluster with manual mode
 const isROSAManualMode = (cluster) =>
-  isROSA(cluster) &&
-  cluster.aws.sts &&
-  !cluster.aws.sts.auto_mode &&
-  (!cluster.aws.sts.oidc_config || !cluster.aws.sts.oidc_config.id);
+  isROSA(cluster) && !cluster?.aws?.sts?.auto_mode && !cluster?.aws?.sts?.oidc_config?.id;
 
 const isHypershiftCluster = (cluster) =>
   get(cluster, 'hypershift.enabled', false) ||
   get(cluster, 'subscription.plan.id') === normalizedProducts.ROSA_HyperShift;
 
-// Indicates that this is a ROSA cluster waiting for manual creation of OIDC
-// and operator roles.
+// Indicates that cluster is waiting and an oidc_config.id had been specified
+const isWaitingForOIDCProviderOrOperatorRolesMode = (cluster) =>
+  isROSA(cluster) &&
+  cluster.state === clusterStates.WAITING &&
+  !cluster?.aws?.sts?.auto_mode &&
+  cluster?.aws?.sts?.oidc_config?.id;
+
+// Indicates that this is a Waiting Hypershift cluster
+const isWaitingHypershiftCluster = (cluster) =>
+  cluster.state === clusterStates.WAITING && isHypershiftCluster(cluster);
+
 const isWaitingROSAManualMode = (cluster) =>
   cluster.state === clusterStates.WAITING &&
   isROSAManualMode(cluster) &&
   !isHypershiftCluster(cluster);
-
-// Indicates that this is a Hypershift cluster waiting for OIDC
-// to be detected.
-const isWaitingHypershiftCluster = (cluster) =>
-  cluster.state === clusterStates.WAITING && isHypershiftCluster(cluster);
 
 const isOffline = (state) => isHibernating(state) || state === clusterStates.UNINSTALLING;
 
@@ -125,10 +126,12 @@ export {
   isHibernating,
   isOffline,
   isROSA,
+  isHypershiftCluster,
   isROSAManualMode,
   isWaitingROSAManualMode,
   isWaitingHypershiftCluster,
   getClusterAIPermissions,
   getStateDescription,
+  isWaitingForOIDCProviderOrOperatorRolesMode,
 };
 export default clusterStates;

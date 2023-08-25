@@ -42,7 +42,7 @@ const Timestamp = ({ value }: Props) => {
       text = `${date.toLocaleDateString()} ${date.toLocaleTimeString()}`;
     }
   }
-  return <span>{text}</span>;
+  return <span data-testid="createdAt">{text}</span>;
 };
 
 export default Timestamp;

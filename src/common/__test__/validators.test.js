@@ -12,7 +12,7 @@ import validators, {
   checkDisconnectedvCPU,
   checkDisconnectedMemCapacity,
   checkDisconnectedNodeCount,
-  validateARN,
+  validateUserOrGroupARN,
   checkLabels,
   awsNumericAccountID,
   validateServiceAccountObject,
@@ -30,6 +30,8 @@ import validators, {
   checkCustomOperatorRolesPrefix,
   createPessimisticValidator,
   validateAWSKMSKeyARN,
+  validateRoleARN,
+  validatePrivateHostedZoneId,
 } from '../validators';
 import fixtures from './validators.fixtures';
 import awsVPCs from '../../../mockdata/api/clusters_mgmt/v1/aws_inquiries/vpcs.json';
@@ -679,20 +681,30 @@ test('Field is valid number of compute nodes for disconnected cluster', () => {
   );
 });
 
-test('Field is a valid ARN', () => {
-  expect(validateARN('arn:aws:iam::012345678901:user/richard')).toBe(undefined);
-  expect(validateARN('arn:aws:iam::012345678901:group/sda')).toBe(undefined);
-  expect(validateARN('arn:aws:iam::012345678901:group/s da')).toBe(
+test('Field is a valid user or group ARN', () => {
+  expect(validateUserOrGroupARN('arn:aws:iam::012345678901:user/richard')).toBe(undefined);
+  expect(validateUserOrGroupARN('arn:aws:iam::012345678901:group/sda')).toBe(undefined);
+  expect(validateUserOrGroupARN('arn:aws:iam::012345678901:group/s da')).toBe(
     'Value must not contain whitespaces.',
   );
-  expect(validateARN('arn:aws:iam::0123456789:user/richard')).toBe(
+  expect(validateUserOrGroupARN('arn:aws:iam::0123456789:user/richard')).toBe(
     'ARN value should be in the format arn:aws:iam::123456789012:user/name.',
   );
-  expect(validateARN('arn:aws:iam:0123456789:user/richard')).toBe(
+  expect(validateUserOrGroupARN('arn:aws:iam:0123456789:user/richard')).toBe(
     'ARN value should be in the format arn:aws:iam::123456789012:user/name.',
   );
-  expect(validateARN('0123456789:user/richard')).toBe(
+  expect(validateUserOrGroupARN('0123456789:user/richard')).toBe(
     'ARN value should be in the format arn:aws:iam::123456789012:user/name.',
+  );
+});
+
+test('Field is a valid user or group ARN', () => {
+  expect(validateRoleARN('arn:aws:iam::012345678901:role/some-role')).toBe(undefined);
+  expect(validateRoleARN('arn:aws:iam::012345678901:role/s da')).toBe(
+    'Value must not contain whitespaces.',
+  );
+  expect(validateRoleARN('arn:aws:iam:0123456789:roles/bad-format')).toBe(
+    'ARN value should be in the format arn:aws:iam::123456789012:role/role-name.',
   );
 });
 
@@ -900,6 +912,16 @@ describe('AWS Subnet', () => {
     expect(validate(values2)).toContain('us-east-1f');
     expect(validate({ ...values2, az_0: '' })).toBe(undefined);
   });
+});
+
+test('Private hosted zone ID', () => {
+  expect(validatePrivateHostedZoneId('Z148QEXAMPLE8V')).toBe(undefined);
+  expect(validatePrivateHostedZoneId('Z04846483BCEKWUIANDJP')).toBe(undefined);
+
+  expect(validatePrivateHostedZoneId('A04846483BCEKWUIANDJP')).toBe(
+    'Not a valid Private hosted zone ID.',
+  );
+  expect(validatePrivateHostedZoneId('A04')).toBe('Not a valid Private hosted zone ID.');
 });
 
 test('GCP Subnet', () => {

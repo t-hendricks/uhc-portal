@@ -11,7 +11,6 @@ import MachinePoolsSubnets from './MachinePoolsSubnets';
 function MachinePoolScreen({
   isByoc,
   isMultiAz,
-  isHypershiftSelected,
   machineType,
   cloudProviderID,
   product,
@@ -19,6 +18,7 @@ function MachinePoolScreen({
   autoscalingEnabled,
   autoScaleMinNodesValue,
   autoScaleMaxNodesValue,
+  openEditClusterAutoScalingModal,
   change,
   billingModel,
   minNodesRequired,
@@ -27,6 +27,8 @@ function MachinePoolScreen({
   clusterVersionRawId,
   imds,
   poolNumber,
+  isHypershift,
+  maxWorkerVolumeSizeGiB,
 }) {
   return (
     <Form
@@ -36,9 +38,9 @@ function MachinePoolScreen({
       }}
     >
       <Grid hasGutter>
-        <MachinePoolScreenHeader isHypershiftSelected={isHypershiftSelected} />
+        <MachinePoolScreenHeader isHypershiftSelected={isHypershift} />
 
-        {isHypershiftSelected && <MachinePoolsSubnets selectedVPCID={selectedVPCID} />}
+        {isHypershift && <MachinePoolsSubnets selectedVPCID={selectedVPCID} />}
 
         <ScaleSection
           isBYOC={isByoc}
@@ -57,8 +59,10 @@ function MachinePoolScreen({
           nodeIncrement={nodeIncrement}
           clusterVersionRawId={clusterVersionRawId}
           imds={imds}
-          isHypershiftSelected={isHypershiftSelected}
           poolNumber={poolNumber}
+          maxWorkerVolumeSizeGiB={maxWorkerVolumeSizeGiB}
+          isHypershift={isHypershift}
+          openEditClusterAutoScalingModal={openEditClusterAutoScalingModal}
         />
       </Grid>
     </Form>
@@ -68,7 +72,6 @@ function MachinePoolScreen({
 MachinePoolScreen.propTypes = {
   isByoc: PropTypes.bool.isRequired,
   isMultiAz: PropTypes.bool.isRequired,
-  isHypershiftSelected: PropTypes.bool.isRequired,
   machineType: PropTypes.string.isRequired,
   cloudProviderID: PropTypes.string.isRequired,
   selectedVPCID: PropTypes.string.isRequired,
@@ -79,11 +82,14 @@ MachinePoolScreen.propTypes = {
   change: PropTypes.func.isRequired,
   autoScaleMinNodesValue: PropTypes.string,
   autoScaleMaxNodesValue: PropTypes.string,
+  openEditClusterAutoScalingModal: PropTypes.func,
   minNodesRequired: PropTypes.number,
   nodeIncrement: PropTypes.number,
   clusterVersionRawId: PropTypes.string.isRequired,
   imds: PropTypes.string,
   poolNumber: PropTypes.number,
+  isHypershift: PropTypes.bool,
+  maxWorkerVolumeSizeGiB: PropTypes.number.isRequired,
 };
 
 export default MachinePoolScreen;

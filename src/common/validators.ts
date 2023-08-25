@@ -4,9 +4,10 @@ import cidrTools from 'cidr-tools';
 import { ValidationError, Validator } from 'jsonschema';
 import { clusterService } from '~/services';
 import { State as CcsInquiriesState } from '~/components/clusters/CreateOSDPage/CreateOSDWizard/ccsInquiriesReducer';
-import { sqlString } from './queryHelpers';
+import { workerNodeVolumeSizeMinGiB } from '~/components/clusters/wizards/rosa/constants';
 import type { GCP, Subnetwork, Taint } from '../types/clusters_mgmt.v1';
 import type { AugmentedSubnetwork } from '../types/types';
+import { sqlString } from './queryHelpers';
 
 type Networks = Parameters<typeof cidrTools['overlap']>[0];
 
@@ -25,6 +26,9 @@ const DNS_SUBDOMAIN_REGEXP = /^([a-z]([-a-z0-9]*[a-z0-9])?)+(\.[a-z]([-a-z0-9]*[
 
 // Regular expression used to check UUID as specified in RFC4122.
 const UUID_REGEXP = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
+
+// Regular expression to check k8s "time" parameters (e.g. max_node_provision_time)
+const K8S_TIME_PARAMETER_REGEXP = /^([0-9]+(\.[0-9]+)?(ns|us|µs|ms|s|m|h))+$/;
 
 // Regular expression used to check whether input is a valid IPv4 CIDR range
 const CIDR_REGEXP =
@@ -54,6 +58,8 @@ const MAX_MACHINE_POOL_NAME_LENGTH = 30;
 
 const MAX_NODE_POOL_NAME_LENGTH = 15;
 
+const MAX_OBJECT_NAME_LENGTH = 63;
+
 // Maximum length of a cluster display name
 const MAX_CLUSTER_DISPLAY_NAME_LENGTH = 63;
 
@@ -61,7 +67,9 @@ const GCP_SUBNET_NAME_MAXLEN = 63;
 // Maximum node count
 const MAX_NODE_COUNT = 180;
 
-const AWS_ARN_REGEX = /^arn:aws:iam::\d{12}:(user|group)\/\S+/;
+const AWS_USER_OR_GROUP_ARN_REGEX = /^arn:aws:iam::\d{12}:(user|group)\/\S+/;
+const AWS_ROLE_ARN_REGEX = /^arn:aws:iam::\d{12}:role\/\S+/;
+const AWS_PRIVATE_HOSTED_ZONE_ID_REGEX = /^Z[0-9A-Z]{3,}/;
 
 const LABEL_VALUE_MAX_LENGTH = 63;
 
@@ -96,6 +104,8 @@ const LABEL_KEY_NAME_REGEX = /^([a-z0-9][a-z0-9-_.]*)?[a-z0-9]$/i;
 const LABEL_VALUE_REGEX = /^(([a-z0-9][a-z0-9-_.]*)?[a-z0-9])?$/i;
 
 const MAX_CUSTOM_OPERATOR_ROLES_PREFIX_LENGTH = 32;
+
+const AUTOSCALER_MAX_LOG_VERBOSITY = 6;
 
 type Validations = {
   validated: boolean;
@@ -250,6 +260,78 @@ const createAsyncValidationEvaluator =
     }));
   };
 
+const k8sTimeParameter = (timeValue: string): string | undefined => {
+  if (!timeValue) {
+    return 'Field is required.';
+  }
+  if (!K8S_TIME_PARAMETER_REGEXP.test(timeValue)) {
+    return 'Not a valid time value';
+  }
+  return undefined;
+};
+
+/* The input field value becomes the empty string when the field is not a number */
+const isNumeric = (num: string | number) => num !== '' && !Number.isNaN(Number(num));
+
+const k8sNumberParameter = (
+  num: number | string,
+  allValues?: object,
+  props?: object,
+  name?: string,
+): string | undefined => {
+  if (
+    name === 'cluster_autoscaling.log_verbosity' &&
+    (num < 1 || num > AUTOSCALER_MAX_LOG_VERBOSITY)
+  ) {
+    return `Value must be between 1 and ${AUTOSCALER_MAX_LOG_VERBOSITY}.`;
+  }
+  if (name === 'cluster_autoscaling.scale_down.utilization_threshold' && (num < 0 || num > 1)) {
+    return 'Value must be between 0 and 1.';
+  }
+  const number = Number(num);
+  if (number < 0) {
+    return 'Value cannot be a negative number.';
+  }
+  return undefined;
+};
+
+const minMaxBaseFieldExtractorRegExp = /^(.*)(\.min|\.max)+$/;
+
+const k8sMinMaxParameter = (
+  minOrMax: string,
+  allValues: object,
+  props: object,
+  fieldName: string,
+): string | undefined => {
+  // Report the error if it's not a number
+  const numError = isNumeric(minOrMax) ? undefined : 'Value must be a number.';
+  if (numError) {
+    return numError;
+  }
+  const number = Number(minOrMax);
+  if (number < 0) {
+    return 'Value cannot be a negative number';
+  }
+
+  /* Extracts the base field to be able to compare the min and max values to one another */
+  const baseFieldMatch = fieldName.match(minMaxBaseFieldExtractorRegExp);
+  const baseField = baseFieldMatch ? baseFieldMatch[1] : ''; // Should always match
+
+  // Check the validity of the pair of values
+  const minParamValue = get(allValues, `${baseField}.min`);
+  const maxParamValue = get(allValues, `${baseField}.max`);
+
+  return minParamValue <= maxParamValue
+    ? undefined
+    : 'The minimum cannot be above the maximum value.';
+};
+
+const clusterAutoScalingValidators = {
+  k8sTimeParameter,
+  k8sNumberParameter,
+  k8sMinMaxParameter,
+};
+
 const evaluateClusterNameAsyncValidation = createAsyncValidationEvaluator(
   clusterNameAsyncValidation,
 );
@@ -396,6 +478,14 @@ const labelAndTaintValueValidations = (value: string): Validations => [
   },
 ];
 
+const labelValueValidationsRequired = (value?: string): Validations => [
+  {
+    validated: typeof value !== 'undefined' && value.trim().length > 0,
+    text: 'A valid value is required',
+  },
+  ...labelAndTaintValueValidations(value || ''),
+];
+
 const taintKeyValidations = (value: string, allValues: { taints?: Taint[] }): Validations => {
   const items = allValues?.taints || [];
   return labelAndTaintKeyValidations(value, items);
@@ -424,7 +514,17 @@ const checkLabels = (input: string | string[]) =>
       undefined,
     );
 
-const checkRouteSelectors = checkLabels;
+const checkLabelValueRequired = createPessimisticValidator(labelValueValidationsRequired);
+
+/** Similar to checkLabels but does not allow keys without values */
+const checkRouteSelectors = (input: string | string[]) =>
+  parseNodeLabels(input)
+    // collect the first error found
+    ?.reduce<string | undefined>(
+      (accum, [key, value]) => accum ?? checkLabelKey(key) ?? checkLabelValueRequired(value),
+      // defaulting to undefined
+      undefined,
+    );
 
 // Function to validate that the cluster ID field is a UUID:
 const checkClusterUUID = (value: string): string | undefined => {
@@ -928,15 +1028,29 @@ const checkDisconnectedNodeCount = (value: string): string | undefined => {
   return nodes(Number(value), { value: 0 }, 250);
 };
 
-const validateARN = (value: string): string | undefined => {
+const validateARN = (value: string, regExp: RegExp, arnFormat: string): string | undefined => {
   if (!value) {
-    return 'Field is required';
+    return 'Field is required.';
   }
   if (/\s/.test(value)) {
     return 'Value must not contain whitespaces.';
   }
-  if (!AWS_ARN_REGEX.test(value)) {
-    return 'ARN value should be in the format arn:aws:iam::123456789012:user/name.';
+  if (!regExp.test(value)) {
+    return `ARN value should be in the format arn:aws:iam::123456789012:${arnFormat}.`;
+  }
+  return undefined;
+};
+
+const validateUserOrGroupARN = (value: string) =>
+  validateARN(value, AWS_USER_OR_GROUP_ARN_REGEX, 'user/name');
+const validateRoleARN = (value: string) => validateARN(value, AWS_ROLE_ARN_REGEX, 'role/role-name');
+
+const validatePrivateHostedZoneId = (value: string) => {
+  if (!value) {
+    return 'Field is required.';
+  }
+  if (!AWS_PRIVATE_HOSTED_ZONE_ID_REGEX.test(value)) {
+    return 'Not a valid Private hosted zone ID.';
   }
   return undefined;
 };
@@ -1411,6 +1525,51 @@ const validateLabelKey = (
 
 const validateLabelValue = checkLabelValue;
 
+type Tls = {
+  clusterRoutesTlsSecretRef?: string;
+  clusterRoutesHostname?: string;
+};
+
+const validateTlsPair = (tlsSecret?: string, tlsHostname?: string) => {
+  if (!tlsSecret && !tlsHostname) {
+    return undefined;
+  }
+  if (!tlsSecret || !tlsHostname) {
+    return 'You cannot provide only one of TLS secret name and Hostname';
+  }
+  return checkObjectName(tlsSecret, 'TLS secret', MAX_OBJECT_NAME_LENGTH);
+};
+
+const validateTlsSecretName = (value: string, allValues: Tls) =>
+  validateTlsPair(value, allValues.clusterRoutesHostname);
+
+const validateTlsHostname = (value: string, allValues: Tls) =>
+  validateTlsPair(value, allValues.clusterRoutesTlsSecretRef);
+
+const validateNamespacesList = (value = '') => {
+  const namespaces = value.split(',');
+  const incorrect = namespaces.find(
+    (namespace) => !!checkObjectName(namespace, 'Namespace', MAX_OBJECT_NAME_LENGTH),
+  );
+  if (incorrect) {
+    return checkObjectName(incorrect, 'Namespace', MAX_OBJECT_NAME_LENGTH);
+  }
+
+  return undefined;
+};
+
+const validateWorkerVolumeSize = (
+  size: number,
+  allValues: object,
+  { maxWorkerVolumeSizeGiB }: { maxWorkerVolumeSizeGiB: number },
+) => {
+  if (size < workerNodeVolumeSizeMinGiB || size > maxWorkerVolumeSizeGiB) {
+    return `The worker root disk size must be between ${workerNodeVolumeSizeMinGiB} GiB and ${maxWorkerVolumeSizeGiB} GiB.`;
+  }
+
+  return undefined;
+};
+
 const validators = {
   required,
   acknowledgePrerequisites,
@@ -1436,6 +1595,7 @@ const validators = {
   validateNumericInput,
   validateLabelKey,
   validateLabelValue,
+  validateWorkerVolumeSize,
   checkOpenIDIssuer,
   checkGithubTeams,
   checkRouteSelectors,
@@ -1479,7 +1639,11 @@ export {
   checkDisconnectedSockets,
   checkDisconnectedMemCapacity,
   checkDisconnectedNodeCount,
+  clusterAutoScalingValidators,
   validateARN,
+  validateUserOrGroupARN,
+  validateRoleARN,
+  validatePrivateHostedZoneId,
   awsNumericAccountID,
   validateGCPServiceAccount,
   validateServiceAccountObject,
@@ -1513,6 +1677,10 @@ export {
   checkLabelValue,
   checkTaintKey,
   checkTaintValue,
+  validateWorkerVolumeSize,
+  validateTlsSecretName,
+  validateTlsHostname,
+  validateNamespacesList,
 };
 
 export default validators;
