@@ -12,7 +12,6 @@ const baseProps = {
   onClose: jest.fn(),
   change: jest.fn(),
   getOrganizationAndQuota: jest.fn(),
-  resetScaleDefaultMachinePoolResponse: jest.fn(),
   resetScaleMachinePoolResponse: jest.fn(),
   resetGetMachinePoolsResponse: jest.fn(),
   getMachineTypes: jest.fn(),

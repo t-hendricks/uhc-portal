@@ -2,7 +2,22 @@ import masterResizeAlertThresholdSelector, {
   masterResizeThresholds,
 } from '../EditNodeCountModalSelectors';
 import fixtures from '../../../ClusterDetails/__test__/ClusterDetails.fixtures';
-import { STATIC_DEFAULT_MP_ID } from '../../../ClusterDetails/components/MachinePools/machinePoolsHelper';
+
+const machineTypes = {
+  types: {
+    aws: [
+      {
+        id: 'm5.xlarge',
+        cpu: {
+          value: 4,
+        },
+        memory: {
+          memory: 4,
+        },
+      },
+    ],
+  },
+};
 
 describe('masterResizeAlertThreshold Selector', () => {
   const modalState = { data: { cluster: { ...fixtures.clusterDetails.cluster } } };
@@ -20,7 +35,13 @@ describe('masterResizeAlertThreshold Selector', () => {
       },
       machinePools: {
         getMachinePools: {
-          data: [],
+          data: [
+            {
+              id: 'foo',
+              replicas: 2,
+              instance_type: 'm5.xlarge',
+            },
+          ],
         },
       },
       modal: modalState,
@@ -28,12 +49,13 @@ describe('masterResizeAlertThreshold Selector', () => {
     };
 
     const requestedNodes = parseInt(state.form.EditNodeCount.values.nodes_compute, 10);
-    const result = masterResizeAlertThresholdSelector(
-      STATIC_DEFAULT_MP_ID,
+    const result = masterResizeAlertThresholdSelector({
+      selectedMachinePoolID: 'foo',
       requestedNodes,
-      state.clusters.details.cluster,
-      state.machinePools.getMachinePools.data,
-    );
+      cluster: state.clusters.details.cluster,
+      machinePools: state.machinePools.getMachinePools.data,
+      machineTypes,
+    });
 
     expect(result).toEqual(masterResizeThresholds.medium);
   });
@@ -54,21 +76,27 @@ describe('masterResizeAlertThreshold Selector', () => {
       },
       machinePools: {
         getMachinePools: {
-          data: [],
+          data: [
+            {
+              id: 'foo',
+              replicas: 2,
+              instance_type: 'm5.xlarge',
+            },
+          ],
         },
       },
-
       modal: modalState,
       form: { EditNodeCount: { values: { nodes_compute: '101' } } },
     };
 
     const requestedNodes = parseInt(state.form.EditNodeCount.values.nodes_compute, 10);
-    const result = masterResizeAlertThresholdSelector(
-      STATIC_DEFAULT_MP_ID,
+    const result = masterResizeAlertThresholdSelector({
+      selectedMachinePoolID: 'foo',
       requestedNodes,
-      state.clusters.details.cluster,
-      state.machinePools.getMachinePools.data,
-    );
+      cluster: state.clusters.details.cluster,
+      machinePools: state.machinePools.getMachinePools.data,
+      machineTypes,
+    });
 
     expect(result).toEqual(masterResizeThresholds.large);
   });
@@ -111,12 +139,13 @@ describe('masterResizeAlertThreshold Selector', () => {
     };
 
     const requestedNodes = parseInt(state.form.EditNodeCount.values.nodes_compute, 10);
-    const result = masterResizeAlertThresholdSelector(
-      STATIC_DEFAULT_MP_ID,
+    const result = masterResizeAlertThresholdSelector({
+      selectedMachinePoolID: 'mp-with-label0',
       requestedNodes,
-      state.clusters.details.cluster,
-      state.machinePools.getMachinePools.data,
-    );
+      cluster: state.clusters.details.cluster,
+      machinePools: state.machinePools.getMachinePools.data,
+      machineTypes,
+    });
 
     expect(result).toEqual(masterResizeThresholds.medium);
   });
@@ -158,12 +187,13 @@ describe('masterResizeAlertThreshold Selector', () => {
     };
 
     const requestedNodes = parseInt(state.form.EditNodeCount.values.nodes_compute, 10);
-    const result = masterResizeAlertThresholdSelector(
-      'mp-with-label',
+    const result = masterResizeAlertThresholdSelector({
+      selectedMachinePoolID: 'mp-with-label',
       requestedNodes,
-      state.clusters.details.cluster,
-      state.machinePools.getMachinePools.data,
-    );
+      cluster: state.clusters.details.cluster,
+      machinePools: state.machinePools.getMachinePools.data,
+      machineTypes,
+    });
 
     expect(result).toEqual(masterResizeThresholds.medium);
   });
@@ -213,12 +243,13 @@ describe('masterResizeAlertThreshold Selector', () => {
     };
 
     const requestedNodes = parseInt(state.form.EditNodeCount.values.nodes_compute, 10);
-    const result = masterResizeAlertThresholdSelector(
-      'mp-with-label0',
+    const result = masterResizeAlertThresholdSelector({
+      selectedMachinePoolID: 'mp-with-label0',
       requestedNodes,
-      state.clusters.details.cluster,
-      state.machinePools.getMachinePools.data,
-    );
+      cluster: state.clusters.details.cluster,
+      machinePools: state.machinePools.getMachinePools.data,
+      machineTypes,
+    });
 
     expect(result).toEqual(masterResizeThresholds.medium);
   });
@@ -238,18 +269,25 @@ describe('masterResizeAlertThreshold Selector', () => {
       },
       machinePools: {
         getMachinePools: {
-          data: [],
+          data: [
+            {
+              id: 'foo',
+              replicas: 2,
+              instance_type: 'm5.xlarge',
+            },
+          ],
         },
       },
     };
 
     const requestedNodes = parseInt(state.form.EditNodeCount.values.nodes_compute, 10);
-    const result = masterResizeAlertThresholdSelector(
-      STATIC_DEFAULT_MP_ID,
+    const result = masterResizeAlertThresholdSelector({
+      selectedMachinePoolID: 'foo',
       requestedNodes,
-      state.clusters.details.cluster,
-      state.machinePools.getMachinePools.data,
-    );
+      cluster: state.clusters.details.cluster,
+      machinePools: state.machinePools.getMachinePools.data,
+      machineTypes,
+    });
 
     expect(result).toEqual(0);
   });

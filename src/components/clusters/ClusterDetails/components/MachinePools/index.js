@@ -14,11 +14,7 @@ import {
   isMachinePoolBehindControlPlane,
 } from './UpdateMachinePools/updateMachinePoolsHelpers';
 import { hasMachinePoolsQuotaSelector } from './MachinePoolsSelectors';
-import {
-  STATIC_DEFAULT_MP_ID,
-  hasStaticDefaultMachinePool,
-  normalizeNodePool,
-} from './machinePoolsHelper';
+import { normalizeNodePool } from './machinePoolsHelper';
 
 import { getOrganizationAndQuota } from '../../../../../redux/actions/userActions';
 import { clusterAutoscalerActions } from '../../../../../redux/actions/clusterAutoscalerActions';
@@ -28,7 +24,6 @@ import { isHypershiftCluster } from '../../clusterDetailsHelper';
 
 const mapStateToProps = (state) => {
   const cluster = get(state, 'clusters.details.cluster', {});
-  const nodes = get(cluster, 'nodes', {});
 
   const props = {
     openModalId: state.modal.modalName,
@@ -43,38 +38,16 @@ const mapStateToProps = (state) => {
       isControlPlaneUpToDate(state) && isMachinePoolBehindControlPlane(state, machinePool),
   };
 
-  if (!hasStaticDefaultMachinePool(cluster)) {
-    const machinePoolsList = isHypershiftCluster(cluster)
-      ? {
-          ...props.machinePoolsList,
-          data: props.machinePoolsList.data.map(normalizeNodePool),
-        }
-      : props.machinePoolsList;
-    return {
-      ...props,
-      clusterAutoscalerResponse: state.clusterAutoscaler,
-      machinePoolsList,
-    };
-  }
-
-  // align the default machine pool structure to additional machine pools structure
-  const defaultMachinePool = {
-    id: STATIC_DEFAULT_MP_ID,
-    instance_type: nodes.compute_machine_type?.id,
-    availability_zones: nodes.availability_zones,
-    labels: nodes.compute_labels,
-  };
-
-  if (nodes.autoscale_compute) {
-    defaultMachinePool.autoscaling = { ...nodes.autoscale_compute };
-  } else {
-    defaultMachinePool.desired = nodes.compute;
-  }
-
+  const machinePoolsList = isHypershiftCluster(cluster)
+    ? {
+        ...props.machinePoolsList,
+        data: props.machinePoolsList.data.map(normalizeNodePool),
+      }
+    : props.machinePoolsList;
   return {
-    defaultMachinePool,
-    clusterAutoscalerResponse: state.clusterAutoscaler,
     ...props,
+    clusterAutoscalerResponse: state.clusterAutoscaler,
+    machinePoolsList,
   };
 };
 

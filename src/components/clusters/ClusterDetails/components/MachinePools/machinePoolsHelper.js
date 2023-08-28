@@ -1,12 +1,8 @@
 import { isHibernating } from '~/components/clusters/common/clusterStates';
 import get from 'lodash/get';
-import { normalizeProductID } from '~/common/normalize';
-import { normalizedProducts } from '~/common/subscriptionTypes';
 import { checkLabels } from '../../../../../common/validators';
 import { asArray } from '../../../../../common/helpers';
 import { isHypershiftCluster, isMultiAZ } from '../../clusterDetailsHelper';
-
-export const STATIC_DEFAULT_MP_ID = 'Default';
 
 const isDeleteDisabled = (canDelete, machinePools, isEnforcedDefaultMP) => {
   const permissionsReason = !canDelete && 'You do not have permissions to delete machine pools';
@@ -70,43 +66,19 @@ const getActions = ({
   };
 };
 
-const actionResolver = (props) => {
-  const { rowData, canDelete, cluster, machinePools, onClickUpdate, ...rest } = props;
-
+const actionResolver = ({
+  rowData,
+  canDelete,
+  cluster,
+  machinePools,
+  onClickUpdate,
+  machineTypes,
+  ...rest
+}) => {
   // hide actions kebab for expandable rows
   if (!rowData.machinePool) {
     return [];
   }
-  if (!hasStaticDefaultMachinePool(cluster)) {
-    return actionsResolverNoDefault(props);
-  }
-
-  const deleteDisabledReason = isDeleteDisabled(canDelete, machinePools, false);
-
-  const actions = getActions({
-    ...rest,
-    onClickUpdate,
-    deleteDisabledReason,
-  });
-
-  return [
-    actions.scaleAction,
-    ...(isStaticDefaultMachinePool(rowData.machinePool.id, cluster)
-      ? []
-      : [actions.editLabelsAction, actions.editTaintsAction, actions.deleteAction]),
-    ...(onClickUpdate !== undefined ? [actions.updateAction] : []),
-  ];
-};
-
-const actionsResolverNoDefault = ({
-  rowData,
-  onClickUpdate,
-  canDelete,
-  machinePools,
-  machineTypes,
-  cluster,
-  ...rest
-}) => {
   const isEnforcedDefaultMP = isEnforcedDefaultMachinePool(
     rowData.machinePool.id,
     machinePools,
@@ -305,15 +277,6 @@ const hasDefaultOrExplicitAutoscalingMachinePool = (cluster, machinePools, exclu
   return hasExplicitAutoscalingMachinePool(machinePools, excludeId);
 };
 
-const hasStaticDefaultMachinePool = (cluster) =>
-  !isHypershiftCluster(cluster) &&
-  ![normalizedProducts.OSD, normalizedProducts.OSDTrial, normalizedProducts.ROSA].includes(
-    normalizeProductID(cluster?.product?.id),
-  );
-
-const isStaticDefaultMachinePool = (machinePoolId, cluster) =>
-  machinePoolId === STATIC_DEFAULT_MP_ID && hasStaticDefaultMachinePool(cluster);
-
 const isEnforcedDefaultMachinePool = (
   currentMachinePoolId,
   machinePools,
@@ -361,7 +324,5 @@ export {
   getAddMachinePoolDisabledReason,
   hasExplicitAutoscalingMachinePool,
   hasDefaultOrExplicitAutoscalingMachinePool,
-  hasStaticDefaultMachinePool,
-  isStaticDefaultMachinePool,
   isEnforcedDefaultMachinePool,
 };

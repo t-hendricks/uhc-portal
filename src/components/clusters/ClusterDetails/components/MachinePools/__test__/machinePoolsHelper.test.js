@@ -5,7 +5,6 @@ import {
   parseTags,
   normalizeNodePool,
   normalizeMachinePool,
-  STATIC_DEFAULT_MP_ID,
 } from '../machinePoolsHelper';
 
 describe('machine pools action resolver', () => {
@@ -54,25 +53,6 @@ describe('machine pools action resolver', () => {
         machinePools: [],
       }),
     ).toEqual([]);
-  });
-
-  it('should only have scale action for the default machine pool', () => {
-    const defaultMachinePoolRowData = {
-      cells: [STATIC_DEFAULT_MP_ID, 'm5.xlarge', 'us-east-1a', '4'],
-      machinePool: { id: STATIC_DEFAULT_MP_ID },
-      key: STATIC_DEFAULT_MP_ID,
-    };
-    const expected = [scaleAction];
-    expect(
-      actionResolver({
-        rowData: defaultMachinePoolRowData,
-        onClickDelete,
-        onClickScale,
-        onClickTaints,
-        onClickLabels,
-        machinePools: [],
-      }).toString(),
-    ).toEqual(expected.toString());
   });
 
   it('should have scale, edit taints, edit labels and delete actions', () => {

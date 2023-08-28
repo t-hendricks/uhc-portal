@@ -39,8 +39,6 @@ import {
   actionResolver,
   hasDefaultOrExplicitAutoscalingMachinePool,
   hasSubnets,
-  STATIC_DEFAULT_MP_ID,
-  isStaticDefaultMachinePool,
 } from './machinePoolsHelper';
 
 import ButtonWithTooltip from '../../../../common/ButtonWithTooltip';
@@ -229,9 +227,7 @@ class MachinePools extends React.Component {
         {
           title: (
             <>
-              {isHypershift && machinePool.id !== STATIC_DEFAULT_MP_ID
-                ? machinePool.aws_node_pool?.instance_type
-                : machinePool.instance_type}
+              {isHypershift ? machinePool.aws_node_pool?.instance_type : machinePool.instance_type}
               {machinePool.aws && (
                 <Label variant="outline" className="ocm-c-machine-pools__spot-label">
                   Spot
@@ -345,7 +341,6 @@ class MachinePools extends React.Component {
     const onClickScaleAction = (_, __, rowData) => {
       openModal(modals.EDIT_NODE_COUNT, {
         machinePool: rowData.machinePool,
-        isDefaultMachinePool: isStaticDefaultMachinePool(rowData.machinePool.id, cluster),
         cluster,
       });
     };

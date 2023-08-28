@@ -9,10 +9,7 @@ import { SpotInstanceInfoAlert, isMachinePoolUsingSpotInstances } from '../SpotI
 
 import { ReduxFormDropdown, ReduxFormTaints } from '../../../../../../common/ReduxFormComponents';
 
-import {
-  hasStaticDefaultMachinePool,
-  isEnforcedDefaultMachinePool,
-} from '../../machinePoolsHelper';
+import { isEnforcedDefaultMachinePool } from '../../machinePoolsHelper';
 
 class EditTaintsModal extends Component {
   componentDidMount() {
@@ -67,14 +64,12 @@ class EditTaintsModal extends Component {
     ) : null;
 
     const { pending } = editTaintsResponse;
-    const isEnforcedDefaultMP =
-      !hasStaticDefaultMachinePool(cluster) &&
-      isEnforcedDefaultMachinePool(
-        selectedMachinePoolId,
-        machinePoolsList.data,
-        machineTypes,
-        cluster,
-      );
+    const isEnforcedDefaultMP = isEnforcedDefaultMachinePool(
+      selectedMachinePoolId,
+      machinePoolsList.data,
+      machineTypes,
+      cluster,
+    );
 
     return (
       <Modal
