@@ -5,44 +5,49 @@ import InstructionCommand from '~/components/common/InstructionCommand';
 import { trackEvents } from '~/common/analytics';
 import ExternalLink from '~/components/common/ExternalLink';
 import links from '~/common/installLinks.mjs';
+import { useGlobalState } from '~/redux/hooks';
 import { RosaCliCommand } from '../constants/cliCommands';
-import AssociateAWSAccountStep from './common/AssociateAWSAccountStep';
+import AssociateAWSAccountStep, {
+  AssociateAWSAccountStepProps,
+} from './common/AssociateAWSAccountStep';
 
-type AccountRoleStepProps = {
-  title: string;
+const AccountRoleStep = (props: AssociateAWSAccountStepProps) => {
+  const isHypershiftSelected =
+    useGlobalState((state) => state.form.CreateCluster?.values?.hypershift) === 'true';
+  return (
+    <AssociateAWSAccountStep {...props}>
+      <Text component={TextVariants.p} className="pf-u-mb-lg">
+        To create the necessary account-wide roles and policies quickly, use the default auto method
+        that&apos;s provided by the ROSA CLI.
+      </Text>
+      <InstructionCommand
+        trackEvent={trackEvents.CopyCreateAccountRoles}
+        textAriaLabel={`Copyable ROSA ${RosaCliCommand.CreateAccountRolesAuto} command`}
+        className="pf-u-mb-lg"
+      >
+        {isHypershiftSelected
+          ? RosaCliCommand.CreateAccountRolesHCP
+          : RosaCliCommand.CreateAccountRolesAuto}
+      </InstructionCommand>
+
+      <Alert
+        variant={AlertVariant.info}
+        isInline
+        isPlain
+        className="pf-u-mb-lg"
+        title={
+          <>
+            If you would prefer to manually create the required roles and policies within your AWS
+            account, then follow{' '}
+            <ExternalLink href={links.AWS_CLI_GETTING_STARTED_MANUAL} noIcon>
+              these instructions
+            </ExternalLink>
+            .
+          </>
+        }
+      />
+    </AssociateAWSAccountStep>
+  );
 };
-
-const AccountRoleStep = ({ title }: AccountRoleStepProps) => (
-  <AssociateAWSAccountStep title={title} contentId="AssociateAWSAccountAccountRoleStep">
-    <Text component={TextVariants.p} className="pf-u-mb-lg">
-      To create the necessary account-wide roles and policies quickly, use the default auto method
-      that&apos;s provided by the ROSA CLI.
-    </Text>
-    <InstructionCommand
-      trackEvent={trackEvents.CopyCreateAccountRoles}
-      textAriaLabel={`Copyable ROSA ${RosaCliCommand.CreateAccountRolesAuto}command`}
-      className="pf-u-mb-lg"
-    >
-      {RosaCliCommand.CreateAccountRolesAuto}
-    </InstructionCommand>
-
-    <Alert
-      variant={AlertVariant.info}
-      isInline
-      isPlain
-      className="pf-u-mb-lg"
-      title={
-        <>
-          If you would prefer to manually create the required roles and policies within your AWS
-          account, then follow{' '}
-          <ExternalLink href={links.AWS_CLI_GETTING_STARTED_MANUAL} noIcon>
-            these instructions
-          </ExternalLink>
-          .
-        </>
-      }
-    />
-  </AssociateAWSAccountStep>
-);
 
 export default AccountRoleStep;

@@ -21,6 +21,8 @@ import links from '~/common/installLinks.mjs';
 import { getAwsBillingAccountsFromQuota } from '~/components/clusters/common/quotaSelectors';
 import { useGlobalState } from '~/redux/hooks/useGlobalState';
 import { CloudAccount } from '~/types/accounts_mgmt.v1/models/CloudAccount';
+import { useFeatureGate } from '~/hooks/useFeatureGate';
+import { HCP_AWS_BILLING_SHOW, HCP_AWS_BILLING_REQUIRED } from '~/redux/constants/featureConstants';
 import { required } from '../../../../../../common/validators';
 import ErrorBox from '../../../../../common/ErrorBox';
 import ExternalLink from '../../../../../common/ExternalLink';
@@ -41,6 +43,8 @@ const AWSBillingAccount = ({
   selectedAWSAccountID,
 }: AWSBillingAccountProps) => {
   const dispatch = useDispatch();
+  const isVisible = useFeatureGate(HCP_AWS_BILLING_SHOW);
+  const isRequired = useFeatureGate(HCP_AWS_BILLING_REQUIRED);
   const organization = useGlobalState((state) => state.userProfile.organization);
   const getAWSBillingAccountsResponse = useGlobalState(
     (state) => state.rosaReducer.getAWSBillingAccountsResponse,
@@ -100,6 +104,10 @@ const AWSBillingAccount = ({
   );
   const isContractEnabled = !!selectedAccount && hasContract(selectedAccount);
 
+  if (!isVisible) {
+    return <></>;
+  }
+
   return (
     <>
       <GridItem span={8}>
@@ -122,11 +130,12 @@ const AWSBillingAccount = ({
           component={AWSAccountSelection}
           name="billing_account_id"
           label="AWS billing account"
+          validate={isRequired ? required : undefined}
+          required={isRequired}
           refresh={{
             onRefresh: refresh,
             text: 'Refresh to view newly associated AWS billing accounts.',
           }}
-          validate={required}
           extendedHelpText={
             <>
               Connect ROSA to a new billing account. To add a different AWS account, log in to the
