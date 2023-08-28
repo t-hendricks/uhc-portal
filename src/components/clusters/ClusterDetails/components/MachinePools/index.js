@@ -44,13 +44,16 @@ const mapStateToProps = (state) => {
   };
 
   if (!hasStaticDefaultMachinePool(cluster)) {
+    const machinePoolsList = isHypershiftCluster(cluster)
+      ? {
+          ...props.machinePoolsList,
+          data: props.machinePoolsList.data.map(normalizeNodePool),
+        }
+      : props.machinePoolsList;
     return {
       ...props,
       clusterAutoscalerResponse: state.clusterAutoscaler,
-      machinePoolsList: {
-        ...props.machinePoolsList,
-        data: state.machinePools.getMachinePools.data.map(normalizeNodePool),
-      },
+      machinePoolsList,
     };
   }
 
