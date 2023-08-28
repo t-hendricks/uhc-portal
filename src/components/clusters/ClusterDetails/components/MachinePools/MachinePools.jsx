@@ -168,7 +168,6 @@ class MachinePools extends React.Component {
       openModal,
       openModalId,
       deleteMachinePool,
-      defaultMachinePool,
       deleteMachinePoolResponse,
       addMachinePoolResponse,
       hasMachinePoolsQuota,
@@ -290,18 +289,6 @@ class MachinePools extends React.Component {
       hasSubnets(machinePool);
 
     const rows = [];
-
-    if (defaultMachinePool) {
-      const isDefaultExpandable = isExpandable(defaultMachinePool);
-
-      // initialize rows array with default machine pool row
-      rows.push(getMachinePoolRow(defaultMachinePool, isDefaultExpandable));
-
-      if (isDefaultExpandable) {
-        // add default machine pool expandable row
-        rows.push(getExpandableRow(defaultMachinePool, 0));
-      }
-    }
 
     // set all other machine pools rows
     machinePoolsList.data.forEach((machinePool) => {
@@ -508,14 +495,6 @@ class MachinePools extends React.Component {
     );
   }
 }
-
-const checkNodesAtLeastOne = (props) => {
-  // eslint-disable-next-line react/destructuring-assignment
-  if (!props.desired && !props.autoscaling) {
-    return new Error('One of props "desired" or "autoscaling" was not specified in MachinePools.');
-  }
-  return null;
-};
 
 MachinePools.propTypes = {
   cluster: PropTypes.object.isRequired,

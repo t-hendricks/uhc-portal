@@ -19,7 +19,7 @@ const defaultMachinePool = {
   desired: 1,
 };
 
-const baseProps = (isHypershift = false, ccs = false) => ({
+const baseProps = (isHypershift = false, ccs = false, machinePool = defaultMachinePool) => ({
   cluster: {
     machinePoolsActions: {
       create: true,
@@ -43,7 +43,7 @@ const baseProps = (isHypershift = false, ccs = false) => ({
   deleteMachinePoolResponse: { ...baseRequestState },
   addMachinePoolResponse: { ...baseRequestState },
   scaleMachinePoolResponse: { ...baseRequestState },
-  machinePoolsList: { ...baseRequestState, data: [] },
+  machinePoolsList: { ...baseRequestState, data: [machinePool] },
   getMachinePools,
   deleteMachinePool,
   clearGetMachinePoolsResponse: jest.fn(),
@@ -55,29 +55,23 @@ const baseProps = (isHypershift = false, ccs = false) => ({
   clearDeleteMachinePoolResponse: jest.fn(),
 });
 
-const osdProps = {
-  ...baseProps(),
-  defaultMachinePool: { ...defaultMachinePool },
-};
-
 describe('<MachinePools />', () => {
   it('should call getMachinePools on mount', () => {
-    shallow(<MachinePools {...osdProps} />);
+    shallow(<MachinePools {...baseProps()} />);
     expect(getMachinePools).toBeCalled();
   });
 
   it('renders with the default machine pool', () => {
-    const wrapper = shallow(<MachinePools {...osdProps} />);
+    const wrapper = shallow(<MachinePools {...baseProps()} />);
     expect(wrapper).toMatchSnapshot();
   });
 
   it('renders with the default machine pool when it has labels', () => {
     const props = {
-      ...osdProps,
-      defaultMachinePool: {
-        ...osdProps.defaultMachinePool,
+      ...baseProps(false, false, {
+        ...defaultMachinePool,
         labels: { foo: 'bar', hello: 'world' },
-      },
+      }),
     };
     const wrapper = shallow(<MachinePools {...props} />);
     expect(wrapper).toMatchSnapshot();
@@ -85,7 +79,7 @@ describe('<MachinePools />', () => {
 
   it('renders with additional machine pools, some with labels and/or taints', () => {
     const props = {
-      ...osdProps,
+      ...baseProps(),
       machinePoolsList: {
         data: [
           {
@@ -154,19 +148,19 @@ describe('<MachinePools />', () => {
       },
     ];
 
-    const wrapper = shallow(<MachinePools {...osdProps} machinePoolsList={{ data }} />);
+    const wrapper = shallow(<MachinePools {...baseProps()} machinePoolsList={{ data }} />);
     expect(wrapper).toMatchSnapshot();
   });
 
   it('should open modal', () => {
-    const wrapper = shallow(<MachinePools {...osdProps} />);
+    const wrapper = shallow(<MachinePools {...baseProps()} />);
 
     wrapper.find('#add-machine-pool').simulate('click');
     expect(openModal).toBeCalledWith(modals.ADD_MACHINE_POOL);
   });
 
   it('should render skeleton while fetching machine pools', () => {
-    const wrapper = shallow(<MachinePools {...osdProps} />);
+    const wrapper = shallow(<MachinePools {...baseProps()} />);
 
     wrapper.setProps({ machinePoolsList: { ...baseRequestState, pending: true, data: [] } });
     expect(wrapper).toMatchSnapshot();
@@ -174,7 +168,7 @@ describe('<MachinePools />', () => {
   });
 
   it('should not allow adding machine pools to users without enough quota', () => {
-    const props = { ...osdProps, hasMachinePoolsQuota: false };
+    const props = { ...baseProps(), hasMachinePoolsQuota: false };
     const wrapper = shallow(<MachinePools {...props} />);
 
     expect(wrapper.find('#add-machine-pool').props().disableReason).toBeTruthy();
