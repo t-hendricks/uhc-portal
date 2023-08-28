@@ -20,7 +20,7 @@ describe('<EditTaintsModal />', () => {
         id: 'mp-with-taints',
         instance_type: 'm5.xlarge',
         kind: 'MachinePool',
-        replicas: 1,
+        replicas: 2,
         taints: [
           { key: 'foo1', value: 'bazz1', effect: 'NoSchedule' },
           { key: 'foo2', value: 'bazz2', effect: 'NoSchedule' },
@@ -32,7 +32,7 @@ describe('<EditTaintsModal />', () => {
         id: 'mp-without-taints',
         instance_type: 'm5.xlarge',
         kind: 'MachinePool',
-        replicas: 1,
+        replicas: 2,
       },
     ],
   };
@@ -52,6 +52,19 @@ describe('<EditTaintsModal />', () => {
     machineTypes: {
       fulfilled: true,
       pending: false,
+      types: {
+        aws: [
+          {
+            id: 'm5.xlarge',
+            cpu: {
+              value: 4,
+            },
+            memory: {
+              value: 4,
+            },
+          },
+        ],
+      },
     },
   };
 
@@ -82,8 +95,32 @@ describe('<EditTaintsModal />', () => {
   });
 
   it('should have enabled "Add more" button when it is valid', () => {
+    const machinePoolsList = {
+      data: [
+        ...mockData.data,
+        {
+          availability_zones: ['us-east-1a'],
+          href: '/api/clusters_mgmt/v1/clusters/cluster-id/machine_pools/mp-with-taints3',
+          id: 'mp-without-taints-3',
+          instance_type: 'm5.xlarge',
+          kind: 'MachinePool',
+          replicas: 3,
+        },
+      ],
+    };
+
+    const cluster = {
+      product: {
+        id: normalizedProducts.ROSA,
+      },
+      ccs: {
+        enabled: true,
+      },
+    };
     expect(
-      getEditTaintsModalWrapper({ invalid: false }).find('FieldArray').props().canAddMore,
+      getEditTaintsModalWrapper({ invalid: false, machinePoolsList, cluster })
+        .find('FieldArray')
+        .props().canAddMore,
     ).toBeTruthy();
   });
 
@@ -139,42 +176,21 @@ describe('<EditTaintsModal />', () => {
       },
     };
 
-    const machineTypes = {
-      fulfilled: true,
-      pending: false,
-      types: {
-        aws: [
-          {
-            id: 'm5.xlarge',
-            cpu: {
-              value: 4,
-            },
-            memory: {
-              value: 4,
-            },
-          },
-        ],
-      },
-    };
-
     expect(
-      getEditTaintsModalWrapper({ cluster, machinePoolsList, machineTypes })
-        .find('FieldArray')
-        .props().canAddMore,
+      getEditTaintsModalWrapper({ cluster, machinePoolsList }).find('FieldArray').props()
+        .canAddMore,
     ).toBeTruthy();
 
     cluster.product.id = normalizedProducts.OSD;
     expect(
-      getEditTaintsModalWrapper({ cluster, machinePoolsList, machineTypes })
-        .find('FieldArray')
-        .props().canAddMore,
+      getEditTaintsModalWrapper({ cluster, machinePoolsList }).find('FieldArray').props()
+        .canAddMore,
     ).toBeTruthy();
 
     cluster.product.id = normalizedProducts.OSDTrial;
     expect(
-      getEditTaintsModalWrapper({ cluster, machinePoolsList, machineTypes })
-        .find('FieldArray')
-        .props().canAddMore,
+      getEditTaintsModalWrapper({ cluster, machinePoolsList }).find('FieldArray').props()
+        .canAddMore,
     ).toBeTruthy();
   });
 });

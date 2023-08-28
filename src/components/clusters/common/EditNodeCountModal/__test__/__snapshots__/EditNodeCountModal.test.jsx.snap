@@ -50,7 +50,7 @@ exports[`<EditNodeCountModal /> renders correctly 1`] = `
           isMachinePool={true}
           isMultiAz={true}
           label="Node count per zone"
-          minNodes={0}
+          minNodes={9}
           name="nodes_compute"
           product="OSD"
         />

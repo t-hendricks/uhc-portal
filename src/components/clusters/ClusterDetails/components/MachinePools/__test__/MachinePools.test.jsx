@@ -19,7 +19,7 @@ const defaultMachinePool = {
   desired: 1,
 };
 
-const baseProps = (isHypershift = false) => ({
+const baseProps = (isHypershift = false, ccs = false) => ({
   cluster: {
     machinePoolsActions: {
       create: true,
@@ -30,6 +30,9 @@ const baseProps = (isHypershift = false) => ({
     },
     hypershift: {
       enabled: isHypershift,
+    },
+    ccs: {
+      enabled: ccs,
     },
   },
   openModal,
@@ -308,7 +311,7 @@ describe('<MachinePools />', () => {
 
   it('Should enable all actions in kebab menu if hypershift is false', () => {
     const props = {
-      ...baseProps(),
+      ...baseProps(false, true),
       machineTypes: {
         types: {
           aws: [
@@ -344,12 +347,6 @@ describe('<MachinePools />', () => {
             status: {
               current_replicas: 2,
             },
-            cpu: {
-              value: 4,
-            },
-            memory: {
-              value: 4,
-            },
           },
           {
             kind: 'NodePool',
@@ -368,12 +365,6 @@ describe('<MachinePools />', () => {
             subnet: 'subnet-049f90721559000de',
             status: {
               current_replicas: 2,
-            },
-            cpu: {
-              value: 4,
-            },
-            memory: {
-              value: 4,
             },
           },
         ],

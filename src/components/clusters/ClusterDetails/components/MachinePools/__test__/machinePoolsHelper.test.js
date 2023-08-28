@@ -70,6 +70,7 @@ describe('machine pools action resolver', () => {
         onClickTaints,
         onClickLabels,
         machinePools: [],
+        machineTypes: {},
       }).toString(),
     ).toEqual(expected.toString());
   });
