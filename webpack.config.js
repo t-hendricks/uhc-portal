@@ -123,6 +123,8 @@ module.exports = async (_env, argv) => {
         exposes: {
           './RootApp': path.resolve(srcDir, 'chrome-main.tsx'),
         },
+        // These have to be excluded until the application migrates to supported versions of webpack configurations
+        exclude: ['react-router-dom', 'react-redux'],
         shared: [
           {
             '@scalprum/react-core': { requiredVersion: '*', singleton: true },
