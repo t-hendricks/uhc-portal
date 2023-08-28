@@ -395,6 +395,13 @@ exports[`<ProgressList /> should render for ROSA manual mode 1`] = `
     DNS setup
   </ProgressStep>
   <ProgressStep
+    id="networkSettings"
+    titleId="networkSettings-title"
+    variant="pending"
+  >
+    Network settings
+  </ProgressStep>
+  <ProgressStep
     id="clusterInstallation"
     titleId="clusterInstallation-title"
     variant="pending"

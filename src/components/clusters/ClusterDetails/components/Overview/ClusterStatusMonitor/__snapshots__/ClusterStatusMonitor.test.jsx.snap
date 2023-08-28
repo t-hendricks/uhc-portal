@@ -14,10 +14,38 @@ exports[`<ClusterStatusMonitor /> Displays warning when install takes longer 1`]
 exports[`<ClusterStatusMonitor /> renders an alert when cluster is errored 1`] = `
 <Alert
   isInline={true}
-  title="OCM1002 Cluster installation failed"
+  title="Cluster creation failed"
   variant="danger"
 >
-  Invalid AWS credentials (authentication)
+  <Flex
+    direction={
+      Object {
+        "default": "column",
+      }
+    }
+  >
+    <FlexItem>
+      OCM1002 Invalid AWS credentials (authentication)
+    </FlexItem>
+    <FlexItem>
+      <Flex
+        direction={
+          Object {
+            "default": "row",
+          }
+        }
+      >
+        <FlexItem>
+          <ExternalLink
+            href="https://access.redhat.com/support/cases/#/case/new"
+            noIcon={true}
+          >
+            Contact support
+          </ExternalLink>
+        </FlexItem>
+      </Flex>
+    </FlexItem>
+  </Flex>
 </Alert>
 `;
 

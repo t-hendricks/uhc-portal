@@ -6,7 +6,7 @@ import fixtures from '../../../__test__/ClusterDetails.fixtures';
 
 jest.useFakeTimers('legacy'); // TODO 'modern'
 
-const { clusterDetails } = fixtures;
+const { clusterDetails, inflightChecks } = fixtures;
 
 const status = {
   pending: false,
@@ -19,16 +19,20 @@ const status = {
 describe('<ClusterStatusMonitor />', () => {
   let wrapper;
   let getClusterStatus;
+  let getInflightChecks;
   let refresh;
   let history;
   beforeEach(() => {
     getClusterStatus = jest.fn();
+    getInflightChecks = jest.fn();
     refresh = jest.fn();
     history = { push: jest.fn() };
     wrapper = shallow(
       <ClusterStatusMonitor
         cluster={{ ...clusterDetails.cluster, state: 'installing' }}
+        inflightChecks={inflightChecks}
         getClusterStatus={getClusterStatus}
+        getInflightChecks={getInflightChecks}
         status={status}
         refresh={refresh}
         history={history}
@@ -38,6 +42,7 @@ describe('<ClusterStatusMonitor />', () => {
 
   it('calls getClusterStatus on mount', () => {
     expect(getClusterStatus).toBeCalledWith(clusterDetails.cluster.id);
+    expect(getInflightChecks).toBeCalledWith(clusterDetails.cluster.id);
   });
 
   it('sets the timeout when cluster is installing', () => {
@@ -56,6 +61,11 @@ describe('<ClusterStatusMonitor />', () => {
           id: clusterDetails.cluster.id,
           state: 'installing',
         },
+      },
+      inflightChecks: {
+        fulfilled: true,
+        pending: false,
+        checks: [],
       },
     });
     expect(setTimeout).toBeCalled();
@@ -81,6 +91,11 @@ describe('<ClusterStatusMonitor />', () => {
           provision_error_message: 'Install taking longer than expected',
         },
       },
+      inflightChecks: {
+        fulfilled: true,
+        pending: false,
+        checks: [],
+      },
     });
     expect(wrapper).toMatchSnapshot();
   });
@@ -90,6 +105,10 @@ describe('<ClusterStatusMonitor />', () => {
       status: {
         ...status,
         pending: true,
+      },
+      inflightChecks: {
+        pending: true,
+        checks: [],
       },
     }); // set pending: true first since the logic depends on the pending -> fulfilled transition
 
@@ -103,6 +122,11 @@ describe('<ClusterStatusMonitor />', () => {
           provision_error_code: 'OCM1002',
           provision_error_message: 'Invalid AWS credentials (authentication)',
         },
+      },
+      inflightChecks: {
+        fulfilled: true,
+        pending: false,
+        checks: [],
       },
     });
     expect(refresh).toBeCalled();
@@ -119,6 +143,11 @@ describe('<ClusterStatusMonitor />', () => {
           provision_error_code: 'OCM1002',
           provision_error_message: 'Invalid AWS credentials (authentication)',
         },
+      },
+      inflightChecks: {
+        fulfilled: true,
+        pending: false,
+        checks: [],
       },
     });
     expect(wrapper).toMatchSnapshot();

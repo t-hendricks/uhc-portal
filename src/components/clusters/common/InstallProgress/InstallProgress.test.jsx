@@ -9,10 +9,13 @@ describe('<InstallProgress />', () => {
     ...fixtures.clusterDetails.cluster,
     state: clusterStates.INSTALLING,
   };
+  const inflightChecks = { fulfilled: true, checks: [] };
 
   let wrapper;
   beforeEach(() => {
-    wrapper = shallow(<InstallProgress cluster={clusterInstalling} />);
+    wrapper = shallow(
+      <InstallProgress cluster={clusterInstalling} inflightChecks={inflightChecks} />,
+    );
   });
 
   it('should render correclty installing cluster', () => {
