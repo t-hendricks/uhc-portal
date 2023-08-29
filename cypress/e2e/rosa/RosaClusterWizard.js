@@ -86,8 +86,14 @@ describe('Rosa cluster tests', { tags: ['ci'] }, () => {
         cy.get(CreateRosaWizardPage.primaryButton).should('not.be.disabled');
         cy.get(CreateRosaWizardPage.associatedAccountsDropdown).click();
         cy.get(CreateRosaWizardPage.accountIdMenuItem).should('have.length', 1);
+        cy.get(CreateRosaWizardPage.associatedAccountsDropdown).click();
         CreateRosaWizardPage.showsNoARNsDetectedAlert();
         cy.get(CreateRosaWizardPage.ARNFieldRequiredMsg).should('have.length', 4); // all 4 ARN fields are empty
+
+        // Confirm alert opens drawer with correct content
+        cy.contains('create the required role').click();
+        cy.contains('h2', 'Create account roles');
+        cy.getByTestId('close-associate-account-btn').click();
       });
 
       it('tests for all ARNs and no "ARN required" messages', () => {
@@ -117,6 +123,11 @@ describe('Rosa cluster tests', { tags: ['ci'] }, () => {
         cy.get(CreateRosaWizardPage.primaryButton).should('not.be.disabled');
         CreateRosaWizardPage.isAccountsAndRolesScreen();
         CreateRosaWizardPage.showsNoUserRoleAlert();
+
+        // Confirm alert opens drawer with correct content
+        cy.contains('create the required role').click();
+        cy.contains('h2', 'Create user role');
+        cy.getByTestId('close-associate-account-btn').click();
       });
 
       it('tests if no ocm role, shows alert', () => {
@@ -151,6 +162,11 @@ describe('Rosa cluster tests', { tags: ['ci'] }, () => {
         cy.get(CreateRosaWizardPage.primaryButton).should('not.be.disabled');
         CreateRosaWizardPage.isAccountsAndRolesScreen();
         CreateRosaWizardPage.showsNoOcmRoleAlert();
+
+        // Confirm alert opens drawer with correct content
+        cy.contains('create the required role').click();
+        cy.contains('h2', 'Create OCM role');
+        cy.getByTestId('close-associate-account-btn').click();
       });
 
       // TODO: resolve timing and mock data issues
