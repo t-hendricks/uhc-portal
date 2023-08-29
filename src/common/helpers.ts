@@ -253,12 +253,19 @@ const formatMinorVersion = (version: string) => {
 
 /**
  * From "key1=value1,key2=value2" returns object { "key1": "value1", "key2": "value2"}.
+ *
+ * More examples:
+ * - strToKeyValueObject('foo', '') is equal to strToKeyValueObject('foo=', undefined)
+ * - strToKeyValueObject('foo') results in "{ foo: undefined }"
+ *
  * @param {string} input comma-separated list of key=value pairs
+ * @param {string} defaultValue used when the value is missing (like input === "foo").
+ *
  */
-const strToKeyValueObject = (input = '') =>
+const strToKeyValueObject = (input: string, defaultValue?: string) =>
   input.split(',').reduce((accum, pair) => {
     const [key, value] = pair.split('=');
-    return { ...accum, [key]: value };
+    return { ...accum, [key]: value ?? defaultValue };
   }, {});
 
 export {

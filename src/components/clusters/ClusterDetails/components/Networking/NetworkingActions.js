@@ -62,12 +62,12 @@ const sendNetworkConfigRequests = async (newData, currentData, clusterID, dispat
   if (
     newData.defaultRouterSelectors !== undefined &&
     !isEqual(
-      strToKeyValueObject(newData.defaultRouterSelectors),
+      strToKeyValueObject(newData.defaultRouterSelectors, ''),
       currentData.default.routeSelectors,
     )
   ) {
     requestDefaultRouter.route_selectors = newData.defaultRouterSelectors
-      ? strToKeyValueObject(newData.defaultRouterSelectors)
+      ? strToKeyValueObject(newData.defaultRouterSelectors, '')
       : {};
   }
 

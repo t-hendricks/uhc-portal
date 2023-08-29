@@ -103,7 +103,7 @@ export const DefaultIngressFields: React.FC<DefaultIngressFieldsProps> = ({
             type="text"
             validate={validateTlsSecretName}
             disabled={areFieldsDisabled}
-            helpText="The name of a secret holding custom TLS certificate, in the openshift-config namespace."
+            helpText="The name of a secret holding custom TLS certificate, in the openshift-config namespace. Optional."
             showHelpTextOnError={false}
           />
         </FormGroup>
