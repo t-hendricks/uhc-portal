@@ -478,14 +478,6 @@ const labelAndTaintValueValidations = (value: string): Validations => [
   },
 ];
 
-const labelValueValidationsRequired = (value?: string): Validations => [
-  {
-    validated: typeof value !== 'undefined' && value.trim().length > 0,
-    text: 'A valid value is required',
-  },
-  ...labelAndTaintValueValidations(value || ''),
-];
-
 const taintKeyValidations = (value: string, allValues: { taints?: Taint[] }): Validations => {
   const items = allValues?.taints || [];
   return labelAndTaintKeyValidations(value, items);
@@ -514,17 +506,7 @@ const checkLabels = (input: string | string[]) =>
       undefined,
     );
 
-const checkLabelValueRequired = createPessimisticValidator(labelValueValidationsRequired);
-
-/** Similar to checkLabels but does not allow keys without values */
-const checkRouteSelectors = (input: string | string[]) =>
-  parseNodeLabels(input)
-    // collect the first error found
-    ?.reduce<string | undefined>(
-      (accum, [key, value]) => accum ?? checkLabelKey(key) ?? checkLabelValueRequired(value),
-      // defaulting to undefined
-      undefined,
-    );
+const checkRouteSelectors = checkLabels;
 
 // Function to validate that the cluster ID field is a UUID:
 const checkClusterUUID = (value: string): string | undefined => {
