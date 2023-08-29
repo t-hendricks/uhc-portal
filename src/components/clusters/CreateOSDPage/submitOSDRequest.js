@@ -282,7 +282,7 @@ export const createClusterRequest = ({ isWizard = true, cloudProviderID, product
                 ? stringToArrayTrimmed(formData.defaultRouterExcludedNamespacesFlag)
                 : undefined,
               route_selectors: formData.defaultRouterSelectors
-                ? strToKeyValueObject(formData.defaultRouterSelectors)
+                ? strToKeyValueObject(formData.defaultRouterSelectors, '')
                 : undefined,
               route_wildcard_policy: formData.isDefaultRouterWildcardPolicyAllowed
                 ? WildcardPolicy.WILDCARDS_ALLOWED
