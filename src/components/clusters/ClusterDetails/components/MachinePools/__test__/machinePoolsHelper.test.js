@@ -71,6 +71,11 @@ describe('machine pools action resolver', () => {
         onClickLabels,
         machinePools: [],
         machineTypes: {},
+        cluster: {
+          ccs: {
+            enabled: true,
+          },
+        },
       }).toString(),
     ).toEqual(expected.toString());
   });
@@ -111,6 +116,48 @@ describe('machine pools action resolver', () => {
         cluster: {
           product: {
             id: normalizedProducts.ROSA,
+          },
+          ccs: {
+            enabled: true,
+          },
+        },
+        machineTypes: {},
+      }).toString(),
+    ).toEqual(expected.toString());
+  });
+
+  it('disables Delete for non-ccs worker Machine Pool', () => {
+    const defaultMachinePoolRowData = {
+      cells: ['worker', 'm5.xlarge', 'us-east-1a', '4'],
+      machinePool: { id: 'worker' },
+      key: 'worker',
+    };
+    const deleteAction = {
+      title: 'Delete',
+      onClick: onClickDelete,
+      className: 'hand-pointer',
+      isAriaDisabled: true,
+      tooltip: 'Worker machine pool cannot be deleted',
+    };
+    const expected = [scaleAction, editLabelsAction, editTaintsAction, deleteAction];
+    expect(
+      actionResolver({
+        rowData: defaultMachinePoolRowData,
+        onClickDelete,
+        onClickScale,
+        onClickTaints,
+        onClickLabels,
+        machinePools: [
+          {
+            id: 'worker',
+          },
+        ],
+        cluster: {
+          product: {
+            id: normalizedProducts.ROSA,
+          },
+          ccs: {
+            enabled: false,
           },
         },
         machineTypes: {},

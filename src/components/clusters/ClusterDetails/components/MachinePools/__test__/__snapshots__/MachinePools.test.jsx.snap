@@ -898,7 +898,7 @@ exports[`<MachinePools /> renders with additional machine pools, some with label
 </Fragment>
 `;
 
-exports[`<MachinePools /> renders with the default machine pool 1`] = `
+exports[`<MachinePools /> renders with the machine pool 1`] = `
 <Fragment>
   <UpdateAllMachinePools />
   <Card
@@ -1034,7 +1034,7 @@ exports[`<MachinePools /> renders with the default machine pool 1`] = `
 </Fragment>
 `;
 
-exports[`<MachinePools /> renders with the default machine pool when it has labels 1`] = `
+exports[`<MachinePools /> renders with the machine pool when it has labels 1`] = `
 <Fragment>
   <UpdateAllMachinePools />
   <Card

@@ -61,12 +61,12 @@ describe('<MachinePools />', () => {
     expect(getMachinePools).toBeCalled();
   });
 
-  it('renders with the default machine pool', () => {
+  it('renders with the machine pool', () => {
     const wrapper = shallow(<MachinePools {...baseProps()} />);
     expect(wrapper).toMatchSnapshot();
   });
 
-  it('renders with the default machine pool when it has labels', () => {
+  it('renders with the machine pool when it has labels', () => {
     const props = {
       ...baseProps(false, false, {
         ...defaultMachinePool,
