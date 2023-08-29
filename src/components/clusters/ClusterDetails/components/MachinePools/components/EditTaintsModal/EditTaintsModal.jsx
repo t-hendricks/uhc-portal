@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Field, FieldArray } from 'redux-form';
-import { Form, Grid, GridItem } from '@patternfly/react-core';
+import { Alert, Form, Grid, GridItem } from '@patternfly/react-core';
 
 import Modal from '../../../../../../common/Modal/Modal';
 import ErrorBox from '../../../../../../common/ErrorBox';
@@ -9,12 +9,17 @@ import { SpotInstanceInfoAlert, isMachinePoolUsingSpotInstances } from '../SpotI
 
 import { ReduxFormDropdown, ReduxFormTaints } from '../../../../../../common/ReduxFormComponents';
 
+import { isEnforcedDefaultMachinePool } from '../../machinePoolsHelper';
+
 class EditTaintsModal extends Component {
   componentDidMount() {
-    const { machinePoolsList, getMachinePools } = this.props;
+    const { machinePoolsList, getMachinePools, machineTypes, getMachineTypes } = this.props;
 
     if (!machinePoolsList.pending) {
       getMachinePools();
+    }
+    if (!machineTypes.fulfilled && !machineTypes.pending) {
+      getMachineTypes();
     }
   }
 
@@ -50,6 +55,8 @@ class EditTaintsModal extends Component {
       pristine,
       selectedMachinePoolId,
       invalid,
+      machineTypes,
+      cluster,
     } = this.props;
 
     const error = editTaintsResponse.error ? (
@@ -57,6 +64,12 @@ class EditTaintsModal extends Component {
     ) : null;
 
     const { pending } = editTaintsResponse;
+    const isEnforcedDefaultMP = isEnforcedDefaultMachinePool(
+      selectedMachinePoolId,
+      machinePoolsList.data,
+      machineTypes,
+      cluster,
+    );
 
     return (
       <Modal
@@ -91,9 +104,19 @@ class EditTaintsModal extends Component {
                   name="taints"
                   component={ReduxFormTaints}
                   isEditing
-                  canAddMore={!invalid}
+                  canAddMore={!invalid && !isEnforcedDefaultMP}
                 />
               </GridItem>
+
+              {isEnforcedDefaultMP && (
+                <GridItem>
+                  <Alert
+                    title="Taints cannot be added to default machine pool"
+                    isInline
+                    variant="info"
+                  />
+                </GridItem>
+              )}
               {isMachinePoolUsingSpotInstances(selectedMachinePoolId, machinePoolsList) && (
                 <>
                   <GridItem>
@@ -121,6 +144,9 @@ EditTaintsModal.propTypes = {
   pristine: PropTypes.bool.isRequired,
   invalid: PropTypes.bool.isRequired,
   selectedMachinePoolId: PropTypes.string.isRequired,
+  machineTypes: PropTypes.object.isRequired,
+  getMachineTypes: PropTypes.func.isRequired,
+  cluster: PropTypes.object.isRequired,
 };
 
 export default EditTaintsModal;

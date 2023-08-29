@@ -9,7 +9,6 @@ import masterResizeAlertThresholdSelector from './EditNodeCountModalSelectors';
 
 import { getOrganizationAndQuota } from '../../../../redux/actions/userActions';
 import { getMachineTypes } from '../../../../redux/actions/machineTypesActions';
-import { clearClusterResponse, editCluster } from '../../../../redux/actions/clustersActions';
 import {
   getMachineOrNodePools,
   patchMachinePoolOrNodePool,
@@ -21,7 +20,6 @@ import { isHypershiftCluster, isMultiAZ } from '../../ClusterDetails/clusterDeta
 
 import { canAutoScaleSelector } from '../../ClusterDetails/components/MachinePools/MachinePoolsSelectors';
 import getClusterName from '../../../../common/getClusterName';
-import { getNodesCount } from '../../CreateOSDPage/CreateOSDForm/FormSections/ScaleSection/AutoScaleSection/AutoScaleHelper';
 
 const reduxFormConfig = {
   form: 'EditNodeCount',
@@ -41,7 +39,6 @@ const mapStateToProps = (state) => {
     valueSelector(state, 'machine_pool') ||
     modalData.machinePool?.id ||
     (isHypershift ? state.machinePools.getMachinePools.data[0]?.id : null) ||
-    (modalData.isDefaultMachinePool ? 'Default' : null) ||
     null;
 
   const cloudProviderID = get(cluster, 'cloud_provider.id', '');
@@ -57,39 +54,30 @@ const mapStateToProps = (state) => {
   }
 
   const commonProps = {
+    cluster,
     resetSection: (values) => resetSection(reduxFormConfig.form, values),
     isValid: isValid(reduxFormConfig.form)(state),
     clusterID: get(cluster, 'id', ''),
     isHypershiftCluster: isHypershift,
     machinePoolsList: {
       ...state.machinePools.getMachinePools,
-      data: [
-        ...(!isHypershift
-          ? [
-              {
-                name: 'Default',
-                value: 'Default',
-                machineType: get(cluster, 'nodes.compute_machine_type.id', ''),
-                nodes: get(cluster, 'nodes.compute', null),
-              },
-            ]
-          : []),
-        ...state.machinePools.getMachinePools.data.map((machinePool) => ({
-          name: machinePool.id,
-          value: machinePool.id,
-          machineType: machinePool.instance_type,
-          nodes: machinePool.replicas,
-          aws: machinePool?.aws,
-        })),
-      ],
+      data: state.machinePools.getMachinePools.data.map((machinePool) => ({
+        name: machinePool.id,
+        value: machinePool.id,
+        machineType: machinePool.instance_type,
+        nodes: machinePool.replicas,
+        aws: machinePool?.aws,
+        originalResponse: machinePool,
+      })),
     },
     isMultiAz: isMultiAvailZone,
-    masterResizeAlertThreshold: masterResizeAlertThresholdSelector(
-      selectedMachinePool,
+    masterResizeAlertThreshold: masterResizeAlertThresholdSelector({
+      selectedMachinePoolID: selectedMachinePool,
       requestedNodes,
       cluster,
-      state.machinePools.getMachinePools.data,
-    ),
+      machinePools: state.machinePools.getMachinePools.data,
+      machineTypes: state.machineTypes,
+    }),
     organization: state.userProfile.organization,
     machineTypes: state.machineTypes,
     cloudProviderID,
@@ -121,30 +109,6 @@ const mapStateToProps = (state) => {
     };
   };
 
-  const initialValuesNodesCompute = getNodesCount(commonProps.isByoc, isMultiAvailZone);
-
-  // Cluster's default machine pool case
-  if (selectedMachinePool === 'Default') {
-    // eslint-disable-next-line camelcase
-    machinePoolWithAutoscale = cluster.nodes?.autoscale_compute;
-    return {
-      ...commonProps,
-      editNodeCountResponse: state.clusters.editedCluster,
-      machineType: get(cluster, 'nodes.compute_machine_type.id', ''),
-      machinePoolId: 'Default',
-      initialValues: {
-        nodes_compute:
-          get(cluster, 'nodes.compute', null) ||
-          get(cluster, 'nodes.autoscale_compute.min_replicas') ||
-          initialValuesNodesCompute,
-        machine_pool: 'Default',
-        autoscalingEnabled: machinePoolWithAutoscale,
-        ...(machinePoolWithAutoscale && getMinAndMaxNodesValues(cluster.nodes.autoscale_compute)),
-      },
-    };
-  }
-
-  // Any other machine pool
   const selectedMachinePoolData =
     get(state, 'machinePools.getMachinePools.data', []).find(
       (machinePool) => machinePool.id === selectedMachinePool,
@@ -158,6 +122,7 @@ const mapStateToProps = (state) => {
       ? get(selectedMachinePoolData, 'aws_node_pool.instance_type', '')
       : get(selectedMachinePoolData, 'instance_type', ''),
     machinePoolId: selectedMachinePool,
+    machineTypes: state.machineTypes,
     initialValues: {
       nodes_compute:
         get(selectedMachinePoolData, 'replicas', null) ||
@@ -184,32 +149,24 @@ const mapDispatchToProps = (dispatch) => ({
       max_replicas: isMultiAz ? maxNodes * 3 : maxNodes,
     };
 
-    if (formData.machine_pool === 'Default' && !isHypershiftCluster) {
-      machinePoolRequest.nodes = formData.autoscalingEnabled
-        ? { autoscale_compute: autoScaleLimits }
-        : { compute: nodesCount };
-      dispatch(editCluster(clusterID, machinePoolRequest));
+    if (formData.autoscalingEnabled) {
+      machinePoolRequest.autoscaling = autoScaleLimits;
     } else {
-      if (formData.autoscalingEnabled) {
-        machinePoolRequest.autoscaling = autoScaleLimits;
-      } else {
-        machinePoolRequest.replicas = nodesCount;
-      }
-      dispatch(
-        patchMachinePoolOrNodePool(
-          clusterID,
-          formData.machine_pool,
-          machinePoolRequest,
-          isHypershiftCluster,
-        ),
-      );
+      machinePoolRequest.replicas = nodesCount;
     }
+    dispatch(
+      patchMachinePoolOrNodePool(
+        clusterID,
+        formData.machine_pool,
+        machinePoolRequest,
+        isHypershiftCluster,
+      ),
+    );
   },
   getMachinePools: (clusterID, isHypershift) =>
     dispatch(getMachineOrNodePools(clusterID, isHypershift)),
   resetGetMachinePoolsResponse: () => dispatch(clearGetMachinePoolsResponse()),
   resetScaleMachinePoolResponse: () => dispatch(clearScaleMachinePoolResponse()),
-  resetScaleDefaultMachinePoolResponse: () => dispatch(clearClusterResponse()),
   closeModal: () => dispatch(closeModal()),
   getOrganizationAndQuota: () => dispatch(getOrganizationAndQuota()),
   getMachineTypes: () => dispatch(getMachineTypes()),

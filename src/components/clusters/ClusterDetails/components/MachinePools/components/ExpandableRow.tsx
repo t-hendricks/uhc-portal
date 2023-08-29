@@ -4,16 +4,14 @@ import isEmpty from 'lodash/isEmpty';
 import chunk from 'lodash/chunk';
 
 import { MachinePool } from '~/types/clusters_mgmt.v1/models/MachinePool';
-import { ClusterFromSubscription } from '~/types/types';
 import { Taint } from '~/types/clusters_mgmt.v1/models/Taint';
 import { hasSubnets, getSubnetIds } from '../machinePoolsHelper';
-import { isMultiAZ } from '../../../clusterDetailsHelper';
 
 const ExpandableRow = ({
-  cluster,
+  isMultiZoneCluster,
   machinePool,
 }: {
-  cluster: ClusterFromSubscription;
+  isMultiZoneCluster: boolean;
   machinePool: MachinePool;
 }) => {
   let labels = null;
@@ -64,19 +62,19 @@ const ExpandableRow = ({
         <Split hasGutter>
           <SplitItem>
             <Title headingLevel="h4" className="autoscale__lim">{`Min nodes ${
-              isMultiAZ(cluster) ? 'per zone' : ''
+              isMultiZoneCluster ? 'per zone' : ''
             }`}</Title>
             {machinePool.autoscaling.min_replicas &&
-              (isMultiAZ(cluster)
+              (isMultiZoneCluster
                 ? machinePool.autoscaling.min_replicas / 3
                 : machinePool.autoscaling.min_replicas)}
           </SplitItem>
           <SplitItem>
             <Title headingLevel="h4" className="autoscale__lim">{`Max nodes ${
-              isMultiAZ(cluster) ? 'per zone' : ''
+              isMultiZoneCluster ? 'per zone' : ''
             }`}</Title>
             {machinePool.autoscaling.max_replicas &&
-              (isMultiAZ(cluster)
+              (isMultiZoneCluster
                 ? machinePool.autoscaling.max_replicas / 3
                 : machinePool.autoscaling.max_replicas)}
           </SplitItem>
