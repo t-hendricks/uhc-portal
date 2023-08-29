@@ -16,6 +16,7 @@ import {
 } from '@patternfly/react-core';
 
 import modals from '~/components/common/Modal/modals';
+import { isRestrictedEnv } from '~/restrictedEnv';
 import EditClusterWideProxyDialog from '../EditClusterWideProxyDialog';
 
 import './VPCDetailsCard.scss';
@@ -109,11 +110,13 @@ const VPCDetailsCard = (props) => {
         </DescriptionList>
         <EditClusterWideProxyDialog />
       </CardBody>
-      <CardFooter>
-        <Button variant="secondary" onClick={handleEditClusterProxy}>
-          Edit cluster-wide proxy
-        </Button>
-      </CardFooter>
+      {!isRestrictedEnv() && (
+        <CardFooter>
+          <Button variant="secondary" onClick={handleEditClusterProxy}>
+            Edit cluster-wide proxy
+          </Button>
+        </CardFooter>
+      )}
     </Card>
   );
 };

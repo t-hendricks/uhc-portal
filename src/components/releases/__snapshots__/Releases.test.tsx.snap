@@ -332,9 +332,12 @@ exports[`<Releases /> should render 1`] = `
                                                       }
                                                     >
                                                       <GalleryItem
-                                                        key="4.8"
+                                                        data-testid="version-4.12"
+                                                        key="4.12"
                                                       >
-                                                        <div>
+                                                        <div
+                                                          data-testid="version-4.12"
+                                                        >
                                                           <Card
                                                             className="ocm-l-ocp-releases__card"
                                                             isFlat={true}
@@ -342,6 +345,242 @@ exports[`<Releases /> should render 1`] = `
                                                             <article
                                                               className="pf-c-card pf-m-flat ocm-l-ocp-releases__card"
                                                               data-ouia-component-id="OUIA-Generated-Card-3"
+                                                              data-ouia-component-type="PF4/Card"
+                                                              data-ouia-safe={true}
+                                                              id=""
+                                                            >
+                                                              <CardTitle>
+                                                                <div
+                                                                  className="pf-c-card__title"
+                                                                >
+                                                                  <div
+                                                                    className="ocm-l-ocp-releases__card-title pf-u-mb-sm"
+                                                                  >
+                                                                    <ExternalLink
+                                                                      href="https://docs.openshift.com/container-platform/4.12/release_notes/ocp-4-12-release-notes.html"
+                                                                      noIcon={true}
+                                                                    >
+                                                                      <a
+                                                                        href="https://docs.openshift.com/container-platform/4.12/release_notes/ocp-4-12-release-notes.html"
+                                                                        onClick={[Function]}
+                                                                        rel="noreferrer noopener"
+                                                                        target="_blank"
+                                                                      >
+                                                                        OpenShift 
+                                                                        4.12
+                                                                        <span
+                                                                          className="pf-u-screen-reader"
+                                                                        >
+                                                                           (new window or tab)
+                                                                        </span>
+                                                                      </a>
+                                                                    </ExternalLink>
+                                                                  </div>
+                                                                  <Divider
+                                                                    className="ocm-l-ocp-releases__divider pf-u-mt-lg pf-u-mb-sm"
+                                                                  >
+                                                                    <hr
+                                                                      className="pf-c-divider ocm-l-ocp-releases__divider pf-u-mt-lg pf-u-mb-sm"
+                                                                    />
+                                                                  </Divider>
+                                                                </div>
+                                                              </CardTitle>
+                                                              <CardBody>
+                                                                <div
+                                                                  className="pf-c-card__body"
+                                                                >
+                                                                  <div
+                                                                    className="ocm-l-ocp-releases__subheading"
+                                                                  >
+                                                                    Channel details
+                                                                  </div>
+                                                                  <dl
+                                                                    className="ocm-l-ocp-releases__channels"
+                                                                  >
+                                                                    <mockConstructor
+                                                                      channel="stable-4.12"
+                                                                      status="Full Support"
+                                                                    >
+                                                                      <dt
+                                                                        className="pf-c-description-list__term pf-u-mt-md"
+                                                                      >
+                                                                        stable-4.12
+                                                                      </dt>
+                                                                    </mockConstructor>
+                                                                    <mockConstructor
+                                                                      channel="fast-4.12"
+                                                                      status="Full Support"
+                                                                    >
+                                                                      <dt
+                                                                        className="pf-c-description-list__term pf-u-mt-md"
+                                                                      >
+                                                                        fast-4.12
+                                                                      </dt>
+                                                                    </mockConstructor>
+                                                                    <mockConstructor
+                                                                      channel="eus-4.12"
+                                                                      status="Full Support"
+                                                                    >
+                                                                      <dt
+                                                                        className="pf-c-description-list__term pf-u-mt-md"
+                                                                      >
+                                                                        eus-4.12
+                                                                      </dt>
+                                                                    </mockConstructor>
+                                                                    <mockConstructor
+                                                                      channel="candidate-4.12"
+                                                                    >
+                                                                      <dt
+                                                                        className="pf-c-description-list__term pf-u-mt-md"
+                                                                      >
+                                                                        candidate-4.12
+                                                                      </dt>
+                                                                    </mockConstructor>
+                                                                  </dl>
+                                                                </div>
+                                                              </CardBody>
+                                                            </article>
+                                                          </Card>
+                                                        </div>
+                                                      </GalleryItem>
+                                                      <GalleryItem
+                                                        data-testid="version-4.11"
+                                                        key="4.11"
+                                                      >
+                                                        <div
+                                                          data-testid="version-4.11"
+                                                        >
+                                                          <Card
+                                                            className="ocm-l-ocp-releases__card"
+                                                            isFlat={true}
+                                                          >
+                                                            <article
+                                                              className="pf-c-card pf-m-flat ocm-l-ocp-releases__card"
+                                                              data-ouia-component-id="OUIA-Generated-Card-4"
+                                                              data-ouia-component-type="PF4/Card"
+                                                              data-ouia-safe={true}
+                                                              id=""
+                                                            >
+                                                              <CardTitle>
+                                                                <div
+                                                                  className="pf-c-card__title"
+                                                                >
+                                                                  <div
+                                                                    className="ocm-l-ocp-releases__card-title pf-u-mb-sm"
+                                                                  >
+                                                                    <ExternalLink
+                                                                      href="https://docs.openshift.com/container-platform/4.11/release_notes/ocp-4-11-release-notes.html"
+                                                                      noIcon={true}
+                                                                    >
+                                                                      <a
+                                                                        href="https://docs.openshift.com/container-platform/4.11/release_notes/ocp-4-11-release-notes.html"
+                                                                        onClick={[Function]}
+                                                                        rel="noreferrer noopener"
+                                                                        target="_blank"
+                                                                      >
+                                                                        OpenShift 
+                                                                        4.11
+                                                                        <span
+                                                                          className="pf-u-screen-reader"
+                                                                        >
+                                                                           (new window or tab)
+                                                                        </span>
+                                                                      </a>
+                                                                    </ExternalLink>
+                                                                  </div>
+                                                                  <Divider
+                                                                    className="ocm-l-ocp-releases__divider pf-u-mt-lg pf-u-mb-sm"
+                                                                  >
+                                                                    <hr
+                                                                      className="pf-c-divider ocm-l-ocp-releases__divider pf-u-mt-lg pf-u-mb-sm"
+                                                                    />
+                                                                  </Divider>
+                                                                </div>
+                                                              </CardTitle>
+                                                              <CardBody>
+                                                                <div
+                                                                  className="pf-c-card__body"
+                                                                >
+                                                                  <div
+                                                                    className="ocm-l-ocp-releases__subheading"
+                                                                  >
+                                                                    Channel details
+                                                                  </div>
+                                                                  <dl
+                                                                    className="ocm-l-ocp-releases__channels"
+                                                                  >
+                                                                    <mockConstructor
+                                                                      channel="stable-4.11"
+                                                                      status="Full Support"
+                                                                    >
+                                                                      <dt
+                                                                        className="pf-c-description-list__term pf-u-mt-md"
+                                                                      >
+                                                                        stable-4.11
+                                                                      </dt>
+                                                                    </mockConstructor>
+                                                                    <mockConstructor
+                                                                      channel="fast-4.11"
+                                                                      status="Full Support"
+                                                                    >
+                                                                      <dt
+                                                                        className="pf-c-description-list__term pf-u-mt-md"
+                                                                      >
+                                                                        fast-4.11
+                                                                      </dt>
+                                                                    </mockConstructor>
+                                                                    <ReleaseChannelName>
+                                                                      <dt
+                                                                        className="pf-c-description-list__term pf-u-mt-md"
+                                                                      >
+                                                                        -
+                                                                      </dt>
+                                                                    </ReleaseChannelName>
+                                                                    <ReleaseChannelDescription>
+                                                                      <dd
+                                                                        className="pf-c-description-list__description ocm-l-ocp-releases__channel-detail"
+                                                                      >
+                                                                        <Level
+                                                                          className="ocm-l-ocp-releases__channel-detail-level"
+                                                                        >
+                                                                          <div
+                                                                            className="pf-l-level ocm-l-ocp-releases__channel-detail-level"
+                                                                          >
+                                                                            No 4.11 EUS channel
+                                                                          </div>
+                                                                        </Level>
+                                                                      </dd>
+                                                                    </ReleaseChannelDescription>
+                                                                    <mockConstructor
+                                                                      channel="candidate-4.11"
+                                                                    >
+                                                                      <dt
+                                                                        className="pf-c-description-list__term pf-u-mt-md"
+                                                                      >
+                                                                        candidate-4.11
+                                                                      </dt>
+                                                                    </mockConstructor>
+                                                                  </dl>
+                                                                </div>
+                                                              </CardBody>
+                                                            </article>
+                                                          </Card>
+                                                        </div>
+                                                      </GalleryItem>
+                                                      <GalleryItem
+                                                        data-testid="version-4.8"
+                                                        key="4.8"
+                                                      >
+                                                        <div
+                                                          data-testid="version-4.8"
+                                                        >
+                                                          <Card
+                                                            className="ocm-l-ocp-releases__card"
+                                                            isFlat={true}
+                                                          >
+                                                            <article
+                                                              className="pf-c-card pf-m-flat ocm-l-ocp-releases__card"
+                                                              data-ouia-component-id="OUIA-Generated-Card-5"
                                                               data-ouia-component-type="PF4/Card"
                                                               data-ouia-safe={true}
                                                               id=""
@@ -441,16 +680,19 @@ exports[`<Releases /> should render 1`] = `
                                                         </div>
                                                       </GalleryItem>
                                                       <GalleryItem
+                                                        data-testid="version-4.7"
                                                         key="4.7"
                                                       >
-                                                        <div>
+                                                        <div
+                                                          data-testid="version-4.7"
+                                                        >
                                                           <Card
                                                             className="ocm-l-ocp-releases__card"
                                                             isFlat={true}
                                                           >
                                                             <article
                                                               className="pf-c-card pf-m-flat ocm-l-ocp-releases__card"
-                                                              data-ouia-component-id="OUIA-Generated-Card-4"
+                                                              data-ouia-component-id="OUIA-Generated-Card-6"
                                                               data-ouia-component-type="PF4/Card"
                                                               data-ouia-safe={true}
                                                               id=""
@@ -562,16 +804,19 @@ exports[`<Releases /> should render 1`] = `
                                                         </div>
                                                       </GalleryItem>
                                                       <GalleryItem
+                                                        data-testid="version-4.6"
                                                         key="4.6"
                                                       >
-                                                        <div>
+                                                        <div
+                                                          data-testid="version-4.6"
+                                                        >
                                                           <Card
                                                             className="ocm-l-ocp-releases__card"
                                                             isFlat={true}
                                                           >
                                                             <article
                                                               className="pf-c-card pf-m-flat ocm-l-ocp-releases__card"
-                                                              data-ouia-component-id="OUIA-Generated-Card-5"
+                                                              data-ouia-component-id="OUIA-Generated-Card-7"
                                                               data-ouia-component-type="PF4/Card"
                                                               data-ouia-safe={true}
                                                               id=""
@@ -671,16 +916,19 @@ exports[`<Releases /> should render 1`] = `
                                                         </div>
                                                       </GalleryItem>
                                                       <GalleryItem
+                                                        data-testid="version-4.5"
                                                         key="4.5"
                                                       >
-                                                        <div>
+                                                        <div
+                                                          data-testid="version-4.5"
+                                                        >
                                                           <Card
                                                             className="ocm-l-ocp-releases__card"
                                                             isFlat={true}
                                                           >
                                                             <article
                                                               className="pf-c-card pf-m-flat ocm-l-ocp-releases__card"
-                                                              data-ouia-component-id="OUIA-Generated-Card-6"
+                                                              data-ouia-component-id="OUIA-Generated-Card-8"
                                                               data-ouia-component-type="PF4/Card"
                                                               data-ouia-safe={true}
                                                               id=""
@@ -791,248 +1039,6 @@ exports[`<Releases /> should render 1`] = `
                                                           </Card>
                                                         </div>
                                                       </GalleryItem>
-                                                      <GalleryItem
-                                                        key="4.4"
-                                                      >
-                                                        <div>
-                                                          <Card
-                                                            className="ocm-l-ocp-releases__card"
-                                                            isFlat={true}
-                                                          >
-                                                            <article
-                                                              className="pf-c-card pf-m-flat ocm-l-ocp-releases__card"
-                                                              data-ouia-component-id="OUIA-Generated-Card-7"
-                                                              data-ouia-component-type="PF4/Card"
-                                                              data-ouia-safe={true}
-                                                              id=""
-                                                            >
-                                                              <CardTitle>
-                                                                <div
-                                                                  className="pf-c-card__title"
-                                                                >
-                                                                  <div
-                                                                    className="ocm-l-ocp-releases__card-title pf-u-mb-sm"
-                                                                  >
-                                                                    <ExternalLink
-                                                                      href="https://docs.openshift.com/container-platform/4.4/release_notes/ocp-4-4-release-notes.html"
-                                                                      noIcon={true}
-                                                                    >
-                                                                      <a
-                                                                        href="https://docs.openshift.com/container-platform/4.4/release_notes/ocp-4-4-release-notes.html"
-                                                                        onClick={[Function]}
-                                                                        rel="noreferrer noopener"
-                                                                        target="_blank"
-                                                                      >
-                                                                        OpenShift 
-                                                                        4.4
-                                                                        <span
-                                                                          className="pf-u-screen-reader"
-                                                                        >
-                                                                           (new window or tab)
-                                                                        </span>
-                                                                      </a>
-                                                                    </ExternalLink>
-                                                                  </div>
-                                                                  <Divider
-                                                                    className="ocm-l-ocp-releases__divider pf-u-mt-lg pf-u-mb-sm"
-                                                                  >
-                                                                    <hr
-                                                                      className="pf-c-divider ocm-l-ocp-releases__divider pf-u-mt-lg pf-u-mb-sm"
-                                                                    />
-                                                                  </Divider>
-                                                                </div>
-                                                              </CardTitle>
-                                                              <CardBody>
-                                                                <div
-                                                                  className="pf-c-card__body"
-                                                                >
-                                                                  <div
-                                                                    className="ocm-l-ocp-releases__subheading"
-                                                                  >
-                                                                    Channel details
-                                                                  </div>
-                                                                  <dl
-                                                                    className="ocm-l-ocp-releases__channels"
-                                                                  >
-                                                                    <mockConstructor
-                                                                      channel="stable-4.4"
-                                                                      status="End of life"
-                                                                    >
-                                                                      <dt
-                                                                        className="pf-c-description-list__term pf-u-mt-md"
-                                                                      >
-                                                                        stable-4.4
-                                                                      </dt>
-                                                                    </mockConstructor>
-                                                                    <mockConstructor
-                                                                      channel="fast-4.4"
-                                                                      status="End of life"
-                                                                    >
-                                                                      <dt
-                                                                        className="pf-c-description-list__term pf-u-mt-md"
-                                                                      >
-                                                                        fast-4.4
-                                                                      </dt>
-                                                                    </mockConstructor>
-                                                                    <ReleaseChannelName>
-                                                                      <dt
-                                                                        className="pf-c-description-list__term pf-u-mt-md"
-                                                                      >
-                                                                        -
-                                                                      </dt>
-                                                                    </ReleaseChannelName>
-                                                                    <ReleaseChannelDescription>
-                                                                      <dd
-                                                                        className="pf-c-description-list__description ocm-l-ocp-releases__channel-detail"
-                                                                      >
-                                                                        <Level
-                                                                          className="ocm-l-ocp-releases__channel-detail-level"
-                                                                        >
-                                                                          <div
-                                                                            className="pf-l-level ocm-l-ocp-releases__channel-detail-level"
-                                                                          >
-                                                                            No 4.4 EUS channel
-                                                                          </div>
-                                                                        </Level>
-                                                                      </dd>
-                                                                    </ReleaseChannelDescription>
-                                                                    <mockConstructor
-                                                                      channel="candidate-4.4"
-                                                                    >
-                                                                      <dt
-                                                                        className="pf-c-description-list__term pf-u-mt-md"
-                                                                      >
-                                                                        candidate-4.4
-                                                                      </dt>
-                                                                    </mockConstructor>
-                                                                  </dl>
-                                                                </div>
-                                                              </CardBody>
-                                                            </article>
-                                                          </Card>
-                                                        </div>
-                                                      </GalleryItem>
-                                                      <GalleryItem
-                                                        key="4.3"
-                                                      >
-                                                        <div>
-                                                          <Card
-                                                            className="ocm-l-ocp-releases__card"
-                                                            isFlat={true}
-                                                          >
-                                                            <article
-                                                              className="pf-c-card pf-m-flat ocm-l-ocp-releases__card"
-                                                              data-ouia-component-id="OUIA-Generated-Card-8"
-                                                              data-ouia-component-type="PF4/Card"
-                                                              data-ouia-safe={true}
-                                                              id=""
-                                                            >
-                                                              <CardTitle>
-                                                                <div
-                                                                  className="pf-c-card__title"
-                                                                >
-                                                                  <div
-                                                                    className="ocm-l-ocp-releases__card-title pf-u-mb-sm"
-                                                                  >
-                                                                    <ExternalLink
-                                                                      href="https://docs.openshift.com/container-platform/4.3/release_notes/ocp-4-3-release-notes.html"
-                                                                      noIcon={true}
-                                                                    >
-                                                                      <a
-                                                                        href="https://docs.openshift.com/container-platform/4.3/release_notes/ocp-4-3-release-notes.html"
-                                                                        onClick={[Function]}
-                                                                        rel="noreferrer noopener"
-                                                                        target="_blank"
-                                                                      >
-                                                                        OpenShift 
-                                                                        4.3
-                                                                        <span
-                                                                          className="pf-u-screen-reader"
-                                                                        >
-                                                                           (new window or tab)
-                                                                        </span>
-                                                                      </a>
-                                                                    </ExternalLink>
-                                                                  </div>
-                                                                  <Divider
-                                                                    className="ocm-l-ocp-releases__divider pf-u-mt-lg pf-u-mb-sm"
-                                                                  >
-                                                                    <hr
-                                                                      className="pf-c-divider ocm-l-ocp-releases__divider pf-u-mt-lg pf-u-mb-sm"
-                                                                    />
-                                                                  </Divider>
-                                                                </div>
-                                                              </CardTitle>
-                                                              <CardBody>
-                                                                <div
-                                                                  className="pf-c-card__body"
-                                                                >
-                                                                  <div
-                                                                    className="ocm-l-ocp-releases__subheading"
-                                                                  >
-                                                                    Channel details
-                                                                  </div>
-                                                                  <dl
-                                                                    className="ocm-l-ocp-releases__channels"
-                                                                  >
-                                                                    <mockConstructor
-                                                                      channel="stable-4.3"
-                                                                      status="End of life"
-                                                                    >
-                                                                      <dt
-                                                                        className="pf-c-description-list__term pf-u-mt-md"
-                                                                      >
-                                                                        stable-4.3
-                                                                      </dt>
-                                                                    </mockConstructor>
-                                                                    <mockConstructor
-                                                                      channel="fast-4.3"
-                                                                      status="End of life"
-                                                                    >
-                                                                      <dt
-                                                                        className="pf-c-description-list__term pf-u-mt-md"
-                                                                      >
-                                                                        fast-4.3
-                                                                      </dt>
-                                                                    </mockConstructor>
-                                                                    <ReleaseChannelName>
-                                                                      <dt
-                                                                        className="pf-c-description-list__term pf-u-mt-md"
-                                                                      >
-                                                                        -
-                                                                      </dt>
-                                                                    </ReleaseChannelName>
-                                                                    <ReleaseChannelDescription>
-                                                                      <dd
-                                                                        className="pf-c-description-list__description ocm-l-ocp-releases__channel-detail"
-                                                                      >
-                                                                        <Level
-                                                                          className="ocm-l-ocp-releases__channel-detail-level"
-                                                                        >
-                                                                          <div
-                                                                            className="pf-l-level ocm-l-ocp-releases__channel-detail-level"
-                                                                          >
-                                                                            No 4.3 EUS channel
-                                                                          </div>
-                                                                        </Level>
-                                                                      </dd>
-                                                                    </ReleaseChannelDescription>
-                                                                    <mockConstructor
-                                                                      channel="candidate-4.3"
-                                                                    >
-                                                                      <dt
-                                                                        className="pf-c-description-list__term pf-u-mt-md"
-                                                                      >
-                                                                        candidate-4.3
-                                                                      </dt>
-                                                                    </mockConstructor>
-                                                                  </dl>
-                                                                </div>
-                                                              </CardBody>
-                                                            </article>
-                                                          </Card>
-                                                        </div>
-                                                      </GalleryItem>
                                                     </div>
                                                   </Gallery>
                                                 </div>
@@ -1080,7 +1086,7 @@ exports[`<Releases /> should render 1`] = `
                                                     >
                                                       Channels recommend release versions and help control the pace of updates.
                     Update channels are tied to a minor version of OpenShift Container Platform,
-                    for example 4.8. To update to the next minor release, you may need to change
+                    for example 4.12. To update to the next minor release, you may need to change
                     the channel you're in.
                                                     </div>
                                                   </StackItem>
@@ -1089,11 +1095,11 @@ exports[`<Releases /> should render 1`] = `
                                                       className="pf-l-stack__item"
                                                     >
                                                       <ExternalLink
-                                                        href="https://docs.openshift.com/container-platform/4.8/updating/understanding-upgrade-channels-release.html"
+                                                        href="https://docs.openshift.com/container-platform/4.12/updating/understanding-upgrade-channels-release.html"
                                                         noIcon={true}
                                                       >
                                                         <a
-                                                          href="https://docs.openshift.com/container-platform/4.8/updating/understanding-upgrade-channels-release.html"
+                                                          href="https://docs.openshift.com/container-platform/4.12/updating/understanding-upgrade-channels-release.html"
                                                           onClick={[Function]}
                                                           rel="noreferrer noopener"
                                                           target="_blank"

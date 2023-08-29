@@ -4,6 +4,7 @@ import get from 'lodash/get';
 import { Button, Flex, Popover } from '@patternfly/react-core';
 
 import { OutlinedQuestionCircleIcon } from '@patternfly/react-icons';
+import { isRestrictedEnv } from '~/restrictedEnv';
 import SupportStatusLabel from '../SupportStatusLabel';
 import ClusterUpdateLink from '../../../../common/ClusterUpdateLink';
 import UpgradeStatus from '../../../../common/Upgrades/UpgradeStatus';
@@ -55,14 +56,20 @@ class ClusterVersionInfo extends React.Component {
             <dt>OpenShift: </dt>
             <dd>
               {clusterVersion}
-              <ClusterUpdateLink
-                cluster={cluster}
-                openModal={openModal}
-                hideOSDUpdates={!!scheduledUpdate}
-              />
-              {scheduledUpdate && scheduledUpdate.schedule_type === 'automatic' && !isUpgrading ? (
-                <UpgradeAcknowledgeLink clusterId={cluster.id} />
-              ) : null}
+              {!isRestrictedEnv() && (
+                <>
+                  <ClusterUpdateLink
+                    cluster={cluster}
+                    openModal={openModal}
+                    hideOSDUpdates={!!scheduledUpdate}
+                  />
+                  {scheduledUpdate &&
+                  scheduledUpdate.schedule_type === 'automatic' &&
+                  !isUpgrading ? (
+                    <UpgradeAcknowledgeLink clusterId={cluster.id} />
+                  ) : null}
+                </>
+              )}
             </dd>
           </Flex>
           {scheduledUpdate && scheduledUpdate.schedule_type === 'manual' && (

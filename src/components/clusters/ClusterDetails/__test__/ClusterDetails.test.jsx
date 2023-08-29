@@ -2,7 +2,7 @@ import { mount, shallow } from 'enzyme';
 import React from 'react';
 import { MemoryRouter } from 'react-router-dom';
 import { subscriptionStatuses } from '../../../../common/subscriptionTypes';
-import { TestWrapper, render, screen } from '../../../../testUtils';
+import { TestWrapper, mockRestrictedEnv, render, screen } from '../../../../testUtils';
 import clusterStates from '../../common/clusterStates';
 import ClusterDetails from '../ClusterDetails';
 import fixtures, { funcs } from './ClusterDetails.fixtures';
@@ -420,6 +420,53 @@ describe('<ClusterDetails />', () => {
       expect(ocpWrapper.find('TabsRow').props().displayMachinePoolsTab).toBe(false);
       expect(ocpWrapper.find('TabsRow').props().displayUpgradeSettingsTab).toBe(false);
       expect(ocpWrapper.find('TabsRow').props().addHostTabDetails.showTab).toBe(false);
+    });
+  });
+
+  describe('Restricted env details', () => {
+    const isRestrictedEnv = mockRestrictedEnv();
+
+    beforeEach(() => {
+      isRestrictedEnv.mockReturnValue(true);
+    });
+
+    afterEach(() => {
+      isRestrictedEnv.mockReturnValue(false);
+    });
+
+    it('hides tabs in restricted env', () => {
+      const functions = funcs();
+      const props = {
+        ...fixtures,
+        ...functions,
+        clearFiltersAndFlags: () => {},
+        clusterDetails: {
+          ...fixtures.ROSAClusterDetails,
+          cluster: {
+            ...fixtures.ROSAClusterDetails.cluster,
+            hypershift: { enabled: true },
+            canEdit: true,
+          },
+        },
+        isAROCluster: false,
+        isArchived: false,
+      };
+      render(
+        <RouterWrapper>
+          <ClusterDetails {...props} />
+        </RouterWrapper>,
+      );
+
+      expect(screen.queryByText('Add-ons')).not.toBeInTheDocument();
+      expect(screen.queryByText('Support')).not.toBeInTheDocument();
+      expect(screen.queryByText('Settings')).not.toBeInTheDocument();
+      expect(screen.queryByText('Monitoring')).not.toBeInTheDocument();
+      expect(screen.queryByText('Cluster history')).not.toBeInTheDocument();
+
+      expect(screen.queryByText('Access control')).toBeInTheDocument();
+      expect(screen.queryByText('Networking')).toBeInTheDocument();
+      expect(screen.queryByText('Machine pools')).toBeInTheDocument();
+      expect(screen.queryByText('Overview')).toBeInTheDocument();
     });
   });
 });

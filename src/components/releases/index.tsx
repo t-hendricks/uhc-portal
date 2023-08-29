@@ -17,21 +17,26 @@ import { OutlinedQuestionCircleIcon } from '@patternfly/react-icons';
 import { Link } from 'react-router-dom';
 import semver from 'semver';
 
+import { SUPPORTED_RESTRICTED_ENV_OCP_VERSIONS, isRestrictedEnv } from '~/restrictedEnv';
 import getReleaseNotesLink from './getReleaseNotesLink';
 import ExternalLink from '../common/ExternalLink';
 import ReleaseChannel from './ReleaseChannel';
 import ReleaseChannelName from './ReleaseChannelName';
 import ReleaseChannelDescription from './ReleaseChannelDescription';
 import { useOCPLifeCycleStatusData } from './hooks';
+import { AppPage } from '../App/AppPage';
 
 import './Releases.scss';
-import { AppPage } from '../App/AppPage';
 
 const Releases = () => {
   const [statusData] = useOCPLifeCycleStatusData();
 
   const allVersions = statusData?.[0]?.versions;
-  const filteredVersions = allVersions?.filter((version) => !version.name.includes('EUS'));
+  const filteredVersions = allVersions?.filter(
+    (version) =>
+      !version.name.includes('EUS') &&
+      (isRestrictedEnv() ? SUPPORTED_RESTRICTED_ENV_OCP_VERSIONS.includes(version.name) : true),
+  );
   const versionsToDisplay = filteredVersions?.splice(0, 6);
   const hasEUSChannel = (versionName: string) => {
     const parsed = semver.coerce(versionName);
@@ -97,7 +102,7 @@ const Releases = () => {
                     {versionsToDisplay?.map((version) => {
                       const releaseNotesLink = getReleaseNotesLink(version.name);
                       return (
-                        <GalleryItem key={version.name}>
+                        <GalleryItem key={version.name} data-testid={`version-${version.name}`}>
                           <Card isFlat className="ocm-l-ocp-releases__card">
                             <CardTitle>
                               <div className="ocm-l-ocp-releases__card-title pf-u-mb-sm">
@@ -118,10 +123,12 @@ const Releases = () => {
                                   channel={`stable-${version.name}`}
                                   status={version.type}
                                 />
-                                <ReleaseChannel
-                                  channel={`fast-${version.name}`}
-                                  status={version.type}
-                                />
+                                {!isRestrictedEnv() && (
+                                  <ReleaseChannel
+                                    channel={`fast-${version.name}`}
+                                    status={version.type}
+                                  />
+                                )}
                                 {hasEUSChannel(version.name) ? (
                                   <ReleaseChannel
                                     channel={`eus-${version.name}`}
@@ -135,7 +142,9 @@ const Releases = () => {
                                     </ReleaseChannelDescription>
                                   </>
                                 )}
-                                <ReleaseChannel channel={`candidate-${version.name}`} />
+                                {!isRestrictedEnv() && (
+                                  <ReleaseChannel channel={`candidate-${version.name}`} />
+                                )}
                               </dl>
                             </CardBody>
                           </Card>

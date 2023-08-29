@@ -33,6 +33,7 @@ import Instruction from '~/components/common/Instruction';
 import Instructions from '~/components/common/Instructions';
 
 import { useFeatureGate } from '~/hooks/useFeatureGate';
+import { isRestrictedEnv } from '~/restrictedEnv';
 import { HCP_ROSA_GETTING_STARTED_PAGE } from '~/redux/constants/featureConstants';
 
 import { AppPage } from '~/components/App/AppPage';
@@ -40,6 +41,8 @@ import StepCreateAWSAccountRoles from './StepCreateAWSAccountRoles';
 import StepDownloadROSACli from './StepDownloadROSACli';
 import WithCLICard from './WithCLICard';
 import WithWizardCard from './WithWizardCard';
+
+import '../createROSAWizard.scss';
 
 export const productName = 'Red Hat OpenShift Service on AWS';
 const title = (productName: string = '') => `Get started with ${productName} (ROSA)`;
@@ -175,9 +178,11 @@ const CreateRosaGetStarted = () => {
                   <GridItem span={6}>
                     <WithCLICard />
                   </GridItem>
-                  <GridItem span={6}>
-                    <WithWizardCard />
-                  </GridItem>
+                  {!isRestrictedEnv() && (
+                    <GridItem span={6}>
+                      <WithWizardCard />
+                    </GridItem>
+                  )}
                 </Grid>
               </CardBody>
             </Card>

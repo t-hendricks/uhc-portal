@@ -33,17 +33,17 @@ const mapStateToProps = (state) => {
   return {
     editClusterRoutersResponse: state.clusterRouters.editRouters,
     controlPlaneAPIEndpoint: cluster.api?.url,
-    defaultRouterAddress: clusterRouters.default.address,
+    defaultRouterAddress: clusterRouters.default?.address,
     additionalRouterAddress: hasAdditionalRouter
       ? clusterRouters.additional.address
-      : `apps2${clusterRouters.default.address.substr(4)}`,
+      : `apps2${clusterRouters.default?.address.substr(4)}`,
     initialValues: {
       private_api: APIPrivate,
-      private_default_router: clusterRouters.default.isPrivate,
+      private_default_router: clusterRouters.default?.isPrivate,
       enable_additional_router: hasAdditionalRouter,
       private_additional_router: !!clusterRouters?.additional?.isPrivate,
       labels_additional_router: routeSelectorsAsString(clusterRouters?.additional?.routeSelectors),
-      is_nlb_load_balancer: clusterRouters.default.loadBalancer === LoadBalancerFlavor.NLB,
+      is_nlb_load_balancer: clusterRouters.default?.loadBalancer === LoadBalancerFlavor.NLB,
     },
     clusterID: cluster.id,
     clusterRouters,

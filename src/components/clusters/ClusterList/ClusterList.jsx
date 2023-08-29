@@ -30,6 +30,7 @@ import {
   ToolbarContent,
 } from '@patternfly/react-core';
 import { AppPage } from '~/components/App/AppPage';
+import { isRestrictedEnv } from '~/restrictedEnv';
 
 import ReadOnlyBanner from '../common/ReadOnlyBanner';
 import ClusterListFilter from '../common/ClusterListFilter';
@@ -50,7 +51,7 @@ import CommonClusterModals from '../common/CommonClusterModals';
 import ViewPaginationRow from '../common/ViewPaginationRow/viewPaginationRow';
 
 import helpers from '../../../common/helpers';
-import { productFilterOptions } from '../../../common/subscriptionTypes';
+import { normalizedProducts, productFilterOptions } from '../../../common/subscriptionTypes';
 
 import {
   viewPropsChanged,
@@ -78,8 +79,18 @@ class ClusterList extends Component {
       organization,
       getMachineTypes,
       machineTypes,
+      onListFlagsSet,
     } = this.props;
 
+    if (isRestrictedEnv()) {
+      onListFlagsSet(
+        'subscriptionFilter',
+        {
+          plan_id: [normalizedProducts.ROSA],
+        },
+        viewConstants.CLUSTERS_VIEW,
+      );
+    }
     const planIDFilter = getQueryParam('plan_id') || '';
 
     if (!isEmpty(planIDFilter)) {
@@ -271,15 +282,22 @@ class ClusterList extends Component {
                       view={viewConstants.CLUSTERS_VIEW}
                     />
                   </ToolbarItem>
-                  <ToolbarItem className="ocm-c-toolbar__item-cluster-list-filter-dropdown">
-                    <ClusterListFilterDropdown
-                      view={viewConstants.CLUSTERS_VIEW}
-                      isDisabled={pending}
-                      history={history}
-                      className="cluster-filter-dropdown"
-                    />
-                  </ToolbarItem>
-                  <ClusterListActions />
+                  {!isRestrictedEnv() && (
+                    <>
+                      <ToolbarItem
+                        className="ocm-c-toolbar__item-cluster-list-filter-dropdown"
+                        data-testid="cluster-list-filter-dropdown"
+                      >
+                        <ClusterListFilterDropdown
+                          view={viewConstants.CLUSTERS_VIEW}
+                          isDisabled={pending}
+                          history={history}
+                          className="cluster-filter-dropdown"
+                        />
+                      </ToolbarItem>
+                      <ClusterListActions />
+                    </>
+                  )}
                   <ViewOnlyMyClustersToggle
                     view={viewConstants.CLUSTERS_VIEW}
                     bodyContent="Show only the clusters you previously created, or all clusters in your organization."
@@ -301,7 +319,9 @@ class ClusterList extends Component {
                   </ToolbarItem>
                 </ToolbarContent>
               </Toolbar>
-              <ClusterListFilterChipGroup view={viewConstants.CLUSTERS_VIEW} history={history} />
+              {!isRestrictedEnv() && (
+                <ClusterListFilterChipGroup view={viewConstants.CLUSTERS_VIEW} history={history} />
+              )}
               <ClusterListTable
                 openModal={openModal}
                 clusters={clusters || []}
@@ -380,6 +400,7 @@ ClusterList.propTypes = {
   toggleSubscriptionReleased: PropTypes.func.isRequired,
   clearGlobalError: PropTypes.func.isRequired,
   clearClusterDetails: PropTypes.func.isRequired,
+  onListFlagsSet: PropTypes.func.isRequired,
 };
 
 export default ClusterList;
