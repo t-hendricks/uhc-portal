@@ -121,10 +121,10 @@ import TermsGuardedRoute from './TermsGuardedRoute';
 import { useFeatures } from './hooks/useFeatures';
 import { is404, metadataByRoute } from './routeMetadata';
 
-const { AssistedUiRouter } = OCM;
-const AssistedUiRouterPage: typeof AssistedUiRouter = (props) => (
+const { Routes: AssistedInstallerRoutes } = OCM;
+const AssistedUiRouterPage: typeof AssistedInstallerRoutes = (props) => (
   <AppPage>
-    <AssistedUiRouter {...props} />
+    <AssistedInstallerRoutes {...props} />
   </AppPage>
 );
 
