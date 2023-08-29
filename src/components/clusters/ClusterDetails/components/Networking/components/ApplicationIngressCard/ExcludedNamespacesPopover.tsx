@@ -3,7 +3,7 @@ import React from 'react';
 import PopoverHint from '~/components/common/PopoverHint';
 
 export const ExcludedNamespacesHelpText =
-  "If no values are specified, all namespaces will be exposed. Format should be a comma-separated list 'value1, value2...'.";
+  "Optional list of namespaces to exclude routes from exposing. If no values are specified, all namespaces will be exposed. Format is a comma-separated list 'value1, value2...'.";
 
 export const ExcludedNamespacesPopover = () => (
   <PopoverHint
