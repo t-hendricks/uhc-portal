@@ -20,10 +20,10 @@ import { getOrganizationAndQuota } from '../../../../../redux/actions/userAction
 import { clusterAutoscalerActions } from '../../../../../redux/actions/clusterAutoscalerActions';
 import { getMachineTypes } from '../../../../../redux/actions/machineTypesActions';
 import { openModal, closeModal } from '../../../../common/Modal/ModalActions';
+import { isHypershiftCluster } from '../../clusterDetailsHelper';
 
-const mapStateToProps = (state, ownProps) => {
+const mapStateToProps = (state) => {
   const cluster = get(state, 'clusters.details.cluster', {});
-  const nodes = get(cluster, 'nodes', {});
 
   const props = {
     openModalId: state.modal.modalName,
@@ -38,56 +38,40 @@ const mapStateToProps = (state, ownProps) => {
       isControlPlaneUpToDate(state) && isMachinePoolBehindControlPlane(state, machinePool),
   };
 
-  if (ownProps.isHypershift) {
-    return {
-      ...props,
-      clusterAutoscalerResponse: state.clusterAutoscaler,
-      machinePoolsList: {
+  const machinePoolsList = isHypershiftCluster(cluster)
+    ? {
         ...props.machinePoolsList,
-        data: state.machinePools.getMachinePools.data.map(normalizeNodePool),
-      },
-    };
-  }
-
-  // align the default machine pool structure to additional machine pools structure
-  const defaultMachinePool = {
-    id: 'Default',
-    instance_type: nodes.compute_machine_type?.id,
-    availability_zones: nodes.availability_zones,
-    labels: nodes.compute_labels,
-  };
-
-  if (nodes.autoscale_compute) {
-    defaultMachinePool.autoscaling = { ...nodes.autoscale_compute };
-  } else {
-    defaultMachinePool.desired = nodes.compute;
-  }
-
+        data: props.machinePoolsList.data.map(normalizeNodePool),
+      }
+    : props.machinePoolsList;
   return {
-    defaultMachinePool,
-    clusterAutoscalerResponse: state.clusterAutoscaler,
     ...props,
+    clusterAutoscalerResponse: state.clusterAutoscaler,
+    machinePoolsList,
   };
 };
 
-const mapDispatchToProps = (dispatch, ownProps) => ({
-  openModal: (modalId, data) => dispatch(openModal(modalId, data)),
-  closeModal: () => dispatch(closeModal()),
-  getMachinePools: () => {
-    dispatch(getMachineOrNodePools(ownProps.cluster.id, ownProps.isHypershift));
-    dispatch(
-      clusterAutoscalerActions.setHasInitialClusterAutoscaler(!!ownProps.cluster.autoscaler),
-    );
-  },
-  clearGetMachinePoolsResponse: () => dispatch(clearGetMachinePoolsResponse(ownProps.clusterID)),
-  clearDeleteMachinePoolResponse: () =>
-    dispatch(clearDeleteMachinePoolResponse(ownProps.clusterID)),
-  deleteMachinePool: (machinePoolID) =>
-    dispatch(deleteMachinePool(ownProps.cluster.id, machinePoolID, ownProps.isHypershift)),
-  getOrganizationAndQuota: () => dispatch(getOrganizationAndQuota()),
-  getMachineTypes: () => dispatch(getMachineTypes()),
-  getClusterAutoscaler: () =>
-    dispatch(clusterAutoscalerActions.getClusterAutoscaler(ownProps.cluster.id)),
-});
+const mapDispatchToProps = (dispatch, ownProps) => {
+  const isHypershift = isHypershiftCluster(ownProps.cluster);
+  return {
+    openModal: (modalId, data) => dispatch(openModal(modalId, data)),
+    closeModal: () => dispatch(closeModal()),
+    getMachinePools: () => {
+      dispatch(getMachineOrNodePools(ownProps.cluster.id, isHypershift));
+      dispatch(
+        clusterAutoscalerActions.setHasInitialClusterAutoscaler(!!ownProps.cluster.autoscaler),
+      );
+    },
+    clearGetMachinePoolsResponse: () => dispatch(clearGetMachinePoolsResponse(ownProps.clusterID)),
+    clearDeleteMachinePoolResponse: () =>
+      dispatch(clearDeleteMachinePoolResponse(ownProps.clusterID)),
+    deleteMachinePool: (machinePoolID) =>
+      dispatch(deleteMachinePool(ownProps.cluster.id, machinePoolID, isHypershift)),
+    getOrganizationAndQuota: () => dispatch(getOrganizationAndQuota()),
+    getMachineTypes: () => dispatch(getMachineTypes()),
+    getClusterAutoscaler: () =>
+      dispatch(clusterAutoscalerActions.getClusterAutoscaler(ownProps.cluster.id)),
+  };
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(MachinePools);

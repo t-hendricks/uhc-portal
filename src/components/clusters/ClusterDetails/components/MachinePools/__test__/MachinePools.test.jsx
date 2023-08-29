@@ -19,7 +19,7 @@ const defaultMachinePool = {
   desired: 1,
 };
 
-const baseProps = {
+const baseProps = (isHypershift = false, ccs = false, machinePool = defaultMachinePool) => ({
   cluster: {
     machinePoolsActions: {
       create: true,
@@ -27,6 +27,12 @@ const baseProps = {
       delete: true,
       edit: true,
       list: true,
+    },
+    hypershift: {
+      enabled: isHypershift,
+    },
+    ccs: {
+      enabled: ccs,
     },
   },
   openModal,
@@ -37,7 +43,7 @@ const baseProps = {
   deleteMachinePoolResponse: { ...baseRequestState },
   addMachinePoolResponse: { ...baseRequestState },
   scaleMachinePoolResponse: { ...baseRequestState },
-  machinePoolsList: { ...baseRequestState, data: [] },
+  machinePoolsList: { ...baseRequestState, data: [machinePool] },
   getMachinePools,
   deleteMachinePool,
   clearGetMachinePoolsResponse: jest.fn(),
@@ -47,32 +53,25 @@ const baseProps = {
   hasMachinePoolsQuota: true,
   canMachinePoolBeUpdated: jest.fn(() => false),
   clearDeleteMachinePoolResponse: jest.fn(),
-};
-
-const osdProps = {
-  ...baseProps,
-  defaultMachinePool: { ...defaultMachinePool },
-  isHypershift: false,
-};
+});
 
 describe('<MachinePools />', () => {
   it('should call getMachinePools on mount', () => {
-    shallow(<MachinePools {...osdProps} />);
+    shallow(<MachinePools {...baseProps()} />);
     expect(getMachinePools).toBeCalled();
   });
 
-  it('renders with the default machine pool', () => {
-    const wrapper = shallow(<MachinePools {...osdProps} />);
+  it('renders with the machine pool', () => {
+    const wrapper = shallow(<MachinePools {...baseProps()} />);
     expect(wrapper).toMatchSnapshot();
   });
 
-  it('renders with the default machine pool when it has labels', () => {
+  it('renders with the machine pool when it has labels', () => {
     const props = {
-      ...osdProps,
-      defaultMachinePool: {
-        ...osdProps.defaultMachinePool,
+      ...baseProps(false, false, {
+        ...defaultMachinePool,
         labels: { foo: 'bar', hello: 'world' },
-      },
+      }),
     };
     const wrapper = shallow(<MachinePools {...props} />);
     expect(wrapper).toMatchSnapshot();
@@ -80,7 +79,7 @@ describe('<MachinePools />', () => {
 
   it('renders with additional machine pools, some with labels and/or taints', () => {
     const props = {
-      ...osdProps,
+      ...baseProps(),
       machinePoolsList: {
         data: [
           {
@@ -149,19 +148,19 @@ describe('<MachinePools />', () => {
       },
     ];
 
-    const wrapper = shallow(<MachinePools {...osdProps} machinePoolsList={{ data }} />);
+    const wrapper = shallow(<MachinePools {...baseProps()} machinePoolsList={{ data }} />);
     expect(wrapper).toMatchSnapshot();
   });
 
   it('should open modal', () => {
-    const wrapper = shallow(<MachinePools {...osdProps} />);
+    const wrapper = shallow(<MachinePools {...baseProps()} />);
 
     wrapper.find('#add-machine-pool').simulate('click');
     expect(openModal).toBeCalledWith(modals.ADD_MACHINE_POOL);
   });
 
   it('should render skeleton while fetching machine pools', () => {
-    const wrapper = shallow(<MachinePools {...osdProps} />);
+    const wrapper = shallow(<MachinePools {...baseProps()} />);
 
     wrapper.setProps({ machinePoolsList: { ...baseRequestState, pending: true, data: [] } });
     expect(wrapper).toMatchSnapshot();
@@ -169,7 +168,7 @@ describe('<MachinePools />', () => {
   });
 
   it('should not allow adding machine pools to users without enough quota', () => {
-    const props = { ...osdProps, hasMachinePoolsQuota: false };
+    const props = { ...baseProps(), hasMachinePoolsQuota: false };
     const wrapper = shallow(<MachinePools {...props} />);
 
     expect(wrapper.find('#add-machine-pool').props().disableReason).toBeTruthy();
@@ -177,8 +176,22 @@ describe('<MachinePools />', () => {
 
   it('Should disable unavailable actions in kebab menu if hypershift', () => {
     const props = {
-      ...baseProps,
-      isHypershift: true,
+      ...baseProps(true),
+      machineTypes: {
+        types: {
+          aws: [
+            {
+              id: 'm5.xlarge',
+              cpu: {
+                value: 4,
+              },
+              memory: {
+                value: 4,
+              },
+            },
+          ],
+        },
+      },
       machinePoolsList: {
         data: [
           {
@@ -255,8 +268,7 @@ describe('<MachinePools />', () => {
 
   it('Should disable delete action in kebab menu if there is only one node pool and hypershift is true', () => {
     const props = {
-      ...baseProps,
-      isHypershift: true,
+      ...baseProps(true),
       machinePoolsList: {
         data: [
           {
@@ -293,14 +305,47 @@ describe('<MachinePools />', () => {
 
   it('Should enable all actions in kebab menu if hypershift is false', () => {
     const props = {
-      ...baseProps,
-      isHypershift: false,
+      ...baseProps(false, true),
+      machineTypes: {
+        types: {
+          aws: [
+            {
+              id: 'm5.xlarge',
+              cpu: {
+                value: 4,
+              },
+              memory: {
+                value: 4,
+              },
+            },
+          ],
+        },
+      },
       machinePoolsList: {
         data: [
           {
             kind: 'NodePool',
             href: '/api/clusters_mgmt/v1/clusters/21gitfhopbgmmfhlu65v93n4g4n3djde/node_pools/workers',
             id: 'workers',
+            replicas: 2,
+            auto_repair: true,
+            aws_node_pool: {
+              instance_type: 'm5.xlarge',
+              instance_profile: 'staging-21gitfhopbgmmfhlu65v93n4g4n3djde-jknhystj27-worker',
+              tags: {
+                'api.openshift.com/environment': 'staging',
+              },
+            },
+            availability_zone: 'us-east-1b',
+            subnet: 'subnet-049f90721559000de',
+            status: {
+              current_replicas: 2,
+            },
+          },
+          {
+            kind: 'NodePool',
+            href: '/api/clusters_mgmt/v1/clusters/21gitfhopbgmmfhlu65v93n4g4n3djde/node_pools/workers',
+            id: 'workers1',
             replicas: 2,
             auto_repair: true,
             aws_node_pool: {
@@ -342,8 +387,7 @@ describe('<MachinePools />', () => {
 
   it('OpenShift version for machine pools is shown if hypershift', () => {
     const props = {
-      ...baseProps,
-      isHypershift: true,
+      ...baseProps(true),
       machinePoolsList: {
         data: [
           {
@@ -379,14 +423,20 @@ describe('<MachinePools />', () => {
   });
 
   it('should render error message', () => {
-    const props = { ...baseProps, deleteMachinePoolResponse: { ...baseRequestState, error: true } };
+    const props = {
+      ...baseProps(),
+      deleteMachinePoolResponse: { ...baseRequestState, error: true },
+    };
     const wrapper = shallow(<MachinePools {...props} />);
 
     expect(wrapper.find('ErrorBox').length).toBe(1);
   });
 
   it('should close error message', () => {
-    const props = { ...baseProps, deleteMachinePoolResponse: { ...baseRequestState, error: true } };
+    const props = {
+      ...baseProps(),
+      deleteMachinePoolResponse: { ...baseRequestState, error: true },
+    };
     const wrapper = shallow(<MachinePools {...props} />);
     const errorBox = wrapper.find('ErrorBox');
     errorBox.props().onCloseAlert();
@@ -396,8 +446,7 @@ describe('<MachinePools />', () => {
   it('displays option to update machine pool if machine pool can be updated ', async () => {
     const user = userEvent.setup();
     const props = {
-      ...baseProps,
-      isHypershift: true,
+      ...baseProps(true),
       machinePoolsList: {
         data: [
           {
@@ -437,8 +486,7 @@ describe('<MachinePools />', () => {
   it('hides option to update machine pool if machine pool cannot be updated', async () => {
     const user = userEvent.setup();
     const props = {
-      ...baseProps,
-      isHypershift: true,
+      ...baseProps(true),
       machinePoolsList: {
         data: [
           {
@@ -478,10 +526,11 @@ describe('<MachinePools />', () => {
   });
 
   it('Should disable actions on machine pools if user does not have permissions', () => {
+    const defaultProps = baseProps(true);
     const props = {
-      ...baseProps,
+      ...defaultProps,
       cluster: {
-        ...baseProps.cluster,
+        ...defaultProps.cluster,
         machinePoolsActions: {
           create: false,
           update: false,
@@ -490,7 +539,6 @@ describe('<MachinePools />', () => {
           list: true,
         },
       },
-      isHypershift: true,
       machinePoolsList: {
         data: [
           {
@@ -513,10 +561,11 @@ describe('<MachinePools />', () => {
 
   it('Should disable delete action if user does not have permissions', async () => {
     const user = userEvent.setup();
+    const defaultProps = baseProps(true);
     const props = {
-      ...baseProps,
+      ...defaultProps,
       cluster: {
-        ...baseProps.cluster,
+        ...defaultProps.cluster,
         machinePoolsActions: {
           create: false,
           update: true,
@@ -525,7 +574,6 @@ describe('<MachinePools />', () => {
           list: true,
         },
       },
-      isHypershift: true,
       machinePoolsList: {
         data: [
           {
@@ -549,8 +597,7 @@ describe('<MachinePools />', () => {
 
   it('Should allow actions on machine pools if user has permissions', () => {
     const props = {
-      ...baseProps,
-      isHypershift: true,
+      ...baseProps(true),
       machinePoolsList: {
         data: [
           {

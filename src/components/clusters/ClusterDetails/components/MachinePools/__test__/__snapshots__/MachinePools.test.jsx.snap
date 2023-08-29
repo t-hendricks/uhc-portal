@@ -322,47 +322,6 @@ exports[`<MachinePools /> renders with a machine pool with autoscaling enabled 1
           Array [
             Object {
               "cells": Array [
-                "some-id",
-                Object {
-                  "title": <React.Fragment>
-                    m5.xlarge
-                  </React.Fragment>,
-                },
-                "us-east-1",
-                Object {
-                  "title": <MachinePoolNodesSummary
-                    isMultiZoneCluster={false}
-                    machinePool={
-                      Object {
-                        "availability_zones": Array [
-                          "us-east-1",
-                        ],
-                        "desired": 1,
-                        "id": "some-id",
-                        "instance_type": "m5.xlarge",
-                      }
-                    }
-                  />,
-                },
-                Object {
-                  "title": <MachinePoolAutoScalingSummary
-                    hasMachinePoolAutoscale={false}
-                    isHypershift={false}
-                  />,
-                },
-              ],
-              "key": "some-id",
-              "machinePool": Object {
-                "availability_zones": Array [
-                  "us-east-1",
-                ],
-                "desired": 1,
-                "id": "some-id",
-                "instance_type": "m5.xlarge",
-              },
-            },
-            Object {
-              "cells": Array [
                 "mp-autoscaling",
                 Object {
                   "title": <React.Fragment>
@@ -483,7 +442,7 @@ exports[`<MachinePools /> renders with a machine pool with autoscaling enabled 1
               ],
               "fullWidth": true,
               "key": "mp-autoscaling-child",
-              "parent": 1,
+              "parent": 0,
             },
           ]
         }
@@ -580,47 +539,6 @@ exports[`<MachinePools /> renders with additional machine pools, some with label
         rowLabeledBy="simple-node"
         rows={
           Array [
-            Object {
-              "cells": Array [
-                "some-id",
-                Object {
-                  "title": <React.Fragment>
-                    m5.xlarge
-                  </React.Fragment>,
-                },
-                "us-east-1",
-                Object {
-                  "title": <MachinePoolNodesSummary
-                    isMultiZoneCluster={false}
-                    machinePool={
-                      Object {
-                        "availability_zones": Array [
-                          "us-east-1",
-                        ],
-                        "desired": 1,
-                        "id": "some-id",
-                        "instance_type": "m5.xlarge",
-                      }
-                    }
-                  />,
-                },
-                Object {
-                  "title": <MachinePoolAutoScalingSummary
-                    hasMachinePoolAutoscale={false}
-                    isHypershift={false}
-                  />,
-                },
-              ],
-              "key": "some-id",
-              "machinePool": Object {
-                "availability_zones": Array [
-                  "us-east-1",
-                ],
-                "desired": 1,
-                "id": "some-id",
-                "instance_type": "m5.xlarge",
-              },
-            },
             Object {
               "cells": Array [
                 "mp-with-labels-and-taints",
@@ -734,7 +652,7 @@ exports[`<MachinePools /> renders with additional machine pools, some with label
               ],
               "fullWidth": true,
               "key": "mp-with-labels-and-taints-child",
-              "parent": 1,
+              "parent": 0,
             },
             Object {
               "cells": Array [
@@ -813,7 +731,7 @@ exports[`<MachinePools /> renders with additional machine pools, some with label
               ],
               "fullWidth": true,
               "key": "mp-with-label-child",
-              "parent": 3,
+              "parent": 2,
             },
             Object {
               "cells": Array [
@@ -919,7 +837,7 @@ exports[`<MachinePools /> renders with additional machine pools, some with label
               ],
               "fullWidth": true,
               "key": "mp-with-taints-child",
-              "parent": 5,
+              "parent": 4,
             },
             Object {
               "cells": Array [
@@ -980,7 +898,7 @@ exports[`<MachinePools /> renders with additional machine pools, some with label
 </Fragment>
 `;
 
-exports[`<MachinePools /> renders with the default machine pool 1`] = `
+exports[`<MachinePools /> renders with the machine pool 1`] = `
 <Fragment>
   <UpdateAllMachinePools />
   <Card
@@ -1116,7 +1034,7 @@ exports[`<MachinePools /> renders with the default machine pool 1`] = `
 </Fragment>
 `;
 
-exports[`<MachinePools /> renders with the default machine pool when it has labels 1`] = `
+exports[`<MachinePools /> renders with the machine pool when it has labels 1`] = `
 <Fragment>
   <UpdateAllMachinePools />
   <Card

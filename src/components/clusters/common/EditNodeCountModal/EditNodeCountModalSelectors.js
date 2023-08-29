@@ -1,3 +1,4 @@
+import { isEnforcedDefaultMachinePool } from '../../ClusterDetails/components/MachinePools/machinePoolsHelper';
 import totalNodesDataSelector from '../totalNodesDataSelector';
 
 // Determine whether a master instance resize alert should be shown.
@@ -10,16 +11,17 @@ const masterResizeThresholds = {
 
 // Determine the master machine type size according to the
 // current nodes and the requested nodes.
-const masterResizeAlertThresholdSelector = (
+const masterResizeAlertThresholdSelector = ({
   selectedMachinePoolID,
   requestedNodes,
   cluster,
   machinePools,
-) => {
+  machineTypes,
+}) => {
   const nodes = totalNodesDataSelector(cluster, machinePools);
   const currentNodes = nodes.totalMaxNodesCount;
   let totalRequestedNodes;
-  if (selectedMachinePoolID === 'Default') {
+  if (isEnforcedDefaultMachinePool(selectedMachinePoolID, machinePools, machineTypes, cluster)) {
     totalRequestedNodes = nodes.totalMaxNodesCount + (requestedNodes - nodes.totalDefaultMaxNodes);
   } else {
     const selectedMachinePool = machinePools.find(
