@@ -1437,7 +1437,9 @@ const validateWorkerVolumeSize = (
     return `The worker root disk size must be between ${workerNodeVolumeSizeMinGiB} GiB and ${maxWorkerVolumeSizeGiB} GiB.`;
   }
 
-  return undefined;
+  return size === Math.floor(size)
+    ? undefined
+    : 'Decimals are not allowed for the worker root disk size. Enter a whole number.';
 };
 
 const validators = {
