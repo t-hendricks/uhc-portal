@@ -16,6 +16,7 @@ import AccountRolesARNsSection from './AccountRolesARNsSection';
 import { AwsRoleErrorAlert } from './AwsRoleErrorAlert';
 import AWSAccountSelection from './AWSAccountSelection';
 import AWSBillingAccount from './AWSBillingAccount/AWSBillingAccount';
+import { useAssociateAWSAccountDrawer } from './AssociateAWSAccountDrawer/AssociateAWSAccountDrawer';
 
 export const isUserRoleForSelectedAWSAccount = (users, awsAcctId) =>
   users.some((user) => user.aws_id === awsAcctId);
@@ -41,8 +42,6 @@ function AccountsRolesScreen({
   clearGetUserRoleResponse,
   offlineToken,
   setOfflineToken,
-  setDrawerIsOpen,
-  isDrawerOpen,
   isHypershiftSelected,
 }) {
   const [AWSAccountIDs, setAWSAccountIDs] = useState([]);
@@ -50,9 +49,9 @@ function AccountsRolesScreen({
   const [awsIDsErrorBox, setAwsIDsErrorBox] = useState(null);
   const [refreshButtonClicked, setRefreshButtonClicked] = useState(false);
   const openDrawerButtonRef = useRef(null);
-  const prevDrawerState = useRef(false);
   const hasAWSAccounts = AWSAccountIDs.length > 0;
   const track = useAnalytics();
+  const { openDrawer } = useAssociateAWSAccountDrawer();
 
   const resetAWSAccountFields = () => {
     // clear certain responses; causes refetch of AWS acct info.
@@ -131,17 +130,12 @@ function AccountsRolesScreen({
     }
   }, [getUserRoleResponse?.error, noUserForSelectedAWSAcct]);
 
-  useEffect(() => {
-    if (!isDrawerOpen && prevDrawerState.current) {
-      openDrawerButtonRef.current.focus();
-      clearGetAWSAccountIDsResponse();
-    }
-    prevDrawerState.current = isDrawerOpen;
-  }, [isDrawerOpen]);
-
-  const toggleAssociateAccountDrawer = useCallback(() => {
-    setDrawerIsOpen(!isDrawerOpen);
-  }, [isDrawerOpen, setDrawerIsOpen]);
+  const onClick = useCallback(
+    (event) => {
+      openDrawer({ focusOnClose: event.target, onClose: clearGetAWSAccountIDsResponse });
+    },
+    [clearGetAWSAccountIDsResponse, openDrawer],
+  );
 
   return (
     <Form onSubmit={() => false}>
@@ -160,7 +154,6 @@ function AccountsRolesScreen({
             component={AWSAccountSelection}
             name="associated_aws_id"
             label="Associated AWS infrastructure account"
-            toggleAssociateAccountDrawer={toggleAssociateAccountDrawer}
             refresh={{
               onRefresh: () => {
                 setRefreshButtonClicked(true);
@@ -179,12 +172,13 @@ function AccountsRolesScreen({
             selectedAWSAccountID={selectedAWSAccountID}
             isLoading={refreshButtonClicked && getAWSAccountIDsResponse.pending}
             isDisabled={getAWSAccountIDsResponse.pending}
+            clearGetAWSAccountIDsResponse={clearGetAWSAccountIDsResponse}
           />
           <Button
             variant="secondary"
             className="pf-u-mt-md"
             ref={openDrawerButtonRef}
-            onClick={toggleAssociateAccountDrawer}
+            onClick={onClick}
           >
             How to associate a new AWS account
           </Button>
@@ -209,16 +203,12 @@ function AccountsRolesScreen({
             clearGetAWSAccountRolesARNsResponse={clearGetAWSAccountRolesARNsResponse}
             isHypershiftSelected={isHypershiftSelected}
             onAccountChanged={resetUserRoleFields}
-            toggleAssociateAccountDrawer={toggleAssociateAccountDrawer}
           />
         )}
 
         {(getUserRoleResponse?.error || noUserForSelectedAWSAcct) && (
           <GridItem span={8} className="pf-u-mt-sm">
-            <AwsRoleErrorAlert
-              title="A user-role could not be detected"
-              toggleAssociateAccountDrawer={toggleAssociateAccountDrawer}
-            />
+            <AwsRoleErrorAlert title="A user-role could not be detected" targetRole="user" />
           </GridItem>
         )}
       </Grid>
@@ -249,8 +239,6 @@ AccountsRolesScreen.propTypes = {
   offlineToken: PropTypes.string,
   setOfflineToken: PropTypes.func,
   isHypershiftSelected: PropTypes.bool.isRequired,
-  setDrawerIsOpen: PropTypes.func,
-  isDrawerOpen: PropTypes.bool,
 };
 
 export default AccountsRolesScreen;

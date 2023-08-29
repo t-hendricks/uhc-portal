@@ -4,6 +4,7 @@ import uniq from 'lodash/uniq';
 
 import config from '~/config';
 
+import { store } from '~/redux/store';
 import { DEFAULT_FLAVOUR_ID } from '~/redux/actions/flavourActions';
 import { createCluster } from '~/redux/actions/clustersActions';
 import { parseReduxFormKeyValueList } from '~/common/helpers';
@@ -60,6 +61,12 @@ export const createClusterRequest = ({ isWizard = true, cloudProviderID, product
   const actualCloudProviderID = formData.cloud_provider || cloudProviderID;
   const actualProduct = formData.product || product;
   const isHypershiftSelected = formData.hypershift === 'true';
+
+  const state = store.getState();
+  const isAWSBillingAccountVisible =
+    state.features?.HCP_AWS_BILLING_SHOW !== undefined
+      ? state.features?.HCP_AWS_BILLING_SHOW
+      : true;
 
   const clusterRequest = {
     name: formData.name,
@@ -214,7 +221,9 @@ export const createClusterRequest = ({ isWizard = true, cloudProviderID, product
             kms_key_arn: formData.etcd_key_arn,
           };
         }
-        clusterRequest.aws.billing_account_id = formData.billing_account_id;
+        if (isAWSBillingAccountVisible) {
+          clusterRequest.aws.billing_account_id = formData.billing_account_id;
+        }
       }
 
       if (formData.imds && !isHypershiftSelected) {

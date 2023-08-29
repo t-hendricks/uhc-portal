@@ -55,7 +55,6 @@ function AccountRolesARNsSection({
   clearGetAWSAccountRolesARNsResponse,
   isHypershiftSelected,
   onAccountChanged,
-  toggleAssociateAccountDrawer,
 }) {
   const track = useAnalytics();
   const [isExpanded, setIsExpanded] = useState(true);
@@ -268,16 +267,11 @@ function AccountRolesARNsSection({
     const alertTitle = resolveARNsErrorTitle(getAWSAccountRolesARNsResponse);
 
     if (hasNoTrustedRelationshipOnClusterRoleError(getAWSAccountRolesARNsResponse)) {
-      return (
-        <AwsRoleErrorAlert
-          title={alertTitle}
-          toggleAssociateAccountDrawer={toggleAssociateAccountDrawer}
-        />
-      );
+      return <AwsRoleErrorAlert title={alertTitle} targetRole="ocm" />;
     }
 
     return <ErrorBox message={alertTitle} response={getAWSAccountRolesARNsResponse} />;
-  }, [getAWSAccountRolesARNsResponse, toggleAssociateAccountDrawer, resolveARNsErrorTitle]);
+  }, [getAWSAccountRolesARNsResponse, resolveARNsErrorTitle]);
 
   const arnCompatibilityAlertTitle = React.useMemo(() => {
     if (isHypershiftSelected)
@@ -299,18 +293,23 @@ function AccountRolesARNsSection({
       {hasARNsError && <GridItem span={8}>{arnsErrorAlert}</GridItem>}
       {!getAWSAccountRolesARNsResponse.pending && !allARNsFound && !hasARNsError && (
         <GridItem span={8}>
-          <Alert isInline variant="danger" title="Some account roles ARNs were not detected.">
-            <br />
-            Create the account roles using the following command in the ROSA CLI
-            <InstructionCommand textAriaLabel="Copyable ROSA login command">
-              {isHypershiftSelected
-                ? RosaCliCommand.CreateAccountRolesHCP
-                : RosaCliCommand.CreateAccountRoles}
-            </InstructionCommand>
-            <br />
-            After running the command, you may need to refresh using the{' '}
-            <strong>Refresh ARNs</strong> button below to populate the ARN fields.
-          </Alert>
+          {isHypershiftSelected ? (
+            <Alert isInline variant="danger" title="Some account roles ARNs were not detected.">
+              <br />
+              Create the account roles using the following command in the ROSA CLI
+              <InstructionCommand textAriaLabel="Copyable ROSA login command">
+                {RosaCliCommand.CreateAccountRolesHCP}
+              </InstructionCommand>
+              <br />
+              After running the command, you may need to refresh using the{' '}
+              <strong>Refresh ARNs</strong> button below to populate the ARN fields.
+            </Alert>
+          ) : (
+            <AwsRoleErrorAlert
+              title="Some account roles ARNs were not detected"
+              targetRole="account"
+            />
+          )}
         </GridItem>
       )}
       {getAWSAccountRolesARNsResponse.pending && (
@@ -510,7 +509,6 @@ AccountRolesARNsSection.propTypes = {
   clearGetAWSAccountRolesARNsResponse: PropTypes.func.isRequired,
   isHypershiftSelected: PropTypes.bool,
   onAccountChanged: PropTypes.func.isRequired,
-  toggleAssociateAccountDrawer: PropTypes.func.isRequired,
 };
 
 export default AccountRolesARNsSection;
