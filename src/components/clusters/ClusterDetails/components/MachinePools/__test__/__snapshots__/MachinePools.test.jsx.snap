@@ -122,6 +122,7 @@ exports[`<MachinePools /> OpenShift version for machine pools is shown if hypers
                 Object {
                   "title": <MachinePoolAutoScalingSummary
                     hasMachinePoolAutoscale={false}
+                    isHypershift={true}
                   />,
                 },
                 Object {
@@ -366,6 +367,7 @@ exports[`<MachinePools /> renders with a machine pool with autoscaling enabled 1
                 Object {
                   "title": <MachinePoolAutoScalingSummary
                     hasMachinePoolAutoscale={true}
+                    isHypershift={false}
                   />,
                 },
               ],
@@ -581,6 +583,7 @@ exports[`<MachinePools /> renders with additional machine pools, some with label
                 Object {
                   "title": <MachinePoolAutoScalingSummary
                     hasMachinePoolAutoscale={false}
+                    isHypershift={false}
                   />,
                 },
               ],
@@ -683,6 +686,7 @@ exports[`<MachinePools /> renders with additional machine pools, some with label
                 Object {
                   "title": <MachinePoolAutoScalingSummary
                     hasMachinePoolAutoscale={false}
+                    isHypershift={false}
                   />,
                 },
               ],
@@ -770,6 +774,7 @@ exports[`<MachinePools /> renders with additional machine pools, some with label
                 Object {
                   "title": <MachinePoolAutoScalingSummary
                     hasMachinePoolAutoscale={false}
+                    isHypershift={false}
                   />,
                 },
               ],
@@ -863,6 +868,7 @@ exports[`<MachinePools /> renders with additional machine pools, some with label
                 Object {
                   "title": <MachinePoolAutoScalingSummary
                     hasMachinePoolAutoscale={false}
+                    isHypershift={false}
                   />,
                 },
               ],
@@ -1000,6 +1006,7 @@ exports[`<MachinePools /> renders with the machine pool 1`] = `
                 Object {
                   "title": <MachinePoolAutoScalingSummary
                     hasMachinePoolAutoscale={false}
+                    isHypershift={false}
                   />,
                 },
               ],
@@ -1139,6 +1146,7 @@ exports[`<MachinePools /> renders with the machine pool when it has labels 1`] =
                 Object {
                   "title": <MachinePoolAutoScalingSummary
                     hasMachinePoolAutoscale={false}
+                    isHypershift={false}
                   />,
                 },
               ],

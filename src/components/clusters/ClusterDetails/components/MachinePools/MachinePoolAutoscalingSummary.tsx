@@ -6,11 +6,13 @@ import globalWarningColor100 from '@patternfly/react-tokens/dist/esm/global_warn
 const MachinePoolAutoScalingSummary = ({
   hasClusterAutoscale,
   hasMachinePoolAutoscale,
+  isHypershift,
 }: {
   hasClusterAutoscale: boolean;
   hasMachinePoolAutoscale: boolean;
+  isHypershift: boolean;
 }) => {
-  if (hasMachinePoolAutoscale && !hasClusterAutoscale) {
+  if (!isHypershift && hasMachinePoolAutoscale && !hasClusterAutoscale) {
     return (
       <Tooltip content="The machine pool autoscaling settings can not apply when the cluster autoscaler is disabled.">
         <TextContent>
