@@ -179,7 +179,7 @@ function AWSAccountSelection({
             isDisabled={isDisabled}
             placeholderText={AWS_ACCT_ID_PLACEHOLDER}
             inlineFilterPlaceholderText="Filter by account ID"
-            filterValidate={{ pattern: /[\D]/g, message: 'Please enter numeric digits only.' }}
+            filterValidate={{ pattern: /[\D]/, message: 'Please enter numeric digits only.' }}
             validated={touched && error ? 'error' : undefined}
             // lastValueStorageKey={AWS_ACCOUNT_ROSA_LOCALSTORAGE_KEY}
             footer={footer}
