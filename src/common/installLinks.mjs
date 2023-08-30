@@ -115,7 +115,7 @@ const links = {
   OSD_CLUSTER_WIDE_PROXY: `${OSD_DOCS_BASE}/networking/configuring-cluster-wide-proxy.html`,
   OSD_UPGRADES: `${OSD_DOCS_BASE}/upgrading/osd-upgrades.html`,
   OSD_LIMITED_SUPPORT_DEFINITION: `${OSD_DOCS_BASE}/osd_architecture/osd_policy/osd-service-definition.html#limited-support_osd-service-definition`,
-  OSD_MONITORING_STACK: `${OSD_DOCS_BASE}/monitoring/osd-understanding-the-monitoring-stack.html`,
+  OSD_MONITORING_STACK: `${OSD_DOCS_BASE}/monitoring/monitoring-overview.html#understanding-the-monitoring-stack_monitoring-overview`,
   OSD_CIDR_MACHINE: `${OSD_DOCS_BASE}/networking/cidr-range-definitions.html#machine-cidr-description`,
   ROSA_CIDR_MACHINE: `${ROSA_DOCS_BASE}/networking/cidr-range-definitions.html#machine-cidr-description`,
   OSD_CIDR_SERVICE: `${OSD_DOCS_BASE}/networking/cidr-range-definitions.html#service-cidr-description`,
@@ -269,7 +269,7 @@ const links = {
 
   ROSA_GET_STARTED: `https://cloud.redhat.com/learn/getting-started-red-hat-openshift-service-aws-rosa`,
   ROSA_DOCS_ENTRY: `${ROSA_DOCS_BASE}/welcome/index.html`,
-  ROSA_MONITORING: `${ROSA_DOCS_BASE}/monitoring/rosa-understanding-the-monitoring-stack.html`,
+  ROSA_MONITORING: `${ROSA_DOCS_BASE}/monitoring/monitoring-overview.html#understanding-the-monitoring-stack_monitoring-overview`,
   ROSA_AUTOSCALING: `${ROSA_DOCS_BASE}/rosa_cluster_admin/rosa_nodes/rosa-nodes-about-autoscaling-nodes.html`,
   ROSA_CLI_DOCS: `${ROSA_CP_DOCS_BASE}/rosa_cli/rosa-get-started-cli`,
   ROSA_AWS_PREREQUISITES: `${ROSA_DOCS_BASE}/rosa_install_access_delete_clusters/rosa_getting_started_iam/rosa-aws-prereqs.html`,
