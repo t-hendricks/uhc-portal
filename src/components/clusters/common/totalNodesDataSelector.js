@@ -4,14 +4,10 @@ import { isHypershiftCluster } from '../ClusterDetails/clusterDetailsHelper';
 const totalNodesDataSelector = (cluster, machinePools) => {
   const isHypershift = isHypershiftCluster(cluster);
 
-  let totalDesiredComputeNodes = isHypershift ? 0 : get(cluster, 'nodes.compute', 0);
+  let totalDesiredComputeNodes = 0;
   let hasMachinePoolWithAutoscaling = false;
   let totalMinNodesCount = 0;
   let totalMaxNodesCount = 0;
-  let totalDefaultMaxNodes = 0;
-  let totalDefaultMinNods = 0;
-
-  const defaultMachineAutoscale = get(cluster, 'nodes.autoscale_compute', false);
 
   let totalActualNodes = get(cluster, 'metrics.nodes.compute', false);
 
@@ -20,19 +16,6 @@ const totalNodesDataSelector = (cluster, machinePools) => {
       (total, pool) => total + get(pool, 'status.current_replicas', 0),
       0,
     );
-  }
-
-  if (defaultMachineAutoscale && !isHypershift) {
-    hasMachinePoolWithAutoscaling = true;
-    totalMinNodesCount = defaultMachineAutoscale.min_replicas;
-    totalDefaultMinNods = defaultMachineAutoscale.min_replicas;
-    totalMaxNodesCount = defaultMachineAutoscale.max_replicas;
-    totalDefaultMaxNodes = defaultMachineAutoscale.max_replicas;
-  } else {
-    totalMinNodesCount += totalDesiredComputeNodes;
-    totalMaxNodesCount += totalDesiredComputeNodes;
-    totalDefaultMinNods = totalDesiredComputeNodes;
-    totalDefaultMaxNodes = totalDesiredComputeNodes;
   }
 
   if (machinePools) {
@@ -60,8 +43,6 @@ const totalNodesDataSelector = (cluster, machinePools) => {
     hasMachinePoolWithAutoscaling,
     totalMinNodesCount,
     totalMaxNodesCount,
-    totalDefaultMaxNodes,
-    totalDefaultMinNods,
     totalActualNodes,
   };
 };
