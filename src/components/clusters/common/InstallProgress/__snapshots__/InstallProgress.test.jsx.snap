@@ -363,12 +363,6 @@ exports[`<InstallProgress /> should render correclty installing cluster 1`] = `
       },
     }
   }
-  inflightChecks={
-    Object {
-      "checks": Array [],
-      "fulfilled": true,
-    }
-  }
 />
 `;
 

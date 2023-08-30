@@ -24,17 +24,11 @@ import { isHypershiftCluster } from '../../clusterDetailsHelper';
 
 interface ClusterProgressCardProps {
   cluster?: Cluster;
-  inflightChecks: Object;
   history: Object;
   refresh?: Function;
 }
 
-const ClusterProgressCard = ({
-  cluster = {},
-  inflightChecks,
-  history,
-  refresh,
-}: ClusterProgressCardProps) => {
+const ClusterProgressCard = ({ cluster = {}, history, refresh }: ClusterProgressCardProps) => {
   const isError = cluster.state === clusterStates.ERROR;
   const isPending = cluster.state === clusterStates.PENDING;
   const isValidating = cluster.state === clusterStates.VALIDATING;
@@ -69,7 +63,7 @@ const ClusterProgressCard = ({
         >
           {inProgress && <Spinner size="sm" className="progressing-icon pf-u-mr-md" />}
           {isError && (
-            <span className="pf-u-mt-md">
+            <span className="pf-u-mr-xs">
               <ExclamationCircleIcon color={dangerColor.value} />{' '}
             </span>
           )}
@@ -88,7 +82,7 @@ const ClusterProgressCard = ({
         {isUninstalling ? (
           <UninstallProgress cluster={cluster} />
         ) : (
-          <InstallProgress cluster={cluster} inflightChecks={inflightChecks} />
+          <InstallProgress cluster={cluster} />
         )}
         <InstallationLogView isExpandable={!isUninstalling} cluster={cluster} />
       </CardBody>

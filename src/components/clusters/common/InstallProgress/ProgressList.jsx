@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { ProgressStepper, ProgressStep, Spinner } from '@patternfly/react-core';
 import UnknownIcon from '@patternfly/react-icons/dist/js/icons/unknown-icon';
@@ -11,8 +11,7 @@ import clusterStates, {
   isWaitingForOIDCProviderOrOperatorRolesMode,
 } from '../clusterStates';
 
-function ProgressList({ cluster, inflightChecks, actionRequiredInitialOpen }) {
-  const inflightRef = useRef([]);
+function ProgressList({ cluster, actionRequiredInitialOpen }) {
   const isROSACluster = isROSA(cluster);
   const isWaitingAndROSAManual = isWaitingROSAManualMode(cluster);
   const isWaitingForOIDCProviderOrOperatorRoles =
@@ -90,13 +89,12 @@ function ProgressList({ cluster, inflightChecks, actionRequiredInitialOpen }) {
 
     // inflight checks are asynchronous
     // so dns/install status is running parallel with network settings
-    if (inflightChecks.fulfilled) {
-      inflightRef.current = inflightChecks.checks;
-    }
     let networkSettings = completed;
-    if (inflightRef.current.some((check) => check.state === InflightCheckState.FAILED)) {
+    if (cluster.inflight_checks.some((check) => check.state === InflightCheckState.FAILED)) {
       networkSettings = failed;
-    } else if (inflightRef.current.some((check) => check.state === InflightCheckState.RUNNING)) {
+    } else if (
+      cluster.inflight_checks.some((check) => check.state === InflightCheckState.RUNNING)
+    ) {
       networkSettings = inProcess;
     }
 
@@ -212,12 +210,6 @@ function ProgressList({ cluster, inflightChecks, actionRequiredInitialOpen }) {
 
 ProgressList.propTypes = {
   cluster: PropTypes.object.isRequired,
-  inflightChecks: PropTypes.shape({
-    pending: PropTypes.bool,
-    fulfilled: PropTypes.bool,
-    error: PropTypes.bool,
-    checks: PropTypes.array,
-  }),
   actionRequiredInitialOpen: PropTypes.bool,
 };
 

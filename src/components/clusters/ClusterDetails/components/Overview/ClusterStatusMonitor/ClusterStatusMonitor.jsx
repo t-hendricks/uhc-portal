@@ -124,7 +124,7 @@ class clusterStatusMonitor extends React.Component {
                   {documentLink && (
                     <FlexItem>
                       <ExternalLink noIcon href={documentLink}>
-                        Review engress requirements
+                        Review egress requirements
                       </ExternalLink>
                     </FlexItem>
                   )}

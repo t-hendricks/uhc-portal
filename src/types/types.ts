@@ -42,6 +42,7 @@ export type FakeCluster = // AICluster &
     | 'managed'
     | 'ccs'
     | 'external_id'
+    | 'inflight_checks'
     | 'name'
     | 'version'
   > & {
