@@ -199,6 +199,28 @@ export const createClusterRequest = ({ isWizard = true, cloudProviderID, product
             id: formData.byo_oidc_config_id,
           };
         }
+
+        // Worker volume size
+        if (formData.worker_volume_size_gib) {
+          clusterRequest.nodes.compute_root_volume = {
+            aws: {
+              size: formData.worker_volume_size_gib,
+            },
+          };
+        }
+
+        // Shared VPC
+        const sharedVpc = formData.shared_vpc;
+        if (isInstallExistingVPC && sharedVpc.is_selected && !isHypershiftSelected) {
+          clusterRequest.aws = {
+            ...clusterRequest.aws,
+            private_hosted_zone_id: sharedVpc.hosted_zone_id,
+            private_hosted_zone_role_arn: sharedVpc.hosted_zone_role_arn,
+          };
+          clusterRequest.dns = {
+            base_domain: sharedVpc.base_dns_domain,
+          };
+        }
       } else {
         // AWS CCS credentials
         clusterRequest.aws = {

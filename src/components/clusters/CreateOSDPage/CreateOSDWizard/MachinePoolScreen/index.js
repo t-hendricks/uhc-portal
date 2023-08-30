@@ -7,6 +7,7 @@ import {
   getMinNodesRequiredHypershift,
   getNodeIncrementHypershift,
 } from '~/components/clusters/ClusterDetails/components/MachinePools/machinePoolsHelper';
+import { getWorkerNodeVolumeSizeMaxGiB } from '~/components/clusters/wizards/rosa/constants';
 import { canAutoScaleOnCreateSelector } from '../../../ClusterDetails/components/MachinePools/MachinePoolsSelectors';
 
 import wizardConnector from '../WizardConnector';
@@ -27,6 +28,7 @@ const mapStateToProps = (state, ownProps) => {
   const clusterVersionRawId = valueSelector(state, 'cluster_version.raw_id');
   const imds = valueSelector(state, 'imds');
   const machinePools = valueSelector(state, 'machine_pools_subnets');
+  const maxWorkerVolumeSizeGiB = getWorkerNodeVolumeSizeMaxGiB(clusterVersionRawId);
 
   return {
     cloudProviderID,
@@ -35,7 +37,7 @@ const mapStateToProps = (state, ownProps) => {
     billingModel,
     isByoc,
     machineType,
-    isHypershiftSelected,
+    isHypershift: isHypershiftSelected,
     selectedVPCID,
     imds,
     clusterVersionRawId,
@@ -45,6 +47,8 @@ const mapStateToProps = (state, ownProps) => {
     nodeIncrement: isHypershiftSelected
       ? getNodeIncrementHypershift(machinePools?.length)
       : getNodeIncrement(isMultiAz),
+    isHypershiftCluster: isHypershiftSelected,
+    maxWorkerVolumeSizeGiB,
     canAutoScale: canAutoScaleOnCreateSelector(state, product),
     autoscalingEnabled: !!valueSelector(state, 'autoscalingEnabled'),
     autoScaleMinNodesValue: valueSelector(state, 'min_replicas'),

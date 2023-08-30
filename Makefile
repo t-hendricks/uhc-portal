@@ -94,7 +94,7 @@ insights-proxy-setup: dev-env-setup
 clean:
 	rm -rf \
 		$(binaries) \
-		build \
+		dist \
 		node_modules \
 		run/cucushift \
 		run/insights-proxy \

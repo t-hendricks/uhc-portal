@@ -245,6 +245,8 @@ const ReviewClusterScreen = ({
           isByoc &&
           canSelectImds(clusterVersionRawId) &&
           ReviewItem({ name: 'imds', formValues })}
+        {formValues.worker_volume_size_gib &&
+          ReviewItem({ name: 'worker_volume_size_gib', formValues })}
       </ReviewSection>
       <ReviewSection
         title={getStepName('NETWORKING')}
@@ -267,6 +269,12 @@ const ReviewClusterScreen = ({
           !isHypershiftSelected &&
           ReviewItem({
             name: 'aws_standalone_vpc',
+            formValues,
+          })}
+        {formValues.shared_vpc.is_selected &&
+          !isHypershiftSelected &&
+          ReviewItem({
+            name: 'shared_vpc',
             formValues,
           })}
         {showVPCCheckbox &&

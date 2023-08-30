@@ -7,6 +7,9 @@ export type AWSAccountRole = typeof AWSAccountRoles[number];
 export type AssociateAWSAccountStepProps = {
   title: string;
   headingLevel?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5';
+  /** Indicates if step should be wrapped in an Expandable to be displayed with other steps;
+   * otherwise steps are independent and text should not reference other steps.
+   */
   expandable?: boolean;
   initiallyExpanded?: boolean;
 };

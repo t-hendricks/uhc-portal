@@ -29,6 +29,7 @@ import type {
   Flavour,
   LimitedSupportReason,
   OidcConfig,
+  DNSDomain,
 } from '../types/clusters_mgmt.v1';
 import type { Subscription } from '../types/accounts_mgmt.v1';
 
@@ -220,6 +221,44 @@ const hibernateCluster = (clusterID: string) =>
 
 const resumeCluster = (clusterID: string) =>
   apiRequest.post<unknown>(`/api/clusters_mgmt/v1/clusters/${clusterID}/resume`);
+
+type DndDomainsQuery = Partial<{
+  userDefined: boolean;
+  hasCluster: boolean;
+}>;
+
+const getDnsDomains = (query: DndDomainsQuery) => {
+  const search = `user_defined='${query.userDefined}' AND cluster.id${
+    query.hasCluster ? "!=''" : "=''"
+  }`;
+  return apiRequest.get<{
+    /**
+     * Retrieved list of add-ons.
+     */
+    items?: Array<DNSDomain>;
+    /**
+     * Index of the requested page, where one corresponds to the first page.
+     */
+    page?: number;
+    /**
+     * Maximum number of items that will be contained in the returned page.
+     */
+    size?: number;
+    /**
+     * Total number of items of the collection that match the search criteria,
+     * regardless of the size of the page.
+     */
+    total?: number;
+  }>('/api/clusters_mgmt/v1/dns_domains', {
+    params: { search },
+  });
+};
+
+const createNewDnsDomain = () =>
+  apiRequest.post<DNSDomain>('/api/clusters_mgmt/v1/dns_domains', {});
+
+const deleteDnsDomain = (id: string) =>
+  apiRequest.delete<unknown>(`/api/clusters_mgmt/v1/dns_domains/${id}`, {});
 
 const getAddOns = (clusterID: string) =>
   apiRequest.get<{
@@ -823,6 +862,9 @@ const clusterService = {
   hibernateCluster,
   resumeCluster,
   unarchiveCluster,
+  getDnsDomains,
+  createNewDnsDomain,
+  deleteDnsDomain,
   getAddOns,
   getClusterAddOns,
   addClusterAddOn,

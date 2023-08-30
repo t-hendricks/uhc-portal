@@ -39,7 +39,7 @@ export const VpcSettings = () => {
           <>
             <GridItem>
               <Title headingLevel="h4" size="md">
-                Existing VPC
+                Install into an existing VPC
                 <PopoverHint
                   iconClassName="pf-u-ml-sm"
                   hint={
@@ -55,11 +55,11 @@ export const VpcSettings = () => {
                 />
               </Title>
               <p className="pf-u-mt-sm">
-                To install into an existing VPC you need to ensure that your VPC is configured with
+                To install into an existing VPC, you need to ensure that your VPC is configured with
                 a public and a private subnet for each availability zone that you want the cluster
                 installed into.{' '}
                 <ExternalLink href={links.INSTALL_AWS_CUSTOM_VPC_REQUIREMENTS}>
-                  Learn all about VPC
+                  Learn more about VPC
                 </ExternalLink>
               </p>
             </GridItem>
@@ -67,7 +67,7 @@ export const VpcSettings = () => {
             <Alert
               variant="info"
               isInline
-              title="You will need to match these VPC subnets when you define the CIDR ranges."
+              title="You'll need to match these VPC subnets when you define the CIDR ranges."
             />
 
             <AwsSubnetFields
@@ -97,7 +97,7 @@ export const VpcSettings = () => {
                 />
               </Title>
               <p className="pf-u-mt-sm">
-                To install into an existing VPC you need to ensure that your VPC is configured with
+                To install into an existing VPC, you need to ensure that your VPC is configured with
                 a control plane subnet and compute subnet.
               </p>
             </GridItem>

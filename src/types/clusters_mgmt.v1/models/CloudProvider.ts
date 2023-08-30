@@ -30,7 +30,7 @@ export type CloudProvider = {
    */
   name?: string;
   /**
-   * Region
+   * (optional) Provider's regions - only included when listing providers with `fetchRegions=true`.
    */
   regions?: Array<CloudRegion>;
 };

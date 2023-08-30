@@ -11,11 +11,13 @@ import type { CCS } from './CCS';
 import type { CloudProvider } from './CloudProvider';
 import type { CloudRegion } from './CloudRegion';
 import type { ClusterAPI } from './ClusterAPI';
+import type { ClusterAutoscaler } from './ClusterAutoscaler';
 import type { ClusterConsole } from './ClusterConsole';
 import type { ClusterHealthState } from './ClusterHealthState';
 import type { ClusterNodes } from './ClusterNodes';
 import type { ClusterState } from './ClusterState';
 import type { ClusterStatus } from './ClusterStatus';
+import type { DeleteProtection } from './DeleteProtection';
 import type { DNS } from './DNS';
 import type { ExternalConfiguration } from './ExternalConfiguration';
 import type { Flavour } from './Flavour';
@@ -23,6 +25,7 @@ import type { GCP } from './GCP';
 import type { GCPEncryptionKey } from './GCPEncryptionKey';
 import type { GCPNetwork } from './GCPNetwork';
 import type { Group } from './Group';
+import type { HTPasswdIdentityProvider } from './HTPasswdIdentityProvider';
 import type { Hypershift } from './Hypershift';
 import type { IdentityProvider } from './IdentityProvider';
 import type { InflightCheck } from './InflightCheck';
@@ -133,6 +136,10 @@ export type Cluster = {
    */
   addons?: Array<AddOnInstallation>;
   /**
+   * Autoscaler.
+   */
+  autoscaler?: ClusterAutoscaler;
+  /**
    * Billing model for cluster resources.
    */
   billing_model?: BillingModel;
@@ -153,6 +160,10 @@ export type Cluster = {
    * format defined in [RFC3339](https://www.ietf.org/rfc/rfc3339.txt).
    */
   creation_timestamp?: string;
+  /**
+   * Delete protection
+   */
+  delete_protection?: DeleteProtection;
   /**
    * Indicates whether the User workload monitoring is enabled or not
    * It is enabled by default
@@ -191,6 +202,10 @@ export type Cluster = {
    * HealthState indicates the overall health state of the cluster.
    */
   health_state?: ClusterHealthState;
+  /**
+   * Details for `htpasswd` identity provider.
+   */
+  htpasswd?: HTPasswdIdentityProvider;
   /**
    * Hypershift configuration.
    */

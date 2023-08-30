@@ -1,54 +1,43 @@
+import wizardConnector from '~/components/clusters/CreateOSDPage/CreateOSDWizard/WizardConnector';
+import { render, screen } from '~/testUtils';
 import React from 'react';
-import { shallow } from 'enzyme';
-import InstallToVPC from './InstallToVPC';
-import SubnetFields, { SingleSubnetFieldsRow } from './SubnetFields';
-import GCPNetworkConfigSection from './GCPNetworkConfigSection';
+import InstallToVPC from '~/components/clusters/CreateOSDPage/CreateOSDForm/FormSections/NetworkingSection/InstallToVPC';
+import links from '~/common/installLinks.mjs';
 
-describe('<InstallToVPC>', () => {
-  let wrapper;
-  beforeEach(() => {
-    wrapper = shallow(
-      <InstallToVPC selectedRegion="us-east-1" isMultiAz={false} cloudProviderID="aws" />,
+const defaultProps = {
+  selectedRegion: 'us-east-1',
+  isMultiAz: false,
+  privateLinkSelected: false,
+  cloudProviderID: 'aws',
+  isSharedVpcSelected: false,
+  hostedZoneDomainName: 'cluster-name.base-domain-name.devshift.org',
+};
+
+describe('<InstallToVPC> (AWS)', () => {
+  it('should have a Shared VPC section', () => {
+    const ConnectedReviewClusterScreen = wizardConnector(InstallToVPC);
+    render(<ConnectedReviewClusterScreen {...defaultProps} />);
+
+    expect(screen.getByText('AWS shared VPC')).toBeInTheDocument();
+  });
+
+  it('should show a link to AWS VPC requirements', () => {
+    const ConnectedReviewClusterScreen = wizardConnector(InstallToVPC);
+    render(<ConnectedReviewClusterScreen {...defaultProps} />);
+
+    expect(screen.getByRole('link', { name: /Learn more about VPC/ })).toHaveAttribute(
+      'href',
+      links.INSTALL_AWS_CUSTOM_VPC_REQUIREMENTS,
     );
-  });
-
-  it('renders correctly when checkbox is not selected', () => {
-    const fieldRowSets = wrapper.find(SubnetFields);
-    expect(fieldRowSets.length).toEqual(0);
-    expect(wrapper).toMatchSnapshot();
-  });
-
-  it('renders correctly when selected for single AZ', () => {
-    wrapper.setProps({ selected: true });
-    const fieldRows = wrapper.find(SubnetFields).dive().find(SingleSubnetFieldsRow);
-    expect(fieldRows.length).toEqual(1);
-    expect(wrapper).toMatchSnapshot();
-  });
-
-  it('renders correctly when selected for multi AZ', () => {
-    wrapper.setProps({ selected: true, isMultiAz: true });
-    const fieldRows = wrapper.find(SubnetFields).dive().find(SingleSubnetFieldsRow);
-    expect(fieldRows.length).toEqual(3);
-    expect(wrapper).toMatchSnapshot();
   });
 });
 
-describe('<InstallToVPC>', () => {
-  let wrapper;
-  beforeEach(() => {
-    wrapper = shallow(<InstallToVPC selectedRegion="us-east1" cloudProviderID="gcp" />);
-  });
+describe('<InstallToVPC> (GCP)', () => {
+  it('should not have a Shared VPC section', () => {
+    const ConnectedReviewClusterScreen = wizardConnector(InstallToVPC);
+    const newProps = { ...defaultProps, cloudProviderID: 'gcp' };
+    render(<ConnectedReviewClusterScreen {...newProps} />);
 
-  it('renders correctly when checkbox is not selected', () => {
-    const fieldRowSets = wrapper.find(GCPNetworkConfigSection);
-    expect(fieldRowSets.length).toEqual(0);
-    expect(wrapper).toMatchSnapshot();
-  });
-
-  it('renders correctly when checkbox is selected', () => {
-    wrapper.setProps({ selected: true });
-    const fieldRowSets = wrapper.find(GCPNetworkConfigSection);
-    expect(fieldRowSets.length).toEqual(1);
-    expect(wrapper).toMatchSnapshot();
+    expect(screen.queryByText('AWS shared VPC')).not.toBeInTheDocument();
   });
 });

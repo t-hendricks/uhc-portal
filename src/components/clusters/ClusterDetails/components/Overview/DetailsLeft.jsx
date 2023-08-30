@@ -45,13 +45,16 @@ function DetailsLeft({ cluster, cloudProviders, showAssistedId }) {
 
   const { id, idLabel } = getIdFields(cluster, showAssistedId);
   const controlPlaneType = isHypershift ? 'Hosted' : 'Classic';
+  const sharedVpcZoneId = get(cluster, 'aws.private_hosted_zone_id', false);
 
   return (
     <>
       <DescriptionList>
         <DescriptionListGroup>
           <DescriptionListTerm>{idLabel}</DescriptionListTerm>
-          <DescriptionListDescription>{id}</DescriptionListDescription>
+          <DescriptionListDescription>
+            <span data-testid="clusterID">{id}</span>
+          </DescriptionListDescription>
         </DescriptionListGroup>
         <DescriptionListGroup>
           <DescriptionListTerm>Type</DescriptionListTerm>
@@ -63,18 +66,22 @@ function DetailsLeft({ cluster, cloudProviders, showAssistedId }) {
           <DescriptionListGroup>
             <DescriptionListTerm>Control plane type</DescriptionListTerm>
             <DescriptionListDescription data-testid="controlType">
-              {controlPlaneType}
+              <span data-testid="controlPlaneType">{controlPlaneType}</span>
             </DescriptionListDescription>
           </DescriptionListGroup>
         )}
         <DescriptionListGroup>
           <DescriptionListTerm>Region</DescriptionListTerm>
-          <DescriptionListDescription>{region}</DescriptionListDescription>
+          <DescriptionListDescription>
+            <span data-testid="region">{region}</span>
+          </DescriptionListDescription>
         </DescriptionListGroup>
         {!isROSA && (
           <DescriptionListGroup>
             <DescriptionListTerm>Provider</DescriptionListTerm>
-            <DescriptionListDescription>{cloudProvider}</DescriptionListDescription>
+            <DescriptionListDescription>
+              <span data-testid="provider">{cloudProvider}</span>
+            </DescriptionListDescription>
           </DescriptionListGroup>
         )}
         {cluster.managed && (
@@ -103,6 +110,14 @@ function DetailsLeft({ cluster, cloudProviders, showAssistedId }) {
             <ClusterVersionInfo cluster={cluster} />
           </DescriptionListDescription>
         </DescriptionListGroup>
+        {!!sharedVpcZoneId && (
+          <DescriptionListGroup>
+            <DescriptionListTerm>Shared VPC hosted zone ID</DescriptionListTerm>
+            <DescriptionListDescription>
+              <span>{sharedVpcZoneId}</span>
+            </DescriptionListDescription>
+          </DescriptionListGroup>
+        )}
         {!isHypershift && cluster.fips && (
           <DescriptionListGroup>
             <DescriptionListTerm>Encryption level</DescriptionListTerm>

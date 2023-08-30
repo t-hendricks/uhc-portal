@@ -4,9 +4,10 @@ import cidrTools from 'cidr-tools';
 import { ValidationError, Validator } from 'jsonschema';
 import { clusterService } from '~/services';
 import { State as CcsInquiriesState } from '~/components/clusters/CreateOSDPage/CreateOSDWizard/ccsInquiriesReducer';
-import { sqlString } from './queryHelpers';
+import { workerNodeVolumeSizeMinGiB } from '~/components/clusters/wizards/rosa/constants';
 import type { GCP, Subnetwork, Taint } from '../types/clusters_mgmt.v1';
 import type { AugmentedSubnetwork } from '../types/types';
+import { sqlString } from './queryHelpers';
 
 type Networks = Parameters<typeof cidrTools['overlap']>[0];
 
@@ -61,7 +62,9 @@ const GCP_SUBNET_NAME_MAXLEN = 63;
 // Maximum node count
 const MAX_NODE_COUNT = 180;
 
-const AWS_ARN_REGEX = /^arn:aws:iam::\d{12}:(user|group)\/\S+/;
+const AWS_USER_OR_GROUP_ARN_REGEX = /^arn:aws:iam::\d{12}:(user|group)\/\S+/;
+const AWS_ROLE_ARN_REGEX = /^arn:aws:iam::\d{12}:role\/\S+/;
+const AWS_PRIVATE_HOSTED_ZONE_ID_REGEX = /^Z[0-9A-Z]{3,}/;
 
 const LABEL_VALUE_MAX_LENGTH = 63;
 
@@ -928,15 +931,29 @@ const checkDisconnectedNodeCount = (value: string): string | undefined => {
   return nodes(Number(value), { value: 0 }, 250);
 };
 
-const validateARN = (value: string): string | undefined => {
+const validateARN = (value: string, regExp: RegExp, arnFormat: string): string | undefined => {
   if (!value) {
-    return 'Field is required';
+    return 'Field is required.';
   }
   if (/\s/.test(value)) {
     return 'Value must not contain whitespaces.';
   }
-  if (!AWS_ARN_REGEX.test(value)) {
-    return 'ARN value should be in the format arn:aws:iam::123456789012:user/name.';
+  if (!regExp.test(value)) {
+    return `ARN value should be in the format arn:aws:iam::123456789012:${arnFormat}.`;
+  }
+  return undefined;
+};
+
+const validateUserOrGroupARN = (value: string) =>
+  validateARN(value, AWS_USER_OR_GROUP_ARN_REGEX, 'user/name');
+const validateRoleARN = (value: string) => validateARN(value, AWS_ROLE_ARN_REGEX, 'role/role-name');
+
+const validatePrivateHostedZoneId = (value: string) => {
+  if (!value) {
+    return 'Field is required.';
+  }
+  if (!AWS_PRIVATE_HOSTED_ZONE_ID_REGEX.test(value)) {
+    return 'Not a valid Private hosted zone ID.';
   }
   return undefined;
 };
@@ -1411,6 +1428,20 @@ const validateLabelKey = (
 
 const validateLabelValue = checkLabelValue;
 
+const validateWorkerVolumeSize = (
+  size: number,
+  allValues: object,
+  { maxWorkerVolumeSizeGiB }: { maxWorkerVolumeSizeGiB: number },
+) => {
+  if (size < workerNodeVolumeSizeMinGiB || size > maxWorkerVolumeSizeGiB) {
+    return `The worker root disk size must be between ${workerNodeVolumeSizeMinGiB} GiB and ${maxWorkerVolumeSizeGiB} GiB.`;
+  }
+
+  return size === Math.floor(size)
+    ? undefined
+    : 'Decimals are not allowed for the worker root disk size. Enter a whole number.';
+};
+
 const validators = {
   required,
   acknowledgePrerequisites,
@@ -1436,6 +1467,7 @@ const validators = {
   validateNumericInput,
   validateLabelKey,
   validateLabelValue,
+  validateWorkerVolumeSize,
   checkOpenIDIssuer,
   checkGithubTeams,
   checkRouteSelectors,
@@ -1480,6 +1512,9 @@ export {
   checkDisconnectedMemCapacity,
   checkDisconnectedNodeCount,
   validateARN,
+  validateUserOrGroupARN,
+  validateRoleARN,
+  validatePrivateHostedZoneId,
   awsNumericAccountID,
   validateGCPServiceAccount,
   validateServiceAccountObject,
@@ -1513,6 +1548,7 @@ export {
   checkLabelValue,
   checkTaintKey,
   checkTaintValue,
+  validateWorkerVolumeSize,
 };
 
 export default validators;

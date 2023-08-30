@@ -61,7 +61,7 @@ describe('<ReviewClusterScreen />', () => {
       });
     });
     describe('is hidden when', () => {
-      it('isHypereshift and "show" feature flag is false', () => {
+      it('isHypershift and "show" feature flag is false', () => {
         const ConnectedReviewClusterScreen = wizardConnector(ReviewClusterScreen);
         const newProps = { ...defaultProps, isHypershiftSelected: true };
         useFeatureGateMock.mockImplementation((gate) => setAWSBillingAcctVisible(gate, false));
@@ -87,6 +87,62 @@ describe('<ReviewClusterScreen />', () => {
         expect(screen.getByText('210987654321')).toBeInTheDocument();
         expect(screen.queryByText('AWS billing account ID')).not.toBeInTheDocument();
         expect(screen.queryByText('123456789012')).not.toBeInTheDocument();
+      });
+    });
+  });
+
+  describe('Shared VPC settings', () => {
+    const getPropsWithSharedVpcSettings = ({ isHypershiftSelected, isSharedVpcSelected }) => ({
+      ...defaultProps,
+      isHypershiftSelected,
+      formValues: {
+        ...defaultProps.formValues,
+        shared_vpc: {
+          is_allowed: true,
+          is_selected: isSharedVpcSelected,
+          hosted_zone_id: 'ZONE-ID-ABC',
+        },
+      },
+    });
+    describe('is shown when', () => {
+      it('has checked Shared VPC and it is not Hypershift', () => {
+        const ConnectedReviewClusterScreen = wizardConnector(ReviewClusterScreen);
+        const newProps = getPropsWithSharedVpcSettings({
+          isHypershiftSelected: false,
+          isSharedVpcSelected: true,
+        });
+        render(<ConnectedReviewClusterScreen {...newProps} />);
+        expect(screen.getByText('Shared VPC settings')).toBeInTheDocument();
+        expect(screen.getByText('Private hosted zone ID')).toBeInTheDocument();
+        expect(screen.getByText('ZONE-ID-ABC')).toBeInTheDocument();
+      });
+    });
+
+    describe('is hidden when', () => {
+      it('has checked Shared VPC but it is Hypershift', () => {
+        const ConnectedReviewClusterScreen = wizardConnector(ReviewClusterScreen);
+        const newProps = getPropsWithSharedVpcSettings({
+          isHypershiftSelected: true,
+          isSharedVpcSelected: true,
+        });
+
+        render(<ConnectedReviewClusterScreen {...newProps} />);
+
+        expect(screen.queryByText('Shared VPC settings')).not.toBeInTheDocument();
+        expect(screen.queryByText('ZONE-ID-ABC')).not.toBeInTheDocument();
+      });
+
+      it('has not checked Shared VPC', () => {
+        const ConnectedReviewClusterScreen = wizardConnector(ReviewClusterScreen);
+        const newProps = getPropsWithSharedVpcSettings({
+          isHypershiftSelected: false,
+          isSharedVpcSelected: false,
+        });
+
+        render(<ConnectedReviewClusterScreen {...newProps} />);
+
+        expect(screen.queryByText('Shared VPC settings')).not.toBeInTheDocument();
+        expect(screen.queryByText('ZONE-ID-ABC')).not.toBeInTheDocument();
       });
     });
   });

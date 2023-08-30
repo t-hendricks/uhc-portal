@@ -2,7 +2,10 @@
 /* tslint:disable */
 /* eslint-disable */
 
+import type { AuditLog } from './AuditLog';
 import type { AwsEtcdEncryption } from './AwsEtcdEncryption';
+import type { Ec2MetadataHttpTokens } from './Ec2MetadataHttpTokens';
+import type { PrivateLinkClusterConfiguration } from './PrivateLinkClusterConfiguration';
 import type { STS } from './STS';
 
 /**
@@ -26,6 +29,18 @@ export type AWS = {
    */
   account_id?: string;
   /**
+   * Audit log forwarding configuration
+   */
+  audit_log?: AuditLog;
+  /**
+   * BillingAccountID is the account used for billing subscriptions purchased via the marketplace
+   */
+  billing_account_id?: string;
+  /**
+   * Which Ec2MetadataHttpTokens to use for metadata service interaction options for EC2 instances
+   */
+  ec2_metadata_http_tokens?: Ec2MetadataHttpTokens;
+  /**
    * Related etcd encryption configuration
    */
   etcd_encryption?: AwsEtcdEncryption;
@@ -33,6 +48,10 @@ export type AWS = {
    * Sets cluster to be inaccessible externally.
    */
   private_link?: boolean;
+  /**
+   * Manages additional configuration for Private Links.
+   */
+  private_link_configuration?: PrivateLinkClusterConfiguration;
   /**
    * AWS secret access key.
    */

@@ -53,7 +53,7 @@ export const getJiraStatuses = async () => {
 
 export const linkify = (text, linkFunction, jiraByKey = {}) => {
   // Jira cards.  lowercase `hac-nnn` form allowed as some folk put it in branch names.
-  text = text.replace(/(HAC|SDA|SDB|MGMT)[- ](\d+)/ig, (match, board, id) => {
+  text = text.replace(/(HAC|SDA|SDB|MGMT|RHBKAAS|OCM)[- ](\d+)/ig, (match, board, id) => {
     const key = `${board.toUpperCase()}-${id}`;
     const priority = jiraByKey[key]?.fields?.priority?.name;
     const status = jiraByKey[key]?.fields?.status?.name?.toUpperCase();

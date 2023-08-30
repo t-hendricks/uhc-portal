@@ -2,7 +2,6 @@
 /* tslint:disable */
 /* eslint-disable */
 
-import type { Cluster } from './Cluster';
 import type { ListeningMethod } from './ListeningMethod';
 import type { LoadBalancerFlavor } from './LoadBalancerFlavor';
 
@@ -26,10 +25,6 @@ export type Ingress = {
    * DNS Name of the ingress.
    */
   dns_name?: string;
-  /**
-   * ID used to identify the cluster that this ingress is attached to.
-   */
-  cluster?: Cluster;
   /**
    * Indicates if this is the default ingress.
    */

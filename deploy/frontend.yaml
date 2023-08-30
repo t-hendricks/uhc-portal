@@ -1,0 +1,43 @@
+# this is the K8S frontend deployment descriptor used for containerized builds
+# it was created following console-dot's containerized-FE migration guide:
+# https://consoledot.pages.redhat.com/docs/dev/containerized-frontends/migration/migration.html#_step_5_create_the_frontend_resource_yaml
+
+apiVersion: v1
+kind: Template
+metadata:
+  name: uhc-portal
+objects:
+  - apiVersion: cloud.redhat.com/v1alpha1
+    kind: Frontend
+    metadata:
+      name: uhc-portal
+    spec:
+      envName: ${ENV_NAME}
+      title: OCM UI
+      deploymentRepo: https://gitlab.cee.redhat.com/service/uhc-portal
+      API:
+        versions:
+          - v1
+      frontend:
+        paths:
+          - /apps/openshift
+      image: ${IMAGE}:${IMAGE_TAG}
+      navItems:
+        - appId: "openshift"
+          title: "Clusters"
+          href: "/openshift"
+          product: "Red Hat OpenShift Cluster Manager"
+      module:
+        manifestLocation: "/apps/openshift/fed-mods.json"
+        modules:
+          - id: "openshift"
+            module: "./RootApp"
+            routes:
+              - /openshift
+parameters:
+  - name: ENV_NAME
+    required: true
+  - name: IMAGE_TAG
+    required: true
+  - name: IMAGE
+    value: quay.io/app-sre/uhc-portal

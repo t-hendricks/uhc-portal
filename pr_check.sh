@@ -15,10 +15,15 @@
 # limitations under the License.
 #
 
-# This script is executed by a Jenkins job for each change request. If it
-# doesn't succeed the change won't be merged.
+# -----------------------------------------------------------------
+# This script is executed by a Jenkins job for each change request.
+# If it doesn't succeed the change won't be merged.
+# -----------------------------------------------------------------
 
-# mockdata check should be really fast
+
+# run sanity checks
+# -----------------
+
 mockdata/regenerate-clusters.json.sh
 if ! git diff --exit-code --stat mockdata/api/clusters_mgmt/v1/clusters.json mockdata/api/accounts_mgmt/v1/subscriptions.json; then
   set +x
@@ -27,5 +32,24 @@ if ! git diff --exit-code --stat mockdata/api/clusters_mgmt/v1/clusters.json moc
   exit 1
 fi
 
-make \
-  app
+
+# build app & push to image repository
+# ------------------------------------
+
+# name of app-sre "application" folder this component lives in; needs to match for quay
+export COMPONENT="uhc-portal"
+# IMAGE should match the quay repo set by app.yaml in app-interface
+export IMAGE="quay.io/app-sre/uhc-portal"
+# if running in jenkins, use the build's workspace
+export WORKSPACE=${WORKSPACE:-$APP_ROOT}
+export APP_ROOT=$(pwd)
+# 16 is the default Node version. change this to override it
+export NODE_BUILD_VERSION=16
+
+COMMON_BUILDER=https://raw.githubusercontent.com/RedHatInsights/insights-frontend-builder-common/master
+
+source <(curl -sSL $COMMON_BUILDER/src/frontend-build.sh)
+BUILD_RESULTS=$?
+
+# send docker teardown status
+exit $BUILD_RESULTS

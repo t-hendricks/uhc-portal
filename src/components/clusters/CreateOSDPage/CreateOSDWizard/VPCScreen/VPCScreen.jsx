@@ -4,7 +4,14 @@ import { Form, Grid, GridItem, Title } from '@patternfly/react-core';
 
 import InstallToVPC from '../../CreateOSDForm/FormSections/NetworkingSection/InstallToVPC';
 
-function VPCScreen({ cloudProviderID, isMultiAz, selectedRegion, privateLinkSelected }) {
+function VPCScreen({
+  cloudProviderID,
+  isMultiAz,
+  selectedRegion,
+  privateLinkSelected,
+  isSharedVpcSelected,
+  hostedZoneDomainName,
+}) {
   return (
     <Form
       onSubmit={(event) => {
@@ -21,9 +28,9 @@ function VPCScreen({ cloudProviderID, isMultiAz, selectedRegion, privateLinkSele
           cloudProviderID={cloudProviderID}
           isMultiAz={isMultiAz}
           selectedRegion={selectedRegion}
-          selected
+          isSharedVpcSelected={isSharedVpcSelected}
           privateLinkSelected={privateLinkSelected}
-          isWizard
+          hostedZoneDomainName={hostedZoneDomainName}
         />
       </Grid>
     </Form>
@@ -35,6 +42,8 @@ VPCScreen.propTypes = {
   isMultiAz: PropTypes.bool,
   selectedRegion: PropTypes.string,
   privateLinkSelected: PropTypes.bool,
+  isSharedVpcSelected: PropTypes.bool,
+  hostedZoneDomainName: PropTypes.string,
 };
 
 export default VPCScreen;

@@ -2341,10 +2341,13 @@
     "@react-hook/latest" "^1.0.2"
     "@react-hook/passive-layout-effect" "^1.2.0"
 
-"@redhat-cloud-services/frontend-components-config-utilities@^1.0.0":
-  version "1.0.0"
-  resolved "https://registry.npmjs.org/@redhat-cloud-services/frontend-components-config-utilities/-/frontend-components-config-utilities-1.0.0.tgz"
-  integrity sha512-Xxb33qTG2wvskBsuWntGrmVl/tzpMooNpFtN8JkuAS+gj27f/4F1Bi6Be6r1kz23+m9SPwfw1Bf4VR3qqNxRiQ==
+"@redhat-cloud-services/frontend-components-config-utilities@^1.5.0":
+  version "1.5.31"
+  resolved "https://registry.yarnpkg.com/@redhat-cloud-services/frontend-components-config-utilities/-/frontend-components-config-utilities-1.5.31.tgz#97aa891c058e71b056166a2da0d2d9803fd6d3f2"
+  integrity sha512-9e3TqpP09orvomftIfVhPzE8PNSw+rf27+AN6LgmES4gbCRk88pgakipxgFRShVv4JrnuUhff9LsfitC6qFN2Q==
+  dependencies:
+    chalk "^4.1.2"
+    node-fetch "2.6.7"
 
 "@redhat-cloud-services/frontend-components-notifications@^3.1.0":
   version "3.1.0"
@@ -10809,6 +10812,13 @@ node-abort-controller@^3.0.1:
   resolved "https://registry.npmjs.org/node-abort-controller/-/node-abort-controller-3.0.1.tgz"
   integrity sha512-/ujIVxthRs+7q6hsdjHMaj8hRG9NuWmwrz+JdRwZ14jdFoKSkm+vDsCbF9PLpnSqjaWQJuTmVtcWHNLr+vrOFw==
 
+node-fetch@2.6.7:
+  version "2.6.7"
+  resolved "https://registry.yarnpkg.com/node-fetch/-/node-fetch-2.6.7.tgz#24de9fba827e3b4ae44dc8b20256a379160052ad"
+  integrity sha512-ZjMPFEfVx5j+y2yF35Kzx5sF7kDzxuDj6ziH4FFbOp87zKDZNx8yExJIb05OGF4Nlt9IHFIMBkRl41VdvcNdbQ==
+  dependencies:
+    whatwg-url "^5.0.0"
+
 node-fetch@^2.6.1:
   version "2.6.1"
   resolved "https://registry.npmjs.org/node-fetch/-/node-fetch-2.6.1.tgz"
@@ -14053,6 +14063,11 @@ tr46@^2.0.2:
   dependencies:
     punycode "^2.1.1"
 
+tr46@~0.0.3:
+  version "0.0.3"
+  resolved "https://registry.yarnpkg.com/tr46/-/tr46-0.0.3.tgz#8184fd347dac9cdc185992f3a6622e14b9d9ab6a"
+  integrity sha512-N3WMsuqV66lT30CrXNbEjx4GEwlow3v6rr4mCcv6prnfwhS01rkgyFdjPNBYd9br7LpXV1+Emh01fHnq2Gdgrw==
+
 transform-class-properties@^1.0.0-beta:
   version "1.0.0-beta"
   resolved "https://registry.npmjs.org/transform-class-properties/-/transform-class-properties-1.0.0-beta.tgz"
@@ -14888,6 +14903,11 @@ webdriverio@6.12.1, webdriverio@^6.0.1:
     serialize-error "^8.0.0"
     webdriver "6.12.1"
 
+webidl-conversions@^3.0.0:
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/webidl-conversions/-/webidl-conversions-3.0.1.tgz#24534275e2a7bc6be7bc86611cc16ae0a5654871"
+  integrity sha512-2JAn3z8AR6rjK8Sm8orRC0h/bcl/DqL7tRPdGZ4I1CjdF+EaMLmYxBHyXuKL849eucPFhvBoxMsflfOb8kxaeQ==
+
 webidl-conversions@^4.0.2:
   version "4.0.2"
   resolved "https://registry.npmjs.org/webidl-conversions/-/webidl-conversions-4.0.2.tgz"
@@ -15056,6 +15076,14 @@ whatwg-mimetype@^2.3.0:
   version "2.3.0"
   resolved "https://registry.npmjs.org/whatwg-mimetype/-/whatwg-mimetype-2.3.0.tgz"
   integrity sha512-M4yMwr6mAnQz76TbJm914+gPpB/nCwvZbJU28cUD6dR004SAxDLOOSUaB1JDRqLtaOV/vi0IC5lEAGFgrjGv/g==
+
+whatwg-url@^5.0.0:
+  version "5.0.0"
+  resolved "https://registry.yarnpkg.com/whatwg-url/-/whatwg-url-5.0.0.tgz#966454e8765462e37644d3626f6742ce8b70965d"
+  integrity sha512-saE57nupxk6v3HY35+jzBwYa0rKSy0XR8JSxZPwgLr7ys0IBzhGviA1/TUGJLmSVqs8pb9AnvICXEuOHLprYTw==
+  dependencies:
+    tr46 "~0.0.3"
+    webidl-conversions "^3.0.0"
 
 whatwg-url@^7.0.0:
   version "7.1.0"
