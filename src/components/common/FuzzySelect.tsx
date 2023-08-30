@@ -32,7 +32,7 @@ function FuzzySelect(props: FuzzySelectProps) {
     selected = '',
     sortFn = (a: FuzzyEntryType, b: FuzzyEntryType): number => a.key.localeCompare(b.key),
     filterValidate,
-    truncation,
+    truncation, // if seleted value above this # of characters, truncate selected
     selectionData,
     isOpen,
   } = props;
@@ -129,9 +129,10 @@ function FuzzySelect(props: FuzzySelectProps) {
       }
       // create filtered map and sort by relevance
       const filterText = text.toLowerCase();
+      const threshold = fuzziness || 0.3;
       const fuse = new Fuse(selectionList, {
         ignoreLocation: true,
-        threshold: fuzziness || 0.3,
+        threshold,
         includeScore: true,
         includeMatches: true,
         keys: ['key'],
@@ -172,25 +173,14 @@ function FuzzySelect(props: FuzzySelectProps) {
               }
 
               // highlight matches in boldface
-              const arr = itemId.split(filterText);
-              if (arr.length > 1) {
-                // if exact matches
-                arr.forEach((seg, inx) => {
-                  slicedId.push(seg);
-                  if (inx < arr.length - 1) slicedId.push(<b>{filterText}</b>);
-                });
-              } else {
-                // fuzzy matches
-                matches[0].indices
-                  .filter(([beg, end]) => end - beg > 0)
-                  .forEach(([beg, end]) => {
-                    slicedId.push(itemId.slice(pos, beg));
-                    slicedId.push(<b>{itemId.slice(beg, end + 1)}</b>);
-                    pos = end + 1;
-                  });
-                if (pos < itemId.length) {
-                  slicedId.push(itemId.slice(pos));
-                }
+              const lcs = lcss(itemId, filterText);
+              lcs.forEach(({ beg, end }) => {
+                slicedId.push(itemId.slice(pos, beg));
+                slicedId.push(<b>{itemId.slice(beg, end + 1)}</b>);
+                pos = end + 1;
+              });
+              if (pos < itemId.length) {
+                slicedId.push(itemId.slice(pos));
               }
             }
           }
@@ -241,5 +231,92 @@ function FuzzySelect(props: FuzzySelectProps) {
     </div>
   );
 }
+
+// get longest common strings
+const lcss = (str1: string, str2: string) => {
+  let matches;
+  let item = str1;
+  let find = str2;
+  let ret: { beg: number; end: number }[] = [];
+  do {
+    // find all occurances of current longest string
+    let match;
+    matches = [];
+    const res = lcs(item, find);
+    if (res.length > 1) {
+      const regex = new RegExp(res, 'g');
+      do {
+        match = regex.exec(item);
+        if (match) matches.push(match);
+      } while (match !== null);
+      if (matches.length) {
+        ret = [
+          ...ret,
+          ...matches.map((match) => {
+            const beg = match.index;
+            const end = beg + match[0].length - 1;
+            return { beg, end };
+          }),
+        ];
+        item = item.replace(regex, () => ' '.repeat(res.length));
+        find = find.replace(regex, () => '');
+      }
+    }
+  } while (find.length && matches.length);
+
+  ret.sort(({ beg: begA }, { beg: begB }) => begA - begB);
+
+  return ret;
+};
+
+const lcs = (str1: string, str2: string) => {
+  let sequence = '';
+  const str1Length = str1.length;
+  const str2Length = str2.length;
+  const num = new Array(str1Length);
+  let maxlen = 0;
+  let lastSubsBegin = 0;
+  let i = 0;
+  let j = 0;
+  while (i < str1Length) {
+    const subArray = new Array(str2Length);
+    j = 0;
+    while (j < str2Length) {
+      subArray[j] = 0;
+      j += 1;
+    }
+    num[i] = subArray;
+    i += 1;
+  }
+  let thisSubsBegin = null;
+  i = 0;
+  while (i < str1Length) {
+    j = 0;
+    while (j < str2Length) {
+      if (str1[i] !== str2[j]) {
+        num[i][j] = 0;
+      } else {
+        if (i === 0 || j === 0) {
+          num[i][j] = 1;
+        } else {
+          num[i][j] = 1 + num[i - 1][j - 1];
+        }
+        if (num[i][j] > maxlen) {
+          maxlen = num[i][j];
+          thisSubsBegin = i - num[i][j] + 1;
+          if (lastSubsBegin === thisSubsBegin) {
+            sequence += str1[i];
+          } else {
+            lastSubsBegin = thisSubsBegin;
+            sequence = str1.substring(lastSubsBegin, i + 1); // - lastSubsBegin);
+          }
+        }
+      }
+      j += 1;
+    }
+    i += 1;
+  }
+  return sequence;
+};
 
 export default FuzzySelect;
