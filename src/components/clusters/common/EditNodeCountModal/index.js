@@ -38,7 +38,7 @@ const mapStateToProps = (state) => {
   const selectedMachinePool =
     valueSelector(state, 'machine_pool') ||
     modalData.machinePool?.id ||
-    (isHypershift ? state.machinePools.getMachinePools.data[0]?.id : null) ||
+    state.machinePools.getMachinePools.data[0]?.id ||
     null;
 
   const cloudProviderID = get(cluster, 'cloud_provider.id', '');
