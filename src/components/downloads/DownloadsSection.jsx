@@ -12,7 +12,7 @@ import { downloadsCategories } from './downloadsStructure';
 const DownloadsSection = ({ selectedCategory, category, description, children }) =>
   (selectedCategory === 'ALL' || selectedCategory === category) && (
     <>
-      <div className="downloads-section-header">
+      <div className="downloads-section-header" data-testid={`downloads-section-${category}`}>
         <Title headingLevel="h2">{downloadsCategories.find((c) => c.key === category).title}</Title>
         {/* Omit spacing between title & description when no description */}
         {description && <div className="description">{description}</div>}

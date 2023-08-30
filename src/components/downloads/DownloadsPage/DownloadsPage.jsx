@@ -29,6 +29,7 @@ import produce from 'immer';
 import { has, get } from 'lodash';
 import { AppPage } from '~/components/App/AppPage';
 
+import { isRestrictedEnv } from '~/restrictedEnv';
 import ExternalLink from '../../common/ExternalLink';
 import links, {
   tools,
@@ -226,7 +227,11 @@ const ExpandableRowPair = ({ expanded, setExpanded, expandKey, cells, descriptio
     setExpanded({ ...expanded, [expandKey]: newOpen });
   };
   return (
-    <Tbody isExpanded={isExpanded} ref={get(toolRefs, expandKey)}>
+    <Tbody
+      isExpanded={isExpanded}
+      ref={get(toolRefs, expandKey)}
+      data-testid={`expandable-row-${expandKey}`}
+    >
       <Tr>
         <Td expand={{ isExpanded, onToggle, rowIndex: 0 }} />
         {cells}
@@ -349,26 +354,28 @@ const cliToolRows = (expanded, setExpanded, selections, setSelections, toolRefs,
         }
       />
 
-      <ToolAndDescriptionRows
-        {...commonProps}
-        tool={tools.OCM}
-        channel={channels.STABLE}
-        name={
-          <>
-            OpenShift Cluster Manager API command-line interface (<code>ocm</code>){' '}
-            <SupportLevelBadge type={SupportLevelType.devPreview} />
-          </>
-        }
-        description={
-          <TextContent>
-            <Text>
-              Manage your OpenShift clusters from the command line using the OpenShift Cluster
-              Manager API client <code>ocm</code>.{' '}
-              <ExternalLink href={links.OCM_CLI_DOCS}>Get started</ExternalLink>
-            </Text>
-          </TextContent>
-        }
-      />
+      {!isRestrictedEnv() && (
+        <ToolAndDescriptionRows
+          {...commonProps}
+          tool={tools.OCM}
+          channel={channels.STABLE}
+          name={
+            <>
+              OpenShift Cluster Manager API command-line interface (<code>ocm</code>){' '}
+              <SupportLevelBadge type={SupportLevelType.devPreview} />
+            </>
+          }
+          description={
+            <TextContent>
+              <Text>
+                Manage your OpenShift clusters from the command line using the OpenShift Cluster
+                Manager API client <code>ocm</code>.{' '}
+                <ExternalLink href={links.OCM_CLI_DOCS}>Get started</ExternalLink>
+              </Text>
+            </TextContent>
+          }
+        />
+      )}
 
       <ToolAndDescriptionRows
         {...commonProps}
@@ -388,41 +395,45 @@ const cliToolRows = (expanded, setExpanded, selections, setSelections, toolRefs,
         }
       />
 
-      <ToolAndDescriptionRows
-        {...commonProps}
-        tool={tools.KN}
-        channel={channels.STABLE}
-        name={
-          <>
-            Knative command-line interface for OpenShift Serverless (<code>kn</code>)
-          </>
-        }
-        description={
-          <Text>
-            Interact with Knative components on OpenShift Container Platform with the Knative client
-            for OpenShift Serverless <code>kn</code>.{' '}
-            <ExternalLink href={links.KN_DOCS}>Learn more</ExternalLink>
-          </Text>
-        }
-      />
+      {!isRestrictedEnv() && (
+        <>
+          <ToolAndDescriptionRows
+            {...commonProps}
+            tool={tools.KN}
+            channel={channels.STABLE}
+            name={
+              <>
+                Knative command-line interface for OpenShift Serverless (<code>kn</code>)
+              </>
+            }
+            description={
+              <Text>
+                Interact with Knative components on OpenShift Container Platform with the Knative
+                client for OpenShift Serverless <code>kn</code>.{' '}
+                <ExternalLink href={links.KN_DOCS}>Learn more</ExternalLink>
+              </Text>
+            }
+          />
 
-      <ToolAndDescriptionRows
-        {...commonProps}
-        tool={tools.TKN}
-        channel={channels.STABLE}
-        name={
-          <>
-            Tekton command-line interface for OpenShift Pipelines (<code>tkn</code>)
-          </>
-        }
-        description={
-          <Text>
-            Manage and interact with CI pipelines on OpenShift Container Platform with the Tekton
-            CLI for OpenShift Pipelines.{' '}
-            <ExternalLink href={links.TKN_DOCS}>Get started</ExternalLink>
-          </Text>
-        }
-      />
+          <ToolAndDescriptionRows
+            {...commonProps}
+            tool={tools.TKN}
+            channel={channels.STABLE}
+            name={
+              <>
+                Tekton command-line interface for OpenShift Pipelines (<code>tkn</code>)
+              </>
+            }
+            description={
+              <Text>
+                Manage and interact with CI pipelines on OpenShift Container Platform with the
+                Tekton CLI for OpenShift Pipelines.{' '}
+                <ExternalLink href={links.TKN_DOCS}>Get started</ExternalLink>
+              </Text>
+            }
+          />
+        </>
+      )}
     </>
   );
 };
@@ -864,34 +875,36 @@ const tokenRows = (expanded, setExpanded, toolRefs, token) => (
       }
     />
 
-    <ExpandableRowPair
-      expanded={expanded}
-      setExpanded={setExpanded}
-      toolRefs={toolRefs}
-      expandKey={expandKeys.TOKEN_OCM}
-      cells={[
-        <Td>OpenShift Cluster Manager API Token</Td>,
-        <Td>
-          <AlignRight>
-            <Link to="/token">
-              <Button
-                variant="secondary"
-                icon={<ArrowRightIcon />}
-                data-testid="view-api-token-btn"
-                iconPosition="right"
-              >
-                View API token
-              </Button>
-            </Link>
-          </AlignRight>
-        </Td>,
-      ]}
-      description={
-        <Text>
-          Use your API token to authenticate against your OpenShift Cluster Manager account.
-        </Text>
-      }
-    />
+    {!isRestrictedEnv() && (
+      <ExpandableRowPair
+        expanded={expanded}
+        setExpanded={setExpanded}
+        toolRefs={toolRefs}
+        expandKey={expandKeys.TOKEN_OCM}
+        cells={[
+          <Td>OpenShift Cluster Manager API Token</Td>,
+          <Td>
+            <AlignRight>
+              <Link to="/token">
+                <Button
+                  variant="secondary"
+                  icon={<ArrowRightIcon />}
+                  data-testid="view-api-token-btn"
+                  iconPosition="right"
+                >
+                  View API token
+                </Button>
+              </Link>
+            </AlignRight>
+          </Td>,
+        ]}
+        description={
+          <Text>
+            Use your API token to authenticate against your OpenShift Cluster Manager account.
+          </Text>
+        }
+      />
+    )}
   </>
 );
 
@@ -1077,102 +1090,105 @@ class DownloadsPage extends React.Component {
               </TableComposable>
             </DownloadsSection>
 
-            <DownloadsSection
-              selectedCategory={selectedCategory}
-              category="DEV"
-              description={
-                <Text>
-                  Access all the powers of Kubernetes through a simplified workflow with Red Hat’s
-                  developer tools.{' '}
-                  <ExternalLink href="https://developers.redhat.com/topics/developer-tools">
-                    Learn more
-                  </ExternalLink>
-                </Text>
-              }
-            >
-              <TableComposable aria-label="Developer tools table">
-                <ColumnHeadings />
-                {devToolRows(
-                  expanded,
-                  this.setExpanded,
-                  selections,
-                  this.setSelections,
-                  this.toolRefs,
-                  urls,
-                )}
-              </TableComposable>
-            </DownloadsSection>
+            {!isRestrictedEnv() && (
+              <>
+                <DownloadsSection
+                  selectedCategory={selectedCategory}
+                  category="DEV"
+                  description={
+                    <Text>
+                      Access all the powers of Kubernetes through a simplified workflow with Red
+                      Hat’s developer tools.{' '}
+                      <ExternalLink href="https://developers.redhat.com/topics/developer-tools">
+                        Learn more
+                      </ExternalLink>
+                    </Text>
+                  }
+                >
+                  <TableComposable aria-label="Developer tools table">
+                    <ColumnHeadings />
+                    {devToolRows(
+                      expanded,
+                      this.setExpanded,
+                      selections,
+                      this.setSelections,
+                      this.toolRefs,
+                      urls,
+                    )}
+                  </TableComposable>
+                </DownloadsSection>
+                <DownloadsSection
+                  selectedCategory={selectedCategory}
+                  category="INSTALLATION"
+                  description={
+                    <Text>
+                      Install OpenShift based on your infrastructure. For the installer matching
+                      your infrastructure type, select the operating system and architecture on
+                      which you wish to run the installer. Then follow the steps provided within
+                      your infrastructure&apos;s tab on the <Link to="/create">create cluster</Link>{' '}
+                      page to install an OpenShift cluster.
+                    </Text>
+                  }
+                >
+                  <TableComposable aria-label="OpenShift installation table">
+                    <ColumnHeadings />
+                    {installationRows(
+                      expanded,
+                      this.setExpanded,
+                      selections,
+                      this.setSelections,
+                      this.toolRefs,
+                      urls,
+                    )}
+                  </TableComposable>
+                </DownloadsSection>
 
-            <DownloadsSection
-              selectedCategory={selectedCategory}
-              category="INSTALLATION"
-              description={
-                <Text>
-                  Install OpenShift based on your infrastructure. For the installer matching your
-                  infrastructure type, select the operating system and architecture on which you
-                  wish to run the installer. Then follow the steps provided within your
-                  infrastructure&apos;s tab on the <Link to="/create">create cluster</Link> page to
-                  install an OpenShift cluster.
-                </Text>
-              }
-            >
-              <TableComposable aria-label="OpenShift installation table">
-                <ColumnHeadings />
-                {installationRows(
-                  expanded,
-                  this.setExpanded,
-                  selections,
-                  this.setSelections,
-                  this.toolRefs,
-                  urls,
-                )}
-              </TableComposable>
-            </DownloadsSection>
+                <DownloadsSection
+                  selectedCategory={selectedCategory}
+                  category="DISCONNECTED_INSTALLATION"
+                  description={
+                    <Text>
+                      Utilities to simplify preparation of disconnected cluster installations.
+                    </Text>
+                  }
+                >
+                  <TableComposable aria-label="OpenShift disconnected installation tools table">
+                    <ColumnHeadings />
+                    {disconnectedInstallationRows(
+                      expanded,
+                      this.setExpanded,
+                      selections,
+                      this.setSelections,
+                      this.toolRefs,
+                      urls,
+                    )}
+                  </TableComposable>
+                </DownloadsSection>
 
-            <DownloadsSection
-              selectedCategory={selectedCategory}
-              category="DISCONNECTED_INSTALLATION"
-              description={
-                <Text>
-                  Utilities to simplify preparation of disconnected cluster installations.
-                </Text>
-              }
-            >
-              <TableComposable aria-label="OpenShift disconnected installation tools table">
-                <ColumnHeadings />
-                {disconnectedInstallationRows(
-                  expanded,
-                  this.setExpanded,
-                  selections,
-                  this.setSelections,
-                  this.toolRefs,
-                  urls,
-                )}
-              </TableComposable>
-            </DownloadsSection>
-
-            <DownloadsSection
-              selectedCategory={selectedCategory}
-              category="CUSTOM_INSTALLATION"
-              description={
-                <Text>
-                  Customize OpenShift and Red Hat Enterprise Linux CoreOS (RHCOS) installation with
-                  these tools.
-                </Text>
-              }
-            >
-              <TableComposable aria-label="OpenShift installation customization downloads table">
-                <ColumnHeadings />
-                {customInstallationRows(
-                  expanded,
-                  this.setExpanded,
-                  selections,
-                  this.setSelections,
-                  this.toolRefs,
-                  urls,
-                )}
-              </TableComposable>
-            </DownloadsSection>
+                <DownloadsSection
+                  selectedCategory={selectedCategory}
+                  category="CUSTOM_INSTALLATION"
+                  description={
+                    <Text>
+                      Customize OpenShift and Red Hat Enterprise Linux CoreOS (RHCOS) installation
+                      with these tools.
+                    </Text>
+                  }
+                >
+                  <TableComposable aria-label="OpenShift installation customization downloads table">
+                    <ColumnHeadings />
+                    {customInstallationRows(
+                      expanded,
+                      this.setExpanded,
+                      selections,
+                      this.setSelections,
+                      this.toolRefs,
+                      urls,
+                    )}
+                  </TableComposable>
+                </DownloadsSection>
+              </>
+            )}
 
             <DownloadsSection category="TOKENS" selectedCategory={selectedCategory}>
               <TableComposable aria-label="Tokens table">

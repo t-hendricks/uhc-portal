@@ -10,6 +10,52 @@ const ocpLifeCycleStatuses: { data: { data: ProductLifeCycle[] } } = {
         link: 'https://access.redhat.com/support/policy/updates/openshift/',
         versions: [
           {
+            name: '4.12',
+            type: 'Full Support',
+            last_minor_release: null,
+            extra_header_value: null,
+            phases: [
+              {
+                name: 'General availability',
+                date: '2021-07-27T00:00:00.000Z',
+                date_format: 'date',
+              },
+              {
+                name: 'Full support',
+                date: 'Release of 4.9 + 1 month',
+                date_format: 'string',
+              },
+              {
+                name: 'Maintenance support',
+                date: 'Release of 4.11',
+                date_format: 'string',
+              },
+            ],
+          },
+          {
+            name: '4.11',
+            type: 'Full Support',
+            last_minor_release: null,
+            extra_header_value: null,
+            phases: [
+              {
+                name: 'General availability',
+                date: '2021-07-27T00:00:00.000Z',
+                date_format: 'date',
+              },
+              {
+                name: 'Full support',
+                date: 'Release of 4.9 + 1 month',
+                date_format: 'string',
+              },
+              {
+                name: 'Maintenance support',
+                date: 'Release of 4.11',
+                date_format: 'string',
+              },
+            ],
+          },
+          {
             name: '4.8',
             type: 'Full Support',
             last_minor_release: null,
