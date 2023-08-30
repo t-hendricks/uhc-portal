@@ -9,6 +9,7 @@ import clusterStates, {
   isROSA,
   isWaitingROSAManualMode,
   isWaitingForOIDCProviderOrOperatorRolesMode,
+  getInflightChecks,
 } from '../clusterStates';
 
 function ProgressList({ cluster, actionRequiredInitialOpen }) {
@@ -90,11 +91,10 @@ function ProgressList({ cluster, actionRequiredInitialOpen }) {
     // inflight checks are asynchronous
     // so dns/install status is running parallel with network settings
     let networkSettings = completed;
-    if (cluster.inflight_checks.some((check) => check.state === InflightCheckState.FAILED)) {
+    const inflightChecks = getInflightChecks(cluster);
+    if (inflightChecks.some((check) => check.state === InflightCheckState.FAILED)) {
       networkSettings = failed;
-    } else if (
-      cluster.inflight_checks.some((check) => check.state === InflightCheckState.RUNNING)
-    ) {
+    } else if (inflightChecks.some((check) => check.state === InflightCheckState.RUNNING)) {
       networkSettings = inProcess;
     }
 

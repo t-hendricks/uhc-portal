@@ -2,11 +2,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { InflightCheckState } from '~/types/clusters_mgmt.v1';
 
-import clusterStates from '../clusterStates';
+import clusterStates, { getInflightChecks } from '../clusterStates';
 import ProgressList from './ProgressList';
 
 function InstallProgress({ cluster }) {
-  const showInflightProgress = cluster.inflight_checks.some(
+  const inflightChecks = getInflightChecks(cluster);
+  const showInflightProgress = inflightChecks.some(
     (check) => check.state !== InflightCheckState.PASSED,
   );
   return showInflightProgress ||
