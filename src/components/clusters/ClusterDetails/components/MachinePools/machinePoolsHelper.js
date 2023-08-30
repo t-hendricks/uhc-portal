@@ -264,12 +264,11 @@ const isEnforcedDefaultMachinePool = (
   machineTypes,
   cluster,
 ) => {
+  if (isHypershiftCluster(cluster)) {
+    return false;
+  }
   const minimalMachineType = machineTypes.types?.aws?.find((mt) => mt.id === 'm5.xlarge');
-  const minReplicas = getMinNodesRequired(
-    true,
-    cluster?.ccs?.enabled || isHypershiftCluster(cluster),
-    isMultiAZ(cluster),
-  );
+  const minReplicas = getMinNodesRequired(true, cluster?.ccs?.enabled, isMultiAZ(cluster));
 
   return !machinePools
     .filter((mp) => mp.id !== currentMachinePoolId)
