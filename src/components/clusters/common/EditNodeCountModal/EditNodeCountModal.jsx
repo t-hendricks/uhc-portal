@@ -133,17 +133,18 @@ class EditNodeCountModal extends Component {
       machineTypes,
     } = this.props;
     let minNodesRequired = 0;
-    const isEnforcedDefaultMP = isEnforcedDefaultMachinePool(
-      machinePoolId,
-      machinePoolsList.data.map((mp) => ({
-        ...mp.originalResponse,
-      })),
-      machineTypes,
-      cluster,
-    );
-    if (isHypershiftCluster && !isEnforcedDefaultMP) {
+
+    if (isHypershiftCluster) {
       minNodesRequired = getMinNodesRequiredHypershift();
     } else {
+      const isEnforcedDefaultMP = isEnforcedDefaultMachinePool(
+        machinePoolId,
+        machinePoolsList.data.map((mp) => ({
+          ...mp.originalResponse,
+        })),
+        machineTypes,
+        cluster,
+      );
       minNodesRequired = getMinNodesRequired(isEnforcedDefaultMP, isByoc, isMultiAz);
     }
 
