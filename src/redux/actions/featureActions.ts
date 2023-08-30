@@ -5,8 +5,6 @@ import {
   ASSISTED_INSTALLER_PLATFORM_OCI,
   ASSISTED_INSTALLER_FEATURE,
   ASSISTED_INSTALLER_MERGE_LISTS_FEATURE,
-  ASSISTED_INSTALLER_NETWORK_TYPE_SELECTION_FEATURE,
-  ASSISTED_INSTALLER_PLATFORM_INTEGRATION_FEATURE,
   OSD_WIZARD_V2_FEATURE,
   ROSA_CREATION_WIZARD_FEATURE,
   HYPERSHIFT_WIZARD_FEATURE,
@@ -70,14 +68,6 @@ export const features = [
   getSimpleUnleashFeature('hcp-aws-billing-show', HCP_AWS_BILLING_SHOW),
   getSimpleUnleashFeature('hcp-aws-billing-required', HCP_AWS_BILLING_REQUIRED),
   getSimpleUnleashFeature('assisted-installer-merge-lists', ASSISTED_INSTALLER_MERGE_LISTS_FEATURE),
-  getSimpleUnleashFeature(
-    'assisted-installer-network-type-selection',
-    ASSISTED_INSTALLER_NETWORK_TYPE_SELECTION_FEATURE,
-  ),
-  getSimpleUnleashFeature(
-    'assisted-installer-platform-integration',
-    ASSISTED_INSTALLER_PLATFORM_INTEGRATION_FEATURE,
-  ),
   getSimpleUnleashFeature('osd-creation-wizard-v2', OSD_WIZARD_V2_FEATURE),
   getSimpleUnleashFeature('rosa-creation-wizard', ROSA_CREATION_WIZARD_FEATURE),
   getSimpleUnleashFeature('assisted-installer-merge-lists', ASSISTED_INSTALLER_MERGE_LISTS_FEATURE),
