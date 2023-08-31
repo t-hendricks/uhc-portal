@@ -8,7 +8,7 @@ function ViewOnlyMyClustersToggle(props) {
 
   return (
     <Switch
-      className="pf-u-align-items-center"
+      className="pf-u-ml-lg pf-u-align-items-center"
       id="view-only-my-clusters"
       aria-label="View only my clusters"
       label={
