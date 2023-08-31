@@ -169,11 +169,16 @@ class AutoScaleSection extends React.Component {
         defaultMinAllowed,
         isHypershiftWizard,
       });
-      const defaultReplicas =
-        isMultiAz && !isHypershiftWizard ? (minAllowed / 3).toString() : minAllowed.toString();
+      const defaultReplicas = isMultiAz && !isHypershiftWizard ? minAllowed / 3 : minAllowed;
 
-      change('min_replicas', defaultReplicas);
-      change('max_replicas', defaultReplicas);
+      const minAutoscaleValue = parseInt(autoScaleMinNodesValue, 10);
+
+      const min = minAutoscaleValue < defaultReplicas ? defaultReplicas : minAutoscaleValue;
+
+      change('min_replicas', `${min}`);
+      if (parseInt(autoScaleMaxNodesValue, 10) < min) {
+        change('max_replicas', `${min}`);
+      }
     }
 
     if (isHypershiftWizard && numPools !== prevProps.numPools) {
