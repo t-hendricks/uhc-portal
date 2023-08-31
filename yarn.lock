@@ -2147,11 +2147,6 @@
     "@nodelib/fs.scandir" "2.1.4"
     fastq "^1.6.0"
 
-"@openshift-assisted/locales@2.24.4":
-  version "2.24.4"
-  resolved "https://registry.yarnpkg.com/@openshift-assisted/locales/-/locales-2.24.4.tgz#9320822bce256cc9598c56b70c57b7e1e773d2ff"
-  integrity sha512-OwQ17Lcn0FdMD4ASGmZ/9LKRMPfzn2DgJ3bKjixNwdK0ju3kDvOE+zi6oI7Z3Fr+KUoWG2taYzygif7wLEriDg==
-
 "@openshift-assisted/locales@2.25.0":
   version "2.25.0"
   resolved "https://registry.yarnpkg.com/@openshift-assisted/locales/-/locales-2.25.0.tgz#3ce7a6465b3d067dafc874239f6309b0578ef346"

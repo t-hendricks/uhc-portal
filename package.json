@@ -9,7 +9,7 @@
   "license": "Apache-2.0",
   "dependencies": {
     "@babel/eslint-parser": "^7.22.5",
-    "@openshift-assisted/locales": "2.24.2",
+    "@openshift-assisted/locales": "2.25.0",
     "@openshift-assisted/types": "2.25.0",
     "@openshift-assisted/ui-lib": "2.25.0",
     "@openshift-console/dynamic-plugin-sdk": "0.0.19",
