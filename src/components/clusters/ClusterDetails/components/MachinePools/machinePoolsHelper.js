@@ -297,20 +297,23 @@ const isEnforcedDefaultMachinePool = (
   const minimalMachineType = machineTypes.types?.aws?.find((mt) => mt.id === 'm5.xlarge');
   const minReplicas = getMinNodesRequired(true, cluster?.ccs?.enabled, isMultiAZ(cluster));
 
+  const providerMachineTypes =
+    cluster.cloud_provider?.id === 'aws' ? machineTypes.types?.aws : machineTypes.types?.gcp;
+
   return !machinePools
     .filter((mp) => mp.id !== currentMachinePoolId)
     .some((mp) => {
       const instanceType =
         mp.kind === 'NodePool' ? mp.aws_node_pool?.instance_type : mp.instance_type;
 
-      const awsMachineType = machineTypes.types?.aws?.find((mt) => mt.id === instanceType);
+      const machineType = providerMachineTypes?.find((mt) => mt.id === instanceType);
 
       return (
-        awsMachineType &&
+        machineType &&
         !mp.taints &&
         (mp.replicas >= minReplicas || mp.autoscaling?.min_replicas >= minReplicas) &&
-        awsMachineType?.cpu?.value >= minimalMachineType?.cpu?.value &&
-        awsMachineType?.memory?.value >= minimalMachineType?.memory?.value
+        machineType?.cpu?.value >= minimalMachineType?.cpu?.value &&
+        machineType?.memory?.value >= minimalMachineType?.memory?.value
       );
     });
 };

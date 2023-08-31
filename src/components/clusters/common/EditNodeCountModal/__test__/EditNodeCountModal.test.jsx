@@ -29,6 +29,11 @@ const baseProps = {
   isMultiAz: true,
   isBYOC: false,
   billingModel: billingModels.STANDARD,
+  cluster: {
+    cloud_provider: {
+      id: 'aws',
+    },
+  },
 };
 
 describe('<EditNodeCountModal />', () => {
