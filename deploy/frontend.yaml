@@ -33,7 +33,7 @@ objects:
           - id: "openshift"
             module: "./RootApp"
             routes:
-              - /openshift
+              - pathname: /openshift
 parameters:
   - name: ENV_NAME
     required: true
