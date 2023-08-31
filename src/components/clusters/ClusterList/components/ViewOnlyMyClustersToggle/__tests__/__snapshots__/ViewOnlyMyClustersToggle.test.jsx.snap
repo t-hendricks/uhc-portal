@@ -3,7 +3,7 @@
 exports[`ViewOnlyMyClustersToggle renders default state correctly 1`] = `
 <Switch
   aria-label="View only my clusters"
-  className="pf-u-align-items-center"
+  className="pf-u-ml-lg pf-u-align-items-center"
   hasCheckIcon={true}
   id="view-only-my-clusters"
   isChecked={false}
@@ -37,7 +37,7 @@ exports[`ViewOnlyMyClustersToggle renders default state correctly 1`] = `
 exports[`ViewOnlyMyClustersToggle renders selected state correctly 1`] = `
 <Switch
   aria-label="View only my clusters"
-  className="pf-u-align-items-center"
+  className="pf-u-ml-lg pf-u-align-items-center"
   hasCheckIcon={true}
   id="view-only-my-clusters"
   isChecked={true}
