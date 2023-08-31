@@ -3,9 +3,10 @@
 /* eslint-disable */
 
 import type { AWSNodePool } from './AWSNodePool';
-import type { Cluster } from './Cluster';
 import type { NodePoolAutoscaling } from './NodePoolAutoscaling';
 import type { NodePoolStatus } from './NodePoolStatus';
+import type { Taint } from './Taint';
+import type { Version } from './Version';
 
 /**
  * Representation of a node pool in a cluster.
@@ -41,9 +42,9 @@ export type NodePool = {
    */
   availability_zone?: string;
   /**
-   * ID used to identify the cluster that this nodepool is attached to.
+   * The labels set on the Nodes created.
    */
-  cluster?: Cluster;
+  labels?: Record<string, string>;
   /**
    * The number of Machines (and Nodes) to create.
    * Replicas and autoscaling cannot be used together.
@@ -57,4 +58,16 @@ export type NodePool = {
    * The subnet upon which the nodes are created.
    */
   subnet?: string;
+  /**
+   * The taints set on the Nodes created.
+   */
+  taints?: Array<Taint>;
+  /**
+   * The names of the tuning configs for this node pool.
+   */
+  tuning_configs?: Array<string>;
+  /**
+   * Version of the node pool.
+   */
+  version?: Version;
 };

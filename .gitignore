@@ -3,7 +3,7 @@
 .vscode
 *.log
 /backend
-/build/
+/dist/
 /node_modules/
 /run/ocm-api-model/
 /run/ocm-api-metamodel/
@@ -23,3 +23,7 @@ backend-config.yml
 
 .yalc
 yalc.lock
+
+candidateBranch.txt
+masterBranch.txt
+output.txt

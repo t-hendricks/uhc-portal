@@ -36,6 +36,10 @@ export type CloudProviderData = {
    */
   region?: CloudRegion;
   /**
+   * Subnets
+   */
+  subnets?: Array<string>;
+  /**
    * Openshift version
    */
   version?: Version;

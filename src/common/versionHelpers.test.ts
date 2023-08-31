@@ -1,4 +1,4 @@
-import { versionFormatter } from './versionFormatter';
+import { splitMajorMinor, versionFormatter } from './versionHelpers';
 
 describe('versionFormatter', () => {
   it('returns the expected version string', () => {
@@ -25,5 +25,13 @@ describe('versionFormatter', () => {
     versions.forEach((version) => {
       expect(versionFormatter(version.value)).toEqual(version.result);
     });
+  });
+});
+
+describe('splitMajorMinor', () => {
+  it('can parse versions', () => {
+    expect(splitMajorMinor('4.12.0-0')).toEqual([4, 12, 0]);
+    expect(splitMajorMinor('4.11.0-candidate')).toEqual([4, 11, 0]);
+    expect(splitMajorMinor('hello')).toEqual([NaN]);
   });
 });

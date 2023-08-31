@@ -1,7 +1,5 @@
-import {
-  getFromVersionFromState,
-  splitMajorMinor,
-} from '../UpgradeAcknowledge/UpgradeAcknowledgeSelectors';
+import { splitMajorMinor } from '~/common/versionHelpers';
+import { getFromVersionFromState } from '../UpgradeAcknowledge/UpgradeAcknowledgeSelectors';
 import { normalizedProducts } from '../../../../../common/subscriptionTypes';
 
 export const getEnableMinorVersionUpgrades = (state) => {

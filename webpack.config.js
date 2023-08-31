@@ -33,7 +33,7 @@ const reactCSS = /@patternfly\/react-styles\/css/;
 
 const modDir = 'node_modules';
 const srcDir = path.resolve(__dirname, 'src');
-const outDir = path.resolve(__dirname, 'build', insights.appname);
+const outDir = path.resolve(__dirname, 'dist', insights.appname);
 
 module.exports = async (_env, argv) => {
   const devMode = argv.mode !== 'production';
@@ -123,6 +123,8 @@ module.exports = async (_env, argv) => {
         exposes: {
           './RootApp': path.resolve(srcDir, 'chrome-main.tsx'),
         },
+        // These have to be excluded until the application migrates to supported versions of webpack configurations
+        exclude: ['react-router-dom', 'react-redux'],
         shared: [
           {
             '@scalprum/react-core': { requiredVersion: '*', singleton: true },

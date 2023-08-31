@@ -7,7 +7,6 @@ import type { AddOnInstallationBilling } from './AddOnInstallationBilling';
 import type { AddOnInstallationParameter } from './AddOnInstallationParameter';
 import type { AddOnInstallationState } from './AddOnInstallationState';
 import type { AddOnVersion } from './AddOnVersion';
-import type { Cluster } from './Cluster';
 
 /**
  * Representation of an add-on installation in a cluster.
@@ -37,10 +36,6 @@ export type AddOnInstallation = {
    * Billing details for add-on installation resource
    */
   billing?: AddOnInstallationBilling;
-  /**
-   * ID used to identify the cluster that this add-on is attached to.
-   */
-  cluster?: Cluster;
   /**
    * Date and time when the add-on was initially installed in the cluster.
    */

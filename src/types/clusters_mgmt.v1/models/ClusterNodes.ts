@@ -5,6 +5,7 @@
 import type { MachinePoolAutoscaling } from './MachinePoolAutoscaling';
 import type { MachinePoolSecurityGroupFilter } from './MachinePoolSecurityGroupFilter';
 import type { MachineType } from './MachineType';
+import type { RootVolume } from './RootVolume';
 
 /**
  * Counts of different classes of nodes inside a cluster.
@@ -33,15 +34,27 @@ export type ClusterNodes = {
    */
   compute_machine_type?: MachineType;
   /**
+   * The compute machine root volume capabilities.
+   */
+  compute_root_volume?: RootVolume;
+  /**
    * Number of infrastructure nodes of the cluster.
    */
   infra?: number;
+  /**
+   * The infra machine type to use, for example `r5.xlarge` (Optional).
+   */
+  infra_machine_type?: MachineType;
   /**
    * Number of master nodes of the cluster.
    */
   master?: number;
   /**
-   * List of security groups to be applied to nodes (Optional)
+   * The master machine type to use, for example `r5.xlarge` (Optional).
+   */
+  master_machine_type?: MachineType;
+  /**
+   * List of security groups to be applied to nodes (Optional).
    */
   security_group_filters?: Array<MachinePoolSecurityGroupFilter>;
   /**

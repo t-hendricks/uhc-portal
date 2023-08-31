@@ -1,14 +1,6 @@
 /* eslint-disable max-len */
 
-export const splitMajorMinor = (version) => {
-  let versionArray = [];
-  try {
-    versionArray = version.split('.').map((num) => parseInt(num, 10));
-  } catch (error) {
-    return [];
-  }
-  return versionArray;
-};
+import { splitMajorMinor } from '~/common/versionHelpers';
 
 const isSTSCluster = (state) =>
   state.clusters.details.cluster.aws?.sts?.role_arn &&

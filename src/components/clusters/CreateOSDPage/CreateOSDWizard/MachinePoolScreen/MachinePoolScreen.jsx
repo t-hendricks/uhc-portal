@@ -11,7 +11,6 @@ import MachinePoolsSubnets from './MachinePoolsSubnets';
 function MachinePoolScreen({
   isByoc,
   isMultiAz,
-  isHypershiftSelected,
   machineType,
   cloudProviderID,
   product,
@@ -27,6 +26,8 @@ function MachinePoolScreen({
   clusterVersionRawId,
   imds,
   poolNumber,
+  isHypershift,
+  maxWorkerVolumeSizeGiB,
 }) {
   return (
     <Form
@@ -36,9 +37,9 @@ function MachinePoolScreen({
       }}
     >
       <Grid hasGutter>
-        <MachinePoolScreenHeader isHypershiftSelected={isHypershiftSelected} />
+        <MachinePoolScreenHeader isHypershiftSelected={isHypershift} />
 
-        {isHypershiftSelected && <MachinePoolsSubnets selectedVPCID={selectedVPCID} />}
+        {isHypershift && <MachinePoolsSubnets selectedVPCID={selectedVPCID} />}
 
         <ScaleSection
           isBYOC={isByoc}
@@ -57,8 +58,9 @@ function MachinePoolScreen({
           nodeIncrement={nodeIncrement}
           clusterVersionRawId={clusterVersionRawId}
           imds={imds}
-          isHypershiftSelected={isHypershiftSelected}
           poolNumber={poolNumber}
+          maxWorkerVolumeSizeGiB={maxWorkerVolumeSizeGiB}
+          isHypershift={isHypershift}
         />
       </Grid>
     </Form>
@@ -68,7 +70,6 @@ function MachinePoolScreen({
 MachinePoolScreen.propTypes = {
   isByoc: PropTypes.bool.isRequired,
   isMultiAz: PropTypes.bool.isRequired,
-  isHypershiftSelected: PropTypes.bool.isRequired,
   machineType: PropTypes.string.isRequired,
   cloudProviderID: PropTypes.string.isRequired,
   selectedVPCID: PropTypes.string.isRequired,
@@ -84,6 +85,8 @@ MachinePoolScreen.propTypes = {
   clusterVersionRawId: PropTypes.string.isRequired,
   imds: PropTypes.string,
   poolNumber: PropTypes.number,
+  isHypershift: PropTypes.bool,
+  maxWorkerVolumeSizeGiB: PropTypes.number.isRequired,
 };
 
 export default MachinePoolScreen;
