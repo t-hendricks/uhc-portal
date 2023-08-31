@@ -1,3 +1,4 @@
+import { normalizedProducts } from '../../../../../../common/subscriptionTypes';
 import {
   actionResolver,
   parseLabels,
@@ -43,26 +44,15 @@ describe('machine pools action resolver', () => {
       key: 'Default-child',
     };
     expect(
-      actionResolver(expandableRowData, onClickDelete, onClickScale, onClickTaints, onClickLabels),
-    ).toEqual([]);
-  });
-
-  it('should only have scale action for the default machine pool', () => {
-    const defaultMachinePoolRowData = {
-      cells: ['Default', 'm5.xlarge', 'us-east-1a', '4'],
-      machinePool: { id: 'Default' },
-      key: 'Default',
-    };
-    const expected = [scaleAction];
-    expect(
-      actionResolver(
-        defaultMachinePoolRowData,
+      actionResolver({
+        rowData: expandableRowData,
         onClickDelete,
         onClickScale,
         onClickTaints,
         onClickLabels,
-      ).toString(),
-    ).toEqual(expected.toString());
+        machinePools: [],
+      }),
+    ).toEqual([]);
   });
 
   it('should have scale, edit taints, edit labels and delete actions', () => {
@@ -73,13 +63,105 @@ describe('machine pools action resolver', () => {
     };
     const expected = [scaleAction, editLabelsAction, editTaintsAction, deleteAction];
     expect(
-      actionResolver(
-        machinePoolRowData,
+      actionResolver({
+        rowData: machinePoolRowData,
         onClickDelete,
         onClickScale,
         onClickTaints,
         onClickLabels,
-      ).toString(),
+        machinePools: [],
+        machineTypes: {},
+        cluster: {
+          ccs: {
+            enabled: true,
+          },
+        },
+      }).toString(),
+    ).toEqual(expected.toString());
+  });
+
+  it('disables Taints and Delete for enforced default pool', () => {
+    const defaultMachinePoolRowData = {
+      cells: ['worker', 'm5.xlarge', 'us-east-1a', '4'],
+      machinePool: { id: 'worker' },
+      key: 'worker',
+    };
+    const editTaintsAction = {
+      title: 'Edit taints',
+      onClick: onClickTaints,
+      className: 'hand-pointer',
+      isAriaDisabled: true,
+      tooltip: 'Default machine pool cannot have taints',
+    };
+    const deleteAction = {
+      title: 'Delete',
+      onClick: onClickDelete,
+      className: 'hand-pointer',
+      isAriaDisabled: true,
+      tooltip: 'Default machine pool cannot be deleted',
+    };
+    const expected = [scaleAction, editLabelsAction, editTaintsAction, deleteAction];
+    expect(
+      actionResolver({
+        rowData: defaultMachinePoolRowData,
+        onClickDelete,
+        onClickScale,
+        onClickTaints,
+        onClickLabels,
+        machinePools: [
+          {
+            id: 'foo-mp',
+          },
+        ],
+        cluster: {
+          product: {
+            id: normalizedProducts.ROSA,
+          },
+          ccs: {
+            enabled: true,
+          },
+        },
+        machineTypes: {},
+      }).toString(),
+    ).toEqual(expected.toString());
+  });
+
+  it('disables Delete for non-ccs worker Machine Pool', () => {
+    const defaultMachinePoolRowData = {
+      cells: ['worker', 'm5.xlarge', 'us-east-1a', '4'],
+      machinePool: { id: 'worker' },
+      key: 'worker',
+    };
+    const deleteAction = {
+      title: 'Delete',
+      onClick: onClickDelete,
+      className: 'hand-pointer',
+      isAriaDisabled: true,
+      tooltip: 'Worker machine pool cannot be deleted',
+    };
+    const expected = [scaleAction, editLabelsAction, editTaintsAction, deleteAction];
+    expect(
+      actionResolver({
+        rowData: defaultMachinePoolRowData,
+        onClickDelete,
+        onClickScale,
+        onClickTaints,
+        onClickLabels,
+        machinePools: [
+          {
+            id: 'worker',
+          },
+        ],
+        cluster: {
+          product: {
+            id: normalizedProducts.ROSA,
+          },
+          ccs: {
+            enabled: false,
+          },
+        },
+        machineTypes: {},
+      }).toString(),
     ).toEqual(expected.toString());
   });
 });

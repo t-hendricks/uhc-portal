@@ -12,7 +12,6 @@ const baseProps = {
   onClose: jest.fn(),
   change: jest.fn(),
   getOrganizationAndQuota: jest.fn(),
-  resetScaleDefaultMachinePoolResponse: jest.fn(),
   resetScaleMachinePoolResponse: jest.fn(),
   resetGetMachinePoolsResponse: jest.fn(),
   getMachineTypes: jest.fn(),
@@ -30,6 +29,11 @@ const baseProps = {
   isMultiAz: true,
   isBYOC: false,
   billingModel: billingModels.STANDARD,
+  cluster: {
+    cloud_provider: {
+      id: 'aws',
+    },
+  },
 };
 
 describe('<EditNodeCountModal />', () => {
