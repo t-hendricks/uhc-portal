@@ -33,6 +33,9 @@ const baseProps = (isHypershift = false, ccs = false, machinePool = defaultMachi
     ccs: {
       enabled: ccs,
     },
+    cloud_provider: {
+      id: 'aws',
+    },
   },
   openModal,
   isAddMachinePoolModalOpen: false,
