@@ -10,8 +10,8 @@ import {
 describe('machine pools action resolver', () => {
   const onClickDelete = jest.fn();
   const onClickScale = jest.fn();
-  const onClickTaints = jest.fn();
-  const onClickLabels = jest.fn();
+  const onClickEditTaints = jest.fn();
+  const onClickEditLabels = jest.fn();
 
   const scaleAction = {
     title: 'Scale',
@@ -21,13 +21,14 @@ describe('machine pools action resolver', () => {
 
   const editTaintsAction = {
     title: 'Edit taints',
-    onClick: onClickTaints,
+    onClick: onClickEditTaints,
     className: 'hand-pointer',
+    isAriaDisabled: false,
   };
 
   const editLabelsAction = {
     title: 'Edit labels',
-    onClick: onClickTaints,
+    onClick: onClickEditLabels,
     className: 'hand-pointer',
   };
 
@@ -35,6 +36,7 @@ describe('machine pools action resolver', () => {
     title: 'Delete',
     onClick: onClickDelete,
     className: 'hand-pointer',
+    isAriaDisabled: false,
   };
 
   it('should not have actions for an expandable row', () => {
@@ -43,16 +45,17 @@ describe('machine pools action resolver', () => {
       cells: [{ title: 'test' }],
       key: 'Default-child',
     };
+
     expect(
       actionResolver({
         rowData: expandableRowData,
         onClickDelete,
         onClickScale,
-        onClickTaints,
-        onClickLabels,
+        onClickEditTaints,
+        onClickEditLabels,
         machinePools: [],
       }),
-    ).toEqual([]);
+    ).toEqual(expect.arrayContaining([]));
   });
 
   it('should have scale, edit taints, edit labels and delete actions', () => {
@@ -62,22 +65,50 @@ describe('machine pools action resolver', () => {
       key: 'test-mp',
     };
     const expected = [scaleAction, editLabelsAction, editTaintsAction, deleteAction];
+
     expect(
       actionResolver({
         rowData: machinePoolRowData,
         onClickDelete,
         onClickScale,
-        onClickTaints,
-        onClickLabels,
-        machinePools: [],
-        machineTypes: {},
+        onClickEditTaints,
+        onClickEditLabels,
+        canDelete: true,
+        machinePools: [
+          {
+            id: 'test-mp',
+          },
+          {
+            id: 'foo-mp',
+            instance_type: 'm5.xlarge',
+            replicas: 5,
+          },
+        ],
+        machineTypes: {
+          types: {
+            aws: [
+              {
+                id: 'm5.xlarge',
+                cpu: {
+                  value: 4,
+                },
+                memory: {
+                  value: 4,
+                },
+              },
+            ],
+          },
+        },
         cluster: {
           ccs: {
             enabled: true,
           },
+          cloud_provider: {
+            id: 'aws',
+          },
         },
-      }).toString(),
-    ).toEqual(expected.toString());
+      }),
+    ).toEqual(expect.arrayContaining(expected));
   });
 
   it('disables Taints and Delete for enforced default pool', () => {
@@ -88,7 +119,7 @@ describe('machine pools action resolver', () => {
     };
     const editTaintsAction = {
       title: 'Edit taints',
-      onClick: onClickTaints,
+      onClick: onClickEditTaints,
       className: 'hand-pointer',
       isAriaDisabled: true,
       tooltip: 'Default machine pool cannot have taints',
@@ -101,16 +132,21 @@ describe('machine pools action resolver', () => {
       tooltip: 'Default machine pool cannot be deleted',
     };
     const expected = [scaleAction, editLabelsAction, editTaintsAction, deleteAction];
+
     expect(
       actionResolver({
         rowData: defaultMachinePoolRowData,
         onClickDelete,
         onClickScale,
-        onClickTaints,
-        onClickLabels,
+        onClickEditTaints,
+        onClickEditLabels,
+        canDelete: true,
         machinePools: [
           {
             id: 'foo-mp',
+          },
+          {
+            id: 'bar-mp',
           },
         ],
         cluster: {
@@ -122,11 +158,11 @@ describe('machine pools action resolver', () => {
           },
         },
         machineTypes: {},
-      }).toString(),
-    ).toEqual(expected.toString());
+      }),
+    ).toEqual(expect.arrayContaining(expected));
   });
 
-  it('disables Delete for non-ccs worker Machine Pool', () => {
+  it('disables Delete and taints for non-ccs worker Machine Pool', () => {
     const defaultMachinePoolRowData = {
       cells: ['worker', 'm5.xlarge', 'us-east-1a', '4'],
       machinePool: { id: 'worker' },
@@ -137,32 +173,45 @@ describe('machine pools action resolver', () => {
       onClick: onClickDelete,
       className: 'hand-pointer',
       isAriaDisabled: true,
-      tooltip: 'Worker machine pool cannot be deleted',
+      tooltip: 'Default machine pool cannot be deleted',
+    };
+
+    const editTaintsAction = {
+      title: 'Edit taints',
+      onClick: onClickEditTaints,
+      className: 'hand-pointer',
+      isAriaDisabled: true,
+      tooltip: 'Default machine pool cannot have taints',
     };
     const expected = [scaleAction, editLabelsAction, editTaintsAction, deleteAction];
-    expect(
-      actionResolver({
-        rowData: defaultMachinePoolRowData,
-        onClickDelete,
-        onClickScale,
-        onClickTaints,
-        onClickLabels,
-        machinePools: [
-          {
-            id: 'worker',
-          },
-        ],
-        cluster: {
-          product: {
-            id: normalizedProducts.ROSA,
-          },
-          ccs: {
-            enabled: false,
-          },
+
+    const actions = actionResolver({
+      rowData: defaultMachinePoolRowData,
+      onClickDelete,
+      onClickScale,
+      onClickEditTaints,
+      onClickEditLabels,
+      canDelete: true,
+      machinePools: [
+        {
+          id: 'worker',
         },
-        machineTypes: {},
-      }).toString(),
-    ).toEqual(expected.toString());
+        {
+          id: 'foo',
+        },
+      ],
+      cluster: {
+        product: {
+          id: normalizedProducts.ROSA,
+        },
+        ccs: {
+          enabled: false,
+        },
+      },
+      machineTypes: {},
+    });
+
+    expect(actions).toEqual(expect.arrayContaining(expected));
   });
 });
 

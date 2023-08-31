@@ -70,6 +70,9 @@ describe('<EditTaintsModal />', () => {
       cloud_provider: {
         id: 'aws',
       },
+      ccs: {
+        enabled: true,
+      },
     },
   };
 
@@ -88,8 +91,22 @@ describe('<EditTaintsModal />', () => {
   });
 
   it('should have enabled buttons when it is valid and has changes', () => {
+    const machinePoolsList = {
+      data: [
+        ...mockData.data,
+        {
+          availability_zones: ['us-east-1a'],
+          href: '/api/clusters_mgmt/v1/clusters/cluster-id/machine_pools/mp-with-taints2',
+          id: 'mp-without-taints1',
+          instance_type: 'm5.xlarge',
+          kind: 'MachinePool',
+          replicas: 2,
+        },
+      ],
+    };
     expect(
-      getEditTaintsModalWrapper({ pristine: false }).find('Modal').props().isPrimaryDisabled,
+      getEditTaintsModalWrapper({ pristine: false, machinePoolsList }).find('Modal').props()
+        .isPrimaryDisabled,
     ).toBeFalsy();
   });
 
@@ -143,6 +160,9 @@ describe('<EditTaintsModal />', () => {
       product: {
         id: normalizedProducts.ROSA,
       },
+      ccs: {
+        enabled: true,
+      },
     };
 
     expect(
@@ -157,6 +177,44 @@ describe('<EditTaintsModal />', () => {
     cluster.product.id = normalizedProducts.OSDTrial;
     expect(
       getEditTaintsModalWrapper({ cluster }).find('FieldArray').props().canAddMore,
+    ).toBeFalsy();
+  });
+
+  it('non-ccs: should have disabled "Add more" button for "worker" mp', () => {
+    const cluster = {
+      product: {
+        id: normalizedProducts.OSD,
+      },
+      ccs: {
+        enabled: false,
+      },
+    };
+
+    const machinePoolsList = {
+      data: [
+        {
+          availability_zones: ['us-east-1a'],
+          href: '/api/clusters_mgmt/v1/clusters/cluster-id/machine_pools/worker',
+          id: 'worker',
+          instance_type: 'm5.xlarge',
+          kind: 'MachinePool',
+          replicas: 2,
+        },
+        {
+          availability_zones: ['us-east-1a'],
+          href: '/api/clusters_mgmt/v1/clusters/cluster-id/machine_pools/mp-with-taints2',
+          id: 'mp-without-taints',
+          instance_type: 'm5.xlarge',
+          kind: 'MachinePool',
+          replicas: 2,
+        },
+      ],
+    };
+
+    expect(
+      getEditTaintsModalWrapper({ cluster, machinePoolsList, selectedMachinePoolId: 'worker' })
+        .find('FieldArray')
+        .props().canAddMore,
     ).toBeFalsy();
   });
 

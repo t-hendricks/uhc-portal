@@ -30,6 +30,9 @@ describe('masterResizeAlertThreshold Selector', () => {
             nodes: {
               compute: 4,
             },
+            ccs: {
+              enabled: true,
+            },
           },
         },
       },
@@ -71,6 +74,9 @@ describe('masterResizeAlertThreshold Selector', () => {
                 max_replicas: 9,
               },
             },
+            ccs: {
+              enabled: true,
+            },
           },
         },
       },
@@ -108,6 +114,9 @@ describe('masterResizeAlertThreshold Selector', () => {
           cluster: {
             nodes: {
               compute: 4,
+            },
+            ccs: {
+              enabled: true,
             },
           },
         },
@@ -161,6 +170,9 @@ describe('masterResizeAlertThreshold Selector', () => {
                 max_replicas: 10,
               },
             },
+            ccs: {
+              enabled: true,
+            },
           },
         },
       },
@@ -205,6 +217,9 @@ describe('masterResizeAlertThreshold Selector', () => {
           cluster: {
             nodes: {
               compute: 4,
+            },
+            ccs: {
+              enabled: true,
             },
           },
         },
@@ -263,6 +278,9 @@ describe('masterResizeAlertThreshold Selector', () => {
           cluster: {
             nodes: {
               compute: 10,
+            },
+            ccs: {
+              enabled: true,
             },
           },
         },
