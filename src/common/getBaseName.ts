@@ -12,6 +12,9 @@ const getBaseEnv = (): string => {
   return '';
 };
 
+/** Returns the app name */
+const ocmAppPath = `/${appname}`;
+
 /** Returns base path for this app */
 const ocmBaseName = (): string => `${getBaseEnv()}/${appname}`;
 
@@ -28,6 +31,6 @@ const removeOcmBaseName = (path: string): string => path.replace(ocmBaseNameRege
 
 const getResourcesBase = (): string => (APP_BETA ? `/beta/apps/${appname}` : `/apps/${appname}`);
 
-export { advisorBaseName, getResourcesBase, removeOcmBaseName };
+export { advisorBaseName, getResourcesBase, ocmAppPath, removeOcmBaseName };
 
 export default ocmBaseName;
