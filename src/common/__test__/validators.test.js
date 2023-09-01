@@ -32,6 +32,7 @@ import validators, {
   validateAWSKMSKeyARN,
   validateRoleARN,
   validatePrivateHostedZoneId,
+  validateRequiredMachinePoolsSubnet,
 } from '../validators';
 import fixtures from './validators.fixtures';
 import awsVPCs from '../../../mockdata/api/clusters_mgmt/v1/aws_inquiries/vpcs.json';
@@ -1069,5 +1070,28 @@ describe('validateAWSKMSKeyARN', () => {
     );
 
     expect(result).toEqual('Your KMS key must contain your selected region.');
+  });
+
+  describe('validateRequiredMachinePoolsSubnet', () => {
+    it('returns undefined when form is pristine', () => {
+      const subnet = '';
+      const props = { pristine: true };
+
+      expect(validateRequiredMachinePoolsSubnet(subnet, {}, props)).toBeUndefined();
+    });
+
+    it('returns an error message when pristine and a subnet is not selected', () => {
+      const subnet = '';
+      const props = { pristine: false };
+
+      expect(validateRequiredMachinePoolsSubnet(subnet, {}, props)).not.toBeUndefined();
+    });
+
+    it('returns an error message when pristine and a subnet id is not selected (rare)', () => {
+      const subnet = { subnet_id: undefined };
+      const props = { pristine: false };
+
+      expect(validateRequiredMachinePoolsSubnet(subnet, {}, props)).not.toBeUndefined();
+    });
   });
 });
