@@ -1,7 +1,7 @@
 import React from 'react';
 import { matchPath, useHistory } from 'react-router-dom';
 import getNavClickParams from '../../common/getNavClickParams';
-import ocmBaseName, { removeOcmBaseName } from '../../common/getBaseName';
+import { ocmAppPath, removeOcmBaseName } from '../../common/getBaseName';
 
 const Insights = () => {
   const history = useHistory();
@@ -12,7 +12,7 @@ const Insights = () => {
       const { location } = history;
       // update route only when it's clicked by the user and can have route change
       const path = event.domEvent?.href;
-      if (path && path.startsWith(ocmBaseName())) {
+      if (path && path.startsWith(ocmAppPath)) {
         const targetPathName = removeOcmBaseName(path);
         if (matchPath(location.pathname, { path: targetPathName, exact: true })) {
           dispatchOcmEvent('APP_REFRESH');
