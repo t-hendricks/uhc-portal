@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Field } from 'redux-form';
@@ -15,12 +14,11 @@ const LabelKey = ({ isNextClicked, input, meta: { touched, error } }) => (
   <>
     <TextInput
       aria-label="Key-value list key"
-      validated={(touched && error) || (isNextClicked && error) ? 'error' : 'default'}
+      validated={(touched || isNextClicked) && error ? 'error' : 'default'}
       {...input}
     />
-    {console.log('clicked in keyval list: ', isNextClicked)}
-    {console.log('error? ', error)}
-    {((touched && error) || (isNextClicked && error)) && (
+
+    {(touched || isNextClicked) && error && (
       <span className="pf-c-form__helper-text pf-m-error">{error}</span>
     )}
   </>
@@ -40,10 +38,10 @@ const LabelValue = ({ isNextClicked, input, meta: { touched, error } }) => (
   <>
     <TextInput
       aria-label="Key-value list value"
-      validated={(touched && error) || (isNextClicked && error) ? 'error' : 'default'}
+      validated={(touched || isNextClicked) && error ? 'error' : 'default'}
       {...input}
     />
-    {((touched && error) || (isNextClicked && error)) && (
+    {(touched || isNextClicked) && error && (
       <span className="pf-c-form__helper-text pf-m-error">{error}</span>
     )}
   </>

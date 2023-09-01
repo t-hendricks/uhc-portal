@@ -506,7 +506,7 @@ const labelAndTaintKeyValidations = (
     },
     {
       validated: isEmptyValid || value?.length > 0,
-      text: 'Required',
+      text: "A valid key name must consist of alphanumeric characters, '-', '.' or '_' and must start and end with an alphanumeric character",
     },
   ];
 };

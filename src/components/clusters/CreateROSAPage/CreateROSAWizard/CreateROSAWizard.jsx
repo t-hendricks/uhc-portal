@@ -145,13 +145,12 @@ class CreateROSAWizardInternal extends React.Component {
   };
 
   onNext = ({ id }, { prevId }) => {
-    const { stepIdReached, isNextClicked } = this.state;
+    const { stepIdReached } = this.state;
     if (id && stepIdReached < id) {
       this.setState({ stepIdReached: id });
     }
     // Reset
     this.setState({ isNextClicked: false });
-    console.log('on next ', isNextClicked);
     this.trackWizardNavigation(trackEvents.WizardNext, prevId);
   };
 
@@ -196,10 +195,8 @@ class CreateROSAWizardInternal extends React.Component {
     if (errorIds?.length) {
       touch(errorIds);
       const hasScrolledTo = scrollToFirstField(errorIds);
-      // this.setState({ isNextClicked: !isNextClicked });
       if (hasScrolledTo) {
         this.setState({ isNextClicked: false });
-        console.log('scrolled to error?', isNextClicked);
       }
       // return `true` if errors were registered to the validatedSteps cache, or if the field
       // was successfully scrolled-to (i.e. found in the current DOM), and `false` otherwise.
@@ -218,10 +215,10 @@ class CreateROSAWizardInternal extends React.Component {
 
   onBeforeNext = async (onNext) => {
     const { isAsyncValidating, getUserRoleResponse, selectedAWSAccountID } = this.props;
-    const { currentStepId, accountAndRolesStepId, deferredNext, isNextClicked } = this.state;
+    const { currentStepId, accountAndRolesStepId, deferredNext } = this.state;
 
     this.setState({ isNextClicked: true });
-    console.log('before next', isNextClicked);
+
     if (isAsyncValidating) {
       if (!deferredNext) {
         this.setState({ deferredNext: onNext });
