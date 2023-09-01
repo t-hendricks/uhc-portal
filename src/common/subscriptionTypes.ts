@@ -174,6 +174,7 @@ const billingModels = {
 const ocmRoles = {
   CLUSTER_EDITOR: 'ClusterEditor',
   CLUSTER_VIEWER: 'ClusterViewer',
+  CLUSTER_AUTOSCALER_EDITOR: 'ClusterAutoscalerEditor',
   IDP_EDITOR: 'IdpEditor',
   MACHINE_POOL_EDITOR: 'MachinePoolEditor',
 };

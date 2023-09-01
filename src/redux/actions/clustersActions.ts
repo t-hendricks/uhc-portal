@@ -442,6 +442,7 @@ const fetchSingleClusterAndPermissions = async (
   ];
   let canEdit = false;
   let canEditOCMRoles = false;
+  let canEditClusterAutoscaler = false;
   let canViewOCMRoles = false;
 
   const buildPermissionsByActionObj = (obj: any, action: SelfAccessReview.action) => {
@@ -484,6 +485,15 @@ const fetchSingleClusterAndPermissions = async (
           idpActions[action] = response.data.allowed;
         });
     });
+    await authorizationsService
+      .selfAccessReview({
+        action: SelfAccessReview.action.UPDATE,
+        resource_type: SelfAccessReview.resource_type.CLUSTER_AUTOSCALER,
+        subscription_id: subscriptionID,
+      })
+      .then((response) => {
+        canEditClusterAutoscaler = response.data.allowed;
+      });
     await authorizationsService
       .selfAccessReview({
         action: SelfAccessReview.action.CREATE,
@@ -556,6 +566,7 @@ const fetchSingleClusterAndPermissions = async (
     cluster.data.idpActions = idpActions;
     cluster.data.canEditOCMRoles = canEditOCMRoles;
     cluster.data.canViewOCMRoles = canViewOCMRoles;
+    cluster.data.canEditClusterAutoscaler = canEditClusterAutoscaler;
     cluster.data.machinePoolsActions = machinePoolsActions;
     cluster.data.canDelete = !!canDeleteAccessReviewResponse?.data?.allowed;
 

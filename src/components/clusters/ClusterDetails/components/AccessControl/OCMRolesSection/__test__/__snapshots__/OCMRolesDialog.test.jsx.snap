@@ -169,6 +169,30 @@ exports[`<OCMRolesDialog /> should render 1`] = `
         <SelectOption
           className=""
           component="button"
+          description="Cluster autoscaler editor role will allow users or groups to manage and configure the cluster autoscaler settings."
+          index={0}
+          inputId=""
+          isChecked={false}
+          isDisabled={false}
+          isFavorite={null}
+          isLastOptionBeforeFooter={[Function]}
+          isLoad={false}
+          isLoading={false}
+          isNoResultsOption={false}
+          isPlaceholder={false}
+          isSelected={false}
+          key="ClusterAutoscalerEditor"
+          keyHandler={[Function]}
+          onClick={[Function]}
+          sendRef={[Function]}
+          setViewMoreNextIndex={[Function]}
+          value="ClusterAutoscalerEditor"
+        >
+          Cluster autoscaler editor
+        </SelectOption>
+        <SelectOption
+          className=""
+          component="button"
           description="Identity provider editor role will allow users or groups to manage and configure the identity providers."
           index={0}
           inputId=""
