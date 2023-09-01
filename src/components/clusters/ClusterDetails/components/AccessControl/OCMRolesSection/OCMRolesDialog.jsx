@@ -119,6 +119,12 @@ function OCMRolesDialog({
       description: 'Cluster viewer role will allow users or groups to view cluster details only.',
     },
     {
+      id: ocmRoles.CLUSTER_AUTOSCALER_EDITOR,
+      name: 'Cluster autoscaler editor',
+      description:
+        'Cluster autoscaler editor role will allow users or groups to manage and configure the cluster autoscaler settings.',
+    },
+    {
       id: ocmRoles.IDP_EDITOR,
       name: 'Identity provider editor',
       description:
