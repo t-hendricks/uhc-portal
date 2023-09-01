@@ -2147,16 +2147,23 @@
     "@nodelib/fs.scandir" "2.1.4"
     fastq "^1.6.0"
 
-"@openshift-assisted/locales@2.24.4":
-  version "2.24.4"
-  resolved "https://registry.yarnpkg.com/@openshift-assisted/locales/-/locales-2.24.4.tgz#9320822bce256cc9598c56b70c57b7e1e773d2ff"
-  integrity sha512-OwQ17Lcn0FdMD4ASGmZ/9LKRMPfzn2DgJ3bKjixNwdK0ju3kDvOE+zi6oI7Z3Fr+KUoWG2taYzygif7wLEriDg==
+"@openshift-assisted/locales@2.25.0":
+  version "2.25.0"
+  resolved "https://registry.yarnpkg.com/@openshift-assisted/locales/-/locales-2.25.0.tgz#3ce7a6465b3d067dafc874239f6309b0578ef346"
+  integrity sha512-7QXHYgjwLII5R1K7ZeB9GS+7t+QTc/qd7w/iERGTDoMA3Jvxn5JkWDzwqvuZ6BZdt9ge5e+innOzitcCqr/UFA==
 
-"@openshift-assisted/ui-lib@2.24.4":
-  version "2.24.4"
-  resolved "https://registry.yarnpkg.com/@openshift-assisted/ui-lib/-/ui-lib-2.24.4.tgz#0513d8f934c0770ed367f73d7e95269f62720981"
-  integrity sha512-mbgQsdQXcfYbb0549joQsPQ1V08SqOytKnE3rL1cziwZz/BOrww9ZyijQ4wnRRjN048uUa28jGjcfkMkuxrQBA==
+"@openshift-assisted/types@2.25.0":
+  version "2.25.0"
+  resolved "https://registry.yarnpkg.com/@openshift-assisted/types/-/types-2.25.0.tgz#9bfbfda30e8ad7d6a231e4f8c6df76cfc1cee470"
+  integrity sha512-2rUB4S4vNNqFSaXBK63upCiQoHJDUcObPWkVm4gv+ljJOaKmoYyWq6lNJtjt/Nmm+GHGrJGyR9diYzHtDI9U+g==
+
+"@openshift-assisted/ui-lib@2.25.0":
+  version "2.25.0"
+  resolved "https://registry.yarnpkg.com/@openshift-assisted/ui-lib/-/ui-lib-2.25.0.tgz#914145c813e2e9d2e371f1236dae6a097da9945b"
+  integrity sha512-iR58rDS0Ms+WGddC1d+d3KrbBH6dlM9t7fSVgMoMr2DIuYWyLj6WQ0YhU6DzgwSEAbIao6pvcZV627qB2Rw4JQ==
   dependencies:
+    "@openshift-assisted/locales" "2.25.0"
+    "@openshift-assisted/types" "2.25.0"
     axios-case-converter "^0.11.1"
     camel-case "^4.1.2"
     cidr-tools "^4.3.0"
@@ -2176,6 +2183,7 @@
     react-error-boundary "^3.1.4"
     react-measure "^2.5.2"
     swr "^2"
+    tslib "^2.6.1"
     unique-names-generator "^4.2.0"
 
 "@openshift-console/dynamic-plugin-sdk@0.0.19":
@@ -13912,6 +13920,11 @@ tslib@^2.1.0:
   version "2.4.0"
   resolved "https://registry.npmjs.org/tslib/-/tslib-2.4.0.tgz"
   integrity sha512-d6xOpEDfsi2CZVlPQzGeux8XMwLT9hssAsaPYExaQMuYskwb+x1x7J371tWlbBdWHroy99KnVB6qIkUbs5X3UQ==
+
+tslib@^2.6.1:
+  version "2.6.2"
+  resolved "https://registry.yarnpkg.com/tslib/-/tslib-2.6.2.tgz#703ac29425e7b37cd6fd456e92404d46d1f3e4ae"
+  integrity sha512-AEYxH93jGFPn/a2iVAwW87VuUIkR1FVUKB77NwMF7nBTDkDrrT/Hpt/IrCJ0QXhW27jTBDcf5ZY7w6RiqTMw2Q==
 
 tsutils@^3.21.0:
   version "3.21.0"
