@@ -93,7 +93,9 @@ const ReduxFormKeyValueList = ({ fields, isNextClicked }) => (
           </GridItem>
           <GridItem span={4}>
             <Button
-              onClick={() => fields.remove(index)}
+              onClick={() => {
+                fields.remove(index);
+              }}
               icon={<MinusCircleIcon />}
               variant="link"
               isDisabled={isRemoveDisabled}

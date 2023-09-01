@@ -149,6 +149,7 @@ class CreateROSAWizardInternal extends React.Component {
     if (id && stepIdReached < id) {
       this.setState({ stepIdReached: id });
     }
+
     // Reset
     this.setState({ isNextClicked: false });
     this.trackWizardNavigation(trackEvents.WizardNext, prevId);
@@ -187,7 +188,7 @@ class CreateROSAWizardInternal extends React.Component {
 
   scrolledToFirstError = () => {
     const { touch, formErrors } = this.props;
-    const { validatedSteps, currentStepId, isNextClicked } = this.state;
+    const { validatedSteps, currentStepId } = this.state;
     const isCurrentStepValid = validatedSteps[currentStepId];
     const errorIds = Object.keys(formErrors);
 
