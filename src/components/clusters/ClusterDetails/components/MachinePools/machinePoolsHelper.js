@@ -4,6 +4,8 @@ import { checkLabels } from '../../../../../common/validators';
 import { asArray } from '../../../../../common/helpers';
 import { isHypershiftCluster, isMultiAZ } from '../../clusterDetailsHelper';
 
+const NON_CCS_DEFAULT_POOL = 'worker';
+
 const isDeleteDisabled = (canDelete, machinePools, isEnforcedDefaultMP) => {
   const permissionsReason = !canDelete && 'You do not have permissions to delete machine pools';
   const lastNodePoolReason = machinePools.length === 1 && 'The last machine pool cannot be deleted';
@@ -288,7 +290,7 @@ const isEnforcedDefaultMachinePool = (
   }
 
   if (!cluster.ccs?.enabled) {
-    return currentMachinePoolId === 'worker';
+    return currentMachinePoolId === NON_CCS_DEFAULT_POOL;
   }
   const minimalMachineType = machineTypes.types?.aws?.find((mt) => mt.id === 'm5.xlarge');
   const minReplicas = getMinNodesRequired(true, cluster?.ccs?.enabled, isMultiAZ(cluster));
