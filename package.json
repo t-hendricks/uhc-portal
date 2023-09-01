@@ -9,8 +9,9 @@
   "license": "Apache-2.0",
   "dependencies": {
     "@babel/eslint-parser": "^7.22.5",
-    "@openshift-assisted/locales": "2.24.8",
-    "@openshift-assisted/ui-lib": "2.24.8",
+    "@openshift-assisted/locales": "2.25.0",
+    "@openshift-assisted/types": "2.25.0",
+    "@openshift-assisted/ui-lib": "2.25.0",
     "@openshift-console/dynamic-plugin-sdk": "0.0.19",
     "@patternfly/patternfly": "^4.215.1",
     "@patternfly/react-charts": "^6.94.19",
@@ -211,7 +212,7 @@
       "<rootDir>/cache/Cypress/"
     ],
     "moduleNameMapper": {
-      "@openshift-assisted/ui-lib/ocm": "<rootDir>/node_modules/@openshift-assisted/ui-lib/build/ocm",
+      "@openshift-assisted/ui-lib/ocm": "<rootDir>/node_modules/@openshift-assisted/ui-lib/build/cjs/ocm",
       "@openshift-assisted/locales/([a-z]{2,3}/translation.json)": "<rootDir>/node_modules/@openshift-assisted/locales/lib/$1/translation.json",
       "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/__mocks__/fileMock.js",
       "\\.(css|less|scss)$": "<rootDir>/__mocks__/styleMock.js",
