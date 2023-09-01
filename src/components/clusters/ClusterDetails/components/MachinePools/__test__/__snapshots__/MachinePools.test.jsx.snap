@@ -259,6 +259,7 @@ exports[`<MachinePools /> renders with a machine pool with autoscaling enabled 1
       </ButtonWithTooltip>
       <ButtonWithTooltip
         className="pf-u-mb-lg"
+        disableReason="You do not have permission to edit the cluster autoscaler."
         id="edit-existing-cluster-autoscaling"
         onClick={[Function]}
         variant="secondary"
@@ -478,6 +479,7 @@ exports[`<MachinePools /> renders with additional machine pools, some with label
       </ButtonWithTooltip>
       <ButtonWithTooltip
         className="pf-u-mb-lg"
+        disableReason="You do not have permission to edit the cluster autoscaler."
         id="edit-existing-cluster-autoscaling"
         onClick={[Function]}
         variant="secondary"
@@ -918,6 +920,7 @@ exports[`<MachinePools /> renders with the machine pool 1`] = `
       </ButtonWithTooltip>
       <ButtonWithTooltip
         className="pf-u-mb-lg"
+        disableReason="You do not have permission to edit the cluster autoscaler."
         id="edit-existing-cluster-autoscaling"
         onClick={[Function]}
         variant="secondary"
@@ -1054,6 +1057,7 @@ exports[`<MachinePools /> renders with the machine pool when it has labels 1`] =
       </ButtonWithTooltip>
       <ButtonWithTooltip
         className="pf-u-mb-lg"
+        disableReason="You do not have permission to edit the cluster autoscaler."
         id="edit-existing-cluster-autoscaling"
         onClick={[Function]}
         variant="secondary"

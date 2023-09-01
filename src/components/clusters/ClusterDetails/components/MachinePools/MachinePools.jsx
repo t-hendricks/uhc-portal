@@ -218,6 +218,13 @@ class MachinePools extends React.Component {
       !machinePoolsActions.update &&
       'You do not have permission to edit machine pools. Only cluster owners, cluster editors, machine pool editors and Organization Administrators can edit machine pools.';
 
+    const canNotEditAutoscalerReason =
+      (!cluster?.canEditClusterAutoscaler &&
+        'You do not have permission to edit the cluster autoscaler.') ||
+      (clusterAutoscalerResponse.hasAutoscaler &&
+        !clusterAutoscalerResponse.getAutoscaler.data &&
+        'The cluster autoscaler is loading.');
+
     const tableActionsDisabled = !!(readOnlyReason || hibernatingReason || canNotEditReason);
 
     const getMachinePoolRow = (machinePool = {}, isExpandableRow) => {
@@ -413,11 +420,7 @@ class MachinePools extends React.Component {
                 {!isRestrictedEnv() && !isHypershift && (
                   <ButtonWithTooltip
                     id="edit-existing-cluster-autoscaling"
-                    isDisabled={
-                      canNotEditReason ||
-                      (clusterAutoscalerResponse.hasAutoscaler &&
-                        !clusterAutoscalerResponse.getAutoscaler.data)
-                    }
+                    disableReason={canNotEditAutoscalerReason}
                     onClick={() => openModal(modals.EDIT_CLUSTER_AUTOSCALING_V1)}
                     variant="secondary"
                     className="pf-u-mb-lg"

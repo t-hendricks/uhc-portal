@@ -73,6 +73,7 @@ export type SubscriptionWithPermissionsList = List & {
 export type AugmentedCluster = ClusterWithPermissions & {
   canEditOCMRoles?: boolean;
   canViewOCMRoles?: boolean;
+  canEditClusterAutoscaler?: boolean;
   idpActions?: {
     [action: string]: boolean;
   };
