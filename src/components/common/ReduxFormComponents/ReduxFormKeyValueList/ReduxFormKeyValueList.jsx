@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Field } from 'redux-form';
@@ -10,18 +11,24 @@ import { validateLabelKey, validateLabelValue } from '../../../../common/validat
 
 import './ReduxFormKeyValueList.scss';
 
-const LabelKey = ({ input, meta: { touched, error } }) => (
+const LabelKey = ({ isNextClicked, input, meta: { touched, error } }) => (
   <>
     <TextInput
       aria-label="Key-value list key"
-      validated={!(touched && error) ? 'default' : 'error'}
+      validated={(touched && error) || (isNextClicked && error) ? 'error' : 'default'}
       {...input}
     />
-    {touched && error && <span className="pf-c-form__helper-text pf-m-error">{error}</span>}
+    {console.log('clicked in keyval list: ', isNextClicked)}
+    {console.log('error? ', error)}
+    {((touched && error) || (isNextClicked && error)) && (
+      <span className="pf-c-form__helper-text pf-m-error">{error}</span>
+    )}
   </>
 );
 
 LabelKey.propTypes = {
+  touch: PropTypes.func,
+  isNextClicked: PropTypes.bool,
   input: PropTypes.object.isRequired,
   meta: PropTypes.shape({
     error: PropTypes.string,
@@ -29,18 +36,21 @@ LabelKey.propTypes = {
   }),
 };
 
-const LabelValue = ({ input, meta: { touched, error } }) => (
+const LabelValue = ({ isNextClicked, input, meta: { touched, error } }) => (
   <>
     <TextInput
       aria-label="Key-value list value"
-      validated={!(touched && error) ? 'default' : 'error'}
+      validated={(touched && error) || (isNextClicked && error) ? 'error' : 'default'}
       {...input}
     />
-    {touched && error && <span className="pf-c-form__helper-text pf-m-error">{error}</span>}
+    {((touched && error) || (isNextClicked && error)) && (
+      <span className="pf-c-form__helper-text pf-m-error">{error}</span>
+    )}
   </>
 );
 
 LabelValue.propTypes = {
+  isNextClicked: PropTypes.bool,
   input: PropTypes.object.isRequired,
   meta: PropTypes.shape({
     error: PropTypes.string,
@@ -49,7 +59,7 @@ LabelValue.propTypes = {
 };
 
 const hasInvalidKeys = (fieldsArray) => fieldsArray && fieldsArray.some((field) => !field.key);
-const ReduxFormKeyValueList = ({ fields, meta: { error, submitFailed } }) => (
+const ReduxFormKeyValueList = ({ fields, isNextClicked }) => (
   <Grid hasGutter>
     <GridItem span={4} className="pf-c-form__label pf-c-form__label-text">
       Key
@@ -70,6 +80,7 @@ const ReduxFormKeyValueList = ({ fields, meta: { error, submitFailed } }) => (
               component={LabelKey}
               index={index}
               validate={validateLabelKey}
+              isNextClicked={isNextClicked}
             />
           </GridItem>
           <GridItem span={4}>
@@ -79,6 +90,7 @@ const ReduxFormKeyValueList = ({ fields, meta: { error, submitFailed } }) => (
               component={LabelValue}
               index={index}
               validate={validateLabelValue}
+              isNextClicked={isNextClicked}
             />
           </GridItem>
           <GridItem span={4}>
@@ -109,16 +121,15 @@ const ReduxFormKeyValueList = ({ fields, meta: { error, submitFailed } }) => (
       >
         Add additional label
       </ButtonWithTooltip>
-      {submitFailed && error && <span>{error}</span>}
     </GridItem>
   </Grid>
 );
 
 ReduxFormKeyValueList.propTypes = {
+  isNextClicked: PropTypes.bool,
   fields: PropTypes.array.isRequired,
   meta: PropTypes.shape({
     error: PropTypes.string,
-    submitFailed: PropTypes.bool,
   }),
 };
 

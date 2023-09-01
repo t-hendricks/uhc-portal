@@ -29,6 +29,7 @@ function MachinePoolScreen({
   poolNumber,
   isHypershift,
   maxWorkerVolumeSizeGiB,
+  isNextClicked,
 }) {
   return (
     <Form
@@ -63,6 +64,7 @@ function MachinePoolScreen({
           maxWorkerVolumeSizeGiB={maxWorkerVolumeSizeGiB}
           isHypershift={isHypershift}
           openEditClusterAutoScalingModal={openEditClusterAutoScalingModal}
+          isNextClicked={isNextClicked}
         />
       </Grid>
     </Form>
@@ -90,6 +92,7 @@ MachinePoolScreen.propTypes = {
   poolNumber: PropTypes.number,
   isHypershift: PropTypes.bool,
   maxWorkerVolumeSizeGiB: PropTypes.number.isRequired,
+  isNextClicked: PropTypes.bool,
 };
 
 export default MachinePoolScreen;
