@@ -221,6 +221,8 @@ AddMachinePoolModal.propTypes = {
 
 AddMachinePoolModal.defaultProps = {
   addMachinePoolResponse: {},
+  autoScaleMinNodesValue: '0',
+  autoScaleMaxNodesValue: '0',
   spotInstancePricing: 'onDemand',
   spotInstanceMaxHourlyPrice: 0.0,
 };

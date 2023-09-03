@@ -171,22 +171,19 @@ class AutoScaleSection extends React.Component {
       });
       const defaultReplicas = isMultiAz && !isHypershiftWizard ? minAllowed / 3 : minAllowed;
 
-      const minAutoscaleValue = autoScaleMinNodesValue ? parseInt(autoScaleMinNodesValue, 10) : 0;
+      const minAutoscaleValue = parseInt(autoScaleMinNodesValue, 10);
 
       const min = minAutoscaleValue < defaultReplicas ? defaultReplicas : minAutoscaleValue;
 
       change('min_replicas', `${min}`);
-      if (!autoScaleMaxNodesValue || parseInt(autoScaleMaxNodesValue, 10) < min) {
+      if (parseInt(autoScaleMaxNodesValue, 10) < min) {
         change('max_replicas', `${min}`);
       }
     }
 
     if (isHypershiftWizard && numPools !== prevProps.numPools) {
       const defaultMinPools = minHypershiftNodesPerPool(numPools);
-      if (
-        (autoScaleMinNodesValue && autoScaleMinNodesValue < defaultMinPools) ||
-        (autoScaleMaxNodesValue && autoScaleMaxNodesValue > this.maxNodes())
-      ) {
+      if (autoScaleMinNodesValue < defaultMinPools || autoScaleMaxNodesValue > this.maxNodes()) {
         change('min_replicas', defaultMinPools.toString());
         change('max_replicas', defaultMinPools.toString());
       }
@@ -336,7 +333,7 @@ class AutoScaleSection extends React.Component {
       return 'Maximum node count';
     };
 
-    const nodesHelpText = (nodes = '0') => {
+    const nodesHelpText = (nodes) => {
       if (isHypershiftWizard) {
         return helpText(`x ${numPools} machine pools = ${parseInt(nodes, 10) * numPools}`);
       }
@@ -476,6 +473,8 @@ AutoScaleSection.propTypes = {
 };
 
 AutoScaleSection.defaultProps = {
+  autoScaleMinNodesValue: '0',
+  autoScaleMaxNodesValue: '0',
   onChange: () => {},
 };
 
