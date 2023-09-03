@@ -2,15 +2,14 @@ import { checkLabels } from '../../../../../common/validators';
 import { asArray } from '../../../../../common/helpers';
 import { isHypershiftCluster, isMultiAZ } from '../../clusterDetailsHelper';
 
-// isNonCCSWorker prop is a workaround for backend issue which does not allow deleting MP with worker id on non-ccs clusters.
-const isDeleteDisabled = (canDelete, machinePools, isEnforcedDefaultMP, isNonCCSWorker) => {
+const NON_CCS_DEFAULT_POOL = 'worker';
+
+const isDeleteDisabled = (canDelete, machinePools, isEnforcedDefaultMP) => {
   const permissionsReason = !canDelete && 'You do not have permissions to delete machine pools';
   const lastNodePoolReason = machinePools.length === 1 && 'The last machine pool cannot be deleted';
-  const nonCCSWorker = isNonCCSWorker && 'Worker machine pool cannot be deleted';
   return (
     permissionsReason ||
     lastNodePoolReason ||
-    nonCCSWorker ||
     (isEnforcedDefaultMP ? 'Default machine pool cannot be deleted' : undefined)
   );
 };
@@ -90,12 +89,7 @@ const actionResolver = ({
   const actions = getActions({
     ...rest,
     onClickUpdate,
-    deleteDisabledReason: isDeleteDisabled(
-      canDelete,
-      machinePools,
-      isEnforcedDefaultMP,
-      !cluster.ccs?.enabled && rowData.machinePool.id === 'worker',
-    ),
+    deleteDisabledReason: isDeleteDisabled(canDelete, machinePools, isEnforcedDefaultMP),
     taintsDisabledReason: isEnforcedDefaultMP
       ? 'Default machine pool cannot have taints'
       : undefined,
@@ -266,6 +260,10 @@ const isEnforcedDefaultMachinePool = (
 ) => {
   if (isHypershiftCluster(cluster)) {
     return false;
+  }
+
+  if (!cluster.ccs?.enabled) {
+    return currentMachinePoolId === NON_CCS_DEFAULT_POOL;
   }
   const minimalMachineType = machineTypes.types?.aws?.find((mt) => mt.id === 'm5.xlarge');
   const minReplicas = getMinNodesRequired(true, cluster?.ccs?.enabled, isMultiAZ(cluster));

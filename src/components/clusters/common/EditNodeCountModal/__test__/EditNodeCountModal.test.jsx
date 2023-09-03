@@ -33,6 +33,9 @@ const baseProps = {
     cloud_provider: {
       id: 'aws',
     },
+    ccs: {
+      enabled: true,
+    },
   },
 };
 
