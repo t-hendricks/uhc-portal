@@ -78,7 +78,7 @@ class EditTaintsModal extends Component {
         primaryText="Save"
         onPrimaryClick={handleSubmit}
         onSecondaryClick={this.cancelEdit}
-        isPrimaryDisabled={pending || pristine || invalid}
+        isPrimaryDisabled={pending || pristine || invalid || isEnforcedDefaultMP}
         isPending={pending}
         modalSize="medium"
       >

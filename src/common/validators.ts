@@ -469,7 +469,8 @@ const labelAndTaintKeyValidations = (
 
 const labelAndTaintValueValidations = (value: string): Validations => [
   {
-    validated: typeof value === 'undefined' || value.length <= LABEL_VALUE_MAX_LENGTH,
+    validated:
+      typeof value === 'undefined' || value === null || value.length <= LABEL_VALUE_MAX_LENGTH,
     text: `A valid value must be ${LABEL_VALUE_MAX_LENGTH} characters or less`,
   },
   {
