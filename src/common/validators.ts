@@ -30,6 +30,9 @@ const UUID_REGEXP = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}
 // Regular expression to check k8s "time" parameters (e.g. max_node_provision_time)
 const K8S_TIME_PARAMETER_REGEXP = /^([0-9]+(\.[0-9]+)?(ns|us|µs|ms|s|m|h))+$/;
 
+// Regular expression to check a single k8s "gpu" parameter, (eg. "nvidia.com/gpu:10:15")
+const K8S_GPU_PARAMETER_REGEXP = /^[a-zA-Z]+[a-zA-Z0-9./-]*:[0-9]+:[0-9]+$/;
+
 // Regular expression used to check whether input is a valid IPv4 CIDR range
 const CIDR_REGEXP =
   /^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])(\/(3[0-2]|[1-2][0-9]|[1-9]))$/;
@@ -260,6 +263,41 @@ const createAsyncValidationEvaluator =
     }));
   };
 
+const k8sGpuParameter = (gpuParam: string): string | undefined => {
+  if (!gpuParam) {
+    return undefined;
+  }
+  const gpuParams = gpuParam.split(',');
+  const invalidParams = gpuParams
+    .map((param) => {
+      let hasError = false;
+
+      if (K8S_GPU_PARAMETER_REGEXP.test(param)) {
+        const parts = param.split(':');
+        const min = Number(parts[1]);
+        const max = Number(parts[2]);
+        if (min < 0 || max < 0 || min > max) {
+          hasError = true;
+        }
+      } else {
+        hasError = true;
+      }
+      return hasError ? param || 'empty param' : undefined;
+    })
+    .filter(Boolean);
+  return invalidParams.length === 0 ? undefined : `Invalid params: ${invalidParams.join(',')}`;
+};
+
+const validateListOfLabels = (input: string | undefined) => {
+  if (!input) {
+    return undefined;
+  }
+  const labels = input.split(',');
+  const nonEmptyLabels = labels.filter(Boolean);
+
+  return labels.length === nonEmptyLabels.length ? undefined : 'Empty labels are not allowed';
+};
+
 const k8sTimeParameter = (timeValue: string): string | undefined => {
   if (!timeValue) {
     return 'Field is required.';
@@ -273,24 +311,24 @@ const k8sTimeParameter = (timeValue: string): string | undefined => {
 /* The input field value becomes the empty string when the field is not a number */
 const isNumeric = (num: string | number) => num !== '' && !Number.isNaN(Number(num));
 
-const k8sNumberParameter = (
-  num: number | string,
-  allValues?: object,
-  props?: object,
-  name?: string,
-): string | undefined => {
-  if (
-    name === 'cluster_autoscaling.log_verbosity' &&
-    (num < 1 || num > AUTOSCALER_MAX_LOG_VERBOSITY)
-  ) {
-    return `Value must be between 1 and ${AUTOSCALER_MAX_LOG_VERBOSITY}.`;
-  }
-  if (name === 'cluster_autoscaling.scale_down.utilization_threshold' && (num < 0 || num > 1)) {
-    return 'Value must be between 0 and 1.';
-  }
+const k8sNumberParameter = (num: number | string): string | undefined => {
   const number = Number(num);
   if (number < 0) {
     return 'Value cannot be a negative number.';
+  }
+  return undefined;
+};
+
+const k8sLogVerbosityParameter = (num: number | string) => {
+  if (num < 1 || num > AUTOSCALER_MAX_LOG_VERBOSITY) {
+    return `Value must be between 1 and ${AUTOSCALER_MAX_LOG_VERBOSITY}.`;
+  }
+  return undefined;
+};
+
+const k8sScaleDownUtilizationThresholdParameter = (num: number | string) => {
+  if (num < 0 || num > 1) {
+    return 'Value must be between 0 and 1.';
   }
   return undefined;
 };
@@ -330,6 +368,9 @@ const clusterAutoScalingValidators = {
   k8sTimeParameter,
   k8sNumberParameter,
   k8sMinMaxParameter,
+  k8sGpuParameter,
+  k8sScaleDownUtilizationThresholdParameter,
+  k8sLogVerbosityParameter,
 };
 
 const evaluateClusterNameAsyncValidation = createAsyncValidationEvaluator(
@@ -1653,6 +1694,7 @@ export {
   validateUniqueNodeLabel,
   validateLabelKey,
   validateLabelValue,
+  validateListOfLabels,
   createPessimisticValidator,
   clusterNameValidation,
   clusterNameAsyncValidation,

@@ -136,7 +136,7 @@ export type Cluster = {
    */
   addons?: Array<AddOnInstallation>;
   /**
-   * Autoscaler.
+   * Link to an optional _ClusterAutoscaler_ that is coupled with the cluster.
    */
   autoscaler?: ClusterAutoscaler;
   /**

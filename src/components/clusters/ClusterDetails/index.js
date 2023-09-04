@@ -7,6 +7,7 @@ import { featureGateSelector } from '~/hooks/useFeatureGate';
 import { clearListVpcs } from '~/components/clusters/CreateOSDPage/CreateOSDWizard/ccsInquiriesActions';
 import { onClearFiltersAndFlags } from '~/redux/actions/viewOptionsActions';
 
+import { clusterAutoscalerActions } from '~/redux/actions/clusterAutoscalerActions';
 import ClusterDetails from './ClusterDetails';
 import { fetchClusterDetails, invalidateClusters } from '../../../redux/actions/clustersActions';
 
@@ -111,6 +112,7 @@ const mapDispatchToProps = (dispatch) =>
       getClusterRouters,
       getMachineOrNodePools,
       clearGetMachinePoolsResponse,
+      clearGetClusterAutoscalerResponse: clusterAutoscalerActions.clearClusterAutoscalerResponse,
       clearListVpcs,
       getClusterHistory,
       toggleSubscriptionReleased,

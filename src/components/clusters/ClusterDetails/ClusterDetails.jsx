@@ -124,6 +124,7 @@ class ClusterDetails extends Component {
       closeModal,
       resetClusterHistory,
       clearGetMachinePoolsResponse,
+      clearGetClusterAutoscalerResponse,
       clearFiltersAndFlags,
       clearListVpcs,
     } = this.props;
@@ -131,6 +132,7 @@ class ClusterDetails extends Component {
     closeModal();
     resetClusterHistory();
     clearGetMachinePoolsResponse();
+    clearGetClusterAutoscalerResponse();
     clearFiltersAndFlags();
     clearListVpcs();
   }
@@ -644,6 +646,7 @@ ClusterDetails.propTypes = {
   getClusterHistory: PropTypes.func.isRequired,
   getMachineOrNodePools: PropTypes.func.isRequired,
   clearGetMachinePoolsResponse: PropTypes.func.isRequired,
+  clearGetClusterAutoscalerResponse: PropTypes.func.isRequired,
   clearListVpcs: PropTypes.func.isRequired,
   canSubscribeOCP: PropTypes.bool.isRequired,
   canTransferClusterOwnership: PropTypes.bool.isRequired,
