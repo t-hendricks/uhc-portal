@@ -5,7 +5,7 @@ import { GlobalState } from '~/redux/store';
 import { LoadBalancerFlavor } from '~/types/clusters_mgmt.v1';
 
 import { isHypershiftCluster } from '~/components/clusters/ClusterDetails/clusterDetailsHelper';
-import { canConfigureManagedIngress } from '~/components/clusters/wizards/rosa/constants';
+import { canConfigureDayTwoManagedIngress } from '~/components/clusters/wizards/rosa/constants';
 import { isHibernating } from '../../../../../common/clusterStates';
 import { openModal } from '../../../../../../common/Modal/ModalActions';
 import ApplicationIngressCard from './ApplicationIngressCard';
@@ -22,7 +22,7 @@ const mapStateToProps = (state: GlobalState) => {
 
   const isReadOnly = cluster?.status?.configuration_mode === 'read_only';
   const clusterHibernating = isHibernating(cluster.state);
-  const hasSufficientIngressEditVersion = canConfigureManagedIngress(
+  const hasSufficientIngressEditVersion = canConfigureDayTwoManagedIngress(
     cluster?.openshift_version || '',
   );
   const {

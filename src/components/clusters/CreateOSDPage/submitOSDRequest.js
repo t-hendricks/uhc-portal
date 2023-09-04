@@ -17,7 +17,7 @@ import { WildcardPolicy } from '~/types/clusters_mgmt.v1/models/WildcardPolicy';
 import { NamespaceOwnershipPolicy } from '~/types/clusters_mgmt.v1/models/NamespaceOwnershipPolicy';
 import { ApplicationIngressType } from '~/components/clusters/wizards/osd/Networking/constants';
 import { getClusterAutoScalingSubmitSettings } from '~/components/clusters/CreateOSDPage/clusterAutoScalingValues';
-import { canConfigureManagedIngress } from '../wizards/rosa/constants';
+import { canConfigureDayOneManagedIngress } from '../wizards/rosa/constants';
 
 const createClusterAzs = ({ formData, isInstallExistingVPC }) => {
   let AZs = [];
@@ -272,7 +272,7 @@ export const createClusterRequest = ({ isWizard = true, cloudProviderID, product
 
       if (
         formData.applicationIngress === ApplicationIngressType.Custom &&
-        canConfigureManagedIngress(formData.cluster_version?.raw_id)
+        canConfigureDayOneManagedIngress(formData.cluster_version?.raw_id)
       ) {
         clusterRequest.ingresses = {
           items: [

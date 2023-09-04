@@ -1,4 +1,4 @@
-import { splitMajorMinor } from '~/common/versionHelpers';
+import { splitVersion } from '~/common/versionHelpers';
 import { getFromVersionFromState } from '../UpgradeAcknowledge/UpgradeAcknowledgeSelectors';
 import { normalizedProducts } from '../../../../../common/subscriptionTypes';
 
@@ -14,12 +14,12 @@ export const getUpgradeScheduleId = (state) =>
   state.clusterUpgrades.schedules.items.find((item) => item.schedule_type === 'automatic')?.id;
 
 export const isNextMinorVersionAvailable = (state) => {
-  const [fromMajor, fromMinor] = splitMajorMinor(getFromVersionFromState(state));
+  const [fromMajor, fromMinor] = splitVersion(getFromVersionFromState(state));
 
   const availableUpgrades = state.clusters.details.cluster?.version?.available_upgrades || [];
 
   return availableUpgrades.some((version) => {
-    const [major, minor] = splitMajorMinor(version);
+    const [major, minor] = splitVersion(version);
     return major === fromMajor && minor > fromMinor;
   });
 };

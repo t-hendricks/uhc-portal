@@ -7,7 +7,7 @@ import {
   CloudProviderType,
   IMDSType,
 } from '~/components/clusters/wizards/common/constants';
-import { splitMajorMinor } from '~/common/versionHelpers';
+import { isMajorMinorEqualOrGreater, splitVersion } from '~/common/versionHelpers';
 
 export enum RosaFieldId {}
 
@@ -65,7 +65,7 @@ export const initialValues: FormikValues = {
 };
 
 export const canSelectImds = (clusterVersionRawId: string): boolean => {
-  const [major, minor] = splitMajorMinor(clusterVersionRawId);
+  const [major, minor] = splitVersion(clusterVersionRawId);
   return major > 4 || (major === 4 && minor >= 11);
 };
 
@@ -76,11 +76,13 @@ export const workerNodeVolumeSizeMinGiB = 128;
  * In GiB.
  */
 export const getWorkerNodeVolumeSizeMaxGiB = (clusterVersionRawId: string): number => {
-  const [major, minor] = splitMajorMinor(clusterVersionRawId);
+  const [major, minor] = splitVersion(clusterVersionRawId);
   return (major > 4 || (major === 4 && minor >= 14) ? 16 : 1) * 1024;
 };
 
-export const canConfigureManagedIngress = (clusterVersionRawId: string): boolean => {
-  const [major, minor] = splitMajorMinor(clusterVersionRawId);
-  return major > 4 || (major === 4 && minor >= 13);
-};
+export const canConfigureDayOneManagedIngress = (clusterVersionRawId: string): boolean =>
+  isMajorMinorEqualOrGreater(clusterVersionRawId, 4, 14);
+
+/* When changing, consider updating the COnfiguration and NetworkScreen components as well (they contain 4.13-specific logic */
+export const canConfigureDayTwoManagedIngress = (clusterVersionRawId: string): boolean =>
+  isMajorMinorEqualOrGreater(clusterVersionRawId, 4, 13);

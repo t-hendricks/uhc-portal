@@ -96,6 +96,7 @@ const links = {
   VIRT_ABOUT: `${DOCS_BASE}/virt/about-virt.html`,
 
   SUBSCRIPTION_EVAL_INFORMATION: 'https://access.redhat.com/articles/4389911',
+  MANAGED_INGRESS_KNOWLEDGE_BASE: 'https://access.redhat.com/articles/7028653',
 
   OSD_DEDICATED_ADMIN_ROLE: `${OSD_DOCS_BASE}/osd_cluster_admin/osd-admin-roles.html`,
   OSD_CCS_AWS: `${OSD_DOCS_BASE}/osd_planning/aws-ccs.html`,

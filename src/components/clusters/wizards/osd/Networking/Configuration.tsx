@@ -17,9 +17,11 @@ import {
 import { useFormState } from '~/components/clusters/wizards/hooks';
 import { CloudProviderType } from '~/components/clusters/wizards/common/constants';
 import { FieldId } from '~/components/clusters/wizards/osd/constants';
+import { isExactMajorMinor } from '~/common/versionHelpers';
+
 import { ApplicationIngressType, ClusterPrivacyType } from './constants';
 import { DefaultIngressFields } from './DefaultIngressFields';
-import { canConfigureManagedIngress } from '../../rosa/constants';
+import { canConfigureDayOneManagedIngress } from '../../rosa/constants';
 
 export const Configuration = () => {
   const track = useAnalytics();
@@ -50,7 +52,8 @@ export const Configuration = () => {
   const trackOcmResourceType =
     product === normalizedProducts.ROSA ? ocmResourceType.MOA : ocmResourceType.OSD;
   const showIngressSection = cloudProvider === CloudProviderType.Aws && isByoc;
-  const isManagedIngresAllowed = canConfigureManagedIngress(clusterVersion.raw_id);
+  const isManagedIngressAllowed = canConfigureDayOneManagedIngress(clusterVersion.raw_id);
+  const isOcp413 = isExactMajorMinor(clusterVersion.raw_id, 4, 13);
 
   const trackCheckedState = (trackEvent: TrackEvent, checked: boolean) =>
     track(trackEvent, {
@@ -241,13 +244,23 @@ export const Configuration = () => {
               </Title>
               <Text className="pf-u-mt-sm">
                 Ingress is configured by default.{' '}
-                {isManagedIngresAllowed
+                {isManagedIngressAllowed
                   ? 'Customize settings if needed.'
-                  : 'It can be customized for clusters 4.13 or newer.'}
+                  : 'It can be customized for 4.14 clusters or newer.'}
+                {isOcp413 && (
+                  <>
+                    {' '}
+                    For 4.13 clusters, refer to{' '}
+                    <ExternalLink href={links.MANAGED_INGRESS_KNOWLEDGE_BASE}>
+                      this knowledge base article
+                    </ExternalLink>
+                    .
+                  </>
+                )}
               </Text>
             </GridItem>
 
-            {isManagedIngresAllowed && (
+            {isManagedIngressAllowed && (
               <>
                 <GridItem>
                   <RadioGroupField
