@@ -34,17 +34,31 @@ const getFieldProps = (field: FieldDefinition) => {
     validate: undefined,
     parse: undefined,
   };
+
   switch (field.type) {
     case 'time':
       props.validate = clusterAutoScalingValidators.k8sTimeParameter;
       break;
-    case 'number':
+    case 'number': {
+      let validate;
+      if (field.name === 'scale_down.utilization_threshold') {
+        validate = clusterAutoScalingValidators.k8sScaleDownUtilizationThresholdParameter;
+      } else if (field.name === 'log_verbosity') {
+        validate = clusterAutoScalingValidators.k8sLogVerbosityParameter;
+      } else if (field.name === 'pod_priority_threshold') {
+        validate = undefined;
+      } else {
+        validate = clusterAutoScalingValidators.k8sNumberParameter;
+      }
+
       props = {
         type: 'number',
         parse: numberParser(field.defaultValue as number),
-        validate: clusterAutoScalingValidators.k8sNumberParameter,
+        validate,
       };
       break;
+    }
+
     case 'min-max': {
       props = {
         type: 'number',
@@ -66,7 +80,7 @@ export const fieldItemMapper = (field: FieldDefinition, isDisabled?: boolean) =>
       type: field.type,
       isRequired: true,
       isDisabled,
-      helpText: <span className="default-value">Default value: {`${field.defaultValue}`}</span>,
+      helpText: <span className="custom-help-text">Default value: {`${field.defaultValue}`}</span>,
     };
     return (
       <ReduxBooleanField fieldName={`cluster_autoscaling.${field.name}`} fieldProps={fieldProps} />
@@ -83,7 +97,7 @@ export const fieldItemMapper = (field: FieldDefinition, isDisabled?: boolean) =>
       props={{
         disabled: isDisabled || false,
       }}
-      helpText={<span className="default-value">Default value: {field.defaultValue}</span>}
+      helpText={<span className="custom-help-text">Default value: {field.defaultValue}</span>}
     />
   );
 };

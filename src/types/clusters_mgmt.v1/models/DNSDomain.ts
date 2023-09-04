@@ -24,13 +24,17 @@ export type DNSDomain = {
   /**
    * Link to the cluster that is registered with the DNS domain (optional).
    */
-  cluster_link?: ClusterLink;
+  cluster?: ClusterLink;
   /**
    * Link to the organization that reserved the DNS domain.
    */
-  organization_link?: OrganizationLink;
+  organization?: OrganizationLink;
   /**
    * Date and time when the DNS domain was reserved.
    */
-  reserved_at?: string;
+  reserved_at_timestamp?: string;
+  /**
+   * Indicates if this dns domain is user defined.
+   */
+  user_defined?: boolean;
 };

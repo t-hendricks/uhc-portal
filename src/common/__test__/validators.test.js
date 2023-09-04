@@ -30,6 +30,7 @@ import validators, {
   checkCustomOperatorRolesPrefix,
   createPessimisticValidator,
   validateAWSKMSKeyARN,
+  clusterAutoScalingValidators,
   validateRoleARN,
   validatePrivateHostedZoneId,
   validateRequiredMachinePoolsSubnet,
@@ -1092,6 +1093,58 @@ describe('validateAWSKMSKeyARN', () => {
       const props = { pristine: false };
 
       expect(validateRequiredMachinePoolsSubnet(subnet, {}, props)).not.toBeUndefined();
+    });
+  });
+});
+
+describe('k8sGpuParameter', () => {
+  test('returns undefined when the value passes validation', () => {
+    [
+      'somevendor.com/gpu:10:15',
+      'anothervendor:0:4',
+      'somevendor.com/gpu:10:15,anothervendor:0:4',
+    ].forEach((validGpu) => {
+      const result = clusterAutoScalingValidators.k8sGpuParameter(validGpu);
+      expect(result).toBeUndefined();
+    });
+  });
+
+  test('returns error message only for the gpu params which are invalid', () => {
+    const result = clusterAutoScalingValidators.k8sGpuParameter(
+      'first-invalid:aa:bb,second-valid:4:20,third-invalid:4:1',
+    );
+    expect(result).toEqual('Invalid params: first-invalid:aa:bb,third-invalid:4:1');
+  });
+
+  test('returns error message when it does not contain the three mandatory parts', () => {
+    ['only-has-one-part', 'only-has-two:parts'].forEach((invalidGpu) => {
+      const result = clusterAutoScalingValidators.k8sGpuParameter(invalidGpu);
+      expect(result).toEqual(`Invalid params: ${invalidGpu}`);
+    });
+  });
+
+  test('returns error message when min and/or max are not numeric', () => {
+    ['somevendor.com/gpu:aa:bb', 'somevendor.com/gpu:0:bb', 'somevendor.com/gpu:aa:0'].forEach(
+      (invalidGpu) => {
+        const result = clusterAutoScalingValidators.k8sGpuParameter(invalidGpu);
+        expect(result).toEqual(`Invalid params: ${invalidGpu}`);
+      },
+    );
+  });
+
+  test('returns error message when min and/or max are not numeric', () => {
+    ['somevendor.com/gpu:aa:bb', 'somevendor.com/gpu:0:bb', 'somevendor.com/gpu:aa:0'].forEach(
+      (invalidGpu) => {
+        const result = clusterAutoScalingValidators.k8sGpuParameter(invalidGpu);
+        expect(result).toEqual(`Invalid params: ${invalidGpu}`);
+      },
+    );
+  });
+
+  test('returns error message when min and max are numbers, and min is above max', () => {
+    ['somevendor.com/gpu:10:0', 'somevendor.com/gpu:4:1'].forEach((invalidGpu) => {
+      const result = clusterAutoScalingValidators.k8sGpuParameter(invalidGpu);
+      expect(result).toEqual(`Invalid params: ${invalidGpu}`);
     });
   });
 });

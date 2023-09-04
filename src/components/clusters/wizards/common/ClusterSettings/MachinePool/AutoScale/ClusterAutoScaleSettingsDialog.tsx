@@ -8,7 +8,7 @@ import installLinks from '~/common/installLinks.mjs';
 import Modal from '~/components/common/Modal/Modal';
 import modals from '~/components/common/Modal/modals';
 import { closeModal } from '~/components/common/Modal/ModalActions';
-import { clusterAutoScalingValidators } from '~/common/validators';
+import { clusterAutoScalingValidators, validateListOfLabels } from '~/common/validators';
 import { useFormState } from '~/components/clusters/wizards/hooks';
 import { FieldId } from '~/components/clusters/wizards/osd/constants';
 import { TextInputField } from '~/components/clusters/wizards/form/TextInputField';
@@ -20,10 +20,18 @@ import {
   scaleDownFields,
 } from '~/components/clusters/common/EditClusterAutoScalingDialog/fieldDefinitions';
 import { getDefaultClusterAutoScaling } from '~/components/clusters/CreateOSDPage/clusterAutoScalingValues';
-
+import {
+  AutoscalerIgnoredLabelsHelpText,
+  AutoscalerIgnoredLabelsPopoverText,
+} from '~/components/clusters/common/EditClusterAutoScalingDialog/AutoscalerIgnoredLabelsTooltip';
+import {
+  AutoscalerGpuHelpText,
+  AutoscalerGpuPopoverText,
+} from '~/components/clusters/common/EditClusterAutoScalingDialog/AutoscalerGpuTooltip';
 import {
   utilizationThresholdValidator,
   logVerbosityValidator,
+  positiveNumberValidator,
   numberValidator,
 } from './validators';
 
@@ -39,6 +47,9 @@ const getValidator = (field: FieldDefinition) => {
   switch (field.name) {
     case 'log_verbosity':
       validator = logVerbosityValidator;
+      break;
+    case 'pod_priority_threshold':
+      validator = numberValidator;
       break;
     case 'scale_down.utilization_threshold':
       validator = utilizationThresholdValidator;
@@ -57,7 +68,7 @@ const getValidator = (field: FieldDefinition) => {
       break;
     default:
       if (field.type === 'number' || field.type === 'min-max') {
-        validator = numberValidator;
+        validator = positiveNumberValidator;
       }
       break;
   }
@@ -70,7 +81,9 @@ const mapField = (field: FieldDefinition, isDisabled?: boolean) => {
       <BooleanDropdownField
         name={`cluster_autoscaling.${field.name}`}
         label={field.label}
-        helperText={<span className="default-value">Default value: {`${field.defaultValue}`}</span>}
+        helperText={
+          <span className="custom-help-text">Default value: {`${field.defaultValue}`}</span>
+        }
       />
     );
   }
@@ -85,7 +98,9 @@ const mapField = (field: FieldDefinition, isDisabled?: boolean) => {
       type={inputType}
       isDisabled={isDisabled}
       showHelpTextOnError
-      helperText={<span className="default-value">Default value: {`${field.defaultValue}`}</span>}
+      helperText={
+        <span className="custom-help-text">Default value: {`${field.defaultValue}`}</span>
+      }
       validate={validator}
     />
   );
@@ -143,13 +158,26 @@ const ClusterAutoScaleSettingsDialog = ({ isWizard }: ClusterAutoScaleSettingsDi
           <ExternalLink href={installLinks.APPLYING_AUTOSCALING_API_DETAIL}> APIs</ExternalLink>.
         </Text>
         <Form onSubmit={handleSave} className="cluster-autoscaling-form">
-          <FormSection title="Balacing behavior">
+          <FormSection title="General settings">
             <Grid hasGutter>
               {balancerFields.map((field) => (
                 <GridItem span={6} key={field.name}>
                   {mapField(field)}
                 </GridItem>
               ))}
+              <GridItem span={6}>
+                <TextInputField
+                  name="cluster_autoscaling.balancing_ignored_labels"
+                  label="balancing-ignored-labels"
+                  type="text"
+                  tooltip={AutoscalerIgnoredLabelsPopoverText}
+                  showHelpTextOnError
+                  helperText={
+                    <span className="custom-help-text">{AutoscalerIgnoredLabelsHelpText}</span>
+                  }
+                  validate={validateListOfLabels}
+                />
+              </GridItem>
             </Grid>
           </FormSection>
           <FormSection title="Resource limits">
@@ -159,6 +187,17 @@ const ClusterAutoScaleSettingsDialog = ({ isWizard }: ClusterAutoScaleSettingsDi
                   {mapField(field)}
                 </GridItem>
               ))}
+              <GridItem span={6}>
+                <TextInputField
+                  name="cluster_autoscaling.resource_limits.gpus"
+                  label="GPUs"
+                  type="text"
+                  tooltip={AutoscalerGpuPopoverText}
+                  showHelpTextOnError
+                  helperText={<span className="custom-help-text">{AutoscalerGpuHelpText}</span>}
+                  validate={clusterAutoScalingValidators.k8sGpuParameter}
+                />
+              </GridItem>
             </Grid>
           </FormSection>
           <FormSection title="Scale down configuration">

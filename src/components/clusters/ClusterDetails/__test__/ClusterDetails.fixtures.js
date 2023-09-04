@@ -37,6 +37,7 @@ const funcs = () => ({
   resetClusterHistory: jest.fn(),
   toggleSubscriptionReleased: jest.fn(),
   clearGetMachinePoolsResponse: jest.fn(),
+  clearGetClusterAutoscalerResponse: jest.fn(),
   getNotificationContacts: jest.fn(),
   getSupportCases: jest.fn(),
   getSchedules: jest.fn(),

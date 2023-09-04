@@ -49,6 +49,7 @@ function clusterAutoscalerReducer(
   state = initialState,
   action: PromiseActionType<ClusterAutoscalerAction>,
 ): State {
+  // eslint-disable-next-line consistent-return
   return produce(state, (draft) => {
     // eslint-disable-next-line default-case
     switch (action.type) {
@@ -59,6 +60,9 @@ function clusterAutoscalerReducer(
       case clusterAutoscalerConstants.CLEAR_LAST_ACTION_RESULT:
         draft.editAction = initialState.editAction;
         break;
+
+      case clusterAutoscalerConstants.CLEAR_GET_CLUSTER_AUTOSCALER_RESPONSE:
+        return initialState;
 
       // GET cluster autoscaler details
       case PENDING_ACTION(clusterAutoscalerConstants.GET_CLUSTER_AUTOSCALER):

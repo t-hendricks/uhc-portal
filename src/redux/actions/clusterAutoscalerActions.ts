@@ -13,6 +13,9 @@ const getClusterAutoscaler = (clusterID: string) =>
     clusterService.getClusterAutoscaler(clusterID).then((response) => response.data),
   );
 
+const clearClusterAutoscalerResponse = () =>
+  action(clusterAutoscalerConstants.CLEAR_GET_CLUSTER_AUTOSCALER_RESPONSE);
+
 const enableClusterAutoscaler = (clusterID: string) =>
   action(
     clusterAutoscalerConstants.ENABLE_CLUSTER_AUTOSCALER,
@@ -48,6 +51,7 @@ const clusterAutoscalerActions = {
   disableClusterAutoscaler,
   updateClusterAutoscaler,
   clearLastAutoscalerActionResult,
+  clearClusterAutoscalerResponse,
   setHasInitialClusterAutoscaler,
 };
 
