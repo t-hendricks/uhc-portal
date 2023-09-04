@@ -55,7 +55,10 @@ const sendNetworkConfigRequests = async (newData, currentData, clusterID, dispat
   const additionalRouterDeleted = hadAdditionalRouter && !newData.enable_additional_router;
 
   // Edit default router
-  if (newData.private_default_router !== currentData.default.isPrivate) {
+  if (
+    newData.private_default_router !== undefined &&
+    newData.private_default_router !== currentData.default.isPrivate
+  ) {
     requestDefaultRouter.listening = newData.private_default_router ? 'internal' : 'external';
   }
 
