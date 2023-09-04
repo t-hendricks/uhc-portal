@@ -39,6 +39,7 @@ type ResolveDisableEditReasonParams = {
   isReadOnly: boolean;
   isHypershift?: boolean;
   clusterHibernating: boolean;
+  hasSufficientIngressEditVersion?: boolean;
 };
 
 const resolveDisableEditReason = ({
@@ -46,7 +47,11 @@ const resolveDisableEditReason = ({
   isReadOnly,
   clusterHibernating,
   isHypershift,
+  hasSufficientIngressEditVersion,
 }: ResolveDisableEditReasonParams) => {
+  const canNotEditDefaultRouterReason =
+    !hasSufficientIngressEditVersion &&
+    'This operation is available for clusters of version 4.13 or higher.';
   const readOnlyReason = isReadOnly && 'This operation is not available during maintenance';
   const hypershiftReason =
     isHypershift && 'This operation is not available for Hosted control plane clusters';
@@ -55,7 +60,13 @@ const resolveDisableEditReason = ({
   const canNotEditReason =
     !canEdit &&
     'You do not have permission to edit routers. Only cluster owners, cluster editors, and organization administrators can edit routers.';
-  return readOnlyReason || hibernatingReason || canNotEditReason || hypershiftReason;
+  return (
+    canNotEditDefaultRouterReason ||
+    readOnlyReason ||
+    hibernatingReason ||
+    canNotEditReason ||
+    hypershiftReason
+  );
 };
 
 type ApplicationIngressCardProps = ResolveDisableEditReasonParams & {
@@ -108,6 +119,7 @@ const ApplicationIngressCard: React.FC<ApplicationIngressCardProps> = ({
     isReadOnly,
     isHypershift,
     clusterHibernating,
+    hasSufficientIngressEditVersion,
   });
 
   const handleEditSettings = () => {
