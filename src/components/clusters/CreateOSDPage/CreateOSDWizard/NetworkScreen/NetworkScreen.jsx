@@ -18,7 +18,9 @@ import { validateRequiredMachinePoolsSubnet } from '~/common/validators';
 import useAnalytics from '~/hooks/useAnalytics';
 import { ocmResourceType, trackEvents } from '~/common/analytics';
 import { isRestrictedEnv } from '~/restrictedEnv';
-import { canConfigureManagedIngress } from '~/components/clusters/wizards/rosa/constants';
+import { canConfigureDayOneManagedIngress } from '~/components/clusters/wizards/rosa/constants';
+import { isExactMajorMinor } from '~/common/versionHelpers';
+
 import { ReduxCheckbox } from '../../../../common/ReduxFormComponents';
 import RadioButtons from '../../../../common/ReduxFormComponents/RadioButtons';
 import { constants } from '../../CreateOSDForm/CreateOSDFormConstants';
@@ -56,7 +58,8 @@ function NetworkScreen(props) {
   // automatically checks the "Install into an existing VPC" checkbox in the UI
   const showConfigureProxy = showClusterWideProxyCheckbox || isByocOSD;
 
-  const isManagedIngresAllowed = canConfigureManagedIngress(clusterVersionRawId);
+  const isManagedIngressAllowed = canConfigureDayOneManagedIngress(clusterVersionRawId);
+  const isOcp413 = isExactMajorMinor(clusterVersionRawId, 4, 13);
 
   const track = useAnalytics();
 
@@ -334,18 +337,28 @@ function NetworkScreen(props) {
               </Title>
               <Text className="pf-u-mt-sm">
                 Ingress is configured by default.{' '}
-                {isManagedIngresAllowed
+                {isManagedIngressAllowed
                   ? 'Customize settings if needed.'
-                  : 'It can be customized for clusters 4.13 or newer.'}
+                  : 'It can be customized for 4.14 clusters or newer.'}
+                {isOcp413 && (
+                  <>
+                    {' '}
+                    For 4.13 clusters, refer to{' '}
+                    <ExternalLink href={links.MANAGED_INGRESS_KNOWLEDGE_BASE}>
+                      this knowledge base article
+                    </ExternalLink>
+                    .
+                  </>
+                )}
               </Text>
             </GridItem>
 
-            {isManagedIngresAllowed && (
+            {isManagedIngressAllowed && (
               <Field
                 component={RadioButtons}
                 name="applicationIngress"
                 ariaLabel="Use application ingress defaults"
-                isDisabled={!isManagedIngresAllowed}
+                isDisabled={!isManagedIngressAllowed}
                 disableDefaultValueHandling
                 options={[
                   {

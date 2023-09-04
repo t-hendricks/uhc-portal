@@ -4,7 +4,7 @@ import { Action } from 'typesafe-actions';
 
 import { GlobalState } from '~/redux/store';
 import { LoadBalancerFlavor } from '~/types/clusters_mgmt.v1';
-import { canConfigureManagedIngress } from '~/components/clusters/wizards/rosa/constants';
+import { canConfigureDayTwoManagedIngress } from '~/components/clusters/wizards/rosa/constants';
 import modals from '../../../../../../common/Modal/modals';
 import shouldShowModal from '../../../../../../common/Modal/ModalSelectors';
 import { closeModal } from '../../../../../../common/Modal/ModalActions';
@@ -41,7 +41,7 @@ const mapStateToProps = (state: GlobalState) => {
 
   const clusterRouters = NetworkingSelector(state);
   const clusterRoutesTlsSecretRef = clusterRouters.default?.tlsSecretRef;
-  const hasSufficientIngressEditVersion = canConfigureManagedIngress(
+  const hasSufficientIngressEditVersion = canConfigureDayTwoManagedIngress(
     cluster?.openshift_version || '',
   );
 

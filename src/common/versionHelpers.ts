@@ -21,12 +21,51 @@ export const versionFormatter = (version: string): string => {
   return `${rawVersion.raw}${textTokens ? `-${textTokens.split('-')[0]}` : ''}`;
 };
 
-export const splitMajorMinor = (version: string): number[] => {
+/**
+ * Split version string to an array.
+ *
+ * @param version cluster version raw ID (i.e. "4.13.5")
+ * @returns An array with destructuralized version [major, minor, patch, ...]
+ */
+export const splitVersion = (version: string): number[] => {
   let versionArray = [];
   try {
     versionArray = version.split('.').map((num) => parseInt(num, 10));
+    versionArray[1] = versionArray[1] ?? 0;
   } catch (error) {
     return [];
   }
   return versionArray;
+};
+
+/**
+ *
+ * @param clusterVersionRawId A string, i.e. "4.15.5"
+ * @param expectedMajor A number, i.e. "4"
+ * @param expectedMinor A number
+ * @returns True, if major and minor versions are equal
+ */
+export const isExactMajorMinor = (
+  clusterVersionRawId: string,
+  expectedMajor: number,
+  expectedMinor: number,
+): boolean => {
+  const [major, minor] = splitVersion(clusterVersionRawId);
+  return expectedMajor === major && expectedMinor === minor;
+};
+
+/**
+ *
+ * @param clusterVersionRawId A string, i.e. "4.15.5"
+ * @param expectedMajor A number, i.e. "4"
+ * @param expectedMinor A number
+ * @returns True, if the version provided a raw ID string is equal or greater than the expected major.minor version
+ */
+export const isMajorMinorEqualOrGreater = (
+  clusterVersionRawId: string,
+  expectedMajor: number,
+  expectedMinor: number,
+): boolean => {
+  const [major, minor] = splitVersion(clusterVersionRawId);
+  return major > expectedMajor || (major === expectedMajor && minor >= expectedMinor);
 };
