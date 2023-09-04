@@ -1,11 +1,21 @@
 import React, { FormEvent } from 'react';
-import { Form, FormSection, Grid, GridItem, Switch, Text } from '@patternfly/react-core';
+import { Form, FormGroup, FormSection, Grid, GridItem, Switch, Text } from '@patternfly/react-core';
 
 import { ClusterAutoscaler } from '~/types/clusters_mgmt.v1';
 import installLinks from '~/common/installLinks.mjs';
 import { getDefaultClusterAutoScaling } from '~/components/clusters/CreateOSDPage/clusterAutoScalingValues';
 import ErrorBox from '~/components/common/ErrorBox';
 import { ErrorState } from '~/types/types';
+import { Field } from 'redux-form';
+import {
+  AutoscalerGpuHelpText,
+  AutoscalerGpuPopover,
+} from '~/components/clusters/common/EditClusterAutoScalingDialog/AutoscalerGpuTooltip';
+import { clusterAutoScalingValidators, validateListOfLabels } from '~/common/validators';
+import {
+  AutoscalerIgnoredLabelsHelpText,
+  AutoscalerIgnoredLabelsPopover,
+} from '~/components/clusters/common/EditClusterAutoScalingDialog/AutoscalerIgnoredLabelsTooltip';
 import MachinePoolsAutoScalingWarning from '../../ClusterDetails/components/MachinePools/MachinePoolAutoscalingWarning';
 import Modal from '../../../common/Modal/Modal';
 import modals from '../../../common/Modal/modals';
@@ -13,6 +23,7 @@ import ExternalLink from '../../../common/ExternalLink';
 
 import { balancerFields, resourceLimitsFields, scaleDownFields } from './fieldDefinitions';
 import { fieldItemMapper } from './fieldItemMapper';
+import ReduxVerticalFormGroup from '../../../common/ReduxFormComponents/ReduxVerticalFormGroup';
 
 import './EditClusterAutoScalingDialog.scss';
 
@@ -145,7 +156,7 @@ function EditClusterAutoScalingDialog({
 
         <Form onSubmit={handlePrimaryClick} className="cluster-autoscaling-form">
           <FormSection
-            title="Balacing behavior"
+            title="General settings"
             className={isWizard ? '' : 'autoscaler-inner-section'}
           >
             <Grid hasGutter>
@@ -154,6 +165,23 @@ function EditClusterAutoScalingDialog({
                   {fieldItemMapper(field, isFormDisabled)}
                 </GridItem>
               ))}
+              <GridItem span={6}>
+                <FormGroup
+                  fieldId="cluster_autoscaling.balancing_ignored_labels"
+                  label="balancing-ignored-labels"
+                  labelIcon={<AutoscalerIgnoredLabelsPopover />}
+                  isStack
+                >
+                  <Field
+                    component={ReduxVerticalFormGroup}
+                    name="cluster_autoscaling.balancing_ignored_labels"
+                    type="text"
+                    disabled={isFormDisabled}
+                    helpText={AutoscalerIgnoredLabelsHelpText}
+                    validate={validateListOfLabels}
+                  />
+                </FormGroup>
+              </GridItem>
             </Grid>
           </FormSection>
           <FormSection
@@ -166,6 +194,23 @@ function EditClusterAutoScalingDialog({
                   {fieldItemMapper(field, isFormDisabled)}
                 </GridItem>
               ))}
+              <GridItem span={6}>
+                <FormGroup
+                  fieldId="cluster_autoscaling.resource_limits.gpus"
+                  label="GPUs"
+                  labelIcon={<AutoscalerGpuPopover />}
+                  isStack
+                >
+                  <Field
+                    component={ReduxVerticalFormGroup}
+                    name="cluster_autoscaling.resource_limits.gpus"
+                    type="text"
+                    disabled={isFormDisabled}
+                    helpText={AutoscalerGpuHelpText}
+                    validate={clusterAutoScalingValidators.k8sGpuParameter}
+                  />
+                </FormGroup>
+              </GridItem>
             </Grid>
           </FormSection>
           <FormSection

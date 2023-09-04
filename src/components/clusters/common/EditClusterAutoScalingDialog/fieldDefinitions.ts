@@ -5,66 +5,84 @@ import { getDefaultClusterAutoScaling } from '~/components/clusters/CreateOSDPag
 export interface FieldDefinition {
   label: string;
   name: string;
-  type: 'boolean' | 'number' | 'gpu' | 'min-max' | 'time';
-  defaultValue: string | boolean | number;
+  type: 'boolean' | 'number' | 'min-max' | 'time';
+  defaultValue: string | boolean | number | undefined;
 }
 
 const defaultValues = getDefaultClusterAutoScaling();
 
 const balancerFields: FieldDefinition[] = [
   {
-    label: 'balanceSimilarNodeGroups',
+    label: 'balance-similar-node-groups',
     name: 'balance_similar_node_groups',
     type: 'boolean',
-    defaultValue: get(defaultValues, 'balance_similar_node_groups', false),
+    defaultValue: defaultValues.balance_similar_node_groups,
   },
   {
-    label: 'maxPodGracePeriod (max-graceful-termination-sec)',
-    name: 'max_pod_grace_period',
-    type: 'number', // expressed in seconds
-    defaultValue: get(defaultValues, 'max_pod_grace_period', 0),
-  },
-  {
-    label: 'logVerbosity',
-    name: 'log_verbosity',
-    type: 'number',
-    defaultValue: get(defaultValues, 'log_verbosity', 1),
-  },
-  {
-    label: 'skipNodesWithLocalStorage',
+    label: 'skip-nodes-with-local-storage',
     name: 'skip_nodes_with_local_storage',
     type: 'boolean',
-    defaultValue: get(defaultValues, 'skip_nodes_with_local_storage', false),
+    defaultValue: defaultValues.skip_nodes_with_local_storage,
+  },
+  {
+    label: 'max-pod-grace-period (max-graceful-termination-sec)',
+    name: 'max_pod_grace_period',
+    type: 'number', // expressed in seconds
+    defaultValue: defaultValues.max_pod_grace_period,
+  },
+  {
+    label: 'max-node-provision-time',
+    name: 'max_node_provision_time',
+    type: 'time',
+    defaultValue: defaultValues.max_node_provision_time,
+  },
+  {
+    label: 'pod-priority-threshold (expendable-pods-priority-cutoff)',
+    name: 'pod_priority_threshold',
+    type: 'number',
+    defaultValue: defaultValues.pod_priority_threshold,
+  },
+  {
+    label: 'ignore-daemonsets-utilization',
+    name: 'ignore_daemonsets_utilization',
+    type: 'boolean',
+    defaultValue: defaultValues.ignore_daemonsets_utilization,
+  },
+  {
+    label: 'log-verbosity',
+    name: 'log_verbosity',
+    type: 'number',
+    defaultValue: defaultValues.log_verbosity,
   },
 ];
 
 const resourceLimitsFields: FieldDefinition[] = [
   {
-    label: 'cores.min',
+    label: 'cores-total-min',
     name: 'resource_limits.cores.min',
     type: 'min-max',
-    defaultValue: get(defaultValues, 'resource_limits.cores.min', 0),
+    defaultValue: defaultValues.resource_limits.cores.min,
   },
   {
-    label: 'cores.max',
+    label: 'cores-total-max',
     name: 'resource_limits.cores.max',
     type: 'min-max',
-    defaultValue: get(defaultValues, 'resource_limits.cores.max', 0),
+    defaultValue: defaultValues.resource_limits.cores.max,
   },
   {
-    label: 'memory.min',
+    label: 'memory-total-min',
     name: 'resource_limits.memory.min',
     type: 'min-max',
     defaultValue: get(defaultValues, 'resource_limits.memory.min', 0),
   },
   {
-    label: 'memory.max',
+    label: 'memory-total-max',
     name: 'resource_limits.memory.max',
     type: 'min-max',
     defaultValue: get(defaultValues, 'resource_limits.memory.max', 0),
   },
   {
-    label: 'maxNodesTotal',
+    label: 'max-nodes-total',
     name: 'resource_limits.max_nodes_total',
     type: 'number',
     defaultValue: get(defaultValues, 'resource_limits.max_nodes_total', 0),
@@ -73,40 +91,40 @@ const resourceLimitsFields: FieldDefinition[] = [
 
 const scaleDownFields: FieldDefinition[] = [
   {
-    label: 'enable',
-    name: 'scale_down.enabled',
+    label: 'enabled',
+    name: 'scale-down-enabled',
     type: 'boolean',
-    defaultValue: get(defaultValues, 'scale_down.enabled', false),
+    defaultValue: defaultValues.scale_down.enabled,
   },
   {
-    label: 'scaleDown.utilizationThreshold',
+    label: 'scale-down-utilization-threshold',
     name: 'scale_down.utilization_threshold',
     type: 'number',
-    defaultValue: get(defaultValues, 'scale_down.utilization_threshold', 0),
+    defaultValue: defaultValues.scale_down.utilization_threshold,
   },
   {
-    label: 'scaleDown.unneededTime',
+    label: 'scale-down-unneeded-time',
     name: 'scale_down.unneeded_time',
     type: 'time',
-    defaultValue: get(defaultValues, 'scale_down.unneeded_time', ''),
+    defaultValue: defaultValues.scale_down.unneeded_time,
   },
   {
-    label: 'scaleDown.delayAfterAdd',
+    label: 'scale-down-delay-after-add',
     name: 'scale_down.delay_after_add',
     type: 'time',
-    defaultValue: get(defaultValues, 'scale_down.delay_after_add', ''),
+    defaultValue: defaultValues.scale_down.delay_after_add,
   },
   {
-    label: 'scaleDown.delayAfterDelete',
+    label: 'scale-down-delay-after-delete',
     name: 'scale_down.delay_after_delete',
     type: 'time',
-    defaultValue: get(defaultValues, 'scale_down.delay_after_delete', ''),
+    defaultValue: defaultValues.scale_down.delay_after_delete,
   },
   {
-    label: 'scaleDown.delayAfterFailure',
+    label: 'scale-down-delay-after-failure',
     name: 'scale_down.delay_after_failure',
     type: 'time',
-    defaultValue: get(defaultValues, 'scale_down.delay_after_failure', ''),
+    defaultValue: defaultValues.scale_down.delay_after_failure,
   },
 ];
 export { balancerFields, scaleDownFields, resourceLimitsFields };

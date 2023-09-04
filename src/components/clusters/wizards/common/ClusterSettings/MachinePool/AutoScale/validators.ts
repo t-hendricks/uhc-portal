@@ -3,17 +3,26 @@ const numberValidator = (numStr: number | string) => {
   if (Number.isNaN(num)) {
     return 'Value must be a number.';
   }
-  if (num < 0) {
+  return undefined;
+};
+
+const positiveNumberValidator = (numStr: number | string) => {
+  const numError = numberValidator(numStr);
+  if (numError) {
+    return numError;
+  }
+  if (Number(numStr) < 0) {
     return 'Value cannot be a negative number.';
   }
   return undefined;
 };
 
-const logVerbosityValidator = (num: number | string) => {
-  const numError = numberValidator(num);
+const logVerbosityValidator = (numStr: number | string) => {
+  const numError = numberValidator(numStr);
   if (numError) {
     return numError;
   }
+  const num = Number(numStr);
   if (num < 1 || num > 6) {
     return 'Value must be between 1 and 6.';
   }
@@ -21,7 +30,7 @@ const logVerbosityValidator = (num: number | string) => {
 };
 
 const utilizationThresholdValidator = (num: number | string) => {
-  const numError = numberValidator(num);
+  const numError = positiveNumberValidator(num);
   if (numError) {
     return numError;
   }
@@ -31,4 +40,9 @@ const utilizationThresholdValidator = (num: number | string) => {
   return undefined;
 };
 
-export { numberValidator, logVerbosityValidator, utilizationThresholdValidator };
+export {
+  numberValidator,
+  positiveNumberValidator,
+  logVerbosityValidator,
+  utilizationThresholdValidator,
+};

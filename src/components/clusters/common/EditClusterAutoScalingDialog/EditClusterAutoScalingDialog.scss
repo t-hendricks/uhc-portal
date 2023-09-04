@@ -1,6 +1,6 @@
 .cluster-autoscaling-form {
-    .pf-c-form__group .default-value,
-    .pf-c-form__helper-text.pf-m-error .default-value {
+    .pf-c-form__group .custom-help-text,
+    .pf-c-form__helper-text.pf-m-error .custom-help-text {
         /* Keep the grey color even when the value is invalid */
         color: var(--pf-global--Color--200);
         font-size: small;
@@ -13,5 +13,9 @@
         &.pf-c-form__section {
             padding-inline: 1.75rem;
         }
+    }
+
+    .popover-hint-button {
+        padding: 0;
     }
 }

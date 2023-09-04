@@ -13,6 +13,7 @@ import shouldShowModal from '~/components/common/Modal/ModalSelectors';
 import modals from '~/components/common/Modal/modals';
 
 import {
+  ClusterAutoScalingForm,
   getClusterAutoScalingSubmitSettings,
   getDefaultClusterAutoScaling,
 } from '~/components/clusters/CreateOSDPage/clusterAutoScalingValues';
@@ -40,7 +41,7 @@ type Day2Props = {
 };
 
 type ScalingFormData = {
-  cluster_autoscaling: ClusterAutoscaler; // eslint-disable-line camelcase
+  cluster_autoscaling: ClusterAutoScalingForm; // eslint-disable-line camelcase
 };
 
 const DAY1_SELECTOR = 'CreateCluster';

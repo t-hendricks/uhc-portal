@@ -8,7 +8,7 @@ export type AutoscalerScaleDownConfig = {
    */
   delay_after_add?: string;
   /**
-   * How long after node deletion that scale down evaluation resumes, defaults to 0s (scan-interval).
+   * How long after node deletion that scale down evaluation resumes, defaults to scan-interval.
    */
   delay_after_delete?: string;
   /**
