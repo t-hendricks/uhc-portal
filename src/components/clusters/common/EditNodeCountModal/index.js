@@ -76,7 +76,6 @@ const mapStateToProps = (state) => {
       requestedNodes,
       cluster,
       machinePools: state.machinePools.getMachinePools.data,
-      machineTypes: state.machineTypes,
     }),
     organization: state.userProfile.organization,
     machineTypes: state.machineTypes,
