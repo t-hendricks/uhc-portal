@@ -1,4 +1,3 @@
-import { isEnforcedDefaultMachinePool } from '../../ClusterDetails/components/MachinePools/machinePoolsHelper';
 import totalNodesDataSelector from '../totalNodesDataSelector';
 
 // Determine whether a master instance resize alert should be shown.
@@ -16,26 +15,20 @@ const masterResizeAlertThresholdSelector = ({
   requestedNodes,
   cluster,
   machinePools,
-  machineTypes,
 }) => {
   const nodes = totalNodesDataSelector(cluster, machinePools);
   const currentNodes = nodes.totalMaxNodesCount;
   let totalRequestedNodes;
-  if (isEnforcedDefaultMachinePool(selectedMachinePoolID, machinePools, machineTypes, cluster)) {
-    totalRequestedNodes = nodes.totalMaxNodesCount + (requestedNodes - nodes.totalDefaultMaxNodes);
-  } else {
-    const selectedMachinePool = machinePools.find(
-      (machinePool) => machinePool.id === selectedMachinePoolID,
-    );
-    if (selectedMachinePool) {
-      if (selectedMachinePool.autoscaling) {
-        totalRequestedNodes =
-          nodes.totalMaxNodesCount +
-          (requestedNodes - selectedMachinePool.autoscaling.max_replicas);
-      } else {
-        totalRequestedNodes =
-          nodes.totalMaxNodesCount + (requestedNodes - selectedMachinePool.replicas);
-      }
+  const selectedMachinePool = machinePools.find(
+    (machinePool) => machinePool.id === selectedMachinePoolID,
+  );
+  if (selectedMachinePool) {
+    if (selectedMachinePool.autoscaling) {
+      totalRequestedNodes =
+        nodes.totalMaxNodesCount + (requestedNodes - selectedMachinePool.autoscaling.max_replicas);
+    } else {
+      totalRequestedNodes =
+        nodes.totalMaxNodesCount + (requestedNodes - selectedMachinePool.replicas);
     }
   }
 

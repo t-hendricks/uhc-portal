@@ -1,15 +1,8 @@
 import nodesSectionDataSelector from './totalNodesDataSelector';
 
-const defaultMachinePoolAutoscalingState = {
+const clusterState = {
   details: {
-    cluster: {
-      nodes: {
-        autoscale_compute: {
-          min_replicas: 4,
-          max_replicas: 6,
-        },
-      },
-    },
+    cluster: {},
   },
 };
 
@@ -17,6 +10,26 @@ const defaultMachinePoolNotAutoscalingState = {
   details: { cluster: { nodes: { compute: 4 }, metrics: { nodes: { compute: 2 } } } },
 };
 
+const workerMachinePool = {
+  availability_zones: ['us-east-1a'],
+  href: '/api/clusters_mgmt/v1/clusters/cluster-id/machine_pools/fake2',
+  id: 'worker',
+  instance_type: 'm5.xlarge',
+  kind: 'MachinePool',
+  replicas: 4,
+};
+
+const workerAutoscaleMachinePool = {
+  availability_zones: ['us-east-1a'],
+  href: '/api/clusters_mgmt/v1/clusters/cluster-id/machine_pools/fake2',
+  id: 'worker',
+  instance_type: 'm5.xlarge',
+  kind: 'MachinePool',
+  autoscaling: {
+    min_replicas: 4,
+    max_replicas: 6,
+  },
+};
 const autoScalingAdditionalMachinePool = {
   availability_zones: ['us-east-1a'],
   href: '/api/clusters_mgmt/v1/clusters/cluster-id/machine_pools/fake2',
@@ -59,10 +72,14 @@ const additionalNonAutoScalingNodePool = {
 describe('TotalNodeDataSelector', () => {
   it('should find if autoscaling enabled when the default machine pool has autoscaling enabled', () => {
     const state = {
-      clusters: { ...defaultMachinePoolAutoscalingState },
+      clusters: { ...clusterState },
       machinePools: {
         getMachinePools: {
-          data: [notAutoScalingAdditionalMachinePool, notAutoScalingAdditionalMachinePool],
+          data: [
+            workerAutoscaleMachinePool,
+            notAutoScalingAdditionalMachinePool,
+            notAutoScalingAdditionalMachinePool,
+          ],
         },
       },
     };
@@ -79,7 +96,11 @@ describe('TotalNodeDataSelector', () => {
       clusters: { ...defaultMachinePoolNotAutoscalingState },
       machinePools: {
         getMachinePools: {
-          data: [notAutoScalingAdditionalMachinePool, autoScalingAdditionalMachinePool],
+          data: [
+            workerMachinePool,
+            notAutoScalingAdditionalMachinePool,
+            autoScalingAdditionalMachinePool,
+          ],
         },
       },
     };
@@ -93,10 +114,14 @@ describe('TotalNodeDataSelector', () => {
 
   it('should count total max and total min compute nodes', () => {
     const state = {
-      clusters: { ...defaultMachinePoolAutoscalingState },
+      clusters: { ...clusterState },
       machinePools: {
         getMachinePools: {
-          data: [notAutoScalingAdditionalMachinePool, autoScalingAdditionalMachinePool],
+          data: [
+            workerAutoscaleMachinePool,
+            notAutoScalingAdditionalMachinePool,
+            autoScalingAdditionalMachinePool,
+          ],
         },
       },
     };
@@ -144,7 +169,11 @@ describe('TotalNodeDataSelector', () => {
       clusters: { ...defaultMachinePoolNotAutoscalingState },
       machinePools: {
         getMachinePools: {
-          data: [notAutoScalingAdditionalMachinePool, autoScalingAdditionalMachinePool],
+          data: [
+            workerMachinePool,
+            notAutoScalingAdditionalMachinePool,
+            autoScalingAdditionalMachinePool,
+          ],
         },
       },
     };
@@ -161,7 +190,7 @@ describe('TotalNodeDataSelector', () => {
       clusters: { ...defaultMachinePoolNotAutoscalingState },
       machinePools: {
         getMachinePools: {
-          data: [nonAutoScalingNodePool, additionalNonAutoScalingNodePool],
+          data: [workerMachinePool, nonAutoScalingNodePool, additionalNonAutoScalingNodePool],
         },
       },
     };
@@ -185,7 +214,7 @@ describe('TotalNodeDataSelector', () => {
       },
       machinePools: {
         getMachinePools: {
-          data: [nonAutoScalingNodePool, additionalNonAutoScalingNodePool],
+          data: [workerMachinePool, nonAutoScalingNodePool, additionalNonAutoScalingNodePool],
         },
       },
     };
