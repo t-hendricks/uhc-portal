@@ -288,14 +288,17 @@ const k8sGpuParameter = (gpuParam: string): string | undefined => {
   return invalidParams.length === 0 ? undefined : `Invalid params: ${invalidParams.join(',')}`;
 };
 
-const validateListOfLabels = (input: string | undefined) => {
+const validateListOfBalancingLabels = (input: string | undefined) => {
   if (!input) {
     return undefined;
   }
   const labels = input.split(',');
+  if (/\s/.test(input)) {
+    return 'Labels must not contain whitespaces.';
+  }
   const nonEmptyLabels = labels.filter(Boolean);
 
-  return labels.length === nonEmptyLabels.length ? undefined : 'Empty labels are not allowed';
+  return labels.length === nonEmptyLabels.length ? undefined : 'Empty labels are not allowed.';
 };
 
 const k8sTimeParameter = (timeValue: string): string | undefined => {
@@ -303,7 +306,7 @@ const k8sTimeParameter = (timeValue: string): string | undefined => {
     return 'Field is required.';
   }
   if (!K8S_TIME_PARAMETER_REGEXP.test(timeValue)) {
-    return 'Not a valid time value';
+    return 'Not a valid time value.';
   }
   return undefined;
 };
@@ -1694,7 +1697,7 @@ export {
   validateUniqueNodeLabel,
   validateLabelKey,
   validateLabelValue,
-  validateListOfLabels,
+  validateListOfBalancingLabels,
   createPessimisticValidator,
   clusterNameValidation,
   clusterNameAsyncValidation,
