@@ -41,6 +41,7 @@ export const BooleanDropdownField = ({ name, label, helperText }: BooleanDropdow
 
   return (
     <FormGroup
+      role="group"
       fieldId={name}
       label={label}
       validated={isValid ? 'default' : 'error'}

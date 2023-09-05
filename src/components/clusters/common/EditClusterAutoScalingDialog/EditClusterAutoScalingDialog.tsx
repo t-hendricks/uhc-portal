@@ -11,7 +11,7 @@ import {
   AutoscalerGpuHelpText,
   AutoscalerGpuPopover,
 } from '~/components/clusters/common/EditClusterAutoScalingDialog/AutoscalerGpuTooltip';
-import { clusterAutoScalingValidators, validateListOfLabels } from '~/common/validators';
+import { clusterAutoScalingValidators, validateListOfBalancingLabels } from '~/common/validators';
 import {
   AutoscalerIgnoredLabelsHelpText,
   AutoscalerIgnoredLabelsPopover,
@@ -70,7 +70,11 @@ function EditClusterAutoScalingDialog({
   const isScalingSelected = isWizard || autoScalingValues.isSelected;
   const isFormDisabled = !isScalingSelected || isSaving;
 
-  let primaryButtonProps = { text: 'Close', isClose: true, isDisabled: false };
+  let primaryButtonProps = {
+    text: 'Close',
+    isClose: true,
+    isDisabled: isWizard && hasAutoScalingErrors,
+  };
   if (isSaving) {
     primaryButtonProps = { text: 'Saving...', isClose: false, isDisabled: true };
   } else if (!isWizard && autoScalingValues.isSelected && !pristine) {
@@ -178,7 +182,7 @@ function EditClusterAutoScalingDialog({
                     type="text"
                     disabled={isFormDisabled}
                     helpText={AutoscalerIgnoredLabelsHelpText}
-                    validate={validateListOfLabels}
+                    validate={validateListOfBalancingLabels}
                   />
                 </FormGroup>
               </GridItem>
