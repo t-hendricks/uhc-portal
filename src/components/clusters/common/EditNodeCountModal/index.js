@@ -31,7 +31,7 @@ const valueSelector = formValueSelector('EditNodeCount');
 
 const mapStateToProps = (state) => {
   const modalData = state.modal.data;
-  const cluster = modalData?.cluster;
+  const cluster = modalData?.cluster || {};
 
   const isHypershift = isHypershiftCluster(cluster);
 
