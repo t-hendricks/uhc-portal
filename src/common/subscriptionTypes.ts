@@ -147,11 +147,10 @@ const clustersServiceProducts = [
 const productFilterOptions = [
   { key: normalizedProducts.OCP, label: 'OCP', plansToQuery: ['OCP', 'OCP-AssistedInstall'] },
   { key: normalizedProducts.OSD, label: 'OSD', plansToQuery: ['OSD'] },
-  { key: normalizedProducts.ROSA, label: 'ROSA', plansToQuery: ['MOA', 'ROSA'] },
   {
-    key: normalizedProducts.ROSA_HyperShift,
-    label: 'ROSA - Hosted',
-    plansToQuery: ['MOA-HostedControlPlane'],
+    key: normalizedProducts.ROSA,
+    label: 'ROSA',
+    plansToQuery: ['MOA', 'ROSA', 'MOA-HostedControlPlane'],
   },
   { key: normalizedProducts.ARO, label: 'ARO', plansToQuery: ['ARO'] },
 ];
