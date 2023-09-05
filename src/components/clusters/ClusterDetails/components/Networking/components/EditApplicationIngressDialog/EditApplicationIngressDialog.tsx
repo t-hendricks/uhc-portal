@@ -19,7 +19,6 @@ type EditApplicationIngressDialogProps = {
   valid: boolean;
   pristine: boolean;
 
-  canEditLoadBalancer?: boolean;
   hasSufficientIngressEditVersion?: boolean;
 };
 
@@ -34,7 +33,6 @@ const EditApplicationIngressDialog: React.FC<EditApplicationIngressDialogProps> 
   valid,
   pristine,
 
-  canEditLoadBalancer,
   hasSufficientIngressEditVersion,
 }) => {
   if (!isOpen) {
@@ -70,7 +68,6 @@ const EditApplicationIngressDialog: React.FC<EditApplicationIngressDialogProps> 
         <DefaultIngressFields
           isDay2
           hasSufficientIngressEditVersion={hasSufficientIngressEditVersion}
-          canEditLoadBalancer={canEditLoadBalancer}
         />
       </Form>
     </Modal>
