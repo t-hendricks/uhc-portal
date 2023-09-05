@@ -13,10 +13,10 @@ const defaultValues = getDefaultClusterAutoScaling();
 
 const balancerFields: FieldDefinition[] = [
   {
-    label: 'balance-similar-node-groups',
-    name: 'balance_similar_node_groups',
-    type: 'boolean',
-    defaultValue: defaultValues.balance_similar_node_groups,
+    label: 'log-verbosity',
+    name: 'log_verbosity',
+    type: 'number',
+    defaultValue: defaultValues.log_verbosity,
   },
   {
     label: 'skip-nodes-with-local-storage',
@@ -49,10 +49,10 @@ const balancerFields: FieldDefinition[] = [
     defaultValue: defaultValues.ignore_daemonsets_utilization,
   },
   {
-    label: 'log-verbosity',
-    name: 'log_verbosity',
-    type: 'number',
-    defaultValue: defaultValues.log_verbosity,
+    label: 'balance-similar-node-groups',
+    name: 'balance_similar_node_groups',
+    type: 'boolean',
+    defaultValue: defaultValues.balance_similar_node_groups,
   },
 ];
 

@@ -2,7 +2,7 @@ import React from 'react';
 import { Formik } from 'formik';
 import merge from 'lodash/merge';
 
-import { checkAccessibility, render, screen, userEvent, UserEventType } from '~/testUtils';
+import { checkAccessibility, render, screen, userEvent, within, UserEventType } from '~/testUtils';
 import modals from '~/components/common/Modal/modals';
 import { ClusterAutoscaler } from '~/types/clusters_mgmt.v1';
 import { FieldId } from '~/components/clusters/wizards/common';
@@ -89,9 +89,16 @@ describe('<ClusterAutoScaleSettingsDialog />', () => {
       render(buildTestComponent(), {}, defaultState);
 
       // Assert
-      const booleanDropdownButtons = screen.getAllByRole('button', { expanded: false });
-      expect(booleanDropdownButtons[0]).toHaveTextContent('false'); // for the balance_similar_node_groups field
-      expect(booleanDropdownButtons[1]).toHaveTextContent('true'); // for the skip_nodes_with_local_storage field
+      expect(
+        within(screen.getByRole('group', { name: /skip-nodes-with-local-storage/ })).getByRole(
+          'button',
+        ),
+      ).toHaveTextContent('true');
+      expect(
+        within(screen.getByRole('group', { name: /balance-similar-node-groups/ })).getByRole(
+          'button',
+        ),
+      ).toHaveTextContent('false');
     });
   });
 

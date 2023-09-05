@@ -8,7 +8,7 @@ import installLinks from '~/common/installLinks.mjs';
 import Modal from '~/components/common/Modal/Modal';
 import modals from '~/components/common/Modal/modals';
 import { closeModal } from '~/components/common/Modal/ModalActions';
-import { clusterAutoScalingValidators, validateListOfLabels } from '~/common/validators';
+import { clusterAutoScalingValidators, validateListOfBalancingLabels } from '~/common/validators';
 import { useFormState } from '~/components/clusters/wizards/hooks';
 import { FieldId } from '~/components/clusters/wizards/osd/constants';
 import { TextInputField } from '~/components/clusters/wizards/form/TextInputField';
@@ -175,7 +175,7 @@ const ClusterAutoScaleSettingsDialog = ({ isWizard }: ClusterAutoScaleSettingsDi
                   helperText={
                     <span className="custom-help-text">{AutoscalerIgnoredLabelsHelpText}</span>
                   }
-                  validate={validateListOfLabels}
+                  validate={validateListOfBalancingLabels}
                 />
               </GridItem>
             </Grid>
