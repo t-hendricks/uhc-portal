@@ -19,20 +19,23 @@ const testsExcludedFromWarningFail = [
   'UpdateGraph.test.jsx',
 ];
 
-// Warnings are printed with console.error
-// Fail tests with proptypes warnings if not in the excluded list
+// Warnings are printed with console.error.
+// - Fail tests with proptypes warnings if not in the excluded list.
+// - Fail on "Maximum update depth exceeded" because infinite loops are nasty in CI.
 const { error } = console;
 // eslint-disable-next-line no-console
 console.error = (...args) => {
   error(...args); // Even if we going to throw below, it's useful to log *full* args.
 
-  const { testPath } = expect.getState();
-  if (testsExcludedFromWarningFail.some((v) => testPath.includes(v))) {
-    return; // keep default behaviour
+  if (String(args[0]).includes('Maximum update depth exceeded')) {
+    throw args[0] instanceof Error ? args[0] : new Error(args[0]);
   }
 
-  if (String(args[0]).includes('Failed prop type:')) {
-    throw args[0] instanceof Error ? args[0] : new Error(args[0]);
+  const { testPath } = expect.getState();
+  if (!testsExcludedFromWarningFail.some((v) => testPath.includes(v))) {
+    if (String(args[0]).includes('Failed prop type:')) {
+      throw args[0] instanceof Error ? args[0] : new Error(args[0]);
+    }
   }
 };
 
