@@ -2147,23 +2147,23 @@
     "@nodelib/fs.scandir" "2.1.4"
     fastq "^1.6.0"
 
-"@openshift-assisted/locales@2.25.0":
-  version "2.25.0"
-  resolved "https://registry.yarnpkg.com/@openshift-assisted/locales/-/locales-2.25.0.tgz#3ce7a6465b3d067dafc874239f6309b0578ef346"
-  integrity sha512-7QXHYgjwLII5R1K7ZeB9GS+7t+QTc/qd7w/iERGTDoMA3Jvxn5JkWDzwqvuZ6BZdt9ge5e+innOzitcCqr/UFA==
+"@openshift-assisted/locales@2.25.1":
+  version "2.25.1"
+  resolved "https://registry.yarnpkg.com/@openshift-assisted/locales/-/locales-2.25.1.tgz#b8db50b435ba70ee0328d763e0ee951dc1869719"
+  integrity sha512-kRqQAmdyx3QmbFCI+g03sS7rGZpCUtK63Beq2WnO4AbP5pXT31cqcIpTfZtR+tJ30+yE3LlX2uCCXCLZ57n3Mw==
 
-"@openshift-assisted/types@2.25.0":
-  version "2.25.0"
-  resolved "https://registry.yarnpkg.com/@openshift-assisted/types/-/types-2.25.0.tgz#9bfbfda30e8ad7d6a231e4f8c6df76cfc1cee470"
-  integrity sha512-2rUB4S4vNNqFSaXBK63upCiQoHJDUcObPWkVm4gv+ljJOaKmoYyWq6lNJtjt/Nmm+GHGrJGyR9diYzHtDI9U+g==
+"@openshift-assisted/types@2.25.1":
+  version "2.25.1"
+  resolved "https://registry.yarnpkg.com/@openshift-assisted/types/-/types-2.25.1.tgz#3720c85ce1249f38fb9d76469f1c4a670d37d045"
+  integrity sha512-bFvO6NVlncdetYv8iG+EP70kUO2bB1nLnnVi4ZS0faNf1a0T8CzJADuIC3+y6GHI1wYxzkxnxssGOsp/l/F1Yg==
 
-"@openshift-assisted/ui-lib@2.25.0":
-  version "2.25.0"
-  resolved "https://registry.yarnpkg.com/@openshift-assisted/ui-lib/-/ui-lib-2.25.0.tgz#914145c813e2e9d2e371f1236dae6a097da9945b"
-  integrity sha512-iR58rDS0Ms+WGddC1d+d3KrbBH6dlM9t7fSVgMoMr2DIuYWyLj6WQ0YhU6DzgwSEAbIao6pvcZV627qB2Rw4JQ==
+"@openshift-assisted/ui-lib@2.25.1":
+  version "2.25.1"
+  resolved "https://registry.yarnpkg.com/@openshift-assisted/ui-lib/-/ui-lib-2.25.1.tgz#53bc1b97258eff9d1562d99819b86bebd23e2a29"
+  integrity sha512-5yx/BhL9g/w4soxFNsau5aIen4DDdlcKIH8NewcTowyp1891gTdanjcVZAXJZ287LbTkNlm4kogRfIcSrqpCWg==
   dependencies:
-    "@openshift-assisted/locales" "2.25.0"
-    "@openshift-assisted/types" "2.25.0"
+    "@openshift-assisted/locales" "2.25.1"
+    "@openshift-assisted/types" "2.25.1"
     axios-case-converter "^0.11.1"
     camel-case "^4.1.2"
     cidr-tools "^4.3.0"
