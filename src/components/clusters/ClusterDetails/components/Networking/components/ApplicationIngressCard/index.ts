@@ -23,7 +23,7 @@ const mapStateToProps = (state: GlobalState) => {
   const isReadOnly = cluster?.status?.configuration_mode === 'read_only';
   const clusterHibernating = isHibernating(cluster.state);
   const hasSufficientIngressEditVersion = canConfigureDayTwoManagedIngress(
-    cluster?.openshift_version || '',
+    cluster?.version?.raw_id || '',
   );
   const {
     routeSelectors,

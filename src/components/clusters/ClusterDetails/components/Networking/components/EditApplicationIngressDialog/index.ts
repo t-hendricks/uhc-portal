@@ -42,7 +42,7 @@ const mapStateToProps = (state: GlobalState) => {
   const clusterRouters = NetworkingSelector(state);
   const clusterRoutesTlsSecretRef = clusterRouters.default?.tlsSecretRef;
   const hasSufficientIngressEditVersion = canConfigureDayTwoManagedIngress(
-    cluster?.openshift_version || '',
+    cluster?.version?.raw_id || '',
   );
 
   const ingressProps = hasSufficientIngressEditVersion
@@ -73,7 +73,6 @@ const mapStateToProps = (state: GlobalState) => {
     clusterRouters,
     editClusterRoutersResponse: state.clusterRouters.editRouters,
 
-    canEditLoadBalancer: !isSTSEnabled,
     hasSufficientIngressEditVersion,
   };
 

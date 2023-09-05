@@ -3,7 +3,7 @@ import isEqual from 'lodash/isEqual';
 import { LoadBalancerFlavor } from '~/types/clusters_mgmt.v1';
 import { NamespaceOwnershipPolicy } from '~/types/clusters_mgmt.v1/models/NamespaceOwnershipPolicy';
 import { WildcardPolicy } from '~/types/clusters_mgmt.v1/models/WildcardPolicy';
-import { arrayToString, strToKeyValueObject, stringToArrayTrimmed } from '~/common/helpers';
+import { strToKeyValueObject, stringToArrayTrimmed } from '~/common/helpers';
 import { setClusterDetails } from '../../../../../redux/actions/clustersActions';
 import { clusterService } from '../../../../../services';
 import { networkingConstants } from './NetworkingConstants';
@@ -66,22 +66,22 @@ const sendNetworkConfigRequests = async (newData, currentData, clusterID, dispat
     newData.defaultRouterSelectors !== undefined &&
     !isEqual(
       strToKeyValueObject(newData.defaultRouterSelectors, ''),
-      currentData.default.routeSelectors,
+      strToKeyValueObject(currentData.default.routeSelectors || '', ''),
     )
   ) {
-    requestDefaultRouter.route_selectors = newData.defaultRouterSelectors
-      ? strToKeyValueObject(newData.defaultRouterSelectors, '')
-      : {};
+    requestDefaultRouter.route_selectors = strToKeyValueObject(newData.defaultRouterSelectors, '');
   }
 
   if (
     newData.defaultRouterExcludedNamespacesFlag !== undefined &&
-    newData.defaultRouterExcludedNamespacesFlag !==
-      arrayToString(currentData.default.excludedNamespaces)
+    !isEqual(
+      stringToArrayTrimmed(newData.defaultRouterExcludedNamespacesFlag),
+      currentData.default.excludedNamespaces || [],
+    )
   ) {
-    requestDefaultRouter.excluded_namespaces = newData.defaultRouterExcludedNamespacesFlag
-      ? stringToArrayTrimmed(newData.defaultRouterExcludedNamespacesFlag)
-      : [];
+    requestDefaultRouter.excluded_namespaces = stringToArrayTrimmed(
+      newData.defaultRouterExcludedNamespacesFlag,
+    );
   }
 
   if (
