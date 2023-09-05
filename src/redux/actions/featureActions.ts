@@ -1,14 +1,9 @@
 import { action, ActionType } from 'typesafe-actions';
-import { Capability } from '~/types/accounts_mgmt.v1/models/Capability';
 import {
   SET_FEATURE,
-  ASSISTED_INSTALLER_PLATFORM_OCI,
   ASSISTED_INSTALLER_FEATURE,
-  ASSISTED_INSTALLER_SNO_FEATURE,
-  ASSISTED_INSTALLER_OCS_FEATURE,
-  ASSISTED_INSTALLER_CNV_FEATURE,
-  OSD_TRIAL_FEATURE,
   ASSISTED_INSTALLER_MERGE_LISTS_FEATURE,
+  OSD_TRIAL_FEATURE,
   OSD_WIZARD_V2_FEATURE,
   ROSA_CREATION_WIZARD_FEATURE,
   HYPERSHIFT_WIZARD_FEATURE,
@@ -17,7 +12,6 @@ import {
   HCP_AWS_BILLING_REQUIRED,
 } from '../constants/featureConstants';
 import authorizationsService from '../../services/authorizationsService';
-import accountsService from '../../services/accountsService';
 import { SelfAccessReview } from '../../types/authorizations.v1/models/SelfAccessReview';
 import type { AppThunk } from '../types';
 
@@ -32,39 +26,6 @@ const getSimpleUnleashFeature = (unleashFeatureName: string, name: string) => ({
       .then((unleash) => unleash.data.enabled),
 });
 
-type MapCapabilityToAssistedInstallerFeatureFunc = {
-  (capabilityName: string): Promise<boolean>;
-  cache?: Map<string, Capability[]>;
-};
-
-const mapCapabilityToAssistedInstallerFeature: MapCapabilityToAssistedInstallerFeatureFunc = async (
-  capabilityName: string,
-) => {
-  if (!mapCapabilityToAssistedInstallerFeature.cache) {
-    mapCapabilityToAssistedInstallerFeature.cache = new Map();
-  }
-
-  let isFeatureEnabled = false;
-  const response = await accountsService.getCurrentAccount();
-  const userOrganizationId = response.data?.organization?.id;
-  if (userOrganizationId) {
-    if (!mapCapabilityToAssistedInstallerFeature.cache.has(userOrganizationId)) {
-      const organizationResponse = await accountsService.getOrganization(userOrganizationId);
-      const organization = organizationResponse.data;
-      mapCapabilityToAssistedInstallerFeature.cache.set(
-        userOrganizationId,
-        JSON.parse(JSON.stringify(organization.capabilities ?? [])) as Capability[],
-      );
-    }
-
-    const capabilities = mapCapabilityToAssistedInstallerFeature.cache.get(userOrganizationId);
-    const capabilityEntry = capabilities?.find(({ name }) => name === capabilityName);
-    isFeatureEnabled = capabilityEntry?.value === 'true';
-  }
-
-  return isFeatureEnabled;
-};
-
 // list of features to detect upon app startup
 export const features = [
   getSimpleUnleashFeature('osd-trial', OSD_TRIAL_FEATURE),
@@ -72,12 +33,9 @@ export const features = [
   getSimpleUnleashFeature('hcp-rosa-getting-started-page', HCP_ROSA_GETTING_STARTED_PAGE),
   getSimpleUnleashFeature('hcp-aws-billing-show', HCP_AWS_BILLING_SHOW),
   getSimpleUnleashFeature('hcp-aws-billing-required', HCP_AWS_BILLING_REQUIRED),
-  getSimpleUnleashFeature('assisted-installer-sno', ASSISTED_INSTALLER_SNO_FEATURE),
-  getSimpleUnleashFeature('assisted-installer-ocs', ASSISTED_INSTALLER_OCS_FEATURE),
-  getSimpleUnleashFeature('assisted-installer-cnv', ASSISTED_INSTALLER_CNV_FEATURE),
-  getSimpleUnleashFeature('assisted-installer-merge-lists', ASSISTED_INSTALLER_MERGE_LISTS_FEATURE),
   getSimpleUnleashFeature('osd-creation-wizard-v2', OSD_WIZARD_V2_FEATURE),
   getSimpleUnleashFeature('rosa-creation-wizard', ROSA_CREATION_WIZARD_FEATURE),
+  getSimpleUnleashFeature('assisted-installer-merge-lists', ASSISTED_INSTALLER_MERGE_LISTS_FEATURE),
   {
     name: ASSISTED_INSTALLER_FEATURE,
     action: () =>
@@ -89,13 +47,6 @@ export const features = [
         }),
         authorizationsService.selfFeatureReview('assisted-installer'),
       ]).then(([resource, unleash]) => resource.data.allowed && unleash.data.enabled),
-  },
-  {
-    name: ASSISTED_INSTALLER_PLATFORM_OCI,
-    action: async () =>
-      mapCapabilityToAssistedInstallerFeature(
-        'capability.organization.bare_metal_installer_platform_oci',
-      ),
   },
 ];
 
