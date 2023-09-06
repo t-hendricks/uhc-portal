@@ -27,6 +27,7 @@ import { required } from '../../../../../../common/validators';
 import ExternalLink from '../../../../../common/ExternalLink';
 import AutoScaleSection from './AutoScaleSection/AutoScaleSection';
 import WorkerNodeVolumeSizeSection from './WorkerNodeVolumeSizeSection/WorkerNodeVolumeSizeSection';
+import { computeNodeHintText } from './AutoScaleSection/AutoScaleHelper';
 
 function ScaleSection({
   pending,
@@ -96,8 +97,9 @@ function ScaleSection({
   );
 
   const isRosa = product === normalizedProducts.ROSA;
-  const isHypershiftWizard = isHypershift && !inModal;
 
+  const isHypershiftWizard = isHypershift && !inModal;
+  const isAddHypershiftModal = isHypershift && inModal;
   const nonAutoScaleNodeLabel = () => {
     const label = 'Compute node count';
 
@@ -173,6 +175,7 @@ function ScaleSection({
               isDefaultMachinePool={!isMachinePool && !isHypershift}
               minNodesRequired={minNodesRequired}
               isHypershiftWizard={isHypershiftWizard}
+              isHypershiftMachinePool={isAddHypershiftModal}
               numPools={nodeIncrement}
             />
           </GridItem>
@@ -184,6 +187,7 @@ function ScaleSection({
           <GridItem md={6}>
             <Field
               component={NodeCountInput}
+              buttonAriaLabel="Compute node count information"
               name="nodes_compute"
               label={nonAutoScaleNodeLabel()}
               isMultiAz={isMultiAz}
@@ -192,7 +196,7 @@ function ScaleSection({
               isDisabled={pending}
               extendedHelpText={
                 <>
-                  {constants.computeNodeCountHint}{' '}
+                  {computeNodeHintText(isHypershiftWizard, isAddHypershiftModal)}{' '}
                   <ExternalLink
                     href={
                       isRosa
