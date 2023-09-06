@@ -12,7 +12,11 @@ const constants = {
     determines the amount of memory and vCPU allocated to each compute node.`,
   computeNodeCountHint:
     'The number of compute nodes to provision per zone. The minimum number of compute nodes will vary depending on which features are enabled.',
-  machinePoolComputeNodeCountHint: 'The number of compute nodes to provision per zone.',
+  hcpComputeNodeCountHintWizard:
+    'The number of compute nodes to provision per machine pool. The minimum number of compute nodes will vary depending on which features are enabled and how many machine pools will be created.',
+  hcpComputeNodeCountHint:
+    'The number of compute nodes to provision. The minimum number of compute nodes will vary depending on which features are enabled and how many machine pools exist.',
+
   machineCIDRHint: `A block of IP addresses used by the OpenShift Container Platform installation
     program while installing the cluster. The address block must not overlap with any other network
     block.`,
