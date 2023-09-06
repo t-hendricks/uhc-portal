@@ -50,7 +50,6 @@ describe('OCM Cluster archives page', () => {
             ClusterListPage.checkFilteredClusterTypes('OCP', true);
             ClusterListPage.checkFilteredClusterTypes('OSD', false);
             ClusterListPage.checkFilteredClusterTypes('ROSA', false);
-            ClusterListPage.checkFilteredClusterTypes('ROSA - Hosted', false);
             // Only OCP clusters should be in cluster list - first page
             ClusterListPage.checkFilteredClustersFromClusterList('OCP', true);
             ClusterListPage.scrollClusterListPageTo('bottom');
@@ -62,7 +61,6 @@ describe('OCM Cluster archives page', () => {
             ClusterListPage.clickClusterTypeFilters();
             ClusterListPage.clickClusterTypes("OSD");
             ClusterListPage.clickClusterTypes("ROSA");
-            ClusterListPage.clickClusterTypes("ROSA - Hosted");
             ClusterListPage.clickClusterTypes("ARO");
             ClusterListPage.clickClusterTypes("OCP");
             ClusterListPage.clearFilters();
