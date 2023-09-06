@@ -38,12 +38,14 @@ export const MarketplaceSelectField = ({
     if (!billingModel.startsWith(billingModels.MARKETPLACE)) {
       reset();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [billingModel]);
 
   useEffect(() => {
     if (billingModel.startsWith(billingModels.MARKETPLACE)) {
       validateField(FieldId.MarketplaceSelection);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [billingModel, selectedMarketplace]);
 
   const [isOpen, setIsOpen] = useState(false);

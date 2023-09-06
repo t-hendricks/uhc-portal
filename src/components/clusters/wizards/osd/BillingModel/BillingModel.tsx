@@ -207,6 +207,7 @@ export const BillingModel = () => {
     ) {
       setFieldValue(FieldId.BillingModel, billingModels.MARKETPLACE);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [product, billingModel, showOsdTrial, quotas.marketplace, quotas.standardOsd]);
 
   let isRhInfraQuotaDisabled = false;

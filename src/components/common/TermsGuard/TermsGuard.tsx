@@ -37,6 +37,7 @@ const TermsGuard = ({
   React.useEffect(() => {
     selfTermsReview();
     // only run once on mount
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleCancel = React.useCallback(() => {

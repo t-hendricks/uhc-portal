@@ -54,6 +54,7 @@ const AWSBillingAccount = ({
 
   const refresh = useCallback(() => {
     dispatch(getAWSBillingAccountIDs(organization.details?.id) as any);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dispatch]);
 
   useEffect(() => {
@@ -64,6 +65,7 @@ const AWSBillingAccount = ({
     } else {
       refresh();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
@@ -78,6 +80,7 @@ const AWSBillingAccount = ({
         change('billing_account_id', '');
       }
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [getAWSBillingAccountsResponse]);
 
   // if there's only one account, select it by default
@@ -85,6 +88,7 @@ const AWSBillingAccount = ({
     if (cloudAccounts?.length === 1 && !selectedAWSBillingAccountID) {
       change('billing_account_id', cloudAccounts[0].cloud_account_id);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [cloudAccounts, selectedAWSBillingAccountID]);
 
   const connectNewAcctBtn = (

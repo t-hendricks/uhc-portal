@@ -9,6 +9,7 @@ export const AppPage: React.FC<PropsWithChildren<{ title?: string }>> = ({ child
     if (title) {
       document.title = title;
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

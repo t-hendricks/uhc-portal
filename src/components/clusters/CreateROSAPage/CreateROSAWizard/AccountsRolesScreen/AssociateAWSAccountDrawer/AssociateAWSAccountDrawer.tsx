@@ -155,6 +155,7 @@ export const useAssociateAWSAccountDrawer = () => {
         focusOnClose,
       });
     },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [openAppDrawer],
   );
   return { openDrawer };

@@ -22,6 +22,7 @@ const TitleWithLink = ({ headingLevel, size, id, text }: Props) => {
       titleRef.current?.scrollIntoView();
     }
     // only run once on load
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

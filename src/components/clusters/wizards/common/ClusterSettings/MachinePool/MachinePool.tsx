@@ -62,10 +62,12 @@ export const MachinePool = () => {
     if (!isNodeLabelsExpanded && errors[FieldId.NodeLabels]) {
       setIsNodeLabelsExpanded(true);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [errors[FieldId.NodeLabels], isNodeLabelsExpanded]);
 
   React.useEffect(() => {
     if (nodeLabels[0].key) setFieldTouched(FieldId.NodeLabels, true, true);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   React.useEffect(() => {

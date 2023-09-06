@@ -164,7 +164,7 @@ const osdTrialRow = () => {
   };
 };
 
-const managedServices = (hasQuota, trialEnabled) => {
+const ManagedServices = ({ hasQuota, trialEnabled }) => {
   const [openRows, setOpenRows] = useState([]);
   const onCollapse = (e, rowKey, open) => {
     if (open) {
@@ -445,7 +445,7 @@ const CloudTab = ({ hasOSDQuota, trialEnabled }) => (
         </StackItem>
         <StackItem>
           Create clusters in the cloud using a managed service.
-          {managedServices(hasOSDQuota, trialEnabled)}
+          <ManagedServices hasQuota={hasOSDQuota} trialEnabled={trialEnabled} />
           {!isRestrictedEnv() && (
             <Button
               variant={ButtonVariant.link}
@@ -478,5 +478,10 @@ export default CloudTab;
 
 CloudTab.propTypes = {
   hasOSDQuota: PropTypes.bool.isRequired,
+  trialEnabled: PropTypes.bool.isRequired,
+};
+
+ManagedServices.propTypes = {
+  hasQuota: PropTypes.bool.isRequired,
   trialEnabled: PropTypes.bool.isRequired,
 };

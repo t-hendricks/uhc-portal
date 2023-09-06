@@ -7,6 +7,7 @@ const EntitlementConfig = ({ fulfilled, pending, createRosaEntitlement }: Props)
       createRosaEntitlement();
     }
     // only run once on mount
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return null;

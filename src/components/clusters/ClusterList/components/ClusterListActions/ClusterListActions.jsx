@@ -33,12 +33,15 @@ const useMediaQuery = (query) => {
   }
 
   const mediaQuery = window.matchMedia(query);
+  // eslint-disable-next-line react-hooks/rules-of-hooks
   const [match, setMatch] = React.useState(!!mediaQuery.matches);
 
+  // eslint-disable-next-line react-hooks/rules-of-hooks
   React.useEffect(() => {
     const handler = () => setMatch(!!mediaQuery.matches);
     mediaQuery.addEventListener('change', handler);
     return () => mediaQuery.removeEventListener('change', handler);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return match;

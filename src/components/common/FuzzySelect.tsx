@@ -100,6 +100,7 @@ function FuzzySelect(props: FuzzySelectProps) {
           ))}
         </SelectGroup>
       ));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectionData]);
 
   const onFilter = useCallback(
@@ -212,6 +213,7 @@ function FuzzySelect(props: FuzzySelectProps) {
         </SelectGroup>
       ));
     },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [selectionList, selectionData, selectOptions],
   );
 

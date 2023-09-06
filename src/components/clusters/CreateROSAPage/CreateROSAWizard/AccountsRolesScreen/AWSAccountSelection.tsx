@@ -94,6 +94,7 @@ function AWSAccountSelection({
     if (isOpen === true && !hasAWSAccounts) {
       associateAWSAccountBtnRef.current?.scrollIntoView({ behavior: 'smooth' });
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isOpen, hasAWSAccounts]);
 
   const onToggle = useCallback(
@@ -119,6 +120,7 @@ function AWSAccountSelection({
         value: cloudAccount.cloud_account_id,
         description: isBillingAccount && hasContract(cloudAccount) ? 'Contract enabled' : '',
       })),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [accounts],
   );
 
@@ -127,6 +129,7 @@ function AWSAccountSelection({
     setIsOpen(false);
     // will cause window reload on first time, then open assoc aws modal with new token
     openDrawer({ onClose: clearGetAWSAccountIDsResponse });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [openDrawer, setIsOpen]);
 
   const footer = useMemo<ReactElement>(() => {
@@ -155,6 +158,7 @@ function AWSAccountSelection({
         </Button>
       </>
     );
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [hasAWSAccounts, isBillingAccount, associateAWSAccountBtnRef]);
 
   return (
