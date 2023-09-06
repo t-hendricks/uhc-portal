@@ -37,6 +37,7 @@ function ProgressList({ cluster, actionRequiredInitialOpen }) {
           ...inProcess,
         },
         DNSSetup: pending,
+        networkSettings: pending,
         clusterInstallation: pending,
       };
     }
@@ -82,6 +83,19 @@ function ProgressList({ cluster, actionRequiredInitialOpen }) {
             text: 'Pending',
             ...inProcess,
           },
+          networkSettings: pending,
+          DNSSetup: pending,
+          clusterInstallation: pending,
+        };
+      }
+      if (cluster.state === clusterStates.VALIDATING) {
+        return {
+          awsAccountSetup: completed,
+          oidcAndOperatorRolesSetup: completed,
+          networkSettings: {
+            text: 'Validating',
+            ...inProcess,
+          },
           DNSSetup: pending,
           clusterInstallation: pending,
         };
@@ -92,23 +106,28 @@ function ProgressList({ cluster, actionRequiredInitialOpen }) {
     // so dns/install status is running parallel with network settings
     let networkSettings = completed;
     const inflightChecks = getInflightChecks(cluster);
-    if (inflightChecks.some((check) => check.state === InflightCheckState.FAILED)) {
-      networkSettings = failed;
-    } else if (inflightChecks.some((check) => check.state === InflightCheckState.RUNNING)) {
+    if (inflightChecks.some((check) => check.state === InflightCheckState.RUNNING)) {
       networkSettings = inProcess;
+    } else if (inflightChecks.some((check) => check.state === InflightCheckState.FAILED)) {
+      networkSettings =
+        cluster.state === clusterStates.INSTALLING || !cluster.status.dns_ready ? warning : failed;
+      networkSettings.text = 'Validation failed';
     }
 
     // first steps completed
-    if (cluster.state === clusterStates.INSTALLING || cluster.state === clusterStates.VALIDATING) {
+    if (cluster.state === clusterStates.INSTALLING) {
       if (!cluster.status.dns_ready) {
         return {
           awsAccountSetup: completed,
           oidcAndOperatorRolesSetup: completed,
-          DNSSetup: {
-            text: 'Setting up DNS',
-            ...inProcess,
-          },
-          networkSettings: pending,
+          DNSSetup:
+            networkSettings === inProcess
+              ? pending
+              : {
+                  text: 'Setting up DNS',
+                  ...inProcess,
+                },
+          networkSettings,
           clusterInstallation: pending,
         };
       }
@@ -134,7 +153,10 @@ function ProgressList({ cluster, actionRequiredInitialOpen }) {
         // if backend lets install proceed to end even though network setup was a failure, show warning
         // else don't show anything for install to emphysis network setting error
         clusterInstallation:
-          networkSettings === failed && cluster.state === clusterStates.READY ? warning : pending,
+          networkSettings === failed &&
+          (cluster.state === clusterStates.INSTALLING || cluster.state === clusterStates.READY)
+            ? warning
+            : pending,
       };
     }
     return {
@@ -172,16 +194,6 @@ function ProgressList({ cluster, actionRequiredInitialOpen }) {
           OIDC and operator roles
         </ProgressStep>
       )}
-      <ProgressStep
-        variant={progressData.DNSSetup.variant}
-        icon={progressData.DNSSetup.icon}
-        isCurrent={progressData.DNSSetup.isCurrent}
-        description={progressData.DNSSetup.text}
-        id="DNSSetup"
-        titleId="DNSSetup-title"
-      >
-        DNS setup
-      </ProgressStep>
       {isROSACluster && (
         <ProgressStep
           variant={progressData.networkSettings.variant}
@@ -194,6 +206,16 @@ function ProgressList({ cluster, actionRequiredInitialOpen }) {
           Network settings
         </ProgressStep>
       )}
+      <ProgressStep
+        variant={progressData.DNSSetup.variant}
+        icon={progressData.DNSSetup.icon}
+        isCurrent={progressData.DNSSetup.isCurrent}
+        description={progressData.DNSSetup.text}
+        id="DNSSetup"
+        titleId="DNSSetup-title"
+      >
+        DNS setup
+      </ProgressStep>
       <ProgressStep
         variant={progressData.clusterInstallation.variant}
         icon={progressData.clusterInstallation.icon}
