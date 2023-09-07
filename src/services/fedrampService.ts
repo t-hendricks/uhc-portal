@@ -8,22 +8,14 @@ const createIncident = (
     backgroundCheck: boolean;
     securityTraining: boolean;
   },
+  contractID?: string,
 ) =>
   apiRequest.postForm(
     '/fedramp-customer-interest/incident',
     {
       file,
-      data: JSON.stringify(
-        {
-          short_description: 'FedRAMP Onboarding',
-          urgency: '1',
-          impact: '1',
-          description: JSON.stringify(checks),
-          contact_type: 'contact',
-        },
-        null,
-        2,
-      ),
+      contractID,
+      acknowledgement: JSON.stringify(checks),
     },
     {
       headers: {

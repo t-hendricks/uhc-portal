@@ -81,7 +81,10 @@ function CustomerOIDCConfiguration({
         }
       });
     } finally {
-      setIsLoading(false);
+      // Because the response can be so quick, this ensures the user will see that something has happened
+      setTimeout(() => {
+        setIsLoading(false);
+      }, 500);
     }
   }, [byoOidcConfigID, onParentSelect]);
 
@@ -135,7 +138,7 @@ function CustomerOIDCConfiguration({
                   onToggle={setIsDropdownOpen}
                   onSelect={onSelect}
                   selections={byoOidcConfigID ? [byoOidcConfigID] : []}
-                  isDisabled={oidcConfigs.length === 0}
+                  isDisabled={oidcConfigs.length === 0 || isLoading}
                   isOpen={isDropdownOpen}
                 >
                   <SelectOption value="NO_SELECTION" isSelected isPlaceholder isDisabled>
@@ -155,7 +158,13 @@ function CustomerOIDCConfiguration({
                 </Select>
               </FlexItem>
               <FlexItem>
-                <Button variant="secondary" className="pf-u-mt-md" onClick={refreshOidcConfigs}>
+                <Button
+                  variant="secondary"
+                  className="pf-u-mt-md"
+                  onClick={refreshOidcConfigs}
+                  isLoading={isLoading}
+                  isDisabled={isLoading}
+                >
                   Refresh
                 </Button>
               </FlexItem>
