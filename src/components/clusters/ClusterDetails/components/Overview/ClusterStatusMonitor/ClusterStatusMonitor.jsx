@@ -167,7 +167,7 @@ class clusterStatusMonitor extends React.Component {
               title="Network settings validation failed"
             >
               <Flex direction={{ default: 'column' }}>
-                <FlexItem>{`${title} ${reason}`}</FlexItem>
+                <FlexItem>{`${reason}`}</FlexItem>
                 {reasonExpandableSection && <FlexItem>{reasonExpandableSection}</FlexItem>}
                 <FlexItem>
                   <Flex direction={{ default: 'row' }}>
@@ -202,23 +202,25 @@ class clusterStatusMonitor extends React.Component {
         reason = get(status, 'status.provision_error_message', '');
       }
       const description = get(status, 'status.description', '');
+      const inflightError = status.status.provision_error_code === 'OCM4001';
       return (
         <>
-          {status.status.state === clusterStates.ERROR && (
+          {status.status.state === clusterStates.ERROR && !inflightError && (
             <Alert variant="danger" isInline title={`${title} Cluster installation failed`}>
               {`${reason} ${description}`}
             </Alert>
           )}{' '}
           {getInflightAlert()}{' '}
-          {(status.status.provision_error_code || status.status.provision_error_message) && (
-            <Alert
-              variant="warning"
-              isInline
-              title={`${title} Installation is taking longer than expected`}
-            >
-              {reason}
-            </Alert>
-          )}
+          {status.status.state !== clusterStates.ERROR &&
+            (status.status.provision_error_code || status.status.provision_error_message) && (
+              <Alert
+                variant="warning"
+                isInline
+                title={`${title} Installation is taking longer than expected`}
+              >
+                {reason}
+              </Alert>
+            )}
         </>
       );
     }

@@ -42,6 +42,7 @@ function ProgressList({ cluster, actionRequiredInitialOpen }) {
       };
     }
 
+    const inflightChecks = getInflightChecks(cluster);
     if (isROSACluster) {
       if (isWaitingForOIDCProviderOrOperatorRoles) {
         // Show link to Action required modal for creation of ROSA operator roles and
@@ -88,7 +89,10 @@ function ProgressList({ cluster, actionRequiredInitialOpen }) {
           clusterInstallation: pending,
         };
       }
-      if (cluster.state === clusterStates.VALIDATING) {
+      if (
+        cluster.state === clusterStates.VALIDATING ||
+        inflightChecks.some((check) => check.state === InflightCheckState.RUNNING)
+      ) {
         return {
           awsAccountSetup: completed,
           oidcAndOperatorRolesSetup: completed,
@@ -102,16 +106,22 @@ function ProgressList({ cluster, actionRequiredInitialOpen }) {
       }
     } // end if isRosaCluster
 
-    // inflight checks are asynchronous
-    // so dns/install status is running parallel with network settings
-    let networkSettings = completed;
-    const inflightChecks = getInflightChecks(cluster);
-    if (inflightChecks.some((check) => check.state === InflightCheckState.RUNNING)) {
-      networkSettings = inProcess;
-    } else if (inflightChecks.some((check) => check.state === InflightCheckState.FAILED)) {
-      networkSettings =
-        cluster.state === clusterStates.INSTALLING || !cluster.status.dns_ready ? warning : failed;
-      networkSettings.text = 'Validation failed';
+    // inflight check stop install
+    const inflightError = inflightChecks.some((check) => check.state === InflightCheckState.FAILED);
+    if (
+      cluster.state === clusterStates.ERROR &&
+      cluster.status.provision_error_code === 'OCM4001'
+    ) {
+      return {
+        awsAccountSetup: completed,
+        oidcAndOperatorRolesSetup: completed,
+        networkSettings: {
+          ...failed,
+          text: 'Validation failed',
+        },
+        DNSSetup: pending,
+        clusterInstallation: pending,
+      };
     }
 
     // first steps completed
@@ -120,14 +130,8 @@ function ProgressList({ cluster, actionRequiredInitialOpen }) {
         return {
           awsAccountSetup: completed,
           oidcAndOperatorRolesSetup: completed,
-          DNSSetup:
-            networkSettings === inProcess
-              ? pending
-              : {
-                  text: 'Setting up DNS',
-                  ...inProcess,
-                },
-          networkSettings,
+          DNSSetup: inProcess,
+          networkSettings: completed,
           clusterInstallation: pending,
         };
       }
@@ -136,27 +140,23 @@ function ProgressList({ cluster, actionRequiredInitialOpen }) {
         awsAccountSetup: completed,
         oidcAndOperatorRolesSetup: completed,
         DNSSetup: completed,
-        // because inflight runs asynchronously, both network and cluster install can be running at same time
-        networkSettings,
+        networkSettings: completed,
         clusterInstallation: {
           text: 'Installing cluster',
           ...inProcess,
         },
       };
     }
-    if (networkSettings !== completed) {
+    if (inflightError) {
       return {
         awsAccountSetup: completed,
         oidcAndOperatorRolesSetup: completed,
         DNSSetup: completed,
-        networkSettings,
-        // if backend lets install proceed to end even though network setup was a failure, show warning
-        // else don't show anything for install to emphysis network setting error
-        clusterInstallation:
-          networkSettings === failed &&
-          (cluster.state === clusterStates.INSTALLING || cluster.state === clusterStates.READY)
-            ? warning
-            : pending,
+        networkSettings: {
+          text: 'Validation failed',
+          ...failed,
+        },
+        clusterInstallation: warning,
       };
     }
     return {
