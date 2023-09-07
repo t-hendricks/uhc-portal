@@ -11,10 +11,12 @@ import {
   FileUpload,
   Flex,
   FlexItem,
+  FormGroup,
   Stack,
   StackItem,
   Text,
   TextContent,
+  TextInput,
   TextVariants,
 } from '@patternfly/react-core';
 import * as React from 'react';
@@ -22,6 +24,7 @@ import { AxiosError } from 'axios';
 import { humanizeValueWithUnit } from '~/common/units';
 import fedrampService from '~/services/fedrampService';
 import config from '~/config';
+import PopoverHint from '~/components/common/PopoverHint';
 import redhatLogoImg from '../../../styles/images/Logo-RedHat-Hat-Color-RGB.png';
 
 const maxFileSize = 10 * 1024 * 1024; // 10 MB
@@ -30,9 +33,11 @@ const maxFileSizeHumanized = humanizeValueWithUnit(maxFileSize, 'B').value;
 const GovCloudForm = ({
   title,
   onSubmitSuccess,
+  hasGovEmail,
 }: {
   title: string;
   onSubmitSuccess: () => void;
+  hasGovEmail: boolean;
 }) => {
   const [isUSCitizen, setIsUSCitizen] = React.useState(false);
   const [backgroundCheck, setBackgroundCheck] = React.useState(false);
@@ -42,8 +47,13 @@ const GovCloudForm = ({
   const [fileReadError, setFileReadError] = React.useState<string>();
   const [isUploading, setUploading] = React.useState(false);
   const [isReadingFile, setIsReadingFile] = React.useState(false);
+  const [contractID, setContractID] = React.useState<string>();
 
-  const accepted = isUSCitizen && backgroundCheck && securityTraining;
+  const formReady =
+    isUSCitizen &&
+    backgroundCheck &&
+    securityTraining &&
+    (hasGovEmail ? true : !!contractID?.trim());
   return (
     <Card style={{ maxWidth: '80rem', borderTopColor: '#e00', borderTopStyle: 'solid' }}>
       <CardTitle>
@@ -93,6 +103,33 @@ const GovCloudForm = ({
               id="training-checkbox"
             />
           </StackItem>
+          {!hasGovEmail && (
+            <StackItem>
+              <FormGroup
+                label="Contract ID or RFP number"
+                isRequired
+                labelIcon={
+                  <PopoverHint
+                    hint={
+                      <>
+                        Contract ID or RFP number from the{' '}
+                        <a
+                          href="https://www.usaspending.gov/search"
+                          target="_blank"
+                          rel="noreferrer noopener"
+                        >
+                          US Spending government
+                        </a>{' '}
+                        website.
+                      </>
+                    }
+                  />
+                }
+              >
+                <TextInput value={contractID} onChange={setContractID} isRequired />
+              </FormGroup>
+            </StackItem>
+          )}
           <StackItem>
             <TextContent>
               <Text component={TextVariants.p}>
@@ -170,17 +207,21 @@ const GovCloudForm = ({
             <Bullseye>
               <Button
                 variant="primary"
-                isDisabled={!accepted || isUploading || !!fileReadError || !fileUpload}
+                isDisabled={!formReady || isUploading || !!fileReadError || !fileUpload}
                 onClick={async () => {
                   if (fileUpload) {
                     setUploading(true);
                     setUploadError(undefined);
                     try {
-                      await fedrampService.createIncident(fileUpload, {
-                        isUSCitizen,
-                        backgroundCheck,
-                        securityTraining,
-                      });
+                      await fedrampService.createIncident(
+                        fileUpload,
+                        {
+                          isUSCitizen,
+                          backgroundCheck,
+                          securityTraining,
+                        },
+                        contractID,
+                      );
                       onSubmitSuccess();
                     } catch (err) {
                       const axiosErr = err as any as AxiosError;
