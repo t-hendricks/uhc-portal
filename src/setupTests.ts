@@ -1,6 +1,7 @@
 import { configure } from 'enzyme';
 import Adapter from '@wojtekmaj/enzyme-adapter-react-17';
 import { setAutoFreeze } from 'immer';
+import { sprintf } from 'sprintf-js';
 import * as useChromeHook from '@redhat-cloud-services/frontend-components/useChrome';
 
 setAutoFreeze(false);
@@ -24,17 +25,21 @@ const testsExcludedFromWarningFail = [
 // - Fail on "Maximum update depth exceeded" because infinite loops are nasty in CI.
 const { error } = console;
 // eslint-disable-next-line no-console
-console.error = (...args) => {
-  error(...args); // Even if we going to throw below, it's useful to log *full* args.
+console.error = (msg, ...args) => {
+  error(msg, ...args); // Even if we going to throw below, it's useful to log *full* args.
 
-  if (String(args[0]).includes('Maximum update depth exceeded')) {
-    throw args[0] instanceof Error ? args[0] : new Error(args[0]);
+  const text = typeof msg === 'string'
+    ? sprintf(msg, ...args)
+    : [String(msg), ...args.map(String)].join(' ');
+
+  if (text.includes('Maximum update depth exceeded')) {
+    throw text;
   }
 
   const { testPath } = expect.getState();
   if (!testsExcludedFromWarningFail.some((v) => testPath.includes(v))) {
-    if (String(args[0]).includes('Failed prop type:')) {
-      throw args[0] instanceof Error ? args[0] : new Error(args[0]);
+    if (text.match(/Failed prop type|type .+ is invalid/)) {
+      throw text;
     }
   }
 };
