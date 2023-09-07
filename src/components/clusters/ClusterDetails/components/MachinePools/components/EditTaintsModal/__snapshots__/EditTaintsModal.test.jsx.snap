@@ -43,10 +43,17 @@ exports[`<EditTaintsModal /> renders correctly 1`] = `
       />
       <GridItem>
         <FieldArray
-          canAddMore={true}
+          canAddMore={false}
           component={[Function]}
           isEditing={true}
           name="taints"
+        />
+      </GridItem>
+      <GridItem>
+        <Alert
+          isInline={true}
+          title="Taints cannot be added to default machine pool"
+          variant="info"
         />
       </GridItem>
     </Grid>
