@@ -10,18 +10,8 @@ if (!process.env.LISTENING_TO_UNHANDLED_REJECTION) {
   process.env.LISTENING_TO_UNHANDLED_REJECTION = 'true';
 }
 
-// These tests have warnings but don't cause test failure
-const testsExcludedFromWarningFail = [
-  'Router.test.jsx',
-  'Insights.test.jsx',
-  'ReduxFormKeyValueList.test',
-  'ReduxFormTaints.test',
-  // TODO: Fix the warnings in this test
-  'UpdateGraph.test.jsx',
-];
-
 // Warnings are printed with console.error.
-// - Fail tests with proptypes warnings if not in the excluded list.
+// - Fail tests with proptypes warnings.
 // - Fail on "Maximum update depth exceeded" because infinite loops are nasty in CI.
 const { error } = console;
 // eslint-disable-next-line no-console
@@ -36,11 +26,8 @@ console.error = (msg, ...args) => {
     throw text;
   }
 
-  const { testPath } = expect.getState();
-  if (!testsExcludedFromWarningFail.some((v) => testPath.includes(v))) {
-    if (text.match(/Failed prop type|type .+ is invalid/)) {
-      throw text;
-    }
+  if (text.match(/Failed prop type|type .+ is invalid/)) {
+    throw text;
   }
 };
 
