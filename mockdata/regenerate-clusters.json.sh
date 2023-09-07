@@ -13,6 +13,8 @@
 cd "$(dirname "$0")" # directory of this script
 cd "$(git rev-parse --show-toplevel)"
 
+shopt -s nullglob  # To work if one deletes all *.json to test 0 clusters scenario
+
 CLUSTERS=mockdata/api/clusters_mgmt/v1/clusters
 SUBSCRIPTIONS=mockdata/api/accounts_mgmt/v1/subscriptions
 
@@ -25,7 +27,7 @@ jq --slurp '{
   size: . | length,
   total: . | length,
   items: . | sort_by(.name),
-}' "$CLUSTERS"/*.json >"$CLUSTERS.json"
+}' "$CLUSTERS"/*.json /dev/null >"$CLUSTERS.json"
 
 echo "Regenerated '$CLUSTERS.json'."
 git status --short "$CLUSTERS.json"
@@ -36,7 +38,7 @@ jq --slurp '{
   size: . | length,
   total: . | length,
   items: . | sort_by(.display_name),
-}' "$SUBSCRIPTIONS"/*.json >"$SUBSCRIPTIONS.json"
+}' "$SUBSCRIPTIONS"/*.json /dev/null >"$SUBSCRIPTIONS.json"
 
 echo "Regenerated '$SUBSCRIPTIONS.json'."
 git status --short "$SUBSCRIPTIONS.json"

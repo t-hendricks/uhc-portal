@@ -390,7 +390,8 @@ const labelAndTaintKeyValidations = (
 
 const labelAndTaintValueValidations = (value: string): Validations => [
   {
-    validated: typeof value === 'undefined' || value.length <= LABEL_VALUE_MAX_LENGTH,
+    validated:
+      typeof value === 'undefined' || value === null || value.length <= LABEL_VALUE_MAX_LENGTH,
     text: `A valid value must be ${LABEL_VALUE_MAX_LENGTH} characters or less`,
   },
   {
@@ -1209,7 +1210,7 @@ const validateRequiredMachinePoolsSubnet = (
   subnet: Subnetwork,
   allValues: unknown,
   props: SubnetFormProps,
-) => (!props.pristine && subnet.subnet_id === '' ? 'Subnet is required' : undefined);
+) => (!props.pristine && !subnet?.subnet_id ? 'Subnet is required' : undefined);
 
 const validateMultipleMachinePoolsSubnets = (
   subnet: Subnetwork,

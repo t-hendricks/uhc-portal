@@ -39,8 +39,6 @@ exports[`<AddMachinePoolModal /> renders correctly 1`] = `
         md={6}
       />
       <ScaleSection
-        autoScaleMaxNodesValue="0"
-        autoScaleMinNodesValue="0"
         autoscalingEnabled={true}
         billingModel="standard"
         canAutoScale={true}

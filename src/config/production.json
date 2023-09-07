@@ -1,7 +1,7 @@
 {
   "apiGateway": "https://api.openshift.com",
   "insightsGateway": "https://console.redhat.com/api",
-  "sentryDSN": "https://***REMOVED***/12",
+  "sentryDSN": "https://be858a1cf3a245a9a1190986e0379b4a@glitchtip.devshift.net/65",
   "fedrampGateway": "https://console.redhat.com/api",
   "fedrampS3": "https://fedramp-customer-interest-rob-prod.s3.us-east-1.amazonaws.com"
 }

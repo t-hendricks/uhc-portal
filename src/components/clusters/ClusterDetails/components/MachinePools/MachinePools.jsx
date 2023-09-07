@@ -20,6 +20,10 @@ import Skeleton from '@redhat-cloud-services/frontend-components/Skeleton';
 
 import { isRestrictedEnv } from '~/restrictedEnv';
 import {
+  isMultiAZ,
+  isHypershiftCluster,
+} from '~/components/clusters/ClusterDetails/clusterDetailsHelper';
+import {
   UpdateAllMachinePools,
   UpdatePoolButton,
   UpdateMachinePoolModal,
@@ -146,17 +150,18 @@ class MachinePools extends React.Component {
       isEditTaintsModalOpen,
       isEditLabelsModalOpen,
       deleteMachinePool,
-      defaultMachinePool,
       deleteMachinePoolResponse,
       addMachinePoolResponse,
       hasMachinePoolsQuota,
-      isHypershift,
       canMachinePoolBeUpdated,
+      machineTypes,
     } = this.props;
 
     const { deletedRowIndex, openedRows, hideDeleteMachinePoolError } = this.state;
     const { machinePoolsActions } = cluster;
     const hasMachinePools = !!machinePoolsList.data.length;
+    const isMultiZoneCluster = isMultiAZ(cluster);
+    const isHypershift = isHypershiftCluster(cluster);
 
     if (hasMachinePools && machinePoolsList.error) {
       return (
@@ -233,9 +238,7 @@ class MachinePools extends React.Component {
         {
           title: (
             <>
-              {isHypershift && machinePool.id !== 'Default'
-                ? machinePool.aws_node_pool?.instance_type
-                : machinePool.instance_type}
+              {isHypershift ? machinePool.aws_node_pool?.instance_type : machinePool.instance_type}
               {machinePool.aws && (
                 <Label variant="outline" className="ocm-c-machine-pools__spot-label">
                   Spot
@@ -266,7 +269,9 @@ class MachinePools extends React.Component {
       fullWidth: true,
       cells: [
         {
-          title: <ExpandableRow cluster={cluster} machinePool={machinePool} />,
+          title: (
+            <ExpandableRow isMultiZoneCluster={isMultiZoneCluster} machinePool={machinePool} />
+          ),
         },
       ],
       key: `${machinePool.id}-child`,
@@ -281,18 +286,6 @@ class MachinePools extends React.Component {
       hasSubnets(machinePool);
 
     const rows = [];
-
-    if (!isHypershift) {
-      const isDefaultExpandable = isExpandable(defaultMachinePool);
-
-      // initialize rows array with default machine pool row
-      rows.push(getMachinePoolRow(defaultMachinePool, isDefaultExpandable));
-
-      if (isDefaultExpandable) {
-        // add default machine pool expandable row
-        rows.push(getExpandableRow(defaultMachinePool, 0));
-      }
-    }
 
     // set all other machine pools rows
     machinePoolsList.data.forEach((machinePool) => {
@@ -329,12 +322,12 @@ class MachinePools extends React.Component {
       });
     };
 
-    const onClickScaleAction = (_, __, rowData) =>
+    const onClickScaleAction = (_, __, rowData) => {
       openModal(modals.EDIT_NODE_COUNT, {
         machinePool: rowData.machinePool,
-        isDefaultMachinePool: rowData.machinePool.id === 'Default' && !isHypershift,
         cluster,
       });
+    };
 
     const onClickEditTaintsAction = (_, __, rowData) =>
       openModal(modals.EDIT_TAINTS, {
@@ -426,19 +419,20 @@ class MachinePools extends React.Component {
                     actionResolver={
                       !isRestrictedEnv()
                         ? (rowData) =>
-                            actionResolver(
+                            actionResolver({
                               rowData,
-                              onClickDeleteAction,
-                              onClickScaleAction,
-                              onClickEditTaintsAction,
-                              onClickEditLabelsAction,
-                              isHypershift,
-                              machinePoolsList.data.length,
-                              canMachinePoolBeUpdated(rowData.machinePool)
+                              onClickDelete: onClickDeleteAction,
+                              onClickScale: onClickScaleAction,
+                              onClickEditTaints: onClickEditTaintsAction,
+                              onClickEditLabels: onClickEditLabelsAction,
+                              onClickUpdate: canMachinePoolBeUpdated(rowData.machinePool)
                                 ? onClickUpdateAction
                                 : undefined,
-                              machinePoolsActions.delete,
-                            )
+                              canDelete: machinePoolsActions.delete,
+                              cluster,
+                              machinePools: machinePoolsList.data,
+                              machineTypes,
+                            })
                         : undefined
                     }
                     areActionsDisabled={() => tableActionsDisabled}
@@ -456,7 +450,7 @@ class MachinePools extends React.Component {
         )}
         {isDeleteMachinePoolModalOpen && <DeleteMachinePoolModal />}
         {isEditTaintsModalOpen && (
-          <EditTaintsModal clusterId={cluster.id} isHypershiftCluster={isHypershift} />
+          <EditTaintsModal cluster={cluster} isHypershiftCluster={isHypershift} />
         )}
         {isEditLabelsModalOpen && (
           <EditLabelsModal clusterId={cluster.id} isHypershiftCluster={isHypershift} />
@@ -466,14 +460,6 @@ class MachinePools extends React.Component {
     );
   }
 }
-
-const checkNodesAtLeastOne = (props) => {
-  // eslint-disable-next-line react/destructuring-assignment
-  if (!props.desired && !props.autoscaling) {
-    return new Error('One of props "desired" or "autoscaling" was not specified in MachinePools.');
-  }
-  return null;
-};
 
 MachinePools.propTypes = {
   cluster: PropTypes.object.isRequired,
@@ -487,14 +473,6 @@ MachinePools.propTypes = {
   addMachinePoolResponse: PropTypes.object.isRequired,
   scaleMachinePoolResponse: PropTypes.object.isRequired,
   machinePoolsList: PropTypes.object.isRequired,
-  defaultMachinePool: PropTypes.shape({
-    id: PropTypes.string.isRequired,
-    instance_type: PropTypes.string.isRequired,
-    availability_zones: PropTypes.array.isRequired,
-    desired: checkNodesAtLeastOne,
-    autoscaling: checkNodesAtLeastOne,
-    labels: PropTypes.objectOf(PropTypes.string),
-  }),
   getMachinePools: PropTypes.func.isRequired,
   deleteMachinePool: PropTypes.func.isRequired,
   clearGetMachinePoolsResponse: PropTypes.func.isRequired,
@@ -502,7 +480,6 @@ MachinePools.propTypes = {
   getOrganizationAndQuota: PropTypes.func.isRequired,
   getMachineTypes: PropTypes.func.isRequired,
   machineTypes: PropTypes.object.isRequired,
-  isHypershift: PropTypes.bool,
   canMachinePoolBeUpdated: PropTypes.func,
 };
 

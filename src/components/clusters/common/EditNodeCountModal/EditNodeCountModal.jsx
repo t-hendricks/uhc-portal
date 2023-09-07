@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom';
 import {
   getMinNodesRequired,
   getMinNodesRequiredHypershift,
+  isEnforcedDefaultMachinePool,
 } from '~/components/clusters/ClusterDetails/components/MachinePools/machinePoolsHelper';
 import NodeCountInput from '../NodeCountInput';
 import { ReduxFormDropdown } from '../../../common/ReduxFormComponents';
@@ -90,21 +91,14 @@ class EditNodeCountModal extends Component {
   resetResponse() {
     const {
       resetGetMachinePoolsResponse,
-      resetScaleDefaultMachinePoolResponse,
       resetScaleMachinePoolResponse,
-      machinePoolId,
-      isHypershiftCluster,
       clearMachineOrNodePoolsOnExit,
     } = this.props;
 
     if (clearMachineOrNodePoolsOnExit) {
       resetGetMachinePoolsResponse();
     }
-    if (machinePoolId === 'Default' && !isHypershiftCluster) {
-      resetScaleDefaultMachinePoolResponse();
-    } else {
-      resetScaleMachinePoolResponse();
-    }
+    resetScaleMachinePoolResponse();
   }
 
   render() {
@@ -133,10 +127,24 @@ class EditNodeCountModal extends Component {
       clusterDisplayName,
       clusterID,
       isHypershiftCluster,
+      machineTypes,
+      cluster,
     } = this.props;
-    const minNodesRequired = isHypershiftCluster
-      ? getMinNodesRequiredHypershift()
-      : getMinNodesRequired(machinePoolId === 'Default', isByoc, isMultiAz);
+    let minNodesRequired = 0;
+
+    if (isHypershiftCluster) {
+      minNodesRequired = getMinNodesRequiredHypershift();
+    } else {
+      const isEnforcedDefaultMP = isEnforcedDefaultMachinePool(
+        machinePoolId,
+        machinePoolsList.data.map((mp) => ({
+          ...mp.originalResponse,
+        })),
+        machineTypes,
+        cluster,
+      );
+      minNodesRequired = getMinNodesRequired(isEnforcedDefaultMP, isByoc, isMultiAz);
+    }
 
     const error = editNodeCountResponse.error ? (
       <ErrorBox message="Error editing machine pool" response={editNodeCountResponse} />
@@ -213,7 +221,6 @@ class EditNodeCountModal extends Component {
                       autoScaleMaxNodesValue={autoScaleMaxNodesValue}
                       product={product}
                       isBYOC={isByoc}
-                      isDefaultMachinePool={machinePoolId === 'Default' && !isHypershiftCluster}
                       minNodesRequired={minNodesRequired}
                     />
                   </GridItem>
@@ -264,7 +271,6 @@ EditNodeCountModal.propTypes = {
   closeModal: PropTypes.func.isRequired,
   handleSubmit: PropTypes.func.isRequired,
   resetGetMachinePoolsResponse: PropTypes.func.isRequired,
-  resetScaleDefaultMachinePoolResponse: PropTypes.func.isRequired,
   resetScaleMachinePoolResponse: PropTypes.func.isRequired,
   editNodeCountResponse: PropTypes.object,
   isMultiAz: PropTypes.bool,
@@ -280,6 +286,7 @@ EditNodeCountModal.propTypes = {
   getMachineTypes: PropTypes.func.isRequired,
   getMachinePools: PropTypes.func.isRequired,
   machinePoolsList: PropTypes.object.isRequired,
+  cluster: PropTypes.object.isRequired,
   onClose: PropTypes.func.isRequired,
   change: PropTypes.func.isRequired,
   isByoc: PropTypes.bool,
