@@ -29,6 +29,7 @@ type DefaultIngressFieldsProps = {
   areFieldsDisabled?: boolean;
   hasSufficientIngressEditVersion?: boolean;
   isDay2?: boolean;
+  canEditLoadBalancer?: boolean;
 };
 
 export const DefaultIngressFields: React.FC<DefaultIngressFieldsProps> = ({
@@ -36,6 +37,7 @@ export const DefaultIngressFields: React.FC<DefaultIngressFieldsProps> = ({
   areFieldsDisabled,
   isDay2,
   hasSufficientIngressEditVersion,
+  canEditLoadBalancer,
 }) => (
   <>
     {isDay2 && (
@@ -170,7 +172,7 @@ export const DefaultIngressFields: React.FC<DefaultIngressFieldsProps> = ({
           id="load_balancer_group"
           component={ReduxCheckbox}
           name="is_nlb_load_balancer"
-          disabled={!hasSufficientIngressEditVersion}
+          disabled={!canEditLoadBalancer}
           label={LoadBalancerFlavorLabel[LoadBalancerFlavor.NLB]}
           labelOff={LoadBalancerFlavorLabel[LoadBalancerFlavor.CLASSIC]}
           isSwitch

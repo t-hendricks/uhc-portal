@@ -4,7 +4,10 @@ import { Action } from 'typesafe-actions';
 
 import { GlobalState } from '~/redux/store';
 import { LoadBalancerFlavor } from '~/types/clusters_mgmt.v1';
-import { canConfigureDayTwoManagedIngress } from '~/components/clusters/wizards/rosa/constants';
+import {
+  canConfigureDayTwoManagedIngress,
+  canConfigureLoadBalancer,
+} from '~/components/clusters/wizards/rosa/constants';
 import modals from '../../../../../../common/Modal/modals';
 import shouldShowModal from '../../../../../../common/Modal/ModalSelectors';
 import { closeModal } from '../../../../../../common/Modal/ModalActions';
@@ -41,9 +44,9 @@ const mapStateToProps = (state: GlobalState) => {
 
   const clusterRouters = NetworkingSelector(state);
   const clusterRoutesTlsSecretRef = clusterRouters.default?.tlsSecretRef;
-  const hasSufficientIngressEditVersion = canConfigureDayTwoManagedIngress(
-    cluster?.version?.raw_id || '',
-  );
+  const clusterVersion = cluster?.openshift_version || cluster?.version?.raw_id || '';
+  const hasSufficientIngressEditVersion = canConfigureDayTwoManagedIngress(clusterVersion);
+  const canEditLoadBalancer = canConfigureLoadBalancer(clusterVersion, isSTSEnabled);
 
   const ingressProps = hasSufficientIngressEditVersion
     ? {
@@ -74,6 +77,7 @@ const mapStateToProps = (state: GlobalState) => {
     editClusterRoutersResponse: state.clusterRouters.editRouters,
 
     hasSufficientIngressEditVersion,
+    canEditLoadBalancer,
   };
 
   return props;

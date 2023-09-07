@@ -40,6 +40,7 @@ type ResolveDisableEditReasonParams = {
   isHypershift?: boolean;
   clusterHibernating: boolean;
   hasSufficientIngressEditVersion?: boolean;
+  canEditLoadBalancer: boolean;
 };
 
 const resolveDisableEditReason = ({
@@ -48,8 +49,10 @@ const resolveDisableEditReason = ({
   clusterHibernating,
   isHypershift,
   hasSufficientIngressEditVersion,
+  canEditLoadBalancer,
 }: ResolveDisableEditReasonParams) => {
   const canNotEditDefaultRouterReason =
+    !canEditLoadBalancer &&
     !hasSufficientIngressEditVersion &&
     'This operation is available for clusters of version 4.13 or higher.';
   const readOnlyReason = isReadOnly && 'This operation is not available during maintenance';
@@ -98,6 +101,7 @@ const ApplicationIngressCard: React.FC<ApplicationIngressCardProps> = ({
   clusterHibernating,
 
   isNLB,
+  canEditLoadBalancer,
   hasSufficientIngressEditVersion,
   clusterRoutesTlsSecretRef,
   clusterRoutesHostname,
@@ -120,6 +124,7 @@ const ApplicationIngressCard: React.FC<ApplicationIngressCardProps> = ({
     isHypershift,
     clusterHibernating,
     hasSufficientIngressEditVersion,
+    canEditLoadBalancer,
   });
 
   const handleEditSettings = () => {
