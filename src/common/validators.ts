@@ -501,17 +501,17 @@ const labelAndTaintKeyValidations = (
       validated: typeof name === 'undefined' || LABEL_KEY_NAME_REGEX.test(name),
       text: "A valid key name must consist of alphanumeric characters, '-', '.' or '_' and must start and end with an alphanumeric character",
     },
+
     {
       validated: typeof name === 'undefined' || name.length <= LABEL_KEY_NAME_MAX_LENGTH,
       text: `A valid key name must be ${LABEL_KEY_NAME_MAX_LENGTH} characters or less`,
     },
     {
-      validated: keyType === 'label' && (isEmptyValid || value?.length > 0),
-      text: "A valid key name must consist of alphanumeric characters, '-', '.' or '_' and must start and end with an alphanumeric character",
-    },
-    {
       validated: isEmptyValid || value?.length > 0,
-      text: "A valid key name must consist of alphanumeric characters, '-', '.' or '_' and must start and end with an alphanumeric character",
+      text:
+        keyType === 'label'
+          ? "A valid key name must consist of alphanumeric characters, '-', '.' or '_' and must start and end with an alphanumeric character"
+          : 'Required',
     },
   ];
 };
