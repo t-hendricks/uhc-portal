@@ -16,10 +16,10 @@ import { filterVpcsOnlyPrivateSubnets, useAWSVPCInquiry } from '../VPCScreen/use
 import { getAWSCloudProviderVPCs } from '../ccsInquiriesActions';
 
 interface VCPDropdownProps {
-  selectedVPCID: string;
+  selectedVPC: CloudVPC;
   input: {
     value: string;
-    onChange: (selectedVPC: string | SelectOptionObject) => void;
+    onChange: (selectedVPC: CloudVPC | SelectOptionObject) => void;
     onBlur: () => void;
   };
   meta: {
@@ -30,7 +30,7 @@ interface VCPDropdownProps {
 }
 
 const VPCDropdown = ({
-  selectedVPCID,
+  selectedVPC,
   input: {
     // Redux Form's onBlur interferes with Patternfly's Select footer onClick handlers.
     onBlur: _onBlur,
@@ -50,9 +50,11 @@ const VPCDropdown = ({
 
   const onSelect = (
     _: React.MouseEvent | React.ChangeEvent,
-    selectedVPC: string | SelectOptionObject,
+    selectedVPCID: string | SelectOptionObject,
   ) => {
-    inputProps.onChange(selectedVPC);
+    inputProps.onChange(
+      selectData.items.find((vpc) => vpc.id === selectedVPCID) ?? { id: '', name: '' },
+    );
     setIsOpen(false);
   };
 
@@ -72,11 +74,11 @@ const VPCDropdown = ({
   }, [vpcResponse.pending, vpcResponse.data?.items]);
 
   React.useEffect(() => {
-    const isValidSelection = !selectedVPCID || items?.some((item) => item.id === selectedVPCID);
-    if (!isValidSelection) {
-      inputProps.onChange('');
+    const isValidSelection = items?.some((item) => item.id === selectedVPC.id);
+    if (items && selectedVPC.id && !isValidSelection) {
+      inputProps.onChange({ id: '', name: '' });
     }
-  }, [selectedVPCID, items]);
+  }, [selectedVPC, items]);
 
   const refreshVPCs = () => {
     if (vpcResponse.cloudProvider === 'aws') {
@@ -88,7 +90,7 @@ const VPCDropdown = ({
     <>
       <FormGroup
         label="Specify a VPC to install your machine pools into"
-        validated={touched && error ? 'error' : undefined}
+        validated={touched && error ? 'error' : 'default'}
         isRequired
       >
         <Flex>
@@ -96,11 +98,11 @@ const VPCDropdown = ({
             <Select
               {...inputProps}
               isOpen={isOpen}
-              selections={selectedVPCID}
+              selections={selectedVPC?.id}
               onToggle={onToggle}
               onSelect={onSelect}
               placeholderText={selectData.placeholder}
-              validated={touched && error ? 'error' : undefined}
+              validated={touched && error ? 'error' : 'default'}
               isDisabled={vpcResponse.pending || selectData.items.length === 0}
             >
               {selectData.items.map((vpcItem) => {

@@ -146,4 +146,39 @@ describe('<ReviewClusterScreen />', () => {
       });
     });
   });
+
+  describe('Selected VPC settings', () => {
+    const getPropsWithSelectedVpcSettings = ({ isHypershiftSelected }) => ({
+      ...defaultProps,
+      isHypershiftSelected,
+      formValues: {
+        ...defaultProps.formValues,
+      },
+    });
+
+    it('is shown for Hypershift clusters', () => {
+      const ConnectedReviewClusterScreen = wizardConnector(ReviewClusterScreen);
+      const newProps = getPropsWithSelectedVpcSettings({
+        isHypershiftSelected: true,
+      });
+      render(<ConnectedReviewClusterScreen {...newProps} />);
+      expect(screen.getByText('Install to selected VPC')).toBeInTheDocument();
+      expect(screen.getByText(sampleFormData.values.selected_vpc.name)).toBeInTheDocument();
+      // vpc value displayed to the user is the name, not the id
+      expect(screen.queryByText(sampleFormData.values.selected_vpc.id)).not.toBeInTheDocument();
+    });
+
+    it('is not shown for non-Hypershift clusters', () => {
+      const ConnectedReviewClusterScreen = wizardConnector(ReviewClusterScreen);
+      const newProps = getPropsWithSelectedVpcSettings({
+        isHypershiftSelected: false,
+      });
+
+      render(<ConnectedReviewClusterScreen {...newProps} />);
+
+      expect(screen.queryByText('Install to selected VPC')).not.toBeInTheDocument();
+      expect(screen.queryByText(sampleFormData.values.selected_vpc.name)).not.toBeInTheDocument();
+      expect(screen.queryByText(sampleFormData.values.selected_vpc.id)).not.toBeInTheDocument();
+    });
+  });
 });

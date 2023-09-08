@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { Grid, GridItem } from '@patternfly/react-core';
 import { Field, FieldArray } from 'redux-form';
 
-import { required } from '~/common/validators';
 import ReduxFormMachinePoolSubnets from '~/components/common/ReduxFormComponents/ReduxFormMachinePoolSubnets/ReduxFormMachinePoolSubnets';
 import VPCDropdown from './VPCDropdown';
 
@@ -17,23 +16,23 @@ const subnetWarnings = (value, allValues) => {
     : undefined;
 };
 
-function MachinePoolsSubnets({ selectedVPCID }) {
+function MachinePoolsSubnets({ selectedVPC }) {
   return (
     <Grid hasGutter>
       <GridItem span={6}>
         <Field
           component={VPCDropdown}
-          name="selected_vpc_id"
-          validate={required}
-          selectedVPCID={selectedVPCID}
+          name="selected_vpc"
+          validate={(value) => (value?.id.length > 0 ? undefined : 'error')}
+          selectedVPC={selectedVPC}
           showRefresh
         />
       </GridItem>
-      {selectedVPCID && (
+      {selectedVPC?.id && (
         <FieldArray
           name="machine_pools_subnets"
           component={ReduxFormMachinePoolSubnets}
-          selectedVPCID={selectedVPCID}
+          selectedVPCID={selectedVPC.id}
           warn={subnetWarnings}
         />
       )}
@@ -42,7 +41,7 @@ function MachinePoolsSubnets({ selectedVPCID }) {
 }
 
 MachinePoolsSubnets.propTypes = {
-  selectedVPCID: PropTypes.string,
+  selectedVPC: PropTypes.object,
 };
 
 export default MachinePoolsSubnets;

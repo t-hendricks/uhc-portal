@@ -224,7 +224,7 @@ function NetworkScreen(props) {
                       isRequired
                       validate={validateRequiredMachinePoolsSubnet}
                       withAutoSelect={false}
-                      selectedVPC={formValues.selected_vpc_id}
+                      selectedVPC={formValues.selected_vpc.id}
                       privacy="public"
                       isNewCluster
                       allowedAZ={[

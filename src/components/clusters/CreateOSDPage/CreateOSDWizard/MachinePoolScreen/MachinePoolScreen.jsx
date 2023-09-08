@@ -23,7 +23,7 @@ function MachinePoolScreen({
   billingModel,
   minNodesRequired,
   nodeIncrement,
-  selectedVPCID,
+  selectedVPC,
   clusterVersionRawId,
   imds,
   poolNumber,
@@ -40,7 +40,7 @@ function MachinePoolScreen({
       <Grid hasGutter>
         <MachinePoolScreenHeader isHypershiftSelected={isHypershift} />
 
-        {isHypershift && <MachinePoolsSubnets selectedVPCID={selectedVPCID} />}
+        {isHypershift && <MachinePoolsSubnets selectedVPC={selectedVPC} />}
 
         <ScaleSection
           isBYOC={isByoc}
@@ -74,7 +74,10 @@ MachinePoolScreen.propTypes = {
   isMultiAz: PropTypes.bool.isRequired,
   machineType: PropTypes.string.isRequired,
   cloudProviderID: PropTypes.string.isRequired,
-  selectedVPCID: PropTypes.string.isRequired,
+  selectedVPC: PropTypes.shape({
+    name: PropTypes.string,
+    id: PropTypes.string,
+  }).isRequired,
   product: PropTypes.oneOf(Object.keys(normalizedProducts)).isRequired,
   billingModel: PropTypes.oneOf(Object.values(billingModels)),
   canAutoScale: PropTypes.bool,
