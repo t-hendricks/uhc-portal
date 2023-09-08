@@ -1,6 +1,5 @@
 import produce, { Draft } from 'immer';
 import * as OCM from '@openshift-assisted/ui-lib/ocm';
-import type { Cluster as AICluster } from '@openshift-assisted/types/assisted-installer-service';
 import type { AxiosResponse } from 'axios';
 import { versionComparator } from './versionComparator';
 import { normalizedProducts, clustersServiceProducts } from './subscriptionTypes';
@@ -247,7 +246,7 @@ const fakeClusterFromSubscription = (subscription: Subscription): FakeCluster =>
 
 const fakeClusterFromAISubscription = (
   subscription: Subscription,
-  aiCluster?: AICluster,
+  aiCluster?: OCM.Cluster,
 ): FakeCluster => {
   const cluster = fakeClusterFromSubscription(subscription);
   if (isAISubscriptionWithoutMetrics(subscription)) {

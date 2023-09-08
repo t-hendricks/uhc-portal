@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { Routes as AssistedInstallerRoutes } from '@openshift-assisted/ui-lib/ocm';
+import * as OCM from '@openshift-assisted/ui-lib/ocm';
 import useChrome from '@redhat-cloud-services/frontend-components/useChrome';
 import { ConnectedRouter } from 'connected-react-router';
 import get from 'lodash/get';
@@ -121,9 +121,10 @@ import TermsGuardedRoute from './TermsGuardedRoute';
 import { useFeatures } from './hooks/useFeatures';
 import { is404, metadataByRoute } from './routeMetadata';
 
-const AssistedUiRouterPage: typeof AssistedInstallerRoutes = (props) => (
+const { AssistedUiRouter } = OCM;
+const AssistedUiRouterPage: typeof AssistedUiRouter = (props) => (
   <AppPage>
-    <AssistedInstallerRoutes {...props} />
+    <AssistedUiRouter {...props} />
   </AppPage>
 );
 
