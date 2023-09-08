@@ -153,7 +153,8 @@ function ProgressList({ cluster, actionRequiredInitialOpen }) {
         oidcAndOperatorRolesSetup: completed,
         DNSSetup: completed,
         networkSettings,
-        clusterInstallation: !inflightErrorStopInstall ? failed : completed,
+        clusterInstallation:
+          cluster.state === clusterStates.ERROR && !inflightErrorStopInstall ? failed : completed,
       };
     }
     return {

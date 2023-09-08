@@ -205,7 +205,7 @@ class clusterStatusMonitor extends React.Component {
       const description = get(status, 'status.description', '');
       return (
         <>
-          {!inflightErrorStopInstall && (
+          {status.status.state === clusterStates.ERROR && !inflightErrorStopInstall && (
             <Alert variant="danger" isInline title={`${title} Cluster installation failed`}>
               {`${reason} ${description}`}
             </Alert>
