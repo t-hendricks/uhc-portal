@@ -30,7 +30,7 @@ const resetClusterRouters = () => (dispatch) =>
     type: networkingConstants.RESET_CLUSTER_ROUTERS,
   });
 
-export const createDefaultRouterRequest = (newData, currentData) => {
+const createDefaultRouterRequest = (newData, currentData) => {
   const requestDefaultRouter = {
     id: currentData.default.routerID,
   };
@@ -177,4 +177,6 @@ export {
   saveNetworkingConfiguration,
   resetClusterRouters,
   resetEditRoutersResponse,
+  createDefaultRouterRequest,
+  sendNetworkConfigRequests,
 };
