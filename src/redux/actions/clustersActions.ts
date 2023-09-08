@@ -17,7 +17,7 @@ import * as Sentry from '@sentry/browser';
 import isEmpty from 'lodash/isEmpty';
 import { action, ActionType } from 'typesafe-actions';
 import axios, { AxiosResponse } from 'axios';
-import type { Cluster as AICluster } from '@openshift-assisted/types/assisted-installer-service';
+import type { Cluster as AICluster } from '@openshift-assisted/ui-lib/ocm';
 
 import { isHypershiftCluster } from '~/components/clusters/ClusterDetails/clusterDetailsHelper';
 import { clustersConstants } from '../constants';

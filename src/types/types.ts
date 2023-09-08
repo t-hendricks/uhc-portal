@@ -1,6 +1,5 @@
 import type React from 'react';
-import type { FeaturesSupportsLevel } from '@openshift-assisted/ui-lib/ocm';
-import type { Cluster as AICluster } from '@openshift-assisted/types/assisted-installer-service';
+import type { Cluster as AICluster, FeaturesSupportsLevel } from '@openshift-assisted/ui-lib/ocm';
 import type { List, OneMetric, Subscription } from './accounts_mgmt.v1';
 import type {
   AWS,
