@@ -29,7 +29,13 @@ import { clustersConstants } from '../constants';
 import type { PromiseActionType, PromiseReducerState } from '../types';
 import type { ClusterAction } from '../actions/clustersActions';
 import type { UpgradeGateAction } from '../actions/upgradeGateActions';
-import type { Cluster, ClusterStatus, VersionGate, Version } from '../../types/clusters_mgmt.v1';
+import type {
+  Cluster,
+  ClusterStatus,
+  VersionGate,
+  Version,
+  InflightCheck,
+} from '../../types/clusters_mgmt.v1';
 import type { ErrorState, AugmentedCluster, ClusterWithPermissions } from '../../types/types';
 
 type State = {
@@ -49,6 +55,9 @@ type State = {
   };
   clusterStatus: PromiseReducerState & {
     status: ClusterStatus;
+  };
+  inflightChecks: PromiseReducerState & {
+    checks: InflightCheck[];
   };
   clusterVersions: PromiseReducerState & {
     versions: Version[];
@@ -100,6 +109,10 @@ const initialState: State = {
   clusterStatus: {
     ...baseState,
     status: {},
+  },
+  inflightChecks: {
+    ...baseState,
+    checks: [],
   },
   clusterVersions: {
     ...baseState,
@@ -433,6 +446,27 @@ const clustersReducer = (
           ...baseState,
           fulfilled: true,
           status: action.payload.data,
+        };
+        break;
+
+      // GET_INFLIGHT_CHECKS
+      case REJECTED_ACTION(clustersConstants.GET_INFLIGHT_CHECKS):
+        draft.inflightChecks = {
+          ...initialState.inflightChecks,
+          ...getErrorState(action),
+        };
+        break;
+      case PENDING_ACTION(clustersConstants.GET_INFLIGHT_CHECKS):
+        draft.inflightChecks = {
+          ...initialState.inflightChecks,
+          pending: true,
+        };
+        break;
+      case FULFILLED_ACTION(clustersConstants.GET_INFLIGHT_CHECKS):
+        draft.inflightChecks = {
+          ...baseState,
+          fulfilled: true,
+          checks: action.payload.data.items || [],
         };
         break;
 

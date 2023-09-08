@@ -92,6 +92,7 @@ class Overview extends React.Component {
       cluster.state === clusterStates.WAITING ||
       cluster.state === clusterStates.PENDING ||
       cluster.state === clusterStates.INSTALLING ||
+      cluster.state === clusterStates.ERROR ||
       cluster.state === clusterStates.UNINSTALLING;
 
     const showInsightsAdvisor =
@@ -159,6 +160,9 @@ class Overview extends React.Component {
           <Grid hasGutter>
             {showInstallSuccessAlert && (
               <Alert variant="success" isInline title="Cluster installed successfully" />
+            )}
+            {shouldMonitorStatus && (
+              <ClusterStatusMonitor refresh={refresh} cluster={cluster} history={history} />
             )}
             {topCard}
             {showAssistedInstallerDetailCard && (

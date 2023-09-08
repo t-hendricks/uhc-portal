@@ -1,37 +1,38 @@
 import { AWSCredentials } from '~/types/types';
-import apiRequest from './apiRequest';
+import type { Subscription } from '../types/accounts_mgmt.v1';
 import type {
-  AddOn,
-  AddOnInstallation,
-  Version,
   AWSInfrastructureAccessRole,
   AWSInfrastructureAccessRoleGrant,
-  Ingress,
-  UpgradePolicy,
-  UpgradePolicyState,
-  MachinePool,
-  NodePool,
-  CloudVPC,
-  KeyRing,
-  EncryptionKey,
+  AddOn,
+  AddOnInstallation,
+  CloudProvider,
   CloudRegion,
-  VersionGate,
-  VersionGateAgreement,
-  User,
-  MachineType,
+  CloudVPC,
   Cluster,
   ClusterStatus,
-  Log,
-  CloudProvider,
-  IdentityProvider,
-  Group,
-  GCP,
-  Flavour,
-  LimitedSupportReason,
-  OidcConfig,
   DNSDomain,
+  EncryptionKey,
+  Flavour,
+  GCP,
+  Group,
+  IdentityProvider,
+  InflightCheck,
+  Ingress,
+  KeyRing,
+  LimitedSupportReason,
+  Log,
+  MachinePool,
+  MachineType,
+  NodePool,
+  OidcConfig,
+  UpgradePolicy,
+  UpgradePolicyState,
+  User,
+  Version,
+  VersionGate,
+  VersionGateAgreement,
 } from '../types/clusters_mgmt.v1';
-import type { Subscription } from '../types/accounts_mgmt.v1';
+import apiRequest from './apiRequest';
 
 const getClusters = (search: string, size: number = -1) =>
   apiRequest.post<{
@@ -71,6 +72,27 @@ const getClusterDetails = (clusterID: string) =>
 
 const getClusterStatus = (clusterID: string) =>
   apiRequest.get<ClusterStatus>(`/api/clusters_mgmt/v1/clusters/${clusterID}/status`);
+
+const getInflightChecks = (clusterID: string) =>
+  apiRequest.get<{
+    /**
+     * Retrieved list of clusters.
+     */
+    items?: Array<InflightCheck>;
+    /**
+     * Index of the requested page, where one corresponds to the first page.
+     */
+    page?: number;
+    /**
+     * Maximum number of items that will be contained in the returned page.
+     */
+    size?: number;
+    /**
+     * Total number of items of the collection that match the search criteria,
+     * regardless of the size of the page.
+     */
+    total?: number;
+  }>(`/api/clusters_mgmt/v1/clusters/${clusterID}/inflight_checks`);
 
 const editCluster = (clusterID: string, data: Cluster) =>
   apiRequest.patch<Cluster>(`/api/clusters_mgmt/v1/clusters/${clusterID}`, data);
@@ -884,6 +906,7 @@ const clusterService = {
   deleteAdditionalIngress,
   editClusterIdentityProvider,
   getClusterStatus,
+  getInflightChecks,
   getMachinePools,
   getNodePools,
   patchNodePool,
@@ -902,20 +925,20 @@ const clusterService = {
 };
 
 export {
-  postUpgradeSchedule,
-  postControlPlaneUpgradeSchedule,
-  getUpgradeSchedules,
+  deleteControlPlaneUpgradeSchedule,
+  deleteUpgradeSchedule,
   getControlPlaneUpgradeSchedules,
   getUpgradeScheduleState,
-  deleteUpgradeSchedule,
-  deleteControlPlaneUpgradeSchedule,
-  patchUpgradeSchedule,
-  patchControlPlaneUpgradeSchedule,
+  getUpgradeSchedules,
+  listAWSRegions,
   listAWSVPCs,
-  listGCPVPCs,
   listGCPKeyRings,
   listGCPKeys,
-  listAWSRegions,
+  listGCPVPCs,
+  patchControlPlaneUpgradeSchedule,
+  patchUpgradeSchedule,
+  postControlPlaneUpgradeSchedule,
+  postUpgradeSchedule,
 };
 
 export default clusterService;
