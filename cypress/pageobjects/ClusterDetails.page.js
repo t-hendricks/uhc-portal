@@ -61,6 +61,14 @@ class ClusterDetails extends Page {
 
   clusterAvailabilityLabelValue = () => cy.getByTestId('availability').should('exist');
 
+  clusterAutoScalingStatus = () => cy.getByTestId('clusterAutoscalingStatus').should('exist');
+
+  clusterIMDSValue = () => cy.getByTestId('instanceMetadataService').should('exist');
+
+  clusterFipsCryptographyStatus = () => cy.getByTestId('fipsCryptographyStatus').should('exist');
+
+  clusterAdditionalEncryptionStatus = () => cy.getByTestId('etcEncryptionStatus').should('exist');
+
   clusterInfrastructureAWSaccountLabelValue = () => cy.getByTestId('infrastructureAWSAccount').should('exist');
 
   clusterMachineCIDRLabelValue = () => cy.getByTestId('machineCIDR').should('exist');
