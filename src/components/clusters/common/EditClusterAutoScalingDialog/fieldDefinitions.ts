@@ -91,8 +91,8 @@ const resourceLimitsFields: FieldDefinition[] = [
 
 const scaleDownFields: FieldDefinition[] = [
   {
-    label: 'enabled',
-    name: 'scale-down-enabled',
+    label: 'scale-down-enabled',
+    name: 'scale_down.enabled',
     type: 'boolean',
     defaultValue: defaultValues.scale_down.enabled,
   },
