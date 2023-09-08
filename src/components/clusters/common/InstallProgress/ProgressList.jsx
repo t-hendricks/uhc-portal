@@ -22,7 +22,7 @@ function ProgressList({ cluster, actionRequiredInitialOpen }) {
     const pending = { variant: 'pending' };
     const inProcess = { variant: 'info', icon: <Spinner size="sm" />, isCurrent: true };
     const completed = { variant: 'success', text: 'Completed' };
-    const warning = { variant: 'warning', text: 'Some steps failed' };
+    const warning = { variant: 'warning', text: 'Validation failed' };
     const failed = { variant: 'danger', text: 'Failed' };
     const unknown = { icon: <UnknownIcon className="icon-space-right" />, text: 'Unknown' };
 
@@ -108,10 +108,9 @@ function ProgressList({ cluster, actionRequiredInitialOpen }) {
 
     // inflight check stop install
     const inflightError = inflightChecks.some((check) => check.state === InflightCheckState.FAILED);
-    if (
-      cluster.state === clusterStates.ERROR &&
-      cluster.status.provision_error_code === 'OCM4001'
-    ) {
+    const inflightErrorStopInstall =
+      cluster.state === clusterStates.ERROR && cluster.status.provision_error_code === 'OCM4001';
+    if (inflightErrorStopInstall) {
       return {
         awsAccountSetup: completed,
         oidcAndOperatorRolesSetup: completed,
@@ -125,13 +124,14 @@ function ProgressList({ cluster, actionRequiredInitialOpen }) {
     }
 
     // first steps completed
+    const networkSettings = inflightError ? warning : completed;
     if (cluster.state === clusterStates.INSTALLING) {
       if (!cluster.status.dns_ready) {
         return {
           awsAccountSetup: completed,
           oidcAndOperatorRolesSetup: completed,
+          networkSettings,
           DNSSetup: inProcess,
-          networkSettings: completed,
           clusterInstallation: pending,
         };
       }
@@ -139,8 +139,8 @@ function ProgressList({ cluster, actionRequiredInitialOpen }) {
       return {
         awsAccountSetup: completed,
         oidcAndOperatorRolesSetup: completed,
+        networkSettings,
         DNSSetup: completed,
-        networkSettings: completed,
         clusterInstallation: {
           text: 'Installing cluster',
           ...inProcess,
@@ -152,11 +152,8 @@ function ProgressList({ cluster, actionRequiredInitialOpen }) {
         awsAccountSetup: completed,
         oidcAndOperatorRolesSetup: completed,
         DNSSetup: completed,
-        networkSettings: {
-          text: 'Validation failed',
-          ...failed,
-        },
-        clusterInstallation: warning,
+        networkSettings,
+        clusterInstallation: !inflightErrorStopInstall ? failed : completed,
       };
     }
     return {

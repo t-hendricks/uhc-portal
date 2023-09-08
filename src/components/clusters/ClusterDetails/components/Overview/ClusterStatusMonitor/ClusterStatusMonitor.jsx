@@ -107,6 +107,7 @@ class clusterStatusMonitor extends React.Component {
     }
 
     if (status.status.id === cluster.id) {
+      const inflightErrorStopInstall = status.status.provision_error_code === 'OCM4001';
       const getInflightAlert = () => {
         const inflightError = this.inflightChecksRef.current.find(
           (check) => check.state === InflightCheckState.FAILED,
@@ -162,7 +163,7 @@ class clusterStatusMonitor extends React.Component {
           }
           return (
             <Alert
-              variant={status.status.state === clusterStates.INSTALLING ? 'warning' : 'danger'}
+              variant={inflightErrorStopInstall ? 'danger' : 'warning'}
               isInline
               title="Network settings validation failed"
             >
@@ -202,10 +203,9 @@ class clusterStatusMonitor extends React.Component {
         reason = get(status, 'status.provision_error_message', '');
       }
       const description = get(status, 'status.description', '');
-      const inflightError = status.status.provision_error_code === 'OCM4001';
       return (
         <>
-          {status.status.state === clusterStates.ERROR && !inflightError && (
+          {!inflightErrorStopInstall && (
             <Alert variant="danger" isInline title={`${title} Cluster installation failed`}>
               {`${reason} ${description}`}
             </Alert>
