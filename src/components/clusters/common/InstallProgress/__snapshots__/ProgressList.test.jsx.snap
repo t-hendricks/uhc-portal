@@ -388,18 +388,18 @@ exports[`<ProgressList /> should render for ROSA manual mode 1`] = `
     OIDC and operator roles
   </ProgressStep>
   <ProgressStep
-    id="DNSSetup"
-    titleId="DNSSetup-title"
-    variant="pending"
-  >
-    DNS setup
-  </ProgressStep>
-  <ProgressStep
     id="networkSettings"
     titleId="networkSettings-title"
     variant="pending"
   >
     Network settings
+  </ProgressStep>
+  <ProgressStep
+    id="DNSSetup"
+    titleId="DNSSetup-title"
+    variant="pending"
+  >
+    DNS setup
   </ProgressStep>
   <ProgressStep
     id="clusterInstallation"
