@@ -42,7 +42,7 @@ import { editSubscriptionSettings } from './subscriptionSettingsActions';
 import isAssistedInstallSubscription from '../../common/isAssistedInstallerCluster';
 import { ASSISTED_INSTALLER_MERGE_LISTS_FEATURE } from '../constants/featureConstants';
 
-import type { Cluster } from '../../types/clusters_mgmt.v1';
+import type { Cluster, InflightCheck } from '../../types/clusters_mgmt.v1';
 import {
   SelfResourceReview,
   SelfAccessReview,
@@ -60,6 +60,8 @@ import type {
   ClusterWithPermissions,
 } from '../../types/types';
 import type { AppThunk, AppThunkDispatch } from '../types';
+
+const ROSA_PRODUCTS = [knownProducts.ROSA, knownProducts.ROSA_HyperShift];
 
 const invalidateClusters = () => action(INVALIDATE_ACTION(clustersConstants.GET_CLUSTERS));
 
@@ -266,6 +268,23 @@ const createResponseForFetchClusters = (
   return result;
 };
 
+const addInflightChecks = async (promise: Promise<any>) => {
+  const clusters = await promise;
+  const map: Record<string, Cluster> = {};
+  await Promise.all(
+    clusters.data.items
+      .filter((cluster: { product: { id: string } }) => ROSA_PRODUCTS.includes(cluster.product?.id))
+      // eslint-disable-next-line camelcase
+      .map((cluster: { id: string; inflight_checks: InflightCheck[] | undefined }) =>
+        clusterService.getInflightChecks(cluster.id).then((res) => {
+          map[cluster.id] = cluster;
+          map[cluster.id].inflight_checks = res.data.items;
+        }),
+      ),
+  );
+  return clusters;
+};
+
 const fetchClustersAndPermissions = async (
   clusterRequestParams: Parameters<typeof accountsService.getSubscriptions>[0],
   aiMergeListsFeatureFlag: boolean | undefined,
@@ -411,7 +430,7 @@ const fetchClustersAndPermissions = async (
       }
     });
 
-    return enrichForClusterService();
+    return addInflightChecks(enrichForClusterService());
   };
 
   await Promise.all(promises);
@@ -463,6 +482,7 @@ const fetchSingleClusterAndPermissions = async (
   const subscription = await accountsService.getSubscription(subscriptionID);
   subscription.data = normalizeSubscription(subscription.data);
   const isAROCluster = subscription?.data?.plan?.type === knownProducts.ARO;
+  const isROSACluster = ROSA_PRODUCTS.includes(subscription?.data?.plan?.type || '');
 
   if (subscription.data.status !== subscriptionStatuses.DEPROVISIONED) {
     await authorizationsService
@@ -562,6 +582,13 @@ const fetchSingleClusterAndPermissions = async (
     );
     cluster.data.limitedSupportReasons = limitedSupportReasons.data?.items || [];
 
+    if (isROSACluster) {
+      const inflightChecks = await clusterService.getInflightChecks(
+        subscription.data.cluster_id as string,
+      );
+      cluster.data.inflight_checks = inflightChecks.data?.items || [];
+    }
+
     cluster.data.canEdit = canEdit;
     cluster.data.idpActions = idpActions;
     cluster.data.canEditOCMRoles = canEditOCMRoles;
@@ -634,6 +661,9 @@ const resetCreatedClusterResponse = () => action(clustersConstants.RESET_CREATED
 const getClusterStatus = (clusterID: string) =>
   action(clustersConstants.GET_CLUSTER_STATUS, clusterService.getClusterStatus(clusterID));
 
+const getInflightChecks = (clusterID: string) =>
+  action(clustersConstants.GET_INFLIGHT_CHECKS, clusterService.getInflightChecks(clusterID));
+
 const getInstallableVersions = (isRosa: boolean) =>
   action(clustersConstants.GET_CLUSTER_VERSIONS, clusterService.getInstallableVersions(isRosa));
 
@@ -661,6 +691,7 @@ type ClusterAction = ActionType<
   | typeof clearClusterDetails
   | typeof resetCreatedClusterResponse
   | typeof getClusterStatus
+  | typeof getInflightChecks
   | typeof getInstallableVersions
 >;
 
@@ -679,6 +710,7 @@ const clustersActions = {
   archiveCluster,
   unarchiveCluster,
   getClusterStatus,
+  getInflightChecks,
   getInstallableVersions,
 };
 
@@ -704,6 +736,7 @@ export {
   clearClusterUnarchiveResponse,
   editClusterConsoleURL,
   getClusterStatus,
+  getInflightChecks,
   upgradeTrialCluster,
   clearUpgradeTrialClusterResponse,
   ClusterAction,

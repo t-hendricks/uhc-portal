@@ -409,6 +409,13 @@ const clusterDetails = {
   },
 };
 
+const inflightChecks = {
+  pending: false,
+  fulfilled: false,
+  error: false,
+  checks: [],
+};
+
 const CCSClusterDetails = produce(clusterDetails, (draft) => {
   draft.cluster.ccs.enabled = true;
 });
@@ -1045,6 +1052,7 @@ const userAccess = {
 const fixtures = {
   match,
   clusterDetails,
+  inflightChecks,
   CCSClusterDetails,
   OSDTrialClusterDetails,
   OSDRHMClusterDetails,

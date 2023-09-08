@@ -29,6 +29,7 @@ import type {
   Flavour,
   LimitedSupportReason,
   OidcConfig,
+  InflightCheck,
   ClusterAutoscaler,
   DNSDomain,
 } from '../types/clusters_mgmt.v1';
@@ -72,6 +73,27 @@ const getClusterDetails = (clusterID: string) =>
 
 const getClusterStatus = (clusterID: string) =>
   apiRequest.get<ClusterStatus>(`/api/clusters_mgmt/v1/clusters/${clusterID}/status`);
+
+const getInflightChecks = (clusterID: string) =>
+  apiRequest.get<{
+    /**
+     * Retrieved list of clusters.
+     */
+    items?: Array<InflightCheck>;
+    /**
+     * Index of the requested page, where one corresponds to the first page.
+     */
+    page?: number;
+    /**
+     * Maximum number of items that will be contained in the returned page.
+     */
+    size?: number;
+    /**
+     * Total number of items of the collection that match the search criteria,
+     * regardless of the size of the page.
+     */
+    total?: number;
+  }>(`/api/clusters_mgmt/v1/clusters/${clusterID}/inflight_checks`);
 
 const editCluster = (clusterID: string, data: Cluster) =>
   apiRequest.patch<Cluster>(`/api/clusters_mgmt/v1/clusters/${clusterID}`, data);
@@ -910,6 +932,7 @@ const clusterService = {
   deleteAdditionalIngress,
   editClusterIdentityProvider,
   getClusterStatus,
+  getInflightChecks,
   getMachinePools,
   getNodePools,
   patchNodePool,

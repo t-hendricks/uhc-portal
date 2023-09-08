@@ -2,38 +2,67 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import get from 'lodash/get';
 
-import { Alert } from '@patternfly/react-core';
+import { Alert, Flex, FlexItem, ExpandableSection, Title } from '@patternfly/react-core';
 
+import { InflightCheckState } from '~/types/clusters_mgmt.v1';
 import clusterStates from '../../../../common/clusterStates';
 import getClusterName from '../../../../../../common/getClusterName';
+import ExternalLink from '../../../../../common/ExternalLink';
 
 class clusterStatusMonitor extends React.Component {
   timerID = null;
+
+  state = {
+    isExpanded: false,
+  };
+
+  constructor(props) {
+    super(props);
+    this.inflightChecksRef = React.createRef();
+    this.inflightChecksRef.current = [];
+  }
 
   componentDidMount() {
     this.update();
   }
 
   componentDidUpdate(prevProps) {
-    const { status, cluster, refresh, addNotification, history } = this.props;
-    if (prevProps.status.pending && !status.pending) {
+    const { status, inflightChecks, cluster, refresh, addNotification, history } = this.props;
+    if (
+      (prevProps.status.pending && !status.pending) ||
+      (prevProps.inflightChecks.pending && !inflightChecks.pending)
+    ) {
       if (this.timerID !== null) {
         clearTimeout(this.timerID);
       }
 
+      // final state is READY
       const isInstalling = (state) =>
         state === clusterStates.INSTALLING ||
         state === clusterStates.PENDING ||
         state === clusterStates.VALIDATING ||
         state === clusterStates.WAITING;
 
-      if (status.fulfilled) {
+      // if not running any checks final state is success
+      const isChecking = (state) =>
+        state !== clusterStates.ERROR &&
+        inflightChecks.checks.some((check) => check.state === InflightCheckState.RUNNING);
+
+      // inflight checks are asynchronous with installing because they can take awhile
+      if (status.fulfilled && inflightChecks.fulfilled) {
         const clusterState = status.status.state;
-        if (clusterState !== cluster.state) {
+        // refresh main detail page if cluster state changed or if still running inflight checks
+        if (clusterState !== cluster.state || isChecking(clusterState)) {
+          // (also updates the ProgressList)
           refresh(); // state transition -> refresh main view
         }
-        if (isInstalling(clusterState) || clusterState === clusterStates.UNINSTALLING) {
-          // still installing/uninstalling, check again in 5s
+
+        // if still installing/uninstalling or running inflight checks, check again in 5s
+        if (
+          isInstalling(clusterState) ||
+          clusterState === clusterStates.UNINSTALLING ||
+          isChecking(clusterState)
+        ) {
           this.timerID = setTimeout(this.update, 5000);
         }
       } else if (status.error) {
@@ -59,44 +88,142 @@ class clusterStatusMonitor extends React.Component {
   }
 
   update = () => {
-    const { cluster, getClusterStatus } = this.props;
+    // inflight checks are asynchronous with installing because they can take awhile
+    const { cluster, getClusterStatus, getInflightChecks } = this.props;
     getClusterStatus(cluster.id);
+    getInflightChecks(cluster.id);
     this.timerID = null;
   };
 
-  render() {
-    const { status, cluster } = this.props;
-    const title = status.status.provision_error_code || '';
+  toggleExpanded = (isExpanded) => {
+    this.setState({ isExpanded });
+  };
 
-    let reason = '';
-    if (status.status.provision_error_code) {
-      reason = get(status, 'status.provision_error_message', '');
+  render() {
+    const { status, inflightChecks, cluster } = this.props;
+    const { isExpanded } = this.state;
+    if (inflightChecks.fulfilled) {
+      this.inflightChecksRef.current = inflightChecks.checks;
     }
 
     if (status.status.id === cluster.id) {
-      if (status.status.state === clusterStates.ERROR) {
-        return (
-          <Alert variant="danger" isInline title={`${title} Cluster installation failed`}>
-            {reason}
-          </Alert>
+      const inflightErrorStopInstall = status.status.provision_error_code === 'OCM4001';
+      const getInflightAlert = () => {
+        const inflightError = this.inflightChecksRef.current.find(
+          (check) => check.state === InflightCheckState.FAILED,
         );
-      }
-      if (status.status.provision_error_code || status.status.provision_error_message) {
-        return (
-          <span>
-            <Alert
-              variant="warning"
-              isInline
-              title={`${title} Installation is taking longer than expected`}
-            >
-              {reason}
-            </Alert>
-            <br />
-          </span>
-        );
-      }
-    }
 
+        if (inflightError) {
+          let documentLink;
+          const subnets = [];
+          let reasonExpandableSection;
+          if (inflightError) {
+            reason =
+              'To configure your VPC, review the egress requirements or contact Red Hat support.';
+            const { details } = inflightError;
+            Object.keys(details).forEach((dkey) => {
+              if (dkey === 'documentation_link') {
+                documentLink = details[dkey];
+              } else if (dkey.startsWith('subnet')) {
+                const logs = [];
+                subnets.push({ name: dkey, logs });
+                Object.keys(details[dkey]).forEach((skey) => {
+                  if (skey.indexOf('log') !== -1) {
+                    logs.push(details[dkey][skey]);
+                  }
+                });
+              }
+            });
+            if (subnets.length) {
+              reasonExpandableSection = (
+                <ExpandableSection
+                  toggleTextCollapsed="View logs"
+                  toggleTextExpanded="Hide logs"
+                  onToggle={(isExpanded) => this.toggleExpanded(isExpanded)}
+                  isExpanded={isExpanded}
+                >
+                  {subnets.map(({ name, logs }) => (
+                    <div
+                      style={{
+                        color: '#f5f5f5',
+                        backgroundColor: '#030303',
+                        padding: '10px',
+                        fontFamily: 'var(--pf-global--FontFamily--monospace)',
+                      }}
+                    >
+                      <Title headingLevel="h3">{name}</Title>
+                      {logs[0].split('\n').map((line) => (
+                        <p>{line}</p>
+                      ))}
+                    </div>
+                  ))}
+                </ExpandableSection>
+              );
+            }
+          }
+          return (
+            <Alert
+              variant={inflightErrorStopInstall ? 'danger' : 'warning'}
+              isInline
+              title="Network settings validation failed"
+            >
+              <Flex direction={{ default: 'column' }}>
+                <FlexItem>{`${reason}`}</FlexItem>
+                {reasonExpandableSection && <FlexItem>{reasonExpandableSection}</FlexItem>}
+                <FlexItem>
+                  <Flex direction={{ default: 'row' }}>
+                    {documentLink && (
+                      <FlexItem>
+                        <ExternalLink noIcon href={documentLink}>
+                          Review egress requirements
+                        </ExternalLink>
+                      </FlexItem>
+                    )}
+                    <FlexItem>
+                      <ExternalLink
+                        noIcon
+                        href="https://access.redhat.com/support/cases/#/case/new"
+                      >
+                        Contact support
+                      </ExternalLink>
+                    </FlexItem>
+                  </Flex>
+                </FlexItem>
+              </Flex>
+            </Alert>
+          );
+        }
+
+        return null;
+      };
+
+      const title = status.status.provision_error_code || '';
+      let reason = '';
+      if (status.status.provision_error_code) {
+        reason = get(status, 'status.provision_error_message', '');
+      }
+      const description = get(status, 'status.description', '');
+      return (
+        <>
+          {status.status.state === clusterStates.ERROR && !inflightErrorStopInstall && (
+            <Alert variant="danger" isInline title={`${title} Cluster installation failed`}>
+              {`${reason} ${description}`}
+            </Alert>
+          )}{' '}
+          {getInflightAlert()}{' '}
+          {status.status.state !== clusterStates.ERROR &&
+            (status.status.provision_error_code || status.status.provision_error_message) && (
+              <Alert
+                variant="warning"
+                isInline
+                title={`${title} Installation is taking longer than expected`}
+              >
+                {reason}
+              </Alert>
+            )}
+        </>
+      );
+    }
     return null;
   }
 }
@@ -109,6 +236,13 @@ clusterStatusMonitor.propTypes = {
   refresh: PropTypes.func,
   addNotification: PropTypes.func,
   getClusterStatus: PropTypes.func,
+  getInflightChecks: PropTypes.func,
+  inflightChecks: PropTypes.shape({
+    pending: PropTypes.bool,
+    fulfilled: PropTypes.bool,
+    error: PropTypes.bool,
+    checks: PropTypes.array,
+  }),
   status: PropTypes.shape({
     pending: PropTypes.bool,
     fulfilled: PropTypes.bool,
