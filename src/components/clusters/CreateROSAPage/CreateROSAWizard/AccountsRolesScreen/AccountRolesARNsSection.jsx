@@ -212,8 +212,13 @@ function AccountRolesARNsSection({
     } else if (getAWSAccountRolesARNsResponse.fulfilled) {
       const accountRolesARNs = get(getAWSAccountRolesARNsResponse, 'data', []).filter((arn) =>
         // TODO: restore when managed policies are in place
-        //  isHypershiftSelected ? arn.hcpManagedPolicies : !arn.hcpManagedPolicies,
-        isHypershiftSelected ? true : !arn.hcpManagedPolicies,
+        // isHypershiftSelected ? (arn.hcpManagedPolicies && arn.managedPolicies) : (!arn.hcpManagedPolicies && !arn.managedPolicies);
+
+        // Per usage of backend `hcpManagedPolicies` and `managedPolicies` fields:
+        // For hypershift managed policies both fields are true
+        // For rosa classic unmanaged both are false
+        // (out of scope) For rosa classic managed policies (the epic is on hold right now) managedPolicies:true and hcpManagedPolicies:false
+        isHypershiftSelected ? true : !arn.hcpManagedPolicies && !arn.managedPolicies,
       );
       setSelectedInstallerRoleAndOptions(accountRolesARNs);
       setAccountRoles(accountRolesARNs);
