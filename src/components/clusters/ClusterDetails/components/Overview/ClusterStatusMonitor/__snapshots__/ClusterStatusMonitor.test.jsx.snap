@@ -1,7 +1,9 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`<ClusterStatusMonitor /> Displays warning when install takes longer 1`] = `
-<span>
+<Fragment>
+   
+   
   <Alert
     isInline={true}
     title=" Installation is taking longer than expected"
@@ -21,4 +23,9 @@ exports[`<ClusterStatusMonitor /> renders an alert when cluster is errored 1`] =
 </Alert>
 `;
 
-exports[`<ClusterStatusMonitor /> renders null when no error 1`] = `""`;
+exports[`<ClusterStatusMonitor /> renders null when no error 1`] = `
+<Fragment>
+   
+   
+</Fragment>
+`;
