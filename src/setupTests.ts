@@ -16,11 +16,16 @@ if (!process.env.LISTENING_TO_UNHANDLED_REJECTION) {
 const { error } = console;
 // eslint-disable-next-line no-console
 console.error = (msg, ...args) => {
-  error(msg, ...args); // Even if we going to throw below, it's useful to log *full* args.
+  const text =
+    typeof msg === 'string' ? sprintf(msg, ...args) : [msg, ...args].map(String).join(' ');
 
-  const text = typeof msg === 'string'
-    ? sprintf(msg, ...args)
-    : [String(msg), ...args.map(String)].join(' ');
+  if (text.includes('https://reactjs.org/link/switch-to-createroot')) {
+    // This is logged by all uses of enzyme.mount() (HAC-4456) and is too verbose.
+    // eslint-disable-next-line no-console
+    console.log(`[downgraded console.error] ${msg}`, ...args);
+  } else {
+    error(msg, ...args); // Even if we going to throw below, it's useful to log *full* args.
+  }
 
   if (text.includes('Maximum update depth exceeded')) {
     throw text;
