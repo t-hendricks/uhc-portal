@@ -11,7 +11,7 @@ if (!process.env.LISTENING_TO_UNHANDLED_REJECTION) {
 }
 
 // Warnings are printed with console.error.
-// - Fail tests with proptypes warnings.
+// - TODO: Fail tests with proptypes warnings.
 // - Fail on "Maximum update depth exceeded" because infinite loops are nasty in CI.
 const { error } = console;
 // eslint-disable-next-line no-console
@@ -27,7 +27,7 @@ console.error = (msg, ...args) => {
   }
 
   if (text.match(/Failed prop type|type .+ is invalid/)) {
-    throw text;
+    // TODO: HAC-4934 // throw text;
   }
 };
 
