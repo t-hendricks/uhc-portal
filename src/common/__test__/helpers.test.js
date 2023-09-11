@@ -2,6 +2,7 @@ import helpers, {
   parseReduxFormKeyValueList,
   parseReduxFormTaints,
   goZeroTime2Null,
+  strToKeyValueObject,
 } from '../helpers';
 
 describe('nestedIsEmpty()', () => {
@@ -108,5 +109,24 @@ describe('goZeroTime2Null', () => {
     expect(goZeroTime2Null(tm.toDateString())).toEqual(tm.toDateString());
     expect(goZeroTime2Null(tm.toLocaleDateString())).toEqual(tm.toLocaleDateString());
     expect(goZeroTime2Null(tm.toUTCString())).toEqual(tm.toUTCString());
+  });
+});
+
+describe('strToKeyValueObject', () => {
+  test('handles undefined', () => {
+    expect(strToKeyValueObject(undefined)).toBeUndefined();
+  });
+
+  test('strToKeyValueObject', () => {
+    expect(strToKeyValueObject('')).toEqual({});
+    expect(strToKeyValueObject('foo')).toEqual({ foo: undefined });
+    expect(Object.hasOwn(strToKeyValueObject('foo2'), 'foo2')).toBeTruthy();
+    expect(strToKeyValueObject('foo', 'bar')).toEqual({ foo: 'bar' });
+    expect(strToKeyValueObject('foo=')).toEqual({ foo: '' });
+    expect(strToKeyValueObject('foo=bar,foo2')).toEqual({ foo: 'bar', foo2: undefined });
+    expect(strToKeyValueObject('foo=bar,foo2,foo=,foo=z,foo=')).toEqual({
+      foo: '',
+      foo2: undefined,
+    });
   });
 });

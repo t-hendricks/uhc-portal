@@ -262,11 +262,20 @@ const formatMinorVersion = (version: string) => {
  * @param {string} defaultValue used when the value is missing (like input === "foo").
  *
  */
-const strToKeyValueObject = (input: string, defaultValue?: string) =>
-  input.split(',').reduce((accum, pair) => {
+const strToKeyValueObject = (input?: string, defaultValue?: string) => {
+  if (input === undefined) {
+    return undefined;
+  }
+
+  if (!input) {
+    return {};
+  }
+
+  return input.split(',').reduce((accum, pair) => {
     const [key, value] = pair.split('=');
     return { ...accum, [key]: value ?? defaultValue };
   }, {});
+};
 
 export {
   noop,

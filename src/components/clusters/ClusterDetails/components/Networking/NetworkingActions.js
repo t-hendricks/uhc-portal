@@ -30,29 +30,10 @@ const resetClusterRouters = () => (dispatch) =>
     type: networkingConstants.RESET_CLUSTER_ROUTERS,
   });
 
-const sendNetworkConfigRequests = async (newData, currentData, clusterID, dispatch) => {
-  let result;
-
-  // API privacy setting changed
-  if (currentData.APIPrivate !== newData.private_api) {
-    const clusterRequest = {
-      api: {
-        listening: newData.private_api ? 'internal' : 'external',
-      },
-    };
-    result = await clusterService.editCluster(clusterID, clusterRequest);
-    if (result.status === 204) {
-      // editing cluster succeeded.
-      // modify the details in state now (instead of waiting for a refresh) to avoid flicker
-      dispatch(setClusterDetails(clusterRequest, true));
-    }
-  }
-
+const createDefaultRouterRequest = (newData, currentData) => {
   const requestDefaultRouter = {
     id: currentData.default.routerID,
   };
-  const hadAdditionalRouter = has(currentData, 'additional');
-  const additionalRouterDeleted = hadAdditionalRouter && !newData.enable_additional_router;
 
   // Edit default router
   if (
@@ -66,7 +47,7 @@ const sendNetworkConfigRequests = async (newData, currentData, clusterID, dispat
     newData.defaultRouterSelectors !== undefined &&
     !isEqual(
       strToKeyValueObject(newData.defaultRouterSelectors, ''),
-      strToKeyValueObject(currentData.default.routeSelectors || '', ''),
+      currentData.default.routeSelectors || {},
     )
   ) {
     requestDefaultRouter.route_selectors = strToKeyValueObject(newData.defaultRouterSelectors, '');
@@ -115,19 +96,45 @@ const sendNetworkConfigRequests = async (newData, currentData, clusterID, dispat
 
   if (
     newData.clusterRoutesTlsSecretRef !== undefined &&
-    newData.clusterRoutesTlsSecretRef !== currentData.default.tlsSecretRef
+    newData.clusterRoutesTlsSecretRef !== (currentData.default.tlsSecretRef || '')
   ) {
     requestDefaultRouter.cluster_routes_tls_secret_ref = newData.clusterRoutesTlsSecretRef;
   }
 
   if (
     newData.clusterRoutesHostname !== undefined &&
-    newData.clusterRoutesHostname !== currentData.default.hostname
+    newData.clusterRoutesHostname !== (currentData.default.hostname || '')
   ) {
     // The API does not allow to PATCH the field without the secret ref
     requestDefaultRouter.cluster_routes_hostname = newData.clusterRoutesHostname;
     requestDefaultRouter.cluster_routes_tls_secret_ref = newData.clusterRoutesTlsSecretRef;
   }
+
+  return requestDefaultRouter;
+};
+
+const sendNetworkConfigRequests = async (newData, currentData, clusterID, dispatch) => {
+  let result;
+
+  // API privacy setting changed
+  if (currentData.APIPrivate !== newData.private_api) {
+    const clusterRequest = {
+      api: {
+        listening: newData.private_api ? 'internal' : 'external',
+      },
+    };
+    result = await clusterService.editCluster(clusterID, clusterRequest);
+    if (result.status === 204) {
+      // editing cluster succeeded.
+      // modify the details in state now (instead of waiting for a refresh) to avoid flicker
+      dispatch(setClusterDetails(clusterRequest, true));
+    }
+  }
+
+  const hadAdditionalRouter = has(currentData, 'additional');
+  const additionalRouterDeleted = hadAdditionalRouter && !newData.enable_additional_router;
+
+  const requestDefaultRouter = createDefaultRouterRequest(newData, currentData);
 
   if (Object.getOwnPropertyNames(requestDefaultRouter).length > 1 /* more than just the "id" ? */) {
     result = await clusterService.editIngress(
@@ -170,4 +177,6 @@ export {
   saveNetworkingConfiguration,
   resetClusterRouters,
   resetEditRoutersResponse,
+  createDefaultRouterRequest,
+  sendNetworkConfigRequests,
 };
