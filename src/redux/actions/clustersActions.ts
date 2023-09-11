@@ -13,47 +13,47 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
+import type { Cluster as AICluster } from '@openshift-assisted/ui-lib/ocm';
 import * as Sentry from '@sentry/browser';
+import axios, { AxiosResponse } from 'axios';
 import isEmpty from 'lodash/isEmpty';
 import { action, ActionType } from 'typesafe-actions';
-import axios, { AxiosResponse } from 'axios';
-import type { Cluster as AICluster } from '@openshift-assisted/ui-lib/ocm';
 
 import { isHypershiftCluster } from '~/components/clusters/ClusterDetails/clusterDetailsHelper';
-import { clustersConstants } from '../constants';
+import isAssistedInstallSubscription from '../../common/isAssistedInstallerCluster';
+import {
+  fakeClusterFromAISubscription,
+  fakeClusterFromSubscription,
+  mapListResponse,
+  normalizeCluster,
+  normalizeMetrics,
+  normalizeSubscription,
+} from '../../common/normalize';
+import { knownProducts, subscriptionStatuses } from '../../common/subscriptionTypes';
+import { postSchedule } from '../../components/clusters/common/Upgrades/clusterUpgradeActions';
 import {
   accountsService,
   assistedService,
   authorizationsService,
   clusterService,
 } from '../../services';
-import { INVALIDATE_ACTION, buildPermissionDict } from '../reduxHelpers';
-import { subscriptionStatuses, knownProducts } from '../../common/subscriptionTypes';
-import {
-  normalizeCluster,
-  fakeClusterFromSubscription,
-  fakeClusterFromAISubscription,
-  normalizeSubscription,
-  mapListResponse,
-  normalizeMetrics,
-} from '../../common/normalize';
-import { postSchedule } from '../../components/clusters/common/Upgrades/clusterUpgradeActions';
-import { editSubscriptionSettings } from './subscriptionSettingsActions';
-import isAssistedInstallSubscription from '../../common/isAssistedInstallerCluster';
+import { clustersConstants } from '../constants';
 import { ASSISTED_INSTALLER_MERGE_LISTS_FEATURE } from '../constants/featureConstants';
+import { buildPermissionDict, INVALIDATE_ACTION } from '../reduxHelpers';
+import { editSubscriptionSettings } from './subscriptionSettingsActions';
 
-import type { Cluster } from '../../types/clusters_mgmt.v1';
-import {
-  SelfResourceReview,
-  SelfAccessReview,
-  SelfResourceReviewRequest,
-} from '../../types/authorizations.v1';
 import type {
   Subscription,
-  SubscriptionList,
   SubscriptionCreateRequest,
+  SubscriptionList,
   SubscriptionPatchRequest,
 } from '../../types/accounts_mgmt.v1';
+import {
+  SelfAccessReview,
+  SelfResourceReview,
+  SelfResourceReviewRequest,
+} from '../../types/authorizations.v1';
+import type { Cluster } from '../../types/clusters_mgmt.v1';
 import type {
   AugmentedCluster,
   AugmentedClusterResponse,
@@ -264,6 +264,30 @@ const createResponseForFetchClusters = (
     result.push(cluster);
   });
   return result;
+};
+
+const hasInflightChecks = (cluster: { product: any; subscription?: any }) => {
+  const isArchived =
+    cluster?.subscription?.status === subscriptionStatuses.ARCHIVED ||
+    cluster?.subscription?.status === subscriptionStatuses.DEPROVISIONED;
+  return !isArchived && ROSA_PRODUCTS.includes(cluster.product?.id);
+};
+
+const addInflightChecks = async (promise: Promise<any>) => {
+  const clusters = await promise;
+  const map: Record<string, Cluster> = {};
+  await Promise.all(
+    clusters.data.items
+      .filter((cluster: { product: { id: string } }) => hasInflightChecks(cluster))
+      // eslint-disable-next-line camelcase
+      .map((cluster: { id: string; inflight_checks: InflightCheck[] | undefined }) =>
+        clusterService.getInflightChecks(cluster.id).then((res) => {
+          map[cluster.id] = cluster;
+          map[cluster.id].inflight_checks = res.data.items;
+        }),
+      ),
+  );
+  return clusters;
 };
 
 const fetchClustersAndPermissions = async (
@@ -672,28 +696,28 @@ const clustersActions = {
 };
 
 export {
-  clustersActions,
-  clearClusterResponse,
-  createCluster,
-  registerDisconnectedCluster,
-  editCluster,
-  fetchClusters,
-  fetchClusterDetails,
-  setClusterDetails,
-  invalidateClusters,
-  resetCreatedClusterResponse,
-  editClusterDisplayName,
-  hibernateCluster,
-  clearHibernateClusterResponse,
-  resumeCluster,
-  clearResumeClusterResponse,
   archiveCluster,
   clearClusterArchiveResponse,
-  unarchiveCluster,
+  clearClusterResponse,
   clearClusterUnarchiveResponse,
-  editClusterConsoleURL,
-  getClusterStatus,
-  upgradeTrialCluster,
+  clearHibernateClusterResponse,
+  clearResumeClusterResponse,
   clearUpgradeTrialClusterResponse,
   ClusterAction,
+  clustersActions,
+  createCluster,
+  editCluster,
+  editClusterConsoleURL,
+  editClusterDisplayName,
+  fetchClusterDetails,
+  fetchClusters,
+  getClusterStatus,
+  hibernateCluster,
+  invalidateClusters,
+  registerDisconnectedCluster,
+  resetCreatedClusterResponse,
+  resumeCluster,
+  setClusterDetails,
+  unarchiveCluster,
+  upgradeTrialCluster,
 };
