@@ -221,13 +221,13 @@ class CreateOSDWizardInternal extends React.Component {
       isAsyncValidating,
       isCCSCredentialsValidationNeeded,
     } = this.props;
-    const { currentStepId, validatedSteps, deferredNext, isNextClicked } = this.state;
+    const { currentStepId, validatedSteps, deferredNext, forceTouch } = this.state;
     const isCurrentStepValid = validatedSteps[currentStepId];
     const errorIds = Object.keys(formErrors);
     const syncErrorIds = Object.keys(formSyncErrors);
     const asyncErrorIds = Object.keys(formAsyncErrors);
 
-    this.setState({ isNextClicked: true });
+    this.setState({ forceTouch: true });
 
     if (isAsyncValidating) {
       if (!deferredNext) {
@@ -240,7 +240,7 @@ class CreateOSDWizardInternal extends React.Component {
     if (asyncErrorIds?.length || (syncErrorIds?.length && !isCurrentStepValid)) {
       touch(errorIds);
       const hasScrolledTo = scrollToFirstField(errorIds);
-      this.setState({ isNextClicked: !isNextClicked });
+      this.setState({ forceTouch: !forceTouch });
       if (hasScrolledTo) {
         return;
       }
@@ -280,7 +280,7 @@ class CreateOSDWizardInternal extends React.Component {
       configureProxySelected,
       ccsCredentialsValidityResponse,
     } = this.props;
-    const { deferredNext, isNextClicked } = this.state;
+    const { deferredNext, forceTouch } = this.state;
 
     const isTrialDefault = product === normalizedProducts.OSDTrial;
 
@@ -322,10 +322,7 @@ class CreateOSDWizardInternal extends React.Component {
             name: stepNameById[stepId.CLUSTER_SETTINGS__DETAILS],
             component: (
               <ErrorBoundary>
-                <ClusterSettingsScreen
-                  isTrialDefault={isTrialDefault}
-                  isNextClicked={isNextClicked}
-                />
+                <ClusterSettingsScreen isTrialDefault={isTrialDefault} forceTouch={forceTouch} />
               </ErrorBoundary>
             ),
             canJumpTo: this.canJumpTo(stepId.CLUSTER_SETTINGS__DETAILS),

@@ -10,15 +10,15 @@ import { validateLabelKey, validateLabelValue } from '../../../../common/validat
 
 import './ReduxFormKeyValueList.scss';
 
-const LabelKey = ({ isNextClicked, input, meta: { touched, error } }) => (
+const LabelKey = ({ forceTouch, input, meta: { touched, error } }) => (
   <>
     <TextInput
       aria-label="Key-value list key"
-      validated={(touched || isNextClicked) && error ? 'error' : 'default'}
+      validated={(touched || forceTouch) && error ? 'error' : 'default'}
       {...input}
     />
 
-    {(touched || isNextClicked) && error && (
+    {(touched || forceTouch) && error && (
       <span className="pf-c-form__helper-text pf-m-error">{error}</span>
     )}
   </>
@@ -26,7 +26,7 @@ const LabelKey = ({ isNextClicked, input, meta: { touched, error } }) => (
 
 LabelKey.propTypes = {
   touch: PropTypes.func,
-  isNextClicked: PropTypes.bool,
+  forceTouch: PropTypes.bool,
   input: PropTypes.object.isRequired,
   meta: PropTypes.shape({
     error: PropTypes.string,
@@ -34,21 +34,21 @@ LabelKey.propTypes = {
   }),
 };
 
-const LabelValue = ({ isNextClicked, input, meta: { touched, error } }) => (
+const LabelValue = ({ forceTouch, input, meta: { touched, error } }) => (
   <>
     <TextInput
       aria-label="Key-value list value"
-      validated={(touched || isNextClicked) && error ? 'error' : 'default'}
+      validated={(touched || forceTouch) && error ? 'error' : 'default'}
       {...input}
     />
-    {(touched || isNextClicked) && error && (
+    {(touched || forceTouch) && error && (
       <span className="pf-c-form__helper-text pf-m-error">{error}</span>
     )}
   </>
 );
 
 LabelValue.propTypes = {
-  isNextClicked: PropTypes.bool,
+  forceTouch: PropTypes.bool,
   input: PropTypes.object.isRequired,
   meta: PropTypes.shape({
     error: PropTypes.string,
@@ -57,7 +57,7 @@ LabelValue.propTypes = {
 };
 
 const hasInvalidKeys = (fieldsArray) => fieldsArray && fieldsArray.some((field) => !field.key);
-const ReduxFormKeyValueList = ({ fields, isNextClicked }) => (
+const ReduxFormKeyValueList = ({ fields, forceTouch }) => (
   <Grid hasGutter>
     <GridItem span={4} className="pf-c-form__label pf-c-form__label-text">
       Key
@@ -78,7 +78,7 @@ const ReduxFormKeyValueList = ({ fields, isNextClicked }) => (
               component={LabelKey}
               index={index}
               validate={validateLabelKey}
-              isNextClicked={isNextClicked}
+              forceTouch={forceTouch}
             />
           </GridItem>
           <GridItem span={4}>
@@ -88,7 +88,7 @@ const ReduxFormKeyValueList = ({ fields, isNextClicked }) => (
               component={LabelValue}
               index={index}
               validate={validateLabelValue}
-              isNextClicked={isNextClicked}
+              forceTouch={forceTouch}
             />
           </GridItem>
           <GridItem span={4}>
@@ -126,7 +126,7 @@ const ReduxFormKeyValueList = ({ fields, isNextClicked }) => (
 );
 
 ReduxFormKeyValueList.propTypes = {
-  isNextClicked: PropTypes.bool,
+  forceTouch: PropTypes.bool,
   fields: PropTypes.array.isRequired,
   meta: PropTypes.shape({
     error: PropTypes.string,
