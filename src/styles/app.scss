@@ -474,13 +474,11 @@ h1 .badged-resource-pf .badged-resource-pf-icon {
   padding-top: 0;
 }
 
-.tile-disabled {
-  color: var(--pf-global--disabled-color--100);
-
-  &.tile-disabled:hover h5 {
-    color: var(--pf-global--Color--100);
-  }
+// Disabled tiles should still allow for tooltips
+.pf-c-tile.pf-m-disabled {
+  pointer-events: all;
 }
+
 
 // Enable word wrapping in tooltips, this is useful in case of extremely long cluster names
 .pf-c-tooltip__content {
