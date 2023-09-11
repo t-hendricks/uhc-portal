@@ -9,6 +9,7 @@ import { notificationsMiddleware } from '@redhat-cloud-services/frontend-compone
 
 import { reduxReducers } from './reducers';
 import sentryMiddleware from './sentryMiddleware';
+import promiseRejectionMiddleware from './promiseRejectionMiddleware';
 
 declare global {
   interface Window {
@@ -28,6 +29,7 @@ const store = createStore(
     applyMiddleware(
       routerMiddleware(history),
       thunkMiddleware,
+      promiseRejectionMiddleware,
       promiseMiddleware,
       notificationsMiddleware({ ...defaultOptions }),
       sentryMiddleware,
