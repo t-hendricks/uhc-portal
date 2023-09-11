@@ -19,9 +19,9 @@ const row = {
       kind: 'Organization',
     },
     role: {
-      id: 'ClusterEditor',
+      id: 'ClusterViewer',
       kind: 'Role',
-      href: '/api/accounts_mgmt/v1/roles/ClusterEditor',
+      href: '/api/accounts_mgmt/v1/roles/ClusterViewer',
     },
     created_at: '2019-11-13T22:24:33.905824Z',
     updated_at: '2019-11-13T22:24:33.905824Z',

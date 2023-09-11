@@ -39,7 +39,7 @@ import clusterUpgrades from '../../components/clusters/common/Upgrades/clusterUp
 import machinePools from '../../components/clusters/ClusterDetails/components/MachinePools/MachinePoolsReducer';
 import githubReducer from './githubReducer';
 import ccsInquiriesReducer from '../../components/clusters/CreateOSDPage/CreateOSDWizard/ccsInquiriesReducer';
-import ocmRolesReducer from '../../components/clusters/ClusterDetails/components/AccessControl/OCMRolesSection/OCMRolesReducer';
+import ocmRolesReducer from './OCMRolesReducer';
 
 import featuresReducer from './featuresReducer';
 import apiErrorReducer from '../../components/App/ApiError/ApiErrorReducer';

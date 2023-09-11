@@ -168,28 +168,53 @@ const billingModels = {
 
 /**
  * The ocmRoles contains all available roles that a customer
- * can grant to other users within his own organization.
+ * can grant to other users within their own organization.
  */
 const ocmRoles = {
-  CLUSTER_EDITOR: 'ClusterEditor',
-  CLUSTER_VIEWER: 'ClusterViewer',
-  IDP_EDITOR: 'IdpEditor',
-  MACHINE_POOL_EDITOR: 'MachinePoolEditor',
+  CLUSTER_EDITOR: {
+    id: 'ClusterEditor',
+    name: 'Cluster editor',
+    description:
+      'Cluster editor role will allow users or groups to manage and configure the cluster.',
+  },
+  CLUSTER_VIEWER: {
+    id: 'ClusterViewer',
+    name: 'Cluster viewer',
+    description: 'Cluster viewer role will allow users or groups to view cluster details only.',
+  },
+  CLUSTER_AUTOSCALER_EDITOR: {
+    id: 'ClusterAutoscalerEditor',
+    name: 'Cluster autoscaler editor',
+    description:
+      'Cluster autoscaler editor role will allow users or groups to manage and configure the cluster autoscaler settings.',
+  },
+  IDP_EDITOR: {
+    id: 'IdpEditor',
+    name: 'Identity provider editor',
+    description:
+      'Identity provider editor role will allow users or groups to manage and configure the identity providers.',
+  },
+  MACHINE_POOL_EDITOR: {
+    id: 'MachinePoolEditor',
+    name: 'Machine pool editor',
+    description:
+      'Machine pool editor role will allow users or groups to manage and configure the machine pools.',
+  },
 };
 
 export {
-  subscriptionStatuses,
-  subscriptionSettings,
-  subscriptionSupportLevels,
-  subscriptionServiceLevels,
-  subscriptionUsages,
-  subscriptionProductBundles,
-  subscriptionSystemUnits,
-  knownProducts,
-  omittedProducts,
-  normalizedProducts,
-  clustersServiceProducts,
-  productFilterOptions,
   billingModels,
+  clustersServiceProducts,
+  knownProducts,
+  normalizedProducts,
   ocmRoles,
+  omittedProducts,
+  productFilterOptions,
+  subscriptionProductBundles,
+  subscriptionServiceLevels,
+  subscriptionSettings,
+  subscriptionStatuses,
+  subscriptionSupportLevels,
+  subscriptionSystemUnits,
+  subscriptionUsages,
 };
