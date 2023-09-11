@@ -70,6 +70,7 @@ const day2FormValueSelectorMapper = (
   ownProps: Day2Props,
 ): EditClusterAutoScalingDialogProps => {
   const formErrors = getFormSyncErrors(DAY2_SELECTOR)(state) as FormErrors<ScalingFormData>;
+  const valueSelector = formValueSelector(DAY2_SELECTOR) || {};
 
   const baseData =
     ownProps.clusterAutoscalerResponse.getAutoscaler.data || getDefaultClusterAutoScaling();
@@ -81,7 +82,7 @@ const day2FormValueSelectorMapper = (
 
   return {
     isOpen: shouldShowModal(state, modals.EDIT_CLUSTER_AUTOSCALING_V1),
-    autoScalingValues: currentAutoscaler,
+    autoScalingValues: valueSelector(state, 'cluster_autoscaling') || currentAutoscaler,
     autoScalingErrors: formErrors.cluster_autoscaling || {},
     initialValues: { cluster_autoscaling: currentAutoscaler },
     editAction: ownProps.clusterAutoscalerResponse.editAction,
