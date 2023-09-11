@@ -60,6 +60,7 @@ export enum OsdFieldId {
   NetworkHostPrefix = 'network_host_prefix',
   NetworkMachineCidrSingleAz = 'network_machine_cidr_single_az',
   NetworkMachineCidrMultiAz = 'network_machine_cidr_multi_az',
+  MarketplaceSelection = 'marketplace_selection',
 }
 
 export const FieldId = { ...CommonFieldId, ...OsdFieldId };

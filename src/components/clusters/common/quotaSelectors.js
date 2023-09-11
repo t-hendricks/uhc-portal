@@ -91,6 +91,13 @@ const availableQuota = (quotaList, params) => {
   const { resourceType, resourceName, product, billingModel, cloudProviderID, isBYOC, isMultiAz } =
     params;
 
+  // remove quota cost checks for marketplace-gcp
+  // this billing-model can currently only be set with OSD_GOOGLE_MARKETPLACE_FEATURE feature enabled
+  // ultimately we should filter for quota_id: "cluster|byoc|osd|gcp|marketplace"
+  if (billingModel === billingModels.MARKETPLACE_GCP) {
+    return Infinity;
+  }
+
   const normalizedBillingModel =
     billingModel === 'standard-trial' ? billingModels.STANDARD : billingModel;
   const query = {

@@ -70,7 +70,6 @@ export const createClusterRequest = ({ isWizard = true, cloudProviderID, product
   const actualCloudProviderID = formData.cloud_provider || cloudProviderID;
   const actualProduct = formData.product || product;
   const isHypershiftSelected = formData.hypershift === 'true';
-
   const state = store.getState();
   const isAWSBillingAccountVisible =
     state.features?.HCP_AWS_BILLING_SHOW !== undefined
@@ -108,6 +107,8 @@ export const createClusterRequest = ({ isWizard = true, cloudProviderID, product
 
   if (isHypershiftSelected) {
     clusterRequest.billing_model = billingModels.MARKETPLACE_AWS;
+  } else if (formData.billing_model === billingModels.MARKETPLACE_GCP) {
+    clusterRequest.billing_model = billingModels.MARKETPLACE_GCP;
   } else if (formData.billing_model) {
     const [billing] = formData.billing_model.split('-');
     clusterRequest.billing_model = billing;

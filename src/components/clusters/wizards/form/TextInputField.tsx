@@ -19,19 +19,22 @@ interface TextInputFieldProps {
 }
 
 interface HelperTextInvalidProps {
-  name: string;
+  name?: string;
   meta: FieldProps['meta'];
-  helpText: string | React.ReactNode;
+  helpText?: string | React.ReactNode;
   showHelpTextOnError?: boolean;
+  className?: string;
 }
 
-const HelperTextInvalid = ({
+export const HelperTextInvalid = ({
   name,
   meta,
   showHelpTextOnError,
   helpText,
+  className,
 }: HelperTextInvalidProps) => {
   const { error, touched } = meta;
+  const additionalClasses = className ? ` ${className}` : '';
   if (touched && error) {
     if (showHelpTextOnError) {
       if (typeof helpText === 'string') {
@@ -42,12 +45,16 @@ const HelperTextInvalid = ({
         );
       }
       return (
-        <div className="pf-c-form__helper-text pf-m-error" id={`${name}-helper`} aria-live="polite">
+        <div
+          className={`pf-c-form__helper-text pf-m-error${additionalClasses}`}
+          id={`${name}-helper`}
+          aria-live="polite"
+        >
           {helpText} {error}
         </div>
       );
     }
-    return <div className="pf-u-background-color-danger">{error}</div>;
+    return <div className={`pf-u-background-color-danger${additionalClasses}`}>{error}</div>;
   }
   return null;
 };
