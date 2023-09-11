@@ -25,7 +25,7 @@ const balancerFields: FieldDefinition[] = [
     defaultValue: defaultValues.skip_nodes_with_local_storage,
   },
   {
-    label: 'max-pod-grace-period (max-graceful-termination-sec)',
+    label: 'max-pod-grace-period',
     name: 'max_pod_grace_period',
     type: 'number', // expressed in seconds
     defaultValue: defaultValues.max_pod_grace_period,
@@ -37,7 +37,7 @@ const balancerFields: FieldDefinition[] = [
     defaultValue: defaultValues.max_node_provision_time,
   },
   {
-    label: 'pod-priority-threshold (expendable-pods-priority-cutoff)',
+    label: 'pod-priority-threshold',
     name: 'pod_priority_threshold',
     type: 'number',
     defaultValue: defaultValues.pod_priority_threshold,
