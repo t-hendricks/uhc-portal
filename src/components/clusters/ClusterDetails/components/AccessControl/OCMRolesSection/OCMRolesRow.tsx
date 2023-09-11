@@ -1,12 +1,14 @@
 import React from 'react';
 
 import get from 'lodash/get';
-import starCase from 'lodash/startCase';
+import startCase from 'lodash/startCase';
 
 import { Tooltip } from '@patternfly/react-core';
 import Skeleton from '@redhat-cloud-services/frontend-components/Skeleton';
+import { IRow } from '@patternfly/react-table';
+import { ocmRoles } from '~/common/subscriptionTypes';
 
-const skeletonRow = [
+const skeletonRow: IRow['cells'] = [
   {
     props: { colSpan: 2 },
     title: <Skeleton size="md" />,
@@ -14,14 +16,29 @@ const skeletonRow = [
 ];
 
 // define a row record for easier managing the api data and presenting to the table.
-class OCMRolesRow {
-  constructor(data = null, rowIdx = -1) {
+class OCMRolesRow implements IRow {
+  public id: string;
+
+  public isCreating: boolean;
+
+  public usernameValue: string;
+
+  public roleValue: string;
+
+  private data: any;
+
+  private email: string;
+
+  private isPending: boolean;
+
+  private cellsData: IRow['cells'];
+
+  constructor(data: any = null, rowIdx: string) {
     this.data = data;
     this.id = get(this.data, 'id', '');
     this.usernameValue = get(this.data, 'account.username', '');
     this.roleValue = get(this.data, 'role.id', '');
     this.email = get(this.data, 'account.email', '');
-    this.rowIdx = rowIdx;
 
     // whether it is creating a new row
     this.isCreating = data === null;
@@ -35,12 +52,14 @@ class OCMRolesRow {
         <span className="hand-pointer">{this.usernameValue}</span>
       </Tooltip>
     );
-    const roleCol = starCase(this.roleValue);
+    const roleCol =
+      Object.values(ocmRoles).find((role) => role.id === this.roleValue)?.name ||
+      startCase(this.roleValue);
     this.cellsData = [{ title: nameCol }, { title: roleCol }];
   }
 
-  setIsPending(val) {
-    this.isPending = val;
+  setIsPending(isPending: boolean) {
+    this.isPending = isPending;
   }
 
   // implement the interface property required by PF Table
