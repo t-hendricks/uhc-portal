@@ -213,7 +213,10 @@ class ClusterDetails extends Component {
     if (externalClusterID) {
       fetchClusterInsights(externalClusterID);
       this.fetchSupportData();
-      getClusterHistory(externalClusterID, clusterLogsViewOptions);
+    }
+
+    if (externalClusterID || clusterID) {
+      getClusterHistory(externalClusterID, clusterID, clusterLogsViewOptions);
     }
 
     if (isManaged) {
@@ -519,7 +522,11 @@ class ClusterDetails extends Component {
               hidden
             >
               <ErrorBoundary>
-                <ClusterLogs externalClusterID={cluster.external_id} history={history} />
+                <ClusterLogs
+                  externalClusterID={cluster.external_id}
+                  clusterID={cluster.id}
+                  history={history}
+                />
               </ErrorBoundary>
             </TabContent>
           )}
