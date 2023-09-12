@@ -27,7 +27,7 @@ const ClusterLogsDownload = ({
     setError(false);
   };
 
-  const handleDowload = async () => {
+  const handleDownload = async () => {
     const query = createServiceLogQueryObject(
       {
         ...viewOptions,
@@ -85,7 +85,7 @@ const ClusterLogsDownload = ({
               data-testId="submit-btn"
               key="download"
               variant="primary"
-              onClick={handleDowload}
+              onClick={handleDownload}
               isDisabled={isDownloading}
               isLoading={isDownloading}
               spinnerAriaLabel="Loading cluster logs"
