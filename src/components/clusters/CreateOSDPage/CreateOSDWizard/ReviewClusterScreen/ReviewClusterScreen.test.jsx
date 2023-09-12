@@ -148,11 +148,17 @@ describe('<ReviewClusterScreen />', () => {
   });
 
   describe('Selected VPC settings', () => {
-    const getPropsWithSelectedVpcSettings = ({ isHypershiftSelected }) => ({
+    const getPropsWithSelectedVpcSettings = ({
+      isHypershiftSelected,
+      isVPCNamePresent = true,
+    }) => ({
       ...defaultProps,
       isHypershiftSelected,
       formValues: {
         ...defaultProps.formValues,
+        ...(isVPCNamePresent
+          ? {}
+          : { selected_vpc: { id: defaultProps.formValues.selected_vpc.id } }),
       },
     });
 
@@ -160,12 +166,28 @@ describe('<ReviewClusterScreen />', () => {
       const ConnectedReviewClusterScreen = wizardConnector(ReviewClusterScreen);
       const newProps = getPropsWithSelectedVpcSettings({
         isHypershiftSelected: true,
+        isVPCNamePresent: true,
       });
       render(<ConnectedReviewClusterScreen {...newProps} />);
+
       expect(screen.getByText('Install to selected VPC')).toBeInTheDocument();
+      // vpc name is displayed when available
       expect(screen.getByText(sampleFormData.values.selected_vpc.name)).toBeInTheDocument();
-      // vpc value displayed to the user is the name, not the id
       expect(screen.queryByText(sampleFormData.values.selected_vpc.id)).not.toBeInTheDocument();
+    });
+
+    it('is shown for Hypershift clusters and fallbacks to the VPC id when the name is absent', () => {
+      const ConnectedReviewClusterScreen = wizardConnector(ReviewClusterScreen);
+      const newProps = getPropsWithSelectedVpcSettings({
+        isHypershiftSelected: true,
+        isVPCNamePresent: false,
+      });
+      render(<ConnectedReviewClusterScreen {...newProps} />);
+
+      expect(screen.getByText('Install to selected VPC')).toBeInTheDocument();
+      // vpc id displayed only if name is not available
+      expect(screen.getByText(sampleFormData.values.selected_vpc.id)).toBeInTheDocument();
+      expect(screen.queryByText(sampleFormData.values.selected_vpc.name)).not.toBeInTheDocument();
     });
 
     it('is not shown for non-Hypershift clusters', () => {
@@ -173,7 +195,6 @@ describe('<ReviewClusterScreen />', () => {
       const newProps = getPropsWithSelectedVpcSettings({
         isHypershiftSelected: false,
       });
-
       render(<ConnectedReviewClusterScreen {...newProps} />);
 
       expect(screen.queryByText('Install to selected VPC')).not.toBeInTheDocument();

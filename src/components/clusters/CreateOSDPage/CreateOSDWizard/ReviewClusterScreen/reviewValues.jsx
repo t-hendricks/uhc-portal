@@ -236,7 +236,7 @@ const reviewValues = {
   // For Hypershift
   selected_vpc: {
     title: 'Install to selected VPC',
-    valueTransform: (selectedVPC) => selectedVPC.name,
+    valueTransform: (selectedVPC) => selectedVPC.name || selectedVPC.id,
   },
   use_privatelink: {
     title: 'PrivateLink',
