@@ -173,7 +173,7 @@ class clusterStatusMonitor extends React.Component {
                       icon={isExpanded ? <MinusCircleIcon /> : <PlusCircleIcon />}
                       onClick={() => this.toggleExpanded(!isExpanded)}
                     >
-                      {isExpanded ? 'Less' : 'More'}
+                      {isExpanded ? 'Show less' : 'Show more'}
                     </Button>
                   )}
                 </>
