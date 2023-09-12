@@ -122,7 +122,7 @@ class clusterStatusMonitor extends React.Component {
           let inflightTable;
           if (inflightError) {
             reason =
-              "To allow this cluster to be fully managed, add these url's to the allowlist of these subnet firewalls. For more information review the egress requirements or contact Red Hat support.";
+              "To allow this cluster to be fully-managed, add these url's to the allowlist of these subnet firewalls. For more information review the egress requirements or contact Red Hat support.";
             const { details } = inflightError;
             Object.keys(details).forEach((dkey) => {
               if (dkey === 'documentation_link') {
@@ -153,7 +153,7 @@ class clusterStatusMonitor extends React.Component {
               inflightTable = (
                 <>
                   <TableComposable
-                    aria-label="Missing allowlist urls"
+                    aria-label="Missing allowlist URLs"
                     variant={TableVariant.compact}
                     style={{ backgroundColor: 'unset' }}
                   >
