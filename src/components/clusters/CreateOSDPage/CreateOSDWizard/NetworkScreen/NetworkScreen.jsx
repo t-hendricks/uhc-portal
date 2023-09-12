@@ -191,7 +191,6 @@ function NetworkScreen(props) {
             </GridItem>
             <GridItem>
               <Text>
-                {/* eslint-disable-next-line max-len */}
                 Install your cluster with all public or private API endpoints and application
                 routes.{' '}
                 {isHypershiftSelected && 'You can customize these options after installation.'}
