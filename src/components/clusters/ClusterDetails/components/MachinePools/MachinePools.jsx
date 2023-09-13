@@ -420,7 +420,9 @@ class MachinePools extends React.Component {
                 {!isRestrictedEnv() && !isHypershift && (
                   <ButtonWithTooltip
                     id="edit-existing-cluster-autoscaling"
-                    disableReason={canNotEditAutoscalerReason}
+                    disableReason={
+                      readOnlyReason || hibernatingReason || canNotEditAutoscalerReason
+                    }
                     onClick={() => openModal(modals.EDIT_CLUSTER_AUTOSCALING_V1)}
                     variant="secondary"
                     className="pf-u-mb-lg"
