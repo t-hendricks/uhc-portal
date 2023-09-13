@@ -49,6 +49,7 @@ class CreateROSAWizardInternal extends React.Component {
     // Dictionary of step IDs; { [stepId: number]: boolean },
     // where entry values indicate the latest form validation state for those respective steps.
     validatedSteps: {},
+    forceTouch: false,
   };
 
   componentDidMount() {
@@ -149,6 +150,8 @@ class CreateROSAWizardInternal extends React.Component {
       this.setState({ stepIdReached: id });
     }
 
+    // Reset
+    this.setState({ forceTouch: false });
     this.trackWizardNavigation(trackEvents.WizardNext, prevId);
   };
 
@@ -185,7 +188,7 @@ class CreateROSAWizardInternal extends React.Component {
 
   scrolledToFirstError = () => {
     const { touch, formErrors } = this.props;
-    const { validatedSteps, currentStepId, isNextClicked } = this.state;
+    const { validatedSteps, currentStepId } = this.state;
     const isCurrentStepValid = validatedSteps[currentStepId];
     const errorIds = Object.keys(formErrors);
 
@@ -193,7 +196,9 @@ class CreateROSAWizardInternal extends React.Component {
     if (errorIds?.length) {
       touch(errorIds);
       const hasScrolledTo = scrollToFirstField(errorIds);
-      this.setState({ isNextClicked: !isNextClicked });
+      if (hasScrolledTo) {
+        this.setState({ forceTouch: false }); // after scrolled to error, reset
+      }
       // return `true` if errors were registered to the validatedSteps cache, or if the field
       // was successfully scrolled-to (i.e. found in the current DOM), and `false` otherwise.
       return !isCurrentStepValid || hasScrolledTo;
@@ -213,7 +218,7 @@ class CreateROSAWizardInternal extends React.Component {
     const { isAsyncValidating, getUserRoleResponse, selectedAWSAccountID } = this.props;
     const { currentStepId, accountAndRolesStepId, deferredNext } = this.state;
 
-    this.setState({ isNextClicked: true });
+    this.setState({ forceTouch: true });
 
     if (isAsyncValidating) {
       if (!deferredNext) {
@@ -263,7 +268,7 @@ class CreateROSAWizardInternal extends React.Component {
       isHypershiftEnabled,
       isHypershiftSelected,
     } = this.props;
-    const { accountAndRolesStepId, deferredNext, isNextClicked, currentStepId } = this.state;
+    const { accountAndRolesStepId, deferredNext, forceTouch, currentStepId } = this.state;
 
     const steps = [
       isHypershiftEnabled && {
@@ -298,7 +303,7 @@ class CreateROSAWizardInternal extends React.Component {
             name: stepNameById[stepId.CLUSTER_SETTINGS__DETAILS],
             component: (
               <ErrorBoundary>
-                <ClusterSettingsScreen isNextClicked={isNextClicked} />
+                <ClusterSettingsScreen forceTouch={forceTouch} />
               </ErrorBoundary>
             ),
             canJumpTo: this.canJumpTo(stepId.CLUSTER_SETTINGS__DETAILS),
@@ -308,7 +313,7 @@ class CreateROSAWizardInternal extends React.Component {
             name: stepNameById[stepId.CLUSTER_SETTINGS__MACHINE_POOL],
             component: (
               <ErrorBoundary>
-                <MachinePoolScreen />
+                <MachinePoolScreen forceTouch={forceTouch} />
               </ErrorBoundary>
             ),
             canJumpTo: this.canJumpTo(22),

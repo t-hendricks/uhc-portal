@@ -52,6 +52,7 @@ function ScaleSection({
   poolNumber,
   maxWorkerVolumeSizeGiB,
   isHypershift,
+  forceTouch,
 }) {
   const onChangeImds = (value) => {
     change('imds', value);
@@ -69,7 +70,7 @@ function ScaleSection({
         <p className="pf-u-mb-md">
           Configure labels that will apply to all nodes in this machine pool.
         </p>
-        <FieldArray name="node_labels" component={ReduxFormKeyValueList} />
+        <FieldArray name="node_labels" forceTouch={forceTouch} component={ReduxFormKeyValueList} />
         {isMachinePool && (
           <>
             <Title headingLevel="h3" className="pf-u-mb-md pf-u-mt-lg">
@@ -300,6 +301,7 @@ ScaleSection.propTypes = {
   imds: PropTypes.string,
   poolNumber: PropTypes.number,
   maxWorkerVolumeSizeGiB: PropTypes.number.isRequired,
+  forceTouch: PropTypes.bool,
 };
 
 export default ScaleSection;
