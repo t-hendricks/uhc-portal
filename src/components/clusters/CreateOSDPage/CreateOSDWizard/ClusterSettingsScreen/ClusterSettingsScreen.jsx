@@ -33,7 +33,7 @@ function ClusterSettingsScreen({
   isHypershiftSelected,
   formErrors,
   touch,
-  isNextClicked,
+  forceTouch,
 }) {
   const [isExpanded, setIsExpanded] = useState(false);
 
@@ -77,14 +77,7 @@ function ClusterSettingsScreen({
     if (isAdvancedEncryptionExpanded) {
       setIsExpanded(true);
     }
-  }, [
-    customerManagedEncryptionSelected,
-    isGCP,
-    gcpError,
-    kmsKeyArn,
-    selectedRegion,
-    isNextClicked,
-  ]);
+  }, [customerManagedEncryptionSelected, isGCP, gcpError, kmsKeyArn, selectedRegion, forceTouch]);
 
   React.useEffect(() => {
     if (!isEtcdEncryptionSelected && !!etcdKeyArn) {
@@ -223,7 +216,7 @@ ClusterSettingsScreen.propTypes = {
   isHypershiftSelected: PropTypes.bool,
   formErrors: PropTypes.object,
   touch: PropTypes.func,
-  isNextClicked: PropTypes.bool,
+  forceTouch: PropTypes.bool,
 };
 
 export default ClusterSettingsScreen;
