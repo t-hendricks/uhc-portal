@@ -2,6 +2,7 @@ import Page from './page';
 import LeaveCreateClusterPrompt from './LeaveCreateClusterPrompt';
 import ClusterListPage from './ClusterList.page';
 import CreateClusterPage from './CreateCluster.page';
+import { ThinkPeaksIconConfig } from '@patternfly/react-icons';
 
 class CreateRosaCluster extends Page {
 
@@ -17,6 +18,12 @@ class CreateRosaCluster extends Page {
 
   customOperatorPrefixInput = () => cy.get('input[id="custom_operator_roles_prefix"]');
 
+  singleZoneAvilabilityRadio = () => cy.getByTestId('multi_az-false');
+
+  multiZoneAvilabilityRadio = () => cy.getByTestId('multi_az-true');
+
+  advancedEncryptionLink = () => cy.get('span').contains('Advanced Encryption');
+
   enableAdditionalEtcdEncryptionCheckbox = () => cy.get('input[id="etcd_encryption"]');
 
   enableFIPSCryptographyCheckbox = () => cy.get('input[id="fips"]');
@@ -26,6 +33,42 @@ class CreateRosaCluster extends Page {
   refreshInfrastructureAWSAccountButton = () => cy.get('button[data-testid="refresh-aws-accounts"]').first();
 
   refreshBillingAWSAccountButton = () => cy.get('button[data-testid="refresh-aws-accounts"]').second();
+
+  supportRoleInput = () => cy.get('input[id="support_role_arn"]');
+
+  workerRoleInput = () => cy.get('input[id="worker_role_arn"]');
+
+  controlPlaneRoleInput = () => cy.get('input[id="control_plane_role_arn"]');
+
+  minimumNodeInput = () => cy.get('input[aria-label="Minimum nodes"]');
+
+  maximumNodeInput = () => cy.get('input[aria-label="Maximum nodes"]');
+
+  minimumNodeCountMinusButton = () => this.minimumNodeInput().prev();
+
+  minimumNodeCountPlusButton = () => this.minimumNodeInput().next();
+
+  maximumNodeCountMinusButton = () => this.maximumNodeInput().prev();
+
+  maximumNodeCountPlusButton = () => this.maximumNodeInput().next();
+
+  cidrDefaultValuesCheckBox = () => cy.get('input[id="cidr_default_values_toggle"]');
+
+  createModeAutoRadio = () => cy.getByTestId('rosa_roles_provider_creation_mode-auto');
+
+  createModeManualRadio = () => cy.getByTestId('rosa_roles_provider_creation_mode-manual');
+
+  applicationIngressDefaultSettingsRadio = () => cy.getByTestId('applicationIngress-default');
+
+  applicationIngressCustomSettingsRadio = () => cy.getByTestId('applicationIngress-custom');
+
+  clusterPrivacyPublicRadio = () => cy.getByTestId('cluster_privacy-external');
+
+  clusterPrivacyPrivateRadio = () => cy.getByTestId('cluster_privacy-internal');
+
+  recurringUpdateRadio = () => cy.getByTestId('upgrade_policy-automatic');
+
+  individualUpdateRadio = () => cy.getByTestId('upgrade_policy-manual');
 
   isCreateRosaPage() {
     super.assertUrlIncludes('/openshift/create/rosa/wizard');
@@ -179,6 +222,11 @@ class CreateRosaCluster extends Page {
     cy.get('li').contains(computeNodeType).click();
   }
 
+  selectGracePeriod(gracePeriod) {
+    cy.get('button[aria-label="Options menu"]').click();
+    cy.get('button').contains(gracePeriod).click();
+  }
+
   enableAutoScaling() {
     cy.get('input[id="autoscalingEnabled"]').check();
   }
@@ -232,7 +280,6 @@ class CreateRosaCluster extends Page {
   }
 
   useCIDRDefaultValues(value = true) {
-    let cidrDefaultValuesCheckBox = cy.get('input[id="cidr_default_values_toggle"]');
     if (value) {
       cidrDefaultValuesCheckBox.check();
     }

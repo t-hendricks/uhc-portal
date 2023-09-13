@@ -160,7 +160,9 @@ function DetailsRight({
             <DescriptionListGroup data-testid="etcd-encryption-key">
               <DescriptionListTerm>Additional encryption </DescriptionListTerm>
               <DescriptionListDescription>
-                {cluster.etcd_encryption ? 'Enabled' : 'Disabled'}
+                <span data-testid="etcEncryptionStatus">
+                  {cluster.etcd_encryption ? 'Enabled' : 'Disabled'}
+                </span>
               </DescriptionListDescription>
             </DescriptionListGroup>
           </>
@@ -297,7 +299,9 @@ function DetailsRight({
           <DescriptionListGroup>
             <DescriptionListTerm>Cluster autoscaling</DescriptionListTerm>
             <DescriptionListDescription>
-              {hasAutoscaleCluster ? 'Enabled' : 'Disabled'}
+              <span data-testid="clusterAutoscalingStatus">
+                {hasAutoscaleCluster ? 'Enabled' : 'Disabled'}
+              </span>
             </DescriptionListDescription>
           </DescriptionListGroup>
         )}
@@ -334,7 +338,9 @@ function DetailsRight({
           <DescriptionListGroup>
             <DescriptionListTerm>Instance Metadata Service (IMDS)</DescriptionListTerm>
             <DescriptionListDescription>
-              {imdsConfig === IMDSType.V1AndV2 ? 'IMDSv1 and IMDSv2' : 'IMDSv2 only'}
+              <span data-testid="instanceMetadataService">
+                {imdsConfig === IMDSType.V1AndV2 ? 'IMDSv1 and IMDSv2' : 'IMDSv2 only'}
+              </span>
             </DescriptionListDescription>
           </DescriptionListGroup>
         )}
