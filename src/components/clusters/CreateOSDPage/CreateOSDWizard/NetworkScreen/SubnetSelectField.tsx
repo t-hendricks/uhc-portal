@@ -9,7 +9,6 @@ import {
   FlexItem,
   FormGroup,
   SelectOptionObject,
-  Spinner,
   Tooltip,
 } from '@patternfly/react-core';
 
@@ -62,6 +61,11 @@ export const SubnetSelectField = ({
   const dispatch = useDispatch();
 
   const { pending: isVpcsLoading, fulfilled: isVpcsFulfilled, error: vpcsError } = vpcs;
+  const placeholder = (hasNoOptions: boolean, hasSubnetNames: boolean) =>
+    (isVpcsLoading && 'Loading...') ||
+    (hasNoOptions && 'No data found.') ||
+    (!hasNoOptions && hasSubnetNames && 'Subnet name') ||
+    (!hasNoOptions && !hasSubnetNames && 'Subnet ID');
 
   // if subnets have the more descriptive name, use that
   const { selectionData, vpcsItems, subnetList, hasNoOptions, hasSubnetNames } = useMemo<{
@@ -170,49 +174,40 @@ export const SubnetSelectField = ({
         />
       )}
 
-      {isVpcsLoading ? (
-        <Flex alignItems={{ default: 'alignItemsCenter' }} spaceItems={{ default: 'spaceItemsSm' }}>
-          <Spinner size="md" />
-          <span>Loading...</span>
-        </Flex>
-      ) : (
-        <Flex>
-          <FlexItem grow={{ default: 'grow' }}>
-            <FuzzySelect
-              label={label}
-              aria-label={label}
-              isOpen={isExpanded}
-              onToggle={(isExpanded) => setIsExpanded(isExpanded)}
-              onSelect={onSelect}
-              selected={selectedSubnet?.name}
-              selectionData={selectionData}
-              isDisabled={isDisabled || hasNoOptions}
-              placeholderText={
-                hasNoOptions ? 'No data found.' : `${hasSubnetNames ? 'Subnet name' : 'Subnet ID'}`
-              }
-              truncation={TRUNCATE_THRESHOLD}
-              inlineFilterPlaceholderText={`Filter by subnet ${hasSubnetNames ? 'name' : 'ID'}`}
-              validated={inputError ? 'error' : undefined}
-            />
+      <Flex>
+        <FlexItem grow={{ default: 'grow' }}>
+          <FuzzySelect
+            label={label}
+            aria-label={label}
+            isOpen={isExpanded}
+            onToggle={(isExpanded) => setIsExpanded(isExpanded)}
+            onSelect={onSelect}
+            selected={selectedSubnet?.name}
+            selectionData={selectionData}
+            isDisabled={isDisabled || hasNoOptions || isVpcsLoading}
+            placeholderText={placeholder(hasNoOptions, hasSubnetNames)}
+            truncation={TRUNCATE_THRESHOLD}
+            inlineFilterPlaceholderText={`Filter by subnet ${hasSubnetNames ? 'name' : 'ID'}`}
+            validated={inputError ? 'error' : undefined}
+          />
+        </FlexItem>
+        {showRefresh && (
+          <FlexItem>
+            <Tooltip content={<p>Refresh</p>}>
+              <Button
+                isLoading={isVpcsLoading}
+                isDisabled={isVpcsLoading}
+                isInline
+                isSmall
+                variant="secondary"
+                onClick={refreshSubnets}
+              >
+                Refresh
+              </Button>
+            </Tooltip>
           </FlexItem>
-          {showRefresh && (
-            <FlexItem>
-              <Tooltip content={<p>Refresh</p>}>
-                <Button
-                  isLoading={isVpcsLoading}
-                  isDisabled={isVpcsLoading}
-                  isInline
-                  isSmall
-                  variant="secondary"
-                  onClick={refreshSubnets}
-                >
-                  Refresh
-                </Button>
-              </Tooltip>
-            </FlexItem>
-          )}
-        </Flex>
-      )}
+        )}
+      </Flex>
     </FormGroup>
   );
 };
