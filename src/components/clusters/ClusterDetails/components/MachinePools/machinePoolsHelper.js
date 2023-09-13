@@ -106,21 +106,6 @@ const actionResolver = ({
   ];
 };
 
-const findDuplicateKey = (labels) => {
-  const keys = {};
-  let duplicateKey = null;
-  labels.forEach((tag) => {
-    const labelParts = tag.split('=');
-    const labelKey = labelParts[0];
-    if (keys[labelKey]) {
-      duplicateKey = labelKey;
-    } else {
-      keys[labelKey] = true;
-    }
-  });
-  return duplicateKey;
-};
-
 const parseLabels = (labelsObj) =>
   labelsObj
     ? Object.keys(labelsObj).map(
@@ -139,14 +124,6 @@ const parseTags = (tags) => {
     }
   });
   return labels;
-};
-
-const validateDuplicateLabels = (labels) => {
-  const duplicateKey = findDuplicateKey(labels);
-  if (duplicateKey) {
-    return `Each label should have a unique key. "${duplicateKey}" already exists.`;
-  }
-  return undefined;
 };
 
 // Takes a node_pool format (singular min/max replica) and converts machine pool style of data (plural min/max replicas)
@@ -320,7 +297,6 @@ export {
   parseTags,
   parseLabels,
   actionResolver,
-  validateDuplicateLabels,
   normalizeNodePool,
   normalizeMachinePool,
   getSubnetIds,
