@@ -1,6 +1,8 @@
 import React from 'react';
 import { Grid, GridItem, LabelGroup, Label } from '@patternfly/react-core';
 import { IMDSType } from '~/components/clusters/wizards/common';
+import { arrayToString, strToKeyValueObject, stringToArrayTrimmed } from '~/common/helpers';
+import { routeSelectorsAsString } from '~/components/clusters/ClusterDetails/components/Networking/NetworkingSelector';
 import { billingModels } from '../../../../../common/subscriptionTypes';
 import { humanizeValueWithUnitGiB } from '../../../../../common/units';
 import parseUpdateSchedule from '../../../common/Upgrades/parseUpdateSchedule';
@@ -317,11 +319,13 @@ const reviewValues = {
   },
   defaultRouterSelectors: {
     title: 'Route selectors',
-    valueTransform: (value) => value || 'None specified',
+    valueTransform: (value) =>
+      value ? routeSelectorsAsString(strToKeyValueObject(value, '')) : 'None specified',
   },
   defaultRouterExcludedNamespacesFlag: {
     title: 'Excluded namespaces',
-    valueTransform: (value) => value || 'None specified',
+    valueTransform: (value) =>
+      value ? arrayToString(stringToArrayTrimmed(value)) : 'None specified',
   },
   isDefaultRouterWildcardPolicyAllowed: {
     title: 'Wildcard policy',
