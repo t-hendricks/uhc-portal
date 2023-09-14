@@ -213,6 +213,7 @@ function NetworkScreen(props) {
                       selectedVPC={formValues.selected_vpc.id}
                       privacy="public"
                       isNewCluster
+                      showRefresh
                       allowedAZ={[
                         ...new Set(
                           formValues.machine_pools_subnets.map(
