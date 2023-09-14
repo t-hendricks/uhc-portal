@@ -9,7 +9,6 @@ import {
   FlexItem,
   FormGroup,
   SelectOptionObject,
-  Tooltip,
 } from '@patternfly/react-core';
 
 import { useAWSVPCsFromCluster } from '~/components/clusters/ClusterDetails/components/MachinePools/components/AddMachinePoolModal/useAWSVPCsFromCluster';
@@ -145,9 +144,7 @@ export const SubnetSelectField = ({
   );
 
   const refreshSubnets = () => {
-    if (vpcs.cloudProvider === 'aws') {
-      dispatch(getAWSCloudProviderVPCs(vpcs.credentials, vpcs.region));
-    }
+    dispatch(getAWSCloudProviderVPCs(vpcs.credentials, vpcs.region));
   };
 
   return (
@@ -193,18 +190,16 @@ export const SubnetSelectField = ({
         </FlexItem>
         {showRefresh && (
           <FlexItem>
-            <Tooltip content={<p>Refresh</p>}>
-              <Button
-                isLoading={isVpcsLoading}
-                isDisabled={isVpcsLoading}
-                isInline
-                isSmall
-                variant="secondary"
-                onClick={refreshSubnets}
-              >
-                Refresh
-              </Button>
-            </Tooltip>
+            <Button
+              isLoading={isVpcsLoading}
+              isDisabled={isVpcsLoading}
+              isInline
+              isSmall
+              variant="secondary"
+              onClick={refreshSubnets}
+            >
+              Refresh
+            </Button>
           </FlexItem>
         )}
       </Flex>
