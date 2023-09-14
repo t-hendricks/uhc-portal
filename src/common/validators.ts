@@ -579,7 +579,8 @@ const validateDuplicateLabels = (input: string | string[] | undefined) => {
   return undefined;
 };
 
-const checkRouteSelectors = [checkLabels, validateDuplicateLabels];
+const checkRouteSelectors = (value: string): string | undefined =>
+  checkLabels(value) || validateDuplicateLabels(value);
 
 // Function to validate that the cluster ID field is a UUID:
 const checkClusterUUID = (value: string): string | undefined => {
