@@ -55,6 +55,19 @@ const baseProps = (isHypershift = false, ccs = false, machinePool = defaultMachi
   clearDeleteMachinePoolResponse: jest.fn(),
 });
 
+const simpleMachinePoolList = {
+  data: [
+    {
+      availability_zones: ['us-east-1a'],
+      href: '/api/clusters_mgmt/v1/clusters/cluster-id/machine_pools/test-mp',
+      id: 'test-mp',
+      instance_type: 'm5.xlarge',
+      kind: 'MachinePool',
+      replicas: 1,
+    },
+  ],
+};
+
 describe('<MachinePools />', () => {
   it('should call getMachinePools on mount', () => {
     shallow(<MachinePools {...baseProps()} />);
@@ -539,18 +552,7 @@ describe('<MachinePools />', () => {
           list: true,
         },
       },
-      machinePoolsList: {
-        data: [
-          {
-            availability_zones: ['us-east-1a'],
-            href: '/api/clusters_mgmt/v1/clusters/cluster-id/machine_pools/test-mp',
-            id: 'test-mp',
-            instance_type: 'm5.xlarge',
-            kind: 'MachinePool',
-            replicas: 1,
-          },
-        ],
-      },
+      machinePoolsList: simpleMachinePoolList,
     };
     const { container } = render(<MachinePools {...props} />);
     // add machine pool button is disabled
@@ -574,18 +576,7 @@ describe('<MachinePools />', () => {
           list: true,
         },
       },
-      machinePoolsList: {
-        data: [
-          {
-            availability_zones: ['us-east-1a'],
-            href: '/api/clusters_mgmt/v1/clusters/cluster-id/machine_pools/test-mp',
-            id: 'test-mp',
-            instance_type: 'm5.xlarge',
-            kind: 'MachinePool',
-            replicas: 1,
-          },
-        ],
-      },
+      machinePoolsList: simpleMachinePoolList,
     };
     render(<MachinePools {...props} />);
     await user.click(screen.getByRole('button', { name: 'Actions' }));
@@ -598,23 +589,28 @@ describe('<MachinePools />', () => {
   it('Should allow actions on machine pools if user has permissions', () => {
     const props = {
       ...baseProps(true),
-      machinePoolsList: {
-        data: [
-          {
-            availability_zones: ['us-east-1a'],
-            href: '/api/clusters_mgmt/v1/clusters/cluster-id/machine_pools/test-mp',
-            id: 'test-mp',
-            instance_type: 'm5.xlarge',
-            kind: 'MachinePool',
-            replicas: 1,
-          },
-        ],
-      },
+      machinePoolsList: simpleMachinePoolList,
     };
     const { container } = render(<MachinePools {...props} />);
     // add machine pool button is enabled
     expect(container.querySelector('#add-machine-pool')).toHaveAttribute('aria-disabled', 'false');
     // table actions are enabled
     expect(container.querySelector('.pf-c-dropdown__toggle')).toBeEnabled();
+  });
+
+  it('Should render successfully when machinePoolsActions is unset (rendering from cluster list data)', () => {
+    const props = {
+      ...baseProps(true),
+      cluster: {
+        ...baseProps.cluster,
+        machinePoolsActions: undefined,
+      },
+      machinePoolsList: simpleMachinePoolList,
+    };
+    const { container } = render(<MachinePools {...props} />);
+    // add machine pool button is disabled
+    expect(container.querySelector('#add-machine-pool')).toHaveAttribute('aria-disabled', 'true');
+    // the table does not become rendered because "list" permission is missing
+    expect(screen.queryByRole('grid', { name: 'Machine pools' })).not.toBeInTheDocument();
   });
 });
