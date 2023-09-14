@@ -99,3 +99,6 @@ export const canConfigureLoadBalancer = (
   clusterVersionRawId: string,
   isSTSEnabled: boolean,
 ): boolean => !isSTSEnabled || canConfigureDayTwoManagedIngress(clusterVersionRawId);
+
+export const canConfigureAdditionalRouter = (clusterVersionRawId: string): boolean =>
+  isExactMajorMinor(clusterVersionRawId, 4, 11) || isExactMajorMinor(clusterVersionRawId, 4, 12);
