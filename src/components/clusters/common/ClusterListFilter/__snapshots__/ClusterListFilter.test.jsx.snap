@@ -4,6 +4,7 @@ exports[`<ClusterListFilter /> renders correctly 1`] = `
 <TextInput
   aria-label="Filter"
   className="cluster-list-filter"
+  data-testid="filterInputClusterList"
   onChange={[Function]}
   placeholder="Filter by name or ID..."
   type="text"
@@ -15,6 +16,7 @@ exports[`<ClusterListFilter /> renders correctly 2`] = `
 <TextInput
   aria-label="Filter"
   className="cluster-list-filter"
+  data-testid="filterInputClusterList"
   onChange={[Function]}
   placeholder="Filter by name or ID..."
   type="text"

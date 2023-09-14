@@ -17,7 +17,7 @@ describe('Downloads page', { tags: ['ci', 'smoke'] }, () => {
     ClusterListPage.isClusterListUrl();
     ClusterListPage.waitForDataReady();
 
-    GlobalNav.navigateTo('Downloads');
+    GlobalNav.downloadsNavigation().click();
     Downloads.isDownloadsPage();
   });
 

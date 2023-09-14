@@ -3,7 +3,7 @@ import GlobalNav from './GlobalNav.page';
 
 class TokenPages extends Page {
   navigateToOCMToken() {
-    GlobalNav.navigateTo('Downloads');
+    GlobalNav.downloadsNavigation().click();
     cy.getByTestId('view-api-token-btn').scrollIntoView().click();
   }
 

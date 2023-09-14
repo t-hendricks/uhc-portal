@@ -37,13 +37,13 @@ describe('OCM Cluster archives page', () => {
             ClusterListPage.showActiveClusters().click();
             ClusterListPage.isClusterListScreen();
             ClusterListPage.viewClusterArchives().click();
-
         })
         it('Cluster archives page : filter options', () => {
 
             ClusterListPage.filterTxtField().should('be.visible').click();
             ClusterListPage.clickClusterTypeFilters();
             ClusterListPage.clickClusterTypes("OCP");
+            ClusterListPage.filterTxtField().click();
             ClusterListPage.clusterListRefresh();
             ClusterListPage.waitForArchiveDataReady();
             // Only OCP cluster should be in filter rule display
