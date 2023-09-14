@@ -62,6 +62,7 @@ import type {
 import type { AppThunk, AppThunkDispatch } from '../types';
 
 const ROSA_PRODUCTS = [knownProducts.ROSA, knownProducts.ROSA_HyperShift];
+const OSD_PRODUCTS = [knownProducts.OSD, knownProducts.OSDTrial];
 
 const invalidateClusters = () => action(INVALIDATE_ACTION(clustersConstants.GET_CLUSTERS));
 
@@ -272,7 +273,10 @@ const hasInflightChecks = (cluster: { product: any; subscription?: any }) => {
   const isArchived =
     cluster?.subscription?.status === subscriptionStatuses.ARCHIVED ||
     cluster?.subscription?.status === subscriptionStatuses.DEPROVISIONED;
-  return !isArchived && ROSA_PRODUCTS.includes(cluster.product?.id);
+  return (
+    !isArchived &&
+    (ROSA_PRODUCTS.includes(cluster.product?.id) || OSD_PRODUCTS.includes(cluster.product?.id))
+  );
 };
 
 const addInflightChecks = async (promise: Promise<any>) => {
@@ -490,6 +494,7 @@ const fetchSingleClusterAndPermissions = async (
   subscription.data = normalizeSubscription(subscription.data);
   const isAROCluster = subscription?.data?.plan?.type === knownProducts.ARO;
   const isROSACluster = ROSA_PRODUCTS.includes(subscription?.data?.plan?.type || '');
+  const isOSDCluster = OSD_PRODUCTS.includes(subscription?.data?.plan?.type || '');
 
   if (subscription.data.status !== subscriptionStatuses.DEPROVISIONED) {
     await authorizationsService
@@ -589,7 +594,7 @@ const fetchSingleClusterAndPermissions = async (
     );
     cluster.data.limitedSupportReasons = limitedSupportReasons.data?.items || [];
 
-    if (isROSACluster) {
+    if (isROSACluster || isOSDCluster) {
       const inflightChecks = await clusterService.getInflightChecks(
         subscription.data.cluster_id as string,
       );
