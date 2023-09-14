@@ -177,7 +177,7 @@ class MachinePools extends React.Component {
     } = this.props;
 
     const { deletedRowIndex, openedRows, hideDeleteMachinePoolError } = this.state;
-    const { machinePoolsActions } = cluster;
+    const machinePoolsActions = cluster?.machinePoolsActions || {}; // Data not defined on the cluster list response
     const hasMachinePools = !!machinePoolsList.data.length;
     const isMultiZoneCluster = isMultiAZ(cluster);
     const hasAutoscalingMachinePools = hasDefaultOrExplicitAutoscalingMachinePool(
