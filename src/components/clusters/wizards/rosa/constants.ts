@@ -7,7 +7,11 @@ import {
   CloudProviderType,
   IMDSType,
 } from '~/components/clusters/wizards/common/constants';
-import { isMajorMinorEqualOrGreater, splitVersion } from '~/common/versionHelpers';
+import {
+  isExactMajorMinor,
+  isMajorMinorEqualOrGreater,
+  splitVersion,
+} from '~/common/versionHelpers';
 
 export enum RosaFieldId {}
 
@@ -91,3 +95,6 @@ export const canConfigureLoadBalancer = (
   clusterVersionRawId: string,
   isSTSEnabled: boolean,
 ): boolean => !isSTSEnabled || canConfigureDayTwoManagedIngress(clusterVersionRawId);
+
+export const canConfigureAdditionalRouter = (clusterVersionRawId: string): boolean =>
+  isExactMajorMinor(clusterVersionRawId, 4, 11) || isExactMajorMinor(clusterVersionRawId, 4, 12);
