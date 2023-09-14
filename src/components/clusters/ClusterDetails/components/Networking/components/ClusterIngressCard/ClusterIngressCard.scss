@@ -2,4 +2,8 @@
   &--body {
     margin-right: var(--pf-global--spacer--2xl);
   }
+
+  input {
+    text-overflow: unset !important;
+  }
 }

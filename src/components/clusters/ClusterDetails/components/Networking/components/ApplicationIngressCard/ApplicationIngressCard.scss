@@ -1,6 +1,9 @@
 .ocm-c-networking-application-ingress__card {
-    &--body {
-      margin-right: var(--pf-global--spacer--2xl);
-    }
+  &--body {
+    margin-right: var(--pf-global--spacer--2xl);
   }
-  
+
+  input {
+    text-overflow: unset !important;
+  }
+}
