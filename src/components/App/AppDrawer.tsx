@@ -108,7 +108,9 @@ export const AppDrawer: React.FC<PropsWithChildren<{}>> = ({ children }) => {
       <AppDrawerContext.Provider value={contextValue}>
         <Drawer {...drawerProps}>
           <DrawerContent panelContent={drawerPanelContent}>
-            <DrawerContentBody className="app-drawer-body">{children}</DrawerContentBody>
+            <DrawerContentBody data-testid="appDrawerContent" className="app-drawer-body">
+              {children}
+            </DrawerContentBody>
           </DrawerContent>
         </Drawer>
       </AppDrawerContext.Provider>

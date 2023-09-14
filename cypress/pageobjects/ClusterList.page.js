@@ -101,7 +101,7 @@ class ClusterList extends Page {
   }
 
   scrollClusterListPageTo(direction) {
-    cy.get('main.pf-c-page__main').find('div.pf-c-drawer__content').scrollTo(direction);
+    cy.getByTestId('appDrawerContent').scrollTo(direction);
   }
 
   clickPerPageItem(count) {

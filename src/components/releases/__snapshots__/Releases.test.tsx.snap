@@ -25,9 +25,11 @@ exports[`<Releases /> should render 1`] = `
                   >
                     <DrawerContentBody
                       className="app-drawer-body"
+                      data-testid="appDrawerContent"
                     >
                       <div
                         className="pf-c-drawer__body app-drawer-body"
+                        data-testid="appDrawerContent"
                       >
                         <ErrorBoundary>
                           <PageHeader>
