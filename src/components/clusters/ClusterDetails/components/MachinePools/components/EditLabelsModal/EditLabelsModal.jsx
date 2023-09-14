@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import { Field } from 'redux-form';
 import { Divider, Form, Grid, GridItem } from '@patternfly/react-core';
 
-import { checkLabels } from '../../../../../../../common/validators';
-import { parseLabels, validateDuplicateLabels } from '../../machinePoolsHelper';
+import { checkLabels, validateDuplicateLabels } from '../../../../../../../common/validators';
+import { parseLabels } from '../../machinePoolsHelper';
 import { isMachinePoolUsingSpotInstances, SpotInstanceInfoAlert } from '../SpotInstanceHelper';
 
 import Modal from '../../../../../../common/Modal/Modal';

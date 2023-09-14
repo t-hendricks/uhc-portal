@@ -556,7 +556,36 @@ const checkLabels = (input: string | string[]) =>
       undefined,
     );
 
-const checkRouteSelectors = checkLabels;
+const findDuplicateKey = (labels: string[]) => {
+  const keys = {} as { [key: string]: boolean };
+  let duplicateKey = null;
+  labels.forEach((tag) => {
+    const labelParts = tag.split('=');
+    const labelKey = labelParts[0];
+    if (keys[labelKey]) {
+      duplicateKey = labelKey;
+    } else {
+      keys[labelKey] = true;
+    }
+  });
+  return duplicateKey;
+};
+
+const validateDuplicateLabels = (input: string | string[] | undefined) => {
+  if (!input) {
+    return undefined;
+  }
+
+  const labels = typeof input === 'string' ? input.split(',') : input;
+  const duplicateKey = findDuplicateKey(labels);
+  if (duplicateKey) {
+    return `Each label should have a unique key. "${duplicateKey}" already exists.`;
+  }
+  return undefined;
+};
+
+const checkRouteSelectors = (value: string): string | undefined =>
+  checkLabels(value) || validateDuplicateLabels(value);
 
 // Function to validate that the cluster ID field is a UUID:
 const checkClusterUUID = (value: string): string | undefined => {
@@ -1702,6 +1731,7 @@ export {
   validateUniqueNodeLabel,
   validateLabelKey,
   validateLabelValue,
+  validateDuplicateLabels,
   validateListOfBalancingLabels,
   createPessimisticValidator,
   clusterNameValidation,
