@@ -62,7 +62,6 @@ function MachinePoolScreen({
           poolNumber={poolNumber}
           maxWorkerVolumeSizeGiB={maxWorkerVolumeSizeGiB}
           isHypershift={isHypershift}
-          openEditClusterAutoScalingModal={openEditClusterAutoScalingModal}
           forceTouch={forceTouch}
         />
       </Grid>
