@@ -252,60 +252,9 @@ To execute a specific test in headless mode:
 yarn cypress-headless --spec 'cypress/e2e/RosaClusterWizard.js'
 ```
 
-# Automated Selenium tests
-
-## New style tests (webdriver.io)
-
-To make it easier for developers to write tests, we've decided to switch to a javascript based testing framework - [webdriver.io](https://webdriver.io).
-
-wdio tests are stored in the `selenium-js/` directory. We use the "page objects" pattern, in `selenium-js/pageobjects` - these define selectors for various components.
-Test cases are in `selenium-js/specs`.
-
-These instructions assume `yarn start` (or equivalent dev-env) is already running. In another terminal:
-
-You'll need credentials in environment variables - `TEST_SELENIUM_WITHQUOTA_PASSWORD` and `TEST_SELENIUM_WITHQUOTA_USER` (ask team members).
-
-Optionally export `SELENIUM_DEBUG=true` environment variable if you want to stop on failure to let you debug (otherwise, it writes a screenshot file and moves on).
-
-Now you need to choose which WebDriver server to use:
-
-- Recommended: a local driver, that opens a browser window directly on your screen.
-
-  ```
-  yarn selenium-with-chromedriver
-  ```
-
-  This starts a selenium control server on port 4444, and runs the tests accordingly.
-
-  Extra argument will be passed on to `wdio` for example:
-
-  ```
-  yarn selenium-with-chromedriver --watch --spec selenium-js/specs/Downloads.js
-  ```
-
-- To use same browser as under CI, in a container:
-
-  Optionally export `BROWSER=firefox` or `BROWSER=chrome`. Run `yarn selenium-with-vnc`.
-  This starts a selenium control server on port 4444, and VNC server on port 5900, and runs the tests.
-
-  Extra argument will be passed on to `wdio` for example:
-
-  ```
-  yarn selenium-with-vnc --watch --spec selenium-js/specs/Downloads.js
-  ```
-
-  Optional: to observe/debug the test, connect a VNC viewer to `localhost`, password is `secret`.
-  If you have Vinagre (`sudo dnf install vinagre`), simply run `yarn selenium-viewer` in another terminal.
-
-  - Actually in CI we use run/selenium-pod.sh that starts containers differently to avoid port conflicts for parallel CI.
-    It also uses static nginx, which requires a full `yarn build` on every change — inconvenient for development.
-
-The yarn commands are defined in package.json "scripts" section, some running scripts from run/ directory.
-
 # Deprecated option for running locally: insights-proxy
 
 * This has been unused for a while for development, might be broken?
-  A similar setup is still used in CI run/selenium-pod.sh...
 
 `make insights-proxy-setup` will autimatically clone/pull insights-proxy
 under `run/insights-proxy` subdirectory and perform its setup
