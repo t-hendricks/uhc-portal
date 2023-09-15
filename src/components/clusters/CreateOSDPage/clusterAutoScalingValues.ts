@@ -4,6 +4,10 @@ import {
   AutoscalerResourceLimitsGPULimit,
 } from '~/types/clusters_mgmt.v1';
 
+const MAX_NODES_DEFAULT = 180;
+const MAX_CORES_DEFAULT = MAX_NODES_DEFAULT * 64;
+const MAX_MEMORY_DEFAULT = MAX_NODES_DEFAULT * 64 * 20;
+
 export type ClusterAutoScalingForm = Omit<
   Required<ClusterAutoscaler>,
   'id' | 'kind' | 'href' | 'balancing_ignored_labels' | 'resource_limits'
@@ -50,14 +54,14 @@ const getDefaultClusterAutoScaling = (): ClusterAutoScalingForm => ({
 
   // UI Resource limits section
   resource_limits: {
-    max_nodes_total: 0,
+    max_nodes_total: MAX_NODES_DEFAULT,
     cores: {
-      min: 1,
-      max: 320000,
+      min: 0,
+      max: MAX_CORES_DEFAULT,
     },
     memory: {
-      min: 1,
-      max: 6400000,
+      min: 0,
+      max: MAX_MEMORY_DEFAULT,
     },
     gpus: '',
   },
