@@ -10,5 +10,6 @@ export enum BillingModel {
   MARKETPLACE_AWS = 'marketplace-aws',
   MARKETPLACE_RHM = 'marketplace-rhm',
   MARKETPLACE_AZURE = 'marketplace-azure',
+  MARKETPLACE_GCP = 'marketplace-gcp',
   STANDARD = 'standard',
 }

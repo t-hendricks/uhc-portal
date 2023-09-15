@@ -671,8 +671,11 @@ const getClusterStatus = (clusterID: string) =>
 const getInflightChecks = (clusterID: string) =>
   action(clustersConstants.GET_INFLIGHT_CHECKS, clusterService.getInflightChecks(clusterID));
 
-const getInstallableVersions = (isRosa: boolean) =>
-  action(clustersConstants.GET_CLUSTER_VERSIONS, clusterService.getInstallableVersions(isRosa));
+const getInstallableVersions = (isRosa: boolean, isMarketplaceGcp: boolean) =>
+  action(
+    clustersConstants.GET_CLUSTER_VERSIONS,
+    clusterService.getInstallableVersions(isRosa, isMarketplaceGcp),
+  );
 
 type ClusterAction = ActionType<
   | typeof fetchClusterDetails
