@@ -280,7 +280,7 @@ const addInflightChecks = async (promise: Promise<any>) => {
   const map: Record<string, Cluster> = {};
   await Promise.all(
     clusters.data.items
-      .filter((cluster: { product: { id: string } }) => ROSA_PRODUCTS.includes(cluster.product?.id))
+      .filter((cluster: { product: { id: string } }) => hasInflightChecks(cluster))
       // eslint-disable-next-line camelcase
       .map((cluster: { id: string; inflight_checks: InflightCheck[] | undefined }) =>
         clusterService.getInflightChecks(cluster.id).then((res) => {
