@@ -30,7 +30,7 @@ function ProgressList({ cluster, actionRequiredInitialOpen }) {
 
     // first step in progress
     if (
-      !isROSACluster &&
+      isOSDCluster &&
       (cluster.state === clusterStates.WAITING || cluster.state === clusterStates.PENDING)
     ) {
       return {
