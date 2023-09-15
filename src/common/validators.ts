@@ -483,6 +483,7 @@ const parseNodeLabels = (input: string | string[] | undefined) => {
 const labelAndTaintKeyValidations = (
   value: string,
   items: { key?: string; value?: string }[],
+  keyType?: string,
 ): Validations => {
   const { prefix, name } = parseNodeLabelKey(value);
   const isEmptyValid = items?.length === 1 && !items[0].key && !items[0].value;
@@ -500,13 +501,17 @@ const labelAndTaintKeyValidations = (
       validated: typeof name === 'undefined' || LABEL_KEY_NAME_REGEX.test(name),
       text: "A valid key name must consist of alphanumeric characters, '-', '.' or '_' and must start and end with an alphanumeric character",
     },
+
     {
       validated: typeof name === 'undefined' || name.length <= LABEL_KEY_NAME_MAX_LENGTH,
       text: `A valid key name must be ${LABEL_KEY_NAME_MAX_LENGTH} characters or less`,
     },
     {
       validated: isEmptyValid || value?.length > 0,
-      text: 'Required',
+      text:
+        keyType === 'label'
+          ? "A valid key name must consist of alphanumeric characters, '-', '.' or '_' and must start and end with an alphanumeric character"
+          : 'Required',
     },
   ];
 };
@@ -525,7 +530,7 @@ const labelAndTaintValueValidations = (value: string): Validations => [
 
 const taintKeyValidations = (value: string, allValues: { taints?: Taint[] }): Validations => {
   const items = allValues?.taints || [];
-  return labelAndTaintKeyValidations(value, items);
+  return labelAndTaintKeyValidations(value, items, 'taint');
 };
 
 const nodeLabelKeyValidations = (
@@ -533,7 +538,7 @@ const nodeLabelKeyValidations = (
   allValues: { node_labels?: Taint[] },
 ): Validations => {
   const items = allValues?.node_labels || [];
-  return labelAndTaintKeyValidations(value, items);
+  return labelAndTaintKeyValidations(value, items, 'label');
 };
 
 const checkLabelKey = createPessimisticValidator(nodeLabelKeyValidations);
@@ -551,7 +556,36 @@ const checkLabels = (input: string | string[]) =>
       undefined,
     );
 
-const checkRouteSelectors = checkLabels;
+const findDuplicateKey = (labels: string[]) => {
+  const keys = {} as { [key: string]: boolean };
+  let duplicateKey = null;
+  labels.forEach((tag) => {
+    const labelParts = tag.split('=');
+    const labelKey = labelParts[0];
+    if (keys[labelKey]) {
+      duplicateKey = labelKey;
+    } else {
+      keys[labelKey] = true;
+    }
+  });
+  return duplicateKey;
+};
+
+const validateDuplicateLabels = (input: string | string[] | undefined) => {
+  if (!input) {
+    return undefined;
+  }
+
+  const labels = typeof input === 'string' ? input.split(',') : input;
+  const duplicateKey = findDuplicateKey(labels);
+  if (duplicateKey) {
+    return `Each label should have a unique key. "${duplicateKey}" already exists.`;
+  }
+  return undefined;
+};
+
+const checkRouteSelectors = (value: string): string | undefined =>
+  checkLabels(value) || validateDuplicateLabels(value);
 
 // Function to validate that the cluster ID field is a UUID:
 const checkClusterUUID = (value: string): string | undefined => {
@@ -1697,6 +1731,7 @@ export {
   validateUniqueNodeLabel,
   validateLabelKey,
   validateLabelValue,
+  validateDuplicateLabels,
   validateListOfBalancingLabels,
   createPessimisticValidator,
   clusterNameValidation,

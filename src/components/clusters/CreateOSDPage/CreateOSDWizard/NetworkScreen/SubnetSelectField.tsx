@@ -1,7 +1,15 @@
 import React, { ChangeEvent, MouseEvent, useCallback, useEffect, useMemo, useState } from 'react';
 
+import { useDispatch } from 'react-redux';
 import { WrappedFieldInputProps, WrappedFieldMetaProps } from 'redux-form';
-import { Alert, Flex, FormGroup, SelectOptionObject, Spinner } from '@patternfly/react-core';
+import {
+  Alert,
+  Button,
+  Flex,
+  FlexItem,
+  FormGroup,
+  SelectOptionObject,
+} from '@patternfly/react-core';
 
 import { useAWSVPCsFromCluster } from '~/components/clusters/ClusterDetails/components/MachinePools/components/AddMachinePoolModal/useAWSVPCsFromCluster';
 import {
@@ -11,6 +19,7 @@ import {
 import ErrorBox from '~/components/common/ErrorBox';
 import { CloudVPC, Subnetwork } from '~/types/clusters_mgmt.v1';
 import FuzzySelect, { FuzzyDataType, FuzzyEntryType } from '~/components/common/FuzzySelect';
+import { getAWSCloudProviderVPCs } from '../ccsInquiriesActions';
 
 const TRUNCATE_THRESHOLD = 40;
 
@@ -25,6 +34,7 @@ export interface SubnetSelectFieldProps {
   privacy?: 'public' | 'private';
   selectedVPC?: string;
   isNewCluster: boolean;
+  showRefresh?: boolean;
   withAutoSelect: boolean;
   allowedAZ?: string[];
 }
@@ -41,13 +51,20 @@ export const SubnetSelectField = ({
   withAutoSelect = true,
   selectedVPC,
   isNewCluster,
+  showRefresh = false,
   allowedAZ,
 }: SubnetSelectFieldProps) => {
   const [isExpanded, setIsExpanded] = useState(false);
   const [selectedSubnet, setSelectedSubnet] = useState(input.value);
   const vpcs = isNewCluster ? useAWSVPCInquiry() : useAWSVPCsFromCluster();
+  const dispatch = useDispatch();
 
   const { pending: isVpcsLoading, fulfilled: isVpcsFulfilled, error: vpcsError } = vpcs;
+  const placeholder = (hasNoOptions: boolean, hasSubnetNames: boolean) =>
+    (isVpcsLoading && 'Loading...') ||
+    (hasNoOptions && 'No data found.') ||
+    (!hasNoOptions && hasSubnetNames && 'Subnet name') ||
+    (!hasNoOptions && !hasSubnetNames && 'Subnet ID');
 
   // if subnets have the more descriptive name, use that
   const { selectionData, vpcsItems, subnetList, hasNoOptions, hasSubnetNames } = useMemo<{
@@ -126,12 +143,16 @@ export const SubnetSelectField = ({
     [setSelectedSubnet, setIsExpanded],
   );
 
+  const refreshSubnets = () => {
+    dispatch(getAWSCloudProviderVPCs(vpcs.credentials, vpcs.region));
+  };
+
   return (
     <FormGroup
       fieldId={name}
       label={label}
       id={input.name}
-      validated={isInputTouched && inputError ? 'error' : undefined}
+      validated={isInputTouched && inputError && !isVpcsLoading ? 'error' : undefined}
       helperTextInvalid={isInputTouched && (vpcsError || inputError)}
       isRequired={isRequired}
       className={className}
@@ -150,29 +171,38 @@ export const SubnetSelectField = ({
         />
       )}
 
-      {isVpcsLoading ? (
-        <Flex alignItems={{ default: 'alignItemsCenter' }} spaceItems={{ default: 'spaceItemsSm' }}>
-          <Spinner size="md" />
-          <span>Loading...</span>
-        </Flex>
-      ) : (
-        <FuzzySelect
-          label={label}
-          aria-label={label}
-          isOpen={isExpanded}
-          onToggle={(isExpanded) => setIsExpanded(isExpanded)}
-          onSelect={onSelect}
-          selected={selectedSubnet?.name}
-          selectionData={selectionData}
-          isDisabled={isDisabled || hasNoOptions}
-          placeholderText={
-            hasNoOptions ? 'No data found.' : `${hasSubnetNames ? 'Subnet name' : 'Subnet ID'}`
-          }
-          truncation={TRUNCATE_THRESHOLD}
-          inlineFilterPlaceholderText={`Filter by subnet ${hasSubnetNames ? 'name' : 'ID'}`}
-          validated={inputError ? 'error' : undefined}
-        />
-      )}
+      <Flex>
+        <FlexItem grow={{ default: 'grow' }}>
+          <FuzzySelect
+            label={label}
+            aria-label={label}
+            isOpen={isExpanded}
+            onToggle={(isExpanded) => setIsExpanded(isExpanded)}
+            onSelect={onSelect}
+            selected={selectedSubnet?.name}
+            selectionData={selectionData}
+            isDisabled={isDisabled || hasNoOptions || isVpcsLoading}
+            placeholderText={placeholder(hasNoOptions, hasSubnetNames)}
+            truncation={TRUNCATE_THRESHOLD}
+            inlineFilterPlaceholderText={`Filter by subnet ${hasSubnetNames ? 'name' : 'ID'}`}
+            validated={inputError ? 'error' : undefined}
+          />
+        </FlexItem>
+        {showRefresh && (
+          <FlexItem>
+            <Button
+              isLoading={isVpcsLoading}
+              isDisabled={isVpcsLoading}
+              isInline
+              isSmall
+              variant="secondary"
+              onClick={refreshSubnets}
+            >
+              Refresh
+            </Button>
+          </FlexItem>
+        )}
+      </Flex>
     </FormGroup>
   );
 };

@@ -26,7 +26,7 @@ const SharedVPCSection = ({
         <>
           Install into a non-default subnet shared by another account in your AWS organization.
           <br />
-          <ExternalLink href={links.AWS_SHARED_VPC} className="pf-u-mt-sn">
+          <ExternalLink href={links.AWS_SHARED_VPC} className="pf-u-mt-lg">
             Learn more about AWS shared VPC
           </ExternalLink>
         </>
@@ -41,16 +41,15 @@ const SharedVPCSection = ({
           title={
             <>
               NOTE: To continue, you&apos;ll need to fill out all of the information. Some of the
-              information for the AWS participant account must be provided by the Administrator of
-              the AWS owner account you want to use. If you aren&apos;t the administrator, reach out
-              to them now.
+              information, such as Private Hosted Zone ID and Shared VPC Role ARN, must be provided
+              by the VPC owner of the AWS account you want to use. If you aren&apos;t the VPC owner,
+              reach out to them now.
             </>
           }
         >
-          <>
-            Make sure you both follow the instructions detailed{' '}
-            <ExternalLink href={links.ROSA_SHARED_VPC}>here</ExternalLink>
-          </>
+          <ExternalLink className="pf-u-mt-sm" href={links.ROSA_SHARED_VPC}>
+            View instructions on configuring shared VPC for ROSA clusters
+          </ExternalLink>
         </Alert>
         <Field
           component={SharedVPCField}

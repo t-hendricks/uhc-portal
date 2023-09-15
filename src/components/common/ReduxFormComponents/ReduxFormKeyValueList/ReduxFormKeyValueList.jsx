@@ -10,18 +10,23 @@ import { validateLabelKey, validateLabelValue } from '../../../../common/validat
 
 import './ReduxFormKeyValueList.scss';
 
-const LabelKey = ({ input, meta: { touched, error } }) => (
+const LabelKey = ({ forceTouch, input, meta: { touched, error } }) => (
   <>
     <TextInput
       aria-label="Key-value list key"
-      validated={!(touched && error) ? 'default' : 'error'}
+      validated={(touched || forceTouch) && error ? 'error' : 'default'}
       {...input}
     />
-    {touched && error && <span className="pf-c-form__helper-text pf-m-error">{error}</span>}
+
+    {(touched || forceTouch) && error && (
+      <span className="pf-c-form__helper-text pf-m-error">{error}</span>
+    )}
   </>
 );
 
 LabelKey.propTypes = {
+  touch: PropTypes.func,
+  forceTouch: PropTypes.bool,
   input: PropTypes.object.isRequired,
   meta: PropTypes.shape({
     error: PropTypes.string,
@@ -29,18 +34,21 @@ LabelKey.propTypes = {
   }),
 };
 
-const LabelValue = ({ input, meta: { touched, error } }) => (
+const LabelValue = ({ forceTouch, input, meta: { touched, error } }) => (
   <>
     <TextInput
       aria-label="Key-value list value"
-      validated={!(touched && error) ? 'default' : 'error'}
+      validated={(touched || forceTouch) && error ? 'error' : 'default'}
       {...input}
     />
-    {touched && error && <span className="pf-c-form__helper-text pf-m-error">{error}</span>}
+    {(touched || forceTouch) && error && (
+      <span className="pf-c-form__helper-text pf-m-error">{error}</span>
+    )}
   </>
 );
 
 LabelValue.propTypes = {
+  forceTouch: PropTypes.bool,
   input: PropTypes.object.isRequired,
   meta: PropTypes.shape({
     error: PropTypes.string,
@@ -49,7 +57,7 @@ LabelValue.propTypes = {
 };
 
 const hasInvalidKeys = (fieldsArray) => fieldsArray && fieldsArray.some((field) => !field.key);
-const ReduxFormKeyValueList = ({ fields, meta: { error, submitFailed } }) => (
+const ReduxFormKeyValueList = ({ fields, forceTouch }) => (
   <Grid hasGutter>
     <GridItem span={4} className="pf-c-form__label pf-c-form__label-text">
       Key
@@ -70,6 +78,7 @@ const ReduxFormKeyValueList = ({ fields, meta: { error, submitFailed } }) => (
               component={LabelKey}
               index={index}
               validate={validateLabelKey}
+              forceTouch={forceTouch}
             />
           </GridItem>
           <GridItem span={4}>
@@ -79,11 +88,14 @@ const ReduxFormKeyValueList = ({ fields, meta: { error, submitFailed } }) => (
               component={LabelValue}
               index={index}
               validate={validateLabelValue}
+              forceTouch={forceTouch}
             />
           </GridItem>
           <GridItem span={4}>
             <Button
-              onClick={() => fields.remove(index)}
+              onClick={() => {
+                fields.remove(index);
+              }}
               icon={<MinusCircleIcon />}
               variant="link"
               isDisabled={isRemoveDisabled}
@@ -109,16 +121,15 @@ const ReduxFormKeyValueList = ({ fields, meta: { error, submitFailed } }) => (
       >
         Add additional label
       </ButtonWithTooltip>
-      {submitFailed && error && <span>{error}</span>}
     </GridItem>
   </Grid>
 );
 
 ReduxFormKeyValueList.propTypes = {
+  forceTouch: PropTypes.bool,
   fields: PropTypes.array.isRequired,
   meta: PropTypes.shape({
     error: PropTypes.string,
-    submitFailed: PropTypes.bool,
   }),
 };
 

@@ -177,7 +177,7 @@ class MachinePools extends React.Component {
     } = this.props;
 
     const { deletedRowIndex, openedRows, hideDeleteMachinePoolError } = this.state;
-    const { machinePoolsActions } = cluster;
+    const machinePoolsActions = cluster?.machinePoolsActions || {}; // Data not defined on the cluster list response
     const hasMachinePools = !!machinePoolsList.data.length;
     const isMultiZoneCluster = isMultiAZ(cluster);
     const hasAutoscalingMachinePools = hasDefaultOrExplicitAutoscalingMachinePool(
@@ -420,7 +420,9 @@ class MachinePools extends React.Component {
                 {!isRestrictedEnv() && !isHypershift && (
                   <ButtonWithTooltip
                     id="edit-existing-cluster-autoscaling"
-                    disableReason={canNotEditAutoscalerReason}
+                    disableReason={
+                      readOnlyReason || hibernatingReason || canNotEditAutoscalerReason
+                    }
                     onClick={() => openModal(modals.EDIT_CLUSTER_AUTOSCALING_V1)}
                     variant="secondary"
                     className="pf-u-mb-lg"

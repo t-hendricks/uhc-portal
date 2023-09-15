@@ -12,7 +12,6 @@ import {
   HCP_ROSA_GETTING_STARTED_PAGE,
   HCP_AWS_BILLING_SHOW,
   HCP_AWS_BILLING_REQUIRED,
-  OSD_TRIAL_FEATURE,
 } from '../constants/featureConstants';
 import authorizationsService from '../../services/authorizationsService';
 import accountsService from '../../services/accountsService';
@@ -65,7 +64,6 @@ const mapCapabilityToAssistedInstallerFeature: MapCapabilityToAssistedInstallerF
 
 // list of features to detect upon app startup
 export const features = [
-  getSimpleUnleashFeature('osd-trial', OSD_TRIAL_FEATURE),
   getSimpleUnleashFeature('hypershift-creation-wizard', HYPERSHIFT_WIZARD_FEATURE),
   getSimpleUnleashFeature('hcp-rosa-getting-started-page', HCP_ROSA_GETTING_STARTED_PAGE),
   getSimpleUnleashFeature('hcp-aws-billing-show', HCP_AWS_BILLING_SHOW),

@@ -53,7 +53,6 @@ class CreateCluster extends React.Component {
       organization,
       token,
       assistedInstallerFeature,
-      osdTrialFeature,
       activeTab,
     } = this.props;
 
@@ -114,7 +113,7 @@ class CreateCluster extends React.Component {
                     <CloudTab
                       hasOSDQuota={hasOSDQuota}
                       rosaCreationWizardFeature={rosaCreationWizardFeature}
-                      trialEnabled={hasOSDTrialQuota && osdTrialFeature}
+                      trialEnabled={hasOSDTrialQuota}
                     />
                   </Tab>,
                   ...(isRestrictedEnv()
@@ -147,7 +146,6 @@ class CreateCluster extends React.Component {
 CreateCluster.propTypes = {
   hasOSDQuota: PropTypes.bool.isRequired,
   hasOSDTrialQuota: PropTypes.bool.isRequired,
-  osdTrialFeature: PropTypes.bool.isRequired,
   rosaCreationWizardFeature: PropTypes.bool,
   organization: PropTypes.shape({
     fulfilled: PropTypes.bool,

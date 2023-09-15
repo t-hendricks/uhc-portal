@@ -30,12 +30,12 @@ const resetClusterRouters = () => (dispatch) =>
     type: networkingConstants.RESET_CLUSTER_ROUTERS,
   });
 
+// Edit default router
 const createDefaultRouterRequest = (newData, currentData) => {
   const requestDefaultRouter = {
     id: currentData.default.routerID,
   };
 
-  // Edit default router
   if (
     newData.private_default_router !== undefined &&
     newData.private_default_router !== currentData.default.isPrivate
@@ -113,6 +113,32 @@ const createDefaultRouterRequest = (newData, currentData) => {
   return requestDefaultRouter;
 };
 
+// Edit existing additional router
+const createAdditionalRouterRequest = (newData, currentData) => {
+  const requestAdditionalRouter = {};
+
+  if (
+    newData.private_additional_router !== undefined &&
+    newData.private_additional_router !== currentData.additional?.isPrivate
+  ) {
+    requestAdditionalRouter.listening = newData.private_additional_router ? 'internal' : 'external';
+    requestAdditionalRouter.id = currentData.additional?.routerID;
+  }
+
+  if (
+    newData.labels_additional_router !== undefined &&
+    newData.labels_additional_router !== currentData.additional?.routeSelectors
+  ) {
+    requestAdditionalRouter.route_selectors = strToKeyValueObject(
+      newData.labels_additional_router,
+      '',
+    );
+    requestAdditionalRouter.id = currentData.additional?.routerID;
+  }
+
+  return requestAdditionalRouter;
+};
+
 const sendNetworkConfigRequests = async (newData, currentData, clusterID, dispatch) => {
   let result;
 
@@ -132,9 +158,14 @@ const sendNetworkConfigRequests = async (newData, currentData, clusterID, dispat
   }
 
   const hadAdditionalRouter = has(currentData, 'additional');
-  const additionalRouterDeleted = hadAdditionalRouter && !newData.enable_additional_router;
+  const additionalRouterDeleted = hadAdditionalRouter && newData.enable_additional_router === false;
 
   const requestDefaultRouter = createDefaultRouterRequest(newData, currentData);
+
+  let requestAdditionalRouter;
+  if (!additionalRouterDeleted && hadAdditionalRouter) {
+    requestAdditionalRouter = createAdditionalRouterRequest(newData, currentData);
+  }
 
   if (Object.getOwnPropertyNames(requestDefaultRouter).length > 1 /* more than just the "id" ? */) {
     result = await clusterService.editIngress(
@@ -151,7 +182,19 @@ const sendNetworkConfigRequests = async (newData, currentData, clusterID, dispat
     );
   }
 
-  // All changes to the additional router are disabled due to deprecation. Delete only.
+  // The "additional" routers are depracated.
+  // Can not create additional router for any OCP version.
+  // For OSD 4.11 and 4.12, we can only edit and delete.
+  // For OSD 4.13+, we can only delete.
+  // Rosa clusters have additional routers non-editable (search for hideAdvancedOptions in the EditClusterIngressDialog)
+  // There should be no STS cluster with an "additional" router (never supported).
+  if (requestAdditionalRouter && Object.getOwnPropertyNames(requestAdditionalRouter).length > 0) {
+    result = await clusterService.editIngress(
+      clusterID,
+      requestAdditionalRouter.id,
+      requestAdditionalRouter,
+    );
+  }
 
   return result;
 };

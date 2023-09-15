@@ -14,10 +14,7 @@ import {
 import OutlinedQuestionCircleIcon from '@patternfly/react-icons/dist/esm/icons/outlined-question-circle-icon';
 
 import CreateOSDWizardIntro from '~/styles/images/CreateOSDWizard-intro.png';
-import {
-  OSD_TRIAL_FEATURE,
-  OSD_GOOGLE_MARKETPLACE_FEATURE,
-} from '~/redux/constants/featureConstants';
+import { OSD_GOOGLE_MARKETPLACE_FEATURE } from '~/redux/constants/featureConstants';
 import { billingModels, normalizedProducts } from '~/common/subscriptionTypes';
 import ExternalLink from '~/components/common/ExternalLink';
 import {
@@ -43,10 +40,10 @@ export const BillingModel = () => {
     values,
     setFieldValue,
   } = useFormState();
+
   const quotas = useGetBillingQuotas({ product });
-  const osdTrialFeature = useFeatureGate(OSD_TRIAL_FEATURE);
-  const showOsdTrial = osdTrialFeature && quotas.osdTrial;
   const osdGoogleMarketplaceFeature = useFeatureGate(OSD_GOOGLE_MARKETPLACE_FEATURE);
+  const showOsdTrial = quotas.osdTrial;
 
   const trialDescription = (
     <p>
