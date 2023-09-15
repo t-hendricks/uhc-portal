@@ -4,6 +4,7 @@ import { Tabs, Tab, TabTitleText, TabTitleIcon, PageSection } from '@patternfly/
 
 import { Spinner } from '@redhat-cloud-services/frontend-components/Spinner';
 import { ServerIcon, CloudIcon, LaptopIcon } from '@patternfly/react-icons';
+import { isRestrictedEnv } from '~/restrictedEnv';
 
 import './CreateClusterPage.scss';
 import { AppPage } from '~/components/App/AppPage';
