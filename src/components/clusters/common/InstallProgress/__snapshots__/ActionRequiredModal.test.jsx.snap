@@ -111,6 +111,7 @@ exports[`<ActionRequiredModal /> should render correctly 1`] = `
                 "items": null,
                 "kind": "AWSInfrastructureAccessRoleGrantLink",
               },
+              "billing_model": "standard",
               "ccs": Object {
                 "disable_scp_checks": false,
                 "enabled": true,
@@ -495,6 +496,7 @@ exports[`<ActionRequiredModal /> should render correctly 1`] = `
                 "items": null,
                 "kind": "AWSInfrastructureAccessRoleGrantLink",
               },
+              "billing_model": "standard",
               "ccs": Object {
                 "disable_scp_checks": false,
                 "enabled": true,

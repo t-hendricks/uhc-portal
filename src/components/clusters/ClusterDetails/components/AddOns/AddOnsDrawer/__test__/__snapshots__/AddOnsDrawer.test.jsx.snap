@@ -168,6 +168,7 @@ exports[`<AddOnsDrawer /> should render 1`] = `
                             "items": null,
                             "kind": "AWSInfrastructureAccessRoleGrantLink",
                           },
+                          "billing_model": "standard",
                           "ccs": Object {
                             "disable_scp_checks": false,
                             "enabled": false,
@@ -559,6 +560,7 @@ exports[`<AddOnsDrawer /> should render 1`] = `
                           "items": null,
                           "kind": "AWSInfrastructureAccessRoleGrantLink",
                         },
+                        "billing_model": "standard",
                         "ccs": Object {
                           "disable_scp_checks": false,
                           "enabled": false,

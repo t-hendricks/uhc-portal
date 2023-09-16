@@ -242,6 +242,7 @@ exports[`<Overview /> for an AI cluster should render 1`] = `
                       "items": null,
                       "kind": "AWSInfrastructureAccessRoleGrantLink",
                     },
+                    "billing_model": "standard",
                     "canEdit": false,
                     "ccs": Object {
                       "disable_scp_checks": false,
@@ -611,6 +612,7 @@ exports[`<Overview /> for an AI cluster should render 1`] = `
                       "items": null,
                       "kind": "AWSInfrastructureAccessRoleGrantLink",
                     },
+                    "billing_model": "standard",
                     "canEdit": false,
                     "ccs": Object {
                       "disable_scp_checks": false,
@@ -2498,6 +2500,7 @@ exports[`<Overview /> for an OSD cluster should render 1`] = `
                       "items": null,
                       "kind": "AWSInfrastructureAccessRoleGrantLink",
                     },
+                    "billing_model": "standard",
                     "ccs": Object {
                       "disable_scp_checks": false,
                       "enabled": false,
@@ -2865,6 +2868,7 @@ exports[`<Overview /> for an OSD cluster should render 1`] = `
                       "items": null,
                       "kind": "AWSInfrastructureAccessRoleGrantLink",
                     },
+                    "billing_model": "standard",
                     "ccs": Object {
                       "disable_scp_checks": false,
                       "enabled": false,
