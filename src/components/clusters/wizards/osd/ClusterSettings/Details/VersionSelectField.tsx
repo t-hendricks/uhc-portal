@@ -120,6 +120,7 @@ export const VersionSelectField = ({ name, label, isDisabled }: VersionSelectFie
           onToggle={onToggle}
           onSelect={onSelect}
           isDisabled={isDisabled}
+          toggleId="version-selector"
         >
           {versions.map((version) => (
             <SelectOption
