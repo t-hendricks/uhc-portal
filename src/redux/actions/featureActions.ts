@@ -5,14 +5,12 @@ import {
   ASSISTED_INSTALLER_PLATFORM_OCI,
   ASSISTED_INSTALLER_FEATURE,
   ASSISTED_INSTALLER_MERGE_LISTS_FEATURE,
-  OSD_WIZARD_V2_FEATURE,
-  ROSA_CREATION_WIZARD_FEATURE,
+  OSD_TRIAL_FEATURE,
   HYPERSHIFT_WIZARD_FEATURE,
   OSD_GOOGLE_MARKETPLACE_FEATURE,
   HCP_ROSA_GETTING_STARTED_PAGE,
   HCP_AWS_BILLING_SHOW,
   HCP_AWS_BILLING_REQUIRED,
-  OSD_TRIAL_FEATURE,
 } from '../constants/featureConstants';
 import authorizationsService from '../../services/authorizationsService';
 import accountsService from '../../services/accountsService';
@@ -65,14 +63,11 @@ const mapCapabilityToAssistedInstallerFeature: MapCapabilityToAssistedInstallerF
 
 // list of features to detect upon app startup
 export const features = [
-  getSimpleUnleashFeature('osd-trial', OSD_TRIAL_FEATURE),
   getSimpleUnleashFeature('hypershift-creation-wizard', HYPERSHIFT_WIZARD_FEATURE),
   getSimpleUnleashFeature('hcp-rosa-getting-started-page', HCP_ROSA_GETTING_STARTED_PAGE),
   getSimpleUnleashFeature('hcp-aws-billing-show', HCP_AWS_BILLING_SHOW),
   getSimpleUnleashFeature('hcp-aws-billing-required', HCP_AWS_BILLING_REQUIRED),
   getSimpleUnleashFeature('assisted-installer-merge-lists', ASSISTED_INSTALLER_MERGE_LISTS_FEATURE),
-  getSimpleUnleashFeature('osd-creation-wizard-v2', OSD_WIZARD_V2_FEATURE),
-  getSimpleUnleashFeature('rosa-creation-wizard', ROSA_CREATION_WIZARD_FEATURE),
   getSimpleUnleashFeature('osd-google-marketplace', OSD_GOOGLE_MARKETPLACE_FEATURE),
   getSimpleUnleashFeature('assisted-installer-merge-lists', ASSISTED_INSTALLER_MERGE_LISTS_FEATURE),
   {

@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import * as OCM from '@openshift-assisted/ui-lib/ocm';
+import { Routes as AssistedInstallerRoutes } from '@openshift-assisted/ui-lib/ocm';
 import useChrome from '@redhat-cloud-services/frontend-components/useChrome';
 import { ConnectedRouter } from 'connected-react-router';
 import get from 'lodash/get';
@@ -33,8 +33,6 @@ import { normalizedProducts } from '../../common/subscriptionTypes';
 import {
   ASSISTED_INSTALLER_FEATURE,
   HYPERSHIFT_WIZARD_FEATURE,
-  OSD_WIZARD_V1,
-  OSD_WIZARD_V2_FEATURE,
 } from '../../redux/constants/featureConstants';
 import apiRequest from '../../services/apiRequest';
 import ArchivedClusterList from '../clusters/ArchivedClusterList';
@@ -43,7 +41,6 @@ import ClusterDetailsSubscriptionId from '../clusters/ClusterDetails/ClusterDeta
 import IdentityProvidersPage from '../clusters/ClusterDetails/components/IdentityProvidersPage';
 import ClustersList from '../clusters/ClusterList';
 import CreateClusterPage from '../clusters/CreateClusterPage';
-import CreateOSDWizard from '../clusters/CreateOSDPage/CreateOSDWizard';
 import CreateROSAWizard from '../clusters/CreateROSAPage/CreateROSAWizard';
 import GetStartedWithROSA from '../clusters/CreateROSAPage/CreateROSAWizard/CreateRosaGetStarted';
 import InsightsAdvisorRedirector from '../clusters/InsightsAdvisorRedirector';
@@ -118,13 +115,11 @@ import GovCloudPage from '../clusters/GovCloud/GovCloudPage';
 import Insights from './Insights';
 import NotFoundError from './NotFoundError';
 import TermsGuardedRoute from './TermsGuardedRoute';
-import { useFeatures } from './hooks/useFeatures';
 import { is404, metadataByRoute } from './routeMetadata';
 
-const { AssistedUiRouter } = OCM;
-const AssistedUiRouterPage: typeof AssistedUiRouter = (props) => (
+const AssistedUiRouterPage: typeof AssistedInstallerRoutes = (props) => (
   <AppPage>
-    <AssistedUiRouter {...props} />
+    <AssistedInstallerRoutes {...props} />
   </AppPage>
 );
 
@@ -150,10 +145,6 @@ const Router: React.FC<RouterProps> = ({ history, planType, clusterId, externalC
   } = useChrome();
 
   const isHypershiftWizardEnabled = useFeatureGate(HYPERSHIFT_WIZARD_FEATURE);
-  // OSD_WIZARD_V2_FEATURE enabled in staging, disabled in production (via Unleashed)
-  const isOSDv2WizardEnabled = useFeatureGate(OSD_WIZARD_V2_FEATURE);
-  // OSD_WIZARD_V1 can be enabled in staging by appending `?features={"osd-wizard-v1":"true"}`
-  const { [OSD_WIZARD_V1]: showOSDWizardV1 } = useFeatures();
 
   // For testing purposes, show which major features are enabled/disabled
   React.useEffect(() => {
@@ -161,11 +152,9 @@ const Router: React.FC<RouterProps> = ({ history, planType, clusterId, externalC
     console.info(
       '---------------Features---------------\n',
       `HYPERSHIFT_WIZARD_FEATURE: ${isHypershiftWizardEnabled ? 'Enabled' : 'Disabled'}\n`,
-      `OSD_WIZARD_V2_FEATURE: ${isOSDv2WizardEnabled ? 'Enabled' : 'Disabled'}\n`,
-      `OSD_WIZARD_V1: ${showOSDWizardV1 ? 'Enabled' : 'Disabled'}\n`,
       '-------------------------------------',
     );
-  }, [isHypershiftWizardEnabled, isOSDv2WizardEnabled, showOSDWizardV1]);
+  }, [isHypershiftWizardEnabled]);
 
   useEffect(() => {
     setPageMetadata({
@@ -329,37 +318,18 @@ const Router: React.FC<RouterProps> = ({ history, planType, clusterId, externalC
             <Redirect from="/create/osd/gcp" to="/create/osd" />
             <Redirect from="/create/osdtrial/aws" to="/create/osdtrial" />
             <Redirect from="/create/osdtrial/gcp" to="/create/osdtrial" />
-            {isOSDv2WizardEnabled && !showOSDWizardV1 ? (
-              <TermsGuardedRoute
-                path="/create/osdtrial"
-                gobackPath="/create"
-                render={() => <CreateOsdWizard product={normalizedProducts.OSDTrial} />}
-                history={history}
-              />
-            ) : (
-              <TermsGuardedRoute
-                path="/create/osdtrial"
-                gobackPath="/create"
-                render={() => <CreateOSDWizard product={normalizedProducts.OSDTrial} />}
-                history={history}
-              />
-            )}
-            {isOSDv2WizardEnabled && !showOSDWizardV1 ? (
-              <TermsGuardedRoute
-                path="/create/osd"
-                gobackPath="/create"
-                component={CreateOsdWizard}
-                history={history}
-              />
-            ) : (
-              <TermsGuardedRoute
-                path="/create/osd"
-                gobackPath="/create"
-                render={() => <CreateOSDWizard product={normalizedProducts.OSD} />}
-                history={history}
-              />
-            )}
-
+            <TermsGuardedRoute
+              path="/create/osdtrial"
+              gobackPath="/create"
+              render={() => <CreateOsdWizard product={normalizedProducts.OSDTrial} />}
+              history={history}
+            />
+            <TermsGuardedRoute
+              path="/create/osd"
+              gobackPath="/create"
+              component={CreateOsdWizard}
+              history={history}
+            />
             <Route
               path="/create/cloud"
               render={(props) => <CreateClusterPage activeTab="cloud" {...props} />}
