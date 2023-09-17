@@ -142,11 +142,9 @@ export const ReviewAndCreateContent = ({ isPending }: ReviewAndCreateContentProp
         <ReviewItem name={FieldId.NetworkPodCidr} formValues={formValues} />
         <ReviewItem name={FieldId.NetworkHostPrefix} formValues={formValues} />
 
-        {isAWS && isByoc && (
-          <ReviewItem name={FieldId.ApplicationIngress} formValues={formValues} />
-        )}
+        {isByoc && <ReviewItem name={FieldId.ApplicationIngress} formValues={formValues} />}
 
-        {applicationIngress !== 'default' && isAWS && isByoc && (
+        {applicationIngress !== 'default' && isByoc && (
           <>
             <ReviewItem name={FieldId.DefaultRouterSelectors} formValues={formValues} />
             <ReviewItem
