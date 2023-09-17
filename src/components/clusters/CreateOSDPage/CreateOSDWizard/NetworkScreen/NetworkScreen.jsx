@@ -378,6 +378,8 @@ function NetworkScreen(props) {
                       <DefaultIngressFields
                         hasSufficientIngressEditVersion
                         className="pf-u-mt-md pf-u-ml-lg"
+                        isDay2={false}
+                        canShowLoadBalancer={false}
                       />
                     ),
                   },
