@@ -8,6 +8,8 @@ import {
   CardTitle,
   TextVariants,
 } from '@patternfly/react-core';
+import ExclamationCircleIcon from '@patternfly/react-icons/dist/js/icons/exclamation-circle-icon';
+import { global_danger_color_100 as dangerColor } from '@patternfly/react-tokens';
 
 import { Cluster } from '~/types/clusters_mgmt.v1';
 import clusterStates, {
@@ -18,7 +20,6 @@ import UninstallProgress from '~/components/clusters/common/UninstallProgress';
 import InstallProgress from '~/components/clusters/common/InstallProgress/InstallProgress';
 import DownloadOcCliButton from '~/components/clusters/common/InstallProgress/DownloadOcCliButton';
 import InstallationLogView from './InstallationLogView';
-import ClusterStatusMonitor from './ClusterStatusMonitor';
 import { isHypershiftCluster } from '../../clusterDetailsHelper';
 
 interface ClusterProgressCardProps {
@@ -61,6 +62,11 @@ const ClusterProgressCard = ({ cluster = {}, history, refresh }: ClusterProgress
           className="card-title pf-u-display-inline-block pf-u-mr-md"
         >
           {inProgress && <Spinner size="sm" className="progressing-icon pf-u-mr-md" />}
+          {isError && (
+            <span className="pf-u-mr-xs">
+              <ExclamationCircleIcon color={dangerColor.value} />{' '}
+            </span>
+          )}
           {titleText}
         </Title>
         {(installationInProgress || isWaitingROSAManual) && !isUninstalling && (
@@ -73,7 +79,6 @@ const ClusterProgressCard = ({ cluster = {}, history, refresh }: ClusterProgress
         )}
       </CardTitle>
       <CardBody>
-        <ClusterStatusMonitor cluster={cluster} refresh={refresh as any} history={history as any} />
         {isUninstalling ? (
           <UninstallProgress cluster={cluster} />
         ) : (

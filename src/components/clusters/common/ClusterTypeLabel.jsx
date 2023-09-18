@@ -35,8 +35,8 @@ function ClusterTypeLabel({ cluster }) {
       tooltip: 'Red Hat OpenShift Service on AWS',
     },
     [normalizedProducts.ROSA_HyperShift]: {
-      name: 'ROSA - Hosted',
-      tooltip: 'Red Hat OpenShift Service on AWS - Hosted control plane',
+      name: 'ROSA',
+      tooltip: 'Red Hat OpenShift Service on AWS',
       label: createdPostGa(creationDateStr) ? null : (
         <PreviewLabel creationDateStr={creationDateStr} />
       ),

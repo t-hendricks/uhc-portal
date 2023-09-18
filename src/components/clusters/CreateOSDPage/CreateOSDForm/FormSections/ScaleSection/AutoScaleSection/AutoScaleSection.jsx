@@ -13,7 +13,7 @@ import {
 import { Field } from 'redux-form';
 
 import './AutoScale.scss';
-import getMinNodesAllowed from './AutoScaleHelper';
+import getMinNodesAllowed, { computeNodeHintText } from './AutoScaleHelper';
 import ReduxCheckbox from '../../../../../../common/ReduxFormComponents/ReduxCheckbox';
 import ExternalLink from '../../../../../../common/ExternalLink';
 import PopoverHint from '../../../../../../common/PopoverHint';
@@ -261,6 +261,7 @@ class AutoScaleSection extends React.Component {
       product,
       onChange,
       isHypershiftWizard,
+      isHypershiftMachinePool,
       numPools,
     } = this.props;
     const { minErrorMessage, maxErrorMessage } = this.state;
@@ -374,9 +375,10 @@ class AutoScaleSection extends React.Component {
               }
               labelIcon={
                 <PopoverHint
+                  buttonAriaLabel="Compute node count information"
                   hint={
                     <>
-                      {constants.computeNodeCountHint}
+                      {computeNodeHintText(isHypershiftWizard, isHypershiftMachinePool)}
                       <br />
                       {isRosa ? (
                         <>
@@ -444,6 +446,7 @@ AutoScaleSection.propTypes = {
   onChange: PropTypes.func,
   minNodesRequired: PropTypes.number,
   isHypershiftWizard: PropTypes.bool,
+  isHypershiftMachinePool: PropTypes.bool,
   numPools: PropTypes.number,
 };
 

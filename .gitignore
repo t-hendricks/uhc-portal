@@ -4,6 +4,7 @@
 *.log
 /backend
 /dist/
+/build/
 /node_modules/
 /run/ocm-api-model/
 /run/ocm-api-metamodel/

@@ -83,6 +83,11 @@ function getClusterStateAndDescription(cluster) {
   };
 }
 
+const getInflightChecks = (cluster) => {
+  const inflightChecks = get(cluster, 'inflight_checks', []);
+  return Array.isArray(inflightChecks) ? inflightChecks : [];
+};
+
 const isHibernating = (state) =>
   state === clusterStates.HIBERNATING ||
   state === clusterStates.POWERING_DOWN ||
@@ -132,6 +137,7 @@ export {
   isWaitingHypershiftCluster,
   getClusterAIPermissions,
   getStateDescription,
+  getInflightChecks,
   isWaitingForOIDCProviderOrOperatorRolesMode,
 };
 export default clusterStates;

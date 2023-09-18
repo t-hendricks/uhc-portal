@@ -144,6 +144,7 @@ class NodeCountInput extends React.Component {
       increment,
       isHypershiftWizard,
       poolNumber = isMultiAz ? 3 : 1,
+      buttonAriaLabel,
     } = this.props;
 
     const optionValueIncrement =
@@ -221,7 +222,11 @@ class NodeCountInput extends React.Component {
         fieldId={input.name}
         label={label}
         helperText={helpText}
-        labelIcon={extendedHelpText && <PopoverHint hint={extendedHelpText} />}
+        labelIcon={
+          extendedHelpText && (
+            <PopoverHint hint={extendedHelpText} buttonAriaLabel={buttonAriaLabel} />
+          )
+        }
       >
         {notEnoughQuota ? (
           <Tooltip content={noQuotaTooltip} position="right">
@@ -261,6 +266,7 @@ NodeCountInput.propTypes = {
   increment: PropTypes.number,
   isHypershiftWizard: PropTypes.bool,
   poolNumber: PropTypes.number,
+  buttonAriaLabel: PropTypes.string,
 };
 
 export default NodeCountInput;

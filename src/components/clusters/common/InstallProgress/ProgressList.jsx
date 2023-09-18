@@ -2,12 +2,14 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { ProgressStepper, ProgressStep, Spinner } from '@patternfly/react-core';
 import UnknownIcon from '@patternfly/react-icons/dist/js/icons/unknown-icon';
+import { InflightCheckState } from '~/types/clusters_mgmt.v1';
 import './ProgressList.scss';
 import ActionRequiredLink from './ActionRequiredLink';
 import clusterStates, {
   isROSA,
   isWaitingROSAManualMode,
   isWaitingForOIDCProviderOrOperatorRolesMode,
+  getInflightChecks,
 } from '../clusterStates';
 
 function ProgressList({ cluster, actionRequiredInitialOpen }) {
@@ -20,6 +22,8 @@ function ProgressList({ cluster, actionRequiredInitialOpen }) {
     const pending = { variant: 'pending' };
     const inProcess = { variant: 'info', icon: <Spinner size="sm" />, isCurrent: true };
     const completed = { variant: 'success', text: 'Completed' };
+    const warning = { variant: 'warning', text: 'Validation failed' };
+    const failed = { variant: 'danger', text: 'Failed' };
     const unknown = { icon: <UnknownIcon className="icon-space-right" />, text: 'Unknown' };
 
     // first step in progress
@@ -33,10 +37,12 @@ function ProgressList({ cluster, actionRequiredInitialOpen }) {
           ...inProcess,
         },
         DNSSetup: pending,
+        networkSettings: pending,
         clusterInstallation: pending,
       };
     }
 
+    const inflightChecks = getInflightChecks(cluster);
     if (isROSACluster) {
       if (isWaitingForOIDCProviderOrOperatorRoles) {
         // Show link to Action required modal for creation of ROSA operator roles and
@@ -48,6 +54,7 @@ function ProgressList({ cluster, actionRequiredInitialOpen }) {
             text: <ActionRequiredLink cluster={cluster} />,
             isCurrent: true,
           },
+          networkSettings: pending,
           DNSSetup: pending,
           clusterInstallation: pending,
         };
@@ -64,6 +71,7 @@ function ProgressList({ cluster, actionRequiredInitialOpen }) {
             ),
             isCurrent: true,
           },
+          networkSettings: pending,
           DNSSetup: pending,
           clusterInstallation: pending,
         };
@@ -72,23 +80,58 @@ function ProgressList({ cluster, actionRequiredInitialOpen }) {
       if (cluster.state === clusterStates.PENDING) {
         return {
           awsAccountSetup: completed,
+          oidcAndOperatorRolesSetup: {
+            text: 'Pending',
+            ...inProcess,
+          },
+          networkSettings: pending,
+          DNSSetup: pending,
+          clusterInstallation: pending,
+        };
+      }
+      if (
+        cluster.state === clusterStates.VALIDATING ||
+        inflightChecks.some((check) => check.state === InflightCheckState.RUNNING)
+      ) {
+        return {
+          awsAccountSetup: completed,
           oidcAndOperatorRolesSetup: completed,
-          DNSSetup: inProcess,
+          networkSettings: {
+            text: 'Validating',
+            ...inProcess,
+          },
+          DNSSetup: pending,
           clusterInstallation: pending,
         };
       }
     } // end if isRosaCluster
 
+    // inflight check stop install
+    const inflightError = inflightChecks.some((check) => check.state === InflightCheckState.FAILED);
+    const inflightErrorStopInstall =
+      cluster.state === clusterStates.ERROR && cluster.status.provision_error_code === 'OCM4001';
+    if (inflightErrorStopInstall) {
+      return {
+        awsAccountSetup: completed,
+        oidcAndOperatorRolesSetup: completed,
+        networkSettings: {
+          ...failed,
+          text: 'Validation failed',
+        },
+        DNSSetup: pending,
+        clusterInstallation: pending,
+      };
+    }
+
     // first steps completed
-    if (cluster.state === clusterStates.INSTALLING || cluster.state === clusterStates.VALIDATING) {
+    const networkSettings = inflightError ? warning : completed;
+    if (cluster.state === clusterStates.INSTALLING) {
       if (!cluster.status.dns_ready) {
         return {
           awsAccountSetup: completed,
           oidcAndOperatorRolesSetup: completed,
-          DNSSetup: {
-            text: 'Setting up DNS',
-            ...inProcess,
-          },
+          networkSettings,
+          DNSSetup: inProcess,
           clusterInstallation: pending,
         };
       }
@@ -96,6 +139,7 @@ function ProgressList({ cluster, actionRequiredInitialOpen }) {
       return {
         awsAccountSetup: completed,
         oidcAndOperatorRolesSetup: completed,
+        networkSettings,
         DNSSetup: completed,
         clusterInstallation: {
           text: 'Installing cluster',
@@ -103,10 +147,21 @@ function ProgressList({ cluster, actionRequiredInitialOpen }) {
         },
       };
     }
+    if (inflightError) {
+      return {
+        awsAccountSetup: completed,
+        oidcAndOperatorRolesSetup: completed,
+        DNSSetup: completed,
+        networkSettings,
+        clusterInstallation:
+          cluster.state === clusterStates.ERROR && !inflightErrorStopInstall ? failed : completed,
+      };
+    }
     return {
       awsAccountSetup: unknown,
       oidcAndOperatorRolesSetup: unknown,
       DNSSetup: unknown,
+      networkSettings: unknown,
       clusterInstallation: unknown,
     };
   };
@@ -135,6 +190,18 @@ function ProgressList({ cluster, actionRequiredInitialOpen }) {
           titleId="oidcAndOperatorRoles-title"
         >
           OIDC and operator roles
+        </ProgressStep>
+      )}
+      {isROSACluster && (
+        <ProgressStep
+          variant={progressData.networkSettings.variant}
+          icon={progressData.networkSettings.icon}
+          isCurrent={progressData.networkSettings.isCurrent}
+          description={progressData.networkSettings.text}
+          id="networkSettings"
+          titleId="networkSettings-title"
+        >
+          Network settings
         </ProgressStep>
       )}
       <ProgressStep

@@ -1,24 +1,34 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`<ClusterStatusMonitor /> Displays warning when install takes longer 1`] = `
-<span>
+<Fragment>
+   
+   
   <Alert
     isInline={true}
     title=" Installation is taking longer than expected"
     variant="warning"
   />
-  <br />
-</span>
+</Fragment>
 `;
 
 exports[`<ClusterStatusMonitor /> renders an alert when cluster is errored 1`] = `
-<Alert
-  isInline={true}
-  title="OCM1002 Cluster installation failed"
-  variant="danger"
->
-  Invalid AWS credentials (authentication)
-</Alert>
+<Fragment>
+  <Alert
+    isInline={true}
+    title="OCM1002 Cluster installation failed"
+    variant="danger"
+  >
+    Invalid AWS credentials (authentication) 
+  </Alert>
+   
+   
+</Fragment>
 `;
 
-exports[`<ClusterStatusMonitor /> renders null when no error 1`] = `""`;
+exports[`<ClusterStatusMonitor /> renders null when no error 1`] = `
+<Fragment>
+   
+   
+</Fragment>
+`;
