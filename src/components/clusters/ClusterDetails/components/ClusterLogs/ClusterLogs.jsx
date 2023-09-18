@@ -76,9 +76,9 @@ class ClusterLogs extends React.Component {
   }
 
   refresh() {
-    const { externalClusterID, getClusterHistory, viewOptions } = this.props;
-    if (externalClusterID) {
-      getClusterHistory(externalClusterID, viewOptions);
+    const { externalClusterID, clusterID, getClusterHistory, viewOptions } = this.props;
+    if (externalClusterID || clusterID) {
+      getClusterHistory(externalClusterID, clusterID, viewOptions);
     }
   }
 
@@ -93,6 +93,7 @@ class ClusterLogs extends React.Component {
       history,
       setSorting,
       externalClusterID,
+      clusterID,
     } = this.props;
 
     // These errors are present during cluster install
@@ -124,6 +125,7 @@ class ClusterLogs extends React.Component {
               history={history}
               externalClusterID={externalClusterID}
               isPendingNoData={isPendingNoData}
+              clusterID={clusterID}
             />
             {error && !size(logs) ? (
               <>
@@ -191,6 +193,7 @@ ClusterLogs.propTypes = {
     push: PropTypes.func.isRequired,
   }).isRequired,
   createdAt: PropTypes.string.isRequired,
+  clusterID: PropTypes.string.isRequired,
 };
 
 export default ClusterLogs;
