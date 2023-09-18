@@ -69,6 +69,7 @@ const AddOnsSubscriptionCard = ({
         setAccount(installedAccount);
       }
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [installedAddOn]);
   React.useEffect(() => {
     if (activeSubscription?.billingModel === 'standard') {

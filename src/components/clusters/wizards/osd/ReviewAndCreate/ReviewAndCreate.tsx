@@ -35,6 +35,7 @@ export const ReviewAndCreate = ({ track }: ReviewAndCreateProps) => {
           track();
         },
       };
+      // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [submitForm, track]),
     StepId.Review,
   );

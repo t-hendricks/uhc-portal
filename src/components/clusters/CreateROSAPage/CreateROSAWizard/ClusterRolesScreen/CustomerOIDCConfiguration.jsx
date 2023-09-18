@@ -86,6 +86,7 @@ function CustomerOIDCConfiguration({
         setIsLoading(false);
       }, 500);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [byoOidcConfigID, onParentSelect]);
 
   const onSelect = (_, configId) => {
@@ -96,6 +97,7 @@ function CustomerOIDCConfiguration({
 
   useEffect(() => {
     refreshOidcConfigs();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   let placeholderOptionText = 'Select a config id';

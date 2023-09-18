@@ -27,6 +27,7 @@ const UpgradeAcknowledgeStep = (props) => {
     if (initiallyConfirmed) {
       setTypedWord(ackWord);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
@@ -34,6 +35,7 @@ const UpgradeAcknowledgeStep = (props) => {
       return confirmed(true);
     }
     return confirmed(false);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [typedWord]);
 
   return (

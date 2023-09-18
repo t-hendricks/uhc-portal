@@ -56,6 +56,7 @@ export const SubnetSelectField = ({
 }: SubnetSelectFieldProps) => {
   const [isExpanded, setIsExpanded] = useState(false);
   const [selectedSubnet, setSelectedSubnet] = useState(input.value);
+  // eslint-disable-next-line react-hooks/rules-of-hooks
   const vpcs = isNewCluster ? useAWSVPCInquiry() : useAWSVPCsFromCluster();
   const dispatch = useDispatch();
 
@@ -109,6 +110,7 @@ export const SubnetSelectField = ({
     const hasNoOptions = subnetList?.length === 0;
     const hasSubnetNames = !hasNoOptions && subnetList.every((subnet) => !!subnet.name);
     return { selectionData, vpcsItems, subnetList, hasNoOptions, hasSubnetNames };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [vpcs.data?.items, selectedVPC]);
 
   useEffect(() => {
@@ -132,6 +134,7 @@ export const SubnetSelectField = ({
       input.onChange(newSelection);
       setSelectedSubnet(newSelection);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [withAutoSelect, isVpcsFulfilled, subnetList, selectedSubnet]);
 
   const onSelect = useCallback(
@@ -140,6 +143,7 @@ export const SubnetSelectField = ({
       setSelectedSubnet(selectedSubnet);
       setIsExpanded(false);
     },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [setSelectedSubnet, setIsExpanded],
   );
 

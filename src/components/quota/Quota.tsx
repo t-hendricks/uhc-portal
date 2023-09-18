@@ -52,6 +52,7 @@ const Quota = ({ invalidateClusters, fetchAccount, account, marketplace }: Props
         cleanupOcmListener();
       }
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   if (account.fulfilled && account.data.organization && account.data.organization.id) {

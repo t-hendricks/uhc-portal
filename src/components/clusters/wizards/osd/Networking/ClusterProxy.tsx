@@ -65,6 +65,7 @@ export const ClusterProxy = () => {
     if (noProxyDomains && !httpProxyUrl && !httpsProxyUrl) {
       setFieldValue(FieldId.NoProxyDomains, '');
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [noProxyDomains, httpProxyUrl, httpsProxyUrl]);
 
   return (

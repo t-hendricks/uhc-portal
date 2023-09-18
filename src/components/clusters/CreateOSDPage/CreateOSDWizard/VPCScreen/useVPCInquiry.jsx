@@ -87,6 +87,7 @@ export const useAWSVPCInquiry = () => {
 
       dispatch(getAWSCloudProviderVPCs(credentials, region));
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [cloudProviderID, credentials, region, hasLatestVpcs]);
 
   return vpcs;

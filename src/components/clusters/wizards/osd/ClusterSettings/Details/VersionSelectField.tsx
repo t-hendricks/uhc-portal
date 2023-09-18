@@ -51,6 +51,7 @@ export const VersionSelectField = ({ name, label, isDisabled }: VersionSelectFie
       // First time.
       getInstallableVersions();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [getInstallableVersionsResponse]);
 
   useEffect(() => {
@@ -58,6 +59,7 @@ export const VersionSelectField = ({ name, label, isDisabled }: VersionSelectFie
       const versionIndex = versions.findIndex((version) => version.default === true);
       setFieldValue(name, versions[versionIndex !== -1 ? versionIndex : 0]);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [versions, selectedClusterVersion?.raw_id]);
 
   const onToggle = (isExpanded: boolean) => {

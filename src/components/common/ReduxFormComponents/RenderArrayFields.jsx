@@ -171,6 +171,7 @@ const RenderArrayFields = (props) => {
         setAreFieldsFilled(fields.map(isFieldFilled));
       }
     },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [
       /* Call once */
     ],
