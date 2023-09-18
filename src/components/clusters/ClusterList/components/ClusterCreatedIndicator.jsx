@@ -104,7 +104,7 @@ function ClusterCreatedIndicator({ cluster }) {
         >
           supported
         </ExternalLink>
-        .
+        . Though your cluster will be functional.
       </p>
     </>
   );
