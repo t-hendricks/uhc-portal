@@ -51,7 +51,10 @@ export default {
       end_of_life_timestamp: '2024-09-17T00:00:00Z',
     },
     custom_operator_roles_prefix: 'my-cluster-cu1f',
-    selected_vpc_id: 'vpc-0cf6c1b4e2a234863',
+    selected_vpc: {
+      id: 'vpc-0cf6c1b4e2a234863',
+      name: 'my-vpc',
+    },
     shared_vpc: { is_allowed: false },
     machine_pools_subnets: [
       {

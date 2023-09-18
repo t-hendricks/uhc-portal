@@ -133,9 +133,9 @@ function NetworkScreen(props) {
 
   const onInstallIntoVPCchange = (checked) => {
     change('install_to_vpc', checked);
-    if (!checked && formValues.shared_vpc.is_allowed) {
+    if (!checked && formValues.shared_vpc.is_selected) {
       change('shared_vpc', {
-        is_allowed: true,
+        is_allowed: formValues.shared_vpc.is_allowed,
         is_selected: false,
         base_dns_domain: '',
         hosted_zone_id: '',
@@ -223,7 +223,7 @@ function NetworkScreen(props) {
                       isRequired
                       validate={validateRequiredMachinePoolsSubnet}
                       withAutoSelect={false}
-                      selectedVPC={formValues.selected_vpc_id}
+                      selectedVPC={formValues.selected_vpc.id}
                       privacy="public"
                       isNewCluster
                       showRefresh

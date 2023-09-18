@@ -17,6 +17,7 @@ describe('<ClusterLogs />', () => {
     wrapper = shallow(
       <ClusterLogs
         externalClusterID={fixtures.clusterDetails.cluster.external_id}
+        clusterID={fixtures.clusterDetails.cluster.id}
         history={{ push }}
         getClusterHistory={getClusterHistory}
         setSorting={setSorting}

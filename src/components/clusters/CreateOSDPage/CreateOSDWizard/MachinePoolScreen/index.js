@@ -26,7 +26,7 @@ const mapStateToProps = (state, ownProps) => {
   const billingModel = valueSelector(state, 'billing_model');
   const machineType = valueSelector(state, 'machine_type');
   const isHypershiftSelected = valueSelector(state, 'hypershift') === 'true';
-  const selectedVPCID = valueSelector(state, 'selected_vpc_id');
+  const selectedVPC = valueSelector(state, 'selected_vpc') ?? { id: '', name: '' };
   const clusterVersionRawId = valueSelector(state, 'cluster_version.raw_id');
   const imds = valueSelector(state, 'imds');
   const machinePools = valueSelector(state, 'machine_pools_subnets');
@@ -40,7 +40,7 @@ const mapStateToProps = (state, ownProps) => {
     isByoc,
     machineType,
     isHypershift: isHypershiftSelected,
-    selectedVPCID,
+    selectedVPC,
     imds,
     clusterVersionRawId,
     minNodesRequired: isHypershiftSelected
