@@ -1,38 +1,38 @@
 import { AWSCredentials } from '~/types/types';
-import type { Subscription } from '../types/accounts_mgmt.v1';
+import apiRequest from './apiRequest';
 import type {
-  AWSInfrastructureAccessRole,
-  AWSInfrastructureAccessRoleGrant,
   AddOn,
   AddOnInstallation,
-  CloudProvider,
-  CloudRegion,
-  CloudVPC,
-  Cluster,
-  ClusterStatus,
-  DNSDomain,
-  EncryptionKey,
-  Flavour,
-  GCP,
-  Group,
-  IdentityProvider,
-  InflightCheck,
+  Version,
+  AWSInfrastructureAccessRole,
+  AWSInfrastructureAccessRoleGrant,
   Ingress,
-  KeyRing,
-  LimitedSupportReason,
-  Log,
-  MachinePool,
-  MachineType,
-  NodePool,
-  OidcConfig,
   UpgradePolicy,
   UpgradePolicyState,
-  User,
-  Version,
+  MachinePool,
+  NodePool,
+  CloudVPC,
+  KeyRing,
+  EncryptionKey,
+  CloudRegion,
   VersionGate,
   VersionGateAgreement,
+  User,
+  MachineType,
+  Cluster,
+  ClusterStatus,
+  Log,
+  CloudProvider,
+  IdentityProvider,
+  Group,
+  GCP,
+  Flavour,
+  LimitedSupportReason,
+  OidcConfig,
+  InflightCheck,
+  DNSDomain,
 } from '../types/clusters_mgmt.v1';
-import apiRequest from './apiRequest';
+import type { Subscription } from '../types/accounts_mgmt.v1';
 
 const getClusters = (search: string, size: number = -1) =>
   apiRequest.post<{
@@ -925,20 +925,20 @@ const clusterService = {
 };
 
 export {
-  deleteControlPlaneUpgradeSchedule,
-  deleteUpgradeSchedule,
+  postUpgradeSchedule,
+  postControlPlaneUpgradeSchedule,
+  getUpgradeSchedules,
   getControlPlaneUpgradeSchedules,
   getUpgradeScheduleState,
-  getUpgradeSchedules,
-  listAWSRegions,
+  deleteUpgradeSchedule,
+  deleteControlPlaneUpgradeSchedule,
+  patchUpgradeSchedule,
+  patchControlPlaneUpgradeSchedule,
   listAWSVPCs,
+  listGCPVPCs,
   listGCPKeyRings,
   listGCPKeys,
-  listGCPVPCs,
-  patchControlPlaneUpgradeSchedule,
-  patchUpgradeSchedule,
-  postControlPlaneUpgradeSchedule,
-  postUpgradeSchedule,
+  listAWSRegions,
 };
 
 export default clusterService;
