@@ -19,6 +19,7 @@ exports[`<InstallProgress /> should render correclty installing cluster 1`] = `
         "items": null,
         "kind": "AWSInfrastructureAccessRoleGrantLink",
       },
+      "billing_model": "standard",
       "ccs": Object {
         "disable_scp_checks": false,
         "enabled": false,

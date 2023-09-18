@@ -318,7 +318,7 @@ const updateClusterAddOn = (clusterID: string, addOnID: string, data: AddOnInsta
 const deleteClusterAddOn = (clusterID: string, addOnID: string) =>
   apiRequest.delete<unknown>(`/api/clusters_mgmt/v1/clusters/${clusterID}/addons/${addOnID}`);
 
-const getInstallableVersions = (isRosa: boolean) =>
+const getInstallableVersions = (isRosa: boolean, isMarketplaceGcp: boolean) =>
   apiRequest.get<{
     /**
      * Retrieved list of versions.
@@ -344,7 +344,9 @@ const getInstallableVersions = (isRosa: boolean) =>
       order: 'end_of_life_timestamp desc',
       // Internal users can test other channels via `ocm` CLI, no UI needed.
       // For external users, make sure we only offer stable channel.
-      search: `enabled='t' AND channel_group='stable' ${isRosa ? " AND rosa_enabled='t'" : ''}`,
+      search: `enabled='t' AND channel_group='stable'${isRosa ? " AND rosa_enabled='t'" : ''}${
+        isMarketplaceGcp ? " AND gcp_marketplace_enabled='t'" : ''
+      }`,
       size: -1,
     },
   });
