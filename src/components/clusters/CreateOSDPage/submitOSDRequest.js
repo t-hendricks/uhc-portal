@@ -107,7 +107,7 @@ export const createClusterRequest = ({ isWizard = true, cloudProviderID, product
   }
 
   if (formData.cluster_version) {
-    clusterRequest.version = formData.cluster_version;
+    clusterRequest.version = { id: formData.cluster_version.id };
   }
 
   if (formData.autoscalingEnabled) {

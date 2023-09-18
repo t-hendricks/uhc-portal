@@ -79,6 +79,9 @@ const noQuotaTooltip =
 const noMachineTypes =
   'You do not have enough quota to create a cluster with the minimum required worker capacity. Contact sales to purchase additional quota.';
 
+const nodeKeyValueTooltipText =
+  "To add an additional label, make sure all of your labels' keys are filled out (value fields are optional).";
+
 /**
  * Returns true if an object is empty or if all its direct children are empty.
  *
@@ -254,6 +257,7 @@ export {
   randAlphanumString,
   noQuotaTooltip,
   noMachineTypes,
+  nodeKeyValueTooltipText,
   strToCleanObject,
   shouldRefetchQuota,
   scrollToFirstField,

@@ -23,12 +23,10 @@ describe('OCM Mainpage - cluster list page', () => {
             ClusterListPage.clickClusterTypes("OCP");
             ClusterListPage.clickClusterTypes("OSD");
             ClusterListPage.clickClusterTypes("ROSA");
-            ClusterListPage.clickClusterTypes("ROSA - Hosted");
             ClusterListPage.clickClusterTypes("ARO");
             ClusterListPage.clickClusterTypes("OCP");
             ClusterListPage.clickClusterTypes("OSD");
             ClusterListPage.clickClusterTypes("ROSA");
-            ClusterListPage.clickClusterTypes("ROSA - Hosted");
             ClusterListPage.clickClusterTypes("ARO");
         });
         it('Cluster list page : extra options & its actions', () => {

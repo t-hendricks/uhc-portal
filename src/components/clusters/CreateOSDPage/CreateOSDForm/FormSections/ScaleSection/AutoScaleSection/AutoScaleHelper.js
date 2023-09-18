@@ -1,5 +1,6 @@
 import max from 'lodash/max';
 import { normalizedProducts } from '../../../../../../../common/subscriptionTypes';
+import { constants } from '../../../CreateOSDFormConstants';
 
 const getMinNodesAllowed = ({
   isDefaultMachinePool,
@@ -48,6 +49,16 @@ export const getMinReplicasCount = (isBYOC, isMultiAz, asString, isHypershiftSel
     minReplicas = getNodesCount(isBYOC, isMultiAz);
   }
   return asString ? `${minReplicas}` : minReplicas;
+};
+
+export const computeNodeHintText = (isHypershiftWizard, isAddEditHypershiftModal) => {
+  if (isHypershiftWizard) {
+    return constants.hcpComputeNodeCountHintWizard;
+  }
+  if (isAddEditHypershiftModal) {
+    return constants.hcpComputeNodeCountHint;
+  }
+  return constants.computeNodeCountHint;
 };
 
 export default getMinNodesAllowed;

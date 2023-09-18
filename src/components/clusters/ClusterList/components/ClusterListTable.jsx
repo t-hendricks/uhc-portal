@@ -27,12 +27,14 @@ import { global_warning_color_100 as warningColor } from '@patternfly/react-toke
 import { Link } from 'react-router-dom';
 import * as OCM from '@openshift-assisted/ui-lib/ocm';
 import SearchIcon from '@patternfly/react-icons/dist/esm/icons/search-icon';
+import { InflightCheckState } from '~/types/clusters_mgmt.v1';
 import ClusterStateIcon from '../../common/ClusterStateIcon/ClusterStateIcon';
 import ClusterLocationLabel from '../../common/ClusterLocationLabel';
 import clusterStates, {
   getClusterStateAndDescription,
   isWaitingROSAManualMode,
   isWaitingForOIDCProviderOrOperatorRolesMode,
+  getInflightChecks,
 } from '../../common/clusterStates';
 import ClusterUpdateLink from '../../common/ClusterUpdateLink';
 import ClusterCreatedIndicator from './ClusterCreatedIndicator';
@@ -120,14 +122,35 @@ function ClusterListTable(props) {
           limitedSupport={hasLimitedSupport}
         />
       );
-      if (state === clusterStates.ERROR) {
+
+      const inflightChecks = getInflightChecks(cluster);
+      const inflightError = inflightChecks.find(
+        (check) => check.state === InflightCheckState.FAILED,
+      );
+
+      if (state === clusterStates.ERROR || inflightError) {
+        let documentLink;
+        let reason = 'Your cluster is in error state.';
+        if (inflightError) {
+          reason = 'Network validation failed.';
+          documentLink = get(inflightError, 'details.documentation_link');
+        }
+
         return (
           <span>
             <Popover
               position={PopoverPosition.top}
               bodyContent={
                 <>
-                  Your cluster is in error state.{' '}
+                  {`${reason} `}
+                  {documentLink && (
+                    <>
+                      <a href={documentLink} target="_blank" rel="noopener noreferrer">
+                        Review egress requirements
+                      </a>
+                      {'  or  '}
+                    </>
+                  )}
                   <a
                     href="https://access.redhat.com/support/cases/#/case/new"
                     target="_blank"
@@ -163,7 +186,8 @@ function ClusterListTable(props) {
         state === clusterStates.WAITING ||
         state === clusterStates.PENDING ||
         state === clusterStates.VALIDATING ||
-        state === clusterStates.INSTALLING
+        state === clusterStates.INSTALLING ||
+        inflightChecks.find((check) => check.state === InflightCheckState.RUNNING)
       ) {
         return (
           <Popover

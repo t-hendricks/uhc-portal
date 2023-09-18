@@ -37,8 +37,8 @@ describe('<ReduxFormKeyValueList />', () => {
 
   it('should add a new item', () => {
     wrapper.setProps({ fields: listWithItemsFields });
-    const addBtn = wrapper.find('Button[className="reduxFormKeyValueList-addBtn"]');
-    addBtn.simulate('click');
+    const addBtn = wrapper.find('.reduxFormKeyValueList-addBtn');
+    addBtn.at(0).simulate('click');
     expect(listWithItemsFields.push).toBeCalled();
   });
 

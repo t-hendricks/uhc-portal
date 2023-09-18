@@ -46,6 +46,7 @@
     "i18next-browser-languagedetector": "^6.1.2",
     "immer": "^9.0.6",
     "imports-loader": "^4.0.1",
+    "is-promise": "^4.0.0",
     "jsonschema": "^1.2.10",
     "jszip": "^3.9.0",
     "keycloak-js": "^18.0.0",

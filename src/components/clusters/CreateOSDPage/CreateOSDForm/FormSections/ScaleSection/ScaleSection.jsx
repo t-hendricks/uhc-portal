@@ -27,6 +27,7 @@ import { required } from '../../../../../../common/validators';
 import ExternalLink from '../../../../../common/ExternalLink';
 import AutoScaleSection from './AutoScaleSection/AutoScaleSection';
 import WorkerNodeVolumeSizeSection from './WorkerNodeVolumeSizeSection/WorkerNodeVolumeSizeSection';
+import { computeNodeHintText } from './AutoScaleSection/AutoScaleHelper';
 
 function ScaleSection({
   pending,
@@ -51,12 +52,13 @@ function ScaleSection({
   poolNumber,
   maxWorkerVolumeSizeGiB,
   isHypershift,
+  forceTouch,
 }) {
   const onChangeImds = (value) => {
     change('imds', value);
   };
 
-  const expandableSectionTitle = isMachinePool ? 'Edit node labels and taints' : 'Edit node labels';
+  const expandableSectionTitle = isMachinePool ? 'Edit node labels and taints' : 'Add node labels';
 
   const labelsAndTaintsSection =
     isHypershift && !inModal ? null : (
@@ -64,10 +66,11 @@ function ScaleSection({
         toggleTextCollapsed={expandableSectionTitle}
         toggleTextExpanded={expandableSectionTitle}
       >
-        <Title headingLevel="h3" className="pf-u-mb-md pf-u-mt-lg">
-          Node labels
-        </Title>
-        <FieldArray name="node_labels" component={ReduxFormKeyValueList} />
+        <Title headingLevel="h3">Node labels (optional)</Title>
+        <p className="pf-u-mb-md">
+          Configure labels that will apply to all nodes in this machine pool.
+        </p>
+        <FieldArray name="node_labels" forceTouch={forceTouch} component={ReduxFormKeyValueList} />
         {isMachinePool && (
           <>
             <Title headingLevel="h3" className="pf-u-mb-md pf-u-mt-lg">
@@ -94,8 +97,9 @@ function ScaleSection({
   );
 
   const isRosa = product === normalizedProducts.ROSA;
-  const isHypershiftWizard = isHypershift && !inModal;
 
+  const isHypershiftWizard = isHypershift && !inModal;
+  const isAddHypershiftModal = isHypershift && inModal;
   const nonAutoScaleNodeLabel = () => {
     const label = 'Compute node count';
 
@@ -168,6 +172,7 @@ function ScaleSection({
               isDefaultMachinePool={!isMachinePool && !isHypershift}
               minNodesRequired={minNodesRequired}
               isHypershiftWizard={isHypershiftWizard}
+              isHypershiftMachinePool={isAddHypershiftModal}
               numPools={nodeIncrement}
             />
           </GridItem>
@@ -182,6 +187,7 @@ function ScaleSection({
           <GridItem md={6}>
             <Field
               component={NodeCountInput}
+              buttonAriaLabel="Compute node count information"
               name="nodes_compute"
               label={nonAutoScaleNodeLabel()}
               isMultiAz={isMultiAz}
@@ -190,7 +196,7 @@ function ScaleSection({
               isDisabled={pending}
               extendedHelpText={
                 <>
-                  {constants.computeNodeCountHint}{' '}
+                  {computeNodeHintText(isHypershiftWizard, isAddHypershiftModal)}{' '}
                   <ExternalLink
                     href={
                       isRosa
@@ -295,6 +301,7 @@ ScaleSection.propTypes = {
   imds: PropTypes.string,
   poolNumber: PropTypes.number,
   maxWorkerVolumeSizeGiB: PropTypes.number.isRequired,
+  forceTouch: PropTypes.bool,
 };
 
 export default ScaleSection;

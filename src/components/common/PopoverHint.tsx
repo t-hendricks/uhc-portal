@@ -8,6 +8,7 @@ interface PopoverHintProps extends Omit<PopoverProps, 'bodyContent'> {
   hint?: React.ReactNode;
   title?: React.ReactNode;
   iconClassName?: string;
+  buttonAriaLabel?: string;
   footer?: React.ReactNode;
   bodyContent?: React.ReactNode | ((hide: () => void) => React.ReactNode);
 }
@@ -18,6 +19,7 @@ const PopoverHint = ({
   iconClassName,
   footer,
   bodyContent,
+  buttonAriaLabel,
   ...popoverProps
 }: PopoverHintProps) => (
   <>
@@ -28,7 +30,11 @@ const PopoverHint = ({
       bodyContent={bodyContent ?? hint}
       {...popoverProps}
     >
-      <Button className="popover-hint-button" aria-label="More information" variant="plain">
+      <Button
+        className="popover-hint-button"
+        aria-label={buttonAriaLabel || 'More information'}
+        variant="plain"
+      >
         <span className={iconClassName}>
           <OutlinedQuestionCircleIcon />
         </span>

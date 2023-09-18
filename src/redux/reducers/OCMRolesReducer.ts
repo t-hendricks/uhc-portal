@@ -4,11 +4,20 @@ import {
   PENDING_ACTION,
   FULFILLED_ACTION,
   baseRequestState,
-} from '../../../../../../redux/reduxHelpers';
-import { getErrorState } from '../../../../../../common/errors';
-import OCMRolesConstants from './OCMRolesConstants';
+} from '../reduxHelpers';
+import { getErrorState } from '../../common/errors';
+import { PromiseActionType, PromiseReducerState } from '../types';
+import OCMRolesConstants from '../constants/OCMRolesConstants';
+import { OCMRoleAction } from '../actions/OCMRolesActions';
 
-const initialState = {
+type State = {
+  getOCMRolesResponse: PromiseReducerState<{ data: any }>;
+  grantOCMRoleResponse: PromiseReducerState<{}>;
+  editOCMRoleResponse: PromiseReducerState<{}>;
+  deleteOCMRoleResponse: PromiseReducerState<{}>;
+};
+
+const initialState: State = {
   getOCMRolesResponse: {
     ...baseRequestState,
     data: {},
@@ -24,7 +33,7 @@ const initialState = {
   },
 };
 
-function OCMRolesReducer(state = initialState, action) {
+function OCMRolesReducer(state = initialState, action: PromiseActionType<OCMRoleAction>) {
   // eslint-disable-next-line consistent-return
   return produce(state, (draft) => {
     // eslint-disable-next-line default-case
@@ -70,25 +79,6 @@ function OCMRolesReducer(state = initialState, action) {
         };
         break;
 
-      // EDIT_OCM_ROLE
-      case PENDING_ACTION(OCMRolesConstants.EDIT_OCM_ROLE):
-        draft.editOCMRoleResponse.pending = true;
-        break;
-
-      case FULFILLED_ACTION(OCMRolesConstants.EDIT_OCM_ROLE):
-        draft.editOCMRoleResponse = {
-          ...baseRequestState,
-          fulfilled: true,
-        };
-        break;
-
-      case REJECTED_ACTION(OCMRolesConstants.EDIT_OCM_ROLE):
-        draft.editOCMRoleResponse = {
-          ...baseRequestState,
-          ...getErrorState(action),
-        };
-        break;
-
       // DELETE_OCM_ROLE
       case PENDING_ACTION(OCMRolesConstants.DELETE_OCM_ROLE):
         draft.deleteOCMRoleResponse.pending = true;
@@ -117,12 +107,6 @@ function OCMRolesReducer(state = initialState, action) {
 
       case OCMRolesConstants.CLEAR_GRANT_OCM_ROLE_RESPONSE:
         draft.grantOCMRoleResponse = {
-          ...baseRequestState,
-        };
-        break;
-
-      case OCMRolesConstants.CLEAR_EDIT_OCM_ROLE_RESPONSE:
-        draft.editOCMRoleResponse = {
           ...baseRequestState,
         };
         break;

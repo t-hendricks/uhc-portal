@@ -159,7 +159,7 @@ describe('createViewQueryObject()', () => {
     const expected = {
       ...baseResult,
       has_filters: false,
-      filter: `${baseResult.filter} AND (plan_id IN ('OCP','OCP-AssistedInstall','MOA','ROSA'))`,
+      filter: `${baseResult.filter} AND (plan_id IN ('OCP','OCP-AssistedInstall','MOA','ROSA','MOA-HostedControlPlane'))`,
     };
 
     expect(createViewQueryObject(viewOptions)).toEqual(expected);
