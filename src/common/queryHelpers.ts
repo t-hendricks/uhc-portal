@@ -1,7 +1,8 @@
 import isEqual from 'lodash/isEqual';
 import isEmpty from 'lodash/isEmpty';
-import { omittedProducts, productFilterOptions } from './subscriptionTypes';
+import { GetClusterHistoryParams } from '~/services/serviceLogService';
 import { ViewOptions } from '../types/types';
+import { omittedProducts, productFilterOptions } from './subscriptionTypes';
 
 type QueryObject = { [key: string]: string | number | boolean };
 
@@ -105,10 +106,12 @@ const createViewQueryObject = (viewOptions?: ViewOptions, username?: string): Qu
 
 const createServiceLogQueryObject = (
   viewOptions?: ViewOptions,
-  queryObj?: QueryObject,
-): QueryObject => {
-  const queryObject: QueryObject = {
-    ...queryObj,
+  format?: GetClusterHistoryParams['format'],
+): GetClusterHistoryParams => {
+  const queryObject: GetClusterHistoryParams = {
+    page: 1,
+    page_size: -1,
+    format,
   };
 
   if (viewOptions) {

@@ -18,11 +18,10 @@ class ClusterLogsToolbar extends React.PureComponent {
       externalClusterID,
       currentFilter,
       currentFlags,
-      clusterLogs,
-      downloadClusterLogs,
       clearFiltersAndFlags,
       isPendingNoData,
       createdAt,
+      clusterID,
     } = this.props;
 
     return (
@@ -51,9 +50,8 @@ class ClusterLogsToolbar extends React.PureComponent {
             <ToolbarItem>
               <ClusterLogsDownload
                 externalClusterID={externalClusterID}
+                clusterID={clusterID}
                 viewOptions={viewOptions}
-                clusterLogs={clusterLogs}
-                downloadClusterLogs={downloadClusterLogs}
               />
             </ToolbarItem>
             <ToolbarItem alignment={{ default: 'alignRight' }} variant="pagination">
@@ -100,10 +98,9 @@ ClusterLogsToolbar.propTypes = {
   }).isRequired,
   externalClusterID: PropTypes.string.isRequired,
   viewOptions: PropTypes.object.isRequired,
-  clusterLogs: PropTypes.object.isRequired,
-  downloadClusterLogs: PropTypes.func.isRequired,
   isPendingNoData: PropTypes.bool.isRequired,
   createdAt: PropTypes.string.isRequired,
+  clusterID: PropTypes.string.isRequired,
 };
 
 export default ClusterLogsToolbar;
