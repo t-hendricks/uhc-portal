@@ -13,8 +13,8 @@ import {
 } from '@patternfly/react-core';
 import { Field } from 'redux-form';
 
-import getMinNodesAllowed, { computeNodeHintText } from './AutoScaleHelper';
 import EditClusterAutoScalingDialog from '~/components/clusters/common/EditClusterAutoScalingDialog';
+import getMinNodesAllowed, { computeNodeHintText } from './AutoScaleHelper';
 import ReduxCheckbox from '../../../../../../common/ReduxFormComponents/ReduxCheckbox';
 import ExternalLink from '../../../../../../common/ExternalLink';
 import PopoverHint from '../../../../../../common/PopoverHint';

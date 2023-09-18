@@ -119,7 +119,6 @@ export { MachineTypeSize } from './models/MachineTypeSize';
 export type { ManagedService } from './models/ManagedService';
 export type { Manifest } from './models/Manifest';
 export type { Metadata } from './models/Metadata';
-export { NamespaceOwnershipPolicy } from './models/NamespaceOwnershipPolicy';
 export type { Network } from './models/Network';
 export type { NetworkVerification } from './models/NetworkVerification';
 export type { NodeInfo } from './models/NodeInfo';
@@ -164,7 +163,6 @@ export type { Value } from './models/Value';
 export type { Version } from './models/Version';
 export type { VersionGate } from './models/VersionGate';
 export type { VersionGateAgreement } from './models/VersionGateAgreement';
-export { WildcardPolicy } from './models/WildcardPolicy';
 
 export type { STSAccountRole } from './models_/STSAccountRole';
 export type { STSAccountRoles } from './models_/STSAccountRoles';
