@@ -62,7 +62,6 @@ openapi: run/ocm-api-model run/ocm-api-metamodel
 	cat run/ocm-api-model/openapi/clusters_mgmt/v1/openapi.json | jq . > openapi/clusters_mgmt.v1.json
 
 # Patching /etc/hosts is needed (once) for development with local server;
-# NOT needed for selenium tests where we arrange it in the container running the browser.
 .PHONY: insights-proxy-check
 .SILENT: insights-proxy-check
 insights-proxy-check: run/insights-proxy
