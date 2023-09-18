@@ -2,7 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import get from 'lodash/get';
 
-import { Alert, Flex, FlexItem, ExpandableSection, Title } from '@patternfly/react-core';
+import PlusCircleIcon from '@patternfly/react-icons/dist/esm/icons/plus-circle-icon';
+import MinusCircleIcon from '@patternfly/react-icons/dist/esm/icons/minus-circle-icon';
+import { Alert, Flex, FlexItem, Button } from '@patternfly/react-core';
+import { TableVariant, TableComposable, Thead, Tr, Th, Tbody, Td } from '@patternfly/react-table';
 
 import { InflightCheckState } from '~/types/clusters_mgmt.v1';
 import clusterStates from '../../../../common/clusterStates';
@@ -115,49 +118,65 @@ class clusterStatusMonitor extends React.Component {
 
         if (inflightError) {
           let documentLink;
-          const subnets = [];
-          let reasonExpandableSection;
+          let subnets = [];
+          let inflightTable;
           if (inflightError) {
             reason =
-              'To configure your VPC, review the egress requirements or contact Red Hat support.';
+              'To allow this cluster to be fully-managed, add these URLs to the allowlist of these subnet firewalls. For more information review the egress requirements or contact Red Hat support.';
             const { details } = inflightError;
             Object.keys(details).forEach((dkey) => {
               if (dkey === 'documentation_link') {
                 documentLink = details[dkey];
               } else if (dkey.startsWith('subnet')) {
-                const logs = [];
-                subnets.push({ name: dkey, logs });
+                const egressErrors = [];
+                subnets.push({ name: dkey, egressErrors });
                 Object.keys(details[dkey]).forEach((skey) => {
-                  if (skey.indexOf('log') !== -1) {
-                    logs.push(details[dkey][skey]);
+                  if (skey.startsWith('egress_url_errors')) {
+                    egressErrors.push(details[dkey][skey].split(' ').pop());
                   }
                 });
               }
             });
             if (subnets.length) {
-              reasonExpandableSection = (
-                <ExpandableSection
-                  toggleTextCollapsed="View logs"
-                  toggleTextExpanded="Hide logs"
-                  onToggle={(isExpanded) => this.toggleExpanded(isExpanded)}
-                  isExpanded={isExpanded}
-                >
-                  {subnets.map(({ name, logs }) => (
-                    <div
-                      style={{
-                        color: '#f5f5f5',
-                        backgroundColor: '#030303',
-                        padding: '10px',
-                        fontFamily: 'var(--pf-global--FontFamily--monospace)',
-                      }}
+              const hasMore = subnets.length > 1;
+              if (hasMore && !isExpanded) subnets = subnets.slice(0, 1);
+              const columns = [{ title: 'Subnet' }, { title: 'URLs' }];
+              const subnetRow = ({ name, egressErrors }) => (
+                <Tbody>
+                  <Tr>
+                    <Td />
+                    <Td modifier="nowrap">{name}</Td>
+                    <Td style={{ whiteSpace: 'break-spaces' }}>{egressErrors.join(',   ')}</Td>
+                  </Tr>
+                </Tbody>
+              );
+              inflightTable = (
+                <>
+                  <TableComposable
+                    aria-label="Missing allowlist URLs"
+                    variant={TableVariant.compact}
+                    style={{ backgroundColor: 'unset' }}
+                  >
+                    <Thead>
+                      <Tr>
+                        <Th />
+                        {columns.map((column) => (
+                          <Th>{column.title}</Th>
+                        ))}
+                      </Tr>
+                    </Thead>
+                    {subnets.map((subnet) => subnetRow(subnet))}
+                  </TableComposable>
+                  {hasMore && (
+                    <Button
+                      variant="link"
+                      icon={isExpanded ? <MinusCircleIcon /> : <PlusCircleIcon />}
+                      onClick={() => this.toggleExpanded(!isExpanded)}
                     >
-                      <Title headingLevel="h3">{name}</Title>
-                      {logs[0].split('\n').map((line) => (
-                        <p>{line}</p>
-                      ))}
-                    </div>
-                  ))}
-                </ExpandableSection>
+                      {isExpanded ? 'Show less' : 'Show more'}
+                    </Button>
+                  )}
+                </>
               );
             }
           }
@@ -169,7 +188,7 @@ class clusterStatusMonitor extends React.Component {
             >
               <Flex direction={{ default: 'column' }}>
                 <FlexItem>{`${reason}`}</FlexItem>
-                {reasonExpandableSection && <FlexItem>{reasonExpandableSection}</FlexItem>}
+                {inflightTable && <FlexItem>{inflightTable}</FlexItem>}
                 <FlexItem>
                   <Flex direction={{ default: 'row' }}>
                     {documentLink && (
