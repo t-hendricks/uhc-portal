@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`BillingModelLabel for OSD CCS cluster 1`] = `"Standard"`;
+exports[`BillingModelLabel for OSD CCS cluster 1`] = `"Subscription (yearly)"`;
 
-exports[`BillingModelLabel for OSD rhInfra cluster 1`] = `"Standard"`;
+exports[`BillingModelLabel for OSD rhInfra cluster 1`] = `"Subscription (yearly)"`;
 
 exports[`BillingModelLabel for OSDTrial CCS cluster 1`] = `"Free trial, upgradeable"`;

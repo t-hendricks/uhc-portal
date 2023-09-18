@@ -21,7 +21,7 @@ function BillingModelLabel({ cluster }) {
   }
 
   // OSD CCS marketplace
-  if (planType === OSD && billingModel === MARKETPLACE && CCS) {
+  if (planType === OSD && billingModel.startsWith(MARKETPLACE) && CCS) {
     return 'On-Demand (hourly)';
   }
 

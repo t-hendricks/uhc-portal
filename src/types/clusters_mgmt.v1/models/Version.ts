@@ -58,4 +58,8 @@ export type Version = {
    * ReleaseImage contains the URI of Openshift release image
    */
   release_image?: string;
+  /**
+   * Whether this version can be used with GCP marketplace
+   */
+  gcp_marketplace_enabled?: boolean;
 };

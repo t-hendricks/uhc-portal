@@ -12,6 +12,7 @@ import { clustersActions } from '~/redux/actions';
 import { useGlobalState } from '~/redux/hooks';
 import { Version } from '~/types/clusters_mgmt.v1';
 import { FieldId } from '~/components/clusters/wizards/osd/constants';
+import { billingModels } from '~/common/subscriptionTypes';
 
 interface VersionSelectFieldProps {
   label: string;
@@ -26,13 +27,19 @@ export const VersionSelectField = ({ name, label, isDisabled }: VersionSelectFie
     (state) => state.clusters,
   );
   const {
-    values: { [FieldId.ClusterVersion]: selectedClusterVersion },
+    values: {
+      [FieldId.ClusterVersion]: selectedClusterVersion,
+      [FieldId.BillingModel]: billingModel,
+    },
     setFieldValue,
   } = useFormState();
   const [isOpen, setIsOpen] = useState(false);
   const [versions, setVersions] = useState<Version[]>([]);
 
-  const getInstallableVersions = () => dispatch(clustersActions.getInstallableVersions(false));
+  const isMarketplaceGcp = billingModel === billingModels.MARKETPLACE_GCP;
+
+  const getInstallableVersions = () =>
+    dispatch(clustersActions.getInstallableVersions(false, isMarketplaceGcp));
 
   useEffect(() => {
     if (getInstallableVersionsResponse.fulfilled) {
@@ -115,6 +122,7 @@ export const VersionSelectField = ({ name, label, isDisabled }: VersionSelectFie
           onToggle={onToggle}
           onSelect={onSelect}
           isDisabled={isDisabled}
+          toggleId="version-selector"
         >
           {versions.map((version) => (
             <SelectOption

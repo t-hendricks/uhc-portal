@@ -49,6 +49,7 @@ import {
   QuotaParams,
 } from '~/components/clusters/wizards/common/utils/quotas';
 import { FieldId } from '~/components/clusters/wizards/osd/constants';
+import { billingModels } from '~/common/subscriptionTypes';
 import { VersionSelectField } from './VersionSelectField';
 import CloudRegionSelectField from './CloudRegionSelectField';
 import { CustomerManagedEncryption } from './CustomerManagedEncryption';
@@ -204,7 +205,14 @@ export const Details = () => {
           </GridItem>
 
           <GridItem>
-            <VersionSelectField name={FieldId.ClusterVersion} label="Version" />
+            <VersionSelectField
+              name={FieldId.ClusterVersion}
+              label={
+                billingModel === billingModels.MARKETPLACE_GCP
+                  ? 'Version (Google Cloud Marketplace enabled)'
+                  : 'Version'
+              }
+            />
           </GridItem>
 
           <GridItem>
