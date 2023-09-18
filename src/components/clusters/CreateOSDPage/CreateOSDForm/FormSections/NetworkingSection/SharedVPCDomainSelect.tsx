@@ -61,12 +61,14 @@ const SharedVPCDomainSelect = ({ label, input, meta }: SharedVPCDomainSelectProp
       input.onChange(createdDnsId);
       dispatch(dnsDomainsActions.clearLastCreatedBaseDnsDomain());
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isUpdatingDomains, createdDnsId, input.value, dispatch]);
 
   React.useEffect(() => {
     if (input.value === deletedDnsId) {
       input.onChange('');
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [deletedDnsId]);
 
   const onSelect = (

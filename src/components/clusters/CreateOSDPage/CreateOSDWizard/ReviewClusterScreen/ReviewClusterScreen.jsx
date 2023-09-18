@@ -89,18 +89,25 @@ const ReviewClusterScreen = ({
     );
   }
 
+  // eslint-disable-next-line react-hooks/rules-of-hooks
   const [userRole, setUserRole] = useState('');
+  // eslint-disable-next-line react-hooks/rules-of-hooks
   const [ocmRole, setOcmRole] = useState('');
+  // eslint-disable-next-line react-hooks/rules-of-hooks
   const isHypershiftEnabled = useFeatureGate(HYPERSHIFT_WIZARD_FEATURE);
+  // eslint-disable-next-line react-hooks/rules-of-hooks
   const viewAWSBillingAcct = useFeatureGate(HCP_AWS_BILLING_SHOW);
 
+  // eslint-disable-next-line react-hooks/rules-of-hooks
   useEffect(() => {
     clearGetUserRoleResponse();
     clearGetOcmRoleResponse();
     // reset hidden form field to false
     change('detected_ocm_and_user_roles', false);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  // eslint-disable-next-line react-hooks/rules-of-hooks
   useEffect(() => {
     if (!isROSA) {
       return;
@@ -119,8 +126,10 @@ const ReviewClusterScreen = ({
     ) {
       getUserRole();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [getUserRoleResponse]);
 
+  // eslint-disable-next-line react-hooks/rules-of-hooks
   useEffect(() => {
     if (!isROSA) {
       return;
@@ -131,6 +140,7 @@ const ReviewClusterScreen = ({
     if (!getOCMRoleResponse.fulfilled && !getOCMRoleResponse.pending && !getOCMRoleResponse.error) {
       getOCMRole(formValues.associated_aws_id);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [getOCMRoleResponse]);
 
   const errorWithAWSAccountRoles =

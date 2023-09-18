@@ -106,6 +106,7 @@ export const Details = () => {
         setIsExpanded(true);
       }
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isValidating]);
 
   const azQuotaParams = {

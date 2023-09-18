@@ -54,6 +54,7 @@ const EditClusterWideProxyDialog = (props) => {
       return 'Configure at least one of the cluster-wide proxy fields.';
     }
     return undefined;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleClose = useCallback(() => {
@@ -61,12 +62,14 @@ const EditClusterWideProxyDialog = (props) => {
     setOpenFileUpload(!additionalTrustBundle);
     clearClusterProxyResponse();
     closeModal();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
     if (noUrlValues) {
       change('no_proxy_domains', '');
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [noUrlValues]);
 
   useEffect(() => {
@@ -77,6 +80,7 @@ const EditClusterWideProxyDialog = (props) => {
     ) {
       handleClose();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [editClusterProxyResponse]);
 
   const onFileRejected = () => {

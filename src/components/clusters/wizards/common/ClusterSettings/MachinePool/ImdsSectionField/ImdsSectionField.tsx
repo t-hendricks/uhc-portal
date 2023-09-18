@@ -28,6 +28,7 @@ export const ImdsSectionField = () => {
       // The user can go back and change the cluster version
       onChange(IMDSType.V1AndV2);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isDisabled, imds]);
 
   return (

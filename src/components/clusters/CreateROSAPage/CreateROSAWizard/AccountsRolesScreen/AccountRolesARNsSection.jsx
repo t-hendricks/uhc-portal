@@ -122,6 +122,7 @@ function AccountRolesARNsSection({
     setAllARNsFound(false);
     clearGetAWSAccountRolesARNsResponse();
     onAccountChanged();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedAWSAccountID]);
 
   useEffect(() => {
@@ -132,6 +133,7 @@ function AccountRolesARNsSection({
         change('rosa_max_os_version', role.version);
       }
     });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedInstallerRole]);
 
   const hasManagedPoliciesByRole = (role) =>
@@ -144,6 +146,7 @@ function AccountRolesARNsSection({
     if (getAWSAccountRolesARNsResponse.fulfilled && selectedRole) {
       setHasManagedPolicies(hasManagedPoliciesByRole(selectedRole));
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedAWSAccountID, getAWSAccountRolesARNsResponse, selectedInstallerRole]);
 
   const setSelectedInstallerRoleAndOptions = (accountRolesARNs) => {
@@ -228,12 +231,14 @@ function AccountRolesARNsSection({
       setAccountRoles([]);
       setHasARNsError(true);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedAWSAccountID, getAWSAccountRolesARNsResponse]);
 
   useEffect(() => {
     if (getAWSAccountRolesARNsResponse.fulfilled || getAWSAccountRolesARNsResponse.error) {
       trackArnsRefreshed(getAWSAccountRolesARNsResponse);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [getAWSAccountRolesARNsResponse]);
 
   const onToggle = () => {

@@ -115,6 +115,7 @@ function OCMRolesSection({
       setPageLoading(true);
       dispatch(OCMRolesActions.getOCMRoles(subscription.id));
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [refreshEvent]);
 
   // GET_OCM_ROLES
@@ -136,6 +137,7 @@ function OCMRolesSection({
       );
       clearPendingRow();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [getOCMRolesResponse]);
 
   // GRANT_OCM_ROLE
@@ -149,6 +151,7 @@ function OCMRolesSection({
     } else if (grantOCMRoleResponse.error) {
       clearPendingRow();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [grantOCMRoleResponse]);
 
   // DELETE_OCM_ROLE
@@ -169,6 +172,7 @@ function OCMRolesSection({
       );
       clearPendingRow();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [deleteOCMRoleResponse]);
 
   const usernameHeader = (

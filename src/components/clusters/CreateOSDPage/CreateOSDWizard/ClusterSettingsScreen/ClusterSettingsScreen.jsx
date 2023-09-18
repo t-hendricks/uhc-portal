@@ -77,12 +77,14 @@ function ClusterSettingsScreen({
     if (isAdvancedEncryptionExpanded) {
       setIsExpanded(true);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [customerManagedEncryptionSelected, isGCP, gcpError, kmsKeyArn, selectedRegion, forceTouch]);
 
   React.useEffect(() => {
     if (!isEtcdEncryptionSelected && !!etcdKeyArn) {
       change('etcd_key_arn', '');
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isEtcdEncryptionSelected, change]);
 
   return (

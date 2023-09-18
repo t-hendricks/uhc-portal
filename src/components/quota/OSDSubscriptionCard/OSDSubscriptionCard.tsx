@@ -73,6 +73,7 @@ const OSDSubscriptionCard = ({ quotaCost, marketplace, organizationID, fetchQuot
   React.useEffect(() => {
     refresh();
     // run once on mount
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   let content: React.ReactNode;

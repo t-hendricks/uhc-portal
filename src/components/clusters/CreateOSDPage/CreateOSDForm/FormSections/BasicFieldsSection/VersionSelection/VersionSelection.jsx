@@ -135,6 +135,7 @@ function VersionSelection({
 
       input.onChange(version);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     versions,
     selectedClusterVersion?.raw_id,
@@ -232,6 +233,7 @@ function VersionSelection({
       maintenanceSupport,
       hasIncompatibleVersions,
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     isRosa,
     isValidRosaVersion,

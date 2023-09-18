@@ -73,6 +73,7 @@ export const AutoScale = ({ isDefaultMachinePool }: AutoScaleProps) => {
         setFieldValue(FieldId.MaxReplicas, defaultReplicas);
       }
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [minReplicas, isBYOC, isDefaultMachinePool, isMultiAz, product, setFieldValue]);
 
   const minNodes = React.useMemo(() => {

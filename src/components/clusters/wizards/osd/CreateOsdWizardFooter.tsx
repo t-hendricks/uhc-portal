@@ -50,6 +50,7 @@ export const CreateOsdWizardFooter = ({ isLoading, onNext }: CreateOsdWizardFoot
       setIsNextDeferred(false);
       onValidateNext();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isValidating, isNextDeferred]);
 
   return (

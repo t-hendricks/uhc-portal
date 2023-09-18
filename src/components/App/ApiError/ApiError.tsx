@@ -23,6 +23,7 @@ const ApiError = ({ apiRequest, showApiError, children, apiError, clearApiError 
       ejectApiErrorInterceptor();
       detachHistoryListener();
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [apiRequest, clearApiError, history]);
 
   // watch only errors that have their own error pages

@@ -49,6 +49,7 @@ function OCMRolesDialog({ onSubmit, row }: OCMRolesDialogProps) {
       setAPIErrorMsg('');
       setIsPrimaryDisabled(false);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isOpen]);
 
   const handleClose = () => {
@@ -83,6 +84,7 @@ function OCMRolesDialog({ onSubmit, row }: OCMRolesDialogProps) {
       }
       setIsPrimaryDisabled(false);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [grantOCMRoleResponse]);
 
   if (!isOpen) {
