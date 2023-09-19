@@ -33,7 +33,7 @@ const reactCSS = /@patternfly\/react-styles\/css/;
 
 const modDir = 'node_modules';
 const srcDir = path.resolve(__dirname, 'src');
-const outDir = path.resolve(__dirname, 'dist', insights.appname);
+const outDir = path.resolve(__dirname, 'dist');
 
 module.exports = async (_env, argv) => {
   const devMode = argv.mode !== 'production';
