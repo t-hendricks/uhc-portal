@@ -58,7 +58,6 @@ function NetworkScreen(props) {
   // automatically checks the "Install into an existing VPC" checkbox in the UI
   const showConfigureProxy = showClusterWideProxyCheckbox || isByocOSD;
 
-  // For ROSA, OSD GCP & AWS
   const showIngressSection = isByoc && !isHypershiftSelected;
 
   const isManagedIngressAllowed = canConfigureDayOneManagedIngress(clusterVersionRawId);
