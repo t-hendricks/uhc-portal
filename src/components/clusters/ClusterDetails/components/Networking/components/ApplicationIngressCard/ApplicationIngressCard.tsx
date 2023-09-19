@@ -16,7 +16,6 @@ import {
 
 import { LoadBalancerFlavor } from '~/types/clusters_mgmt.v1';
 import { isRestrictedEnv } from '~/restrictedEnv';
-import { CloudProviderType } from '~/components/clusters/wizards/common';
 
 import EditApplicationIngressDialog from '../EditApplicationIngressDialog';
 import ButtonWithTooltip from '../../../../../../common/ButtonWithTooltip';
@@ -74,9 +73,8 @@ const resolveDisableEditReason = ({
 };
 
 type ApplicationIngressCardProps = ResolveDisableEditReasonParams & {
-  provider?: string;
-
   isNLB?: boolean;
+  canShowLoadBalancer: boolean;
   hasSufficientIngressEditVersion?: boolean;
   clusterRoutesTlsSecretRef?: string;
   clusterRoutesHostname?: string;
@@ -94,8 +92,6 @@ type ApplicationIngressCardProps = ResolveDisableEditReasonParams & {
 };
 
 const ApplicationIngressCard: React.FC<ApplicationIngressCardProps> = ({
-  provider,
-
   canEdit,
   isReadOnly,
   isHypershift,
@@ -103,6 +99,7 @@ const ApplicationIngressCard: React.FC<ApplicationIngressCardProps> = ({
 
   isNLB,
   canEditLoadBalancer,
+  canShowLoadBalancer,
   hasSufficientIngressEditVersion,
   clusterRoutesTlsSecretRef,
   clusterRoutesHostname,
@@ -117,8 +114,6 @@ const ApplicationIngressCard: React.FC<ApplicationIngressCardProps> = ({
 
   openModal,
 }) => {
-  const isAWS = provider === CloudProviderType.Aws;
-
   const disableEditReason = resolveDisableEditReason({
     canEdit,
     isReadOnly,
@@ -214,7 +209,7 @@ const ApplicationIngressCard: React.FC<ApplicationIngressCardProps> = ({
             </>
           )}
 
-          {isAWS && (
+          {canShowLoadBalancer && (
             <FormGroup label="Load balancer type" labelIcon={<LoadBalancerPopover />}>
               <Switch
                 label={LoadBalancerFlavorLabel[LoadBalancerFlavor.NLB]}

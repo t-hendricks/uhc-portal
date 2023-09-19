@@ -5,6 +5,7 @@ import { GlobalState } from '~/redux/store';
 import { LoadBalancerFlavor } from '~/types/clusters_mgmt.v1';
 
 import { isHypershiftCluster } from '~/components/clusters/ClusterDetails/clusterDetailsHelper';
+import { CloudProviderType } from '~/components/clusters/wizards/common';
 import {
   canConfigureDayTwoManagedIngress,
   canConfigureLoadBalancer,
@@ -20,6 +21,7 @@ const mapStateToProps = (state: GlobalState) => {
 
   const provider = cluster.cloud_provider?.id;
   const isHypershift = isHypershiftCluster(cluster);
+  const isAWS = provider === CloudProviderType.Aws;
 
   const { canEdit } = cluster;
 
@@ -28,8 +30,10 @@ const mapStateToProps = (state: GlobalState) => {
   const isSTSEnabled = cluster?.aws?.sts?.enabled === true;
   const clusterHibernating = isHibernating(cluster.state);
   const clusterVersion = cluster?.openshift_version || cluster?.version?.raw_id || '';
-  const hasSufficientIngressEditVersion = canConfigureDayTwoManagedIngress(clusterVersion);
+  const hasSufficientIngressEditVersion =
+    !isHypershift && canConfigureDayTwoManagedIngress(clusterVersion);
   const canEditLoadBalancer = canConfigureLoadBalancer(clusterVersion, isSTSEnabled);
+  const canShowLoadBalancer = isAWS && !isHypershift;
 
   const {
     routeSelectors,
@@ -53,6 +57,7 @@ const mapStateToProps = (state: GlobalState) => {
     isNLB: loadBalancer === LoadBalancerFlavor.NLB,
     hasSufficientIngressEditVersion,
     canEditLoadBalancer,
+    canShowLoadBalancer,
     clusterRoutesTlsSecretRef: tlsSecretRef,
     clusterRoutesHostname: hostname,
 
