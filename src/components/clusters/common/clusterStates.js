@@ -109,7 +109,9 @@ const isWaitingForOIDCProviderOrOperatorRolesMode = (cluster) =>
   isROSA(cluster) &&
   cluster.state === clusterStates.WAITING &&
   !cluster?.aws?.sts?.auto_mode &&
-  cluster?.aws?.sts?.oidc_config?.id;
+  cluster?.aws?.sts?.oidc_config?.id &&
+  cluster?.status.description &&
+  cluster?.status.description !== 'Waiting for OIDC configuration';
 
 // Indicates that this is a Waiting Hypershift cluster
 const isWaitingHypershiftCluster = (cluster) =>

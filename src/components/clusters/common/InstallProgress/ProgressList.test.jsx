@@ -55,4 +55,13 @@ describe('<ProgressList />', () => {
     wrapper.setProps({ cluster: rosaManualMode });
     expect(wrapper).toMatchSnapshot();
   });
+
+  describe('OIDC step (RTL test)', () => {
+    // Currently there isn't a way, from the rendered HTML code
+    // to tell what state each step is in
+    // so therefore there isn't a way to test the state of the progress bar
+    // work should be done to add proper aria roles and labels to each step
+
+    it.todo('OIDC step');
+  });
 });
