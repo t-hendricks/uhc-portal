@@ -334,7 +334,7 @@ const reviewValues = {
   },
   isDefaultRouterNamespaceOwnershipPolicyStrict: {
     title: 'Namespace ownership policy',
-    valueTransform: (value) => (value ? 'Strict' : 'Inter-namespace ownership'),
+    valueTransform: (value) => (value ? 'Strict namespace ownership' : 'Inter-namespace ownership'),
   },
   gpc_vpc: {
     title: 'VPC subnet settings',

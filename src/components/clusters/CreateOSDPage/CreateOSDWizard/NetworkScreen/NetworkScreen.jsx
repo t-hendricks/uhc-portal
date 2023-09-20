@@ -58,6 +58,8 @@ function NetworkScreen(props) {
   // automatically checks the "Install into an existing VPC" checkbox in the UI
   const showConfigureProxy = showClusterWideProxyCheckbox || isByocOSD;
 
+  const showIngressSection = isByoc && !isHypershiftSelected;
+
   const isManagedIngressAllowed = canConfigureDayOneManagedIngress(clusterVersionRawId);
   const isOcp413 = isExactMajorMinor(clusterVersionRawId, 4, 13);
 
@@ -329,7 +331,7 @@ function NetworkScreen(props) {
           </>
         )}
 
-        {cloudProviderID === 'aws' && !isHypershiftSelected && (
+        {showIngressSection && (
           <>
             <GridItem>
               <Title headingLevel="h4" size="xl">
@@ -375,6 +377,8 @@ function NetworkScreen(props) {
                       <DefaultIngressFields
                         hasSufficientIngressEditVersion
                         className="pf-u-mt-md pf-u-ml-lg"
+                        isDay2={false}
+                        canShowLoadBalancer={false}
                       />
                     ),
                   },

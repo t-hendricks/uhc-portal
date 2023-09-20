@@ -51,7 +51,8 @@ export const Configuration = () => {
     isByoc && [normalizedProducts.OSD, normalizedProducts.OSDTrial].includes(product);
   const trackOcmResourceType =
     product === normalizedProducts.ROSA ? ocmResourceType.MOA : ocmResourceType.OSD;
-  const showIngressSection = cloudProvider === CloudProviderType.Aws && isByoc;
+
+  const showIngressSection = isByoc;
   const isManagedIngressAllowed = canConfigureDayOneManagedIngress(clusterVersion.raw_id);
   const isOcp413 = isExactMajorMinor(clusterVersion.raw_id, 4, 13);
 
