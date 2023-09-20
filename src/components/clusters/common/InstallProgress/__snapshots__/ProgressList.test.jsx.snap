@@ -424,6 +424,14 @@ exports[`<ProgressList /> should render when first step completed 1`] = `
   </ProgressStep>
   <ProgressStep
     description="Completed"
+    id="networkSettings"
+    titleId="networkSettings-title"
+    variant="success"
+  >
+    Network settings
+  </ProgressStep>
+  <ProgressStep
+    description="Completed"
     id="DNSSetup"
     titleId="DNSSetup-title"
     variant="success"
@@ -464,6 +472,13 @@ exports[`<ProgressList /> should render when first step in progress 1`] = `
     Account setup
   </ProgressStep>
   <ProgressStep
+    id="networkSettings"
+    titleId="networkSettings-title"
+    variant="pending"
+  >
+    Network settings
+  </ProgressStep>
+  <ProgressStep
     id="DNSSetup"
     titleId="DNSSetup-title"
     variant="pending"
@@ -489,6 +504,14 @@ exports[`<ProgressList /> should render when second step completed 1`] = `
     variant="success"
   >
     Account setup
+  </ProgressStep>
+  <ProgressStep
+    description="Completed"
+    id="networkSettings"
+    titleId="networkSettings-title"
+    variant="success"
+  >
+    Network settings
   </ProgressStep>
   <ProgressStep
     description="Completed"

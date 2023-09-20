@@ -7,6 +7,7 @@ import './ProgressList.scss';
 import ActionRequiredLink from './ActionRequiredLink';
 import clusterStates, {
   isROSA,
+  isOSD,
   isWaitingROSAManualMode,
   isWaitingForOIDCProviderOrOperatorRolesMode,
   getInflightChecks,
@@ -14,6 +15,7 @@ import clusterStates, {
 
 function ProgressList({ cluster, actionRequiredInitialOpen }) {
   const isROSACluster = isROSA(cluster);
+  const isOSDCluster = isOSD(cluster);
   const isWaitingAndROSAManual = isWaitingROSAManualMode(cluster);
   const isWaitingForOIDCProviderOrOperatorRoles =
     isWaitingForOIDCProviderOrOperatorRolesMode(cluster);
@@ -28,7 +30,7 @@ function ProgressList({ cluster, actionRequiredInitialOpen }) {
 
     // first step in progress
     if (
-      !isROSACluster &&
+      isOSDCluster &&
       (cluster.state === clusterStates.WAITING || cluster.state === clusterStates.PENDING)
     ) {
       return {
@@ -89,6 +91,8 @@ function ProgressList({ cluster, actionRequiredInitialOpen }) {
           clusterInstallation: pending,
         };
       }
+    } // end if isRosaCluster
+    if (isROSACluster || isOSDCluster) {
       if (
         cluster.state === clusterStates.VALIDATING ||
         inflightChecks.some((check) => check.state === InflightCheckState.RUNNING)
@@ -104,7 +108,7 @@ function ProgressList({ cluster, actionRequiredInitialOpen }) {
           clusterInstallation: pending,
         };
       }
-    } // end if isRosaCluster
+    }
 
     // inflight check stop install
     const inflightError = inflightChecks.some((check) => check.state === InflightCheckState.FAILED);
@@ -192,7 +196,7 @@ function ProgressList({ cluster, actionRequiredInitialOpen }) {
           OIDC and operator roles
         </ProgressStep>
       )}
-      {isROSACluster && (
+      {(isROSACluster || isOSDCluster) && (
         <ProgressStep
           variant={progressData.networkSettings.variant}
           icon={progressData.networkSettings.icon}
