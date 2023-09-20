@@ -17,6 +17,7 @@ import { constants } from '../../CreateOSDForm/CreateOSDFormConstants';
 import BasicFieldsSection from '../../CreateOSDForm/FormSections/BasicFieldsSection';
 import links from '../../../../../common/installLinks.mjs';
 import { normalizedProducts } from '../../../../../common/subscriptionTypes';
+import { validateAWSKMSKeyARN } from '~/common/validators';
 
 function ClusterSettingsScreen({
   isByoc,
@@ -27,6 +28,9 @@ function ClusterSettingsScreen({
   product,
   billingModel,
   change,
+  kmsKeyArn,
+  formErrors,
+  touch,
 }) {
   const [isExpanded, setIsExpanded] = useState(false);
 
@@ -35,6 +39,27 @@ function ClusterSettingsScreen({
   };
 
   const isRosa = product === normalizedProducts.ROSA;
+  const isGCP = cloudProviderID === 'gcp';
+
+  const {
+    key_ring: keyRingError,
+    key_name: keyNameError,
+    kms_service_account: kmsServiceAccountError,
+  } = formErrors;
+
+  const gcpError = keyRingError || keyNameError || kmsServiceAccountError;
+
+  React.useEffect(() => {
+    if (customerManagedEncryptionSelected === 'true') {
+      if (isGCP && gcpError) {
+        setIsExpanded(true);
+      }
+      if (!isGCP && validateAWSKMSKeyARN(kmsKeyArn, selectedRegion)) {
+        setIsExpanded(true);
+        touch('CreateCluster', 'kms_key_arn');
+      }
+    }
+  }, []);
 
   return (
     <Form
@@ -110,6 +135,7 @@ function ClusterSettingsScreen({
               customerManagedEncryptionSelected={customerManagedEncryptionSelected}
               selectedRegion={selectedRegion}
               cloudProviderID={cloudProviderID}
+              kmsKeyArn={kmsKeyArn}
             />
           )}
           <GridItem md={6}>
@@ -146,11 +172,14 @@ ClusterSettingsScreen.propTypes = {
   isByoc: PropTypes.bool,
   cloudProviderID: PropTypes.string,
   isMultiAz: PropTypes.bool,
-  customerManagedEncryptionSelected: PropTypes.bool,
+  customerManagedEncryptionSelected: PropTypes.string,
   product: PropTypes.string,
   billingModel: PropTypes.string,
   selectedRegion: PropTypes.string,
   change: PropTypes.func,
+  kmsKeyArn: PropTypes.string,
+  formErrors: PropTypes.object,
+  touch: PropTypes.func,
 };
 
 export default ClusterSettingsScreen;

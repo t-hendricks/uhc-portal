@@ -11,20 +11,25 @@ import {
   RadioGroupOption,
   TextInputField,
 } from '~/components/clusters/wizards/form';
+import { useFormState } from '~/components/clusters/wizards/hooks';
 import { FieldId } from '~/components/clusters/wizards/osd/constants';
 import { GcpEncryption } from './GcpEncryption';
 
 interface CustomerManagedEncryptionProps {
-  hasCustomerManagedKey: boolean;
+  hasCustomerManagedKey: string;
   region: string;
   cloudProvider: string;
+  kmsKeyArn: string;
 }
 
 export const CustomerManagedEncryption = ({
   hasCustomerManagedKey,
   region,
   cloudProvider,
+  kmsKeyArn,
 }: CustomerManagedEncryptionProps) => {
+  const { setFieldTouched } = useFormState();
+
   const isGCP = cloudProvider === CloudProviderType.Gcp;
 
   const cloudProviderLearnLink = isGCP
@@ -46,6 +51,11 @@ export const CustomerManagedEncryption = ({
       popoverHint: helpText,
     },
   ];
+
+  React.useEffect(() => {
+    if (hasCustomerManagedKey === 'true' && kmsKeyArn && !isGCP)
+      setFieldTouched(FieldId.KmsKeyArn, true, true);
+  }, []);
 
   return (
     <Grid hasGutter>
@@ -71,7 +81,7 @@ export const CustomerManagedEncryption = ({
         </FormGroup>
       </GridItem>
 
-      {hasCustomerManagedKey?.toString() === 'true' &&
+      {hasCustomerManagedKey === 'true' &&
         (isGCP ? (
           <GcpEncryption region={region} />
         ) : (
@@ -80,7 +90,7 @@ export const CustomerManagedEncryption = ({
               name={FieldId.KmsKeyArn}
               label="Key ARN"
               validate={(value) => validateAWSKMSKeyARN(value, region)}
-              helperText="Provide a custom key ARN"
+              helperText={!kmsKeyArn ? 'Provide a custom key ARN' : ''}
               tooltip={
                 <>
                   <p className="pf-u-mb-sm">{constants.awsKeyARN}</p>
