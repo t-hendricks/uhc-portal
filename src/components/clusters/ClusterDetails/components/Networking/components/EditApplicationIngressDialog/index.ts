@@ -8,6 +8,8 @@ import {
   canConfigureDayTwoManagedIngress,
   canConfigureLoadBalancer,
 } from '~/components/clusters/wizards/rosa/constants';
+import { CloudProviderType } from '~/components/clusters/wizards/common';
+
 import modals from '../../../../../../common/Modal/modals';
 import shouldShowModal from '../../../../../../common/Modal/ModalSelectors';
 import { closeModal } from '../../../../../../common/Modal/ModalActions';
@@ -38,6 +40,7 @@ const mapStateToProps = (state: GlobalState) => {
   const { cluster } = state.clusters?.details;
 
   const provider = cluster?.cloud_provider?.id;
+  const isAWS = provider === CloudProviderType.Aws;
 
   // @ts-ignore
   const isSTSEnabled = cluster?.aws?.sts?.enabled === true;
@@ -46,7 +49,9 @@ const mapStateToProps = (state: GlobalState) => {
   const clusterRoutesTlsSecretRef = clusterRouters.default?.tlsSecretRef;
   const clusterVersion = cluster?.openshift_version || cluster?.version?.raw_id || '';
   const hasSufficientIngressEditVersion = canConfigureDayTwoManagedIngress(clusterVersion);
-  const canEditLoadBalancer = canConfigureLoadBalancer(clusterVersion, isSTSEnabled);
+  const canShowLoadBalancer = isAWS;
+  const canEditLoadBalancer =
+    canShowLoadBalancer && canConfigureLoadBalancer(clusterVersion, isSTSEnabled);
 
   const ingressProps = hasSufficientIngressEditVersion
     ? {
@@ -78,6 +83,7 @@ const mapStateToProps = (state: GlobalState) => {
 
     hasSufficientIngressEditVersion,
     canEditLoadBalancer,
+    canShowLoadBalancer,
   };
 
   return props;

@@ -30,6 +30,7 @@ type DefaultIngressFieldsProps = {
   hasSufficientIngressEditVersion?: boolean;
   isDay2?: boolean;
   canEditLoadBalancer?: boolean;
+  canShowLoadBalancer?: boolean;
 };
 
 export const DefaultIngressFields: React.FC<DefaultIngressFieldsProps> = ({
@@ -38,6 +39,7 @@ export const DefaultIngressFields: React.FC<DefaultIngressFieldsProps> = ({
   isDay2,
   hasSufficientIngressEditVersion,
   canEditLoadBalancer,
+  canShowLoadBalancer,
 }) => (
   <>
     {isDay2 && (
@@ -161,7 +163,7 @@ export const DefaultIngressFields: React.FC<DefaultIngressFieldsProps> = ({
       </FormGroup>
     )}
 
-    {isDay2 && (
+    {canShowLoadBalancer && (
       <FormGroup
         fieldId="load_balancer_group"
         label="Load balancer type"

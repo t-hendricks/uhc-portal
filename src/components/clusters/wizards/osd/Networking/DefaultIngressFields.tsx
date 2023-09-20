@@ -77,7 +77,7 @@ export const DefaultIngressFields: React.FC<DefaultIngressFieldsProps> = () => {
         <SplitItem>
           <CheckboxField
             name={FieldId.IsDefaultRouterNamespaceOwnershipPolicyStrict}
-            label="Use strict inter-namespace ownership policy"
+            label="Use strict namespace ownership policy"
           />
         </SplitItem>
         <SplitItem>

@@ -270,30 +270,6 @@ export const createClusterRequest = ({ isWizard = true, cloudProviderID, product
         formData,
         isInstallExistingVPC,
       });
-
-      if (
-        formData.applicationIngress === ApplicationIngressType.Custom &&
-        canConfigureDayOneManagedIngress(formData.cluster_version?.raw_id)
-      ) {
-        clusterRequest.ingresses = {
-          items: [
-            {
-              default: true,
-              excluded_namespaces: formData.defaultRouterExcludedNamespacesFlag
-                ? stringToArrayTrimmed(formData.defaultRouterExcludedNamespacesFlag)
-                : undefined,
-              route_selectors: strToKeyValueObject(formData.defaultRouterSelectors, ''),
-              route_wildcard_policy: formData.isDefaultRouterWildcardPolicyAllowed
-                ? WildcardPolicy.WILDCARDS_ALLOWED
-                : WildcardPolicy.WILDCARDS_DISALLOWED,
-              route_namespace_ownership_policy:
-                formData.isDefaultRouterNamespaceOwnershipPolicyStrict
-                  ? NamespaceOwnershipPolicy.STRICT
-                  : NamespaceOwnershipPolicy.INTER_NAMESPACE_ALLOWED,
-            },
-          ],
-        };
-      }
     } else if (actualCloudProviderID === 'gcp') {
       const parsed = JSON.parse(formData.gcp_service_account);
       clusterRequest.gcp = pick(parsed, [
@@ -329,6 +305,31 @@ export const createClusterRequest = ({ isWizard = true, cloudProviderID, product
         };
       }
     }
+
+    // For ROSA, GCP and AWS OSD with byoc
+    if (
+      formData.applicationIngress === ApplicationIngressType.Custom &&
+      canConfigureDayOneManagedIngress(formData.cluster_version?.raw_id)
+    ) {
+      clusterRequest.ingresses = {
+        items: [
+          {
+            default: true,
+            excluded_namespaces: formData.defaultRouterExcludedNamespacesFlag
+              ? stringToArrayTrimmed(formData.defaultRouterExcludedNamespacesFlag)
+              : undefined,
+            route_selectors: strToKeyValueObject(formData.defaultRouterSelectors, ''),
+            route_wildcard_policy: formData.isDefaultRouterWildcardPolicyAllowed
+              ? WildcardPolicy.WILDCARDS_ALLOWED
+              : WildcardPolicy.WILDCARDS_DISALLOWED,
+            route_namespace_ownership_policy: formData.isDefaultRouterNamespaceOwnershipPolicyStrict
+              ? NamespaceOwnershipPolicy.STRICT
+              : NamespaceOwnershipPolicy.INTER_NAMESPACE_ALLOWED,
+          },
+        ],
+      };
+    }
+
     // byoc && vpc && configure proxy
     if (isInstallExistingVPC && configureProxySelected) {
       const proxy = {};
