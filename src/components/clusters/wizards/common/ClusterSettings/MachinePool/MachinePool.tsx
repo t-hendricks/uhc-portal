@@ -35,11 +35,13 @@ export const MachinePool = ({ billingModel }: MachinePoolProps) => {
       [FieldId.MultiAz]: multiAz,
       [FieldId.Byoc]: byoc,
       [FieldId.NodesCompute]: nodesCompute,
+      [FieldId.NodeLabels]: nodeLabels,
     },
     errors,
     getFieldProps,
     setFieldValue,
     getFieldMeta,
+    setFieldTouched,
   } = useFormState();
   const isMultiAz = multiAz === 'true';
   const isByoc = byoc === 'true';
@@ -61,6 +63,10 @@ export const MachinePool = ({ billingModel }: MachinePoolProps) => {
       setIsNodeLabelsExpanded(true);
     }
   }, [errors[FieldId.NodeLabels], isNodeLabelsExpanded]);
+
+  React.useEffect(() => {
+    if (nodeLabels[0].key) setFieldTouched(FieldId.NodeLabels, true, true);
+  }, []);
 
   React.useEffect(() => {
     dispatch(getMachineTypes());
