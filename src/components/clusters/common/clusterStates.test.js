@@ -1,8 +1,5 @@
-import sample from 'lodash/sample';
-import keys from 'lodash/keys';
 import set from 'lodash/set';
 import forOwn from 'lodash/forOwn';
-import * as OCM from '@openshift-assisted/ui-lib/ocm';
 import { normalizedProducts, subscriptionStatuses } from '../../../common/subscriptionTypes';
 import clusterStates, {
   getClusterStateAndDescription,
@@ -23,9 +20,8 @@ const mockCluster = (data) => {
 
 describe('getClusterStateAndDescription', () => {
   it('should not handle AssistedInstall states', () => {
-    const AIStatus = sample(keys(OCM.Constants.CLUSTER_STATUS_LABELS));
     const cluster = mockCluster({
-      status: AIStatus,
+      status: undefined,
       'subscription.plan.id': normalizedProducts.OCP_Assisted_Install,
       'subscription.plan.type': 'OCP',
       'subscription.status': subscriptionStatuses.DISCONNECTED,
