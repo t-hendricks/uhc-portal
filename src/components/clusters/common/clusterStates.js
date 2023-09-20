@@ -98,7 +98,8 @@ const isROSA = (cluster) => cluster.product.id === normalizedProducts.ROSA;
 
 // Indicates that this is an OSD cluster
 const isOSD = (cluster) =>
-  cluster.product.id === normalizedProducts.OSD || normalizedProducts.OSDTrial;
+  cluster.product.id === normalizedProducts.OSD ||
+  cluster.product.id === normalizedProducts.OSDTrial;
 
 // Indicates that this is a ROSA cluster with manual mode
 const isROSAManualMode = (cluster) =>
