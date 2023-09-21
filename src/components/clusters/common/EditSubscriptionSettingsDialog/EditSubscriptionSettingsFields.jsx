@@ -166,7 +166,7 @@ class EditSubscriptionSettingsFields extends Component {
         break;
       case SYSTEM_UNITS:
         options = [
-          { label: 'Cores/vCPUs', value: CORES_VCPU, isDefault: true },
+          { label: 'Cores or vCPUs', value: CORES_VCPU, isDefault: true },
           { label: 'Sockets', value: SOCKETS },
         ];
         break;
@@ -462,6 +462,7 @@ class EditSubscriptionSettingsFields extends Component {
 
     // the number field for CPU/vCores or Socket
     const cpuSocketValue = systemUnits === SOCKETS ? socketTotal : cpuTotal;
+    const cpuSocketLabel = systemUnits === SOCKETS ? 'Sockets' : 'Cores or vCPUs';
     const CpuSocketNumberField = isDisconnectedSub ? (
       <NumberInput
         value={cpuSocketValue}
@@ -482,9 +483,7 @@ class EditSubscriptionSettingsFields extends Component {
       />
     ) : (
       <>
-        <span id="cpu-socket-value">{`${cpuSocketValue} ${
-          systemUnits === SOCKETS ? 'Sockets' : 'Cores/vCPU'
-        }`}</span>
+        <span id="cpu-socket-value">{`${cpuSocketValue} ${cpuSocketLabel}`}</span>
         <PopoverHint
           id="cpu-socket-value-hint"
           hint="This data is gathered directly from the telemetry metrics submitted by the cluster and cannot be changed."
@@ -555,7 +554,7 @@ class EditSubscriptionSettingsFields extends Component {
           isRequired={isDisconnectedSub}
           helperText={
             isDisconnectedSub
-              ? `${systemUnits} value can be any integer larger than ${MIN_VAL}`
+              ? `${cpuSocketLabel} value can be any integer larger than ${MIN_VAL}`
               : ''
           }
           helperTextInvalid={systemUnitsNumericErrorMsg}
