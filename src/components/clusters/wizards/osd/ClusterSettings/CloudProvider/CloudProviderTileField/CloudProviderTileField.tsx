@@ -5,15 +5,15 @@ import { Tile, Tooltip } from '@patternfly/react-core';
 
 import AWSLogo from '~/styles/images/AWSLogo';
 import GCPLogo from '~/styles/images/GCPLogo';
-import { useGlobalState } from '~/redux/hooks/useGlobalState';
 import { useFormState } from '~/components/clusters/wizards/hooks';
 import { CloudProviderType } from '~/components/clusters/wizards/common/constants';
 import * as osdInitialValues from '~/components/clusters/CreateOSDPage/createOSDInitialValues';
 import { noQuotaTooltip } from '~/common/helpers';
 import { FieldId } from '~/components/clusters/wizards/osd/constants';
-import { quotaParams, hasAvailableQuota } from '~/components/clusters/wizards/common/utils/quotas';
+import { useGetBillingQuotas } from '~/components/clusters/wizards/osd/BillingModel/useGetBillingQuotas';
 
 import './cloudProviderTileField.scss';
+import { billingModels } from '~/common/subscriptionTypes';
 
 export const CloudProviderTileField = () => {
   const {
@@ -25,19 +25,18 @@ export const CloudProviderTileField = () => {
     },
     setFieldValue,
   } = useFormState();
-  const quotaList = useGlobalState((state) => state.userProfile.organization.quotaList);
-  const hasGcpResources = hasAvailableQuota(quotaList, {
-    ...quotaParams.gcpResources,
+  const quotas = useGetBillingQuotas({
     product,
     billingModel,
     isBYOC,
   });
-  const hasAwsResources = hasAvailableQuota(quotaList, {
-    ...quotaParams.awsResources,
-    product,
-    billingModel,
-    isBYOC,
-  });
+  const hasGcpResources = quotas.gcpResources;
+  const hasAwsResources =
+    billingModel === billingModels.MARKETPLACE_GCP ? false : quotas.awsResources;
+  const notAvailableTooltip =
+    billingModel === billingModels.MARKETPLACE_GCP
+      ? 'OpenShift Dedicated purchased through the Google Cloud marketplace can only be provisioned on GCP.'
+      : noQuotaTooltip;
 
   const handleChange = (value: string) => {
     // Silently reset some user choices that are now meaningless.
@@ -60,6 +59,7 @@ export const CloudProviderTileField = () => {
     <Tile
       className={classNames('ocm-tile-create-cluster', !hasGcpResources && 'tile-disabled')}
       onClick={() => hasGcpResources && handleChange(CloudProviderType.Gcp)}
+      isDisabled={!hasGcpResources}
       data-testid="gcp-provider-card"
       title="Run on Google Cloud Platform"
       icon={<GCPLogo />}
@@ -73,6 +73,7 @@ export const CloudProviderTileField = () => {
     <Tile
       className={classNames('ocm-tile-create-cluster', !hasAwsResources && 'tile-disabled')}
       onClick={() => hasAwsResources && handleChange(CloudProviderType.Aws)}
+      isDisabled={!hasAwsResources}
       data-testid="aws-provider-card"
       title="Run on Amazon Web Services"
       icon={<AWSLogo />}
@@ -84,7 +85,7 @@ export const CloudProviderTileField = () => {
 
   return (
     <div>
-      {hasAwsResources ? awsTile : <Tooltip content={noQuotaTooltip}>{awsTile}</Tooltip>}
+      {hasAwsResources ? awsTile : <Tooltip content={notAvailableTooltip}>{awsTile}</Tooltip>}
       {hasGcpResources ? gcpTile : <Tooltip content={noQuotaTooltip}>{gcpTile}</Tooltip>}
     </div>
   );
