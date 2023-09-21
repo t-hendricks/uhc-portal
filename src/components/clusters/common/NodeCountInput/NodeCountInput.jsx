@@ -62,7 +62,7 @@ class NodeCountInput extends React.Component {
       optionValueIncrement,
     });
 
-    if (!options.includes(input.value)) {
+    if (!options.includes(Number(input.value))) {
       // if the value isn't an option, then just set to minNode (the value the user sees as the setting )
       input.onChange(minNodes);
     }
