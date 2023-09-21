@@ -17,6 +17,40 @@ interface TextInputFieldProps {
   input?: TextInputProps;
 }
 
+interface HelperTextInvalidProps {
+  name: string;
+  meta: FieldProps['meta'];
+  helpText: string | React.ReactNode;
+  showHelpTextOnError?: boolean;
+}
+
+const HelperTextInvalid = ({
+  name,
+  meta,
+  showHelpTextOnError,
+  helpText,
+}: HelperTextInvalidProps) => {
+  const { error, touched } = meta;
+  if (touched && error) {
+    if (showHelpTextOnError) {
+      if (typeof helpText === 'string') {
+        return (
+          <>
+            {helpText} {error}
+          </>
+        );
+      }
+      return (
+        <div className="pf-c-form__helper-text pf-m-error" id={`${name}-helper`} aria-live="polite">
+          {helpText} {error}
+        </div>
+      );
+    }
+    return <div className="pf-u-background-color-danger">{error}</div>;
+  }
+  return null;
+};
+
 export const TextInputField = ({
   name,
   label,
