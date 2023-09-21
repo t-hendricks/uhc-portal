@@ -616,7 +616,7 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly 1`] = `
                               class="pf-c-radio__label"
                               for="system_units:Cores/vCPU"
                             >
-                              Cores/vCPUs
+                              Cores or vCPUs
                             </label>
                           </div>
                           <div
@@ -665,7 +665,7 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly 1`] = `
                           <span
                             id="cpu-socket-value"
                           >
-                            0 Cores/vCPU
+                            0 Cores or vCPUs
                           </span>
                           <button
                             aria-disabled="false"
@@ -2368,7 +2368,7 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly 1`] = `
                                           Object {
                                             "isChecked": true,
                                             "isDefault": true,
-                                            "label": "Cores/vCPUs",
+                                            "label": "Cores or vCPUs",
                                             "value": "Cores/vCPU",
                                           },
                                           Object {
@@ -2667,7 +2667,7 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly 1`] = `
                                                 isDisabled={false}
                                                 isValid={true}
                                                 key="system_units:Cores/vCPU"
-                                                label="Cores/vCPUs"
+                                                label="Cores or vCPUs"
                                                 name="system_units:Cores/vCPU"
                                                 onChange={[Function]}
                                                 value="Cores/vCPU"
@@ -2693,7 +2693,7 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly 1`] = `
                                                     className="pf-c-radio__label"
                                                     htmlFor="system_units:Cores/vCPU"
                                                   >
-                                                    Cores/vCPUs
+                                                    Cores or vCPUs
                                                   </label>
                                                 </div>
                                               </Radio>
@@ -2772,7 +2772,7 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly 1`] = `
                                             <span
                                               id="cpu-socket-value"
                                             >
-                                              0 Cores/vCPU
+                                              0 Cores or vCPUs
                                             </span>
                                             <PopoverHint
                                               hasAutoWidth={true}
@@ -3701,7 +3701,7 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly when an erorr occu
                               class="pf-c-radio__label"
                               for="system_units:Cores/vCPU"
                             >
-                              Cores/vCPUs
+                              Cores or vCPUs
                             </label>
                           </div>
                           <div
@@ -3750,7 +3750,7 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly when an erorr occu
                           <span
                             id="cpu-socket-value"
                           >
-                            0 Cores/vCPU
+                            0 Cores or vCPUs
                           </span>
                           <button
                             aria-disabled="false"
@@ -5535,7 +5535,7 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly when an erorr occu
                                           Object {
                                             "isChecked": true,
                                             "isDefault": true,
-                                            "label": "Cores/vCPUs",
+                                            "label": "Cores or vCPUs",
                                             "value": "Cores/vCPU",
                                           },
                                           Object {
@@ -5834,7 +5834,7 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly when an erorr occu
                                                 isDisabled={false}
                                                 isValid={true}
                                                 key="system_units:Cores/vCPU"
-                                                label="Cores/vCPUs"
+                                                label="Cores or vCPUs"
                                                 name="system_units:Cores/vCPU"
                                                 onChange={[Function]}
                                                 value="Cores/vCPU"
@@ -5860,7 +5860,7 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly when an erorr occu
                                                     className="pf-c-radio__label"
                                                     htmlFor="system_units:Cores/vCPU"
                                                   >
-                                                    Cores/vCPUs
+                                                    Cores or vCPUs
                                                   </label>
                                                 </div>
                                               </Radio>
@@ -5939,7 +5939,7 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly when an erorr occu
                                             <span
                                               id="cpu-socket-value"
                                             >
-                                              0 Cores/vCPU
+                                              0 Cores or vCPUs
                                             </span>
                                             <PopoverHint
                                               hasAutoWidth={true}
@@ -6926,7 +6926,7 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly with billing_model
                               class="pf-c-radio__label pf-m-disabled"
                               for="system_units:Cores/vCPU"
                             >
-                              Cores/vCPUs
+                              Cores or vCPUs
                             </label>
                           </div>
                           <div
@@ -6976,7 +6976,7 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly with billing_model
                           <span
                             id="cpu-socket-value"
                           >
-                            0 Cores/vCPU
+                            0 Cores or vCPUs
                           </span>
                           <button
                             aria-disabled="false"
@@ -8863,7 +8863,7 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly with billing_model
                                           Object {
                                             "isChecked": true,
                                             "isDefault": true,
-                                            "label": "Cores/vCPUs",
+                                            "label": "Cores or vCPUs",
                                             "value": "Cores/vCPU",
                                           },
                                           Object {
@@ -9162,7 +9162,7 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly with billing_model
                                                 isDisabled={true}
                                                 isValid={true}
                                                 key="system_units:Cores/vCPU"
-                                                label="Cores/vCPUs"
+                                                label="Cores or vCPUs"
                                                 name="system_units:Cores/vCPU"
                                                 onChange={[Function]}
                                                 value="Cores/vCPU"
@@ -9188,7 +9188,7 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly with billing_model
                                                     className="pf-c-radio__label pf-m-disabled"
                                                     htmlFor="system_units:Cores/vCPU"
                                                   >
-                                                    Cores/vCPUs
+                                                    Cores or vCPUs
                                                   </label>
                                                 </div>
                                               </Radio>
@@ -9267,7 +9267,7 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly with billing_model
                                             <span
                                               id="cpu-socket-value"
                                             >
-                                              0 Cores/vCPU
+                                              0 Cores or vCPUs
                                             </span>
                                             <PopoverHint
                                               hasAutoWidth={true}
@@ -10177,7 +10177,7 @@ exports[`<EditSubscriptionSettingsDialog /> renders eval support correctly 1`] =
                               class="pf-c-radio__label pf-m-disabled"
                               for="system_units:Cores/vCPU"
                             >
-                              Cores/vCPUs
+                              Cores or vCPUs
                             </label>
                           </div>
                           <div
@@ -11972,7 +11972,7 @@ exports[`<EditSubscriptionSettingsDialog /> renders eval support correctly 1`] =
                                         Array [
                                           Object {
                                             "isDefault": true,
-                                            "label": "Cores/vCPUs",
+                                            "label": "Cores or vCPUs",
                                             "value": "Cores/vCPU",
                                           },
                                           Object {
@@ -12272,7 +12272,7 @@ exports[`<EditSubscriptionSettingsDialog /> renders eval support correctly 1`] =
                                                 isDisabled={true}
                                                 isValid={true}
                                                 key="system_units:Cores/vCPU"
-                                                label="Cores/vCPUs"
+                                                label="Cores or vCPUs"
                                                 name="system_units:Cores/vCPU"
                                                 onChange={[Function]}
                                                 value="Cores/vCPU"
@@ -12298,7 +12298,7 @@ exports[`<EditSubscriptionSettingsDialog /> renders eval support correctly 1`] =
                                                     className="pf-c-radio__label pf-m-disabled"
                                                     htmlFor="system_units:Cores/vCPU"
                                                   >
-                                                    Cores/vCPUs
+                                                    Cores or vCPUs
                                                   </label>
                                                 </div>
                                               </Radio>
