@@ -416,7 +416,7 @@ class CreateROSAWizardInternal extends React.Component {
           <ErrorBoundary>
             <WizardContext.Consumer>
               {({ goToStepById }) =>
-                createClusterResponse.pending ? (
+                !createClusterResponse.pending ? (
                   <ReviewClusterScreen
                     clusterRequestParams={{ isWizard: true }}
                     goToStepById={goToStepById}
