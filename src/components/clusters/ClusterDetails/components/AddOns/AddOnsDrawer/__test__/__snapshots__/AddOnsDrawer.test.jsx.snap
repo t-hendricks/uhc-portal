@@ -517,6 +517,7 @@ exports[`<AddOnsDrawer /> should render 1`] = `
                     />
                     <AddOnsSubscription
                       activeCardId="codeready-workspaces"
+                      setAddonsDrawer={[MockFunction]}
                     />
                   </Flex>
                 </DrawerPanelBody>
@@ -907,6 +908,7 @@ exports[`<AddOnsDrawer /> should render 1`] = `
                     }
                     hasQuota={true}
                     openModal={[MockFunction]}
+                    updateClusterAddOn={[MockFunction]}
                   />
                 </DrawerPanelBody>
               </Tab>
