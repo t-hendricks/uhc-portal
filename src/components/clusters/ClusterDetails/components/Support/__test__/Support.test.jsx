@@ -40,9 +40,7 @@ describe('<NotificationContactsCard isDisabled/>', () => {
 
 describe('<SupportCasesCard isDisabled/>', () => {
   it('should have the components disabled', () => {
-    const wrapper = shallow(
-      <SupportCasesCard {...baseProps} clusterUUID="1" product="OSD" isDisabled />,
-    );
+    const wrapper = shallow(<SupportCasesCard {...baseProps} isDisabled />);
     expect(wrapper.find('Button').length).toEqual(0);
   });
 });
