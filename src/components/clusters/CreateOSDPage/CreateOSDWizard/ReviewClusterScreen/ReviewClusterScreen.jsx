@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import isEmpty from 'lodash/isEmpty';
-import { Title, Bullseye, Stack, StackItem, Spinner } from '@patternfly/react-core';
+import { Title } from '@patternfly/react-core';
 
 import config from '~/config';
 import {
@@ -33,7 +33,6 @@ const ReviewClusterScreen = ({
   formValues,
   canAutoScale,
   autoscalingEnabled,
-  isCreateClusterPending,
   installToVPCSelected,
   configureProxySelected,
   getUserRole,
@@ -70,35 +69,11 @@ const ReviewClusterScreen = ({
     ...(hasEtcdEncryption ? ['etcd_key_arn'] : []),
   ];
 
-  if (isCreateClusterPending) {
-    return (
-      <Bullseye>
-        <Stack>
-          <StackItem>
-            <Bullseye>
-              <Spinner size="xl" isSVG />
-            </Bullseye>
-          </StackItem>
-          <StackItem>
-            <Bullseye>
-              Creating your cluster. Do not refresh this page. This request may take a moment...
-            </Bullseye>
-          </StackItem>
-        </Stack>
-      </Bullseye>
-    );
-  }
-
-  // eslint-disable-next-line react-hooks/rules-of-hooks
   const [userRole, setUserRole] = useState('');
-  // eslint-disable-next-line react-hooks/rules-of-hooks
   const [ocmRole, setOcmRole] = useState('');
-  // eslint-disable-next-line react-hooks/rules-of-hooks
   const isHypershiftEnabled = useFeatureGate(HYPERSHIFT_WIZARD_FEATURE);
-  // eslint-disable-next-line react-hooks/rules-of-hooks
   const viewAWSBillingAcct = useFeatureGate(HCP_AWS_BILLING_SHOW);
 
-  // eslint-disable-next-line react-hooks/rules-of-hooks
   useEffect(() => {
     clearGetUserRoleResponse();
     clearGetOcmRoleResponse();
@@ -107,7 +82,6 @@ const ReviewClusterScreen = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  // eslint-disable-next-line react-hooks/rules-of-hooks
   useEffect(() => {
     if (!isROSA) {
       return;
@@ -129,7 +103,6 @@ const ReviewClusterScreen = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [getUserRoleResponse]);
 
-  // eslint-disable-next-line react-hooks/rules-of-hooks
   useEffect(() => {
     if (!isROSA) {
       return;
@@ -336,13 +309,13 @@ const ReviewClusterScreen = ({
     </div>
   );
 };
+
 ReviewClusterScreen.propTypes = {
   change: PropTypes.func,
   clusterRequestParams: PropTypes.object.isRequired,
   formValues: PropTypes.objectOf(
     PropTypes.oneOfType([PropTypes.string, PropTypes.number, PropTypes.bool]),
   ),
-  isCreateClusterPending: PropTypes.bool,
   canAutoScale: PropTypes.bool,
   autoscalingEnabled: PropTypes.bool,
   installToVPCSelected: PropTypes.bool,
