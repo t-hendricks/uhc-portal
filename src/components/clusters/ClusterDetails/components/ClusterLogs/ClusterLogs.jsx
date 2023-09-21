@@ -94,6 +94,7 @@ class ClusterLogs extends React.Component {
       setSorting,
       externalClusterID,
       clusterID,
+      refreshEvent,
     } = this.props;
 
     // These errors are present during cluster install
@@ -103,6 +104,7 @@ class ClusterLogs extends React.Component {
     const hasNoFilters =
       isEmpty(viewOptions.filter) && helpers.nestedIsEmpty(viewOptions.flags.severityTypes);
     const isPendingNoData = !size(logs) && pending && hasNoFilters;
+
     return (
       <>
         <Card className="ocm-c-overview-cluster-history__card">
@@ -120,6 +122,15 @@ class ClusterLogs extends React.Component {
             </CardActions>
           </CardHeader>
           <CardBody className="ocm-c-overview-cluster-history__card--body">
+            {error && !ignoreErrors && (
+              <ErrorBox
+                message="Error retrieving cluster logs"
+                response={{
+                  errorMessage,
+                  operationID,
+                }}
+              />
+            )}
             <ClusterLogsToolbar
               view={viewConstants.CLUSTER_LOGS_VIEW}
               history={history}
@@ -127,32 +138,25 @@ class ClusterLogs extends React.Component {
               isPendingNoData={isPendingNoData}
               clusterID={clusterID}
             />
-            {error && !size(logs) ? (
+            {error && !size(logs) && ignoreErrors ? (
               <>
                 <PageSection>
                   <EmptyState>
-                    {ignoreErrors ? (
-                      <>
-                        <EmptyStateIcon icon={SearchIcon} />
-                        <Title size="lg" headingLevel="h4">
-                          No cluster log entries found
-                        </Title>
-                      </>
-                    ) : (
-                      <ErrorBox
-                        message="Error retrieving cluster logs"
-                        response={{
-                          errorMessage,
-                          operationID,
-                        }}
-                      />
-                    )}
+                    <EmptyStateIcon icon={SearchIcon} />
+                    <Title size="lg" headingLevel="h4">
+                      No cluster log entries found
+                    </Title>
                   </EmptyState>
                 </PageSection>
               </>
             ) : (
               <>
-                <LogTable pending={pending} logs={logs} setSorting={setSorting} />
+                <LogTable
+                  pending={pending}
+                  logs={logs}
+                  setSorting={setSorting}
+                  refreshEvent={refreshEvent}
+                />
                 <ViewPaginationRow
                   viewType={viewConstants.CLUSTER_LOGS_VIEW}
                   currentPage={viewOptions.currentPage}
@@ -184,6 +188,10 @@ ClusterLogs.propTypes = {
     filter: PropTypes.object,
   }).isRequired,
   clusterLogs: PropTypes.object.isRequired,
+  refreshEvent: PropTypes.shape({
+    type: PropTypes.string,
+    reset: PropTypes.func.isRequired,
+  }).isRequired,
   getClusterHistory: PropTypes.func.isRequired,
   setListFlag: PropTypes.func.isRequired,
   setFilter: PropTypes.func.isRequired,
