@@ -42,7 +42,7 @@ import { editSubscriptionSettings } from './subscriptionSettingsActions';
 import isAssistedInstallSubscription from '../../common/isAssistedInstallerCluster';
 import { ASSISTED_INSTALLER_MERGE_LISTS_FEATURE } from '../constants/featureConstants';
 
-import type { Cluster, InflightCheck } from '../../types/clusters_mgmt.v1';
+import type { Cluster } from '../../types/clusters_mgmt.v1';
 import {
   SelfResourceReview,
   SelfAccessReview,
@@ -269,33 +269,6 @@ const createResponseForFetchClusters = (
   return result;
 };
 
-const hasInflightChecks = (cluster: { product: any; subscription?: any }) => {
-  const isArchived =
-    cluster?.subscription?.status === subscriptionStatuses.ARCHIVED ||
-    cluster?.subscription?.status === subscriptionStatuses.DEPROVISIONED;
-  return (
-    !isArchived &&
-    (ROSA_PRODUCTS.includes(cluster.product?.id) || OSD_PRODUCTS.includes(cluster.product?.id))
-  );
-};
-
-const addInflightChecks = async (promise: Promise<any>) => {
-  const clusters = await promise;
-  const map: Record<string, Cluster> = {};
-  await Promise.all(
-    clusters.data.items
-      .filter((cluster: { product: { id: string } }) => hasInflightChecks(cluster))
-      // eslint-disable-next-line camelcase
-      .map((cluster: { id: string; inflight_checks: InflightCheck[] | undefined }) =>
-        clusterService.getInflightChecks(cluster.id).then((res) => {
-          map[cluster.id] = cluster;
-          map[cluster.id].inflight_checks = res.data.items;
-        }),
-      ),
-  );
-  return clusters;
-};
-
 const fetchClustersAndPermissions = async (
   clusterRequestParams: Parameters<typeof accountsService.getSubscriptions>[0],
   aiMergeListsFeatureFlag: boolean | undefined,
@@ -441,7 +414,7 @@ const fetchClustersAndPermissions = async (
       }
     });
 
-    return addInflightChecks(enrichForClusterService());
+    return enrichForClusterService();
   };
 
   await Promise.all(promises);
