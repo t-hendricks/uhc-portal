@@ -71,7 +71,7 @@ const ClusterLogsDownload = ({
 
   return (
     <>
-      <Button variant="primary" onClick={() => setIsOpen(true)} data-testId="download-btn">
+      <Button variant="primary" onClick={() => setIsOpen(true)} data-testid="download-btn">
         Download history
       </Button>
       {isOpen && (
@@ -82,7 +82,7 @@ const ClusterLogsDownload = ({
           onClose={isDownloading ? undefined : close}
           actions={[
             <Button
-              data-testId="submit-btn"
+              data-testid="submit-btn"
               key="download"
               variant="primary"
               onClick={handleDownload}
