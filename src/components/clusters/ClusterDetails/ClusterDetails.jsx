@@ -64,7 +64,7 @@ const PAGE_TITLE = 'Red Hat OpenShift Cluster Manager';
 class ClusterDetails extends Component {
   state = {
     selectedTab: '',
-    refreshEvent: null,
+    refreshEvent: { type: null },
   };
 
   constructor(props) {
@@ -239,7 +239,7 @@ class ClusterDetails extends Component {
       getOnDemandMetrics(subscriptionID);
     }
 
-    this.setState({ refreshEvent: { type: clicked } });
+    this.setState({ refreshEvent: { type: clicked || 'auto' } });
   }
 
   fetchSupportData() {
@@ -522,6 +522,10 @@ class ClusterDetails extends Component {
                   externalClusterID={cluster.external_id}
                   clusterID={cluster.id}
                   history={history}
+                  refreshEvent={{
+                    type: refreshEvent.type,
+                    reset: () => this.setState({ refreshEvent: { type: null } }),
+                  }}
                 />
               </ErrorBoundary>
             </TabContent>

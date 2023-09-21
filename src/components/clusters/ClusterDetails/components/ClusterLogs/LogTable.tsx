@@ -75,18 +75,32 @@ type SortParams = {
 
 type LogTableParams = {
   pending: boolean;
+  refreshEvent: {
+    type: string;
+    reset: () => void;
+  };
   logs: any[];
   setSorting: (sort: SortParams) => void;
 };
 
-const LogTable = ({ logs, setSorting, pending }: LogTableParams) => {
+const LogTable = ({ logs, setSorting, pending, refreshEvent }: LogTableParams) => {
   const [expandedLogs, setExpandedLogs] = React.useState<string[]>([]);
+  const [showSpinner, setShowSpinner] = React.useState(true);
 
   // initially sorted by Date descending
   const [sortColIndex, setSortColIndex] = React.useState(
     columns.findIndex((col) => col.sortTitle === 'timestamp') + 1,
   );
   const [sortDirection, setSortDirection] = React.useState(SortByDirection.desc);
+
+  React.useEffect(() => {
+    if (!pending) {
+      setShowSpinner(false);
+      if (refreshEvent.type !== null) {
+        refreshEvent.reset();
+      }
+    }
+  }, [refreshEvent, pending]);
 
   const setLogExpanded = (log: LogType, isExpanding = true) => {
     const otherExpandedLogs = expandedLogs.filter((r) => r !== log.id);
@@ -165,7 +179,7 @@ const LogTable = ({ logs, setSorting, pending }: LogTableParams) => {
 
   return (
     <Bullseye>
-      {pending ? (
+      {pending && (refreshEvent.type === null || showSpinner) ? (
         <Spinner size="lg" />
       ) : (
         <TableComposable aria-label="Expandable table" variant={TableVariant.compact}>
