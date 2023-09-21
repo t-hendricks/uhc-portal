@@ -101,7 +101,7 @@ function SubscriptionSettings({
   if (systemUnits === subscriptionSystemUnits.SOCKETS && socketTotal !== undefined) {
     systemUnitsStr = 'Sockets';
   } else if (systemUnits === subscriptionSystemUnits.CORES_VCPU && cpuTotal !== undefined) {
-    systemUnitsStr = 'Cores/vCPUs ';
+    systemUnitsStr = 'Cores or vCPUs';
   }
   const displayObligation = cpuTotal !== undefined || socketTotal !== undefined;
   const obligationLabel =
