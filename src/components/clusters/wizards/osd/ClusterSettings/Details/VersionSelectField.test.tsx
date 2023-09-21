@@ -14,6 +14,7 @@ const data: Version[] = [
   {
     kind: 'Version',
     raw_id: '4.13.1',
+    id: '4.13.1',
     enabled: true,
     default: false,
     channel_group: 'stable',
@@ -25,6 +26,7 @@ const data: Version[] = [
   {
     kind: 'Version',
     raw_id: '4.12.13',
+    id: '4.12.13',
     enabled: true,
     default: true,
     channel_group: 'stable',
@@ -36,6 +38,7 @@ const data: Version[] = [
   {
     kind: 'Version',
     raw_id: '4.12.12',
+    id: '4.12.12',
     enabled: true,
     default: false,
     channel_group: 'stable',
