@@ -13,7 +13,7 @@ import { constants } from '~/components/clusters/CreateOSDPage/CreateOSDForm/Cre
 import PopoverHint from '~/components/common/PopoverHint';
 import DynamicSelect from '~/components/common/DynamicSelect';
 import ExternalLink from '~/components/common/ExternalLink';
-import { getGcpCcsCredentials } from '~/components/clusters/wizards/common/utils';
+import { getGcpCcsCredentials } from '~/components/clusters/wizards/common/utils/ccsCredentials';
 import { FieldId } from '~/components/clusters/wizards/osd/constants';
 import { EncryptionKey } from '~/types/clusters_mgmt.v1';
 

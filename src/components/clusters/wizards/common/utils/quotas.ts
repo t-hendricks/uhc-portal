@@ -4,7 +4,7 @@ import { CloudProviderType } from '~/components/clusters/wizards/common/constant
 import { Quota } from '~/types/accounts_mgmt.v1';
 
 export interface QuotaParams {
-  resourceType: string;
+  resourceType?: string;
   product: string;
   billingModel?: string;
   cloudProviderID?: string;

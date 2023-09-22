@@ -23,7 +23,7 @@ import { useFormState } from '~/components/clusters/wizards/hooks';
 import { CloudProviderType } from '~/components/clusters/wizards/common/constants';
 import { TextInputField } from '~/components/clusters/wizards/form';
 import { FieldId } from '~/components/clusters/wizards/osd/constants';
-import { getAwsCcsCredentials } from '../../../common';
+import { getAwsCcsCredentials } from '../../../common/utils/ccsCredentials';
 
 interface AwsSubnetFieldsProps {
   region: string;

@@ -179,7 +179,6 @@ function NetworkScreen(props) {
             </GridItem>
             <GridItem>
               <Text>
-                {/* eslint-disable-next-line max-len */}
                 Install your cluster with all public or private API endpoints and application
                 routes.{' '}
                 {isHypershiftSelected && 'You can customize these options after installation.'}
@@ -211,7 +210,7 @@ function NetworkScreen(props) {
                       isRequired
                       validate={validateRequiredMachinePoolsSubnet}
                       withAutoSelect={false}
-                      selectedVPC={formValues.selected_vpc_id}
+                      selectedVPC={formValues.selected_vpc.id}
                       privacy="public"
                       isNewCluster
                       allowedAZ={[

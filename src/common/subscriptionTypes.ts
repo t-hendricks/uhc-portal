@@ -163,6 +163,7 @@ const billingModels = {
   STANDARD: 'standard', // quota from Red Hat Subscriptions
   MARKETPLACE: 'marketplace', // quota from Red Hat Marketplace
   MARKETPLACE_AWS: 'marketplace-aws',
+  MARKETPLACE_GCP: 'marketplace-gcp',
   STANDARD_TRIAL: 'standard-trial',
 };
 

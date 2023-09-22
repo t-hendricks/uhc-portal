@@ -229,7 +229,7 @@ const ReviewClusterScreen = ({
           : ReviewItem({ name: 'nodes_compute', formValues })}
         {showVPCCheckbox &&
           ReviewItem({
-            name: isHypershiftSelected ? 'selected_vpc_id' : 'install_to_vpc',
+            name: isHypershiftSelected ? 'selected_vpc' : 'install_to_vpc',
             formValues,
           })}
         {hasAWSVPCSettings &&
