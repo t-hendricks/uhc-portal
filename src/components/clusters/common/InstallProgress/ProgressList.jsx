@@ -18,14 +18,18 @@ function ProgressList({ cluster, actionRequiredInitialOpen }) {
   const isWaitingForOIDCProviderOrOperatorRoles =
     isWaitingForOIDCProviderOrOperatorRolesMode(cluster);
 
+  // helper variables for isPending
+  const isPendingState = cluster.state === clusterStates.PENDING;
+  const isWaitingState = cluster.state === clusterStates.WAITING;
+  const isAutoMode = cluster?.aws?.sts?.auto_mode;
+  const hasOIDCConfig = cluster?.aws?.sts?.oidc_config?.id;
+  const doesNotHaveStatusMessage =
+    !cluster?.status.description ||
+    cluster?.status.description === 'Waiting for OIDC configuration';
+
   const isPending =
-    cluster.state === clusterStates.PENDING ||
-    (cluster.state === clusterStates.WAITING &&
-      (cluster?.aws?.sts?.auto_mode ||
-        (!cluster?.aws?.sts?.auto_mode &&
-          cluster?.aws?.sts?.oidc_config?.id &&
-          !cluster?.status.description) ||
-        cluster?.status.description === 'Waiting for OIDC configuration'));
+    isPendingState ||
+    (isWaitingState && (isAutoMode || (hasOIDCConfig && doesNotHaveStatusMessage)));
 
   const getProgressData = () => {
     const pending = { variant: 'pending' };
