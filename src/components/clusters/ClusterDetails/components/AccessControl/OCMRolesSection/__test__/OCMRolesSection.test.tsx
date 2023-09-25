@@ -2,7 +2,9 @@ import React from 'react';
 
 import { insightsMock, render, within } from '~/testUtils';
 import MockAdapter from 'axios-mock-adapter';
+
 import apiRequest from '~/services/apiRequest';
+import { Subscription } from '~/types/accounts_mgmt.v1';
 import { OCMRoles } from './OCMRolesSection.fixture';
 import OCMRolesSection from '../OCMRolesSection';
 
@@ -12,8 +14,9 @@ const mock = new MockAdapter(apiRequest);
 insightsMock();
 
 describe('<OCMRolesSection />', () => {
+  const { subscription } = fixtures.clusterDetails.cluster;
   const props = {
-    subscription: fixtures.clusterDetails.cluster.subscription,
+    subscription: subscription as unknown as Subscription,
     canEditOCMRoles: true,
     canViewOCMRoles: true,
   };
