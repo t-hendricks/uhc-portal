@@ -33,6 +33,8 @@ export default {
     enable_user_workload_monitoring: 'true',
     region: 'us-west-2',
     az_0: 'Select availability zone',
+    private_subnet_id_0: 'subnet-private-1',
+    public_subnet_id_0: 'subnet-public-1',
     cluster_privacy_public_subnet: {
       subnet_id: '',
       availability_zone: '',
