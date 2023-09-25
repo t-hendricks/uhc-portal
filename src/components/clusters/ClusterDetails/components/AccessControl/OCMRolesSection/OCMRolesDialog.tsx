@@ -25,9 +25,10 @@ import { closeModal } from '../../../../../common/Modal/ModalActions';
 export type OCMRolesDialogProps = {
   onSubmit: (row: OCMRolesRow, username: string, roleID: string) => void;
   row: OCMRolesRow;
+  productId?: string;
 };
 
-function OCMRolesDialog({ onSubmit, row }: OCMRolesDialogProps) {
+function OCMRolesDialog({ onSubmit, row, productId }: OCMRolesDialogProps) {
   const [username, setUsername] = useState<string>();
   const [usernameValidationMsg, setUsernameValidationMsg] = useState('');
   const [APIErrorMsg, setAPIErrorMsg] = useState('');
@@ -120,7 +121,12 @@ function OCMRolesDialog({ onSubmit, row }: OCMRolesDialogProps) {
   const title = row.isCreating ? 'Grant role' : 'Edit role';
   const btnText = row.isCreating ? 'Grant role' : 'Edit role';
 
-  const options = Object.values(ocmRoles);
+  const options = Object.values(ocmRoles).filter((ocmRole) => {
+    if (!productId || !ocmRole.excludeProductIds) {
+      return true;
+    }
+    return !ocmRole.excludeProductIds.some((excludedId) => excludedId === productId);
+  });
 
   return (
     <Modal
