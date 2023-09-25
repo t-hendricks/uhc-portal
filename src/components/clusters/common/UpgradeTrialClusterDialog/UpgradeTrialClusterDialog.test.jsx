@@ -16,6 +16,12 @@ describe('<UpgradeTrialClusterDialog />', () => {
   const machineTypesByID = {
     'm5.xlarge': { id: 'm5.xlarge', generic_name: 'standard-4' },
   };
+  const machinePools = [
+    {
+      instance_type: 'm5.xlarge',
+      replicas: 3,
+    },
+  ];
   let wrapper;
   let closeModal;
   let onClose;
@@ -42,6 +48,7 @@ describe('<UpgradeTrialClusterDialog />', () => {
         cluster={cluster}
         machineTypesByID={machineTypesByID}
         upgradeTrialClusterResponse={{ errorMessage: '', error: false, fulfilled: false }}
+        machinePools={machinePools}
       />,
     );
   });

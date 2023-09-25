@@ -19,6 +19,7 @@ const mapStateToProps = (state) => {
     clusterDisplayName: getClusterName(modalData.cluster),
     shouldDisplayClusterName: modalData.shouldDisplayClusterName,
     machineTypesByID: state.machineTypes.typesByID,
+    machinePools: state.machinePools.getMachinePools.data,
   };
 };
 

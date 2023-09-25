@@ -41,45 +41,58 @@ class UpgradeTrialClusterDialog extends Component {
       cluster,
       machineTypesByID,
       organization: { quotaList },
+      machinePools,
     } = this.props;
     const { OSD } = normalizedProducts;
     const { STANDARD, MARKETPLACE } = billingModels;
-    const quota = {
-      STANDARD: false,
-      MARKETPLACE: false,
-    };
 
     // OSD Trial is always CCS
     const isBYOC = true;
     const isMultiAz = get(cluster, 'multi_az');
-    const nodeMinimum = isMultiAz ? 3 : 2;
 
-    // convert machine type instance size to resource name for quota cost
-    const machineTypeID = get(cluster, 'nodes.compute_machine_type.id');
-    if (!machineTypeID) {
-      return quota;
-    }
-
-    const resourceName = machineTypesByID[machineTypeID].generic_name;
     const cloudProviderID = get(cluster, 'cloud_provider.id');
 
-    const quotaParams = {
-      product: OSD,
-      cloudProviderID,
-      resourceName,
-      isBYOC,
-      isMultiAz,
-      billingModel: STANDARD,
-    };
+    const machinePoolTypes = machinePools.reduce((acc, mp) => {
+      const instanceTypeID = mp.instance_type;
+      const resourceName = machineTypesByID[instanceTypeID].generic_name;
 
-    const standardClusters = availableClustersFromQuota(quotaList, quotaParams);
-    const standardNodes = availableNodesFromQuota(quotaList, quotaParams);
-    quota.STANDARD = standardNodes >= nodeMinimum && standardClusters > 0;
+      const numOfMachines = mp.autoscaling ? mp.autoscaling.max_replicas : mp.replicas;
 
-    quotaParams.billingModel = MARKETPLACE;
-    const marketClusters = availableClustersFromQuota(quotaList, quotaParams);
-    const marketNodes = availableNodesFromQuota(quotaList, quotaParams);
-    quota.MARKETPLACE = marketNodes >= nodeMinimum && marketClusters > 0;
+      if (acc[resourceName]) {
+        acc[resourceName] += numOfMachines;
+      } else {
+        acc[resourceName] = numOfMachines;
+      }
+      return acc;
+    }, {});
+
+    const quota = Object.keys(machinePoolTypes).reduce(
+      (acc, key) => {
+        const quotaParams = {
+          product: OSD,
+          cloudProviderID,
+          resourceName: key,
+          isBYOC,
+          isMultiAz,
+          billingModel: STANDARD,
+        };
+
+        const standardClusters = availableClustersFromQuota(quotaList, quotaParams);
+        const standardNodes = availableNodesFromQuota(quotaList, quotaParams);
+
+        acc.STANDARD =
+          acc.STANDARD && standardNodes >= machinePoolTypes[key] && standardClusters > 0;
+
+        quotaParams.billingModel = MARKETPLACE;
+        const marketClusters = availableClustersFromQuota(quotaList, quotaParams);
+        const marketNodes = availableNodesFromQuota(quotaList, quotaParams);
+        acc.MARKETPLACE =
+          acc.MARKETPLACE && marketNodes >= machinePoolTypes[key] && marketClusters > 0;
+
+        return acc;
+      },
+      { MARKETPLACE: true, STANDARD: true },
+    );
 
     return quota;
   }
@@ -228,6 +241,7 @@ UpgradeTrialClusterDialog.propTypes = {
   machineTypesByID: PropTypes.object,
   clusterDisplayName: PropTypes.string,
   shouldDisplayClusterName: PropTypes.bool,
+  machinePools: PropTypes.array.isRequired,
 };
 
 UpgradeTrialClusterDialog.defaultProps = {
