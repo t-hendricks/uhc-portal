@@ -36,12 +36,11 @@ export function ListTextLabelLinkCard(props: ListTextLabelLinkCardProps) {
                     <Split>
                       <SplitItem>{listItemText}</SplitItem>
                       <SplitItem isFilled />
-                      <SplitItem>{listItemLabel}</SplitItem>
                     </Split>
                   </SplitItem>
                   <SplitItem style={{ width: '40%' }}>
                     <Split>
-                      <SplitItem />
+                      <SplitItem>{listItemLabel}</SplitItem>
                       <SplitItem isFilled />
                       <SplitItem>{listItemLink}</SplitItem>
                     </Split>
