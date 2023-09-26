@@ -15,16 +15,17 @@ import {
 } from '@patternfly/react-core';
 import { Link } from 'react-router-dom';
 import ExternalLink from '~/components/common/ExternalLink';
-import OpenShiftBanner from './OpenShiftBanner/OpenShiftBanner';
+import ProductBanner from '../../common/ProductBanner';
 import docLinks from '../../../common/installLinks.mjs';
 import { OfferingCard } from './OfferingCard/OfferingCard';
 import { ListTextLabelLinkCard } from '../../common/ListTextLabelLinkCard/ListTextLabelLinkCard';
 import createAWSCluster from '../../../styles/images/Create-AWS-cluster.png';
+import OpenShiftProductIcon from '../../../styles/images/OpenShiftProductIcon.svg';
 
 const getStartedMessage =
   "You have 0 clusters detected. Let's create a new cluster or register your existing ones.";
 
-const LinkTextLabelLinkCardContents = {
+const linkTextLabelLinkCardContents = {
   cardClassName: 'pf-u-mb-lg',
   textLabelLinkItems: [
     {
@@ -52,10 +53,31 @@ const LinkTextLabelLinkCardContents = {
   ],
 };
 
+const openshiftBannerContents = {
+  icon: <img src={OpenShiftProductIcon} alt="Openshift" />,
+  learnMoreLink: (
+    <ExternalLink href={docLinks.WHAT_IS_OPENSHIFT}>Learn more about OpenShift</ExternalLink>
+  ),
+  title: 'OpenShift',
+  text: (
+    <>
+      Focus on work that matters with the industry&#39;s leading hybrid cloud application platform
+      powered by Kubernetes.
+      <br />
+      Develop, modernize, deploy, run, and manage your applications faster and easier.
+    </>
+  ),
+};
+
 function OverviewEmptyState() {
   return (
     <>
-      <OpenShiftBanner />
+      <ProductBanner
+        icon={openshiftBannerContents.icon}
+        learnMoreLink={openshiftBannerContents.learnMoreLink}
+        title={openshiftBannerContents.title}
+        text={openshiftBannerContents.text}
+      />
       <PageSection>
         <Card>
           <Flex justifyContent={{ default: 'justifyContentSpaceBetween' }}>
@@ -116,7 +138,7 @@ function OverviewEmptyState() {
         <Title size="xl" headingLevel="h2" className="pf-u-mt-lg pf-u-mb-lg">
           Recommended Content
         </Title>
-        <ListTextLabelLinkCard {...LinkTextLabelLinkCardContents} />
+        <ListTextLabelLinkCard {...linkTextLabelLinkCardContents} />
         <ExternalLink href="/openshift/learning-resources">
           See all OpenShift learning resources
         </ExternalLink>
