@@ -18,8 +18,8 @@ import AWSAccountSelection, { AWS_ACCOUNT_ROSA_LOCALSTORAGE_KEY } from './AWSAcc
 import AWSBillingAccount from './AWSBillingAccount/AWSBillingAccount';
 import { useAssociateAWSAccountDrawer } from './AssociateAWSAccountDrawer/AssociateAWSAccountDrawer';
 
-export const isUserRoleForSelectedAWSAccount = (users: any[], awsAcctId: any) =>
-  users.some((user: { aws_id: any }) => user.aws_id === awsAcctId);
+export const isUserRoleForSelectedAWSAccount = (users: any[] | undefined, awsAcctId: any) =>
+  users?.some((user: { aws_id: any }) => user.aws_id === awsAcctId);
 
 export const getUserRoleForSelectedAWSAccount = (users: any[], awsAcctId: any) =>
   users.find((user: { aws_id: any }) => user.aws_id === awsAcctId);
