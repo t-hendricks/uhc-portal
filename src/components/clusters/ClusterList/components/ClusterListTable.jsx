@@ -76,14 +76,20 @@ function ClusterListTable(props) {
   }
 
   const sortBy = {
-    index: 0, // TODO support more fields
+    index: viewOptions.sorting.sortIndex,
     direction: viewOptions.sorting.isAscending ? SortByDirection.asc : SortByDirection.desc,
   };
 
-  const onSortToggle = (_event, _index, direction) => {
+  const sortColumns = {
+    Name: 'display_name',
+    Created: 'created_at',
+  };
+
+  const onSortToggle = (_event, index, direction) => {
     const sorting = { ...viewOptions.sorting };
     sorting.isAscending = direction === SortByDirection.asc;
-    sorting.sortField = 'name'; // TODO support more fields
+    sorting.sortField = sortColumns[columns[index].title];
+    sorting.sortIndex = index;
     setSorting(sorting);
   };
 
@@ -232,7 +238,7 @@ function ClusterListTable(props) {
     { title: 'Name', transforms: [sortable, cellWidth(30)] },
     { title: 'Status', transforms: [cellWidth(15)] },
     { title: 'Type', transforms: [cellWidth(10)] },
-    { title: 'Created', columnTransforms: [hiddenOnMdOrSmaller] },
+    { title: 'Created', transforms: [sortable], columnTransforms: [hiddenOnMdOrSmaller] },
     { title: 'Version', columnTransforms: [hiddenOnMdOrSmaller] },
     { title: 'Provider (Region)', columnTransforms: [hiddenOnMdOrSmaller] },
     '',
