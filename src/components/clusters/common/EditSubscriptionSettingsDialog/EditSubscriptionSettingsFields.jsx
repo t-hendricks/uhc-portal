@@ -208,11 +208,12 @@ class EditSubscriptionSettingsFields extends Component {
     } = this.state;
 
     const stringValue = inputVal || (systemUnits === SOCKETS ? socketTotal : cpuTotal);
+    const fieldLabel = systemUnits === SOCKETS ? 'Sockets' : 'Cores or vCPUs';
     // validate that `value` consists of decimal digits only
     if (!/^\d+$/.test(`${stringValue}`)) {
       return {
         isValid: false,
-        errorMsg: `${systemUnits} value can only be a positive integer number.`,
+        errorMsg: `${fieldLabel} value can only be a positive integer number.`,
       };
     }
     // now value is number for sure
@@ -220,7 +221,7 @@ class EditSubscriptionSettingsFields extends Component {
     if (value < MIN_VAL) {
       return {
         isValid: false,
-        errorMsg: `${systemUnits} value must be an integer number greater than ${MIN_VAL - 1}.`,
+        errorMsg: `${fieldLabel} value must be an integer number greater than ${MIN_VAL - 1}.`,
       };
     }
     return { isValid: true, errorMsg: '' };
