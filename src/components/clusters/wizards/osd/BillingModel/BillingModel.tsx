@@ -247,9 +247,7 @@ export const BillingModel = () => {
   const infraOptions: RadioGroupOption[] = [
     {
       label: 'Customer cloud subscription',
-      description: osdGoogleMarketplaceFeature
-        ? 'Leverage your existing cloud provider account'
-        : 'Leverage your existing cloud provider account (AWS or Google Cloud)',
+      description: 'Provision the cluster using your existing cloud provider account',
       value: 'true',
       disabled: isByocQuotaDisabled,
     },
