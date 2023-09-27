@@ -9,6 +9,10 @@ import {
   TextContent,
   Flex,
   Grid,
+  Hint,
+  HintBody,
+  HintFooter,
+  HintTitle,
 } from '@patternfly/react-core';
 
 import { useGlobalState } from '~/redux/hooks/useGlobalState';
@@ -18,19 +22,26 @@ import ExternalLink from '~/components/common/ExternalLink';
 import { Prerequisites } from '~/components/clusters/wizards/common/Prerequisites/Prerequisites';
 import { FileUploadField } from '~/components/clusters/wizards/form';
 import { FieldId } from '~/components/clusters/wizards/osd/constants';
+import { useFormState } from '~/components/clusters/wizards/hooks';
+import { billingModels } from '~/common/subscriptionTypes';
 
 export const GcpByocFields = () => {
   const { ccsCredentialsValidity } = useGlobalState((state) => state.ccsInquiries);
+  const {
+    values: { [FieldId.BillingModel]: billingModel },
+  } = useFormState();
 
   return (
     <Grid hasGutter>
-      <GridItem>
-        <Alert variant="info" isInline title="Customer cloud subscription">
-          Provision your cluster in a Google Cloud Platform account owned by you or your company to
-          leverage your existing relationship and pay Google Cloud Platform directly for public
-          cloud costs.
-        </Alert>
-      </GridItem>
+      {billingModel !== billingModels.MARKETPLACE_GCP && (
+        <GridItem>
+          <Alert variant="info" isInline title="Customer cloud subscription">
+            Provision your cluster in a Google Cloud Platform account owned by you or your company
+            to leverage your existing relationship and pay Google Cloud Platform directly for public
+            cloud costs.
+          </Alert>
+        </GridItem>
+      )}
 
       <Flex direction={{ default: 'column' }} spaceItems={{ default: 'spaceItemsLg' }}>
         <GridItem>
@@ -39,6 +50,23 @@ export const GcpByocFields = () => {
           </Title>
 
           <Prerequisites acknowledgementRequired initiallyExpanded>
+            {billingModel === billingModels.MARKETPLACE_GCP && (
+              <Hint className="pf-u-mb-md pf-u-mt-sm">
+                <HintTitle>
+                  <strong>Have you prepared your Google account?</strong>
+                </HintTitle>
+                <HintBody>
+                  Accept the Google Cloud terms and agreements to get started. If you have already
+                  prepared your Google Cloud account console, continue to the OSD prerequisites.
+                </HintBody>
+                <HintFooter>
+                  <ExternalLink href={links.GCP_CONSOLE_OSD_HOME}>
+                    Review Google terms and agreements.
+                  </ExternalLink>
+                </HintFooter>
+              </Hint>
+            )}
+
             <TextContent>
               <Text component={TextVariants.p} className="ocm-secondary-text">
                 Successful cluster provisioning requires that:

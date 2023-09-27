@@ -316,6 +316,9 @@ const links = {
     'https://aws.amazon.com/elasticloadbalancing/features/#Product_comparisons',
   AWS_SHARED_VPC: 'https://docs.aws.amazon.com/vpc/latest/userguide/vpc-sharing.html',
 
+  GCP_CONSOLE_OSD_HOME:
+    'https://console.cloud.google.com/marketplace/agreements/redhat-marketplace/red-hat-openshift-dedicated',
+
   OCM_DOCS_MANAGING_CLUSTERS: `${OCM_DOCS_BASE}/html/managing_clusters/assembly-managing-clusters`,
   OCM_DOCS_PULL_SECRETS: `${OCM_DOCS_BASE}/html/managing_clusters/assembly-managing-clusters#downloading_and_updating_pull_secrets`,
   OCM_DOCS_ROLES_AND_ACCESS: `${OCM_DOCS_BASE}/html/managing_clusters/assembly-user-management-ocm`,
