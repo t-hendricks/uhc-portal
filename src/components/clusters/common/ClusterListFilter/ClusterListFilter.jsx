@@ -48,6 +48,7 @@ class ClusterListFilter extends React.Component {
         className="cluster-list-filter"
         value={currentValue}
         placeholder="Filter by name or ID..."
+        data-testid="filterInputClusterList"
         onChange={(value) => this.updateCurrentValue(value)}
         isDisabled={isDisabled}
       />
