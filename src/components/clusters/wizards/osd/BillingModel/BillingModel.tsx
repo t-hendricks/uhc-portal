@@ -103,7 +103,7 @@ export const BillingModel = () => {
 
   const gcpLink = (
     <ExternalLink
-      href="https://console.cloud.google.com/marketplace/product/redhat-marketplace/red-hat-openshift-container-platform-prod?project=solar-program-335223&pli=1"
+      href="https://console.cloud.google.com/marketplace/product/redhat-marketplace/red-hat-openshift-dedicated"
       noIcon
     >
       Google Cloud
