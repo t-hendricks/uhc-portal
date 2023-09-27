@@ -10,7 +10,10 @@ import {
   getFormSyncErrors,
   getFormAsyncErrors,
 } from 'redux-form';
-import { resetCreatedClusterResponse } from '~/redux/actions/clustersActions';
+import {
+  resetCreatedClusterResponse,
+  clearInstallableVersions,
+} from '~/redux/actions/clustersActions';
 import { getMachineTypes } from '~/redux/actions/machineTypesActions';
 import { getOrganizationAndQuota } from '~/redux/actions/userActions';
 import { getCloudProviders } from '~/redux/actions/cloudProviderActions';
@@ -28,6 +31,7 @@ const mapStateToProps = (state) => {
   const valueSelector = formValueSelector('CreateCluster');
   const formSyncErrors = getFormSyncErrors('CreateCluster')(state) ?? {};
   const formAsyncErrors = getFormAsyncErrors('CreateCluster')(state) ?? {};
+  const { clusterVersions } = state?.clusters || {};
 
   return {
     isValid: isValid('CreateCluster')(state),
@@ -50,6 +54,7 @@ const mapStateToProps = (state) => {
     getUserRoleResponse,
     selectedAWSAccountID: valueSelector(state, 'associated_aws_id'),
     isHypershiftSelected: valueSelector(state, 'hypershift') === 'true',
+    getInstallableVersionsResponse: clusterVersions,
   };
 };
 
@@ -75,6 +80,7 @@ const mapDispatchToProps = (dispatch) => ({
   getMachineTypes: () => dispatch(getMachineTypes()),
   getCloudProviders: () => dispatch(getCloudProviders()),
   clearGetUserRoleResponse: () => dispatch(clearGetUserRoleResponse()),
+  clearInstallableVersions: () => dispatch(clearInstallableVersions()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(withRouter(CreateROSAWizard));

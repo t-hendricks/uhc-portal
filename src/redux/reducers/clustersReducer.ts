@@ -492,6 +492,11 @@ const clustersReducer = (
             : [],
         };
         break;
+      case clustersConstants.CLEAR_CLUSTER_VERSIONS_RESPONSE:
+        draft.clusterVersions = {
+          ...initialState.clusterVersions,
+        };
+        break;
 
       case REJECTED_ACTION(clustersConstants.GET_UPGRADE_GATES):
         draft.upgradeGates = {
