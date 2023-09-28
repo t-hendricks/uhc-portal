@@ -8,6 +8,7 @@ import {
   getMinNodesRequiredHypershift,
   hasDefaultOrExplicitAutoscalingMachinePool,
   isEnforcedDefaultMachinePool,
+  isMinimumCountWithoutTaints,
 } from '~/components/clusters/ClusterDetails/components/MachinePools/machinePoolsHelper';
 import MachinePoolsAutoScalingWarning from '~/components/clusters/ClusterDetails/components/MachinePools/MachinePoolAutoscalingWarning';
 import NodeCountInput from '../NodeCountInput';
@@ -131,6 +132,7 @@ class EditNodeCountModal extends Component {
       clusterID,
       isHypershiftCluster,
       machineTypes,
+      currentNodeCount,
     } = this.props;
     let minNodesRequired = 0;
 
@@ -198,6 +200,14 @@ class EditNodeCountModal extends Component {
     const pending =
       editNodeCountResponse.pending || organization.pending || machinePoolsList.pending;
 
+    const isMinReplicaCount = isMinimumCountWithoutTaints({
+      currentMachinePoolId: machinePoolId,
+      machinePools: machinePoolsList.data,
+      cluster,
+      newReplica: !autoscalingEnabled && currentNodeCount,
+      newMinReplica: autoscalingEnabled && autoScaleMinNodesValue,
+    });
+
     return (
       <Modal
         className="edit-cluster-modal edit-cluster-modal-rhinfra"
@@ -207,7 +217,7 @@ class EditNodeCountModal extends Component {
         primaryText="Apply"
         onPrimaryClick={handleSubmit}
         onSecondaryClick={this.cancelEdit}
-        isPrimaryDisabled={pending || pristine || !isValid}
+        isPrimaryDisabled={pending || pristine || !isValid || !isMinReplicaCount}
         isPending={pending}
         isSmall
         isHypershift={isHypershiftCluster}
@@ -266,6 +276,15 @@ class EditNodeCountModal extends Component {
                   <GridItem span={4} />
                 </>
               )}
+              {!isMinReplicaCount ? (
+                <GridItem>
+                  <Alert
+                    title="Machine pool cannot be scaled because it will leave less than 2 nodes without taints across your cluster"
+                    isInline
+                    variant="info"
+                  />
+                </GridItem>
+              ) : null}
 
               {!!autoScaleWarning && <GridItem md={12}>{autoScaleWarning}</GridItem>}
 
@@ -327,6 +346,7 @@ EditNodeCountModal.propTypes = {
   clusterDisplayName: PropTypes.string,
   resetSection: PropTypes.func.isRequired,
   clearMachineOrNodePoolsOnExit: PropTypes.bool,
+  currentNodeCount: PropTypes.number,
 };
 
 EditNodeCountModal.defaultProps = {

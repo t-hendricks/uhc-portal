@@ -6,13 +6,22 @@ import { isHypershiftCluster, isMultiAZ } from '../../clusterDetailsHelper';
 
 const NON_CCS_DEFAULT_POOL = 'worker';
 
-const isDeleteDisabled = (canDelete, machinePools, isEnforcedDefaultMP) => {
+const minReplicasNeededText =
+  'There needs to be at least 2 nodes without taints across all machine pools';
+
+const isDeleteDisabled = (
+  canDelete,
+  machinePools,
+  isEnforcedDefaultMP,
+  isMinimumCountWithoutTaints,
+) => {
   const permissionsReason = !canDelete && 'You do not have permissions to delete machine pools';
   const lastNodePoolReason = machinePools.length === 1 && 'The last machine pool cannot be deleted';
   return (
     permissionsReason ||
     lastNodePoolReason ||
-    (isEnforcedDefaultMP ? 'Default machine pool cannot be deleted' : undefined)
+    (isEnforcedDefaultMP ? 'Default machine pool cannot be deleted' : undefined) ||
+    (!isMinimumCountWithoutTaints ? minReplicasNeededText : undefined)
   );
 };
 
@@ -88,13 +97,32 @@ const actionResolver = ({
     cluster,
   );
 
+  const hasMinimumCount = isMinimumCountWithoutTaints({
+    currentMachinePoolId: rowData.machinePool.id,
+    machinePools,
+    cluster,
+  });
+
+  const taintsDisabledReason = () => {
+    if (isEnforcedDefaultMP) {
+      return 'Default machine pool cannot have taints';
+    }
+    if (!hasMinimumCount) {
+      return minReplicasNeededText;
+    }
+    return undefined;
+  };
+
   const actions = getActions({
     ...rest,
     onClickUpdate,
-    deleteDisabledReason: isDeleteDisabled(canDelete, machinePools, isEnforcedDefaultMP),
-    taintsDisabledReason: isEnforcedDefaultMP
-      ? 'Default machine pool cannot have taints'
-      : undefined,
+    deleteDisabledReason: isDeleteDisabled(
+      canDelete,
+      machinePools,
+      isEnforcedDefaultMP,
+      hasMinimumCount,
+    ),
+    taintsDisabledReason: taintsDisabledReason(),
   });
 
   return [
@@ -293,6 +321,37 @@ const isEnforcedDefaultMachinePool = (
     });
 };
 
+const isMinimumCountWithoutTaints = ({
+  currentMachinePoolId,
+  machinePools,
+  cluster,
+  newReplica,
+  newMinReplica,
+}) => {
+  if (!isHypershiftCluster(cluster)) {
+    return true; // This only applies to HCP clusters
+  }
+
+  const numberReplicas = machinePools?.reduce((count, p) => {
+    const pool = p.originalResponse || p; // When scaling, the pool data is inside originalResponse key
+
+    if (!pool.taints?.length && (newMinReplica || newReplica || pool.id !== currentMachinePoolId)) {
+      if (pool.id === currentMachinePoolId || pool.name === currentMachinePoolId) {
+        return count + (newReplica || newMinReplica);
+      }
+      if (pool.autoscaling) {
+        // Is min_replica (without s) when editing taints or scaling
+        return count + (pool.autoscaling.min_replicas || pool.autoscaling.min_replica);
+      }
+
+      return count + (pool.replicas || pool.replica);
+    }
+    return count;
+  }, 0);
+
+  return numberReplicas && numberReplicas >= 2;
+};
+
 export {
   parseTags,
   parseLabels,
@@ -309,4 +368,6 @@ export {
   hasExplicitAutoscalingMachinePool,
   hasDefaultOrExplicitAutoscalingMachinePool,
   isEnforcedDefaultMachinePool,
+  isMinimumCountWithoutTaints,
+  minReplicasNeededText,
 };

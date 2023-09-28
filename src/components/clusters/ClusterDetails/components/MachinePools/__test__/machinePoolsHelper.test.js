@@ -5,6 +5,8 @@ import {
   parseTags,
   normalizeNodePool,
   normalizeMachinePool,
+  isMinimumCountWithoutTaints,
+  minReplicasNeededText,
 } from '../machinePoolsHelper';
 
 describe('machine pools action resolver', () => {
@@ -212,6 +214,282 @@ describe('machine pools action resolver', () => {
     });
 
     expect(actions).toEqual(expect.arrayContaining(expected));
+  });
+
+  it('disables delete and taints for HCP cluster if less than 2 replicas without taints', () => {
+    const actions = actionResolver({
+      rowData: { machinePool: { id: 'mp-no-taints' } },
+      onClickDelete,
+      onClickScale,
+      onClickEditTaints,
+      onClickEditLabels,
+      canDelete: true,
+      machinePools: [
+        {
+          id: 'mp-with-taints',
+          replicas: 2,
+          taints: [{ key: 'hello', value: 'world', effect: 'NoSchedule' }],
+        },
+        {
+          id: 'mp1',
+          replicas: 1,
+        },
+        {
+          id: 'mp-no-taints',
+          replicas: 1,
+        },
+      ],
+      cluster: {
+        product: {
+          id: normalizedProducts.ROSA,
+        },
+        hypershift: { enabled: true },
+        ccs: {
+          enabled: true,
+        },
+      },
+      machineTypes: {},
+    });
+
+    actions.forEach((action) => {
+      if (action.title === 'Delete') {
+        expect(action.isAriaDisabled).toBeTruthy();
+        expect(action.tooltip).toEqual(minReplicasNeededText);
+      }
+      if (action.title === 'Edit taints') {
+        expect(action.isAriaDisabled).toBeTruthy();
+        expect(action.tooltip).toEqual(minReplicasNeededText);
+      }
+    });
+  });
+
+  it('enables delete and taints for HCP cluster if  2 replicas without taints', () => {
+    const actions = actionResolver({
+      rowData: { machinePool: { id: 'mp-with-taints' } },
+      onClickDelete,
+      onClickScale,
+      onClickEditTaints,
+      onClickEditLabels,
+      canDelete: true,
+      machinePools: [
+        {
+          id: 'mp-with-taints',
+          replicas: 2,
+          taints: [{ key: 'hello', value: 'world', effect: 'NoSchedule' }],
+        },
+        {
+          id: 'mp1',
+          replicas: 1,
+        },
+        {
+          id: 'mp-no-taints',
+          replicas: 1,
+        },
+      ],
+      cluster: {
+        product: {
+          id: normalizedProducts.ROSA,
+        },
+        hypershift: { enabled: true },
+        ccs: {
+          enabled: true,
+        },
+      },
+      machineTypes: {},
+    });
+
+    actions.forEach((action) => {
+      if (action.title === 'Delete') {
+        expect(action.isAriaDisabled).toBeFalsy();
+      }
+      if (action.title === 'Edit taints') {
+        expect(action.isAriaDisabled).toBeFalsy();
+      }
+    });
+  });
+});
+
+describe('isMinimumCountWithoutTaints ', () => {
+  const machinePools = [
+    {
+      id: 'mp-with-taints',
+      replicas: 2,
+      taints: [{ key: 'hello', value: 'world', effect: 'NoSchedule' }],
+    },
+    {
+      id: 'mp1',
+      replicas: 1,
+    },
+    {
+      id: 'mp-no-taints',
+      replicas: 1,
+    },
+  ];
+
+  const machinePoolsScaled = [
+    {
+      id: 'mp-with-taints',
+      taints: [{ key: 'hello', value: 'world', effect: 'NoSchedule' }],
+      autoscaling: {
+        min_replicas: 2,
+        max_replicas: 3,
+      },
+    },
+    {
+      id: 'mp1',
+      autoscaling: {
+        min_replicas: 1,
+        max_replicas: 3,
+      },
+    },
+    {
+      id: 'mp-no-taints',
+      autoscaling: {
+        min_replicas: 1,
+        max_replicas: 3,
+      },
+    },
+  ];
+
+  const cluster = {
+    hypershift: { enabled: true },
+  };
+  describe('HCP clusters', () => {
+    it('returns false if less than 2 nodes without taints - no scaling', () => {
+      expect(
+        isMinimumCountWithoutTaints({
+          cluster,
+          machinePools,
+          currentMachinePoolId: 'mp-no-taints',
+        }),
+      ).toBeFalsy();
+    });
+
+    it('returns false if less than 2 autoscaled nodes without taints - no scaling', () => {
+      expect(
+        isMinimumCountWithoutTaints({
+          cluster,
+          machinePools: machinePoolsScaled,
+          currentMachinePoolId: 'mp-no-taints',
+        }),
+      ).toBeFalsy();
+    });
+
+    it('returns true if  2 nodes without taints - no scaling', () => {
+      expect(
+        isMinimumCountWithoutTaints({
+          cluster,
+          machinePools,
+          currentMachinePoolId: 'mp-with-taints',
+        }),
+      ).toBeTruthy();
+    });
+
+    it('returns true if 2 autoscaled nodes without taints - no scaling', () => {
+      expect(
+        isMinimumCountWithoutTaints({
+          cluster,
+          machinePools: machinePoolsScaled,
+          currentMachinePoolId: 'mp-with-taints',
+        }),
+      ).toBeTruthy();
+    });
+
+    it('returns false if less than 2 nodes without taints - scaling', () => {
+      const newMachinePools = [
+        {
+          id: 'mp-with-taints',
+          replicas: 2,
+          taints: [{ key: 'hello', value: 'world', effect: 'NoSchedule' }],
+        },
+        {
+          id: 'mp-no-taints',
+          replicas: 3,
+        },
+      ];
+
+      expect(
+        isMinimumCountWithoutTaints({
+          cluster,
+          machinePools: newMachinePools,
+          currentMachinePoolId: 'mp-no-taints',
+          newReplica: 1,
+        }),
+      ).toBeFalsy();
+    });
+
+    it('returns false if less than 2 autoscaled nodes without taints - scaling', () => {
+      const newMachinePools = [
+        {
+          id: 'mp-with-taints',
+          replicas: 2,
+          taints: [{ key: 'hello', value: 'world', effect: 'NoSchedule' }],
+        },
+        {
+          id: 'mp-no-taints',
+          autoscaling: {
+            min_replicas: 3,
+            max_replicas: 3,
+          },
+        },
+      ];
+      expect(
+        isMinimumCountWithoutTaints({
+          cluster,
+          machinePools: newMachinePools,
+          currentMachinePoolId: 'mp-no-taints',
+          newMinReplica: 1,
+        }),
+      ).toBeFalsy();
+    });
+
+    it('returns true if  2 nodes without taints - scaling', () => {
+      const newMachinePools = [
+        {
+          id: 'mp-with-taints',
+          replicas: 2,
+          taints: [{ key: 'hello', value: 'world', effect: 'NoSchedule' }],
+        },
+        {
+          id: 'mp-no-taints',
+          replicas: 3,
+        },
+      ];
+
+      expect(
+        isMinimumCountWithoutTaints({
+          cluster,
+          machinePools: newMachinePools,
+          currentMachinePoolId: 'mp-no-taints',
+          newReplica: 2,
+        }),
+      ).toBeTruthy();
+    });
+
+    it('returns true if 2 autoscaled nodes without taints - scaling', () => {
+      const newMachinePools = [
+        {
+          id: 'mp-with-taints',
+          replicas: 2,
+          taints: [{ key: 'hello', value: 'world', effect: 'NoSchedule' }],
+        },
+        {
+          id: 'mp-no-taints',
+          autoscaling: {
+            min_replicas: 3,
+            max_replicas: 3,
+          },
+        },
+      ];
+      expect(
+        isMinimumCountWithoutTaints({
+          cluster,
+          machinePools: newMachinePools,
+          currentMachinePoolId: 'mp-no-taints',
+          newMinReplica: 2,
+        }),
+      ).toBeTruthy();
+    });
   });
 });
 
