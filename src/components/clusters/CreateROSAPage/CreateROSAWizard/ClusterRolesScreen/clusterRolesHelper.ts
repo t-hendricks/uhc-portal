@@ -24,13 +24,15 @@ const getOperatorRolesCommand = ({
   }
 
   const rosaBaseCommand = `rosa create operator-roles --prefix "${customOperatorRolesPrefix}" --oidc-config-id "${byoOidcConfigID}"`;
+  const installerRoleArnOption = installerRoleArn ? `--installer-role-arn ${installerRoleArn}` : '';
+
   if (forcedByoOidcType === 'Hypershift') {
-    return `${rosaBaseCommand} --hosted-cp`;
+    return `${rosaBaseCommand} --hosted-cp ${installerRoleArnOption}`;
   }
   if (forcedByoOidcType === 'SharedVPC') {
-    return `${rosaBaseCommand} --installer-role-arn ${installerRoleArn} --shared-vpc-role-arn ${sharedVpcRoleArn}`;
+    return `${rosaBaseCommand} ${installerRoleArnOption} --shared-vpc-role-arn ${sharedVpcRoleArn}`;
   }
-  return rosaBaseCommand;
+  return `${rosaBaseCommand} ${installerRoleArnOption}`;
 };
 
 const getForcedByoOidcReason = (forcedByoOidcType: ForcedByoOidcType) => {
