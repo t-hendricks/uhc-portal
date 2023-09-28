@@ -234,7 +234,7 @@ class MachinePools extends React.Component {
           title: (
             <>
               {isHypershift ? machinePool.aws_node_pool?.instance_type : machinePool.instance_type}
-              {machinePool.aws && (
+              {machinePool.aws?.spot_market_options && (
                 <Label variant="outline" className="ocm-c-machine-pools__spot-label">
                   Spot
                 </Label>
