@@ -30,5 +30,7 @@ export namespace ClusterLog {
     WARNING = 'Warning',
     ERROR = 'Error',
     FATAL = 'Fatal',
+    MAJOR = 'Major',
+    CRITICAL = 'Critical',
   }
 }

@@ -163,7 +163,9 @@
                   "Info",
                   "Warning",
                   "Error",
-                  "Fatal"
+                  "Fatal",
+                  "Major",
+                  "Critical"
                 ],
                 "type": "string"
               },
