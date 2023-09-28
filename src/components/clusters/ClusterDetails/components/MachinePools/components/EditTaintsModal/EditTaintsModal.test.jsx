@@ -1,5 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
+import { render, screen } from '~/testUtils';
+import { reduxForm } from 'redux-form';
 
 import EditTaintsModal from './EditTaintsModal';
 import { normalizedProducts } from '../../../../../../../common/subscriptionTypes';
@@ -357,5 +359,102 @@ describe('<EditTaintsModal />', () => {
         .find('FieldArray')
         .props().canAddMore,
     ).toBeTruthy();
+  });
+
+  describe('RTL tests', () => {
+    const props = {
+      closeModal: jest.fn(),
+      handleSubmit: jest.fn(),
+      resetEditTaintsResponse: jest.fn(),
+      getMachinePools: jest.fn(),
+      change: jest.fn(),
+      reset: jest.fn(),
+      editTaintsResponse: {},
+      invalid: false,
+      pristine: false,
+      machineTypes: {
+        fulfilled: true,
+        pending: false,
+        types: {
+          aws: [
+            {
+              id: 'm5.xlarge',
+              cpu: {
+                value: 4,
+              },
+              memory: {
+                value: 4,
+              },
+            },
+          ],
+        },
+      },
+      getMachineTypes: jest.fn(),
+      cluster: {
+        cloud_provider: {
+          id: 'aws',
+        },
+        ccs: {
+          enabled: true,
+        },
+        hypershift: { enabled: true },
+      },
+      machinePoolsList: {
+        data: [
+          {
+            id: 'mp-with-taints',
+            replicas: 2,
+            taints: [{ key: 'hello', value: 'world', effect: 'NoSchedule' }],
+          },
+          {
+            id: 'mp1',
+            replicas: 1,
+          },
+          {
+            id: 'mp-no-taints',
+            replicas: 1,
+          },
+        ],
+      },
+      selectedMachinePoolId: '',
+    };
+
+    const wizardConnector = (component) => reduxForm({ form: 'editTaints' })(component);
+
+    it.skip('disables the primary button when there are less than 2 replicas without taints for an HCP cluster', () => {
+      // Skipping test - ReduxForms will reset the pristine value to always be true
+      // and pristine = true causes the primary button to be disabled
+      // While this test passes, it is due to the reset pristine value
+      const newProps = { ...props, selectedMachinePoolId: 'mp-no-taints' };
+
+      const ConnectedEditTaintsModal = wizardConnector(EditTaintsModal);
+      render(<ConnectedEditTaintsModal {...newProps} />);
+
+      expect(
+        screen.getByText(
+          'Taints cannot be added unless there are at least 2 replicas without taints across all machine pools',
+        ),
+      ).toBeInTheDocument();
+
+      expect(screen.getByRole('button', { name: 'Save' })).toBeDisabled();
+    });
+
+    it.skip('enables the primary button when adding taints would still leave  at least 2 replicas without taints for an HCP cluster', () => {
+      // Skipping test - ReduxForms will reset the pristine value to always be true
+      // and pristine = true causes the primary button to be disabled
+      // and the input boxes are not rendering so this test always fails
+      const newProps = { ...props, selectedMachinePoolId: 'mp-with-taints' };
+
+      const ConnectedEditTaintsModal = wizardConnector(EditTaintsModal);
+      render(<ConnectedEditTaintsModal {...newProps} />);
+
+      expect(
+        screen.queryByText(
+          'Taints cannot be added unless there are at least 2 replicas without taints across all machine pools',
+        ),
+      ).not.toBeInTheDocument();
+
+      expect(screen.getByRole('button', { name: 'Save' })).not.toBeDisabled();
+    });
   });
 });

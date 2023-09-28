@@ -9,7 +9,10 @@ import { SpotInstanceInfoAlert, isMachinePoolUsingSpotInstances } from '../SpotI
 
 import { ReduxFormDropdown, ReduxFormTaints } from '../../../../../../common/ReduxFormComponents';
 
-import { isEnforcedDefaultMachinePool } from '../../machinePoolsHelper';
+import {
+  isEnforcedDefaultMachinePool,
+  isMinimumCountWithoutTaints,
+} from '../../machinePoolsHelper';
 
 class EditTaintsModal extends Component {
   componentDidMount() {
@@ -71,6 +74,12 @@ class EditTaintsModal extends Component {
       cluster,
     );
 
+    const isMinReplicaCount = isMinimumCountWithoutTaints({
+      currentMachinePoolId: selectedMachinePoolId,
+      machinePools: machinePoolsList.data,
+      cluster,
+    });
+
     return (
       <Modal
         title="Edit taints"
@@ -78,7 +87,9 @@ class EditTaintsModal extends Component {
         primaryText="Save"
         onPrimaryClick={handleSubmit}
         onSecondaryClick={this.cancelEdit}
-        isPrimaryDisabled={pending || pristine || invalid || isEnforcedDefaultMP}
+        isPrimaryDisabled={
+          pending || pristine || invalid || isEnforcedDefaultMP || !isMinReplicaCount
+        }
         isPending={pending}
         modalSize="medium"
       >
@@ -104,7 +115,7 @@ class EditTaintsModal extends Component {
                   name="taints"
                   component={ReduxFormTaints}
                   isEditing
-                  canAddMore={!invalid && !isEnforcedDefaultMP}
+                  canAddMore={!invalid && !isEnforcedDefaultMP && isMinReplicaCount}
                 />
               </GridItem>
 
@@ -117,6 +128,17 @@ class EditTaintsModal extends Component {
                   />
                 </GridItem>
               )}
+
+              {!isMinReplicaCount ? (
+                <GridItem>
+                  <Alert
+                    title="Taints cannot be added unless there are at least 2 nodes without taints across all machine pools"
+                    isInline
+                    variant="info"
+                  />
+                </GridItem>
+              ) : null}
+
               {isMachinePoolUsingSpotInstances(selectedMachinePoolId, machinePoolsList) && (
                 <>
                   <GridItem>
