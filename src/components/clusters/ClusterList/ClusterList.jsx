@@ -193,8 +193,10 @@ class ClusterList extends Component {
 
     const showSpinner = !isPendingNoData && pending && !loadingChangedView;
     const showSkeleton = isPendingNoData || (pending && loadingChangedView);
+    // The empty state asserts as a fact that you have no clusters;
+    // not appropriate when results are indeterminate or empty due to filtering.
     const showEmptyState =
-      !isPendingNoData && !size(clusters) && hasNoFilters && !showMyClustersOnly;
+      !isPendingNoData && !error && !size(clusters) && hasNoFilters && !showMyClustersOnly;
 
     const someReadOnly = clusters.map((c) => c?.status?.configuration_mode).includes('read_only');
 
@@ -218,27 +220,6 @@ class ClusterList extends Component {
         </PageHeader>
       </>
     );
-
-    if (error && !size(clusters)) {
-      return (
-        <AppPage title={PAGE_TITLE}>
-          {pageHeader}
-          <PageSection>
-            <div data-ready>
-              <Unavailable
-                message="Error retrieving clusters"
-                response={{
-                  errorMessage,
-                  operationID,
-                  errorCode,
-                  errorDetails,
-                }}
-              />
-            </div>
-          </PageSection>
-        </AppPage>
-      );
-    }
 
     // This signals to end-to-end tests that page has completed loading.
     // For now deliberately ignoring in-place reloads with a spinner;
@@ -320,19 +301,31 @@ class ClusterList extends Component {
               {!isRestrictedEnv() && (
                 <ClusterListFilterChipGroup view={viewConstants.CLUSTERS_VIEW} history={history} />
               )}
-              <ClusterListTable
-                openModal={openModal}
-                clusters={clusters || []}
-                viewOptions={viewOptions}
-                setSorting={setSorting}
-                isPending={showSkeleton}
-                setClusterDetails={setClusterDetails}
-                canSubscribeOCPList={canSubscribeOCPList}
-                canHibernateClusterList={canHibernateClusterList}
-                canTransferClusterOwnershipList={canTransferClusterOwnershipList}
-                toggleSubscriptionReleased={toggleSubscriptionReleased}
-                refreshFunc={this.refresh}
-              />
+              {error && !size(clusters) ? (
+                <Unavailable
+                  message="Error retrieving clusters"
+                  response={{
+                    errorMessage,
+                    operationID,
+                    errorCode,
+                    errorDetails,
+                  }}
+                />
+              ) : (
+                <ClusterListTable
+                  openModal={openModal}
+                  clusters={clusters || []}
+                  viewOptions={viewOptions}
+                  setSorting={setSorting}
+                  isPending={showSkeleton}
+                  setClusterDetails={setClusterDetails}
+                  canSubscribeOCPList={canSubscribeOCPList}
+                  canHibernateClusterList={canHibernateClusterList}
+                  canTransferClusterOwnershipList={canTransferClusterOwnershipList}
+                  toggleSubscriptionReleased={toggleSubscriptionReleased}
+                  refreshFunc={this.refresh}
+                />
+              )}
               <ViewPaginationRow
                 viewType={viewConstants.CLUSTERS_VIEW}
                 currentPage={viewOptions.currentPage}
