@@ -17,7 +17,10 @@ export const authInterceptor = (client: AxiosInstance): AxiosInstance => {
     await insights.chrome.auth.getUser();
     const token = await insights.chrome.auth.getToken();
     const BASE_URL = getBaseUrl(cfg.baseURL);
-    const updatedCfg: AxiosRequestConfig = { ...cfg, url: `${BASE_URL}${cfg.url}` };
+    const updatedCfg: AxiosRequestConfig = {
+      ...cfg,
+      url: `${BASE_URL}${cfg.url}`,
+    };
     if (token) {
       updatedCfg.headers = {
         ...updatedCfg.headers,
