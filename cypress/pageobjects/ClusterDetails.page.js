@@ -146,7 +146,7 @@ class ClusterDetails extends Page {
   }
 
   waitForInstallerScreenToLoad = () => {
-    cy.get('.pf-c-spinner', { timeout: 30000 }).should('not.exist');
+    cy.get('li.pf-c-wizard__nav-item', { timeout: 30000 }).should('not.exist');
     cy.get('div.cluster-loading-container', { timeout: 100000 }).should('not.exist');
   };
 
