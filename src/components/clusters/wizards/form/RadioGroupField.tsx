@@ -1,11 +1,13 @@
 import React from 'react';
 import classNames from 'classnames';
-import { RadioButtonField } from 'formik-pf';
 
 import { FormGroup, Flex, Tooltip } from '@patternfly/react-core';
 
 import PopoverHint from '~/components/common/PopoverHint';
 import { useFormState } from '~/components/clusters/wizards/hooks';
+// Custom until this issues is resolved https://github.com/patternfly-labs/formik-pf/issues/25
+// import { RadioButtonField } from 'formik-pf';
+import { RadioButtonField } from './CustomRadioButtonField';
 
 enum RadioGroupDirection {
   Row = 'row',
@@ -19,6 +21,7 @@ export interface RadioGroupOption {
   disabled?: boolean;
   tooltip?: React.ReactNode;
   popoverHint?: React.ReactNode;
+  shouldCheck?: (fieldValue: string, radioValue: React.ReactText) => boolean;
 }
 
 interface RadioGroupFieldProps {
@@ -61,6 +64,7 @@ export const RadioGroupField = ({
                 setFieldValue(name, value);
                 onChange?.(value?.toString());
               }}
+              shouldCheck={option.shouldCheck}
             />
           );
 

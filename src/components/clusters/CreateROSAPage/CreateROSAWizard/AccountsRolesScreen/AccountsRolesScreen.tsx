@@ -1,5 +1,5 @@
-import React, { useState, useCallback, useEffect, useRef } from 'react';
-import PropTypes from 'prop-types';
+/* eslint-disable camelcase */
+import React, { useState, useCallback, useEffect, useRef, ReactElement } from 'react';
 import get from 'lodash/get';
 
 import { Button, Form, Grid, GridItem, Text, TextVariants, Title } from '@patternfly/react-core';
@@ -14,15 +14,36 @@ import { loadOfflineToken } from '~/components/tokens/TokenUtils';
 
 import AccountRolesARNsSection from './AccountRolesARNsSection';
 import { AwsRoleErrorAlert } from './AwsRoleErrorAlert';
-import AWSAccountSelection from './AWSAccountSelection';
+import AWSAccountSelection, { AWS_ACCOUNT_ROSA_LOCALSTORAGE_KEY } from './AWSAccountSelection';
 import AWSBillingAccount from './AWSBillingAccount/AWSBillingAccount';
 import { useAssociateAWSAccountDrawer } from './AssociateAWSAccountDrawer/AssociateAWSAccountDrawer';
 
-export const isUserRoleForSelectedAWSAccount = (users, awsAcctId) =>
-  users.some((user) => user.aws_id === awsAcctId);
+export const isUserRoleForSelectedAWSAccount = (users: any[], awsAcctId: any) =>
+  users.some((user: { aws_id: any }) => user.aws_id === awsAcctId);
 
-export const getUserRoleForSelectedAWSAccount = (users, awsAcctId) =>
-  users.find((user) => user.aws_id === awsAcctId);
+export const getUserRoleForSelectedAWSAccount = (users: any[], awsAcctId: any) =>
+  users.find((user: { aws_id: any }) => user.aws_id === awsAcctId);
+
+export interface AccountsRolesScreenProps {
+  touch?: any;
+  change?: any;
+  selectedAWSAccountID?: string;
+  selectedAWSBillingAccountID?: string;
+  selectedInstallerRoleARN?: string;
+  getAWSAccountIDs: any;
+  getAWSAccountIDsResponse: any;
+  getAWSAccountRolesARNs: any;
+  getAWSAccountRolesARNsResponse: any;
+  getUserRoleResponse: any;
+  clearGetAWSAccountIDsResponse: any;
+  clearGetAWSAccountRolesARNsResponse: any;
+  clearGetUserRoleResponse: any;
+  organizationID: string;
+  rosaMaxOSVersion?: string;
+  offlineToken?: string;
+  setOfflineToken?: any;
+  isHypershiftSelected: boolean;
+}
 
 function AccountsRolesScreen({
   touch,
@@ -43,10 +64,10 @@ function AccountsRolesScreen({
   offlineToken,
   setOfflineToken,
   isHypershiftSelected,
-}) {
-  const [AWSAccountIDs, setAWSAccountIDs] = useState([]);
+}: AccountsRolesScreenProps) {
+  const [AWSAccountIDs, setAWSAccountIDs] = useState<string[]>([]);
   const [noUserForSelectedAWSAcct, setNoUserForSelectedAWSAcct] = useState(false);
-  const [awsIDsErrorBox, setAwsIDsErrorBox] = useState(null);
+  const [awsIDsErrorBox, setAwsIDsErrorBox] = useState<ReactElement | null>(null);
   const [refreshButtonClicked, setRefreshButtonClicked] = useState(false);
   const openDrawerButtonRef = useRef(null);
   const hasAWSAccounts = AWSAccountIDs.length > 0;
@@ -97,7 +118,11 @@ function AccountsRolesScreen({
   // if aws acct ids default to first available aws account
   useEffect(() => {
     if (hasAWSAccounts && !selectedAWSAccountID) {
-      change('associated_aws_id', AWSAccountIDs[0]);
+      let selectedAWSAccountID = localStorage.getItem(AWS_ACCOUNT_ROSA_LOCALSTORAGE_KEY);
+      if (!selectedAWSAccountID || !AWSAccountIDs.includes(selectedAWSAccountID)) {
+        [selectedAWSAccountID] = AWSAccountIDs;
+      }
+      change('associated_aws_id', selectedAWSAccountID);
     }
   }, [hasAWSAccounts, selectedAWSAccountID]);
 
@@ -187,8 +212,8 @@ function AccountsRolesScreen({
         {isHypershiftSelected && (
           <AWSBillingAccount
             change={change}
-            selectedAWSBillingAccountID={selectedAWSBillingAccountID}
-            selectedAWSAccountID={selectedAWSAccountID}
+            selectedAWSBillingAccountID={selectedAWSBillingAccountID || ''}
+            selectedAWSAccountID={selectedAWSAccountID || ''}
           />
         )}
         {selectedAWSAccountID && hasAWSAccounts && (
@@ -215,30 +240,5 @@ function AccountsRolesScreen({
     </Form>
   );
 }
-
-AccountsRolesScreen.propTypes = {
-  touch: PropTypes.func,
-  change: PropTypes.func,
-  selectedAWSAccountID: PropTypes.string,
-  selectedAWSBillingAccountID: PropTypes.string,
-  selectedInstallerRoleARN: PropTypes.string,
-  getAWSAccountIDs: PropTypes.func.isRequired,
-  getAWSAccountIDsResponse: PropTypes.object.isRequired,
-  getAWSAccountRolesARNs: PropTypes.func.isRequired,
-  getAWSAccountRolesARNsResponse: PropTypes.object.isRequired,
-  getUserRoleResponse: PropTypes.object.isRequired,
-  clearGetAWSAccountIDsResponse: PropTypes.func.isRequired,
-  clearGetAWSAccountRolesARNsResponse: PropTypes.func.isRequired,
-  clearGetUserRoleResponse: PropTypes.func.isRequired,
-  organizationID: PropTypes.string.isRequired,
-  initialValues: PropTypes.shape({
-    associated_aws_id: PropTypes.string,
-    installer_role_arn: PropTypes.string,
-  }).isRequired,
-  rosaMaxOSVersion: PropTypes.string,
-  offlineToken: PropTypes.string,
-  setOfflineToken: PropTypes.func,
-  isHypershiftSelected: PropTypes.bool.isRequired,
-};
 
 export default AccountsRolesScreen;

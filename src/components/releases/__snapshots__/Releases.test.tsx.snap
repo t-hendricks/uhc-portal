@@ -15,13 +15,16 @@ exports[`<Releases /> should render 1`] = `
           <div
             className="pf-c-drawer"
           >
-            <DrawerContent>
+            <DrawerContent
+              data-testid="appDrawerContent"
+            >
               <DrawerMain>
                 <div
                   className="pf-c-drawer__main"
                 >
                   <div
                     className="pf-c-drawer__content"
+                    data-testid="appDrawerContent"
                   >
                     <DrawerContentBody
                       className="app-drawer-body"

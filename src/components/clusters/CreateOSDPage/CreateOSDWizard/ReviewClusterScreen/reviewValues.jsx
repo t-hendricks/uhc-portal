@@ -32,6 +32,8 @@ const reviewValues = {
       [billingModels.STANDARD]: 'Annual: Fixed capacity subscription from Red Hat',
       [billingModels.MARKETPLACE]:
         'On-Demand: Flexible usage billed through the Red Hat Marketplace',
+      [billingModels.MARKETPLACE_GCP]:
+        'On-Demand: Flexible usage billed through Google Cloud Marketplace',
       'standard-trial': 'Free trial (upgradeable)',
     },
   },
@@ -50,7 +52,8 @@ const reviewValues = {
   },
   cloud_provider: {
     title: 'Cloud provider',
-    valueTransform: (value) => value?.toUpperCase(),
+    valueTransform: (value) =>
+      value === 'gcp' ? 'Google Cloud Platform (GCP)' : value?.toUpperCase(),
   },
   name: {
     title: 'Cluster name',
@@ -234,8 +237,9 @@ const reviewValues = {
     },
   },
   // For Hypershift
-  selected_vpc_id: {
+  selected_vpc: {
     title: 'Install to selected VPC',
+    valueTransform: (selectedVPC) => selectedVPC.name || selectedVPC.id,
   },
   use_privatelink: {
     title: 'PrivateLink',

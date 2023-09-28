@@ -7,7 +7,7 @@ import { useGlobalState } from '~/redux/hooks';
 import {
   getCloudProverInfo,
   shouldValidateCcsCredentials,
-} from '~/components/clusters/wizards/common/utils';
+} from '~/components/clusters/wizards/common/utils/ccsCredentials';
 import { CreateOsdWizardFooter } from '~/components/clusters/wizards/osd/CreateOsdWizardFooter';
 
 export const CloudProviderStepFooter = () => {
