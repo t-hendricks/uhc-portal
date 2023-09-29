@@ -61,6 +61,8 @@ class CreateROSAWizardInternal extends React.Component {
       getOrganizationAndQuota,
       getCloudProviders,
       isHypershiftEnabled,
+      getInstallableVersionsResponse,
+      clearInstallableVersions,
     } = this.props;
 
     if (shouldRefetchQuota(organization)) {
@@ -71,6 +73,9 @@ class CreateROSAWizardInternal extends React.Component {
     }
     if (!machineTypes.fulfilled && !machineTypes.pending) {
       getMachineTypes();
+    }
+    if (getInstallableVersionsResponse.fulfilled) {
+      clearInstallableVersions();
     }
 
     const firstStepId = isHypershiftEnabled

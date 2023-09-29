@@ -24,7 +24,10 @@ import {
 import { FieldId } from '~/components/clusters/wizards/osd/constants';
 import { useFormState } from '~/components/clusters/wizards/hooks';
 import { RadioGroupField, RadioGroupOption } from '~/components/clusters/wizards/form';
+import { clustersActions } from '~/redux/actions';
 import { useFeatureGate } from '~/hooks/useFeatureGate';
+import { useGlobalState } from '~/redux/hooks';
+import { useDispatch } from 'react-redux';
 import { useGetBillingQuotas } from './useGetBillingQuotas';
 import { MarketplaceSelectField } from './MarketplaceSelectField';
 
@@ -40,6 +43,18 @@ export const BillingModel = () => {
     values,
     setFieldValue,
   } = useFormState();
+  const dispatch = useDispatch();
+  const { clusterVersions: getInstallableVersionsResponse } = useGlobalState(
+    (state) => state.clusters,
+  );
+
+  const clearPreviousVersionsReponse = () => {
+    // clears versions from redux if it was loaded before, since different billingModels
+    // can get different versions
+    if (getInstallableVersionsResponse?.fulfilled) {
+      dispatch(clustersActions.clearInstallableVersions());
+    }
+  };
 
   const quotas = useGetBillingQuotas({ product });
   const osdGoogleMarketplaceFeature = useFeatureGate(OSD_GOOGLE_MARKETPLACE_FEATURE);
@@ -88,7 +103,7 @@ export const BillingModel = () => {
 
   const gcpLink = (
     <ExternalLink
-      href="https://console.cloud.google.com/marketplace/product/redhat-marketplace/red-hat-openshift-container-platform-prod?project=solar-program-335223&pli=1"
+      href="https://console.cloud.google.com/marketplace/product/redhat-marketplace/red-hat-openshift-dedicated"
       noIcon
     >
       Google Cloud
@@ -207,7 +222,16 @@ export const BillingModel = () => {
     ) {
       setFieldValue(FieldId.BillingModel, billingModels.MARKETPLACE);
     }
-  }, [product, billingModel, showOsdTrial, quotas.marketplace, quotas.standardOsd]);
+
+    clearPreviousVersionsReponse();
+  }, [
+    product,
+    billingModel,
+    showOsdTrial,
+    quotas.marketplace,
+    quotas.standardOsd,
+    selectedMarketplace,
+  ]);
 
   let isRhInfraQuotaDisabled = false;
   let isByocQuotaDisabled = false;
@@ -223,9 +247,7 @@ export const BillingModel = () => {
   const infraOptions: RadioGroupOption[] = [
     {
       label: 'Customer cloud subscription',
-      description: osdGoogleMarketplaceFeature
-        ? 'Leverage your existing cloud provider account'
-        : 'Leverage your existing cloud provider account (AWS or Google Cloud)',
+      description: 'Provision the cluster using your existing cloud provider account',
       value: 'true',
       disabled: isByocQuotaDisabled,
     },

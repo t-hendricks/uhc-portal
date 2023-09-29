@@ -660,6 +660,8 @@ const getClusterStatus = (clusterID: string) =>
 const getInflightChecks = (clusterID: string) =>
   action(clustersConstants.GET_INFLIGHT_CHECKS, clusterService.getInflightChecks(clusterID));
 
+const clearInstallableVersions = () => action(clustersConstants.CLEAR_CLUSTER_VERSIONS_RESPONSE);
+
 const getInstallableVersions = (isRosa: boolean, isMarketplaceGcp: boolean) =>
   action(
     clustersConstants.GET_CLUSTER_VERSIONS,
@@ -691,6 +693,7 @@ type ClusterAction = ActionType<
   | typeof resetCreatedClusterResponse
   | typeof getClusterStatus
   | typeof getInflightChecks
+  | typeof clearInstallableVersions
   | typeof getInstallableVersions
 >;
 
@@ -710,6 +713,7 @@ const clustersActions = {
   unarchiveCluster,
   getClusterStatus,
   getInflightChecks,
+  clearInstallableVersions,
   getInstallableVersions,
 };
 
@@ -738,5 +742,6 @@ export {
   getInflightChecks,
   upgradeTrialCluster,
   clearUpgradeTrialClusterResponse,
+  clearInstallableVersions,
   ClusterAction,
 };
