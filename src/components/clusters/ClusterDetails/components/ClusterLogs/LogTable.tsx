@@ -30,6 +30,8 @@ import { SearchIcon, WrenchIcon } from '@patternfly/react-icons';
 import { ClusterLog } from '~/types/service_logs.v1/index';
 import './LogTable.scss';
 
+import { eventTypes } from '../../clusterDetailsHelper';
+
 const columns = [
   {
     title: 'Description',
@@ -85,7 +87,7 @@ type LogTableParams = {
 
 const LogTable = ({ logs, setSorting, pending, refreshEvent }: LogTableParams) => {
   const [expandedLogs, setExpandedLogs] = React.useState<string[]>([]);
-  const [showSpinner, setShowSpinner] = React.useState(true);
+  const [forceHideSpinner, setForceHideSpinner] = React.useState(false);
 
   // initially sorted by Date descending
   const [sortColIndex, setSortColIndex] = React.useState(
@@ -93,10 +95,11 @@ const LogTable = ({ logs, setSorting, pending, refreshEvent }: LogTableParams) =
   );
   const [sortDirection, setSortDirection] = React.useState(SortByDirection.desc);
 
+  // keep showing logs data while refreshing
   React.useEffect(() => {
     if (!pending) {
-      setShowSpinner(false);
-      if (refreshEvent.type !== null) {
+      setForceHideSpinner(true);
+      if (refreshEvent.type !== eventTypes.NONE) {
         refreshEvent.reset();
       }
     }
@@ -177,9 +180,11 @@ const LogTable = ({ logs, setSorting, pending, refreshEvent }: LogTableParams) =
     columnIndex,
   });
 
+  const showSpinner = pending && (refreshEvent.type === eventTypes.NONE || !forceHideSpinner);
+
   return (
     <Bullseye>
-      {pending && (refreshEvent.type === null || showSpinner) ? (
+      {showSpinner ? (
         <Spinner size="lg" />
       ) : (
         <TableComposable aria-label="Expandable table" variant={TableVariant.compact}>

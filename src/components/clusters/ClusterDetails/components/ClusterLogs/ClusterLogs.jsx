@@ -15,9 +15,10 @@ import size from 'lodash/size';
 import isEmpty from 'lodash/isEmpty';
 import isEqual from 'lodash/isEqual';
 import SearchIcon from '@patternfly/react-icons/dist/esm/icons/search-icon';
-import { viewPropsChanged, getQueryParam } from '../../../../../common/queryHelpers';
 import ClusterLogsToolbar from './toolbar';
 import LogTable from './LogTable';
+import { eventTypes } from '../../clusterDetailsHelper';
+import { viewPropsChanged, getQueryParam } from '../../../../../common/queryHelpers';
 import { viewConstants } from '../../../../../redux/constants';
 import ErrorBox from '../../../../common/ErrorBox';
 import ViewPaginationRow from '../../../common/ViewPaginationRow/viewPaginationRow';
@@ -189,7 +190,7 @@ ClusterLogs.propTypes = {
   }).isRequired,
   clusterLogs: PropTypes.object.isRequired,
   refreshEvent: PropTypes.shape({
-    type: PropTypes.string,
+    type: PropTypes.oneOf(Object.values(eventTypes)),
     reset: PropTypes.func.isRequired,
   }).isRequired,
   getClusterHistory: PropTypes.func.isRequired,
