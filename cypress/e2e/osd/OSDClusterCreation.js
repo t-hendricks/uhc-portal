@@ -33,6 +33,8 @@ describe('OSD cluster tests', { tags: ['ci'] }, () => {
 
     it('shows an error with invalid and empty names', () => {
       CreateOSDWizardPage.isBillingModelScreen();
+      // select Red Hat account cloud option (previously default value)
+      cy.get(CreateOSDWizardPage.billingModelRedHatCloudAccountOption).click();
       cy.get(CreateOSDWizardPage.primaryButton).click();
       cy.getByTestId('aws-provider-card').click();
       cy.get(CreateOSDWizardPage.primaryButton).click();

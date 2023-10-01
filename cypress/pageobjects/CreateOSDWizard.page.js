@@ -62,6 +62,10 @@ class CreateOSDCluster extends Page {
   get TrialSelected() {
     return 'input:checked[name="billing_model"][value="standard-trial"]';
   }
+
+  get billingModelRedHatCloudAccountOption() {
+    return 'input[id="form-radiobutton-byoc-false-field"]';
+  }
 }
 
 export default new CreateOSDCluster();
