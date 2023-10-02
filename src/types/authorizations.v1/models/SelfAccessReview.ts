@@ -49,6 +49,7 @@ export namespace SelfAccessReview {
     CLUSTER_LOG = 'ClusterLog',
     CLUSTER_CREDENTIAL = 'ClusterCredential',
     CLUSTER_METRIC = 'ClusterMetric',
+    CLUSTER_AUTOSCALER = 'ClusterAutoscaler',
     RESOURCE_QUOTA = 'ResourceQuota',
     RESERVED_RESOURCE = 'ReservedResource',
     DASHBOARD = 'Dashboard',

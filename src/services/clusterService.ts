@@ -30,6 +30,7 @@ import type {
   LimitedSupportReason,
   OidcConfig,
   InflightCheck,
+  ClusterAutoscaler,
   DNSDomain,
 } from '../types/clusters_mgmt.v1';
 import type { Subscription } from '../types/accounts_mgmt.v1';
@@ -601,6 +602,24 @@ const deleteNodePool = (clusterID: string, nodePoolID: string) =>
     `/api/clusters_mgmt/v1/clusters/${clusterID}/node_pools/${nodePoolID}`,
   );
 
+const getClusterAutoscaler = (clusterID: string) =>
+  apiRequest.get<ClusterAutoscaler>(`/api/clusters_mgmt/v1/clusters/${clusterID}/autoscaler`);
+
+const enableClusterAutoscaler = (clusterID: string, autoscaler: ClusterAutoscaler) =>
+  apiRequest.post<ClusterAutoscaler>(
+    `/api/clusters_mgmt/v1/clusters/${clusterID}/autoscaler`,
+    autoscaler,
+  );
+
+const updateClusterAutoscaler = (clusterID: string, autoscaler: ClusterAutoscaler) =>
+  apiRequest.patch<ClusterAutoscaler>(
+    `/api/clusters_mgmt/v1/clusters/${clusterID}/autoscaler`,
+    autoscaler,
+  );
+
+const disableClusterAutoscaler = (clusterID: string) =>
+  apiRequest.delete<ClusterAutoscaler>(`/api/clusters_mgmt/v1/clusters/${clusterID}/autoscaler`);
+
 const upgradeTrialCluster = (clusterID: string, data: Cluster) =>
   apiRequest.patch<Cluster>(`/api/clusters_mgmt/v1/clusters/${clusterID}`, data);
 
@@ -917,6 +936,10 @@ const clusterService = {
   scaleMachinePool,
   deleteMachinePool,
   deleteNodePool,
+  getClusterAutoscaler,
+  enableClusterAutoscaler,
+  disableClusterAutoscaler,
+  updateClusterAutoscaler,
   upgradeTrialCluster,
   getUpgradeGates,
   getClusterGateAgreements,

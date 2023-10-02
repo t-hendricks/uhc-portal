@@ -15,6 +15,7 @@ export enum FieldId {
   NodeDrainGracePeriod = 'node_drain_grace_period',
   MachineType = 'machine_type',
   AutoscalingEnabled = 'autoscalingEnabled',
+  ClusterAutoscaling = 'cluster_autoscaling',
   NodeLabels = 'node_labels',
   MinReplicas = 'min_replicas',
   MaxReplicas = 'max_replicas',

@@ -115,7 +115,12 @@ const Modal = ({
                 </Button>
               ),
               showSecondary && !secondaryLink && (
-                <Button key="secondary" variant="secondary" onClick={onSecondaryClick}>
+                <Button
+                  key="secondary"
+                  variant="secondary"
+                  onClick={onSecondaryClick}
+                  isDisabled={isSecondaryDisabled}
+                >
                   {secondaryText}
                 </Button>
               ),
