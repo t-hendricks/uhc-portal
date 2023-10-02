@@ -9,6 +9,7 @@ import { DEFAULT_FLAVOUR_ID } from '~/redux/actions/flavourActions';
 import { createCluster } from '~/redux/actions/clustersActions';
 import { parseReduxFormKeyValueList } from '~/common/helpers';
 import { billingModels } from '~/common/subscriptionTypes';
+import { getClusterAutoScalingSubmitSettings } from '~/components/clusters/CreateOSDPage/clusterAutoScalingValues';
 
 const createClusterAzs = ({ formData, isInstallExistingVPC }) => {
   let AZs = [];
@@ -121,6 +122,7 @@ export const createClusterRequest = ({ isWizard = true, cloudProviderID, product
         max_replicas: maxNodes * formData.machine_pools_subnets.length,
       };
     } else {
+      clusterRequest.autoscaler = getClusterAutoScalingSubmitSettings(formData.cluster_autoscaling);
       clusterRequest.nodes.autoscale_compute = {
         min_replicas: isMultiAz ? minNodes * 3 : minNodes,
         max_replicas: isMultiAz ? maxNodes * 3 : maxNodes,

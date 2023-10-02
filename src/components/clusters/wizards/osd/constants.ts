@@ -13,6 +13,7 @@ import {
   IMDSType,
 } from '~/components/clusters/wizards/common/constants';
 import { BreadcrumbPath } from '~/components/common/Breadcrumbs';
+import { getDefaultClusterAutoScaling } from '~/components/clusters/CreateOSDPage/clusterAutoScalingValues';
 import { ClusterPrivacyType } from './Networking/constants';
 
 export enum OsdFieldId {
@@ -128,6 +129,7 @@ export const initialValues: FormikValues = {
   [FieldId.DisableScpChecks]: false,
   [FieldId.CustomerManagedKey]: 'false',
   [FieldId.IMDS]: IMDSType.V1AndV2,
+  [FieldId.ClusterAutoscaling]: getDefaultClusterAutoScaling(),
 };
 
 export const initialTouched = {

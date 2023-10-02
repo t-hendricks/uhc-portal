@@ -2618,6 +2618,159 @@
         }
       }
     },
+    "/api/clusters_mgmt/v1/clusters/{cluster_id}/autoscaler": {
+      "delete": {
+        "description": "Deletes the cluster autoscaler.",
+        "parameters": [
+          {
+            "name": "cluster_id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Success."
+          },
+          "default": {
+            "description": "Error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "description": "Retrieves the autoscaler of a cluster.",
+        "parameters": [
+          {
+            "name": "cluster_id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ClusterAutoscaler"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "description": "Creates a new cluster autoscaler object.",
+        "parameters": [
+          {
+            "name": "cluster_id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ClusterAutoscaler"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Success.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ClusterAutoscaler"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "description": "Updates the cluster autoscaler.",
+        "parameters": [
+          {
+            "name": "cluster_id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ClusterAutoscaler"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ClusterAutoscaler"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/clusters_mgmt/v1/clusters/{cluster_id}/aws/private_link_configuration": {
       "get": {
         "description": "Retrieves the details of the configuration for the Private Link.",
@@ -10611,6 +10764,14 @@
             "description": "Related etcd encryption configuration",
             "$ref": "#/components/schemas/AwsEtcdEncryption"
           },
+          "private_hosted_zone_id": {
+            "description": "ID of private hosted zone.",
+            "type": "string"
+          },
+          "private_hosted_zone_role_arn": {
+            "description": "Role ARN for private hosted zone.",
+            "type": "string"
+          },
           "private_link": {
             "description": "Sets cluster to be inaccessible externally.",
             "type": "boolean"
@@ -10949,18 +11110,22 @@
             "description": "Self link.",
             "type": "string"
           },
-          "cluster_link": {
+          "cluster": {
             "description": "Link to the cluster that is registered with the DNS domain (optional).",
             "$ref": "#/components/schemas/ClusterLink"
           },
-          "organization_link": {
+          "organization": {
             "description": "Link to the organization that reserved the DNS domain.",
             "$ref": "#/components/schemas/OrganizationLink"
           },
-          "reserved_at": {
+          "reserved_at_timestamp": {
             "description": "Date and time when the DNS domain was reserved.",
             "type": "string",
             "format": "date-time"
+          },
+          "user_defined": {
+            "description": "Indicates if this dns domain is user defined.",
+            "type": "boolean"
           }
         }
       },
@@ -12032,6 +12197,13 @@
       },
       "AutoscalerResourceLimits": {
         "properties": {
+          "gpus": {
+            "description": "Minimum and maximum number of different GPUs in cluster, in the format <gpu_type>:<min>:<max>.\nCluster autoscaler will not scale the cluster beyond these numbers. Can be passed multiple times.",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AutoscalerResourceLimitsGPULimit"
+            }
+          },
           "cores": {
             "description": "Minimum and maximum number of cores in cluster, in the format <min>:<max>.\nCluster autoscaler will not scale the cluster beyond these numbers.",
             "$ref": "#/components/schemas/ResourceRange"
@@ -12044,6 +12216,17 @@
           "memory": {
             "description": "Minimum and maximum number of gigabytes of memory in cluster, in the format <min>:<max>.\nCluster autoscaler will not scale the cluster beyond these numbers.",
             "$ref": "#/components/schemas/ResourceRange"
+          }
+        }
+      },
+      "AutoscalerResourceLimitsGPULimit": {
+        "properties": {
+          "range": {
+            "$ref": "#/components/schemas/ResourceRange"
+          },
+          "type": {
+            "description": "The type of GPU to associate with the minimum and maximum limits.\nThis value is used by the Cluster Autoscaler to identify Nodes that will have GPU capacity by searching\nfor it as a label value on the Node objects. For example, Nodes that carry the label key\n`cluster-api/accelerator` with the label value being the same as the Type field will be counted towards\nthe resource limits by the Cluster Autoscaler.",
+            "type": "string"
           }
         }
       },
@@ -12329,7 +12512,7 @@
             }
           },
           "autoscaler": {
-            "description": "Autoscaler.",
+            "description": "Link to an optional _ClusterAutoscaler_ that is coupled with the cluster.",
             "$ref": "#/components/schemas/ClusterAutoscaler"
           },
           "billing_model": {
@@ -12538,8 +12721,31 @@
       "ClusterAutoscaler": {
         "description": "Cluster-wide autoscaling configuration.",
         "properties": {
+          "kind": {
+            "description": "Indicates the type of this object. Will be 'ClusterAutoscaler' if this is a complete object or 'ClusterAutoscalerLink' if it is just a link.",
+            "type": "string"
+          },
+          "id": {
+            "description": "Unique identifier of the object.",
+            "type": "string"
+          },
+          "href": {
+            "description": "Self link.",
+            "type": "string"
+          },
           "balance_similar_node_groups": {
-            "description": "BalanceSimilarNodeGroups enables/disables the\n`--balance-similar-node-groups` cluster-autocaler feature.\nThis feature will automatically identify node groups with\nthe same instance type and the same set of labels and try\nto keep the respective sizes of those node groups balanced.",
+            "description": "BalanceSimilarNodeGroups enables/disables the\n`--balance-similar-node-groups` cluster-autoscaler feature.\nThis feature will automatically identify node groups with\nthe same instance type and the same set of labels and try\nto keep the respective sizes of those node groups balanced.",
+            "type": "boolean"
+          },
+          "balancing_ignored_labels": {
+            "description": "This option specifies labels that cluster autoscaler should ignore when considering node group similarity.\nFor example, if you have nodes with \"topology.ebs.csi.aws.com/zone\" label, you can add name of this label here\nto prevent cluster autoscaler from splitting nodes into different node groups based on its value.",
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "ignore_daemonsets_utilization": {
+            "description": "Should CA ignore DaemonSet pods when calculating resource utilization for scaling down. false by default.",
             "type": "boolean"
           },
           "log_verbosity": {
@@ -12547,8 +12753,17 @@
             "type": "integer",
             "format": "int32"
           },
+          "max_node_provision_time": {
+            "description": "Maximum time CA waits for node to be provisioned.",
+            "type": "string"
+          },
           "max_pod_grace_period": {
             "description": "Gives pods graceful termination time before scaling down.",
+            "type": "integer",
+            "format": "int32"
+          },
+          "pod_priority_threshold": {
+            "description": "To allow users to schedule \"best-effort\" pods, which shouldn't trigger\nCluster Autoscaler actions, but only run when there are spare resources available,\nMore info: https://github.com/kubernetes/autoscaler/blob/master/cluster-autoscaler/FAQ.md#how-does-cluster-autoscaler-work-with-pod-priority-and-preemption.",
             "type": "integer",
             "format": "int32"
           },
@@ -13397,9 +13612,24 @@
             "description": "DNS Name of the ingress.",
             "type": "string"
           },
+          "cluster_routes_hostname": {
+            "description": "Cluster routes hostname.",
+            "type": "string"
+          },
+          "cluster_routes_tls_secret_ref": {
+            "description": "Cluster routes TLS Secret reference.",
+            "type": "string"
+          },
           "default": {
             "description": "Indicates if this is the default ingress.",
             "type": "boolean"
+          },
+          "excluded_namespaces": {
+            "description": "A set of excluded namespaces for the ingress.",
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
           },
           "listening": {
             "description": "Listening method of the ingress",
@@ -13409,12 +13639,20 @@
             "description": "Load Balancer type of the ingress",
             "$ref": "#/components/schemas/LoadBalancerFlavor"
           },
+          "route_namespace_ownership_policy": {
+            "description": "Namespace Ownership Policy for the ingress.",
+            "$ref": "#/components/schemas/NamespaceOwnershipPolicy"
+          },
           "route_selectors": {
             "description": "A set of labels for the ingress. ",
             "type": "object",
             "additionalProperties": {
               "type": "string"
             }
+          },
+          "route_wildcard_policy": {
+            "description": "Wildcard policy for the ingress.",
+            "$ref": "#/components/schemas/WildcardPolicy"
           }
         }
       },
@@ -13549,7 +13787,7 @@
         ]
       },
       "LoadBalancerFlavor": {
-        "description": "Type of node received via telemetry.",
+        "description": "Type of load balancer for AWS cloud provider parameters.",
         "type": "string",
         "enum": [
           "classic",
@@ -13788,6 +14026,14 @@
             }
           }
         }
+      },
+      "NamespaceOwnershipPolicy": {
+        "description": "Type of Namespace Ownership Policy.",
+        "type": "string",
+        "enum": [
+          "InterNamespaceAllowed",
+          "Strict"
+        ]
       },
       "Network": {
         "description": "Network configuration of a cluster.",
@@ -14883,6 +15129,14 @@
             "$ref": "#/components/schemas/VersionGate"
           }
         }
+      },
+      "WildcardPolicy": {
+        "description": "Type of wildcard policy.",
+        "type": "string",
+        "enum": [
+          "WildcardsAllowed",
+          "WildcardsDisallowed"
+        ]
       },
       "Error": {
         "type": "object",

@@ -46,6 +46,7 @@ exports[`<AddMachinePoolModal /> renders correctly 1`] = `
         cloudProviderID="aws"
         inModal={true}
         isBYOC={false}
+        isHypershift={false}
         isMachinePool={true}
         isMultiAz={false}
         machineType="r5.2xlarge"
@@ -53,6 +54,15 @@ exports[`<AddMachinePoolModal /> renders correctly 1`] = `
         product="OSD"
         showStorageAndLoadBalancers={false}
       />
+      <GridItem
+        md={12}
+      >
+        <MachinePoolsAutoScalingWarning
+          hasAutoscalingMachinePools={false}
+          isEnabledOnCurrentPool={true}
+          warningType="addMachinePool"
+        />
+      </GridItem>
     </Grid>
   </Form>
 </Modal>
