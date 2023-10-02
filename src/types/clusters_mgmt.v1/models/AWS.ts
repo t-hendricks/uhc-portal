@@ -45,6 +45,14 @@ export type AWS = {
    */
   etcd_encryption?: AwsEtcdEncryption;
   /**
+   * ID of private hosted zone.
+   */
+  private_hosted_zone_id?: string;
+  /**
+   * Role ARN for private hosted zone.
+   */
+  private_hosted_zone_role_arn?: string;
+  /**
    * Sets cluster to be inaccessible externally.
    */
   private_link?: boolean;

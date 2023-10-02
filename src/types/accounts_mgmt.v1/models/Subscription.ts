@@ -15,7 +15,7 @@ export type Subscription = SubscriptionCommonFields & {
   created_at?: string;
   creator?: AccountReference;
   /**
-   * Calulated as the subscription created date + 60 days
+   * Calculated as the subscription created date + 60 days
    */
   eval_expiration_date?: string;
   labels?: Array<Label>;

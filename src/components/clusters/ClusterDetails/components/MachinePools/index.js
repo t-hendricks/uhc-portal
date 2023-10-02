@@ -17,21 +17,16 @@ import { hasMachinePoolsQuotaSelector } from './MachinePoolsSelectors';
 import { normalizeNodePool } from './machinePoolsHelper';
 
 import { getOrganizationAndQuota } from '../../../../../redux/actions/userActions';
+import { clusterAutoscalerActions } from '../../../../../redux/actions/clusterAutoscalerActions';
 import { getMachineTypes } from '../../../../../redux/actions/machineTypesActions';
 import { openModal, closeModal } from '../../../../common/Modal/ModalActions';
 import { isHypershiftCluster } from '../../clusterDetailsHelper';
-
-import shouldShowModal from '../../../../common/Modal/ModalSelectors';
-import modals from '../../../../common/Modal/modals';
 
 const mapStateToProps = (state) => {
   const cluster = get(state, 'clusters.details.cluster', {});
 
   const props = {
-    isAddMachinePoolModalOpen: shouldShowModal(state, 'add-machine-pool'),
-    isDeleteMachinePoolModalOpen: shouldShowModal(state, 'delete-machine-pool'),
-    isEditTaintsModalOpen: shouldShowModal(state, modals.EDIT_TAINTS),
-    isEditLabelsModalOpen: shouldShowModal(state, modals.EDIT_LABELS),
+    openModalId: state.modal.modalName,
     machinePoolsList: state.machinePools.getMachinePools,
     addMachinePoolResponse: state.machinePools.addMachinePoolResponse,
     deleteMachinePoolResponse: state.machinePools.deleteMachinePoolResponse,
@@ -61,7 +56,12 @@ const mapDispatchToProps = (dispatch, ownProps) => {
   return {
     openModal: (modalId, data) => dispatch(openModal(modalId, data)),
     closeModal: () => dispatch(closeModal()),
-    getMachinePools: () => dispatch(getMachineOrNodePools(ownProps.cluster.id, isHypershift)),
+    getMachinePools: () => {
+      dispatch(getMachineOrNodePools(ownProps.cluster.id, isHypershift));
+      dispatch(
+        clusterAutoscalerActions.setHasInitialClusterAutoscaler(!!ownProps.cluster.autoscaler),
+      );
+    },
     clearGetMachinePoolsResponse: () => dispatch(clearGetMachinePoolsResponse(ownProps.clusterID)),
     clearDeleteMachinePoolResponse: () =>
       dispatch(clearDeleteMachinePoolResponse(ownProps.clusterID)),
@@ -69,6 +69,8 @@ const mapDispatchToProps = (dispatch, ownProps) => {
       dispatch(deleteMachinePool(ownProps.cluster.id, machinePoolID, isHypershift)),
     getOrganizationAndQuota: () => dispatch(getOrganizationAndQuota()),
     getMachineTypes: () => dispatch(getMachineTypes()),
+    getClusterAutoscaler: () =>
+      dispatch(clusterAutoscalerActions.getClusterAutoscaler(ownProps.cluster.id)),
   };
 };
 

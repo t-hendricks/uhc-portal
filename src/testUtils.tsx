@@ -37,6 +37,17 @@ const renderWithState = (
 
 export * from '@testing-library/react';
 export { default as userEvent } from '@testing-library/user-event';
+
+// Type not exported in the library
+export type UserEventType = {
+  type: (
+    field: HTMLElement,
+    typeValue: string,
+    { initialSelectionStart }: { initialSelectionStart: number },
+  ) => void;
+  clear: (field: HTMLElement) => void;
+};
+
 export { renderWithState as render };
 
 /* ***** Items outside of React Test Library ************ */

@@ -27,6 +27,7 @@ export { AlertSeverity } from './models/AlertSeverity';
 export type { AlertsInfo } from './models/AlertsInfo';
 export type { AuditLog } from './models/AuditLog';
 export type { AutoscalerResourceLimits } from './models/AutoscalerResourceLimits';
+export type { AutoscalerResourceLimitsGPULimit } from './models/AutoscalerResourceLimitsGPULimit';
 export type { AutoscalerScaleDownConfig } from './models/AutoscalerScaleDownConfig';
 export type { AWS } from './models/AWS';
 export type { AwsEtcdEncryption } from './models/AwsEtcdEncryption';

@@ -8,6 +8,8 @@ import {
   getNodeIncrementHypershift,
 } from '~/components/clusters/ClusterDetails/components/MachinePools/machinePoolsHelper';
 import { getWorkerNodeVolumeSizeMaxGiB } from '~/components/clusters/wizards/rosa/constants';
+import { openModal } from '~/components/common/Modal/ModalActions';
+import modals from '~/components/common/Modal/modals';
 import { canAutoScaleOnCreateSelector } from '../../../ClusterDetails/components/MachinePools/MachinePoolsSelectors';
 
 import wizardConnector from '../WizardConnector';
@@ -65,4 +67,8 @@ const mapStateToProps = (state, ownProps) => {
   };
 };
 
-export default connect(mapStateToProps)(wizardConnector(MachinePoolScreen));
+const mapDispatchToProps = (dispatch) => ({
+  openEditClusterAutoScalingModal: () => dispatch(openModal(modals.EDIT_CLUSTER_AUTOSCALING_V1)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(wizardConnector(MachinePoolScreen));

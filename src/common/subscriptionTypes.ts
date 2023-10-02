@@ -167,11 +167,19 @@ const billingModels = {
   STANDARD_TRIAL: 'standard-trial',
 };
 
+type OcmRoleItem = {
+  id: string;
+  name: string;
+  description: string;
+  // ProductIds for which granting new role bindings should not be allowed
+  excludeProductIds?: string[];
+};
+
 /**
  * The ocmRoles contains all available roles that a customer
  * can grant to other users within their own organization.
  */
-const ocmRoles = {
+const ocmRoles: Record<string, OcmRoleItem> = {
   CLUSTER_EDITOR: {
     id: 'ClusterEditor',
     name: 'Cluster editor',
@@ -188,6 +196,7 @@ const ocmRoles = {
     name: 'Cluster autoscaler editor',
     description:
       'Cluster autoscaler editor role will allow users or groups to manage and configure the cluster autoscaler settings.',
+    excludeProductIds: [knownProducts.ROSA_HyperShift],
   },
   IDP_EDITOR: {
     id: 'IdpEditor',

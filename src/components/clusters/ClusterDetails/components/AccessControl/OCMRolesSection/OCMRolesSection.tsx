@@ -20,7 +20,7 @@ import Skeleton from '@redhat-cloud-services/frontend-components/Skeleton';
 import { useDispatch } from 'react-redux';
 import { ReactNode } from 'react-markdown';
 import { useGlobalState } from '~/redux/hooks';
-import { Subscription } from '~/types/clusters_mgmt.v1';
+import { Subscription } from '~/types/accounts_mgmt.v1';
 import modals from '../../../../../common/Modal/modals';
 import ErrorBox from '../../../../../common/ErrorBox';
 import ButtonWithTooltip from '../../../../../common/ButtonWithTooltip';
@@ -51,6 +51,9 @@ function OCMRolesSection({
   const { getOCMRolesResponse, grantOCMRoleResponse, deleteOCMRoleResponse } = useGlobalState(
     (state) => state.ocmRoles,
   );
+
+  const productId = subscription?.plan?.id;
+
   const dispatch = useDispatch();
 
   // showPendingRow replaces a row by a skeletonRow.
@@ -299,7 +302,11 @@ function OCMRolesSection({
           <TableHeader />
           <TableBody />
         </Table>
-        <OCMRolesDialog onSubmit={handleDialogSubmit} row={modalData as OCMRolesRow} />
+        <OCMRolesDialog
+          onSubmit={handleDialogSubmit}
+          row={modalData as OCMRolesRow}
+          productId={productId}
+        />
       </CardBody>
     </Card>
   );

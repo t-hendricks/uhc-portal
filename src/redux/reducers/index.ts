@@ -27,6 +27,7 @@ import flavoursReducer from './flavoursReducer';
 import machineTypesReducer from './machineTypesReducer';
 import dnsDomainsReducer from './dnsDomainsReducer';
 import insightsReducer from '../../components/clusters/ClusterDetails/components/Insights/InsightsReducer';
+import { clusterAutoscalerReducer } from './clusterAutoscalerReducer';
 import { subscriptionsReducer } from './subscriptionsReducer';
 import { loadBalancersReducer } from './loadBalancersReducer';
 import { persistentStorageReducer } from './persistentStorageReducer';
@@ -56,6 +57,7 @@ const reducers = {
   modal: modalReducer,
   logs: InstallationLogReducer,
   identityProviders: IdentityProvidersReducer,
+  clusterAutoscaler: clusterAutoscalerReducer,
   clusterUsers: clusterUsersReducer,
   clusterSupport: clustersSupportReducer,
   dnsDomains: dnsDomainsReducer,

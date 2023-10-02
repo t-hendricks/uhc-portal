@@ -37,8 +37,8 @@ const hasMachinePoolsQuotaSelector = (state) => {
 };
 
 const hasOrgLevelAutoscaleCapability = (state) => {
-  const capabilites = get(state, 'userProfile.organization.details.capabilities', []);
-  const autoScaleClusters = capabilites.find(
+  const capabilities = get(state, 'userProfile.organization.details.capabilities', []);
+  const autoScaleClusters = capabilities.find(
     (capability) => capability.name === 'capability.cluster.autoscale_clusters',
   );
 
