@@ -66,33 +66,30 @@ class UpgradeTrialClusterDialog extends Component {
       return acc;
     }, {});
 
-    const quota = Object.keys(machinePoolTypes).reduce(
-      (acc, key) => {
-        const quotaParams = {
-          product: OSD,
-          cloudProviderID,
-          resourceName: key,
-          isBYOC,
-          isMultiAz,
-          billingModel: STANDARD,
-        };
+    const quota = { MARKETPLACE: true, STANDARD: true };
 
-        const standardClusters = availableClustersFromQuota(quotaList, quotaParams);
-        const standardNodes = availableNodesFromQuota(quotaList, quotaParams);
+    Object.keys(machinePoolTypes).forEach((key) => {
+      const quotaParams = {
+        product: OSD,
+        cloudProviderID,
+        resourceName: key,
+        isBYOC,
+        isMultiAz,
+        billingModel: STANDARD,
+      };
 
-        acc.STANDARD =
-          acc.STANDARD && standardNodes >= machinePoolTypes[key] && standardClusters > 0;
+      const standardClusters = availableClustersFromQuota(quotaList, quotaParams);
+      const standardNodes = availableNodesFromQuota(quotaList, quotaParams);
 
-        quotaParams.billingModel = MARKETPLACE;
-        const marketClusters = availableClustersFromQuota(quotaList, quotaParams);
-        const marketNodes = availableNodesFromQuota(quotaList, quotaParams);
-        acc.MARKETPLACE =
-          acc.MARKETPLACE && marketNodes >= machinePoolTypes[key] && marketClusters > 0;
+      quota.STANDARD =
+        quota.STANDARD && standardNodes >= machinePoolTypes[key] && standardClusters > 0;
 
-        return acc;
-      },
-      { MARKETPLACE: true, STANDARD: true },
-    );
+      quotaParams.billingModel = MARKETPLACE;
+      const marketClusters = availableClustersFromQuota(quotaList, quotaParams);
+      const marketNodes = availableNodesFromQuota(quotaList, quotaParams);
+      quota.MARKETPLACE =
+        quota.MARKETPLACE && marketNodes >= machinePoolTypes[key] && marketClusters > 0;
+    });
 
     return quota;
   }
@@ -213,6 +210,7 @@ class UpgradeTrialClusterDialog extends Component {
                 isInline
                 title="Your organization doesn't have enough quota to upgrade this cluster."
                 className="upgrade-trial-no-quota"
+                data-testid="no-quota-alert"
               >
                 <Link to="/quota">
                   <Button id="subscriptions" variant="link">

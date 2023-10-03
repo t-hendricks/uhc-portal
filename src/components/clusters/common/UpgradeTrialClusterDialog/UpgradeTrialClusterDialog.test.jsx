@@ -1,10 +1,10 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { MemoryRouter } from 'react-router';
 
 import fixtures from '../../ClusterDetails/__test__/ClusterDetails.fixtures';
 import { emptyQuotaList } from '../__test__/quota.fixtures';
 import UpgradeTrialClusterDialog from './UpgradeTrialClusterDialog';
-import ErrorBox from '../../../common/ErrorBox';
+import { render, screen } from '../../../../testUtils';
 
 describe('<UpgradeTrialClusterDialog />', () => {
   const organizationState = {
@@ -22,7 +22,6 @@ describe('<UpgradeTrialClusterDialog />', () => {
       replicas: 3,
     },
   ];
-  let wrapper;
   let closeModal;
   let onClose;
   let submit;
@@ -35,33 +34,50 @@ describe('<UpgradeTrialClusterDialog />', () => {
     submit = jest.fn();
     resetResponse = jest.fn();
     getOrganizationAndQuota = jest.fn();
-    wrapper = shallow(
-      <UpgradeTrialClusterDialog
-        isOpen
-        closeModal={closeModal}
-        onClose={onClose}
-        submit={submit}
-        resetResponse={resetResponse}
-        organization={organizationState}
-        getOrganizationAndQuota={getOrganizationAndQuota}
-        clusterID="some-cluster-id"
-        cluster={cluster}
-        machineTypesByID={machineTypesByID}
-        upgradeTrialClusterResponse={{ errorMessage: '', error: false, fulfilled: false }}
-        machinePools={machinePools}
-      />,
+  });
+
+  it('renders no-quota alert when there is no quota', () => {
+    render(
+      <MemoryRouter>
+        <UpgradeTrialClusterDialog
+          isOpen
+          closeModal={closeModal}
+          onClose={onClose}
+          submit={submit}
+          resetResponse={resetResponse}
+          organization={organizationState}
+          getOrganizationAndQuota={getOrganizationAndQuota}
+          clusterID="some-cluster-id"
+          cluster={cluster}
+          machineTypesByID={machineTypesByID}
+          upgradeTrialClusterResponse={{ errorMessage: '', error: false, fulfilled: false }}
+          machinePools={machinePools}
+        />
+      </MemoryRouter>,
     );
+    expect(screen.getByTestId('no-quota-alert')).toBeInTheDocument();
   });
 
-  it('renders correctly', () => {
-    expect(wrapper).toMatchSnapshot();
-  });
+  it('renders error box when an erorr occurs', () => {
+    render(
+      <MemoryRouter>
+        <UpgradeTrialClusterDialog
+          isOpen
+          closeModal={closeModal}
+          onClose={onClose}
+          submit={submit}
+          resetResponse={resetResponse}
+          organization={organizationState}
+          getOrganizationAndQuota={getOrganizationAndQuota}
+          clusterID="some-cluster-id"
+          cluster={cluster}
+          machineTypesByID={machineTypesByID}
+          upgradeTrialClusterResponse={{ error: true, errorMessage: 'this is an error' }}
+          machinePools={machinePools}
+        />
+      </MemoryRouter>,
+    );
 
-  it('renders correctly when an erorr occurs', () => {
-    wrapper.setProps({
-      upgradeTrialClusterResponse: { error: true, errorMessage: 'this is an error' },
-    });
-    expect(wrapper).toMatchSnapshot();
-    expect(wrapper.find(ErrorBox).length).toEqual(1);
+    expect(screen.getByText('Error upgrading cluster')).toBeInTheDocument();
   });
 });
