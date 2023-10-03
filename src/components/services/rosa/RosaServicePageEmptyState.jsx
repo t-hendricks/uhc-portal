@@ -59,12 +59,12 @@ const benefitsExpandableContents = [
   {
     title: 'Self-service deployment',
     contents:
-      'Create fully-managed OpenShift clusters in minutes with self-service deployment from the AWS console, so you can get up and running quickly.',
+      'Create fully-managed OpenShift clusters in minutes with self-service deployment from the AWS Console, so you can get up and running quickly.',
   },
   {
     title: 'Seamless integration with other AWS services',
     contents:
-      'A native AWS service accessed on-demand with self-service deployment from the AWS Management Console, so you can get up and running quickly. Take advantage of seamless integration with other AWS cloud-native services.',
+      'A native AWS service accessed on demand from the AWS Management Console so you can get up and running quickly. Take advantage of seamless integration with other AWS cloud native services.',
   },
   {
     title: 'Maximum availability',
