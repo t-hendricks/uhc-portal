@@ -1,7 +1,6 @@
 import React from 'react';
-import { ExternalLinkAltIcon } from '@patternfly/react-icons';
-import { List, ListItem, Text } from '@patternfly/react-core';
-import links, { tools, channels } from '../../../../common/installLinks.mjs';
+import links, { channels, tools } from '../../../../common/installLinks.mjs';
+import AdditionalInstructionsS390x from './AdditionalInstructionsS390x';
 
 /**
  * RHCOS structure
@@ -328,37 +327,7 @@ const instructionsMapping = {
       upi: {
         title: 'Install OpenShift on IBM Z (s390x) with user-provisioned infrastructure',
         rhcos: {
-          additionalInstructions: (
-            <Text component="div">
-              <List>
-                <ListItem>
-                  If you plan your installation with z/VM, download the initramfs, the kernel, and
-                  the rootfs files.{' '}
-                  <Text
-                    component="a"
-                    href={links.INSTALL_IBMZ_LEARN_MORE_ZVM}
-                    target="_blank"
-                    rel="noreferrer noopener"
-                  >
-                    Learn more <ExternalLinkAltIcon size="sm" />.
-                  </Text>
-                </ListItem>
-                <ListItem>
-                  If you plan your installation with RHEL KVM, depending on the installation type
-                  you plan to perform, download the QCOW2 file or the initramfs, the kernel, and the
-                  rootfs files.{' '}
-                  <Text
-                    component="a"
-                    href={links.INSTALL_IBMZ_RHCOS_LEARN_MORE_RHEL_KVM}
-                    target="_blank"
-                    rel="noreferrer noopener"
-                  >
-                    Learn more <ExternalLinkAltIcon size="sm" />.{' '}
-                  </Text>
-                </ListItem>
-              </List>
-            </Text>
-          ),
+          additionalInstructions: <AdditionalInstructionsS390x />,
           downloads: [
             {
               buttonText: 'Download RHCOS initramfs',
