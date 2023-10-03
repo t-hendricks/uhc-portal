@@ -9,8 +9,10 @@ import {
   EmptyStateBody,
   EmptyStateIcon,
   EmptyStateVariant,
+  Text,
   Title,
   Spinner,
+  TextVariants,
 } from '@patternfly/react-core';
 
 import {
@@ -29,6 +31,7 @@ import {
 import { SearchIcon, WrenchIcon } from '@patternfly/react-icons';
 import { ClusterLog } from '~/types/service_logs.v1/index';
 import './LogTable.scss';
+import ExternalLink from '~/components/common/ExternalLink';
 
 import { eventTypes } from '../../clusterDetailsHelper';
 
@@ -68,7 +71,7 @@ const emptyState = (colSpan: number) => (
   </Td>
 );
 
-type LogType = ClusterLog & { id: string };
+type LogType = ClusterLog & { id: string; doc_references?: Array<string> };
 
 type SortParams = {
   isAscending: boolean;
@@ -123,6 +126,7 @@ const LogTable = ({ logs, setSorting, pending, refreshEvent }: LogTableParams) =
       username,
       created_by: createdBy,
       internal_only,
+      doc_references: docReferences,
     } = log;
 
     const day = moment.utc(timestamp).format('D MMM YYYY, HH:mm UTC');
@@ -132,6 +136,27 @@ const LogTable = ({ logs, setSorting, pending, refreshEvent }: LogTableParams) =
         {description || ''}
       </ReactMarkdown>
     );
+
+    const hasDocReferences = docReferences && docReferences.length > 0;
+
+    const references = hasDocReferences ? (
+      <>
+        <Text
+          data-testid={`references_${rowIndex}`}
+          className="cluster-log__resources"
+          component={TextVariants.h2}
+        >
+          <strong>References:</strong>
+        </Text>
+        <ul>
+          {docReferences.map((url) => (
+            <li>
+              <ExternalLink href={url}>{url}</ExternalLink>
+            </li>
+          ))}
+        </ul>
+      </>
+    ) : null;
 
     const isInternal = internal_only; // summary.trim() === 'INTERNAL';
 
@@ -156,7 +181,10 @@ const LogTable = ({ logs, setSorting, pending, refreshEvent }: LogTableParams) =
         </Tr>
         <Tr isExpanded={isLogExpanded(log)}>
           <Td colSpan={columns.length + 1}>
-            <ExpandableRowContent>{md}</ExpandableRowContent>
+            <ExpandableRowContent>
+              {md}
+              {references}
+            </ExpandableRowContent>
           </Td>
         </Tr>
       </Tbody>
