@@ -259,7 +259,7 @@ export const AutoScale = ({ isDefaultMachinePool }: AutoScaleProps) => {
             Edit cluster autoscaling settings
           </Button>
         </GridItem>
-        <ClusterAutoScaleSettingsDialog isWizard />
+        <ClusterAutoScaleSettingsDialog isWizard isRosa={isRosa} />
         {autoscalingEnabled && azFormGroups}
       </GridItem>
     </>

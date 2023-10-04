@@ -31,6 +31,7 @@ type AutoscaleAction = 'update' | 'enable' | 'disable';
 
 export interface EditClusterAutoScalingDialogProps {
   isOpen: boolean;
+  isRosa: boolean;
   isWizard: boolean;
   pristine: boolean;
   closeModal: () => void;
@@ -54,6 +55,7 @@ export interface EditClusterAutoScalingDialogProps {
  */
 function EditClusterAutoScalingDialog({
   isOpen,
+  isRosa,
   isWizard,
   closeModal,
   change,
@@ -130,7 +132,13 @@ function EditClusterAutoScalingDialog({
         <Text component="p">
           The cluster autoscaler adjusts the size of a cluster to meet its current deployment needs.
           Learn more about{' '}
-          <ExternalLink href={installLinks.APPLYING_AUTOSCALING}>cluster autoscaling</ExternalLink>{' '}
+          <ExternalLink
+            href={
+              isRosa ? installLinks.ROSA_CLUSTER_AUTOSCALING : installLinks.OSD_CLUSTER_AUTOSCALING
+            }
+          >
+            cluster autoscaling
+          </ExternalLink>{' '}
           or
           <ExternalLink href={installLinks.APPLYING_AUTOSCALING_API_DETAIL}> APIs</ExternalLink>.
         </Text>

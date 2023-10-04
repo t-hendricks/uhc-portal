@@ -130,6 +130,8 @@ const links = {
   ROSA_CIDR_POD: `${ROSA_DOCS_BASE}/networking/cidr-range-definitions.html#pod-cidr-description`,
   OSD_CIDR_HOST: `${OSD_DOCS_BASE}/networking/cidr-range-definitions.html#host-prefix-description`,
   ROSA_CIDR_HOST: `${ROSA_DOCS_BASE}/networking/cidr-range-definitions.html#host-prefix-description`,
+  OSD_CLUSTER_AUTOSCALING: `${OSD_DOCS_BASE}/osd_cluster_admin/osd-cluster-autoscaling.html`,
+  ROSA_CLUSTER_AUTOSCALING: `${ROSA_DOCS_BASE}/rosa_cluster_admin/rosa-cluster-autoscaling.html`,
 
   CLI_TOOLS_OCP_GETTING_STARTED: `${DOCS_BASE}/cli_reference/openshift_cli/getting-started-cli.html`,
 
