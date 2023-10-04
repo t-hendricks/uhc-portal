@@ -4,6 +4,7 @@ import { normalizedProducts, subscriptionStatuses } from '../../../common/subscr
 import clusterStates, {
   getClusterStateAndDescription,
   isWaitingROSAManualMode,
+  isWaitingForOIDCProviderOrOperatorRolesMode,
 } from './clusterStates';
 
 const mockCluster = (data) => {
@@ -104,6 +105,53 @@ describe('getClusterStateAndDescription', () => {
         aws: { sts: { auto_mode: false, oidc_config: { id: 'my-oidc-id' } } },
       };
       expect(isWaitingROSAManualMode(oidcReadyCluster)).toBeFalsy();
+    });
+  });
+
+  describe('isWaitingForOIDCProviderOrOperatorRolesMode', () => {
+    const sampleCluster = {
+      product: { id: 'ROSA' },
+      state: 'waiting',
+      aws: { sts: { auto_mode: false, oidc_config: { id: 'my_oidc_config' } } },
+      status: { description: 'my status description' },
+    };
+
+    it('returns true if waiting for OIDC creation', () => {
+      expect(isWaitingForOIDCProviderOrOperatorRolesMode(sampleCluster)).toBeTruthy();
+    });
+
+    it('returns false if not a rosa cluster', () => {
+      const osdCluster = { ...sampleCluster, product: { id: 'OSD' } };
+      expect(isWaitingForOIDCProviderOrOperatorRolesMode(osdCluster)).toBeFalsy();
+    });
+
+    it('returns false if is not in a waiting state', () => {
+      const pendingCluster = { ...sampleCluster, state: 'pending' };
+      expect(isWaitingForOIDCProviderOrOperatorRolesMode(pendingCluster)).toBeFalsy();
+    });
+
+    it('returns false if not sts auto mode', () => {
+      const manualCluster = {
+        ...sampleCluster,
+        aws: { sts: { ...sampleCluster.aws.sts, auto_mode: true } },
+      };
+      expect(isWaitingForOIDCProviderOrOperatorRolesMode(manualCluster)).toBeFalsy();
+    });
+
+    it('returns false if the description is "Waiting for OIDC configuration"', () => {
+      const waitingOIDCCluster = {
+        ...sampleCluster,
+        status: { description: 'Waiting for OIDC configuration' },
+      };
+      expect(isWaitingForOIDCProviderOrOperatorRolesMode(waitingOIDCCluster)).toBeFalsy();
+    });
+
+    it('returns false if there is not a description', () => {
+      const confirmingOIDCCluster = {
+        ...sampleCluster,
+        status: {},
+      };
+      expect(isWaitingForOIDCProviderOrOperatorRolesMode(confirmingOIDCCluster)).toBeFalsy();
     });
   });
 });
