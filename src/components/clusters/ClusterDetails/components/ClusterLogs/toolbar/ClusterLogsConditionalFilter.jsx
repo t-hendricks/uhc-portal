@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import ConditionalFilter from '@redhat-cloud-services/frontend-components/ConditionalFilter';
 import { conditionalFilterType } from '@redhat-cloud-services/frontend-components/ConditionalFilter/conditionalFilterConstants';
 import PropTypes from 'prop-types';
-import { SEVERITY_TYPES } from '../clusterLogConstants';
+import { SEVERITY_TYPES, LOG_TYPES } from '../clusterLogConstants';
 import { buildFilterURLParams } from '../../../../../../common/queryHelpers';
 
 class ClusterLogsConditionalFilter extends Component {
@@ -22,6 +22,7 @@ class ClusterLogsConditionalFilter extends Component {
 
     // flags
     severityTypes: [],
+    logTypes: [],
 
     loggedBy: '',
   };
@@ -32,7 +33,7 @@ class ClusterLogsConditionalFilter extends Component {
       this.setState({ ...currentFilter });
     }
     if (currentFlags) {
-      this.setState({ severityTypes: currentFlags.severityTypes });
+      this.setState({ severityTypes: currentFlags.severityTypes, logTypes: currentFlags.logTypes });
     }
   }
 
@@ -43,7 +44,10 @@ class ClusterLogsConditionalFilter extends Component {
       this.setState({ ...nextProps.currentFilter });
     }
     if (nextProps.currentFlags !== currentFlags) {
-      this.setState({ severityTypes: nextProps.currentFlags.severityTypes });
+      this.setState({
+        severityTypes: nextProps.currentFlags.severityTypes,
+        logTypes: nextProps.currentFlags.logTypes,
+      });
     }
   }
 
@@ -65,10 +69,11 @@ class ClusterLogsConditionalFilter extends Component {
     } = this.props;
 
     this.setState({ [field]: value }, () => {
-      const { severityTypes } = this.state;
-      setFlags({ severityTypes });
+      const { severityTypes, logTypes } = this.state;
+      setFlags({ severityTypes, logTypes });
+      const flags = severityTypes.concat(logTypes);
       push({
-        search: buildFilterURLParams({ severityTypes }),
+        search: buildFilterURLParams({ flags }),
       });
     });
   }
@@ -82,7 +87,7 @@ class ClusterLogsConditionalFilter extends Component {
   }
 
   render() {
-    const { description, severityTypes, loggedBy } = this.state;
+    const { description, severityTypes, logTypes, loggedBy } = this.state;
 
     const descriptionFilter = {
       type: conditionalFilterType.text,
@@ -109,6 +114,20 @@ class ClusterLogsConditionalFilter extends Component {
       },
     };
 
+    const logTypesCheckbox = {
+      type: conditionalFilterType.checkbox,
+      label: 'Type',
+      value: 'Type',
+      filterValues: {
+        onChange: (event, value) => this.updateFlags(value, 'logTypes'),
+        items: LOG_TYPES.map((key) => ({
+          label: key,
+          value: key,
+        })),
+        value: logTypes,
+      },
+    };
+
     const loggedByFilter = {
       type: conditionalFilterType.text,
       value: 'Logged by',
@@ -120,7 +139,11 @@ class ClusterLogsConditionalFilter extends Component {
       },
     };
 
-    return <ConditionalFilter items={[descriptionFilter, severityTypesCheckbox, loggedByFilter]} />;
+    return (
+      <ConditionalFilter
+        items={[descriptionFilter, severityTypesCheckbox, logTypesCheckbox, loggedByFilter]}
+      />
+    );
   }
 }
 
@@ -133,6 +156,7 @@ ClusterLogsConditionalFilter.propTypes = {
   }).isRequired,
   currentFlags: PropTypes.shape({
     severityTypes: PropTypes.arrayOf(PropTypes.string),
+    logTypes: PropTypes.arrayOf(PropTypes.string),
   }).isRequired,
   setFilter: PropTypes.func.isRequired,
   setFlags: PropTypes.func.isRequired,

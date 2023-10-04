@@ -147,10 +147,14 @@ const createServiceLogQueryObject = (
     }
 
     if (viewOptions.flags) {
-      const { severityTypes = [] } = viewOptions.flags.conditionalFilterFlags;
+      const { severityTypes = [], logTypes = [] } = viewOptions.flags.conditionalFilterFlags;
       if (severityTypes.length > 0) {
         const quotedItems = severityTypes.map(sqlString);
         clauses.push(`severity IN (${quotedItems.join(',')})`);
+      }
+      if (logTypes.length > 0) {
+        const quotedItems = logTypes.map(sqlString);
+        clauses.push(`log_type IN (${quotedItems.join(',')})`);
       }
     }
 

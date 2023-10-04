@@ -41,6 +41,10 @@ const columns = [
     sortTitle: 'summary',
   },
   {
+    title: 'Type',
+    sortTitle: 'log_type',
+  },
+  {
     title: 'Severity',
     sortTitle: 'severity',
   },
@@ -126,6 +130,7 @@ const LogTable = ({ logs, setSorting, pending, refreshEvent }: LogTableParams) =
       username,
       created_by: createdBy,
       internal_only,
+      log_type,
       doc_references: docReferences,
     } = log;
 
@@ -175,6 +180,7 @@ const LogTable = ({ logs, setSorting, pending, refreshEvent }: LogTableParams) =
           <Td>
             {summary} {isInternal ? <WrenchIcon /> : null}
           </Td>
+          <Td>{log_type}</Td>
           <Td>{severity}</Td>
           <Td>{username || createdBy}</Td>
           <Td>{day}</Td>

@@ -23,7 +23,7 @@ import { viewConstants } from '../../../../../redux/constants';
 import ErrorBox from '../../../../common/ErrorBox';
 import ViewPaginationRow from '../../../common/ViewPaginationRow/viewPaginationRow';
 import helpers from '../../../../../common/helpers';
-import { SEVERITY_TYPES } from './clusterLogConstants';
+import { SEVERITY_TYPES, LOG_TYPES } from './clusterLogConstants';
 import LiveDateFormat from '../../../../common/LiveDateFormat/LiveDateFormat';
 import {
   dateParse,
@@ -51,10 +51,16 @@ class ClusterLogs extends React.Component {
     }
 
     const severityTypes = getQueryParam('severityTypes') || '';
-    if (!isEmpty(severityTypes)) {
+    const logTypes = getQueryParam('logTypes') || '';
+    if (!isEmpty(severityTypes) || !isEmpty(logTypes)) {
       hasChanged = true;
       setListFlag('conditionalFilterFlags', {
-        severityTypes: severityTypes.split(',').filter((type) => SEVERITY_TYPES.includes(type)),
+        severityTypes: !isEmpty(severityTypes)
+          ? severityTypes.split(',').filter((type) => SEVERITY_TYPES.includes(type))
+          : viewOptions.flags.severityTypes,
+        logTypes: !isEmpty(logTypes)
+          ? logTypes.split(',').filter((type) => LOG_TYPES.includes(type))
+          : viewOptions.flags.logTypes,
       });
     }
 
@@ -103,7 +109,9 @@ class ClusterLogs extends React.Component {
     const ignoreErrors = errorCode === 403 || errorCode === 404;
 
     const hasNoFilters =
-      isEmpty(viewOptions.filter) && helpers.nestedIsEmpty(viewOptions.flags.severityTypes);
+      isEmpty(viewOptions.filter) &&
+      helpers.nestedIsEmpty(viewOptions.flags.severityTypes) &&
+      helpers.nestedIsEmpty(viewOptions.flags.logTypes);
     const isPendingNoData = !size(logs) && pending && hasNoFilters;
 
     return (
@@ -185,6 +193,7 @@ ClusterLogs.propTypes = {
     totalPages: PropTypes.number,
     flags: PropTypes.shape({
       severityTypes: PropTypes.object,
+      logTypes: PropTypes.object,
     }),
     filter: PropTypes.object,
   }).isRequired,
