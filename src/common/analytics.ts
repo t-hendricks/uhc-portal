@@ -311,6 +311,11 @@ const trackEvents: { [key: string]: TrackEvent } = {
     link_name: 'copy-rosa-create-cluster',
     ocm_resource_type: ocmResourceType.MOA,
   },
+  RequestRosaHandsonExperience: {
+    event: eventNames.BUTTON_CLICKED,
+    link_name: 'request-rosa-handson-experience',
+    ocm_resource_type: ocmResourceType.ROSA,
+  },
 };
 
 /**
