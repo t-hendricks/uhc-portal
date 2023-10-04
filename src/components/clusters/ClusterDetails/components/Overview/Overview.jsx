@@ -132,9 +132,6 @@ class Overview extends React.Component {
           <Title headingLevel="h2" className="card-title">
             Resource usage
           </Title>
-          {shouldMonitorStatus && (
-            <ClusterStatusMonitor refresh={refresh} cluster={cluster} history={history} />
-          )}
         </CardTitle>
         <CardBody className="ocm-c-overview-resource-usage__card--body">
           <ResourceUsage
