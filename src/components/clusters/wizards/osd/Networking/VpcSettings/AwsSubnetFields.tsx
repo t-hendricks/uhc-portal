@@ -52,7 +52,7 @@ export const AwsSubnetFields = (props: AwsSubnetFieldsProps) => {
 
   React.useEffect(() => {
     if (cloudProvider === CloudProviderType.Aws) {
-      dispatch(getAWSCloudProviderVPCs(ccsCredentials, region));
+      dispatch(getAWSCloudProviderVPCs({ awsCredentials: ccsCredentials, region }));
     }
   }, [ccsCredentials, cloudProvider, dispatch, region]);
 
