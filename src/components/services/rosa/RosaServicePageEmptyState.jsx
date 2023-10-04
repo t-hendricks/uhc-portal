@@ -45,6 +45,31 @@ const rosaBannerContents = {
   iconCardBodyClassName: 'rosa-aws-redhat-vertical-logo',
 };
 
+const TryRosaCard = () => (
+  <Card style={{ height: '100%' }}>
+    <CardHeader>
+      <CardTitle>
+        <Title headingLevel="h4">
+          <CubeIcon isInline size="md" className="pf-u-mr-sm rosa-cube-icon" />
+          Try ROSA hands-on experience
+        </Title>
+      </CardTitle>
+    </CardHeader>
+    <CardBody>Experience ROSA with our free demo environment.</CardBody>
+    <CardFooter>
+      <Button
+        variant="primary"
+        component={(props) => (
+          <Link {...props} data-testid="register-cluster" to="/services/rosa/demo/" />
+        )}
+        isLarge
+      >
+        Get started
+      </Button>
+    </CardFooter>
+  </Card>
+);
+
 const AWSRedHatVerticalLogo = () => (
   <Stack hasGutter>
     <span>
@@ -183,45 +208,50 @@ function RosaServicePageEmptyState() {
           Currently, you have <span className="pf-u-font-weight-bold">0 ROSA clusters.</span>{' '}
           We&#39;re here to help you get started.
         </TextContent>
-
-        <Card>
-          <Flex justifyContent={{ default: 'justifyContentSpaceBetween' }}>
-            <FlexItem>
-              <CardHeader>
-                <CardTitle>
-                  <Title headingLevel="h4">
-                    <CubeIcon isInline size="md" className="pf-u-mr-sm rosa-cube-icon" />
-                    Create your first ROSA cluster
-                  </Title>
-                </CardTitle>
-              </CardHeader>
-              <CardBody>
-                Get back to focusing on your application when you build a ROSA cluster. We&#39;ll
-                manage and maintain the cluster for you.
-              </CardBody>
-              <CardFooter>
-                <Flex>
-                  <FlexItem>
-                    <Button
-                      variant="primary"
-                      component={(props) => (
-                        <Link
-                          {...props}
-                          data-testid="register-cluster"
-                          to="/create/rosa/getstarted"
-                        />
-                      )}
-                      isLarge
-                    >
-                      View prerequisites
-                    </Button>
-                  </FlexItem>
-                </Flex>
-              </CardFooter>
-            </FlexItem>
-          </Flex>
-        </Card>
-
+        <Flex>
+          <FlexItem flex={{ default: 'flex_1' }}>
+            <Card>
+              <Flex justifyContent={{ default: 'justifyContentSpaceBetween' }}>
+                <FlexItem>
+                  <CardHeader>
+                    <CardTitle>
+                      <Title headingLevel="h4">
+                        <CubeIcon isInline size="md" className="pf-u-mr-sm rosa-cube-icon" />
+                        Create your first ROSA cluster
+                      </Title>
+                    </CardTitle>
+                  </CardHeader>
+                  <CardBody>
+                    Get back to focusing on your application when you build a ROSA cluster.
+                    We&#39;ll manage and maintain the cluster for you.
+                  </CardBody>
+                  <CardFooter>
+                    <Flex>
+                      <FlexItem>
+                        <Button
+                          variant="primary"
+                          component={(props) => (
+                            <Link
+                              {...props}
+                              data-testid="register-cluster"
+                              to="/create/rosa/getstarted"
+                            />
+                          )}
+                          isLarge
+                        >
+                          View prerequisites
+                        </Button>
+                      </FlexItem>
+                    </Flex>
+                  </CardFooter>
+                </FlexItem>
+              </Flex>
+            </Card>
+          </FlexItem>
+          <FlexItem flex={{ default: 'flex_1' }} alignSelf={{ default: 'alignSelfStretch' }}>
+            <TryRosaCard />
+          </FlexItem>
+        </Flex>
         <Title className="pf-u-mt-lg pf-u-mb-lg" headingLevel="h2">
           Benefits
         </Title>
