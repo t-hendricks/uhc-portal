@@ -21,6 +21,7 @@ export type ClusterLog = ObjectReference & {
   summary?: string;
   timestamp?: string;
   username?: string;
+  log_type?: string;
 };
 
 export namespace ClusterLog {

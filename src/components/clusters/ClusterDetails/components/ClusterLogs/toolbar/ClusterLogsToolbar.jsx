@@ -91,6 +91,7 @@ ClusterLogsToolbar.propTypes = {
   setFlags: PropTypes.func.isRequired,
   currentFlags: PropTypes.shape({
     severityTypes: PropTypes.arrayOf(PropTypes.string),
+    logTypes: PropTypes.arrayOf(PropTypes.string),
   }).isRequired,
   clearFiltersAndFlags: PropTypes.func.isRequired,
   history: PropTypes.shape({
