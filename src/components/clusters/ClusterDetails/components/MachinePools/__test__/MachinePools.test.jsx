@@ -1,7 +1,7 @@
 import React from 'react';
 import { shallow, mount } from 'enzyme';
-import { TestWrapper, screen, render } from '@testUtils';
 
+import { TestWrapper, screen, render } from '~/testUtils';
 import modals from '~/components/common/Modal/modals';
 import { normalizedProducts } from '~/common/subscriptionTypes';
 import { baseRequestState } from '../../../../../../redux/reduxHelpers';

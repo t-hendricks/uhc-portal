@@ -1,4 +1,4 @@
-import { render, screen } from '@testUtils';
+import { render, screen } from '~/testUtils';
 import { formatErrorDetails, getErrorMessage, overrideErrorMessage } from '../errors';
 import { PENDING_ACTION } from '../../redux/reduxHelpers';
 import AddOnsConstants from '../../components/clusters/ClusterDetails/components/AddOns/AddOnsConstants';

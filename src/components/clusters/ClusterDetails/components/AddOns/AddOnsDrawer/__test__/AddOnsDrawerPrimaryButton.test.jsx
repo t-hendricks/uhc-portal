@@ -1,6 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import { render, checkAccessibility } from '@testUtils';
+
+import { render, checkAccessibility } from '~/testUtils';
 import AddOnsPrimaryButton from '../AddOnsDrawerPrimaryButton';
 
 import { managedIntegration } from '../../__test__/AddOns.fixtures';

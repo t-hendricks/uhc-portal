@@ -1,6 +1,8 @@
 import React from 'react';
-import { render, screen, fireEvent, checkAccessibility, within } from '@testUtils';
 import '@testing-library/jest-dom';
+
+import { render, screen, fireEvent, checkAccessibility, within } from '~/testUtils';
+
 import ExternalLink from './ExternalLink';
 
 const useAnalyticsMock = jest.fn();

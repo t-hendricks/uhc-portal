@@ -1,6 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import { render, checkAccessibility } from '@testUtils';
+
+import { render, checkAccessibility } from '~/testUtils';
 import AddOnStateLabel from '../AddOnStateLabel';
 import AddOnsConstants from '../AddOnsConstants';
 

@@ -1,5 +1,6 @@
 import React from 'react';
-import { fireEvent, render, screen } from '@testUtils';
+
+import { fireEvent, render, screen } from '~/testUtils';
 import wizardConnector from '~/components/clusters/CreateOSDPage/CreateOSDWizard/WizardConnector';
 import CustomerOIDCConfiguration from './CustomerOIDCConfiguration';
 

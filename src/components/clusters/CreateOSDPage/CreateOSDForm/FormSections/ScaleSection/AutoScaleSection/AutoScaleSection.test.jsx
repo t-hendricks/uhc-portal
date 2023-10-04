@@ -1,5 +1,6 @@
 import React from 'react';
-import { render, screen, checkAccessibility, within } from '@testUtils';
+
+import { render, screen, checkAccessibility, within } from '~/testUtils';
 import wizardConnector from '~/components/clusters/CreateOSDPage/CreateOSDWizard/WizardConnector';
 import AutoScaleSection from './AutoScaleSection';
 import { constants } from '../../../CreateOSDFormConstants';

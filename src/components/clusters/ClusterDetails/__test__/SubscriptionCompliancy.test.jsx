@@ -1,6 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import { render, screen, checkAccessibility } from '@testUtils';
+
+import { render, screen, checkAccessibility } from '~/testUtils';
 
 import SubscriptionCompliancy from '../components/SubscriptionCompliancy';
 import fixtures from './ClusterDetails.fixtures';
