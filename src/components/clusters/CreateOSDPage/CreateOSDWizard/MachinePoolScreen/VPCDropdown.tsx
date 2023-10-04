@@ -84,7 +84,12 @@ const VPCDropdown = ({
 
   const refreshVPCs = () => {
     if (vpcResponse.cloudProvider === 'aws') {
-      dispatch(getAWSCloudProviderVPCs(vpcResponse.credentials, vpcResponse.region));
+      dispatch(
+        getAWSCloudProviderVPCs({
+          awsCredentials: vpcResponse.credentials,
+          region: vpcResponse.region,
+        }),
+      );
     }
   };
 

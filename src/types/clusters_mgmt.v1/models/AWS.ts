@@ -29,6 +29,10 @@ export type AWS = {
    */
   account_id?: string;
   /**
+   * Additional AWS Security Groups to be added to default worker (compute) machine pool.
+   */
+  additional_compute_security_group_ids?: Array<string>;
+  /**
    * Audit log forwarding configuration
    */
   audit_log?: AuditLog;
