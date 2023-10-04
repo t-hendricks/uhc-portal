@@ -62,6 +62,7 @@ const INITIAL_OSL_VIEW_STATE: ViewState = {
   flags: {
     conditionalFilterFlags: {
       severityTypes: [],
+      logTypes: [],
     },
   },
 };

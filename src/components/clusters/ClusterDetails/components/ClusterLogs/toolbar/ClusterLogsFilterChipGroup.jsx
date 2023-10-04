@@ -4,7 +4,7 @@ import isEmpty from 'lodash/isEmpty';
 
 import { Button, Chip, ChipGroup, Split, SplitItem } from '@patternfly/react-core';
 
-import { SEVERITY_TYPES } from '../clusterLogConstants';
+import { SEVERITY_TYPES, LOG_TYPES } from '../clusterLogConstants';
 import { buildFilterURLParams } from '../../../../../../common/queryHelpers';
 import helpers from '../../../../../../common/helpers';
 
@@ -85,6 +85,15 @@ const groupFlags = [
       return map;
     }, {}),
   },
+  {
+    key: 'logTypes',
+    label: 'Type',
+    optionLabels: LOG_TYPES.reduce((map, key) => {
+      /* eslint-disable-next-line no-param-reassign */
+      map[key] = key;
+      return map;
+    }, {}),
+  },
 ];
 
 function ClusterLogsFilterChipGroup({
@@ -147,6 +156,7 @@ ClusterLogsFilterChipGroup.propTypes = {
   setFlags: PropTypes.func.isRequired,
   currentFlags: PropTypes.shape({
     severityTypes: PropTypes.arrayOf(PropTypes.string),
+    logTypes: PropTypes.arrayOf(PropTypes.string),
   }).isRequired,
   clearFiltersAndFlags: PropTypes.func.isRequired,
   history: PropTypes.shape({
