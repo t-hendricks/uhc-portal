@@ -23,12 +23,14 @@ function MachinePoolsSubnets({ selectedVPC }) {
         <Field
           component={VPCDropdown}
           name="selected_vpc"
-          validate={(value) => (value?.id.length > 0 ? undefined : 'error')}
+          validate={(value) =>
+            value?.id?.length > 0 || value?.name?.length > 0 ? undefined : 'error'
+          }
           selectedVPC={selectedVPC}
           showRefresh
         />
       </GridItem>
-      {selectedVPC?.id && (
+      {(selectedVPC?.id || selectedVPC?.name) && (
         <FieldArray
           name="machine_pools_subnets"
           component={ReduxFormMachinePoolSubnets}
