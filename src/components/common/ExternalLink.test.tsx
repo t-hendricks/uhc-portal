@@ -1,5 +1,4 @@
 import React from 'react';
-import '@testing-library/jest-dom';
 
 import { render, screen, fireEvent, checkAccessibility, within } from '~/testUtils';
 

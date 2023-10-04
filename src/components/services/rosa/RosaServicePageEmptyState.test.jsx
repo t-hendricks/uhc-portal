@@ -1,7 +1,6 @@
 import React from 'react';
 import { BrowserRouter } from 'react-router-dom';
 import { waitForElementToBeRemoved } from '@testing-library/react';
-import '@testing-library/jest-dom';
 
 import { render, screen, checkAccessibility, fireEvent } from '~/testUtils';
 import RosaServicePageEmptyState from './RosaServicePageEmptyState';
