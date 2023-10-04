@@ -21,6 +21,10 @@ export type AWSMachinePool = {
    */
   href?: string;
   /**
+   * Additional AWS Security Groups to be added machine pool. Note that machine pools can only be worker node at the time.
+   */
+  additional_security_group_ids?: Array<string>;
+  /**
    * Use spot instances on this machine pool to reduce cost.
    */
   spot_market_options?: AWSSpotMarketOptions;

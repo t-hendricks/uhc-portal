@@ -41,8 +41,6 @@ const mapStateToProps = (state: GlobalState) => {
 
   const provider = cluster?.cloud_provider?.id;
   const isAWS = provider === CloudProviderType.Aws;
-
-  // @ts-ignore
   const isSTSEnabled = cluster?.aws?.sts?.enabled === true;
 
   const clusterRouters = NetworkingSelector(state);

@@ -40,14 +40,20 @@ const credentialsFromJSON = async (gcpCredentialsJSON: string): Promise<GCP> => 
  * List AWS VPCs for given CCS account.
  * Optimization: If `subnet` is provided, only VPC attached to that subnet id will be included.
  */
-export const getAWSCloudProviderVPCs = (
-  awsCredentials: AWSCredentials,
-  region: string,
-  subnet?: string,
-) =>
+export const getAWSCloudProviderVPCs = ({
+  awsCredentials,
+  region,
+  subnet,
+  options,
+}: {
+  awsCredentials: AWSCredentials;
+  region: string;
+  subnet?: string;
+  options?: { includeSecurityGroups: boolean };
+}) =>
   action(
     LIST_VPCS,
-    listAWSVPCs(awsCredentials, region, subnet),
+    listAWSVPCs(awsCredentials, region, subnet, options),
     // parameters can be used to check if we need to query again.
     {
       credentials: awsCredentials,

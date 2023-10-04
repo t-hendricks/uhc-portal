@@ -148,7 +148,12 @@ export const SubnetSelectField = ({
   );
 
   const refreshSubnets = () => {
-    dispatch(getAWSCloudProviderVPCs(vpcs.credentials, vpcs.region));
+    dispatch(
+      getAWSCloudProviderVPCs({
+        awsCredentials: vpcs.credentials,
+        region: vpcs.region,
+      }),
+    );
   };
 
   return (

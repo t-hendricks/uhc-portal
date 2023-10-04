@@ -26,7 +26,6 @@ const mapStateToProps = (state: GlobalState) => {
   const { canEdit } = cluster;
 
   const isReadOnly = cluster?.status?.configuration_mode === 'read_only';
-  // @ts-ignore
   const isSTSEnabled = cluster?.aws?.sts?.enabled === true;
   const clusterHibernating = isHibernating(cluster.state);
   const clusterVersion = cluster?.openshift_version || cluster?.version?.raw_id || '';

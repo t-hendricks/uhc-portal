@@ -6,6 +6,20 @@ import MachinePools from '../MachinePools';
 
 import { baseRequestState } from '../../../../../../redux/reduxHelpers';
 
+const clusterState = {
+  clusters: {
+    details: {
+      cluster: {
+        aws: { sts: { role_arn: 'my-arn' } },
+      },
+    },
+  },
+};
+
+jest.mock('~/redux/hooks/useGlobalState', () => ({
+  useGlobalState: jest.fn().mockReturnValue(clusterState),
+}));
+
 const getMachinePools = jest.fn();
 const deleteMachinePool = jest.fn();
 const openModal = jest.fn();
@@ -42,7 +56,11 @@ const baseProps = (isHypershift = false, ccs = false, machinePool = defaultMachi
   isAddMachinePoolModalOpen: false,
   isEditTaintsModalOpen: false,
   isEditLabelsModalOpen: false,
-  clusterAutoscalerResponse: { ...baseRequestState, autoscaler: undefined },
+  clusterAutoscalerResponse: {
+    hasAutoscaler: false,
+    getAutoscaler: { ...baseRequestState },
+    editAction: { ...baseRequestState },
+  },
   deleteMachinePoolResponse: { ...baseRequestState },
   addMachinePoolResponse: { ...baseRequestState },
   scaleMachinePoolResponse: { ...baseRequestState },
@@ -50,6 +68,7 @@ const baseProps = (isHypershift = false, ccs = false, machinePool = defaultMachi
   getMachinePools,
   deleteMachinePool,
   clearGetMachinePoolsResponse: jest.fn(),
+  getClusterAutoscaler: jest.fn(),
   getOrganizationAndQuota,
   getMachineTypes,
   machineTypes: {},

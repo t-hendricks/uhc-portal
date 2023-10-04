@@ -121,6 +121,7 @@ exports[`<MachinePools /> OpenShift version for machine pools is shown if hypers
                 },
                 Object {
                   "title": <MachinePoolAutoScalingSummary
+                    hasClusterAutoscale={false}
                     hasMachinePoolAutoscale={false}
                     isHypershift={true}
                   />,
@@ -190,7 +191,7 @@ exports[`<MachinePools /> OpenShift version for machine pools is shown if hypers
             Object {
               "cells": Array [
                 Object {
-                  "title": <ExpandableRow
+                  "title": <MachinePoolExpandedRow
                     isMultiZoneCluster={false}
                     machinePool={
                       Object {
@@ -367,6 +368,7 @@ exports[`<MachinePools /> renders with a machine pool with autoscaling enabled 1
                 },
                 Object {
                   "title": <MachinePoolAutoScalingSummary
+                    hasClusterAutoscale={false}
                     hasMachinePoolAutoscale={true}
                     isHypershift={false}
                   />,
@@ -406,7 +408,7 @@ exports[`<MachinePools /> renders with a machine pool with autoscaling enabled 1
             Object {
               "cells": Array [
                 Object {
-                  "title": <ExpandableRow
+                  "title": <MachinePoolExpandedRow
                     isMultiZoneCluster={false}
                     machinePool={
                       Object {
@@ -584,6 +586,7 @@ exports[`<MachinePools /> renders with additional machine pools, some with label
                 },
                 Object {
                   "title": <MachinePoolAutoScalingSummary
+                    hasClusterAutoscale={false}
                     hasMachinePoolAutoscale={false}
                     isHypershift={false}
                   />,
@@ -620,7 +623,7 @@ exports[`<MachinePools /> renders with additional machine pools, some with label
             Object {
               "cells": Array [
                 Object {
-                  "title": <ExpandableRow
+                  "title": <MachinePoolExpandedRow
                     isMultiZoneCluster={false}
                     machinePool={
                       Object {
@@ -687,6 +690,7 @@ exports[`<MachinePools /> renders with additional machine pools, some with label
                 },
                 Object {
                   "title": <MachinePoolAutoScalingSummary
+                    hasClusterAutoscale={false}
                     hasMachinePoolAutoscale={false}
                     isHypershift={false}
                   />,
@@ -711,7 +715,7 @@ exports[`<MachinePools /> renders with additional machine pools, some with label
             Object {
               "cells": Array [
                 Object {
-                  "title": <ExpandableRow
+                  "title": <MachinePoolExpandedRow
                     isMultiZoneCluster={false}
                     machinePool={
                       Object {
@@ -775,6 +779,7 @@ exports[`<MachinePools /> renders with additional machine pools, some with label
                 },
                 Object {
                   "title": <MachinePoolAutoScalingSummary
+                    hasClusterAutoscale={false}
                     hasMachinePoolAutoscale={false}
                     isHypershift={false}
                   />,
@@ -808,7 +813,7 @@ exports[`<MachinePools /> renders with additional machine pools, some with label
             Object {
               "cells": Array [
                 Object {
-                  "title": <ExpandableRow
+                  "title": <MachinePoolExpandedRow
                     isMultiZoneCluster={false}
                     machinePool={
                       Object {
@@ -869,6 +874,7 @@ exports[`<MachinePools /> renders with additional machine pools, some with label
                 },
                 Object {
                   "title": <MachinePoolAutoScalingSummary
+                    hasClusterAutoscale={false}
                     hasMachinePoolAutoscale={false}
                     isHypershift={false}
                   />,
@@ -1008,6 +1014,7 @@ exports[`<MachinePools /> renders with the machine pool 1`] = `
                 },
                 Object {
                   "title": <MachinePoolAutoScalingSummary
+                    hasClusterAutoscale={false}
                     hasMachinePoolAutoscale={false}
                     isHypershift={false}
                   />,
@@ -1149,6 +1156,7 @@ exports[`<MachinePools /> renders with the machine pool when it has labels 1`] =
                 },
                 Object {
                   "title": <MachinePoolAutoScalingSummary
+                    hasClusterAutoscale={false}
                     hasMachinePoolAutoscale={false}
                     isHypershift={false}
                   />,
@@ -1172,7 +1180,7 @@ exports[`<MachinePools /> renders with the machine pool when it has labels 1`] =
             Object {
               "cells": Array [
                 Object {
-                  "title": <ExpandableRow
+                  "title": <MachinePoolExpandedRow
                     isMultiZoneCluster={false}
                     machinePool={
                       Object {

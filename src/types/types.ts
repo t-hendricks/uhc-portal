@@ -46,6 +46,7 @@ export type FakeCluster = // AICluster &
     | 'inflight_checks'
     | 'name'
     | 'version'
+    | 'aws'
   > & {
     metrics: OneMetric;
     state?: string | ClusterState;
