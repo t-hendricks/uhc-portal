@@ -98,7 +98,7 @@ function SubscriptionCompliancy({ cluster, openModal, canSubscribeOCP = false })
               <Button variant="link" isInline onClick={handleArchiveCluster}>
                 Archive this cluster
               </Button>
-              {' if it no longer exits. '}
+              {' if it no longer exists. '}
             </>
           ) : (
             textForUsersCanNotEdit

@@ -5,7 +5,7 @@ exports[`<ClusterCreatedIndicator /> should not crash when the cluster has no su
 exports[`<ClusterCreatedIndicator /> should render when trial expires 1`] = `
 <Popover
   aria-label="Evaluation expired"
-  bodyContent="Your 60-day evaluation has expired. Edit subscription settings to continue using this cluster, or archive this cluster if it no longer exits"
+  bodyContent="Your 60-day evaluation has expired. Edit subscription settings to continue using this cluster, or archive this cluster if it no longer exists."
   position="top"
 >
   <Button
