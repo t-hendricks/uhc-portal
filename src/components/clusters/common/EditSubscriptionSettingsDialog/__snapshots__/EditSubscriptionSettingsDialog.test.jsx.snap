@@ -10217,7 +10217,7 @@ exports[`<EditSubscriptionSettingsDialog /> renders eval support correctly 1`] =
                             <span
                               class="pf-c-form__label-text"
                             >
-                              Number of sockets
+                              Number of sockets (excluding control plane nodes)
                             </span>
                           </label>
                            
@@ -12348,7 +12348,7 @@ exports[`<EditSubscriptionSettingsDialog /> renders eval support correctly 1`] =
                                       helperText=""
                                       helperTextInvalid=""
                                       isRequired={false}
-                                      label="Number of sockets"
+                                      label="Number of sockets (excluding control plane nodes)"
                                       validated="default"
                                     >
                                       <GenerateId
@@ -12366,7 +12366,7 @@ exports[`<EditSubscriptionSettingsDialog /> renders eval support correctly 1`] =
                                               <span
                                                 className="pf-c-form__label-text"
                                               >
-                                                Number of sockets
+                                                Number of sockets (excluding control plane nodes)
                                               </span>
                                             </label>
                                              
