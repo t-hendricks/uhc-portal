@@ -26,6 +26,7 @@ exports[`<ClusterLogs /> should render 1`] = `
       className="ocm-c-overview-cluster-history__card--body"
     >
       <Connect(ClusterLogsToolbar)
+        clusterID="1i4counta3holamvo1g5tp6n8p3a03bq"
         externalClusterID="bae5b227-2472-4e71-be4d-a18fc60bb48a"
         history={
           Object {

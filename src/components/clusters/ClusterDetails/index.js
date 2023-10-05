@@ -60,8 +60,8 @@ const mapStateToProps = (state, { location }) => {
       pending: false,
     },
   } = state.clusterSupport;
-  const clusterId = get(details, 'cluster.external_id');
-  const insightsIssuesCount = issuesCountSelector(state, clusterId);
+  const externalId = get(details, 'cluster.external_id');
+  const insightsIssuesCount = issuesCountSelector(state, externalId);
 
   return {
     cloudProviders,
@@ -69,7 +69,7 @@ const mapStateToProps = (state, { location }) => {
     addOns,
     clusterIdentityProviders,
     organization,
-    displayClusterLogs: !!clusterId,
+    displayClusterLogs: !!externalId || !!details?.cluster?.id,
     clusterLogsViewOptions: state.viewOptions[viewConstants.CLUSTER_LOGS_VIEW],
     insightsData,
     canSubscribeOCP: canSubscribeOCPSelector(state),

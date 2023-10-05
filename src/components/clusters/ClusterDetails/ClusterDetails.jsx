@@ -40,7 +40,7 @@ import CommonClusterModals from '../common/CommonClusterModals';
 import CancelUpgradeModal from '../common/Upgrades/CancelUpgradeModal';
 
 import { isValid, shouldRefetchQuota } from '../../../common/helpers';
-import { isHypershiftCluster } from './clusterDetailsHelper';
+import { isHypershiftCluster, eventTypes } from './clusterDetailsHelper';
 import getClusterName from '../../../common/getClusterName';
 import { subscriptionStatuses, knownProducts } from '../../../common/subscriptionTypes';
 import clusterStates, { isHibernating } from '../common/clusterStates';
@@ -64,7 +64,7 @@ const PAGE_TITLE = 'Red Hat OpenShift Cluster Manager';
 class ClusterDetails extends Component {
   state = {
     selectedTab: '',
-    refreshEvent: null,
+    refreshEvent: { type: eventTypes.NONE },
   };
 
   constructor(props) {
@@ -213,7 +213,10 @@ class ClusterDetails extends Component {
     if (externalClusterID) {
       fetchClusterInsights(externalClusterID);
       this.fetchSupportData();
-      getClusterHistory(externalClusterID, clusterLogsViewOptions);
+    }
+
+    if (externalClusterID || clusterID) {
+      getClusterHistory(externalClusterID, clusterID, clusterLogsViewOptions);
     }
 
     if (isManaged) {
@@ -236,7 +239,7 @@ class ClusterDetails extends Component {
       getOnDemandMetrics(subscriptionID);
     }
 
-    this.setState({ refreshEvent: { type: clicked } });
+    this.setState({ refreshEvent: { type: clicked || eventTypes.AUTO } });
   }
 
   fetchSupportData() {
@@ -409,7 +412,7 @@ class ClusterDetails extends Component {
             openModal={openModal}
             pending={clusterDetails.pending}
             refreshFunc={this.refresh}
-            clickRefreshFunc={() => this.refresh('clicked')}
+            clickRefreshFunc={() => this.refresh(eventTypes.CLICKED)}
             clusterIdentityProviders={clusterIdentityProviders}
             organization={organization}
             error={clusterDetails.error}
@@ -515,7 +518,15 @@ class ClusterDetails extends Component {
               hidden
             >
               <ErrorBoundary>
-                <ClusterLogs externalClusterID={cluster.external_id} history={history} />
+                <ClusterLogs
+                  externalClusterID={cluster.external_id}
+                  clusterID={cluster.id}
+                  history={history}
+                  refreshEvent={{
+                    type: refreshEvent.type,
+                    reset: () => this.setState({ refreshEvent: { type: eventTypes.NONE } }),
+                  }}
+                />
               </ErrorBoundary>
             </TabContent>
           )}

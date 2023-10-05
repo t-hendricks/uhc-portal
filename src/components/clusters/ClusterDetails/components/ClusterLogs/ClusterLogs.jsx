@@ -15,9 +15,10 @@ import size from 'lodash/size';
 import isEmpty from 'lodash/isEmpty';
 import isEqual from 'lodash/isEqual';
 import SearchIcon from '@patternfly/react-icons/dist/esm/icons/search-icon';
-import { viewPropsChanged, getQueryParam } from '../../../../../common/queryHelpers';
 import ClusterLogsToolbar from './toolbar';
 import LogTable from './LogTable';
+import { eventTypes } from '../../clusterDetailsHelper';
+import { viewPropsChanged, getQueryParam } from '../../../../../common/queryHelpers';
 import { viewConstants } from '../../../../../redux/constants';
 import ErrorBox from '../../../../common/ErrorBox';
 import ViewPaginationRow from '../../../common/ViewPaginationRow/viewPaginationRow';
@@ -76,9 +77,9 @@ class ClusterLogs extends React.Component {
   }
 
   refresh() {
-    const { externalClusterID, getClusterHistory, viewOptions } = this.props;
-    if (externalClusterID) {
-      getClusterHistory(externalClusterID, viewOptions);
+    const { externalClusterID, clusterID, getClusterHistory, viewOptions } = this.props;
+    if (externalClusterID || clusterID) {
+      getClusterHistory(externalClusterID, clusterID, viewOptions);
     }
   }
 
@@ -93,6 +94,8 @@ class ClusterLogs extends React.Component {
       history,
       setSorting,
       externalClusterID,
+      clusterID,
+      refreshEvent,
     } = this.props;
 
     // These errors are present during cluster install
@@ -102,6 +105,7 @@ class ClusterLogs extends React.Component {
     const hasNoFilters =
       isEmpty(viewOptions.filter) && helpers.nestedIsEmpty(viewOptions.flags.severityTypes);
     const isPendingNoData = !size(logs) && pending && hasNoFilters;
+
     return (
       <>
         <Card className="ocm-c-overview-cluster-history__card">
@@ -119,38 +123,41 @@ class ClusterLogs extends React.Component {
             </CardActions>
           </CardHeader>
           <CardBody className="ocm-c-overview-cluster-history__card--body">
+            {error && !ignoreErrors && (
+              <ErrorBox
+                message="Error retrieving cluster logs"
+                response={{
+                  errorMessage,
+                  operationID,
+                }}
+              />
+            )}
             <ClusterLogsToolbar
               view={viewConstants.CLUSTER_LOGS_VIEW}
               history={history}
               externalClusterID={externalClusterID}
               isPendingNoData={isPendingNoData}
+              clusterID={clusterID}
             />
-            {error && !size(logs) ? (
+            {error && !size(logs) && ignoreErrors ? (
               <>
                 <PageSection>
                   <EmptyState>
-                    {ignoreErrors ? (
-                      <>
-                        <EmptyStateIcon icon={SearchIcon} />
-                        <Title size="lg" headingLevel="h4">
-                          No cluster log entries found
-                        </Title>
-                      </>
-                    ) : (
-                      <ErrorBox
-                        message="Error retrieving cluster logs"
-                        response={{
-                          errorMessage,
-                          operationID,
-                        }}
-                      />
-                    )}
+                    <EmptyStateIcon icon={SearchIcon} />
+                    <Title size="lg" headingLevel="h4">
+                      No cluster log entries found
+                    </Title>
                   </EmptyState>
                 </PageSection>
               </>
             ) : (
               <>
-                <LogTable pending={pending} logs={logs} setSorting={setSorting} />
+                <LogTable
+                  pending={pending}
+                  logs={logs}
+                  setSorting={setSorting}
+                  refreshEvent={refreshEvent}
+                />
                 <ViewPaginationRow
                   viewType={viewConstants.CLUSTER_LOGS_VIEW}
                   currentPage={viewOptions.currentPage}
@@ -182,6 +189,10 @@ ClusterLogs.propTypes = {
     filter: PropTypes.object,
   }).isRequired,
   clusterLogs: PropTypes.object.isRequired,
+  refreshEvent: PropTypes.shape({
+    type: PropTypes.oneOf(Object.values(eventTypes)),
+    reset: PropTypes.func.isRequired,
+  }).isRequired,
   getClusterHistory: PropTypes.func.isRequired,
   setListFlag: PropTypes.func.isRequired,
   setFilter: PropTypes.func.isRequired,
@@ -191,6 +202,7 @@ ClusterLogs.propTypes = {
     push: PropTypes.func.isRequired,
   }).isRequired,
   createdAt: PropTypes.string.isRequired,
+  clusterID: PropTypes.string.isRequired,
 };
 
 export default ClusterLogs;

@@ -75,7 +75,7 @@ exports[`<SubscriptionSettings /> should render for OCP 1`] = `
               Subscription units
             </DescriptionListTerm>
             <DescriptionListDescription>
-              Cores/vCPUs 
+              Cores or vCPUs
             </DescriptionListDescription>
           </DescriptionListGroup>
           <DescriptionListGroup>

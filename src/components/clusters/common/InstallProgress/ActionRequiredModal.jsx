@@ -37,9 +37,10 @@ function ActionRequiredModal({ cluster, isOpen, onClose }) {
   const createByOIDCId = (cluster) => {
     const oidcConfigID = cluster.aws.sts?.oidc_config?.id;
     const operatorRolePrefix = cluster.aws?.sts?.operator_role_prefix;
+    const installerRole = cluster.aws?.sts?.role_arn;
     const operatorRolesCliCommand = `rosa create operator-roles ${
       isHCPCluster ? '--hosted-cp' : ''
-    } --prefix "${operatorRolePrefix}" --oidc-config-id "${oidcConfigID}"`;
+    } --prefix "${operatorRolePrefix}" --oidc-config-id "${oidcConfigID}"  --installer-role-arn ${installerRole}`;
     const oidcProviderCliCommand = `rosa create oidc-provider --oidc-config-id "${oidcConfigID}"`;
 
     return (
