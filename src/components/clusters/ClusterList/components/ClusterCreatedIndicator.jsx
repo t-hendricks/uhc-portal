@@ -71,7 +71,7 @@ function ClusterCreatedIndicator({ cluster }) {
     return (
       <Popover
         position={PopoverPosition.top}
-        bodyContent="Your 60-day evaluation has expired. Edit subscription settings to continue using this cluster, or archive this cluster if it no longer exits"
+        bodyContent="Your 60-day evaluation has expired. Edit subscription settings to continue using this cluster, or archive this cluster if it no longer exists."
         aria-label="Evaluation expired"
       >
         <Button
