@@ -475,7 +475,7 @@ class EditSubscriptionSettingsFields extends Component {
         onChange={this.handleUnitsNumberChange}
         inputAriaLabel={
           systemUnits === SOCKETS
-            ? 'Number of sockets'
+            ? 'Number of sockets (excluding control plane nodes)'
             : 'Number of compute cores (excluding control plane nodes)'
         }
         minusBtnAriaLabel="decrement the number by 1"
@@ -549,7 +549,7 @@ class EditSubscriptionSettingsFields extends Component {
         <FormGroup
           label={
             systemUnits === SOCKETS
-              ? 'Number of sockets'
+              ? 'Number of sockets (excluding control plane nodes)'
               : 'Number of compute cores (excluding control plane nodes)'
           }
           isRequired={isDisconnectedSub}
