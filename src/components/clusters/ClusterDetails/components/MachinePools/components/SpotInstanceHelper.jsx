@@ -7,7 +7,7 @@ const isMachinePoolUsingSpotInstances = (machinePoolId, machinePoolsList) => {
   const selectedMachinePool = machinePoolsList.data.find(
     (machinePool) => (machinePool.id || machinePool.name) === machinePoolId,
   );
-  return selectedMachinePool ? selectedMachinePool?.aws : false;
+  return !!selectedMachinePool?.aws?.spot_market_options;
 };
 
 const SpotInstanceInfoAlert = () => (
