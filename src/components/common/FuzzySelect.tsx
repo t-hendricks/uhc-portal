@@ -35,6 +35,8 @@ function FuzzySelect(props: FuzzySelectProps) {
     truncation, // if seleted value above this # of characters, truncate selected
     selectionData,
     isOpen,
+    toggleId,
+    ...rest
   } = props;
 
   // const [isInnerOpen, setIsInnerOpen] = useState(false);
@@ -220,13 +222,14 @@ function FuzzySelect(props: FuzzySelectProps) {
   return (
     <div ref={containerRef}>
       <Select
-        {...props}
         isOpen={isOpen}
         onFilter={onFilter}
         selections={truncateSelected(selected, truncation)}
         ref={ref}
         hasInlineFilter
         isGrouped={isGrouped}
+        toggleId={toggleId}
+        {...rest}
       >
         {selectOptions}
       </Select>
