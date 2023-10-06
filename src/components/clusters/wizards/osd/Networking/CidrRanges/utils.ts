@@ -15,7 +15,6 @@ export const validateCidr = (value: string) => (cloudProvider: CloudProviderType
   required(value) ||
   validators.cidr(value) ||
   validators.validateRange(value) ||
-  validators.disjointFromDockerRange(value) ||
   (cloudProvider === CloudProviderType.Gcp && validators.privateAddress(value)) ||
   undefined;
 

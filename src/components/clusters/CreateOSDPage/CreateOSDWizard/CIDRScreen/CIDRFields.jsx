@@ -54,7 +54,6 @@ function CIDRFields({
     required,
     validators.cidr,
     validators.validateRange,
-    validators.disjointFromDockerRange,
     cloudProviderID === 'gcp' && validators.privateAddress,
   ];
 
