@@ -46,7 +46,7 @@ import ErrorBox from '../../../../common/ErrorBox';
 import modals from '../../../../common/Modal/modals';
 import { noQuotaTooltip } from '../../../../../common/helpers';
 import { versionFormatter } from '../../../../../common/versionHelpers';
-import { isHibernating } from '../../../common/clusterStates';
+import { isHibernating, isROSA } from '../../../common/clusterStates';
 
 import './MachinePools.scss';
 
@@ -185,6 +185,7 @@ class MachinePools extends React.Component {
       machinePoolsList?.data,
     );
     const isHypershift = isHypershiftCluster(cluster);
+    const isRosa = isROSA(cluster);
 
     if (hasMachinePools && machinePoolsList.error) {
       return (
@@ -494,6 +495,7 @@ class MachinePools extends React.Component {
         {openModalId === modals.EDIT_CLUSTER_AUTOSCALING_V1 && (
           <EditClusterAutoScalerForDay2
             isWizard={false}
+            isRosa={isRosa}
             clusterId={cluster.id}
             hasAutoscalingMachinePools={hasAutoscalingMachinePools}
             clusterAutoscalerResponse={clusterAutoscalerResponse}

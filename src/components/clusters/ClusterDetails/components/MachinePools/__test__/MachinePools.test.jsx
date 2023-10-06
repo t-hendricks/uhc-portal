@@ -1,10 +1,11 @@
 import React from 'react';
 import { shallow, mount } from 'enzyme';
 import { TestWrapper, screen, render, userEvent } from '@testUtils';
-import modals from '~/components/common/Modal/modals';
-import MachinePools from '../MachinePools';
 
+import modals from '~/components/common/Modal/modals';
+import { normalizedProducts } from '~/common/subscriptionTypes';
 import { baseRequestState } from '../../../../../../redux/reduxHelpers';
+import MachinePools from '../MachinePools';
 
 const clusterState = {
   clusters: {
@@ -33,8 +34,11 @@ const defaultMachinePool = {
   desired: 1,
 };
 
-const baseProps = (isHypershift = false, ccs = false, machinePool = defaultMachinePool) => ({
+const getBaseProps = (isHypershift = false, ccs = false, machinePool = defaultMachinePool) => ({
   cluster: {
+    product: {
+      id: normalizedProducts.ROSA,
+    },
     machinePoolsActions: {
       create: true,
       update: true,
@@ -92,18 +96,18 @@ const simpleMachinePoolList = {
 
 describe('<MachinePools />', () => {
   it('should call getMachinePools on mount', () => {
-    shallow(<MachinePools {...baseProps()} />);
+    shallow(<MachinePools {...getBaseProps()} />);
     expect(getMachinePools).toBeCalled();
   });
 
   it('renders with the machine pool', () => {
-    const wrapper = shallow(<MachinePools {...baseProps()} />);
+    const wrapper = shallow(<MachinePools {...getBaseProps()} />);
     expect(wrapper).toMatchSnapshot();
   });
 
   it('renders with the machine pool when it has labels', () => {
     const props = {
-      ...baseProps(false, false, {
+      ...getBaseProps(false, false, {
         ...defaultMachinePool,
         labels: { foo: 'bar', hello: 'world' },
       }),
@@ -114,7 +118,7 @@ describe('<MachinePools />', () => {
 
   it('renders with additional machine pools, some with labels and/or taints', () => {
     const props = {
-      ...baseProps(),
+      ...getBaseProps(),
       machinePoolsList: {
         data: [
           {
@@ -183,19 +187,19 @@ describe('<MachinePools />', () => {
       },
     ];
 
-    const wrapper = shallow(<MachinePools {...baseProps()} machinePoolsList={{ data }} />);
+    const wrapper = shallow(<MachinePools {...getBaseProps()} machinePoolsList={{ data }} />);
     expect(wrapper).toMatchSnapshot();
   });
 
   it('should open modal', () => {
-    const wrapper = shallow(<MachinePools {...baseProps()} />);
+    const wrapper = shallow(<MachinePools {...getBaseProps()} />);
 
     wrapper.find('#add-machine-pool').simulate('click');
     expect(openModal).toBeCalledWith(modals.ADD_MACHINE_POOL);
   });
 
   it('should render skeleton while fetching machine pools', () => {
-    const wrapper = shallow(<MachinePools {...baseProps()} />);
+    const wrapper = shallow(<MachinePools {...getBaseProps()} />);
 
     wrapper.setProps({ machinePoolsList: { ...baseRequestState, pending: true, data: [] } });
     expect(wrapper).toMatchSnapshot();
@@ -203,7 +207,7 @@ describe('<MachinePools />', () => {
   });
 
   it('should not allow adding machine pools to users without enough quota', () => {
-    const props = { ...baseProps(), hasMachinePoolsQuota: false };
+    const props = { ...getBaseProps(), hasMachinePoolsQuota: false };
     const wrapper = shallow(<MachinePools {...props} />);
 
     expect(wrapper.find('#add-machine-pool').props().disableReason).toBeTruthy();
@@ -211,7 +215,7 @@ describe('<MachinePools />', () => {
 
   it('Should disable unavailable actions in kebab menu if hypershift', () => {
     const props = {
-      ...baseProps(true),
+      ...getBaseProps(true),
       machineTypes: {
         types: {
           aws: [
@@ -303,7 +307,7 @@ describe('<MachinePools />', () => {
 
   it('Should disable delete action in kebab menu if there is only one node pool and hypershift is true', () => {
     const props = {
-      ...baseProps(true),
+      ...getBaseProps(true),
       machinePoolsList: {
         data: [
           {
@@ -340,7 +344,7 @@ describe('<MachinePools />', () => {
 
   it('Should enable all actions in kebab menu if hypershift is false', () => {
     const props = {
-      ...baseProps(false, true),
+      ...getBaseProps(false, true),
       machineTypes: {
         types: {
           aws: [
@@ -422,7 +426,7 @@ describe('<MachinePools />', () => {
 
   it('OpenShift version for machine pools is shown if hypershift', () => {
     const props = {
-      ...baseProps(true),
+      ...getBaseProps(true),
       machinePoolsList: {
         data: [
           {
@@ -459,7 +463,7 @@ describe('<MachinePools />', () => {
 
   it('should render error message', () => {
     const props = {
-      ...baseProps(),
+      ...getBaseProps(),
       deleteMachinePoolResponse: { ...baseRequestState, error: true },
     };
     const wrapper = shallow(<MachinePools {...props} />);
@@ -469,7 +473,7 @@ describe('<MachinePools />', () => {
 
   it('should close error message', () => {
     const props = {
-      ...baseProps(),
+      ...getBaseProps(),
       deleteMachinePoolResponse: { ...baseRequestState, error: true },
     };
     const wrapper = shallow(<MachinePools {...props} />);
@@ -481,7 +485,7 @@ describe('<MachinePools />', () => {
   it('displays option to update machine pool if machine pool can be updated ', async () => {
     const user = userEvent.setup();
     const props = {
-      ...baseProps(true),
+      ...getBaseProps(true),
       machinePoolsList: {
         data: [
           {
@@ -521,7 +525,7 @@ describe('<MachinePools />', () => {
   it('hides option to update machine pool if machine pool cannot be updated', async () => {
     const user = userEvent.setup();
     const props = {
-      ...baseProps(true),
+      ...getBaseProps(true),
       machinePoolsList: {
         data: [
           {
@@ -561,7 +565,7 @@ describe('<MachinePools />', () => {
   });
 
   it('Should disable actions on machine pools if user does not have permissions', () => {
-    const defaultProps = baseProps(true);
+    const defaultProps = getBaseProps(true);
     const props = {
       ...defaultProps,
       cluster: {
@@ -585,7 +589,7 @@ describe('<MachinePools />', () => {
 
   it('Should disable delete action if user does not have permissions', async () => {
     const user = userEvent.setup();
-    const defaultProps = baseProps(true);
+    const defaultProps = getBaseProps(true);
     const props = {
       ...defaultProps,
       cluster: {
@@ -610,7 +614,7 @@ describe('<MachinePools />', () => {
 
   it('Should allow actions on machine pools if user has permissions', () => {
     const props = {
-      ...baseProps(true),
+      ...getBaseProps(true),
       machinePoolsList: simpleMachinePoolList,
     };
     const { container } = render(<MachinePools {...props} />);
@@ -621,14 +625,16 @@ describe('<MachinePools />', () => {
   });
 
   it('Should render successfully when machinePoolsActions is unset (rendering from cluster list data)', () => {
+    const baseProps = getBaseProps(true);
     const props = {
-      ...baseProps(true),
+      ...baseProps,
       cluster: {
         ...baseProps.cluster,
         machinePoolsActions: undefined,
       },
       machinePoolsList: simpleMachinePoolList,
     };
+
     const { container } = render(<MachinePools {...props} />);
     // add machine pool button is disabled
     expect(container.querySelector('#add-machine-pool')).toHaveAttribute('aria-disabled', 'true');
