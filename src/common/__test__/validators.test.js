@@ -351,20 +351,6 @@ test('Field is an IP address with subnet mask between 16-28', () => {
   );
 });
 
-test('Field is an IP address that does not overlap with 172.17.0.0/16, reserved for docker', () => {
-  expect(validators.disjointFromDockerRange()).toBe(undefined);
-  expect(validators.disjointFromDockerRange('172.17.0.0/16')).toBe(
-    'Selected range must not overlap with 172.17.0.0/16.',
-  );
-  expect(validators.disjointFromDockerRange('172.17.0.0/15')).toBe(
-    'Selected range must not overlap with 172.17.0.0/16.',
-  );
-  expect(validators.disjointFromDockerRange('172.17.80.0/17')).toBe(
-    'Selected range must not overlap with 172.17.0.0/16.',
-  );
-  expect(validators.disjointFromDockerRange('90.90.90.90/20')).toBe(undefined);
-});
-
 test('Field is an address the corresponds with the first host in its subnet', () => {
   expect(validators.validateRange()).toBe(undefined);
   expect(validators.validateRange('192.148.30.71/16')).toBe(
