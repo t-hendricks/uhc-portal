@@ -450,7 +450,7 @@ class AutoScaleSection extends React.Component {
                   Edit cluster autoscaling settings
                 </Button>
               </GridItem>
-              <EditClusterAutoScalingDialog isWizard change={change} />
+              <EditClusterAutoScalingDialog isWizard change={change} isRosa={isRosa} />
             </>
           )}
 
