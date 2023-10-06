@@ -30,7 +30,7 @@ export function ListTextLabelLinkCard(props: ListTextLabelLinkCardProps) {
             }
 
             return (
-              <ListItem>
+              <ListItem key={listItemText}>
                 <Split className={splitClassName} hasGutter>
                   <SplitItem style={{ width: '60%' }}>
                     <Split>

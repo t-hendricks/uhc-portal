@@ -41,8 +41,9 @@ function LimitedSupportAlert({ limitedSupportReasons, isROSA, isOSD }) {
       }
     >
       <DescriptionList>
-        {limitedSupportReasons.map((reason) => (
-          <DescriptionListGroup>
+        {limitedSupportReasons.map((reason, index) => (
+          // eslint-disable-next-line react/no-array-index-key
+          <DescriptionListGroup key={`reason-${index}`}>
             {reason.summary ? <DescriptionListTerm>{reason.summary}</DescriptionListTerm> : null}
             {reason.details ? (
               <DescriptionListDescription>{reason.details}</DescriptionListDescription>

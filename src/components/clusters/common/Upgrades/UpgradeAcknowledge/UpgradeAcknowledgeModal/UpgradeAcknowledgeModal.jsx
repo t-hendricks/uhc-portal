@@ -111,8 +111,10 @@ const UpgradeAcknowledgeModal = (props) => {
           confirmed={(isConfirmed) => setConfirmed(isConfirmed)}
         />
       ) : (
-        errors.map((error) => (
+        errors.map((error, index) => (
           <ErrorBox
+            /* eslint-disable-next-line react/no-array-index-key */
+            key={`err-${index}`}
             message="Failed to save administrator acknowledgement."
             response={getErrorState({ payload: error })}
           />
