@@ -64,18 +64,20 @@ function FuzzySelect(props: FuzzySelectProps) {
     }
   }, [isOpen]);
 
-  const { selectionList, isGrouped } = useMemo<{
+  const { selectionList, isGrouped, groupOrder } = useMemo<{
     selectionList: FuzzyEntryType[];
+    groupOrder: string[];
     isGrouped: boolean;
   }>(() => {
     if (Array.isArray(selectionData)) {
-      return { selectionList: selectionData as FuzzyEntryType[], isGrouped: false };
+      return { selectionList: selectionData as FuzzyEntryType[], isGrouped: false, groupOrder: [] };
     }
     let allLists: FuzzyEntryType[] = [];
     Object.entries(selectionData || {}).forEach(([_group, list]) => {
       allLists = [...allLists, ...list];
     });
-    return { selectionList: allLists, isGrouped: true };
+    const groupOrder = Object.keys(selectionData) as string[];
+    return { selectionList: allLists, isGrouped: true, groupOrder };
   }, [selectionData]);
 
   const selectOptions = useMemo<ReactElement[]>(() => {
@@ -91,17 +93,15 @@ function FuzzySelect(props: FuzzySelectProps) {
         </SelectOption>
       ));
     }
-    return Object.entries(selectionData || {})
-      .sort(([groupa], [groupb]) => groupa.localeCompare(groupb))
-      .map(([group, list]) => (
-        <SelectGroup label={group} key={group}>
-          {list.map(({ key, value, description }) => (
-            <SelectOption value={value || key} key={key} description={description}>
-              {key}
-            </SelectOption>
-          ))}
-        </SelectGroup>
-      ));
+    return Object.entries(selectionData || {}).map(([group, list]) => (
+      <SelectGroup label={group} key={group}>
+        {list.map(({ key, value, description }) => (
+          <SelectOption value={value || key} key={key} description={description}>
+            {key}
+          </SelectOption>
+        ))}
+      </SelectGroup>
+    ));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectionData]);
 
@@ -201,19 +201,21 @@ function FuzzySelect(props: FuzzySelectProps) {
         ));
       }
       // create filtered grouped select options
-      return Object.entries(matchedMap).map(([groupKey, list]) => (
-        <SelectGroup label={groupKey} key={groupKey}>
-          {list.map((entry) => (
-            <SelectOption
-              className="pf-c-dropdown__menu-item"
-              key={Object.keys(entry)[0]}
-              value={valueMap[Object.keys(entry)[0]]}
-            >
-              {Object.values(entry)}
-            </SelectOption>
-          ))}
-        </SelectGroup>
-      ));
+      return Object.entries(matchedMap)
+        .sort(([groupa], [groupb]) => groupOrder.indexOf(groupa) - groupOrder.indexOf(groupb))
+        .map(([groupKey, list]) => (
+          <SelectGroup label={groupKey} key={groupKey}>
+            {list.map((entry) => (
+              <SelectOption
+                className="pf-c-dropdown__menu-item"
+                key={Object.keys(entry)[0]}
+                value={valueMap[Object.keys(entry)[0]]}
+              >
+                {Object.values(entry)}
+              </SelectOption>
+            ))}
+          </SelectGroup>
+        ));
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [selectionList, selectionData, selectOptions],
