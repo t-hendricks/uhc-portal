@@ -30,6 +30,7 @@ function MachinePoolScreen({
   isHypershift,
   maxWorkerVolumeSizeGiB,
   forceTouch,
+  hasNodeLabels,
 }) {
   return (
     <Form
@@ -65,6 +66,7 @@ function MachinePoolScreen({
           isHypershift={isHypershift}
           openEditClusterAutoScalingModal={openEditClusterAutoScalingModal}
           forceTouch={forceTouch}
+          hasNodeLabels={hasNodeLabels}
         />
       </Grid>
     </Form>
@@ -96,6 +98,7 @@ MachinePoolScreen.propTypes = {
   isHypershift: PropTypes.bool,
   maxWorkerVolumeSizeGiB: PropTypes.number.isRequired,
   forceTouch: PropTypes.bool,
+  hasNodeLabels: PropTypes.bool,
 };
 
 export default MachinePoolScreen;
