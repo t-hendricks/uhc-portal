@@ -21,7 +21,7 @@ const content = [
   },
 ];
 
-const RosaHandsonRecommendedContentTable = () => (
+const RosaHandsOnRecommendedContentTable = () => (
   <PageSection style={{ paddingBottom: 'unset', paddingTop: 'unset' }}>
     <TableComposable aria-label="Recommended content table">
       {content.map((item) => (
@@ -43,4 +43,4 @@ const RosaHandsonRecommendedContentTable = () => (
   </PageSection>
 );
 
-export default RosaHandsonRecommendedContentTable;
+export default RosaHandsOnRecommendedContentTable;

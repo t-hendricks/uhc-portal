@@ -12,26 +12,18 @@ const useDemoExperiencePolling = (): {
   initializeError: unknown;
   restartPolling: (demoExperience: DemoExperience) => void;
 } => {
-  const [demoExperience, setDemoExperience] = React.useState<DemoExperience>({} as DemoExperience);
+  const [demoExperience, setDemoExperience] = React.useState<DemoExperience>({
+    quota: {},
+  } as DemoExperience);
   const [initializing, setInitializing] = React.useState<boolean>(false);
   const [initializeError, setInitializeError] = React.useState<unknown>();
   const [intervalId, setIntervalId] = React.useState<number | null>(null);
   const pollingErrorCounter = React.useRef<number>(0);
+
   const shouldStopPolling = (demoExperience?: DemoExperience) =>
     demoExperience?.status === DemoExperienceStatusEnum.Available ||
     demoExperience?.status === DemoExperienceStatusEnum.Failed ||
     demoExperience?.status === DemoExperienceStatusEnum.Unavailable;
-
-  const fetchDemoExperience = async (): Promise<DemoExperience | undefined> => {
-    try {
-      const response = await demoExperienceService.getDemoExperience();
-      setDemoExperience(response.data);
-      return response.data;
-    } catch (err) {
-      setInitializeError(err);
-    }
-    return undefined;
-  };
 
   const stopPolling = () => {
     if (intervalId) {
@@ -43,11 +35,13 @@ const useDemoExperiencePolling = (): {
   const startPolling = async () => {
     const id = window.setInterval(async () => {
       try {
-        const demoExperience = await fetchDemoExperience();
+        const { data: demoExperience } = await demoExperienceService.getDemoExperience();
+        setDemoExperience(demoExperience);
         if (shouldStopPolling(demoExperience)) {
           stopPolling();
         }
       } catch (err) {
+        // handle polling error by reportring the first one to Sentry. currently not displayed to user
         if (pollingErrorCounter.current === 0) {
           Sentry.captureException(err);
         }
@@ -82,6 +76,7 @@ const useDemoExperiencePolling = (): {
   React.useEffect(() => {
     initialize();
     return () => stopPolling();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return { demoExperience, initializing, initializeError, restartPolling };

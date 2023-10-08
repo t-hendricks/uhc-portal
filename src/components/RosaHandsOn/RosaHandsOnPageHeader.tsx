@@ -12,10 +12,10 @@ import {
 import { PageHeader } from '@redhat-cloud-services/frontend-components';
 
 import ExternalLink from '../common/ExternalLink';
-import OpenshiftIcon from './RosaHandsonIcons/OpenshiftIcon';
-import RosaHandsOnLinks from './RosaHandsOnLinks';
+import OpenshiftIcon from './RosaHandsOnIcons/OpenshiftIcon';
+import { rosaHandsOnLinks } from './constants';
 
-const RosaHandsonPageHeader = () => (
+const RosaHandsOnPageHeader = () => (
   <PageHeader>
     <Flex direction={{ default: 'row' }} flexWrap={{ default: 'nowrap' }}>
       <FlexItem alignSelf={{ default: 'alignSelfFlexStart' }}>
@@ -26,19 +26,19 @@ const RosaHandsonPageHeader = () => (
         <Stack hasGutter>
           <StackItem>
             <TextContent>
-              <Text component="h2">Red Hat OpenShift on AWS Hands-on Experience</Text>
+              <Text component="h2">Red Hat OpenShift Service on AWS Hands-on Experience</Text>
             </TextContent>
           </StackItem>
           <StackItem>
             <Text>
-              Red Hat OpenShift Service on AWS is a fully managed turnkey application platform that
-              allows organizations to quickly build, deploy, and scale applications in a native AWS
-              environment. With one click, start your free 8-hour hands-on experience in a ROSA
-              cluster.
+              Red Hat OpenShift Service on AWS (ROSA) is a fully managed turnkey application
+              platform that allows organizations to quickly build, deploy, and scale applications in
+              a native AWS environment. With one click, start your free 8-hour hands-on experience
+              in a ROSA cluster.
             </Text>
           </StackItem>
           <StackItem>
-            <ExternalLink href={RosaHandsOnLinks.slackChannel}>
+            <ExternalLink href={rosaHandsOnLinks.slackChannel}>
               Have a question? Join our slack community
             </ExternalLink>
           </StackItem>
@@ -48,4 +48,4 @@ const RosaHandsonPageHeader = () => (
   </PageHeader>
 );
 
-export default RosaHandsonPageHeader;
+export default RosaHandsOnPageHeader;

@@ -10,14 +10,14 @@ import {
 } from '@patternfly/react-core';
 import humanizeDuration from 'humanize-duration';
 
-import RosaHandsonPageHeader from './RosaHandsonPageHeader';
+import RosaHandsOnPageHeader from './RosaHandsOnPageHeader';
 import ErrorBoundary from '../App/ErrorBoundary';
-import RosaHandsonGetStartedCard from './RosaHandsonGetStartedCard';
-import RosaHandsonRecommendedContentTable from './RosaHandsonRecommendedContentTable';
+import RosaHandsOnGetStartedCard from './RosaHandsOnGetStartedCard';
+import RosaHandsOnRecommendedContentTable from './RosaHandsOnRecommendedContentTable';
 import { DemoExperience, DemoExperienceStatusEnum } from './DemoExperienceModels';
-import RosaHandsOnLinks from './RosaHandsOnLinks';
+import { rosaHandsOnLinks } from './constants';
 import ExternalLink from '../common/ExternalLink';
-import RosaHandsonErrorPage from './RosaHandsonErrorPage';
+import RosaHandsOnErrorPage from './RosaHandsOnErrorPage';
 
 const getErrorMessage = (error: unknown): string => {
   if (error instanceof Error) {
@@ -32,7 +32,7 @@ const getErrorMessage = (error: unknown): string => {
 const ExperienceDurationInfo = ({ demoExperience }: { demoExperience: DemoExperience }) => {
   const remainingTime =
     new Date(demoExperience.scheduled_delete_timestamp || '').getTime() - Date.now();
-  const remainingDemos = (demoExperience.quota?.limit || 1) - (demoExperience.quota?.current || 1);
+  const remainingDemos = demoExperience.quota.limit - demoExperience.quota.current;
   return (
     <Alert
       title={`The current experience demo will end in ${humanizeDuration(remainingTime, {
@@ -47,18 +47,18 @@ const ExperienceDurationInfo = ({ demoExperience }: { demoExperience: DemoExperi
 };
 
 const GetStartedWithRosaButton = () => (
-  <ExternalLink href={RosaHandsOnLinks.getStarted}>Get started with ROSA</ExternalLink>
+  <ExternalLink href={rosaHandsOnLinks.getStarted}>Get started with ROSA</ExternalLink>
 );
 
 const UnavailableAlert = ({ demoExperience }: { demoExperience: DemoExperience }) => {
-  const remainingTrials = (demoExperience.quota?.limit || 1) - (demoExperience.quota?.current || 1);
+  const remainingTrials = demoExperience.quota.limit - demoExperience.quota.current;
   const alertActions = remainingTrials === 0 ? [<GetStartedWithRosaButton />] : [];
   const alertTitle =
     remainingTrials === 0 ? (
       <>
-        After 3 launches, you may create ROSA clusters using a pay-as-you-go option. If you have any
-        questions, please contact support by clicking on the hat icon located at the bottom-right
-        corner of the page.
+        After {demoExperience.quota.limit} launches, you may create ROSA clusters using a
+        pay-as-you-go option. If you have any questions, please contact support by clicking on the
+        hat icon located at the bottom-right corner of the page.
       </>
     ) : (
       demoExperience?.unavailable_reason ||
@@ -74,7 +74,7 @@ const RequestErrorAlert = ({ error }: { error: unknown }) => (
   </Alert>
 );
 
-export type RosaHandsonPageContentProps = {
+export type RosaHandsOnPageContentProps = {
   error: unknown;
   requestError: unknown;
   loading: boolean;
@@ -82,20 +82,20 @@ export type RosaHandsonPageContentProps = {
   onRequestCluster: () => void;
 };
 
-const RosaHandsonPageContent = ({
+const RosaHandsOnPageContent = ({
   error,
   loading,
   requestError,
   ...props
-}: RosaHandsonPageContentProps) => {
+}: RosaHandsOnPageContentProps) => {
   if (error) {
-    return <RosaHandsonErrorPage message={getErrorMessage(error)} />;
+    return <RosaHandsOnErrorPage message={getErrorMessage(error)} />;
   }
   const { status } = props.demoExperience;
 
   return (
     <ErrorBoundary>
-      <RosaHandsonPageHeader />
+      <RosaHandsOnPageHeader />
       <>
         {requestError && <RequestErrorAlert error={requestError} />}
         {status === DemoExperienceStatusEnum.Unavailable && <UnavailableAlert {...props} />}
@@ -108,7 +108,7 @@ const RosaHandsonPageContent = ({
               </CardBody>
             </Card>
           ) : (
-            <RosaHandsonGetStartedCard {...props} />
+            <RosaHandsOnGetStartedCard {...props} />
           )}
         </PageSection>
         <PageSection style={{ paddingTop: 'unset' }}>
@@ -117,10 +117,10 @@ const RosaHandsonPageContent = ({
           </TextContent>
         </PageSection>
 
-        <RosaHandsonRecommendedContentTable />
+        <RosaHandsOnRecommendedContentTable />
       </>
     </ErrorBoundary>
   );
 };
 
-export default RosaHandsonPageContent;
+export default RosaHandsOnPageContent;
