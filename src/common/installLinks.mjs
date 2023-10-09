@@ -94,6 +94,8 @@ const links = {
   TELEMETRY_INFORMATION: `${DOCS_BASE}/support/remote_health_monitoring/about-remote-health-monitoring.html`,
   REMOTE_HEALTH_INSIGHTS: `${DOCS_BASE}/support/remote_health_monitoring/using-insights-to-identify-issues-with-your-cluster.html`,
   UPDATING_CLUSTER: `${DOCS_BASE}/updating/updating-cluster-within-minor.html`,
+  // TODO https://issues.redhat.com/browse/HAC-5192 to change the link to a public document, not a KB article
+  HIBERNATING_CLUSTER: 'https://access.redhat.com/articles/7012966',
   MIGRATING_FROM_3_TO_4: `${DOCS_BASE}/migrating_from_ocp_3_to_4/about-migrating-from-3-to-4.html`,
   SERVERLESS_ABOUT: `${DOCS_BASE}/serverless/about/about-serverless.html`,
   SERVICE_MESH_ABOUT: `${DOCS_BASE}/service_mesh/v2x/ossm-architecture.html`,

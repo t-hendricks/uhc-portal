@@ -1,11 +1,14 @@
 import React, { Component } from 'react';
-
-import { DateFormat } from '@redhat-cloud-services/frontend-components/DateFormat';
 import PropTypes from 'prop-types';
-import { Form, Alert } from '@patternfly/react-core';
+import { Form } from '@patternfly/react-core';
+
 import Modal from '../../../common/Modal/Modal';
 import modals from '../../../common/Modal/modals';
 import ErrorBox from '../../../common/ErrorBox';
+import HibernateClusterContent from './HibernateClusterContent';
+import HibernateClusterUpgradeScheduled from './HibernateClusterUpgradeScheduled';
+import HibernateClusterUpgradeInProgress from './HibernateClusterUpgradeInProgress';
+import HibernateClusterModalTitle from './HibernateClusterModalTitle';
 
 class HibernateClusterModal extends Component {
   componentDidMount() {
@@ -50,78 +53,44 @@ class HibernateClusterModal extends Component {
       <ErrorBox message="Error hibernating cluster" response={hibernateClusterResponse} />
     ) : null;
 
-    const handleSubmit = () => {
-      submit(clusterID);
-    };
-
-    const defaultForm = (
-      <Form onSubmit={() => submit()}>
-        {error}
-        <p>
-          Moving <b>{clusterName}</b> cluster to Hibernating state will block any operation for this
-          cluster. While hibernating, the cluster will not consume any virtual machine instance or
-          network resources, but will still count against subscription quota. Note that version
-          upgrades will not occur.
-        </p>
-        <Alert
-          variant="warning"
-          title={`
-            In case the cluster’s cloud provider is not responsive,
-            resuming from hibernation might not be completed and will require manual intervention for the cluster to be restored.   
-          `}
-        />
-        This can be undone at any time.
-      </Form>
-    );
-
-    const upgradeScheduledForm = (schedule) => (
-      <Form onSubmit={() => submit()}>
-        {error}
-        <p>
-          Moving <b>{clusterName}</b> cluster to Hibernating state is not possible while there is a
-          scheduled cluster upgrade.
-        </p>
-        <Alert
-          variant="warning"
-          title={
-            <p>
-              There is a scheduled update to,{' '}
-              <DateFormat type="exact" date={Date.parse(schedule.next_run)} />. The scheduled update
-              cannot be executed if the cluster is hibernating
-            </p>
-          }
-        />
-        Try again after the cluster upgrade is done or cancel the upgrade.
-      </Form>
-    );
-
-    const upgradeInProgressForm = (
-      <Form onSubmit={() => submit()}>
-        {error}
-        <p>
-          Moving <b>{clusterName}</b> to Hibernating state is not possible while the cluster is
-          upgrading.
-        </p>
-      </Form>
-    );
-
-    let hibernateForm;
-    let primaryText;
-    let secondaryText;
-    let onPrimaryClick;
-    let onSecondaryClick;
     const scheduledUpgrades = upgradesInState('scheduled');
     const upgradesInProgress = upgradesInState('started');
+
+    let hibernateFormContent;
+    let secondaryText = 'Close';
+    let isHibernateEnabled;
+
     if (upgradesInProgress.length > 0) {
-      primaryText = 'Cancel';
-      onPrimaryClick = cancelHibernateCluster;
+      isHibernateEnabled = false;
       secondaryText = 'See version update details';
-      hibernateForm = upgradeInProgressForm;
+      hibernateFormContent = <HibernateClusterUpgradeInProgress clusterName={clusterName} />;
     } else if (scheduledUpgrades.length > 0) {
-      primaryText = 'Cancel';
+      isHibernateEnabled = false;
       secondaryText = 'Change cluster upgrade policy';
-      onSecondaryClick = () => {
+      hibernateFormContent = (
+        <HibernateClusterUpgradeScheduled
+          clusterName={clusterName}
+          nextRun={scheduledUpgrades[0].next_run}
+        />
+      );
+    } else {
+      isHibernateEnabled = true;
+      hibernateFormContent = (
+        <HibernateClusterContent clusterName={clusterName} isHibernating={false} />
+      );
+    }
+
+    const onPrimaryClick = () => {
+      if (isHibernateEnabled) {
+        submit(clusterID);
+      } else {
         cancelHibernateCluster();
+      }
+    };
+    const onSecondaryClick = () => {
+      cancelHibernateCluster();
+
+      if (!isHibernateEnabled) {
         if (history.location.pathname.startsWith('/details/s/')) {
           window.location.hash = '#updateSettings';
         } else {
@@ -130,30 +99,26 @@ class HibernateClusterModal extends Component {
             hash: '#updateSettings',
           });
         }
-      };
-      onPrimaryClick = cancelHibernateCluster;
-      hibernateForm = upgradeScheduledForm(scheduledUpgrades[0]);
-    } else {
-      hibernateForm = defaultForm;
-      primaryText = 'Hibernate cluster';
-      secondaryText = 'Cancel';
-      onPrimaryClick = handleSubmit;
-      onSecondaryClick = cancelHibernateCluster;
-    }
+      }
+    };
 
     return (
       <Modal
-        data-testid="hibernate-cluster-modal"
-        title="Hibernate cluster"
+        aria-label="hibernate-cluster-modal"
+        header={<HibernateClusterModalTitle title="Hibernate cluster" />}
+        titleIconVariant="danger"
         secondaryTitle={shouldDisplayClusterName ? clusterName : undefined}
-        onClose={cancelHibernateCluster}
-        primaryText={primaryText}
-        secondaryText={secondaryText}
+        primaryText={isHibernateEnabled ? 'Hibernate cluster' : 'Close'}
         onPrimaryClick={onPrimaryClick}
+        secondaryText={secondaryText}
         onSecondaryClick={onSecondaryClick}
+        onClose={cancelHibernateCluster}
         isPending={hibernateClusterResponse.pending || clusterUpgrades.pending}
       >
-        <>{hibernateForm}</>
+        <Form onSubmit={submit}>
+          {error}
+          {hibernateFormContent}
+        </Form>
       </Modal>
     );
   }
