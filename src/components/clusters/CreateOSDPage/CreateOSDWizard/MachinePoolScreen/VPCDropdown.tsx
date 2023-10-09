@@ -11,7 +11,11 @@ import {
 import ErrorBox from '~/components/common/ErrorBox';
 import FuzzySelect, { FuzzyDataType } from '~/components/common/FuzzySelect';
 import { CloudVPC } from '~/types/clusters_mgmt.v1';
-import { filterVpcsOnlyPrivateSubnets, useAWSVPCInquiry } from '../VPCScreen/useVPCInquiry';
+import {
+  filterVpcsOnlyPrivateSubnets,
+  filterOutRedHatManagedVPCs,
+  useAWSVPCInquiry,
+} from '../VPCScreen/useVPCInquiry';
 import { getAWSCloudProviderVPCs } from '../ccsInquiriesActions';
 
 interface VCPDropdownProps {
@@ -26,6 +30,7 @@ interface VCPDropdownProps {
     error: string;
   };
   showRefresh?: boolean;
+  isHypershift?: boolean;
 }
 
 const VPCDropdown = ({
@@ -37,10 +42,13 @@ const VPCDropdown = ({
   },
   meta: { error, touched },
   showRefresh = false,
+  isHypershift = false,
 }: VCPDropdownProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const vpcResponse = useAWSVPCInquiry();
-  const { items } = vpcResponse.data as { items: CloudVPC[] };
+  const items: CloudVPC[] = isHypershift
+    ? filterOutRedHatManagedVPCs(vpcResponse.data?.items)
+    : vpcResponse.data?.items;
   const dispatch = useDispatch();
 
   const onToggle = () => {
