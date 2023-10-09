@@ -8,6 +8,7 @@ export type FuzzyEntryType = {
   groupKey?: string;
   value?: any;
   description?: string;
+  disabled?: boolean;
 };
 export type FuzzyDataType = FuzzyEntryType[] | Record<string, FuzzyEntryType[]>;
 export interface FuzzySelectProps extends Omit<SelectProps, 'isGrouped'> {
@@ -82,12 +83,13 @@ function FuzzySelect(props: FuzzySelectProps) {
 
   const selectOptions = useMemo<ReactElement[]>(() => {
     if (Array.isArray(selectionData)) {
-      return selectionData.sort(sortFn).map(({ key, value, description }) => (
+      return selectionData.sort(sortFn).map(({ key, value, description, disabled }) => (
         <SelectOption
           className="pf-c-dropdown__menu-item"
           key={key}
           value={value || key}
           description={description}
+          isDisabled={disabled}
         >
           {key}
         </SelectOption>
@@ -95,8 +97,13 @@ function FuzzySelect(props: FuzzySelectProps) {
     }
     return Object.entries(selectionData || {}).map(([group, list]) => (
       <SelectGroup label={group} key={group}>
-        {list.map(({ key, value, description }) => (
-          <SelectOption value={value || key} key={key} description={description}>
+        {list.map(({ key, value, description, disabled }) => (
+          <SelectOption
+            value={value || key}
+            key={key}
+            description={description}
+            isDisabled={disabled}
+          >
             {key}
           </SelectOption>
         ))}
@@ -152,7 +159,7 @@ function FuzzySelect(props: FuzzySelectProps) {
         )
         .forEach(({ item, matches }) => {
           if (item) {
-            if (item.key && matches) {
+            if (item.key && matches && !item.disabled) {
               let pos = 0;
               const itemId = item.key;
               valueMap[itemId] = item.value || itemId;
