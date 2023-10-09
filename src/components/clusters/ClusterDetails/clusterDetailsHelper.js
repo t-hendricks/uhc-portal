@@ -51,6 +51,12 @@ const isReadyForAwsAccessActions = (cluster) =>
 const isReadyForIdpActions = (cluster) =>
   hasValidStatusForActions(cluster, { needsConsoleUrl: !isHypershiftCluster(cluster) });
 
+const eventTypes = {
+  CLICKED: 'clicked',
+  AUTO: 'auto',
+  NONE: '',
+};
+
 export {
   hasCpuAndMemory,
   getSubscriptionLastReconciledDate,
@@ -60,4 +66,5 @@ export {
   isReadyForRoleAccessActions,
   isReadyForAwsAccessActions,
   isReadyForIdpActions,
+  eventTypes,
 };

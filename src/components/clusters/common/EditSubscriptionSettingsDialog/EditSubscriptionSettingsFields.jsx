@@ -166,7 +166,7 @@ class EditSubscriptionSettingsFields extends Component {
         break;
       case SYSTEM_UNITS:
         options = [
-          { label: 'Cores/vCPUs', value: CORES_VCPU, isDefault: true },
+          { label: 'Cores or vCPUs', value: CORES_VCPU, isDefault: true },
           { label: 'Sockets', value: SOCKETS },
         ];
         break;
@@ -208,11 +208,12 @@ class EditSubscriptionSettingsFields extends Component {
     } = this.state;
 
     const stringValue = inputVal || (systemUnits === SOCKETS ? socketTotal : cpuTotal);
+    const fieldLabel = systemUnits === SOCKETS ? 'Sockets' : 'Cores or vCPUs';
     // validate that `value` consists of decimal digits only
     if (!/^\d+$/.test(`${stringValue}`)) {
       return {
         isValid: false,
-        errorMsg: `${systemUnits} value can only be a positive integer number.`,
+        errorMsg: `${fieldLabel} value can only be a positive integer number.`,
       };
     }
     // now value is number for sure
@@ -220,7 +221,7 @@ class EditSubscriptionSettingsFields extends Component {
     if (value < MIN_VAL) {
       return {
         isValid: false,
-        errorMsg: `${systemUnits} value must be an integer number greater than ${MIN_VAL - 1}.`,
+        errorMsg: `${fieldLabel} value must be an integer number greater than ${MIN_VAL - 1}.`,
       };
     }
     return { isValid: true, errorMsg: '' };
@@ -462,6 +463,7 @@ class EditSubscriptionSettingsFields extends Component {
 
     // the number field for CPU/vCores or Socket
     const cpuSocketValue = systemUnits === SOCKETS ? socketTotal : cpuTotal;
+    const cpuSocketLabel = systemUnits === SOCKETS ? 'Sockets' : 'Cores or vCPUs';
     const CpuSocketNumberField = isDisconnectedSub ? (
       <NumberInput
         value={cpuSocketValue}
@@ -482,9 +484,7 @@ class EditSubscriptionSettingsFields extends Component {
       />
     ) : (
       <>
-        <span id="cpu-socket-value">{`${cpuSocketValue} ${
-          systemUnits === SOCKETS ? 'Sockets' : 'Cores/vCPU'
-        }`}</span>
+        <span id="cpu-socket-value">{`${cpuSocketValue} ${cpuSocketLabel}`}</span>
         <PopoverHint
           id="cpu-socket-value-hint"
           hint="This data is gathered directly from the telemetry metrics submitted by the cluster and cannot be changed."
@@ -555,7 +555,7 @@ class EditSubscriptionSettingsFields extends Component {
           isRequired={isDisconnectedSub}
           helperText={
             isDisconnectedSub
-              ? `${systemUnits} value can be any integer larger than ${MIN_VAL}`
+              ? `${cpuSocketLabel} value can be any integer larger than ${MIN_VAL}`
               : ''
           }
           helperTextInvalid={systemUnitsNumericErrorMsg}

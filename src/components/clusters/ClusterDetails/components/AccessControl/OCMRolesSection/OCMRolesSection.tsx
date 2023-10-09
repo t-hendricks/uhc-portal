@@ -21,6 +21,7 @@ import { useDispatch } from 'react-redux';
 import { ReactNode } from 'react-markdown';
 import { useGlobalState } from '~/redux/hooks';
 import { Subscription } from '~/types/accounts_mgmt.v1';
+import { eventTypes } from '../../../clusterDetailsHelper';
 import modals from '../../../../../common/Modal/modals';
 import ErrorBox from '../../../../../common/ErrorBox';
 import ButtonWithTooltip from '../../../../../common/ButtonWithTooltip';
@@ -114,7 +115,7 @@ function OCMRolesSection({
 
   // handle user clicked refresh
   useEffect(() => {
-    if (canViewOCMRoles && get(refreshEvent, 'type') === 'clicked' && subscription.id) {
+    if (canViewOCMRoles && get(refreshEvent, 'type') === eventTypes.CLICKED && subscription.id) {
       setPageLoading(true);
       dispatch(OCMRolesActions.getOCMRoles(subscription.id));
     }
