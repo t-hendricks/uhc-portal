@@ -1,15 +1,12 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`<HibernateClusterModal /> renders correctly 1`] = `
-<Card
-  id="hibernatingClusterCard"
->
+<Card>
   <CardBody>
     <EmptyState
-      variant="large"
+      variant="small"
     >
       <EmptyStateIcon
-        className="status-icon"
         icon={[Function]}
       />
       <Title
