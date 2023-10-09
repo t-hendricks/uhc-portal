@@ -16,7 +16,7 @@ const subnetWarnings = (value, allValues) => {
     : undefined;
 };
 
-function MachinePoolsSubnets({ selectedVPC }) {
+function MachinePoolsSubnets({ selectedVPC, isHypershift }) {
   return (
     <Grid hasGutter>
       <GridItem span={6}>
@@ -28,6 +28,7 @@ function MachinePoolsSubnets({ selectedVPC }) {
           }
           selectedVPC={selectedVPC}
           showRefresh
+          isHypershift={isHypershift}
         />
       </GridItem>
       {(selectedVPC?.id || selectedVPC?.name) && (
@@ -44,6 +45,7 @@ function MachinePoolsSubnets({ selectedVPC }) {
 
 MachinePoolsSubnets.propTypes = {
   selectedVPC: PropTypes.object,
+  isHypershift: PropTypes.bool,
 };
 
 export default MachinePoolsSubnets;
