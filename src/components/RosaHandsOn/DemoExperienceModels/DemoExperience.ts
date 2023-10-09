@@ -11,8 +11,8 @@
  * https://github.com/swagger-api/swagger-codegen.git
  * Do not edit the class manually.
  */
-import { DemoExperienceDeploymentDetails } from './demo-experience-deployment-details';
-import { DemoExperienceQuota } from './demo-experience-quota';
+import { DemoExperienceDeploymentDetails } from './DemoExperienceDeploymentDetails';
+import { DemoExperienceQuota } from './DemoExperienceQuota';
 /**
  *
  * @export
@@ -36,7 +36,7 @@ export interface DemoExperience {
    * @type {DemoExperienceQuota}
    * @memberof DemoExperience
    */
-  quota?: DemoExperienceQuota;
+  quota: DemoExperienceQuota;
   /**
    * Time when the demo experience was requested. Set if status is \"deploying\", \"started\", or \"failed\"
    * @type {Date}

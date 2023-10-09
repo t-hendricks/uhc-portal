@@ -10,7 +10,7 @@ import * as React from 'react';
 import { global_danger_color_100 as dangerColor } from '@patternfly/react-tokens';
 import { ExclamationCircleIcon } from '@patternfly/react-icons';
 
-const RosaHandsonErrorPage = ({ message }: { message: string }) => (
+const RosaHandsOnErrorPage = ({ message }: { message: string }) => (
   <EmptyState>
     <EmptyStateIcon
       icon={(props) => <ExclamationCircleIcon {...props} color={dangerColor.value} />}
@@ -27,4 +27,4 @@ const RosaHandsonErrorPage = ({ message }: { message: string }) => (
   </EmptyState>
 );
 
-export default RosaHandsonErrorPage;
+export default RosaHandsOnErrorPage;

@@ -7,12 +7,12 @@ import useAnalytics from '~/hooks/useAnalytics';
 import { trackEvents } from '~/common/analytics';
 
 import ErrorBoundary from '../App/ErrorBoundary';
-import RosaHandsonPageContent from './RosaHandsonPageContent';
+import RosaHandsOnPageContent from './RosaHandsOnPageContent';
 
 import demoExperienceService from './demoExperienceService';
 import useDemoExperiencePolling from './useDemoExperiencePolling';
 
-const RosaHandsonPage = () => {
+const RosaHandsOnPage = () => {
   const track = useAnalytics();
   const { demoExperience, initializing, initializeError, restartPolling } =
     useDemoExperiencePolling();
@@ -26,7 +26,7 @@ const RosaHandsonPage = () => {
       setRequestingExperience(false);
       restartPolling(response.data);
       setRequestError(null);
-      track(trackEvents.RequestRosaHandsonExperience);
+      track(trackEvents.RequestRosaHandsOnExperience);
     } catch (err) {
       Sentry.captureException(err);
       setRequestError(err);
@@ -37,7 +37,7 @@ const RosaHandsonPage = () => {
   return (
     <ErrorBoundary>
       <Page>
-        <RosaHandsonPageContent
+        <RosaHandsOnPageContent
           requestError={requestError}
           error={initializeError}
           loading={initializing || requestingExperience}
@@ -49,4 +49,4 @@ const RosaHandsonPage = () => {
   );
 };
 
-export default RosaHandsonPage;
+export default RosaHandsOnPage;

@@ -117,7 +117,7 @@ import Insights from './Insights';
 import NotFoundError from './NotFoundError';
 import TermsGuardedRoute from './TermsGuardedRoute';
 import { is404, metadataByRoute } from './routeMetadata';
-import RosaHandsonPage from '../RosaHandson/RosaHandsonPage';
+import RosaHandsOnPage from '../RosaHandsOn/RosaHandsOnPage';
 
 const AssistedUiRouterPage: typeof AssistedInstallerRoutes = (props) => (
   <AppPage>
@@ -383,7 +383,7 @@ const Router: React.FC<RouterProps> = ({ history, planType, clusterId, externalC
             <Route path="/overview" exact component={Overview} />
             <Route path="/releases" exact component={Releases} />
             <Route path="/assisted-installer" component={GatedAssistedUiRouter} />
-            <Route path="/services/rosa/demo" component={RosaHandsonPage} />
+            <Route path="/services/rosa/demo" component={RosaHandsOnPage} />
             <Route path="/services/rosa" component={RosaServicePageEmptyState} />
 
             <Route path="/" exact component={ClustersList} />
