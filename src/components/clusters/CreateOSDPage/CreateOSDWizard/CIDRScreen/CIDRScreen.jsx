@@ -12,6 +12,7 @@ function CIDRScreen({
   change,
   isOSD,
   isROSA,
+  formValues,
 }) {
   return (
     <Form
@@ -33,6 +34,7 @@ function CIDRScreen({
           change={change}
           isOSD={isOSD}
           isROSA={isROSA}
+          formValues={formValues}
         />
       </Grid>
     </Form>
@@ -47,6 +49,7 @@ CIDRScreen.propTypes = {
   change: PropTypes.func,
   isROSA: PropTypes.bool,
   isOSD: PropTypes.bool,
+  formValues: PropTypes.object,
 };
 
 export default CIDRScreen;
