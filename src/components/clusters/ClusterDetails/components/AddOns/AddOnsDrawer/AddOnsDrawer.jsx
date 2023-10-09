@@ -209,6 +209,10 @@ class AddOnsDrawer extends React.Component {
                   <AddOnsMetaDataItem
                     activeCardDocsLink={activeCard?.docs_link}
                     installedAddOnOperatorVersion={installedAddOn?.operator_version}
+                    addonID={activeCard?.id}
+                    clusterID={cluster?.id}
+                    externalClusterID={cluster?.external_id}
+                    subscriptionPlanID={cluster?.subscription?.plan?.id}
                   />
                   <AddOnsParameterList
                     installedAddOn={installedAddOn}
