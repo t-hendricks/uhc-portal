@@ -144,13 +144,13 @@ function DetailsLeft({ cluster, cloudProviders, showAssistedId }) {
         {cluster.managed && !isROSA && (
           <>
             <DescriptionListGroup>
-              <DescriptionListTerm>Subscription type</DescriptionListTerm>
+              <DescriptionListTerm>Subscription billing model</DescriptionListTerm>
               <DescriptionListDescription>
                 <BillingModelLabel cluster={cluster} />
               </DescriptionListDescription>
             </DescriptionListGroup>
             <DescriptionListGroup>
-              <DescriptionListTerm>Infrastructure type</DescriptionListTerm>
+              <DescriptionListTerm>Infrastructure billing model</DescriptionListTerm>
               <DescriptionListDescription>
                 <InfrastructureModelLabel cluster={cluster} />
               </DescriptionListDescription>

@@ -30,8 +30,7 @@ const reviewValues = {
     title: 'Subscription type',
     values: {
       [billingModels.STANDARD]: 'Annual: Fixed capacity subscription from Red Hat',
-      [billingModels.MARKETPLACE]:
-        'On-Demand: Flexible usage billed through the Red Hat Marketplace',
+      [billingModels.MARKETPLACE]: 'On-Demand: Flexible usage billed through Red Hat Marketplace',
       [billingModels.MARKETPLACE_GCP]:
         'On-Demand: Flexible usage billed through Google Cloud Marketplace',
       'standard-trial': 'Free trial (upgradeable)',

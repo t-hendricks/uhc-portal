@@ -16,8 +16,8 @@ const componentText = {
   ID: { label: 'Cluster ID', aiLabel: 'Assisted cluster ID / Cluster ID', NA: 'N/A' },
   VERSION: { label: 'Version' },
   OWNER: { label: 'Owner', NA: 'N/A' },
-  SUBSCRIPTION: { label: 'Subscription type' },
-  INFRASTRUCTURE: { label: 'Infrastructure type' },
+  SUBSCRIPTION: { label: 'Subscription billing model' },
+  INFRASTRUCTURE: { label: 'Infrastructure billing model' },
 };
 
 const checkForValue = (label, value) => {
