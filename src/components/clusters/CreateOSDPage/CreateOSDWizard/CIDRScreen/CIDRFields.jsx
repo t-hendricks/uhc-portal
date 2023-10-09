@@ -33,6 +33,7 @@ function CIDRFields({
   isDefaultValuesChecked,
   change,
   isROSA,
+  formValues,
 }) {
   const isFieldDisabled = isDefaultValuesChecked || disabled;
 
@@ -50,33 +51,35 @@ function CIDRFields({
     return value;
   };
 
-  const cidrValidators = [
-    required,
-    validators.cidr,
-    validators.validateRange,
-    cloudProviderID === 'gcp' && validators.privateAddress,
-  ];
+  const cidrValidators = (value) =>
+    required(value) ||
+    validators.cidr(value) ||
+    validators.validateRange(value) ||
+    (cloudProviderID === 'gcp' && validators.privateAddress(value)) ||
+    undefined;
 
-  const machineCidrValidators = [
-    ...cidrValidators,
-    cloudProviderID === 'aws' && validators.awsMachineCidr,
+  const machineCidrValidators = (value) =>
+    cidrValidators(value) ||
+    (cloudProviderID === 'aws' && validators.awsMachineCidr(value, formValues)) ||
     // cloudProviderID === 'gcp' && validators.gcpMachineCidr, https://issues.redhat.com/browse/HAC-2118
-    validators.validateRange,
-    machineDisjointSubnets,
-    cloudProviderID === 'aws' && !isMultiAz && awsMachineSingleAZSubnetMask,
-    cloudProviderID === 'aws' && isMultiAz && awsMachineMultiAZSubnetMask,
-  ].filter(Boolean);
+    validators.validateRange(value) ||
+    machineDisjointSubnets(value, formValues) ||
+    (cloudProviderID === 'aws' && !isMultiAz && awsMachineSingleAZSubnetMask(value)) ||
+    (cloudProviderID === 'aws' && isMultiAz && awsMachineMultiAZSubnetMask(value)) ||
+    undefined;
 
-  const serviceCidrValidators = [
-    ...cidrValidators,
-    validators.serviceCidr,
-    serviceDisjointSubnets,
-    cloudProviderID === 'aws' && awsServiceSubnetMask,
-  ].filter(Boolean);
+  const serviceCidrValidators = (value) =>
+    cidrValidators(value) ||
+    validators.serviceCidr(value) ||
+    serviceDisjointSubnets(value, formValues) ||
+    (cloudProviderID === 'aws' && awsServiceSubnetMask(value)) ||
+    undefined;
 
-  const podCidrValidators = [...cidrValidators, validators.podCidr, podDisjointSubnets].filter(
-    Boolean,
-  );
+  const podCidrValidators = (value) =>
+    cidrValidators(value) ||
+    validators.podCidr(value, formValues) ||
+    podDisjointSubnets(value, formValues) ||
+    undefined;
 
   const awsMachineCIDRMax = isMultiAz
     ? validators.AWS_MACHINE_CIDR_MAX_MULTI_AZ
@@ -274,6 +277,7 @@ CIDRFields.propTypes = {
   installToVpcSelected: PropTypes.bool,
   isDefaultValuesChecked: PropTypes.bool,
   isROSA: PropTypes.bool,
+  formValues: PropTypes.object,
 };
 
 export default CIDRFields;
