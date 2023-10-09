@@ -13,6 +13,7 @@ type Props = {
   stopClickPropagation?: boolean;
   isButton?: boolean;
   variant?: ButtonProps['variant'];
+  customTrackProperties?: Record<string, unknown>;
 };
 
 const ExternalLink = ({
@@ -24,6 +25,7 @@ const ExternalLink = ({
   stopClickPropagation,
   isButton,
   variant = ButtonVariant.secondary,
+  customTrackProperties = {},
 }: Props) => {
   const track = useAnalytics();
 
@@ -47,6 +49,7 @@ const ExternalLink = ({
         link_url: href,
         module: 'openshift',
         ocm_resource_type: resource,
+        ...customTrackProperties,
       },
     });
   };

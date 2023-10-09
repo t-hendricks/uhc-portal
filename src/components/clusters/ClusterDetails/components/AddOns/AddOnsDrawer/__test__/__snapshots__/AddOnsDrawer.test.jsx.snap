@@ -129,6 +129,10 @@ exports[`<AddOnsDrawer /> should render 1`] = `
                     </FlexItem>
                     <AddOnsMetaDataItem
                       activeCardDocsLink="https://access.redhat.com/documentation/en-us/red_hat_codeready_workspaces"
+                      addonID="codeready-workspaces"
+                      clusterID="1i4counta3holamvo1g5tp6n8p3a03bq"
+                      externalClusterID="bae5b227-2472-4e71-be4d-a18fc60bb48a"
+                      subscriptionPlanID="OSD"
                     />
                     <AddOnsParameterList
                       activeCard={

@@ -306,5 +306,40 @@ describe('<ExternalLink />', () => {
         },
       );
     });
+    it('is called with custom tracking properties', () => {
+      // Arrange
+      mockPathname.mockReturnValue('/crc');
+      const customProps = {
+        current_path: '/openshift/details/s',
+        tab_title: 'Add-ons',
+        tab_id: 'addOnsTabContent',
+        card_type: 'addon',
+        addon_id: '12345',
+        resource_id: '67890',
+        ocm_cluster_id: 'e-12345',
+        ocm_resource_type: 'osd',
+      };
+      render(
+        <ExternalLink href="http://example.com" customTrackProperties={customProps}>
+          Hello World
+        </ExternalLink>,
+      );
+
+      // Act
+      fireEvent.click(screen.getByRole('link'));
+
+      // Assert
+      expect(useAnalyticsMock).toHaveBeenCalled();
+      expect(useAnalyticsMock).toHaveBeenCalledWith(
+        { event: 'Link Clicked', link_name: 'external-link' },
+        {
+          customProperties: {
+            link_url: 'http://example.com',
+            module: 'openshift',
+            ...customProps,
+          },
+        },
+      );
+    });
   });
 });
