@@ -29,6 +29,7 @@ const mapStateToProps = (state) => {
       network_pod_cidr: values.network_pod_cidr || podCidrDefaultValue(cloudProviderID),
       network_host_prefix: values.network_host_prefix || HOST_PREFIX_DEFAULT,
     },
+    formValues: getFormValues('CreateCluster')(state) ?? {},
   };
 };
 
