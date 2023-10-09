@@ -194,7 +194,7 @@ export const BillingModel = () => {
           {
             disabled: !quotas.marketplace,
             value: billingModels.MARKETPLACE,
-            label: 'On-Demand: Flexible usage billed through the Red Hat Marketplace',
+            label: 'On-Demand: Flexible usage billed through Red Hat Marketplace',
             description: !quotas.marketplace
               ? marketplaceDisabledDescription
               : marketplaceQuotaDescription,
@@ -218,7 +218,8 @@ export const BillingModel = () => {
     if (
       (!showOsdTrial || billingModel === billingModels.STANDARD) &&
       quotas.marketplace &&
-      !quotas.standardOsd
+      !quotas.standardOsd &&
+      !billingModel.startsWith(billingModels.MARKETPLACE)
     ) {
       setFieldValue(FieldId.BillingModel, billingModels.MARKETPLACE);
     }

@@ -54,7 +54,7 @@ const { DISCONNECTED } = subscriptionStatuses;
 
 const standardBillingModelLabel = 'Annual: Fixed capacity subscription from Red Hat';
 const marketplaceBillingModelLabel =
-  'On-Demand (Hourly): Flexible usage billed through the Red Hat Marketplace';
+  'On-Demand (Hourly): Flexible usage billed through Red Hat Marketplace';
 
 const MIN_VAL = 1;
 

@@ -17,12 +17,15 @@ function BillingModelLabel({ cluster }) {
 
   // OSD non-ccs standard quota
   if (planType === OSD && billingModel === STANDARD) {
-    return 'Subscription (yearly)';
+    return 'Annual Red Hat subscriptions';
   }
 
   // OSD CCS marketplace
   if (planType === OSD && billingModel.startsWith(MARKETPLACE) && CCS) {
-    return 'On-Demand (hourly)';
+    if (billingModel === billingModels.MARKETPLACE_GCP) {
+      return 'On-demand via Google Cloud Marketplace';
+    }
+    return 'On-demand via Red Hat Marketplace';
   }
 
   return 'Standard';
