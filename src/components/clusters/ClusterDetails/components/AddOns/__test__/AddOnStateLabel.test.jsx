@@ -1,6 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-
+import { render, checkAccessibility } from '@testUtils';
 import AddOnStateLabel from '../AddOnStateLabel';
 import AddOnsConstants from '../AddOnsConstants';
 
@@ -19,8 +19,17 @@ describe('<AddOnsStateLabel />', () => {
     );
   });
 
-  it('should render', () => {
-    expect(wrapper).toMatchSnapshot();
+  it('is accessible', async () => {
+    const { container } = render(
+      <AddOnStateLabel
+        addOn={{}}
+        installedAddOn={{
+          state: AddOnsConstants.INSTALLATION_STATE.READY,
+        }}
+        requirements={{ fulfilled: true, errorMsgs: [] }}
+      />,
+    );
+    await checkAccessibility(container);
   });
 
   it('should render installed label if state is ready', () => {

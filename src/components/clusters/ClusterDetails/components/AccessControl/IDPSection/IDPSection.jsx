@@ -121,6 +121,7 @@ class IDPSection extends React.Component {
 
     const IDPDropdownOptions = Object.values(IDPTypeNames).map((idpName) => (
       <DropdownItem
+        key={idpName}
         component={
           <Link
             to={{

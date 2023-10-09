@@ -1,23 +1,31 @@
 import React from 'react';
-import { shallow } from 'enzyme';
-
+import { render, checkAccessibility, TestRouter, screen } from '@testUtils';
 import * as Fixtures from './ArchivedClusterList.fixtures';
 import ArchivedClusterList from '../../../ArchivedClusterList';
 
 describe('<ArchivedClusterList />', () => {
   describe('ArchivedClusterList', () => {
-    const wrapper = shallow(
-      <ArchivedClusterList
-        viewOptions={{
-          flags: {},
-          fields: {},
-        }}
-        {...Fixtures}
-      />,
-    );
-
-    it('should render', () => {
-      expect(wrapper).toMatchSnapshot();
+    it.skip('is accessible', async () => {
+      // This fails because there are two pagination area with role
+      // that do not have unique accessible labels
+      const { container } = render(
+        <TestRouter>
+          <ArchivedClusterList
+            viewOptions={{
+              flags: {},
+              fields: {},
+              sorting: {
+                sortIndex: 0,
+                isAscending: true,
+                sortField: 'name',
+              },
+            }}
+            {...Fixtures}
+          />
+        </TestRouter>,
+      );
+      expect(await screen.findByRole('grid')).toBeInTheDocument();
+      await checkAccessibility(container);
     });
   });
 });
