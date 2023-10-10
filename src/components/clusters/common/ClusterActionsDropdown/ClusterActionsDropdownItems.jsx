@@ -1,7 +1,6 @@
 import get from 'lodash/get';
 import React from 'react';
 import { DropdownItem } from '@patternfly/react-core';
-import { isRestrictedEnv } from '~/restrictedEnv';
 import clusterStates, { isHibernating } from '../clusterStates';
 import { subscriptionStatuses, normalizedProducts } from '../../../../common/subscriptionTypes';
 import getClusterName from '../../../../common/getClusterName';
@@ -304,8 +303,7 @@ function actionResolver(
     cluster.managed &&
     canHibernateCluster &&
     !isProductOSDTrial &&
-    !isHypershiftCluster(cluster) &&
-    !isRestrictedEnv();
+    !isHypershiftCluster(cluster);
   const showEditNodeCount = cluster.canEdit && cluster.managed;
   const isArchived = get(cluster, 'subscription.status', false) === subscriptionStatuses.ARCHIVED;
   const showArchive = cluster.canEdit && !cluster.managed && cluster.subscription && !isArchived;
