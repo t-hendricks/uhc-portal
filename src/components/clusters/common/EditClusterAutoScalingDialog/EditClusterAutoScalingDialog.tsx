@@ -152,6 +152,7 @@ function EditClusterAutoScalingDialog({
               <MachinePoolsAutoScalingWarning
                 hasClusterAutoScaler={isScalingSelected}
                 hasAutoscalingMachinePools={hasAutoscalingMachinePools}
+                isEnabledOnCurrentPool={false}
                 warningType="clusterView"
               />
             )}
