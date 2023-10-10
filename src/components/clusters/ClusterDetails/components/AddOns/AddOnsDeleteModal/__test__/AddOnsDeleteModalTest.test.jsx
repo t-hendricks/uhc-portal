@@ -1,35 +1,42 @@
 import React from 'react';
 import { shallow } from 'enzyme';
+import { render, checkAccessibility } from '@testUtils';
 import { TextInput } from '@patternfly/react-core';
 
 import AddOnsDeleteModal from '../AddOnsDeleteModal';
 
 describe('<AddOnsDeleteModal />', () => {
   let wrapper;
-  let closeModal;
-  let deleteClusterAddOn;
-  let clearClusterAddOnsResponses;
+  const closeModal = jest.fn();
+  const deleteClusterAddOn = jest.fn();
+  const clearClusterAddOnsResponses = jest.fn();
+
+  const props = {
+    isOpen: true,
+    modalData: {
+      addOnName: 'fake-addon-name',
+      addOnID: 'fake-addon-id',
+      clusterID: 'fake-cluster-id',
+    },
+    closeModal,
+    deleteClusterAddOn,
+    clearClusterAddOnsResponses,
+    deleteClusterAddOnResponse: { fulfilled: false, pending: false, error: false },
+  };
+
   beforeEach(() => {
-    closeModal = jest.fn();
-    deleteClusterAddOn = jest.fn();
-    clearClusterAddOnsResponses = jest.fn();
-    wrapper = shallow(
-      <AddOnsDeleteModal
-        isOpen
-        modalData={{
-          addOnName: 'fake-addon-name',
-          addOnID: 'fake-addon-id',
-          clusterID: 'fake-cluster-id',
-        }}
-        closeModal={closeModal}
-        deleteClusterAddOn={deleteClusterAddOn}
-        clearClusterAddOnsResponses={clearClusterAddOnsResponses}
-        deleteClusterAddOnResponse={{ fulfilled: false, pending: false, error: false }}
-      />,
-    );
+    wrapper = shallow(<AddOnsDeleteModal {...props} />);
   });
-  it('renders correctly', () => {
-    expect(wrapper).toMatchSnapshot();
+
+  afterEach(() => {
+    closeModal.mockClear();
+    deleteClusterAddOn.mockClear();
+    clearClusterAddOnsResponses.mockClear();
+  });
+
+  it('is accessible', async () => {
+    const { container } = render(<AddOnsDeleteModal {...props} />);
+    await checkAccessibility(container);
   });
 
   it('delete button should be enabled only after inputting the add on name', () => {

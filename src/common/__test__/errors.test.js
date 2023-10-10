@@ -1,3 +1,4 @@
+import { render, screen } from '@testUtils';
 import { formatErrorDetails, getErrorMessage, overrideErrorMessage } from '../errors';
 import { PENDING_ACTION } from '../../redux/reduxHelpers';
 import AddOnsConstants from '../../components/clusters/ClusterDetails/components/AddOns/AddOnsConstants';
@@ -102,7 +103,11 @@ describe('formatErrorDetails()', () => {
         ],
       },
     ];
-    expect(formatErrorDetails(errDetails)).toMatchSnapshot();
+
+    const errorDetails = formatErrorDetails(errDetails);
+    expect(errorDetails).toHaveLength(1);
+    render(errorDetails[0]);
+    expect(screen.getByRole('listitem')).toHaveTextContent('addon: addon-prow-operator');
   });
 });
 
@@ -123,7 +128,14 @@ describe('formatErrorDetails()', () => {
         ],
       },
     ];
-    expect(formatErrorDetails(errDetails)).toMatchSnapshot();
+
+    const errorDetails = formatErrorDetails(errDetails);
+    expect(errorDetails).toHaveLength(1);
+    const { container } = render(errorDetails[0]);
+
+    const expected =
+      '[ { "name": "Option 1", "value": "option 1" }, { "name": "Option 2", "value": "option 2" } ]';
+    expect(container.querySelector('pre')).toHaveTextContent(expected);
   });
 
   it('handles AddOnRequirementData kind', () => {
@@ -136,6 +148,12 @@ describe('formatErrorDetails()', () => {
         },
       },
     ];
-    expect(formatErrorDetails(errDetails)).toMatchSnapshot();
+
+    const errorDetails = formatErrorDetails(errDetails);
+    expect(errorDetails).toHaveLength(1);
+    const { container } = render(errorDetails[0]);
+
+    const expected = '{ "cloud_provider.id": "gcp", "region.id": [ "us-east-1", "eu-west-1" ] }';
+    expect(container.querySelector('pre')).toHaveTextContent(expected);
   });
 });

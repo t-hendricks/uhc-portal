@@ -4,7 +4,7 @@ import { createStore, Store } from 'redux';
 import { render, RenderOptions } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import '@testing-library/jest-dom';
-
+import { MemoryRouter } from 'react-router';
 import { toHaveNoViolations, axe } from 'jest-axe';
 
 import { createBrowserHistory } from 'history';
@@ -78,3 +78,7 @@ export const mockRestrictedEnv = () => {
   mock.mockReturnValue(false);
   return mock;
 };
+
+export const TestRouter = ({ children }: { children: React.ReactNode }) => (
+  <MemoryRouter>{children}</MemoryRouter>
+);

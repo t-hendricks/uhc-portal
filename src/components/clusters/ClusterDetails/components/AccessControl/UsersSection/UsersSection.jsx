@@ -92,7 +92,7 @@ class UsersSection extends React.Component {
               aria-label="User IDs"
               bodyContent={<p>User IDs are matched by the cluster&apos;s identity providers.</p>}
             >
-              <Button variant="plain" isInline>
+              <Button variant="plain" isInline aria-label="Help">
                 <HelpIcon size="sm" />
               </Button>
             </Popover>
@@ -113,7 +113,7 @@ class UsersSection extends React.Component {
                 </p>
               }
             >
-              <Button variant="plain" isInline>
+              <Button variant="plain" isInline aria-label="Help">
                 <HelpIcon size="sm" />
               </Button>
             </Popover>
