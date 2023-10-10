@@ -9,10 +9,10 @@ import {
 } from '@patternfly/react-core';
 import spacing from '@patternfly/react-styles/css/utilities/Spacing/spacing';
 
+import getBillingModelLabel from '~/components/clusters/common/getBillingModelLabel';
 import Timestamp from '../../../../common/Timestamp';
 import PopoverHint from '../../../../common/PopoverHint';
 import ClusterTypeLabel from '../../../common/ClusterTypeLabel';
-import BillingModelLabel from '../../../common/BillingModelLabel';
 import InfrastructureModelLabel from '../../../common/InfrastructureModelLabel';
 import ClusterVersionInfo from './ClusterVersionInfo';
 import { normalizedProducts } from '../../../../../common/subscriptionTypes';
@@ -146,7 +146,7 @@ function DetailsLeft({ cluster, cloudProviders, showAssistedId }) {
             <DescriptionListGroup>
               <DescriptionListTerm>Subscription billing model</DescriptionListTerm>
               <DescriptionListDescription>
-                <BillingModelLabel cluster={cluster} />
+                {getBillingModelLabel(cluster)}
               </DescriptionListDescription>
             </DescriptionListGroup>
             <DescriptionListGroup>

@@ -205,7 +205,7 @@ const hasPotentialQuota = (
  */
 const queryFromCluster = (cluster) => ({
   product: cluster.subscription.plan.type,
-  billingModel: get(cluster, 'billing_model', billingModels.STANDARD),
+  billingModel: get(cluster, 'subscription.cluster_billing_model', billingModels.STANDARD),
   cloudProviderID: get(cluster, 'cloud_provider.id', 'any'),
   isBYOC: get(cluster, 'ccs.enabled', false),
   isMultiAz: get(cluster, 'multi_az', false),

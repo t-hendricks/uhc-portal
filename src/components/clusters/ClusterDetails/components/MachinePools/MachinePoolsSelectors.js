@@ -13,7 +13,7 @@ const hasMachinePoolsQuotaSelector = (state) => {
 
   const { cluster } = state.clusters.details;
   const cloudProviderID = cluster.cloud_provider?.id;
-  const billingModel = get(cluster, 'billing_model', billingModels.STANDARD);
+  const billingModel = get(cluster, 'subscription.cluster_billing_model', billingModels.STANDARD);
 
   const hasNodesQuotaForType = (machineType) => {
     const resourceName = machineType.generic_name;
