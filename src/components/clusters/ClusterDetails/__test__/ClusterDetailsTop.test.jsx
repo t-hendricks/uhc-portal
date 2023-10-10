@@ -1,5 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
+import { render, checkAccessibility, TestRouter, screen } from '@testUtils';
 // TODO: Remove this import when PF team fixes the issue causing tests to break without it
 import { Button } from '@patternfly/react-core';
 
@@ -23,14 +24,22 @@ describe('<ClusterDetailsTop />', () => {
     canTransferClusterOwnership: fixtures.canTransferClusterOwnership,
     canHibernateCluster: fixtures.canHibernateCluster,
     toggleSubscriptionReleased: functions.toggleSubscriptionReleased,
+    showPreviewLabel: true,
   };
 
   beforeEach(() => {
     wrapper = shallow(<ClusterDetailsTop {...props} />);
   });
 
-  it('should render', () => {
-    expect(wrapper).toMatchSnapshot();
+  it('is accessible', async () => {
+    const { container } = render(
+      <TestRouter>
+        <ClusterDetailsTop {...props} />
+      </TestRouter>,
+    );
+
+    expect(await screen.findByRole('heading', { level: 1 })).toBeInTheDocument();
+    await checkAccessibility(container);
   });
 
   it('should show refresh button', () => {

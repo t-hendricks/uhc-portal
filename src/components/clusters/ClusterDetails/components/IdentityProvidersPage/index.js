@@ -23,7 +23,7 @@ import {
 } from './IdentityProvidersHelper';
 import { scrollToFirstField } from '../../../../../common/helpers';
 
-const reduxFormConfig = {
+export const reduxFormConfig = {
   form: 'CreateIdentityProvider',
   enableReinitialize: true,
   onSubmitFail: scrollToFirstField,
