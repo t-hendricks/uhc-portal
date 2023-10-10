@@ -1,13 +1,22 @@
 import React from 'react';
 import { Alert } from '@patternfly/react-core';
 
-interface WarningProps {
+export interface WarningProps {
   hasClusterAutoScaler: boolean;
   hasAutoscalingMachinePools: boolean;
-  isEnabledOnCurrentPool?: boolean;
+  isEnabledOnCurrentPool: boolean;
   warningType: 'editMachinePool' | 'addMachinePool' | 'clusterView';
 }
 
+/*
+ * It is currently not possible for the UI to correctly identify when a cluster has autoscaler disabled.
+ *
+ * In particular, for clusters created before the implementation of Cluster Autoscaler that had MP autoscaling enabled,
+ * the backend would assign them an autoscaler in Hive. But this autoscaler is not returned via the API.
+ *
+ * Therefore, we can only show the warnings that are 100% accurate,
+ * e.g. when the Cluster has a "new" autoscaler, and the MPs all have autoscaling disabled.
+ */
 const MachinePoolsAutoScalingWarning = ({
   hasClusterAutoScaler,
   hasAutoscalingMachinePools,
@@ -18,11 +27,7 @@ const MachinePoolsAutoScalingWarning = ({
   let title = '';
   switch (warningType) {
     case 'clusterView':
-      if (!hasClusterAutoScaler && hasAutoscalingMachinePools) {
-        title = 'Machine pools will not autoscale';
-        message =
-          'No machine pools can autoscale because of your autoscaling settings. To apply autoscaling to the machine pools, click on the "Autoscale cluster" toggle above.';
-      } else if (hasClusterAutoScaler && !hasAutoscalingMachinePools) {
+      if (hasClusterAutoScaler && !hasAutoscalingMachinePools) {
         title = 'Cluster will not autoscale';
         message =
           'The cluster autoscaling settings will not have any effect as no machine pools are set to autoscale.';
@@ -34,16 +39,13 @@ const MachinePoolsAutoScalingWarning = ({
         title = 'Cluster will not autoscale';
         message =
           'Without machine pools which are configured to autoscale, the cluster autoscaler settings will not have any effect on the cluster.';
-      } else if (!hasClusterAutoScaler && isEnabledOnCurrentPool) {
-        title = 'Machine pool will not autoscale';
-        message = 'To apply autoscaling to the machine pool, enable also the cluster autoscaler.';
       }
       break;
     default:
       break;
   }
   return message ? (
-    <Alert id="inconsistent-autoscaling-settings" variant="warning" isInline title={title}>
+    <Alert data-testid="inconsistent-autoscaling-settings" variant="warning" isInline title={title}>
       {message}
     </Alert>
   ) : null;
