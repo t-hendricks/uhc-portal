@@ -5,6 +5,7 @@ import { Field } from 'redux-form';
 import { Form, FormGroup, Grid, GridItem } from '@patternfly/react-core';
 
 import { SubnetSelectField } from '~/components/clusters/CreateOSDPage/CreateOSDWizard/NetworkScreen/SubnetSelectField';
+import { billingModels } from '~/common/subscriptionTypes';
 import MachinePoolsAutoScalingWarning from '../../MachinePoolAutoscalingWarning';
 import Modal from '../../../../../../common/Modal/Modal';
 import ErrorBox from '../../../../../../common/ErrorBox';
@@ -71,7 +72,7 @@ class AddMachinePoolModal extends Component {
       maxWorkerVolumeSizeGiB,
     } = this.props;
 
-    const billingModel = get(cluster, 'billing_model');
+    const billingModel = get(cluster, 'subscription.cluster_billing_model', billingModels.STANDARD);
 
     const hasError = addMachinePoolResponse.error && (
       <ErrorBox message="Error adding machine pool" response={addMachinePoolResponse} />
