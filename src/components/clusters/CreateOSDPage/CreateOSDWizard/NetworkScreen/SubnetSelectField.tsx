@@ -179,7 +179,7 @@ export const SubnetSelectField = ({
             isOpen={isExpanded}
             onToggle={(isExpanded) => setIsExpanded(isExpanded)}
             onSelect={onSelect}
-            selected={selectedSubnet?.name}
+            selected={selectedSubnet?.name || selectedSubnet?.subnet_id}
             selectionData={selectionData}
             isDisabled={isDisabled || hasNoOptions || isVpcsLoading}
             placeholderText={placeholder(hasNoOptions, hasSubnetNames)}
