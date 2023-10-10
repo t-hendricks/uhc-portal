@@ -458,17 +458,6 @@ const CloudTab = ({ hasOSDQuota, trialEnabled }) => (
         </StackItem>
       </Stack>
     </PageSection>
-    <PageSection>
-      <Stack hasGutter>
-        <StackItem>
-          <Title headingLevel="h2">Run it yourself</Title>
-        </StackItem>
-        <StackItem>
-          Run OpenShift clusters on your own by installing from another cloud provider.
-          {runItYourself()}
-        </StackItem>
-      </Stack>
-    </PageSection>
     {!isRestrictedEnv() && (
       <PageSection>
         <Stack hasGutter>

@@ -445,23 +445,21 @@ class MachinePools extends React.Component {
                     cells={columns}
                     rows={rows}
                     onCollapse={this.onCollapse}
-                    actionResolver={
-                      !isRestrictedEnv()
-                        ? (rowData) =>
-                            actionResolver(
-                              rowData,
-                              onClickDeleteAction,
-                              onClickScaleAction,
-                              onClickEditTaintsAction,
-                              onClickEditLabelsAction,
-                              isHypershift,
-                              machinePoolsList.data.length,
-                              canMachinePoolBeUpdated(rowData.machinePool)
-                                ? onClickUpdateAction
-                                : undefined,
-                              machinePoolsActions.delete,
-                            )
-                        : undefined
+                    actionResolver={(rowData) =>
+                      actionResolver({
+                        rowData,
+                        onClickDelete: onClickDeleteAction,
+                        onClickScale: onClickScaleAction,
+                        onClickEditTaints: onClickEditTaintsAction,
+                        onClickEditLabels: onClickEditLabelsAction,
+                        onClickUpdate: canMachinePoolBeUpdated(rowData.machinePool)
+                          ? onClickUpdateAction
+                          : undefined,
+                        canDelete: machinePoolsActions.delete,
+                        cluster,
+                        machinePools: machinePoolsList.data,
+                        machineTypes,
+                      })
                     }
                     areActionsDisabled={() => tableActionsDisabled}
                   >
