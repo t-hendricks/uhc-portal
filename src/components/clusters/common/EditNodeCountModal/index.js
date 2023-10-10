@@ -88,7 +88,7 @@ const mapStateToProps = (state) => {
     canAutoScale: canAutoScaleSelector(state, get(cluster, 'subscription.plan.type', '')),
     autoScaleMinNodesValue: valueSelector(state, 'min_replicas'),
     autoScaleMaxNodesValue: valueSelector(state, 'max_replicas'),
-    billingModel: get(cluster, 'billing_model', ''),
+    billingModel: get(cluster, 'subscription.cluster_billing_model', ''),
     shouldDisplayClusterName: modalData.shouldDisplayClusterName
       ? modalData.shouldDisplayClusterName
       : false,
