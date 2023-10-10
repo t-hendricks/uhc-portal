@@ -16,7 +16,6 @@ import {
 import { Table, TableHeader, TableBody, cellWidth, expandable } from '@patternfly/react-table';
 import Skeleton from '@redhat-cloud-services/frontend-components/Skeleton';
 
-import { isRestrictedEnv } from '~/restrictedEnv';
 import { EditClusterAutoScalerForDay2 } from '~/components/clusters/common/EditClusterAutoScalingDialog';
 import {
   isMultiAZ,
