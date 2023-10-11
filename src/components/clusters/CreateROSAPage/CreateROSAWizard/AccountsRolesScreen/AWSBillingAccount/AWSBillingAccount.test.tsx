@@ -3,7 +3,7 @@ import * as reactRedux from 'react-redux';
 import * as helpers from '~/common/helpers';
 import * as useFeatureGate from '~/hooks/useFeatureGate';
 import { HCP_AWS_BILLING_SHOW, HCP_AWS_BILLING_REQUIRED } from '~/redux/constants/featureConstants';
-import { screen, render, checkAccessibility, userEvent, within } from '~/testUtils';
+import { screen, render, checkAccessibility, within } from '~/testUtils';
 import wizardConnector from '~/components/clusters/CreateOSDPage/CreateOSDWizard/WizardConnector';
 import { CloudAccount } from '~/types/accounts_mgmt.v1/models/CloudAccount';
 import AWSBillingAccount from './AWSBillingAccount';
@@ -126,10 +126,9 @@ describe('<AWSBillingAccount />', () => {
 
   it('populates the billing account id drop down with accounts in Redux state', async () => {
     // Arrange
-    const user = userEvent.setup();
     useFeatureGateMock.mockImplementation((gate) => gate === HCP_AWS_BILLING_SHOW);
     const accountInState = defaultState.rosaReducer.getAWSBillingAccountsResponse.data;
-    render(<ConnectedAWSBillingAccount {...defaultProps} />, {}, defaultState);
+    const { user } = render(<ConnectedAWSBillingAccount {...defaultProps} />, {}, defaultState);
     await user.click(screen.getByRole('button', { name: 'Options menu' })); // expand drop-down
 
     // Assert
