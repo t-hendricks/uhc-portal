@@ -1,6 +1,6 @@
 import React from 'react';
 import { shallow, mount } from 'enzyme';
-import { TestWrapper, screen, render, userEvent } from '@testUtils';
+import { TestWrapper, screen, render } from '@testUtils';
 
 import modals from '~/components/common/Modal/modals';
 import { normalizedProducts } from '~/common/subscriptionTypes';
@@ -483,7 +483,6 @@ describe('<MachinePools />', () => {
   });
 
   it('displays option to update machine pool if machine pool can be updated ', async () => {
-    const user = userEvent.setup();
     const props = {
       ...getBaseProps(true),
       machinePoolsList: {
@@ -517,13 +516,12 @@ describe('<MachinePools />', () => {
       canMachinePoolBeUpdated: jest.fn(() => true),
     };
 
-    render(<MachinePools {...props} />);
+    const { user } = render(<MachinePools {...props} />);
 
     await user.click(screen.getByRole('button', { name: 'Actions' }));
     expect(screen.getByRole('menuitem', { name: 'Update version' })).toBeInTheDocument();
   });
   it('hides option to update machine pool if machine pool cannot be updated', async () => {
-    const user = userEvent.setup();
     const props = {
       ...getBaseProps(true),
       machinePoolsList: {
@@ -557,7 +555,7 @@ describe('<MachinePools />', () => {
       canMachinePoolBeUpdated: jest.fn(() => false),
     };
 
-    render(<MachinePools {...props} />);
+    const { user } = render(<MachinePools {...props} />);
 
     await user.click(screen.getByRole('button', { name: 'Actions' }));
     expect(screen.getAllByRole('menuitem').length).not.toEqual(0);
@@ -588,7 +586,6 @@ describe('<MachinePools />', () => {
   });
 
   it('Should disable delete action if user does not have permissions', async () => {
-    const user = userEvent.setup();
     const defaultProps = getBaseProps(true);
     const props = {
       ...defaultProps,
@@ -604,7 +601,7 @@ describe('<MachinePools />', () => {
       },
       machinePoolsList: simpleMachinePoolList,
     };
-    render(<MachinePools {...props} />);
+    const { user } = render(<MachinePools {...props} />);
     await user.click(screen.getByRole('button', { name: 'Actions' }));
     expect(screen.queryByRole('menuitem', { name: 'Delete' })).toHaveAttribute(
       'aria-disabled',
