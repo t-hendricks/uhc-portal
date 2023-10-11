@@ -14,7 +14,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { Routes as AssistedInstallerRoutes } from '@openshift-assisted/ui-lib/ocm';
+import {
+  Routes as AssistedInstallerRoutes,
+  NoPermissionsError as AINoPermissionsError,
+} from '@openshift-assisted/ui-lib/ocm';
 import useChrome from '@redhat-cloud-services/frontend-components/useChrome';
 import { ConnectedRouter } from 'connected-react-router';
 import get from 'lodash/get';
@@ -125,7 +128,12 @@ const AssistedUiRouterPage: typeof AssistedInstallerRoutes = (props) => (
   </AppPage>
 );
 
-const GatedAssistedUiRouter = withFeatureGate(AssistedUiRouterPage, ASSISTED_INSTALLER_FEATURE);
+const GatedAssistedUiRouter = withFeatureGate(
+  AssistedUiRouterPage,
+  ASSISTED_INSTALLER_FEATURE,
+  AINoPermissionsError,
+);
+
 const GatedMetalInstall = withFeatureGate(
   InstallBareMetal,
   ASSISTED_INSTALLER_FEATURE,
