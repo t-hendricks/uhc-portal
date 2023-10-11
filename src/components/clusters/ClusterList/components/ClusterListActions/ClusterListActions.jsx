@@ -25,8 +25,6 @@ import {
 } from '@patternfly/react-core';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import { useFeatureGate } from '~/hooks/useFeatureGate';
-import { featureConstants } from '../../../../../redux/constants';
 
 const useMediaQuery = (query) => {
   if (typeof window === 'undefined' || typeof window.matchMedia === 'undefined') {
@@ -54,20 +52,16 @@ const dropdownRegisterCluster = (
     </div>
   </DropdownItem>
 );
+const toolbarViewArchivedClusters = (
+  <ToolbarItem key="archived">
+    <Link to="archived">View cluster archives</Link>
+  </ToolbarItem>
+);
 const dropdownArchived = (
   <DropdownItem component="button" key="archived">
     <div>
       <Link to="archived" className="pf-c-dropdown__menu-item">
         View cluster archives
-      </Link>
-    </div>
-  </DropdownItem>
-);
-const dropdownAssisteInstaller = (
-  <DropdownItem component="button" key="assistedinstaller">
-    <div>
-      <Link to="/assisted-installer" className="pf-c-dropdown__menu-item">
-        Assisted Installer clusters
       </Link>
     </div>
   </DropdownItem>
@@ -89,7 +83,7 @@ const toolbarRegisterCluster = (
   </ToolbarItem>
 );
 
-const useItems = (aiEnabled) => {
+const useItems = () => {
   const wide = useMediaQuery('(min-width: 900px)');
 
   const toolbarItems = [];
@@ -98,38 +92,36 @@ const useItems = (aiEnabled) => {
   toolbarItems.push(toolbarCreateCluster);
   if (wide) {
     toolbarItems.push(toolbarRegisterCluster);
+    toolbarItems.push(toolbarViewArchivedClusters);
   } else {
     dropdownItems.push(dropdownRegisterCluster);
-  }
-  dropdownItems.push(dropdownArchived);
-
-  if (aiEnabled) {
-    dropdownItems.push(dropdownAssisteInstaller);
+    dropdownItems.push(dropdownArchived);
   }
 
   return [dropdownItems, toolbarItems];
 };
 
 const ClusterListActions = ({ className }) => {
-  const aiEnabled = useFeatureGate(featureConstants.ASSISTED_INSTALLER_FEATURE);
   const [isOpen, onToggle] = useState(false);
-  const [dropdownItems, toolbarItems] = useItems(aiEnabled);
+  const [dropdownItems, toolbarItems] = useItems();
 
   return (
     <>
       {toolbarItems}
-      <ToolbarItem>
-        <Dropdown
-          data-testid="cluster-list-extra-actions-dropdown"
-          onSelect={() => onToggle(!isOpen)}
-          toggle={<KebabToggle onToggle={onToggle} />}
-          isOpen={isOpen}
-          isPlain
-          dropdownItems={dropdownItems}
-          className={className}
-          position={DropdownPosition.right}
-        />
-      </ToolbarItem>
+      {dropdownItems.length > 0 && (
+        <ToolbarItem>
+          <Dropdown
+            data-testid="cluster-list-extra-actions-dropdown"
+            onSelect={() => onToggle(!isOpen)}
+            toggle={<KebabToggle onToggle={onToggle} />}
+            isOpen={isOpen}
+            isPlain
+            dropdownItems={dropdownItems}
+            className={className}
+            position={DropdownPosition.right}
+          />
+        </ToolbarItem>
+      )}
     </>
   );
 };
