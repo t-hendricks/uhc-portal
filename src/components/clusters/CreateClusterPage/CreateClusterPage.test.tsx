@@ -1,7 +1,7 @@
 import * as React from 'react';
-import { screen } from '@testing-library/react';
 import { MemoryRouter } from 'react-router';
-import { mockRestrictedEnv, render } from '~/testUtils';
+
+import { mockRestrictedEnv, render, screen } from '~/testUtils';
 import CreateClusterPage from './CreateClusterPage';
 
 describe('<CreateClusterPage />', () => {

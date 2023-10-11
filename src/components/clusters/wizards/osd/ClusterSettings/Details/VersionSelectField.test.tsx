@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Formik } from 'formik';
-import { fireEvent, render } from '~/testUtils';
-import { screen } from '@testing-library/dom';
+
+import { fireEvent, render, screen } from '~/testUtils';
 import { Version } from '~/types/clusters_mgmt.v1';
 import clusterService from '~/services/clusterService';
 import { billingModels } from '~/common/subscriptionTypes';

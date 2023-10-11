@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Formik } from 'formik';
-import { render } from '~/testUtils';
-import { screen } from '@testing-library/dom';
+
+import { render, screen } from '~/testUtils';
 import { MarketplaceSelectField } from './MarketplaceSelectField';
 import { initialValues } from '../constants';
 

@@ -2,8 +2,8 @@ import React from 'react';
 import { mount, ReactWrapper } from 'enzyme';
 import axios from 'axios';
 import { act } from 'react-dom/test-utils';
-import { screen } from '@testing-library/react';
-import { mockRestrictedEnv, render } from '~/testUtils';
+
+import { mockRestrictedEnv, render, screen } from '~/testUtils';
 import Releases from './index';
 import ReleaseChannel from './ReleaseChannel';
 import ocpLifeCycleStatuses from './__mocks__/ocpLifeCycleStatuses';

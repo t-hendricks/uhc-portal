@@ -1,6 +1,6 @@
 import * as React from 'react';
-import { screen } from '@testing-library/dom';
-import { mockRestrictedEnv, render } from '../../../../../../../testUtils';
+
+import { mockRestrictedEnv, render, screen } from '../../../../../../../testUtils';
 import ClusterIngressCard from './ClusterIngressCard';
 
 describe('<ClusterIngressCard />', () => {

@@ -1,7 +1,7 @@
 import * as React from 'react';
-import { screen } from '@testing-library/dom';
+
 import VPCDetailsCard from './VPCDetailsCard';
-import { mockRestrictedEnv, render } from '../../../../../../../testUtils';
+import { mockRestrictedEnv, render, screen } from '../../../../../../../testUtils';
 
 describe('<VPCDetailsCard />', () => {
   const defaultProps = {
