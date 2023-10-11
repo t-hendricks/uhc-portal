@@ -1,6 +1,6 @@
 import React from 'react';
 import * as reactRedux from 'react-redux';
-import { checkAccessibility, screen, render, userEvent, within, waitFor } from '~/testUtils';
+import { checkAccessibility, screen, render, within, waitFor } from '~/testUtils';
 import * as updateMachinePoolsHelpers from './updateMachinePoolsHelpers';
 
 import { UpdatePoolButton, UpdateMachinePoolModal } from './UpdateMachinePoolModal';
@@ -267,12 +267,11 @@ describe('UpdateMachinePoolModal', () => {
     });
 
     it('displays error', async () => {
-      const user = userEvent.setup();
       mockUpdatePools.mockResolvedValue(['I am an error!']);
       const mockedDispatch = jest.fn();
       useDispatchMock.mockReturnValue(mockedDispatch);
 
-      render(<UpdateMachinePoolModal />, {}, defaultState);
+      const { user } = render(<UpdateMachinePoolModal />, {}, defaultState);
       expect(screen.getByRole('dialog')).toBeInTheDocument();
       expect(mockUpdatePools).toBeCalledTimes(0);
 

@@ -32,7 +32,8 @@ const renderWithState = (
   const Wrapper = ({ children }: { children: React.ReactNode }) => (
     <TestWrapper initialStore={newStore}>{children}</TestWrapper>
   );
-  return { ...render(ui, { wrapper: Wrapper, ...options }), user: userEvent.setup() };
+  const user = userEvent.setup(); // docs recommend to run this before render().
+  return { ...render(ui, { wrapper: Wrapper, ...options }), user };
 };
 
 export * from '@testing-library/react';

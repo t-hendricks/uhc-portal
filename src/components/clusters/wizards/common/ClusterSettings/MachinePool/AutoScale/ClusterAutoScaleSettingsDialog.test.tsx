@@ -2,7 +2,7 @@ import React from 'react';
 import { Formik } from 'formik';
 import merge from 'lodash/merge';
 
-import { checkAccessibility, render, screen, userEvent, within, UserEventType } from '~/testUtils';
+import { checkAccessibility, render, screen, within, UserEventType } from '~/testUtils';
 import modals from '~/components/common/Modal/modals';
 import { ClusterAutoscaler } from '~/types/clusters_mgmt.v1';
 import { FieldId } from '~/components/clusters/wizards/common';
@@ -105,8 +105,7 @@ describe('<ClusterAutoScaleSettingsDialog />', () => {
   describe('Modal Buttons', () => {
     it('"Close" becomes disabled when some field has errors', async () => {
       // Arrange
-      const user = userEvent.setup();
-      render(buildTestComponent(), {}, defaultState);
+      const { user } = render(buildTestComponent(), {}, defaultState);
       expect(getModalActionButton('Close')).toBeEnabled();
       expect(getTestInputField()).toHaveValue(0.5);
 
@@ -120,8 +119,7 @@ describe('<ClusterAutoScaleSettingsDialog />', () => {
 
     it('"Close" button becomes enabled when the error is fixed', async () => {
       // Arrange
-      const user = userEvent.setup();
-      render(buildTestComponent(), {}, defaultState);
+      const { user } = render(buildTestComponent(), {}, defaultState);
 
       // Act - first get the component in an error state and fix it
       await updateTestInputValue(user, { typeValue: '11', clearBefore: true });
