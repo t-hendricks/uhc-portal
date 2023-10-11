@@ -63,7 +63,6 @@ function CustomerOIDCConfiguration({
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [oidcConfigs, setOidcConfigs] = useState([]);
-  const [selectedConfig, setSelectedConfig] = useState(byoOidcConfigID);
 
   const refreshOidcConfigs = React.useCallback(() => {
     setIsLoading(true);
@@ -91,9 +90,15 @@ function CustomerOIDCConfiguration({
   const onSelect = (_, configId) => {
     const selected = oidcConfigs.find((config) => config.id === configId);
     setIsDropdownOpen(false);
-    setSelectedConfig(configId);
     onParentSelect(selected);
   };
+
+  useEffect(() => {
+    const isValidSelection = oidcConfigs?.some((item) => item?.id === byoOidcConfigID);
+    if (oidcConfigs?.length > 0 && byoOidcConfigID && !isValidSelection) {
+      onParentSelect(null);
+    }
+  }, [byoOidcConfigID, oidcConfigs, onParentSelect]);
 
   useEffect(() => {
     refreshOidcConfigs();
@@ -145,7 +150,7 @@ function CustomerOIDCConfiguration({
                   isOpen={isDropdownOpen}
                   onToggle={setIsDropdownOpen}
                   onSelect={onSelect}
-                  selected={selectedConfig}
+                  selected={byoOidcConfigID}
                   selectionData={selectionData}
                   isDisabled={oidcConfigs.length === 0 || isLoading}
                   placeholderText={
