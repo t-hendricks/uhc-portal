@@ -15,6 +15,7 @@ function InstallToVPC({
   privateLinkSelected,
   cloudProviderID,
   isSharedVpcSelected,
+  isSharedVpcSelectable,
   hostedZoneDomainName,
 }) {
   return (
@@ -61,6 +62,7 @@ function InstallToVPC({
           <SharedVPCSection
             hostedZoneDomainName={hostedZoneDomainName}
             isSelected={isSharedVpcSelected}
+            isSharedVpcSelectable={isSharedVpcSelectable}
           />
         </>
       )}
@@ -100,6 +102,7 @@ InstallToVPC.propTypes = {
   isMultiAz: PropTypes.bool,
   privateLinkSelected: PropTypes.bool,
   isSharedVpcSelected: PropTypes.bool,
+  isSharedVpcSelectable: PropTypes.bool,
   cloudProviderID: PropTypes.string,
 };
 
