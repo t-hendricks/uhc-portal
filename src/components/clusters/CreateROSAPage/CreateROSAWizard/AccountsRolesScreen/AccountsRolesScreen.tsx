@@ -2,7 +2,15 @@
 import React, { useState, useCallback, useEffect, useRef, ReactElement } from 'react';
 import get from 'lodash/get';
 
-import { Button, Form, Grid, GridItem, Text, TextVariants, Title } from '@patternfly/react-core';
+import {
+  Button,
+  Form,
+  Grid,
+  GridItem,
+  Text,
+  TextContent,
+  TextVariants,
+} from '@patternfly/react-core';
 import { Field } from 'redux-form';
 
 import { required } from '~/common/validators';
@@ -12,6 +20,8 @@ import useAnalytics from '~/hooks/useAnalytics';
 import ErrorBox from '~/components/common/ErrorBox';
 import { loadOfflineToken } from '~/components/tokens/TokenUtils';
 
+import { PrerequisitesInfoBox } from '~/components/clusters/CreateROSAPage/CreateROSAWizard/common/PrerequisitesInfoBox';
+import { WelcomeMessage } from '~/components/clusters/CreateROSAPage/CreateROSAWizard/common/WelcomeMessage';
 import AccountRolesARNsSection from './AccountRolesARNsSection';
 import { AwsRoleErrorAlert } from './AwsRoleErrorAlert';
 import AWSAccountSelection, { AWS_ACCOUNT_ROSA_LOCALSTORAGE_KEY } from './AWSAccountSelection';
@@ -42,6 +52,7 @@ export interface AccountsRolesScreenProps {
   rosaMaxOSVersion?: string;
   offlineToken?: string;
   setOfflineToken?: any;
+  isHypershiftEnabled: boolean;
   isHypershiftSelected: boolean;
 }
 
@@ -63,6 +74,7 @@ function AccountsRolesScreen({
   clearGetUserRoleResponse,
   offlineToken,
   setOfflineToken,
+  isHypershiftEnabled,
   isHypershiftSelected,
 }: AccountsRolesScreenProps) {
   const [AWSAccountIDs, setAWSAccountIDs] = useState<string[]>([]);
@@ -170,12 +182,24 @@ function AccountsRolesScreen({
   return (
     <Form onSubmit={() => false}>
       <Grid hasGutter className="pf-u-mt-md">
+        {!isHypershiftEnabled && (
+          <>
+            <GridItem span={12}>
+              <WelcomeMessage />
+            </GridItem>
+            <GridItem span={12}>
+              <PrerequisitesInfoBox />
+            </GridItem>
+          </>
+        )}
         <GridItem span={8}>
-          <Title headingLevel="h3">AWS infrastructure account</Title>
-          <Text component={TextVariants.p}>
-            Select an AWS account that is associated with your Red Hat account or associate a new
-            account. This account will contain the ROSA infrastructure.
-          </Text>
+          <TextContent>
+            <Text component={TextVariants.h3}>AWS infrastructure account</Text>
+            <Text component={TextVariants.p}>
+              Select an AWS account that is associated with your Red Hat account or associate a new
+              account. This account will contain the ROSA infrastructure.
+            </Text>
+          </TextContent>
         </GridItem>
         <GridItem span={4} />
         <GridItem sm={12} md={7}>
