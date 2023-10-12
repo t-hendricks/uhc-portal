@@ -153,10 +153,7 @@ function FuzzySelect(props: FuzzySelectProps) {
       fuse
         .search<FuzzyEntryType>(filterText)
         // most relevent towards top, then by number
-        .sort(
-          ({ score: ax = 0, item: itema }, { score: bx = 0, item: itemb }) =>
-            ax - bx || sortFn(itema, itemb),
-        )
+        .sort(({ score: ax = 0 }, { score: bx = 0 }) => ax - bx)
         .forEach(({ item, matches }) => {
           if (item) {
             if (item.key && matches && !item.disabled) {
