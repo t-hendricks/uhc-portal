@@ -1,11 +1,10 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import { screen } from '@testing-library/dom';
 
 import { subscriptionStatuses } from '../../../../common/subscriptionTypes';
 import Overview from '../components/Overview/Overview';
 import fixtures from './ClusterDetails.fixtures';
-import { mockRestrictedEnv, render } from '../../../../testUtils';
+import { mockRestrictedEnv, render, screen } from '../../../../testUtils';
 
 describe('<Overview />', () => {
   describe('for an OSD cluster', () => {

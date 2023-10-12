@@ -18,8 +18,8 @@ import React from 'react';
 import { mount, shallow } from 'enzyme';
 import { BrowserRouter, MemoryRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
-import { screen } from '@testing-library/react';
-import { mockRestrictedEnv, render } from '~/testUtils';
+
+import { mockRestrictedEnv, render, screen } from '~/testUtils';
 
 import { store } from '../../../redux/store';
 import Tokens from '../Tokens';
