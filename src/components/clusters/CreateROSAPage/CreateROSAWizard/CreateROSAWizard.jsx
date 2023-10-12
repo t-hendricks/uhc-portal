@@ -293,6 +293,7 @@ class CreateROSAWizardInternal extends React.Component {
           <ErrorBoundary>
             <AccountsRolesScreen
               organizationID={organization?.details?.id}
+              isHypershiftEnabled={isHypershiftEnabled}
               isHypershiftSelected={isHypershiftSelected}
             />
           </ErrorBoundary>
