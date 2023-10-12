@@ -19,7 +19,13 @@ const RosaHandsOnGetStartedToolbar = ({
   switch (status) {
     case DemoExperienceStatusEnum.Started:
       btn = (
-        <ExternalLink href={demoExperience.experience_url || ''} isButton variant="primary" noIcon>
+        <ExternalLink
+          href={demoExperience.experience_url || ''}
+          isButton
+          variant="primary"
+          noIcon
+          customTrackProperties={{ link_name: 'launch-rosa-hands-on-experience' }}
+        >
           Launch experience
         </ExternalLink>
       );
@@ -39,10 +45,7 @@ const RosaHandsOnGetStartedToolbar = ({
         <Button
           variant="primary"
           onClick={onRequestCluster}
-          isDisabled={[
-            DemoExperienceStatusEnum.Failed,
-            DemoExperienceStatusEnum.Unavailable,
-          ].includes(status)}
+          isDisabled={status === DemoExperienceStatusEnum.Unavailable}
         >
           Request experience
         </Button>
