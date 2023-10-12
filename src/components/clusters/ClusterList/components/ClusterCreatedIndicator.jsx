@@ -71,7 +71,7 @@ function ClusterCreatedIndicator({ cluster }) {
     return (
       <Popover
         position={PopoverPosition.top}
-        bodyContent="Your 60-day evaluation has expired. Edit subscription settings to continue using this cluster, or archive this cluster if it no longer exits"
+        bodyContent="Your 60-day evaluation has expired. Edit subscription settings to continue using this cluster, or archive this cluster if it no longer exists."
         aria-label="Evaluation expired"
       >
         <Button
@@ -91,20 +91,29 @@ function ClusterCreatedIndicator({ cluster }) {
         <strong>OCP Cluster</strong>
       </h1>
       <p>
-        Your OCP cluster subscription will expire in&nbsp;
+        Your OCP cluster evaluation will expire in&nbsp;
         {OCPTrialExpiresStr}
         &nbsp;on&nbsp;
         <strong>
           <DateFormat date={subscription.eval_expiration_date} type="onlyDate" />
         </strong>
-        .&nbsp;After it expires, your cluster will not be&nbsp;
+        .&nbsp;Your cluster is not&nbsp;
         <ExternalLink
           href="https://access.redhat.com/support/policy/updates/openshift/policies"
           noIcon
+          noTarget
         >
           supported
         </ExternalLink>
-        .
+        . To get Red Hat support for clusters, learn more about{' '}
+        <ExternalLink
+          href="https://www.redhat.com/en/resources/self-managed-openshift-sizing-subscription-guide"
+          noIcon
+          noTarget
+        >
+          OCP subscriptions
+        </ExternalLink>
+        . Though your cluster will be functional.
       </p>
     </>
   );

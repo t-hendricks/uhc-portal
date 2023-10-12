@@ -96,6 +96,11 @@ const isHibernating = (state) =>
 // Indicates that this is a ROSA cluster
 const isROSA = (cluster) => cluster.product.id === normalizedProducts.ROSA;
 
+// Indicates that this is an OSD cluster
+const isOSD = (cluster) =>
+  cluster.product.id === normalizedProducts.OSD ||
+  cluster.product.id === normalizedProducts.OSDTrial;
+
 // Indicates that this is a ROSA cluster with manual mode
 const isROSAManualMode = (cluster) =>
   isROSA(cluster) && !cluster?.aws?.sts?.auto_mode && !cluster?.aws?.sts?.oidc_config?.id;
@@ -131,6 +136,7 @@ export {
   isHibernating,
   isOffline,
   isROSA,
+  isOSD,
   isHypershiftCluster,
   isROSAManualMode,
   isWaitingROSAManualMode,

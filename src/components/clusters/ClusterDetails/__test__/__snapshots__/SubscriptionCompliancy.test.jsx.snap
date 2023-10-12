@@ -69,7 +69,7 @@ exports[`<SubscriptionCompliancy /> should warn when evaluation is expired 1`] =
     >
       Archive this cluster
     </Button>
-     if it no longer exits. 
+     if it no longer exists. 
   </p>
 </Alert>
 `;

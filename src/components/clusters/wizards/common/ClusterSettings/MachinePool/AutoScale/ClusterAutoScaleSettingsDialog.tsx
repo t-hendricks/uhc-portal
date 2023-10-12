@@ -39,6 +39,7 @@ import './ClusterAutoScaleSettingsDialog.scss';
 
 interface ClusterAutoScaleSettingsDialogProps {
   isWizard: boolean;
+  isRosa: boolean;
 }
 
 const getValidator = (field: FieldDefinition) => {
@@ -106,7 +107,10 @@ const mapField = (field: FieldDefinition, isDisabled?: boolean) => {
   );
 };
 
-const ClusterAutoScaleSettingsDialog = ({ isWizard }: ClusterAutoScaleSettingsDialogProps) => {
+const ClusterAutoScaleSettingsDialog = ({
+  isWizard,
+  isRosa,
+}: ClusterAutoScaleSettingsDialogProps) => {
   const dispatch = useDispatch();
   const closeScalerModal = () => dispatch(closeModal());
 
@@ -153,7 +157,13 @@ const ClusterAutoScaleSettingsDialog = ({ isWizard }: ClusterAutoScaleSettingsDi
         <Text component="p">
           The cluster autoscaler adjusts the size of a cluster to meet its current deployment needs.
           Learn more about{' '}
-          <ExternalLink href={installLinks.APPLYING_AUTOSCALING}>cluster autoscaling</ExternalLink>{' '}
+          <ExternalLink
+            href={
+              isRosa ? installLinks.ROSA_CLUSTER_AUTOSCALING : installLinks.OSD_CLUSTER_AUTOSCALING
+            }
+          >
+            cluster autoscaling
+          </ExternalLink>{' '}
           or
           <ExternalLink href={installLinks.APPLYING_AUTOSCALING_API_DETAIL}> APIs</ExternalLink>.
         </Text>
