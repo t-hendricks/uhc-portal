@@ -49,22 +49,19 @@ const TryRosaCard = () => (
   <Card style={{ height: '100%' }}>
     <CardHeader>
       <CardTitle>
-        <Title headingLevel="h4">
-          <CubeIcon isInline size="md" className="pf-u-mr-sm rosa-cube-icon" />
-          Try ROSA hands-on experience
-        </Title>
+        <Title headingLevel="h4">Want a preview of ROSA?</Title>
       </CardTitle>
     </CardHeader>
-    <CardBody>Experience ROSA with our free demo environment.</CardBody>
+    <CardBody>Access a no-cost hands-on experience with Red Hat OpenShift Service on AWS.</CardBody>
     <CardFooter>
       <Button
-        variant="primary"
+        variant="secondary"
         component={(props) => (
           <Link {...props} data-testid="register-cluster" to="/services/rosa/demo/" />
         )}
         isLarge
       >
-        Get started
+        Try for 8 hours
       </Button>
     </CardFooter>
   </Card>

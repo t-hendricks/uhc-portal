@@ -35,11 +35,16 @@ const ExperienceDurationInfo = ({ demoExperience }: { demoExperience: DemoExperi
   const remainingDemos = demoExperience.quota.limit - demoExperience.quota.current;
   return (
     <Alert
-      title={`The current experience demo will end in ${humanizeDuration(remainingTime, {
-        units: ['h', 'm'],
-        round: true,
-        delimiter: ' and ',
-      })}. You have ${remainingDemos} experience launches remaining.`}
+      title={
+        <>
+          Your current experience demo will end in{' '}
+          {humanizeDuration(remainingTime, {
+            units: ['h'],
+            maxDecimalPoints: 2,
+          })}
+          . You have {remainingDemos} experience launches remaining.
+        </>
+      }
       variant="info"
       isInline
     />

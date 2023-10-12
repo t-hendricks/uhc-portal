@@ -5,12 +5,11 @@ import { Page } from '@patternfly/react-core';
 
 import useAnalytics from '~/hooks/useAnalytics';
 import { trackEvents } from '~/common/analytics';
-
-import ErrorBoundary from '../App/ErrorBoundary';
 import RosaHandsOnPageContent from './RosaHandsOnPageContent';
 
 import demoExperienceService from './demoExperienceService';
 import useDemoExperiencePolling from './useDemoExperiencePolling';
+import { AppPage } from '../App/AppPage';
 
 const RosaHandsOnPage = () => {
   const track = useAnalytics();
@@ -35,7 +34,7 @@ const RosaHandsOnPage = () => {
   };
 
   return (
-    <ErrorBoundary>
+    <AppPage title="ROSA hands-on experience">
       <Page>
         <RosaHandsOnPageContent
           requestError={requestError}
@@ -45,7 +44,7 @@ const RosaHandsOnPage = () => {
           onRequestCluster={() => requestCluster()}
         />
       </Page>
-    </ErrorBoundary>
+    </AppPage>
   );
 };
 
