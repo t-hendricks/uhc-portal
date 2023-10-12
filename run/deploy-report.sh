@@ -21,7 +21,7 @@ jira_token="${1#--jira-token=}"
 # Read each line from stdin (piped CSV data) and convert it to JSON
 while IFS=',' read -r commitHash commitDate commitMessage; do
   echo "------------------------------------------------"
-  echo "|                 live_master                  |"
+  echo "|           live_consoledev_master             |"
   echo "|  commitHash  |  commitDate  |  commitMessage |"
   echo "------------------------------------------------"
   masterLogLine="$commitHash $commitDate $commitMessage"
