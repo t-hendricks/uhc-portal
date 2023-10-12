@@ -108,6 +108,7 @@ import EntitlementConfig from '../common/EntitlementConfig/index';
 import DownloadsPage from '../downloads/DownloadsPage';
 import withFeatureGate from '../features/with-feature-gate';
 import Dashboard from '../dashboard';
+import Overview from '../Overview';
 import Quota from '../quota';
 import Releases from '../releases/index';
 import Tokens from '../tokens';
@@ -389,6 +390,7 @@ const Router: React.FC<RouterProps> = ({ history, planType, clusterId, externalC
             <Route path="/quota" component={Quota} />
             <Route path="/archived" component={ArchivedClusterList} />
             <Route path="/dashboard" exact component={Dashboard} />
+            <Route path="/overview" exact component={Overview} />
             <Route path="/releases" exact component={Releases} />
             <Route path="/assisted-installer" component={GatedAssistedUiRouter} />
             <Route path="/services/rosa/demo" component={RosaHandsOnPage} />

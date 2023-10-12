@@ -17,7 +17,7 @@ import Spinner from '@redhat-cloud-services/frontend-components/Spinner';
 
 import ConnectedModal from '../common/Modal/ConnectedModal';
 import SmallClusterChart from '../clusters/common/ResourceUsage/SmallClusterChart';
-import OverviewEmptyState from './EmptyState/OverviewEmptyState';
+import DashboardEmptyState from './EmptyState/DashboardEmptyState';
 import ExpiredTrialsCard from './ExpiredTrialsCard';
 import ClustersWithIssuesTableCard from './ClustersWithIssuesTableCard';
 import CostCard from './CostCard';
@@ -124,7 +124,7 @@ class Dashboard extends Component {
     if (summaryDashboard.fulfilled && !totalClusters) {
       return (
         <AppPage title={PAGE_TITLE}>
-          <OverviewEmptyState />
+          <DashboardEmptyState />
         </AppPage>
       );
     }

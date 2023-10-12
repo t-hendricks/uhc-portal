@@ -2,14 +2,14 @@ import React from 'react';
 import { BrowserRouter } from 'react-router-dom';
 
 import { render, screen, checkAccessibility } from '~/testUtils';
-import OverviewEmptyState from './OverviewEmptyState';
-import docLinks from '../../../common/installLinks.mjs';
+import Overview from './Overview';
+import docLinks from '../../common/installLinks.mjs';
 
 describe('<OverviewEmptyState />', () => {
   it('contains correct links', async () => {
     const { container } = render(
       <BrowserRouter>
-        <OverviewEmptyState />
+        <Overview />
       </BrowserRouter>,
     );
 
