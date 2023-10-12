@@ -1,6 +1,5 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import { screen } from '@testing-library/dom';
 import { MemoryRouter } from 'react-router';
 
 import DownloadsPage, {
@@ -17,7 +16,7 @@ import {
   architectures,
   urls,
 } from '../../../common/installLinks.mjs';
-import { mockRestrictedEnv, render } from '../../../testUtils';
+import { mockRestrictedEnv, render, screen } from '../../../testUtils';
 
 const { linux, mac, windows } = operatingSystems;
 const { arm, ppc, s390x, x86 } = architectures;
