@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import get from 'lodash/get';
-import Overview from './Overview';
+import Dashboard from './Dashboard';
 import { getSummaryDashboard, getUnhealthyClusters } from '../../redux/actions/dashboardsActions';
 import { getUserAccess } from '../../redux/actions/costActions';
 import { invalidateSubscriptions } from '../../redux/actions/subscriptionsActions';
@@ -50,4 +50,4 @@ const mapStateToProps = (state) => ({
   }),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Overview);
+export default connect(mapStateToProps, mapDispatchToProps)(Dashboard);

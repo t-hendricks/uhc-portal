@@ -28,12 +28,12 @@ import { createOverviewQueryObject } from '../../common/queryHelpers';
 import Unavailable from '../common/Unavailable';
 import InsightsAdvisorCard from './InsightsAdvisorCard/InsightsAdvisorCard';
 
-import './Overview.scss';
+import './Dashboard.scss';
 import { AppPage } from '../App/AppPage';
 
 const PAGE_TITLE = 'Overview | Red Hat OpenShift Cluster Manager';
 
-class Overview extends Component {
+class Dashboard extends Component {
   componentDidMount() {
     const {
       summaryDashboard,
@@ -132,7 +132,7 @@ class Overview extends Component {
     return (
       <AppPage title={PAGE_TITLE}>
         <PageHeader>
-          <PageHeaderTitle title="Overview" className="page-title" />
+          <PageHeaderTitle title="Dashboard" className="page-title" />
         </PageHeader>
         <PageSection>
           <Grid hasGutter className="ocm-c-overview">
@@ -221,7 +221,7 @@ class Overview extends Component {
   }
 }
 
-Overview.propTypes = {
+Dashboard.propTypes = {
   getSummaryDashboard: PropTypes.func.isRequired,
   getUserAccess: PropTypes.func.isRequired,
   invalidateSubscriptions: PropTypes.func.isRequired,
@@ -259,4 +259,4 @@ Overview.propTypes = {
   organization: PropTypes.object.isRequired,
 };
 
-export default Overview;
+export default Dashboard;

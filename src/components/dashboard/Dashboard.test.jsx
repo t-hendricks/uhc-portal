@@ -1,7 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import Overview from './Overview';
-import { clustersWithIssues } from './Overview.fixtures';
+import Dashboard from './Dashboard';
+import { clustersWithIssues } from './Dashboard.fixtures';
 
 const dashboardState = {
   summary: {
@@ -32,7 +32,7 @@ const dashboardState = {
   insightsGroups: {},
 };
 
-describe('<Overview />', () => {
+describe('<Dashboard />', () => {
   let getSummaryDashboard;
   let getUnhealthyClusters;
   let getUserAccess;
@@ -57,7 +57,7 @@ describe('<Overview />', () => {
       data: true,
     };
     wrapper = shallow(
-      <Overview
+      <Dashboard
         getSummaryDashboard={getSummaryDashboard}
         invalidateSubscriptions={jest.fn()}
         getUnhealthyClusters={getUnhealthyClusters}
