@@ -1,8 +1,8 @@
 import React from 'react';
-import { render, screen, checkAccessibility, fireEvent } from '@testUtils';
-import { waitForElementToBeRemoved } from '@testing-library/react';
-import '@testing-library/jest-dom';
 import { BrowserRouter } from 'react-router-dom';
+import { waitForElementToBeRemoved } from '@testing-library/react';
+
+import { render, screen, checkAccessibility, fireEvent } from '~/testUtils';
 import RosaServicePageEmptyState from './RosaServicePageEmptyState';
 import clusterService from '../../../services/clusterService';
 

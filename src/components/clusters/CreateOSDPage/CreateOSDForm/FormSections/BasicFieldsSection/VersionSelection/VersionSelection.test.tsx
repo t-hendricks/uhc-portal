@@ -1,5 +1,6 @@
 import React from 'react';
-import { render, screen, within, checkAccessibility } from '@testUtils';
+
+import { render, screen, within, checkAccessibility } from '~/testUtils';
 import * as ReleaseHooks from '~/components/releases/hooks';
 import * as helpers from '~/common/helpers';
 import { ProductLifeCycle } from '~/types/product-life-cycles';

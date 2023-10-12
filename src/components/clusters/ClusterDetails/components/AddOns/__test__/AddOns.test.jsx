@@ -1,5 +1,6 @@
 import React from 'react';
-import { render, checkAccessibility } from '@testUtils';
+
+import { render, checkAccessibility } from '~/testUtils';
 import AddOns from '../AddOns';
 import { mockAddOns, mockClusterAddOns } from './AddOns.fixtures';
 import { addonsQuotaList } from '../../../../common/__test__/quota.fixtures';

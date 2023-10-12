@@ -1,6 +1,7 @@
 import React from 'react';
 import { MemoryRouter } from 'react-router-dom';
-import { render, screen } from '@testUtils';
+
+import { render, screen } from '~/testUtils';
 
 import { normalizedProducts } from '~/common/subscriptionTypes';
 

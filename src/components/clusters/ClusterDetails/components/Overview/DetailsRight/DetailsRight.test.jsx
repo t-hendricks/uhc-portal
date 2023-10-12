@@ -1,3 +1,5 @@
+import React from 'react';
+
 import {
   checkAccessibility,
   insightsMock,
@@ -5,8 +7,7 @@ import {
   screen,
   within,
   mockRestrictedEnv,
-} from '@testUtils';
-import React from 'react';
+} from '~/testUtils';
 import { subscriptionStatuses } from '~/common/subscriptionTypes';
 import fixtures from '../../../__test__/ClusterDetails.fixtures';
 import DetailsRight from './DetailsRight';

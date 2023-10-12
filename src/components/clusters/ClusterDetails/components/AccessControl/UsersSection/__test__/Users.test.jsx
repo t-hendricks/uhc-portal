@@ -1,5 +1,6 @@
 import React from 'react';
-import { screen, render, checkAccessibility } from '@testUtils';
+
+import { screen, render, checkAccessibility } from '~/testUtils';
 import { initialState } from '../UsersReducer';
 import { stateWithUsers } from './Users.fixtures';
 import UsersSection from '../UsersSection';

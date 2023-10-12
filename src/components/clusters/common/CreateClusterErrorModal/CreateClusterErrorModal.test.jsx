@@ -1,7 +1,7 @@
 import React from 'react';
 import * as ReactRedux from 'react-redux';
 
-import { render, screen, checkAccessibility } from '@testUtils';
+import { render, screen, checkAccessibility } from '~/testUtils';
 import CreateClusterErrorModal from './CreateClusterErrorModal';
 
 jest.mock('react-redux', () => {

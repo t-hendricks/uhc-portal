@@ -1,6 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import { render, screen, waitFor } from '@testUtils';
+
+import { render, screen, waitFor } from '~/testUtils';
 import MachineTypeSelection from './MachineTypeSelection';
 
 import {

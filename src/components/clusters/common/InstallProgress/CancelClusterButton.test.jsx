@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { render, screen, within, checkAccessibility } from '@testUtils';
+import { render, screen, within, checkAccessibility } from '~/testUtils';
 
 import CancelClusterButton from './CancelClusterButton';
 

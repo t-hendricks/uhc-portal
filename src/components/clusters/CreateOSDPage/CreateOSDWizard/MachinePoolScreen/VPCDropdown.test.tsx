@@ -1,5 +1,6 @@
 import React from 'react';
-import { fireEvent, render, screen } from '@testUtils';
+
+import { fireEvent, render, screen } from '~/testUtils';
 import VPCDropdown from './VPCDropdown';
 import * as vpcInquiries from '../VPCScreen/useVPCInquiry';
 

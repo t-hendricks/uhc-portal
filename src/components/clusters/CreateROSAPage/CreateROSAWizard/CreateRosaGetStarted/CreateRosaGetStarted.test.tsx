@@ -1,6 +1,7 @@
 import React from 'react';
-import { render, checkAccessibility, insightsMock, screen, mockRestrictedEnv } from '@testUtils';
 import { MemoryRouter } from 'react-router-dom';
+
+import { render, checkAccessibility, insightsMock, screen, mockRestrictedEnv } from '~/testUtils';
 import * as hooks from '~/hooks/useFeatureGate';
 import { HCP_ROSA_GETTING_STARTED_PAGE } from '~/redux/constants/featureConstants';
 import CreateRosaGetStarted from './CreateRosaGetStarted';

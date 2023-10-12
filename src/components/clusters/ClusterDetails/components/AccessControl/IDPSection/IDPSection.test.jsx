@@ -1,5 +1,6 @@
 import React from 'react';
-import { screen, render, checkAccessibility } from '@testUtils';
+
+import { screen, render, checkAccessibility } from '~/testUtils';
 import IDPSection from './IDPSection';
 
 const baseIDPs = {

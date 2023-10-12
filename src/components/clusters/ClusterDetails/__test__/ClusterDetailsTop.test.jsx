@@ -1,9 +1,10 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import { render, checkAccessibility, TestRouter, screen } from '@testUtils';
+
 // TODO: Remove this import when PF team fixes the issue causing tests to break without it
 import { Button } from '@patternfly/react-core';
 
+import { render, checkAccessibility, TestRouter, screen } from '~/testUtils';
 import ClusterDetailsTop from '../components/ClusterDetailsTop';
 import fixtures, { funcs } from './ClusterDetails.fixtures';
 import clusterStates from '../../common/clusterStates';

@@ -1,6 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import { render, checkAccessibility } from '@testUtils';
+
+import { render, checkAccessibility } from '~/testUtils';
 import { Button } from '@patternfly/react-core';
 import { Field, reduxForm } from 'redux-form';
 import { reduxFormConfig } from '../index';

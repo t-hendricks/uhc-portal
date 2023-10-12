@@ -1,8 +1,8 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import { render, checkAccessibility } from '@testUtils';
 import { TextInput } from '@patternfly/react-core';
 
+import { render, checkAccessibility } from '~/testUtils';
 import AddOnsDeleteModal from '../AddOnsDeleteModal';
 
 describe('<AddOnsDeleteModal />', () => {

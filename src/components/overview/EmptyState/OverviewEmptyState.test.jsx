@@ -1,7 +1,7 @@
 import React from 'react';
-import { render, screen, checkAccessibility } from '@testUtils';
-import '@testing-library/jest-dom';
 import { BrowserRouter } from 'react-router-dom';
+
+import { render, screen, checkAccessibility } from '~/testUtils';
 import OverviewEmptyState from './OverviewEmptyState';
 import docLinks from '../../../common/installLinks.mjs';
 

@@ -1,6 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import { screen, render, checkAccessibility } from '@testUtils';
+
+import { screen, render, checkAccessibility } from '~/testUtils';
 
 import NetworkSelfServiceSection from '../NetworkSelfServiceSection';
 

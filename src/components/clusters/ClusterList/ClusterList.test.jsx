@@ -1,12 +1,11 @@
 import React from 'react';
-import { screen } from '@testing-library/react';
 import { MemoryRouter } from 'react-router';
 
 import ClusterList from './ClusterList';
 import fixtures from '../ClusterDetails/__test__/ClusterDetails.fixtures';
 import { normalizedProducts } from '../../../common/subscriptionTypes';
 import { viewConstants } from '../../../redux/constants';
-import { mockRestrictedEnv, render } from '../../../testUtils';
+import { mockRestrictedEnv, render, screen } from '../../../testUtils';
 
 describe('<ClusterList />', () => {
   describe('in restricted env', () => {
