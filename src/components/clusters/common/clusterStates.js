@@ -109,12 +109,20 @@ const isHypershiftCluster = (cluster) =>
   get(cluster, 'hypershift.enabled', false) ||
   get(cluster, 'subscription.plan.id') === normalizedProducts.ROSA_HyperShift;
 
+// Helper methods for  isWaitingForOIDCProviderOrOperatorRolesMode
+const isInWaitingState = (cluster) => cluster.state === clusterStates.WAITING;
+const isNotSTSAutoMode = (cluster) => !cluster?.aws?.sts?.auto_mode;
+const hasOIDCConfig = (cluster) => cluster?.aws?.sts?.oidc_config?.id;
+const doesNotHaveStatusMessage = (cluster) =>
+  cluster?.status.description && cluster?.status.description !== 'Waiting for OIDC configuration';
+
 // Indicates that cluster is waiting and an oidc_config.id had been specified
 const isWaitingForOIDCProviderOrOperatorRolesMode = (cluster) =>
   isROSA(cluster) &&
-  cluster.state === clusterStates.WAITING &&
-  !cluster?.aws?.sts?.auto_mode &&
-  cluster?.aws?.sts?.oidc_config?.id;
+  isInWaitingState(cluster) &&
+  isNotSTSAutoMode(cluster) &&
+  hasOIDCConfig(cluster) &&
+  doesNotHaveStatusMessage(cluster);
 
 // Indicates that this is a Waiting Hypershift cluster
 const isWaitingHypershiftCluster = (cluster) =>

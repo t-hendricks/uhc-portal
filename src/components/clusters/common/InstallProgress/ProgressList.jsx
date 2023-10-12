@@ -20,6 +20,19 @@ function ProgressList({ cluster, actionRequiredInitialOpen }) {
   const isWaitingForOIDCProviderOrOperatorRoles =
     isWaitingForOIDCProviderOrOperatorRolesMode(cluster);
 
+  // helper variables for isPending
+  const isPendingState = cluster.state === clusterStates.PENDING;
+  const isWaitingState = cluster.state === clusterStates.WAITING;
+  const isAutoMode = cluster?.aws?.sts?.auto_mode;
+  const hasOIDCConfig = cluster?.aws?.sts?.oidc_config?.id;
+  const doesNotHaveStatusMessage =
+    !cluster?.status.description ||
+    cluster?.status.description === 'Waiting for OIDC configuration';
+
+  const isPending =
+    isPendingState ||
+    (isWaitingState && (isAutoMode || (hasOIDCConfig && doesNotHaveStatusMessage)));
+
   const getProgressData = () => {
     const pending = { variant: 'pending' };
     const inProcess = { variant: 'info', icon: <Spinner size="sm" />, isCurrent: true };
@@ -78,8 +91,8 @@ function ProgressList({ cluster, actionRequiredInitialOpen }) {
           clusterInstallation: pending,
         };
       }
-      // Rosa cluster when pending means it has completed OIDC and operator roles step
-      if (cluster.state === clusterStates.PENDING) {
+      // Rosa cluster when pending means it is verifying or completed OIDC and operator roles step
+      if (isPending) {
         return {
           awsAccountSetup: completed,
           oidcAndOperatorRolesSetup: {
