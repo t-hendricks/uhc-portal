@@ -1,5 +1,6 @@
 import React from 'react';
-import { render, checkAccessibility, TestRouter, screen } from '@testUtils';
+
+import { render, checkAccessibility, TestRouter, screen } from '~/testUtils';
 import * as Fixtures from './ArchivedClusterListTable.fixtures';
 import ArchivedClusterListTable from '../ArchivedClusterListTable';
 

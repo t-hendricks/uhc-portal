@@ -1,6 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import { render, checkAccessibility /* , screen  */ } from '@testUtils';
+
+import { render, checkAccessibility /* , screen  */ } from '~/testUtils';
 import AddOnsFailedBox from '../AddOnsDrawerFailedBox';
 
 describe('<AddOnsFailedBox />', () => {

@@ -222,7 +222,6 @@ module.exports = async (_env, argv) => {
       },
       alias: {
         '~': path.resolve(__dirname, 'src/'),
-        '@testUtils': path.resolve(__dirname, 'src/testUtils.tsx'),
       },
     },
 

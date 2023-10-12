@@ -94,8 +94,7 @@
       "alias": {
         "extensions": [".js", ".jsx", ".ts", ".tsx"],
         "map": [
-          ["~", "./src"],
-          ["@testUtils", "./src/testUtils.tsx"]
+          ["~", "./src"]
         ]
       }
     }

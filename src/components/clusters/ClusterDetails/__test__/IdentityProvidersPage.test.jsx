@@ -1,6 +1,7 @@
 import React from 'react';
-import { render, checkAccessibility, TestRouter } from '@testUtils';
 import { reduxForm } from 'redux-form';
+
+import { render, checkAccessibility, TestRouter } from '~/testUtils';
 import IdentityProvidersPage from '../components/IdentityProvidersPage/IdentityProvidersPage';
 import { reduxFormConfig } from '../components/IdentityProvidersPage';
 import { IDPformValues } from '../components/IdentityProvidersPage/IdentityProvidersHelper';

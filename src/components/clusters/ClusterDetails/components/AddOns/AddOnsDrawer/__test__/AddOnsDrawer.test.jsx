@@ -1,6 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import { render, checkAccessibility } from '@testUtils';
+
+import { render, checkAccessibility } from '~/testUtils';
 import AddOnsDrawer from '../AddOnsDrawer';
 import { mockAddOns, mockClusterAddOns } from '../../__test__/AddOns.fixtures';
 
