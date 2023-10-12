@@ -48,7 +48,6 @@ const GCP_MACHINE_CIDR_MAX = 23;
 const HOST_PREFIX_REGEXP = /^\/?(3[0-2]|[1-2][0-9]|[0-9])$/;
 const HOST_PREFIX_MIN = 23;
 const HOST_PREFIX_MAX = 26;
-const DOCKER_CIDR_RANGE = '172.17.0.0/16';
 
 // Regular expression for a valid URL for a console in a self managed cluster.
 const CONSOLE_URL_REGEXP =
@@ -898,20 +897,6 @@ const privateAddress = (value: string): string | undefined => {
   return 'Range is not private.';
 };
 
-const disjointFromDockerRange = (value: string): string | undefined => {
-  if (!value) {
-    return undefined;
-  }
-  try {
-    if (cidrTools.overlap(value, DOCKER_CIDR_RANGE)) {
-      return 'Selected range must not overlap with 172.17.0.0/16.';
-    }
-    return undefined;
-  } catch (e) {
-    return `Failed to parse CIDR: ${e}`;
-  }
-};
-
 const awsSubnetMask =
   (fieldName: string) =>
   (value: string): string | undefined => {
@@ -1587,7 +1572,6 @@ const validators = {
   validateRange,
   privateAddress,
   awsSubnetMask,
-  disjointFromDockerRange,
   hostPrefix,
   nodes,
   nodesMultiAz,

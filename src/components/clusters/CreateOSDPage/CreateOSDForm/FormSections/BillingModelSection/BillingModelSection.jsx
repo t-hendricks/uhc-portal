@@ -165,7 +165,7 @@ function BillingModelSection({
   subscriptionOptions.push({
     disabled: marketplaceDisabled,
     value: billingModels.MARKETPLACE,
-    label: 'On-Demand: Flexible usage billed through the Red Hat Marketplace',
+    label: 'On-Demand: Flexible usage billed through Red Hat Marketplace',
     description: marketplaceDisabled ? marketplaceDisabledDescription : marketplaceQuotaDescription,
   });
 

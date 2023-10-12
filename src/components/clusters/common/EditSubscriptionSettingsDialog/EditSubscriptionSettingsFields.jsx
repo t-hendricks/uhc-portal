@@ -54,7 +54,7 @@ const { DISCONNECTED } = subscriptionStatuses;
 
 const standardBillingModelLabel = 'Annual: Fixed capacity subscription from Red Hat';
 const marketplaceBillingModelLabel =
-  'On-Demand (Hourly): Flexible usage billed through the Red Hat Marketplace';
+  'On-Demand (Hourly): Flexible usage billed through Red Hat Marketplace';
 
 const MIN_VAL = 1;
 
@@ -475,7 +475,7 @@ class EditSubscriptionSettingsFields extends Component {
         onChange={this.handleUnitsNumberChange}
         inputAriaLabel={
           systemUnits === SOCKETS
-            ? 'Number of sockets'
+            ? 'Number of sockets (excluding control plane nodes)'
             : 'Number of compute cores (excluding control plane nodes)'
         }
         minusBtnAriaLabel="decrement the number by 1"
@@ -549,7 +549,7 @@ class EditSubscriptionSettingsFields extends Component {
         <FormGroup
           label={
             systemUnits === SOCKETS
-              ? 'Number of sockets'
+              ? 'Number of sockets (excluding control plane nodes)'
               : 'Number of compute cores (excluding control plane nodes)'
           }
           isRequired={isDisconnectedSub}

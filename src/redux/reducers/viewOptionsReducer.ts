@@ -28,12 +28,21 @@ const INITIAL_VIEW_STATE: ViewState = {
   totalPages: 0,
   filter: '',
   sorting: {
-    sortField: 'name',
-    isAscending: true,
-    sortIndex: 0,
+    sortField: 'created_at',
+    isAscending: false,
+    sortIndex: 3,
   },
   flags: {
     showArchived: false,
+  },
+};
+
+const INITIAL_ARCHIVED_VIEW_STATE: ViewState = {
+  ...INITIAL_VIEW_STATE,
+  sorting: {
+    sortField: 'name',
+    isAscending: true,
+    sortIndex: 0,
   },
 };
 
@@ -68,7 +77,7 @@ const INITIAL_OVERVIEW_VIEW_STATE: ViewState = {
 const initialState: State = {};
 
 initialState[viewConstants.CLUSTERS_VIEW] = Object.assign(INITIAL_VIEW_STATE);
-initialState[viewConstants.ARCHIVED_CLUSTERS_VIEW] = Object.assign(INITIAL_VIEW_STATE);
+initialState[viewConstants.ARCHIVED_CLUSTERS_VIEW] = Object.assign(INITIAL_ARCHIVED_VIEW_STATE);
 initialState[viewConstants.CLUSTER_LOGS_VIEW] = Object.assign(INITIAL_OSL_VIEW_STATE);
 initialState[viewConstants.OVERVIEW_VIEW] = Object.assign(INITIAL_OVERVIEW_VIEW_STATE);
 initialState[viewConstants.OVERVIEW_EXPIRED_TRIALS] = Object.assign(INITIAL_OVERVIEW_VIEW_STATE);

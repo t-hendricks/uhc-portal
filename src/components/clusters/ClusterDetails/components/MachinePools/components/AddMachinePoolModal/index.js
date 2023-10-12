@@ -100,9 +100,8 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
       if (formData.spot_instances) {
         machinePoolRequest.aws = {
           spot_market_options:
-            formData.spot_instance_pricing === 'maximum' &&
-            formData.spot_instance_max_hourly_price !== undefined
-              ? { max_price: formData.spot_instance_max_hourly_price }
+            formData.spot_instance_pricing === 'maximum'
+              ? { max_price: formData.spot_instance_max_hourly_price || 0.01 }
               : {},
         };
       }
