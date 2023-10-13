@@ -13,7 +13,7 @@ export const PrerequisitesInfoBox: React.FC = () => (
       prerequisite steps on the
     </HintBody>
     <HintFooter>
-      <Link to="getstarted">{`Get started with ${productName} (ROSA) page.`}</Link>
+      <Link to="getstarted">{`Set up ${productName} (ROSA) page.`}</Link>
     </HintFooter>
   </Hint>
 );

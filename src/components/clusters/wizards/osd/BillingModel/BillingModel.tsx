@@ -294,7 +294,7 @@ export const BillingModel = () => {
             </Title>
             <Text component="p" id="welcome-osd-text">
               Reduce operational complexity and focus on building applications that add more value
-              to your business with Red Hat OpenShift Dedicated, a fully managed service of Red Hat
+              to your business with Red Hat OpenShift Dedicated, a fully-managed service of Red Hat
               OpenShift on Amazon Web Services (AWS) and Google Cloud.
             </Text>
           </StackItem>

@@ -31,7 +31,7 @@ const RosaHandsOnPageHeader = () => (
           </StackItem>
           <StackItem>
             <Text>
-              Red Hat OpenShift Service on AWS (ROSA) is a fully managed turnkey application
+              Red Hat OpenShift Service on AWS (ROSA) is a fully-managed turnkey application
               platform that allows organizations to quickly build, deploy, and scale applications in
               a native AWS environment. With one click, start your free 8-hour hands-on experience
               in a ROSA cluster.

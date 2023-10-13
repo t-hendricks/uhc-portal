@@ -56,7 +56,7 @@ export enum UrlPath {
 export const breadcrumbs: BreadcrumbPath[] = [
   { label: 'Clusters' },
   { label: 'Cluster Type', path: UrlPath.Create },
-  { label: 'Get Started with ROSA', path: UrlPath.CreateGetStarted },
+  { label: 'Set up ROSA', path: UrlPath.CreateGetStarted },
   { label: 'Create a ROSA Cluster' },
 ];
 
