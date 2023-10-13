@@ -48,6 +48,7 @@ const MachineTypeSelection = ({
   billingModel,
   quota,
   organization,
+  menuAppendTo,
   ...extraProps
 }) => {
   const [isOpen, setIsOpen] = React.useState(false);
@@ -253,6 +254,7 @@ const MachineTypeSelection = ({
           onToggle={(isExpanded) => setIsOpen(isExpanded)}
           onSelect={changeHandler}
           maxHeight={inModal ? 300 : 600}
+          menuAppendTo={menuAppendTo}
         >
           {options}
         </Select>
@@ -355,6 +357,7 @@ MachineTypeSelection.propTypes = {
   billingModel: PropTypes.oneOf(Object.values(billingModels)).isRequired,
   quota: PropTypes.object.isRequired,
   organization: PropTypes.object.isRequired,
+  menuAppendTo: PropTypes.object,
   // Plus extraprops passed by redux Field
 };
 

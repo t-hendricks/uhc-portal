@@ -328,7 +328,7 @@ class CreateROSAWizardInternal extends React.Component {
             name: stepNameById[stepId.CLUSTER_SETTINGS__MACHINE_POOL],
             component: (
               <ErrorBoundary>
-                <MachinePoolScreen forceTouch={forceTouch} />
+                <MachinePoolScreen />
               </ErrorBoundary>
             ),
             canJumpTo: this.canJumpTo(22),

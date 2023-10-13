@@ -7,14 +7,13 @@ import config from '~/config';
 import ReviewSection, {
   ReviewItem,
 } from '~/components/clusters/CreateOSDPage/CreateOSDWizard/ReviewClusterScreen/ReviewSection';
-import { useGlobalState } from '~/redux/hooks/useGlobalState';
 import { useFormState } from '~/components/clusters/wizards/hooks';
 import {
   CloudProviderType,
   UpgradePolicyType,
 } from '~/components/clusters/wizards/common/constants';
 import { FieldId, StepId } from '~/components/clusters/wizards/osd/constants';
-import { canAutoScaleOnCreateSelector } from '~/components/clusters/ClusterDetails/components/MachinePools/MachinePoolsSelectors';
+import useCanClusterAutoscale from '~/components/clusters/ClusterDetails/components/MachinePools/components/EditMachinePoolModal/hooks/useCanClusterAutoscale';
 import { DebugClusterRequest } from './DebugClusterRequest';
 import { canSelectImds } from '../../rosa/constants';
 
@@ -38,7 +37,7 @@ export const ReviewAndCreateContent = ({ isPending }: ReviewAndCreateContentProp
     },
     values: formValues,
   } = useFormState();
-  const canAutoScale = useGlobalState((state) => canAutoScaleOnCreateSelector(state, product));
+  const canAutoScale = useCanClusterAutoscale(product);
   const autoscalingEnabled = canAutoScale && !!formValues[FieldId.AutoscalingEnabled];
 
   const isByoc = byoc === 'true';

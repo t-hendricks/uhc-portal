@@ -2,7 +2,6 @@ import get from 'lodash/get';
 
 import { availableNodesFromQuota } from '../../../common/quotaSelectors';
 import { normalizedProducts, billingModels } from '../../../../../common/subscriptionTypes';
-import { isHypershiftCluster } from '../../clusterDetailsHelper';
 
 const hasMachinePoolsQuotaSelector = (state) => {
   const { organization } = state.userProfile;
@@ -45,44 +44,13 @@ const hasOrgLevelAutoscaleCapability = (state) => {
   return !!(autoScaleClusters && autoScaleClusters.value === 'true');
 };
 
-const hasClusterLevelAutoscaleCapability = (state) => {
-  const cluster = get(state, 'clusters.details.cluster');
-  if (!cluster) {
-    return false;
-  }
-  const subCapabilities = get(cluster, 'subscription.capabilities', []);
-  const autoScaleClusters = subCapabilities.find(
-    (capability) => capability.name === 'capability.cluster.autoscale_clusters',
-  );
-
-  return !!(autoScaleClusters && autoScaleClusters.value === 'true');
-};
-
 // on the OSD creation page don't check cluster level capability for autoscaling
 const canAutoScaleOnCreateSelector = (state, product) =>
   product === normalizedProducts.ROSA ||
   (product === normalizedProducts.OSD && hasOrgLevelAutoscaleCapability(state));
 
-const canAutoScaleSelector = (state, product) =>
-  product === normalizedProducts.ROSA ||
-  (product === normalizedProducts.OSD && hasClusterLevelAutoscaleCapability(state)) ||
-  (product === normalizedProducts.OSD && hasOrgLevelAutoscaleCapability(state));
-
-const canUseSpotInstances = (state, product) => {
-  const { cluster } = state.clusters.details;
-  const cloudProviderID = cluster.cloud_provider?.id;
-  return (
-    cloudProviderID === 'aws' &&
-    !isHypershiftCluster(cluster) &&
-    (product === normalizedProducts.ROSA ||
-      (product === normalizedProducts.OSD && state.clusters.details?.cluster?.ccs?.enabled))
-  );
-};
-
 export {
   hasMachinePoolsQuotaSelector,
   hasOrgLevelAutoscaleCapability,
   canAutoScaleOnCreateSelector,
-  canAutoScaleSelector,
-  canUseSpotInstances,
 };

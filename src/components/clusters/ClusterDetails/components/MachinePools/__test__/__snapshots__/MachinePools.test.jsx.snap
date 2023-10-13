@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`<MachinePools /> OpenShift version for machine pools is shown if hypershift 1`] = `
+exports[`<MachinePools /> renders OpenShift version for machine pools is shown if hypershift 1`] = `
 <Fragment>
   <UpdateAllMachinePools />
   <Card
@@ -231,6 +231,29 @@ exports[`<MachinePools /> OpenShift version for machine pools is shown if hypers
         <TableBody />
       </Table>
     </CardBody>
+  </Card>
+  <UpdateMachinePoolModal />
+</Fragment>
+`;
+
+exports[`<MachinePools /> renders should render skeleton while fetching machine pools 1`] = `
+<Fragment>
+  <Card>
+    <CardTitle>
+      <Skeleton
+        size="lg"
+      />
+    </CardTitle>
+    <CardBody>
+      <Skeleton
+        size="lg"
+      />
+    </CardBody>
+    <CardFooter>
+      <Skeleton
+        size="lg"
+      />
+    </CardFooter>
   </Card>
   <UpdateMachinePoolModal />
 </Fragment>
@@ -1180,29 +1203,6 @@ exports[`<MachinePools /> renders with the machine pool when it has labels 1`] =
         <TableBody />
       </Table>
     </CardBody>
-  </Card>
-  <UpdateMachinePoolModal />
-</Fragment>
-`;
-
-exports[`<MachinePools /> should render skeleton while fetching machine pools 1`] = `
-<Fragment>
-  <Card>
-    <CardTitle>
-      <Skeleton
-        size="lg"
-      />
-    </CardTitle>
-    <CardBody>
-      <Skeleton
-        size="lg"
-      />
-    </CardBody>
-    <CardFooter>
-      <Skeleton
-        size="lg"
-      />
-    </CardFooter>
   </Card>
   <UpdateMachinePoolModal />
 </Fragment>

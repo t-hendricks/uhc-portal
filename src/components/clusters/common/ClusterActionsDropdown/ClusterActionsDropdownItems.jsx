@@ -139,20 +139,16 @@ function actionResolver(
     ),
   });
 
-  const getEditNodeCountProps = () => ({
+  const getEditMachinePoolProps = () => ({
     ...baseProps,
-    title: 'Edit node count',
-    key: getKey('editnodecount'),
+    title: 'Edit machine pools',
+    key: getKey('editmachinepools'),
     ...disableIfTooltip(
       uninstallingMessage || readOnlyMessage || hibernatingMessage || notReadyMessage,
       {
         onClick: () =>
-          openModal(modals.EDIT_NODE_COUNT, {
+          openModal(modals.EDIT_MACHINE_POOL, {
             cluster,
-            isDefaultMachinePool: !isHypershiftCluster(cluster),
-            shouldDisplayClusterName: inClusterList,
-            isHypershiftCluster: isHypershiftCluster(cluster),
-            clearMachineOrNodePoolsOnExit: inClusterList,
           }),
       },
     ),
@@ -304,7 +300,7 @@ function actionResolver(
     canHibernateCluster &&
     !isProductOSDTrial &&
     !isHypershiftCluster(cluster);
-  const showEditNodeCount = cluster.canEdit && cluster.managed;
+  const showEditMachinePool = cluster.canEdit && cluster.managed;
   const isArchived = get(cluster, 'subscription.status', false) === subscriptionStatuses.ARCHIVED;
   const showArchive = cluster.canEdit && !cluster.managed && cluster.subscription && !isArchived;
   const showUnarchive = cluster.canEdit && !cluster.managed && cluster.subscription && isArchived;
@@ -329,7 +325,7 @@ function actionResolver(
     cluster.canEdit && getEditDisplayNameProps(),
     showEditURL && getEditConsoleURLProps(),
     showScale && getScaleClusterProps(),
-    showEditNodeCount && getEditNodeCountProps(),
+    showEditMachinePool && getEditMachinePoolProps(),
     showHibernateCluster && getHibernateClusterProps(),
     showUpgradeTrialCluster && getUpgradeTrialClusterProps(),
     showDelete && getDeleteItemProps(),
