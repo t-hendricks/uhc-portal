@@ -11,6 +11,7 @@ import helpers from '../../../../../../common/helpers';
 const mapFilterGroup = (group, currentFilter, setFilter, history) => {
   const setFilterAndQueryParams = (key, value) => {
     history.push({
+      ...history.location,
       search: buildFilterURLParams({ [key]: [value] }),
     });
     setFilter(value);
@@ -39,6 +40,7 @@ const mapFilterGroup = (group, currentFilter, setFilter, history) => {
 const mapFlagsGroup = (group, currentFlags, setFlags, history) => {
   const setFilterAndQueryParams = (flags) => {
     history.push({
+      ...history.location,
       search: buildFilterURLParams(flags),
     });
     setFlags(flags);
@@ -70,6 +72,7 @@ const mapFlagsGroup = (group, currentFlags, setFlags, history) => {
 
 const clearFilters = (history, clearFiltersAndFlags) => {
   history.push({
+    ...history.location,
     search: '',
   });
   clearFiltersAndFlags();
