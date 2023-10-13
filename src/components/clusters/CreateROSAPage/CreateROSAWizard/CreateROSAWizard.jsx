@@ -451,7 +451,7 @@ class CreateROSAWizardInternal extends React.Component {
     const breadcrumbs = [
       { label: 'Clusters' },
       { label: 'Cluster Type', path: '/create' },
-      { label: 'Get Started with ROSA', path: '/create/rosa/getstarted' },
+      { label: 'Set up ROSA', path: '/create/rosa/getstarted' },
       { label: 'Create a ROSA Cluster' },
     ];
 

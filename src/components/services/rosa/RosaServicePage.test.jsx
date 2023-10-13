@@ -1,9 +1,8 @@
 import React from 'react';
-import { render, screen, checkAccessibility, fireEvent } from '@testUtils';
-import { waitForElementToBeRemoved } from '@testing-library/react';
-import '@testing-library/jest-dom';
 import { BrowserRouter } from 'react-router-dom';
-import RosaServicePageEmptyState from './RosaServicePageEmptyState';
+
+import { render, screen, checkAccessibility, fireEvent } from '~/testUtils';
+import RosaServicePage from './RosaServicePage';
 import clusterService from '../../../services/clusterService';
 
 jest.mock('../../../services/clusterService');
@@ -11,17 +10,15 @@ clusterService.getClusters.mockResolvedValue({
   data: { kind: 'ClusterList', page: 0, size: 0, total: 0, items: [] },
 });
 
-describe('<RosaServicePageEmptyState />', () => {
+describe('<RosaServicePage />', () => {
   it('contains correct links', async () => {
     const { container } = render(
       <BrowserRouter>
-        <RosaServicePageEmptyState />
+        <RosaServicePage />
       </BrowserRouter>,
     );
 
-    expect(document.querySelector('span[role="progressbar"]')).toBeVisible();
-    await waitForElementToBeRemoved(document.querySelector('span[role="progressbar"]'));
-    expect(screen.getByText('View prerequisites', { selector: 'a' })).toHaveAttribute(
+    expect(screen.getByText('Begin setup', { selector: 'a' })).toHaveAttribute(
       'href',
       '/create/rosa/getstarted',
     );
@@ -30,7 +27,7 @@ describe('<RosaServicePageEmptyState />', () => {
     fireEvent.click(selfServiceButton);
     expect(
       screen.getByText(
-        'Create fully-managed OpenShift clusters in minutes with self-service deployment from the AWS Console, so you can get up and running quickly.',
+        'Create fully-managed OpenShift clusters in minutes so you can get up and running quickly.',
       ),
     ).toBeVisible();
 
@@ -40,7 +37,7 @@ describe('<RosaServicePageEmptyState />', () => {
     fireEvent.click(seamlessIntegrationButton);
     expect(
       screen.getByText(
-        'A native AWS service accessed on demand from the AWS Management Console so you can get up and running quickly. Take advantage of seamless integration with other AWS cloud native services.',
+        'A native AWS service accessed on demand from the AWS Management Console. Take advantage of seamless integration with other AWS cloud native services.',
       ),
     ).toBeVisible();
 
@@ -72,13 +69,14 @@ describe('<RosaServicePageEmptyState />', () => {
     fireEvent.click(fullyManagedButton);
     expect(
       screen.getByText(
-        'Focus on applications, not infrastructure, by using the fully-managed OpenShift service backed by enterprise class SLA.',
+        'Fully-managed OpenShift service, backed by a global Site Reliability Engineering (SRE) team and an enterprise class SLA, enabling customers to focus on applications, not managing infrastructure.',
       ),
     );
 
-    expect(
-      screen.getByText('Learn more about our pricing models here.', { selector: 'a' }),
-    ).toHaveAttribute('href', 'https://aws.amazon.com/rosa/pricing');
+    expect(screen.getByText('Learn more about pricing', { selector: 'a' })).toHaveAttribute(
+      'href',
+      'https://aws.amazon.com/rosa/pricing',
+    );
 
     checkAccessibility(container);
   });

@@ -89,7 +89,7 @@ const RosaHandsOnGetStartedCard = ({
                   One-click deployment of a ROSA cluster in a demo environment.
                 </CheckListItem>
                 <CheckListItem>
-                  A view into a fully managed turnkey application platform with integrated services
+                  A view into a fully-managed turnkey application platform with integrated services
                   and tools, fully backed by a global team of site reliability engineers (SREs).
                 </CheckListItem>
                 <CheckListItem>

@@ -23,7 +23,7 @@ describe('<PrerequisitesInfoBox} />', () => {
     expect(screen.getByText('Did you complete your prerequisites?')).toBeInTheDocument();
     expect(
       within(screen.getByRole('link')).getByText(
-        /Get started with Red Hat OpenShift Service on AWS \(ROSA\) page/,
+        /Set up Red Hat OpenShift Service on AWS \(ROSA\) page/,
       ),
     ).toBeInTheDocument();
     expect(screen.getByRole('link').getAttribute('href')).toEqual('/getstarted');
