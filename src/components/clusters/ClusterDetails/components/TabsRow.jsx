@@ -16,7 +16,7 @@ class TabsRow extends React.Component {
     const { history } = this.props;
     this.unlisten = history.listen((location, action) => {
       // listen to browser back/forward and manual URL changes
-      if (action === 'POP') {
+      if (['PUSH', 'POP'].includes(action)) {
         const targetTab = this.getTabs().find((t) => `#${t.id}` === location.hash);
         const targetTabKey = targetTab?.key;
         if (targetTab?.isDisabled || !targetTab?.show) {

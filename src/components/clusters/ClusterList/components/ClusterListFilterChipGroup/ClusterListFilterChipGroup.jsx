@@ -17,6 +17,7 @@ function ClusterListFilterChipGroup({ currentFilters, setFilter, history }) {
   const setFilterAndQueryParams = (filter) => {
     if (history !== undefined) {
       history.push({
+        ...history.location,
         search: buildFilterURLParams(filter),
       });
     }
@@ -76,6 +77,7 @@ ClusterListFilterChipGroup.propTypes = {
   setFilter: PropTypes.func.isRequired,
   currentFilters: PropTypes.objectOf(PropTypes.arrayOf(PropTypes.string)),
   history: PropTypes.shape({
+    location: PropTypes.string.isRequired,
     push: PropTypes.func.isRequired,
   }),
 };

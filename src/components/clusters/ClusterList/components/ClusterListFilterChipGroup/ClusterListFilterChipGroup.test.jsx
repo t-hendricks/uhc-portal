@@ -9,7 +9,7 @@ describe('<ClusterListFilterChipGroup />', () => {
       <ClusterListFilterChipGroup
         setFilter={jest.fn()}
         currentFilters={{ plan_id: ['OSD'] }}
-        history={{ push: jest.fn() }}
+        history={{ location: {}, push: jest.fn() }}
       />,
     );
     expect(wrapper).toMatchSnapshot();
