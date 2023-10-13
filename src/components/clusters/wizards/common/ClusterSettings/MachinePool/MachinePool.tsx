@@ -66,7 +66,7 @@ export const MachinePool = () => {
   }, [errors[FieldId.NodeLabels], isNodeLabelsExpanded]);
 
   React.useEffect(() => {
-    if (nodeLabels[0].key) setFieldTouched(FieldId.NodeLabels, true, true);
+    if (nodeLabels[0]?.key) setFieldTouched(FieldId.NodeLabels, true, true);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -74,12 +74,17 @@ export const MachinePool = () => {
     dispatch(getMachineTypes());
   }, [dispatch]);
 
+  React.useEffect(() => {
+    if (nodeLabels[0]?.key) setIsNodeLabelsExpanded(true);
+  }, [nodeLabels]);
+
   const nodeLabelsExpandableSection = (
     <ExpandableSection
       toggleText="Add node labels"
       className="pf-u-mt-md"
       onToggle={(isExpanded) => setIsNodeLabelsExpanded(isExpanded)}
       isExpanded={isNodeLabelsExpanded}
+      data-testid="node-labels-toggle"
     >
       <Title headingLevel="h3">Node labels (optional)</Title>
       <p className="pf-u-mb-md">

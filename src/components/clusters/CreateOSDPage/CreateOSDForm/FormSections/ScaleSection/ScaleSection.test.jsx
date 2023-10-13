@@ -123,5 +123,20 @@ describe('<ScaleSection />', () => {
         within(screen.getByRole('dialog')).getByText(constants.computeNodeCountHint),
       ).toBeInTheDocument();
     });
+
+    it('should open nodes labels section by default if node labels are set', async () => {
+      // Arrange
+      const newProps = {
+        ...defaultProps,
+        product: 'ROSA',
+        inModal: false,
+        isHypershift: false,
+        hasNodeLabels: true,
+      };
+      render(<ConnectedScaleSection {...newProps} />);
+      // Assert
+      const sectionToggle = screen.getByRole('button', { name: 'Add node labels' });
+      expect(sectionToggle).toHaveAttribute('aria-expanded', 'true');
+    });
   });
 });
