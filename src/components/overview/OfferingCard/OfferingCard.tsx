@@ -43,7 +43,7 @@ export function OfferingCard(props: OfferingCardProps) {
   let offeringCardTextBody: string | undefined;
   let offeringCardDocLink: React.ReactNode | undefined;
   let offeringCardCreationLink: string | undefined;
-  let externalCreationButton = false;
+  let externalCreationButton: boolean = false;
   let cardLogo: React.ReactNode | undefined;
 
   switch (offeringType) {
@@ -122,7 +122,7 @@ export function OfferingCard(props: OfferingCardProps) {
         { descriptionListTerm: 'Billing type', descriptionListDescription: 'Flexible hourly' },
       ];
       offeringCardDocLink = (
-        <ExternalLink href={docLinks.OPENSHIFT_DEDICATED_LEARN_MORE}>
+        <ExternalLink href="https://cloud.ibm.com/kubernetes/catalog/create?platformType=openshift">
           Learn more on IBM
         </ExternalLink>
       );
@@ -134,7 +134,10 @@ export function OfferingCard(props: OfferingCardProps) {
       offeringCardTextBody =
         'Instant free access to your own minimal, preconfigured environment for development and testing.';
       offeringCardDocLink = (
-        <Button variant={ButtonVariant.link} component={() => <Link to="/">View details</Link>} />
+        <Button
+          variant={ButtonVariant.link}
+          component={() => <Link to="/sandbox">View details</Link>}
+        />
       );
       cardLogo = <RHLogo className="offering-logo" />;
       break;

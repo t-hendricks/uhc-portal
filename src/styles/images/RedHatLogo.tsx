@@ -12,7 +12,7 @@ const RedHatLogo = (props: { height?: string; width?: string; className?: string
       data-name="Layer 1"
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 192 145"
-      aria-labelledby="Red Hat logo"
+      aria-label="Red Hat logo"
     >
       <defs>
         <style />

@@ -9,7 +9,7 @@ const IBMLogo = (props: { height?: string; width?: string; className?: string })
       width={height || '64'}
       height={width || '64'}
       className={className}
-      aria-labelledby="IBM logo"
+      aria-label="IBM logo"
     >
       <defs>
         <filter id="A" filterUnits="userSpaceOnUse" x="79.3" y="86.2" width="188.1" height="166.2">

@@ -13,7 +13,7 @@ const AWSLogo = (props: { height?: string; width?: string; className?: string })
       height={height || '.9em'}
       width={width}
       viewBox="0 0 304 182"
-      aria-labelledby="Amazon Web Service logo"
+      aria-label="Amazon Web Service logo"
     >
       <g>
         <path
