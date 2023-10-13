@@ -4,7 +4,7 @@ import isEmpty from 'lodash/isEmpty';
 
 import { MachinePool } from '~/types/clusters_mgmt.v1/models/MachinePool';
 import { SecurityGroup } from '~/types/clusters_mgmt.v1';
-import { useAWSVPCsFromCluster } from '~/components/clusters/ClusterDetails/components/MachinePools/components/AddMachinePoolModal/useAWSVPCsFromCluster';
+import { useAWSVPCsFromCluster } from '~/components/clusters/CreateOSDPage/CreateOSDWizard/NetworkScreen/useAWSVPCsFromCluster';
 import { hasSubnets, getSubnetIds } from '../machinePoolsHelper';
 import MachinePoolAutoScalingDetail from '../MachinePoolAutoscalingDetail';
 

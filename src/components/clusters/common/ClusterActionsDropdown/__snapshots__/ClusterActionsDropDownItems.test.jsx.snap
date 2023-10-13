@@ -80,8 +80,8 @@ exports[`Cluster Actions Dropdown Items cluster configuration_mode read_only sho
   <DropdownItem
     component="button"
     isAriaDisabled={true}
-    key="1.menu.editnodecount"
-    title="Edit node count"
+    key="1.menu.editmachinepools"
+    title="Edit machine pools"
     tooltip={
       <span>
         This operation is not available during maintenance
@@ -93,7 +93,7 @@ exports[`Cluster Actions Dropdown Items cluster configuration_mode read_only sho
       }
     }
   >
-    Edit node count
+    Edit machine pools
   </DropdownItem>
   <DropdownItem
     component="button"
@@ -183,8 +183,8 @@ exports[`Cluster Actions Dropdown Items cluster state hibernating should render 
   <DropdownItem
     component="button"
     isAriaDisabled={true}
-    key="1.menu.editnodecount"
-    title="Edit node count"
+    key="1.menu.editmachinepools"
+    title="Edit machine pools"
     tooltip={
       <React.Fragment>
         This cluster is hibernating; resume cluster in order to perform actions
@@ -196,7 +196,7 @@ exports[`Cluster Actions Dropdown Items cluster state hibernating should render 
       }
     }
   >
-    Edit node count
+    Edit machine pools
   </DropdownItem>
   <DropdownItem
     component="button"
@@ -276,8 +276,8 @@ exports[`Cluster Actions Dropdown Items cluster with state not ready should rend
   <DropdownItem
     component="button"
     isAriaDisabled={true}
-    key="1.menu.editnodecount"
-    title="Edit node count"
+    key="1.menu.editmachinepools"
+    title="Edit machine pools"
     tooltip={
       <span>
         This cluster is not ready
@@ -289,7 +289,7 @@ exports[`Cluster Actions Dropdown Items cluster with state not ready should rend
       }
     }
   >
-    Edit node count
+    Edit machine pools
   </DropdownItem>
   <DropdownItem
     component="button"
@@ -350,11 +350,11 @@ exports[`Cluster Actions Dropdown Items cluster with state ready and console url
   </DropdownItem>
   <DropdownItem
     component="button"
-    key="1.menu.editnodecount"
+    key="1.menu.editmachinepools"
     onClick={[Function]}
-    title="Edit node count"
+    title="Edit machine pools"
   >
-    Edit node count
+    Edit machine pools
   </DropdownItem>
   <DropdownItem
     component="button"
@@ -405,11 +405,11 @@ exports[`Cluster Actions Dropdown Items cluster with state ready and console url
   </DropdownItem>
   <DropdownItem
     component="button"
-    key="1.menu.editnodecount"
+    key="1.menu.editmachinepools"
     onClick={[Function]}
-    title="Edit node count"
+    title="Edit machine pools"
   >
-    Edit node count
+    Edit machine pools
   </DropdownItem>
   <DropdownItem
     component="button"
@@ -489,8 +489,8 @@ exports[`Cluster Actions Dropdown Items cluster with state uninstalling should r
   <DropdownItem
     component="button"
     isAriaDisabled={true}
-    key="1.menu.editnodecount"
-    title="Edit node count"
+    key="1.menu.editmachinepools"
+    title="Edit machine pools"
     tooltip={
       <span>
         The cluster is being uninstalled
@@ -502,7 +502,7 @@ exports[`Cluster Actions Dropdown Items cluster with state uninstalling should r
       }
     }
   >
-    Edit node count
+    Edit machine pools
   </DropdownItem>
   <DropdownItem
     component="button"

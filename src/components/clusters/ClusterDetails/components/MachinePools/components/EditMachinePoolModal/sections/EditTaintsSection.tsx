@@ -1,0 +1,134 @@
+import { FieldArray, useField } from 'formik';
+import * as React from 'react';
+import {
+  Alert,
+  Button,
+  FormGroup,
+  Grid,
+  GridItem,
+  Text,
+  TextVariants,
+} from '@patternfly/react-core';
+import { PlusCircleIcon } from '@patternfly/react-icons';
+import { Cluster, MachinePool } from '~/types/clusters_mgmt.v1';
+import { GlobalState } from '~/redux/store';
+import TextField from '~/components/common/formik/TextField';
+import TaintEffectField from '../fields/TaintEffectField';
+import { EditMachinePoolValues } from '../hooks/useMachinePoolFormik';
+import {
+  isEnforcedDefaultMachinePool,
+  isMinimumCountWithoutTaints,
+} from '../../../machinePoolsHelper';
+import FieldArrayRemoveButton from '../components/FieldArrayRemoveButton';
+
+type EditTaintsSectionProps = {
+  cluster: Cluster;
+  machinePoolId?: string;
+  machinePools: MachinePool[];
+  machineTypes: GlobalState['machineTypes'];
+};
+
+const EditTaintsSection = ({
+  machinePoolId,
+  cluster,
+  machinePools,
+  machineTypes,
+}: EditTaintsSectionProps) => {
+  const [input] = useField<EditMachinePoolValues['taints']>('taints');
+  const isDefaultMP =
+    !!machinePoolId &&
+    isEnforcedDefaultMachinePool(machinePoolId, machinePools, machineTypes, cluster);
+  const isMinReplicaCount = machinePoolId
+    ? isMinimumCountWithoutTaints({
+        currentMachinePoolId: machinePoolId,
+        machinePools,
+        cluster,
+      })
+    : true;
+
+  const taintsDisabled = isDefaultMP || !isMinReplicaCount;
+  return (
+    <GridItem>
+      <FormGroup fieldId="taints" label="Taints" />
+      <FieldArray
+        name="taints"
+        render={({ push, remove }) => (
+          <>
+            <Grid hasGutter>
+              <GridItem span={4}>
+                <Text component={TextVariants.small}>Key</Text>
+              </GridItem>
+              <GridItem span={4}>
+                <Text component={TextVariants.small}>Value</Text>
+              </GridItem>
+              <GridItem span={4}>
+                <Text component={TextVariants.small}>Effect</Text>
+              </GridItem>
+            </Grid>
+            <Grid hasGutter>
+              {input.value.map((_, index) => {
+                const keyField = `taints[${index}].key`;
+                const valueField = `taints[${index}].value`;
+                const effectField = `taints[${index}].effect`;
+
+                return (
+                  // eslint-disable-next-line react/no-array-index-key
+                  <React.Fragment key={index}>
+                    <GridItem span={4}>
+                      <TextField fieldId={keyField} isDisabled={taintsDisabled} />
+                    </GridItem>
+                    <GridItem span={4}>
+                      <TextField fieldId={valueField} isDisabled={taintsDisabled} />
+                    </GridItem>
+                    <GridItem span={3}>
+                      <TaintEffectField fieldId={effectField} isDisabled={taintsDisabled} />
+                    </GridItem>
+                    <GridItem span={1}>
+                      <FieldArrayRemoveButton
+                        input={input}
+                        index={index}
+                        onRemove={remove}
+                        onPush={() => push({ key: '', value: '', effect: 'NoSchedule' })}
+                      />
+                    </GridItem>
+                  </React.Fragment>
+                );
+              })}
+              <GridItem span={6}>
+                <Button
+                  icon={<PlusCircleIcon />}
+                  onClick={() => push({ key: '', value: '', effect: 'NoSchedule' })}
+                  variant="link"
+                  isInline
+                  isDisabled={taintsDisabled}
+                >
+                  Add taint
+                </Button>
+              </GridItem>
+              {isDefaultMP && (
+                <GridItem>
+                  <Alert
+                    variant="info"
+                    isInline
+                    title="Taints cannot be added to default machine pool."
+                  />
+                </GridItem>
+              )}
+              {!isMinReplicaCount && (
+                <GridItem>
+                  <Alert
+                    title="Taints cannot be added unless there are at least 2 nodes without taints across all machine pools"
+                    isInline
+                    variant="info"
+                  />
+                </GridItem>
+              )}
+            </Grid>
+          </>
+        )}
+      />
+    </GridItem>
+  );
+};
+
+export default EditTaintsSection;

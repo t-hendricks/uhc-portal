@@ -33,13 +33,10 @@ describe('Cluster Actions Dropdown Items', () => {
       expect(Fixtures.managedReadyProps.openModal).toBeCalledWith('edit-cluster', Fixtures.cluster);
     });
 
-    it('should open edit node count modal', () => {
+    it('should open edit machine pools modal', () => {
       wrapper.find(DropdownItem).at(3).simulate('click');
-      expect(Fixtures.managedReadyProps.openModal).toBeCalledWith('edit-node-count', {
+      expect(Fixtures.managedReadyProps.openModal).toBeCalledWith('edit-machine-pool', {
         cluster: Fixtures.cluster,
-        isDefaultMachinePool: true,
-        isHypershiftCluster: false,
-        clearMachineOrNodePoolsOnExit: undefined,
       });
     });
 
@@ -67,7 +64,7 @@ describe('Cluster Actions Dropdown Items', () => {
         ['Open console', false],
         ['Edit display name', false],
         ['Edit load balancers and persistent storage', false],
-        ['Edit node count', false],
+        ['Edit machine pools', false],
         ['Hibernate cluster', false],
         ['Delete cluster', false],
       ]);
@@ -105,7 +102,7 @@ describe('Cluster Actions Dropdown Items', () => {
         ['Open console', true],
         ['Edit display name', true],
         ['Edit load balancers and persistent storage', true],
-        ['Edit node count', true],
+        ['Edit machine pools', true],
         ['Hibernate cluster', true],
         ['Delete cluster', true],
       ]);
@@ -127,7 +124,7 @@ describe('Cluster Actions Dropdown Items', () => {
         ['Open console', true],
         ['Edit display name', false],
         ['Edit load balancers and persistent storage', true],
-        ['Edit node count', true],
+        ['Edit machine pools', true],
         ['Hibernate cluster', true],
         ['Delete cluster', false],
       ]);
@@ -149,7 +146,7 @@ describe('Cluster Actions Dropdown Items', () => {
         ['Open console', true],
         ['Edit display name', false],
         ['Edit load balancers and persistent storage', true],
-        ['Edit node count', true],
+        ['Edit machine pools', true],
         ['Resume from Hibernation', false],
         ['Delete cluster', true],
       ]);
@@ -171,7 +168,7 @@ describe('Cluster Actions Dropdown Items', () => {
         ['Open console', false],
         ['Edit display name', false],
         ['Edit load balancers and persistent storage', true],
-        ['Edit node count', true],
+        ['Edit machine pools', true],
         ['Hibernate cluster', true],
         ['Delete cluster', true],
       ]);
@@ -201,20 +198,20 @@ describe('Cluster Actions Dropdown Items', () => {
   });
 
   describe('Hypershift cluster', () => {
-    it('enables "edit node count" option if not hypershift', () => {
+    it('enables "edit machine pools" option if not hypershift', () => {
       const wrapper = shallow(<DropDownItemsRenderHelper {...Fixtures.managedReadyProps} />);
       wrapper.find(DropdownItem).forEach((option) => {
-        if (option.props().title === 'Edit node count') {
+        if (option.props().title === 'Edit machine pools') {
           expect(option.props().isAriaDisabled).toBeFalsy();
         }
       });
     });
 
-    // hypershift now allows 'edit node count'
-    it('enables "edit node count" option if hypershift', () => {
+    // hypershift now allows 'edit machine pools'
+    it('enables "edit machine pools" option if hypershift', () => {
       const wrapper = shallow(<DropDownItemsRenderHelper {...Fixtures.hyperShiftReadyProps} />);
       wrapper.find(DropdownItem).forEach((option) => {
-        if (option.props().title === 'Edit node count') {
+        if (option.props().title === 'Edit machine pools') {
           expect(option.props().isAriaDisabled).toBeFalsy();
         }
       });
