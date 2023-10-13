@@ -6,8 +6,6 @@ import { Form, Grid, GridItem, Title, Text, ExpandableSection } from '@patternfl
 
 import { required } from '~/common/validators';
 import { getMachineTypes } from '~/redux/actions/machineTypesActions';
-import { useGlobalState } from '~/redux/hooks/useGlobalState';
-import { canAutoScaleOnCreateSelector } from '~/components/clusters/ClusterDetails/components/MachinePools/MachinePoolsSelectors';
 import MachineTypeSelection from '~/components/clusters/CreateOSDPage/CreateOSDForm/FormSections/ScaleSection/MachineTypeSelection';
 import { CloudProviderType, FieldId } from '~/components/clusters/wizards/common/constants';
 import { useFormState } from '~/components/clusters/wizards/hooks';
@@ -18,6 +16,7 @@ import NodeCountInput from '~/components/clusters/common/NodeCountInput';
 import { normalizedProducts } from '~/common/subscriptionTypes';
 import { getNodesCount } from '~/components/clusters/CreateOSDPage/CreateOSDForm/FormSections/ScaleSection/AutoScaleSection/AutoScaleHelper';
 import { getMinNodesRequired } from '~/components/clusters/ClusterDetails/components/MachinePools/machinePoolsHelper';
+import useCanClusterAutoscale from '~/components/clusters/ClusterDetails/components/MachinePools/components/EditMachinePoolModal/hooks/useCanClusterAutoscale';
 import { NodeLabelsFieldArray } from './NodeLabelsFieldArray';
 import { ImdsSectionField } from './ImdsSectionField/ImdsSectionField';
 import { AutoScale } from './AutoScale/AutoScale';
@@ -46,7 +45,7 @@ export const MachinePool = () => {
   const isByoc = byoc === 'true';
   const isRosa = product === normalizedProducts.ROSA;
   const isAWS = cloudProvider === CloudProviderType.Aws;
-  const canAutoScale = useGlobalState((state) => canAutoScaleOnCreateSelector(state, product));
+  const canAutoScale = useCanClusterAutoscale(product);
   const [isNodeLabelsExpanded, setIsNodeLabelsExpanded] = React.useState(false);
 
   // If no value has been set for compute nodes already,

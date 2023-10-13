@@ -3,7 +3,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import ScaleClusterDialog from './ScaleClusterDialog';
-import EditNodeCountModal from './EditNodeCountModal';
 import ArchiveClusterDialog from './ArchiveClusterDialog';
 import HibernateClusterModal from './HibernateClusterModal';
 import ResumeClusterModal from './ResumeClusterModal';
@@ -16,6 +15,7 @@ import UpgradeTrialClusterDialog from './UpgradeTrialClusterDialog';
 import DeleteClusterDialog from './DeleteClusterDialog';
 import UpgradeWizard from './Upgrades/UpgradeWizard';
 import ConnectedModal from '../../common/Modal/ConnectedModal';
+import { ConnectedEditMachinePoolModal } from '../ClusterDetails/components/MachinePools/components/EditMachinePoolModal/EditMachinePoolModal';
 
 function CommonClusterModals({ onClose, onClusterDeleted }) {
   return (
@@ -25,7 +25,6 @@ function CommonClusterModals({ onClose, onClusterDeleted }) {
       <ConnectedModal ModalComponent={TransferClusterOwnershipDialog} onClose={onClose} />
       <ConnectedModal ModalComponent={EditSubscriptionSettingsDialog} onClose={onClose} isDialog />
       <ConnectedModal ModalComponent={ScaleClusterDialog} onClose={onClose} />
-      <ConnectedModal ModalComponent={EditNodeCountModal} onClose={onClose} />
       <ConnectedModal ModalComponent={ArchiveClusterDialog} onClose={onClose} />
       <ConnectedModal ModalComponent={HibernateClusterModal} onClose={onClose} />
       <ConnectedModal ModalComponent={ResumeClusterModal} onClose={onClose} />
@@ -44,6 +43,7 @@ function CommonClusterModals({ onClose, onClusterDeleted }) {
           }
         }}
       />
+      <ConnectedModal ModalComponent={ConnectedEditMachinePoolModal} />
     </>
   );
 }

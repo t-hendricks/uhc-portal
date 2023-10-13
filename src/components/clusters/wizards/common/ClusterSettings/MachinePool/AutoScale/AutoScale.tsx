@@ -18,11 +18,11 @@ import links from '~/common/installLinks.mjs';
 import { openModal } from '~/components/common/Modal/ModalActions';
 import modals from '~/components/common/Modal/modals';
 import { normalizedProducts } from '~/common/subscriptionTypes';
-import { MAX_NODES } from '~/components/clusters/common/NodeCountInput/NodeCountInput';
 import { required, validateNumericInput } from '~/common/validators';
 import getMinNodesAllowed from '~/components/clusters/CreateOSDPage/CreateOSDForm/FormSections/ScaleSection/AutoScaleSection/AutoScaleHelper';
 import { CheckboxField } from '~/components/clusters/wizards/form/CheckboxField';
 import { useFormState } from '~/components/clusters/wizards/hooks';
+import { MAX_NODES } from '~/components/clusters/common/machinePools/constants';
 import { NodesInput } from './NodesInput';
 import ClusterAutoScaleSettingsDialog from './ClusterAutoScaleSettingsDialog';
 

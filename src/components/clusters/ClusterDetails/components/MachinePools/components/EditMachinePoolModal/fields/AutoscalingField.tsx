@@ -1,0 +1,56 @@
+import { Checkbox, FormGroup } from '@patternfly/react-core';
+import { useField } from 'formik';
+import * as React from 'react';
+import links from '~/common/installLinks.mjs';
+import { constants } from '~/components/clusters/CreateOSDPage/CreateOSDForm/CreateOSDFormConstants';
+import ExternalLink from '~/components/common/ExternalLink';
+import PopoverHint from '~/components/common/PopoverHint';
+import { Cluster } from '~/types/clusters_mgmt.v1';
+import { isROSA } from '~/components/clusters/common/clusterStates';
+import useCanClusterAutoscale from '../hooks/useCanClusterAutoscale';
+
+const fieldId = 'autoscaling';
+
+type AutoscalingFieldProps = {
+  cluster: Cluster;
+};
+
+const AutoscalingField = ({ cluster }: AutoscalingFieldProps) => {
+  const [field] = useField(fieldId);
+  const canAutoScale = useCanClusterAutoscale(cluster.product?.id);
+
+  const isRosa = isROSA(cluster);
+  const autoScalingUrl = isRosa ? links.ROSA_AUTOSCALING : links.APPLYING_AUTOSCALING;
+
+  return canAutoScale ? (
+    <FormGroup label="Scaling">
+      <Checkbox
+        {...field}
+        label={
+          <>
+            Enable autoscaling{' '}
+            <PopoverHint
+              hint={
+                <>
+                  {constants.autoscaleHint}{' '}
+                  <ExternalLink href={autoScalingUrl}>
+                    Learn more about autoscaling
+                    {isRosa ? ' with ROSA' : ''}
+                  </ExternalLink>
+                </>
+              }
+            />
+          </>
+        }
+        isChecked={field.value as boolean}
+        onChange={(checked, event) => {
+          field.onChange(event);
+        }}
+        id={fieldId}
+        description="Autoscaling automatically adds and removes worker (compute) nodes from the cluster based on resource requirements."
+      />
+    </FormGroup>
+  ) : null;
+};
+
+export default AutoscalingField;

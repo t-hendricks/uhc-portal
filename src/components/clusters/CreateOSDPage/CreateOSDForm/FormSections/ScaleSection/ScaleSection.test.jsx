@@ -80,28 +80,6 @@ describe('<ScaleSection />', () => {
       ).toBeInTheDocument();
     });
 
-    it('displays appropriate text when adding new HCP machine pool', async () => {
-      // Arrange
-      const newProps = {
-        ...defaultProps,
-        product: 'ROSA',
-        inModal: true,
-        isHypershift: true,
-      };
-      const { user } = render(<ConnectedScaleSection {...newProps} />);
-      expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
-      // ensure non-autoscale selection is showing
-      expect(screen.getByRole('combobox', { name: 'Compute nodes' })).toBeInTheDocument();
-
-      // Act
-      await user.click(screen.getByRole('button', { name: 'Compute node count information' }));
-      expect(await screen.findByRole('dialog')).toBeInTheDocument();
-      // Assert
-      expect(
-        within(screen.getByRole('dialog')).getByText(constants.hcpComputeNodeCountHint),
-      ).toBeInTheDocument();
-    });
-
     it('displays appropriate text when adding a new ROSA classic machine pool', async () => {
       // Arrange
       const newProps = {
