@@ -40,6 +40,7 @@ class ClusterListFilterDropdown extends React.Component {
     const setFilterAndQueryParams = (filter) => {
       if (history !== undefined) {
         history.push({
+          ...history.location,
           search: buildFilterURLParams(filter),
         });
       }
@@ -103,6 +104,7 @@ ClusterListFilterDropdown.propTypes = {
   setFilter: PropTypes.func.isRequired,
   currentFilters: PropTypes.objectOf(PropTypes.arrayOf(PropTypes.string)),
   history: PropTypes.shape({
+    location: PropTypes.string.isRequired,
     push: PropTypes.func.isRequired,
   }),
   className: PropTypes.string,
