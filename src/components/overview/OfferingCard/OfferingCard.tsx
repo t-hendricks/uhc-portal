@@ -2,21 +2,22 @@ import './OfferingCard.scss';
 import React from 'react';
 import {
   Button,
+  ButtonVariant,
   Card,
   CardBody,
   CardFooter,
   CardHeader,
+  DescriptionList,
+  DescriptionListTerm,
+  DescriptionListGroup,
+  DescriptionListDescription,
   Flex,
   FlexItem,
   Label,
   Split,
   SplitItem,
-  Text,
   TextContent,
-  TextList,
-  TextListItem,
-  TextListVariants,
-  TextListItemVariants,
+  Text,
   Title,
 } from '@patternfly/react-core';
 import { Link } from 'react-router-dom';
@@ -33,7 +34,9 @@ type OfferingCardProps = {
 export function OfferingCard(props: OfferingCardProps) {
   const { offeringType } = props;
   let offeringCardTitle: string = '';
-  let offeringCardTextList: { textlistSubject: string; testlistContent: string }[] | undefined;
+  let offeringCardDescriptionList:
+    | { descriptionListTerm: string; descriptionListDescription: string }[]
+    | undefined;
   let offeringCardDocLink: React.ReactNode | undefined;
   let offeringCardCreationLink: string = '';
   let includeCreationButton = true;
@@ -43,23 +46,29 @@ export function OfferingCard(props: OfferingCardProps) {
   switch (offeringType) {
     case 'AWS':
       offeringCardTitle = 'Red Hat OpenShift Service on AWS (ROSA)';
-      offeringCardTextList = [
-        { textlistSubject: 'Runs on', testlistContent: 'Amazon Web Services' },
-        { textlistSubject: 'Purchase through', testlistContent: 'Amazon Web Services' },
-        { textlistSubject: 'Billing type', testlistContent: 'Flexible hourly' },
+      offeringCardDescriptionList = [
+        { descriptionListTerm: 'Runs on', descriptionListDescription: 'Amazon Web Services' },
+        {
+          descriptionListTerm: 'Purchase through',
+          descriptionListDescription: 'Amazon Web Services',
+        },
+        { descriptionListTerm: 'Billing type', descriptionListDescription: 'Flexible hourly' },
       ];
       offeringCardCreationLink = '/create/rosa/getstarted';
       offeringCardDocLink = (
-        <ExternalLink href={docLinks.AWS_OPENSHIFT_LEARN_MORE}>View details</ExternalLink>
+        <Button
+          variant={ButtonVariant.link}
+          component={() => <Link to="/services/rosa">View details</Link>}
+        />
       );
-      cardLogo = <AWSLogo height="40px" width="40px" className="logo-aws" />;
+      cardLogo = <AWSLogo className="offering-logo" />;
       break;
     case 'Azure':
       offeringCardTitle = 'Azure Red Hat OpenShift (ARO)';
-      offeringCardTextList = [
-        { textlistSubject: 'Runs on', testlistContent: 'Microsoft Azure' },
-        { textlistSubject: 'Purchase through', testlistContent: 'Microsoft' },
-        { textlistSubject: 'Billing type', testlistContent: 'Flexible hourly' },
+      offeringCardDescriptionList = [
+        { descriptionListTerm: 'Runs on', descriptionListDescription: 'Microsoft Azure' },
+        { descriptionListTerm: 'Purchase through', descriptionListDescription: 'Microsoft' },
+        { descriptionListTerm: 'Billing type', descriptionListDescription: 'Flexible hourly' },
       ];
       offeringCardDocLink = (
         <ExternalLink href={docLinks.AZURE_OPENSHIFT_GET_STARTED}>Learn more on Azure</ExternalLink>
@@ -70,16 +79,16 @@ export function OfferingCard(props: OfferingCardProps) {
       break;
     case 'RHOSD':
       offeringCardTitle = 'Red Hat OpenShift Dedicated';
-      offeringCardTextList = [
-        { textlistSubject: 'Runs on', testlistContent: 'AWS or Google Cloud' },
-        { textlistSubject: 'Purchase through', testlistContent: 'Red Hat' },
-        { textlistSubject: 'Billing type', testlistContent: 'Flexible or fixed' },
+      offeringCardDescriptionList = [
+        { descriptionListTerm: 'Runs on', descriptionListDescription: 'AWS or Google Cloud' },
+        { descriptionListTerm: 'Purchase through', descriptionListDescription: 'Red Hat' },
+        { descriptionListTerm: 'Billing type', descriptionListDescription: 'Flexible or fixed' },
       ];
       offeringCardCreationLink = '/create/osd';
       offeringCardDocLink = (
         <ExternalLink href={docLinks.OPENSHIFT_DEDICATED_LEARN_MORE}>Learn more</ExternalLink>
       );
-      cardLogo = <RHLogo className="logo-rhosd" />;
+      cardLogo = <RHLogo className="offering-logo" />;
       break;
     default:
       break;
@@ -100,20 +109,24 @@ export function OfferingCard(props: OfferingCardProps) {
         <Title headingLevel="h2">{offeringCardTitle}</Title>
       </CardBody>
       <CardBody className="pf-v5-u-mt-md">
-        {offeringCardTextList?.length && (
+        {offeringCardDescriptionList?.length && (
           <TextContent>
-            <TextList component={TextListVariants.dl}>
-              {offeringCardTextList.map(({ textlistSubject, testlistContent }) => (
-                <>
-                  <TextListItem component={TextListItemVariants.dt}>
-                    <Text component="small">{textlistSubject}</Text>
-                  </TextListItem>
-                  <TextListItem component={TextListItemVariants.dd}>
-                    <Text component="small">{testlistContent}</Text>
-                  </TextListItem>
-                </>
-              ))}
-            </TextList>
+            <DescriptionList isHorizontal isCompact isAutoFit>
+              <DescriptionListGroup>
+                {offeringCardDescriptionList.map(
+                  ({ descriptionListTerm, descriptionListDescription }) => (
+                    <>
+                      <DescriptionListTerm>
+                        <Text component="small">{descriptionListTerm}</Text>
+                      </DescriptionListTerm>
+                      <DescriptionListDescription>
+                        <Text component="small">{descriptionListDescription}</Text>
+                      </DescriptionListDescription>
+                    </>
+                  ),
+                )}
+              </DescriptionListGroup>
+            </DescriptionList>
           </TextContent>
         )}
       </CardBody>
@@ -129,10 +142,10 @@ export function OfferingCard(props: OfferingCardProps) {
                 <Button
                   variant="secondary"
                   component={(props) => (
-                    <Link {...props} data-testid="register-cluster" to={offeringCardCreationLink} />
+                    <Link {...props} data-testid="create-cluster" to={offeringCardCreationLink} />
                   )}
                 >
-                  Create Cluster
+                  Create cluster
                 </Button>
               )}
             </FlexItem>

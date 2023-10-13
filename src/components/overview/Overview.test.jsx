@@ -3,9 +3,9 @@ import { BrowserRouter } from 'react-router-dom';
 
 import { render, screen, checkAccessibility } from '~/testUtils';
 import Overview from './Overview';
-import docLinks from '../../common/installLinks.mjs';
+// import docLinks from '../../common/installLinks.mjs';
 
-describe('<OverviewEmptyState />', () => {
+describe('<Overview />', () => {
   it('contains correct links', async () => {
     const { container } = render(
       <BrowserRouter>
@@ -13,28 +13,12 @@ describe('<OverviewEmptyState />', () => {
       </BrowserRouter>,
     );
 
-    expect(screen.getByText('Create cluster', { selector: 'a' })).toHaveAttribute(
-      'href',
-      '/create',
-    );
-
-    expect(screen.getByText('Register a cluster', { selector: 'a' })).toHaveAttribute(
-      'href',
-      '/register',
-    );
-
-    expect(screen.getByText('Learn more about OpenShift', { selector: 'a' })).toHaveAttribute(
-      'href',
-      docLinks.WHAT_IS_OPENSHIFT,
-    );
-
-    expect(screen.getByText('Browse all OpenShift offerings', { selector: 'a' })).toHaveAttribute(
-      'href',
-      '/create',
-    );
+    expect(
+      screen.getByText('View all OpenShift cluster types and start creating', { selector: 'a' }),
+    ).toHaveAttribute('href', '/create');
 
     expect(
-      screen.getByText('See all OpenShift learning resources', { selector: 'a' }),
+      screen.getByText('Browse all OpenShift learning resources', { selector: 'a' }),
     ).toHaveAttribute('href', '/openshift/learning-resources');
 
     checkAccessibility(container);

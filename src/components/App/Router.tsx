@@ -108,7 +108,7 @@ import EntitlementConfig from '../common/EntitlementConfig/index';
 import DownloadsPage from '../downloads/DownloadsPage';
 import withFeatureGate from '../features/with-feature-gate';
 import Dashboard from '../dashboard';
-import Overview from '../Overview';
+import Overview from '../overview';
 import Quota from '../quota';
 import Releases from '../releases/index';
 import Tokens from '../tokens';

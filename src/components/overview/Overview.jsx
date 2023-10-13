@@ -5,9 +5,10 @@ import { Link } from 'react-router-dom';
 import ExternalLink from '~/components/common/ExternalLink';
 import ProductBanner from '../common/ProductBanner';
 import docLinks from '../../common/installLinks.mjs';
-import { OfferingCard } from './OfferingCard/OfferingCard';
 import { ListTextLabelLinkCard } from '../common/ListTextLabelLinkCard/ListTextLabelLinkCard';
 import OpenShiftProductIcon from '../../styles/images/OpenShiftProductIcon.svg';
+import { OfferingCard } from './OfferingCard/OfferingCard';
+import { AppPage } from '../App/AppPage';
 
 const linkTextLabelLinkCardContents = {
   cardClassName: 'pf-u-mb-lg',
@@ -55,7 +56,7 @@ const openshiftBannerContents = {
 
 function OverviewEmptyState() {
   return (
-    <>
+    <AppPage>
       <ProductBanner
         icon={openshiftBannerContents.icon}
         learnMoreLink={openshiftBannerContents.learnMoreLink}
@@ -70,7 +71,7 @@ function OverviewEmptyState() {
           <FlexItem className="pf-u-pt-md">
             <OfferingCard offeringType="RHOSD" />
           </FlexItem>
-          <FlexItem>
+          <FlexItem className="pf-u-pt-md">
             <OfferingCard offeringType="AWS" />
           </FlexItem>
           <FlexItem className="pf-u-pt-md">
@@ -86,7 +87,7 @@ function OverviewEmptyState() {
           Browse all OpenShift learning resources
         </ExternalLink>
       </PageSection>
-    </>
+    </AppPage>
   );
 }
 
