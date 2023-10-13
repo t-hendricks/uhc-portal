@@ -651,10 +651,14 @@ const getInflightChecks = (clusterID: string) =>
 
 const clearInstallableVersions = () => action(clustersConstants.CLEAR_CLUSTER_VERSIONS_RESPONSE);
 
-const getInstallableVersions = (isRosa: boolean, isMarketplaceGcp: boolean) =>
+const getInstallableVersions = (
+  isRosa: boolean,
+  isMarketplaceGcp: boolean,
+  isHCP: boolean = false,
+) =>
   action(
     clustersConstants.GET_CLUSTER_VERSIONS,
-    clusterService.getInstallableVersions(isRosa, isMarketplaceGcp),
+    clusterService.getInstallableVersions(isRosa, isMarketplaceGcp, isHCP),
   );
 
 type ClusterAction = ActionType<

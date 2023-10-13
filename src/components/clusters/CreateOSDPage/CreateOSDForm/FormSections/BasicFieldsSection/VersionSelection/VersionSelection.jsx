@@ -103,17 +103,67 @@ function VersionSelection({
     </Alert>
   );
 
-  useEffect(() => {
-    if (getInstallableVersionsResponse.fulfilled) {
-      setVersions(get(getInstallableVersionsResponse, 'versions', []));
-    } else if (getInstallableVersionsResponse.error) {
-      // error, close dropdown
-      setIsOpen(false);
-    } else if (!getInstallableVersionsResponse.pending) {
-      // First time.
-      getInstallableVersions(isRosa);
+  const versionName = (version) => parseFloat(version.raw_id);
+
+  const isHostedDisabled = (version) =>
+    isHypershiftSelected && !version.hosted_control_plane_enabled;
+
+  const isIncompatibleVersion = (version) => {
+    if (!version?.raw_id) {
+      return false;
     }
-  }, [getInstallableVersions, getInstallableVersionsResponse, isRosa]);
+    const minManagedPolicyVersionName = parseFloat(MIN_MANAGED_POLICY_VERSION);
+
+    const versionPatch = Number(version.raw_id.split('.')[2]);
+
+    const minManagedPolicyVersionPatch = Number(MIN_MANAGED_POLICY_VERSION.split('.')[2]);
+
+    const isIncompatibleManagedVersion =
+      hasManagedArnsSelected &&
+      (versionName(version) < minManagedPolicyVersionName ||
+        (versionName(version) === minManagedPolicyVersionName &&
+          versionPatch < minManagedPolicyVersionPatch));
+
+    return (
+      (isRosa && !isValidRosaVersion(version)) ||
+      isIncompatibleManagedVersion ||
+      isHostedDisabled(version)
+    );
+  };
+
+  useEffect(() => {
+    // Get version list on every load because version list
+    // call depends on if is hypershift
+    getInstallableVersions(isRosa, isHypershiftSelected);
+  }, [getInstallableVersions, isRosa, isHypershiftSelected]);
+
+  useEffect(
+    () => {
+      if (getInstallableVersionsResponse.fulfilled) {
+        const versions = get(getInstallableVersionsResponse, 'versions', []);
+
+        const selectedVersionInVersionList = versions.find(
+          (ver) => ver.raw_id === selectedClusterVersion?.raw_id,
+        );
+
+        if (
+          selectedClusterVersion?.raw_id &&
+          (!selectedVersionInVersionList || isIncompatibleVersion(selectedVersionInVersionList))
+        ) {
+          // The previously selected version is no longer compatible
+          input.onChange(undefined);
+        }
+        setVersions(versions);
+      } else if (getInstallableVersionsResponse.error) {
+        // error, close dropdown
+        setIsOpen(false);
+      }
+    },
+    // We only want to run this code when the full set of available versions is available.
+    // and not when  selectedClusterVersion? changes.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [getInstallableVersionsResponse],
+  );
 
   useEffect(() => {
     if (versions.length && !selectedClusterVersion?.raw_id) {
@@ -150,7 +200,7 @@ function VersionSelection({
     // In case of backend error, don't want infinite loop reloading,
     // but allow manual reload by opening the dropdown.
     if (toggleOpenValue && getInstallableVersionsResponse.error) {
-      getInstallableVersions(isRosa);
+      getInstallableVersions(isRosa, isHypershiftSelected);
     }
   };
 
@@ -180,28 +230,11 @@ function VersionSelection({
     let hasIncompatibleVersions = false;
 
     versions.forEach((version) => {
-      const { raw_id: versionRawId, hosted_control_plane_enabled: hostedEnabled } = version;
-      const versionName = parseFloat(versionRawId);
-      const minManagedPolicyVersionName = parseFloat(MIN_MANAGED_POLICY_VERSION);
+      const isIncompatible = isIncompatibleVersion(version);
 
-      const versionPatch = Number(versionRawId.split('.')[2]);
-      const minManagedPolicyVersionPatch = Number(MIN_MANAGED_POLICY_VERSION.split('.')[2]);
+      hasIncompatibleVersions = hasIncompatibleVersions || isIncompatible;
 
-      const isIncompatibleManagedVersion =
-        hasManagedArnsSelected &&
-        (versionName < minManagedPolicyVersionName ||
-          (versionName === minManagedPolicyVersionName &&
-            versionPatch < minManagedPolicyVersionPatch));
-
-      const isHostedDisabled = isHypershiftSelected && !hostedEnabled;
-
-      const isIncompatibleVersion =
-        (isRosa && !isValidRosaVersion(version)) ||
-        isIncompatibleManagedVersion ||
-        isHostedDisabled;
-      hasIncompatibleVersions = hasIncompatibleVersions || isIncompatibleVersion;
-
-      if (isIncompatibleVersion && showOnlyCompatibleVersions) {
+      if (isIncompatible && showOnlyCompatibleVersions) {
         return;
       }
 
@@ -212,14 +245,14 @@ function VersionSelection({
           value={version.raw_id}
           formValue={version.raw_id}
           key={version.id}
-          isDisabled={isIncompatibleVersion}
-          description={selectOptionDescription(isIncompatibleVersion, isHostedDisabled)}
+          isDisabled={isIncompatible}
+          description={selectOptionDescription(isIncompatible, isHostedDisabled(version))}
         >
           {`${version.raw_id}`}
         </SelectOption>
       );
 
-      switch (supportVersionMap?.[versionName]) {
+      switch (supportVersionMap?.[versionName(version)]) {
         case SupportStatusType.Full:
           fullSupport.push(selectOption);
           break;

@@ -95,11 +95,16 @@ const defaultProps = {
   input: { onChange: jest.fn() },
   isDisabled: false,
   label: 'Version select label',
-  meta: { error: false, touched: false },
+  meta: { error: '', touched: false },
   getInstallableVersions: jest.fn(),
   getInstallableVersionsResponse,
   selectedClusterVersion: undefined,
 };
+
+// NOTE:
+// These tests will create numerous warnings about improper props
+// These are coming from the PatternFly select items
+// For example:  Warning: React does not recognize the `inputId` prop on a DOM element.
 
 describe('<VersionSelection />', () => {
   beforeAll(() => {
@@ -591,13 +596,14 @@ describe('<VersionSelection />', () => {
       };
 
       const { user } = render(<VersionSelection {...newProps} />);
-      expect(mockGetInstallableVersions.mock.calls).toHaveLength(0);
+      // Always calls getInstallableVersions on load
+      expect(mockGetInstallableVersions.mock.calls).toHaveLength(1);
 
       // Act
       await user.click(screen.getByLabelText(componentText.BUTTON.label));
 
       // Assert
-      expect(mockGetInstallableVersions.mock.calls).toHaveLength(1);
+      expect(mockGetInstallableVersions.mock.calls).toHaveLength(2);
     });
 
     it("calls input's onChange function when an option is selected", async () => {
@@ -637,6 +643,62 @@ describe('<VersionSelection />', () => {
 
       // Assert
       expect(screen.getByLabelText(componentText.BUTTON.label)).toBeDisabled();
+    });
+
+    it('calls input.onChange to set the selected version to "undefined" when selected version is not valid', () => {
+      // In this case, it is a hypershift cluster, but the selected version is not hosted_control_plane_enabled
+
+      const newVersions = [
+        ...versions,
+        {
+          channel_group: 'stable',
+          default: false,
+          enabled: true,
+          end_of_life_timestamp: '2024-03-17T00:00:00Z',
+          hosted_control_plane_enabled: false,
+          id: 'openshift-v4.10.2',
+          raw_id: '4.10.2',
+          rosa_enabled: true,
+        },
+      ];
+      const mockOnChange = jest.fn();
+
+      const newProps = {
+        ...defaultProps,
+        input: { onChange: mockOnChange },
+        selectedClusterVersion: { raw_id: '4.10.2' },
+        isHypershiftSelected: true,
+        getInstallableVersionsResponse: {
+          error: false,
+          errorMessage: '',
+          fulfilled: true,
+          pending: false,
+          valid: true,
+          versions: newVersions,
+        },
+      };
+
+      render(<VersionSelection {...newProps} />);
+      expect(mockOnChange).toBeCalled();
+      expect(mockOnChange).toBeCalledWith(undefined);
+    });
+
+    it('calls input.onChange to set the selected version to "undefined" when selected version does not exist', () => {
+      // In this case, the selected version isn't in the version list at all
+
+      const mockOnChange = jest.fn();
+
+      const newProps = {
+        ...defaultProps,
+        input: { onChange: mockOnChange },
+        selectedClusterVersion: { raw_id: '4.10.9999' },
+      };
+
+      expect(versions.some((ver) => ver.raw_id === '4.10.999')).toBeFalsy();
+
+      render(<VersionSelection {...newProps} />);
+      expect(mockOnChange).toBeCalled();
+      expect(mockOnChange).toBeCalledWith(undefined);
     });
   });
 });
