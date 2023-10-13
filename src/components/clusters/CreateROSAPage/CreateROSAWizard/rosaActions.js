@@ -41,6 +41,19 @@ export const normalizeSTSUsersByAWSAccounts = (stsUserRoles) => {
   return [...new Set(ids)]; // convert to Set to remove duplicates, spread to convert back to array
 };
 
+const normalizedAWSAccountRole = (arrayOfRoleItems, prefix) =>
+  arrayOfRoleItems.reduce(
+    (roleObj, { type, arn, roleVersion, ...otherRoleAttributes }) => ({
+      ...roleObj,
+      ...otherRoleAttributes,
+      version: roleVersion,
+      [type]: arn,
+    }),
+    {
+      prefix,
+    },
+  );
+
 /** Converts accountRoles object into an array of ARNs
  * @param accountRoles object: https://gitlab.cee.redhat.com/service/uhc-clusters-service/-/merge_requests/3486
  * @returns
@@ -49,20 +62,34 @@ export const normalizeSTSUsersByAWSAccounts = (stsUserRoles) => {
  *   { Installer: 'arn:..croche-test-Installer-Role', ControlPlane: 'arn:...' ...}
  * ]
  */
-export const normalizeAWSAccountRoles = (accountRoles) =>
-  (accountRoles?.items || []).map((accountRole) =>
-    (accountRole?.items || []).reduce(
-      (roleObj, { type, arn, roleVersion, ...otherRoleAttributes }) => ({
-        ...roleObj,
-        ...otherRoleAttributes,
-        version: roleVersion,
-        [type]: arn,
-      }),
-      {
-        prefix: accountRole.prefix,
-      },
-    ),
-  );
+export const normalizeAWSAccountRoles = (accountRoles) => {
+  const normalizedRoles = [];
+
+  (accountRoles?.items || []).forEach((accountRole) => {
+    // Only use accountRoles that have more than 1 arn attached
+    // This is to prevent managed policy roles created with an unsupported CLI version
+    if (accountRole.items && accountRole.items.length > 1) {
+      const managedPolicyArns = [];
+      const unManagedPolicyArns = [];
+
+      // Split into managed and unmanaged policy
+      accountRole.items.forEach((item) => {
+        if (item.hcpManagedPolicies || item.managedPolicies) {
+          managedPolicyArns.push(item);
+        } else {
+          unManagedPolicyArns.push(item);
+        }
+      });
+      if (managedPolicyArns.length) {
+        normalizedRoles.push(normalizedAWSAccountRole(managedPolicyArns, accountRole.prefix));
+      }
+      if (unManagedPolicyArns.length) {
+        normalizedRoles.push(normalizedAWSAccountRole(unManagedPolicyArns, accountRole.prefix));
+      }
+    }
+  });
+  return normalizedRoles;
+};
 
 export const getAWSBillingAccountIDs = (organizationID) => (dispatch) =>
   dispatch({
