@@ -3,14 +3,17 @@ import React from 'react';
 import { Title, Label, Flex, FlexItem, PageSection } from '@patternfly/react-core';
 import { Link } from 'react-router-dom';
 import ExternalLink from '~/components/common/ExternalLink';
-import ProductBanner from '../common/ProductBanner';
+import { ProductBanner, ProductBannerProps } from '../common/ProductBanner';
 import docLinks from '../../common/installLinks.mjs';
-import { ListTextLabelLinkCard } from '../common/ListTextLabelLinkCard/ListTextLabelLinkCard';
+import {
+  ListTextLabelLinkCard,
+  ListTextLabelLinkCardProps,
+} from '../common/ListTextLabelLinkCard/ListTextLabelLinkCard';
 import OpenShiftProductIcon from '../../styles/images/OpenShiftProductIcon.svg';
 import { OfferingCard } from './OfferingCard/OfferingCard';
 import { AppPage } from '../App/AppPage';
 
-const linkTextLabelLinkCardContents = {
+const linkTextLabelLinkCardContents: ListTextLabelLinkCardProps = {
   cardClassName: 'pf-u-mb-lg',
   textLabelLinkItems: [
     {
@@ -38,7 +41,7 @@ const linkTextLabelLinkCardContents = {
   ],
 };
 
-const openshiftBannerContents = {
+const openshiftBannerContents: ProductBannerProps = {
   icon: <img src={OpenShiftProductIcon} alt="OpenShift product icon" />,
   learnMoreLink: (
     <ExternalLink href={docLinks.WHAT_IS_OPENSHIFT}>Learn more about OpenShift</ExternalLink>
