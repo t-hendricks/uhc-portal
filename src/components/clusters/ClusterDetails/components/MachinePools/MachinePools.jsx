@@ -23,7 +23,6 @@ import {
   isHypershiftCluster,
 } from '~/components/clusters/ClusterDetails/clusterDetailsHelper';
 import MachinePoolNodesSummary from './MachinePoolNodesSummary';
-import MachinePoolAutoScalingSummary from './MachinePoolAutoscalingSummary';
 import {
   UpdateAllMachinePools,
   UpdatePoolButton,
@@ -253,13 +252,7 @@ class MachinePools extends React.Component {
           ),
         },
         {
-          title: (
-            <MachinePoolAutoScalingSummary
-              isHypershift={isHypershift}
-              hasClusterAutoscale={clusterAutoscalerResponse.hasAutoscaler}
-              hasMachinePoolAutoscale={!!machinePool.autoscaling}
-            />
-          ),
+          title: machinePool.autoscaling ? 'Enabled' : 'Disabled',
         },
         isHypershift ? { title: getOpenShiftVersion(machinePool, tableActionsDisabled) } : null,
       ].filter((column) => column !== null);
