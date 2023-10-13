@@ -39,11 +39,11 @@ const linkTextLabelLinkCardContents = {
 };
 
 const openshiftBannerContents = {
-  icon: <img src={OpenShiftProductIcon} alt="Get started with OpenShift" />,
+  icon: <img src={OpenShiftProductIcon} alt="OpenShift product icon" />,
   learnMoreLink: (
     <ExternalLink href={docLinks.WHAT_IS_OPENSHIFT}>Learn more about OpenShift</ExternalLink>
   ),
-  title: 'OpenShift',
+  title: 'Get started with OpenShift',
   text: (
     <>
       Focus on work that matters with the industry&#39;s leading hybrid cloud application platform
@@ -76,6 +76,15 @@ function OverviewEmptyState() {
           </FlexItem>
           <FlexItem className="pf-u-pt-md">
             <OfferingCard offeringType="Azure" />
+          </FlexItem>
+          <FlexItem className="pf-u-pt-md">
+            <OfferingCard offeringType="RHOCP" />
+          </FlexItem>
+          <FlexItem className="pf-u-pt-md">
+            <OfferingCard offeringType="RHOIBM" />
+          </FlexItem>
+          <FlexItem className="pf-u-pt-md">
+            <OfferingCard offeringType="DEVSNBX" />
           </FlexItem>
         </Flex>
         <Link to="/create">View all OpenShift cluster types and start creating</Link>

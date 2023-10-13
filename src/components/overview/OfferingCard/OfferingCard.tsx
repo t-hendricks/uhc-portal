@@ -25,21 +25,24 @@ import ExternalLink from '~/components/common/ExternalLink';
 import microsoftLogo from '../../../styles/images/Microsoft_logo.svg';
 import AWSLogo from '../../../styles/images/AWSLogo';
 import RHLogo from '../../../styles/images/RedHatLogo';
+import IBMLogo from '../../../styles/images/ibm_cloud-icon.svg';
+import OpenShiftProductIcon from '../../../styles/images/OpenShiftProductIcon.svg';
 import docLinks from '../../../common/installLinks.mjs';
 
 type OfferingCardProps = {
-  offeringType?: 'AWS' | 'Azure' | 'RHOSD';
+  offeringType?: 'AWS' | 'Azure' | 'RHOSD' | 'RHOCP' | 'RHOIBM' | 'DEVSNBX';
 };
 
 export function OfferingCard(props: OfferingCardProps) {
   const { offeringType } = props;
-  let offeringCardTitle: string = '';
+  let offeringCardTitle: string | undefined;
+  let offeringCardLabel: string = 'Managed service';
   let offeringCardDescriptionList:
     | { descriptionListTerm: string; descriptionListDescription: string }[]
     | undefined;
+  let offeringCardTextBody: string | undefined;
   let offeringCardDocLink: React.ReactNode | undefined;
-  let offeringCardCreationLink: string = '';
-  let includeCreationButton = true;
+  let offeringCardCreationLink: string | undefined;
   let externalCreationButton = false;
   let cardLogo: React.ReactNode | undefined;
 
@@ -74,9 +77,9 @@ export function OfferingCard(props: OfferingCardProps) {
         <ExternalLink href={docLinks.AZURE_OPENSHIFT_GET_STARTED}>Learn more on Azure</ExternalLink>
       );
       externalCreationButton = true;
-      includeCreationButton = false;
       cardLogo = <img className="offering-logo" src={microsoftLogo} alt="Microsoft Azure logo" />;
       break;
+
     case 'RHOSD':
       offeringCardTitle = 'Red Hat OpenShift Dedicated';
       offeringCardDescriptionList = [
@@ -87,6 +90,51 @@ export function OfferingCard(props: OfferingCardProps) {
       offeringCardCreationLink = '/create/osd';
       offeringCardDocLink = (
         <ExternalLink href={docLinks.OPENSHIFT_DEDICATED_LEARN_MORE}>Learn more</ExternalLink>
+      );
+      cardLogo = <RHLogo className="offering-logo" />;
+      break;
+
+    case 'RHOCP':
+      offeringCardTitle = 'Red Hat OpenShift Container Platform';
+      offeringCardLabel = 'Self-managed service';
+      offeringCardDescriptionList = [
+        { descriptionListTerm: 'Runs on', descriptionListDescription: 'Supported infrastructures' },
+        { descriptionListTerm: 'Purchase through', descriptionListDescription: 'Red Hat' },
+        { descriptionListTerm: 'Billing type', descriptionListDescription: 'Annual subscription' },
+      ];
+      offeringCardCreationLink = '/create';
+      offeringCardDocLink = (
+        <Button
+          variant={ButtonVariant.link}
+          component={() => <Link to="/register">Register cluster</Link>}
+        />
+      );
+      cardLogo = (
+        <img className="offering-logo" src={OpenShiftProductIcon} alt="OpenShift product logo" />
+      );
+      break;
+
+    case 'RHOIBM':
+      offeringCardTitle = 'Red Hat OpenShift on IBM Cloud';
+      offeringCardDescriptionList = [
+        { descriptionListTerm: 'Runs on', descriptionListDescription: 'IBM Cloud' },
+        { descriptionListTerm: 'Purchase through', descriptionListDescription: 'IBM' },
+        { descriptionListTerm: 'Billing type', descriptionListDescription: 'Flexible hourly' },
+      ];
+      offeringCardDocLink = (
+        <ExternalLink href={docLinks.OPENSHIFT_DEDICATED_LEARN_MORE}>
+          Learn more on IBM
+        </ExternalLink>
+      );
+      cardLogo = <img className="offering-logo" src={IBMLogo} alt="IBM logo" />;
+      break;
+
+    case 'DEVSNBX':
+      offeringCardTitle = 'Developer Sandbox';
+      offeringCardTextBody =
+        'Instant free access to your own minimal, preconfigured environment for development and testing.';
+      offeringCardDocLink = (
+        <Button variant={ButtonVariant.link} component={() => <Link to="/">View details</Link>} />
       );
       cardLogo = <RHLogo className="offering-logo" />;
       break;
@@ -101,7 +149,7 @@ export function OfferingCard(props: OfferingCardProps) {
           <SplitItem>{cardLogo}</SplitItem>
           <SplitItem isFilled />
           <SplitItem>
-            <Label color="blue">Managed service</Label>
+            <Label color="blue">{offeringCardLabel}</Label>
           </SplitItem>
         </Split>
       </CardHeader>
@@ -109,8 +157,9 @@ export function OfferingCard(props: OfferingCardProps) {
         <Title headingLevel="h2">{offeringCardTitle}</Title>
       </CardBody>
       <CardBody className="pf-v5-u-mt-md">
-        {offeringCardDescriptionList?.length && (
-          <TextContent>
+        <TextContent>
+          {offeringCardTextBody && <Text>{offeringCardTextBody}</Text>}
+          {offeringCardDescriptionList?.length && (
             <DescriptionList isHorizontal isCompact isAutoFit>
               <DescriptionListGroup>
                 {offeringCardDescriptionList.map(
@@ -127,12 +176,12 @@ export function OfferingCard(props: OfferingCardProps) {
                 )}
               </DescriptionListGroup>
             </DescriptionList>
-          </TextContent>
-        )}
+          )}
+        </TextContent>
       </CardBody>
       <CardFooter>
         <Flex>
-          {includeCreationButton && (
+          {offeringCardCreationLink && (
             <FlexItem>
               {externalCreationButton ? (
                 <ExternalLink href={offeringCardCreationLink} isButton variant="secondary">
