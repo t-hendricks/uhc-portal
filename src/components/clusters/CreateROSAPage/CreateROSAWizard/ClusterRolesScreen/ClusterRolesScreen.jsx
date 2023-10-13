@@ -92,6 +92,7 @@ function ClusterRolesScreen({
     if (!customOperatorRolesPrefix) {
       change('custom_operator_roles_prefix', `${clusterName}-${createOperatorRolesHashPrefix()}`);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [customOperatorRolesPrefix, clusterName]);
 
   useEffect(() => {
@@ -99,6 +100,7 @@ function ClusterRolesScreen({
     // when navigating to this step (from Next or Back)
     change('detected_ocm_role', false);
     clearGetOcmRoleResponse();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
@@ -108,6 +110,7 @@ function ClusterRolesScreen({
         isAutoModeAvailable ? roleModes.AUTO : roleModes.MANUAL,
       );
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [rosaCreationMode, isAutoModeAvailable, getOCMRoleResponse.fulfilled]);
 
   useEffect(() => {
@@ -135,6 +138,7 @@ function ClusterRolesScreen({
     } else {
       getOCMRole(awsAccountID);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [getOCMRoleResponse]);
 
   const handleRefresh = () => {

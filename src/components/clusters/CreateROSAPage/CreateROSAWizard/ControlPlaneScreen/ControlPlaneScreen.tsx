@@ -46,6 +46,7 @@ const ControlPlaneField = ({
     if (!value) {
       onChange('true');
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleChange = (isHypershift: hypershiftValue) => {

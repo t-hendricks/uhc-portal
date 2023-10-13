@@ -103,6 +103,7 @@ const Tokens = (props: Props) => {
       }, window.location.origin);
     }
     // No dependencies because this effect should only be run once on mount
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const pageTitle = 'OpenShift Cluster Manager API Token';

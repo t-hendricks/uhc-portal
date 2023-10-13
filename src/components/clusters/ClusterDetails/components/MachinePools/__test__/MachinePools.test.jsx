@@ -7,6 +7,20 @@ import { normalizedProducts } from '~/common/subscriptionTypes';
 import { baseRequestState } from '../../../../../../redux/reduxHelpers';
 import MachinePools from '../MachinePools';
 
+const clusterState = {
+  clusters: {
+    details: {
+      cluster: {
+        aws: { sts: { role_arn: 'my-arn' } },
+      },
+    },
+  },
+};
+
+jest.mock('~/redux/hooks/useGlobalState', () => ({
+  useGlobalState: jest.fn().mockReturnValue(clusterState),
+}));
+
 const getMachinePools = jest.fn();
 const deleteMachinePool = jest.fn();
 const openModal = jest.fn();
@@ -46,7 +60,11 @@ const getBaseProps = (isHypershift = false, ccs = false, machinePool = defaultMa
   isAddMachinePoolModalOpen: false,
   isEditTaintsModalOpen: false,
   isEditLabelsModalOpen: false,
-  clusterAutoscalerResponse: { ...baseRequestState, autoscaler: undefined },
+  clusterAutoscalerResponse: {
+    hasAutoscaler: false,
+    getAutoscaler: { ...baseRequestState },
+    editAction: { ...baseRequestState },
+  },
   deleteMachinePoolResponse: { ...baseRequestState },
   addMachinePoolResponse: { ...baseRequestState },
   scaleMachinePoolResponse: { ...baseRequestState },
@@ -54,6 +72,7 @@ const getBaseProps = (isHypershift = false, ccs = false, machinePool = defaultMa
   getMachinePools,
   deleteMachinePool,
   clearGetMachinePoolsResponse: jest.fn(),
+  getClusterAutoscaler: jest.fn(),
   getOrganizationAndQuota,
   getMachineTypes,
   machineTypes: {},

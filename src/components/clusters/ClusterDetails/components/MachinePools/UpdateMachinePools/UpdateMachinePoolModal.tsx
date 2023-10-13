@@ -69,6 +69,7 @@ export const UpdateMachinePoolModal = () => {
       function cleanup() {
         cleanUp();
       },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [],
   );
 

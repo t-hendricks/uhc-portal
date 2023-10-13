@@ -105,6 +105,7 @@ function ClusterProxyScreen({
     if (noUrlValues) {
       change('no_proxy_domains', '');
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [noUrlValues]);
 
   return (

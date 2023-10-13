@@ -71,6 +71,7 @@ const VPCDropdown = ({
       placeholder,
       items: vpcItems,
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [vpcResponse.pending, vpcResponse.data?.items]);
 
   React.useEffect(() => {
@@ -78,11 +79,17 @@ const VPCDropdown = ({
     if (items && selectedVPC.id && !isValidSelection) {
       inputProps.onChange({ id: '', name: '' });
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedVPC, items]);
 
   const refreshVPCs = () => {
     if (vpcResponse.cloudProvider === 'aws') {
-      dispatch(getAWSCloudProviderVPCs(vpcResponse.credentials, vpcResponse.region));
+      dispatch(
+        getAWSCloudProviderVPCs({
+          awsCredentials: vpcResponse.credentials,
+          region: vpcResponse.region,
+        }),
+      );
     }
   };
 

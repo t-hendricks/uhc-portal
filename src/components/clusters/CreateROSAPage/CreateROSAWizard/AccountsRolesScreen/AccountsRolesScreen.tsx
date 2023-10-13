@@ -105,6 +105,7 @@ function AccountsRolesScreen({
         setOfflineToken(errorReason || tokenOrError);
       }, window.location.origin);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
@@ -113,6 +114,7 @@ function AccountsRolesScreen({
       setNoUserForSelectedAWSAcct(!found);
       clearGetUserRoleResponse();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [getUserRoleResponse.fulfilled, selectedAWSAccountID]);
 
   // if aws acct ids default to first available aws account
@@ -124,6 +126,7 @@ function AccountsRolesScreen({
       }
       change('associated_aws_id', selectedAWSAccountID);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [hasAWSAccounts, selectedAWSAccountID]);
 
   useEffect(() => {
@@ -147,12 +150,14 @@ function AccountsRolesScreen({
     } else {
       getAWSAccountIDs(organizationID);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [getAWSAccountIDsResponse]);
 
   useEffect(() => {
     if (getUserRoleResponse?.error || noUserForSelectedAWSAcct) {
       track(trackEvents.MissingUserRole);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [getUserRoleResponse?.error, noUserForSelectedAWSAcct]);
 
   const onClick = useCallback(
