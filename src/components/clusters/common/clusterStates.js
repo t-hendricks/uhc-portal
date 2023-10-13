@@ -83,6 +83,8 @@ function getClusterStateAndDescription(cluster) {
   };
 }
 
+const hasInflightErrors = (cluster) => getInflightChecks(cluster).length !== 0;
+
 const getInflightChecks = (cluster) => {
   const inflightChecks = get(cluster, 'inflight_checks', []);
   return Array.isArray(inflightChecks) ? inflightChecks : [];
@@ -152,6 +154,7 @@ export {
   getClusterAIPermissions,
   getStateDescription,
   getInflightChecks,
+  hasInflightErrors,
   isWaitingForOIDCProviderOrOperatorRolesMode,
 };
 export default clusterStates;
