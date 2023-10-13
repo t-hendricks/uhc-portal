@@ -45,14 +45,14 @@ import WithWizardCard from './WithWizardCard';
 import '../createROSAWizard.scss';
 
 export const productName = 'Red Hat OpenShift Service on AWS';
-const title = (productName: string = '') => `Get started with ${productName} (ROSA)`;
+const title = (productName: string = '') => `Set up ${productName} (ROSA)`;
 
 const breadcrumbs = (
   <Breadcrumbs
     path={[
       { label: 'Clusters' },
       { label: 'Cluster Type', path: '/create' },
-      { label: 'Get Started with ROSA' },
+      { label: 'Set up ROSA' },
     ]}
   />
 );

@@ -1,13 +1,11 @@
 import './RosaServicePage.scss';
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import {
   Button,
   CardBody,
   CardFooter,
   CardTitle,
   Card,
-  EmptyState,
-  EmptyStateBody,
   ExpandableSection,
   Label,
   List,
@@ -18,20 +16,18 @@ import {
   FlexItem,
   PageSection,
   CardHeader,
-  Spinner,
   TextContent,
   TextVariants,
   Divider,
   Stack,
-  Hint,
 } from '@patternfly/react-core';
 import { CubeIcon } from '@patternfly/react-icons';
-import { Link, Redirect } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import ExternalLink from '~/components/common/ExternalLink';
+import Breadcrumbs from '~/components/common/Breadcrumbs';
 import RedHatLogo from '~/styles/images/Logo-Red_Hat-B-Standard-RGB.png';
 import AWSLogo from '~/styles/images/AWSLogo';
 import { AppPage } from '~/components/App/AppPage';
-import clusterService from '../../../services/clusterService';
 import { ListTextLabelLinkCard } from '../../common/ListTextLabelLinkCard/ListTextLabelLinkCard';
 import ProductBanner from '../../common/ProductBanner';
 import docLinks from '../../../common/installLinks.mjs';
@@ -81,12 +77,12 @@ const benefitsExpandableContents = [
   {
     title: 'Self-service deployment',
     contents:
-      'Create fully-managed OpenShift clusters in minutes with self-service deployment from the AWS Console, so you can get up and running quickly.',
+      'Create fully-managed OpenShift clusters in minutes so you can get up and running quickly.',
   },
   {
     title: 'Seamless integration with other AWS services',
     contents:
-      'A native AWS service accessed on demand from the AWS Management Console so you can get up and running quickly. Take advantage of seamless integration with other AWS cloud native services.',
+      'A native AWS service accessed on demand from the AWS Management Console. Take advantage of seamless integration with other AWS cloud native services.',
   },
   {
     title: 'Maximum availability',
@@ -109,7 +105,7 @@ const featuresExpandableContents = [
   {
     title: 'Fully-managed service',
     contents:
-      'Focus on applications, not infrastructure, by using the fully-managed OpenShift service backed by enterprise class SLA.',
+      'Fully-managed OpenShift service, backed by a global Site Reliability Engineering (SRE) team and an enterprise class SLA, enabling customers to focus on applications, not managing infrastructure.',
   },
 ];
 
@@ -141,21 +137,7 @@ const linkTextLabelLinkCardContents = {
   ],
 };
 
-function RosaServicePageEmptyState() {
-  const [isLoading, setIsLoading] = useState(true);
-  const [rosaClusterExists, setRosaClusterExists] = useState(false);
-  useEffect(() => {
-    clusterService
-      .getClusters("product.id='rosa'", 0)
-      .then((response) => {
-        if (response.data.total) setRosaClusterExists(true);
-      })
-      .catch((e) => {
-        throw e;
-      })
-      .finally(() => setIsLoading(false));
-  }, []);
-
+function RosaServicePage() {
   const expandableListArray = (expandableContentArray) => (
     <Card>
       <List isPlain isBordered>
@@ -174,22 +156,6 @@ function RosaServicePageEmptyState() {
     </Card>
   );
 
-  if (isLoading) {
-    return (
-      <AppPage>
-        <EmptyState>
-          <EmptyStateBody>
-            <Spinner centered />
-          </EmptyStateBody>
-        </EmptyState>
-      </AppPage>
-    );
-  }
-
-  if (rosaClusterExists) {
-    return <Redirect to="/" />;
-  }
-
   return (
     <AppPage>
       <ProductBanner
@@ -198,12 +164,20 @@ function RosaServicePageEmptyState() {
         title={rosaBannerContents.title}
         text={rosaBannerContents.text}
         iconCardBodyClassName={rosaBannerContents.iconCardBodyClassName}
+        breadcrumbs={
+          <Breadcrumbs
+            path={[
+              { label: 'Overview', path: `/overview` },
+              {
+                label: 'Red Hat OpenShift Service on AWS (ROSA)',
+              },
+            ]}
+          />
+        }
       />
       <PageSection>
         <TextContent className="pf-u-mb-lg">
           <Title headingLevel="h2">Get started with ROSA</Title>
-          Currently, you have <span className="pf-u-font-weight-bold">0 ROSA clusters.</span>{' '}
-          We&#39;re here to help you get started.
         </TextContent>
         <Flex>
           <FlexItem flex={{ default: 'flex_1' }}>
@@ -214,7 +188,7 @@ function RosaServicePageEmptyState() {
                     <CardTitle>
                       <Title headingLevel="h4">
                         <CubeIcon isInline size="md" className="pf-u-mr-sm rosa-cube-icon" />
-                        Create your first ROSA cluster
+                        Create a ROSA cluster
                       </Title>
                     </CardTitle>
                   </CardHeader>
@@ -236,7 +210,7 @@ function RosaServicePageEmptyState() {
                           )}
                           isLarge
                         >
-                          View prerequisites
+                          Begin setup
                         </Button>
                       </FlexItem>
                     </Flex>
@@ -259,15 +233,50 @@ function RosaServicePageEmptyState() {
         </Title>
         <Card>{expandableListArray(featuresExpandableContents)}</Card>
 
-        <Hint className="pf-u-mt-lg">
-          <span>
-            Curious about pricing options for ROSA?{' '}
-            <ExternalLink noIcon href={docLinks.ROSA_PRICING}>
-              {' '}
-              Learn more about our pricing models here.
-            </ExternalLink>
-          </span>
-        </Hint>
+        <Title className="pf-u-mt-lg pf-u-mb-lg" headingLevel="h2">
+          Pricing
+        </Title>
+        <Flex>
+          <FlexItem flex={{ default: 'flex_1' }}>
+            <Card>
+              <Flex justifyContent={{ default: 'justifyContentSpaceBetween' }}>
+                <FlexItem>
+                  <CardHeader>
+                    <CardTitle>
+                      <Title headingLevel="h4">Cost Component #1: ROSA service fees</Title>
+                    </CardTitle>
+                  </CardHeader>
+                  <CardBody>
+                    Accrue on demand at an hourly rate per 4 vCPU used by worker nodes. Annual
+                    contracts are also available for further discounts. ROSA service fees are
+                    uniform across all supported regions.
+                  </CardBody>
+                </FlexItem>
+              </Flex>
+            </Card>
+          </FlexItem>
+          <FlexItem flex={{ default: 'flex_1' }} alignSelf={{ default: 'alignSelfStretch' }}>
+            <Card isFullHeight>
+              <Flex justifyContent={{ default: 'justifyContentSpaceBetween' }}>
+                <FlexItem>
+                  <CardHeader>
+                    <CardTitle>
+                      <Title headingLevel="h4">Cost Component #2: AWS infrastructure fees</Title>
+                    </CardTitle>
+                  </CardHeader>
+                  <CardBody>
+                    Includes fees for the underlying worker nodes, infrastructure nodes, control
+                    plane nodes, storage, and network.
+                  </CardBody>
+                </FlexItem>
+              </Flex>
+            </Card>
+          </FlexItem>
+        </Flex>
+
+        <div className="pf-u-mt-md">
+          <ExternalLink href={docLinks.ROSA_PRICING}>Learn more about pricing</ExternalLink>
+        </div>
 
         <Title headingLevel="h2" className="pf-u-mt-lg pf-u-mb-lg">
           Recommended content
@@ -279,4 +288,4 @@ function RosaServicePageEmptyState() {
   );
 }
 
-export default RosaServicePageEmptyState;
+export default RosaServicePage;

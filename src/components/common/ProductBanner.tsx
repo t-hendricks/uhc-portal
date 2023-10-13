@@ -1,15 +1,17 @@
 import {
-  Card,
   CardBody,
   CardFooter,
   CardTitle,
   Divider,
   Flex,
   FlexItem,
+  Stack,
+  StackItem,
   Text,
   Title,
 } from '@patternfly/react-core';
 import React from 'react';
+import { PageHeader } from '@redhat-cloud-services/frontend-components/PageHeader';
 
 type ProductBannerProps = {
   icon?: React.ReactNode;
@@ -17,12 +19,14 @@ type ProductBannerProps = {
   title?: string;
   text?: string | React.ReactNode;
   iconCardBodyClassName?: string;
+  breadcrumbs?: React.ReactNode;
 };
 
 const ProductBanner = (props: ProductBannerProps) => {
-  const { icon, learnMoreLink, title, text, iconCardBodyClassName } = props;
+  const { icon, learnMoreLink, title, text, iconCardBodyClassName, breadcrumbs } = props;
   return (
-    <Card>
+    <PageHeader>
+      {breadcrumbs}
       <Flex>
         <FlexItem alignSelf={{ default: 'alignSelfCenter' }}>
           <CardBody className={iconCardBodyClassName}>{icon}</CardBody>
@@ -31,19 +35,26 @@ const ProductBanner = (props: ProductBannerProps) => {
           orientation={{
             default: 'vertical',
           }}
-          inset={{ default: 'inset2xl' }}
         />
         <FlexItem>
-          <CardTitle>
-            <Title headingLevel="h1">{title}</Title>
-          </CardTitle>
-          <CardBody>
-            <Text>{text}</Text>
-          </CardBody>
-          <CardFooter>{learnMoreLink}</CardFooter>
+          <Stack hasGutter>
+            <StackItem isFilled>
+              <CardTitle>
+                <Title headingLevel="h1">{title}</Title>
+              </CardTitle>
+            </StackItem>
+            <StackItem isFilled>
+              <CardBody>
+                <Text>{text}</Text>
+              </CardBody>
+            </StackItem>
+            <StackItem>
+              <CardFooter>{learnMoreLink}</CardFooter>
+            </StackItem>
+          </Stack>
         </FlexItem>
       </Flex>
-    </Card>
+    </PageHeader>
   );
 };
 
