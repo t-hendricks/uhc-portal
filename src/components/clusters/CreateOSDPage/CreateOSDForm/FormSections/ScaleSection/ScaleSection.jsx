@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { Field, Fields, FieldArray } from 'redux-form';
 import {
@@ -54,7 +54,14 @@ function ScaleSection({
   maxWorkerVolumeSizeGiB,
   isHypershift,
   forceTouch,
+  hasNodeLabels = false,
 }) {
+  const [isNodeLabelsExpanded, setIsNodeLabelsExpanded] = useState(false);
+
+  useEffect(() => {
+    if (hasNodeLabels) setIsNodeLabelsExpanded(true);
+  }, [hasNodeLabels]);
+
   const onChangeImds = (value) => {
     change('imds', value);
   };
@@ -66,6 +73,8 @@ function ScaleSection({
       <ExpandableSection
         toggleTextCollapsed={expandableSectionTitle}
         toggleTextExpanded={expandableSectionTitle}
+        isExpanded={isNodeLabelsExpanded}
+        onToggle={(isExpanded) => setIsNodeLabelsExpanded(isExpanded)}
       >
         <Title headingLevel="h3">Node labels (optional)</Title>
         <p className="pf-u-mb-md">
@@ -299,6 +308,7 @@ ScaleSection.propTypes = {
   nodeIncrement: PropTypes.number,
   isMachinePool: PropTypes.bool,
   canAutoScale: PropTypes.bool,
+  hasNodeLabels: PropTypes.bool,
   autoscalingEnabled: PropTypes.bool,
   change: PropTypes.func.isRequired,
   autoScaleMinNodesValue: PropTypes.string,
