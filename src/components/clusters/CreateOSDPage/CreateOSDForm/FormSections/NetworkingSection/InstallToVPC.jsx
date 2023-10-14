@@ -38,9 +38,12 @@ function InstallToVPC({
                 }
               />
             </Title>
-            To install into an existing VPC, you need to ensure that your VPC is configured with a
-            public and a private subnet for each availability zone that you want the cluster
-            installed into.{' '}
+            {`To install into an existing VPC, you need to ensure that your VPC is configured with ${
+              !privateLinkSelected ? 'a public and' : ''
+            }
+            a private subnet for each availability zone that you want the cluster
+            installed into`}
+            .
             <ExternalLink href={links.INSTALL_AWS_CUSTOM_VPC_REQUIREMENTS}>
               Learn more about VPC
             </ExternalLink>
