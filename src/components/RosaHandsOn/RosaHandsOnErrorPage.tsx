@@ -16,7 +16,7 @@ const RosaHandsOnErrorPage = ({ message }: { message: string }) => (
       icon={(props) => <ExclamationCircleIcon {...props} color={dangerColor.value} />}
     />
     <Title headingLevel="h4" size="lg">
-      Failed to fetch demo experience status.
+      Failed to fetch demo experience.
     </Title>
     <EmptyStateBody>
       <TextContent className="pf-u-mb-md">{message}</TextContent>
