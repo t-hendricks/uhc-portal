@@ -53,7 +53,7 @@ const createOSDInitialValues = ({
     aws_secret_access_key: '',
     network_configuration_toggle: 'basic',
     cluster_privacy: isRestrictedEnv() ? 'internal' : 'external',
-    install_to_vpc: isHypershiftSelected,
+    install_to_vpc: !!isHypershiftSelected,
     use_privatelink: false,
     configure_proxy: false,
     disable_scp_checks: false,
