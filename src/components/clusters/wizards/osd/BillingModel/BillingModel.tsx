@@ -225,6 +225,7 @@ export const BillingModel = () => {
     }
 
     clearPreviousVersionsReponse();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     product,
     billingModel,

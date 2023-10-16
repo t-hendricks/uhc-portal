@@ -45,6 +45,7 @@ const Unavailable = ({ errors, message = '', response }: Props) => {
     } else {
       reportToSentry(response);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   const errorDetails = ({ response: r, message: m, key = '' }: ErrorProp) => (
     <StackItem key={key}>

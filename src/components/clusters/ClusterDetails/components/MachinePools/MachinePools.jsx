@@ -23,7 +23,6 @@ import {
   isHypershiftCluster,
 } from '~/components/clusters/ClusterDetails/clusterDetailsHelper';
 import MachinePoolNodesSummary from './MachinePoolNodesSummary';
-import MachinePoolAutoScalingSummary from './MachinePoolAutoscalingSummary';
 import {
   UpdateAllMachinePools,
   UpdatePoolButton,
@@ -33,7 +32,7 @@ import {
 import AddMachinePoolModal from './components/AddMachinePoolModal';
 import EditTaintsModal from './components/EditTaintsModal';
 import EditLabelsModal from './components/EditLabelsModal';
-import ExpandableRow from './components/ExpandableRow';
+import MachinePoolExpandedRow from './components/MachinePoolExpandedRow';
 import DeleteMachinePoolModal from './components/DeleteMachinePoolModal/DeleteMachinePoolModal';
 import {
   actionResolver,
@@ -253,13 +252,7 @@ class MachinePools extends React.Component {
           ),
         },
         {
-          title: (
-            <MachinePoolAutoScalingSummary
-              isHypershift={isHypershift}
-              hasClusterAutoscale={clusterAutoscalerResponse.hasAutoscaler}
-              hasMachinePoolAutoscale={!!machinePool.autoscaling}
-            />
-          ),
+          title: machinePool.autoscaling ? 'Enabled' : 'Disabled',
         },
         isHypershift ? { title: getOpenShiftVersion(machinePool, tableActionsDisabled) } : null,
       ].filter((column) => column !== null);
@@ -281,7 +274,10 @@ class MachinePools extends React.Component {
       cells: [
         {
           title: (
-            <ExpandableRow isMultiZoneCluster={isMultiZoneCluster} machinePool={machinePool} />
+            <MachinePoolExpandedRow
+              isMultiZoneCluster={isMultiZoneCluster}
+              machinePool={machinePool}
+            />
           ),
         },
       ],

@@ -96,6 +96,7 @@ export const AppDrawer: React.FC<PropsWithChildren<{}>> = ({ children }) => {
         );
       }
     },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [drawerSettings, drawerTransitionDuration, isOpening, setIsOpening, setDrawerSettings],
   );
 

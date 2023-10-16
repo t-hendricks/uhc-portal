@@ -143,6 +143,7 @@ export type { ProvisionShard } from './models/ProvisionShard';
 export type { Proxy } from './models/Proxy';
 export type { ResourceRange } from './models/ResourceRange';
 export type { RootVolume } from './models/RootVolume';
+export type { SecurityGroup } from './models/SecurityGroup';
 export type { ServerConfig } from './models/ServerConfig';
 export type { SocketTotalNodeRoleOSMetricNode } from './models/SocketTotalNodeRoleOSMetricNode';
 export type { SocketTotalsNodeRoleOSMetricNode } from './models/SocketTotalsNodeRoleOSMetricNode';

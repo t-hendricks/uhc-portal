@@ -55,6 +55,7 @@ export const CustomerManagedEncryption = ({
   React.useEffect(() => {
     if (hasCustomerManagedKey === 'true' && kmsKeyArn && !isGCP)
       setFieldTouched(FieldId.KmsKeyArn, true, true);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

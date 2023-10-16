@@ -641,9 +641,16 @@ const upgradeTrialCluster = (clusterID: string, data: Cluster) =>
  *  }`
  * @param region {string} the region ID.
  * @param {string} [subnet] - Optimization: If provided, only VPC attached to that subnet id will be included.
+ * @param {object} options - Additional parameters to include in the request query.
  */
-const listAWSVPCs = (credentials: AWSCredentials, region: string, subnet?: string) =>
-  apiRequest.post<{
+const listAWSVPCs = (
+  credentials: AWSCredentials,
+  region: string,
+  subnet?: string,
+  options?: { includeSecurityGroups: boolean },
+) => {
+  const query = options?.includeSecurityGroups ? '?fetchSecurityGroups=true' : '';
+  return apiRequest.post<{
     /**
      * Retrieved list of cloud VPC.
      */
@@ -665,14 +672,14 @@ const listAWSVPCs = (credentials: AWSCredentials, region: string, subnet?: strin
      * searching the result will always be the total number of available vpcs of the provider.
      */
     total?: number;
-  }>('/api/clusters_mgmt/v1/aws_inquiries/vpcs', {
+  }>(`/api/clusters_mgmt/v1/aws_inquiries/vpcs${query}`, {
     aws: credentials,
     region: {
       id: region,
     },
     subnets: subnet ? [subnet] : undefined,
   });
-
+};
 const listGCPVPCs = (credentials: GCP, region: string) =>
   apiRequest.post<{
     /**

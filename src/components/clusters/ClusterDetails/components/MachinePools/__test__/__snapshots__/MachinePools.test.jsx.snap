@@ -120,10 +120,7 @@ exports[`<MachinePools /> OpenShift version for machine pools is shown if hypers
                   />,
                 },
                 Object {
-                  "title": <MachinePoolAutoScalingSummary
-                    hasMachinePoolAutoscale={false}
-                    isHypershift={true}
-                  />,
+                  "title": "Disabled",
                 },
                 Object {
                   "title": <React.Fragment>
@@ -190,7 +187,7 @@ exports[`<MachinePools /> OpenShift version for machine pools is shown if hypers
             Object {
               "cells": Array [
                 Object {
-                  "title": <ExpandableRow
+                  "title": <MachinePoolExpandedRow
                     isMultiZoneCluster={false}
                     machinePool={
                       Object {
@@ -366,10 +363,7 @@ exports[`<MachinePools /> renders with a machine pool with autoscaling enabled 1
                   />,
                 },
                 Object {
-                  "title": <MachinePoolAutoScalingSummary
-                    hasMachinePoolAutoscale={true}
-                    isHypershift={false}
-                  />,
+                  "title": "Enabled",
                 },
               ],
               "isOpen": false,
@@ -406,7 +400,7 @@ exports[`<MachinePools /> renders with a machine pool with autoscaling enabled 1
             Object {
               "cells": Array [
                 Object {
-                  "title": <ExpandableRow
+                  "title": <MachinePoolExpandedRow
                     isMultiZoneCluster={false}
                     machinePool={
                       Object {
@@ -583,10 +577,7 @@ exports[`<MachinePools /> renders with additional machine pools, some with label
                   />,
                 },
                 Object {
-                  "title": <MachinePoolAutoScalingSummary
-                    hasMachinePoolAutoscale={false}
-                    isHypershift={false}
-                  />,
+                  "title": "Disabled",
                 },
               ],
               "isOpen": false,
@@ -620,7 +611,7 @@ exports[`<MachinePools /> renders with additional machine pools, some with label
             Object {
               "cells": Array [
                 Object {
-                  "title": <ExpandableRow
+                  "title": <MachinePoolExpandedRow
                     isMultiZoneCluster={false}
                     machinePool={
                       Object {
@@ -686,10 +677,7 @@ exports[`<MachinePools /> renders with additional machine pools, some with label
                   />,
                 },
                 Object {
-                  "title": <MachinePoolAutoScalingSummary
-                    hasMachinePoolAutoscale={false}
-                    isHypershift={false}
-                  />,
+                  "title": "Disabled",
                 },
               ],
               "isOpen": false,
@@ -711,7 +699,7 @@ exports[`<MachinePools /> renders with additional machine pools, some with label
             Object {
               "cells": Array [
                 Object {
-                  "title": <ExpandableRow
+                  "title": <MachinePoolExpandedRow
                     isMultiZoneCluster={false}
                     machinePool={
                       Object {
@@ -774,10 +762,7 @@ exports[`<MachinePools /> renders with additional machine pools, some with label
                   />,
                 },
                 Object {
-                  "title": <MachinePoolAutoScalingSummary
-                    hasMachinePoolAutoscale={false}
-                    isHypershift={false}
-                  />,
+                  "title": "Disabled",
                 },
               ],
               "isOpen": false,
@@ -808,7 +793,7 @@ exports[`<MachinePools /> renders with additional machine pools, some with label
             Object {
               "cells": Array [
                 Object {
-                  "title": <ExpandableRow
+                  "title": <MachinePoolExpandedRow
                     isMultiZoneCluster={false}
                     machinePool={
                       Object {
@@ -868,10 +853,7 @@ exports[`<MachinePools /> renders with additional machine pools, some with label
                   />,
                 },
                 Object {
-                  "title": <MachinePoolAutoScalingSummary
-                    hasMachinePoolAutoscale={false}
-                    isHypershift={false}
-                  />,
+                  "title": "Disabled",
                 },
               ],
               "key": "mp-with-no-labels-no-taints",
@@ -1007,10 +989,7 @@ exports[`<MachinePools /> renders with the machine pool 1`] = `
                   />,
                 },
                 Object {
-                  "title": <MachinePoolAutoScalingSummary
-                    hasMachinePoolAutoscale={false}
-                    isHypershift={false}
-                  />,
+                  "title": "Disabled",
                 },
               ],
               "key": "some-id",
@@ -1148,10 +1127,7 @@ exports[`<MachinePools /> renders with the machine pool when it has labels 1`] =
                   />,
                 },
                 Object {
-                  "title": <MachinePoolAutoScalingSummary
-                    hasMachinePoolAutoscale={false}
-                    isHypershift={false}
-                  />,
+                  "title": "Disabled",
                 },
               ],
               "isOpen": false,
@@ -1172,7 +1148,7 @@ exports[`<MachinePools /> renders with the machine pool when it has labels 1`] =
             Object {
               "cells": Array [
                 Object {
-                  "title": <ExpandableRow
+                  "title": <MachinePoolExpandedRow
                     isMultiZoneCluster={false}
                     machinePool={
                       Object {
