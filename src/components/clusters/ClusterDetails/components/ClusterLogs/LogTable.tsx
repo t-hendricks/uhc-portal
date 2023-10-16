@@ -186,7 +186,7 @@ const LogTable = ({ logs, setSorting, pending, refreshEvent }: LogTableParams) =
           <Td>{day}</Td>
         </Tr>
         <Tr isExpanded={isLogExpanded(log)}>
-          <Td colSpan={columns.length + 1}>
+          <Td className="cluster-log" colSpan={columns.length + 1}>
             <ExpandableRowContent>
               {md}
               {references}
