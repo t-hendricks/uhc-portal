@@ -1,26 +1,27 @@
 import React from 'react';
 import * as Sentry from '@sentry/browser';
 
-import { DemoExperience, DemoExperienceStatusEnum } from './DemoExperienceModels';
 import demoExperienceService from './demoExperienceService';
+import { DemoExperienceStatusEnum } from './DemoExperienceModels';
+import { AugmentedDemoExperience } from './augmentedModelTypes';
 
 const POLLING_INTERVAL = 30000;
 
 const useDemoExperiencePolling = (): {
-  demoExperience: DemoExperience;
+  demoExperience: AugmentedDemoExperience;
   initializing: boolean;
   initializeError: unknown;
-  restartPolling: (demoExperience: DemoExperience) => void;
+  restartPolling: (demoExperience: AugmentedDemoExperience) => void;
 } => {
-  const [demoExperience, setDemoExperience] = React.useState<DemoExperience>({
+  const [demoExperience, setDemoExperience] = React.useState<AugmentedDemoExperience>({
     quota: {},
-  } as DemoExperience);
+  } as AugmentedDemoExperience);
   const [initializing, setInitializing] = React.useState<boolean>(false);
   const [initializeError, setInitializeError] = React.useState<unknown>();
   const [intervalId, setIntervalId] = React.useState<number | null>(null);
   const pollingErrorCounter = React.useRef<number>(0);
 
-  const shouldStopPolling = (demoExperience?: DemoExperience) =>
+  const shouldStopPolling = (demoExperience?: AugmentedDemoExperience) =>
     demoExperience?.status === DemoExperienceStatusEnum.Available ||
     demoExperience?.status === DemoExperienceStatusEnum.Failed ||
     demoExperience?.status === DemoExperienceStatusEnum.Unavailable;
@@ -67,7 +68,7 @@ const useDemoExperiencePolling = (): {
     }
   };
 
-  const restartPolling = (demoExperience: DemoExperience) => {
+  const restartPolling = (demoExperience: AugmentedDemoExperience) => {
     setDemoExperience(demoExperience);
     stopPolling();
     startPolling();
