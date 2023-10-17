@@ -1,4 +1,5 @@
 import get from 'lodash/get';
+import { InflightCheckState } from '~/types/clusters_mgmt.v1';
 import { subscriptionStatuses, normalizedProducts } from '../../../common/subscriptionTypes';
 
 const clusterStates = {
@@ -83,7 +84,10 @@ function getClusterStateAndDescription(cluster) {
   };
 }
 
-const hasInflightErrors = (cluster) => getInflightChecks(cluster).length !== 0;
+const hasInflightErrors = (cluster) =>
+  getInflightChecks(cluster).some(
+    (inflightCheck) => inflightCheck.state !== InflightCheckState.PASSED,
+  );
 
 const getInflightChecks = (cluster) => {
   const inflightChecks = get(cluster, 'inflight_checks', []);
