@@ -10,12 +10,16 @@ import clusterStates, {
   isOSD,
   isWaitingROSAManualMode,
   isWaitingForOIDCProviderOrOperatorRolesMode,
+  isOSDGCPWaitingForRolesOnHostProject,
+  isOSDGCPPendingOnHostProject,
   getInflightChecks,
 } from '../clusterStates';
 
 function ProgressList({ cluster, actionRequiredInitialOpen }) {
   const isROSACluster = isROSA(cluster);
   const isOSDCluster = isOSD(cluster);
+  const isOSDGCPPending = isOSDGCPPendingOnHostProject(cluster);
+  const isOSDGCPWaiting = isOSDGCPWaitingForRolesOnHostProject(cluster);
   const isWaitingAndROSAManual = isWaitingROSAManualMode(cluster);
   const isWaitingForOIDCProviderOrOperatorRoles =
     isWaitingForOIDCProviderOrOperatorRolesMode(cluster);
@@ -43,12 +47,13 @@ function ProgressList({ cluster, actionRequiredInitialOpen }) {
 
     // first step in progress
     if (
-      isOSDCluster &&
-      (cluster.state === clusterStates.WAITING || cluster.state === clusterStates.PENDING)
+      (isOSDCluster &&
+        (cluster.state === clusterStates.WAITING || cluster.state === clusterStates.PENDING)) ||
+      isOSDGCPPending
     ) {
       return {
         awsAccountSetup: {
-          text: 'Preparing account',
+          text: isOSDGCPWaiting ? 'Waiting for permissions' : 'Preparing account',
           ...inProcess,
         },
         DNSSetup: pending,

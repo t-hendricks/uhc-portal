@@ -8,7 +8,9 @@ import { Alert, Flex, FlexItem, Button } from '@patternfly/react-core';
 import { TableVariant, TableComposable, Thead, Tr, Th, Tbody, Td } from '@patternfly/react-table';
 
 import { InflightCheckState } from '~/types/clusters_mgmt.v1';
-import clusterStates from '../../../../common/clusterStates';
+import clusterStates, {
+  isOSDGCPWaitingForRolesOnHostProject,
+} from '../../../../common/clusterStates';
 import getClusterName from '../../../../../../common/getClusterName';
 import ExternalLink from '../../../../../common/ExternalLink';
 
@@ -104,144 +106,185 @@ class clusterStatusMonitor extends React.Component {
 
   render() {
     const { status, inflightChecks, cluster } = this.props;
-    const { isExpanded } = this.state;
     if (inflightChecks.fulfilled) {
       this.inflightChecksRef.current = inflightChecks.checks;
     }
 
     if (status.status.id === cluster.id) {
       const inflightErrorStopInstall = status.status.provision_error_code === 'OCM4001';
-      const getInflightAlert = () => {
-        const inflightError = this.inflightChecksRef.current.find(
-          (check) => check.state === InflightCheckState.FAILED,
-        );
-
-        if (inflightError) {
-          let documentLink;
-          let subnets = [];
-          let inflightTable;
-          if (inflightError) {
-            reason =
-              'To allow this cluster to be fully managed, add these URLs to the allowlist of these subnet firewalls. For more information review the egress requirements or contact Red Hat support.';
-            const { details } = inflightError;
-            Object.keys(details).forEach((dkey) => {
-              if (dkey === 'documentation_link') {
-                documentLink = details[dkey];
-              } else if (dkey.startsWith('subnet')) {
-                const egressErrors = [];
-                subnets.push({ name: dkey, egressErrors });
-                Object.keys(details[dkey]).forEach((skey) => {
-                  if (skey.startsWith('egress_url_errors')) {
-                    egressErrors.push(details[dkey][skey].split(' ').pop());
-                  }
-                });
-              }
-            });
-            if (subnets.length) {
-              const hasMore = subnets.length > 1;
-              if (hasMore && !isExpanded) subnets = subnets.slice(0, 1);
-              const columns = [{ title: 'Subnet' }, { title: 'URLs' }];
-              const subnetRow = ({ name, egressErrors }) => (
-                <Tbody>
-                  <Tr>
-                    <Td />
-                    <Td modifier="nowrap">{name}</Td>
-                    <Td style={{ whiteSpace: 'break-spaces' }}>{egressErrors.join(',   ')}</Td>
-                  </Tr>
-                </Tbody>
-              );
-              inflightTable = (
-                <>
-                  <TableComposable
-                    aria-label="Missing allowlist URLs"
-                    variant={TableVariant.compact}
-                    style={{ backgroundColor: 'unset' }}
-                  >
-                    <Thead>
-                      <Tr>
-                        <Th />
-                        {columns.map((column) => (
-                          <Th>{column.title}</Th>
-                        ))}
-                      </Tr>
-                    </Thead>
-                    {subnets.map((subnet) => subnetRow(subnet))}
-                  </TableComposable>
-                  {hasMore && (
-                    <Button
-                      variant="link"
-                      icon={isExpanded ? <MinusCircleIcon /> : <PlusCircleIcon />}
-                      onClick={() => this.toggleExpanded(!isExpanded)}
-                    >
-                      {isExpanded ? 'Show less' : 'Show more'}
-                    </Button>
-                  )}
-                </>
-              );
-            }
-          }
-          return (
-            <Alert
-              variant={inflightErrorStopInstall ? 'danger' : 'warning'}
-              isInline
-              title="Network settings validation failed"
-            >
-              <Flex direction={{ default: 'column' }}>
-                <FlexItem>{`${reason}`}</FlexItem>
-                {inflightTable && <FlexItem>{inflightTable}</FlexItem>}
-                <FlexItem>
-                  <Flex direction={{ default: 'row' }}>
-                    {documentLink && (
-                      <FlexItem>
-                        <ExternalLink noIcon href={documentLink}>
-                          Review egress requirements
-                        </ExternalLink>
-                      </FlexItem>
-                    )}
-                    <FlexItem>
-                      <ExternalLink
-                        noIcon
-                        href="https://access.redhat.com/support/cases/#/case/new"
-                      >
-                        Contact support
-                      </ExternalLink>
-                    </FlexItem>
-                  </Flex>
-                </FlexItem>
-              </Flex>
-            </Alert>
-          );
-        }
-
-        return null;
-      };
-
-      const title = status.status.provision_error_code || '';
+      const errorCode = status.status.provision_error_code || '';
       let reason = '';
       if (status.status.provision_error_code) {
         reason = get(status, 'status.provision_error_message', '');
       }
       const description = get(status, 'status.description', '');
+
+      const alerts = [];
+
+      // Cluster install failure
+      if (status.status.state === clusterStates.ERROR && !inflightErrorStopInstall) {
+        alerts.push(
+          <Alert variant="danger" isInline title={`${errorCode} Cluster installation failed`}>
+            {`${reason} ${description}`}
+          </Alert>,
+        );
+      }
+
+      // Rosa inflight error check found urls missing from byo vpc firewall
+      alerts.push(this.showMissingURLList(inflightErrorStopInstall));
+
+      // OSD GCP is waiting on roles to be added to dynamically generated service account for a shared vpc project
+      alerts.push(this.showRequiredGCPRoles());
+
+      // Cluster is taking a lot of time to create
+      if (
+        status.status.state !== clusterStates.ERROR &&
+        (status.status.provision_error_code || status.status.provision_error_message)
+      ) {
+        alerts.push(
+          <Alert
+            variant="warning"
+            isInline
+            title={`${errorCode} Installation is taking longer than expected`}
+          >
+            {reason}
+          </Alert>,
+        );
+      }
+      return <>{alerts}</>;
+    }
+    return null;
+  }
+
+  showRequiredGCPRoles() {
+    const { cluster } = this.props;
+    if (isOSDGCPWaitingForRolesOnHostProject(cluster)) {
+      const hostProjectId = cluster?.gcp_network?.vpc_project_id;
+      const dynamicServiceAccount =
+        cluster?.status?.description?.split(' ').filter((seg) => seg.endsWith('.com'))?.[0] ||
+        'unknown';
+      const reason = [];
+      reason.push('To continue cluster installation, contact the VPC owner of the ');
+      reason.push(<b>{hostProjectId}</b>);
+      reason.push(' host project, who must grant the ');
+      reason.push(<b>{dynamicServiceAccount}</b>);
+      reason.push(' service account the following permissions: ');
+      reason.push(<b>Compute Network Administrator, </b>);
+      reason.push(<b>Compute Security Administrator, </b>);
+      reason.push(<b>DNS Administrator.</b>);
       return (
-        <>
-          {status.status.state === clusterStates.ERROR && !inflightErrorStopInstall && (
-            <Alert variant="danger" isInline title={`${title} Cluster installation failed`}>
-              {`${reason} ${description}`}
-            </Alert>
-          )}{' '}
-          {getInflightAlert()}{' '}
-          {status.status.state !== clusterStates.ERROR &&
-            (status.status.provision_error_code || status.status.provision_error_message) && (
-              <Alert
-                variant="warning"
-                isInline
-                title={`${title} Installation is taking longer than expected`}
-              >
-                {reason}
-              </Alert>
-            )}
-        </>
+        <Alert variant="warning" isInline title="Permissions needed:">
+          <Flex direction={{ default: 'column' }}>
+            <FlexItem>{reason}</FlexItem>
+            <FlexItem>
+              <ExternalLink href="https://cloud.google.com/vpc/docs/provisioning-shared-vpc#migs-service-accounts">
+                Learn more about permissions
+              </ExternalLink>
+            </FlexItem>
+          </Flex>
+        </Alert>
       );
+    }
+    return null;
+  }
+
+  showMissingURLList(inflightErrorStopInstall) {
+    const { isExpanded } = this.state;
+    const inflightError = this.inflightChecksRef.current.find(
+      (check) => check.state === InflightCheckState.FAILED,
+    );
+    if (inflightError) {
+      let documentLink;
+      let subnets = [];
+      let inflightTable;
+      if (inflightError) {
+        const reason =
+          'To allow this cluster to be fully-managed, add these URLs to the allowlist of these subnet firewalls. For more information review the egress requirements or contact Red Hat support.';
+        const { details } = inflightError;
+        Object.keys(details).forEach((dkey) => {
+          if (dkey === 'documentation_link') {
+            documentLink = details[dkey];
+          } else if (dkey.startsWith('subnet')) {
+            const egressErrors = [];
+            subnets.push({ name: dkey, egressErrors });
+            Object.keys(details[dkey]).forEach((skey) => {
+              if (skey.startsWith('egress_url_errors')) {
+                egressErrors.push(details[dkey][skey].split(' ').pop());
+              }
+            });
+          }
+        });
+        if (subnets.length) {
+          const hasMore = subnets.length > 1;
+          if (hasMore && !isExpanded) subnets = subnets.slice(0, 1);
+          const columns = [{ title: 'Subnet' }, { title: 'URLs' }];
+          const subnetRow = ({ name, egressErrors }) => (
+            <Tbody>
+              <Tr>
+                <Td />
+                <Td modifier="nowrap">{name}</Td>
+                <Td style={{ whiteSpace: 'break-spaces' }}>{egressErrors.join(',   ')}</Td>
+              </Tr>
+            </Tbody>
+          );
+          inflightTable = (
+            <>
+              <TableComposable
+                aria-label="Missing allowlist URLs"
+                variant={TableVariant.compact}
+                style={{ backgroundColor: 'unset' }}
+              >
+                <Thead>
+                  <Tr>
+                    <Th />
+                    {columns.map((column) => (
+                      <Th>{column.title}</Th>
+                    ))}
+                  </Tr>
+                </Thead>
+                {subnets.map((subnet) => subnetRow(subnet))}
+              </TableComposable>
+              {hasMore && (
+                <Button
+                  variant="link"
+                  icon={isExpanded ? <MinusCircleIcon /> : <PlusCircleIcon />}
+                  onClick={() => this.toggleExpanded(!isExpanded)}
+                >
+                  {isExpanded ? 'Show less' : 'Show more'}
+                </Button>
+              )}
+            </>
+          );
+        }
+        return (
+          <Alert
+            variant={inflightErrorStopInstall ? 'danger' : 'warning'}
+            isInline
+            title="User action required"
+          >
+            <Flex direction={{ default: 'column' }}>
+              <FlexItem>{`${reason}`}</FlexItem>
+              {inflightTable && <FlexItem>{inflightTable}</FlexItem>}
+              <FlexItem>
+                <Flex direction={{ default: 'row' }}>
+                  {documentLink && (
+                    <FlexItem>
+                      <ExternalLink noIcon href={documentLink}>
+                        Review egress requirements
+                      </ExternalLink>
+                    </FlexItem>
+                  )}
+                  <FlexItem>
+                    <ExternalLink noIcon href="https://access.redhat.com/support/cases/#/case/new">
+                      Contact support
+                    </ExternalLink>
+                  </FlexItem>
+                </Flex>
+              </FlexItem>
+            </Flex>
+          </Alert>
+        );
+      }
     }
     return null;
   }
@@ -251,6 +294,12 @@ clusterStatusMonitor.propTypes = {
   cluster: PropTypes.shape({
     id: PropTypes.string,
     state: PropTypes.string,
+    status: PropTypes.shape({
+      description: PropTypes.string,
+    }),
+    gcp_network: PropTypes.shape({
+      vpc_project_id: PropTypes.string,
+    }),
   }),
   refresh: PropTypes.func,
   addNotification: PropTypes.func,
