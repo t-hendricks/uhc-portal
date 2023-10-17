@@ -90,6 +90,16 @@ const getInflightChecks = (cluster) => {
   return Array.isArray(inflightChecks) ? inflightChecks : [];
 };
 
+const isOSDGCPWaitingForRolesOnHostProject = (cluster) =>
+  isOSD(cluster) &&
+  cluster?.status?.state === 'waiting' &&
+  cluster?.status?.description.indexOf(cluster?.gcp_network?.vpc_project_id) !== -1;
+
+const isOSDGCPPendingOnHostProject = (cluster) =>
+  isOSD(cluster) &&
+  (cluster?.status?.state === 'validating' || cluster?.status?.state === 'pending') &&
+  !!cluster?.gcp_network?.vpc_project_id;
+
 const isHibernating = (state) =>
   state === clusterStates.HIBERNATING ||
   state === clusterStates.POWERING_DOWN ||
@@ -151,6 +161,8 @@ export {
   isROSAManualMode,
   isWaitingROSAManualMode,
   isWaitingHypershiftCluster,
+  isOSDGCPWaitingForRolesOnHostProject,
+  isOSDGCPPendingOnHostProject,
   getClusterAIPermissions,
   getStateDescription,
   getInflightChecks,
