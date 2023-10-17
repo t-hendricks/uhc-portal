@@ -14,7 +14,7 @@ const createOSDInitialValues = ({
   isByoc,
   isMultiAz,
   isTrialDefault,
-  isHypershiftSelected,
+  isHypershiftSelected = false,
 }) => {
   let defaultNodeCount;
   if (isByoc || isTrialDefault) {
