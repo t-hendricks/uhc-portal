@@ -3,6 +3,7 @@ import { AxiosError } from 'axios';
 import { Button, ExpandableSection, Form, Stack, StackItem } from '@patternfly/react-core';
 import { Formik } from 'formik';
 import { useDispatch } from 'react-redux';
+import isEqual from 'lodash/isEqual';
 import Modal from '~/components/common/Modal/Modal';
 import { clusterService } from '~/services';
 import {
@@ -148,7 +149,7 @@ const EditMachinePoolModal = ({
       validateOnMount
     >
       {}
-      {({ isValid, submitForm, isSubmitting }) => (
+      {({ isValid, submitForm, isSubmitting, values }) => (
         <Modal
           id="edit-mp-modal"
           title={isEdit ? 'Edit machine pool' : 'Add machine pool'}
@@ -179,7 +180,8 @@ const EditMachinePoolModal = ({
                     !isValid ||
                     isSubmitting ||
                     !machinePoolsResponse.fulfilled ||
-                    !machineTypesResponse.fulfilled
+                    !machineTypesResponse.fulfilled ||
+                    isEqual(initialValues, values)
                   }
                   onClick={submitForm}
                   isLoading={isSubmitting}
