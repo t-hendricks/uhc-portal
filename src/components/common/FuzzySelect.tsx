@@ -231,6 +231,7 @@ function FuzzySelect(props: FuzzySelectProps) {
         isOpen={isOpen}
         onFilter={onFilter}
         selections={truncateSelected(selected, truncation)}
+        style={{ maxHeight: '300px', overflowY: 'auto' }}
         ref={ref}
         hasInlineFilter
         isGrouped={isGrouped}
