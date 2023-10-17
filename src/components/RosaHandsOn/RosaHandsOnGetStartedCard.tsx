@@ -36,15 +36,17 @@ const CheckListItem = ({
     icon={<CheckIcon color={global_link_Color_dark.value} size="md" />}
     style={{ alignItems: 'baseline' }}
   >
-    <Text>{children}</Text>
-    {popoverContent && (
-      <>
-        &nbsp;
-        <Popover bodyContent={popoverContent} headerContent={popoverHeader} maxWidth="40rem">
-          <Button icon={<HelpIcon />} variant="link" isInline />
-        </Popover>
-      </>
-    )}
+    <Text>
+      {children}
+      {popoverContent && (
+        <>
+          &nbsp;
+          <Popover bodyContent={popoverContent} headerContent={popoverHeader} maxWidth="40rem">
+            <Button icon={<HelpIcon />} variant="link" isInline />
+          </Popover>
+        </>
+      )}
+    </Text>
   </ListItem>
 );
 
@@ -54,15 +56,15 @@ const RosaHandsOnGetStartedCard = ({
 }: RosaHandsOnToolbarProps) => (
   <Card>
     <CardBody>
-      <Grid>
-        <GridItem span={6}>
-          <Stack hasGutter>
-            <StackItem>
-              <TextContent>
-                <Text component="h3">What you get with this experience</Text>
-              </TextContent>
-            </StackItem>
-            <StackItem isFilled>
+      <Stack hasGutter>
+        <StackItem>
+          <TextContent>
+            <Text component="h3">What you get with this experience</Text>
+          </TextContent>
+        </StackItem>
+        <StackItem isFilled>
+          <Grid>
+            <GridItem span={9}>
               <List isPlain>
                 <CheckListItem
                   popoverContent={
@@ -89,27 +91,29 @@ const RosaHandsOnGetStartedCard = ({
                   One-click deployment of a ROSA cluster in a demo environment.
                 </CheckListItem>
                 <CheckListItem>
-                  A view into a fully-managed turnkey application platform with integrated services
-                  and tools, fully backed by a global team of site reliability engineers (SREs).
+                  A view into a fully managed turnkey application platform with integrated services
+                  and tools,
+                  <br />
+                  fully backed by a global team of site reliability engineers (SREs).
                 </CheckListItem>
                 <CheckListItem>
                   Step-by-step guided content on how to get started and build, deploy and scale an
                   application on ROSA.
                 </CheckListItem>
               </List>
-            </StackItem>
-            <StackItem>
-              <RosaHandsOnGetStartedToolbar
-                demoExperience={demoExperience}
-                onRequestCluster={onRequestCluster}
-              />
-            </StackItem>
-          </Stack>
-        </GridItem>
-        <GridItem span={6} style={{ justifySelf: 'right' }}>
-          <RosaHandsOnIcon />
-        </GridItem>
-      </Grid>
+            </GridItem>
+            <GridItem span={3} style={{ justifySelf: 'right' }}>
+              <RosaHandsOnIcon />
+            </GridItem>
+          </Grid>
+        </StackItem>
+        <StackItem>
+          <RosaHandsOnGetStartedToolbar
+            demoExperience={demoExperience}
+            onRequestCluster={onRequestCluster}
+          />
+        </StackItem>
+      </Stack>
     </CardBody>
   </Card>
 );

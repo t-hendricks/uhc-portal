@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, screen, fireEvent, checkAccessibility } from '@testUtils';
+import { render, screen, fireEvent, checkAccessibility } from '~/testUtils';
 import wizardConnector from '~/components/clusters/CreateOSDPage/CreateOSDWizard/WizardConnector';
 import * as useFeatureGate from '~/hooks/useFeatureGate';
 import { HCP_USE_UNMANAGED } from '~/redux/constants/featureConstants';

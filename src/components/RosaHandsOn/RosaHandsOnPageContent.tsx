@@ -19,6 +19,9 @@ import { rosaHandsOnLinks } from './constants';
 import ExternalLink from '../common/ExternalLink';
 import RosaHandsOnErrorPage from './RosaHandsOnErrorPage';
 
+const contactSupportText =
+  'please contact support by clicking on the hat icon located at the bottom-right corner of the page.';
+
 const getErrorMessage = (error: unknown): string => {
   if (error instanceof Error) {
     return error.message;
@@ -39,8 +42,10 @@ const ExperienceDurationInfo = ({ demoExperience }: { demoExperience: DemoExperi
         <>
           Your current experience demo will end in{' '}
           {humanizeDuration(remainingTime, {
-            units: ['h'],
+            units: ['h', 'm'],
             maxDecimalPoints: 2,
+            round: true,
+            delimiter: ' and ',
           })}
           . You have {remainingDemos} experience launches remaining.
         </>
@@ -62,19 +67,18 @@ const UnavailableAlert = ({ demoExperience }: { demoExperience: DemoExperience }
     remainingTrials === 0 ? (
       <>
         After {demoExperience.quota.limit} launches, you may create ROSA clusters using a
-        pay-as-you-go option. If you have any questions, please contact support by clicking on the
-        hat icon located at the bottom-right corner of the page.
+        pay-as-you-go option. If you have any questions, {contactSupportText}
       </>
     ) : (
       demoExperience?.unavailable_reason ||
-      'This demo is currently unavailable. Please contact support by clicking on the hat icon located at the bottom-right corner of the page.'
+      `This demo is currently unavailable. If this issue persists, ${contactSupportText}`
     );
 
   return <Alert title={alertTitle} variant="danger" isInline actionLinks={alertActions} />;
 };
 
 const RequestErrorAlert = ({ error }: { error: unknown }) => (
-  <Alert title="Failed to request a cluster" variant="danger" isInline>
+  <Alert title="Failed to request an experience" variant="danger" isInline>
     {getErrorMessage(error)}
   </Alert>
 );
@@ -105,6 +109,13 @@ const RosaHandsOnPageContent = ({
         {requestError && <RequestErrorAlert error={requestError} />}
         {status === DemoExperienceStatusEnum.Unavailable && <UnavailableAlert {...props} />}
         {status === DemoExperienceStatusEnum.Started && <ExperienceDurationInfo {...props} />}
+        {status === DemoExperienceStatusEnum.Failed && (
+          <Alert
+            title={`Experience provisioning failed. If this issue persists, ${contactSupportText}`}
+            variant="danger"
+            isInline
+          />
+        )}
         <PageSection>
           {loading ? (
             <Card>
