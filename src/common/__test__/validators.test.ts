@@ -820,6 +820,11 @@ describe('Field is a valid user or group ARN', () => {
 describe('Field is a valid user or group ARN', () => {
   it.each([
     ['arn:aws:iam::012345678901:role/some-role', undefined],
+    ['arn:aws-cn:iam::123456789012:role/cypress-account-roles-gov-int-Installer-Role', undefined],
+    [
+      'arn:aws-us-gov:iam::123456789012:role/cypress-account-roles-gov-int-Installer-Role',
+      undefined,
+    ],
     ['arn:aws:iam::012345678901:role/s da', 'Value must not contain whitespaces.'],
     [
       'arn:aws:iam:0123456789:roles/bad-format',
