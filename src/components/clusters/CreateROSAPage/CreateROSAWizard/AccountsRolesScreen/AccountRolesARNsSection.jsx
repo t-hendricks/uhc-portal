@@ -44,6 +44,36 @@ const noRoleOption = {
   value: NO_ROLE_DETECTED,
 };
 
+const hasCompleteRoleSet = (role, isHypershiftSelected) =>
+  role.Installer && role.Support && role.Worker && (role.ControlPlane || isHypershiftSelected);
+
+// Order: current selected role > 'ManagedOpenShift'-prefixed role > first managed policy role > first complete role set > first incomplete role set > 'No Role Detected'
+export const getDefaultInstallerRole = (selectedInstallerRoleARN, accountRolesARNs) => {
+  if (selectedInstallerRoleARN && selectedInstallerRoleARN !== NO_ROLE_DETECTED) {
+    return selectedInstallerRoleARN;
+  }
+
+  if (accountRolesARNs.length === 0) {
+    return NO_ROLE_DETECTED;
+  }
+
+  const firstManagedPolicyRole = accountRolesARNs.find(
+    (role) => role.managedPolicies || role.hcpManagedPolicies,
+  );
+
+  const hasManagedOpenshiftPrefix = accountRolesARNs.find(
+    (role) => role.prefix === 'ManagedOpenShift',
+  );
+
+  const firstCompleteRoleSet = accountRolesARNs.find((role) => hasCompleteRoleSet(role));
+  const defaultRole =
+    hasManagedOpenshiftPrefix ||
+    firstManagedPolicyRole ||
+    firstCompleteRoleSet ||
+    accountRolesARNs[0];
+
+  return defaultRole.Installer;
+};
 function AccountRolesARNsSection({
   touch,
   change,
@@ -82,28 +112,6 @@ function AccountRolesARNsSection({
     if (!isHypershiftSelected) {
       change('control_plane_role_arn', role?.ControlPlane || NO_ROLE_DETECTED);
     }
-  };
-
-  const hasCompleteRoleSet = (role) =>
-    role.Installer && role.Support && role.Worker && (role.ControlPlane || isHypershiftSelected);
-
-  // Order: current selected role > first managed policy role > first complete role set > first incomplete role set > 'No Role Detected'
-  const getDefaultInstallerRole = (selectedInstallerRoleARN, accountRolesARNs) => {
-    if (selectedInstallerRoleARN && selectedInstallerRoleARN !== NO_ROLE_DETECTED) {
-      return selectedInstallerRoleARN;
-    }
-
-    if (accountRolesARNs.length === 0) {
-      return NO_ROLE_DETECTED;
-    }
-
-    const firstManagedPolicyRole = accountRolesARNs.find(
-      (role) => role.managedPolicies || role.hcpManagedPolicies,
-    );
-    const firstCompleteRoleSet = accountRolesARNs.find((role) => hasCompleteRoleSet(role));
-    const defaultRole = firstManagedPolicyRole || firstCompleteRoleSet || accountRolesARNs[0];
-
-    return defaultRole.Installer;
   };
 
   const hasNoTrustedRelationshipOnClusterRoleError = ({ errorDetails }) =>
