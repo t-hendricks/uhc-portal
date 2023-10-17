@@ -141,7 +141,7 @@ function actionResolver(
 
   const getEditMachinePoolProps = () => ({
     ...baseProps,
-    title: 'Edit machine pools',
+    title: 'Edit machine pool',
     key: getKey('editmachinepools'),
     ...disableIfTooltip(
       uninstallingMessage || readOnlyMessage || hibernatingMessage || notReadyMessage,

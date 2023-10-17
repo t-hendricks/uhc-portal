@@ -100,7 +100,7 @@ exports[`<ClusterActionsDropdown /> cluster with state not ready should render (
       <DropdownItem
         component="button"
         isAriaDisabled={true}
-        title="Edit machine pools"
+        title="Edit machine pool"
         tooltip={
           <span>
             This cluster is not ready
@@ -112,7 +112,7 @@ exports[`<ClusterActionsDropdown /> cluster with state not ready should render (
           }
         }
       >
-        Edit machine pools
+        Edit machine pool
       </DropdownItem>,
       <DropdownItem
         component="button"
@@ -184,9 +184,9 @@ exports[`<ClusterActionsDropdown /> cluster with state ready and console url sho
       <DropdownItem
         component="button"
         onClick={[Function]}
-        title="Edit machine pools"
+        title="Edit machine pool"
       >
-        Edit machine pools
+        Edit machine pool
       </DropdownItem>,
       <DropdownItem
         component="button"
@@ -276,7 +276,7 @@ exports[`<ClusterActionsDropdown /> cluster with state uninstalling should rende
       <DropdownItem
         component="button"
         isAriaDisabled={true}
-        title="Edit machine pools"
+        title="Edit machine pool"
         tooltip={
           <span>
             The cluster is being uninstalled
@@ -288,7 +288,7 @@ exports[`<ClusterActionsDropdown /> cluster with state uninstalling should rende
           }
         }
       >
-        Edit machine pools
+        Edit machine pool
       </DropdownItem>,
       <DropdownItem
         component="button"
