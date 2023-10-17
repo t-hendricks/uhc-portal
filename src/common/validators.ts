@@ -68,6 +68,8 @@ const MAX_OBJECT_NAME_LENGTH = 63;
 // Maximum length of a cluster display name
 const MAX_CLUSTER_DISPLAY_NAME_LENGTH = 63;
 
+const GCP_PROJECT_ID_REGEX = /^[a-z][-a-z0-9]{4,28}[a-z0-9]{1}$/;
+
 const GCP_SUBNET_NAME_MAXLEN = 63;
 // Maximum node count
 const MAX_NODE_COUNT = 180;
@@ -1112,6 +1114,16 @@ const validatePrivateHostedZoneId = (value: string) => {
   return undefined;
 };
 
+const validateGCPHostProjectId = (value: string) => {
+  if (!value) {
+    return 'Field is required.';
+  }
+  if (!GCP_PROJECT_ID_REGEX.test(value)) {
+    return 'Not a valid hosted project ID. This must be an existing GCP project ID within which all networks are defined.';
+  }
+  return undefined;
+};
+
 /**
  * for ReduxFieldArray, validate there is at least one filled value.
  * Note that since ReduxFieldArray stores the input's key/id with each value,
@@ -1714,6 +1726,7 @@ export {
   validateAWSSubnet,
   validateAWSSubnetIsPrivate,
   validateAWSSubnetIsPublic,
+  validateGCPHostProjectId,
   validateRequiredMachinePoolsSubnet,
   validateMultipleMachinePoolsSubnets,
   validateGCPSubnet,

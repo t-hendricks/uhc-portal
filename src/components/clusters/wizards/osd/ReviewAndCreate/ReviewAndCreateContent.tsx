@@ -27,6 +27,7 @@ export const ReviewAndCreateContent = ({ isPending }: ReviewAndCreateContentProp
     values: {
       [FieldId.Product]: product,
       [FieldId.InstallToVpc]: installToVpc,
+      [FieldId.InstallToSharedVpc]: installToSharedVpc,
       [FieldId.ConfigureProxy]: configureProxy,
       [FieldId.Byoc]: byoc,
       [FieldId.CloudProvider]: cloudProvider,
@@ -42,6 +43,7 @@ export const ReviewAndCreateContent = ({ isPending }: ReviewAndCreateContentProp
 
   const isByoc = byoc === 'true';
   const isAWS = cloudProvider === CloudProviderType.Aws;
+  const isGCP = cloudProvider === CloudProviderType.Gcp;
 
   const clusterSettingsFields = [
     FieldId.CloudProvider,
@@ -123,6 +125,9 @@ export const ReviewAndCreateContent = ({ isPending }: ReviewAndCreateContentProp
         {isByoc && <ReviewItem name={FieldId.InstallToVpc} formValues={formValues} />}
         {isByoc && clusterPrivacy === 'internal' && installToVpc && (
           <ReviewItem name={FieldId.UsePrivateLink} formValues={formValues} />
+        )}
+        {isByoc && isGCP && installToSharedVpc && (
+          <ReviewItem name={FieldId.SharedHostProjectID} formValues={formValues} />
         )}
         {isByoc && installToVpc && (
           <ReviewItem name={isAWS ? 'aws_standalone_vpc' : 'gpc_vpc'} formValues={formValues} />
