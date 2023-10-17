@@ -2,6 +2,7 @@
 import React from 'react';
 import moment from 'moment';
 import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
 
 import {
   Bullseye,
@@ -137,7 +138,17 @@ const LogTable = ({ logs, setSorting, pending, refreshEvent }: LogTableParams) =
     const day = moment.utc(timestamp).format('D MMM YYYY, HH:mm UTC');
 
     const md = (
-      <ReactMarkdown className="markdown" linkTarget="_blank">
+      <ReactMarkdown
+        className="markdown"
+        rehypePlugins={[remarkGfm]}
+        components={{
+          // map a link to ExternalLink
+          a(props) {
+            const { href, children } = props;
+            return <ExternalLink href={href ?? ''}>{children}</ExternalLink>;
+          },
+        }}
+      >
         {description || ''}
       </ReactMarkdown>
     );

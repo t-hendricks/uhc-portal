@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { ReactNode, useState, useEffect } from 'react';
 
 import map from 'lodash/map';
 import get from 'lodash/get';
@@ -18,7 +18,6 @@ import { Table, TableHeader, TableBody, TableVariant, IRowData } from '@patternf
 import Skeleton from '@redhat-cloud-services/frontend-components/Skeleton';
 
 import { useDispatch } from 'react-redux';
-import { ReactNode } from 'react-markdown';
 import { useGlobalState } from '~/redux/hooks';
 import { Subscription } from '~/types/accounts_mgmt.v1';
 import { eventTypes } from '../../../clusterDetailsHelper';
