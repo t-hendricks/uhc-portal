@@ -7,6 +7,7 @@ type EnvConfig = {
   showOldMetrics?: boolean;
   fedrampGateway?: string;
   fedrampS3?: string;
+  demoExperience?: string;
 };
 
 const configs: { [env: string]: Promise<EnvConfig> | undefined } = {};

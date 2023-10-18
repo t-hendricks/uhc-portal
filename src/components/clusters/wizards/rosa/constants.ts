@@ -7,7 +7,12 @@ import {
   CloudProviderType,
   IMDSType,
 } from '~/components/clusters/wizards/common/constants';
-import { splitMajorMinor } from '~/common/versionHelpers';
+import {
+  isExactMajorMinor,
+  isMajorMinorEqualOrGreater,
+  isMajorMinorPatchEqualOrGreater,
+  splitVersion,
+} from '~/common/versionHelpers';
 
 export enum RosaFieldId {}
 
@@ -51,7 +56,7 @@ export enum UrlPath {
 export const breadcrumbs: BreadcrumbPath[] = [
   { label: 'Clusters' },
   { label: 'Cluster Type', path: UrlPath.Create },
-  { label: 'Get Started with ROSA', path: UrlPath.CreateGetStarted },
+  { label: 'Set up ROSA', path: UrlPath.CreateGetStarted },
   { label: 'Create a ROSA Cluster' },
 ];
 
@@ -65,7 +70,7 @@ export const initialValues: FormikValues = {
 };
 
 export const canSelectImds = (clusterVersionRawId: string): boolean => {
-  const [major, minor] = splitMajorMinor(clusterVersionRawId);
+  const [major, minor] = splitVersion(clusterVersionRawId);
   return major > 4 || (major === 4 && minor >= 11);
 };
 
@@ -76,6 +81,24 @@ export const workerNodeVolumeSizeMinGiB = 128;
  * In GiB.
  */
 export const getWorkerNodeVolumeSizeMaxGiB = (clusterVersionRawId: string): number => {
-  const [major, minor] = splitMajorMinor(clusterVersionRawId);
+  const [major, minor] = splitVersion(clusterVersionRawId);
   return (major > 4 || (major === 4 && minor >= 14) ? 16 : 1) * 1024;
 };
+
+export const canConfigureDayOneManagedIngress = (clusterVersionRawId: string): boolean =>
+  isMajorMinorEqualOrGreater(clusterVersionRawId, 4, 14);
+
+/* When changing, consider updating the COnfiguration and NetworkScreen components as well (they contain 4.13-specific logic */
+export const canConfigureDayTwoManagedIngress = (clusterVersionRawId: string): boolean =>
+  isMajorMinorEqualOrGreater(clusterVersionRawId, 4, 13);
+
+export const canConfigureSharedVpc = (clusterVersionRawId: string): boolean =>
+  isMajorMinorPatchEqualOrGreater(clusterVersionRawId, 4, 13, 9);
+
+export const canConfigureLoadBalancer = (
+  clusterVersionRawId: string,
+  isSTSEnabled: boolean,
+): boolean => !isSTSEnabled || canConfigureDayTwoManagedIngress(clusterVersionRawId);
+
+export const canConfigureAdditionalRouter = (clusterVersionRawId: string): boolean =>
+  isExactMajorMinor(clusterVersionRawId, 4, 11) || isExactMajorMinor(clusterVersionRawId, 4, 12);

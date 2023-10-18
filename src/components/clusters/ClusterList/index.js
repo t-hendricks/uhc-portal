@@ -10,7 +10,7 @@ import { userActions } from '../../../redux/actions/userActions';
 import { modalActions } from '../../common/Modal/ModalActions';
 import canSubscribeOCPListSelector from '../common/EditSubscriptionSettingsDialog/CanSubscribeOCPListSelector';
 import { canTransferClusterOwnershipListSelector } from '../common/TransferClusterOwnershipDialog/TransferClusterOwnershipDialogSelectors';
-import canHibernateClusterListSelector from '../common/HibernateClusterModal/CanHibernateClusterListSelector';
+import { canHibernateClusterListSelector } from '../common/HibernateClusterModal/HibernateClusterModalSelectors';
 import { toggleSubscriptionReleased } from '../common/TransferClusterOwnershipDialog/subscriptionReleasedActions';
 import { clearGlobalError } from '../../../redux/actions/globalErrorActions';
 

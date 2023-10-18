@@ -9,6 +9,7 @@ found=()
 # ...and whose associated jira tickets were not all closed; most likely still in 'Review'
 notClosed=()
 notClosedDueToDependencies=()
+doNotPromote=()
 # master commits ready to promote to live_candidate
 readyToPromote=()
 readyToPromoteSHAs=()
@@ -20,7 +21,7 @@ jira_token="${1#--jira-token=}"
 # Read each line from stdin (piped CSV data) and convert it to JSON
 while IFS=',' read -r commitHash commitDate commitMessage; do
   echo "------------------------------------------------"
-  echo "|                 live_master                  |"
+  echo "|           live_consoledev_master             |"
   echo "|  commitHash  |  commitDate  |  commitMessage |"
   echo "------------------------------------------------"
   masterLogLine="$commitHash $commitDate $commitMessage"
@@ -47,7 +48,7 @@ while IFS=',' read -r commitHash commitDate commitMessage; do
     mrID=$(echo "$commitDescription" | grep -o '![0-9]\{4\}' | tr -d '!')
     mrDesc=$(echo "$commitDescription" | awk 'NR==1 { print }')
     # Pattern matching to extract jiraKeys
-    jiraTicketRegex="(HAC|MGMT|OCM|SDA|SDB|RHBKAAS)[- ]?([0-9]+)"
+    jiraTicketRegex="(HAC|MGMT|OCM|OCMUI|SDA|SDB|RHBKAAS)[- ]?([0-9]+)"
     # Find and store all matching jiraKeys
     startIndex=0
     while [[ ${commitDescription:startIndex} =~ $jiraTicketRegex ]]; do
@@ -71,6 +72,7 @@ while IFS=',' read -r commitHash commitDate commitMessage; do
     else
       allJirasClosed=true
       allDependentJirasClosed=true
+      hasDoNotPromoteLabel=false
       # Iterate over the jiraKeys and look them up
       for jiraKey in "${jiraKeys[@]}"; do
         if [ -n "$jiraKeysAsString" ]; then
@@ -81,7 +83,7 @@ while IFS=',' read -r commitHash commitDate commitMessage; do
         echo "  JIRA info"
         printf "    key: %s\n" "$jiraKey"
 
-        response=$(curl -s -X GET -H "Authorization: Bearer $jira_token" -H "Content-Type: application/json" "https://issues.redhat.com/rest/api/2/issue/$jiraKey?fields=key,summary,resolutiondate,status,issuelinks")
+        response=$(curl -s -X GET -H "Authorization: Bearer $jira_token" -H "Content-Type: application/json" "https://issues.redhat.com/rest/api/2/issue/$jiraKey?fields=key,summary,resolutiondate,status,issuelinks,labels")
 
         # Check if the response contains an error
         if [[ $(echo "$response" | jq -r '.errorMessages') != "null" ]]; then
@@ -97,12 +99,25 @@ while IFS=',' read -r commitHash commitDate commitMessage; do
         status=$(echo "$response" | jq -r '.fields.status.name')
         printf "    status: %s\n" "$status"
 
+        labels=$(echo "$response" | jq -r '.fields.labels[]');
+        labels_str=$(echo "$labels" | tr '\n' ',')
+        # remove the trailing comma
+        labels_str=${labels_str%,}
+        echo "    labels: $labels_str"
+
         resolutiondate=$(echo "$response" | jq -r '.fields.resolutiondate')
         printf "    resolutiondate: %s\n" "$resolutiondate"
 
         if [[ "$status" != "Closed" && "$status" != "Verified" ]]; then
           allJirasClosed=false
         else
+          # if closed, see if has 'do-not-promote' label
+          for label in $labels; do
+              if [[ "$label" == "do-not-promote" ]]; then
+                  hasDoNotPromoteLabel=true
+                  break
+              fi
+          done
           # if closed, look up 'depends on' jira tickets and make sure they are also closed
           issuelinks=$(echo "$response" | jq -r '.fields.issuelinks')
           dependentIssueLinks=$(echo "$issuelinks" | jq '[.[] | select(.type.name == "Depend" and .outwardIssue != null and (.outwardIssue.key | test("(HAC|MGMT|OCM|SDA|SDB|RHBKAAS)[- ]?([0-9]+)")))]')
@@ -124,17 +139,21 @@ while IFS=',' read -r commitHash commitDate commitMessage; do
         fi
       done # Iterating over the jiraKeys
 
-      if [[ "$allJirasClosed" == true && "$allDependentJirasClosed" == true ]]; then
+      if [[ "$allJirasClosed" == true && "$allDependentJirasClosed" == true && "$hasDoNotPromoteLabel" == false ]]; then
         readyToPromote+=("C $masterLogLine\\n                       $mrDesc")
         readyToPromoteSHAs+=("$commitHash")
         releaseNote="$(jq --null-input --compact-output --arg revision "$commitHash" --arg ticket "$jiraKeysAsString" --arg description "$mrDesc" --arg mr "!$mrID" '$ARGS.named')"
         releaseNotes+=("$releaseNote")
+      elif [[ "$hasDoNotPromoteLabel" == true ]]; then
+        doNotPromote+=("$masterLogLine")
       elif [[ "$status" != "Closed" && "$status" != "Verified" ]]; then
         notClosed+=("$masterLogLine")
-      else
+      elif [[ "$allDependentJirasClosed" == false ]]; then
         notClosedDueToDependencies+=("$masterLogLine")
+      else
+        echo "    --> Error: could not process: $masterLogLine"
       fi
-    fi 
+    fi
     jiraKeys=()
   fi
 done
@@ -189,19 +208,23 @@ done
 echo " "
 echo "------- Other Information -------"
 echo " "
+echo "Master commit messages not found in candidate, but their jira tickets have 'do-not-promote' label"
+echo " "
+for logLine in "${doNotPromote[@]}"; do
+  echo "$logLine"
+done
+echo " "
+echo "Master commit messages not found in candidate, but not all jira tickets they depends on are Closed"
+echo " "
+for logLine in "${notClosedDueToDependencies[@]}"; do
+  echo "$logLine"
+done
+echo " "
 echo "Master commit messages not found in candidate, but not all associated jira tickets are Closed"
 echo " "
 for logLine in "${notClosed[@]}"; do
   echo "$logLine"
 done
-
-echo " "
-echo "Master commit messages not found in candidate, but not all jira tickets it depends on are Closed"
-echo " "
-for logLine in "${notClosedDueToDependencies[@]}"; do
-  echo "$logLine"
-done
-
 echo " "
 echo "Master commit messages found in candidate"
 echo " "

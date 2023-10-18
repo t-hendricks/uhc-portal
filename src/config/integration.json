@@ -1,5 +1,6 @@
 {
   "apiGateway": "https://api.integration.openshift.com",
   "fedrampGateway": "https://console.redhat.com/api",
-  "fedrampS3": "https://fedramp-customer-interest-rob-stage.s3.us-east-1.amazonaws.com"
+  "fedrampS3": "https://fedramp-customer-interest-rob-stage.s3.us-east-1.amazonaws.com",
+  "demoExperience": "https://api.demo-experience.stage.demo.redhat.com"
 }

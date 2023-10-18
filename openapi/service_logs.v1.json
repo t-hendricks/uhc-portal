@@ -163,7 +163,33 @@
                   "Info",
                   "Warning",
                   "Error",
-                  "Fatal"
+                  "Fatal",
+                  "Major",
+                  "Critical"
+                ],
+                "type": "string"
+              },
+              "log_type": {
+                "enum": [
+                  "clustercreate-high-level",
+                  "clustercreate-details",
+                  "clusterremove-high-level",
+                  "clusterremove-details",
+                  "cluster-state-updates",
+                  "Customer data",
+                  "Customer applications",
+                  "Developer services",
+                  "Platform monitoring",
+                  "Logging",
+                  "Application networking",
+                  "Cluster networking",
+                  "Virtual networking management",
+                  "Virtual compute management",
+                  "Cluster version",
+                  "Capacity management",
+                  "Virtual storage management",
+                  "AWS software",
+                  "Hardware/AWS global infrastructure"
                 ],
                 "type": "string"
               },

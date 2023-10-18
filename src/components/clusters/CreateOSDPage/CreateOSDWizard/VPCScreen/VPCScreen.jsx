@@ -10,6 +10,7 @@ function VPCScreen({
   selectedRegion,
   privateLinkSelected,
   isSharedVpcSelected,
+  isSharedVpcSelectable,
   hostedZoneDomainName,
 }) {
   return (
@@ -29,6 +30,7 @@ function VPCScreen({
           isMultiAz={isMultiAz}
           selectedRegion={selectedRegion}
           isSharedVpcSelected={isSharedVpcSelected}
+          isSharedVpcSelectable={isSharedVpcSelectable}
           privateLinkSelected={privateLinkSelected}
           hostedZoneDomainName={hostedZoneDomainName}
         />
@@ -43,6 +45,7 @@ VPCScreen.propTypes = {
   selectedRegion: PropTypes.string,
   privateLinkSelected: PropTypes.bool,
   isSharedVpcSelected: PropTypes.bool,
+  isSharedVpcSelectable: PropTypes.bool,
   hostedZoneDomainName: PropTypes.string,
 };
 

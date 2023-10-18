@@ -297,19 +297,6 @@ function actionResolver(
     };
   };
 
-  const adminConsoleItemProps = getAdminConsoleProps();
-  const scaleClusterItemProps = getScaleClusterProps();
-  const editNodeCountItemProps = getEditNodeCountProps();
-  const editDisplayNameItemProps = getEditDisplayNameProps();
-  const editConsoleURLItemProps = getEditConsoleURLProps();
-  const deleteClusterItemProps = getDeleteItemProps();
-  const archiveClusterItemProps = getArchiveClusterProps();
-  const unarchiveClusterItemProps = getUnarchiveClusterProps();
-  const editSubscriptionSettingsProps = getEditSubscriptionSettingsProps();
-  const transferClusterOwnershipProps = getTransferClusterOwnershipProps();
-  const upgradeTrialClusterProps = getUpgradeTrialClusterProps();
-  const hibernateClusterProps = getHibernateClusterProps();
-
   const showDelete = cluster.canDelete && cluster.managed;
   const showScale = cluster.canEdit && cluster.managed && !cluster.ccs?.enabled;
   const showHibernateCluster =
@@ -339,22 +326,22 @@ function actionResolver(
   const showUpgradeTrialCluster = isClusterReady && cluster.canEdit && isProductOSDTrial;
 
   if (isRestrictedEnv()) {
-    return [showConsoleButton && adminConsoleItemProps].filter(Boolean);
+    return [showConsoleButton && getAdminConsoleProps()].filter(Boolean);
   }
 
   return [
-    showConsoleButton && adminConsoleItemProps,
-    cluster.canEdit && editDisplayNameItemProps,
-    showEditURL && editConsoleURLItemProps,
-    showScale && scaleClusterItemProps,
-    showEditNodeCount && editNodeCountItemProps,
-    showHibernateCluster && hibernateClusterProps,
-    showUpgradeTrialCluster && upgradeTrialClusterProps,
-    showDelete && deleteClusterItemProps,
-    showArchive && archiveClusterItemProps,
-    showUnarchive && unarchiveClusterItemProps,
-    showEditSubscriptionSettings && editSubscriptionSettingsProps,
-    showTransferClusterOwnership && transferClusterOwnershipProps,
+    showConsoleButton && getAdminConsoleProps(),
+    cluster.canEdit && getEditDisplayNameProps(),
+    showEditURL && getEditConsoleURLProps(),
+    showScale && getScaleClusterProps(),
+    showEditNodeCount && getEditNodeCountProps(),
+    showHibernateCluster && getHibernateClusterProps(),
+    showUpgradeTrialCluster && getUpgradeTrialClusterProps(),
+    showDelete && getDeleteItemProps(),
+    showArchive && getArchiveClusterProps(),
+    showUnarchive && getUnarchiveClusterProps(),
+    showEditSubscriptionSettings && getEditSubscriptionSettingsProps(),
+    showTransferClusterOwnership && getTransferClusterOwnershipProps(),
   ].filter(Boolean);
 }
 

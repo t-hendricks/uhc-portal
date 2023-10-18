@@ -7631,7 +7631,7 @@ exports[`<DownloadsPage> renders 1`] = `
                 OpenShift Installer with multi-architecture compute machines
                  
                 <TechnologyPreview
-                  position={1}
+                  position="inline"
                 />
               </React.Fragment>
             }

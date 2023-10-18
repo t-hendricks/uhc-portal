@@ -112,10 +112,12 @@ import TokensROSA from '../tokens/TokensROSA';
 import ApiError from './ApiError';
 import { AppPage } from './AppPage';
 import GovCloudPage from '../clusters/GovCloud/GovCloudPage';
+import RosaServicePage from '../services/rosa/RosaServicePage';
 import Insights from './Insights';
 import NotFoundError from './NotFoundError';
 import TermsGuardedRoute from './TermsGuardedRoute';
 import { is404, metadataByRoute } from './routeMetadata';
+import RosaHandsOnPage from '../RosaHandsOn/RosaHandsOnPage';
 
 const AssistedUiRouterPage: typeof AssistedInstallerRoutes = (props) => (
   <AppPage>
@@ -381,6 +383,9 @@ const Router: React.FC<RouterProps> = ({ history, planType, clusterId, externalC
             <Route path="/overview" exact component={Overview} />
             <Route path="/releases" exact component={Releases} />
             <Route path="/assisted-installer" component={GatedAssistedUiRouter} />
+            <Route path="/services/rosa/demo" component={RosaHandsOnPage} />
+            <Route path="/services/rosa" component={RosaServicePage} />
+
             <Route path="/" exact component={ClustersList} />
             <Route component={NotFoundError} />
           </Switch>

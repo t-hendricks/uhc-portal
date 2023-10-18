@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Formik } from 'formik';
-import { render } from '~/testUtils';
-import { screen } from '@testing-library/dom';
+
+import { render, screen } from '~/testUtils';
 import { billingModels } from '~/common/subscriptionTypes';
 import { GcpByocFields } from './GcpByocFields';
 import { FieldId, initialValues } from '../../constants';

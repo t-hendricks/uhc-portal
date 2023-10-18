@@ -58,6 +58,16 @@ export const filterVpcsOnlyPrivateSubnets = (vpcs) =>
     });
 
 /**
+ * Returns a modified copy of the VPC list where:
+ * - The red_hat_managed: true are filtered out for hypershift
+
+ * @param vpcs list of VPC items
+ * @returns {*} copy of the VPC list
+ */
+export const filterOutRedHatManagedVPCs = (vpcs) =>
+  vpcs.filter((vpcItem) => !vpcItem.red_hat_managed);
+
+/**
  * React hook fetching VPCs on mount and when dependencies change.
  * Request args extracted from redux-form state.
  * Does nothing if GCP selected.

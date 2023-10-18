@@ -21,6 +21,7 @@ export type ClusterLog = ObjectReference & {
   summary?: string;
   timestamp?: string;
   username?: string;
+  log_type?: string;
 };
 
 export namespace ClusterLog {
@@ -30,5 +31,7 @@ export namespace ClusterLog {
     WARNING = 'Warning',
     ERROR = 'Error',
     FATAL = 'Fatal',
+    MAJOR = 'Major',
+    CRITICAL = 'Critical',
   }
 }

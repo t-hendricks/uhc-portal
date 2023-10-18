@@ -121,7 +121,7 @@ class AddGrantModal extends Component {
                           target="_blank"
                           rel="noreferrer noopener"
                         >
-                          Check the AWS documention.
+                          Check the AWS documentation.
                         </a>
                       </div>
                     }
