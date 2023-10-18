@@ -1,4 +1,5 @@
 import get from 'lodash/get';
+import { InflightCheckState } from '~/types/clusters_mgmt.v1';
 import { subscriptionStatuses, normalizedProducts } from '../../../common/subscriptionTypes';
 
 const clusterStates = {
@@ -83,10 +84,25 @@ function getClusterStateAndDescription(cluster) {
   };
 }
 
+const hasInflightErrors = (cluster) =>
+  getInflightChecks(cluster).some(
+    (inflightCheck) => inflightCheck.state !== InflightCheckState.PASSED,
+  );
+
 const getInflightChecks = (cluster) => {
   const inflightChecks = get(cluster, 'inflight_checks', []);
   return Array.isArray(inflightChecks) ? inflightChecks : [];
 };
+
+const isOSDGCPWaitingForRolesOnHostProject = (cluster) =>
+  isOSD(cluster) &&
+  cluster?.status?.state === 'waiting' &&
+  cluster?.status?.description.indexOf(cluster?.gcp_network?.vpc_project_id) !== -1;
+
+const isOSDGCPPendingOnHostProject = (cluster) =>
+  isOSD(cluster) &&
+  (cluster?.status?.state === 'validating' || cluster?.status?.state === 'pending') &&
+  !!cluster?.gcp_network?.vpc_project_id;
 
 const isHibernating = (state) =>
   state === clusterStates.HIBERNATING ||
@@ -149,9 +165,12 @@ export {
   isROSAManualMode,
   isWaitingROSAManualMode,
   isWaitingHypershiftCluster,
+  isOSDGCPWaitingForRolesOnHostProject,
+  isOSDGCPPendingOnHostProject,
   getClusterAIPermissions,
   getStateDescription,
   getInflightChecks,
+  hasInflightErrors,
   isWaitingForOIDCProviderOrOperatorRolesMode,
 };
 export default clusterStates;
