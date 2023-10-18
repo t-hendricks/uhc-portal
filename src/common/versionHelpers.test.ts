@@ -1,4 +1,10 @@
-import { splitMajorMinor, versionFormatter } from './versionHelpers';
+import {
+  isExactMajorMinor,
+  isMajorMinorEqualOrGreater,
+  isMajorMinorPatchEqualOrGreater,
+  splitVersion,
+  versionFormatter,
+} from './versionHelpers';
 
 describe('versionFormatter', () => {
   it('returns the expected version string', () => {
@@ -28,10 +34,66 @@ describe('versionFormatter', () => {
   });
 });
 
-describe('splitMajorMinor', () => {
+describe('splitVersion', () => {
   it('can parse versions', () => {
-    expect(splitMajorMinor('4.12.0-0')).toEqual([4, 12, 0]);
-    expect(splitMajorMinor('4.11.0-candidate')).toEqual([4, 11, 0]);
-    expect(splitMajorMinor('hello')).toEqual([NaN]);
+    expect(splitVersion('4.12.0-0')).toEqual([4, 12, 0]);
+    expect(splitVersion('4.11.0-candidate')).toEqual([4, 11, 0]);
+    expect(splitVersion('4.0.0')).toEqual([4, 0, 0]);
+    expect(splitVersion('4.0')).toEqual([4, 0, 0]);
+    expect(splitVersion('4')).toEqual([4, 0, 0]);
+    expect(splitVersion('hello')).toEqual([NaN, 0, 0]);
+  });
+});
+
+describe('version comparison', () => {
+  it('works for isExactMajorMinor', () => {
+    expect(isExactMajorMinor('4.12.0-0', 4, 12)).toBeTruthy();
+    expect(isExactMajorMinor('4.12.1-0', 4, 12)).toBeTruthy();
+    expect(isExactMajorMinor('4.12', 4, 12)).toBeTruthy();
+    expect(isExactMajorMinor('4', 4, 0)).toBeTruthy();
+
+    expect(isExactMajorMinor('4.13', 4, 12)).toBeFalsy();
+    expect(isExactMajorMinor('4.12', 4, 13)).toBeFalsy();
+    expect(isExactMajorMinor('hello', 4, 13)).toBeFalsy();
+  });
+
+  it('works for isMajorMinorEqualOrGreater', () => {
+    expect(isMajorMinorEqualOrGreater('4.12.0-0', 4, 12)).toBeTruthy();
+    expect(isMajorMinorEqualOrGreater('4.12.1-0', 4, 12)).toBeTruthy();
+    expect(isMajorMinorEqualOrGreater('4.12', 4, 12)).toBeTruthy();
+    expect(isMajorMinorEqualOrGreater('4', 4, 0)).toBeTruthy();
+    expect(isMajorMinorEqualOrGreater('4.12.0', 4, 12)).toBeTruthy();
+    expect(isMajorMinorEqualOrGreater('4.12.1', 4, 12)).toBeTruthy();
+    expect(isMajorMinorEqualOrGreater('4.13', 4, 12)).toBeTruthy();
+    expect(isMajorMinorEqualOrGreater('5.13', 4, 12)).toBeTruthy();
+    expect(isMajorMinorEqualOrGreater('5', 4, 12)).toBeTruthy();
+
+    expect(isMajorMinorEqualOrGreater('4', 4, 12)).toBeFalsy();
+    expect(isMajorMinorEqualOrGreater('4.12', 4, 13)).toBeFalsy();
+    expect(isMajorMinorEqualOrGreater('4.12.1', 4, 13)).toBeFalsy();
+    expect(isMajorMinorEqualOrGreater('4.12.0', 5, 12)).toBeFalsy();
+    expect(isMajorMinorEqualOrGreater('hello', 4, 12)).toBeFalsy();
+  });
+
+  it('works for isMajorMinorPatchEqualOrGreater', () => {
+    expect(isMajorMinorPatchEqualOrGreater('5', 4, 12, 1)).toBeTruthy();
+    expect(isMajorMinorPatchEqualOrGreater('5', 4, 12, 0)).toBeTruthy();
+    expect(isMajorMinorPatchEqualOrGreater('5', 4, 0, 0)).toBeTruthy();
+    expect(isMajorMinorPatchEqualOrGreater('3', 4, 0, 1)).toBeFalsy();
+    expect(isMajorMinorPatchEqualOrGreater('3', 4, 2, 0)).toBeFalsy();
+    expect(isMajorMinorPatchEqualOrGreater('4.12', 4, 12, 1)).toBeFalsy();
+    expect(isMajorMinorPatchEqualOrGreater('hello', 4, 12, 1)).toBeFalsy();
+
+    expect(isMajorMinorPatchEqualOrGreater('4.12.2-0', 4, 11, 1)).toBeTruthy();
+    expect(isMajorMinorPatchEqualOrGreater('4.12.2-0', 4, 11, 2)).toBeTruthy();
+    expect(isMajorMinorPatchEqualOrGreater('4.12.2-0', 4, 11, 3)).toBeTruthy();
+
+    expect(isMajorMinorPatchEqualOrGreater('4.12.2-0', 4, 12, 1)).toBeTruthy();
+    expect(isMajorMinorPatchEqualOrGreater('4.12.2-0', 4, 12, 2)).toBeTruthy();
+    expect(isMajorMinorPatchEqualOrGreater('4.12.2-0', 4, 12, 3)).toBeFalsy();
+
+    expect(isMajorMinorPatchEqualOrGreater('4.12.2-0', 4, 13, 1)).toBeFalsy();
+    expect(isMajorMinorPatchEqualOrGreater('4.12.2-0', 4, 13, 2)).toBeFalsy();
+    expect(isMajorMinorPatchEqualOrGreater('4.12.2-0', 4, 13, 3)).toBeFalsy();
   });
 });

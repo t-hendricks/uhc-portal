@@ -1,6 +1,6 @@
 /* eslint-disable max-len */
 
-import { splitMajorMinor } from '~/common/versionHelpers';
+import { splitVersion } from '~/common/versionHelpers';
 
 const isSTSCluster = (state) =>
   state.clusters.details.cluster.aws?.sts?.role_arn &&
@@ -50,8 +50,8 @@ export const getClusterAcks = (state, upgradeVersion) => {
   const clusterAcks = getClusterMetAcks(state);
   const upgradeGates = getUpgradeGates(state) || [];
 
-  const [toMajor, toMinor] = splitMajorMinor(toVersion);
-  const [fromMajor, fromMinor] = splitMajorMinor(fromVersion);
+  const [toMajor, toMinor] = splitVersion(toVersion);
+  const [fromMajor, fromMinor] = splitVersion(fromVersion);
 
   if (!toMajor || !toMinor || !fromMajor || !fromMinor) {
     return [[], []];
@@ -61,7 +61,7 @@ export const getClusterAcks = (state, upgradeVersion) => {
     if (gate.sts_only && !isSTSCluster(state)) {
       return false;
     }
-    const [gateMajor, gateMinor] = splitMajorMinor(gate.version_raw_id_prefix);
+    const [gateMajor, gateMinor] = splitVersion(gate.version_raw_id_prefix);
     if (!gateMajor || !gateMinor) {
       return false;
     }
