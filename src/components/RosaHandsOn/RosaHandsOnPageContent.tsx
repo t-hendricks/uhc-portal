@@ -14,13 +14,11 @@ import RosaHandsOnPageHeader from './RosaHandsOnPageHeader';
 import ErrorBoundary from '../App/ErrorBoundary';
 import RosaHandsOnGetStartedCard from './RosaHandsOnGetStartedCard';
 import RosaHandsOnRecommendedContentTable from './RosaHandsOnRecommendedContentTable';
-import { DemoExperience, DemoExperienceStatusEnum } from './DemoExperienceModels';
-import { rosaHandsOnLinks } from './constants';
-import ExternalLink from '../common/ExternalLink';
-import RosaHandsOnErrorPage from './RosaHandsOnErrorPage';
 
-const contactSupportText =
-  'please contact support by clicking on the hat icon located at the bottom-right corner of the page.';
+import RosaHandsOnErrorPage from './RosaHandsOnErrorPage';
+import RosaHandsOnContactSupport from './RosaHandsOnContactSupport';
+import { AugmentedDemoExperience } from './augmentedModelTypes';
+import { DemoExperienceStatusEnum } from './DemoExperienceModels';
 
 const getErrorMessage = (error: unknown): string => {
   if (error instanceof Error) {
@@ -32,62 +30,103 @@ const getErrorMessage = (error: unknown): string => {
   return 'Unexpected error';
 };
 
-const ExperienceDurationInfo = ({ demoExperience }: { demoExperience: DemoExperience }) => {
+const StatusAlert = ({ demoExperience }: { demoExperience: AugmentedDemoExperience }) => {
   const remainingTime =
     new Date(demoExperience.scheduled_delete_timestamp || '').getTime() - Date.now();
-  const remainingDemos = demoExperience.quota.limit - demoExperience.quota.current;
-  return (
-    <Alert
-      title={
-        <>
-          Your current experience demo will end in{' '}
-          {humanizeDuration(remainingTime, {
-            units: ['h', 'm'],
-            maxDecimalPoints: 2,
-            round: true,
-            delimiter: ' and ',
-          })}
-          . You have {remainingDemos} experience launches remaining.
-        </>
-      }
-      variant="info"
-      isInline
-    />
-  );
+  const remainingQuota = demoExperience.quota.limit - demoExperience.quota.current;
+  let alert;
+  switch (demoExperience.status) {
+    case 'quota-exceeded':
+      alert = (
+        <Alert
+          title={
+            <>
+              After {demoExperience.quota.limit} launches, you can create ROSA clusters using a
+              pay-as-you-go option. If you have any questions, you can <RosaHandsOnContactSupport />
+              .
+            </>
+          }
+          isInline
+          variant="info"
+        />
+      );
+      break;
+    case DemoExperienceStatusEnum.Started:
+      alert = (
+        <Alert
+          title={
+            <>
+              Your current experience demo will end in{' '}
+              {humanizeDuration(remainingTime, {
+                units: ['h', 'm'],
+                maxDecimalPoints: 2,
+                round: true,
+                delimiter: ' and ',
+              })}
+              . You have {remainingQuota} experience launches remaining.
+            </>
+          }
+          variant="info"
+          isInline
+        />
+      );
+      break;
+    case DemoExperienceStatusEnum.Failed:
+      alert = (
+        <Alert
+          title={
+            <>
+              We&apos;re experiencing an error on our end. This does not affect your quota. Try
+              again and if this issue persists, <RosaHandsOnContactSupport />.
+            </>
+          }
+          variant="danger"
+          isInline
+        />
+      );
+      break;
+    case DemoExperienceStatusEnum.Unavailable:
+      alert = (
+        <Alert
+          title={
+            <>
+              The demo system is currently unavailable. If this issue persists, you can{' '}
+              <RosaHandsOnContactSupport />.
+            </>
+          }
+          variant="danger"
+          isInline
+        >
+          {demoExperience.unavailable_reason}
+        </Alert>
+      );
+      break;
+    case DemoExperienceStatusEnum.Available:
+      alert =
+        demoExperience.quota.current > 0 ? (
+          <Alert
+            variant="info"
+            isInline
+            title={
+              <>
+                You have {remainingQuota} launches remaining. If you have any questions, you can{' '}
+                <RosaHandsOnContactSupport />.
+              </>
+            }
+          />
+        ) : null;
+      break;
+    default:
+      alert = null;
+  }
+  return <>{alert}</>;
 };
-
-const GetStartedWithRosaButton = () => (
-  <ExternalLink href={rosaHandsOnLinks.getStarted}>Get started with ROSA</ExternalLink>
-);
-
-const UnavailableAlert = ({ demoExperience }: { demoExperience: DemoExperience }) => {
-  const remainingTrials = demoExperience.quota.limit - demoExperience.quota.current;
-  const alertActions = remainingTrials === 0 ? [<GetStartedWithRosaButton />] : [];
-  const alertTitle =
-    remainingTrials === 0 ? (
-      <>
-        After {demoExperience.quota.limit} launches, you may create ROSA clusters using a
-        pay-as-you-go option. If you have any questions, {contactSupportText}
-      </>
-    ) : (
-      demoExperience?.unavailable_reason ||
-      `This demo is currently unavailable. If this issue persists, ${contactSupportText}`
-    );
-
-  return <Alert title={alertTitle} variant="danger" isInline actionLinks={alertActions} />;
-};
-
-const RequestErrorAlert = ({ error }: { error: unknown }) => (
-  <Alert title="Failed to request an experience" variant="danger" isInline>
-    {getErrorMessage(error)}
-  </Alert>
-);
 
 export type RosaHandsOnPageContentProps = {
   error: unknown;
   requestError: unknown;
   loading: boolean;
-  demoExperience: DemoExperience;
+  demoExperience: AugmentedDemoExperience;
   onRequestCluster: () => void;
 };
 
@@ -95,27 +134,23 @@ const RosaHandsOnPageContent = ({
   error,
   loading,
   requestError,
-  ...props
+  demoExperience,
+  onRequestCluster,
 }: RosaHandsOnPageContentProps) => {
   if (error) {
     return <RosaHandsOnErrorPage message={getErrorMessage(error)} />;
   }
-  const { status } = props.demoExperience;
 
   return (
     <ErrorBoundary>
       <RosaHandsOnPageHeader />
+      <StatusAlert demoExperience={demoExperience} />
+      {requestError && (
+        <Alert title="Failed to request an experience" variant="danger" isInline>
+          {getErrorMessage(error)}
+        </Alert>
+      )}
       <>
-        {requestError && <RequestErrorAlert error={requestError} />}
-        {status === DemoExperienceStatusEnum.Unavailable && <UnavailableAlert {...props} />}
-        {status === DemoExperienceStatusEnum.Started && <ExperienceDurationInfo {...props} />}
-        {status === DemoExperienceStatusEnum.Failed && (
-          <Alert
-            title={`Experience provisioning failed. If this issue persists, ${contactSupportText}`}
-            variant="danger"
-            isInline
-          />
-        )}
         <PageSection>
           {loading ? (
             <Card>
@@ -124,7 +159,12 @@ const RosaHandsOnPageContent = ({
               </CardBody>
             </Card>
           ) : (
-            <RosaHandsOnGetStartedCard {...props} />
+            <>
+              <RosaHandsOnGetStartedCard
+                onRequestCluster={onRequestCluster}
+                demoExperience={demoExperience}
+              />
+            </>
           )}
         </PageSection>
         <PageSection style={{ paddingTop: 'unset' }}>
