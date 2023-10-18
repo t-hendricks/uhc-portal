@@ -11,6 +11,8 @@ import {
 import ErrorBox from '~/components/common/ErrorBox';
 import FuzzySelect, { FuzzyDataType } from '~/components/common/FuzzySelect';
 import { CloudVPC } from '~/types/clusters_mgmt.v1';
+import { formValueSelector } from 'redux-form';
+import { useGlobalState } from '~/redux/hooks';
 import {
   filterVpcsOnlyPrivateSubnets,
   filterOutRedHatManagedVPCs,
@@ -50,6 +52,7 @@ const VPCDropdown = ({
     ? filterOutRedHatManagedVPCs(vpcResponse.data?.items)
     : vpcResponse.data?.items;
   const dispatch = useDispatch();
+  const regionID = useGlobalState((state) => valueSelector(state, 'region'));
 
   const onToggle = () => {
     setIsOpen(!isOpen);
@@ -118,7 +121,7 @@ const VPCDropdown = ({
   return (
     <>
       <FormGroup
-        label="Specify a VPC to install your machine pools into"
+        label={`Specify a VPC to install your machine pools into in your selected region: ${regionID}`}
         validated={touched && error ? 'error' : 'default'}
         isRequired
       >
@@ -164,3 +167,5 @@ const VPCDropdown = ({
 };
 
 export default VPCDropdown;
+
+const valueSelector = formValueSelector('CreateCluster');
