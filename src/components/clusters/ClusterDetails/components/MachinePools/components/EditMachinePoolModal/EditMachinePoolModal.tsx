@@ -31,6 +31,7 @@ import EditDetailsSection from './sections/EditDetailsSection';
 import { getBaseMachineOrNodePool } from './utils';
 import useMachinePools from './hooks/useMachinePools';
 import useMachineTypes from './hooks/useMachineTypes';
+import { getMachineOrNodePools } from '../../MachinePoolsActions';
 
 const modalDescription =
   'A machine pool is a group of machines that are all clones of the same configuration, that can be used on demand by an application running on a pod.';
@@ -255,7 +256,8 @@ export const ConnectedEditMachinePoolModal = () => {
   const machinePoolsResponse = useMachinePools(cluster);
   const machineTypesResponse = useMachineTypes();
 
-  const machinePoolsList = isHypershiftCluster(cluster)
+  const isHypershift = isHypershiftCluster(cluster);
+  const machinePoolsList = isHypershift
     ? {
         ...machinePoolsResponse,
         data: machinePoolsResponse.data?.map(normalizeNodePool) || [],
@@ -268,6 +270,11 @@ export const ConnectedEditMachinePoolModal = () => {
       isEdit
       machineTypesResponse={machineTypesResponse}
       machinePoolsResponse={machinePoolsList}
+      onSave={() => {
+        if (!machinePoolsResponse.pending) {
+          getMachineOrNodePools(cluster.id, isHypershift)(dispatch);
+        }
+      }}
     />
   ) : null;
 };
