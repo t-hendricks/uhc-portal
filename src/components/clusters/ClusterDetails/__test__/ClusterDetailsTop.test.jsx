@@ -2,14 +2,13 @@ import React from 'react';
 import { shallow } from 'enzyme';
 // TODO: Remove this import when PF team fixes the issue causing tests to break without it
 import { Button } from '@patternfly/react-core';
-import { screen } from '@testing-library/dom';
 import { MemoryRouter } from 'react-router';
 
 import ClusterDetailsTop from '../components/ClusterDetailsTop';
 import fixtures, { funcs } from './ClusterDetails.fixtures';
 import clusterStates from '../../common/clusterStates';
 import ButtonWithTooltip from '../../../common/ButtonWithTooltip';
-import { mockRestrictedEnv, render } from '../../../../testUtils';
+import { mockRestrictedEnv, render, screen } from '../../../../testUtils';
 
 describe('<ClusterDetailsTop />', () => {
   let wrapper;

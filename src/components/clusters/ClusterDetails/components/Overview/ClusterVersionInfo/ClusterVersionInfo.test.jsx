@@ -1,8 +1,7 @@
 import * as React from 'react';
-import { screen } from '@testing-library/dom';
 import ClusterVersionInfo from './ClusterVersionInfo';
 import fixtures from '../../../__test__/ClusterDetails.fixtures';
-import { mockRestrictedEnv, render } from '../../../../../../testUtils';
+import { mockRestrictedEnv, render, screen } from '../../../../../../testUtils';
 
 describe('<ClusterVersionInfo />', () => {
   describe('in restricted env', () => {

@@ -109,10 +109,16 @@ const getEnvs = async (upstream) => {
       info: appInfo('https://raw.githubusercontent.com/RedHatInsights/uhc-portal-frontend-deploy/qa-stable/app.info.json'),
     },
     {
-      name: 'live_master',
+      name: 'live_qaprodauth_master',
       ci_job: 'https://***REMOVED***/job/insights-frontend-deployer/job/uhc-portal-frontend-deploy/job/qa-stable/',
       comment: 'Live at https://qaprodauth.console.redhat.com/openshift/',
       info: appInfo('https://qaprodauth.console.redhat.com/apps/openshift/app.info.json'),
+    },
+    {
+      name: 'live_consoledev_master',
+      ci_job: 'Ask #forum-consoledot-ui',
+      comment: 'Live at https://console.dev.redhat.com/openshift/',
+      info: appInfo('https://console.dev.redhat.com/apps/openshift/app.info.json'),
     },
     {
       name: 'build_pushed_beta_master',
@@ -121,11 +127,18 @@ const getEnvs = async (upstream) => {
       info: appInfo('https://raw.githubusercontent.com/RedHatInsights/uhc-portal-frontend-deploy/qa-beta/app.info.json'),
     },
     {
-      name: 'live_beta_master',
+      name: 'live_qaprodauth_beta_master',
       ci_job: 'https://***REMOVED***/job/insights-frontend-deployer/job/uhc-portal-frontend-deploy/job/qa-beta/',
       comment: 'Live at https://qaprodauth.console.redhat.com/preview/openshift/',
       info: appInfo('https://qaprodauth.console.redhat.com/beta/apps/openshift/app.info.json'),
     },
+    {
+      name: 'live_consoledev_beta_master',
+      ci_job: 'Ask #forum-consoledot-ui',
+      comment: 'Live at https://console.dev.redhat.com/preview/openshift/',
+      info: appInfo('https://console.dev.redhat.com/beta/apps/openshift/app.info.json'),
+    },
+
     {
       name: `${upstream}/candidate`,
       comment: 'https://gitlab.cee.redhat.com/service/uhc-portal/commits/candidate',

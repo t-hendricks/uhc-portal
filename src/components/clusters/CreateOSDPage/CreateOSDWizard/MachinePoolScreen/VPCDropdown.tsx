@@ -1,18 +1,21 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { useDispatch } from 'react-redux';
 import {
   Button,
   Flex,
   FlexItem,
   FormGroup,
-  Select,
-  SelectOption,
   SelectOptionObject,
   Tooltip,
 } from '@patternfly/react-core';
 import ErrorBox from '~/components/common/ErrorBox';
+import FuzzySelect, { FuzzyDataType } from '~/components/common/FuzzySelect';
 import { CloudVPC } from '~/types/clusters_mgmt.v1';
-import { filterVpcsOnlyPrivateSubnets, useAWSVPCInquiry } from '../VPCScreen/useVPCInquiry';
+import {
+  filterVpcsOnlyPrivateSubnets,
+  filterOutRedHatManagedVPCs,
+  useAWSVPCInquiry,
+} from '../VPCScreen/useVPCInquiry';
 import { getAWSCloudProviderVPCs } from '../ccsInquiriesActions';
 
 interface VCPDropdownProps {
@@ -27,6 +30,7 @@ interface VCPDropdownProps {
     error: string;
   };
   showRefresh?: boolean;
+  isHypershift?: boolean;
 }
 
 const VPCDropdown = ({
@@ -38,10 +42,13 @@ const VPCDropdown = ({
   },
   meta: { error, touched },
   showRefresh = false,
+  isHypershift = false,
 }: VCPDropdownProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const vpcResponse = useAWSVPCInquiry();
-  const { items } = vpcResponse.data as { items: CloudVPC[] };
+  const items: CloudVPC[] = isHypershift
+    ? filterOutRedHatManagedVPCs(vpcResponse.data?.items)
+    : vpcResponse.data?.items;
   const dispatch = useDispatch();
 
   const onToggle = () => {
@@ -53,7 +60,10 @@ const VPCDropdown = ({
     selectedVPCID: string | SelectOptionObject,
   ) => {
     inputProps.onChange(
-      selectData.items.find((vpc) => vpc.id === selectedVPCID) ?? { id: '', name: '' },
+      selectData.items.find((vpc) => vpc?.name === selectedVPCID || vpc?.id === selectedVPCID) ?? {
+        id: '',
+        name: '',
+      },
     );
     setIsOpen(false);
   };
@@ -75,8 +85,10 @@ const VPCDropdown = ({
   }, [vpcResponse.pending, vpcResponse.data?.items]);
 
   React.useEffect(() => {
-    const isValidSelection = items?.some((item) => item.id === selectedVPC.id);
-    if (items && selectedVPC.id && !isValidSelection) {
+    const isValidSelection = items?.some(
+      (item) => item?.id === selectedVPC?.id || item?.name === selectedVPC?.name,
+    );
+    if (items && (selectedVPC?.id || selectedVPC?.name) && !isValidSelection) {
       inputProps.onChange({ id: '', name: '' });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -92,6 +104,16 @@ const VPCDropdown = ({
       );
     }
   };
+  const selectionData = useMemo<FuzzyDataType>(
+    () =>
+      selectData.items.map((vpcItem) => ({
+        key: vpcItem.name! || vpcItem.id!,
+        value: vpcItem.name || vpcItem.id,
+        description: vpcItem.aws_subnets?.length === 0 ? 'This VPC has no private subnets' : '',
+      })),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [selectData.items],
+  );
 
   return (
     <>
@@ -102,33 +124,20 @@ const VPCDropdown = ({
       >
         <Flex>
           <FlexItem grow={{ default: 'grow' }}>
-            <Select
+            <FuzzySelect
               {...inputProps}
+              label="Select a VPC"
+              aria-label="select VPC"
               isOpen={isOpen}
-              selections={selectedVPC?.id}
               onToggle={onToggle}
               onSelect={onSelect}
-              placeholderText={selectData.placeholder}
-              validated={touched && error ? 'error' : 'default'}
+              selected={selectedVPC?.name || selectedVPC?.id}
+              selectionData={selectionData}
               isDisabled={vpcResponse.pending || selectData.items.length === 0}
-            >
-              {selectData.items.map((vpcItem) => {
-                const key = vpcItem.name || vpcItem.id;
-                const vpcDescription =
-                  vpcItem.aws_subnets?.length === 0 ? 'This VPC has no private subnets' : '';
-                return (
-                  <SelectOption
-                    className="pf-c-dropdown__menu-item"
-                    key={key}
-                    value={vpcItem.id}
-                    description={vpcDescription}
-                    isDisabled={!!vpcDescription}
-                  >
-                    {key}
-                  </SelectOption>
-                );
-              })}
-            </Select>
+              placeholderText={selectData.placeholder}
+              inlineFilterPlaceholderText="Filter by VPC"
+              validated={touched && error ? 'error' : 'default'}
+            />
           </FlexItem>
           {showRefresh && (
             <FlexItem>

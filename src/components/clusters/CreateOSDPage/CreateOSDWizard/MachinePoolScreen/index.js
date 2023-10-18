@@ -55,6 +55,7 @@ const mapStateToProps = (state, ownProps) => {
     autoscalingEnabled: !!valueSelector(state, 'autoscalingEnabled'),
     autoScaleMinNodesValue: valueSelector(state, 'min_replicas'),
     autoScaleMaxNodesValue: valueSelector(state, 'max_replicas'),
+    hasNodeLabels: valueSelector(state, 'node_labels')[0].key,
     initialValues: createOSDInitialValues({
       cloudProviderID,
       product,

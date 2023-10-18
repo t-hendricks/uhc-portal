@@ -1,7 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import './HibernatingClusterCard.scss';
-
 import {
   Card,
   CardBody,
@@ -12,8 +10,8 @@ import {
   EmptyStateBody,
   EmptyStateSecondaryActions,
 } from '@patternfly/react-core';
-
 import { AsleepIcon, InProgressIcon } from '@patternfly/react-icons';
+
 import clusterStates from '../clusterStates';
 import modals from '../../../common/Modal/modals';
 import ButtonWithTooltip from '../../../common/ButtonWithTooltip';
@@ -51,9 +49,6 @@ function HibernatingClusterCard({ cluster, openModal }) {
       body =
         'The cluster will not utilize any infrastructure and all operations will not be available';
       icon = InProgressIcon;
-      showButton = true;
-      buttonDisableReason =
-        'This cluster is powering down; you will be able to resume after it reaches hibernating state.';
       break;
     default:
       title = 'Cluster is currently hibernating';
@@ -66,16 +61,16 @@ function HibernatingClusterCard({ cluster, openModal }) {
   }
 
   return (
-    <Card id="hibernatingClusterCard">
+    <Card>
       <CardBody>
-        <EmptyState variant={EmptyStateVariant.large}>
-          <EmptyStateIcon className="status-icon" icon={icon} />
+        <EmptyState variant={EmptyStateVariant.small}>
+          <EmptyStateIcon icon={icon} />
           <Title headingLevel="h4" size="lg">
             {title}
           </Title>
           <EmptyStateBody>{body}</EmptyStateBody>
-          <EmptyStateSecondaryActions>
-            {showButton && (
+          {showButton && (
+            <EmptyStateSecondaryActions>
               <ButtonWithTooltip
                 variant="link"
                 disableReason={buttonDisableReason}
@@ -83,8 +78,8 @@ function HibernatingClusterCard({ cluster, openModal }) {
               >
                 Resume from Hibernation
               </ButtonWithTooltip>
-            )}
-          </EmptyStateSecondaryActions>
+            </EmptyStateSecondaryActions>
+          )}
         </EmptyState>
       </CardBody>
     </Card>
