@@ -8,7 +8,7 @@ class TabsRow extends React.Component {
   unlisten = null;
 
   state = {
-    activeTabKey: 0,
+    activeTabKey: undefined,
     initialTabKey: this.getInitTab(),
   };
 
@@ -36,11 +36,14 @@ class TabsRow extends React.Component {
 
   componentDidUpdate() {
     const { activeTabKey, initialTabKey } = this.state;
-    const { overviewTabRef } = this.props;
-    const activeTab = this.getTabs()[activeTabKey];
-    if (!activeTab.show) {
-      this.handleTabClick(undefined, 0);
-      overviewTabRef.current.hidden = false;
+
+    if (activeTabKey) {
+      const { overviewTabRef } = this.props;
+      const activeTab = this.getTabs()[activeTabKey];
+      if (!activeTab.show) {
+        this.handleTabClick(undefined, 0);
+        overviewTabRef.current.hidden = false;
+      }
     }
 
     const initialTab = this.getTabs()[initialTabKey];
@@ -56,10 +59,7 @@ class TabsRow extends React.Component {
   getInitTab() {
     const { initTabOpen } = this.props;
     const tabIndex = this.getTabs().findIndex((tab) => tab.id === initTabOpen);
-    if (tabIndex === -1) {
-      return 0;
-    }
-    return tabIndex;
+    return tabIndex === -1 ? 0 : tabIndex;
   }
 
   getTabs() {
@@ -185,20 +185,21 @@ class TabsRow extends React.Component {
   handleTabClick = (event, tabIndex, historyPush = true) => {
     const { onTabSelected, history, location } = this.props;
     const tabs = this.getTabs();
+    const { activeTabKey: previousTabKey } = this.state;
     this.setState(
       (state) => ({
         activeTabKey: tabIndex,
         initialTabKey: state.initialTabKey === tabIndex ? null : state.initialTabKey,
       }),
       () => {
-        const { initialTabKey } = this.state;
-        if (initialTabKey === null) {
-          if (historyPush) {
-            history.push({
-              pathname: location.pathname,
-              hash: `#${tabs[tabIndex].id}`,
-            });
-          }
+        const { initialTabKey, activeTabKey } = this.state;
+        if (initialTabKey === null && historyPush) {
+          history.push({
+            ...(previousTabKey && previousTabKey !== activeTabKey
+              ? { pathname: location.pathname }
+              : location),
+            hash: `#${tabs[tabIndex].id}`,
+          });
         }
       },
     );
@@ -220,7 +221,6 @@ class TabsRow extends React.Component {
     const { activeTabKey } = this.state;
 
     const tabsToDisplay = this.getTabs().filter((tab) => tab.show);
-
     return (
       <Tabs activeKey={activeTabKey} onSelect={this.handleTabClick}>
         {tabsToDisplay.map((tab) => (
