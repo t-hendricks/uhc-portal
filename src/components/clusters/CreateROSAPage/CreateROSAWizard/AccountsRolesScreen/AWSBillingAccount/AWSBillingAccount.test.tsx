@@ -3,7 +3,7 @@ import * as reactRedux from 'react-redux';
 import * as helpers from '~/common/helpers';
 import * as useFeatureGate from '~/hooks/useFeatureGate';
 import { HCP_AWS_BILLING_SHOW, HCP_AWS_BILLING_REQUIRED } from '~/redux/constants/featureConstants';
-import { screen, render, checkAccessibility, within } from '~/testUtils';
+import { withState, render, screen, checkAccessibility, within } from '~/testUtils';
 import wizardConnector from '~/components/clusters/CreateOSDPage/CreateOSDWizard/WizardConnector';
 import { CloudAccount } from '~/types/accounts_mgmt.v1/models/CloudAccount';
 import AWSBillingAccount from './AWSBillingAccount';
@@ -90,10 +90,8 @@ describe('<AWSBillingAccount />', () => {
     // Arrange
     shouldRefreshQuotaMock.mockReturnValue(false);
     useFeatureGateMock.mockImplementation((gate) => gate === HCP_AWS_BILLING_SHOW);
-    const { container } = render(
+    const { container } = withState(defaultState).render(
       <ConnectedAWSBillingAccount {...defaultProps} />,
-      {},
-      defaultState,
     );
 
     // Assert
@@ -118,7 +116,7 @@ describe('<AWSBillingAccount />', () => {
     useDispatchMock.mockReturnValue(dummyDispatch);
     shouldRefreshQuotaMock.mockReturnValue(false);
 
-    render(<ConnectedAWSBillingAccount {...defaultProps} />, {}, defaultState);
+    withState(defaultState).render(<ConnectedAWSBillingAccount {...defaultProps} />);
 
     // Assert
     expect(dummyDispatch).toHaveBeenCalledTimes(0);
@@ -128,7 +126,9 @@ describe('<AWSBillingAccount />', () => {
     // Arrange
     useFeatureGateMock.mockImplementation((gate) => gate === HCP_AWS_BILLING_SHOW);
     const accountInState = defaultState.rosaReducer.getAWSBillingAccountsResponse.data;
-    const { user } = render(<ConnectedAWSBillingAccount {...defaultProps} />, {}, defaultState);
+    const { user } = withState(defaultState).render(
+      <ConnectedAWSBillingAccount {...defaultProps} />,
+    );
     await user.click(screen.getByRole('button', { name: 'Options menu' })); // expand drop-down
 
     // Assert
@@ -152,7 +152,7 @@ describe('<AWSBillingAccount />', () => {
       selectedAWSBillingAccountID: 'notAnAccount',
       change: changeMock,
     };
-    render(<ConnectedAWSBillingAccount {...newProps} />, {}, defaultState);
+    withState(defaultState).render(<ConnectedAWSBillingAccount {...newProps} />);
 
     // Assert
 
@@ -189,7 +189,7 @@ describe('<AWSBillingAccount />', () => {
         },
       },
     };
-    render(<ConnectedAWSBillingAccount {...newProps} />, {}, newState);
+    withState(newState).render(<ConnectedAWSBillingAccount {...newProps} />);
 
     // Assert
     expect(changeMock).toHaveBeenCalledTimes(1);
@@ -216,7 +216,9 @@ describe('<AWSBillingAccount />', () => {
     };
 
     shouldRefreshQuotaMock.mockReturnValue(false);
-    const { container } = render(<ConnectedAWSBillingAccount {...defaultProps} />, {}, newState);
+    const { container } = withState(newState).render(
+      <ConnectedAWSBillingAccount {...defaultProps} />,
+    );
 
     // Assert
 
@@ -242,7 +244,9 @@ describe('<AWSBillingAccount />', () => {
     };
 
     shouldRefreshQuotaMock.mockReturnValue(false);
-    const { container } = render(<ConnectedAWSBillingAccount {...defaultProps} />, {}, newState);
+    const { container } = withState(newState).render(
+      <ConnectedAWSBillingAccount {...defaultProps} />,
+    );
 
     // Assert
 
@@ -263,7 +267,9 @@ describe('<AWSBillingAccount />', () => {
       selectedAWSAccountID: '456',
     };
     shouldRefreshQuotaMock.mockReturnValue(false);
-    const { container } = render(<ConnectedAWSBillingAccount {...newProps} />, {}, defaultState);
+    const { container } = withState(defaultState).render(
+      <ConnectedAWSBillingAccount {...newProps} />,
+    );
 
     // Assert
     expect(screen.getByRole('alert')).toBeInTheDocument();
@@ -286,7 +292,7 @@ describe('<AWSBillingAccount />', () => {
       selectedAWSAccountID: '123',
     };
     shouldRefreshQuotaMock.mockReturnValue(false);
-    render(<ConnectedAWSBillingAccount {...newProps} />, {}, defaultState);
+    withState(defaultState).render(<ConnectedAWSBillingAccount {...newProps} />);
 
     // Assert
     expect(screen.queryByRole('alert')).not.toBeInTheDocument();
@@ -300,7 +306,7 @@ describe('<AWSBillingAccount />', () => {
       selectedAWSAccountID: '123',
     };
     shouldRefreshQuotaMock.mockReturnValue(false);
-    render(<ConnectedAWSBillingAccount {...newProps} />, {}, defaultState);
+    withState(defaultState).render(<ConnectedAWSBillingAccount {...newProps} />);
 
     // Assert
     expect(screen.queryByRole('alert')).not.toBeInTheDocument();
@@ -314,7 +320,7 @@ describe('<AWSBillingAccount />', () => {
       selectedAWSAccountID: '',
     };
     shouldRefreshQuotaMock.mockReturnValue(false);
-    render(<ConnectedAWSBillingAccount {...newProps} />, {}, defaultState);
+    withState(defaultState).render(<ConnectedAWSBillingAccount {...newProps} />);
 
     // Assert
     expect(screen.queryByRole('alert')).not.toBeInTheDocument();
@@ -324,10 +330,8 @@ describe('<AWSBillingAccount />', () => {
     // Arrange
     shouldRefreshQuotaMock.mockReturnValue(false);
     useFeatureGateMock.mockImplementation(() => false);
-    const { container } = render(
+    const { container } = withState(defaultState).render(
       <ConnectedAWSBillingAccount {...defaultProps} />,
-      {},
-      defaultState,
     );
 
     // Assert
@@ -338,10 +342,8 @@ describe('<AWSBillingAccount />', () => {
     // Arrange
     shouldRefreshQuotaMock.mockReturnValue(false);
     useFeatureGateMock.mockImplementation(() => true);
-    const { container } = render(
+    const { container } = withState(defaultState).render(
       <ConnectedAWSBillingAccount {...defaultProps} />,
-      {},
-      defaultState,
     );
 
     // Assert
@@ -360,7 +362,7 @@ describe('<AWSBillingAccount />', () => {
       }
       return false;
     });
-    render(<ConnectedAWSBillingAccount {...defaultProps} />, {}, defaultState);
+    withState(defaultState).render(<ConnectedAWSBillingAccount {...defaultProps} />);
 
     // Assert
     expect(screen.queryByText('Field is required')).not.toBeInTheDocument(); // With the PF 4 select,this is the only way to determine if an element is required
@@ -378,7 +380,7 @@ describe('<AWSBillingAccount />', () => {
       }
       return false;
     });
-    render(<ConnectedAWSBillingAccount {...defaultProps} />, {}, defaultState);
+    withState(defaultState).render(<ConnectedAWSBillingAccount {...defaultProps} />);
 
     // Assert
     expect(screen.getByText('Field is required')).toBeInTheDocument(); // With the PF 4 select,this is the only way to determine if an element is required

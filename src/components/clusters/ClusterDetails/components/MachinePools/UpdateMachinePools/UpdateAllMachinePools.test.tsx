@@ -3,7 +3,7 @@ import MockAdapter from 'axios-mock-adapter';
 import * as reactRedux from 'react-redux';
 import { MemoryRouter } from 'react-router-dom';
 import apiRequest from '~/services/apiRequest';
-import { screen, render, checkAccessibility, within, insightsMock } from '~/testUtils';
+import { withState, screen, checkAccessibility, within, insightsMock } from '~/testUtils';
 
 import { UpdateAllMachinePools } from './index';
 
@@ -101,7 +101,7 @@ describe('<UpdateNodePools />', () => {
         },
       };
 
-      const { container } = render(<UpdateAllMachinePools />, {}, newState);
+      const { container } = withState(newState).render(<UpdateAllMachinePools />);
 
       expectUpdateButtonAbsence(container);
     });
@@ -118,7 +118,7 @@ describe('<UpdateNodePools />', () => {
         clusters: { details: { cluster: { ...defaultCluster, hypershift: { enabled: false } } } },
       };
 
-      const { container } = render(<UpdateAllMachinePools />, {}, newState);
+      const { container } = withState(newState).render(<UpdateAllMachinePools />);
 
       expectUpdateButtonAbsence(container);
     });
@@ -134,7 +134,7 @@ describe('<UpdateNodePools />', () => {
         machinePools: { getMachinePools: machinePools },
       };
 
-      const { container } = render(<UpdateAllMachinePools />, {}, newState);
+      const { container } = withState(newState).render(<UpdateAllMachinePools />);
 
       expectUpdateButtonAbsence(container);
     });
@@ -150,7 +150,7 @@ describe('<UpdateNodePools />', () => {
         machinePools: { getMachinePools: machinePools },
       };
 
-      const { container } = render(<UpdateAllMachinePools />, {}, newState);
+      const { container } = withState(newState).render(<UpdateAllMachinePools />);
 
       expectUpdateButtonAbsence(container);
     });
@@ -168,7 +168,7 @@ describe('<UpdateNodePools />', () => {
         clusters: { details: { cluster: { ...defaultCluster, version: { id: undefined } } } },
       };
 
-      const { container } = render(<UpdateAllMachinePools />, {}, newState);
+      const { container } = withState(newState).render(<UpdateAllMachinePools />);
 
       expectUpdateButtonAbsence(container);
     });
@@ -180,7 +180,7 @@ describe('<UpdateNodePools />', () => {
         machinePools: { getMachinePools: { ...defaultMachinePools, data: [] } },
       };
 
-      const { container } = render(<UpdateAllMachinePools />, {}, newState);
+      const { container } = withState(newState).render(<UpdateAllMachinePools />);
 
       expectUpdateButtonAbsence(container);
     });
@@ -197,7 +197,7 @@ describe('<UpdateNodePools />', () => {
         },
       };
 
-      const { container } = render(<UpdateAllMachinePools />, {}, newState);
+      const { container } = withState(newState).render(<UpdateAllMachinePools />);
 
       expectUpdateButtonAbsence(container);
     });
@@ -219,7 +219,7 @@ describe('<UpdateNodePools />', () => {
           },
         };
 
-        const { container } = render(<UpdateAllMachinePools />, {}, newState);
+        const { container } = withState(newState).render(<UpdateAllMachinePools />);
 
         expectUpdateButtonAbsence(container);
       });
@@ -236,7 +236,7 @@ describe('<UpdateNodePools />', () => {
           },
         };
 
-        const { container } = render(<UpdateAllMachinePools />, {}, newState);
+        const { container } = withState(newState).render(<UpdateAllMachinePools />);
 
         expectUpdateButtonAbsence(container);
       });
@@ -253,7 +253,7 @@ describe('<UpdateNodePools />', () => {
           },
         };
 
-        const { container } = render(<UpdateAllMachinePools />, {}, newState);
+        const { container } = withState(newState).render(<UpdateAllMachinePools />);
 
         expectUpdateButtonAbsence(container);
       });
@@ -270,7 +270,7 @@ describe('<UpdateNodePools />', () => {
           },
         };
 
-        const { container } = render(<UpdateAllMachinePools />, {}, newState);
+        const { container } = withState(newState).render(<UpdateAllMachinePools />);
 
         expectUpdateButtonAbsence(container);
       });
@@ -287,7 +287,7 @@ describe('<UpdateNodePools />', () => {
           },
         };
 
-        const { container } = render(<UpdateAllMachinePools />, {}, newState);
+        const { container } = withState(newState).render(<UpdateAllMachinePools />);
 
         expectUpdateButtonAbsence(container);
       });
@@ -305,7 +305,7 @@ describe('<UpdateNodePools />', () => {
           },
         },
       };
-      const { container } = render(<UpdateAllMachinePools />, {}, newState);
+      const { container } = withState(newState).render(<UpdateAllMachinePools />);
 
       expectUpdateButtonPresence();
       await checkAccessibility(container);
@@ -324,7 +324,7 @@ describe('<UpdateNodePools />', () => {
         },
       };
 
-      const { user } = render(<UpdateAllMachinePools />, {}, newState);
+      const { user } = withState(newState).render(<UpdateAllMachinePools />);
       expectUpdateButtonPresence();
 
       // Act
@@ -364,7 +364,7 @@ describe('<UpdateNodePools />', () => {
         },
       };
 
-      const { user } = render(<UpdateAllMachinePools />, {}, newState);
+      const { user } = withState(newState).render(<UpdateAllMachinePools />);
 
       expect(mock.history.patch.length).toBe(0);
       expect(dummyDispatch).toHaveBeenCalledTimes(0);
@@ -410,7 +410,7 @@ describe('<UpdateNodePools />', () => {
         },
       };
 
-      const { container, user } = render(<UpdateAllMachinePools />, {}, newState);
+      const { container, user } = withState(newState).render(<UpdateAllMachinePools />);
 
       expect(mock.history.patch.length).toBe(0);
       expect(dummyDispatch).toHaveBeenCalledTimes(0);
@@ -471,10 +471,8 @@ describe('<UpdateNodePools />', () => {
         },
       };
 
-      const { user } = render(
+      const { user } = withState(newState).render(
         <UpdateAllMachinePools initialErrorMessage="This is an error" />,
-        {},
-        newState,
       );
       expectUpdateButtonPresence();
       expect(screen.getByRole('alert', { name: errorAlertLabel })).toBeInTheDocument();
@@ -509,7 +507,7 @@ describe('<UpdateNodePools />', () => {
           },
         },
       };
-      const { user } = render(<UpdateAllMachinePools />, {}, newState);
+      const { user } = withState(newState).render(<UpdateAllMachinePools />);
       expectUpdateButtonPresence();
 
       // ACT
@@ -532,12 +530,10 @@ describe('<UpdateNodePools />', () => {
           },
         },
       };
-      render(
+      withState(newState).render(
         <MemoryRouter>
           <UpdateAllMachinePools goToMachinePoolTab />
         </MemoryRouter>,
-        {},
-        newState,
       );
 
       expectUpdateButtonAbsence();
@@ -558,12 +554,10 @@ describe('<UpdateNodePools />', () => {
           },
         },
       };
-      render(
+      withState(newState).render(
         <MemoryRouter>
           <UpdateAllMachinePools />
         </MemoryRouter>,
-        {},
-        newState,
       );
 
       expectUpdateButtonPresence();
