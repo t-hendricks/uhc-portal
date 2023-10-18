@@ -3,6 +3,7 @@ import { useField } from 'formik';
 import * as React from 'react';
 import links from '~/common/installLinks.mjs';
 import ExternalLink from '~/components/common/ExternalLink';
+import WithTooltip from '../components/WithTooltip';
 
 const fieldId = 'useSpotInstances';
 
@@ -14,35 +15,37 @@ type UseSpotInstancesFieldProps = {
 const UseSpotInstancesField = ({ children, isDisabled }: UseSpotInstancesFieldProps) => {
   const [field] = useField(fieldId);
   return (
-    <Stack hasGutter>
-      <StackItem>
-        <Checkbox
-          {...field}
-          label="Use Amazon EC2 Spot Instance"
-          isChecked={field.value as boolean}
-          onChange={(checked, event) => {
-            field.onChange(event);
-          }}
-          id={fieldId}
-          body={field.value && children}
-          description="You can save on costs by creating a machine pool running on AWS that deploys machines as non-guaranteed Spot Instances. This cannot be changed after machine pool is created."
-          isDisabled={isDisabled}
-        />
-      </StackItem>
-      {field.value && (
+    <WithTooltip showTooltip={isDisabled} content="This option cannot be changed after it was set.">
+      <Stack hasGutter>
         <StackItem>
-          <Alert
-            variant="warning"
-            title="Your Spot Instance may be interrupted at any time. Use Spot Instances for workloads that can tolerate interruptions."
-            isInline
-          >
-            <ExternalLink href={links.AWS_SPOT_INSTANCES}>
-              Learn more about Spot instances
-            </ExternalLink>
-          </Alert>
+          <Checkbox
+            {...field}
+            label="Use Amazon EC2 Spot Instance"
+            isChecked={field.value as boolean}
+            onChange={(checked, event) => {
+              field.onChange(event);
+            }}
+            id={fieldId}
+            body={field.value && children}
+            description="You can save on cossts by creating a machine pool running on AWS that deploys machines as non-guaranteed Spot Instances. This cannot be changed after machine pool is created."
+            isDisabled={isDisabled}
+          />
         </StackItem>
-      )}
-    </Stack>
+        {field.value && (
+          <StackItem>
+            <Alert
+              variant="warning"
+              title="Your Spot Instance may be interrupted at any time. Use Spot Instances for workloads that can tolerate interruptions."
+              isInline
+            >
+              <ExternalLink href={links.AWS_SPOT_INSTANCES}>
+                Learn more about Spot instances
+              </ExternalLink>
+            </Alert>
+          </StackItem>
+        )}
+      </Stack>
+    </WithTooltip>
   );
 };
 

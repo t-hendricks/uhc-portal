@@ -13,6 +13,7 @@ import { normalizeProductID } from '~/common/normalize';
 import { normalizedProducts } from '~/common/subscriptionTypes';
 import { isHypershiftCluster } from '~/components/clusters/ClusterDetails/clusterDetailsHelper';
 import useFormikOnChange from '../hooks/useFormikOnChange';
+import WithTooltip from '../components/WithTooltip';
 
 const fieldId = 'diskSize';
 
@@ -43,20 +44,22 @@ const DiskSizeField = ({ cluster, isEdit }: DiskSizeFieldProps) => {
         />
       }
     >
-      <NumberInput
-        {...field}
-        onPlus={() => onChange(field.value + 1)}
-        onMinus={() => onChange(field.value - 1)}
-        onChange={(e) => {
-          const newValue = (e.target as any).value;
-          onChange(Number(newValue));
-        }}
-        id={fieldId}
-        min={workerNodeVolumeSizeMinGiB}
-        max={maxWorkerVolumeSizeGiB}
-        unit={<span className="ocm-disk-size_unit">GiB</span>}
-        isDisabled={isEdit}
-      />
+      <WithTooltip showTooltip={isEdit} content="This option cannot be changed after it was set.">
+        <NumberInput
+          {...field}
+          onPlus={() => onChange(field.value + 1)}
+          onMinus={() => onChange(field.value - 1)}
+          onChange={(e) => {
+            const newValue = (e.target as any).value;
+            onChange(Number(newValue));
+          }}
+          id={fieldId}
+          min={workerNodeVolumeSizeMinGiB}
+          max={maxWorkerVolumeSizeGiB}
+          unit={<span className="ocm-disk-size_unit">GiB</span>}
+          isDisabled={isEdit}
+        />
+      </WithTooltip>
     </FormGroup>
   ) : null;
 };
