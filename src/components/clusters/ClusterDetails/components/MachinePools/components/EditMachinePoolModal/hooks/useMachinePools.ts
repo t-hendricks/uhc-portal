@@ -13,7 +13,7 @@ const useMachinePools = (cluster: Cluster) => {
     if (cluster?.id) {
       getMachineOrNodePools(cluster.id, hypershiftCluster)(dispatch);
     }
-  }, [dispatch, cluster.id, hypershiftCluster]);
+  }, [dispatch, cluster?.id, hypershiftCluster]);
 
   const machinePoolsResponse = useGlobalState((state) => state.machinePools.getMachinePools);
 
