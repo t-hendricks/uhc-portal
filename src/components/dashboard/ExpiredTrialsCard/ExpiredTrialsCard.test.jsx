@@ -1,7 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 import ExpiredTrialsCard from './ExpiredTrialsCard';
-import { expiredTrials } from '../Overview.fixtures';
+import { expiredTrials } from '../Dashboard.fixtures';
 import { expiredTrialsFilter } from './expiredTrialsHelpers';
 
 const initialState = {

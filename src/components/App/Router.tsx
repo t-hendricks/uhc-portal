@@ -107,6 +107,7 @@ import { CreateOsdWizard } from '../clusters/wizards';
 import EntitlementConfig from '../common/EntitlementConfig/index';
 import DownloadsPage from '../downloads/DownloadsPage';
 import withFeatureGate from '../features/with-feature-gate';
+import Dashboard from '../dashboard';
 import Overview from '../overview';
 import Quota from '../quota';
 import Releases from '../releases/index';
@@ -192,7 +193,7 @@ const Router: React.FC<RouterProps> = ({ history, planType, clusterId, externalC
             />
             <Redirect from="/install/crc/installer-provisioned" to="/create/local" />
             <Redirect from="/token/moa" to="/token/rosa" />
-            <Redirect from="/insights" to="/overview" />
+            <Redirect from="/insights" to="/dashboard" />
             <Redirect from="/subscriptions" to="/quota" />
             <Route path="/downloads" component={DownloadsPage} />
 
@@ -388,6 +389,7 @@ const Router: React.FC<RouterProps> = ({ history, planType, clusterId, externalC
             <Route path="/quota/resource-limits" render={() => <Quota marketplace />} />
             <Route path="/quota" component={Quota} />
             <Route path="/archived" component={ArchivedClusterList} />
+            <Route path="/dashboard" exact component={Dashboard} />
             <Route path="/overview" exact component={Overview} />
             <Route path="/releases" exact component={Releases} />
             <Route path="/assisted-installer" component={GatedAssistedUiRouter} />

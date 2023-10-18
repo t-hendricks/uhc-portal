@@ -1,13 +1,13 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`<Overview /> renders correctly 1`] = `
+exports[`<Dashboard /> renders correctly 1`] = `
 <AppPage
   title="Overview | Red Hat OpenShift Cluster Manager"
 >
   <PageHeader>
     <PageHeaderTitle
       className="page-title"
-      title="Overview"
+      title="Dashboard"
     />
   </PageHeader>
   <PageSection>
