@@ -13,7 +13,7 @@ import {
 import React from 'react';
 import { PageHeader } from '@redhat-cloud-services/frontend-components/PageHeader';
 
-type ProductBannerProps = {
+export type ProductBannerProps = {
   icon?: React.ReactNode;
   learnMoreLink?: React.ReactNode;
   title?: string;
@@ -22,7 +22,7 @@ type ProductBannerProps = {
   breadcrumbs?: React.ReactNode;
 };
 
-const ProductBanner = (props: ProductBannerProps) => {
+export const ProductBanner = (props: ProductBannerProps) => {
   const { icon, learnMoreLink, title, text, iconCardBodyClassName, breadcrumbs } = props;
   return (
     <PageHeader>
@@ -57,5 +57,3 @@ const ProductBanner = (props: ProductBannerProps) => {
     </PageHeader>
   );
 };
-
-export default ProductBanner;
