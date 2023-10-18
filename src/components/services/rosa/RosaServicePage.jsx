@@ -48,7 +48,7 @@ const TryRosaCard = () => (
         <Title headingLevel="h4">Want a preview of ROSA?</Title>
       </CardTitle>
     </CardHeader>
-    <CardBody>Access a no-cost hands-on experience with Red Hat OpenShift Service on AWS.</CardBody>
+    <CardBody>Access a no-cost, hands-on Red Hat OpenShift Service on AWS experience.</CardBody>
     <CardFooter>
       <Button
         variant="secondary"
@@ -57,7 +57,7 @@ const TryRosaCard = () => (
         )}
         isLarge
       >
-        Try for 8 hours
+        Try it
       </Button>
     </CardFooter>
   </Card>
