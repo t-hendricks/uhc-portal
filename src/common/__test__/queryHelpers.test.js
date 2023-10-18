@@ -3,6 +3,7 @@ import {
   buildFilterURLParams,
   sqlString,
   createViewQueryObject,
+  getQueryParam,
 } from '../queryHelpers';
 
 test('Test buildUrlParams', () => {
@@ -180,5 +181,48 @@ describe('createViewQueryObject()', () => {
     };
 
     expect(createViewQueryObject(viewOptions, username)).toEqual(expected);
+  });
+});
+
+describe('getQueryParam', () => {
+  beforeEach(() => {
+    delete global.window.location;
+    global.window = Object.create(window);
+    global.window.location = {};
+  });
+
+  it.each([
+    ['?severityTypes=Info', 'severityTypes', 'Info'],
+    ['?severityTypes=Info,Warning,Error', 'severityTypes', 'Info,Warning,Error'],
+    [
+      '?logTypes=Cluster version,clusterremove-high-level,Hardware/AWS global infrastructure',
+      'logTypes',
+      'Cluster version,clusterremove-high-level,Hardware/AWS global infrastructure',
+    ],
+    ['?severityTypes=Info&logTypes=clusterremove-high-level', 'severityTypes', 'Info'],
+    [
+      '?severityTypes=Info&logTypes=clusterremove-high-level',
+      'logTypes',
+      'clusterremove-high-level',
+    ],
+    [
+      '?severityTypes=Info,Warning,Error&logTypes=clusterremove-high-level',
+      'severityTypes',
+      'Info,Warning,Error',
+    ],
+    [
+      '?severityTypes=Info&logTypes=Cluster version,clusterremove-high-level,Hardware/AWS global infrastructure',
+      'logTypes',
+      'Cluster version,clusterremove-high-level,Hardware/AWS global infrastructure',
+    ],
+    [
+      '?severityTypes=Info,Warning,Error&logTypes=Cluster version,clusterremove-high-level,Hardware/AWS global infrastructure',
+      'severityTypes',
+      'Info,Warning,Error',
+    ],
+  ])('search %p to be %p', (search, queryParam, expected) => {
+    global.window.location.search = search;
+    const result = getQueryParam(queryParam);
+    expect(result).toBe(expected);
   });
 });
