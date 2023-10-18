@@ -108,10 +108,7 @@ class ClusterLogs extends React.Component {
     // Instead of showing an error, display "No cluster log entries found"
     const ignoreErrors = errorCode === 403 || errorCode === 404;
 
-    const hasNoFilters =
-      isEmpty(viewOptions.filter) &&
-      helpers.nestedIsEmpty(viewOptions.flags.severityTypes) &&
-      helpers.nestedIsEmpty(viewOptions.flags.logTypes);
+    const hasNoFilters = isEmpty(viewOptions.filter) && helpers.nestedIsEmpty(viewOptions.flags);
     const isPendingNoData = !size(logs) && pending && hasNoFilters;
 
     return (
