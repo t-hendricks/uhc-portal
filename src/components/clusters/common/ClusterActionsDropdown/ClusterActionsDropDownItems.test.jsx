@@ -64,7 +64,7 @@ describe('Cluster Actions Dropdown Items', () => {
         ['Open console', false],
         ['Edit display name', false],
         ['Edit load balancers and persistent storage', false],
-        ['Edit machine pools', false],
+        ['Edit machine pool', false],
         ['Hibernate cluster', false],
         ['Delete cluster', false],
       ]);
@@ -102,7 +102,7 @@ describe('Cluster Actions Dropdown Items', () => {
         ['Open console', true],
         ['Edit display name', true],
         ['Edit load balancers and persistent storage', true],
-        ['Edit machine pools', true],
+        ['Edit machine pool', true],
         ['Hibernate cluster', true],
         ['Delete cluster', true],
       ]);
@@ -124,7 +124,7 @@ describe('Cluster Actions Dropdown Items', () => {
         ['Open console', true],
         ['Edit display name', false],
         ['Edit load balancers and persistent storage', true],
-        ['Edit machine pools', true],
+        ['Edit machine pool', true],
         ['Hibernate cluster', true],
         ['Delete cluster', false],
       ]);
@@ -146,7 +146,7 @@ describe('Cluster Actions Dropdown Items', () => {
         ['Open console', true],
         ['Edit display name', false],
         ['Edit load balancers and persistent storage', true],
-        ['Edit machine pools', true],
+        ['Edit machine pool', true],
         ['Resume from Hibernation', false],
         ['Delete cluster', true],
       ]);
@@ -168,7 +168,7 @@ describe('Cluster Actions Dropdown Items', () => {
         ['Open console', false],
         ['Edit display name', false],
         ['Edit load balancers and persistent storage', true],
-        ['Edit machine pools', true],
+        ['Edit machine pool', true],
         ['Hibernate cluster', true],
         ['Delete cluster', true],
       ]);
@@ -201,7 +201,7 @@ describe('Cluster Actions Dropdown Items', () => {
     it('enables "edit machine pools" option if not hypershift', () => {
       const wrapper = shallow(<DropDownItemsRenderHelper {...Fixtures.managedReadyProps} />);
       wrapper.find(DropdownItem).forEach((option) => {
-        if (option.props().title === 'Edit machine pools') {
+        if (option.props().title === 'Edit machine pool') {
           expect(option.props().isAriaDisabled).toBeFalsy();
         }
       });
@@ -211,7 +211,7 @@ describe('Cluster Actions Dropdown Items', () => {
     it('enables "edit machine pools" option if hypershift', () => {
       const wrapper = shallow(<DropDownItemsRenderHelper {...Fixtures.hyperShiftReadyProps} />);
       wrapper.find(DropdownItem).forEach((option) => {
-        if (option.props().title === 'Edit machine pools') {
+        if (option.props().title === 'Edit machine pool') {
           expect(option.props().isAriaDisabled).toBeFalsy();
         }
       });
