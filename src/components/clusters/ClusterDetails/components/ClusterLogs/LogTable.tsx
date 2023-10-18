@@ -60,20 +60,24 @@ const columns = [
 ];
 
 const emptyState = (colSpan: number) => (
-  <Td colSpan={colSpan}>
-    <Bullseye>
-      <EmptyState variant={EmptyStateVariant.small}>
-        <EmptyStateIcon icon={SearchIcon} />
-        <Title headingLevel="h2" size="lg">
-          No results found
-        </Title>
-        <EmptyStateBody>
-          No results match the filter criteria. Remove all filters or clear all filters to show
-          results.
-        </EmptyStateBody>
-      </EmptyState>
-    </Bullseye>
-  </Td>
+  <Tbody>
+    <Tr>
+      <Td colSpan={colSpan}>
+        <Bullseye>
+          <EmptyState variant={EmptyStateVariant.small}>
+            <EmptyStateIcon icon={SearchIcon} />
+            <Title headingLevel="h2" size="lg">
+              No results found
+            </Title>
+            <EmptyStateBody>
+              No results match the filter criteria. Remove all filters or clear all filters to show
+              results.
+            </EmptyStateBody>
+          </EmptyState>
+        </Bullseye>
+      </Td>
+    </Tr>
+  </Tbody>
 );
 
 type LogType = ClusterLog & { id: string; doc_references?: Array<string> };
@@ -177,7 +181,7 @@ const LogTable = ({ logs, setSorting, pending, refreshEvent }: LogTableParams) =
     const isInternal = internal_only; // summary.trim() === 'INTERNAL';
 
     return (
-      <Tbody className={isInternal ? 'pf-u-background-color-danger' : undefined}>
+      <Tbody className={isInternal ? 'pf-u-background-color-danger' : undefined} key={rowIndex}>
         <Tr>
           <Td
             expand={{
@@ -237,7 +241,9 @@ const LogTable = ({ logs, setSorting, pending, refreshEvent }: LogTableParams) =
             <Tr>
               <Th />
               {columns.map((column, index) => (
-                <Th sort={getSortParams(index + 1)}>{column.title}</Th>
+                <Th sort={getSortParams(index + 1)} key={column.title}>
+                  {column.title}
+                </Th>
               ))}
             </Tr>
           </Thead>

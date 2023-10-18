@@ -1,5 +1,5 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { render, checkAccessibility } from '~/testUtils';
 import CostBreakdownCard from './CostBreakdownCard';
 
 const initialState = {
@@ -102,14 +102,17 @@ const availableState = {
 };
 
 describe('<CostBreakdownCard />', () => {
-  let wrapper;
-  let getReport;
-  let getSources;
+  // let wrapper;
+  const getReport = jest.fn();
+  const getSources = jest.fn();
   describe('When no source providers are available', () => {
-    beforeEach(() => {
-      getReport = jest.fn();
-      getSources = jest.fn();
-      wrapper = shallow(
+    afterEach(() => {
+      getReport.mockClear();
+      getSources.mockClear();
+    });
+
+    it('is accessible with empty state', async () => {
+      const { container } = render(
         <CostBreakdownCard
           getReport={getReport}
           getSources={getSources}
@@ -117,24 +120,34 @@ describe('<CostBreakdownCard />', () => {
           report={initialState.report}
         />,
       );
+      await checkAccessibility(container);
     });
 
-    it('renders empty state', () => {
-      expect(wrapper).toMatchSnapshot();
-    });
-    it('calls getSources on mount', () => {
+    it('calls getSources and getReport on mount', () => {
+      render(
+        <CostBreakdownCard
+          getReport={getReport}
+          getSources={getSources}
+          sources={initialState.sources}
+          report={initialState.report}
+        />,
+      );
       expect(getSources).toBeCalled();
-    });
-    it('calls getReport on mount', () => {
-      expect(getSources).toBeCalled();
+      expect(getReport).toBeCalled();
     });
   });
 
   describe('When cost report is available', () => {
-    beforeEach(() => {
-      getReport = jest.fn();
-      getSources = jest.fn();
-      wrapper = shallow(
+    afterEach(() => {
+      getReport.mockClear();
+      getSources.mockClear();
+    });
+
+    // This test fails due to an accessibility issue within PF PieCart
+    // PF takes the ariaDesc prop and incorrectly uses it to set
+    // aria-described by vs using aria-labelledby
+    it.skip('is accessible with cluster costs', async () => {
+      const { container } = render(
         <CostBreakdownCard
           getReport={getReport}
           getSources={getSources}
@@ -142,20 +155,23 @@ describe('<CostBreakdownCard />', () => {
           report={availableState.report}
         />,
       );
+
+      await checkAccessibility(container);
     });
 
-    it('renders cluster costs', () => {
-      expect(wrapper).toMatchSnapshot();
-    });
-    it('calls getSources on mount', () => {
+    it('calls getSources and getReport on mount', () => {
+      expect(getSources).not.toBeCalled();
+      expect(getReport).not.toBeCalled();
+      render(
+        <CostBreakdownCard
+          getReport={getReport}
+          getSources={getSources}
+          sources={availableState.sources}
+          report={initialState.report}
+        />,
+      );
       expect(getSources).toBeCalled();
-    });
-    it('calls getReport on mount', () => {
       expect(getReport).toBeCalled();
     });
   });
 });
-
-/**
-
- */
