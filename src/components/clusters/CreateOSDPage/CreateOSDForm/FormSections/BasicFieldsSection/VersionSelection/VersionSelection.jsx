@@ -3,7 +3,6 @@
 import React, { useState, useEffect } from 'react';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
-import get from 'lodash/get';
 import {
   Select,
   SelectOption,
@@ -140,7 +139,7 @@ function VersionSelection({
   useEffect(
     () => {
       if (getInstallableVersionsResponse.fulfilled) {
-        const versions = get(getInstallableVersionsResponse, 'versions', []);
+        const versions = getInstallableVersionsResponse?.versions ?? [];
 
         const selectedVersionInVersionList = versions.find(
           (ver) => ver.raw_id === selectedClusterVersion?.raw_id,
@@ -210,9 +209,7 @@ function VersionSelection({
   };
 
   const getSelection = () => {
-    const selectedVersion = versions.find(
-      (version) => get(input, 'value.raw_id') === version.raw_id,
-    );
+    const selectedVersion = versions.find((version) => input.value?.raw_id === version.raw_id);
     return selectedVersion ? selectedVersion.raw_id : '';
   };
 

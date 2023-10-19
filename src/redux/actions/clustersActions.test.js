@@ -106,10 +106,7 @@ describe('clustersActions', () => {
   });
 
   describe('getInstallableVersions', () => {
-    it.skip('calls cluster service getInstallableVErsions action with HCP', () => {
-      // This test is failing because clusterService.getInstallableVersions is returning undefined
-      // clusterService.getInstallableVersions is a real method
-      // unknown why it is missing from the clusterService mock.
+    it('calls cluster service getInstallableVersions action with HCP', () => {
       const isRosa = true;
       const isMarketplaceGcp = true;
       const isHCP = true;
