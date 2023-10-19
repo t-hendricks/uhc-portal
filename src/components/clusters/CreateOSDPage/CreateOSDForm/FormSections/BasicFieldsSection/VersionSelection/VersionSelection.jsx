@@ -131,10 +131,20 @@ function VersionSelection({
   };
 
   useEffect(() => {
-    // Get version list on every load because version list
-    // call depends on if is hypershift
-    getInstallableVersions(isRosa, isHypershiftSelected);
-  }, [getInstallableVersions, isRosa, isHypershiftSelected]);
+    // Get version list if first time or if control plane selection has changed
+    const isHCPVersions = getInstallableVersionsResponse.params?.product === 'hcp';
+
+    if (
+      !getInstallableVersionsResponse.fulfilled ||
+      getInstallableVersionsResponse.error ||
+      (isHCPVersions && !isHypershiftSelected) ||
+      (!isHCPVersions && isHypershiftSelected)
+    ) {
+      getInstallableVersions(isRosa, isHypershiftSelected);
+    }
+    // Call only component mount
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   useEffect(
     () => {

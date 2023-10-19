@@ -655,11 +655,11 @@ const getInstallableVersions = (
   isRosa: boolean,
   isMarketplaceGcp: boolean,
   isHCP: boolean = false,
-) =>
-  action(
-    clustersConstants.GET_CLUSTER_VERSIONS,
-    clusterService.getInstallableVersions(isRosa, isMarketplaceGcp, isHCP),
-  );
+) => {
+  const versions = clusterService.getInstallableVersions(isRosa, isMarketplaceGcp, isHCP);
+  // console.log('KKD - ', versions);
+  return action(clustersConstants.GET_CLUSTER_VERSIONS, versions);
+};
 
 type ClusterAction = ActionType<
   | typeof fetchClusterDetails

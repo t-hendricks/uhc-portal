@@ -143,6 +143,125 @@ describe('<VersionSelection />', () => {
     await checkAccessibility(container);
   });
 
+  describe(' calls getInstallableVersions', () => {
+    const mockGetInstallableVersions = jest.fn();
+
+    afterEach(() => {
+      mockGetInstallableVersions.mockClear();
+    });
+    it(' is not called when it has already called and control plane has not changed', () => {
+      expect(mockGetInstallableVersions.mock.calls).toHaveLength(0);
+      const newProps = {
+        ...defaultProps,
+        isHypershiftSelected: true,
+        getInstallableVersionsResponse: {
+          error: false,
+          pending: false,
+          fulfilled: true,
+          params: { product: 'hcp' },
+        },
+        getInstallableVersions: mockGetInstallableVersions,
+      };
+      render(<VersionSelection {...newProps} />);
+
+      expect(mockGetInstallableVersions.mock.calls).toHaveLength(0);
+    });
+
+    it('when getInstallableVersions on mount has not been called before', () => {
+      expect(mockGetInstallableVersions.mock.calls).toHaveLength(0);
+      const newProps = {
+        ...defaultProps,
+        getInstallableVersionsResponse: {
+          error: false,
+          pending: false,
+          fulfilled: false,
+        },
+        getInstallableVersions: mockGetInstallableVersions,
+      };
+      render(<VersionSelection {...newProps} />);
+
+      expect(mockGetInstallableVersions.mock.calls).toHaveLength(1);
+    });
+
+    it('on mount when last call ended in error', () => {
+      expect(mockGetInstallableVersions.mock.calls).toHaveLength(0);
+      const newProps = {
+        ...defaultProps,
+        getInstallableVersionsResponse: {
+          error: true,
+          pending: false,
+          fulfilled: true,
+        },
+        getInstallableVersions: mockGetInstallableVersions,
+      };
+      render(<VersionSelection {...newProps} />);
+
+      expect(mockGetInstallableVersions.mock.calls).toHaveLength(1);
+    });
+
+    it('on mount if control plane switched from classic to HCP', () => {
+      expect(mockGetInstallableVersions.mock.calls).toHaveLength(0);
+      const newProps = {
+        ...defaultProps,
+        isHypershiftSelected: false,
+        getInstallableVersionsResponse: {
+          error: false,
+          pending: false,
+          fulfilled: true,
+          params: { product: 'hcp' },
+        },
+        getInstallableVersions: mockGetInstallableVersions,
+      };
+      render(<VersionSelection {...newProps} />);
+
+      expect(mockGetInstallableVersions.mock.calls).toHaveLength(1);
+    });
+
+    it('on mount if control plane switched from HCP to classic', () => {
+      expect(mockGetInstallableVersions.mock.calls).toHaveLength(0);
+      const newProps = {
+        ...defaultProps,
+        isHypershiftSelected: true,
+        getInstallableVersionsResponse: {
+          error: false,
+          pending: false,
+          fulfilled: true,
+          params: {},
+        },
+        getInstallableVersions: mockGetInstallableVersions,
+      };
+      render(<VersionSelection {...newProps} />);
+
+      expect(mockGetInstallableVersions.mock.calls).toHaveLength(1);
+    });
+
+    it('when there was an error and the menu is opened', async () => {
+      // Arrange
+      const newProps = {
+        ...defaultProps,
+        isOpen: false,
+        getInstallableVersionsResponse: {
+          error: true,
+          pending: false,
+          fulfilled: true,
+          errorMessage: 'This is a custom error message',
+        },
+        getInstallableVersions: mockGetInstallableVersions,
+      };
+
+      const { user } = render(<VersionSelection {...newProps} />);
+
+      // Called on mount because of error when mounted
+      expect(mockGetInstallableVersions.mock.calls).toHaveLength(1);
+
+      // Act
+      await user.click(screen.getByLabelText(componentText.BUTTON.label));
+
+      // Assert
+      expect(mockGetInstallableVersions.mock.calls).toHaveLength(2);
+    });
+  });
+
   describe('when Hypershfit', () => {
     it('hides versions prior to "4.11.4" when hypershift and an ARN with a managed policy are selected', () => {
       // Arrange
@@ -291,6 +410,7 @@ describe('<VersionSelection />', () => {
     afterEach(() => {
       mockedSupportedVersion.mockRestore();
     });
+
     it('displays only error when error getting versions', () => {
       // Arrange
       const newProps = {
@@ -578,32 +698,6 @@ describe('<VersionSelection />', () => {
 
       // Assert
       expect(screen.queryByRole('listbox')).not.toBeInTheDocument();
-    });
-
-    it('calls getInstallableVersions when there was an error and the menu is opened', async () => {
-      // Arrange
-      const mockGetInstallableVersions = jest.fn();
-      const newProps = {
-        ...defaultProps,
-        isOpen: false,
-        getInstallableVersionsResponse: {
-          error: true,
-          pending: false,
-          fulfilled: true,
-          errorMessage: 'This is a custom error message',
-        },
-        getInstallableVersions: mockGetInstallableVersions,
-      };
-
-      const { user } = render(<VersionSelection {...newProps} />);
-      // Always calls getInstallableVersions on load
-      expect(mockGetInstallableVersions.mock.calls).toHaveLength(1);
-
-      // Act
-      await user.click(screen.getByLabelText(componentText.BUTTON.label));
-
-      // Assert
-      expect(mockGetInstallableVersions.mock.calls).toHaveLength(2);
     });
 
     it("calls input's onChange function when an option is selected", async () => {
