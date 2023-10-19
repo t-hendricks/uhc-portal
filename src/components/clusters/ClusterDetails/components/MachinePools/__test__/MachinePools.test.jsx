@@ -68,7 +68,6 @@ const defaultProps = {
   isAddMachinePoolModalOpen: false,
   isEditTaintsModalOpen: false,
   isEditLabelsModalOpen: false,
-  isDeleteMachinePoolModalOpen: false,
   isClusterAutoscalingModalOpen: false,
   clusterAutoscalerResponse: {
     hasAutoscaler: false,

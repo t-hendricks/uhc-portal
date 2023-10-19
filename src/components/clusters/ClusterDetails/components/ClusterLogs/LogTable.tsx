@@ -170,7 +170,7 @@ const LogTable = ({ logs, setSorting, pending, refreshEvent }: LogTableParams) =
         </Text>
         <ul>
           {docReferences.map((url) => (
-            <li>
+            <li key={url}>
               <ExternalLink href={url}>{url}</ExternalLink>
             </li>
           ))}

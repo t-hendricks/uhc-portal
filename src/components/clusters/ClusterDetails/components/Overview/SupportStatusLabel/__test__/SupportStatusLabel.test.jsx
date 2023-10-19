@@ -1,5 +1,4 @@
 import React from 'react';
-// import { shallow } from 'enzyme';
 import { render, checkAccessibility, screen } from '~/testUtils';
 
 import SupportStatusLabel from '../SupportStatusLabel';
@@ -19,14 +18,6 @@ const defaultProps = {
 };
 
 describe('<SupportStatusLabel />', () => {
-  // let wrapper;
-  // let getSupportStatus;
-  // beforeEach(() => {
-  //   getSupportStatus = jest.fn();
-  //   wrapper = shallow(
-  //     <SupportStatusLabel getSupportStatus={getSupportStatus} clusterVersion="4.5" />,
-  //   );
-  // });
   beforeEach(() => {
     getSupportStatus.mockClear();
   });

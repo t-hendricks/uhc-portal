@@ -1,12 +1,10 @@
 import React from 'react';
-// import { shallow } from 'enzyme';
 import { render, checkAccessibility, screen } from '~/testUtils';
 
 import ClusterLogs from '../ClusterLogs';
 import fixtures from '../../../__test__/ClusterDetails.fixtures';
 
 describe('<ClusterLogs />', () => {
-  // let wrapper;
   const getClusterHistory = jest.fn();
   const setSorting = jest.fn();
   const setListFlag = jest.fn();
