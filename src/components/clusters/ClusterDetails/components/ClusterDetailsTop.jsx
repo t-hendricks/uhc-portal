@@ -6,7 +6,6 @@ import { Spinner } from '@redhat-cloud-services/frontend-components/Spinner';
 import { Button, Alert, Split, SplitItem, Title } from '@patternfly/react-core';
 
 import { PreviewLabel } from '~/components/clusters/common/PreviewLabel';
-import { isRestrictedEnv } from '~/restrictedEnv';
 import clusterStates, { isOffline } from '../../common/clusterStates';
 import modals from '../../../common/Modal/modals';
 import ClusterActionsDropdown from '../../common/ClusterActionsDropdown';
@@ -141,7 +140,7 @@ function ClusterDetailsTop(props) {
     );
   }
 
-  const actions = !isRestrictedEnv() && !isUninstalledAICluster(cluster) && (
+  const actions = !isUninstalledAICluster(cluster) && (
     <ClusterActionsDropdown
       disabled={!cluster.canEdit && !cluster.canDelete}
       cluster={cluster}

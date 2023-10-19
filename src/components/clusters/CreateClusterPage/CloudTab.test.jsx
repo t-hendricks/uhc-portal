@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, screen, checkAccessibility } from '@testUtils';
+import { render, screen, checkAccessibility, mockRestrictedEnv } from '@testUtils';
 import { MemoryRouter } from 'react-router-dom';
 
 import CloudTab from './CloudTab';
@@ -160,6 +160,25 @@ describe('<CloudTab />', () => {
           visibility: true,
         },
       ]);
+    });
+  });
+
+  describe('in Restricted env', () => {
+    const isRestrictedEnv = mockRestrictedEnv();
+
+    afterEach(() => {
+      isRestrictedEnv.mockReturnValue(false);
+    });
+    it('renders only ROSA cluster', () => {
+      isRestrictedEnv.mockReturnValue(true);
+      render(
+        <MemoryRouter>
+          <CloudTab />
+        </MemoryRouter>,
+      );
+
+      expect(screen.getAllByRole('row')).toHaveLength(2);
+      expect(screen.getByTestId('rosa-create-cluster-button')).toBeInTheDocument();
     });
   });
 });

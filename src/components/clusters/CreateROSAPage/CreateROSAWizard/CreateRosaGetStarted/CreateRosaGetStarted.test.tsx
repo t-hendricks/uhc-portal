@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, checkAccessibility, insightsMock, screen } from '@testUtils';
+import { render, checkAccessibility, insightsMock, screen, mockRestrictedEnv } from '@testUtils';
 import { MemoryRouter } from 'react-router-dom';
 import * as hooks from '~/hooks/useFeatureGate';
 import { HCP_ROSA_GETTING_STARTED_PAGE } from '~/redux/constants/featureConstants';
@@ -74,5 +74,35 @@ describe('<CreateRosaGetStarted />', () => {
     expect(
       screen.getByRole('button', { name: completeAWSMessage }).querySelector('svg.warning'),
     ).toBeInTheDocument();
+  });
+
+  describe('in Restricted env', () => {
+    const isRestrictedEnv = mockRestrictedEnv();
+
+    afterEach(() => {
+      isRestrictedEnv.mockReturnValue(false);
+    });
+
+    it('does not show HCP directions', () => {
+      jest
+        .spyOn(hooks, 'useFeatureGate')
+        .mockImplementation((feature) => feature === HCP_ROSA_GETTING_STARTED_PAGE);
+      const { rerender } = render(
+        <MemoryRouter>
+          <CreateRosaGetStarted />
+        </MemoryRouter>,
+      );
+
+      expect(screen.getByTestId('hcp-directions')).toBeInTheDocument();
+
+      isRestrictedEnv.mockReturnValue(true);
+      rerender(
+        <MemoryRouter>
+          <CreateRosaGetStarted />
+        </MemoryRouter>,
+      );
+
+      expect(screen.queryByTestId('hcp-directions')).not.toBeInTheDocument();
+    });
   });
 });

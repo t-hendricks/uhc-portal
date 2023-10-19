@@ -16,7 +16,6 @@ import {
 import { Table, TableHeader, TableBody, cellWidth, expandable } from '@patternfly/react-table';
 import Skeleton from '@redhat-cloud-services/frontend-components/Skeleton';
 
-import { isRestrictedEnv } from '~/restrictedEnv';
 import { EditClusterAutoScalerForDay2 } from '~/components/clusters/common/EditClusterAutoScalingDialog';
 import {
   isMultiAZ,
@@ -401,20 +400,18 @@ class MachinePools extends React.Component {
                 {machinePoolsList.error && (
                   <ErrorBox message="Error retrieving machine pools" response={machinePoolsList} />
                 )}
-                {!isRestrictedEnv() && (
-                  <ButtonWithTooltip
-                    disableReason={
-                      readOnlyReason || hibernatingReason || canNotCreateReason || quotaReason
-                    }
-                    id="add-machine-pool"
-                    onClick={() => openModal(modals.ADD_MACHINE_POOL)}
-                    variant="secondary"
-                    className="pf-u-mb-lg pf-u-mr-md"
-                  >
-                    Add machine pool
-                  </ButtonWithTooltip>
-                )}
-                {!isRestrictedEnv() && !isHypershift && (
+                <ButtonWithTooltip
+                  disableReason={
+                    readOnlyReason || hibernatingReason || canNotCreateReason || quotaReason
+                  }
+                  id="add-machine-pool"
+                  onClick={() => openModal(modals.ADD_MACHINE_POOL)}
+                  variant="secondary"
+                  className="pf-u-mb-lg pf-u-mr-md"
+                >
+                  Add machine pool
+                </ButtonWithTooltip>
+                {!isHypershift && (
                   <ButtonWithTooltip
                     id="edit-existing-cluster-autoscaling"
                     disableReason={
@@ -448,24 +445,21 @@ class MachinePools extends React.Component {
                     cells={columns}
                     rows={rows}
                     onCollapse={this.onCollapse}
-                    actionResolver={
-                      !isRestrictedEnv()
-                        ? (rowData) =>
-                            actionResolver({
-                              rowData,
-                              onClickDelete: onClickDeleteAction,
-                              onClickScale: onClickScaleAction,
-                              onClickEditTaints: onClickEditTaintsAction,
-                              onClickEditLabels: onClickEditLabelsAction,
-                              onClickUpdate: canMachinePoolBeUpdated(rowData.machinePool)
-                                ? onClickUpdateAction
-                                : undefined,
-                              canDelete: machinePoolsActions.delete,
-                              cluster,
-                              machinePools: machinePoolsList.data,
-                              machineTypes,
-                            })
-                        : undefined
+                    actionResolver={(rowData) =>
+                      actionResolver({
+                        rowData,
+                        onClickDelete: onClickDeleteAction,
+                        onClickScale: onClickScaleAction,
+                        onClickEditTaints: onClickEditTaintsAction,
+                        onClickEditLabels: onClickEditLabelsAction,
+                        onClickUpdate: canMachinePoolBeUpdated(rowData.machinePool)
+                          ? onClickUpdateAction
+                          : undefined,
+                        canDelete: machinePoolsActions.delete,
+                        cluster,
+                        machinePools: machinePoolsList.data,
+                        machineTypes,
+                      })
                     }
                     areActionsDisabled={() => tableActionsDisabled}
                   >

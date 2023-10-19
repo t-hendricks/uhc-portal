@@ -61,7 +61,7 @@ const CreateRosaGetStarted = () => {
   const { search } = useLocation();
   const sourceIsAWS = search.indexOf('source=aws') !== -1;
   const [isAWSPrereqOpen, setIsAWSPrereqOpen] = React.useState(!sourceIsAWS);
-  const showHCPDirections = useFeatureGate(HCP_ROSA_GETTING_STARTED_PAGE);
+  const showHCPDirections = useFeatureGate(HCP_ROSA_GETTING_STARTED_PAGE) && !isRestrictedEnv();
 
   return (
     <AppPage>
@@ -171,6 +171,7 @@ const CreateRosaGetStarted = () => {
                     component="p"
                     aria-label=""
                     title="For now, you can only create ROSA with Hosted Control Plane clusters using the CLI.  You'll be able to create ROSA with Hosted Control Plane clusters using the web interface soon."
+                    data-testid="hcp-directions"
                   />
                 ) : null}
 
@@ -178,11 +179,9 @@ const CreateRosaGetStarted = () => {
                   <GridItem span={6}>
                     <WithCLICard />
                   </GridItem>
-                  {!isRestrictedEnv() && (
-                    <GridItem span={6}>
-                      <WithWizardCard />
-                    </GridItem>
-                  )}
+                  <GridItem span={6}>
+                    <WithWizardCard />
+                  </GridItem>
                 </Grid>
               </CardBody>
             </Card>
