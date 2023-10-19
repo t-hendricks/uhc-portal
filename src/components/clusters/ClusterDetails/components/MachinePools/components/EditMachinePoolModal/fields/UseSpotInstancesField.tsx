@@ -15,7 +15,10 @@ type UseSpotInstancesFieldProps = {
 const UseSpotInstancesField = ({ children, isDisabled }: UseSpotInstancesFieldProps) => {
   const [field] = useField(fieldId);
   return (
-    <WithTooltip showTooltip={isDisabled} content="This option cannot be changed after it was set.">
+    <WithTooltip
+      showTooltip={isDisabled}
+      content="This option cannot be edited from its original setting selection."
+    >
       <Stack hasGutter>
         <StackItem>
           <Checkbox
