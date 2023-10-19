@@ -3,7 +3,9 @@ import { viewOptionsConstants } from '../../../../../redux/constants';
 import ViewOnlyMyClustersToggle from './ViewOnlyMyClustersToggle';
 
 const mapStateToProps = (state, ownProps) => ({
-  isChecked: state.viewOptions[ownProps.view].flags.showMyClustersOnly,
+  isChecked:
+    state.viewOptions[ownProps.view].flags.showMyClustersOnly ??
+    localStorage.getItem(ownProps.localStorageKey),
 });
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
@@ -15,6 +17,7 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
         showMyClustersOnly: isChecked,
       },
     });
+    localStorage.setItem(ownProps.localStorageKey, isChecked);
   },
 });
 

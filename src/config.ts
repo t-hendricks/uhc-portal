@@ -1,4 +1,4 @@
-const ENV_OVERRIDE_LOCALSTORAGE_KEY = 'ocmOverridenEnvironment';
+import { ENV_OVERRIDE_LOCALSTORAGE_KEY } from './common/localStorageConstants';
 
 type EnvConfig = {
   apiGateway: string;
@@ -106,5 +106,4 @@ const config = {
   },
 };
 
-export { ENV_OVERRIDE_LOCALSTORAGE_KEY };
 export default config;
