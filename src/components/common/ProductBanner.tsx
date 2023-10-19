@@ -3,8 +3,8 @@ import {
   CardFooter,
   CardTitle,
   Divider,
-  Flex,
-  FlexItem,
+  Split,
+  SplitItem,
   Stack,
   StackItem,
   Text,
@@ -27,16 +27,16 @@ const ProductBanner = (props: ProductBannerProps) => {
   return (
     <PageHeader>
       {breadcrumbs}
-      <Flex>
-        <FlexItem alignSelf={{ default: 'alignSelfCenter' }}>
+      <Split>
+        <SplitItem className="pf-u-pr-md">
           <CardBody className={iconCardBodyClassName}>{icon}</CardBody>
-        </FlexItem>
+        </SplitItem>
         <Divider
           orientation={{
             default: 'vertical',
           }}
         />
-        <FlexItem>
+        <SplitItem className="pf-u-pl-md">
           <Stack hasGutter>
             <StackItem isFilled>
               <CardTitle>
@@ -52,8 +52,8 @@ const ProductBanner = (props: ProductBannerProps) => {
               <CardFooter>{learnMoreLink}</CardFooter>
             </StackItem>
           </Stack>
-        </FlexItem>
-      </Flex>
+        </SplitItem>
+      </Split>
     </PageHeader>
   );
 };
