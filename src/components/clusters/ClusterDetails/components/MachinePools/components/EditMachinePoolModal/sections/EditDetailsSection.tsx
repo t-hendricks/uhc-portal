@@ -1,10 +1,11 @@
-import { FormGroup, FormSelect, FormSelectOption } from '@patternfly/react-core';
+import { FormGroup, SelectOption } from '@patternfly/react-core';
 import * as React from 'react';
 import { Cluster, MachinePool } from '~/types/clusters_mgmt.v1';
 import TextField from '~/components/common/formik/TextField';
 import { isHypershiftCluster } from '~/components/clusters/common/clusterStates';
 import SubnetField from '../fields/SubnetField';
 import InstanceTypeField from '../fields/InstanceTypeField';
+import SelectField from '../fields/SelectField';
 
 type EditDetailsSectionProps = {
   cluster: Cluster;
@@ -24,11 +25,13 @@ const EditDetailsSection = ({
   <>
     {isEdit ? (
       <FormGroup fieldId="machine-pool" label="Machine pool">
-        <FormSelect id="machine-pool" onChange={setCurrentMPId} value={currentMPId}>
+        <SelectField fieldId="machine-pool" onSelect={setCurrentMPId} value={currentMPId}>
           {machinePools.map((mp) => (
-            <FormSelectOption label={mp.id || ''} key={mp.id} value={mp.id} />
+            <SelectOption key={mp.id} value={mp.id}>
+              {mp.id || ''}
+            </SelectOption>
           ))}
-        </FormSelect>
+        </SelectField>
       </FormGroup>
     ) : (
       <>

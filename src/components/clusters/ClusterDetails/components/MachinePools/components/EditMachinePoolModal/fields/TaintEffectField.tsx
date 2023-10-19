@@ -1,6 +1,8 @@
-import { FormSelect, FormSelectOption } from '@patternfly/react-core';
+import { SelectOption } from '@patternfly/react-core';
 import { useField } from 'formik';
 import * as React from 'react';
+import useFormikOnChange from '../hooks/useFormikOnChange';
+import SelectField from './SelectField';
 
 export type TaintEffect = 'NoSchedule' | 'NoExecute' | 'PreferNoSchedule';
 
@@ -11,17 +13,13 @@ type TaintEffectFieldProps = {
 
 const TaintEffectField = ({ fieldId, isDisabled }: TaintEffectFieldProps) => {
   const [field] = useField<TaintEffect>(fieldId);
+  const onChange = useFormikOnChange(fieldId);
   return (
-    <FormSelect
-      {...field}
-      id={fieldId}
-      onChange={(val, event) => field.onChange(event)}
-      isDisabled={isDisabled}
-    >
-      <FormSelectOption label="NoSchedule" value="NoSchedule" />
-      <FormSelectOption label="NoExecute" value="NoExecute" />
-      <FormSelectOption label="PreferNoSchedule" value="PreferNoSchedule" />
-    </FormSelect>
+    <SelectField value={field.value} fieldId={fieldId} onSelect={onChange} isDisabled={isDisabled}>
+      <SelectOption value="NoSchedule">NoSchedule</SelectOption>
+      <SelectOption value="NoExecute">NoExecute</SelectOption>
+      <SelectOption value="PreferNoSchedule">PreferNoSchedule</SelectOption>
+    </SelectField>
   );
 };
 
