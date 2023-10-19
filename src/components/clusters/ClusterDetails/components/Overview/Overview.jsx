@@ -124,10 +124,7 @@ class Overview extends React.Component {
 
     if (isHibernating(cluster.state)) {
       topCard = <HibernatingClusterCard cluster={cluster} openModal={openModal} />;
-    } else if (
-      !isAssistedInstallSubscription(cluster.subscription) &&
-      (shouldShowLogs(cluster) || hasInflightErrors(cluster))
-    ) {
+    } else if (!isAssistedInstallSubscription(cluster.subscription) && shouldShowLogs(cluster)) {
       topCard = <ClusterProgressCard cluster={cluster} refresh={refresh} history={history} />;
     }
 
