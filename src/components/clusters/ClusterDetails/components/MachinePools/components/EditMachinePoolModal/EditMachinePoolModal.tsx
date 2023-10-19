@@ -31,7 +31,7 @@ import EditDetailsSection from './sections/EditDetailsSection';
 import { getBaseMachineOrNodePool } from './utils';
 import useMachinePools from './hooks/useMachinePools';
 import useMachineTypes from './hooks/useMachineTypes';
-import { getMachineOrNodePools } from '../../MachinePoolsActions';
+import { clearGetMachinePoolsResponse, getMachineOrNodePools } from '../../MachinePoolsActions';
 
 const modalDescription =
   'A machine pool is a group of machines that are all clones of the same configuration, that can be used on demand by an application running on a pod.';
@@ -246,11 +246,20 @@ const EditMachinePoolModal = ({
   );
 };
 
-export const ConnectedEditMachinePoolModal = () => {
+type ConnectedEditMachinePoolModalProps = {
+  clearMachinePools: boolean;
+};
+
+export const ConnectedEditMachinePoolModal = ({
+  clearMachinePools,
+}: ConnectedEditMachinePoolModalProps) => {
   const data = useGlobalState((state) => state.modal.data);
   const dispatch = useDispatch();
   const onModalClose = () => {
     dispatch(closeModal());
+    if (clearMachinePools) {
+      clearGetMachinePoolsResponse()(dispatch);
+    }
   };
   const { cluster } = data as any;
   const machinePoolsResponse = useMachinePools(cluster);
@@ -263,6 +272,7 @@ export const ConnectedEditMachinePoolModal = () => {
         data: machinePoolsResponse.data?.map(normalizeNodePool) || [],
       }
     : machinePoolsResponse;
+
   return cluster ? (
     <EditMachinePoolModal
       cluster={cluster}
