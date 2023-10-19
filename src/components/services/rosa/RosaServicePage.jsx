@@ -35,9 +35,9 @@ import OpenShiftProductIcon from '../../../styles/images/OpenShiftProductIcon.sv
 
 const rosaBannerContents = {
   icon: <img src={OpenShiftProductIcon} alt="OpenShift" />,
-  learnMoreLink: <ExternalLink href={docLinks.WHAT_IS_ROSA}>Learn more</ExternalLink>,
+  learnMoreLink: <ExternalLink href={docLinks.WHAT_IS_ROSA}>Learn more about ROSA</ExternalLink>,
   title: 'Red Hat OpenShift Service on AWS (ROSA)',
-  text: 'Build applications faster with self-service provisioning, automatic security enforcement, and streamlined deployment.',
+  text: 'Quickly build, deploy, and scale applications with our fully-managed turnkey application platform.',
   iconCardBodyClassName: 'rosa-aws-redhat-vertical-logo',
 };
 
@@ -243,7 +243,7 @@ function RosaServicePage() {
                 <FlexItem>
                   <CardHeader>
                     <CardTitle>
-                      <Title headingLevel="h4">Cost Component #1: ROSA service fees</Title>
+                      <Title headingLevel="h4">Cost Component 1: ROSA service fees</Title>
                     </CardTitle>
                   </CardHeader>
                   <CardBody>
@@ -261,7 +261,7 @@ function RosaServicePage() {
                 <FlexItem>
                   <CardHeader>
                     <CardTitle>
-                      <Title headingLevel="h4">Cost Component #2: AWS infrastructure fees</Title>
+                      <Title headingLevel="h4">Cost Component 2: AWS infrastructure fees</Title>
                     </CardTitle>
                   </CardHeader>
                   <CardBody>
