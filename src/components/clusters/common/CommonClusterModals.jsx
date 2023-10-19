@@ -17,7 +17,7 @@ import UpgradeWizard from './Upgrades/UpgradeWizard';
 import ConnectedModal from '../../common/Modal/ConnectedModal';
 import { ConnectedEditMachinePoolModal } from '../ClusterDetails/components/MachinePools/components/EditMachinePoolModal/EditMachinePoolModal';
 
-function CommonClusterModals({ onClose, onClusterDeleted }) {
+function CommonClusterModals({ onClose, onClusterDeleted, clearMachinePools }) {
   return (
     <>
       <ConnectedModal ModalComponent={EditDisplayNameDialog} onClose={onClose} />
@@ -43,7 +43,10 @@ function CommonClusterModals({ onClose, onClusterDeleted }) {
           }
         }}
       />
-      <ConnectedModal ModalComponent={ConnectedEditMachinePoolModal} />
+      <ConnectedModal
+        ModalComponent={ConnectedEditMachinePoolModal}
+        clearMachinePools={clearMachinePools}
+      />
     </>
   );
 }
@@ -51,6 +54,7 @@ function CommonClusterModals({ onClose, onClusterDeleted }) {
 CommonClusterModals.propTypes = {
   onClose: PropTypes.func.isRequired,
   onClusterDeleted: PropTypes.func,
+  clearMachinePools: PropTypes.bool,
 };
 
 export default CommonClusterModals;

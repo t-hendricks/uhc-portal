@@ -335,7 +335,7 @@ class ClusterList extends Component {
                 variant="bottom"
                 isDisabled={isPendingNoData}
               />
-              <CommonClusterModals onClose={invalidateClusters} />
+              <CommonClusterModals onClose={invalidateClusters} clearMachinePools />
             </div>
           </Card>
         </PageSection>
