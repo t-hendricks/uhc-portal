@@ -1,4 +1,4 @@
-import { FormGroup, FormSelect, FormSelectOption, Tooltip } from '@patternfly/react-core';
+import { FormGroup, SelectOption, Tooltip } from '@patternfly/react-core';
 import { useField } from 'formik';
 import * as React from 'react';
 import PopoverHint from '~/components/common/PopoverHint';
@@ -11,6 +11,7 @@ import { normalizeProductID } from '~/common/normalize';
 import { normalizedProducts } from '~/common/subscriptionTypes';
 import { noQuotaTooltip } from '~/common/helpers';
 import useFormikOnChange from '../hooks/useFormikOnChange';
+import SelectField from './SelectField';
 
 const fieldId = 'replicas';
 
@@ -38,9 +39,20 @@ const NodeCountField = ({ minNodesRequired, options, cluster }: NodeCountFieldPr
 
   const isRosa = normalizeProductID(cluster.product?.id) === normalizedProducts.ROSA;
 
-  const selectOptions = options.map((option) => (
-    <FormSelectOption label={`${isMultiAz ? option / 3 : option}`} key={option} value={option} />
-  ));
+  const selectField = (
+    <SelectField
+      value={`${field.value}`}
+      fieldId={fieldId}
+      onSelect={(newValue) => onChange(parseInt(newValue as string, 10))}
+      isDisabled={notEnoughQuota}
+    >
+      {options.map((option) => (
+        <SelectOption key={option} value={`${option}`}>
+          {`${isMultiAz ? option / 3 : option}`}
+        </SelectOption>
+      ))}
+    </SelectField>
+  );
 
   return (
     <FormGroup
@@ -66,22 +78,13 @@ const NodeCountField = ({ minNodesRequired, options, cluster }: NodeCountFieldPr
       }
       helperText={isMultiAz && `x 3 zones = ${field.value}`}
     >
-      <FormSelect
-        {...field}
-        id={fieldId}
-        onChange={(val, event) => {
-          onChange(parseInt(val, 10));
-        }}
-        isDisabled={notEnoughQuota}
-      >
-        {notEnoughQuota ? (
-          <Tooltip content={noQuotaTooltip} position="right">
-            <div>{selectOptions}</div>
-          </Tooltip>
-        ) : (
-          selectOptions
-        )}
-      </FormSelect>
+      {notEnoughQuota ? (
+        <Tooltip content={noQuotaTooltip} position="right">
+          {selectField}
+        </Tooltip>
+      ) : (
+        selectField
+      )}
     </FormGroup>
   );
 };
