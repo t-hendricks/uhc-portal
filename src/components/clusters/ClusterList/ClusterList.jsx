@@ -31,6 +31,7 @@ import {
 } from '@patternfly/react-core';
 import { AppPage } from '~/components/App/AppPage';
 import { isRestrictedEnv } from '~/restrictedEnv';
+import { ONLY_MY_CLUSTERS_TOGGLE_CLUSTERS_LIST } from '~/common/localStorageConstants';
 
 import ReadOnlyBanner from '../common/ReadOnlyBanner';
 import ClusterListFilter from '../common/ClusterListFilter';
@@ -280,6 +281,7 @@ class ClusterList extends Component {
                   <ViewOnlyMyClustersToggle
                     view={viewConstants.CLUSTERS_VIEW}
                     bodyContent="Show only the clusters you previously created, or all clusters in your organization."
+                    localStorageKey={ONLY_MY_CLUSTERS_TOGGLE_CLUSTERS_LIST}
                   />
                   <ToolbarItem
                     alignment={{ default: 'alignRight' }}
