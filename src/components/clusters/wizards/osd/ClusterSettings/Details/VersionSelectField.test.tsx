@@ -88,7 +88,7 @@ describe('<VersionSelectField />', () => {
       notLoadedState,
     );
 
-    expect(getInstallableVersionsSpy).toHaveBeenCalledWith(false, false);
+    expect(getInstallableVersionsSpy).toHaveBeenCalledWith(false, false, false);
   });
 
   it('to call clusterService.getInstallableVersions with: isRosa false, isMarketplaceGcp true', async () => {
@@ -104,7 +104,7 @@ describe('<VersionSelectField />', () => {
       notLoadedState,
     );
 
-    expect(getInstallableVersionsSpy).toHaveBeenCalledWith(false, true);
+    expect(getInstallableVersionsSpy).toHaveBeenCalledWith(false, true, false);
   });
 
   it('to shows the right default version', async () => {
