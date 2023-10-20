@@ -142,7 +142,7 @@ function RosaServicePage() {
     <Card>
       <List isPlain isBordered>
         {expandableContentArray.map(({ title, contents }) => (
-          <ListItem className="rosa-expandable-list-item">
+          <ListItem className="rosa-expandable-list-item" key={title}>
             <ExpandableSection
               className="rosa-expandable-section"
               toggleContent={<Text component={TextVariants.h3}>{title}</Text>}
