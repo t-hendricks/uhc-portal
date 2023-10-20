@@ -187,7 +187,7 @@ function RosaServicePage() {
                   <CardHeader>
                     <CardTitle>
                       <Title headingLevel="h4">
-                        <CubeIcon isInline size="md" className="pf-u-mr-sm rosa-cube-icon" />
+                        <CubeIcon size="md" className="pf-u-mr-sm rosa-cube-icon" />
                         Create a ROSA cluster
                       </Title>
                     </CardTitle>
