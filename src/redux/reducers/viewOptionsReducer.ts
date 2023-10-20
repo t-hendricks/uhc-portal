@@ -1,6 +1,10 @@
 import { AxiosResponse } from 'axios';
 import { ViewOptions } from '~/types/types';
 import { ClusterLogList } from '~/types/service_logs.v1';
+import {
+  ONLY_MY_CLUSTERS_TOGGLE_CLUSTERS_LIST,
+  ONLY_MY_CLUSTERS_TOGGLE_CLUSTER_ARCHIVES_LIST,
+} from '~/common/localStorageConstants';
 import { FULFILLED_ACTION, REJECTED_ACTION } from '../reduxHelpers';
 import {
   clustersConstants,
@@ -44,6 +48,19 @@ const INITIAL_ARCHIVED_VIEW_STATE: ViewState = {
     isAscending: true,
     sortIndex: 0,
   },
+  flags: {
+    ...INITIAL_VIEW_STATE.flags,
+    showMyClustersOnly:
+      localStorage.getItem(ONLY_MY_CLUSTERS_TOGGLE_CLUSTER_ARCHIVES_LIST) === 'true',
+  },
+};
+
+const INITIAL_CLUSTER_LIST_VIEW_STATE: ViewState = {
+  ...INITIAL_VIEW_STATE,
+  flags: {
+    ...INITIAL_VIEW_STATE.flags,
+    showMyClustersOnly: localStorage.getItem(ONLY_MY_CLUSTERS_TOGGLE_CLUSTERS_LIST) === 'true',
+  },
 };
 
 const INITIAL_OSL_VIEW_STATE: ViewState = {
@@ -77,7 +94,7 @@ const INITIAL_OVERVIEW_VIEW_STATE: ViewState = {
 
 const initialState: State = {};
 
-initialState[viewConstants.CLUSTERS_VIEW] = Object.assign(INITIAL_VIEW_STATE);
+initialState[viewConstants.CLUSTERS_VIEW] = Object.assign(INITIAL_CLUSTER_LIST_VIEW_STATE);
 initialState[viewConstants.ARCHIVED_CLUSTERS_VIEW] = Object.assign(INITIAL_ARCHIVED_VIEW_STATE);
 initialState[viewConstants.CLUSTER_LOGS_VIEW] = Object.assign(INITIAL_OSL_VIEW_STATE);
 initialState[viewConstants.OVERVIEW_VIEW] = Object.assign(INITIAL_OVERVIEW_VIEW_STATE);
