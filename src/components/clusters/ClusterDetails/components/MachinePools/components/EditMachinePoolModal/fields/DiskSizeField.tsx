@@ -44,7 +44,10 @@ const DiskSizeField = ({ cluster, isEdit }: DiskSizeFieldProps) => {
         />
       }
     >
-      <WithTooltip showTooltip={isEdit} content="This option cannot be changed after it was set.">
+      <WithTooltip
+        showTooltip={isEdit}
+        content="This option cannot be edited from its original setting selection."
+      >
         <NumberInput
           {...field}
           onPlus={() => onChange(field.value + 1)}
