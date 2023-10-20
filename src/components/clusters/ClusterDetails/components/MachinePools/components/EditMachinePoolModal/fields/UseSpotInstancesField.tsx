@@ -30,7 +30,7 @@ const UseSpotInstancesField = ({ children, isDisabled }: UseSpotInstancesFieldPr
             }}
             id={fieldId}
             body={field.value && children}
-            description="You can save on cossts by creating a machine pool running on AWS that deploys machines as non-guaranteed Spot Instances. This cannot be changed after machine pool is created."
+            description="You can save on costs by creating a machine pool running on AWS that deploys machines as non-guaranteed Spot Instances. This cannot be changed after machine pool is created."
             isDisabled={isDisabled}
           />
         </StackItem>
