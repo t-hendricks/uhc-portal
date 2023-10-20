@@ -61,6 +61,7 @@ type State = {
   };
   clusterVersions: PromiseReducerState & {
     versions: Version[];
+    params?: { [key: string]: string } | undefined;
   };
   details: PromiseReducerState & {
     cluster: AugmentedCluster;
@@ -117,6 +118,7 @@ const initialState: State = {
   clusterVersions: {
     ...baseState,
     versions: [],
+    params: {},
   },
   details: {
     ...baseState,
@@ -487,6 +489,7 @@ const clustersReducer = (
         draft.clusterVersions = {
           ...baseState,
           fulfilled: true,
+          params: action.payload.config.params,
           versions: action.payload.data.items
             ? filterAndSortClusterVersions(action.payload.data.items)
             : [],

@@ -95,11 +95,16 @@ const defaultProps = {
   input: { onChange: jest.fn() },
   isDisabled: false,
   label: 'Version select label',
-  meta: { error: false, touched: false },
+  meta: { error: '', touched: false },
   getInstallableVersions: jest.fn(),
   getInstallableVersionsResponse,
   selectedClusterVersion: undefined,
 };
+
+// NOTE:
+// These tests will create numerous warnings about improper props
+// These are coming from the PatternFly select items
+// For example:  Warning: React does not recognize the `inputId` prop on a DOM element.
 
 describe('<VersionSelection />', () => {
   beforeAll(() => {
@@ -136,6 +141,125 @@ describe('<VersionSelection />', () => {
 
     // Assert
     await checkAccessibility(container);
+  });
+
+  describe(' calls getInstallableVersions', () => {
+    const mockGetInstallableVersions = jest.fn();
+
+    afterEach(() => {
+      mockGetInstallableVersions.mockClear();
+    });
+    it(' is not called when it has already called and control plane has not changed', () => {
+      expect(mockGetInstallableVersions.mock.calls).toHaveLength(0);
+      const newProps = {
+        ...defaultProps,
+        isHypershiftSelected: true,
+        getInstallableVersionsResponse: {
+          error: false,
+          pending: false,
+          fulfilled: true,
+          params: { product: 'hcp' },
+        },
+        getInstallableVersions: mockGetInstallableVersions,
+      };
+      render(<VersionSelection {...newProps} />);
+
+      expect(mockGetInstallableVersions.mock.calls).toHaveLength(0);
+    });
+
+    it('when getInstallableVersions on mount has not been called before', () => {
+      expect(mockGetInstallableVersions.mock.calls).toHaveLength(0);
+      const newProps = {
+        ...defaultProps,
+        getInstallableVersionsResponse: {
+          error: false,
+          pending: false,
+          fulfilled: false,
+        },
+        getInstallableVersions: mockGetInstallableVersions,
+      };
+      render(<VersionSelection {...newProps} />);
+
+      expect(mockGetInstallableVersions.mock.calls).toHaveLength(1);
+    });
+
+    it('on mount when last call ended in error', () => {
+      expect(mockGetInstallableVersions.mock.calls).toHaveLength(0);
+      const newProps = {
+        ...defaultProps,
+        getInstallableVersionsResponse: {
+          error: true,
+          pending: false,
+          fulfilled: true,
+        },
+        getInstallableVersions: mockGetInstallableVersions,
+      };
+      render(<VersionSelection {...newProps} />);
+
+      expect(mockGetInstallableVersions.mock.calls).toHaveLength(1);
+    });
+
+    it('on mount if control plane switched from classic to HCP', () => {
+      expect(mockGetInstallableVersions.mock.calls).toHaveLength(0);
+      const newProps = {
+        ...defaultProps,
+        isHypershiftSelected: false,
+        getInstallableVersionsResponse: {
+          error: false,
+          pending: false,
+          fulfilled: true,
+          params: { product: 'hcp' },
+        },
+        getInstallableVersions: mockGetInstallableVersions,
+      };
+      render(<VersionSelection {...newProps} />);
+
+      expect(mockGetInstallableVersions.mock.calls).toHaveLength(1);
+    });
+
+    it('on mount if control plane switched from HCP to classic', () => {
+      expect(mockGetInstallableVersions.mock.calls).toHaveLength(0);
+      const newProps = {
+        ...defaultProps,
+        isHypershiftSelected: true,
+        getInstallableVersionsResponse: {
+          error: false,
+          pending: false,
+          fulfilled: true,
+          params: {},
+        },
+        getInstallableVersions: mockGetInstallableVersions,
+      };
+      render(<VersionSelection {...newProps} />);
+
+      expect(mockGetInstallableVersions.mock.calls).toHaveLength(1);
+    });
+
+    it('when there was an error and the menu is opened', async () => {
+      // Arrange
+      const newProps = {
+        ...defaultProps,
+        isOpen: false,
+        getInstallableVersionsResponse: {
+          error: true,
+          pending: false,
+          fulfilled: true,
+          errorMessage: 'This is a custom error message',
+        },
+        getInstallableVersions: mockGetInstallableVersions,
+      };
+
+      const { user } = render(<VersionSelection {...newProps} />);
+
+      // Called on mount because of error when mounted
+      expect(mockGetInstallableVersions.mock.calls).toHaveLength(1);
+
+      // Act
+      await user.click(screen.getByLabelText(componentText.BUTTON.label));
+
+      // Assert
+      expect(mockGetInstallableVersions.mock.calls).toHaveLength(2);
+    });
   });
 
   describe('when Hypershfit', () => {
@@ -286,6 +410,7 @@ describe('<VersionSelection />', () => {
     afterEach(() => {
       mockedSupportedVersion.mockRestore();
     });
+
     it('displays only error when error getting versions', () => {
       // Arrange
       const newProps = {
@@ -575,31 +700,6 @@ describe('<VersionSelection />', () => {
       expect(screen.queryByRole('listbox')).not.toBeInTheDocument();
     });
 
-    it('calls getInstallableVersions when there was an error and the menu is opened', async () => {
-      // Arrange
-      const mockGetInstallableVersions = jest.fn();
-      const newProps = {
-        ...defaultProps,
-        isOpen: false,
-        getInstallableVersionsResponse: {
-          error: true,
-          pending: false,
-          fulfilled: true,
-          errorMessage: 'This is a custom error message',
-        },
-        getInstallableVersions: mockGetInstallableVersions,
-      };
-
-      const { user } = render(<VersionSelection {...newProps} />);
-      expect(mockGetInstallableVersions.mock.calls).toHaveLength(0);
-
-      // Act
-      await user.click(screen.getByLabelText(componentText.BUTTON.label));
-
-      // Assert
-      expect(mockGetInstallableVersions.mock.calls).toHaveLength(1);
-    });
-
     it("calls input's onChange function when an option is selected", async () => {
       // Arrange
       const selectedClusterVersion = versions.find((version) => version.raw_id === '4.12.1');
@@ -637,6 +737,62 @@ describe('<VersionSelection />', () => {
 
       // Assert
       expect(screen.getByLabelText(componentText.BUTTON.label)).toBeDisabled();
+    });
+
+    it('calls input.onChange to set the selected version to "undefined" when selected version is not valid', () => {
+      // In this case, it is a hypershift cluster, but the selected version is not hosted_control_plane_enabled
+
+      const newVersions = [
+        ...versions,
+        {
+          channel_group: 'stable',
+          default: false,
+          enabled: true,
+          end_of_life_timestamp: '2024-03-17T00:00:00Z',
+          hosted_control_plane_enabled: false,
+          id: 'openshift-v4.10.2',
+          raw_id: '4.10.2',
+          rosa_enabled: true,
+        },
+      ];
+      const mockOnChange = jest.fn();
+
+      const newProps = {
+        ...defaultProps,
+        input: { onChange: mockOnChange },
+        selectedClusterVersion: { raw_id: '4.10.2' },
+        isHypershiftSelected: true,
+        getInstallableVersionsResponse: {
+          error: false,
+          errorMessage: '',
+          fulfilled: true,
+          pending: false,
+          valid: true,
+          versions: newVersions,
+        },
+      };
+
+      render(<VersionSelection {...newProps} />);
+      expect(mockOnChange).toBeCalled();
+      expect(mockOnChange).toBeCalledWith(undefined);
+    });
+
+    it('calls input.onChange to set the selected version to "undefined" when selected version does not exist', () => {
+      // In this case, the selected version isn't in the version list at all
+
+      const mockOnChange = jest.fn();
+
+      const newProps = {
+        ...defaultProps,
+        input: { onChange: mockOnChange },
+        selectedClusterVersion: { raw_id: '4.10.9999' },
+      };
+
+      expect(versions.some((ver) => ver.raw_id === '4.10.999')).toBeFalsy();
+
+      render(<VersionSelection {...newProps} />);
+      expect(mockOnChange).toBeCalled();
+      expect(mockOnChange).toBeCalledWith(undefined);
     });
   });
 });
