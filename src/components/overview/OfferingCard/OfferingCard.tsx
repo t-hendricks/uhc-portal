@@ -167,14 +167,14 @@ export function OfferingCard(props: OfferingCardProps) {
               <DescriptionListGroup>
                 {offeringCardDescriptionList.map(
                   ({ descriptionListTerm, descriptionListDescription }) => (
-                    <>
+                    <React.Fragment key={descriptionListTerm}>
                       <DescriptionListTerm>
                         <Text component="small">{descriptionListTerm}</Text>
                       </DescriptionListTerm>
                       <DescriptionListDescription>
                         <Text component="small">{descriptionListDescription}</Text>
                       </DescriptionListDescription>
-                    </>
+                    </React.Fragment>
                   ),
                 )}
               </DescriptionListGroup>
