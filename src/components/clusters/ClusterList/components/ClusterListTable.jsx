@@ -196,7 +196,12 @@ function ClusterListTable(props) {
           {icon}
           {description}
           {hasLimitedSupport
-            ? linkToClusterDetails(cluster, <Label color="red">Limited support</Label>)
+            ? linkToClusterDetails(
+                cluster,
+                <Label color="red" className="pf-u-ml-xs">
+                  Limited support
+                </Label>,
+              )
             : null}
         </span>
       );
