@@ -5,7 +5,7 @@ import { Alert, GridItem, Title } from '@patternfly/react-core';
 
 import PopoverHint from '~/components/common/PopoverHint';
 import ExternalLink from '~/components/common/ExternalLink';
-import { required, validateGCPHostProjectId } from '~/common/validators';
+import { required, validateGCPHostProjectId, validateGCPSubnet } from '~/common/validators';
 import links from '~/common/installLinks.mjs';
 import { useFormState } from '~/components/clusters/wizards/hooks';
 import { FieldId } from '~/components/clusters/wizards/osd/constants';
@@ -103,51 +103,75 @@ export const GcpVpcSettings = () => {
       </GridItem>
 
       <GridItem md={3}>
-        <Field
-          component={GcpVpcNameSelectField}
-          name={FieldId.VpcName}
-          validate={required}
-          label="Existing VPC name"
-          placeholder="Select VPC name"
-          emptyPlaceholder="No existing VPCs"
-          input={{
-            ...getFieldProps(FieldId.VpcName),
-            onChange: (value: string) => setFieldValue(FieldId.VpcName, value),
-          }}
-          meta={getFieldMeta(FieldId.VpcName)}
-        />
+        {installToSharedVpc ? (
+          <TextInputField
+            name={FieldId.VpcName}
+            label="Existing VPC name"
+            validate={validateGCPSubnet}
+          />
+        ) : (
+          <Field
+            component={GcpVpcNameSelectField}
+            name={FieldId.VpcName}
+            validate={required}
+            label="Existing VPC name"
+            placeholder="Select VPC name"
+            emptyPlaceholder="No existing VPCs"
+            input={{
+              ...getFieldProps(FieldId.VpcName),
+              onChange: (value: string) => setFieldValue(FieldId.VpcName, value),
+            }}
+            meta={getFieldMeta(FieldId.VpcName)}
+          />
+        )}
       </GridItem>
 
       <GridItem md={3}>
-        <Field
-          component={GcpVpcSubnetSelectField}
-          name={FieldId.ControlPlaneSubnet}
-          validate={required}
-          label="Control plane subnet name"
-          placeholder="Select subnet name"
-          emptyPlaceholder="No subnet names"
-          input={{
-            ...getFieldProps(FieldId.ControlPlaneSubnet),
-            onChange: (value: string) => setFieldValue(FieldId.ControlPlaneSubnet, value),
-          }}
-          meta={getFieldMeta(FieldId.ControlPlaneSubnet)}
-        />
+        {installToSharedVpc ? (
+          <TextInputField
+            name={FieldId.ControlPlaneSubnet}
+            label="Control plane subnet name"
+            validate={validateGCPSubnet}
+          />
+        ) : (
+          <Field
+            component={GcpVpcSubnetSelectField}
+            name={FieldId.ControlPlaneSubnet}
+            validate={required}
+            label="Control plane subnet name"
+            placeholder="Select subnet name"
+            emptyPlaceholder="No subnet names"
+            input={{
+              ...getFieldProps(FieldId.ControlPlaneSubnet),
+              onChange: (value: string) => setFieldValue(FieldId.ControlPlaneSubnet, value),
+            }}
+            meta={getFieldMeta(FieldId.ControlPlaneSubnet)}
+          />
+        )}
       </GridItem>
 
       <GridItem md={3}>
-        <Field
-          component={GcpVpcSubnetSelectField}
-          name={FieldId.ComputeSubnet}
-          validate={required}
-          label="Compute subnet name"
-          placeholder="Select subnet name"
-          emptyPlaceholder="No subnet names"
-          input={{
-            ...getFieldProps(FieldId.ComputeSubnet),
-            onChange: (value: string) => setFieldValue(FieldId.ComputeSubnet, value),
-          }}
-          meta={getFieldMeta(FieldId.ComputeSubnet)}
-        />
+        {installToSharedVpc ? (
+          <TextInputField
+            name={FieldId.ComputeSubnet}
+            label="Compute subnet name"
+            validate={validateGCPSubnet}
+          />
+        ) : (
+          <Field
+            component={GcpVpcSubnetSelectField}
+            name={FieldId.ComputeSubnet}
+            validate={required}
+            label="Compute subnet name"
+            placeholder="Select subnet name"
+            emptyPlaceholder="No subnet names"
+            input={{
+              ...getFieldProps(FieldId.ComputeSubnet),
+              onChange: (value: string) => setFieldValue(FieldId.ComputeSubnet, value),
+            }}
+            meta={getFieldMeta(FieldId.ComputeSubnet)}
+          />
+        )}
       </GridItem>
     </>
   );
