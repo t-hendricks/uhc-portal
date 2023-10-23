@@ -44,6 +44,7 @@ import ClusterTypeLabel from '../../common/ClusterTypeLabel';
 import ProgressList from '../../common/InstallProgress/ProgressList';
 import ActionRequiredLink from '../../common/InstallProgress/ActionRequiredLink';
 import { isAISubscriptionWithoutMetrics } from '../../../../common/isAssistedInstallerCluster';
+import getClusterVersion from '../../common/getClusterVersion';
 
 const { ClusterStatus: AIClusterStatus } = OCM;
 function ClusterListTable(props) {
@@ -210,7 +211,7 @@ function ClusterListTable(props) {
     // Note: hideOSDUpdates is set because we can't know if an update was already scheduled
     const clusterVersion = (
       <span>
-        {cluster.openshift_version || 'N/A'}
+        {getClusterVersion(cluster)}
         <ClusterUpdateLink cluster={cluster} openModal={openModal} hideOSDUpdates />
       </span>
     );
