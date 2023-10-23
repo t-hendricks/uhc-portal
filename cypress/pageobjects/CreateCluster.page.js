@@ -5,7 +5,9 @@ class CreateCluster extends Page {
     super.assertUrlIncludes('openshift/create');
   }
 
-  get createOSDTrialClusterBtn() { return $("//button[contains(text(),'Create trial cluster')]"); }
+  get createOSDTrialClusterBtn() {
+    return $("//button[contains(text(),'Create trial cluster')]");
+  }
 }
 
 export default new CreateCluster();

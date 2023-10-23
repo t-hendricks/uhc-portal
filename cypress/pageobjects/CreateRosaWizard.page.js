@@ -5,7 +5,6 @@ import CreateClusterPage from './CreateCluster.page';
 import { ThinkPeaksIconConfig } from '@patternfly/react-icons';
 
 class CreateRosaCluster extends Page {
-
   clusterDetailsTree = () => cy.get('li.pf-c-wizard__nav-item').find('button').contains('Details');
 
   rosaCreateClusterButton = () => cy.getByTestId('rosa-create-cluster-button');
@@ -14,7 +13,8 @@ class CreateRosaCluster extends Page {
 
   rosaClusterWithWeb = () => cy.get('a').contains('With web interface');
 
-  reviewAndCreateTree = () => cy.get('li.pf-c-wizard__nav-item').find('button').contains('Review and create');
+  reviewAndCreateTree = () =>
+    cy.get('li.pf-c-wizard__nav-item').find('button').contains('Review and create');
 
   machineCIDRInput = () => cy.get('input[id="network_machine_cidr"]');
 
@@ -36,9 +36,9 @@ class CreateRosaCluster extends Page {
 
   enableFIPSCryptographyCheckbox = () => cy.get('input[id="fips"]');
 
-  useBothIMDSv1AndIMDSv2Radio = () => cy.getByTestId("imds-optional");
+  useBothIMDSv1AndIMDSv2Radio = () => cy.getByTestId('imds-optional');
 
-  useIMDSv2Radio = () => cy.getByTestId("imds-required");
+  useIMDSv2Radio = () => cy.getByTestId('imds-required');
 
   rootDiskSizeInput = () => cy.get('input[name="worker_volume_size_gib"]');
 
@@ -48,9 +48,11 @@ class CreateRosaCluster extends Page {
 
   createClusterButton = () => cy.get('button[type="submit"]').contains('Create cluster');
 
-  refreshInfrastructureAWSAccountButton = () => cy.get('button[data-testid="refresh-aws-accounts"]').first();
+  refreshInfrastructureAWSAccountButton = () =>
+    cy.get('button[data-testid="refresh-aws-accounts"]').first();
 
-  refreshBillingAWSAccountButton = () => cy.get('button[data-testid="refresh-aws-accounts"]').second();
+  refreshBillingAWSAccountButton = () =>
+    cy.get('button[data-testid="refresh-aws-accounts"]').second();
 
   supportRoleInput = () => cy.get('input[id="support_role_arn"]');
 
@@ -87,7 +89,6 @@ class CreateRosaCluster extends Page {
   recurringUpdateRadio = () => cy.getByTestId('upgrade_policy-automatic');
 
   individualUpdateRadio = () => cy.getByTestId('upgrade_policy-manual');
-
 
   isCreateRosaPage() {
     super.assertUrlIncludes('/openshift/create/rosa/wizard');
@@ -209,22 +210,39 @@ class CreateRosaCluster extends Page {
 
   selectHostedControlPlaneTypeOption() {
     cy.getByTestId('hosted-control-planes').click();
-    cy.getByTestId('hosted-control-planes').should('have.attr', 'aria-selected').then((isSelected) => {
-      expect(isSelected).to.eq('true');
-    });
+    cy.getByTestId('hosted-control-planes')
+      .should('have.attr', 'aria-selected')
+      .then((isSelected) => {
+        expect(isSelected).to.eq('true');
+      });
   }
 
   selectAWSInfrastructureAccount(accountID) {
-    cy.get('button').contains('How to associate a new AWS account').siblings().find('div').find('button.pf-c-select__toggle').click();
+    cy.get('button')
+      .contains('How to associate a new AWS account')
+      .siblings()
+      .find('div')
+      .find('button.pf-c-select__toggle')
+      .click();
     cy.get('input.pf-m-search', { timeout: 50000 }).clear().type(accountID);
-    cy.get('div[label="Associated AWS infrastructure account"]').find('button').contains(accountID).click();
+    cy.get('div[label="Associated AWS infrastructure account"]')
+      .find('button')
+      .contains(accountID)
+      .click();
   }
   waitForARNList() {
     cy.get('span.pf-c-button__progress', { timeout: 80000 }).should('not.exist');
   }
 
   selectInstallerRole(roleName) {
-    cy.get('span').contains('Installer role').parent().parent().siblings().find('div').find('button.pf-c-select__toggle').click();
+    cy.get('span')
+      .contains('Installer role')
+      .parent()
+      .parent()
+      .siblings()
+      .find('div')
+      .find('button.pf-c-select__toggle')
+      .click();
     cy.get('ul[id="installer_role_arn"]').find('button').contains(roleName).click();
   }
   selectClusterVersion(version) {
@@ -233,21 +251,28 @@ class CreateRosaCluster extends Page {
   }
 
   addNodeLabelKeyAndValue(key, value = '', index = 0) {
-    cy.get('input[name="node_labels[' + index + '].key"]').clear().type(key);
-    cy.get('input[name="node_labels[' + index + '].value"]').clear().type(value);
-
+    cy.get('input[name="node_labels[' + index + '].key"]')
+      .clear()
+      .type(key);
+    cy.get('input[name="node_labels[' + index + '].value"]')
+      .clear()
+      .type(value);
   }
   isNodeLabelKeyAndValue(key, value = '', index = 0) {
     cy.get('input[name="node_labels[' + index + '].key"]').should('have.value', key);
     cy.get('input[name="node_labels[' + index + '].value"]').should('have.value', value);
-
   }
   selectRegion(region) {
     cy.get('select[name="region"]').select(region);
   }
 
   selectComputeNodeType(computeNodeType) {
-    cy.get('label[for="node_type"]').parent().siblings().find('div').find('button.pf-c-select__toggle').click();
+    cy.get('label[for="node_type"]')
+      .parent()
+      .siblings()
+      .find('div')
+      .find('button.pf-c-select__toggle')
+      .click();
     cy.get('li').contains(computeNodeType).click();
   }
 
@@ -269,37 +294,33 @@ class CreateRosaCluster extends Page {
   }
 
   selectClusterPrivacy(privacy) {
-    if (privacy == "private") {
+    if (privacy == 'private') {
       this.clusterPrivacyPrivateRadio().check();
-    }
-    else {
+    } else {
       this.clusterPrivacyPublicRadio().check();
     }
   }
 
   selectUpdateStratergy(stratergy) {
-    if (stratergy == "Recurring updates") {
+    if (stratergy == 'Recurring updates') {
       this.recurringUpdateRadio().check();
-    }
-    else {
+    } else {
       this.individualUpdateRadio().check();
     }
   }
 
   selectAvailabilityZone(az) {
-    if (az == "Single zone") {
+    if (az == 'Single zone') {
       this.singleZoneAvilabilityRadio().check();
-    }
-    else {
+    } else {
       this.multiZoneAvilabilityRadio().check();
     }
   }
 
   selectRoleProviderMode(mode) {
-    if (mode == "Auto") {
+    if (mode == 'Auto') {
       this.createModeAutoRadio().check();
-    }
-    else {
+    } else {
       this.createModeManualRadio().check();
     }
   }
@@ -307,8 +328,7 @@ class CreateRosaCluster extends Page {
   useCIDRDefaultValues(value = true) {
     if (value) {
       this.cidrDefaultValuesCheckBox().check();
-    }
-    else {
+    } else {
       this.cidrDefaultValuesCheckBox().uncheck();
     }
   }
@@ -319,19 +339,20 @@ class CreateRosaCluster extends Page {
   }
 
   isClusterPropertyMatchesValue(property, value) {
-    cy.get('span.pf-c-description-list__text').contains(property).parent().siblings().find('div').contains(value);
+    cy.get('span.pf-c-description-list__text')
+      .contains(property)
+      .parent()
+      .siblings()
+      .find('div')
+      .contains(value);
   }
-
-
 
   setMinimumNodeCount(nodeCount) {
     this.minimumNodeInput().type('{selectAll}').type(nodeCount);
-
   }
   setMaximumNodeCount(nodeCount) {
     this.maximumNodeInput().type('{selectAll}').type(nodeCount);
   }
 }
-
 
 export default new CreateRosaCluster();
