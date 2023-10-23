@@ -1,5 +1,6 @@
 import get from 'lodash/get';
 
+import { isClusterUpgrading } from '~/components/clusters/common/clusterStates';
 import config from '../../../../../config';
 import {
   getIssuesAndWarnings,
@@ -42,8 +43,7 @@ const clusterHealthSelector = (state, lastCheckIn, discoveredIssues) => {
   if (!freshActivity) {
     return monitoringStatuses.NO_METRICS;
   }
-
-  if (cluster.metrics.upgrade.state === 'running') {
+  if (isClusterUpgrading(cluster)) {
     return monitoringStatuses.UPGRADING;
   }
 

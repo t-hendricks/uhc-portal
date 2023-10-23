@@ -68,7 +68,7 @@ function getClusterStateAndDescription(cluster) {
     state = clusterStates.RESUMING;
   } else if (cluster.subscription.status === subscriptionStatuses.STALE) {
     state = clusterStates.STALE;
-  } else if (get(cluster, 'metrics.upgrade.state') === 'running') {
+  } else if (isClusterUpgrading(cluster)) {
     state = clusterStates.UPDATING;
   } else if (
     cluster.subscription.status === subscriptionStatuses.ACTIVE ||
@@ -139,6 +139,8 @@ const getClusterAIPermissions = (cluster) => ({
   canEdit: cluster.canEdit,
 });
 
+const isClusterUpgrading = (cluster) => get(cluster, 'metrics.upgrade.state') === 'running';
+
 export {
   getClusterStateAndDescription,
   isHibernating,
@@ -153,5 +155,6 @@ export {
   getStateDescription,
   getInflightChecks,
   isWaitingForOIDCProviderOrOperatorRolesMode,
+  isClusterUpgrading,
 };
 export default clusterStates;

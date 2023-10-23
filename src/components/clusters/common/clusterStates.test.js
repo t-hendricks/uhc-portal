@@ -3,6 +3,7 @@ import forOwn from 'lodash/forOwn';
 import { normalizedProducts, subscriptionStatuses } from '../../../common/subscriptionTypes';
 import clusterStates, {
   getClusterStateAndDescription,
+  isClusterUpgrading,
   isWaitingROSAManualMode,
   isWaitingForOIDCProviderOrOperatorRolesMode,
 } from './clusterStates';
@@ -152,6 +153,42 @@ describe('getClusterStateAndDescription', () => {
         status: {},
       };
       expect(isWaitingForOIDCProviderOrOperatorRolesMode(confirmingOIDCCluster)).toBeFalsy();
+    });
+  });
+
+  describe('is cluster upgrading', () => {
+    it('it is running', () => {
+      // Arrange
+      const cluster = {
+        metrics: {
+          upgrade: {
+            state: 'running',
+          },
+        },
+      };
+
+      // Act
+      const isUpgrading = isClusterUpgrading(cluster);
+
+      // Assert
+      expect(isUpgrading).toBe(true);
+    });
+
+    it('it is not running', () => {
+      // Arrange
+      const cluster = {
+        metrics: {
+          upgrade: {
+            state: 'anything else',
+          },
+        },
+      };
+
+      // Act
+      const isUpgrading = isClusterUpgrading(cluster);
+
+      // Assert
+      expect(isUpgrading).toBe(false);
     });
   });
 });
