@@ -20,6 +20,6 @@ describe('<Overview />', () => {
       screen.getByText('Browse all OpenShift learning resources', { selector: 'a' }),
     ).toHaveAttribute('href', '/openshift/learning-resources');
 
-    checkAccessibility(container);
+    await checkAccessibility(container);
   });
 });
