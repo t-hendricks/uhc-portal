@@ -45,7 +45,7 @@ const TryRosaCard = () => (
   <Card style={{ height: '100%' }}>
     <CardHeader>
       <CardTitle>
-        <Title headingLevel="h4">Want a preview of ROSA?</Title>
+        <Title headingLevel="h3">Want a preview of ROSA?</Title>
       </CardTitle>
     </CardHeader>
     <CardBody>Access a no-cost, hands-on Red Hat OpenShift Service on AWS experience.</CardBody>
@@ -140,7 +140,7 @@ function RosaServicePage() {
     <Card>
       <List isPlain isBordered>
         {expandableContentArray.map(({ title, contents }) => (
-          <ListItem className="rosa-expandable-list-item">
+          <ListItem className="rosa-expandable-list-item" key={title}>
             <ExpandableSection
               className="rosa-expandable-section"
               toggleContent={<Text component={TextVariants.h3}>{title}</Text>}
@@ -184,8 +184,8 @@ function RosaServicePage() {
                 <FlexItem>
                   <CardHeader>
                     <CardTitle>
-                      <Title headingLevel="h4">
-                        <CubeIcon isInline size="md" className="pf-u-mr-sm rosa-cube-icon" />
+                      <Title headingLevel="h3">
+                        <CubeIcon size="md" className="pf-u-mr-sm rosa-cube-icon" />
                         Create a ROSA cluster
                       </Title>
                     </CardTitle>
@@ -241,7 +241,7 @@ function RosaServicePage() {
                 <FlexItem>
                   <CardHeader>
                     <CardTitle>
-                      <Title headingLevel="h4">Cost Component 1: ROSA service fees</Title>
+                      <Title headingLevel="h3">Cost Component 1: ROSA service fees</Title>
                     </CardTitle>
                   </CardHeader>
                   <CardBody>
@@ -259,7 +259,7 @@ function RosaServicePage() {
                 <FlexItem>
                   <CardHeader>
                     <CardTitle>
-                      <Title headingLevel="h4">Cost Component 2: AWS infrastructure fees</Title>
+                      <Title headingLevel="h3">Cost Component 2: AWS infrastructure fees</Title>
                     </CardTitle>
                   </CardHeader>
                   <CardBody>
