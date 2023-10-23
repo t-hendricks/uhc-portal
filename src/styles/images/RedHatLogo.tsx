@@ -5,7 +5,6 @@ const RedHatLogo = (props: { height?: string; width?: string; className?: string
   return (
     // eslint-disable-next-line max-len
     <svg
-      id="Layer_1"
       className={className}
       height={height || '.9em'}
       width={width}
