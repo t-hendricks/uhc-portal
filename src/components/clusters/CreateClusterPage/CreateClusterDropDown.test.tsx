@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, checkAccessibility, screen, fireEvent } from '@testUtils';
+import { render, checkAccessibility, screen, fireEvent, mockRestrictedEnv } from '@testUtils';
 import { MemoryRouter, Router } from 'react-router-dom';
 import { createMemoryHistory } from 'history';
 import * as hooks from '~/hooks/useFeatureGate';
@@ -116,5 +116,32 @@ describe('<CreateClusterDropDown />', () => {
     expect(
       screen.queryByText(/ROSA with Hosted Control Plane coming soon/),
     ).not.toBeInTheDocument();
+  });
+
+  describe('in Restriced env', () => {
+    const isRestrictedEnv = mockRestrictedEnv();
+
+    afterEach(() => {
+      isRestrictedEnv.mockReturnValue(false);
+    });
+    it('does not show hypershift helper text', () => {
+      isRestrictedEnv.mockReturnValue(true);
+      jest
+        .spyOn(hooks, 'useFeatureGate')
+        .mockImplementation((feature) => feature === HCP_ROSA_GETTING_STARTED_PAGE);
+
+      render(
+        <MemoryRouter>
+          <CreateClusterDropDown />
+        </MemoryRouter>,
+      );
+
+      fireEvent.click(screen.getByRole('button', { name: 'Create cluster' }));
+      expect(screen.getByText(/With CLI/)).toBeInTheDocument();
+      expect(screen.getByText(/With web interface/)).toBeInTheDocument();
+
+      expect(screen.queryByTestId('cli-helper')).not.toBeInTheDocument();
+      expect(screen.queryByTestId('wizard-helper')).not.toBeInTheDocument();
+    });
   });
 });

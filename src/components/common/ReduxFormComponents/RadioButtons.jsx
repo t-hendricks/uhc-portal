@@ -60,6 +60,7 @@ class RadioButtons extends React.Component {
                 value={option.value}
                 name={input.name}
                 id={`${input.name}-${option.value}`}
+                data-testid={`${input.name}-${option.value}`}
                 aria-label={option.ariaLabel || option.label}
                 label={option.label}
                 onChange={this.changeHandler}

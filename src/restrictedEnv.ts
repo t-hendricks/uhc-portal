@@ -3,4 +3,4 @@ export const isRestrictedEnv = () => insights.chrome.getEnvironment() === 'int';
 
 export const restrictedEnvApi = 'https://api.int.***REMOVED***.com';
 
-export const SUPPORTED_RESTRICTED_ENV_OCP_VERSIONS = ['4.11'];
+export const SUPPORT_CASE_URL = 'https://redhatgov.servicenowservices.com/css';

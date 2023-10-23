@@ -66,7 +66,8 @@ function DetailsRight({
     cluster.managed &&
     cluster.storage_quota &&
     humanizeValueWithUnitGiB(cluster.storage_quota.value);
-  const showVCPU = !isDisconnected && !hasSockets;
+  const showVCPU = !isDisconnected && !hasSockets && !isRestrictedEnv();
+  const showMemory = !isDisconnected && !isRestrictedEnv();
 
   const controlPlaneActualNodes = get(cluster, 'metrics.nodes.master', '-');
   const controlPlaneDesiredNodes = get(cluster, 'nodes.master', '-');
@@ -124,7 +125,7 @@ function DetailsRight({
             </DescriptionListGroup>
           </>
         )}
-        {!isDisconnected && (
+        {showMemory && (
           <>
             <DescriptionListGroup>
               <DescriptionListTerm>Total memory</DescriptionListTerm>

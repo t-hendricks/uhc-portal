@@ -450,6 +450,7 @@ describe('<ClusterDetails />', () => {
         },
         isAROCluster: false,
         isArchived: false,
+        displayClusterLogs: true,
       };
       render(
         <RouterWrapper>
@@ -457,16 +458,16 @@ describe('<ClusterDetails />', () => {
         </RouterWrapper>,
       );
 
-      expect(screen.queryByText('Add-ons')).not.toBeInTheDocument();
-      expect(screen.queryByText('Support')).not.toBeInTheDocument();
-      expect(screen.queryByText('Settings')).not.toBeInTheDocument();
-      expect(screen.queryByText('Monitoring')).not.toBeInTheDocument();
-      expect(screen.queryByText('Cluster history')).not.toBeInTheDocument();
+      expect(screen.queryByRole('tab', { name: 'Monitoring' })).not.toBeInTheDocument();
+      expect(screen.queryByRole('tab', { name: 'Add-ons' })).not.toBeInTheDocument();
 
-      expect(screen.queryByText('Access control')).toBeInTheDocument();
-      expect(screen.queryByText('Networking')).toBeInTheDocument();
-      expect(screen.queryByText('Machine pools')).toBeInTheDocument();
-      expect(screen.queryByText('Overview')).toBeInTheDocument();
+      expect(screen.queryByRole('tab', { name: 'Support' })).toBeInTheDocument();
+      expect(screen.queryByRole('tab', { name: 'Settings' })).toBeInTheDocument();
+      expect(screen.queryByRole('tab', { name: 'Cluster history' })).toBeInTheDocument();
+      expect(screen.queryByRole('tab', { name: 'Access control' })).toBeInTheDocument();
+      expect(screen.queryByRole('tab', { name: 'Networking' })).toBeInTheDocument();
+      expect(screen.queryByRole('tab', { name: 'Machine pools' })).toBeInTheDocument();
+      expect(screen.queryByRole('tab', { name: 'Overview' })).toBeInTheDocument();
     });
   });
 });
