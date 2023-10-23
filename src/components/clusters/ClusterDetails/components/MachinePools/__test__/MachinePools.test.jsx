@@ -6,19 +6,27 @@ import { normalizedProducts } from '~/common/subscriptionTypes';
 import { baseRequestState } from '../../../../../../redux/reduxHelpers';
 import MachinePools from '../MachinePools';
 
-const clusterState = {
-  clusters: {
-    details: {
-      cluster: {
-        aws: { sts: { role_arn: 'my-arn' } },
+const vpcs = [
+  {
+    aws_security_groups: [
+      {
+        name: '',
+        id: 'sg-group-without-a-name',
       },
-    },
+      {
+        name: 'abc is my name',
+        id: 'sg-abc',
+      },
+    ],
   },
-};
+];
 
-jest.mock('~/redux/hooks/useGlobalState', () => ({
-  useGlobalState: jest.fn().mockReturnValue(clusterState),
-}));
+jest.mock(
+  '~/components/clusters/CreateOSDPage/CreateOSDWizard/NetworkScreen/useAWSVPCsFromCluster',
+  () => ({
+    useAWSVPCsFromCluster: () => ({ fulfilled: true, data: { items: vpcs } }),
+  }),
+);
 
 const getMachinePools = jest.fn();
 const deleteMachinePool = jest.fn();
@@ -56,9 +64,11 @@ const getBaseProps = (isHypershift = false, ccs = false, machinePool = defaultMa
     },
   },
   openModal,
+  isDeleteMachinePoolModalOpen: false,
   isAddMachinePoolModalOpen: false,
   isEditTaintsModalOpen: false,
   isEditLabelsModalOpen: false,
+  isClusterAutoscalingModalOpen: false,
   clusterAutoscalerResponse: {
     hasAutoscaler: false,
     getAutoscaler: { ...baseRequestState },
