@@ -19,7 +19,10 @@ class TokenPages extends Page {
     // If the app is still loading, there are several stages — blank page, then spinner, then OCM renders.
     // So the "no spinner" check is not very reliable; the "h1" check is the real deal.
     cy.get('.pf-c-spinner', { timeout: 30000 }).should('not.exist');
-    cy.get('h1', { timeout: 30000 }).scrollIntoView().contains('OpenShift Cluster Manager API Token').should('be.visible');
+    cy.get('h1', { timeout: 30000 })
+      .scrollIntoView()
+      .contains('OpenShift Cluster Manager API Token')
+      .should('be.visible');
   }
 
   // check load token part
@@ -28,7 +31,7 @@ class TokenPages extends Page {
     cy.getByTestId('load-token-btn').click();
     cy.getByTestId(`${buttonLabel}`).should('have.attr', 'href');
     cy.get('input[aria-label="Copyable token"]', { timeout: 40000 }).should('exist');
-  }
+  };
 
   // check revoke previous tokens part
   checkRevokePrevousToken() {

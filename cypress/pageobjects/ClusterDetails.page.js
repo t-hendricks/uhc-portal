@@ -26,7 +26,6 @@ class ClusterDetails extends Page {
 
   editDisplayNameInput = () => cy.get('input[id="edit-display-name-input"]');
 
-
   editDisplaynameConfirm = () =>
     cy.get('div[aria-label="Edit display name"]').find('footer').find('button').first();
 
@@ -51,7 +50,8 @@ class ClusterDetails extends Page {
 
   deleteClusterNameInput = () => cy.get('input[aria-label="cluster name"]');
 
-  deleteClusterConfirm = () => cy.get('div[aria-label="Delete cluster"]').find('footer').find('button').first();
+  deleteClusterConfirm = () =>
+    cy.get('div[aria-label="Delete cluster"]').find('footer').find('button').first();
 
   clusterNameTitle = () => cy.get('h1.cl-details-page-title');
 
@@ -61,7 +61,16 @@ class ClusterDetails extends Page {
 
   clusterAvailabilityLabelValue = () => cy.getByTestId('availability').should('exist');
 
-  clusterInfrastructureAWSaccountLabelValue = () => cy.getByTestId('infrastructureAWSAccount').should('exist');
+  clusterAutoScalingStatus = () => cy.getByTestId('clusterAutoscalingStatus').should('exist');
+
+  clusterIMDSValue = () => cy.getByTestId('instanceMetadataService').should('exist');
+
+  clusterFipsCryptographyStatus = () => cy.getByTestId('fipsCryptographyStatus').should('exist');
+
+  clusterAdditionalEncryptionStatus = () => cy.getByTestId('etcEncryptionStatus').should('exist');
+
+  clusterInfrastructureAWSaccountLabelValue = () =>
+    cy.getByTestId('infrastructureAWSAccount').should('exist');
 
   clusterMachineCIDRLabelValue = () => cy.getByTestId('machineCIDR').should('exist');
 
@@ -70,7 +79,6 @@ class ClusterDetails extends Page {
   clusterPodCIDRLabelValue = () => cy.getByTestId('podCIDR').should('exist');
 
   clusterHostPrefixLabelValue = () => cy.getByTestId('hostPrefix').should('exist');
-
 
   waitForEditUrlModalToLoad = () => {
     cy.getByTestId('edit-console-url-dialog', { timeout: 30000 }).should('be.visible');
@@ -113,7 +121,10 @@ class ClusterDetails extends Page {
   }
 
   waitForOidcAndOperatorRolesSetupToSuccess() {
-    cy.get('li[id="oidcAndOperatorRolesSetup"]', { timeout: 80000 }).should('have.class', 'pf-m-success');
+    cy.get('li[id="oidcAndOperatorRolesSetup"]', { timeout: 80000 }).should(
+      'have.class',
+      'pf-m-success',
+    );
     this.checkInstallationStepStatus('OIDC and operator roles', 'Completed');
   }
 
@@ -129,10 +140,9 @@ class ClusterDetails extends Page {
 
   checkInstallationStepStatus(step, status = '') {
     let installStep = cy.get('div.pf-c-progress-stepper__step-title').contains(step);
-    if (status == "") {
+    if (status == '') {
       installStep.should('be.visible');
-    }
-    else {
+    } else {
       installStep.siblings().find('div').contains(status);
     }
   }
@@ -143,10 +153,11 @@ class ClusterDetails extends Page {
   };
 
   waitForDeleteClusterActionComplete = () => {
-    cy.getByTestId('delete-cluster-dialog').get('div.ins-c-spinner', { timeout: 100000 }).should('not.exist');
+    cy.getByTestId('delete-cluster-dialog')
+      .get('div.ins-c-spinner', { timeout: 100000 })
+      .should('not.exist');
   };
 }
-
 
 ClusterDetails.propTypes = {
   displayName: PropTypes.string.isRequired,

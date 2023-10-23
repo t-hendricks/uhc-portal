@@ -1,7 +1,6 @@
 import Page from './page';
 
 class GlobalNav extends Page {
-
   clustersNavigation = () => cy.get('a[data-quickstart-id="openshift"]');
   overviewNavigation = () => cy.get('a[data-quickstart-id="openshift_overview"]');
   releasesNavigation = () => cy.get('a[data-quickstart-id="openshift_releases"]');
