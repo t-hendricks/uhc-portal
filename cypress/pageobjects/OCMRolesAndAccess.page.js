@@ -3,7 +3,7 @@ import Page from './page';
 class OCMRolesAndAccess extends Page {
   accessControlTabButton = () => cy.get('[data-ouia-component-id="Access control"]');
 
-  grantRoleButton = () => cy.getByTestId("grant-role-btn");
+  grantRoleButton = () => cy.getByTestId('grant-role-btn');
 
   OCMRolesAndAccessTable = () => cy.get('table[aria-label="OCM Roles and Access"]');
 
