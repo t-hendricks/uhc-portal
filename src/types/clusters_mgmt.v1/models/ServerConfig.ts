@@ -2,6 +2,8 @@
 /* tslint:disable */
 /* eslint-disable */
 
+import type { ProvisionShardTopology } from './ProvisionShardTopology';
+
 /**
  * Representation of a server config
  */
@@ -19,11 +21,15 @@ export type ServerConfig = {
    */
   href?: string;
   /**
-   * The kubeconfig of the server
+   * The kubeconfig of the server.
    */
   kubeconfig?: string;
   /**
-   * The URL of the server
+   * The URL of the server.
    */
   server?: string;
+  /**
+   * The topology of a provision shard (Optional).
+   */
+  topology?: ProvisionShardTopology;
 };

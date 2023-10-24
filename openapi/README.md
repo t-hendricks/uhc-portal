@@ -3,20 +3,16 @@ Run `make openapi` (at the root level) to grab new ones and `yarn gen-types` to 
 
 # WARNING: Manual patches
 
-As of this writing we carry several manual patches to JSON and to types, that above commands overwrite:
+As of this writing we must do a few manual changes on the generated Type definitions:
 
-- commit 640443293396d3c132189016589f61ea36b9eec5 added stuff into openapi/clusters_mgmt.v1.json
-  (pending upstream https://github.com/openshift-online/ocm-api-model/pull/775)
-- commit 52b7661c5249590f2e20fbd0910e78b08de5553d added manually written type files under
-  src/types/clusters_mgmt.v1/models_/ + imports into generated clusters_mgmt.v1/index.ts
-  (TODO: add in ocm-api-model)
-- commit 423e07a328deed9d1c06b861628a097810f11434 edited the generated TypeScript, for 2 issues:
-  - https://github.com/ferdikoomen/openapi-typescript-codegen/issues/1229
-  - https://github.com/ferdikoomen/openapi-typescript-codegen/issues/1230
-    (improved upstream, anyway we dropped that openapi in commit d8914c74abc6f374621951cabc876ba4edc07ac8)
-- Added `"x-enum-varnames": [ "DISLIKE", "NO_VOTE", "LIKE" ]` to insights-results-aggregator JSONs
-  (both v1 and v2) to avoid enum name collision: `enum user_vote { _1 = '-1', _0 = '0', _1 = '1', }`.
-  https://github.com/ferdikoomen/openapi-typescript-codegen/issues/991
+- cost-management.v1/models/TagRate.ts and cost-management.v1/models/TieredRate.ts: Revert the lines for `cost-type` that use a bad syntax.
+- insights-results-aggregator.(v1|v2)/models/reportData.ts: Revert the definitions of `user_vote` to avoid a syntax `enum user_vote { _1 = '-1', _0 = '0', _1 = '1', }`
+- insights-results-aggregator.v2/models/systemWideRuleDisableList.ts: Revert the line for `updated_at` with missing type
+- authorizations.v1/models/SelfAccessReview.ts: Do not remove the entries on `resource_type` for `Idp`, `ClusterAutoscaler` and `MachinePool`
+
+The following open issues are related to these manual changes:
+- https://github.com/ferdikoomen/openapi-typescript-codegen/issues/1229
+- https://github.com/ferdikoomen/openapi-typescript-codegen/issues/991
 
 # Lifecycle of OpenAPI definitions
 

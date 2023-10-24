@@ -124,7 +124,6 @@
           "internal": false,
           "reason": "",
           "resolution": "",
-          "risk_of_change": 0,
           "rule_id": "ccx_rules_ocm.tutorial_rule.report",
           "tags": [
             "openshift",
@@ -174,17 +173,6 @@
             "description": "Resolution steps of the issue, possibly linking to a resolution article in the knowledge base.",
             "type": "string"
           },
-          "risk_of_change": {
-            "description": "Risk of change - values paired with corresponding UI elements. 0 returned when not defined, therefore to hide the UI.",
-            "enum": [
-              0,
-              1,
-              2,
-              3,
-              4
-            ],
-            "type": "integer"
-          },
           "rule_id": {
             "description": "ID of a rule.",
             "type": "string"
@@ -212,11 +200,6 @@
               "-1",
               "0",
               "1"
-            ],
-            "x-enum-varnames": [
-              "DISLIKE",
-              "NO_VOTE",
-              "LIKE"
             ],
             "format": "int32",
             "type": "integer"
@@ -272,8 +255,11 @@
             "type": "array"
           },
           "errors": {
+            "items": {
+              "type": "string"
+            },
             "nullable": true,
-            "type": "string"
+            "type": "array"
           },
           "generated_at": {
             "type": "string"
@@ -624,6 +610,9 @@
               }
             },
             "description": "Latest available report for the given organization and cluster combination. Returns rules and their descriptions that were hit by the cluster. Disabled rules are ommitted by default unless the get_disabled query param is provided."
+          },
+          "404": {
+            "description": "Resource not found, usually caused when the cluster ID is not registered and request come from Insights Operator."
           }
         },
         "summary": "Returns the latest insights report for a cluster.",
@@ -1202,7 +1191,7 @@
     },
     "/org_overview": {
       "get": {
-        "description": "Retrieves an overview data about the clusters being hit by rules",
+        "description": "Retrieves an overview data about the clusters being hit by rules. The cluster list is retrieved from the AMS API. Takes into account managed clusters and rules, acknowledged rules as well as disabled clusters.",
         "operationId": "getOverviewForOrganization",
         "responses": {
           "200": {
@@ -1216,12 +1205,14 @@
             "description": "Summary of results by cluster"
           }
         },
-        "summary": "Get relevant data for an overview of hitting rules in the clusters for this organziation",
+        "summary": "Retrieve an overview of rule hits affecting all clusters in an organization. Organization ID is retrieved from the auth token.",
         "tags": [
           "prod"
         ]
       },
       "post": {
+        "description": "DEPRACATED: Use GET instead. Retrieves an overview data about the clusters being hit by rules. This method doesn't take into account managed clusters, rules that were acked or clusters that were disabled. For this functionality, use GET method.",
+        "operationId": "postOverviewForOrganization",
         "requestBody": {
           "content": {
             "application/json": {
@@ -1254,6 +1245,7 @@
             "description": "Status ok"
           }
         },
+        "summary": "DEPRACATED: Use GET instead. Retrieve an overview of rule hits affecting all clusters in an organization. Organization ID is retrieved from the auth token.",
         "tags": [
           "prod"
         ]
@@ -1261,7 +1253,7 @@
     },
     "/organizations/{orgId}/clusters": {
       "get": {
-        "description": "Returns a list of clusters, ie. cluster IDs, that are associated with the specified organization ID. Please note that there is 1:N organization to cluster mapping, ie. one cluster belongs exactly to one organization.",
+        "description": "Returns a list of clusters, ie. cluster IDs, that are associated with the specified organization ID from the last 3 hours. For a complete list of clusters, please use API v2. Please note that there is 1:N organization to cluster mapping, ie. one cluster belongs exactly to one organization.",
         "operationId": "getClustersForOrganization",
         "parameters": [
           {

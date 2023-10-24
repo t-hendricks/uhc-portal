@@ -2,7 +2,9 @@
 /* tslint:disable */
 /* eslint-disable */
 
+import type { ScheduleType } from './ScheduleType';
 import type { UpgradePolicyState } from './UpgradePolicyState';
+import type { UpgradeType } from './UpgradeType';
 
 /**
  * Representation of an upgrade policy that can be set for a node pool.
@@ -49,17 +51,17 @@ export type NodePoolUpgradePolicy = {
    */
   schedule?: string;
   /**
-   * Schedule type can be either "manual" (single execution) or "automatic" (re-occurring).
+   * Schedule type of the upgrade.
    */
-  schedule_type?: string;
+  schedule_type?: ScheduleType;
   /**
    * State of the upgrade policy for the node pool.
    */
   state?: UpgradePolicyState;
   /**
-   * Upgrade type specify the type of the upgrade. Can only be "NodePool".
+   * Upgrade type of the node pool.
    */
-  upgrade_type?: string;
+  upgrade_type?: UpgradeType;
   /**
    * Version is the desired upgrade version.
    */

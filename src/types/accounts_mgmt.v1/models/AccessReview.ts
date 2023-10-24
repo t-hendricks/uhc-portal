@@ -62,5 +62,9 @@ export namespace AccessReview {
     SELF_ACCESS_REVIEW = 'SelfAccessReview',
     SUBSCRIPTION_INTERNAL = 'SubscriptionInternal',
     SUBSCRIPTION_ROLE_BINDING = 'SubscriptionRoleBinding',
+    CLUSTER_SELF_MANAGED = 'ClusterSelfManaged',
+    CLUSTER_SELF_MANAGED_ADDON = 'ClusterSelfManagedAddon',
+    CLUSTER_SELF_MANAGED_LABEL = 'ClusterSelfManagedLabel',
+    CLUSTER_SELF_MANAGED_STATUS = 'ClusterSelfManagedStatus',
   }
 }

@@ -37,6 +37,7 @@ export namespace SubscriptionPatchRequest {
     MARKETPLACE_AWS = 'marketplace-aws',
     MARKETPLACE_AZURE = 'marketplace-azure',
     MARKETPLACE_RHM = 'marketplace-rhm',
+    MARKETPLACE_GCP = 'marketplace-gcp',
   }
 
   export enum product_bundle {

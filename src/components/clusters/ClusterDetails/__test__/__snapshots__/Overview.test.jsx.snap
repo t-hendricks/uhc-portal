@@ -2188,7 +2188,7 @@ exports[`<Overview /> for an OCP cluster should render 1`] = `
                       },
                       "reason": "",
                       "resolution": "",
-                      "risk_of_change": 0,
+                      "resolution_risk": 0,
                       "rule_id": "ccx_rules_ocp.external.rules.nodes_kubelet_version_check.report",
                       "tags": Array [
                         "tag1",

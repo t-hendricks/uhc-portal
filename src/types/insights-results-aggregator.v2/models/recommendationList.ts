@@ -20,7 +20,7 @@ export type recommendationList = Array<{
    */
   impact?: 0 | 1 | 2 | 3 | 4;
   /**
-   * The number of clusters impacted by this rule.
+   * The number of clusters impacted by this rule. Disabled clusters are excluded from the count. If the rule is acked, it is just marked as disabled:true and the count is still returned.
    */
   impacted_clusters_count?: number;
   /**
@@ -32,9 +32,9 @@ export type recommendationList = Array<{
    */
   publish_date?: string;
   /**
-   * Risk of change - values paired with corresponding UI elements. 0 returned when not defined, therefore to hide the UI.
+   * Indicates the impact of the resolution steps on the cluster and other associated risks. Behaves in the same way as total_risk, 0 is returned when the rule doesn't have a resolution_risk defined.
    */
-  risk_of_change?: 0 | 1 | 2 | 3 | 4;
+  resolution_risk?: 0 | 1 | 2 | 3 | 4;
   /**
    * The rule ID in the | format.
    */
