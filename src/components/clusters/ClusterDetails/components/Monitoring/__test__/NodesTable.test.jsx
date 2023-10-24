@@ -1,16 +1,10 @@
 import React from 'react';
-import { shallow } from 'enzyme';
-
+import { render, checkAccessibility } from '~/testUtils';
 import NodesTable from '../components/NodesTable';
 
-describe('<ClusterHealthCard />', () => {
-  let wrapper;
-
-  beforeEach(() => {
-    wrapper = shallow(<NodesTable />);
-  });
-
-  it('should render', () => {
-    expect(wrapper).toMatchSnapshot();
+describe('<NodesTable />', () => {
+  it('is accessible', async () => {
+    const { container } = render(<NodesTable />);
+    await checkAccessibility(container);
   });
 });

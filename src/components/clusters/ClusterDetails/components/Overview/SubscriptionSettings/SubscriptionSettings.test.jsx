@@ -1,43 +1,62 @@
 import React from 'react';
-import { shallow } from 'enzyme';
 
+import { render, screen, checkAccessibility } from '~/testUtils';
 import SubscriptionSettings from './SubscriptionSettings';
-import * as Fixtures from './SubscriptionSettings.fixtures';
+import * as fixtures from './SubscriptionSettings.fixtures';
 import { normalizedProducts } from '../../../../../../common/subscriptionTypes';
 
 describe('<SubscriptionSettings />', () => {
-  const editButtonSelectorEnabled = '[variant="link"][isDisabled=false]';
-  const editButtonSelectorDisabled = '[variant="link"][isDisabled=true]';
+  it('should render for OCP', async () => {
+    const newProps = { ...fixtures };
+    newProps.subscription.plan.id = normalizedProducts.OCP;
+    newProps.subscription.plan.type = normalizedProducts.OCP;
 
-  it('should render for OCP', () => {
-    Fixtures.subscription.plan.id = normalizedProducts.OCP;
-    Fixtures.subscription.plan.type = normalizedProducts.OCP;
-    const wrapper = shallow(<SubscriptionSettings {...Fixtures} />);
-    expect(wrapper.find(editButtonSelectorEnabled).length).toEqual(1);
-    expect(wrapper).toMatchSnapshot();
+    const { container } = render(<SubscriptionSettings {...newProps} />);
+    expect(screen.getByRole('button', { name: 'Edit subscription settings' })).toBeEnabled();
+    expect(screen.getByRole('button', { name: 'Edit subscription settings' })).toHaveAttribute(
+      'aria-disabled',
+      'false',
+    );
+    await checkAccessibility(container);
   });
 
   it('should not render if not OCP', () => {
-    Fixtures.subscription.plan.id = normalizedProducts.OSD;
-    Fixtures.subscription.plan.type = normalizedProducts.OSD;
-    const wrapper = shallow(<SubscriptionSettings {...Fixtures} />);
-    expect(wrapper).toMatchObject({});
+    const newProps = { ...fixtures };
+    newProps.subscription.plan.id = normalizedProducts.OSD;
+    newProps.subscription.plan.type = normalizedProducts.OSD;
+
+    const { container } = render(<SubscriptionSettings {...newProps} />);
+    expect(container).toBeEmptyDOMElement();
   });
 
   it('should show contact sales', () => {
-    Fixtures.subscription.plan.id = normalizedProducts.OCP;
-    Fixtures.subscription.plan.type = normalizedProducts.OCP;
-    Fixtures.canSubscribeOCP = false;
-    const wrapper = shallow(<SubscriptionSettings {...Fixtures} />);
-    expect(wrapper.find(editButtonSelectorDisabled).length).toEqual(1);
-    expect(wrapper.find('ExternalLink').length).toEqual(1);
+    const newProps = { ...fixtures };
+    newProps.subscription.plan.id = normalizedProducts.OCP;
+    newProps.subscription.plan.type = normalizedProducts.OCP;
+    newProps.canSubscribeOCP = false;
+
+    render(<SubscriptionSettings {...newProps} />);
+    expect(screen.getByRole('button', { name: 'Edit subscription settings' })).toBeDisabled();
+    expect(screen.getByRole('button', { name: 'Edit subscription settings' })).toHaveAttribute(
+      'aria-disabled',
+      'true',
+    );
+
+    expect(screen.getByRole('link', { name: 'Contact sales (new window or tab)' })).toHaveAttribute(
+      'href',
+      'https://www.redhat.com/en/contact',
+    );
   });
 
   it('should hide Edit', () => {
-    Fixtures.subscription.plan.id = normalizedProducts.OCP;
-    Fixtures.subscription.plan.type = normalizedProducts.OCP;
-    Fixtures.canEdit = false;
-    const wrapper = shallow(<SubscriptionSettings {...Fixtures} />);
-    expect(wrapper.find(editButtonSelectorEnabled).length).toEqual(0);
+    const newProps = { ...fixtures };
+    newProps.subscription.plan.id = normalizedProducts.OCP;
+    newProps.subscription.plan.type = normalizedProducts.OCP;
+    newProps.canEdit = false;
+
+    render(<SubscriptionSettings {...newProps} />);
+    expect(
+      screen.queryByRole('button', { name: 'Edit subscription settings' }),
+    ).not.toBeInTheDocument();
   });
 });
