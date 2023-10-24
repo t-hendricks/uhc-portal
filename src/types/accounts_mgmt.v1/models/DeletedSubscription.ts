@@ -8,5 +8,6 @@ export type DeletedSubscription = SubscriptionCommonFields & {
   created_at?: string;
   id?: string;
   metrics?: string;
+  original_id?: string;
   query_timestamp?: string;
 };

@@ -21,6 +21,7 @@ export namespace RoleBinding {
   export enum managed_by {
     CONFIG = 'Config',
     USER = 'User',
+    RBAC = 'RBAC',
   }
 
   export enum type {

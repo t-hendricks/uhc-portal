@@ -37,6 +37,15 @@
           "type": "string"
         }
       },
+      "deleteAssociatedResources": {
+        "description": "If true, deletes the associated resources (e.g. role bindings) for an account along with the account itself",
+        "in": "query",
+        "name": "deleteAssociatedResources",
+        "required": false,
+        "schema": {
+          "type": "boolean"
+        }
+      },
       "dryRun": {
         "description": "If true, instructs API to avoid making any changes, but rather run through validations only.",
         "in": "query",
@@ -199,6 +208,15 @@
           "type": "string"
         }
       },
+      "name": {
+        "description": "The name of the default capability",
+        "in": "path",
+        "name": "name",
+        "required": true,
+        "schema": {
+          "type": "string"
+        }
+      },
       "orderBy": {
         "description": "Specifies the order by criteria. The syntax of this parameter is\nsimilar to the syntax of the _order by_ clause of an SQL statement,\nbut using the names of the json attributes / column of the account.\nFor example, in order to retrieve all accounts ordered by username:\n\n```sql\nusername asc\n```\n\nOr in order to retrieve all accounts ordered by username _and_ first name:\n\n```sql\nusername asc, firstName asc\n```\n\nIf the parameter isn't provided, or if the value is empty, then\nno explicit ordering will be applied.",
         "in": "query",
@@ -267,7 +285,7 @@
       "rotationId": {
         "description": "The id of the pull secret rotation",
         "in": "path",
-        "name": "key",
+        "name": "rotationId",
         "required": true,
         "schema": {
           "type": "string"
@@ -369,7 +387,11 @@
               "SubscriptionLabelInternal",
               "SelfAccessReview",
               "SubscriptionInternal",
-              "SubscriptionRoleBinding"
+              "SubscriptionRoleBinding",
+              "ClusterSelfManaged",
+              "ClusterSelfManagedAddon",
+              "ClusterSelfManagedLabel",
+              "ClusterSelfManagedStatus"
             ],
             "type": "string"
           },
@@ -408,7 +430,13 @@
           "cluster_uuid": {
             "type": "string"
           },
+          "is_ocm_internal": {
+            "type": "boolean"
+          },
           "organization_id": {
+            "type": "string"
+          },
+          "reason": {
             "type": "string"
           },
           "resource_type": {
@@ -452,7 +480,11 @@
               "SubscriptionLabelInternal",
               "SelfAccessReview",
               "SubscriptionInternal",
-              "SubscriptionRoleBinding"
+              "SubscriptionRoleBinding",
+              "ClusterSelfManaged",
+              "ClusterSelfManagedAddon",
+              "ClusterSelfManagedLabel",
+              "ClusterSelfManagedStatus"
             ],
             "type": "string"
           },
@@ -565,10 +597,14 @@
               "description": {
                 "type": "string"
               },
+              "external_id": {
+                "type": "string"
+              },
               "managed_by": {
                 "enum": [
                   "SSO",
-                  "OCM"
+                  "OCM",
+                  "RBAC"
                 ],
                 "type": "string"
               },
@@ -610,6 +646,13 @@
                 "format": "date-time",
                 "type": "string"
               },
+              "managed_by": {
+                "enum": [
+                  "OCM",
+                  "RBAC"
+                ],
+                "type": "string"
+              },
               "updated_at": {
                 "format": "date-time",
                 "type": "string"
@@ -617,7 +660,8 @@
             },
             "required": [
               "account_id",
-              "account_group_id"
+              "account_group_id",
+              "managed_by"
             ],
             "type": "object"
           }
@@ -632,11 +676,7 @@
             "properties": {
               "items": {
                 "items": {
-                  "allOf": [
-                    {
-                      "$ref": "#/components/schemas/AccountGroupAssignment"
-                    }
-                  ]
+                  "$ref": "#/components/schemas/AccountGroupAssignment"
                 },
                 "type": "array"
               }
@@ -654,11 +694,7 @@
             "properties": {
               "items": {
                 "items": {
-                  "allOf": [
-                    {
-                      "$ref": "#/components/schemas/AccountGroup"
-                    }
-                  ]
+                  "$ref": "#/components/schemas/AccountGroup"
                 },
                 "type": "array"
               }
@@ -698,11 +734,7 @@
             "properties": {
               "items": {
                 "items": {
-                  "allOf": [
-                    {
-                      "$ref": "#/components/schemas/Account"
-                    }
-                  ]
+                  "$ref": "#/components/schemas/Account"
                 },
                 "type": "array"
               }
@@ -751,11 +783,76 @@
               "email": {
                 "type": "string"
               },
+              "first_name": {
+                "type": "string"
+              },
+              "last_name": {
+                "type": "string"
+              },
               "name": {
                 "type": "string"
               },
               "username": {
                 "type": "string"
+              }
+            },
+            "type": "object"
+          }
+        ]
+      },
+      "BillingModel": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/ObjectReference"
+          },
+          {
+            "properties": {
+              "billing_model_type": {
+                "enum": [
+                  "standard",
+                  "marketplace",
+                  "marketplace-aws",
+                  "marketplace-azure",
+                  "marketplace-rhm",
+                  "marketplace-gcp"
+                ],
+                "type": "string"
+              },
+              "description": {
+                "type": "string"
+              },
+              "display_name": {
+                "type": "string"
+              },
+              "id": {
+                "type": "string"
+              },
+              "marketplace": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "id",
+              "billing_model_type",
+              "display_name",
+              "description"
+            ],
+            "type": "object"
+          }
+        ]
+      },
+      "BillingModelList": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/List"
+          },
+          {
+            "properties": {
+              "items": {
+                "items": {
+                  "$ref": "#/components/schemas/BillingModel"
+                },
+                "type": "array"
               }
             },
             "type": "object"
@@ -784,6 +881,24 @@
               "value",
               "inherited"
             ],
+            "type": "object"
+          }
+        ]
+      },
+      "CapabilityList": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/List"
+          },
+          {
+            "properties": {
+              "items": {
+                "items": {
+                  "$ref": "#/components/schemas/Capability"
+                },
+                "type": "array"
+              }
+            },
             "type": "object"
           }
         ]
@@ -934,6 +1049,12 @@
           },
           "cloud_provider_id": {
             "type": "string"
+          },
+          "contracts": {
+            "items": {
+              "$ref": "#/components/schemas/Contract"
+            },
+            "type": "array"
           }
         },
         "type": "object"
@@ -954,6 +1075,9 @@
               },
               "category_pretty": {
                 "type": "string"
+              },
+              "ccs_only": {
+                "type": "boolean"
               },
               "cloud_provider": {
                 "type": "string"
@@ -1089,6 +1213,9 @@
               "$ref": "#/components/schemas/ReservedResource"
             },
             "type": "array"
+          },
+          "xcm_id": {
+            "type": "string"
           }
         },
         "required": [
@@ -1123,17 +1250,24 @@
       },
       "ClusterMetricsNodes": {
         "properties": {
+          "arch": {
+            "type": "string"
+          },
           "compute": {
-            "type": "double"
+            "format": "double",
+            "type": "number"
           },
           "infra": {
-            "type": "double"
+            "format": "double",
+            "type": "number"
           },
           "master": {
-            "type": "double"
+            "format": "double",
+            "type": "number"
           },
           "total": {
-            "type": "double"
+            "format": "double",
+            "type": "number"
           }
         },
         "type": "object"
@@ -1175,7 +1309,8 @@
                 "type": "string"
               },
               "value": {
-                "type": "double"
+                "format": "double",
+                "type": "number"
               }
             },
             "required": [
@@ -1194,7 +1329,8 @@
                 "type": "string"
               },
               "value": {
-                "type": "double"
+                "format": "double",
+                "type": "number"
               }
             },
             "required": [
@@ -1269,11 +1405,7 @@
             "properties": {
               "items": {
                 "items": {
-                  "allOf": [
-                    {
-                      "$ref": "#/components/schemas/ClusterTransfer"
-                    }
-                  ]
+                  "$ref": "#/components/schemas/ClusterTransfer"
                 },
                 "type": "array"
               }
@@ -1338,7 +1470,8 @@
                   "marketplace",
                   "marketplace-aws",
                   "marketplace-rhm",
-                  "marketplace-azure"
+                  "marketplace-azure",
+                  "marketplace-gcp"
                 ],
                 "type": "string"
               },
@@ -1393,6 +1526,76 @@
           }
         ]
       },
+      "Contract": {
+        "properties": {
+          "dimensions": {
+            "items": {
+              "$ref": "#/components/schemas/ContractDimension"
+            },
+            "type": "array"
+          },
+          "end_date": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "start_date": {
+            "format": "date-time",
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "ContractDimension": {
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "value": {
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "DefaultCapability": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/ObjectReference"
+          },
+          {
+            "properties": {
+              "name": {
+                "type": "string"
+              },
+              "value": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "name",
+              "value"
+            ],
+            "type": "object"
+          }
+        ]
+      },
+      "DefaultCapabilityList": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/List"
+          },
+          {
+            "properties": {
+              "items": {
+                "items": {
+                  "$ref": "#/components/schemas/DefaultCapability"
+                },
+                "type": "array"
+              }
+            },
+            "type": "object"
+          }
+        ]
+      },
       "DeletedSubscription": {
         "allOf": [
           {
@@ -1408,6 +1611,9 @@
                 "type": "string"
               },
               "metrics": {
+                "type": "string"
+              },
+              "original_id": {
                 "type": "string"
               },
               "query_timestamp": {
@@ -1515,7 +1721,8 @@
                   "marketplace",
                   "marketplace-aws",
                   "marketplace-rhm",
-                  "marketplace-azure"
+                  "marketplace-azure",
+                  "marketplace-gcp"
                 ],
                 "type": "string"
               },
@@ -1649,6 +1856,13 @@
                 "type": "boolean"
               },
               "key": {
+                "type": "string"
+              },
+              "managed_by": {
+                "enum": [
+                  "Config",
+                  "User"
+                ],
                 "type": "string"
               },
               "organization_id": {
@@ -1900,7 +2114,8 @@
             "$ref": "#/components/schemas/ClusterResource"
           },
           "critical_alerts_firing": {
-            "type": "double"
+            "format": "double",
+            "type": "number"
           },
           "health_state": {
             "enum": [
@@ -1916,8 +2131,15 @@
           "nodes": {
             "$ref": "#/components/schemas/ClusterMetricsNodes"
           },
+          "nodes_arch": {
+            "items": {
+              "$ref": "#/components/schemas/ClusterMetricsNodes"
+            },
+            "type": "array"
+          },
           "non_virt_nodes": {
-            "type": "double"
+            "format": "double",
+            "type": "number"
           },
           "openshift_version": {
             "type": "string"
@@ -1926,7 +2148,8 @@
             "type": "string"
           },
           "operators_condition_failing": {
-            "type": "double"
+            "format": "double",
+            "type": "number"
           },
           "query_timestamp": {
             "format": "date-time",
@@ -1948,13 +2171,16 @@
             "$ref": "#/components/schemas/ClusterResource"
           },
           "subscription_cpu_total": {
-            "type": "double"
+            "format": "double",
+            "type": "number"
           },
           "subscription_obligation_exists": {
-            "type": "double"
+            "format": "double",
+            "type": "number"
           },
           "subscription_socket_total": {
-            "type": "double"
+            "format": "double",
+            "type": "number"
           },
           "upgrade": {
             "$ref": "#/components/schemas/ClusterUpgrade"
@@ -2038,11 +2264,7 @@
             "properties": {
               "items": {
                 "items": {
-                  "allOf": [
-                    {
-                      "$ref": "#/components/schemas/Organization"
-                    }
-                  ]
+                  "$ref": "#/components/schemas/Organization"
                 },
                 "type": "array"
               }
@@ -2190,11 +2412,7 @@
             "properties": {
               "items": {
                 "items": {
-                  "allOf": [
-                    {
-                      "$ref": "#/components/schemas/PullSecretRotation"
-                    }
-                  ]
+                  "$ref": "#/components/schemas/PullSecretRotation"
                 },
                 "type": "array"
               }
@@ -2238,6 +2456,72 @@
             "type": "object"
           }
         ]
+      },
+      "QuotaAuthorizationRequest": {
+        "properties": {
+          "account_username": {
+            "type": "string"
+          },
+          "availability_zone": {
+            "type": "string"
+          },
+          "cloud_provider_id": {
+            "type": "string"
+          },
+          "display_name": {
+            "type": "string"
+          },
+          "product_id": {
+            "type": "string"
+          },
+          "quota_version": {
+            "type": "string"
+          },
+          "reserve": {
+            "type": "boolean"
+          },
+          "resource_id": {
+            "type": "string"
+          },
+          "resources": {
+            "items": {
+              "$ref": "#/components/schemas/ReservedResource"
+            },
+            "type": "array"
+          },
+          "subscription_id": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "account_username",
+          "resources"
+        ],
+        "type": "object"
+      },
+      "QuotaAuthorizationResponse": {
+        "properties": {
+          "allowed": {
+            "type": "boolean"
+          },
+          "excess_resources": {
+            "items": {
+              "$ref": "#/components/schemas/ExcessResource"
+            },
+            "type": "array"
+          },
+          "organization_id": {
+            "type": "string"
+          },
+          "subscription": {
+            "$ref": "#/components/schemas/ObjectReference"
+          }
+        },
+        "required": [
+          "allowed",
+          "excess_resources"
+        ],
+        "type": "object"
       },
       "QuotaCost": {
         "allOf": [
@@ -2335,7 +2619,8 @@
                   "marketplace",
                   "marketplace-aws",
                   "marketplace-rhm",
-                  "marketplace-azure"
+                  "marketplace-azure",
+                  "marketplace-gcp"
                 ],
                 "type": "string"
               },
@@ -2584,7 +2869,8 @@
                   "marketplace",
                   "marketplace-aws",
                   "marketplace-rhm",
-                  "marketplace-azure"
+                  "marketplace-azure",
+                  "marketplace-gcp"
                 ],
                 "type": "string"
               },
@@ -2643,7 +2929,8 @@
                   "marketplace",
                   "marketplace-aws",
                   "marketplace-rhm",
-                  "marketplace-azure"
+                  "marketplace-azure",
+                  "marketplace-gcp"
                 ],
                 "type": "string"
               },
@@ -2725,7 +3012,8 @@
               "marketplace",
               "marketplace-aws",
               "marketplace-rhm",
-              "marketplace-azure"
+              "marketplace-azure",
+              "marketplace-gcp"
             ],
             "type": "string"
           }
@@ -2939,7 +3227,8 @@
               "managed_by": {
                 "enum": [
                   "Config",
-                  "User"
+                  "User",
+                  "RBAC"
                 ],
                 "type": "string"
               },
@@ -3132,7 +3421,11 @@
               "SubscriptionLabelInternal",
               "SelfAccessReview",
               "SubscriptionInternal",
-              "SubscriptionRoleBinding"
+              "SubscriptionRoleBinding",
+              "ClusterSelfManaged",
+              "ClusterSelfManagedAddon",
+              "ClusterSelfManagedLabel",
+              "ClusterSelfManagedStatus"
             ],
             "type": "string"
           },
@@ -3532,6 +3825,9 @@
                   "Academic"
                 ],
                 "type": "string"
+              },
+              "xcm_id": {
+                "type": "string"
               }
             },
             "required": [
@@ -3638,7 +3934,8 @@
               "marketplace",
               "marketplace-aws",
               "marketplace-azure",
-              "marketplace-rhm"
+              "marketplace-rhm",
+              "marketplace-gcp"
             ],
             "type": "string"
           },
@@ -3854,7 +4151,8 @@
                 "type": "string"
               },
               "value": {
-                "type": "double"
+                "format": "double",
+                "type": "number"
               }
             },
             "type": "object"
@@ -4294,6 +4592,64 @@
       }
     },
     "/api/accounts_mgmt/v1/accounts/{id}": {
+      "delete": {
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/deleteAssociatedResources"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Account successfully deleted"
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Auth token is invalid"
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Unauthorized to perform operation"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "No account with specified id exists"
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Unexpected error occurred"
+          }
+        },
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "summary": "Delete an account by id"
+      },
       "get": {
         "parameters": [
           {
@@ -4641,7 +4997,7 @@
                 }
               }
             },
-            "description": "No label with specified key on specified organizations id exists"
+            "description": "No label with specified key on specified account id exists"
           },
           "500": {
             "content": {
@@ -4701,7 +5057,7 @@
                 }
               }
             },
-            "description": "No label with specified key on specified organizations id exists"
+            "description": "No label with specified key on specified account id exists"
           },
           "500": {
             "content": {
@@ -4719,7 +5075,7 @@
             "Bearer": []
           }
         ],
-        "summary": "Get subscription labels by label key"
+        "summary": "Get account labels by label key"
       },
       "parameters": [
         {
@@ -4800,7 +5156,7 @@
                 }
               }
             },
-            "description": "Unexpected error updating organizations label"
+            "description": "Unexpected error updating account label"
           }
         },
         "security": [
@@ -5069,6 +5425,196 @@
         },
         {
           "$ref": "#/components/parameters/rotationId"
+        }
+      ]
+    },
+    "/api/accounts_mgmt/v1/billing_models": {
+      "get": {
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BillingModelList"
+                }
+              }
+            },
+            "description": "A JSON array of billing model objects"
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Auth token is invalid"
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Unauthorized to perform operation"
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Unexpected error occurred"
+          }
+        },
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "summary": "Returns a list of available billing models"
+      },
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/page"
+        },
+        {
+          "$ref": "#/components/parameters/size"
+        }
+      ]
+    },
+    "/api/accounts_mgmt/v1/billing_models/{id}": {
+      "get": {
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BillingModel"
+                }
+              }
+            },
+            "description": "Billing model found by id"
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Auth token is invalid"
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Unauthorized to perform operation"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "No billing model with specified id exists"
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Unexpected error occurred"
+          }
+        },
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "summary": "Get a billing model"
+      },
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/id"
+        }
+      ]
+    },
+    "/api/accounts_mgmt/v1/capabilities": {
+      "get": {
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CapabilityList"
+                }
+              }
+            },
+            "description": "A JSON array of capability objects"
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Auth token is invalid"
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Unauthorized to perform operation"
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Unexpected error occurred"
+          }
+        },
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "summary": "Returns a list of available capabilities"
+      },
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/page"
+        },
+        {
+          "$ref": "#/components/parameters/size"
+        },
+        {
+          "$ref": "#/components/parameters/search"
         }
       ]
     },
@@ -6328,6 +6874,310 @@
         "summary": "Get the authenticated account"
       }
     },
+    "/api/accounts_mgmt/v1/default_capabilities": {
+      "get": {
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DefaultCapabilityList"
+                }
+              }
+            },
+            "description": "A JSON array of default capabilities"
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Auth token is invalid"
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Unexpected error occurred"
+          }
+        },
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "summary": "Returns a list of default capabilities"
+      },
+      "post": {
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DefaultCapability"
+              }
+            }
+          },
+          "description": "Label data",
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DefaultCapability"
+                }
+              }
+            },
+            "description": "Created or updated default capability successfully"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Validation errors occurred"
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Auth token is invalid"
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Unauthorized to perform operation"
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "An unexpected error occurred creating the default capability"
+          }
+        },
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "summary": "Create a new default capability or update an existing one"
+      }
+    },
+    "/api/accounts_mgmt/v1/default_capabilities/{name}": {
+      "delete": {
+        "responses": {
+          "204": {
+            "description": "Default capability successfully deleted"
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Auth token is invalid"
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Unauthorized to perform operation"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "No default capability with specified name exists"
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "An unexpected error occurred deleting the default capability"
+          }
+        },
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "summary": "Delete a default capability"
+      },
+      "get": {
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DefaultCapability"
+                }
+              }
+            },
+            "description": "Default capability found by name"
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Auth token is invalid"
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Unauthorized to perform operation"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "No default capability with specified name exists"
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Unexpected error occurred"
+          }
+        },
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "summary": "Get default capability by label name"
+      },
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/name"
+        }
+      ],
+      "patch": {
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DefaultCapability"
+              }
+            }
+          },
+          "description": "Default capability data",
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DefaultCapability"
+                }
+              }
+            },
+            "description": "Created or updated default capability successfully"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Validation errors occurred"
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Auth token is invalid"
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Unauthorized to perform operation"
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Unexpected error updating default capability"
+          }
+        },
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "summary": "Create a new default capability or update an existing one"
+      }
+    },
     "/api/accounts_mgmt/v1/deleted_subscriptions": {
       "get": {
         "parameters": [
@@ -6393,6 +7243,73 @@
         ],
         "summary": "Returns a list of deleted subscriptions"
       }
+    },
+    "/api/accounts_mgmt/v1/deleted_subscriptions/{id}": {
+      "get": {
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DeletedSubscription"
+                }
+              }
+            },
+            "description": "A JSON object of a single deleted subscription"
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Auth token is invalid"
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Unauthorized to perform operation"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Resource does not exist"
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Unexpected error occurred"
+          }
+        },
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "summary": "Fetches a deleted subscription by id"
+      },
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/id"
+        }
+      ]
     },
     "/api/accounts_mgmt/v1/errors": {
       "get": {
@@ -7396,7 +8313,7 @@
             "Bearer": []
           }
         ],
-        "summary": "Get subscription labels by label key"
+        "summary": "Get organization labels by label key"
       },
       "parameters": [
         {
@@ -8351,6 +9268,12 @@
           "$ref": "#/components/parameters/search"
         },
         {
+          "$ref": "#/components/parameters/page"
+        },
+        {
+          "$ref": "#/components/parameters/size"
+        },
+        {
           "$ref": "#/components/parameters/fetchRelatedResources"
         },
         {
@@ -9003,6 +9926,99 @@
         }
       ]
     },
+    "/api/accounts_mgmt/v1/quota_authorizations": {
+      "post": {
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/QuotaAuthorizationRequest"
+              }
+            }
+          },
+          "description": "User data and intention",
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/QuotaAuthorizationResponse"
+                }
+              }
+            },
+            "description": "The authorization action was successful"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Validation errors occurred"
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Auth token is invalid"
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Unauthorized to perform operation"
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "AMS subscription exists but is associated with another account"
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "The limits for this subscription are exceeded."
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Other cluster authorization error"
+          }
+        },
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "summary": "Authorizes a user to consume or release a single quantity of quota"
+      }
+    },
     "/api/accounts_mgmt/v1/quota_cost": {
       "get": {
         "responses": {
@@ -9047,6 +10063,12 @@
       "parameters": [
         {
           "$ref": "#/components/parameters/search"
+        },
+        {
+          "$ref": "#/components/parameters/page"
+        },
+        {
+          "$ref": "#/components/parameters/size"
         },
         {
           "$ref": "#/components/parameters/fetchRelatedResources"
@@ -10642,6 +11664,12 @@
         "parameters": [
           {
             "$ref": "#/components/parameters/search"
+          },
+          {
+            "$ref": "#/components/parameters/page"
+          },
+          {
+            "$ref": "#/components/parameters/size"
           }
         ],
         "responses": {

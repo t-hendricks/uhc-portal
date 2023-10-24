@@ -8,8 +8,8 @@
 export enum BillingModel {
   MARKETPLACE = 'marketplace',
   MARKETPLACE_AWS = 'marketplace-aws',
+  MARKETPLACE_GCP = 'marketplace-gcp',
   MARKETPLACE_RHM = 'marketplace-rhm',
   MARKETPLACE_AZURE = 'marketplace-azure',
-  MARKETPLACE_GCP = 'marketplace-gcp',
   STANDARD = 'standard',
 }

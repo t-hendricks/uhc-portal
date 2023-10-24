@@ -8,6 +8,7 @@ export type CloudResource = ObjectReference & {
   active?: boolean;
   category?: string;
   category_pretty?: string;
+  ccs_only?: boolean;
   cloud_provider?: string;
   cpu_cores?: number;
   created_at?: string;

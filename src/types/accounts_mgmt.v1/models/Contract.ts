@@ -2,10 +2,10 @@
 /* tslint:disable */
 /* eslint-disable */
 
-import { ContractDimension } from './ContractDimension';
+import type { ContractDimension } from './ContractDimension';
 
 export type Contract = {
-  dimensions: Array<ContractDimension>;
-  end_date: string;
-  start_date: string;
+  dimensions?: Array<ContractDimension>;
+  end_date?: string;
+  start_date?: string;
 };

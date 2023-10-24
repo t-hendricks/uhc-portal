@@ -3,6 +3,6 @@
 /* eslint-disable */
 
 export type ContractDimension = {
-  name: string;
-  value: number;
+  name?: string;
+  value?: string;
 };
