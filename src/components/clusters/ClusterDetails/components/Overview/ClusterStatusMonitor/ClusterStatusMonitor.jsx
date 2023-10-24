@@ -238,7 +238,7 @@ class clusterStatusMonitor extends React.Component {
                   <Tr>
                     <Th />
                     {columns.map((column) => (
-                      <Th>{column.title}</Th>
+                      <Th key={column.title}>{column.title}</Th>
                     ))}
                   </Tr>
                 </Thead>

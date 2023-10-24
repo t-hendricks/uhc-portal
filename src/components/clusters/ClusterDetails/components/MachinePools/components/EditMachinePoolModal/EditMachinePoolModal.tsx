@@ -187,7 +187,7 @@ const EditMachinePoolModal = ({
                   onClick={submitForm}
                   isLoading={isSubmitting}
                   className="pf-u-mr-md"
-                  data-testId="submit-btn"
+                  data-testid="submit-btn"
                 >
                   {isEdit ? 'Save' : 'Add machine pool'}
                 </Button>
@@ -195,7 +195,7 @@ const EditMachinePoolModal = ({
                   variant="secondary"
                   isDisabled={isSubmitting}
                   onClick={onClose}
-                  data-testId="cancel-btn"
+                  data-testid="cancel-btn"
                 >
                   Cancel
                 </Button>
