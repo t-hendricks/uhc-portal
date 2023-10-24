@@ -29,6 +29,8 @@ import RosaHandsOnContactSupport from './RosaHandsOnContactSupport';
 import { DemoExperienceStatusEnum } from './DemoExperienceModels';
 import { AugmentedDemoExperience } from './augmentedModelTypes';
 
+const cardId = 'rosa-handson-main-card';
+
 const CheckListItem = ({
   children,
   popoverContent,
@@ -47,7 +49,13 @@ const CheckListItem = ({
       {popoverContent && (
         <>
           &nbsp;
-          <Popover bodyContent={popoverContent} headerContent={popoverHeader} maxWidth="40rem">
+          <Popover
+            bodyContent={popoverContent}
+            headerContent={popoverHeader}
+            maxWidth="40rem"
+            // append to inner element instead of body, to enable Contact support to open intercom
+            appendTo={() => document.getElementById(cardId) as HTMLElement}
+          >
             <Button icon={<HelpIcon />} variant="link" isInline />
           </Popover>
         </>
@@ -57,7 +65,7 @@ const CheckListItem = ({
 );
 
 const DefaultCardBody = ({ demoExperience }: { demoExperience: AugmentedDemoExperience }) => (
-  <List isPlain>
+  <List isPlain id={cardId}>
     <CheckListItem
       popoverContent={
         <>
