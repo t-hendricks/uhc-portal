@@ -1,10 +1,5 @@
 .cluster-log {
   .markdown {
-    a[target="_blank"]::after {
-      font-family: "Font Awesome 5 Free", serif;
-      font-weight: 900;
-      content: ' \f35d'
-    }
     ul {
       list-style: disc;
       padding-top: var(--pf-global--spacer--sm);
