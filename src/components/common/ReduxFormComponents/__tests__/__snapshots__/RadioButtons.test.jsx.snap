@@ -12,6 +12,7 @@ exports[`<RadioButtons /> should render - basic 1`] = `
       <Radio
         aria-label="Option 1"
         className="test-classname"
+        data-testid="test-radio-buttons-option-1"
         id="test-radio-buttons-option-1"
         isChecked={false}
         isDisabled={false}
@@ -34,6 +35,7 @@ exports[`<RadioButtons /> should render - basic 1`] = `
       <Radio
         aria-label="the default"
         className="test-classname"
+        data-testid="test-radio-buttons-test-default"
         id="test-radio-buttons-test-default"
         isChecked={false}
         isDisabled={false}
