@@ -20,6 +20,7 @@ export type ClusterAuthorizationRequest = {
   quota_version?: string;
   reserve?: boolean;
   resources?: Array<ReservedResource>;
+  xcm_id?: string;
 };
 
 export namespace ClusterAuthorizationRequest {

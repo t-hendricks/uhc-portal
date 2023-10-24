@@ -35,7 +35,7 @@ export type STS = {
    */
   managed_policies?: boolean;
   /**
-   * Registered Oidc Config, if available holds information related to the oidc config
+   * Registered Oidc Config, if available holds information related to the oidc config.
    */
   oidc_config?: OidcConfig;
   /**

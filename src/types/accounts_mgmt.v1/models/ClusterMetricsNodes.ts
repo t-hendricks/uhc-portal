@@ -3,6 +3,7 @@
 /* eslint-disable */
 
 export type ClusterMetricsNodes = {
+  arch?: string;
   compute?: number;
   infra?: number;
   master?: number;

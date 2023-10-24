@@ -11,6 +11,10 @@ export type GCPNetwork = {
    */
   vpc_name?: string;
   /**
+   * The name of the host project where the shared VPC exists.
+   */
+  vpc_project_id?: string;
+  /**
    * Compute subnet used by the cluster.
    */
   compute_subnet?: string;
