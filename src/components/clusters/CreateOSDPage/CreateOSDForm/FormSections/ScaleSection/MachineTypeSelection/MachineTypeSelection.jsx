@@ -5,12 +5,21 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { FormGroup, Select, SelectGroup, SelectOption, Spinner } from '@patternfly/react-core';
+import {
+  FormGroup,
+  Select,
+  SelectGroup,
+  SelectOption,
+  Spinner,
+  Alert,
+  AlertVariant,
+} from '@patternfly/react-core';
 
 import ErrorBox from '../../../../../../common/ErrorBox';
 import PopoverHint from '../../../../../../common/PopoverHint';
 import { humanizeValueWithUnit } from '../../../../../../../common/units';
 import { noMachineTypes } from '../../../../../../../common/helpers';
+import ExternalLink from '../../../../../../common/ExternalLink';
 import {
   availableClustersFromQuota,
   availableNodesFromQuota,
@@ -233,7 +242,13 @@ const MachineTypeSelection = ({
 
   if (isDataReady()) {
     if (filteredMachineTypes.length === 0) {
-      return <div>{noMachineTypes}</div>;
+      return (
+        <Alert variant={AlertVariant.danger} isInline title={noMachineTypes}>
+          <ExternalLink href="https://cloud.redhat.com/products/dedicated/contact/">
+            Contact sales to purchase additional quota.
+          </ExternalLink>
+        </Alert>
+      );
     }
 
     return (
