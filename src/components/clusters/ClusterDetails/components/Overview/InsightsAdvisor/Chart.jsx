@@ -19,9 +19,9 @@ const Chart = ({ entries, issueCount, externalId }) => (
       y: v,
     }))}
     title={`${issueCount}`}
-    titleComponent={<InsightsTitleComponent />}
+    titleComponent={<InsightsTitleComponent style={{}} />}
     subTitle={`Total ${issueCount === 1 ? 'issue' : 'issues'}`}
-    subTitleComponent={<InsightsSubtitleComponent externalId={externalId} />}
+    subTitleComponent={<InsightsSubtitleComponent externalId={externalId} style={{}} />}
     legendData={entries.map(([k, v]) => ({ name: `${v} ${riskLabels[k]}` }))}
     legendOrientation="vertical"
     legendPosition="right"
@@ -36,7 +36,7 @@ const Chart = ({ entries, issueCount, externalId }) => (
           id: k,
           value: v,
         }))}
-        labelComponent={<InsightsLabelComponent externalId={externalId} />}
+        labelComponent={<InsightsLabelComponent externalId={externalId} style={{}} />}
         dataComponent={<InsightsLegendIconComponent />}
         x={200}
       />

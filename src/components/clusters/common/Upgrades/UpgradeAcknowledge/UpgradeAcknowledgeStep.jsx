@@ -45,8 +45,9 @@ const UpgradeAcknowledgeStep = (props) => {
           1. Review and prevent update issues
         </Title>
         <ul className="wizard-step-body">
-          {unmetAcknowledgements.map((ack) => (
-            <li data-testid="unmetAcknowledgement">
+          {unmetAcknowledgements.map((ack, index) => (
+            // eslint-disable-next-line react/no-array-index-key
+            <li key={`ack-${index}`} data-testid="unmetAcknowledgement">
               {ack.description ? <p>{ack.description}</p> : null}
               <Alert
                 id="upgrade-ack-alert"
