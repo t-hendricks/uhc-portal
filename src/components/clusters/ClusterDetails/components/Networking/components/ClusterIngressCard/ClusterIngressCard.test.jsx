@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { mockRestrictedEnv, render, screen } from '../../../../../../../testUtils';
+import { mockRestrictedEnv, withState, screen } from '../../../../../../../testUtils';
 import ClusterIngressCard from './ClusterIngressCard';
 
 describe('<ClusterIngressCard />', () => {
@@ -30,18 +30,18 @@ describe('<ClusterIngressCard />', () => {
 
   describe('in default environment', () => {
     it('renders footer', async () => {
-      render(<ClusterIngressCard {...defaultProps} />, {}, loadedState);
+      withState(loadedState).render(<ClusterIngressCard {...defaultProps} />);
       expect(screen.queryByText('Edit cluster ingress')).toBeInTheDocument();
     });
 
     it('renders the API as public when isApiPrivate=false', async () => {
-      render(<ClusterIngressCard {...defaultProps} isApiPrivate={false} />, {}, loadedState);
+      withState(loadedState).render(<ClusterIngressCard {...defaultProps} isApiPrivate={false} />);
       expect(screen.queryByText('Public API')).toBeInTheDocument();
       expect(screen.queryByText('Private API')).not.toBeInTheDocument();
     });
 
     it('renders the API as private when isApiPrivate=true', async () => {
-      render(<ClusterIngressCard {...defaultProps} isApiPrivate />, {}, loadedState);
+      withState(loadedState).render(<ClusterIngressCard {...defaultProps} isApiPrivate />);
       expect(screen.queryByText('Public API')).not.toBeInTheDocument();
       expect(screen.queryByText('Private API')).toBeInTheDocument();
     });
@@ -59,15 +59,13 @@ describe('<ClusterIngressCard />', () => {
     });
 
     it('does not render footer', async () => {
-      render(<ClusterIngressCard {...defaultProps} />, {}, loadedState);
+      withState(loadedState).render(<ClusterIngressCard {...defaultProps} />);
       expect(screen.queryByText('Edit cluster ingress')).not.toBeInTheDocument();
     });
 
     it('renders the API as private in any case', async () => {
-      const { rerender } = render(
+      const { rerender } = withState(loadedState).render(
         <ClusterIngressCard {...defaultProps} isApiPrivate={false} />,
-        {},
-        loadedState,
       );
       expect(screen.queryByText('Private API')).toBeInTheDocument();
 
