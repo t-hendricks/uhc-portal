@@ -18,6 +18,8 @@ import {
   ToolbarItem,
   Title,
 } from '@patternfly/react-core';
+import { Link } from 'react-router-dom';
+
 import { CheckIcon, HelpIcon } from '@patternfly/react-icons';
 // eslint-disable-next-line camelcase
 import { global_link_Color_dark } from '@patternfly/react-tokens';
@@ -25,7 +27,6 @@ import RosaHandsOnIcon from './RosaHandsOnIcons/RosaHandsOnIcon';
 import ExternalLink from '../common/ExternalLink';
 import { MAX_DURATION, rosaHandsOnLinks } from './constants';
 
-import RosaHandsOnContactSupport from './RosaHandsOnContactSupport';
 import { DemoExperienceStatusEnum } from './DemoExperienceModels';
 import { AugmentedDemoExperience } from './augmentedModelTypes';
 
@@ -70,7 +71,7 @@ const DefaultCardBody = ({ demoExperience }: { demoExperience: AugmentedDemoExpe
       popoverContent={
         <>
           You may launch a demo up to <strong>{demoExperience.quota.limit} times</strong> total. If
-          you have questions, you can <RosaHandsOnContactSupport /> or join the{' '}
+          you have questions, you can join the{' '}
           <ExternalLink href={rosaHandsOnLinks.slackChannel}>
             ROSA community Slack channel
           </ExternalLink>
@@ -139,9 +140,13 @@ const RosaHandsOnGetStartedCard = ({
       break;
     case 'quota-exceeded':
       btn = (
-        <ExternalLink variant="primary" href={rosaHandsOnLinks.getStarted} noIcon isButton>
+        <Button
+          variant="primary"
+          href={rosaHandsOnLinks.getStarted}
+          component={(props) => <Link {...props} to={rosaHandsOnLinks.getStarted} />}
+        >
           Create a ROSA cluster
-        </ExternalLink>
+        </Button>
       );
       title = 'Take the next step. Create your own ROSA Cluster!';
       body = (
