@@ -136,8 +136,14 @@ export function OfferingCard(props: OfferingCardProps) {
       offeringCardDocLink = (
         <Button
           variant={ButtonVariant.link}
-          component={() => <Link to="/sandbox">View details</Link>}
-        />
+          component={() => (
+            <ExternalLink noTarget noIcon href="/openshift/sandbox">
+              View details
+            </ExternalLink>
+          )}
+        >
+          View details
+        </Button>
       );
       cardLogo = <RHLogo className="offering-logo" />;
       break;
