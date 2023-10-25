@@ -236,7 +236,7 @@ const getAddMachinePoolDisabledReason = (cluster) => {
   if (isReadOnly) {
     return 'This operation is not available during maintenance.';
   }
-  if (isHibernating(cluster.state)) {
+  if (isHibernating(cluster)) {
     return 'This operation is not available while cluster is hibernating.';
   }
   if (!cluster.canEdit) {

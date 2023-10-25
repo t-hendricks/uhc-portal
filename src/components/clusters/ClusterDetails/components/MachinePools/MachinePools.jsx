@@ -217,8 +217,7 @@ class MachinePools extends React.Component {
     const isReadOnly = cluster?.status?.configuration_mode === 'read_only';
     const readOnlyReason = isReadOnly && 'This operation is not available during maintenance';
     const hibernatingReason =
-      isHibernating(cluster.state) &&
-      'This operation is not available while cluster is hibernating';
+      isHibernating(cluster) && 'This operation is not available while cluster is hibernating';
     const canNotCreateReason =
       !machinePoolsActions.create &&
       'You do not have permission to add a machine pool. Only cluster owners, cluster editors, machine pool editors and Organization Administrators can add machine pools.';

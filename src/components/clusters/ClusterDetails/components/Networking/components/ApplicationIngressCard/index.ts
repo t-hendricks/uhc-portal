@@ -10,7 +10,7 @@ import {
   canConfigureDayTwoManagedIngress,
   canConfigureLoadBalancer,
 } from '~/components/clusters/wizards/rosa/constants';
-import { isHibernating } from '../../../../../common/clusterStates';
+import { isHibernating } from '~/components/clusters/common/clusterStates';
 import { openModal } from '../../../../../../common/Modal/ModalActions';
 import ApplicationIngressCard from './ApplicationIngressCard';
 import NetworkingSelector from '../../NetworkingSelector';
@@ -27,7 +27,7 @@ const mapStateToProps = (state: GlobalState) => {
 
   const isReadOnly = cluster?.status?.configuration_mode === 'read_only';
   const isSTSEnabled = cluster?.aws?.sts?.enabled === true;
-  const clusterHibernating = isHibernating(cluster.state);
+  const clusterHibernating = isHibernating(cluster);
   const clusterVersion = cluster?.openshift_version || cluster?.version?.raw_id || '';
   const hasSufficientIngressEditVersion =
     !isHypershift && canConfigureDayTwoManagedIngress(clusterVersion);

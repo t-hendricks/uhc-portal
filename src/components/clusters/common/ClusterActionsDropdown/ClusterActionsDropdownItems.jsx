@@ -50,7 +50,7 @@ function actionResolver(
   const isClusterReady = cluster.state === clusterStates.READY;
   // Superset of more specific uninstallingMessage.
   const notReadyMessage = !isClusterReady && <span>This cluster is not ready</span>;
-  const isClusterInHibernatingProcess = isHibernating(cluster.state);
+  const isClusterInHibernatingProcess = isHibernating(cluster);
   const hibernatingMessage =
     isClusterInHibernatingProcess &&
     (cluster.state === clusterStates.RESUMING ? (

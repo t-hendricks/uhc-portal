@@ -28,8 +28,8 @@ const mapStateToProps = (state) => {
   const { canEdit } = cluster;
   const isReadOnly = cluster?.status?.configuration_mode === 'read_only';
   const isSTSEnabled = cluster?.aws?.sts?.enabled === true;
-  const clusterHibernating = isHibernating(cluster.state);
-  const showConsoleLink = consoleURL && !isOffline(cluster.state);
+  const clusterHibernating = isHibernating(cluster);
+  const showConsoleLink = consoleURL && !isOffline(cluster);
 
   return {
     consoleURL,

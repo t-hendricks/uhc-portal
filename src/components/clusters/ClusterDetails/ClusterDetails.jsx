@@ -347,7 +347,7 @@ class ClusterDetails extends Component {
       this.setState({ selectedTab: tabId });
     };
 
-    const clusterHibernating = isHibernating(cluster.state);
+    const clusterHibernating = isHibernating(cluster);
     const isArchived =
       get(cluster, 'subscription.status', false) === subscriptionStatuses.ARCHIVED ||
       get(cluster, 'subscription.status', false) === subscriptionStatuses.DEPROVISIONED;

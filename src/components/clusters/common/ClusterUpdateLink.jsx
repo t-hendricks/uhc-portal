@@ -38,7 +38,7 @@ const ClusterUpdateLink = ({ cluster, openModal, hideOSDUpdates }) => {
   // or OCP clusters that have available updates
   if (
     (cluster.managed &&
-      (!cluster.canEdit || !osdUpgradeAvailable || isHibernating(cluster.state) || isStale)) ||
+      (!cluster.canEdit || !osdUpgradeAvailable || isHibernating(cluster) || isStale)) ||
     (!cluster.managed && (!upgrade.available || isStale))
   ) {
     return null;

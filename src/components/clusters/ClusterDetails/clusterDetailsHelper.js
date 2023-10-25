@@ -37,7 +37,7 @@ const isArchivedSubscription = (cluster) => {
 const hasValidStatusForActions = (cluster, { needsConsoleUrl }) =>
   cluster.managed &&
   (!needsConsoleUrl || get(cluster, 'console.url')) &&
-  (cluster.state === clusterStates.READY || isHibernating(cluster.state)) &&
+  (cluster.state === clusterStates.READY || isHibernating(cluster)) &&
   !isArchivedSubscription(cluster);
 
 const isReadyForRoleAccessActions = (cluster) =>
