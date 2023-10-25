@@ -1,37 +1,86 @@
-import React from 'react';
+import React, { ReactElement, useMemo } from 'react';
 import { Field } from 'formik';
 
-import { Alert, GridItem, Title } from '@patternfly/react-core';
+import { Alert, AlertActionLink, GridItem, Title } from '@patternfly/react-core';
 
 import PopoverHint from '~/components/common/PopoverHint';
 import ExternalLink from '~/components/common/ExternalLink';
 import { required, validateGCPHostProjectId, validateGCPSubnet } from '~/common/validators';
 import links from '~/common/installLinks.mjs';
 import { useFormState } from '~/components/clusters/wizards/hooks';
-import { FieldId } from '~/components/clusters/wizards/osd/constants';
+import { FieldId, StepId } from '~/components/clusters/wizards/osd/constants';
+import { versionComparator } from '~/common/versionComparator';
+import { useWizardContext } from '@patternfly/react-core/next';
 import { GcpVpcNameSelectField } from './GcpVpcNameSelectField';
 import { GcpVpcSubnetSelectField } from './GcpVpcSubnetSelectField';
 import { CheckboxField, TextInputField } from '../../../form';
 
 export const GcpVpcSettings = () => {
   const {
-    values: { [FieldId.InstallToSharedVpc]: installToSharedVpc },
+    values: {
+      [FieldId.ClusterVersion]: clusterVersion,
+      [FieldId.InstallToSharedVpc]: installToSharedVpc,
+    },
     getFieldProps,
     getFieldMeta,
     setFieldValue,
   } = useFormState();
 
+  const { goToStepById } = useWizardContext();
+
   const onInstallIntoSharedVPCchange = (checked: boolean) => {
     setFieldValue(FieldId.InstallToSharedVpc, checked);
   };
 
+  const hostProjectId = useMemo<ReactElement | null>(() => {
+    if (installToSharedVpc) {
+      if (versionComparator(clusterVersion?.raw_id, '4.13.15') === -1) {
+        return (
+          <div className="pf-u-mt-md">
+            <Alert
+              variant="danger"
+              isInline
+              title="You must use OpenShift version 4.13.15 or above."
+              actionLinks={
+                <>
+                  <AlertActionLink onClick={() => goToStepById(StepId.ClusterSettingsDetails)}>
+                    Change version
+                  </AlertActionLink>
+                </>
+              }
+            />
+          </div>
+        );
+      }
+      return (
+        <div className="pf-u-mt-md">
+          <TextInputField
+            name={FieldId.SharedHostProjectID}
+            label="Host project ID"
+            validate={validateGCPHostProjectId}
+          />
+
+          <div className="pf-u-mt-md">
+            <Alert
+              variant="info"
+              isInline
+              title="NOTE: To install a cluster into a shared VPC, the shared VPC administrator must enable a project as a
+              host project in their Google Cloud console. Then you can attach service projects to the host project."
+            />
+          </div>
+        </div>
+      );
+    }
+    return null;
+  }, [clusterVersion?.raw_id, goToStepById, installToSharedVpc]);
+
   return (
     <>
-      <GridItem span={6}>
+      <GridItem span={8}>
         <Title headingLevel="h4" size="md">
           GCP shared VPC
         </Title>
-        <div className="pf-u-ml-sm pf-u-mt-md  pf-u-mb-lg">
+        <div className="pf-u-mt-md  pf-u-mb-lg">
           <CheckboxField
             name={FieldId.InstallToSharedVpc}
             label="Install into GCP shared VPC"
@@ -48,25 +97,7 @@ export const GcpVpcSettings = () => {
             }
             input={{ onChange: onInstallIntoSharedVPCchange }}
           />
-          {installToSharedVpc && (
-            <div className="pf-u-ml-lg pf-u-mt-md">
-              <TextInputField
-                name={FieldId.SharedHostProjectID}
-                label="Host project ID"
-                validate={validateGCPHostProjectId}
-              />
-
-              <div className="pf-u-mt-md">
-                <Alert
-                  variant="info"
-                  isInline
-                  title="NOTE: To install a cluster into a shared VPC, the shared VPC administrator must enable a project as
-                  a host project in their Google Cloud console. Then you can attach service projects to the host
-                  project."
-                />
-              </div>
-            </div>
-          )}
+          {hostProjectId}
         </div>
       </GridItem>
 
@@ -92,13 +123,15 @@ export const GcpVpcSettings = () => {
             To install into an existing VPC, you need to ensure that your VPC is configured with a
             control plane subnet and compute subnet.
           </p>
-          <div className="pf-u-mt-md  pf-u-mb-lg">
-            <Alert
-              variant="info"
-              isInline
-              title="You'll need to match these VPC subnets when you define the CIDR ranges."
-            />
-          </div>
+          {!installToSharedVpc && (
+            <div className="pf-u-mt-md  pf-u-mb-lg">
+              <Alert
+                variant="info"
+                isInline
+                title="You'll need to match these VPC subnets when you define the CIDR ranges."
+              />
+            </div>
+          )}
         </div>
       </GridItem>
 
@@ -173,6 +206,18 @@ export const GcpVpcSettings = () => {
           />
         )}
       </GridItem>
+
+      {installToSharedVpc && (
+        <GridItem span={9}>
+          <div className="pf-u-mt-md  pf-u-mb-lg">
+            <Alert
+              variant="info"
+              isInline
+              title="For successful installation, be sure your Host project ID, Existing VPC name, Control plane subnet name, and Compute subnet name are correct."
+            />
+          </div>
+        </GridItem>
+      )}
     </>
   );
 };
