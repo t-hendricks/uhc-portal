@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Formik } from 'formik';
 
-import { fireEvent, render, screen } from '~/testUtils';
+import { withState, screen, fireEvent } from '~/testUtils';
 import { Version } from '~/types/clusters_mgmt.v1';
 import clusterService from '~/services/clusterService';
 import { billingModels } from '~/common/subscriptionTypes';
@@ -80,12 +80,10 @@ describe('<VersionSelectField />', () => {
   };
 
   it('to call clusterService.getInstallableVersions with: isRosa false, isMarketplaceGcp false', async () => {
-    render(
+    withState(notLoadedState).render(
       <Formik initialValues={defaultValues} onSubmit={() => {}}>
         <VersionSelectField {...defaultProps} />
       </Formik>,
-      {},
-      notLoadedState,
     );
 
     expect(getInstallableVersionsSpy).toHaveBeenCalledWith(false, false, false);
@@ -96,24 +94,20 @@ describe('<VersionSelectField />', () => {
       ...initialValues,
       [FieldId.BillingModel]: billingModels.MARKETPLACE_GCP,
     };
-    render(
+    withState(notLoadedState).render(
       <Formik initialValues={marketplaceGcpValues} onSubmit={() => {}}>
         <VersionSelectField {...defaultProps} />
       </Formik>,
-      {},
-      notLoadedState,
     );
 
     expect(getInstallableVersionsSpy).toHaveBeenCalledWith(false, true, false);
   });
 
   it('to shows the right default version', async () => {
-    render(
+    withState(loadedState).render(
       <Formik initialValues={defaultValues} onSubmit={() => {}}>
         <VersionSelectField {...defaultProps} />
       </Formik>,
-      {},
-      loadedState,
     );
 
     expect(screen.queryByText('4.13.1')).not.toBeInTheDocument();
@@ -121,12 +115,10 @@ describe('<VersionSelectField />', () => {
   });
 
   it('to open the toggle', async () => {
-    const { container } = render(
+    const { container } = withState(loadedState).render(
       <Formik initialValues={defaultValues} onSubmit={() => {}}>
         <VersionSelectField {...defaultProps} />
       </Formik>,
-      {},
-      loadedState,
     );
 
     expect(screen.queryByText('Version (Google Cloud Marketplace enabled)')).toBeInTheDocument();

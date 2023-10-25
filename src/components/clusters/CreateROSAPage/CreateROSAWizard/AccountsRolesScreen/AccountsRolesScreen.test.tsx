@@ -1,5 +1,5 @@
 import React from 'react';
-import { checkAccessibility, insightsMock, render, screen } from '~/testUtils';
+import { withState, checkAccessibility, insightsMock, screen } from '~/testUtils';
 import { MemoryRouter } from 'react-router-dom';
 import wizardConnector from '~/components/clusters/CreateOSDPage/CreateOSDWizard/WizardConnector';
 import { normalizeSTSUsersByAWSAccounts } from '~/components/clusters/CreateROSAPage/CreateROSAWizard/rosaActions';
@@ -30,16 +30,14 @@ describe('<AccountsRolesScreen />', () => {
   const ConnectedAccountsRolesScreen = wizardConnector(AccountsRolesScreen);
 
   it('is accessible', async () => {
-    const { container } = render(
+    const { container } = withState({}).render(
       <ConnectedAccountsRolesScreen {...accountRolesScreenProps} />,
-      {},
-      {},
     );
     await checkAccessibility(container);
   });
 
   it('does not show the welcome and prerequisites sections for users with HyperShift enabled', () => {
-    render(<ConnectedAccountsRolesScreen {...accountRolesScreenProps} />, {}, {});
+    withState({}).render(<ConnectedAccountsRolesScreen {...accountRolesScreenProps} />);
 
     expect(
       screen.queryByText('Welcome to Red Hat OpenShift Service on AWS (ROSA)'),
@@ -49,12 +47,10 @@ describe('<AccountsRolesScreen />', () => {
 
   it('shows the welcome and prerequisites sections for users with HyperShift disabled', () => {
     const props = { ...accountRolesScreenProps, isHypershiftEnabled: false };
-    render(
+    withState({}).render(
       <MemoryRouter>
         <ConnectedAccountsRolesScreen {...props} />
       </MemoryRouter>,
-      {},
-      {},
     );
 
     expect(
