@@ -96,7 +96,7 @@ function AccessControl({ cluster, history, refreshEvent = null }) {
               history={history}
               clusterUrls={clusterUrls}
               idpActions={cluster.idpActions}
-              clusterHibernating={isHibernating(cluster.state)}
+              clusterHibernating={isHibernating(cluster)}
               isReadOnly={isReadOnly}
             />
           </Tab>
@@ -108,7 +108,7 @@ function AccessControl({ cluster, history, refreshEvent = null }) {
           >
             <UsersSection
               cluster={cluster}
-              clusterHibernating={isHibernating(cluster.state)}
+              clusterHibernating={isHibernating(cluster)}
               isReadOnly={isReadOnly}
             />
           </Tab>
@@ -133,7 +133,7 @@ function AccessControl({ cluster, history, refreshEvent = null }) {
             <NetworkSelfServiceSection
               clusterID={get(cluster, 'id')}
               canEdit={cluster.canEdit}
-              clusterHibernating={isHibernating(cluster.state)}
+              clusterHibernating={isHibernating(cluster)}
               isReadOnly={isReadOnly}
             />
           </Tab>

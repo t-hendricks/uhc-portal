@@ -626,6 +626,7 @@ const OCPClusterDetails = {
         master: 3,
         compute: 4,
       },
+      upgrade: {},
     },
     state: 'ready',
     flavour: {
@@ -775,6 +776,7 @@ const AROClusterDetails = {
         master: 3,
         compute: 4,
       },
+      upgrade: {},
     },
     state: 'ready',
     flavour: {

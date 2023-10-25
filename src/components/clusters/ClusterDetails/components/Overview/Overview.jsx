@@ -104,7 +104,7 @@ class Overview extends React.Component {
       !isDeprovisioned &&
       !isArchived;
     const showResourceUsage =
-      !isHibernating(cluster.state) &&
+      !isHibernating(cluster) &&
       !isAssistedInstallSubscription(cluster.subscription) &&
       !shouldShowLogs(cluster) &&
       !isDeprovisioned &&
@@ -122,10 +122,14 @@ class Overview extends React.Component {
     const showDetailsCard = !cluster.aiCluster || !isUninstalledAICluster(cluster);
     const showSubscriptionSettings = !isDeprovisioned && !isArchived;
 
-    if (isHibernating(cluster.state)) {
+    if (isHibernating(cluster)) {
       topCard = <HibernatingClusterCard cluster={cluster} openModal={openModal} />;
-    } else if (!isAssistedInstallSubscription(cluster.subscription) && shouldShowLogs(cluster)) {
-      topCard = <ClusterProgressCard cluster={cluster} refresh={refresh} history={history} />;
+    } else if (
+      cluster &&
+      !isAssistedInstallSubscription(cluster.subscription) &&
+      shouldShowLogs(cluster)
+    ) {
+      topCard = <ClusterProgressCard cluster={cluster} />;
     }
 
     const resourceUsage = (

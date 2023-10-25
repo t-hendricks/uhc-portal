@@ -106,7 +106,7 @@ function ClusterDetailsTop(props) {
   );
 
   let launchConsole;
-  if (consoleURL && !isOffline(cluster.state)) {
+  if (consoleURL && !isOffline(cluster)) {
     launchConsole = (
       <a
         href={consoleURL}

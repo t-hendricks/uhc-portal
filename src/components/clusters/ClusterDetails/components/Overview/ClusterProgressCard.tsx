@@ -1,34 +1,32 @@
 import React from 'react';
 import {
-  Text,
   Card,
-  Title,
-  Spinner,
   CardBody,
   CardTitle,
+  Spinner,
+  Text,
   TextVariants,
+  Title,
 } from '@patternfly/react-core';
 import ExclamationCircleIcon from '@patternfly/react-icons/dist/js/icons/exclamation-circle-icon';
 import { global_danger_color_100 as dangerColor } from '@patternfly/react-tokens';
 
-import { Cluster } from '~/types/clusters_mgmt.v1';
-import clusterStates, {
-  isWaitingROSAManualMode,
-  isWaitingHypershiftCluster,
-} from '~/components/clusters/common/clusterStates';
-import UninstallProgress from '~/components/clusters/common/UninstallProgress';
-import InstallProgress from '~/components/clusters/common/InstallProgress/InstallProgress';
 import DownloadOcCliButton from '~/components/clusters/common/InstallProgress/DownloadOcCliButton';
-import InstallationLogView from './InstallationLogView';
+import InstallProgress from '~/components/clusters/common/InstallProgress/InstallProgress';
+import UninstallProgress from '~/components/clusters/common/UninstallProgress';
+import clusterStates, {
+  isWaitingHypershiftCluster,
+  isWaitingROSAManualMode,
+} from '~/components/clusters/common/clusterStates';
+import { ClusterFromSubscription } from '~/types/types';
 import { isHypershiftCluster } from '../../clusterDetailsHelper';
+import InstallationLogView from './InstallationLogView';
 
 interface ClusterProgressCardProps {
-  cluster?: Cluster;
-  history: Object;
-  refresh?: Function;
+  cluster: ClusterFromSubscription;
 }
 
-const ClusterProgressCard = ({ cluster = {}, history, refresh }: ClusterProgressCardProps) => {
+const ClusterProgressCard = ({ cluster }: ClusterProgressCardProps) => {
   const isError = cluster.state === clusterStates.ERROR;
   const isPending = cluster.state === clusterStates.PENDING;
   const isValidating = cluster.state === clusterStates.VALIDATING;
