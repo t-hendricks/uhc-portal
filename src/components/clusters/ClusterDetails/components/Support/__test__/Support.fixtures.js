@@ -121,6 +121,8 @@ const baseProps = {
     pending: false,
     subscriptionID: '1iGW3xYbKZAEdZLi207rcA1l0ob',
   },
+  clusterUUID: '1',
+  product: 'OSD',
   supportCases: {
     cases: [],
     pending: false,
@@ -141,6 +143,10 @@ const baseProps = {
   addNotificationContact: jest.fn(),
   getSupportCases: jest.fn(),
   clusterCreator,
+  version: {
+    id: 'openshift-v4.12.4',
+    raw_id: '4.12.4',
+  },
 };
 
 export {

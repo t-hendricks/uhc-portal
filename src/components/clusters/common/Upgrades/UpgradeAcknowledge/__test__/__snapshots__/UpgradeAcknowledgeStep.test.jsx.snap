@@ -65,6 +65,7 @@ exports[`<UpgradeAcknowledgeStep> should render correctly on load 1`] = `
           >
             <li
               data-testid="unmetAcknowledgement"
+              key="ack-0"
             >
               <p>
                 my upgrade gate
@@ -182,6 +183,7 @@ exports[`<UpgradeAcknowledgeStep> should render correctly on load 1`] = `
             </li>
             <li
               data-testid="unmetAcknowledgement"
+              key="ack-1"
             >
               <p>
                 my other upgrade gate

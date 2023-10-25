@@ -337,7 +337,9 @@ VersionSelection.propTypes = {
     value: PropTypes.string,
     onChange: PropTypes.func,
   }),
-  selectedClusterVersion: PropTypes.string,
+  selectedClusterVersion: PropTypes.shape({
+    raw_id: PropTypes.string,
+  }),
   isRosa: PropTypes.bool,
   rosaMaxOSVersion: PropTypes.string,
   getInstallableVersions: PropTypes.func.isRequired,

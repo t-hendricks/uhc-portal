@@ -37,6 +37,7 @@ describe('<AddOns />', () => {
         deleteClusterAddOnResponse={deleteClusterAddOnResponse}
         clearClusterAddOnsResponses={clearClusterAddOnsResponses}
         openModal={openModal}
+        isHypershift={false}
       />,
     );
   });

@@ -11,9 +11,10 @@ describe('<AddOnsDrawer />', () => {
   let wrapper;
   const openModal = jest.fn();
   const addClusterAddOn = jest.fn();
+  const updateClusterAddOn = jest.fn();
+  const setAddonsDrawer = jest.fn();
   const addClusterAddOnResponse = {};
   const deleteClusterAddOnResponse = {};
-  const clearClusterAddOnsResponses = {};
   const submitClusterAddOnResponse = {};
   const drawer = {
     open: false,
@@ -36,8 +37,9 @@ describe('<AddOnsDrawer />', () => {
         addClusterAddOn={addClusterAddOn}
         addClusterAddOnResponse={addClusterAddOnResponse}
         deleteClusterAddOnResponse={deleteClusterAddOnResponse}
-        clearClusterAddOnsResponses={clearClusterAddOnsResponses}
+        updateClusterAddOn={updateClusterAddOn}
         submitClusterAddOnResponse={submitClusterAddOnResponse}
+        setAddonsDrawer={setAddonsDrawer}
         drawer={drawer}
       />,
     );
@@ -56,7 +58,7 @@ describe('<AddOnsDrawer />', () => {
   xit('ensure state is set correctly and drawer is expanded when card clicked', () => {
     const activeCard = wrapper.state('activeCard');
     expect(activeCard).toEqual(null);
-    expect(wrapper.state('isDrawerExpaned')).toBeFalsy();
+    expect(wrapper.state('isDrawerExpanded')).toBeFalsy();
 
     wrapper.find('Connect(AddOnsCard)').at(1).simulate('click');
 
