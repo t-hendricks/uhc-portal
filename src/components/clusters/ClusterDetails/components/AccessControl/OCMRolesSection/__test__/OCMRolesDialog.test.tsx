@@ -1,5 +1,5 @@
 import React from 'react';
-import { checkAccessibility, render } from '~/testUtils';
+import { withState, checkAccessibility } from '~/testUtils';
 import modals from '~/components/common/Modal/modals';
 import { knownProducts, ocmRoles } from '~/common/subscriptionTypes';
 import { row } from './OCMRolesDialog.fixture';
@@ -20,10 +20,8 @@ describe('<OCMRolesDialog />', () => {
     submit?: () => void;
     productId?: string;
   }) =>
-    render(
+    withState({ modal: { modalName: modals.OCM_ROLES } }).render(
       <OCMRolesDialog onSubmit={submit || jest.fn()} row={rolesRow} productId={productId} />,
-      {},
-      { modal: { modalName: modals.OCM_ROLES } },
     );
 
   describe('Creation mode', () => {

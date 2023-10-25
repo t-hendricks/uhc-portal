@@ -1,5 +1,5 @@
 import React from 'react';
-import { screen, render, waitFor, checkAccessibility, fireEvent } from '~/testUtils';
+import { screen, waitFor, checkAccessibility, fireEvent, withState } from '~/testUtils';
 import { SubnetSelectField, SubnetSelectFieldProps } from './SubnetSelectField';
 
 describe('SubnetSelectField tests', () => {
@@ -9,15 +9,13 @@ describe('SubnetSelectField tests', () => {
 
   it('select subnet', async () => {
     // render dropdown
-    const { container, user } = render(
-      <SubnetSelectField {...defaultProps} />, // get defaultProps by putting bp at top of SubnetSelectField in dev mode and capturing the properties
-      {},
-      {
-        ccsInquiries: {
-          // get test vpcs data by putting bp at bottom of useAWSVPCInquiry hook in dev mode and and capturing vcps
-          vpcs, // we're pretending that dispatch has already used axios to add vcps to state
-        },
+    const fulfilledState = {
+      ccsInquiries: {
+        vpcs, // we're pretending that dispatch has already used axios to add vcps to state
       },
+    };
+    const { container, user } = withState(fulfilledState).render(
+      <SubnetSelectField {...defaultProps} />,
     );
 
     // click it open
@@ -92,6 +90,7 @@ const defaultProps: SubnetSelectFieldProps = {
   isNewCluster: true,
 };
 
+// get test vpcs data by putting bp at bottom of useAWSVPCInquiry hook in dev mode and and capturing vpcs
 const vpcs = {
   error: false,
   pending: false,

@@ -1,55 +1,100 @@
 import React from 'react';
 import { Provider } from 'react-redux';
-import { createStore, Store } from 'redux';
-import { render, RenderOptions } from '@testing-library/react';
+import { AnyAction, createStore } from 'redux';
+import { act, render, RenderOptions } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import '@testing-library/jest-dom';
 import { MemoryRouter } from 'react-router';
 import { toHaveNoViolations, axe } from 'jest-axe';
 
 import { createBrowserHistory } from 'history';
-import { store } from './redux/store';
+
+import { GlobalState, store as globalStore } from './redux/store';
 import { reduxReducers } from './redux/reducers';
 import * as restrictedEnv from './restrictedEnv';
 
+// Type not exported in the library
+export type UserEventType = ReturnType<typeof userEvent.setup>;
+
+// An extended version of RTL's "custom render()" pattern.
+
 const history = createBrowserHistory();
+const reducer = reduxReducers(history);
 
-export const TestWrapper = ({
-  children,
-  initialStore,
-}: {
-  children: React.ReactNode;
-  initialStore?: Store;
-}) => <Provider store={initialStore || store}>{children}</Provider>;
+interface TestState {
+  store: typeof globalStore;
+  /** Wrapper can be used as component independently of render(), notably for Enzyme. */
+  Wrapper: (props: { children: React.ReactNode }) => React.ReactNode;
+  /** Convenience accessor to redux state. */
+  getState: () => GlobalState;
+  /** Convenience alias to store.dispatch, wrapped with act() to trigger all re-renders. */
+  dispatch: (action: AnyAction) => any;
+  render: (
+    ui: React.ReactElement,
+    options?: RenderOptions,
+  ) => ReturnType<typeof render> & { user: UserEventType };
+}
 
+/** Construct a local redux store + test helpers for it.
+ * A simple use is `{ container } = withState(initialState).render(...);`
+ * but can save `testState = withState(initialState);` and reuse it later.
+ *
+ * Helpers are closures, no need to call as methods, safe to destructure e.g.:
+ * `const { render, dispatch } = withState(initialState);`
+ *
+ * Accepts any subset of state, rest gets filled by reducers initial values.
+ * If not passed a state, uses the global `store` and tries to block dispatch().
+ */
+const withState = (initialState?: any): TestState => {
+  // This could be a class with bound methods but didn't want to require `new withState()`,
+  // and old-school constructor function got too annoying to TypeScript, so plain Object it is.
+
+  const store = initialState ? createStore(reducer, initialState) : globalStore;
+  // TODO: should we enable promiseMiddleware, thunkMiddleware on these stores?
+
+  const Wrapper = ({ children }: { children: React.ReactNode }) => (
+    <Provider store={store}>{children}</Provider>
+  );
+
+  return {
+    store,
+    Wrapper,
+
+    // Our `GlobalState` type is slightly more precise.
+    getState: () => store.getState() as unknown as GlobalState,
+
+    dispatch: (action: AnyAction) => {
+      if (store === globalStore) {
+        throw new Error(
+          'Tests must not dispatch() on global `store`; use `withState(initialState)` to create a local store.',
+        );
+      }
+      act(() => {
+        store.dispatch(action);
+      });
+    },
+
+    render: (ui: React.ReactElement, options?: RenderOptions) => ({
+      ...render(ui, { wrapper: Wrapper, ...options }),
+      user: userEvent.setup(),
+    }),
+  };
+};
+
+/**
+ * Similar to testing-library's render() but provides a redux store.
+ * @param initialState - if given, initialize redux with these values.
+ */
 const renderWithState = (
   ui: React.ReactElement,
   options?: Omit<RenderOptions, 'queries'>,
   initialState?: any, // setting to any because only a partial state structure may be sent
-) => {
-  const newStore = initialState ? createStore(reduxReducers(history), initialState) : store;
-
-  const Wrapper = ({ children }: { children: React.ReactNode }) => (
-    <TestWrapper initialStore={newStore}>{children}</TestWrapper>
-  );
-  const user = userEvent.setup(); // docs recommend to run this before render().
-  return { ...render(ui, { wrapper: Wrapper, ...options }), user };
-};
+) => withState(initialState).render(ui, options);
 
 export * from '@testing-library/react';
 export { default as userEvent } from '@testing-library/user-event';
 
-// Type not exported in the library
-export type UserEventType = {
-  type: (
-    field: HTMLElement,
-    typeValue: string,
-    { initialSelectionStart }: { initialSelectionStart: number },
-  ) => void;
-  clear: (field: HTMLElement) => void;
-};
-
-export { renderWithState as render };
+export { withState, renderWithState as render };
 
 /* ***** Items outside of React Test Library ************ */
 expect.extend(toHaveNoViolations);
