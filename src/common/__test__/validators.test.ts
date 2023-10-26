@@ -1252,6 +1252,11 @@ describe('validateAWSKMSKeyARN', () => {
       'us-east-1',
       undefined,
     ],
+    [
+      'arn:aws-us-gov:kms:us-east-1:111111111111:key/1470a953-a261-4350-850d-2d8d1ef6e82b',
+      'us-east-1',
+      undefined,
+    ],
     ['', 'some-region', 'Field is required.'],
     ['arn:with whitespace', 'some-region', 'Value must not contain whitespaces.'],
     [
