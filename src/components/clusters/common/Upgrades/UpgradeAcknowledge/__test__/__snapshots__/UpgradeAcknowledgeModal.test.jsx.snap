@@ -404,6 +404,7 @@ exports[`<UpgradeAcknowledgeModal > Error is shown for failed y-stream approval 
                             id="pf-modal-part-4"
                           >
                             <ErrorBox
+                              key="err-0"
                               message="Failed to save administrator acknowledgement."
                               response={
                                 Object {
@@ -1037,6 +1038,7 @@ exports[`<UpgradeAcknowledgeModal > Errors are shown for failed gates action 1`]
                             id="pf-modal-part-5"
                           >
                             <ErrorBox
+                              key="err-0"
                               message="Failed to save administrator acknowledgement."
                               response={
                                 Object {
@@ -1125,6 +1127,7 @@ exports[`<UpgradeAcknowledgeModal > Errors are shown for failed gates action 1`]
                               </Alert>
                             </ErrorBox>
                             <ErrorBox
+                              key="err-1"
                               message="Failed to save administrator acknowledgement."
                               response={
                                 Object {

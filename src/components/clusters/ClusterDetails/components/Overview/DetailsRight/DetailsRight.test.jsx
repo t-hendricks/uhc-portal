@@ -14,6 +14,9 @@ import DetailsRight from './DetailsRight';
 const defaultProps = {
   cluster: fixtures.clusterDetails.cluster,
   cloudProviders: fixtures.cloudProviders,
+  hasAutoscaleMachinePools: false,
+  hasAutoscaleCluster: false,
+  canAutoscaleCluster: false,
 };
 
 const componentText = {

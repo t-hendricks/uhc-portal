@@ -21,7 +21,7 @@ const AwsVpcTable = ({ vpcs, showPublicFields }) => {
         </>
       )}
       {vpcs.map((vpc) => (
-        <>
+        <React.Fragment key={vpc.privateSubnet}>
           <GridItem md={colSize}>{vpc.az}</GridItem>
           <GridItem md={colSize}>{vpc.privateSubnet}</GridItem>
           {showPublicFields && (
@@ -30,7 +30,7 @@ const AwsVpcTable = ({ vpcs, showPublicFields }) => {
               <GridItem md={colSize} />
             </>
           )}
-        </>
+        </React.Fragment>
       ))}
     </Grid>
   );

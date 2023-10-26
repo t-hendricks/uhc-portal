@@ -66,6 +66,7 @@ exports[`<InsightsAdvisor /> should render the chart 1`] = `
       labelComponent={
         <InsightsLabelComponent
           externalId="foo-bar"
+          style={Object {}}
         />
       }
       x={200}
@@ -103,10 +104,15 @@ exports[`<InsightsAdvisor /> should render the chart 1`] = `
   subTitleComponent={
     <InsightsSubtitleComponent
       externalId="foo-bar"
+      style={Object {}}
     />
   }
   title="3"
-  titleComponent={<InsightsTitleComponent />}
+  titleComponent={
+    <InsightsTitleComponent
+      style={Object {}}
+    />
+  }
   width={350}
 />
 `;
