@@ -94,7 +94,7 @@ const isHibernating = (state) =>
   state === clusterStates.RESUMING;
 
 // Indicates that this is a ROSA cluster
-const isROSA = (cluster) => cluster.product.id === normalizedProducts.ROSA;
+const isROSA = (cluster) => cluster?.product?.id === normalizedProducts.ROSA;
 
 // Indicates that this is an OSD cluster
 const isOSD = (cluster) =>

@@ -1,81 +1,44 @@
-import { isHibernating } from '~/components/clusters/common/clusterStates';
 import get from 'lodash/get';
+import { isHibernating } from '~/components/clusters/common/clusterStates';
+import { normalizeProductID } from '~/common/normalize';
+import { normalizedProducts } from '~/common/subscriptionTypes';
 import { checkLabels } from '../../../../../common/validators';
 import { asArray } from '../../../../../common/helpers';
 import { isHypershiftCluster, isMultiAZ } from '../../clusterDetailsHelper';
 
 const NON_CCS_DEFAULT_POOL = 'worker';
 
-const isDeleteDisabled = (canDelete, machinePools, isEnforcedDefaultMP) => {
+const minReplicasNeededText =
+  'There needs to be at least 2 nodes without taints across all machine pools';
+
+const isDeleteDisabled = (
+  canDelete,
+  machinePools,
+  isEnforcedDefaultMP,
+  isMinimumCountWithoutTaints,
+) => {
   const permissionsReason = !canDelete && 'You do not have permissions to delete machine pools';
   const lastNodePoolReason = machinePools.length === 1 && 'The last machine pool cannot be deleted';
+  const enforcedDefaultMPReason = isEnforcedDefaultMP && 'Default machine pool cannot be deleted';
+  const minimumCountReason = !isMinimumCountWithoutTaints && minReplicasNeededText;
   return (
     permissionsReason ||
     lastNodePoolReason ||
-    (isEnforcedDefaultMP ? 'Default machine pool cannot be deleted' : undefined)
+    enforcedDefaultMPReason ||
+    minimumCountReason ||
+    undefined
   );
-};
-
-const getActions = ({
-  onClickScale,
-  onClickDelete,
-  onClickEditLabels,
-  onClickEditTaints,
-  onClickUpdate,
-  deleteDisabledReason,
-  taintsDisabledReason,
-}) => {
-  const scaleAction = {
-    title: 'Scale',
-    onClick: onClickScale,
-    className: 'hand-pointer',
-  };
-
-  const deleteAction = {
-    title: 'Delete',
-    onClick: onClickDelete,
-    className: 'hand-pointer',
-    isAriaDisabled: !!deleteDisabledReason,
-    ...(!!deleteDisabledReason && { tooltip: deleteDisabledReason }),
-  };
-
-  const editLabelsAction = {
-    title: 'Edit labels',
-    onClick: onClickEditLabels,
-    className: 'hand-pointer',
-  };
-
-  const editTaintsAction = {
-    title: 'Edit taints',
-    onClick: onClickEditTaints,
-    className: 'hand-pointer',
-    isAriaDisabled: !!taintsDisabledReason,
-    ...(!!taintsDisabledReason && { tooltip: taintsDisabledReason }),
-  };
-
-  const updateAction = {
-    title: 'Update version',
-    onClick: onClickUpdate,
-    className: 'hand-pointer',
-  };
-
-  return {
-    scaleAction,
-    deleteAction,
-    editLabelsAction,
-    editTaintsAction,
-    updateAction,
-  };
 };
 
 const actionResolver = ({
   rowData,
+  onClickEdit,
+  onClickDelete,
+  onClickUpdate,
   canDelete,
   cluster,
   machinePools,
-  onClickUpdate,
   machineTypes,
-  ...rest
 }) => {
   // hide actions kebab for expandable rows
   if (!rowData.machinePool) {
@@ -88,37 +51,40 @@ const actionResolver = ({
     cluster,
   );
 
-  const actions = getActions({
-    ...rest,
-    onClickUpdate,
-    deleteDisabledReason: isDeleteDisabled(canDelete, machinePools, isEnforcedDefaultMP),
-    taintsDisabledReason: isEnforcedDefaultMP
-      ? 'Default machine pool cannot have taints'
-      : undefined,
+  const hasMinimumCount = isMinimumCountWithoutTaints({
+    currentMachinePoolId: rowData.machinePool.id,
+    machinePools,
+    cluster,
   });
 
-  return [
-    actions.scaleAction,
-    actions.editLabelsAction,
-    actions.editTaintsAction,
-    actions.deleteAction,
-    ...(onClickUpdate !== undefined ? [actions.updateAction] : []),
-  ];
-};
+  const deleteDisabledReason = isDeleteDisabled(
+    canDelete,
+    machinePools,
+    isEnforcedDefaultMP,
+    hasMinimumCount,
+  );
 
-const findDuplicateKey = (labels) => {
-  const keys = {};
-  let duplicateKey = null;
-  labels.forEach((tag) => {
-    const labelParts = tag.split('=');
-    const labelKey = labelParts[0];
-    if (keys[labelKey]) {
-      duplicateKey = labelKey;
-    } else {
-      keys[labelKey] = true;
-    }
-  });
-  return duplicateKey;
+  const editAction = {
+    title: 'Edit',
+    onClick: onClickEdit,
+    className: 'hand-pointer',
+  };
+
+  const deleteAction = {
+    title: 'Delete',
+    onClick: onClickDelete,
+    className: 'hand-pointer',
+    isAriaDisabled: !!deleteDisabledReason,
+    ...(!!deleteDisabledReason && { tooltip: deleteDisabledReason }),
+  };
+
+  const updateAction = {
+    title: 'Update version',
+    onClick: onClickUpdate,
+    className: 'hand-pointer',
+  };
+
+  return [editAction, deleteAction, ...(onClickUpdate !== undefined ? [updateAction] : [])];
 };
 
 const parseLabels = (labelsObj) =>
@@ -141,18 +107,11 @@ const parseTags = (tags) => {
   return labels;
 };
 
-const validateDuplicateLabels = (labels) => {
-  const duplicateKey = findDuplicateKey(labels);
-  if (duplicateKey) {
-    return `Each label should have a unique key. "${duplicateKey}" already exists.`;
-  }
-  return undefined;
-};
-
 // Takes a node_pool format (singular min/max replica) and converts machine pool style of data (plural min/max replicas)
 const normalizeNodePool = (nodePool) => {
+  const normalizedNodePool = { ...nodePool, instance_type: nodePool.aws_node_pool?.instance_type };
   if (nodePool.autoscaling) {
-    const normalizedNodePool = { ...nodePool, autoscaling: { ...nodePool.autoscaling } };
+    normalizedNodePool.autoscaling = { ...nodePool.autoscaling };
     if (nodePool.autoscaling.min_replica >= 0) {
       normalizedNodePool.autoscaling.min_replicas = nodePool.autoscaling.min_replica;
       delete normalizedNodePool.autoscaling.min_replica;
@@ -161,9 +120,8 @@ const normalizeNodePool = (nodePool) => {
       normalizedNodePool.autoscaling.max_replicas = nodePool.autoscaling.max_replica;
       delete normalizedNodePool.autoscaling.max_replica;
     }
-    return normalizedNodePool;
   }
-  return nodePool;
+  return normalizedNodePool;
 };
 
 // Takes a machine pool style of data and makes it match node_pool format (singular min/max replica)
@@ -219,6 +177,25 @@ const getMinNodesRequired = (isDefaultMachinePool, isByoc, isMultiAz) => {
   return 0;
 };
 
+const getClusterMinNodes = ({ cluster, machineTypesResponse, machinePool, machinePools }) => {
+  if (isHypershiftCluster(cluster)) {
+    return isMinimumCountWithoutTaints({
+      currentMachinePoolId: machinePool?.id,
+      cluster,
+      machinePools,
+    })
+      ? 1
+      : 2;
+  }
+  const isMultiAz = isMultiAZ(cluster);
+
+  const isEnforcedDefaultMP =
+    !!machinePool &&
+    isEnforcedDefaultMachinePool(machinePool.id, machinePools, machineTypesResponse, cluster);
+
+  return getMinNodesRequired(isEnforcedDefaultMP, !!cluster?.ccs?.enabled, isMultiAz);
+};
+
 /**
  * Node increment
  * MultiAz requires nodes to be a multiple of 3
@@ -229,7 +206,7 @@ const getNodeIncrement = (isMultiAz) => (isMultiAz ? 3 : 1);
 
 /**
  * Minimum is 2, and if more than 1 node pool, then minimum is num of pools
- * @param {number} numMachinePools
+ * @param {number | undefined=} numMachinePools
  * @returns number
  */
 const getMinNodesRequiredHypershift = (numMachinePools) => {
@@ -240,7 +217,7 @@ const getMinNodesRequiredHypershift = (numMachinePools) => {
   if (numMachinePools === 1) {
     return 2;
   }
-  return numMachinePools;
+  return numMachinePools || 0;
 };
 
 /**
@@ -316,11 +293,38 @@ const isEnforcedDefaultMachinePool = (
     });
 };
 
+const isMinimumCountWithoutTaints = ({ currentMachinePoolId, machinePools, cluster }) => {
+  if (!isHypershiftCluster(cluster)) {
+    return true; // This only applies to HCP clusters
+  }
+
+  const numberReplicas = machinePools?.reduce((count, pool) => {
+    if (pool.id !== currentMachinePoolId) {
+      if (!pool.taints?.length) {
+        return count + (pool.autoscaling ? pool.autoscaling.min_replicas : pool.replicas);
+      }
+    }
+    return count;
+  }, 0);
+
+  return numberReplicas >= 2;
+};
+
+const canUseSpotInstances = (cluster) => {
+  const cloudProviderID = cluster.cloud_provider?.id;
+  const product = normalizeProductID(cluster.product?.id);
+  return (
+    cloudProviderID === 'aws' &&
+    !isHypershiftCluster(cluster) &&
+    (product === normalizedProducts.ROSA ||
+      (product === normalizedProducts.OSD && cluster.ccs?.enabled))
+  );
+};
+
 export {
   parseTags,
   parseLabels,
   actionResolver,
-  validateDuplicateLabels,
   normalizeNodePool,
   normalizeMachinePool,
   getSubnetIds,
@@ -329,8 +333,12 @@ export {
   getNodeIncrement,
   getMinNodesRequiredHypershift,
   getNodeIncrementHypershift,
-  isEnforcedDefaultMachinePool,
   getAddMachinePoolDisabledReason,
   hasExplicitAutoscalingMachinePool,
   hasDefaultOrExplicitAutoscalingMachinePool,
+  isEnforcedDefaultMachinePool,
+  isMinimumCountWithoutTaints,
+  minReplicasNeededText,
+  canUseSpotInstances,
+  getClusterMinNodes,
 };

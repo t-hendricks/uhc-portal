@@ -1,5 +1,4 @@
 import { FormGroup, FormSelect, FormSelectOption, Tooltip } from '@patternfly/react-core';
-import range from 'lodash/range';
 import PropTypes from 'prop-types';
 import React from 'react';
 
@@ -10,30 +9,15 @@ import {
 import { noQuotaTooltip } from '../../../../common/helpers';
 import { billingModels, normalizedProducts } from '../../../../common/subscriptionTypes';
 import PopoverHint from '../../../common/PopoverHint';
-import { availableNodesFromQuota } from '../quotaSelectors';
-
-export const MAX_NODES = 180;
+import {
+  buildOptions,
+  getAvailableQuota as getAvailableQuotaUtil,
+  getIncludedNodes,
+} from '../machinePools/utils';
+import { MAX_NODES } from '../machinePools/constants';
 
 const incrementValue = ({ isHypershiftWizard, poolNumber, isMultiAz }) =>
   isHypershiftWizard ? getNodeIncrementHypershift(poolNumber) : getNodeIncrement(isMultiAz);
-
-const buildOptions = ({
-  included,
-  available,
-  isEditingCluster,
-  currentNodeCount,
-  minNodes,
-  increment,
-}) => {
-  // no extra node quota = only base cluster size is available
-  const optionsAvailable = available > 0 || isEditingCluster;
-  let maxValue = isEditingCluster ? available + currentNodeCount : available + included;
-  if (maxValue > MAX_NODES) {
-    maxValue = MAX_NODES;
-  }
-
-  return optionsAvailable ? range(minNodes, maxValue + 1, increment) : [minNodes];
-};
 
 class NodeCountInput extends React.Component {
   componentDidMount() {
@@ -46,8 +30,9 @@ class NodeCountInput extends React.Component {
       isHypershiftWizard,
       poolNumber,
       isMultiAz,
+      isMachinePool,
     } = this.props;
-    const included = this.getIncludedNodes();
+    const included = getIncludedNodes({ isMultiAz, isHypershift: !isMachinePool });
     const available = this.getAvailableQuota();
 
     const optionValueIncrement =
@@ -90,48 +75,34 @@ class NodeCountInput extends React.Component {
     }
   }
 
-  getIncludedNodes() {
-    const { isByoc, isMultiAz, isMachinePool } = this.props;
-    if (isByoc || isMachinePool) {
-      return 0;
-    }
-    return isMultiAz ? 9 : 4;
-  }
-
   getAvailableQuota() {
     const {
       quota,
       isByoc,
       isMultiAz,
       machineType,
-      machineTypesByID,
+      machineTypes,
       cloudProviderID,
       product,
       billingModel,
     } = this.props;
 
-    const machineTypeResource = machineTypesByID[machineType];
-    if (!machineTypeResource) {
-      return 0;
-    }
-    const resourceName = machineTypeResource.generic_name;
-
-    const quotaParams = {
-      product,
-      cloudProviderID,
-      isBYOC: isByoc,
-      isMultiAz,
-      resourceName,
+    return getAvailableQuotaUtil({
+      quota,
+      isByoc,
       billingModel,
-    };
-    return availableNodesFromQuota(quota, quotaParams);
+      cloudProviderID,
+      isMultiAz,
+      machineTypes,
+      machineTypeId: machineType,
+      product,
+    });
   }
 
   render() {
     const {
       input,
       isMultiAz,
-      isDisabled,
       isEditingCluster,
       currentNodeCount,
       label,
@@ -150,7 +121,7 @@ class NodeCountInput extends React.Component {
     const optionValueIncrement =
       increment || incrementValue({ isHypershiftWizard, poolNumber, isMultiAz });
 
-    const included = this.getIncludedNodes();
+    const included = getIncludedNodes({ isMultiAz, isHypershift: !isMachinePool });
     const available = this.getAvailableQuota();
 
     const options = buildOptions({
@@ -168,7 +139,6 @@ class NodeCountInput extends React.Component {
     if (isByoc && !isEditingCluster && !isMachinePool) {
       notEnoughQuota = !machineType || options.length < 1;
     }
-    const disabled = isDisabled || notEnoughQuota;
 
     const optionLabel = (value) => {
       let labelNumber = value;
@@ -195,7 +165,7 @@ class NodeCountInput extends React.Component {
     const formSelect = (
       <FormSelect
         aria-label="Compute nodes"
-        isDisabled={disabled}
+        isDisabled={notEnoughQuota}
         className="quota-dropdown"
         {...input}
       >
@@ -245,7 +215,6 @@ NodeCountInput.propTypes = {
   isEditingCluster: PropTypes.bool,
   currentNodeCount: PropTypes.number,
   minNodes: PropTypes.number,
-  isDisabled: PropTypes.bool,
   label: PropTypes.string,
   helpText: PropTypes.string,
   extendedHelpText: PropTypes.string,
@@ -254,7 +223,7 @@ NodeCountInput.propTypes = {
   isMachinePool: PropTypes.bool,
   isMultiAz: PropTypes.bool,
   machineType: PropTypes.string,
-  machineTypesByID: PropTypes.object,
+  machineTypes: PropTypes.object,
   input: PropTypes.shape({
     name: PropTypes.string.isRequired,
     value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),

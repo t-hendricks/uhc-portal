@@ -5,30 +5,18 @@ import {
   parseTags,
   normalizeNodePool,
   normalizeMachinePool,
+  isMinimumCountWithoutTaints,
+  minReplicasNeededText,
+  isEnforcedDefaultMachinePool,
 } from '../machinePoolsHelper';
 
 describe('machine pools action resolver', () => {
   const onClickDelete = jest.fn();
-  const onClickScale = jest.fn();
-  const onClickEditTaints = jest.fn();
-  const onClickEditLabels = jest.fn();
+  const onClickEdit = jest.fn();
 
-  const scaleAction = {
-    title: 'Scale',
-    onClick: onClickScale,
-    className: 'hand-pointer',
-  };
-
-  const editTaintsAction = {
-    title: 'Edit taints',
-    onClick: onClickEditTaints,
-    className: 'hand-pointer',
-    isAriaDisabled: false,
-  };
-
-  const editLabelsAction = {
-    title: 'Edit labels',
-    onClick: onClickEditLabels,
+  const editAction = {
+    title: 'Edit',
+    onClick: onClickEdit,
     className: 'hand-pointer',
   };
 
@@ -50,29 +38,24 @@ describe('machine pools action resolver', () => {
       actionResolver({
         rowData: expandableRowData,
         onClickDelete,
-        onClickScale,
-        onClickEditTaints,
-        onClickEditLabels,
+        onClickEdit,
         machinePools: [],
       }),
     ).toEqual(expect.arrayContaining([]));
   });
 
-  it('should have scale, edit taints, edit labels and delete actions', () => {
+  it('should have edit and delete actions', () => {
     const machinePoolRowData = {
       cells: ['test-mp', 'm5.xlarge', 'us-east-1a', '4'],
       machinePool: { id: 'test-mp' },
       key: 'test-mp',
     };
-    const expected = [scaleAction, editLabelsAction, editTaintsAction, deleteAction];
-
+    const expected = [editAction, deleteAction];
     expect(
       actionResolver({
         rowData: machinePoolRowData,
         onClickDelete,
-        onClickScale,
-        onClickEditTaints,
-        onClickEditLabels,
+        onClickEdit,
         canDelete: true,
         machinePools: [
           {
@@ -111,35 +94,23 @@ describe('machine pools action resolver', () => {
     ).toEqual(expect.arrayContaining(expected));
   });
 
-  it('disables Taints and Delete for enforced default pool', () => {
+  it('disables Delete for enforced default pool', () => {
     const defaultMachinePoolRowData = {
       cells: ['worker', 'm5.xlarge', 'us-east-1a', '4'],
       machinePool: { id: 'worker' },
       key: 'worker',
     };
-    const editTaintsAction = {
-      title: 'Edit taints',
-      onClick: onClickEditTaints,
-      className: 'hand-pointer',
-      isAriaDisabled: true,
-      tooltip: 'Default machine pool cannot have taints',
-    };
-    const deleteAction = {
-      title: 'Delete',
-      onClick: onClickDelete,
-      className: 'hand-pointer',
+    const deleteDisabledAction = {
+      ...deleteAction,
       isAriaDisabled: true,
       tooltip: 'Default machine pool cannot be deleted',
     };
-    const expected = [scaleAction, editLabelsAction, editTaintsAction, deleteAction];
-
+    const expected = [editAction, deleteDisabledAction];
     expect(
       actionResolver({
         rowData: defaultMachinePoolRowData,
         onClickDelete,
-        onClickScale,
-        onClickEditTaints,
-        onClickEditLabels,
+        onClickEdit,
         canDelete: true,
         machinePools: [
           {
@@ -168,29 +139,17 @@ describe('machine pools action resolver', () => {
       machinePool: { id: 'worker' },
       key: 'worker',
     };
-    const deleteAction = {
-      title: 'Delete',
-      onClick: onClickDelete,
-      className: 'hand-pointer',
+    const deleteDisabledAction = {
+      ...deleteAction,
       isAriaDisabled: true,
       tooltip: 'Default machine pool cannot be deleted',
     };
 
-    const editTaintsAction = {
-      title: 'Edit taints',
-      onClick: onClickEditTaints,
-      className: 'hand-pointer',
-      isAriaDisabled: true,
-      tooltip: 'Default machine pool cannot have taints',
-    };
-    const expected = [scaleAction, editLabelsAction, editTaintsAction, deleteAction];
-
+    const expected = [editAction, deleteDisabledAction];
     const actions = actionResolver({
       rowData: defaultMachinePoolRowData,
       onClickDelete,
-      onClickScale,
-      onClickEditTaints,
-      onClickEditLabels,
+      onClickEdit,
       canDelete: true,
       machinePools: [
         {
@@ -212,6 +171,181 @@ describe('machine pools action resolver', () => {
     });
 
     expect(actions).toEqual(expect.arrayContaining(expected));
+  });
+
+  it('disables delete for HCP cluster if less than 2 replicas without taints', () => {
+    const actions = actionResolver({
+      rowData: { machinePool: { id: 'mp-no-taints' } },
+      onClickDelete,
+      onClickEdit,
+      canDelete: true,
+      machinePools: [
+        {
+          id: 'mp-with-taints',
+          replicas: 2,
+          taints: [{ key: 'hello', value: 'world', effect: 'NoSchedule' }],
+        },
+        {
+          id: 'mp1',
+          replicas: 1,
+        },
+        {
+          id: 'mp-no-taints',
+          replicas: 1,
+        },
+      ],
+      cluster: {
+        product: {
+          id: normalizedProducts.ROSA,
+        },
+        hypershift: { enabled: true },
+        ccs: {
+          enabled: true,
+        },
+      },
+      machineTypes: {},
+    });
+
+    actions.forEach((action) => {
+      if (action.title === 'Delete') {
+        expect(action.isAriaDisabled).toBeTruthy();
+        expect(action.tooltip).toEqual(minReplicasNeededText);
+      }
+      if (action.title === 'Edit') {
+        expect(action.isAriaDisabled).toBeFalsy();
+      }
+    });
+  });
+
+  it('enables delete and edit for HCP cluster if  2 replicas without taints', () => {
+    const actions = actionResolver({
+      rowData: { machinePool: { id: 'mp-with-taints' } },
+      onClickDelete,
+      onClickEdit,
+      canDelete: true,
+      machinePools: [
+        {
+          id: 'mp-with-taints',
+          replicas: 2,
+          taints: [{ key: 'hello', value: 'world', effect: 'NoSchedule' }],
+        },
+        {
+          id: 'mp1',
+          replicas: 1,
+        },
+        {
+          id: 'mp-no-taints',
+          replicas: 1,
+        },
+      ],
+      cluster: {
+        product: {
+          id: normalizedProducts.ROSA,
+        },
+        hypershift: { enabled: true },
+        ccs: {
+          enabled: true,
+        },
+      },
+      machineTypes: {},
+    });
+
+    actions.forEach((action) => {
+      if (action.title === 'Delete') {
+        expect(action.isAriaDisabled).toBeFalsy();
+      }
+      if (action.title === 'Edit') {
+        expect(action.isAriaDisabled).toBeFalsy();
+      }
+    });
+  });
+});
+
+describe('isMinimumCountWithoutTaints ', () => {
+  const machinePools = [
+    {
+      id: 'mp-with-taints',
+      replicas: 2,
+      taints: [{ key: 'hello', value: 'world', effect: 'NoSchedule' }],
+    },
+    {
+      id: 'mp1',
+      replicas: 1,
+    },
+    {
+      id: 'mp-no-taints',
+      replicas: 1,
+    },
+  ];
+
+  const machinePoolsScaled = [
+    {
+      id: 'mp-with-taints',
+      taints: [{ key: 'hello', value: 'world', effect: 'NoSchedule' }],
+      autoscaling: {
+        min_replicas: 2,
+        max_replicas: 3,
+      },
+    },
+    {
+      id: 'mp1',
+      autoscaling: {
+        min_replicas: 1,
+        max_replicas: 3,
+      },
+    },
+    {
+      id: 'mp-no-taints',
+      autoscaling: {
+        min_replicas: 1,
+        max_replicas: 3,
+      },
+    },
+  ];
+
+  const cluster = {
+    hypershift: { enabled: true },
+  };
+  describe('HCP clusters', () => {
+    it('returns false if less than 2 nodes without taints - no scaling', () => {
+      expect(
+        isMinimumCountWithoutTaints({
+          cluster,
+          machinePools,
+          currentMachinePoolId: 'mp-no-taints',
+        }),
+      ).toBeFalsy();
+    });
+
+    it('returns false if less than 2 autoscaled nodes without taints - no scaling', () => {
+      expect(
+        isMinimumCountWithoutTaints({
+          cluster,
+          machinePools: machinePoolsScaled,
+          currentMachinePoolId: 'mp-no-taints',
+        }),
+      ).toBeFalsy();
+    });
+
+    it('returns true if  2 nodes without taints', () => {
+      expect(
+        isMinimumCountWithoutTaints({
+          cluster,
+          machinePools,
+          currentMachinePoolId: 'mp-with-taints',
+        }),
+      ).toBeTruthy();
+    });
+
+    it('returns true if 2 autoscaled nodes without taints', () => {
+      expect(
+        isMinimumCountWithoutTaints({
+          cluster,
+          machinePools: machinePoolsScaled,
+          currentMachinePoolId: 'mp-with-taints',
+        }),
+      ).toBeTruthy();
+    });
   });
 });
 
@@ -279,16 +413,20 @@ describe('normalizeNodePool', () => {
         min_replicas: 2,
         max_replicas: 5,
       },
+      instance_type: nodePoolBase.aws_node_pool.instance_type,
     };
     expect(normalizeNodePool(nodePoolwithAutoScaling)).toEqual(normalizedNodePool);
   });
 
-  it('should keep same structue', () => {
+  it('should normalize instance_type', () => {
     const nodePoolWithoutAutoscaling = {
       ...nodePoolBase,
       replicas: 2,
     };
-    expect(normalizeNodePool(nodePoolWithoutAutoscaling)).toEqual(nodePoolWithoutAutoscaling);
+    expect(normalizeNodePool(nodePoolWithoutAutoscaling)).toEqual({
+      ...nodePoolWithoutAutoscaling,
+      instance_type: nodePoolBase.aws_node_pool.instance_type,
+    });
   });
 });
 
@@ -337,5 +475,227 @@ describe('normalizeMachinePool', () => {
       },
     };
     expect(normalizeMachinePool(normalizedNodePool)).toEqual(nodePoolwithAutoScaling);
+  });
+});
+
+describe('isEnforcedDefaultMachinePool', () => {
+  const machineTypes = {
+    types: {
+      aws: [
+        {
+          id: 'm5.xlarge',
+          cpu: {
+            value: 4,
+          },
+          memory: {
+            value: 4,
+          },
+        },
+      ],
+    },
+  };
+  it('Non-CCS: worker MP is always default', () => {
+    expect(
+      isEnforcedDefaultMachinePool(
+        'worker',
+        [],
+        {},
+        {
+          ccs: {
+            enabled: false,
+          },
+        },
+      ),
+    ).toBeTruthy();
+  });
+  it('Non-CCS: non-worker MP is always default', () => {
+    expect(
+      isEnforcedDefaultMachinePool(
+        'worker-1',
+        [],
+        {},
+        {
+          ccs: {
+            enabled: false,
+          },
+        },
+      ),
+    ).toBeFalsy();
+  });
+  it('Hypershift: Does not have default MP', () => {
+    expect(
+      isEnforcedDefaultMachinePool(
+        'worker',
+        [],
+        {},
+        {
+          hypershift: {
+            enabled: true,
+          },
+        },
+      ),
+    ).toBeFalsy();
+  });
+  it('CCS GCP: Detects default pool', () => {
+    const cluster = {
+      ccs: {
+        enabled: true,
+      },
+      cloud_provider: {
+        id: 'gcp',
+      },
+    };
+    const machinePools = [
+      {
+        id: 'foo',
+        instance_type: 'custom-6',
+        replicas: 1,
+      },
+      {
+        id: 'bar',
+        instance_type: 'custom-6',
+        replicas: 2,
+      },
+    ];
+    const machineTypes = {
+      types: {
+        aws: [
+          {
+            id: 'm5.xlarge',
+            cpu: {
+              value: 4,
+            },
+            memory: {
+              value: 4,
+            },
+          },
+        ],
+        gcp: [
+          {
+            id: 'custom-6',
+            cpu: {
+              value: 6,
+            },
+            memory: {
+              value: 6,
+            },
+          },
+        ],
+      },
+    };
+
+    expect(isEnforcedDefaultMachinePool('bar', machinePools, machineTypes, cluster)).toBeTruthy();
+    expect(isEnforcedDefaultMachinePool('foo', machinePools, machineTypes, cluster)).toBeFalsy();
+  });
+  it('CCS: Detects default pool among multiple pools - one has too little replicas', () => {
+    const cluster = {
+      ccs: {
+        enabled: true,
+      },
+      cloud_provider: {
+        id: 'aws',
+      },
+    };
+    const machinePools = [
+      {
+        id: 'foo',
+        instance_type: 'm5.xlarge',
+        replicas: 1,
+      },
+      {
+        id: 'bar',
+        instance_type: 'm5.xlarge',
+        replicas: 2,
+      },
+    ];
+
+    expect(isEnforcedDefaultMachinePool('bar', machinePools, machineTypes, cluster)).toBeTruthy();
+    expect(isEnforcedDefaultMachinePool('foo', machinePools, machineTypes, cluster)).toBeFalsy();
+  });
+  it('CCS: Detects default pool among multiple pools - one has taints', () => {
+    const cluster = {
+      ccs: {
+        enabled: true,
+      },
+      cloud_provider: {
+        id: 'aws',
+      },
+    };
+    const machinePools = [
+      {
+        id: 'foo',
+        instance_type: 'm5.xlarge',
+        replicas: 2,
+        taints: [
+          {
+            key: 'foo',
+          },
+        ],
+      },
+      {
+        id: 'bar',
+        instance_type: 'm5.xlarge',
+        replicas: 2,
+      },
+    ];
+    expect(isEnforcedDefaultMachinePool('bar', machinePools, machineTypes, cluster)).toBeTruthy();
+    expect(isEnforcedDefaultMachinePool('foo', machinePools, machineTypes, cluster)).toBeFalsy();
+  });
+  it('CCS: Detects default pool among multiple pools - autoscale', () => {
+    const cluster = {
+      ccs: {
+        enabled: true,
+      },
+      cloud_provider: {
+        id: 'aws',
+      },
+    };
+    const machinePools = [
+      {
+        id: 'foo',
+        instance_type: 'm5.xlarge',
+        autoscaling: {
+          min_replicas: 1,
+        },
+      },
+      {
+        id: 'bar',
+        instance_type: 'm5.xlarge',
+        autoscaling: {
+          min_replicas: 2,
+        },
+      },
+    ];
+    expect(isEnforcedDefaultMachinePool('bar', machinePools, machineTypes, cluster)).toBeTruthy();
+    expect(isEnforcedDefaultMachinePool('foo', machinePools, machineTypes, cluster)).toBeFalsy();
+  });
+  it('CCS: Detects default pool among multiple pools - multiaz', () => {
+    const cluster = {
+      ccs: {
+        enabled: true,
+      },
+      cloud_provider: {
+        id: 'aws',
+      },
+      multi_az: true,
+    };
+    const machinePools = [
+      {
+        id: 'foo',
+        instance_type: 'm5.xlarge',
+        autoscaling: {
+          min_replicas: 2,
+        },
+      },
+      {
+        id: 'bar',
+        instance_type: 'm5.xlarge',
+        autoscaling: {
+          min_replicas: 3,
+        },
+      },
+    ];
+    expect(isEnforcedDefaultMachinePool('bar', machinePools, machineTypes, cluster)).toBeTruthy();
+    expect(isEnforcedDefaultMachinePool('foo', machinePools, machineTypes, cluster)).toBeFalsy();
   });
 });

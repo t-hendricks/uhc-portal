@@ -1,7 +1,6 @@
 import {
   hasMachinePoolsQuotaSelector,
   hasOrgLevelAutoscaleCapability,
-  canAutoScaleSelector,
 } from '../MachinePoolsSelectors';
 import { baseRequestState } from '../../../../../../redux/reduxHelpers';
 import { stateWithQuota, stateWithNoQuota } from './MachinePools.fixtures';
@@ -38,21 +37,6 @@ describe('machinePoolsSelector', () => {
     },
   };
 
-  const stateWithClusterAutoscaleCapability = {
-    clusters: {
-      details: {
-        cluster: {
-          subscription: {
-            capabilities: [
-              { name: 'capability.cluster.autoscale_clusters', value: 'true', inherited: false },
-              { name: 'capability.cluster.subscribed_ocp', value: 'true', inherited: false },
-            ],
-          },
-        },
-      },
-    },
-  };
-
   it('should return false when quota is not fetched yet', () => {
     const organiztionNotFulfilledState = {
       userProfile: { organization: { ...baseRequestState } },
@@ -84,29 +68,6 @@ describe('machinePoolsSelector', () => {
       stateWithoutAutoscaleCapability,
       normalizedProducts.OSD,
     );
-    expect(result).toBe(false);
-  });
-
-  it('should allow autoscaling for ROSA clusters', () => {
-    const result = canAutoScaleSelector({}, normalizedProducts.ROSA);
-    expect(result).toBe(true);
-  });
-
-  it('should allow autoscaling for RHM OSD clusters', () => {
-    const result = canAutoScaleSelector(
-      stateWithClusterAutoscaleCapability,
-      normalizedProducts.OSD,
-    );
-    expect(result).toBe(true);
-  });
-
-  it('should not allow autoscaling', () => {
-    const result = canAutoScaleSelector(stateWithoutAutoscaleCapability, normalizedProducts.OCP);
-    expect(result).toBe(false);
-  });
-
-  it('should not allow autoscaling for ARO clusters', () => {
-    const result = canAutoScaleSelector(stateWithoutAutoscaleCapability, normalizedProducts.ARO);
     expect(result).toBe(false);
   });
 });

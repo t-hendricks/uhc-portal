@@ -4,7 +4,6 @@ import ReduxVerticalFormGroup from './ReduxVerticalFormGroup';
 import ReduxFormRadioGroup from './ReduxFormRadioGroup';
 import ReduxFormKeyValueList from './ReduxFormKeyValueList/ReduxFormKeyValueList';
 import ReduxFormTaints from './ReduxFormTaints/ReduxFormTaints';
-import ReduxFormTagsInput from './ReduxFormTagsInput';
 import { ReduxSelectDropdown } from './ReduxSelectDropdown';
 import ReduxFieldArray from './ReduxFieldArray';
 import RenderCompoundArrayFields from './RenderCompoundArrayFields';
@@ -17,7 +16,6 @@ export {
   ReduxFormRadioGroup,
   ReduxFormKeyValueList,
   ReduxFormTaints,
-  ReduxFormTagsInput,
   ReduxFieldArray,
   RenderCompoundArrayFields,
 };

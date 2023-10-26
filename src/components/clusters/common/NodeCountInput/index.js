@@ -4,7 +4,7 @@ import get from 'lodash/get';
 import NodeCountInput from './NodeCountInput';
 
 const mapStateToProps = (state) => ({
-  machineTypesByID: state.machineTypes.typesByID,
+  machineTypes: state.machineTypes,
   quota: get(state, 'userProfile.organization.quotaList', {}),
 });
 

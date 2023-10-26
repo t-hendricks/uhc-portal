@@ -11,7 +11,6 @@ import {
   SelectOptionObject,
 } from '@patternfly/react-core';
 
-import { useAWSVPCsFromCluster } from '~/components/clusters/ClusterDetails/components/MachinePools/components/AddMachinePoolModal/useAWSVPCsFromCluster';
 import {
   isSubnetMatchingPrivacy,
   useAWSVPCInquiry,
@@ -20,22 +19,23 @@ import ErrorBox from '~/components/common/ErrorBox';
 import { CloudVPC, Subnetwork } from '~/types/clusters_mgmt.v1';
 import FuzzySelect, { FuzzyDataType, FuzzyEntryType } from '~/components/common/FuzzySelect';
 import { getAWSCloudProviderVPCs } from '../ccsInquiriesActions';
+import { useAWSVPCsFromCluster } from './useAWSVPCsFromCluster';
 
 const TRUNCATE_THRESHOLD = 40;
 
 export interface SubnetSelectFieldProps {
   name: string;
   label: string;
-  input: WrappedFieldInputProps;
-  meta: WrappedFieldMetaProps;
+  input: Pick<WrappedFieldInputProps, 'value' | 'onChange' | 'name'>;
+  meta: Pick<WrappedFieldMetaProps, 'error' | 'touched'>;
   isDisabled?: boolean;
   isRequired?: boolean;
   className?: string;
   privacy?: 'public' | 'private';
   selectedVPC?: string;
-  isNewCluster: boolean;
+  isNewCluster?: boolean;
   showRefresh?: boolean;
-  withAutoSelect: boolean;
+  withAutoSelect?: boolean;
   allowedAZ?: string[];
 }
 
@@ -50,7 +50,7 @@ export const SubnetSelectField = ({
   privacy,
   withAutoSelect = true,
   selectedVPC,
-  isNewCluster,
+  isNewCluster = false,
   showRefresh = false,
   allowedAZ,
 }: SubnetSelectFieldProps) => {
