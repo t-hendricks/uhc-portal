@@ -75,17 +75,23 @@ class ClusterIngressCard extends React.Component {
         <CardBody className="ocm-c-networking-cluster-ingress__card--body">
           <Form isHorizontal>
             <FormGroup fieldId="console_url" label="Cluster console URL" isStack>
-              <ClipboardCopy name="console_url" isReadOnly>
-                {consoleURL}
-              </ClipboardCopy>
-              {showConsoleLink && (
-                <TextContent>
-                  <Text component={TextVariants.small}>
-                    <a href={consoleURL} target="_blank" rel="noopener noreferrer">
-                      Open console
-                    </a>
-                  </Text>
-                </TextContent>
+              {consoleURL?.length ? (
+                <>
+                  <ClipboardCopy name="console_url" isReadOnly>
+                    {consoleURL}
+                  </ClipboardCopy>
+                  {showConsoleLink && (
+                    <TextContent>
+                      <Text component={TextVariants.small}>
+                        <a href={consoleURL} target="_blank" rel="noopener noreferrer">
+                          Open console
+                        </a>
+                      </Text>
+                    </TextContent>
+                  )}
+                </>
+              ) : (
+                <TextInput value="N/A" type="text" readOnlyVariant="default" />
               )}
             </FormGroup>
             <FormGroup

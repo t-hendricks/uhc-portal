@@ -1,9 +1,14 @@
 .cluster-log {
   .markdown {
-    a[target="_blank"]::after {
-      font-family: "Font Awesome 5 Free", serif;
-      font-weight: 900;
-      content: ' \f35d'
+    ul {
+      list-style: disc;
+      padding-top: var(--pf-global--spacer--sm);
+      padding-left: var(--pf-global--spacer--md);
+      padding-bottom: var(--pf-global--spacer--md);
+      padding-right: var(--pf-global--spacer--sm);
+      li {
+        padding: var(--pf-global--spacer--sm);
+      }
     }
   }
 }

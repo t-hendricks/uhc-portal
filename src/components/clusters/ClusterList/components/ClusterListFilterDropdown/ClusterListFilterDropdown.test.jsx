@@ -9,7 +9,7 @@ describe('<ClusterListFilterDropdown />', () => {
       <ClusterListFilterDropdown
         setFilter={jest.fn()}
         currentFilters={{}}
-        history={{ push: jest.fn() }}
+        history={{ location: 'my-url', push: jest.fn() }}
       />,
     );
     expect(wrapper).toMatchSnapshot();
