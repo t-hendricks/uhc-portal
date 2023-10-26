@@ -13,7 +13,9 @@ describe('<Overview />', () => {
     );
 
     expect(
-      screen.getByText('View all OpenShift cluster types and start creating', { selector: 'a' }),
+      screen.getByText('View all OpenShift cluster types', {
+        selector: 'a',
+      }),
     ).toHaveAttribute('href', '/create');
 
     expect(
