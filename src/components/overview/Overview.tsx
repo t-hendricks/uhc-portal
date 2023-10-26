@@ -90,7 +90,7 @@ function OverviewEmptyState() {
             <OfferingCard offeringType="DEVSNBX" />
           </FlexItem>
         </Flex>
-        <Link to="/create">View all OpenShift cluster types and start creating</Link>
+        <Link to="/create">View all OpenShift cluster types</Link>
         <Title size="xl" headingLevel="h2" className="pf-u-mt-lg pf-u-mb-lg">
           Recommended Content
         </Title>
