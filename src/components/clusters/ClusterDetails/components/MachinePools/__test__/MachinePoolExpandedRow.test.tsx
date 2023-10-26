@@ -21,7 +21,7 @@ const vpcs = [
 ];
 
 jest.mock(
-  '~/components/clusters/ClusterDetails/components/MachinePools/components/AddMachinePoolModal/useAWSVPCsFromCluster',
+  '~/components/clusters/CreateOSDPage/CreateOSDWizard/NetworkScreen/useAWSVPCsFromCluster',
   () => ({
     useAWSVPCsFromCluster: () => ({ fulfilled: true, data: { items: vpcs } }),
   }),

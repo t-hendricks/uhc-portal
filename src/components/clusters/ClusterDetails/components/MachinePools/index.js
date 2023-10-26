@@ -1,5 +1,6 @@
 import { connect } from 'react-redux';
 import get from 'lodash/get';
+import modals from '~/components/common/Modal/modals';
 
 import MachinePools from './MachinePools';
 import {
@@ -20,17 +21,17 @@ import { getOrganizationAndQuota } from '../../../../../redux/actions/userAction
 import { clusterAutoscalerActions } from '../../../../../redux/actions/clusterAutoscalerActions';
 import { getMachineTypes } from '../../../../../redux/actions/machineTypesActions';
 import { openModal, closeModal } from '../../../../common/Modal/ModalActions';
+import shouldShowModal from '../../../../common/Modal/ModalSelectors';
 import { isHypershiftCluster } from '../../clusterDetailsHelper';
 
 const mapStateToProps = (state) => {
   const cluster = get(state, 'clusters.details.cluster', {});
 
   const props = {
-    openModalId: state.modal.modalName,
+    isDeleteMachinePoolModalOpen: shouldShowModal(state, modals.DELETE_MACHINE_POOL),
+    isClusterAutoscalingModalOpen: shouldShowModal(state, modals.EDIT_CLUSTER_AUTOSCALING_V1),
     machinePoolsList: state.machinePools.getMachinePools,
-    addMachinePoolResponse: state.machinePools.addMachinePoolResponse,
     deleteMachinePoolResponse: state.machinePools.deleteMachinePoolResponse,
-    scaleMachinePoolResponse: state.machinePools.scaleMachinePoolResponse,
     hasMachinePoolsQuota: hasMachinePoolsQuotaSelector(state),
     machineTypes: state.machineTypes,
     organization: state.userProfile.organization,

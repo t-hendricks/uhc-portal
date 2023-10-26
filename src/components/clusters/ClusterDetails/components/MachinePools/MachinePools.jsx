@@ -28,9 +28,6 @@ import {
   UpdateMachinePoolModal,
 } from './UpdateMachinePools';
 
-import AddMachinePoolModal from './components/AddMachinePoolModal';
-import EditTaintsModal from './components/EditTaintsModal';
-import EditLabelsModal from './components/EditLabelsModal';
 import MachinePoolExpandedRow from './components/MachinePoolExpandedRow';
 import DeleteMachinePoolModal from './components/DeleteMachinePoolModal/DeleteMachinePoolModal';
 import {
@@ -45,6 +42,7 @@ import modals from '../../../../common/Modal/modals';
 import { noQuotaTooltip } from '../../../../../common/helpers';
 import { versionFormatter } from '../../../../../common/versionHelpers';
 import { isHibernating, isROSA } from '../../../common/clusterStates';
+import EditMachinePoolModal from './components/EditMachinePoolModal/EditMachinePoolModal';
 
 import './MachinePools.scss';
 
@@ -65,6 +63,8 @@ const initialState = {
   deletedRowIndex: null,
   openedRows: [],
   hideDeleteMachinePoolError: false,
+  editMachinePoolId: undefined,
+  addMachinePool: false,
 };
 
 class MachinePools extends React.Component {
@@ -91,8 +91,6 @@ class MachinePools extends React.Component {
   componentDidUpdate(prevProps) {
     const {
       deleteMachinePoolResponse,
-      addMachinePoolResponse,
-      scaleMachinePoolResponse,
       getClusterAutoscaler,
       clusterAutoscalerResponse,
       getMachinePools,
@@ -103,9 +101,8 @@ class MachinePools extends React.Component {
     const { deletedRowIndex } = this.state;
 
     if (
-      ((deleteMachinePoolResponse.fulfilled && prevProps.deleteMachinePoolResponse.pending) ||
-        (addMachinePoolResponse.fulfilled && prevProps.addMachinePoolResponse.pending) ||
-        (scaleMachinePoolResponse.fulfilled && prevProps.scaleMachinePoolResponse.pending)) &&
+      deleteMachinePoolResponse.fulfilled &&
+      prevProps.deleteMachinePoolResponse.pending &&
       !machinePoolsList.pending
     ) {
       getOrganizationAndQuota();
@@ -164,17 +161,24 @@ class MachinePools extends React.Component {
       cluster,
       machinePoolsList,
       openModal,
-      openModalId,
+      isDeleteMachinePoolModalOpen,
       deleteMachinePool,
       deleteMachinePoolResponse,
-      addMachinePoolResponse,
       hasMachinePoolsQuota,
       clusterAutoscalerResponse,
       canMachinePoolBeUpdated,
       machineTypes,
+      getMachinePools,
+      isClusterAutoscalingModalOpen,
     } = this.props;
 
-    const { deletedRowIndex, openedRows, hideDeleteMachinePoolError } = this.state;
+    const {
+      deletedRowIndex,
+      openedRows,
+      hideDeleteMachinePoolError,
+      addMachinePool,
+      editMachinePoolId,
+    } = this.state;
     const machinePoolsActions = cluster?.machinePoolsActions || {}; // Data not defined on the cluster list response
     const hasMachinePools = !!machinePoolsList.data.length;
     const isMultiZoneCluster = isMultiAZ(cluster);
@@ -192,6 +196,12 @@ class MachinePools extends React.Component {
         </EmptyState>
       );
     }
+
+    const refreshMachinePools = () => {
+      if (!machinePoolsList.pending) {
+        getMachinePools();
+      }
+    };
 
     const columns = [
       { title: 'Machine pool', cellFormatters: [expandable] },
@@ -328,22 +338,12 @@ class MachinePools extends React.Component {
       });
     };
 
-    const onClickScaleAction = (_, __, rowData) => {
-      openModal(modals.EDIT_NODE_COUNT, {
-        machinePool: rowData.machinePool,
-        cluster,
-      });
-    };
-
-    const onClickEditTaintsAction = (_, __, rowData) =>
-      openModal(modals.EDIT_TAINTS, {
-        machinePool: rowData.machinePool,
-      });
-
-    const onClickEditLabelsAction = (_, __, rowData) =>
-      openModal(modals.EDIT_LABELS, {
-        machinePool: rowData.machinePool,
-      });
+    const onClickEdit = (_, __, rowData) =>
+      this.setState(
+        produce((draft) => {
+          draft.editMachinePoolId = rowData.machinePool.id;
+        }),
+      );
 
     const onClickUpdateAction = (_, __, rowData) =>
       openModal(modals.UPDATE_MACHINE_POOL_VERSION, {
@@ -360,11 +360,7 @@ class MachinePools extends React.Component {
       ],
     };
 
-    if (
-      hasMachinePools &&
-      (machinePoolsList.pending || addMachinePoolResponse.pending) &&
-      deletedRowIndex === null
-    ) {
+    if (hasMachinePools && machinePoolsList.pending && deletedRowIndex === null) {
       rows.push(skeletonRow);
     }
 
@@ -405,7 +401,13 @@ class MachinePools extends React.Component {
                     readOnlyReason || hibernatingReason || canNotCreateReason || quotaReason
                   }
                   id="add-machine-pool"
-                  onClick={() => openModal(modals.ADD_MACHINE_POOL)}
+                  onClick={() =>
+                    this.setState(
+                      produce((draft) => {
+                        draft.addMachinePool = true;
+                      }),
+                    )
+                  }
                   variant="secondary"
                   className="pf-u-mb-lg pf-u-mr-md"
                 >
@@ -449,9 +451,6 @@ class MachinePools extends React.Component {
                       actionResolver({
                         rowData,
                         onClickDelete: onClickDeleteAction,
-                        onClickScale: onClickScaleAction,
-                        onClickEditTaints: onClickEditTaintsAction,
-                        onClickEditLabels: onClickEditLabelsAction,
                         onClickUpdate: canMachinePoolBeUpdated(rowData.machinePool)
                           ? onClickUpdateAction
                           : undefined,
@@ -459,6 +458,7 @@ class MachinePools extends React.Component {
                         cluster,
                         machinePools: machinePoolsList.data,
                         machineTypes,
+                        onClickEdit,
                       })
                     }
                     areActionsDisabled={() => tableActionsDisabled}
@@ -471,18 +471,26 @@ class MachinePools extends React.Component {
             </Card>
           </>
         )}
-        {openModalId === modals.ADD_MACHINE_POOL && (
-          <AddMachinePoolModal cluster={cluster} isHypershiftCluster={isHypershift} />
-        )}
-        {openModalId === modals.DELETE_MACHINE_POOL && <DeleteMachinePoolModal />}
-        {openModalId === modals.EDIT_TAINTS && (
-          <EditTaintsModal cluster={cluster} isHypershiftCluster={isHypershift} />
-        )}
-        {openModalId === modals.EDIT_LABELS && (
-          <EditLabelsModal clusterId={cluster.id} isHypershiftCluster={isHypershift} />
+        {isDeleteMachinePoolModalOpen && <DeleteMachinePoolModal />}
+        {(!!editMachinePoolId || addMachinePool) && (
+          <EditMachinePoolModal
+            cluster={cluster}
+            onSave={refreshMachinePools}
+            onClose={() =>
+              this.setState(
+                produce((draft) => {
+                  draft.editMachinePoolId = undefined;
+                  draft.addMachinePool = false;
+                }),
+              )
+            }
+            machinePoolId={editMachinePoolId}
+            machinePoolsResponse={machinePoolsList}
+            machineTypesResponse={machineTypes}
+          />
         )}
         <UpdateMachinePoolModal />
-        {openModalId === modals.EDIT_CLUSTER_AUTOSCALING_V1 && (
+        {isClusterAutoscalingModalOpen && (
           <EditClusterAutoScalerForDay2
             isWizard={false}
             isRosa={isRosa}
@@ -505,10 +513,9 @@ MachinePools.propTypes = {
   }).isRequired,
   openModal: PropTypes.func.isRequired,
   hasMachinePoolsQuota: PropTypes.bool.isRequired,
-  openModalId: PropTypes.string,
+  isDeleteMachinePoolModalOpen: PropTypes.bool.isRequired,
+  isClusterAutoscalingModalOpen: PropTypes.bool.isRequired,
   deleteMachinePoolResponse: PropTypes.object.isRequired,
-  addMachinePoolResponse: PropTypes.object.isRequired,
-  scaleMachinePoolResponse: PropTypes.object.isRequired,
   machinePoolsList: PropTypes.object.isRequired,
   getMachinePools: PropTypes.func.isRequired,
   deleteMachinePool: PropTypes.func.isRequired,

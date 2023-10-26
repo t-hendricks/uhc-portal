@@ -1,28 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { Field, Fields, FieldArray } from 'redux-form';
-import {
-  FormGroup,
-  GridItem,
-  ExpandableSection,
-  Title,
-  Text,
-  TextVariants,
-} from '@patternfly/react-core';
+import { GridItem, ExpandableSection, Title, Text, TextVariants } from '@patternfly/react-core';
 
 import { canSelectImds } from '~/components/clusters/wizards/rosa/constants';
 import MachineTypeSelection from './MachineTypeSelection';
 import ImdsSection from './ImdsSection';
 
-import { ReduxFormKeyValueList, ReduxFormTaints } from '../../../../../common/ReduxFormComponents';
-import PersistentStorageDropdown from '../../../../common/PersistentStorageDropdown';
-import LoadBalancersDropdown from '../../../../common/LoadBalancersDropdown';
+import { ReduxFormKeyValueList } from '../../../../../common/ReduxFormComponents';
 import NodeCountInput from '../../../../common/NodeCountInput';
 import links from '../../../../../../common/installLinks.mjs';
 import { normalizedProducts, billingModels } from '../../../../../../common/subscriptionTypes';
-import { constants } from '../../CreateOSDFormConstants';
 
-import PopoverHint from '../../../../../common/PopoverHint';
 import { required } from '../../../../../../common/validators';
 import ExternalLink from '../../../../../common/ExternalLink';
 import AutoScaleSection from './AutoScaleSection/AutoScaleSection';
@@ -30,19 +19,15 @@ import WorkerNodeVolumeSizeSection from './WorkerNodeVolumeSizeSection/WorkerNod
 import { computeNodeHintText } from './AutoScaleSection/AutoScaleHelper';
 
 function ScaleSection({
-  pending,
   isBYOC,
   isMultiAz,
   machineType,
   cloudProviderID,
   product,
-  showStorageAndLoadBalancers = true,
   minNodesRequired,
   nodeIncrement,
-  isMachinePool = false,
   canAutoScale = false,
   autoscalingEnabled = false,
-  inModal = false,
   autoScaleMinNodesValue,
   autoScaleMaxNodesValue,
   change,
@@ -53,7 +38,6 @@ function ScaleSection({
   poolNumber,
   maxWorkerVolumeSizeGiB,
   isHypershift,
-  forceTouch,
   hasNodeLabels = false,
 }) {
   const [isNodeLabelsExpanded, setIsNodeLabelsExpanded] = useState(false);
@@ -66,34 +50,22 @@ function ScaleSection({
     change('imds', value);
   };
 
-  const expandableSectionTitle = isMachinePool ? 'Edit node labels and taints' : 'Add node labels';
+  const labelsSection = isHypershift ? null : (
+    <ExpandableSection
+      toggleText="Add node labels"
+      isExpanded={isNodeLabelsExpanded}
+      onToggle={setIsNodeLabelsExpanded}
+    >
+      <Title headingLevel="h3">Node labels (optional)</Title>
+      <p className="pf-u-mb-md">
+        Configure labels that will apply to all nodes in this machine pool.
+      </p>
+      <FieldArray name="node_labels" component={ReduxFormKeyValueList} />
+    </ExpandableSection>
+  );
 
-  const labelsAndTaintsSection =
-    isHypershift && !inModal ? null : (
-      <ExpandableSection
-        toggleTextCollapsed={expandableSectionTitle}
-        toggleTextExpanded={expandableSectionTitle}
-        isExpanded={isNodeLabelsExpanded}
-        onToggle={(isExpanded) => setIsNodeLabelsExpanded(isExpanded)}
-      >
-        <Title headingLevel="h3">Node labels (optional)</Title>
-        <p className="pf-u-mb-md">
-          Configure labels that will apply to all nodes in this machine pool.
-        </p>
-        <FieldArray name="node_labels" forceTouch={forceTouch} component={ReduxFormKeyValueList} />
-        {isMachinePool && (
-          <>
-            <Title headingLevel="h3" className="pf-u-mb-md pf-u-mt-lg">
-              Taints
-            </Title>
-            <FieldArray name="taints" component={ReduxFormTaints} canAddMore />
-          </>
-        )}
-      </ExpandableSection>
-    );
-
-  const isRosaClassicOrOsdCss = cloudProviderID === 'aws' && !isHypershift && isBYOC;
-  const imdsSection = isRosaClassicOrOsdCss && imds && (
+  const isRosaClassicOrOsdCcs = cloudProviderID === 'aws' && !isHypershift && isBYOC;
+  const imdsSection = isRosaClassicOrOsdCcs && imds && (
     <>
       <GridItem md={8}>
         <ImdsSection
@@ -107,13 +79,10 @@ function ScaleSection({
   );
 
   const isRosa = product === normalizedProducts.ROSA;
-
-  const isHypershiftWizard = isHypershift && !inModal;
-  const isAddHypershiftModal = isHypershift && inModal;
   const nonAutoScaleNodeLabel = () => {
     const label = 'Compute node count';
 
-    if (isHypershiftWizard) {
+    if (isHypershift) {
       return `${label} (per machine pool)`;
     }
 
@@ -156,14 +125,11 @@ function ScaleSection({
           component={MachineTypeSelection}
           names={['machine_type', 'machine_type_force_choice']}
           validate={{ machine_type: required }}
-          disabled={pending}
           isMultiAz={isMultiAz}
           isBYOC={isBYOC}
           cloudProviderID={cloudProviderID}
           product={product}
-          isMachinePool={isMachinePool}
           billingModel={billingModel}
-          inModal={inModal}
         />
       </GridItem>
       <GridItem md={6} />
@@ -173,7 +139,7 @@ function ScaleSection({
           <GridItem md={12}>
             <AutoScaleSection
               openEditClusterAutoScalingModal={
-                isRosaClassicOrOsdCss ? openEditClusterAutoScalingModal : undefined
+                isRosaClassicOrOsdCcs ? openEditClusterAutoScalingModal : undefined
               }
               autoscalingEnabled={autoscalingEnabled}
               isMultiAz={isMultiAz}
@@ -182,10 +148,9 @@ function ScaleSection({
               autoScaleMaxNodesValue={autoScaleMaxNodesValue}
               product={product}
               isBYOC={isBYOC}
-              isDefaultMachinePool={!isMachinePool && !isHypershift}
+              isDefaultMachinePool={!isHypershift}
               minNodesRequired={minNodesRequired}
-              isHypershiftWizard={isHypershiftWizard}
-              isHypershiftMachinePool={isAddHypershiftModal}
+              isHypershiftWizard={isHypershift}
               numPools={nodeIncrement}
             />
           </GridItem>
@@ -203,10 +168,9 @@ function ScaleSection({
               isMultiAz={isMultiAz}
               isByoc={isBYOC}
               machineType={machineType}
-              isDisabled={pending}
               extendedHelpText={
                 <>
-                  {computeNodeHintText(isHypershiftWizard, isAddHypershiftModal)}{' '}
+                  {computeNodeHintText(isHypershift, false)}{' '}
                   <ExternalLink
                     href={
                       isRosa
@@ -222,9 +186,8 @@ function ScaleSection({
               product={product}
               minNodes={minNodesRequired}
               increment={nodeIncrement}
-              isMachinePool={isMachinePool}
               billingModel={billingModel}
-              isHypershiftWizard={isHypershiftWizard}
+              isHypershiftWizard={isHypershift}
               poolNumber={poolNumber}
               isHypershift={isHypershift}
             />
@@ -237,54 +200,8 @@ function ScaleSection({
       {imdsSection}
       {/* Worker node disk size */}
       {workerNodeVolumeSizeSection}
-      {/* Labels and Taints */}
-      {labelsAndTaintsSection}
-
-      {/* Persistent Storage & Load Balancers */}
-      {showStorageAndLoadBalancers && !isBYOC && (
-        <>
-          <GridItem md={6}>
-            <FormGroup
-              label="Persistent storage"
-              fieldId="persistent_storage"
-              labelIcon={<PopoverHint hint={constants.persistentStorageHint} />}
-            >
-              <Field
-                name="persistent_storage"
-                component={PersistentStorageDropdown}
-                disabled={pending}
-                currentValue={null}
-                cloudProviderID={cloudProviderID}
-                billingModel={billingModel}
-                product={product}
-                isBYOC={isBYOC}
-                isMultiAZ={isMultiAz}
-              />
-            </FormGroup>
-          </GridItem>
-          <GridItem md={6} />
-          <GridItem md={6}>
-            <FormGroup
-              label="Load balancers"
-              fieldId="load_balancers"
-              labelIcon={<PopoverHint hint={constants.loadBalancersHint} />}
-            >
-              <Field
-                name="load_balancers"
-                component={LoadBalancersDropdown}
-                disabled={pending}
-                currentValue={null}
-                cloudProviderID={cloudProviderID}
-                billingModel={billingModel}
-                product={product}
-                isBYOC={isBYOC}
-                isMultiAZ={isMultiAz}
-              />
-            </FormGroup>
-          </GridItem>
-          <GridItem md={6} />
-        </>
-      )}
+      {/* Labels */}
+      {labelsSection}
     </>
   );
 }
@@ -294,19 +211,15 @@ ScaleSection.defaultProps = {
 };
 
 ScaleSection.propTypes = {
-  pending: PropTypes.bool,
   isBYOC: PropTypes.bool.isRequired,
   isMultiAz: PropTypes.bool.isRequired,
   isHypershift: PropTypes.bool,
-  inModal: PropTypes.bool,
-  showStorageAndLoadBalancers: PropTypes.bool,
   machineType: PropTypes.string.isRequired,
   cloudProviderID: PropTypes.string.isRequired,
   product: PropTypes.oneOf(Object.keys(normalizedProducts)).isRequired,
   billingModel: PropTypes.oneOf(Object.values(billingModels)),
   minNodesRequired: PropTypes.number,
   nodeIncrement: PropTypes.number,
-  isMachinePool: PropTypes.bool,
   canAutoScale: PropTypes.bool,
   hasNodeLabels: PropTypes.bool,
   autoscalingEnabled: PropTypes.bool,
@@ -318,7 +231,6 @@ ScaleSection.propTypes = {
   imds: PropTypes.string,
   poolNumber: PropTypes.number,
   maxWorkerVolumeSizeGiB: PropTypes.number.isRequired,
-  forceTouch: PropTypes.bool,
 };
 
 export default ScaleSection;

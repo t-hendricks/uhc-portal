@@ -29,7 +29,6 @@ function MachinePoolScreen({
   poolNumber,
   isHypershift,
   maxWorkerVolumeSizeGiB,
-  forceTouch,
   hasNodeLabels,
 }) {
   return (
@@ -58,7 +57,6 @@ function MachinePoolScreen({
           autoScaleMinNodesValue={autoScaleMinNodesValue}
           autoScaleMaxNodesValue={autoScaleMaxNodesValue}
           billingModel={billingModel}
-          showStorageAndLoadBalancers={false}
           minNodesRequired={minNodesRequired}
           nodeIncrement={nodeIncrement}
           clusterVersionRawId={clusterVersionRawId}
@@ -67,7 +65,6 @@ function MachinePoolScreen({
           maxWorkerVolumeSizeGiB={maxWorkerVolumeSizeGiB}
           isHypershift={isHypershift}
           openEditClusterAutoScalingModal={openEditClusterAutoScalingModal}
-          forceTouch={forceTouch}
           hasNodeLabels={hasNodeLabels}
         />
       </Grid>
@@ -99,7 +96,6 @@ MachinePoolScreen.propTypes = {
   poolNumber: PropTypes.number,
   isHypershift: PropTypes.bool,
   maxWorkerVolumeSizeGiB: PropTypes.number.isRequired,
-  forceTouch: PropTypes.bool,
   hasNodeLabels: PropTypes.bool,
 };
 

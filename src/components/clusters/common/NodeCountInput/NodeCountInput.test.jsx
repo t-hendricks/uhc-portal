@@ -4,9 +4,10 @@ import {
   getMinNodesRequired as RealGetMinNodesRequired,
   getMinNodesRequiredHypershift,
 } from '~/components/clusters/ClusterDetails/components/MachinePools/machinePoolsHelper';
-import NodeCountInput, { MAX_NODES } from './NodeCountInput';
+import NodeCountInput from './NodeCountInput';
 import * as quotaSelectors from '../quotaSelectors';
 import { normalizedProducts, billingModels } from '../../../../common/subscriptionTypes';
+import { MAX_NODES } from '../machinePools/constants';
 
 const getMinNodesRequired = ({ isDefaultMachinePool, isByoc, isMultiAz }) =>
   RealGetMinNodesRequired(isDefaultMachinePool, isByoc, isMultiAz);
@@ -23,8 +24,10 @@ const baseProps = ({ isByoc, isMultiAz }) => ({
   label: 'compute nodes',
   currentNodeCount: 4,
   quota: {},
-  machineTypesByID: {
-    fake: { id: 'fake', generic_name: 'fake' },
+  machineTypes: {
+    typesByID: {
+      fake: { id: 'fake', generic_name: 'fake' },
+    },
   },
   input: {
     name: 'compute-nodes',

@@ -1,4 +1,12 @@
-import { Banner, PageSection, Wizard, WizardContext } from '@patternfly/react-core';
+import {
+  Banner,
+  Bullseye,
+  PageSection,
+  Stack,
+  StackItem,
+  Wizard,
+  WizardContext,
+} from '@patternfly/react-core';
 import { Spinner } from '@redhat-cloud-services/frontend-components';
 import { isMatch } from 'lodash';
 import PropTypes from 'prop-types';
@@ -320,7 +328,7 @@ class CreateROSAWizardInternal extends React.Component {
             name: stepNameById[stepId.CLUSTER_SETTINGS__MACHINE_POOL],
             component: (
               <ErrorBoundary>
-                <MachinePoolScreen forceTouch={forceTouch} />
+                <MachinePoolScreen />
               </ErrorBoundary>
             ),
             canJumpTo: this.canJumpTo(22),
@@ -407,13 +415,30 @@ class CreateROSAWizardInternal extends React.Component {
         component: (
           <ErrorBoundary>
             <WizardContext.Consumer>
-              {({ goToStepById }) => (
-                <ReviewClusterScreen
-                  isCreateClusterPending={createClusterResponse.pending}
-                  clusterRequestParams={{ isWizard: true }}
-                  goToStepById={goToStepById}
-                />
-              )}
+              {({ goToStepById }) =>
+                !createClusterResponse.pending ? (
+                  <ReviewClusterScreen
+                    clusterRequestParams={{ isWizard: true }}
+                    goToStepById={goToStepById}
+                  />
+                ) : (
+                  <Bullseye>
+                    <Stack>
+                      <StackItem>
+                        <Bullseye>
+                          <Spinner size="xl" isSVG />
+                        </Bullseye>
+                      </StackItem>
+                      <StackItem>
+                        <Bullseye>
+                          Creating your cluster. Do not refresh this page. This request may take a
+                          moment...
+                        </Bullseye>
+                      </StackItem>
+                    </Stack>
+                  </Bullseye>
+                )
+              }
             </WizardContext.Consumer>
           </ErrorBoundary>
         ),

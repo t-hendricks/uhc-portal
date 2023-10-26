@@ -44,10 +44,10 @@ const UpdateAllMachinePools = ({
     return null;
   }
 
-  const machinePoolsToUpdate = machinePools.data.filter((pool: NodePool) =>
-    // @ts-ignore pool.version not picked up by running yarn gen-type
-    compareIsMachinePoolBehindControlPlane(controlPlaneVersion, pool.version.id),
-  );
+  const machinePoolsToUpdate =
+    machinePools.data?.filter((pool: NodePool) =>
+      compareIsMachinePoolBehindControlPlane(controlPlaneVersion, pool.version?.id),
+    ) || [];
 
   if (machinePoolsToUpdate.length === 0) {
     return null;
