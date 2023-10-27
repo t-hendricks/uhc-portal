@@ -7,18 +7,34 @@ import { defaultMarginBottomSpacing, ListItem, hypershiftValue } from './Control
 type HostedTileProps = {
   handleChange: (string: hypershiftValue) => void;
   isSelected: boolean;
+  isHostedDisabled: boolean;
 };
 
-const HostedTile = ({ handleChange, isSelected }: HostedTileProps) => (
+const HostedTile = ({ handleChange, isSelected, isHostedDisabled }: HostedTileProps) => (
   <Tile
     title="Hosted"
     isDisplayLarge
     isStacked
-    onClick={() => handleChange('true')}
+    onClick={() => !isHostedDisabled && handleChange('true')}
     isSelected={isSelected}
+    isDisabled={isHostedDisabled}
     className="controlPlaneScreenTile"
     data-testid="hosted-control-planes"
   >
+    {isHostedDisabled && (
+      <Alert
+        variant="info"
+        title={
+          <>
+            To create hosted control plane clusters, you&apos;ll need to{' '}
+            <ExternalLink href={links.AWS_CONSOLE_ROSA_HOME_GET_STARTED}>
+              enable ROSA hosted control plane
+            </ExternalLink>
+          </>
+        }
+        className={defaultMarginBottomSpacing}
+      />
+    )}
     <Text component={TextVariants.p} className={defaultMarginBottomSpacing}>
       Run an OpenShift cluster where the control plane is decoupled from the data plane, and is
       treated like a multi-tenant workload on a hosted service cluster. The data plane is on a
