@@ -5,10 +5,70 @@ exports[`<Dashboard /> renders correctly 1`] = `
   title="Overview | Red Hat OpenShift Cluster Manager"
 >
   <PageHeader>
-    <PageHeaderTitle
-      className="page-title"
-      title="Dashboard"
-    />
+    <Split
+      hasGutter={true}
+    >
+      <SplitItem>
+        <Title
+          className="page-title"
+          headingLevel="h1"
+          size="2xl"
+          widget-type="InsightsPageHeaderTitle"
+        >
+          Dashboard
+        </Title>
+      </SplitItem>
+      <SplitItem
+        isFilled={true}
+      />
+      <SplitItem>
+        <Link
+          to="/create"
+        >
+          <Button
+            variant="primary"
+          >
+            Create cluster
+          </Button>
+        </Link>
+      </SplitItem>
+      <SplitItem>
+        <Link
+          to="/register"
+        >
+          <Button
+            variant="secondary"
+          >
+            Register cluster
+          </Button>
+        </Link>
+      </SplitItem>
+      <SplitItem>
+        <Dropdown
+          dropdownItems={
+            Array [
+              <DropdownItem>
+                <Link
+                  to="/archived"
+                >
+                  View archived clusters
+                </Link>
+              </DropdownItem>,
+            ]
+          }
+          isOpen={false}
+          isPlain={true}
+          onSelect={[Function]}
+          position="right"
+          toggle={
+            <KebabToggle
+              id="toggle-kebab"
+              onToggle={[Function]}
+            />
+          }
+        />
+      </SplitItem>
+    </Split>
   </PageHeader>
   <PageSection>
     <Grid
