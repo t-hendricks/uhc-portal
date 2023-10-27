@@ -10,7 +10,7 @@ import {
 import { Spinner } from '@redhat-cloud-services/frontend-components';
 import { isMatch } from 'lodash';
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, { useState } from 'react';
 import { Redirect } from 'react-router-dom';
 
 import { ocmResourceType, trackEvents } from '~/common/analytics';
@@ -45,6 +45,7 @@ import LeaveCreateClusterPrompt from '../../common/LeaveCreateClusterPrompt';
 import AccountsRolesScreen from './AccountsRolesScreen';
 import { isUserRoleForSelectedAWSAccount } from './AccountsRolesScreen/AccountsRolesScreen';
 import ClusterRolesScreen from './ClusterRolesScreen';
+import { ROSAWizardContext } from './ROSAWizardContext';
 
 import CreateRosaWizardFooter from './CreateRosaWizardFooter';
 
@@ -561,20 +562,23 @@ class CreateROSAWizardInternal extends React.Component {
 function CreateROSAWizard(props) {
   usePreventBrowserNav();
   const isHypershiftEnabled = useFeatureGate(HYPERSHIFT_WIZARD_FEATURE) && !isRestrictedEnv();
+  const [forceLeaveWizard, setForceLeaveWizard] = useState(false);
+  const contextValue = { forceLeaveWizard, setForceLeaveWizard };
   return (
-    <AppPage title="Create OpenShift ROSA Cluster">
-      <AppDrawerContext.Consumer>
-        {({ closeDrawer }) => (
-          <CreateROSAWizardInternal
-            {...props}
-            closeDrawer={closeDrawer}
-            isHypershiftEnabled={isHypershiftEnabled}
-          />
-        )}
-      </AppDrawerContext.Consumer>
-
-      <LeaveCreateClusterPrompt product={normalizedProducts.ROSA} />
-    </AppPage>
+    <ROSAWizardContext.Provider value={contextValue}>
+      <AppPage title="Create OpenShift ROSA Cluster">
+        <AppDrawerContext.Consumer>
+          {({ closeDrawer }) => (
+            <CreateROSAWizardInternal
+              {...props}
+              closeDrawer={closeDrawer}
+              isHypershiftEnabled={isHypershiftEnabled}
+            />
+          )}
+        </AppDrawerContext.Consumer>
+        <LeaveCreateClusterPrompt product={normalizedProducts.ROSA} />
+      </AppPage>
+    </ROSAWizardContext.Provider>
   );
 }
 
