@@ -32,7 +32,13 @@ while [[ $# -gt 0 ]]; do
 done
 
 if [ -z "$after" ] ; then
-    after=$(date -v-1m +%Y-%m-%d)
+    if date --version &>/dev/null; then
+      # GNU date is available
+      after=$(date --date="1 month ago" +%Y-%m-%d)
+    else
+      # Assume BSD date is available
+      after=$(date -v-1m +%Y-%m-%d)
+    fi
     echo "Defaulting 'after' to '$after'"
 fi
 
