@@ -225,6 +225,12 @@ const hasManagedQuotaSelector = (state, product) =>
     product,
   }) >= 1;
 
+const hasHostedQuotaSelector = (quotaList) =>
+  availableClustersFromQuota(quotaList, {
+    product: normalizedProducts.ROSA,
+    billingModel: billingModels.MARKETPLACE,
+  }) >= 1;
+
 /**
  * Returns number of nodes of specific type that can be created/added, from 0 to `Infinity`.
  * Returns 0 if necessary data not fulfilled yet.
@@ -250,6 +256,7 @@ export {
   hasPotentialQuota,
   queryFromCluster,
   hasManagedQuotaSelector,
+  hasHostedQuotaSelector,
   availableClustersFromQuota,
   availableNodesFromQuota,
   addOnBillingQuota,
