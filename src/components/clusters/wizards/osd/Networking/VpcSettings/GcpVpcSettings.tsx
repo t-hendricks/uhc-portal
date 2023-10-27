@@ -34,41 +34,42 @@ export const GcpVpcSettings = () => {
 
   const hostProjectId = useMemo<ReactElement | null>(() => {
     if (installToSharedVpc) {
-      if (versionComparator(clusterVersion?.raw_id, '4.13.15') === -1) {
-        return (
-          <div className="pf-u-mt-md">
-            <Alert
-              variant="danger"
-              isInline
-              title="You must use OpenShift version 4.13.15 or above."
-              actionLinks={
-                <>
-                  <AlertActionLink onClick={() => goToStepById(StepId.ClusterSettingsDetails)}>
-                    Change version
-                  </AlertActionLink>
-                </>
-              }
-            />
-          </div>
-        );
-      }
+      const wrongVersion = versionComparator(clusterVersion?.raw_id, '4.13.15') === -1;
       return (
-        <div className="pf-u-mt-md">
-          <TextInputField
-            name={FieldId.SharedHostProjectID}
-            label="Host project ID"
-            validate={validateGCPHostProjectId}
-          />
-
-          <div className="pf-u-mt-md">
-            <Alert
-              variant="info"
-              isInline
-              title="NOTE: To install a cluster into a shared VPC, the shared VPC administrator must enable a project as a
-              host project in their Google Cloud console. Then you can attach service projects to the host project."
+        <>
+          {wrongVersion && (
+            <div className="pf-u-mt-md">
+              <Alert
+                variant="danger"
+                isInline
+                title="You must use OpenShift version 4.13.15 or above."
+                actionLinks={
+                  <>
+                    <AlertActionLink onClick={() => goToStepById(StepId.ClusterSettingsDetails)}>
+                      Change version
+                    </AlertActionLink>
+                  </>
+                }
+              />
+            </div>
+          )}
+          <div className="pf-u-mt-md" style={{ display: wrongVersion ? 'none' : 'block' }}>
+            <TextInputField
+              name={FieldId.SharedHostProjectID}
+              label="Host project ID"
+              validate={validateGCPHostProjectId}
             />
+
+            <div className="pf-u-mt-md">
+              <Alert
+                variant="info"
+                isInline
+                title="NOTE: To install a cluster into a shared VPC, the shared VPC administrator must enable a project as a
+              host project in their Google Cloud console. Then you can attach service projects to the host project."
+              />
+            </div>
           </div>
-        </div>
+        </>
       );
     }
     return null;
@@ -108,11 +109,9 @@ export const GcpVpcSettings = () => {
             iconClassName="pf-u-ml-sm"
             hint={
               <>
-                {
-                  'Your VPC must have control plane and compute subnets. The control plane subnet is where you deploy your control plane machines. The compute subnet is where you deploy your compute machines. '
-                }
+                Install into a non-default subnet shared by another account in your CP organization
                 <ExternalLink href={links.INSTALL_GCP_VPC}>
-                  Learn more about installing into an existing VPC
+                  Learn more about GCP shared VPC
                 </ExternalLink>
               </>
             }
@@ -123,15 +122,9 @@ export const GcpVpcSettings = () => {
             To install into an existing VPC, you need to ensure that your VPC is configured with a
             control plane subnet and compute subnet.
           </p>
-          {!installToSharedVpc && (
-            <div className="pf-u-mt-md  pf-u-mb-lg">
-              <Alert
-                variant="info"
-                isInline
-                title="You'll need to match these VPC subnets when you define the CIDR ranges."
-              />
-            </div>
-          )}
+          <p className="pf-u-mt-sm">
+            You&#39;ll also need to match these VPC subnets when you define the CIDR ranges.
+          </p>
         </div>
       </GridItem>
 
