@@ -48,7 +48,7 @@ while IFS=',' read -r commitHash commitDate commitMessage; do
     mrID=$(echo "$commitDescription" | grep -o '![0-9]\{4\}' | tr -d '!')
     mrDesc=$(echo "$commitDescription" | awk 'NR==1 { print }')
     # Pattern matching to extract jiraKeys
-    jiraTicketRegex="(HAC|MGMT|OCM|OCMUI|SDA|SDB|RHBKAAS)[- ]?([0-9]+)"
+    jiraTicketRegex='(OCMUI|HAC|RHBKAAS|MGMT|RHCLOUD|OCM|SDA|SDB)[- ]?([0-9]+)'
     # Find and store all matching jiraKeys
     startIndex=0
     while [[ ${commitDescription:startIndex} =~ $jiraTicketRegex ]]; do
@@ -108,7 +108,10 @@ while IFS=',' read -r commitHash commitDate commitMessage; do
         resolutiondate=$(echo "$response" | jq -r '.fields.resolutiondate')
         printf "    resolutiondate: %s\n" "$resolutiondate"
 
-        if [[ "$status" != "Closed" && "$status" != "Verified" ]]; then
+        # OCMUI, HAC boards use "Review" -> (after QE) "Closed".
+        # RHBKAAS board uses "ON_QA" -> (after QE) "Verified" -> (after deploy) "Closed".
+        # RHCLOUD board uses "ON_QA" -> (after QE) "Release Pending" -> (after deploy) "Closed".
+        if [[ "$status" != "Closed" && "$status" != "Verified" && "$status" != "Release Pending" ]]; then
           allJirasClosed=false
         else
           # if closed, see if has 'do-not-promote' label
@@ -120,7 +123,7 @@ while IFS=',' read -r commitHash commitDate commitMessage; do
           done
           # if closed, look up 'depends on' jira tickets and make sure they are also closed
           issuelinks=$(echo "$response" | jq -r '.fields.issuelinks')
-          dependentIssueLinks=$(echo "$issuelinks" | jq '[.[] | select(.type.name == "Depend" and .outwardIssue != null and (.outwardIssue.key | test("(HAC|MGMT|OCM|SDA|SDB|RHBKAAS)[- ]?([0-9]+)")))]')
+          dependentIssueLinks=$(echo "$issuelinks" | jq '[.[] | select(.type.name == "Depend" and .outwardIssue != null and (.outwardIssue.key | test("(OCMUI|HAC|RHBKAAS|MGMT|RHCLOUD|OCM|SDA|SDB)[- ]?([0-9]+)")))]')
           if [ "$(echo "$dependentIssueLinks" | jq '. | length')" -gt 0 ]; then
             echo "    is dependent on:"
             for row in $(echo "${dependentIssueLinks}" | jq -r '.[] | @base64'); do

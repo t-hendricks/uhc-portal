@@ -78,6 +78,6 @@ describe('<RosaServicePage />', () => {
       'https://aws.amazon.com/rosa/pricing',
     );
 
-    checkAccessibility(container);
+    await checkAccessibility(container);
   });
 });

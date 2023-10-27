@@ -212,7 +212,7 @@ const getQueryParam = (param: string): string | undefined => {
     .forEach((queryString) => {
       const [key, val] = queryString.split('=');
       if (key === param) {
-        ret = val;
+        ret = decodeURI(val);
       }
     });
   return ret;

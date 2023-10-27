@@ -65,15 +65,14 @@ class ClusterLogsConditionalFilter extends Component {
   updateFlags(value, field) {
     const {
       setFlags,
-      history: { push },
+      history: { location, push },
     } = this.props;
-
     this.setState({ [field]: value }, () => {
       const { severityTypes, logTypes } = this.state;
       setFlags({ severityTypes, logTypes });
-      const flags = severityTypes.concat(logTypes);
       push({
-        search: buildFilterURLParams({ flags }),
+        ...location,
+        search: buildFilterURLParams({ logTypes, severityTypes }),
       });
     });
   }
@@ -161,6 +160,7 @@ ClusterLogsConditionalFilter.propTypes = {
   setFilter: PropTypes.func.isRequired,
   setFlags: PropTypes.func.isRequired,
   history: PropTypes.shape({
+    location: PropTypes.string.isRequired,
     push: PropTypes.func.isRequired,
   }).isRequired,
 };

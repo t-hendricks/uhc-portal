@@ -31,6 +31,9 @@ export const GcpByocFields = () => {
     values: { [FieldId.BillingModel]: billingModel },
   } = useFormState();
 
+  const gcpTitle = 'Have you prepared your Google account?';
+  const gcpText = `To prepare your account, accept the Google Cloud Terms and Agreements. If you've already accepted the terms, you can continue to complete OSD prerequisites.`;
+
   return (
     <Grid hasGutter>
       {billingModel !== billingModels.MARKETPLACE_GCP && (
@@ -53,12 +56,9 @@ export const GcpByocFields = () => {
             {billingModel === billingModels.MARKETPLACE_GCP && (
               <Hint className="pf-u-mb-md pf-u-mt-sm">
                 <HintTitle>
-                  <strong>Have you prepared your Google account?</strong>
+                  <strong>{gcpTitle}</strong>
                 </HintTitle>
-                <HintBody>
-                  Accept the Google Cloud terms and agreements to get started. If you have already
-                  prepared your Google Cloud account console, continue to the OSD prerequisites.
-                </HintBody>
+                <HintBody>{gcpText}</HintBody>
                 <HintFooter>
                   <ExternalLink href={links.GCP_CONSOLE_OSD_HOME}>
                     Review Google terms and agreements.

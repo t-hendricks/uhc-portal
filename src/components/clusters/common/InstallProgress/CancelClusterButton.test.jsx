@@ -18,7 +18,7 @@ describe('<CancelClusterButton />', () => {
 
   it('is accessible with modal open', async () => {
     const { container } = render(<CancelClusterButton cluster={cluster} defaultOpen />);
-    expect(screen.getByRole('dialog')).toBeInTheDocument();
+    expect(await screen.findByRole('dialog')).toBeInTheDocument();
     await checkAccessibility(container);
   });
 
@@ -39,7 +39,7 @@ describe('<CancelClusterButton />', () => {
     await user.click(screen.getByRole('button', { name: 'Cancel cluster creation' }));
 
     // Assert
-    expect(screen.getByRole('dialog')).toBeInTheDocument();
+    expect(await screen.findByRole('dialog')).toBeInTheDocument();
   });
 
   it('closes the modal on Close button click', async () => {
@@ -48,6 +48,7 @@ describe('<CancelClusterButton />', () => {
 
     // Act
     await user.click(screen.getByRole('button', { name: 'Cancel cluster creation' }));
+    expect(await screen.findByRole('dialog')).toBeInTheDocument();
 
     const modal = screen.getByRole('dialog');
     const closeButton = within(modal).getByRole('button', { name: 'Close' });
@@ -63,6 +64,7 @@ describe('<CancelClusterButton />', () => {
 
     // Act
     await user.click(screen.getByRole('button', { name: 'Cancel cluster creation' }));
+    expect(await screen.findByRole('dialog')).toBeInTheDocument();
 
     const modal = screen.getByRole('dialog');
     const cancelButton = within(modal).getByRole('button', { name: 'Cancel' });

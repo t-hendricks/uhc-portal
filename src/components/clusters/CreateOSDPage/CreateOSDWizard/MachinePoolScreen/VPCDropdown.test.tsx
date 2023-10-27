@@ -1,5 +1,7 @@
 import React from 'react';
-import { fireEvent, render, screen } from '@testUtils';
+
+import { fireEvent, render, screen } from '~/testUtils';
+import { GlobalState } from '~/redux/store';
 import VPCDropdown from './VPCDropdown';
 import * as vpcInquiries from '../VPCScreen/useVPCInquiry';
 
@@ -120,19 +122,41 @@ describe('<VPCDropdown />', () => {
     render(<VPCDropdown {...defaultProps} />);
     expect(screen.getByRole('button', { name: 'Refresh' })).toBeEnabled();
   });
-});
-it('shows with no VPCs found in dropdown', async () => {
-  render(<VPCDropdown {...defaultProps} />);
-  expect(await screen.findByText(/No VPCs found/i)).toBeInTheDocument();
-});
 
-it('shows search in select vpc dropdown', async () => {
-  const useAWSVPCInquiryhMock = jest.spyOn(vpcInquiries, 'useAWSVPCInquiry');
-  useAWSVPCInquiryhMock.mockReturnValue(vpclist);
+  it('shows with no VPCs found in dropdown', async () => {
+    render(<VPCDropdown {...defaultProps} />);
+    expect(await screen.findByText(/No VPCs found/i)).toBeInTheDocument();
+  });
 
-  render(<VPCDropdown {...defaultProps} />);
-  expect(await screen.findByText(/select a vpc/i)).toBeInTheDocument();
-  const selectDropdown = screen.getByRole('button', { name: 'Options menu' });
-  fireEvent.keyDown(selectDropdown, { key: 'Enter' }); // this is the only way to open select! using click doesn't work
-  expect(screen.getByPlaceholderText('Filter by VPC')).toBeInTheDocument();
+  it('shows search in select vpc dropdown', async () => {
+    const useAWSVPCInquiryhMock = jest.spyOn(vpcInquiries, 'useAWSVPCInquiry');
+    useAWSVPCInquiryhMock.mockReturnValue(vpclist);
+
+    render(<VPCDropdown {...defaultProps} />);
+    expect(await screen.findByText(/select a vpc/i)).toBeInTheDocument();
+    const selectDropdown = screen.getByRole('button', { name: 'Options menu' });
+    fireEvent.keyDown(selectDropdown, { key: 'Enter' }); // this is the only way to open select! using click doesn't work
+    expect(screen.getByPlaceholderText('Filter by VPC')).toBeInTheDocument();
+  });
+
+  it('shows the selected cloud provider region information', () => {
+    const initialState: Partial<GlobalState> = {
+      form: {
+        CreateCluster: {
+          values: {
+            cloud_provider: 'aws',
+            region: 'us-east-1',
+          },
+          registeredFields: [],
+        },
+      },
+    };
+    render(<VPCDropdown {...defaultProps} />, {}, initialState);
+
+    expect(
+      screen.getByText(
+        `Specify a VPC to install your machine pools into in your selected region: ${initialState?.form?.CreateCluster?.values?.region}`,
+      ),
+    ).toBeInTheDocument();
+  });
 });

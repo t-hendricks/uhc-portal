@@ -1,15 +1,31 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`MachineTypeSelection when the machine types list is available byoc lacking enough byoc node quota renders correctly 1`] = `
-<div>
-  You do not have enough quota to create a cluster with the minimum required worker capacity. Contact sales to purchase additional quota.
-</div>
+<Alert
+  isInline={true}
+  title="You do not have enough quota to create a cluster with the minimum required worker capacity."
+  variant="danger"
+>
+  <ExternalLink
+    href="https://cloud.redhat.com/products/dedicated/contact/"
+  >
+    Contact sales to purchase additional quota.
+  </ExternalLink>
+</Alert>
 `;
 
 exports[`MachineTypeSelection when the machine types list is available with an error loading flavours renders correctly 1`] = `
-<div>
-  You do not have enough quota to create a cluster with the minimum required worker capacity. Contact sales to purchase additional quota.
-</div>
+<Alert
+  isInline={true}
+  title="You do not have enough quota to create a cluster with the minimum required worker capacity."
+  variant="danger"
+>
+  <ExternalLink
+    href="https://cloud.redhat.com/products/dedicated/contact/"
+  >
+    Contact sales to purchase additional quota.
+  </ExternalLink>
+</Alert>
 `;
 
 exports[`MachineTypeSelection when the machine types list is available with rhinfra quota covering previous selection renders correctly 1`] = `
