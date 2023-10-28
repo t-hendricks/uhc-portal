@@ -6,6 +6,8 @@ import PopoverHint from '~/components/common/PopoverHint';
 
 interface TextInputFieldProps {
   name: string;
+  textInputClassName?: string;
+  formGroupClassName?: string;
   label?: string;
   validate?: FieldValidator;
   isDisabled?: boolean;
@@ -61,6 +63,8 @@ export const HelperTextInvalid = ({
 
 export const TextInputField = ({
   name,
+  textInputClassName,
+  formGroupClassName,
   label,
   validate,
   isDisabled,
@@ -77,6 +81,7 @@ export const TextInputField = ({
       <FormGroup
         fieldId={field.name}
         label={label}
+        className={formGroupClassName}
         validated={meta.touched && meta.error ? 'error' : 'default'}
         helperTextInvalid={
           <HelperTextInvalid
@@ -93,6 +98,7 @@ export const TextInputField = ({
       >
         <TextInput
           id={field.name}
+          className={textInputClassName}
           isDisabled={isDisabled}
           validated={meta.touched && meta.error ? 'error' : 'default'}
           onBlur={() => form.setFieldTouched(name, true)}
