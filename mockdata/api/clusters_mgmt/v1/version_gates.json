@@ -1,8 +1,8 @@
 {
   "kind": "VersionGateList",
   "page": 1,
-  "size": 6,
-  "total": 6,
+  "size": 11,
+  "total": 11,
   "items": [
     {
       "kind": "VersionGate",
@@ -16,6 +16,45 @@
       "documentation_url": "https://access.redhat.com/solutions/6808671",
       "sts_only": true,
       "creation_timestamp": "2022-03-11T01:32:40.359815Z"
+    },
+    {
+      "kind": "VersionGate",
+      "id": "273f0652-5ca5-11ee-a98c-0a580a82061c",
+      "href": "/api/clusters_mgmt/v1/version_gates/273f0652-5ca5-11ee-a98c-0a580a82061c",
+      "version_raw_id_prefix": "4.14",
+      "label": "api.openshift.com/gate-sts",
+      "value": "4.14",
+      "warning_message": "STS roles must be updated with 4.14 permissions before the cluster can be updated to OpenShift 4.14. Failure to update the roles before cluster update will cause cluster control plane degradation.",
+      "description": "OpenShift STS clusters include new required cloud provider permissions in OpenShift 4.14.",
+      "documentation_url": "https://access.redhat.com/solutions/6808671",
+      "sts_only": true,
+      "creation_timestamp": "2023-09-26T19:44:49.286512Z"
+    },
+    {
+      "kind": "VersionGate",
+      "id": "4cc9c9ce-46c2-11ee-8482-0a580a8300ea",
+      "href": "/api/clusters_mgmt/v1/version_gates/4cc9c9ce-46c2-11ee-8482-0a580a8300ea",
+      "version_raw_id_prefix": "4.14",
+      "label": "api.openshift.com/gate-ingress",
+      "value": "4.14",
+      "warning_message": "In version 4.14 of OSD/ROSA, we are changing how we manage Ingress Controllers. If you are using additional non-default Ingresses, or Custom Domains, your cluster may be affected.",
+      "description": "Upgrade to 4.14 may affect additional Ingress behaviour.",
+      "documentation_url": "https://access.redhat.com/node/7028653",
+      "sts_only": false,
+      "creation_timestamp": "2023-08-29T23:18:02.095663Z"
+    },
+    {
+      "kind": "VersionGate",
+      "id": "68da7320-5ca5-11ee-9f54-0a580a80040b",
+      "href": "/api/clusters_mgmt/v1/version_gates/68da7320-5ca5-11ee-9f54-0a580a80040b",
+      "version_raw_id_prefix": "4.14",
+      "label": "api.openshift.com/gate-ocp",
+      "value": "4.14",
+      "warning_message": "To prevent an outage on your cluster, review any APIs in use that will be removed, and migrate them to the appropriate new API version. Failure to evaluate and migrate components affected by this update can cause some types of workloads to stop functioning.",
+      "description": "OpenShift removes several Kubernetes APIs in OpenShift 4.14.",
+      "documentation_url": "https://access.redhat.com/articles/6958395",
+      "sts_only": false,
+      "creation_timestamp": "2023-09-26T19:46:39.357009Z"
     },
     {
       "kind": "VersionGate",
@@ -81,6 +120,32 @@
       "documentation_url": "https://access.redhat.com/solutions/6988197",
       "sts_only": false,
       "creation_timestamp": "2022-11-29T22:19:28.798657Z"
+    },
+    {
+      "kind": "VersionGate",
+      "id": "ec6fa2a0-d1ea-11ed-aefd-0a580a800209",
+      "href": "/api/clusters_mgmt/v1/version_gates/ec6fa2a0-d1ea-11ed-aefd-0a580a800209",
+      "version_raw_id_prefix": "4.13",
+      "label": "api.openshift.com/gate-sts",
+      "value": "4.13",
+      "warning_message": "STS roles must be updated with 4.13 permissions before the cluster can be updated to OpenShift 4.13. Failure to update the roles before cluster update will cause cluster control plane degradation.",
+      "description": "OpenShift STS clusters include new required cloud provider permissions in OpenShift 4.13.",
+      "documentation_url": "https://access.redhat.com/solutions/7005463",
+      "sts_only": true,
+      "creation_timestamp": "2023-04-03T06:44:03.764497Z"
+    },
+    {
+      "kind": "VersionGate",
+      "id": "f0bbef99-d1ea-11ed-aefd-0a580a800209",
+      "href": "/api/clusters_mgmt/v1/version_gates/f0bbef99-d1ea-11ed-aefd-0a580a800209",
+      "version_raw_id_prefix": "4.13",
+      "label": "api.openshift.com/gate-ocp",
+      "value": "4.13",
+      "warning_message": "To prevent an outage on your cluster, review any APIs in use that will be removed, and migrate them to the appropriate new API version. Failure to evaluate and migrate components affected by this update can cause some types of workloads to stop functioning.",
+      "description": "OpenShift removes several Kubernetes APIs in OpenShift 4.13.",
+      "documentation_url": "https://access.redhat.com/solutions/7005465",
+      "sts_only": false,
+      "creation_timestamp": "2023-04-03T06:44:10.975427Z"
     }
   ]
 }

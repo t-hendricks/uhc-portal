@@ -1,0 +1,180 @@
+{
+  "kind": "Cluster",
+  "id": "2739qkd9lr9imu58nmh02pep14jfkmgi",
+  "href": "/api/clusters_mgmt/v1/clusters/2739qkd9lr9imu58nmh02pep14jfkmgi",
+  "name": "osd-updating-cluster",
+  "external_id": "a8797990-3f7b-43c0-9d9a-08b8bca3c795",
+  "infra_id": "osd-updating-cluster-r8bnj",
+  "display_name": "osd-updating-cluster",
+  "creation_timestamp": "2023-10-25T10:17:55.682203Z",
+  "activity_timestamp": "2023-10-25T12:54:17Z",
+  "cloud_provider": {
+    "kind": "CloudProviderLink",
+    "id": "aws",
+    "href": "/api/clusters_mgmt/v1/cloud_providers/aws"
+  },
+  "openshift_version": "4.13.14",
+  "subscription": {
+    "kind": "SubscriptionLink",
+    "id": "2XFe5xAHjDK33K7S9EHgdlWBqaB",
+    "href": "/api/accounts_mgmt/v1/subscriptions/2XFe5xAHjDK33K7S9EHgdlWBqaB"
+  },
+  "region": {
+    "kind": "CloudRegionLink",
+    "id": "us-east-1",
+    "href": "/api/clusters_mgmt/v1/cloud_providers/aws/regions/us-east-1"
+  },
+  "console": {
+    "url": "https://console-openshift-console.apps.osd-updating-cluster.zp51.p1.openshiftapps.com"
+  },
+  "api": {
+    "url": "https://api.osd-updating-cluster.zp51.p1.openshiftapps.com:6443",
+    "listening": "external"
+  },
+  "nodes": {
+    "master": 3,
+    "infra": 2,
+    "compute": 4,
+    "availability_zones": ["us-east-1a"],
+    "compute_machine_type": {
+      "kind": "MachineTypeLink",
+      "id": "m5.xlarge",
+      "href": "/api/clusters_mgmt/v1/machine_types/m5.xlarge"
+    },
+    "infra_machine_type": {
+      "kind": "MachineTypeLink",
+      "id": "r5.xlarge",
+      "href": "/api/clusters_mgmt/v1/machine_types/r5.xlarge"
+    }
+  },
+  "state": "ready",
+  "flavour": {
+    "kind": "FlavourLink",
+    "id": "osd-4",
+    "href": "/api/clusters_mgmt/v1/flavours/osd-4"
+  },
+  "groups": {
+    "kind": "GroupListLink",
+    "href": "/api/clusters_mgmt/v1/clusters/2739qkd9lr9imu58nmh02pep14jfkmgi/groups"
+  },
+  "aws": {
+    "private_link": false,
+    "private_link_configuration": {
+      "kind": "PrivateLinkConfigurationLink",
+      "href": "/api/clusters_mgmt/v1/clusters/2739qkd9lr9imu58nmh02pep14jfkmgi/aws/private_link_configuration"
+    },
+    "tags": {
+      "red-hat-clustertype": "osd",
+      "red-hat-managed": "true"
+    },
+    "audit_log": {
+      "role_arn": ""
+    },
+    "ec2_metadata_http_tokens": ""
+  },
+  "dns": {
+    "base_domain": "zp51.p1.openshiftapps.com"
+  },
+  "network": {
+    "type": "OVNKubernetes",
+    "machine_cidr": "10.0.0.0/16",
+    "service_cidr": "172.30.0.0/16",
+    "pod_cidr": "10.128.0.0/16",
+    "host_prefix": 23
+  },
+  "external_configuration": {
+    "kind": "ExternalConfiguration",
+    "href": "/api/clusters_mgmt/v1/clusters/2739qkd9lr9imu58nmh02pep14jfkmgi/external_configuration",
+    "syncsets": {
+      "kind": "SyncsetListLink",
+      "href": "/api/clusters_mgmt/v1/clusters/2739qkd9lr9imu58nmh02pep14jfkmgi/external_configuration/syncsets"
+    },
+    "labels": {
+      "kind": "LabelListLink",
+      "href": "/api/clusters_mgmt/v1/clusters/2739qkd9lr9imu58nmh02pep14jfkmgi/external_configuration/labels"
+    },
+    "manifests": {
+      "kind": "ManifestListLink",
+      "href": "/api/clusters_mgmt/v1/clusters/2739qkd9lr9imu58nmh02pep14jfkmgi/external_configuration/manifests"
+    }
+  },
+  "multi_az": false,
+  "managed": true,
+  "ccs": {
+    "enabled": false,
+    "disable_scp_checks": false
+  },
+  "version": {
+    "kind": "Version",
+    "id": "openshift-v4.13.14",
+    "href": "/api/clusters_mgmt/v1/versions/openshift-v4.13.14",
+    "raw_id": "4.13.14",
+    "channel_group": "stable",
+    "available_upgrades": ["4.13.17"],
+    "end_of_life_timestamp": "2024-09-17T00:00:00Z"
+  },
+  "storage_quota": {
+    "value": 107374182400,
+    "unit": "B"
+  },
+  "load_balancer_quota": 0,
+  "identity_providers": {
+    "kind": "IdentityProviderListLink",
+    "href": "/api/clusters_mgmt/v1/clusters/2739qkd9lr9imu58nmh02pep14jfkmgi/identity_providers"
+  },
+  "aws_infrastructure_access_role_grants": {
+    "kind": "AWSInfrastructureAccessRoleGrantLink",
+    "href": "/api/clusters_mgmt/v1/clusters/2739qkd9lr9imu58nmh02pep14jfkmgi/aws_infrastructure_access_role_grants"
+  },
+  "addons": {
+    "kind": "AddOnInstallationListLink",
+    "href": "/api/clusters_mgmt/v1/clusters/2739qkd9lr9imu58nmh02pep14jfkmgi/addons"
+  },
+  "ingresses": {
+    "kind": "IngressListLink",
+    "href": "/api/clusters_mgmt/v1/clusters/2739qkd9lr9imu58nmh02pep14jfkmgi/ingresses"
+  },
+  "machine_pools": {
+    "kind": "MachinePoolListLink",
+    "href": "/api/clusters_mgmt/v1/clusters/2739qkd9lr9imu58nmh02pep14jfkmgi/machine_pools"
+  },
+  "inflight_checks": {
+    "kind": "InflightCheckListLink",
+    "href": "/api/clusters_mgmt/v1/clusters/2739qkd9lr9imu58nmh02pep14jfkmgi/inflight_checks"
+  },
+  "product": {
+    "kind": "ProductLink",
+    "id": "osd",
+    "href": "/api/clusters_mgmt/v1/products/osd"
+  },
+  "status": {
+    "state": "ready",
+    "dns_ready": true,
+    "oidc_ready": false,
+    "provision_error_message": "",
+    "provision_error_code": "",
+    "configuration_mode": "full",
+    "limited_support_reason_count": 0
+  },
+  "node_drain_grace_period": {
+    "value": 60,
+    "unit": "minutes"
+  },
+  "etcd_encryption": false,
+  "billing_model": "standard",
+  "disable_user_workload_monitoring": false,
+  "managed_service": {
+    "enabled": false,
+    "managed": false
+  },
+  "hypershift": {
+    "enabled": false
+  },
+  "byo_oidc": {
+    "enabled": false
+  },
+  "delete_protection": {
+    "href": "/api/clusters_mgmt/v1/clusters/2739qkd9lr9imu58nmh02pep14jfkmgi/delete_protection",
+    "enabled": false
+  }
+}
