@@ -33,6 +33,7 @@ const config = {
     },
   },
   moduleFileExtensions: ['js', 'jsx', 'ts', 'tsx', 'json', 'node', 'mjs'],
+  collectCoverageFrom: ['src/'],
 };
 
 module.exports = config;
