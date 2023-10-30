@@ -48,7 +48,11 @@ const hasCompleteRoleSet = (role, isHypershiftSelected) =>
   role.Installer && role.Support && role.Worker && (role.ControlPlane || isHypershiftSelected);
 
 // Order: current selected role > 'ManagedOpenShift'-prefixed role > first managed policy role > first complete role set > first incomplete role set > 'No Role Detected'
-export const getDefaultInstallerRole = (selectedInstallerRoleARN, accountRolesARNs) => {
+const getDefaultInstallerRole = (
+  selectedInstallerRoleARN,
+  accountRolesARNs,
+  isHypershiftSelected,
+) => {
   if (selectedInstallerRoleARN && selectedInstallerRoleARN !== NO_ROLE_DETECTED) {
     return selectedInstallerRoleARN;
   }
@@ -65,7 +69,9 @@ export const getDefaultInstallerRole = (selectedInstallerRoleARN, accountRolesAR
     (role) => role.prefix === 'ManagedOpenShift',
   );
 
-  const firstCompleteRoleSet = accountRolesARNs.find((role) => hasCompleteRoleSet(role));
+  const firstCompleteRoleSet = accountRolesARNs.find((role) =>
+    hasCompleteRoleSet(role, isHypershiftSelected),
+  );
   const defaultRole =
     hasManagedOpenshiftPrefix ||
     firstManagedPolicyRole ||
@@ -137,7 +143,7 @@ function AccountRolesARNsSection({
   useEffect(() => {
     accountRoles.forEach((role) => {
       if (role.Installer === selectedInstallerRole) {
-        setAllARNsFound(hasCompleteRoleSet(role));
+        setAllARNsFound(hasCompleteRoleSet(role, isHypershiftSelected));
         updateRoleArns(role);
         change('rosa_max_os_version', role.version);
       }
@@ -186,6 +192,7 @@ function AccountRolesARNsSection({
     const defaultInstallerRole = getDefaultInstallerRole(
       selectedInstallerRoleARN,
       accountRolesARNs,
+      isHypershiftSelected,
     );
     setSelectedInstallerRole(defaultInstallerRole);
   };
