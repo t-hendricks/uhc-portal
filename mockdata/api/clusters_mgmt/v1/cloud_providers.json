@@ -121,6 +121,24 @@
         },
         {
           "kind": "CloudRegion",
+          "id": "ap-south-2",
+          "href": "/api/clusters_mgmt/v1/cloud_providers/aws/regions/ap-south-2",
+          "display_name": "Asia Pacific, Hyderabad",
+          "cloud_provider": {
+            "kind": "CloudProviderLink",
+            "id": "aws",
+            "href": "/api/clusters_mgmt/v1/cloud_providers/aws"
+          },
+          "enabled": true,
+          "supports_multi_az": true,
+          "kms_location_name": "",
+          "kms_location_id": "",
+          "ccs_only": true,
+          "govcloud": false,
+          "supports_hypershift": false
+        },
+        {
+          "kind": "CloudRegion",
           "id": "ap-southeast-1",
           "href": "/api/clusters_mgmt/v1/cloud_providers/aws/regions/ap-southeast-1",
           "display_name": "Asia Pacific, Singapore",
@@ -171,6 +189,24 @@
           "kms_location_id": "",
           "ccs_only": true,
           "govcloud": false,
+          "supports_hypershift": true
+        },
+        {
+          "kind": "CloudRegion",
+          "id": "ap-southeast-4",
+          "href": "/api/clusters_mgmt/v1/cloud_providers/aws/regions/ap-southeast-4",
+          "display_name": "Asia Pacific, Melbourne",
+          "cloud_provider": {
+            "kind": "CloudProviderLink",
+            "id": "aws",
+            "href": "/api/clusters_mgmt/v1/cloud_providers/aws"
+          },
+          "enabled": true,
+          "supports_multi_az": true,
+          "kms_location_name": "",
+          "kms_location_id": "",
+          "ccs_only": true,
+          "govcloud": false,
           "supports_hypershift": false
         },
         {
@@ -207,6 +243,24 @@
           "kms_location_id": "",
           "ccs_only": false,
           "govcloud": false,
+          "supports_hypershift": true
+        },
+        {
+          "kind": "CloudRegion",
+          "id": "eu-central-2",
+          "href": "/api/clusters_mgmt/v1/cloud_providers/aws/regions/eu-central-2",
+          "display_name": "Europe, Zurich",
+          "cloud_provider": {
+            "kind": "CloudProviderLink",
+            "id": "aws",
+            "href": "/api/clusters_mgmt/v1/cloud_providers/aws"
+          },
+          "enabled": true,
+          "supports_multi_az": true,
+          "kms_location_name": "",
+          "kms_location_id": "",
+          "ccs_only": true,
+          "govcloud": false,
           "supports_hypershift": false
         },
         {
@@ -232,6 +286,24 @@
           "id": "eu-south-1",
           "href": "/api/clusters_mgmt/v1/cloud_providers/aws/regions/eu-south-1",
           "display_name": "Europe (Milan)",
+          "cloud_provider": {
+            "kind": "CloudProviderLink",
+            "id": "aws",
+            "href": "/api/clusters_mgmt/v1/cloud_providers/aws"
+          },
+          "enabled": true,
+          "supports_multi_az": true,
+          "kms_location_name": "",
+          "kms_location_id": "",
+          "ccs_only": true,
+          "govcloud": false,
+          "supports_hypershift": false
+        },
+        {
+          "kind": "CloudRegion",
+          "id": "eu-south-2",
+          "href": "/api/clusters_mgmt/v1/cloud_providers/aws/regions/eu-south-2",
+          "display_name": "Europe, Spain",
           "cloud_provider": {
             "kind": "CloudProviderLink",
             "id": "aws",
@@ -296,6 +368,24 @@
           "kms_location_name": "",
           "kms_location_id": "",
           "ccs_only": false,
+          "govcloud": false,
+          "supports_hypershift": false
+        },
+        {
+          "kind": "CloudRegion",
+          "id": "me-central-1",
+          "href": "/api/clusters_mgmt/v1/cloud_providers/aws/regions/me-central-1",
+          "display_name": "Middle East, UAE",
+          "cloud_provider": {
+            "kind": "CloudProviderLink",
+            "id": "aws",
+            "href": "/api/clusters_mgmt/v1/cloud_providers/aws"
+          },
+          "enabled": true,
+          "supports_multi_az": true,
+          "kms_location_name": "",
+          "kms_location_id": "",
+          "ccs_only": true,
           "govcloud": false,
           "supports_hypershift": false
         },
@@ -369,7 +459,7 @@
           "kms_location_id": "",
           "ccs_only": false,
           "govcloud": false,
-          "supports_hypershift": false
+          "supports_hypershift": true
         },
         {
           "kind": "CloudRegion",
@@ -441,7 +531,7 @@
           "kms_location_id": "",
           "ccs_only": false,
           "govcloud": false,
-          "supports_hypershift": false
+          "supports_hypershift": true
         }
       ]
     },
@@ -1148,8 +1238,8 @@
           },
           "enabled": true,
           "supports_multi_az": true,
-          "kms_location_name": "Global,Asia",
-          "kms_location_id": "global,asia",
+          "kms_location_name": "Asia,Global",
+          "kms_location_id": "asia,global",
           "ccs_only": false,
           "govcloud": false,
           "supports_hypershift": false
@@ -1166,8 +1256,8 @@
           },
           "enabled": true,
           "supports_multi_az": true,
-          "kms_location_name": "Global,asia1 (Tokyo, Osaka, and Seoul),Asia",
-          "kms_location_id": "global,asia1,asia",
+          "kms_location_name": "Asia,Global,asia1 (Tokyo, Osaka, and Seoul)",
+          "kms_location_id": "asia,global,asia1",
           "ccs_only": false,
           "govcloud": false,
           "supports_hypershift": false
@@ -1184,8 +1274,8 @@
           },
           "enabled": true,
           "supports_multi_az": true,
-          "kms_location_name": "Asia,Global,asia1 (Tokyo, Osaka, and Seoul)",
-          "kms_location_id": "asia,global,asia1",
+          "kms_location_name": "Global,Asia,asia1 (Tokyo, Osaka, and Seoul)",
+          "kms_location_id": "global,asia,asia1",
           "ccs_only": true,
           "govcloud": false,
           "supports_hypershift": false
@@ -1220,8 +1310,8 @@
           },
           "enabled": true,
           "supports_multi_az": true,
-          "kms_location_name": "Asia,Global",
-          "kms_location_id": "asia,global",
+          "kms_location_name": "Global,Asia",
+          "kms_location_id": "global,asia",
           "ccs_only": false,
           "govcloud": false,
           "supports_hypershift": false
@@ -1256,8 +1346,8 @@
           },
           "enabled": true,
           "supports_multi_az": true,
-          "kms_location_name": "eur4 (Finland, Netherlands, and Belgium),europe,Global",
-          "kms_location_id": "eur4,europe,global",
+          "kms_location_name": "eur4 (Finland, Netherlands, and Belgium),Global,europe",
+          "kms_location_id": "eur4,global,europe",
           "ccs_only": true,
           "govcloud": false,
           "supports_hypershift": false
@@ -1274,8 +1364,8 @@
           },
           "enabled": true,
           "supports_multi_az": true,
-          "kms_location_name": "europe,Global",
-          "kms_location_id": "europe,global",
+          "kms_location_name": "Global,europe",
+          "kms_location_id": "global,europe",
           "ccs_only": false,
           "govcloud": false,
           "supports_hypershift": false
@@ -1292,8 +1382,8 @@
           },
           "enabled": true,
           "supports_multi_az": true,
-          "kms_location_name": "Global,eur5 (London, Netherlands, and Belgium),europe",
-          "kms_location_id": "global,eur5,europe",
+          "kms_location_name": "eur5 (London, Netherlands, and Belgium),Global,europe",
+          "kms_location_id": "eur5,global,europe",
           "ccs_only": false,
           "govcloud": false,
           "supports_hypershift": false
@@ -1310,8 +1400,8 @@
           },
           "enabled": true,
           "supports_multi_az": true,
-          "kms_location_name": "europe,Global",
-          "kms_location_id": "europe,global",
+          "kms_location_name": "Global,europe",
+          "kms_location_id": "global,europe",
           "ccs_only": true,
           "govcloud": false,
           "supports_hypershift": false
@@ -1328,8 +1418,8 @@
           },
           "enabled": true,
           "supports_multi_az": true,
-          "kms_location_name": "Global,europe,eur4 (Finland, Netherlands, and Belgium),eur5 (London, Netherlands, and Belgium)",
-          "kms_location_id": "global,europe,eur4,eur5",
+          "kms_location_name": "eur4 (Finland, Netherlands, and Belgium),eur5 (London, Netherlands, and Belgium),europe,Global",
+          "kms_location_id": "eur4,eur5,europe,global",
           "ccs_only": false,
           "govcloud": false,
           "supports_hypershift": false
@@ -1346,8 +1436,8 @@
           },
           "enabled": true,
           "supports_multi_az": true,
-          "kms_location_name": "Global,europe",
-          "kms_location_id": "global,europe",
+          "kms_location_name": "europe,Global",
+          "kms_location_id": "europe,global",
           "ccs_only": true,
           "govcloud": false,
           "supports_hypershift": false
@@ -1418,8 +1508,8 @@
           },
           "enabled": true,
           "supports_multi_az": true,
-          "kms_location_name": "nam4 (Iowa, South Carolina, and Oklahoma),Global,US",
-          "kms_location_id": "nam4,global,us",
+          "kms_location_name": "nam4 (Iowa, South Carolina, and Oklahoma),US,Global",
+          "kms_location_id": "nam4,us,global",
           "ccs_only": false,
           "govcloud": false,
           "supports_hypershift": false
@@ -1436,8 +1526,8 @@
           },
           "enabled": true,
           "supports_multi_az": true,
-          "kms_location_name": "Global,nam4 (Iowa, South Carolina, and Oklahoma),US",
-          "kms_location_id": "global,nam4,us",
+          "kms_location_name": "nam4 (Iowa, South Carolina, and Oklahoma),Global,US",
+          "kms_location_id": "nam4,global,us",
           "ccs_only": false,
           "govcloud": false,
           "supports_hypershift": false
@@ -1490,8 +1580,8 @@
           },
           "enabled": true,
           "supports_multi_az": true,
-          "kms_location_name": "Global,US",
-          "kms_location_id": "global,us",
+          "kms_location_name": "US,Global",
+          "kms_location_id": "us,global",
           "ccs_only": false,
           "govcloud": false,
           "supports_hypershift": false
