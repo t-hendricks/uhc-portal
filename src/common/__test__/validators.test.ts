@@ -75,79 +75,26 @@ describe('clusterNameAsyncValidation', () => {
   });
 });
 
-describe('Field is a valid cluster name', () => {
-  const numCharsMsg = '1 - 15 characters';
-  const alphanumericMsg = 'Consist of lower-case alphanumeric characters, or hyphen (-)';
-  const startCharMsg = 'Start with a lower-case alphabetic character';
-  const endCharMsg = 'End with a lower-case alphanumeric character';
-
-  const testCases: [string | undefined, any][] = [
-    [
-      undefined,
-      [
-        { text: numCharsMsg, validated: false },
-        { text: alphanumericMsg, validated: false },
-        { text: startCharMsg, validated: false },
-        { text: endCharMsg, validated: false },
-      ],
-    ],
-    [
-      '',
-      [
-        { text: numCharsMsg, validated: false },
-        { text: alphanumericMsg, validated: false },
-        { text: startCharMsg, validated: false },
-        { text: endCharMsg, validated: false },
-      ],
-    ],
-    [
-      'foo.bar',
-      [
-        { text: numCharsMsg, validated: true },
-        { text: alphanumericMsg, validated: false },
-        { text: startCharMsg, validated: true },
-        { text: endCharMsg, validated: true },
-      ],
-    ],
-    [
-      'foobarfoobarfoobar',
-      [
-        { text: numCharsMsg, validated: false },
-        { text: alphanumericMsg, validated: true },
-        { text: startCharMsg, validated: true },
-        { text: endCharMsg, validated: true },
-      ],
-    ],
-    [
-      '1foobar',
-      [
-        { text: numCharsMsg, validated: true },
-        { text: alphanumericMsg, validated: true },
-        { text: startCharMsg, validated: false },
-        { text: endCharMsg, validated: true },
-      ],
-    ],
-    [
-      'foobar-',
-      [
-        { text: numCharsMsg, validated: true },
-        { text: alphanumericMsg, validated: true },
-        { text: startCharMsg, validated: true },
-        { text: endCharMsg, validated: false },
-      ],
-    ],
-    [
-      'foo-1bar',
-      [
-        { text: numCharsMsg, validated: true },
-        { text: alphanumericMsg, validated: true },
-        { text: startCharMsg, validated: true },
-        { text: endCharMsg, validated: true },
-      ],
-    ],
+describe('Field is a valid cluster name [len, chars, start, end]', () => {
+  const requirements = [
+    // expected values will be in same order
+    '1 - 15 characters',
+    'Consist of lower-case alphanumeric characters, or hyphen (-)',
+    'Start with a lower-case alphabetic character',
+    'End with a lower-case alphanumeric character',
+  ];
+  const testCases: [string | undefined, boolean[]][] = [
+    [undefined, [false, false, false, false]],
+    ['', [false, false, false, false]],
+    ['foo.bar', [true, false, true, true]],
+    ['foobarfoobarfoobar', [false, true, true, true]],
+    ['1foobar', [true, true, false, true]],
+    ['foobar-', [true, true, true, false]],
+    ['foo-1bar', [true, true, true, true]],
   ];
 
-  it.each(testCases)('value %p to be %o', (value: string | undefined, expected: any) => {
+  it.each(testCases)('value %p to be %p', (value: string | undefined, validateds: boolean[]) => {
+    const expected = requirements.map((text, i) => ({ text, validated: validateds[i] }));
     expect(clusterNameValidation(value)).toEqual(expected);
   });
 });
@@ -373,7 +320,7 @@ describe('Field does not share subnets with other fields', () => {
       'This subnet overlaps with the subnets in the Service CIDR, Pod CIDR fields.',
     ],
   ])(
-    'value %p and formData %o to be %p',
+    'value %p and formData %p to be %p',
     (
       value: string | undefined,
       formData: { [name: string]: any },
@@ -533,7 +480,7 @@ describe('Field is valid node count for OCP cluster', () => {
       "'aaa' is not a valid number of nodes.",
     ],
   ])(
-    'value %p min %o max %p to be %p',
+    'value %p min %p max %p to be %p',
     (
       value: string | number,
       min: { value: number; validationMsg?: string },
@@ -1125,7 +1072,22 @@ describe('GCP KMSService Account', () => {
 
 describe('HTPasswd password', () => {
   it.each([
-    ['SOMETHINGsomething1', undefined],
+    [
+      '',
+      {
+        emptyPassword: true,
+        // Blank string also fails all the other requirements,
+        // but deliberately suppressed to focus user attention on it being blank.
+        baseRequirements: false,
+        uppercase: false,
+        lowercase: false,
+        numbersOrSymbols: false,
+      },
+    ],
+    [
+      'SOMETHINGsomething1',
+      undefined, // all good
+    ],
     [
       'somethingsomething',
       {
@@ -1196,7 +1158,7 @@ describe('HTPasswd password', () => {
         numbersOrSymbols: true,
       },
     ],
-  ])('value %p to be %o', (value: string, expected: any | undefined) => {
+  ])('value %p to be %p', (value: string, expected: any | undefined) => {
     expect(validateHTPasswdPassword(value)).toStrictEqual(expected);
   });
 });
