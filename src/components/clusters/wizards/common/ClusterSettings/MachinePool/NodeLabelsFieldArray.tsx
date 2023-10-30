@@ -1,3 +1,4 @@
+import './NodeLabelsFieldArray.scss';
 import React from 'react';
 import { FieldArray } from 'formik';
 import classNames from 'classnames';
@@ -71,14 +72,19 @@ export const NodeLabelsFieldArray = () => {
               return (
                 <Grid hasGutter>
                   <GridItem span={5}>
-                    <TextInputField name={keyFieldName} validate={validateNodeKey(index)} />
+                    <TextInputField
+                      textInputClassName="label-form"
+                      name={keyFieldName}
+                      validate={validateNodeKey(index)}
+                    />
                   </GridItem>
                   <GridItem span={6}>
-                    <Flex
-                      alignItems={{ default: 'alignItemsCenter' }}
-                      flexWrap={{ default: 'nowrap' }}
-                    >
-                      <TextInputField name={valueFieldName} validate={validateNodeValue} />
+                    <Flex flexWrap={{ default: 'nowrap' }}>
+                      <TextInputField
+                        formGroupClassName="label-form"
+                        name={valueFieldName}
+                        validate={validateNodeValue}
+                      />
                       <Button
                         onClick={() => remove(index)}
                         icon={<MinusCircleIcon />}
