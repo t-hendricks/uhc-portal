@@ -3,14 +3,9 @@ import PropTypes from 'prop-types';
 
 import {
   PageSection,
-  Dropdown,
-  DropdownItem,
   Title,
-  Button,
-  ButtonVariant,
   Split,
   SplitItem,
-  KebabToggle,
   CardTitle,
   CardBody,
   EmptyState,
@@ -19,10 +14,10 @@ import {
   Grid,
   GridItem,
 } from '@patternfly/react-core';
-import { Link } from 'react-router-dom';
 import { PageHeader } from '@redhat-cloud-services/frontend-components/PageHeader';
 import Spinner from '@redhat-cloud-services/frontend-components/Spinner';
 
+import ClusterListActions from '../clusters/ClusterList/components/ClusterListActions/ClusterListActions';
 import ConnectedModal from '../common/Modal/ConnectedModal';
 import SmallClusterChart from '../clusters/common/ResourceUsage/SmallClusterChart';
 import DashboardEmptyState from './EmptyState/DashboardEmptyState';
@@ -75,10 +70,6 @@ class Dashboard extends Component {
     getUserAccess({ type: 'OCP' });
   }
 
-  state = {
-    toggleOpen: false,
-  };
-
   render() {
     const {
       summaryDashboard,
@@ -97,8 +88,6 @@ class Dashboard extends Component {
       insightsOverview,
       userAccess,
     } = this.props;
-
-    const { toggleOpen } = this.state;
 
     const isError = summaryDashboard.error || unhealthyClusters.error;
     const isPending =
@@ -159,37 +148,7 @@ class Dashboard extends Component {
             </SplitItem>
             <SplitItem isFilled />
             <SplitItem>
-              <Link to="/create">
-                <Button variant={ButtonVariant.primary}>Create cluster</Button>
-              </Link>
-            </SplitItem>
-            <SplitItem>
-              <Link to="/register">
-                <Button variant={ButtonVariant.secondary}>Register cluster</Button>
-              </Link>
-            </SplitItem>
-            <SplitItem>
-              <Dropdown
-                position="right"
-                onSelect={() => {
-                  this.setState({ toggleOpen: !toggleOpen });
-                }}
-                toggle={
-                  <KebabToggle
-                    id="toggle-kebab"
-                    onToggle={() => {
-                      this.setState({ toggleOpen: !toggleOpen });
-                    }}
-                  />
-                }
-                isOpen={toggleOpen}
-                isPlain
-                dropdownItems={[
-                  <DropdownItem key="link">
-                    <Link to="/archived">View archived clusters</Link>
-                  </DropdownItem>,
-                ]}
-              />
+              <ClusterListActions isDashboardView />
             </SplitItem>
           </Split>
         </PageHeader>

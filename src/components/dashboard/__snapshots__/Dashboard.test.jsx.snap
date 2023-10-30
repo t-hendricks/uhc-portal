@@ -22,50 +22,8 @@ exports[`<Dashboard /> renders correctly 1`] = `
         isFilled={true}
       />
       <SplitItem>
-        <Link
-          to="/create"
-        >
-          <Button
-            variant="primary"
-          >
-            Create cluster
-          </Button>
-        </Link>
-      </SplitItem>
-      <SplitItem>
-        <Link
-          to="/register"
-        >
-          <Button
-            variant="secondary"
-          >
-            Register cluster
-          </Button>
-        </Link>
-      </SplitItem>
-      <SplitItem>
-        <Dropdown
-          dropdownItems={
-            Array [
-              <DropdownItem>
-                <Link
-                  to="/archived"
-                >
-                  View archived clusters
-                </Link>
-              </DropdownItem>,
-            ]
-          }
-          isOpen={false}
-          isPlain={true}
-          onSelect={[Function]}
-          position="right"
-          toggle={
-            <KebabToggle
-              id="toggle-kebab"
-              onToggle={[Function]}
-            />
-          }
+        <ClusterListActions
+          isDashboardView={true}
         />
       </SplitItem>
     </Split>
