@@ -1,28 +1,431 @@
 {
   "href": "/api/clusters_mgmt/v1/oidc_configs",
   "page": 1,
-  "size": 2,
-  "total": 2,
+  "size": 43,
+  "total": 43,
   "items": [
     {
-      "href": "/api/clusters_mgmt/v1/oidc_configs/23ov7lq99ttljb2180rohvtshpt19o1p",
-      "id": "23ov7lq99ttljb2180rohvtshpt19o1p",
-      "organization_id": "1HAXGgCYqHpednsRDiwWsZBmDlA",
-      "issuer_url": "https://d3gt1gce2zmg3d.cloudfront.net/23ov7lq99ttljb2180rohvtshpt19o1p",
-      "creation_timestamp": "2023-05-17T02:54:15.895782Z",
-      "last_used_timestamp": "2023-05-17T03:07:35.118957Z",
-      "last_update_timestamp": "2023-05-17T03:07:35.118957Z",
+      "href": "/api/clusters_mgmt/v1/oidc_configs/232616gcm50ddagsrdu6chhfft7lsspu",
+      "id": "232616gcm50ddagsrdu6chhfft7lsspu",
+      "organization_id": "1wuANBLgbvRSXRXN10OuSFE2gzB",
+      "issuer_url": "https://oidc-n7i0.s3.us-east-1.amazonaws.com",
+      "creation_timestamp": "2023-04-12T13:14:02.177951Z",
+      "secret_arn": "arn:aws:secretsmanager:us-east-1:000000000006:secret:rosa-private-key-oidc-n7i0-l9DNNk",
+      "managed": false,
+      "reusable": true
+    },
+    {
+      "href": "/api/clusters_mgmt/v1/oidc_configs/22qbk74r3mi8gsavti9tp40qfme1pp1s",
+      "id": "22qbk74r3mi8gsavti9tp40qfme1pp1s",
+      "organization_id": "1wuANBLgbvRSXRXN10OuSFE2gzB",
+      "issuer_url": "https://oidc-y2w6.s3.us-east-1.amazonaws.com",
+      "creation_timestamp": "2023-03-31T16:19:40.82434Z",
+      "last_used_timestamp": "2023-04-28T01:37:53.797838Z",
+      "last_update_timestamp": "2023-04-28T01:37:53.797838Z",
+      "secret_arn": "arn:aws:secretsmanager:us-east-1:000000000006:secret:rosa-private-key-oidc-y2w6-8Wrvm5",
+      "managed": false,
+      "reusable": true
+    },
+    {
+      "href": "/api/clusters_mgmt/v1/oidc_configs/23p9ej7lgnronovc486rb7a1opcb33k0",
+      "id": "23p9ej7lgnronovc486rb7a1opcb33k0",
+      "organization_id": "1wuANBLgbvRSXRXN10OuSFE2gzB",
+      "issuer_url": "https://rh-oidc.s3.us-east-1.amazonaws.com/23p9ej7lgnronovc486rb7a1opcb33k0",
+      "creation_timestamp": "2023-05-17T14:31:40.376484Z",
       "managed": true,
       "reusable": true
     },
     {
-      "href": "/api/clusters_mgmt/v1/oidc_configs/24jk7g5jsakl8pv7gbhnb74fvq483vad",
-      "id": "24jk7g5jsakl8pv7gbhnb74fvq483vad",
-      "organization_id": "1HAXGgCYqHpednsRDiwWsZBmDlA",
-      "issuer_url": "https://d3gt1gce2zmg3d.cloudfront.net/24jk7g5jsakl8pv7gbhnb74fvq483vad",
-      "creation_timestamp": "2023-06-26T13:25:20.09931Z",
-      "last_used_timestamp": "2023-06-26T13:43:48.117861Z",
-      "last_update_timestamp": "2023-06-26T13:43:48.117861Z",
+      "href": "/api/clusters_mgmt/v1/oidc_configs/23p9l9omk4dd7c7rp2a38uj6uj1r36ls",
+      "id": "23p9l9omk4dd7c7rp2a38uj6uj1r36ls",
+      "organization_id": "1wuANBLgbvRSXRXN10OuSFE2gzB",
+      "issuer_url": "https://rh-oidc.s3.us-east-1.amazonaws.com/23p9l9omk4dd7c7rp2a38uj6uj1r36ls",
+      "creation_timestamp": "2023-05-17T14:45:59.719369Z",
+      "managed": true,
+      "reusable": true
+    },
+    {
+      "href": "/api/clusters_mgmt/v1/oidc_configs/23p9rv2g3c8f3rl4e5mat89pc05m6f53",
+      "id": "23p9rv2g3c8f3rl4e5mat89pc05m6f53",
+      "organization_id": "1wuANBLgbvRSXRXN10OuSFE2gzB",
+      "issuer_url": "https://rh-oidc.s3.us-east-1.amazonaws.com/23p9rv2g3c8f3rl4e5mat89pc05m6f53",
+      "creation_timestamp": "2023-05-17T15:00:12.628901Z",
+      "managed": true,
+      "reusable": true
+    },
+    {
+      "href": "/api/clusters_mgmt/v1/oidc_configs/23q1ppf4tfsf89fj63e0b4qs08qdsrjv",
+      "id": "23q1ppf4tfsf89fj63e0b4qs08qdsrjv",
+      "organization_id": "1wuANBLgbvRSXRXN10OuSFE2gzB",
+      "issuer_url": "https://rh-oidc.s3.us-east-1.amazonaws.com/23q1ppf4tfsf89fj63e0b4qs08qdsrjv",
+      "creation_timestamp": "2023-05-18T18:13:57.169213Z",
+      "managed": true,
+      "reusable": true
+    },
+    {
+      "href": "/api/clusters_mgmt/v1/oidc_configs/268fbtjl5b1h6m55i5q7u9k1ru3p9hdo",
+      "id": "268fbtjl5b1h6m55i5q7u9k1ru3p9hdo",
+      "organization_id": "1wuANBLgbvRSXRXN10OuSFE2gzB",
+      "issuer_url": "https://rh-oidc.s3.us-east-1.amazonaws.com/268fbtjl5b1h6m55i5q7u9k1ru3p9hdo",
+      "creation_timestamp": "2023-09-14T17:33:42.7526Z",
+      "last_used_timestamp": "2023-09-14T17:35:07.713289Z",
+      "last_update_timestamp": "2023-09-14T17:35:07.713289Z",
+      "managed": true,
+      "reusable": true
+    },
+    {
+      "href": "/api/clusters_mgmt/v1/oidc_configs/24bmr7l9oe1nt06gee58bvcienog7sjo",
+      "id": "24bmr7l9oe1nt06gee58bvcienog7sjo",
+      "organization_id": "1wuANBLgbvRSXRXN10OuSFE2gzB",
+      "issuer_url": "https://rh-oidc.s3.us-east-1.amazonaws.com/24bmr7l9oe1nt06gee58bvcienog7sjo",
+      "creation_timestamp": "2023-06-14T13:07:42.331664Z",
+      "last_used_timestamp": "2023-07-10T16:18:48.998575Z",
+      "last_update_timestamp": "2023-07-10T16:18:48.998575Z",
+      "managed": true,
+      "reusable": true
+    },
+    {
+      "href": "/api/clusters_mgmt/v1/oidc_configs/24d3gir8ru135sc4searvisqeojd3ur4",
+      "id": "24d3gir8ru135sc4searvisqeojd3ur4",
+      "organization_id": "1wuANBLgbvRSXRXN10OuSFE2gzB",
+      "issuer_url": "https://rh-oidc.s3.us-east-1.amazonaws.com/24d3gir8ru135sc4searvisqeojd3ur4",
+      "creation_timestamp": "2023-06-16T15:56:59.918345Z",
+      "last_used_timestamp": "2023-06-16T16:01:26.960507Z",
+      "last_update_timestamp": "2023-06-16T16:01:26.960507Z",
+      "managed": true,
+      "reusable": true
+    },
+    {
+      "href": "/api/clusters_mgmt/v1/oidc_configs/24h45o798kqg03pbkmuml5gfnsf2t26r",
+      "id": "24h45o798kqg03pbkmuml5gfnsf2t26r",
+      "organization_id": "1wuANBLgbvRSXRXN10OuSFE2gzB",
+      "issuer_url": "https://rh-oidc.s3.us-east-1.amazonaws.com/24h45o798kqg03pbkmuml5gfnsf2t26r",
+      "creation_timestamp": "2023-06-22T18:20:16.153524Z",
+      "last_used_timestamp": "2023-06-22T18:33:13.931096Z",
+      "last_update_timestamp": "2023-06-22T18:33:13.931096Z",
+      "managed": true,
+      "reusable": true
+    },
+    {
+      "href": "/api/clusters_mgmt/v1/oidc_configs/24mvcbgfb7ogv0a4cq1brh12t6qgsma7",
+      "id": "24mvcbgfb7ogv0a4cq1brh12t6qgsma7",
+      "organization_id": "1wuANBLgbvRSXRXN10OuSFE2gzB",
+      "issuer_url": "https://rh-oidc.s3.us-east-1.amazonaws.com/24mvcbgfb7ogv0a4cq1brh12t6qgsma7",
+      "creation_timestamp": "2023-07-01T15:20:14.940248Z",
+      "managed": true,
+      "reusable": true
+    },
+    {
+      "href": "/api/clusters_mgmt/v1/oidc_configs/24oblorgcnesbg9bf2n2rlosdkf4lj37",
+      "id": "24oblorgcnesbg9bf2n2rlosdkf4lj37",
+      "organization_id": "1wuANBLgbvRSXRXN10OuSFE2gzB",
+      "issuer_url": "https://rh-oidc.s3.us-east-1.amazonaws.com/24oblorgcnesbg9bf2n2rlosdkf4lj37",
+      "creation_timestamp": "2023-07-03T17:44:03.862629Z",
+      "last_used_timestamp": "2023-07-03T17:45:47.955055Z",
+      "last_update_timestamp": "2023-07-03T17:45:47.955055Z",
+      "managed": true,
+      "reusable": true
+    },
+    {
+      "href": "/api/clusters_mgmt/v1/oidc_configs/24via4ma5qniv2b8ll9e6vsmakfdjmks",
+      "id": "24via4ma5qniv2b8ll9e6vsmakfdjmks",
+      "organization_id": "1wuANBLgbvRSXRXN10OuSFE2gzB",
+      "issuer_url": "https://rh-oidc.s3.us-east-1.amazonaws.com/24via4ma5qniv2b8ll9e6vsmakfdjmks",
+      "creation_timestamp": "2023-07-14T16:08:50.690841Z",
+      "managed": true,
+      "reusable": true
+    },
+    {
+      "href": "/api/clusters_mgmt/v1/oidc_configs/24vif1ooui37u2o9e67mmgcdo8qupdha",
+      "id": "24vif1ooui37u2o9e67mmgcdo8qupdha",
+      "organization_id": "1wuANBLgbvRSXRXN10OuSFE2gzB",
+      "issuer_url": "https://rh-oidc.s3.us-east-1.amazonaws.com/24vif1ooui37u2o9e67mmgcdo8qupdha",
+      "creation_timestamp": "2023-07-14T16:19:19.109139Z",
+      "last_used_timestamp": "2023-07-14T16:23:08.332412Z",
+      "last_update_timestamp": "2023-07-14T16:23:08.332412Z",
+      "managed": true,
+      "reusable": true
+    },
+    {
+      "href": "/api/clusters_mgmt/v1/oidc_configs/251l29ro4b9d1pl407n2n4o70dls3us3",
+      "id": "251l29ro4b9d1pl407n2n4o70dls3us3",
+      "organization_id": "1wuANBLgbvRSXRXN10OuSFE2gzB",
+      "issuer_url": "https://rh-oidc.s3.us-east-1.amazonaws.com/251l29ro4b9d1pl407n2n4o70dls3us3",
+      "creation_timestamp": "2023-07-17T20:05:59.775289Z",
+      "managed": true,
+      "reusable": true
+    },
+    {
+      "href": "/api/clusters_mgmt/v1/oidc_configs/251l2h6rauu9ioj9v8ouu60aof3l6ne8",
+      "id": "251l2h6rauu9ioj9v8ouu60aof3l6ne8",
+      "organization_id": "1wuANBLgbvRSXRXN10OuSFE2gzB",
+      "issuer_url": "https://rh-oidc.s3.us-east-1.amazonaws.com/251l2h6rauu9ioj9v8ouu60aof3l6ne8",
+      "creation_timestamp": "2023-07-17T20:06:28.395724Z",
+      "managed": true,
+      "reusable": true
+    },
+    {
+      "href": "/api/clusters_mgmt/v1/oidc_configs/251l45qe7eravltiqksbv802sdfe439q",
+      "id": "251l45qe7eravltiqksbv802sdfe439q",
+      "organization_id": "1wuANBLgbvRSXRXN10OuSFE2gzB",
+      "issuer_url": "https://rh-oidc.s3.us-east-1.amazonaws.com/251l45qe7eravltiqksbv802sdfe439q",
+      "creation_timestamp": "2023-07-17T20:09:59.458857Z",
+      "managed": true,
+      "reusable": true
+    },
+    {
+      "href": "/api/clusters_mgmt/v1/oidc_configs/251l4la02k42s2b54guj3enivh8kskel",
+      "id": "251l4la02k42s2b54guj3enivh8kskel",
+      "organization_id": "1wuANBLgbvRSXRXN10OuSFE2gzB",
+      "issuer_url": "https://rh-oidc.s3.us-east-1.amazonaws.com/251l4la02k42s2b54guj3enivh8kskel",
+      "creation_timestamp": "2023-07-17T20:11:01.592768Z",
+      "managed": true,
+      "reusable": true
+    },
+    {
+      "href": "/api/clusters_mgmt/v1/oidc_configs/251lc5tp92mgt9jq5tn2l9bn7q7oc17b",
+      "id": "251lc5tp92mgt9jq5tn2l9bn7q7oc17b",
+      "organization_id": "1wuANBLgbvRSXRXN10OuSFE2gzB",
+      "issuer_url": "https://rh-oidc.s3.us-east-1.amazonaws.com/251lc5tp92mgt9jq5tn2l9bn7q7oc17b",
+      "creation_timestamp": "2023-07-17T20:27:03.465105Z",
+      "managed": true,
+      "reusable": true
+    },
+    {
+      "href": "/api/clusters_mgmt/v1/oidc_configs/251lccpmg3nrc2s03nbaelrqdv23atdk",
+      "id": "251lccpmg3nrc2s03nbaelrqdv23atdk",
+      "organization_id": "1wuANBLgbvRSXRXN10OuSFE2gzB",
+      "issuer_url": "https://rh-oidc.s3.us-east-1.amazonaws.com/251lccpmg3nrc2s03nbaelrqdv23atdk",
+      "creation_timestamp": "2023-07-17T20:27:31.930528Z",
+      "managed": true,
+      "reusable": true
+    },
+    {
+      "href": "/api/clusters_mgmt/v1/oidc_configs/2527e420a9v43i018uh8nj44u3903djb",
+      "id": "2527e420a9v43i018uh8nj44u3903djb",
+      "organization_id": "1wuANBLgbvRSXRXN10OuSFE2gzB",
+      "issuer_url": "https://rh-oidc.s3.us-east-1.amazonaws.com/2527e420a9v43i018uh8nj44u3903djb",
+      "creation_timestamp": "2023-07-18T17:00:00.059738Z",
+      "last_used_timestamp": "2023-07-18T17:15:44.679012Z",
+      "last_update_timestamp": "2023-07-18T17:15:44.679012Z",
+      "managed": true,
+      "reusable": true
+    },
+    {
+      "href": "/api/clusters_mgmt/v1/oidc_configs/25281kbaevn1lf17g2tpochqhm2a8oud",
+      "id": "25281kbaevn1lf17g2tpochqhm2a8oud",
+      "organization_id": "1wuANBLgbvRSXRXN10OuSFE2gzB",
+      "issuer_url": "https://rh-oidc.s3.us-east-1.amazonaws.com/25281kbaevn1lf17g2tpochqhm2a8oud",
+      "creation_timestamp": "2023-07-18T17:41:37.534995Z",
+      "managed": true,
+      "reusable": true
+    },
+    {
+      "href": "/api/clusters_mgmt/v1/oidc_configs/2545ot0sqt21cdu9c3bsrb8t0hi8csd2",
+      "id": "2545ot0sqt21cdu9c3bsrb8t0hi8csd2",
+      "organization_id": "1wuANBLgbvRSXRXN10OuSFE2gzB",
+      "issuer_url": "https://rh-oidc.s3.us-east-1.amazonaws.com/2545ot0sqt21cdu9c3bsrb8t0hi8csd2",
+      "creation_timestamp": "2023-07-21T15:55:32.482368Z",
+      "managed": true,
+      "reusable": true
+    },
+    {
+      "href": "/api/clusters_mgmt/v1/oidc_configs/2545p50eafv1gcafugui2c3bt5om820q",
+      "id": "2545p50eafv1gcafugui2c3bt5om820q",
+      "organization_id": "1wuANBLgbvRSXRXN10OuSFE2gzB",
+      "issuer_url": "https://rh-oidc.s3.us-east-1.amazonaws.com/2545p50eafv1gcafugui2c3bt5om820q",
+      "creation_timestamp": "2023-07-21T15:56:04.330936Z",
+      "last_used_timestamp": "2023-07-21T15:58:35.955859Z",
+      "last_update_timestamp": "2023-07-21T15:58:35.955859Z",
+      "managed": true,
+      "reusable": true
+    },
+    {
+      "href": "/api/clusters_mgmt/v1/oidc_configs/2568d27gbddhug29co662neekr9e459s",
+      "id": "2568d27gbddhug29co662neekr9e459s",
+      "organization_id": "1wuANBLgbvRSXRXN10OuSFE2gzB",
+      "issuer_url": "https://rh-oidc.s3.us-east-1.amazonaws.com/2568d27gbddhug29co662neekr9e459s",
+      "creation_timestamp": "2023-07-24T19:44:08.221601Z",
+      "last_used_timestamp": "2023-07-26T20:40:03.129966Z",
+      "last_update_timestamp": "2023-07-26T20:40:03.129966Z",
+      "managed": true,
+      "reusable": true
+    },
+    {
+      "href": "/api/clusters_mgmt/v1/oidc_configs/257j0im75du50oj118nil4kr7op05ceg",
+      "id": "257j0im75du50oj118nil4kr7op05ceg",
+      "organization_id": "1wuANBLgbvRSXRXN10OuSFE2gzB",
+      "issuer_url": "https://rh-oidc.s3.us-east-1.amazonaws.com/257j0im75du50oj118nil4kr7op05ceg",
+      "creation_timestamp": "2023-07-26T20:12:58.48327Z",
+      "managed": true,
+      "reusable": true
+    },
+    {
+      "href": "/api/clusters_mgmt/v1/oidc_configs/2587lc0qj73rd4q25jnvim47trj45dq3",
+      "id": "2587lc0qj73rd4q25jnvim47trj45dq3",
+      "organization_id": "1wuANBLgbvRSXRXN10OuSFE2gzB",
+      "issuer_url": "https://rh-oidc.s3.us-east-1.amazonaws.com/2587lc0qj73rd4q25jnvim47trj45dq3",
+      "creation_timestamp": "2023-07-27T19:42:40.778477Z",
+      "last_used_timestamp": "2023-08-02T16:03:01.503691Z",
+      "last_update_timestamp": "2023-08-02T16:03:01.503691Z",
+      "managed": true,
+      "reusable": true
+    },
+    {
+      "href": "/api/clusters_mgmt/v1/oidc_configs/2586nnuf7ah38h1vp67l8osp2i28rmuf",
+      "id": "2586nnuf7ah38h1vp67l8osp2i28rmuf",
+      "organization_id": "1wuANBLgbvRSXRXN10OuSFE2gzB",
+      "issuer_url": "https://rh-oidc.s3.us-east-1.amazonaws.com/2586nnuf7ah38h1vp67l8osp2i28rmuf",
+      "creation_timestamp": "2023-07-27T18:39:27.726592Z",
+      "last_used_timestamp": "2023-09-06T15:33:22.121362Z",
+      "last_update_timestamp": "2023-09-06T15:33:22.121362Z",
+      "managed": true,
+      "reusable": true
+    },
+    {
+      "href": "/api/clusters_mgmt/v1/oidc_configs/26b1s8gdq6oo2jlts4vj741j4293gsev",
+      "id": "26b1s8gdq6oo2jlts4vj741j4293gsev",
+      "organization_id": "1wuANBLgbvRSXRXN10OuSFE2gzB",
+      "issuer_url": "https://rh-oidc.s3.us-east-1.amazonaws.com/26b1s8gdq6oo2jlts4vj741j4293gsev",
+      "creation_timestamp": "2023-09-18T15:26:26.225261Z",
+      "managed": true,
+      "reusable": true
+    },
+    {
+      "href": "/api/clusters_mgmt/v1/oidc_configs/2633hm870ik6ddq9jlt9o0b55515gkje",
+      "id": "2633hm870ik6ddq9jlt9o0b55515gkje",
+      "organization_id": "1wuANBLgbvRSXRXN10OuSFE2gzB",
+      "issuer_url": "https://rh-oidc.s3.us-east-1.amazonaws.com/2633hm870ik6ddq9jlt9o0b55515gkje",
+      "creation_timestamp": "2023-09-06T14:04:09.953241Z",
+      "last_used_timestamp": "2023-09-06T14:13:56.355774Z",
+      "last_update_timestamp": "2023-09-06T14:13:56.355774Z",
+      "managed": true,
+      "reusable": true
+    },
+    {
+      "href": "/api/clusters_mgmt/v1/oidc_configs/263v2nojc5gqk7sv3roufn2o3e0eajci",
+      "id": "263v2nojc5gqk7sv3roufn2o3e0eajci",
+      "organization_id": "1wuANBLgbvRSXRXN10OuSFE2gzB",
+      "issuer_url": "https://rh-oidc.s3.us-east-1.amazonaws.com/263v2nojc5gqk7sv3roufn2o3e0eajci",
+      "creation_timestamp": "2023-09-07T21:23:43.725694Z",
+      "managed": true,
+      "reusable": true
+    },
+    {
+      "href": "/api/clusters_mgmt/v1/oidc_configs/264de7cjvkvpqrgb87qq3qpo9glutg9i",
+      "id": "264de7cjvkvpqrgb87qq3qpo9glutg9i",
+      "organization_id": "1wuANBLgbvRSXRXN10OuSFE2gzB",
+      "issuer_url": "https://rh-oidc.s3.us-east-1.amazonaws.com/264de7cjvkvpqrgb87qq3qpo9glutg9i",
+      "creation_timestamp": "2023-09-08T13:43:57.774727Z",
+      "last_used_timestamp": "2023-09-08T14:02:02.418147Z",
+      "last_update_timestamp": "2023-09-08T14:02:02.418147Z",
+      "managed": true,
+      "reusable": true
+    },
+    {
+      "href": "/api/clusters_mgmt/v1/oidc_configs/264dacrvj0tmtb32smenjpous22eqdug",
+      "id": "264dacrvj0tmtb32smenjpous22eqdug",
+      "organization_id": "1wuANBLgbvRSXRXN10OuSFE2gzB",
+      "issuer_url": "https://rh-oidc.s3.us-east-1.amazonaws.com/264dacrvj0tmtb32smenjpous22eqdug",
+      "creation_timestamp": "2023-09-08T13:35:47.699142Z",
+      "managed": true,
+      "reusable": true
+    },
+    {
+      "href": "/api/clusters_mgmt/v1/oidc_configs/264dagsqsq2chhjgoe5g7jtvo8k58lq7",
+      "id": "264dagsqsq2chhjgoe5g7jtvo8k58lq7",
+      "organization_id": "1wuANBLgbvRSXRXN10OuSFE2gzB",
+      "issuer_url": "https://rh-oidc.s3.us-east-1.amazonaws.com/264dagsqsq2chhjgoe5g7jtvo8k58lq7",
+      "creation_timestamp": "2023-09-08T13:36:03.078268Z",
+      "managed": true,
+      "reusable": true
+    },
+    {
+      "href": "/api/clusters_mgmt/v1/oidc_configs/264fkf0fb0hri4p6o6uethueltq6lbhn",
+      "id": "264fkf0fb0hri4p6o6uethueltq6lbhn",
+      "organization_id": "1wuANBLgbvRSXRXN10OuSFE2gzB",
+      "issuer_url": "https://rh-oidc.s3.us-east-1.amazonaws.com/264fkf0fb0hri4p6o6uethueltq6lbhn",
+      "creation_timestamp": "2023-09-08T16:13:48.795405Z",
+      "last_used_timestamp": "2023-09-08T18:06:39.026273Z",
+      "last_update_timestamp": "2023-09-08T18:06:39.026273Z",
+      "managed": true,
+      "reusable": true
+    },
+    {
+      "href": "/api/clusters_mgmt/v1/oidc_configs/265k3g8i2vf3a36jevha1bepinomqo0g",
+      "id": "265k3g8i2vf3a36jevha1bepinomqo0g",
+      "organization_id": "1wuANBLgbvRSXRXN10OuSFE2gzB",
+      "issuer_url": "https://rh-oidc.s3.us-east-1.amazonaws.com/265k3g8i2vf3a36jevha1bepinomqo0g",
+      "creation_timestamp": "2023-09-10T09:43:29.877772Z",
+      "managed": true,
+      "reusable": true
+    },
+    {
+      "href": "/api/clusters_mgmt/v1/oidc_configs/26bk629nkh0lv80c7apqk4f599ccv6f8",
+      "id": "26bk629nkh0lv80c7apqk4f599ccv6f8",
+      "organization_id": "1wuANBLgbvRSXRXN10OuSFE2gzB",
+      "issuer_url": "https://rh-oidc.s3.us-east-1.amazonaws.com/26bk629nkh0lv80c7apqk4f599ccv6f8",
+      "creation_timestamp": "2023-09-19T12:16:09.843877Z",
+      "managed": true,
+      "reusable": true
+    },
+    {
+      "href": "/api/clusters_mgmt/v1/oidc_configs/26cs9crs78bfhqapcnlceslvu4t35d52",
+      "id": "26cs9crs78bfhqapcnlceslvu4t35d52",
+      "organization_id": "1wuANBLgbvRSXRXN10OuSFE2gzB",
+      "issuer_url": "https://rh-oidc.s3.us-east-1.amazonaws.com/26cs9crs78bfhqapcnlceslvu4t35d52",
+      "creation_timestamp": "2023-09-21T09:53:55.613824Z",
+      "managed": true,
+      "reusable": true
+    },
+    {
+      "href": "/api/clusters_mgmt/v1/oidc_configs/26d39bh1gg5s42eefdfaf4j9uu0n1nd3",
+      "id": "26d39bh1gg5s42eefdfaf4j9uu0n1nd3",
+      "organization_id": "1wuANBLgbvRSXRXN10OuSFE2gzB",
+      "issuer_url": "https://rh-oidc.s3.us-east-1.amazonaws.com/26d39bh1gg5s42eefdfaf4j9uu0n1nd3",
+      "creation_timestamp": "2023-09-21T17:51:42.593268Z",
+      "last_used_timestamp": "2023-09-21T17:54:12.190932Z",
+      "last_update_timestamp": "2023-09-21T17:54:12.190932Z",
+      "managed": true,
+      "reusable": true
+    },
+    {
+      "href": "/api/clusters_mgmt/v1/oidc_configs/22phvja6kkki8f7h8mmk46a7j2h26uk1",
+      "id": "22phvja6kkki8f7h8mmk46a7j2h26uk1",
+      "organization_id": "1wuANBLgbvRSXRXN10OuSFE2gzB",
+      "issuer_url": "https://rh-oidc.s3.us-east-1.amazonaws.com/22phvja6kkki8f7h8mmk46a7j2h26uk1",
+      "creation_timestamp": "2023-03-30T11:09:01.834691Z",
+      "last_used_timestamp": "2023-10-09T17:34:03.765857Z",
+      "last_update_timestamp": "2023-10-09T17:34:03.765857Z",
+      "managed": true,
+      "reusable": true
+    },
+    {
+      "href": "/api/clusters_mgmt/v1/oidc_configs/26i4us51bojuhs382vsd2oag8e6ir2fb",
+      "id": "26i4us51bojuhs382vsd2oag8e6ir2fb",
+      "organization_id": "1wuANBLgbvRSXRXN10OuSFE2gzB",
+      "issuer_url": "https://rh-oidc.s3.us-east-1.amazonaws.com/26i4us51bojuhs382vsd2oag8e6ir2fb",
+      "creation_timestamp": "2023-09-29T09:48:32.081446Z",
+      "last_used_timestamp": "2023-09-29T09:50:15.680818Z",
+      "last_update_timestamp": "2023-09-29T09:50:15.680818Z",
+      "managed": true,
+      "reusable": true
+    },
+    {
+      "href": "/api/clusters_mgmt/v1/oidc_configs/26kca04kcra0foeoip2k9oceao0m8bu8",
+      "id": "26kca04kcra0foeoip2k9oceao0m8bu8",
+      "organization_id": "1wuANBLgbvRSXRXN10OuSFE2gzB",
+      "issuer_url": "https://rh-oidc.s3.us-east-1.amazonaws.com/26kca04kcra0foeoip2k9oceao0m8bu8",
+      "creation_timestamp": "2023-10-02T18:59:12.749128Z",
+      "managed": true,
+      "reusable": true
+    },
+    {
+      "href": "/api/clusters_mgmt/v1/oidc_configs/26kcd0hrr94qi2itvbncqo2k188ssdc7",
+      "id": "26kcd0hrr94qi2itvbncqo2k188ssdc7",
+      "organization_id": "1wuANBLgbvRSXRXN10OuSFE2gzB",
+      "issuer_url": "https://rh-oidc.s3.us-east-1.amazonaws.com/26kcd0hrr94qi2itvbncqo2k188ssdc7",
+      "creation_timestamp": "2023-10-02T19:05:38.775923Z",
       "managed": true,
       "reusable": true
     }
