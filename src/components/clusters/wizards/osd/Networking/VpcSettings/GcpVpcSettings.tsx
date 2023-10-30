@@ -87,10 +87,7 @@ export const GcpVpcSettings = () => {
             label="Install into GCP shared VPC"
             tooltip={
               <>
-                <p>
-                  Install into a non-default subnet shared by another account in your GCP
-                  organization.
-                </p>
+                <p>Install into a VPC shared by another account in your GCP organization.</p>
                 <ExternalLink href={links.INSTALL_GCP_VPC}>
                   Learn more about GCP shared VPC.
                 </ExternalLink>
