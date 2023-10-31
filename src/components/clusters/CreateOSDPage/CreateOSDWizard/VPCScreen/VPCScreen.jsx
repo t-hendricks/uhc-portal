@@ -8,6 +8,7 @@ function VPCScreen({
   cloudProviderID,
   isMultiAz,
   selectedRegion,
+  selectedVPC,
   privateLinkSelected,
   isSharedVpcSelected,
   isSharedVpcSelectable,
@@ -29,6 +30,7 @@ function VPCScreen({
           cloudProviderID={cloudProviderID}
           isMultiAz={isMultiAz}
           selectedRegion={selectedRegion}
+          selectedVPC={selectedVPC}
           isSharedVpcSelected={isSharedVpcSelected}
           isSharedVpcSelectable={isSharedVpcSelectable}
           privateLinkSelected={privateLinkSelected}
@@ -43,6 +45,7 @@ VPCScreen.propTypes = {
   cloudProviderID: PropTypes.string,
   isMultiAz: PropTypes.bool,
   selectedRegion: PropTypes.string,
+  selectedVPC: PropTypes.object,
   privateLinkSelected: PropTypes.bool,
   isSharedVpcSelected: PropTypes.bool,
   isSharedVpcSelectable: PropTypes.bool,

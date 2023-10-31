@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React from 'react';
 import { useDispatch } from 'react-redux';
 import {
   Button,
@@ -9,12 +9,12 @@ import {
   Tooltip,
 } from '@patternfly/react-core';
 import ErrorBox from '~/components/common/ErrorBox';
-import FuzzySelect, { FuzzyDataType } from '~/components/common/FuzzySelect';
+import FuzzySelect, { FuzzyEntryType } from '~/components/common/FuzzySelect';
 import { CloudVPC } from '~/types/clusters_mgmt.v1';
 import { formValueSelector } from 'redux-form';
 import { useGlobalState } from '~/redux/hooks';
 import {
-  filterVpcsOnlyPrivateSubnets,
+  vpcHasPrivateSubnets,
   filterOutRedHatManagedVPCs,
   useAWSVPCInquiry,
 } from '../VPCScreen/useVPCInquiry';
@@ -35,6 +35,17 @@ interface VCPDropdownProps {
   isHypershift?: boolean;
 }
 
+const sortVPCOptions = (vpcA: FuzzyEntryType, vpcB: FuzzyEntryType) => {
+  // Invalid VPCs must be kept last
+  if (vpcA.disabled && !vpcB.disabled) {
+    return 1;
+  }
+  if (vpcB.disabled && !vpcA.disabled) {
+    return -1;
+  }
+  return vpcA.key.localeCompare(vpcB.key);
+};
+
 const VPCDropdown = ({
   selectedVPC,
   input: {
@@ -46,13 +57,15 @@ const VPCDropdown = ({
   showRefresh = false,
   isHypershift = false,
 }: VCPDropdownProps) => {
-  const [isOpen, setIsOpen] = useState(false);
-  const vpcResponse = useAWSVPCInquiry();
-  const items: CloudVPC[] = isHypershift
-    ? filterOutRedHatManagedVPCs(vpcResponse.data?.items)
-    : vpcResponse.data?.items;
   const dispatch = useDispatch();
+  const [isOpen, setIsOpen] = React.useState<boolean>(false);
   const regionID = useGlobalState((state) => valueSelector(state, 'region'));
+
+  const vpcResponse = useAWSVPCInquiry();
+  const originalVPCs = React.useMemo<CloudVPC[]>(() => {
+    const vpcs = vpcResponse.data?.items || [];
+    return isHypershift ? filterOutRedHatManagedVPCs(vpcs) : vpcs;
+  }, [vpcResponse.data?.items, isHypershift]);
 
   const onToggle = () => {
     setIsOpen(!isOpen);
@@ -62,43 +75,58 @@ const VPCDropdown = ({
     _: React.MouseEvent | React.ChangeEvent,
     selectedVPCID: string | SelectOptionObject,
   ) => {
-    inputProps.onChange(
-      selectData.items.find((vpc) => vpc?.name === selectedVPCID || vpc?.id === selectedVPCID) ?? {
-        id: '',
-        name: '',
-      },
+    // We want the form to store the original VPC object, rather than the option items
+    const selectedItem = originalVPCs.find(
+      (vpc) => vpc.id === selectedVPCID || vpc.name === selectedVPCID,
     );
-    setIsOpen(false);
+    if (selectedItem) {
+      inputProps.onChange(selectedItem);
+      setIsOpen(false);
+    }
   };
 
   const selectData = React.useMemo(() => {
-    const vpcItems = filterVpcsOnlyPrivateSubnets(items || []) as CloudVPC[];
     let placeholder = 'Select a VPC';
     if (vpcResponse.pending) {
       placeholder = 'Loading...';
-    } else if (vpcItems.length === 0) {
+    } else if (originalVPCs.length === 0) {
       placeholder = 'No VPCs found';
     }
 
+    const vpcOptions = originalVPCs.map((vpcItem) => {
+      const isDisabledVPC = !vpcHasPrivateSubnets(vpcItem);
+      const optionId = vpcItem.name || (vpcItem.id as string);
+      return {
+        key: optionId,
+        value: optionId,
+        description: isDisabledVPC ? 'This VPC has no private subnets' : '',
+        disabled: isDisabledVPC,
+      };
+    });
+
     return {
       placeholder,
-      items: vpcItems,
+      options: vpcOptions,
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [vpcResponse.pending, vpcResponse.data?.items]);
+  }, [vpcResponse.pending, originalVPCs]);
 
   React.useEffect(() => {
-    const isValidSelection = items?.some(
-      (item) => item?.id === selectedVPC?.id || item?.name === selectedVPC?.name,
+    if (!selectedVPC) {
+      return;
+    }
+
+    const isValidSelection = originalVPCs.some(
+      (item) => item?.id === selectedVPC.id || item?.name === selectedVPC.name,
     );
-    if (items && (selectedVPC?.id || selectedVPC?.name) && !isValidSelection) {
+    if (originalVPCs.length > 0 && (selectedVPC.id || selectedVPC.name) && !isValidSelection) {
       inputProps.onChange({ id: '', name: '' });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [selectedVPC, items]);
+  }, [selectedVPC, originalVPCs]);
 
   const refreshVPCs = () => {
     if (vpcResponse.cloudProvider === 'aws') {
+      inputProps.onChange({ id: '', name: '' });
       dispatch(
         getAWSCloudProviderVPCs({
           awsCredentials: vpcResponse.credentials,
@@ -107,17 +135,6 @@ const VPCDropdown = ({
       );
     }
   };
-  const selectionData = useMemo<FuzzyDataType>(
-    () =>
-      selectData.items.map((vpcItem) => ({
-        key: vpcItem.name! || vpcItem.id!,
-        value: vpcItem.name || vpcItem.id,
-        description: vpcItem.aws_subnets?.length === 0 ? 'This VPC has no private subnets' : '',
-        disabled: vpcItem.aws_subnets?.length === 0,
-      })),
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [selectData.items],
-  );
 
   return (
     <>
@@ -135,9 +152,10 @@ const VPCDropdown = ({
               isOpen={isOpen}
               onToggle={onToggle}
               onSelect={onSelect}
+              sortFn={sortVPCOptions}
               selected={selectedVPC?.name || selectedVPC?.id}
-              selectionData={selectionData}
-              isDisabled={vpcResponse.pending || selectData.items.length === 0}
+              selectionData={selectData.options}
+              isDisabled={vpcResponse.pending || selectData.options.length === 0}
               placeholderText={selectData.placeholder}
               inlineFilterPlaceholderText="Filter by VPC"
               validated={touched && error ? 'error' : 'default'}
@@ -147,7 +165,7 @@ const VPCDropdown = ({
             <FlexItem>
               <Tooltip content={<p>Refresh</p>}>
                 <Button
-                  data-testid="refresh-aws-accounts"
+                  data-testid="refresh-vpcs"
                   isLoading={vpcResponse.pending}
                   isDisabled={vpcResponse.pending}
                   isInline

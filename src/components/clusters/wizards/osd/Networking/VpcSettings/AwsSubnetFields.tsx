@@ -7,9 +7,7 @@ import { GridItem } from '@patternfly/react-core';
 
 import {
   required,
-  validateAWSSubnet,
-  validateAWSSubnetIsPrivate,
-  validateAWSSubnetIsPublic,
+  osdWizardAWSSubnetValidators,
   validateUniqueAZ,
   validateValueNotPlaceholder,
 } from '~/common/validators';
@@ -127,13 +125,13 @@ const SingleSubnetFieldsRow = ({
 
   const validatePrivateSubnet = (value: string) =>
     required(value) ||
-    validateAWSSubnet(value, values, vpcsData, privateSubnetIdName) ||
-    validateAWSSubnetIsPrivate(value, values, vpcsData);
+    osdWizardAWSSubnetValidators.isValidSubnet(value, values, vpcsData, privateSubnetIdName) ||
+    osdWizardAWSSubnetValidators.isPrivateSubnet(value, values, vpcsData);
 
   const validatePublicSubnet = (value: string) =>
     required(value) ||
-    validateAWSSubnet(value, values, vpcsData, publicSubnetIdName) ||
-    validateAWSSubnetIsPublic(value, values, vpcsData);
+    osdWizardAWSSubnetValidators.isValidSubnet(value, values, vpcsData, publicSubnetIdName) ||
+    osdWizardAWSSubnetValidators.isPublicSubnet(value, values, vpcsData);
 
   return (
     <>

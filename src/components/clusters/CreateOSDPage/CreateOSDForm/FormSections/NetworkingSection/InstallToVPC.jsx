@@ -11,6 +11,7 @@ import SharedVPCSection from './SharedVPCSection';
 
 function InstallToVPC({
   selectedRegion,
+  selectedVPC,
   isMultiAz,
   privateLinkSelected,
   cloudProviderID,
@@ -56,6 +57,7 @@ function InstallToVPC({
           />
           <AWSSubnetFields
             isMultiAz={isMultiAz}
+            selectedVPC={selectedVPC}
             selectedRegion={selectedRegion}
             privateLinkSelected={privateLinkSelected}
           />
@@ -99,6 +101,7 @@ function InstallToVPC({
 InstallToVPC.propTypes = {
   hostedZoneDomainName: PropTypes.string,
   selectedRegion: PropTypes.string,
+  selectedVPC: PropTypes.object,
   isMultiAz: PropTypes.bool,
   privateLinkSelected: PropTypes.bool,
   isSharedVpcSelected: PropTypes.bool,
