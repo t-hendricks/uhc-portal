@@ -45,7 +45,7 @@ describe('<AccountsRolesScreen />', () => {
     expect(screen.queryByText('Did you complete your prerequisites?')).not.toBeInTheDocument();
   });
 
-  it('shows the welcome and prerequisites sections for users with HyperShift disabled', () => {
+  it('shows the welcome and prerequisites sections for users with HyperShift disabled without the CLI warning', () => {
     const props = { ...accountRolesScreenProps, isHypershiftEnabled: false };
     withState({}).render(
       <MemoryRouter>
@@ -57,6 +57,7 @@ describe('<AccountsRolesScreen />', () => {
       screen.getByText('Welcome to Red Hat OpenShift Service on AWS (ROSA)'),
     ).toBeInTheDocument();
     expect(screen.getByText('Did you complete your prerequisites?')).toBeInTheDocument();
+    expect(screen.queryByText(/Make sure you are using ROSA CLI version/)).not.toBeInTheDocument();
   });
 });
 

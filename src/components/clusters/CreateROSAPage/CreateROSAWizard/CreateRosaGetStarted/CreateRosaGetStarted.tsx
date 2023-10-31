@@ -125,7 +125,7 @@ const CreateRosaGetStarted = () => {
                   </SplitItem>
                   <SplitItem>
                     <ExternalLink href={links.AWS_ROSA_GET_STARTED}>
-                      Help with ROSA setup
+                      More information on ROSA setup
                     </ExternalLink>
                   </SplitItem>
                 </Split>

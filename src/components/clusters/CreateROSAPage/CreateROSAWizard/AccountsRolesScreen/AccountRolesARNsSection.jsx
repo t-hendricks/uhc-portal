@@ -31,7 +31,10 @@ import ExternalLink from '~/components/common/ExternalLink';
 import InstructionCommand from '~/components/common/InstructionCommand';
 import { ReduxSelectDropdown } from '~/components/common/ReduxFormComponents';
 import ReduxVerticalFormGroup from '~/components/common/ReduxFormComponents/ReduxVerticalFormGroup';
-import { MIN_MANAGED_POLICY_VERSION } from '~/components/clusters/CreateROSAPage/CreateROSAWizard/rosaConstants';
+import {
+  MIN_MANAGED_POLICY_VERSION,
+  ROSA_HOSTED_CLI_MIN_VERSION,
+} from '~/components/clusters/CreateROSAPage/CreateROSAWizard/rosaConstants';
 import { AwsRoleErrorAlert } from './AwsRoleErrorAlert';
 import { RosaCliCommand } from './constants/cliCommands';
 
@@ -328,6 +331,9 @@ function AccountRolesARNsSection({
               <br />
               After running the command, you may need to refresh using the{' '}
               <strong>Refresh ARNs</strong> button below to populate the ARN fields.
+              {isHypershiftSelected && (
+                <p>You must use ROSA CLI version {ROSA_HOSTED_CLI_MIN_VERSION} or above.</p>
+              )}
             </Alert>
           ) : (
             <AwsRoleErrorAlert
