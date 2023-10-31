@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Alert } from '@patternfly/react-core';
-import { ExternalLinkAltIcon } from '@patternfly/react-icons';
 import * as Sentry from '@sentry/browser';
 
+import ExternalLink from '~/components/common/ExternalLink';
 import { BANNED_USER_CODE } from '../../../../../common/errors';
 
 class TokenErrorAlert extends React.Component {
@@ -28,10 +28,10 @@ class TokenErrorAlert extends React.Component {
           {errorMessage}
           <br />
           <br />
-          Try again by refreshing the page. If the problem persists, report the issue to{' '}
-          <a href="mailto:ocm-feedback@redhat.com" rel="noreferrer noopener" target="_blank">
-            ocm-feedback@redhat.com <ExternalLinkAltIcon color="#0066cc" size="sm" />
-          </a>
+          Try again by refreshing the page. If the problem persists{' '}
+          <ExternalLink href="https://access.redhat.com/support/">
+            contact our customer support
+          </ExternalLink>
           .
         </>
       );
