@@ -85,7 +85,7 @@ function AccountsRolesScreen({
   const openDrawerButtonRef = useRef(null);
   const hasAWSAccounts = AWSAccountIDs.length > 0;
   const track = useAnalytics();
-  const { openDrawer } = useAssociateAWSAccountDrawer();
+  const { openDrawer } = useAssociateAWSAccountDrawer(isHypershiftSelected);
 
   const resetAWSAccountFields = () => {
     // clear certain responses; causes refetch of AWS acct info.
@@ -189,7 +189,7 @@ function AccountsRolesScreen({
               <WelcomeMessage />
             </GridItem>
             <GridItem span={12}>
-              <PrerequisitesInfoBox />
+              <PrerequisitesInfoBox showRosaCliRequirement={false} />
             </GridItem>
           </>
         )}
