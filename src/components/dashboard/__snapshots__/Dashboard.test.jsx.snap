@@ -5,10 +5,28 @@ exports[`<Dashboard /> renders correctly 1`] = `
   title="Overview | Red Hat OpenShift Cluster Manager"
 >
   <PageHeader>
-    <PageHeaderTitle
-      className="page-title"
-      title="Dashboard"
-    />
+    <Split
+      hasGutter={true}
+    >
+      <SplitItem>
+        <Title
+          className="page-title"
+          headingLevel="h1"
+          size="2xl"
+          widget-type="InsightsPageHeaderTitle"
+        >
+          Dashboard
+        </Title>
+      </SplitItem>
+      <SplitItem
+        isFilled={true}
+      />
+      <SplitItem>
+        <ClusterListActions
+          isDashboardView={true}
+        />
+      </SplitItem>
+    </Split>
   </PageHeader>
   <PageSection>
     <Grid

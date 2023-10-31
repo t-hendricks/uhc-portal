@@ -3,6 +3,9 @@ import PropTypes from 'prop-types';
 
 import {
   PageSection,
+  Title,
+  Split,
+  SplitItem,
   CardTitle,
   CardBody,
   EmptyState,
@@ -11,10 +14,10 @@ import {
   Grid,
   GridItem,
 } from '@patternfly/react-core';
-
-import { PageHeader, PageHeaderTitle } from '@redhat-cloud-services/frontend-components/PageHeader';
+import { PageHeader } from '@redhat-cloud-services/frontend-components/PageHeader';
 import Spinner from '@redhat-cloud-services/frontend-components/Spinner';
 
+import ClusterListActions from '../clusters/ClusterList/components/ClusterListActions/ClusterListActions';
 import ConnectedModal from '../common/Modal/ConnectedModal';
 import SmallClusterChart from '../clusters/common/ResourceUsage/SmallClusterChart';
 import DashboardEmptyState from './EmptyState/DashboardEmptyState';
@@ -132,7 +135,22 @@ class Dashboard extends Component {
     return (
       <AppPage title={PAGE_TITLE}>
         <PageHeader>
-          <PageHeaderTitle title="Dashboard" className="page-title" />
+          <Split hasGutter>
+            <SplitItem>
+              <Title
+                headingLevel="h1"
+                size="2xl"
+                className="page-title"
+                widget-type="InsightsPageHeaderTitle"
+              >
+                Dashboard
+              </Title>
+            </SplitItem>
+            <SplitItem isFilled />
+            <SplitItem>
+              <ClusterListActions isDashboardView />
+            </SplitItem>
+          </Split>
         </PageHeader>
         <PageSection>
           <Grid hasGutter className="ocm-c-overview">
