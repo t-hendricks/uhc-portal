@@ -3,6 +3,7 @@ import { render, screen, fireEvent, checkAccessibility } from '~/testUtils';
 import wizardConnector from '~/components/clusters/CreateOSDPage/CreateOSDWizard/WizardConnector';
 import * as useFeatureGate from '~/hooks/useFeatureGate';
 import { HCP_USE_UNMANAGED } from '~/redux/constants/featureConstants';
+import { ROSA_HOSTED_CLI_MIN_VERSION } from '~/components/clusters/CreateROSAPage/CreateROSAWizard/rosaConstants';
 import AccountRolesARNsSection from './AccountRolesARNsSection';
 
 const latestOCPVersion = '4.13.3';
@@ -82,6 +83,8 @@ describe('<AccountRolesARNsSection />', () => {
   };
 
   const ConnectedAccountRolesARNsSection = wizardConnector(AccountRolesARNsSection);
+
+  const rosaCLIMessage = `You must use ROSA CLI version ${ROSA_HOSTED_CLI_MIN_VERSION} or above.`;
 
   it('is accessible', async () => {
     const { container } = render(<ConnectedAccountRolesARNsSection {...props} />);
@@ -345,5 +348,36 @@ describe('<AccountRolesARNsSection />', () => {
       render(<ConnectedAccountRolesARNsSection {...newProps} />);
       expect(screen.getByText(incompleteNonManagedInstallerRole.Installer)).toBeInTheDocument();
     });
+  });
+
+  it('shows ROSA CLI requirement message if ARNs are not detected and Hypershift has been selected', () => {
+    const testProps = {
+      ...props,
+      getAWSAccountRolesARNsResponse: {
+        fulfilled: true,
+        error: true,
+        pending: false,
+        data: [],
+      },
+    };
+    render(<ConnectedAccountRolesARNsSection {...testProps} />);
+
+    expect(screen.getByText(rosaCLIMessage)).toBeInTheDocument();
+  });
+
+  it('does not show the ROSA CLI requirement message if ARNs are not detected and ROSA classic has been selected', () => {
+    const newProps = {
+      ...props,
+      getAWSAccountRolesARNsResponse: {
+        fulfilled: true,
+        error: true,
+        pending: false,
+        data: [],
+      },
+      isHypershiftSelected: false,
+    };
+    render(<ConnectedAccountRolesARNsSection {...newProps} />);
+
+    expect(screen.queryByText(rosaCLIMessage)).not.toBeInTheDocument();
   });
 });
