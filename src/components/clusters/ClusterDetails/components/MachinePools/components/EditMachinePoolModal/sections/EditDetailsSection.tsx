@@ -1,5 +1,6 @@
-import { FormGroup, SelectOption } from '@patternfly/react-core';
 import * as React from 'react';
+import { FormGroup, SelectOption } from '@patternfly/react-core';
+
 import { Cluster, MachinePool } from '~/types/clusters_mgmt.v1';
 import TextField from '~/components/common/formik/TextField';
 import { isHypershiftCluster } from '~/components/clusters/common/clusterStates';
@@ -36,7 +37,7 @@ const EditDetailsSection = ({
     ) : (
       <>
         <TextField fieldId="name" label="Machine pool name" isRequired />
-        {isHypershiftCluster(cluster) && <SubnetField />}
+        {isHypershiftCluster(cluster) && <SubnetField cluster={cluster} />}
         <InstanceTypeField cluster={cluster} />
       </>
     )}

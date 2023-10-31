@@ -12,7 +12,7 @@ import {
 } from '~/components/clusters/ClusterDetails/clusterDetailsHelper';
 import ErrorBox from '~/components/common/ErrorBox';
 import { getErrorMessage } from '~/common/errors';
-import { AWSSpotMarketOptions, Cluster, MachinePool } from '~/types/clusters_mgmt.v1';
+import { Cluster, MachinePool } from '~/types/clusters_mgmt.v1';
 import { GlobalState } from '~/redux/store';
 import { ErrorState } from '~/types/types';
 import modals from '~/components/common/Modal/modals';
@@ -29,7 +29,8 @@ import DiskSizeField from './fields/DiskSizeField';
 import EditLabelsSection from './sections/EditLabelsSection';
 import EditTaintsSection from './sections/EditTaintsSection';
 import EditDetailsSection from './sections/EditDetailsSection';
-import { getBaseMachineOrNodePool } from './utils';
+import EditSecurityGroupsSection from './sections/EditSecurityGroupsSection';
+import { buildNodePoolRequest, buildMachinePoolRequest } from './utils';
 import useMachinePools from './hooks/useMachinePools';
 import useMachineTypes from './hooks/useMachineTypes';
 import { clearGetMachinePoolsResponse, getMachineOrNodePools } from '../../MachinePoolsActions';
@@ -48,42 +49,27 @@ const submitEdit = ({
 }) => {
   const isHypershift = isHypershiftCluster(cluster);
   const isMultiAz = isMultiAZ(cluster);
-  const pool = getBaseMachineOrNodePool(values, isHypershift, isMultiAz);
+
+  const pool = isHypershift
+    ? buildNodePoolRequest(values, {
+        isEdit: !!currentMPId,
+        isMultiAz,
+      })
+    : buildMachinePoolRequest(values, {
+        isEdit: !!currentMPId,
+        isMultiAz,
+        isROSACluster: isROSA(cluster),
+      });
+
+  // Edit request
   if (currentMPId) {
     const request = isHypershift ? clusterService.patchNodePool : clusterService.patchMachinePool;
     return request(cluster.id || '', currentMPId, pool);
   }
-  if (isHypershift) {
-    return clusterService.addNodePool(cluster.id || '', {
-      ...pool,
-      aws_node_pool: {
-        instance_type: values.instanceType,
-      },
-      subnet: values.subnet?.subnet_id,
-    });
-  }
 
-  if (values.useSpotInstances) {
-    const options: AWSSpotMarketOptions = {};
-    if (values.spotInstanceType === 'maximum') {
-      options.max_price = values.maxPrice;
-    }
-    (pool as MachinePool).aws = {
-      spot_market_options: options,
-    };
-  }
-
-  if (isROSA(cluster)) {
-    (pool as MachinePool).root_volume = {
-      aws: {
-        size: values.diskSize,
-      },
-    };
-  }
-  return clusterService.addMachinePool(cluster.id || '', {
-    ...pool,
-    instance_type: values.instanceType,
-  });
+  // Creation request
+  const request = isHypershift ? clusterService.addNodePool : clusterService.addMachinePool;
+  return request(cluster.id || '', pool);
 };
 
 type EditMachinePoolModalProps = {
@@ -108,8 +94,8 @@ const EditMachinePoolModal = ({
   machineTypesResponse,
 }: EditMachinePoolModalProps) => {
   const [submitError, setSubmitError] = React.useState<AxiosError<any>>();
-  const isEdit = !!isInitEdit || !!machinePoolId;
   const [currentMPId, setCurrentMPId] = React.useState<string | undefined>(machinePoolId);
+  const isEdit = !!isInitEdit || !!machinePoolId;
 
   const currentMachinePool = machinePoolsResponse.data?.find((mp) => mp.id === currentMPId);
 
@@ -229,16 +215,15 @@ const EditMachinePoolModal = ({
               />
               <DiskSizeField cluster={cluster} isEdit={isEdit} />
               <ExpandableSection toggleText="Edit node labels and taints">
-                <Form>
-                  <EditLabelsSection />
-                  <EditTaintsSection
-                    cluster={cluster}
-                    machinePools={machinePoolsResponse.data || []}
-                    machinePoolId={currentMPId}
-                    machineTypes={machineTypesResponse}
-                  />
-                </Form>
+                <EditLabelsSection />
+                <EditTaintsSection
+                  cluster={cluster}
+                  machinePools={machinePoolsResponse.data || []}
+                  machinePoolId={currentMPId}
+                  machineTypes={machineTypesResponse}
+                />
               </ExpandableSection>
+              <EditSecurityGroupsSection cluster={cluster} isEdit={isEdit} />
               {canUseSpotInstances(cluster) && <SpotInstancesSection isEdit={isEdit} />}
             </Form>
           )}

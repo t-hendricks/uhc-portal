@@ -1,3 +1,4 @@
+import { CloudVPC } from '~/types/clusters_mgmt.v1';
 import validators, {
   required,
   checkIdentityProviderName,
@@ -18,9 +19,7 @@ import validators, {
   validateServiceAccountObject,
   validateUniqueAZ,
   validateNumericInput,
-  validateAWSSubnet,
-  validateAWSSubnetIsPrivate,
-  validateAWSSubnetIsPublic,
+  osdWizardAWSSubnetValidators,
   validateGCPSubnet,
   validateGCPKMSServiceAccount,
   validateHTPasswdPassword,
@@ -34,6 +33,7 @@ import validators, {
   validateRoleARN,
   validatePrivateHostedZoneId,
   validateRequiredMachinePoolsSubnet,
+  OSDSubnetFormProps,
 } from '../validators';
 import fixtures from './validators.fixtures';
 import awsVPCs from '../../../mockdata/api/clusters_mgmt/v1/aws_inquiries/vpcs.json';
@@ -902,9 +902,10 @@ describe('AWS Subnet', () => {
   });
 
   const formProps = {
-    vpcs: { fulfilled: true, data: processAWSVPCs(awsVPCs as any) },
+    vpcs: { fulfilled: true, data: processAWSVPCs(awsVPCs.items as CloudVPC[]) },
     vpcsValid: true,
-  };
+  } as OSDSubnetFormProps;
+
   const goodValues = {
     az_0: 'us-east-1d',
     private_subnet_id_0: 'subnet-08a2c509ba577f19f', // All from vpc-048a9cb4375326db1.
@@ -917,56 +918,75 @@ describe('AWS Subnet', () => {
     public_subnet_id_2: 'subnet-0710c0d15361d308c',
   };
 
-  describe('private/public', () => {
-    const validatePP = (allValues: any) =>
-      validateAWSSubnetIsPrivate(allValues.private_subnet_id_0, allValues, formProps as any) ||
-      validateAWSSubnetIsPrivate(allValues.private_subnet_id_1, allValues, formProps as any) ||
-      validateAWSSubnetIsPrivate(allValues.private_subnet_id_2, allValues, formProps as any) ||
-      validateAWSSubnetIsPublic(allValues.public_subnet_id_0, allValues, formProps as any) ||
-      validateAWSSubnetIsPublic(allValues.public_subnet_id_1, allValues, formProps as any) ||
-      validateAWSSubnetIsPublic(allValues.public_subnet_id_2, allValues, formProps as any);
-    expect(validatePP(goodValues)).toBe(undefined);
-    const publicValues = { ...goodValues, private_subnet_id_1: goodValues.public_subnet_id_2 };
-    expect(validatePP(publicValues)).toBe('Provided subnet is public, should be private.');
-    const privateValues = { ...goodValues, public_subnet_id_1: goodValues.private_subnet_id_2 };
-    expect(validatePP(privateValues)).toBe('Provided subnet is private, should be public.');
+  describe('validateAWSOSDWizardVPCs.isPublicSubnet', () => {
+    it.each([['public_subnet_id_0'], ['public_subnet_id_1'], ['public_subnet_id_2']])(
+      'validates as public subnet %s',
+      (subnetId: string) => {
+        expect(osdWizardAWSSubnetValidators.isPublicSubnet(subnetId, {}, formProps)).toBe(
+          undefined,
+        );
+      },
+    );
+
+    it('returns validation error for a private subnet', () => {
+      expect(
+        osdWizardAWSSubnetValidators.isPublicSubnet(goodValues.private_subnet_id_0, {}, formProps),
+      ).toBe('Provided subnet is private, should be public.');
+    });
+  });
+
+  describe('validateAWSOSDWizardVPCs.isPrivateSubnet', () => {
+    it.each([['private_subnet_id_0'], ['private_subnet_id_1'], ['private_subnet_id_2']])(
+      'validates as private subnet %s',
+      (subnetId: string) => {
+        expect(osdWizardAWSSubnetValidators.isPrivateSubnet(subnetId, {}, formProps)).toBe(
+          undefined,
+        );
+      },
+    );
+
+    it('returns validation error for a public subnet', () => {
+      expect(
+        osdWizardAWSSubnetValidators.isPrivateSubnet(goodValues.public_subnet_id_0, {}, formProps),
+      ).toBe('Provided subnet is public, should be private.');
+    });
   });
 
   const validate = (allValues: any) =>
-    validateAWSSubnet(
+    osdWizardAWSSubnetValidators.isValidSubnet(
       allValues.private_subnet_id_0,
       allValues,
-      formProps as any,
+      formProps,
       'private_subnet_id_0',
     ) ||
-    validateAWSSubnet(
+    osdWizardAWSSubnetValidators.isValidSubnet(
       allValues.private_subnet_id_1,
       allValues,
-      formProps as any,
+      formProps,
       'private_subnet_id_1',
     ) ||
-    validateAWSSubnet(
+    osdWizardAWSSubnetValidators.isValidSubnet(
       allValues.private_subnet_id_2,
       allValues,
-      formProps as any,
+      formProps,
       'private_subnet_id_2',
     ) ||
-    validateAWSSubnet(
+    osdWizardAWSSubnetValidators.isValidSubnet(
       allValues.public_subnet_id_0,
       allValues,
-      formProps as any,
+      formProps,
       'public_subnet_id_0',
     ) ||
-    validateAWSSubnet(
+    osdWizardAWSSubnetValidators.isValidSubnet(
       allValues.public_subnet_id_1,
       allValues,
-      formProps as any,
+      formProps,
       'public_subnet_id_1',
     ) ||
-    validateAWSSubnet(
+    osdWizardAWSSubnetValidators.isValidSubnet(
       allValues.public_subnet_id_2,
       allValues,
-      formProps as any,
+      formProps,
       'public_subnet_id_2',
     );
 
@@ -987,26 +1007,26 @@ describe('AWS Subnet', () => {
       private_subnet_id_2: 'subnet-id-without-Name',
     };
     expect(
-      validateAWSSubnet(
+      osdWizardAWSSubnetValidators.isValidSubnet(
         values.private_subnet_id_0,
         values,
-        formProps as any,
+        formProps,
         'private_subnet_id_0',
       ),
     ).toContain('drcluster2-may-11-68fs6-vpc');
     expect(
-      validateAWSSubnet(
+      osdWizardAWSSubnetValidators.isValidSubnet(
         values.private_subnet_id_1,
         values,
-        formProps as any,
+        formProps,
         'private_subnet_id_1',
       ),
     ).toContain('SDA-5333-test-new-API-returning-both-name-and-id');
     expect(
-      validateAWSSubnet(
+      osdWizardAWSSubnetValidators.isValidSubnet(
         values.private_subnet_id_2,
         values,
-        formProps as any,
+        formProps,
         'private_subnet_id_2',
       ),
     ).toContain('SDA-5333-test-new-API-returning-only-id-for-VPC-without-Name-tag');
