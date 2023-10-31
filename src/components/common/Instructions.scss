@@ -4,6 +4,20 @@
   margin-left: 0 !important;
   max-width: 800px;
   padding-left: 0 !important;
-  
-}
 
+  // showing list style items as nested numbers for ordered lists (ol) inside instructions
+  // Example: 1.1, 1.2, 1.3 etc.
+  ol {
+    counter-reset: ocm-instructions;
+    list-style-type: none;
+
+    li {
+      counter-increment: ocm-instructions;
+
+      &::marker {
+        content: counters(ocm-instructions, '.') ' ';
+        font-weight: 700;
+      }
+    }
+  }
+}

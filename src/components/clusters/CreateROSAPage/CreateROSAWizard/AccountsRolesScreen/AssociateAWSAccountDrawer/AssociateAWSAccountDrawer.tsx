@@ -19,6 +19,7 @@ import {
 import { trackEvents } from '~/common/analytics';
 import useAnalytics from '~/hooks/useAnalytics';
 import { AppDrawerContext, AppDrawerSettings } from '~/components/App/AppDrawer';
+import { ROSA_HOSTED_CLI_MIN_VERSION } from '~/components/clusters/CreateROSAPage/CreateROSAWizard/rosaConstants';
 import OCMRoleStep from './OCMRoleStep';
 import UserRoleStep from './UserRoleStep';
 import AccountRoleStep from './AccountRoleStep';
@@ -26,10 +27,11 @@ import { AWSAccountRole } from './common/AssociateAWSAccountStep';
 
 type AssociateRolesDrawerProps = {
   targetRole?: AWSAccountRole;
+  showRosaCliRequirement: boolean;
 };
 
 const AssociateRolesDrawerContent = forwardRef<HTMLInputElement, AssociateRolesDrawerProps>(
-  ({ targetRole }, ref) => {
+  ({ targetRole, showRosaCliRequirement }, ref) => {
     const { closeDrawer } = useContext(AppDrawerContext);
 
     let title;
@@ -90,6 +92,11 @@ const AssociateRolesDrawerContent = forwardRef<HTMLInputElement, AssociateRolesD
                   ROSA cluster deployments use the AWS Security Token Service for added security.
                   Run the following required steps from a CLI authenticated with both AWS and ROSA.
                 </Text>
+                {showRosaCliRequirement && (
+                  <Text component={TextVariants.p}>
+                    You must use ROSA CLI version {ROSA_HOSTED_CLI_MIN_VERSION} or above.
+                  </Text>
+                )}
               </StackItem>
               {(allSteps || targetRole === 'ocm') && (
                 <StackItem>
@@ -128,7 +135,7 @@ const AssociateRolesDrawerContent = forwardRef<HTMLInputElement, AssociateRolesD
   },
 );
 
-export const useAssociateAWSAccountDrawer = () => {
+export const useAssociateAWSAccountDrawer = (showRosaCliRequirement = false) => {
   const { openDrawer: openAppDrawer } = useContext(AppDrawerContext);
   const track = useAnalytics();
 
@@ -150,13 +157,18 @@ export const useAssociateAWSAccountDrawer = () => {
       track(trackEvents.AssociateAWS);
       openAppDrawer({
         drawerProps: { onExpand },
-        drawerPanelContent: <AssociateRolesDrawerContent ref={titleRef} targetRole={targetRole} />,
+        drawerPanelContent: (
+          <AssociateRolesDrawerContent
+            ref={titleRef}
+            targetRole={targetRole}
+            showRosaCliRequirement={showRosaCliRequirement}
+          />
+        ),
         onClose,
         focusOnClose,
       });
     },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [openAppDrawer],
+    [onExpand, openAppDrawer, track, showRosaCliRequirement],
   );
   return { openDrawer };
 };
