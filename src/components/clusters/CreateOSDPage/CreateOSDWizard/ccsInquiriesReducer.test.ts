@@ -1,21 +1,21 @@
 import { processAWSVPCs } from '~/components/clusters/CreateOSDPage/CreateOSDWizard/ccsInquiriesReducer';
 import { CloudVPC } from '~/types/clusters_mgmt.v1';
-import awsVPCs from '../../../../../mockdata/api/clusters_mgmt/v1/aws_inquiries/vpcs.json';
+import vpcResponse from '../../../../../mockdata/api/clusters_mgmt/v1/aws_inquiries/vpcs.json';
+
+const vpcItems = vpcResponse.items as CloudVPC[];
 
 describe('processAWSVPCs', () => {
-  it('works', () => {
+  it('adds bySubnetId with correct data', () => {
     // Backend has technical difficulties with optional arrays in JSON.
-    // This mockdata contains `aws_subnets: null` which is totally a real thing backend
+    // This mockData contains `aws_subnets: null` which is totally a real thing backend
     // may return even when `aws_subnets: []` would be appropriate.
     //
     // Our openapi-derived `CloudVPC` type only describes array | undefined.
-    // TODO: Ideally TS should be aware of `null` possiblity!
+    // TODO: Ideally TS should be aware of `null` possibility!
     //   For now making a *false promise* to TS that it's `CloudVPC` i.e. without `null`,
     //   so it will let us test actual run-time handling of actual real data...
-    const result = processAWSVPCs(awsVPCs as { items: CloudVPC[] });
+    const result = processAWSVPCs(vpcItems);
 
-    // Contains original items unmodified.
-    expect(result.items).toHaveLength(awsVPCs.size);
     // new API
     expect(result.bySubnetID['subnet-0d3a4a32658ee415a']).toEqual({
       vpc_id: 'vpc-0d5c8e4d499be6630',
@@ -32,5 +32,59 @@ describe('processAWSVPCs', () => {
       public: false,
       availability_zone: 'us-west-1a',
     });
+  });
+
+  it('returns the VPC items in the same order', () => {
+    const result = processAWSVPCs(vpcItems);
+
+    expect(result.items).toHaveLength(vpcItems.length);
+    vpcItems.forEach((vpc, index) => {
+      expect(vpc.name).toEqual(result.items[index].name);
+    });
+  });
+
+  it('removes the Red Hat managed security groups', () => {
+    const vpcId = 'vpc-with-security-groups';
+    const result = processAWSVPCs(vpcItems);
+
+    const processedVpcWithSGs = result.items.find((vpc) => vpc.id === vpcId) as CloudVPC;
+
+    const resultSgs = processedVpcWithSGs.aws_security_groups || [];
+    expect(resultSgs.length).toEqual(5);
+    resultSgs.forEach((sg) => {
+      expect(sg.red_hat_managed).toBeFalsy();
+    });
+  });
+
+  it('sorts the VPC security groups by their display order', () => {
+    const result = processAWSVPCs(vpcItems);
+    const vpcId = 'vpc-with-security-groups';
+
+    const processedVpcWithSGs = result.items.find((vpc) => vpc.id === vpcId) as CloudVPC;
+    const resultSgs = processedVpcWithSGs.aws_security_groups || [];
+
+    const expectSortOrder = [
+      {
+        id: 'sg-xyz',
+        name: 'sg-a-name-that-should-go-first',
+      },
+      {
+        id: 'sg-def',
+        name: 'sg-def',
+      },
+      {
+        id: 'sg-abc',
+        name: 'sg-pqr',
+      },
+      {
+        id: 'sg-123-no-name',
+        name: '',
+      },
+      {
+        id: 'sg-no-name',
+        name: '',
+      },
+    ];
+    expect(resultSgs.map((sg) => sg.id)).toEqual(expectSortOrder.map((sg) => sg.id));
   });
 });

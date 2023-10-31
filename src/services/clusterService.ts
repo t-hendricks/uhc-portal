@@ -629,6 +629,17 @@ const upgradeTrialCluster = (clusterID: string, data: Cluster) =>
   apiRequest.patch<Cluster>(`/api/clusters_mgmt/v1/clusters/${clusterID}`, data);
 
 /**
+ * Gets the VPC details of a BYO VPC cluster
+ *
+ * @param clusterId {string} the cluster ID.
+ * @param {object} options - Additional parameters to include in the request query.
+ */
+const getAWSVPCDetails = (clusterId: string, options?: { includeSecurityGroups: boolean }) => {
+  const query = options?.includeSecurityGroups ? '?fetchSecurityGroups=true' : '';
+  return apiRequest.get<CloudVPC>(`/api/clusters_mgmt/v1/clusters/${clusterId}/vpc${query}`);
+};
+
+/**
  * List AWS VPCs for given CCS account.
  *
  * @param credentials {json} an object in the form:
@@ -971,6 +982,7 @@ export {
   deleteControlPlaneUpgradeSchedule,
   patchUpgradeSchedule,
   patchControlPlaneUpgradeSchedule,
+  getAWSVPCDetails,
   listAWSVPCs,
   listGCPVPCs,
   listGCPKeyRings,

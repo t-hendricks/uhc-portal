@@ -67,14 +67,14 @@ const createOSDInitialValues = ({
     defaultRouterExcludedNamespacesFlag: '',
     isDefaultRouterWildcardPolicyAllowed: false,
     isDefaultRouterNamespaceOwnershipPolicyStrict: true,
+    selected_vpc: {
+      id: '',
+      name: '',
+    },
 
     // Optional fields based on whether Hypershift is selected or not
     ...(isHypershiftSelected
       ? {
-          selected_vpc: {
-            id: '',
-            name: '',
-          },
           machine_pools_subnets: [newEmptySubnet()],
           cluster_privacy_public_subnet: newEmptySubnet(),
           worker_volume_size_gib: undefined,

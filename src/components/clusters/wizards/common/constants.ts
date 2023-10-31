@@ -29,6 +29,7 @@ export enum FieldId {
   DefaultRouterExcludedNamespacesFlag = 'defaultRouterExcludedNamespacesFlag',
   IsDefaultRouterNamespaceOwnershipPolicyStrict = 'isDefaultRouterNamespaceOwnershipPolicyStrict',
   IsDefaultRouterWildcardPolicyAllowed = 'isDefaultRouterWildcardPolicyAllowed',
+  SecurityGroupIds = 'securityGroupIds',
 }
 
 export const initialValues: FormikValues = {

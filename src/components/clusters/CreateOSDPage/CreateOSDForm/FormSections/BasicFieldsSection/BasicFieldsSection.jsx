@@ -35,7 +35,6 @@ function BasicFieldsSection({
   hasMultiAzQuota,
   change,
   isWizard,
-  handleMultiAZChangeForOldForm,
   isHypershiftSelected,
   clusterPrivacy,
 }) {
@@ -66,9 +65,6 @@ function BasicFieldsSection({
     change('nodes_compute', getNodesCount(isBYOC, isValueMultiAz, true));
     change('min_replicas', getMinReplicasCount(isBYOC, isValueMultiAz, true, isHypershiftSelected));
     change('max_replicas', getMinReplicasCount(isBYOC, isValueMultiAz, true, isHypershiftSelected));
-    if (handleMultiAZChangeForOldForm) {
-      handleMultiAZChangeForOldForm(value);
-    }
   };
 
   return (
@@ -205,7 +201,6 @@ BasicFieldsSection.propTypes = {
   isMultiAz: PropTypes.bool.isRequired,
   showDNSBaseDomain: PropTypes.bool,
   showAvailability: PropTypes.bool,
-  handleMultiAZChangeForOldForm: PropTypes.func,
   change: PropTypes.func.isRequired,
   cloudProviderID: PropTypes.string.isRequired,
   isBYOC: PropTypes.bool.isRequired,

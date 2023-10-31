@@ -41,6 +41,7 @@ export type EditMachinePoolValues = {
   diskSize: number;
   instanceType: string | undefined;
   subnet: Subnetwork | undefined;
+  securityGroupIds: string[];
 };
 
 type UseMachinePoolFormikArgs = {
@@ -123,6 +124,7 @@ const useMachinePoolFormik = ({
       diskSize: diskSize || defaultWorkerNodeVolumeSizeGiB,
       instanceType,
       subnet: undefined,
+      securityGroupIds: machinePool?.aws?.additional_security_group_ids || [],
     };
   }, [machinePool, isMultiAz, minNodesRequired]);
 
@@ -267,6 +269,7 @@ const useMachinePoolFormik = ({
             !hasMachinePool && isHypershift
               ? Yup.object().test('subnet-is-required', 'Please select a subnet', requiredSubnet)
               : Yup.mixed(),
+          securityGroupIds: Yup.array().of(Yup.string()),
         });
       }),
     [

@@ -8,6 +8,7 @@ export type FuzzyEntryType = {
   groupKey?: string;
   value?: any;
   description?: string;
+  disabled?: boolean;
 };
 export type FuzzyDataType = FuzzyEntryType[] | Record<string, FuzzyEntryType[]>;
 export interface FuzzySelectProps extends Omit<SelectProps, 'isGrouped'> {
