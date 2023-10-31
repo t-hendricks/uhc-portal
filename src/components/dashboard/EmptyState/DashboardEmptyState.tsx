@@ -22,7 +22,7 @@ const AssistedInstallerLink = withFeatureGate(
     </Link>
   ),
   ASSISTED_INSTALLER_FEATURE,
-  undefined,
+  () => null,
 );
 
 function DashboardEmptyState() {
