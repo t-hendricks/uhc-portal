@@ -16,6 +16,9 @@ const reduxFormConfig = {
 };
 
 const reduxFormEditCWProxy = reduxForm(reduxFormConfig)(EditClusterWideProxyDialog);
+// Helper function to check if values have changed, returns changed value or undefined
+const OnlyRetunValueIfChanged = (newValue, oldValue) =>
+  newValue !== oldValue ? newValue : undefined;
 
 const mapStateToProps = (state) => {
   const { cluster } = state.clusters.details;
@@ -45,14 +48,20 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => ({
   clearClusterProxyResponse: () => dispatch(clearClusterResponse()),
   closeModal: () => dispatch(closeModal()),
-  onSubmit: (formData) => {
+  onSubmit: (formData, prevValues) => {
     const clusterProxyBody = {
       proxy: {
-        http_proxy: formData.http_proxy_url,
-        https_proxy: formData.https_proxy_url,
-        no_proxy: arrayToString(formData.no_proxy_domains),
+        http_proxy: OnlyRetunValueIfChanged(formData.http_proxy_url, prevValues.http_proxy_url),
+        https_proxy: OnlyRetunValueIfChanged(formData.https_proxy_url, prevValues.https_proxy_url),
+        no_proxy: OnlyRetunValueIfChanged(
+          arrayToString(formData.no_proxy_domains),
+          arrayToString(prevValues.no_proxy_domains),
+        ),
       },
-      additional_trust_bundle: formData.additional_trust_bundle,
+      additional_trust_bundle: OnlyRetunValueIfChanged(
+        formData.additional_trust_bundle,
+        prevValues.additional_trust_bundle,
+      ),
     };
     dispatch(editCluster(formData.clusterID, clusterProxyBody));
   },
@@ -66,7 +75,7 @@ const mapDispatchToProps = (dispatch) => ({
 
 const mergeProps = (stateProps, dispatchProps, ownProps) => {
   const onSubmit = (formData) => {
-    dispatchProps.onSubmit(formData);
+    dispatchProps.onSubmit(formData, stateProps.initialValues);
   };
   return {
     ...ownProps,
