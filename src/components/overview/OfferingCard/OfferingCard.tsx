@@ -61,7 +61,7 @@ export function OfferingCard(props: OfferingCardProps) {
       offeringCardDocLink = (
         <Button
           variant={ButtonVariant.link}
-          component={() => <Link to="/services/rosa">View details</Link>}
+          component={() => <Link to="/overview/rosa">View details</Link>}
         />
       );
       cardLogo = <AWSLogo className="offering-logo" />;
