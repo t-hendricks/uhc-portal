@@ -390,11 +390,15 @@ const Router: React.FC<RouterProps> = ({ history, planType, clusterId, externalC
             <Route path="/quota" component={Quota} />
             <Route path="/archived" component={ArchivedClusterList} />
             <Route path="/dashboard" exact component={Dashboard} />
+            <Route path="/overview/rosa/hands-on" component={RosaHandsOnPage} />
+            <Route path="/overview/rosa" component={RosaServicePage} />
             <Route path="/overview" exact component={Overview} />
             <Route path="/releases" exact component={Releases} />
             <Route path="/assisted-installer" component={GatedAssistedUiRouter} />
-            <Route path="/services/rosa/demo" component={RosaHandsOnPage} />
-            <Route path="/services/rosa" component={RosaServicePage} />
+
+            {/* TODO: remove these redirects once links from trials and demo system emails are updated */}
+            <Redirect from="/services/rosa/demo" to="/overview/rosa/hands-on" />
+            <Redirect from="/services/rosa" to="/overview/rosa" />
 
             <Route path="/" exact component={ClustersList} />
             <Route component={NotFoundError} />

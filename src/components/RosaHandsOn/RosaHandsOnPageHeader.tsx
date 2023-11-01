@@ -14,9 +14,20 @@ import { PageHeader } from '@redhat-cloud-services/frontend-components';
 import ExternalLink from '../common/ExternalLink';
 import OpenshiftIcon from './RosaHandsOnIcons/OpenshiftIcon';
 import { rosaHandsOnLinks } from './constants';
+import Breadcrumbs from '../common/Breadcrumbs';
 
 const RosaHandsOnPageHeader = () => (
   <PageHeader>
+    <Breadcrumbs
+      path={[
+        { label: 'Overview', path: `/overview` },
+        {
+          label: 'Red Hat OpenShift Service on AWS (ROSA)',
+          path: '/overview/rosa',
+        },
+        { label: 'Hands-on Experience' },
+      ]}
+    />
     <Flex direction={{ default: 'row' }} flexWrap={{ default: 'nowrap' }}>
       <FlexItem alignSelf={{ default: 'alignSelfFlexStart' }}>
         <OpenshiftIcon />
