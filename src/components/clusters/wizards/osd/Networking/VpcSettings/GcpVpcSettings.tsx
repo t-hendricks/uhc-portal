@@ -2,6 +2,7 @@ import React, { ReactElement, useMemo } from 'react';
 import { Field } from 'formik';
 
 import { Alert, AlertActionLink, GridItem, Title } from '@patternfly/react-core';
+import { useFeatureGate } from '~/hooks/useFeatureGate';
 
 import PopoverHint from '~/components/common/PopoverHint';
 import ExternalLink from '~/components/common/ExternalLink';
@@ -11,6 +12,7 @@ import { useFormState } from '~/components/clusters/wizards/hooks';
 import { FieldId, StepId } from '~/components/clusters/wizards/osd/constants';
 import { versionComparator } from '~/common/versionComparator';
 import { useWizardContext } from '@patternfly/react-core/next';
+import { OSD_GCP_SHARED_VPC_FEATURE } from '~/redux/constants/featureConstants';
 import { GcpVpcNameSelectField } from './GcpVpcNameSelectField';
 import { GcpVpcSubnetSelectField } from './GcpVpcSubnetSelectField';
 import { CheckboxField, TextInputField } from '../../../form';
@@ -25,6 +27,9 @@ export const GcpVpcSettings = () => {
     getFieldMeta,
     setFieldValue,
   } = useFormState();
+
+  // is vpc permitted
+  const isVPCFeaturePermitted = useFeatureGate(OSD_GCP_SHARED_VPC_FEATURE);
 
   const { goToStepById } = useWizardContext();
 
@@ -77,30 +82,29 @@ export const GcpVpcSettings = () => {
 
   return (
     <>
-      <GridItem span={8}>
-        <Title headingLevel="h4" size="md">
-          GCP shared VPC
-        </Title>
-        <div className="pf-u-mt-md  pf-u-mb-lg">
-          <CheckboxField
-            name={FieldId.InstallToSharedVpc}
-            label="Install into GCP shared VPC"
-            tooltip={
-              <>
-                <p>
-                  Install into a non-default subnet shared by another account in your GCP
-                  organization.
-                </p>
-                <ExternalLink href={links.INSTALL_GCP_VPC}>
-                  Learn more about GCP shared VPC.
-                </ExternalLink>
-              </>
-            }
-            input={{ onChange: onInstallIntoSharedVPCchange }}
-          />
-          {hostProjectId}
-        </div>
-      </GridItem>
+      {isVPCFeaturePermitted && (
+        <GridItem span={8}>
+          <Title headingLevel="h4" size="md">
+            GCP shared VPC
+          </Title>
+          <div className="pf-u-mt-md  pf-u-mb-lg">
+            <CheckboxField
+              name={FieldId.InstallToSharedVpc}
+              label="Install into GCP shared VPC"
+              tooltip={
+                <>
+                  <p>Install into a VPC shared by another account in your GCP organization.</p>
+                  <ExternalLink href={links.INSTALL_GCP_VPC}>
+                    Learn more about GCP shared VPC.
+                  </ExternalLink>
+                </>
+              }
+              input={{ onChange: onInstallIntoSharedVPCchange }}
+            />
+            {hostProjectId}
+          </div>
+        </GridItem>
+      )}
 
       <GridItem>
         <Title headingLevel="h4" size="md">
