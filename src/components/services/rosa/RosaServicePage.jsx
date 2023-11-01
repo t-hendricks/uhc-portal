@@ -52,7 +52,7 @@ const TryRosaCard = () => (
     <CardFooter>
       <Button
         variant="secondary"
-        component={(props) => <Link {...props} to="/services/rosa/demo/" />}
+        component={(props) => <Link {...props} to="/overview/rosa/hands-on" />}
         isLarge
       >
         Try it
