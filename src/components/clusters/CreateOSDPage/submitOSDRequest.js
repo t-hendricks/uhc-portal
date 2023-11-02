@@ -295,6 +295,9 @@ export const createClusterRequest = ({ isWizard = true, cloudProviderID, product
           control_plane_subnet: formData.control_plane_subnet,
           compute_subnet: formData.compute_subnet,
         };
+        if (formData.install_to_shared_vpc) {
+          clusterRequest.gcp_network.vpc_project_id = formData.shared_host_project_id;
+        }
       }
       if (formData.customer_managed_key === 'true') {
         clusterRequest.gcp_encryption_key = {

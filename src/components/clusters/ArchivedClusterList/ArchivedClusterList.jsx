@@ -26,6 +26,7 @@ import { Link } from 'react-router-dom';
 import { Card, Toolbar, ToolbarItem, ToolbarContent, PageSection } from '@patternfly/react-core';
 
 import { AppPage } from '~/components/App/AppPage';
+import { ONLY_MY_CLUSTERS_TOGGLE_CLUSTER_ARCHIVES_LIST } from '~/common/localStorageConstants';
 import ClusterListFilter from '../common/ClusterListFilter';
 import ClusterListFilterDropDown from '../ClusterList/components/ClusterListFilterDropdown';
 import ClusterListFilterChipGroup from '../ClusterList/components/ClusterListFilterChipGroup';
@@ -170,6 +171,7 @@ class ArchivedClusterList extends Component {
                     <ViewOnlyMyClustersToggle
                       view={viewConstants.ARCHIVED_CLUSTERS_VIEW}
                       bodyContent="Show only the clusters you previously archived, or all archived clusters in your organization."
+                      localStorageKey={ONLY_MY_CLUSTERS_TOGGLE_CLUSTER_ARCHIVES_LIST}
                     />
                   </ToolbarItem>
                   <ToolbarItem className="pf-l-split__item split-margin-left">

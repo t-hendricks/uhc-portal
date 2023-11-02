@@ -1,6 +1,7 @@
 import React from 'react';
 import * as reactRedux from 'react-redux';
-import { checkAccessibility, screen, render, userEvent, within, waitFor } from '~/testUtils';
+
+import { withState, checkAccessibility, screen, within, waitFor } from '~/testUtils';
 import * as updateMachinePoolsHelpers from './updateMachinePoolsHelpers';
 
 import { UpdatePoolButton, UpdateMachinePoolModal } from './UpdateMachinePoolModal';
@@ -50,10 +51,8 @@ describe('UpdateMachinePoolModal', () => {
   });
   describe('<UpdatePoolButton />', () => {
     it('displays the update button when the machine pool version is behind the control plane', async () => {
-      const { container, user } = render(
+      const { container, user } = withState(defaultState).render(
         <UpdatePoolButton machinePool={defaultMachinePool} />,
-        {},
-        defaultState,
       );
 
       expect(screen.getByRole('button')).toBeInTheDocument();
@@ -78,10 +77,8 @@ describe('UpdateMachinePoolModal', () => {
             },
           },
         };
-        const { container } = render(
+        const { container } = withState(newState).render(
           <UpdatePoolButton machinePool={defaultMachinePool} />,
-          {},
-          newState,
         );
 
         expect(container).toBeEmptyDOMElement();
@@ -98,10 +95,8 @@ describe('UpdateMachinePoolModal', () => {
             },
           },
         };
-        const { container } = render(
+        const { container } = withState(newState).render(
           <UpdatePoolButton machinePool={defaultMachinePool} />,
-          {},
-          newState,
         );
 
         expect(container).toBeEmptyDOMElement();
@@ -114,10 +109,8 @@ describe('UpdateMachinePoolModal', () => {
             getMachinePools: { error: true, fulfilled: true, data: [defaultMachinePool] },
           },
         };
-        const { container } = render(
+        const { container } = withState(newState).render(
           <UpdatePoolButton machinePool={defaultMachinePool} />,
-          {},
-          newState,
         );
 
         expect(container).toBeEmptyDOMElement();
@@ -130,10 +123,8 @@ describe('UpdateMachinePoolModal', () => {
             getMachinePools: { error: false, fulfilled: false, data: [defaultMachinePool] },
           },
         };
-        const { container } = render(
+        const { container } = withState(newState).render(
           <UpdatePoolButton machinePool={defaultMachinePool} />,
-          {},
-          newState,
         );
 
         expect(container).toBeEmptyDOMElement();
@@ -146,10 +137,8 @@ describe('UpdateMachinePoolModal', () => {
             getMachinePools: { error: true, fulfilled: true, data: [] },
           },
         };
-        const { container } = render(
+        const { container } = withState(newState).render(
           <UpdatePoolButton machinePool={defaultMachinePool} />,
-          {},
-          newState,
         );
 
         expect(container).toBeEmptyDOMElement();
@@ -166,10 +155,8 @@ describe('UpdateMachinePoolModal', () => {
             },
           },
         };
-        const { container } = render(
+        const { container } = withState(newState).render(
           <UpdatePoolButton machinePool={defaultMachinePool} />,
-          {},
-          newState,
         );
 
         expect(container).toBeEmptyDOMElement();
@@ -189,10 +176,8 @@ describe('UpdateMachinePoolModal', () => {
             },
           },
         };
-        const { container } = render(
+        const { container } = withState(newState).render(
           <UpdatePoolButton machinePool={defaultMachinePool} />,
-          {},
-          newState,
         );
 
         expect(container).toBeEmptyDOMElement();
@@ -200,10 +185,8 @@ describe('UpdateMachinePoolModal', () => {
 
       it('the machine pool version is not known', () => {
         const newMachinePool = { ...defaultMachinePool, version: {} };
-        const { container } = render(
+        const { container } = withState(defaultState).render(
           <UpdatePoolButton machinePool={newMachinePool} />,
-          {},
-          defaultState,
         );
 
         expect(container).toBeEmptyDOMElement();
@@ -213,10 +196,8 @@ describe('UpdateMachinePoolModal', () => {
         const newMachinePool = { ...defaultMachinePool, version: { id: 'openshift-v4.13.3' } };
 
         expect(defaultCluster.version.id).toEqual('openshift-v4.13.3');
-        const { container } = render(
+        const { container } = withState(defaultState).render(
           <UpdatePoolButton machinePool={newMachinePool} />,
-          {},
-          defaultState,
         );
 
         expect(container).toBeEmptyDOMElement();
@@ -233,14 +214,14 @@ describe('UpdateMachinePoolModal', () => {
     });
     it('is hidden when redux state has modal closed', () => {
       const newState = { ...defaultState, modal: { data: {} } };
-      const { container } = render(<UpdateMachinePoolModal />, {}, newState);
+      const { container } = withState(newState).render(<UpdateMachinePoolModal />);
 
       expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
       expect(container).toBeEmptyDOMElement();
     });
 
     it('displays modal with machine name', async () => {
-      const { container } = render(<UpdateMachinePoolModal />, {}, defaultState);
+      const { container } = withState(defaultState).render(<UpdateMachinePoolModal />);
       expect(screen.getByRole('dialog')).toBeInTheDocument();
       expect(
         screen.getByText('Update machine pool my-machine-pool', { exact: false }),
@@ -253,7 +234,7 @@ describe('UpdateMachinePoolModal', () => {
       useDispatchMock.mockReturnValue(mockedDispatch);
       mockUpdatePools.mockResolvedValue([]);
 
-      const { user } = render(<UpdateMachinePoolModal />, {}, defaultState);
+      const { user } = withState(defaultState).render(<UpdateMachinePoolModal />);
       expect(screen.getByRole('dialog')).toBeInTheDocument();
       expect(mockUpdatePools).toBeCalledTimes(0);
 
@@ -267,12 +248,11 @@ describe('UpdateMachinePoolModal', () => {
     });
 
     it('displays error', async () => {
-      const user = userEvent.setup();
       mockUpdatePools.mockResolvedValue(['I am an error!']);
       const mockedDispatch = jest.fn();
       useDispatchMock.mockReturnValue(mockedDispatch);
 
-      render(<UpdateMachinePoolModal />, {}, defaultState);
+      const { user } = withState(defaultState).render(<UpdateMachinePoolModal />);
       expect(screen.getByRole('dialog')).toBeInTheDocument();
       expect(mockUpdatePools).toBeCalledTimes(0);
 

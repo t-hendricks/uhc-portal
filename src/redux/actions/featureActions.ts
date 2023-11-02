@@ -7,6 +7,7 @@ import {
   ASSISTED_INSTALLER_MERGE_LISTS_FEATURE,
   HYPERSHIFT_WIZARD_FEATURE,
   OSD_GOOGLE_MARKETPLACE_FEATURE,
+  OSD_GCP_SHARED_VPC_FEATURE,
   HCP_ROSA_GETTING_STARTED_PAGE,
   HCP_AWS_BILLING_SHOW,
   HCP_AWS_BILLING_REQUIRED,
@@ -68,6 +69,7 @@ export const features = [
   getSimpleUnleashFeature('hcp-aws-billing-required', HCP_AWS_BILLING_REQUIRED),
   getSimpleUnleashFeature('assisted-installer-merge-lists', ASSISTED_INSTALLER_MERGE_LISTS_FEATURE),
   getSimpleUnleashFeature('osd-google-marketplace', OSD_GOOGLE_MARKETPLACE_FEATURE),
+  getSimpleUnleashFeature('osd-gcp-shared-vpc', OSD_GCP_SHARED_VPC_FEATURE),
   {
     name: ASSISTED_INSTALLER_FEATURE,
     action: () =>

@@ -1,6 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
+import { render, checkAccessibility } from '~/testUtils';
 import AddOnsPrimaryButton from '../AddOnsDrawerPrimaryButton';
 
 import { managedIntegration } from '../../__test__/AddOns.fixtures';
@@ -18,29 +19,35 @@ describe('<AddOnsPrimaryButton />', () => {
     },
   };
 
+  const props = {
+    activeCard: managedIntegration,
+    activeCardRequirementsFulfilled: true,
+    addClusterAddOn,
+    addClusterAddOnResponse,
+    cluster: {
+      canEdit: true,
+      id: 'fake id',
+      state: 'ready',
+      console: { url: 'https://example.com/veryfakeconsole' },
+    },
+    hasQuota: true,
+    installedAddOn: { state: 'ready', operator_version: '0.0.1', csv_name: 'fake-addon.0.0.1' },
+    openModal,
+    subscriptionModels,
+  };
+
   beforeEach(() => {
-    wrapper = shallow(
-      <AddOnsPrimaryButton
-        activeCard={managedIntegration}
-        activeCardRequirementsFulfilled
-        addClusterAddOn={addClusterAddOn}
-        addClusterAddOnResponse={addClusterAddOnResponse}
-        cluster={{
-          canEdit: true,
-          id: 'fake id',
-          state: 'ready',
-          console: { url: 'https://example.com/veryfakeconsole' },
-        }}
-        hasQuota
-        installedAddOn={{ state: 'ready', operator_version: '0.0.1', csv_name: 'fake-addon.0.0.1' }}
-        openModal={openModal}
-        subscriptionModels={subscriptionModels}
-      />,
-    );
+    wrapper = shallow(<AddOnsPrimaryButton {...props} />);
   });
 
-  it('should render', () => {
-    expect(wrapper).toMatchSnapshot();
+  afterEach(() => {
+    addClusterAddOn.mockClear();
+    openModal.mockClear();
+  });
+
+  it('is accessible', async () => {
+    const { container } = render(<AddOnsPrimaryButton {...props} />);
+    await checkAccessibility(container);
   });
 
   it('should render both open and uninstall buttons for ready cluster', () => {

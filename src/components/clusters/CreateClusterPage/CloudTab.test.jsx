@@ -1,6 +1,7 @@
 import React from 'react';
-import { render, screen, checkAccessibility, mockRestrictedEnv } from '@testUtils';
 import { MemoryRouter } from 'react-router-dom';
+
+import { render, screen, checkAccessibility, mockRestrictedEnv } from '~/testUtils';
 
 import CloudTab from './CloudTab';
 

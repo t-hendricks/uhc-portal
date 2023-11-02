@@ -1,19 +1,21 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
+import { render, checkAccessibility /* , screen  */ } from '~/testUtils';
 import AddOnsFailedBox from '../AddOnsDrawerFailedBox';
 
 describe('<AddOnsFailedBox />', () => {
   let wrapper;
+  const props = { installedAddOn: { state: 'failed', state_description: 'failed message' } };
 
   beforeEach(() => {
-    wrapper = shallow(
-      <AddOnsFailedBox installedAddOn={{ state: 'failed', state_description: 'failed message' }} />,
-    );
+    wrapper = shallow(<AddOnsFailedBox {...props} />);
   });
 
-  it('should render', () => {
-    expect(wrapper).toMatchSnapshot();
+  it('is accessible', async () => {
+    const { container } = render(<AddOnsFailedBox {...props} />);
+
+    await checkAccessibility(container);
   });
 
   it('should render alert box', () => {

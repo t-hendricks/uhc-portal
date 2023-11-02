@@ -15,6 +15,7 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
         showMyClustersOnly: isChecked,
       },
     });
+    localStorage.setItem(ownProps.localStorageKey, isChecked);
   },
 });
 

@@ -20,8 +20,8 @@ import '@cypress/code-coverage/support';
 // Alternatively you can use CommonJS syntax:
 // require('./commands')
 
-const registerCypressGrep = require('@cypress/grep')
-registerCypressGrep()
+const registerCypressGrep = require('@cypress/grep');
+registerCypressGrep();
 
 before(() => {
   cy.log('Setting session cookies');
@@ -34,9 +34,10 @@ before(() => {
   cy.viewport('macbook-13');
 });
 
-
 beforeEach(() => {
-  cy.log('Configuring Cypress to catch all uncaught exceptions & unhandled promise rejections thrown from OCM app.');
+  cy.log(
+    'Configuring Cypress to catch all uncaught exceptions & unhandled promise rejections thrown from OCM app.',
+  );
   cy.on('uncaught:exception', (err, runnable, promise) => {
     // return false to prevent the error from failing this test
     console.error(`Cypress caught exception: ${err.message}`);

@@ -1,21 +1,21 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
+import { render, checkAccessibility } from '~/testUtils';
 import AddOnsRequirementContent from '../AddOnsDrawerRequirementContent';
 
 describe('<AddOnsRequirementContent />', () => {
   let wrapper;
 
+  const props = { activeCardRequirements: ['first requirement', 'second requirement'] };
+
   beforeEach(() => {
-    wrapper = shallow(
-      <AddOnsRequirementContent
-        activeCardRequirements={['first requirement', 'second requirement']}
-      />,
-    );
+    wrapper = shallow(<AddOnsRequirementContent {...props} />);
   });
 
-  it('should render', () => {
-    expect(wrapper).toMatchSnapshot();
+  it('is accessible', async () => {
+    const { container } = render(<AddOnsRequirementContent {...props} />);
+    await checkAccessibility(container);
   });
 
   it('expect to render all requirements', () => {

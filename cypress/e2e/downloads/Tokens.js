@@ -35,5 +35,4 @@ describe('Token pages', { tags: ['ci', 'smoke'] }, () => {
     TokenPages.waitTokenPageIsLoaded();
     TokenPages.checkRevokePrevousToken();
   });
-
 });

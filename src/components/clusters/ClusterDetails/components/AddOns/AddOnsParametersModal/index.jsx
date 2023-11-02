@@ -6,7 +6,7 @@ import AddOnsParametersModal from './AddOnsParametersModal';
 import { addClusterAddOn, updateClusterAddOn, clearClusterAddOnsResponses } from '../AddOnsActions';
 import { parameterValuesForEditing } from '../AddOnsHelper';
 
-const reduxFormConfig = {
+export const reduxFormConfig = {
   form: 'AddOnsParameters',
   enableReinitialize: true,
 };

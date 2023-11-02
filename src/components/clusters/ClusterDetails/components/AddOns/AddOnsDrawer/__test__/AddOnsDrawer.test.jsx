@@ -1,6 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
+import { render, checkAccessibility } from '~/testUtils';
 import AddOnsDrawer from '../AddOnsDrawer';
 import { mockAddOns, mockClusterAddOns } from '../../__test__/AddOns.fixtures';
 
@@ -23,30 +24,37 @@ describe('<AddOnsDrawer />', () => {
 
   const { clusterDetails, organization } = fixtures;
 
+  const props = {
+    addOnsList: mockAddOns.items,
+    mockClusterAddOns,
+    cluster: clusterDetails.cluster,
+    clusterAddOns: mockClusterAddOns,
+    organization,
+    quota: addonsQuotaList,
+    openModal,
+    clusterMachinePools: {},
+    addClusterAddOn,
+    addClusterAddOnResponse,
+    deleteClusterAddOnResponse,
+    updateClusterAddOn,
+    submitClusterAddOnResponse,
+    setAddonsDrawer,
+    drawer,
+  };
+
   beforeEach(() => {
-    wrapper = shallow(
-      <AddOnsDrawer
-        addOnsList={mockAddOns.items}
-        mockClusterAddOns={mockClusterAddOns}
-        cluster={clusterDetails.cluster}
-        clusterAddOns={mockClusterAddOns}
-        organization={organization}
-        quota={addonsQuotaList}
-        openModal={openModal}
-        clusterMachinePools={{}}
-        addClusterAddOn={addClusterAddOn}
-        addClusterAddOnResponse={addClusterAddOnResponse}
-        deleteClusterAddOnResponse={deleteClusterAddOnResponse}
-        updateClusterAddOn={updateClusterAddOn}
-        submitClusterAddOnResponse={submitClusterAddOnResponse}
-        setAddonsDrawer={setAddonsDrawer}
-        drawer={drawer}
-      />,
-    );
+    wrapper = shallow(<AddOnsDrawer {...props} />);
+  });
+  afterEach(() => {
+    openModal.mockClear();
+    addClusterAddOn.mockClear();
+    updateClusterAddOn.mockClear();
+    setAddonsDrawer.mockClear();
   });
 
-  it('should render', () => {
-    expect(wrapper).toMatchSnapshot();
+  it('is accessible', async () => {
+    const { container } = render(<AddOnsDrawer {...props} />);
+    await checkAccessibility(container);
   });
 
   it('expect 7 rendered cards', () => {

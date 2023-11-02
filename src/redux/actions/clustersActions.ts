@@ -651,11 +651,15 @@ const getInflightChecks = (clusterID: string) =>
 
 const clearInstallableVersions = () => action(clustersConstants.CLEAR_CLUSTER_VERSIONS_RESPONSE);
 
-const getInstallableVersions = (isRosa: boolean, isMarketplaceGcp: boolean) =>
-  action(
-    clustersConstants.GET_CLUSTER_VERSIONS,
-    clusterService.getInstallableVersions(isRosa, isMarketplaceGcp),
-  );
+const getInstallableVersions = (
+  isRosa: boolean,
+  isMarketplaceGcp: boolean,
+  isHCP: boolean = false,
+) => {
+  const versions = clusterService.getInstallableVersions(isRosa, isMarketplaceGcp, isHCP);
+  // console.log('KKD - ', versions);
+  return action(clustersConstants.GET_CLUSTER_VERSIONS, versions);
+};
 
 type ClusterAction = ActionType<
   | typeof fetchClusterDetails

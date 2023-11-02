@@ -46,6 +46,9 @@ deleteMachinePool.mockResolvedValue({});
 const clearGetMachinePoolsResponse = jest.fn();
 clearGetMachinePoolsResponse.mockResolvedValue({});
 
+const getInstallableVersions = jest.fn();
+getInstallableVersions.mockResolvedValue([]);
+
 const clusterService = {
   getClusters,
   postNewCluster,
@@ -63,6 +66,7 @@ const clusterService = {
   getNodePools,
   deleteMachinePool,
   clearGetMachinePoolsResponse,
+  getInstallableVersions,
 };
 
 export default clusterService;

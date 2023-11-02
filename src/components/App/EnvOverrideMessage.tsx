@@ -1,7 +1,7 @@
 import React from 'react';
 import { Alert, Button, ButtonVariant } from '@patternfly/react-core';
 import ocmBaseName from '~/common/getBaseName';
-import { ENV_OVERRIDE_LOCALSTORAGE_KEY } from '../../config';
+import { ENV_OVERRIDE_LOCALSTORAGE_KEY } from '~/common/localStorageConstants';
 
 type Props = {
   env: string;

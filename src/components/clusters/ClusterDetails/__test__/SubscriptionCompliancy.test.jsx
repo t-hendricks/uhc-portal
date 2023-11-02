@@ -1,6 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import { Alert } from '@patternfly/react-core';
+
+import { render, screen, checkAccessibility } from '~/testUtils';
 
 import SubscriptionCompliancy from '../components/SubscriptionCompliancy';
 import fixtures from './ClusterDetails.fixtures';
@@ -16,8 +17,9 @@ describe('<SubscriptionCompliancy />', () => {
   const { OCPClusterDetails, clusterDetails, organization } = fixtures;
   const openModal = jest.fn();
   let wrapper;
+  let props;
   beforeEach(() => {
-    const props = {
+    props = {
       cluster: OCPClusterDetails.cluster,
       canSubscribeOCP: false,
       organization,
@@ -26,7 +28,7 @@ describe('<SubscriptionCompliancy />', () => {
     wrapper = shallow(<SubscriptionCompliancy {...props} />);
   });
 
-  it('should warn during evaluation period', () => {
+  it('should warn during evaluation period', async () => {
     const cluster = { ...OCPClusterDetails.cluster, canEdit: true };
     cluster.subscription[SUPPORT_LEVEL] = EVAL;
     cluster.subscription.capabilities = [
@@ -36,32 +38,75 @@ describe('<SubscriptionCompliancy />', () => {
         inherited: true,
       },
     ];
-    wrapper.setProps({ cluster }, () => {
-      expect(wrapper).toMatchSnapshot();
-      expect(wrapper.find(Alert).length).toEqual(1);
-    });
-    // show diff text for non-edit users
-    cluster.canEdit = false;
-    wrapper.setProps({ cluster }, () => {
-      expect(wrapper).toMatchSnapshot();
-      expect(wrapper.find(Alert).length).toEqual(1);
-    });
+    const newProps = { ...props, cluster };
+    const { container } = render(<SubscriptionCompliancy {...newProps} />);
+    expect(screen.getByLabelText('Warning Alert')).toBeInTheDocument();
+    expect(screen.getByText('OpenShift evaluation expiration date')).toBeInTheDocument();
+    expect(
+      screen.queryByText(
+        'The cluster owner or an Organization Administrator can edit subscription settings for non-evaluation use.',
+        { exact: false },
+      ),
+    ).not.toBeInTheDocument();
+    await checkAccessibility(container);
   });
 
-  it('should warn when evaluation is expired', () => {
+  it('should warn during evaluation period without an ability to edit', async () => {
+    const cluster = { ...OCPClusterDetails.cluster, canEdit: true };
+    cluster.subscription[SUPPORT_LEVEL] = EVAL;
+    cluster.subscription.capabilities = [
+      {
+        name: 'capability.cluster.subscribed_ocp',
+        value: 'true',
+        inherited: true,
+      },
+    ];
+    cluster.canEdit = false;
+    const newProps = { ...props, cluster };
+    const { container } = render(<SubscriptionCompliancy {...newProps} />);
+    expect(screen.getByLabelText('Warning Alert')).toBeInTheDocument();
+    expect(screen.getByText('OpenShift evaluation expiration date')).toBeInTheDocument();
+    expect(
+      screen.getByText(
+        'The cluster owner or an Organization Administrator can edit subscription settings for non-evaluation use.',
+        { exact: false },
+      ),
+    ).toBeInTheDocument();
+    await checkAccessibility(container);
+  });
+
+  it('should warn when evaluation is expired', async () => {
     const cluster = { ...OCPClusterDetails.cluster, canEdit: true };
     cluster.subscription[SUPPORT_LEVEL] = NONE;
     cluster.subscription.capabilities = [];
-    wrapper.setProps({ cluster }, () => {
-      expect(wrapper).toMatchSnapshot();
-      expect(wrapper.find(Alert).length).toEqual(1);
-    });
-    // show diff text for non-edit users
+    const newProps = { ...props, cluster };
+    const { container } = render(<SubscriptionCompliancy {...newProps} />);
+    expect(screen.getByLabelText('Danger Alert')).toBeInTheDocument();
+    expect(screen.getByText('Your 60-day OpenShift evaluation has expired')).toBeInTheDocument();
+    expect(
+      screen.queryByText(
+        'The cluster owner or an Organization Administrator can edit subscription settings for non-evaluation use.',
+        { exact: false },
+      ),
+    ).not.toBeInTheDocument();
+    await checkAccessibility(container);
+  });
+  it('should warn when evaluation is expired without an ability to edit', async () => {
+    const cluster = { ...OCPClusterDetails.cluster, canEdit: true };
+    cluster.subscription[SUPPORT_LEVEL] = NONE;
+    cluster.subscription.capabilities = [];
     cluster.canEdit = false;
-    wrapper.setProps({ cluster }, () => {
-      expect(wrapper).toMatchSnapshot();
-      expect(wrapper.find(Alert).length).toEqual(1);
-    });
+    const newProps = { ...props, cluster };
+    const { container } = render(<SubscriptionCompliancy {...newProps} />);
+    expect(screen.getByLabelText('Danger Alert')).toBeInTheDocument();
+    expect(screen.getByText('Your 60-day OpenShift evaluation has expired')).toBeInTheDocument();
+    expect(
+      screen.getByText(
+        'The cluster owner or an Organization Administrator can edit subscription settings for non-evaluation use.',
+        { exact: false },
+      ),
+    ).toBeInTheDocument();
+    await checkAccessibility(container);
   });
 
   it('should not render when it has a valid support', () => {

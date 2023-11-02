@@ -1,6 +1,7 @@
 import React from 'react';
 import MockAdapter from 'axios-mock-adapter';
-import { render, screen, checkAccessibility, within, insightsMock } from '@testUtils';
+
+import { render, screen, checkAccessibility, within, insightsMock } from '~/testUtils';
 import apiRequest from '~/services/apiRequest';
 import wizardConnector from '~/components/clusters/CreateOSDPage/CreateOSDWizard/WizardConnector';
 import ScaleSection from './ScaleSection';

@@ -129,6 +129,7 @@ function ArchivedClusterListTable(props) {
       rows={clusters.map((cluster) => clusterRow(cluster))}
       onSort={onSortToggle}
       sortBy={sortBy}
+      aria-label="Archived clusters"
     >
       <TableHeader />
       <TableBody />

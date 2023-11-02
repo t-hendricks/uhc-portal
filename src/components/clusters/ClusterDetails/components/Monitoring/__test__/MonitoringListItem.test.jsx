@@ -1,17 +1,15 @@
 import React from 'react';
-import { shallow } from 'enzyme';
-
+import { render, checkAccessibility } from '~/testUtils';
 import MonitoringListItem from '../components/MonitoringListItem';
 import { mockOCPActiveClusterDetails } from './Monitoring.fixtures';
 
 describe('<MonitoringListItem />', () => {
-  let wrapper;
-
-  beforeEach(() => {
-    wrapper = shallow(<MonitoringListItem cluster={mockOCPActiveClusterDetails} />);
-  });
-
-  it('should render', () => {
-    expect(wrapper).toMatchSnapshot();
+  it('is accessible', async () => {
+    const { container } = render(
+      <ul>
+        <MonitoringListItem title="myTitle" cluster={mockOCPActiveClusterDetails} />
+      </ul>,
+    );
+    await checkAccessibility(container);
   });
 });

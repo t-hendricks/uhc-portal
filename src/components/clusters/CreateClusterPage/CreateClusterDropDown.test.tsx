@@ -1,7 +1,8 @@
 import React from 'react';
-import { render, checkAccessibility, screen, fireEvent, mockRestrictedEnv } from '@testUtils';
 import { MemoryRouter, Router } from 'react-router-dom';
 import { createMemoryHistory } from 'history';
+
+import { render, checkAccessibility, screen, fireEvent, mockRestrictedEnv } from '~/testUtils';
 import * as hooks from '~/hooks/useFeatureGate';
 import { HCP_ROSA_GETTING_STARTED_PAGE } from '~/redux/constants/featureConstants';
 import CreateClusterDropDown from './CreateClusterDropDown';
