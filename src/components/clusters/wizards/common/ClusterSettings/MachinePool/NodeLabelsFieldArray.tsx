@@ -3,7 +3,7 @@ import React from 'react';
 import { FieldArray } from 'formik';
 import classNames from 'classnames';
 
-import { Button, Flex, Grid, GridItem } from '@patternfly/react-core';
+import { Button, Split, SplitItem, Stack, StackItem } from '@patternfly/react-core';
 import { MinusCircleIcon, PlusCircleIcon } from '@patternfly/react-icons';
 
 import { checkLabelKey, checkLabelValue } from '~/common/validators';
@@ -51,13 +51,7 @@ export const NodeLabelsFieldArray = () => {
   };
 
   return (
-    <Grid hasGutter>
-      <GridItem span={5} className="pf-c-form__label pf-c-form__label-text">
-        Key
-      </GridItem>
-      <GridItem span={5} className="pf-c-form__label pf-c-form__label-text">
-        Value
-      </GridItem>
+    <Stack hasGutter className="label-split-layout">
       <FieldArray
         name={FieldId.NodeLabels}
         validateOnChange
@@ -70,35 +64,43 @@ export const NodeLabelsFieldArray = () => {
               const valueFieldName = `${name}.value`;
 
               return (
-                <Grid hasGutter>
-                  <GridItem span={5}>
-                    <TextInputField
-                      textInputClassName="label-form"
-                      name={keyFieldName}
-                      validate={validateNodeKey(index)}
-                    />
-                  </GridItem>
-                  <GridItem span={6}>
-                    <Flex flexWrap={{ default: 'nowrap' }}>
+                <StackItem>
+                  <Split hasGutter className="node-label-split-layout">
+                    <SplitItem className="node-label-split-item">
                       <TextInputField
-                        formGroupClassName="label-form"
+                        name={keyFieldName}
+                        validate={validateNodeKey(index)}
+                        label={index === 0 ? 'Key' : undefined}
+                        formGroup={{ isRequired: false }}
+                      />
+                    </SplitItem>
+                    <SplitItem className="node-label-split-item">
+                      <TextInputField
                         name={valueFieldName}
                         validate={validateNodeValue}
+                        label={index === 0 ? 'Value' : undefined}
+                        formGroup={{ isRequired: false }}
                       />
+                    </SplitItem>
+                    <SplitItem>
                       <Button
                         onClick={() => remove(index)}
                         icon={<MinusCircleIcon />}
                         variant="link"
                         isInline
                         isDisabled={isRemoveDisabled}
-                        className={classNames(isRemoveDisabled && 'pf-u-disabled-color-200')}
+                        className={`${classNames(
+                          isRemoveDisabled && 'pf-u-disabled-color-200',
+                        )} ${classNames(
+                          index === 0 ? 'label-button-padding-lg' : 'label-button-padding-sm',
+                        )}`}
                       />
-                    </Flex>
-                  </GridItem>
-                </Grid>
+                    </SplitItem>
+                  </Split>
+                </StackItem>
               );
             })}
-            <GridItem>
+            <StackItem>
               <ButtonWithTooltip
                 onClick={() => push({ key: '', value: '' })}
                 icon={<PlusCircleIcon />}
@@ -108,10 +110,10 @@ export const NodeLabelsFieldArray = () => {
               >
                 Add additional label
               </ButtonWithTooltip>
-            </GridItem>
+            </StackItem>
           </>
         )}
       />
-    </Grid>
+    </Stack>
   );
 };
