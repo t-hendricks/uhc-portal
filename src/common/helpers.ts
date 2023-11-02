@@ -27,10 +27,6 @@ const multiInputToCleanArray = (
     : [];
 };
 
-const stringToArray = (str?: string) => str && str.trim().split(',');
-
-const arrayToString = (arr?: string[]) => arr && arr.join(',');
-
 /**
  * Normalizes the data to make sure it's a list
  * @param itemOrList {Object} item or list of items.
@@ -41,6 +37,14 @@ const asArray = <T>(itemOrList: T | T[]): T[] => {
   }
   return [itemOrList];
 };
+
+const stringToArray = (str?: string) => str && str.trim().split(',');
+const stringToArrayTrimmed = (str: string) =>
+  asArray(stringToArray(str))
+    .map((ns) => ns?.trim())
+    .filter((ns) => !!ns);
+
+const arrayToString = (arr?: string[]) => arr && arr.join(',');
 
 /**
  * Parses comma separated key<delimiter>value pairs into an object.
@@ -247,6 +251,32 @@ const formatMinorVersion = (version: string) => {
   return parsedVersion ? `${semver.major(parsedVersion)}.${semver.minor(parsedVersion)}` : version;
 };
 
+/**
+ * From "key1=value1,key2=value2" returns object { "key1": "value1", "key2": "value2"}.
+ *
+ * More examples:
+ * - strToKeyValueObject('foo', '') is equal to strToKeyValueObject('foo=', undefined)
+ * - strToKeyValueObject('foo') results in "{ foo: undefined }"
+ *
+ * @param {string} input comma-separated list of key=value pairs
+ * @param {string} defaultValue used when the value is missing (like input === "foo").
+ *
+ */
+const strToKeyValueObject = (input?: string, defaultValue?: string) => {
+  if (input === undefined) {
+    return undefined;
+  }
+
+  if (!input) {
+    return {};
+  }
+
+  return input.split(',').reduce((accum, pair) => {
+    const [key, value] = pair.split('=');
+    return { ...accum, [key]: value ?? defaultValue };
+  }, {});
+};
+
 export {
   noop,
   isValid,
@@ -268,6 +298,8 @@ export {
   arrayToString,
   isSupportedMinorVersion,
   formatMinorVersion,
+  strToKeyValueObject,
+  stringToArrayTrimmed,
 };
 
 export default helpers;

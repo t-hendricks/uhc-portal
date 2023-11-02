@@ -11,8 +11,6 @@ import {
   ExpandableSection,
 } from '@patternfly/react-core';
 
-import { LoadBalancerFlavor } from '~/types/clusters_mgmt.v1';
-
 import Modal from '../../../../../../common/Modal/Modal';
 import ErrorBox from '../../../../../../common/ErrorBox';
 import {
@@ -23,8 +21,6 @@ import ExternalLink from '../../../../../../common/ExternalLink';
 
 import links from '../../../../../../../common/installLinks.mjs';
 import { checkRouteSelectors } from '../../../../../../../common/validators';
-import { LoadBalancerFlavorLabel } from '../constants';
-import LoadBalancerPopover from '../LoadBalancerPopover';
 
 class EditClusterIngressDialog extends React.Component {
   componentDidUpdate(prevProps) {
@@ -46,12 +42,11 @@ class EditClusterIngressDialog extends React.Component {
     const {
       provider,
       controlPlaneAPIEndpoint,
-      defaultRouterAddress,
       additionalRouterAddress,
       editClusterRoutersResponse,
       isOpen,
       hideAdvancedOptions,
-      additionalRouterEnabled,
+      canEditAdditionalRouter,
       showRouterVisibilityWarning,
       valid,
       pristine,
@@ -98,19 +93,20 @@ class EditClusterIngressDialog extends React.Component {
               component={ReduxCheckbox}
               name="enable_additional_router"
               label="Enable additional router"
+              extendedHelpText="The use of an additional router is deprecated in favor of the single application ingress. Since it has already been enabled, the additional router can be still edited for 4.11 and 4.12 versions but once disabled, it can not be re-enabled again. In the 4.13+ versions, the additional router can not be edited but disabled only."
             />
           </FormGroup>
           <FormGroup fieldId="additional_router_address" isStack>
             <TextInput
               id="additional_router_address"
               value={`*.${additionalRouterAddress}`}
-              isReadOnly
+              readOnlyVariant="default"
             />
             <Field
               component={ReduxCheckbox}
               name="private_additional_router"
               label="Make router private"
-              isDisabled={!additionalRouterEnabled}
+              isDisabled={!canEditAdditionalRouter}
             />
           </FormGroup>
           <Field
@@ -122,7 +118,7 @@ class EditClusterIngressDialog extends React.Component {
             helpText="Comma separated pairs in key=value format. If no label is specified, all routes will be exposed on both routers."
             validate={checkRouteSelectors}
             key="route_selectors"
-            isDisabled={!additionalRouterEnabled}
+            readOnlyVariant={canEditAdditionalRouter ? undefined : 'default'}
           />
         </Form>
       </ExpandableSection>
@@ -155,34 +151,6 @@ class EditClusterIngressDialog extends React.Component {
               </ClipboardCopy>
               <Field component={ReduxCheckbox} name="private_api" label="Make API private" />
             </FormGroup>
-            <FormGroup fieldId="default_router_address" label="Default application router" isStack>
-              <TextInput
-                id="default_router_address"
-                value={`*.${defaultRouterAddress}`}
-                isReadOnly
-              />
-              <Field
-                component={ReduxCheckbox}
-                name="private_default_router"
-                label="Make router private"
-              />
-            </FormGroup>
-            {isAWS && (
-              <FormGroup
-                fieldId="load_balancer_group"
-                label="Load balancer type"
-                className="pf-u-pb-md"
-                labelIcon={<LoadBalancerPopover />}
-              >
-                <Field
-                  component={ReduxCheckbox}
-                  name="is_nlb_load_balancer"
-                  label={LoadBalancerFlavorLabel[LoadBalancerFlavor.NLB]}
-                  labelOff={LoadBalancerFlavorLabel[LoadBalancerFlavor.CLASSIC]}
-                  isSwitch
-                />
-              </FormGroup>
-            )}
             {advancedOptions}
           </Form>
         </Modal>
@@ -194,15 +162,12 @@ class EditClusterIngressDialog extends React.Component {
 EditClusterIngressDialog.propTypes = {
   provider: PropTypes.string,
   controlPlaneAPIEndpoint: PropTypes.string.isRequired,
-  defaultRouterAddress: PropTypes.string.isRequired,
   additionalRouterAddress: PropTypes.string.isRequired,
   initialValues: PropTypes.shape({
     private_api: PropTypes.bool,
-    private_default_router: PropTypes.bool,
     enable_additional_router: PropTypes.bool,
     private_additional_router: PropTypes.bool,
     labels_additional_router: PropTypes.string,
-    is_nlb_load_balancer: PropTypes.bool,
   }).isRequired,
   editClusterRoutersResponse: PropTypes.shape({
     error: PropTypes.bool,
@@ -218,7 +183,7 @@ EditClusterIngressDialog.propTypes = {
   valid: PropTypes.bool.isRequired,
   pristine: PropTypes.bool.isRequired,
   hideAdvancedOptions: PropTypes.bool.isRequired,
-  additionalRouterEnabled: PropTypes.bool.isRequired,
+  canEditAdditionalRouter: PropTypes.bool.isRequired,
   showRouterVisibilityWarning: PropTypes.bool.isRequired,
 };
 

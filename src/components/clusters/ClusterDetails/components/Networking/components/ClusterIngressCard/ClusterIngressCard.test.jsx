@@ -26,12 +26,10 @@ describe('<ClusterIngressCard />', () => {
     it('API and router are shown as private', async () => {
       const { rerender } = render(<ClusterIngressCard {...props} />);
       expect(screen.queryByText('Private API')).not.toBeInTheDocument();
-      expect(screen.queryByText('Private router')).not.toBeInTheDocument();
 
       isRestrictedEnv.mockReturnValue(true);
       rerender(<ClusterIngressCard {...props} />);
       expect(screen.queryByText('Private API')).toBeInTheDocument();
-      expect(screen.queryByText('Private router')).toBeInTheDocument();
     });
   });
 });

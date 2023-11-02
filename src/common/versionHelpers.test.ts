@@ -45,8 +45,8 @@ describe('splitVersion', () => {
   });
 });
 
-describe('version comparison', () => {
-  it('works for isExactMajorMinor', () => {
+describe('version comparision', () => {
+  it('can isExactMajorMinor', () => {
     expect(isExactMajorMinor('4.12.0-0', 4, 12)).toBeTruthy();
     expect(isExactMajorMinor('4.12.1-0', 4, 12)).toBeTruthy();
     expect(isExactMajorMinor('4.12', 4, 12)).toBeTruthy();
@@ -57,7 +57,7 @@ describe('version comparison', () => {
     expect(isExactMajorMinor('hello', 4, 13)).toBeFalsy();
   });
 
-  it('works for isMajorMinorEqualOrGreater', () => {
+  it('can isMajorMinorEqualOrGreater', () => {
     expect(isMajorMinorEqualOrGreater('4.12.0-0', 4, 12)).toBeTruthy();
     expect(isMajorMinorEqualOrGreater('4.12.1-0', 4, 12)).toBeTruthy();
     expect(isMajorMinorEqualOrGreater('4.12', 4, 12)).toBeTruthy();

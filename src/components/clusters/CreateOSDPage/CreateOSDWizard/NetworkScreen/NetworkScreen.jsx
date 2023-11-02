@@ -12,18 +12,24 @@ import {
   Tooltip,
 } from '@patternfly/react-core';
 import { Field } from 'redux-form';
+
 import { normalizedProducts } from '~/common/subscriptionTypes';
 import { validateRequiredMachinePoolsSubnet } from '~/common/validators';
 import useAnalytics from '~/hooks/useAnalytics';
 import { ocmResourceType, trackEvents } from '~/common/analytics';
 import { isRestrictedEnv } from '~/restrictedEnv';
+import { canConfigureDayOneManagedIngress } from '~/components/clusters/wizards/rosa/constants';
+import { isExactMajorMinor } from '~/common/versionHelpers';
+
 import { ReduxCheckbox } from '../../../../common/ReduxFormComponents';
 import RadioButtons from '../../../../common/ReduxFormComponents/RadioButtons';
 import { constants } from '../../CreateOSDForm/CreateOSDFormConstants';
 import ExternalLink from '../../../../common/ExternalLink';
 import links from '../../../../../common/installLinks.mjs';
 import { PLACEHOLDER_VALUE } from '../../CreateOSDForm/FormSections/NetworkingSection/AvailabilityZoneSelection';
+
 import { SubnetSelectField } from './SubnetSelectField';
+import { DefaultIngressFields } from './DefaultIngressFields';
 
 function NetworkScreen(props) {
   const {
@@ -40,6 +46,8 @@ function NetworkScreen(props) {
     product,
     formValues,
     isHypershiftSelected,
+    clusterVersionRawId,
+    applicationIngress,
   } = props;
   const { OSD, OSDTrial } = normalizedProducts;
   const isByocOSD = isByoc && [OSD, OSDTrial].includes(product);
@@ -49,6 +57,11 @@ function NetworkScreen(props) {
   // Do not need to check for VPC here, since checking the "Configure a cluster-wide proxy" checkbox
   // automatically checks the "Install into an existing VPC" checkbox in the UI
   const showConfigureProxy = showClusterWideProxyCheckbox || isByocOSD;
+
+  const showIngressSection = isByoc && !isHypershiftSelected;
+
+  const isManagedIngressAllowed = canConfigureDayOneManagedIngress(clusterVersionRawId);
+  const isOcp413 = isExactMajorMinor(clusterVersionRawId, 4, 13);
 
   const track = useAnalytics();
 
@@ -317,6 +330,63 @@ function NetworkScreen(props) {
             </GridItem>
           </>
         )}
+
+        {showIngressSection && (
+          <>
+            <GridItem>
+              <Title headingLevel="h4" size="xl">
+                Application ingress settings
+              </Title>
+              <Text className="pf-u-mt-sm">
+                Ingress is configured by default.{' '}
+                {isManagedIngressAllowed
+                  ? 'Customize settings if needed.'
+                  : 'It can be customized for 4.14 clusters or newer.'}
+                {isOcp413 && (
+                  <>
+                    {' '}
+                    For 4.13 clusters, refer to{' '}
+                    <ExternalLink href={links.MANAGED_INGRESS_KNOWLEDGE_BASE}>
+                      this knowledge base article
+                    </ExternalLink>
+                    .
+                  </>
+                )}
+              </Text>
+            </GridItem>
+
+            {isManagedIngressAllowed && (
+              <Field
+                component={RadioButtons}
+                name="applicationIngress"
+                ariaLabel="Use application ingress defaults"
+                isDisabled={!isManagedIngressAllowed}
+                disableDefaultValueHandling
+                options={[
+                  {
+                    value: 'default',
+                    ariaLabel: 'Default settings',
+                    label: 'Default settings',
+                    // Do not show the form when "default" is requested
+                  },
+                  {
+                    value: 'custom',
+                    ariaLabel: 'Custom settings',
+                    label: 'Custom settings',
+                    extraField: applicationIngress !== 'default' && (
+                      <DefaultIngressFields
+                        hasSufficientIngressEditVersion
+                        className="pf-u-mt-md pf-u-ml-lg"
+                        isDay2={false}
+                        canShowLoadBalancer={false}
+                      />
+                    ),
+                  },
+                ]}
+              />
+            )}
+          </>
+        )}
       </Grid>
     </Form>
   );
@@ -336,6 +406,8 @@ NetworkScreen.propTypes = {
   product: PropTypes.string,
   formValues: PropTypes.object,
   isHypershiftSelected: PropTypes.bool,
+  clusterVersionRawId: PropTypes.string.isRequired,
+  applicationIngress: PropTypes.string,
 };
 
 export default NetworkScreen;

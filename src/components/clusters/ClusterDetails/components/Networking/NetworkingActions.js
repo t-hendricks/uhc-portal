@@ -1,10 +1,12 @@
 import has from 'lodash/has';
-import isEmpty from 'lodash/isEmpty';
+import isEqual from 'lodash/isEqual';
 import { LoadBalancerFlavor } from '~/types/clusters_mgmt.v1';
-import { strToCleanObject } from '../../../../../common/helpers';
-import { networkingConstants } from './NetworkingConstants';
+import { NamespaceOwnershipPolicy } from '~/types/clusters_mgmt.v1/models/NamespaceOwnershipPolicy';
+import { WildcardPolicy } from '~/types/clusters_mgmt.v1/models/WildcardPolicy';
+import { strToKeyValueObject, stringToArrayTrimmed } from '~/common/helpers';
 import { setClusterDetails } from '../../../../../redux/actions/clustersActions';
 import { clusterService } from '../../../../../services';
+import { networkingConstants } from './NetworkingConstants';
 
 const getClusterRouters = (clusterID) => (dispatch) =>
   dispatch({
@@ -28,6 +30,115 @@ const resetClusterRouters = () => (dispatch) =>
     type: networkingConstants.RESET_CLUSTER_ROUTERS,
   });
 
+// Edit default router
+const createDefaultRouterRequest = (newData, currentData) => {
+  const requestDefaultRouter = {
+    id: currentData.default.routerID,
+  };
+
+  if (
+    newData.private_default_router !== undefined &&
+    newData.private_default_router !== currentData.default.isPrivate
+  ) {
+    requestDefaultRouter.listening = newData.private_default_router ? 'internal' : 'external';
+  }
+
+  if (
+    newData.defaultRouterSelectors !== undefined &&
+    !isEqual(
+      strToKeyValueObject(newData.defaultRouterSelectors, ''),
+      currentData.default.routeSelectors || {},
+    )
+  ) {
+    requestDefaultRouter.route_selectors = strToKeyValueObject(newData.defaultRouterSelectors, '');
+  }
+
+  if (
+    newData.defaultRouterExcludedNamespacesFlag !== undefined &&
+    !isEqual(
+      stringToArrayTrimmed(newData.defaultRouterExcludedNamespacesFlag),
+      currentData.default.excludedNamespaces || [],
+    )
+  ) {
+    requestDefaultRouter.excluded_namespaces = stringToArrayTrimmed(
+      newData.defaultRouterExcludedNamespacesFlag,
+    );
+  }
+
+  if (
+    newData.isDefaultRouterNamespaceOwnershipPolicyStrict !== undefined &&
+    newData.isDefaultRouterNamespaceOwnershipPolicyStrict !==
+      currentData.default.isNamespaceOwnershipPolicyStrict
+  ) {
+    requestDefaultRouter.route_namespace_ownership_policy =
+      newData.isDefaultRouterNamespaceOwnershipPolicyStrict
+        ? NamespaceOwnershipPolicy.STRICT
+        : NamespaceOwnershipPolicy.INTER_NAMESPACE_ALLOWED;
+  }
+
+  if (
+    newData.isDefaultRouterWildcardPolicyAllowed !== undefined &&
+    newData.isDefaultRouterWildcardPolicyAllowed !== currentData.default.isWildcardPolicyAllowed
+  ) {
+    requestDefaultRouter.route_wildcard_policy = newData.isDefaultRouterWildcardPolicyAllowed
+      ? WildcardPolicy.WILDCARDS_ALLOWED
+      : WildcardPolicy.WILDCARDS_DISALLOWED;
+  }
+
+  if (
+    newData.is_nlb_load_balancer !== undefined &&
+    newData.is_nlb_load_balancer !== (currentData.default.loadBalancer === LoadBalancerFlavor.NLB)
+  ) {
+    requestDefaultRouter.load_balancer_type = newData.is_nlb_load_balancer
+      ? LoadBalancerFlavor.NLB
+      : LoadBalancerFlavor.CLASSIC;
+  }
+
+  if (
+    newData.clusterRoutesTlsSecretRef !== undefined &&
+    newData.clusterRoutesTlsSecretRef !== (currentData.default.tlsSecretRef || '')
+  ) {
+    requestDefaultRouter.cluster_routes_tls_secret_ref = newData.clusterRoutesTlsSecretRef;
+  }
+
+  if (
+    newData.clusterRoutesHostname !== undefined &&
+    newData.clusterRoutesHostname !== (currentData.default.hostname || '')
+  ) {
+    // The API does not allow to PATCH the field without the secret ref
+    requestDefaultRouter.cluster_routes_hostname = newData.clusterRoutesHostname;
+    requestDefaultRouter.cluster_routes_tls_secret_ref = newData.clusterRoutesTlsSecretRef;
+  }
+
+  return requestDefaultRouter;
+};
+
+// Edit existing additional router
+const createAdditionalRouterRequest = (newData, currentData) => {
+  const requestAdditionalRouter = {};
+
+  if (
+    newData.private_additional_router !== undefined &&
+    newData.private_additional_router !== currentData.additional?.isPrivate
+  ) {
+    requestAdditionalRouter.listening = newData.private_additional_router ? 'internal' : 'external';
+    requestAdditionalRouter.id = currentData.additional?.routerID;
+  }
+
+  if (
+    newData.labels_additional_router !== undefined &&
+    newData.labels_additional_router !== currentData.additional?.routeSelectors
+  ) {
+    requestAdditionalRouter.route_selectors = strToKeyValueObject(
+      newData.labels_additional_router,
+      '',
+    );
+    requestAdditionalRouter.id = currentData.additional?.routerID;
+  }
+
+  return requestAdditionalRouter;
+};
+
 const sendNetworkConfigRequests = async (newData, currentData, clusterID, dispatch) => {
   let result;
 
@@ -46,55 +157,17 @@ const sendNetworkConfigRequests = async (newData, currentData, clusterID, dispat
     }
   }
 
-  const requestDefaultRouter = {
-    id: currentData.default.routerID,
-  };
-  const requestAdditionalRouter = {};
   const hadAdditionalRouter = has(currentData, 'additional');
-  const additionalRouterDeleted = hadAdditionalRouter && !newData.enable_additional_router;
-  const additionalRouterCreated = !hadAdditionalRouter && newData.enable_additional_router;
-  const defaultRouterEdited = newData.private_default_router !== currentData.default.isPrivate;
-  const defaultRouterLBEdited =
-    newData.is_nlb_load_balancer !== (currentData.default.loadBalancer === LoadBalancerFlavor.NLB);
+  const additionalRouterDeleted = hadAdditionalRouter && newData.enable_additional_router === false;
 
-  // Edit default router
-  if (defaultRouterEdited) {
-    requestDefaultRouter.listening = newData.private_default_router ? 'internal' : 'external';
-  }
+  const requestDefaultRouter = createDefaultRouterRequest(newData, currentData);
 
-  if (defaultRouterLBEdited) {
-    requestDefaultRouter.load_balancer_type = newData.is_nlb_load_balancer
-      ? LoadBalancerFlavor.NLB
-      : LoadBalancerFlavor.CLASSIC;
-  }
-
-  // Edit existing additional router
+  let requestAdditionalRouter;
   if (!additionalRouterDeleted && hadAdditionalRouter) {
-    if (newData.private_additional_router !== currentData.additional.isPrivate) {
-      requestAdditionalRouter.listening = newData.private_additional_router
-        ? 'internal'
-        : 'external';
-      requestAdditionalRouter.id = currentData.additional.routerID;
-    }
-    if (newData.labels_additional_router !== currentData.additional.routeSelectors) {
-      requestAdditionalRouter.route_selectors = strToCleanObject(
-        newData.labels_additional_router,
-        '=',
-      );
-      requestAdditionalRouter.id = currentData.additional.routerID;
-    }
+    requestAdditionalRouter = createAdditionalRouterRequest(newData, currentData);
   }
 
-  // Add new additional router
-  if (additionalRouterCreated) {
-    requestAdditionalRouter.listening = newData.private_additional_router ? 'internal' : 'external';
-    requestAdditionalRouter.route_selectors = strToCleanObject(
-      newData.labels_additional_router,
-      '=',
-    );
-  }
-
-  if (defaultRouterEdited || defaultRouterLBEdited) {
+  if (Object.getOwnPropertyNames(requestDefaultRouter).length > 1 /* more than just the "id" ? */) {
     result = await clusterService.editIngress(
       clusterID,
       requestDefaultRouter.id,
@@ -108,17 +181,21 @@ const sendNetworkConfigRequests = async (newData, currentData, clusterID, dispat
       requestDefaultRouter,
     );
   }
-  if (!isEmpty(requestAdditionalRouter)) {
-    if (additionalRouterCreated) {
-      result = await clusterService.addAdditionalIngress(clusterID, requestAdditionalRouter);
-    } else {
-      result = await clusterService.editIngress(
-        clusterID,
-        requestAdditionalRouter.id,
-        requestAdditionalRouter,
-      );
-    }
+
+  // The "additional" routers are depracated.
+  // Can not create additional router for any OCP version.
+  // For OSD 4.11 and 4.12, we can only edit and delete.
+  // For OSD 4.13+, we can only delete.
+  // Rosa clusters have additional routers non-editable (search for hideAdvancedOptions in the EditClusterIngressDialog)
+  // There should be no STS cluster with an "additional" router (never supported).
+  if (requestAdditionalRouter && Object.getOwnPropertyNames(requestAdditionalRouter).length > 0) {
+    result = await clusterService.editIngress(
+      clusterID,
+      requestAdditionalRouter.id,
+      requestAdditionalRouter,
+    );
   }
+
   return result;
 };
 
@@ -143,4 +220,6 @@ export {
   saveNetworkingConfiguration,
   resetClusterRouters,
   resetEditRoutersResponse,
+  createDefaultRouterRequest,
+  sendNetworkConfigRequests,
 };

@@ -17,7 +17,11 @@ import {
 import { useFormState } from '~/components/clusters/wizards/hooks';
 import { CloudProviderType } from '~/components/clusters/wizards/common/constants';
 import { FieldId } from '~/components/clusters/wizards/osd/constants';
-import { ClusterPrivacyType } from './constants';
+import { isExactMajorMinor } from '~/common/versionHelpers';
+
+import { ApplicationIngressType, ClusterPrivacyType } from './constants';
+import { DefaultIngressFields } from './DefaultIngressFields';
+import { canConfigureDayOneManagedIngress } from '../../rosa/constants';
 
 export const Configuration = () => {
   const track = useAnalytics();
@@ -26,6 +30,7 @@ export const Configuration = () => {
       [FieldId.CloudProvider]: cloudProvider,
       [FieldId.Product]: product,
       [FieldId.Byoc]: byoc,
+      [FieldId.ClusterVersion]: clusterVersion,
       [FieldId.ClusterPrivacy]: clusterPrivacy,
       [FieldId.ConfigureProxy]: configureProxy,
       [FieldId.InstallToVpc]: installToVpc,
@@ -33,6 +38,7 @@ export const Configuration = () => {
       [FieldId.FirstAvailabilityZone]: availZoneOne,
       [FieldId.SecondAvailabilityZone]: availZoneTwo,
       [FieldId.ThirdAvailabilityZone]: availZoneThree,
+      [FieldId.ApplicationIngress]: applicationIngress,
     },
     values,
     setFieldValue,
@@ -45,6 +51,10 @@ export const Configuration = () => {
     isByoc && [normalizedProducts.OSD, normalizedProducts.OSDTrial].includes(product);
   const trackOcmResourceType =
     product === normalizedProducts.ROSA ? ocmResourceType.MOA : ocmResourceType.OSD;
+
+  const showIngressSection = isByoc;
+  const isManagedIngressAllowed = canConfigureDayOneManagedIngress(clusterVersion.raw_id);
+  const isOcp413 = isExactMajorMinor(clusterVersion.raw_id, 4, 13);
 
   const trackCheckedState = (trackEvent: TrackEvent, checked: boolean) =>
     track(trackEvent, {
@@ -102,6 +112,10 @@ export const Configuration = () => {
     trackCheckedState(trackEvents.InstallIntoVPC, checked);
   };
 
+  const onApplicationIngressChange = (value: string) => {
+    setFieldValue(FieldId.ApplicationIngress, value);
+  };
+
   const clusterPrivacyOptions: RadioGroupOption[] = [
     {
       value: ClusterPrivacyType.External,
@@ -113,6 +127,17 @@ export const Configuration = () => {
       label: 'Private',
       description:
         'Access Kubernetes API endpoint and application routes from direct private connections only.',
+    },
+  ];
+
+  const applicationIngressOptions: RadioGroupOption[] = [
+    {
+      value: ApplicationIngressType.Default,
+      label: 'Default settings',
+    },
+    {
+      value: ApplicationIngressType.Custom,
+      label: 'Custom settings',
     },
   ];
 
@@ -209,6 +234,45 @@ export const Configuration = () => {
                 </div>
               </FormGroup>
             </GridItem>
+          </>
+        )}
+
+        {showIngressSection && (
+          <>
+            <GridItem>
+              <Title headingLevel="h4" size="xl">
+                Application ingress settings
+              </Title>
+              <Text className="pf-u-mt-sm">
+                Ingress is configured by default.{' '}
+                {isManagedIngressAllowed
+                  ? 'Customize settings if needed.'
+                  : 'It can be customized for 4.14 clusters or newer.'}
+                {isOcp413 && (
+                  <>
+                    {' '}
+                    For 4.13 clusters, refer to{' '}
+                    <ExternalLink href={links.MANAGED_INGRESS_KNOWLEDGE_BASE}>
+                      this knowledge base article
+                    </ExternalLink>
+                    .
+                  </>
+                )}
+              </Text>
+            </GridItem>
+
+            {isManagedIngressAllowed && (
+              <>
+                <GridItem>
+                  <RadioGroupField
+                    name={FieldId.ApplicationIngress}
+                    options={applicationIngressOptions}
+                    onChange={onApplicationIngressChange}
+                  />
+                </GridItem>
+                {applicationIngress === ApplicationIngressType.Custom && <DefaultIngressFields />}
+              </>
+            )}
           </>
         )}
       </Grid>

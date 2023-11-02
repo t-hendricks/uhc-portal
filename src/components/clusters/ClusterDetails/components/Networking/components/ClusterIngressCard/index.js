@@ -1,6 +1,5 @@
 import { connect } from 'react-redux';
 
-import { LoadBalancerFlavor } from '~/types/clusters_mgmt.v1';
 import { isHibernating, isOffline } from '../../../../../common/clusterStates';
 import { openModal } from '../../../../../../common/Modal/ModalActions';
 import NetworkingSelector, { routeSelectorPairsAsStrings } from '../../NetworkingSelector';
@@ -14,7 +13,6 @@ const mapStateToProps = (state) => {
 
   const consoleURL = cluster.console?.url;
   const controlPlaneAPIEndpoint = cluster.api?.url;
-  const defaultRouterAddress = clusterRouters.default.address;
   const additionalRouterAddress = hasAdditionalRouter
     ? clusterRouters.additional.address
     : `apps2${clusterRouters.default.address.substr(4)}`;
@@ -25,7 +23,6 @@ const mapStateToProps = (state) => {
   const provider = cluster.cloud_provider?.id;
 
   const isApiPrivate = cluster.api?.listening === 'internal';
-  const isDefaultRouterPrivate = clusterRouters.default.isPrivate;
   const isAdditionalRouterPrivate = !!clusterRouters?.additional?.isPrivate;
 
   const { canEdit } = cluster;
@@ -37,11 +34,9 @@ const mapStateToProps = (state) => {
   return {
     consoleURL,
     controlPlaneAPIEndpoint,
-    defaultRouterAddress,
     additionalRouterAddress,
     additionalRouterLabels,
     isApiPrivate,
-    isDefaultRouterPrivate,
     isAdditionalRouterPrivate,
     hasAdditionalRouter,
     canEdit,
@@ -49,7 +44,6 @@ const mapStateToProps = (state) => {
     isSTSEnabled,
     clusterHibernating,
     showConsoleLink,
-    isNLB: clusterRouters.default.loadBalancer === LoadBalancerFlavor.NLB,
     provider,
   };
 };

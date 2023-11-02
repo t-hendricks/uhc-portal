@@ -6,6 +6,7 @@ import type {
   AWS,
   Cluster,
   ClusterState,
+  ClusterStatus,
   LimitedSupportReason,
   Subnetwork,
   VersionGateAgreement,
@@ -86,6 +87,7 @@ export type AugmentedCluster = ClusterWithPermissions & {
   aiCluster?: AICluster;
   limitedSupportReasons?: LimitedSupportReason[];
   aiSupportLevels?: FeaturesSupportsLevel;
+  status?: ClusterStatus;
 };
 
 export type AugmentedClusterResponse = {

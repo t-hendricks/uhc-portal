@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 import { formValueSelector, reduxForm } from 'redux-form';
+import { canConfigureAdditionalRouter } from '~/components/clusters/wizards/rosa/constants';
 
-import { LoadBalancerFlavor } from '~/types/clusters_mgmt.v1';
 import { knownProducts } from '../../../../../../../common/subscriptionTypes';
 import modals from '../../../../../../common/Modal/modals';
 import shouldShowModal from '../../../../../../common/Modal/ModalSelectors';
@@ -25,10 +25,13 @@ const mapStateToProps = (state) => {
 
   const provider = cluster.cloud_provider?.id;
 
+  const clusterVersion = cluster?.openshift_version || cluster?.version?.raw_id || '';
   const valueSelector = formValueSelector('EditClusterIngress');
   const additionalRouterEnabled = !!valueSelector(state, 'enable_additional_router');
   const APIPrivate = cluster.api?.listening === 'internal';
   const subscriptionPlan = cluster.subscription?.plan?.type;
+  const canEditAdditionalRouter =
+    additionalRouterEnabled && canConfigureAdditionalRouter(clusterVersion);
 
   return {
     editClusterRoutersResponse: state.clusterRouters.editRouters,
@@ -39,17 +42,17 @@ const mapStateToProps = (state) => {
       : `apps2${clusterRouters.default?.address.substr(4)}`,
     initialValues: {
       private_api: APIPrivate,
-      private_default_router: clusterRouters.default?.isPrivate,
       enable_additional_router: hasAdditionalRouter,
       private_additional_router: !!clusterRouters?.additional?.isPrivate,
       labels_additional_router: routeSelectorsAsString(clusterRouters?.additional?.routeSelectors),
-      is_nlb_load_balancer: clusterRouters.default?.loadBalancer === LoadBalancerFlavor.NLB,
     },
     clusterID: cluster.id,
     clusterRouters,
     APIPrivate,
-    additionalRouterEnabled,
-    hideAdvancedOptions: subscriptionPlan === knownProducts.ROSA,
+    canEditAdditionalRouter,
+    hideAdvancedOptions:
+      !hasAdditionalRouter /* Do not allow Add of an additional router */ ||
+      subscriptionPlan === knownProducts.ROSA,
     provider,
     isOpen: shouldShowModal(state, modals.EDIT_CLUSTER_INGRESS),
     /**
@@ -59,8 +62,7 @@ const mapStateToProps = (state) => {
     showRouterVisibilityWarning:
       additionalRouterEnabled &&
       !valueSelector(state, 'labels_additional_router') &&
-      (valueSelector(state, 'private_default_router') ||
-        valueSelector(state, 'private_additional_router')),
+      valueSelector(state, 'private_additional_router'),
   };
 };
 

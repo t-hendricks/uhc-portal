@@ -1,6 +1,8 @@
 import React from 'react';
 import { Grid, GridItem, LabelGroup, Label } from '@patternfly/react-core';
 import { IMDSType } from '~/components/clusters/wizards/common';
+import { arrayToString, strToKeyValueObject, stringToArrayTrimmed } from '~/common/helpers';
+import { routeSelectorsAsString } from '~/components/clusters/ClusterDetails/components/Networking/NetworkingSelector';
 import { billingModels } from '../../../../../common/subscriptionTypes';
 import { humanizeValueWithUnitGiB } from '../../../../../common/units';
 import parseUpdateSchedule from '../../../common/Upgrades/parseUpdateSchedule';
@@ -310,6 +312,28 @@ const reviewValues = {
       }));
       return <AwsVpcTable vpcs={vpcs} showPublicFields={false} />;
     },
+  },
+  applicationIngress: {
+    title: 'Application ingress',
+    valueTransform: (value) => (value === 'default' ? 'Use default settings' : 'Custom settings'),
+  },
+  defaultRouterSelectors: {
+    title: 'Route selectors',
+    valueTransform: (value) =>
+      value ? routeSelectorsAsString(strToKeyValueObject(value, '')) : 'None specified',
+  },
+  defaultRouterExcludedNamespacesFlag: {
+    title: 'Excluded namespaces',
+    valueTransform: (value) =>
+      value ? arrayToString(stringToArrayTrimmed(value)) : 'None specified',
+  },
+  isDefaultRouterWildcardPolicyAllowed: {
+    title: 'Wildcard policy',
+    valueTransform: (value) => (value ? 'Allowed' : 'Disallowed'),
+  },
+  isDefaultRouterNamespaceOwnershipPolicyStrict: {
+    title: 'Namespace ownership policy',
+    valueTransform: (value) => (value ? 'Strict namespace ownership' : 'Inter-namespace ownership'),
   },
   gpc_vpc: {
     title: 'VPC subnet settings',

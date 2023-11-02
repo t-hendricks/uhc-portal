@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { Grid, GridItem, EmptyState, EmptyStateBody } from '@patternfly/react-core';
 import { Spinner } from '@redhat-cloud-services/frontend-components/Spinner';
 import ClusterIngressCard from './components/ClusterIngressCard';
+import ApplicationIngressCard from './components/ApplicationIngressCard';
 import NetworkConfigurationCard from './components/NetworkConfigurationCard';
 import VPCDetailsCard from './components/VPCDetailsCard';
 import VPCSubnetsCard from './components/VPCSubnetsCard';
@@ -37,10 +38,13 @@ class Networking extends React.Component {
           <NetworkConfigurationCard network={network} />
         </GridItem>
         <GridItem lg={9} md={12} className="networking-grid-item">
-          <VPCDetailsCard />
+          <ApplicationIngressCard provider={provider} />
         </GridItem>
         <GridItem lg={3} md={12} className="networking-grid-item">
           <VPCSubnetsCard />
+        </GridItem>
+        <GridItem lg={9} md={12} className="networking-grid-item">
+          <VPCDetailsCard />
         </GridItem>
       </Grid>
     );
