@@ -6,7 +6,6 @@ exports[`<ClusterListEmptyState /> renders correctly 1`] = `
   variant="large"
 >
   <EmptyStateIcon
-    color="#c00"
     icon={[Function]}
   />
   <Title

@@ -10,7 +10,7 @@ import {
   EmptyStateSecondaryActions,
   Button,
 } from '@patternfly/react-core';
-import { OpenshiftIcon } from '@patternfly/react-icons';
+import { PlusCircleIcon } from '@patternfly/react-icons';
 
 import { ASSISTED_INSTALLER_FEATURE } from '../../../../redux/constants/featureConstants';
 import withFeatureGate from '../../../features/with-feature-gate';
@@ -28,7 +28,7 @@ const AssistedInstallerLink = withFeatureGate(
 function ClusterListEmptyState() {
   return (
     <EmptyState variant={EmptyStateVariant.large} className="cluster-list-empty-state">
-      <EmptyStateIcon icon={OpenshiftIcon} color="#c00" />
+      <EmptyStateIcon icon={PlusCircleIcon} />
       <Title headingLevel="h4" size="2xl">
         No OpenShift clusters to display
       </Title>
