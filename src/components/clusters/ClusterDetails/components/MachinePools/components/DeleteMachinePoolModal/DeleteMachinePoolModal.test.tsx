@@ -1,7 +1,8 @@
 import React from 'react';
-import { render, screen, fireEvent } from '@testUtils';
-import { useGlobalState } from '~/redux/hooks';
 import * as reactRedux from 'react-redux';
+
+import { render, screen, fireEvent } from '~/testUtils';
+import { useGlobalState } from '~/redux/hooks';
 import { closeModal } from '~/components/common/Modal/ModalActions';
 import DeleteMachinePoolModal from './DeleteMachinePoolModal';
 

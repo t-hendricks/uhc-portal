@@ -22,9 +22,10 @@ import { loadOfflineToken } from '~/components/tokens/TokenUtils';
 
 import { PrerequisitesInfoBox } from '~/components/clusters/CreateROSAPage/CreateROSAWizard/common/PrerequisitesInfoBox';
 import { WelcomeMessage } from '~/components/clusters/CreateROSAPage/CreateROSAWizard/common/WelcomeMessage';
+import { AWS_ACCOUNT_ROSA_LOCALSTORAGE_KEY } from '~/common/localStorageConstants';
 import AccountRolesARNsSection from './AccountRolesARNsSection';
 import { AwsRoleErrorAlert } from './AwsRoleErrorAlert';
-import AWSAccountSelection, { AWS_ACCOUNT_ROSA_LOCALSTORAGE_KEY } from './AWSAccountSelection';
+import AWSAccountSelection from './AWSAccountSelection';
 import AWSBillingAccount from './AWSBillingAccount/AWSBillingAccount';
 import { useAssociateAWSAccountDrawer } from './AssociateAWSAccountDrawer/AssociateAWSAccountDrawer';
 
@@ -84,7 +85,7 @@ function AccountsRolesScreen({
   const openDrawerButtonRef = useRef(null);
   const hasAWSAccounts = AWSAccountIDs.length > 0;
   const track = useAnalytics();
-  const { openDrawer } = useAssociateAWSAccountDrawer();
+  const { openDrawer } = useAssociateAWSAccountDrawer(isHypershiftSelected);
 
   const resetAWSAccountFields = () => {
     // clear certain responses; causes refetch of AWS acct info.
@@ -188,7 +189,7 @@ function AccountsRolesScreen({
               <WelcomeMessage />
             </GridItem>
             <GridItem span={12}>
-              <PrerequisitesInfoBox />
+              <PrerequisitesInfoBox showRosaCliRequirement={false} />
             </GridItem>
           </>
         )}

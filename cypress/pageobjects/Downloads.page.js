@@ -5,9 +5,8 @@ import Page from './page';
  */
 class Downloads extends Page {
   filterByCategory = (category) => {
-    cy.getByTestId('downloads-category-dropdown')
-      .select(category);
-  }
+    cy.getByTestId('downloads-category-dropdown').select(category);
+  };
 
   clickExpandAll = () => cy.contains('Expand all').click();
 
@@ -17,44 +16,42 @@ class Downloads extends Page {
     cy.contains('h1', 'Downloads');
   }
 
-  isVisibleRowContaining = substring => (
-    cy.contains(substring)
+  isVisibleRowContaining = (substring) =>
+    cy
+      .contains(substring)
       .parents('tr.pf-c-table__expandable-row')
       .invoke('attr', 'hidden')
-      .should('not.exist')
-  )
+      .should('not.exist');
 
-  isHiddenRowContaining = substring => (
-    cy.contains(substring)
+  isHiddenRowContaining = (substring) =>
+    cy
+      .contains(substring)
       .parents('tr.pf-c-table__expandable-row')
       .invoke('attr', 'hidden')
-      .should('exist')
-  )
+      .should('exist');
 
-  rowDoesNotExist = rowDataTestId => (
-    cy.getByTestId(rowDataTestId).should('not.exist')
-  )
+  rowDoesNotExist = (rowDataTestId) => cy.getByTestId(rowDataTestId).should('not.exist');
 
-  clickExpandableRow = substring => (
-    cy.contains(substring)
-      .parents('[role="rowgroup"]')
-      .find('button#expand-toggle0')
-      .click()
-  )
+  clickExpandableRow = (substring) =>
+    cy.contains(substring).parents('[role="rowgroup"]').find('button#expand-toggle0').click();
 
   allDropdownOptions = (dropdownDataTestId, testValues) => {
-    cy.getByTestId(dropdownDataTestId).children('option').then((options) => {
-      const actualValues = [...options].map(o => o.text);
-      expect(actualValues).to.eql(testValues);
-    });
-  }
+    cy.getByTestId(dropdownDataTestId)
+      .children('option')
+      .then((options) => {
+        const actualValues = [...options].map((o) => o.text);
+        expect(actualValues).to.eql(testValues);
+      });
+  };
 
   enabledDropdownOptions = (dropdownDataTestId, testValues) => {
-    cy.getByTestId(dropdownDataTestId).children('option:not([disabled])').then((options) => {
-      const actualValues = [...options].map(o => o.text);
-      expect(actualValues).to.eql(testValues);
-    });
-  }
+    cy.getByTestId(dropdownDataTestId)
+      .children('option:not([disabled])')
+      .then((options) => {
+        const actualValues = [...options].map((o) => o.text);
+        expect(actualValues).to.eql(testValues);
+      });
+  };
 }
 
 export default new Downloads();

@@ -33,6 +33,7 @@ import clusterStates, {
   getClusterStateAndDescription,
   isWaitingROSAManualMode,
   isWaitingForOIDCProviderOrOperatorRolesMode,
+  isOSDGCPWaitingForRolesOnHostProject,
 } from '../../common/clusterStates';
 import ClusterUpdateLink from '../../common/ClusterUpdateLink';
 import ClusterCreatedIndicator from './ClusterCreatedIndicator';
@@ -155,7 +156,8 @@ function ClusterListTable(props) {
       }
       if (
         isWaitingROSAManualMode(cluster) ||
-        isWaitingForOIDCProviderOrOperatorRolesMode(cluster)
+        isWaitingForOIDCProviderOrOperatorRolesMode(cluster) ||
+        isOSDGCPWaitingForRolesOnHostProject(cluster)
       ) {
         // Show a popover for manual creation of ROSA operator roles and OIDC provider.
         return (

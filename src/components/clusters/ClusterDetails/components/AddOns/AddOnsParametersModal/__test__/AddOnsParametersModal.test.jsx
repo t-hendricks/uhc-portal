@@ -1,7 +1,10 @@
 import React from 'react';
 import { shallow } from 'enzyme';
+
+import { render, checkAccessibility } from '~/testUtils';
 import { Button } from '@patternfly/react-core';
-import { Field } from 'redux-form';
+import { Field, reduxForm } from 'redux-form';
+import { reduxFormConfig } from '../index';
 
 import AddOnsParametersModal from '../AddOnsParametersModal';
 import fixtures from '../../../../__test__/ClusterDetails.fixtures';
@@ -10,65 +13,73 @@ const dummyValue = 'dummy value';
 
 describe('<AddOnsParametersModal />', () => {
   let wrapper;
-  let closeModal;
-  let clearClusterAddOnsResponses;
-  let resetForm;
-  let change;
-  let handleSubmit;
-  let quota;
+  const closeModal = jest.fn();
+  const clearClusterAddOnsResponses = jest.fn();
+  const quota = {};
+  const resetForm = jest.fn();
+  const change = jest.fn();
+  const handleSubmit = jest.fn();
+
   const { clusterDetails } = fixtures;
+
+  const ReduxFormAddOnParametersModal = reduxForm(reduxFormConfig)(AddOnsParametersModal);
+
+  const props = {
+    isOpen: true,
+    closeModal,
+    resetForm,
+    addOn: {
+      description: 'Dummy Desc',
+      enabled: true,
+      editable: true,
+      id: 'Dummy ID',
+      name: 'Dummy Name',
+      parameters: {
+        items: [
+          {
+            id: 'dummy item',
+            enabled: true,
+            editable: true,
+            default_value: dummyValue,
+          },
+        ],
+      },
+    },
+    addOnInstallation: {
+      id: 'Dummy ID',
+      parameters: {
+        items: [
+          {
+            id: 'dummy item',
+          },
+        ],
+      },
+    },
+    isUpdateForm: false,
+    submitClusterAddOnResponse: { fulfilled: false, pending: false, error: false },
+    clearClusterAddOnsResponses,
+    pristine: true,
+    change,
+    handleSubmit,
+    quota,
+    cluster: clusterDetails.cluster,
+  };
+
   beforeEach(() => {
-    closeModal = jest.fn();
-    clearClusterAddOnsResponses = jest.fn();
-    quota = {};
-    resetForm = jest.fn();
-    change = jest.fn();
-    handleSubmit = jest.fn();
-    wrapper = shallow(
-      <AddOnsParametersModal
-        isOpen
-        closeModal={closeModal}
-        resetForm={resetForm}
-        addOn={{
-          description: 'Dummy Desc',
-          enabled: true,
-          editable: true,
-          id: 'Dummy ID',
-          name: 'Dummy Name',
-          parameters: {
-            items: [
-              {
-                id: 'dummy item',
-                enabled: true,
-                editable: true,
-                default_value: dummyValue,
-              },
-            ],
-          },
-        }}
-        addOnInstallation={{
-          id: 'Dummy ID',
-          parameters: {
-            items: [
-              {
-                id: 'dummy item',
-              },
-            ],
-          },
-        }}
-        isUpdateForm={false}
-        submitClusterAddOnResponse={{ fulfilled: false, pending: false, error: false }}
-        clearClusterAddOnsResponses={clearClusterAddOnsResponses}
-        pristine
-        change={change}
-        handleSubmit={handleSubmit}
-        quota={quota}
-        cluster={clusterDetails.cluster}
-      />,
-    );
+    wrapper = shallow(<AddOnsParametersModal {...props} />);
   });
-  it('renders correctly', () => {
-    expect(wrapper).toMatchSnapshot();
+
+  afterEach(() => {
+    closeModal.mockClear();
+    clearClusterAddOnsResponses.mockClear();
+    resetForm.mockClear();
+    change.mockClear();
+    handleSubmit.mockClear();
+  });
+
+  it('is accessible', async () => {
+    const { container } = render(<ReduxFormAddOnParametersModal {...props} />);
+    await checkAccessibility(container);
   });
 
   it('expect set default option button is be present if default_value present', () => {

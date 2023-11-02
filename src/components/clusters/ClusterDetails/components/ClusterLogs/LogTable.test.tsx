@@ -1,5 +1,6 @@
 import React from 'react';
-import { render, screen } from '@testUtils';
+
+import { render, screen } from '~/testUtils';
 import LogTable from './LogTable';
 
 const standardLog = {
@@ -7,7 +8,8 @@ const standardLog = {
   cluster_uuid: '031fb349-fa84-421a-9c7a-af47e34559e1',
   created_at: '2022-10-05T15:30:23.844262Z',
   created_by: 'service-account-ocm-cs-production-2',
-  description: "Add-on 'Red Hat OpenShift Database Access' was added and is awaiting installation",
+  description:
+    "Add-on 'Red Hat OpenShift Database Access' was added and is awaiting installation.  For more information, see https://access.redhat.com/documentation/en-us/red_hat_openshift_service_on_aws/4/html/storage/configuring-persistent-storage",
   email: '',
   event_stream_id: '2FinYzqDtg2vb9hviy5CfTEJywq',
   first_name: '',
@@ -84,5 +86,18 @@ describe('Doc References', () => {
     // Assert
     await user.click(screen.getByRole('button', { name: 'Details' }));
     expect(screen.queryByTestId('references_0')).not.toBeInTheDocument();
+  });
+
+  it('verifies urls in log descriptions render as ExternalLinks', async () => {
+    // Arrange
+    const newProps = {
+      ...defaultProps,
+      logs: [{ ...standardLog }],
+    };
+    const { user } = render(<LogTable {...newProps} />);
+
+    // Assert
+    await user.click(screen.getByRole('button', { name: 'Details' }));
+    expect(screen.queryByTestId('openInNewWindowIcon')).toBeInTheDocument();
   });
 });

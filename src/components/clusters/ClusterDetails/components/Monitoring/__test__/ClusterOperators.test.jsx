@@ -1,16 +1,11 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { render, checkAccessibility } from '~/testUtils';
 
 import ClusterOperators from '../components/ClusterOperators';
 
 describe('<ClusterOperators />', () => {
-  let wrapper;
-
-  beforeEach(() => {
-    wrapper = shallow(<ClusterOperators />);
-  });
-
-  it('should render', () => {
-    expect(wrapper).toMatchSnapshot();
+  it('is accessible', async () => {
+    const { container } = render(<ClusterOperators />);
+    await checkAccessibility(container);
   });
 });

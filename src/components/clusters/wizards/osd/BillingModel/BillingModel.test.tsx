@@ -1,6 +1,7 @@
-import { render } from '@testUtils';
-import { Formik } from 'formik';
 import React from 'react';
+import { Formik } from 'formik';
+
+import { render } from '~/testUtils';
 import { initialValues } from '../../rosa/constants';
 import { BillingModel } from './BillingModel';
 

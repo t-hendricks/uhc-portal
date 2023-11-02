@@ -31,7 +31,10 @@ import ExternalLink from '~/components/common/ExternalLink';
 import InstructionCommand from '~/components/common/InstructionCommand';
 import { ReduxSelectDropdown } from '~/components/common/ReduxFormComponents';
 import ReduxVerticalFormGroup from '~/components/common/ReduxFormComponents/ReduxVerticalFormGroup';
-import { MIN_MANAGED_POLICY_VERSION } from '~/components/clusters/CreateROSAPage/CreateROSAWizard/rosaConstants';
+import {
+  MIN_MANAGED_POLICY_VERSION,
+  ROSA_HOSTED_CLI_MIN_VERSION,
+} from '~/components/clusters/CreateROSAPage/CreateROSAWizard/rosaConstants';
 import { AwsRoleErrorAlert } from './AwsRoleErrorAlert';
 import { RosaCliCommand } from './constants/cliCommands';
 
@@ -44,6 +47,42 @@ const noRoleOption = {
   value: NO_ROLE_DETECTED,
 };
 
+const hasCompleteRoleSet = (role, isHypershiftSelected) =>
+  role.Installer && role.Support && role.Worker && (role.ControlPlane || isHypershiftSelected);
+
+// Order: current selected role > 'ManagedOpenShift'-prefixed role > first managed policy role > first complete role set > first incomplete role set > 'No Role Detected'
+const getDefaultInstallerRole = (
+  selectedInstallerRoleARN,
+  accountRolesARNs,
+  isHypershiftSelected,
+) => {
+  if (selectedInstallerRoleARN && selectedInstallerRoleARN !== NO_ROLE_DETECTED) {
+    return selectedInstallerRoleARN;
+  }
+
+  if (accountRolesARNs.length === 0) {
+    return NO_ROLE_DETECTED;
+  }
+
+  const firstManagedPolicyRole = accountRolesARNs.find(
+    (role) => role.managedPolicies || role.hcpManagedPolicies,
+  );
+
+  const hasManagedOpenshiftPrefix = accountRolesARNs.find(
+    (role) => role.prefix === 'ManagedOpenShift',
+  );
+
+  const firstCompleteRoleSet = accountRolesARNs.find((role) =>
+    hasCompleteRoleSet(role, isHypershiftSelected),
+  );
+  const defaultRole =
+    hasManagedOpenshiftPrefix ||
+    firstManagedPolicyRole ||
+    firstCompleteRoleSet ||
+    accountRolesARNs[0];
+
+  return defaultRole.Installer;
+};
 function AccountRolesARNsSection({
   touch,
   change,
@@ -83,28 +122,6 @@ function AccountRolesARNsSection({
     }
   };
 
-  const hasCompleteRoleSet = (role) =>
-    role.Installer && role.Support && role.Worker && (role.ControlPlane || isHypershiftSelected);
-
-  // Order: current selected role > first managed policy role > first complete role set > first incomplete role set > 'No Role Detected'
-  const getDefaultInstallerRole = (selectedInstallerRoleARN, accountRolesARNs) => {
-    if (selectedInstallerRoleARN && selectedInstallerRoleARN !== NO_ROLE_DETECTED) {
-      return selectedInstallerRoleARN;
-    }
-
-    if (accountRolesARNs.length === 0) {
-      return NO_ROLE_DETECTED;
-    }
-
-    const firstManagedPolicyRole = accountRolesARNs.find(
-      (role) => role.managedPolicies || role.hcpManagedPolicies,
-    );
-    const firstCompleteRoleSet = accountRolesARNs.find((role) => hasCompleteRoleSet(role));
-    const defaultRole = firstManagedPolicyRole || firstCompleteRoleSet || accountRolesARNs[0];
-
-    return defaultRole.Installer;
-  };
-
   const hasNoTrustedRelationshipOnClusterRoleError = ({ errorDetails }) =>
     errorDetails?.length &&
     errorDetails.some((error) => error?.Error_Key === 'NoTrustedRelationshipOnClusterRole');
@@ -128,7 +145,7 @@ function AccountRolesARNsSection({
   useEffect(() => {
     accountRoles.forEach((role) => {
       if (role.Installer === selectedInstallerRole) {
-        setAllARNsFound(hasCompleteRoleSet(role));
+        setAllARNsFound(hasCompleteRoleSet(role, isHypershiftSelected));
         updateRoleArns(role);
         change('rosa_max_os_version', role.version);
       }
@@ -177,6 +194,7 @@ function AccountRolesARNsSection({
     const defaultInstallerRole = getDefaultInstallerRole(
       selectedInstallerRoleARN,
       accountRolesARNs,
+      isHypershiftSelected,
     );
     setSelectedInstallerRole(defaultInstallerRole);
   };
@@ -313,6 +331,9 @@ function AccountRolesARNsSection({
               <br />
               After running the command, you may need to refresh using the{' '}
               <strong>Refresh ARNs</strong> button below to populate the ARN fields.
+              {isHypershiftSelected && (
+                <p>You must use ROSA CLI version {ROSA_HOSTED_CLI_MIN_VERSION} or above.</p>
+              )}
             </Alert>
           ) : (
             <AwsRoleErrorAlert

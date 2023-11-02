@@ -1,5 +1,6 @@
 import React from 'react';
-import { render, screen, checkAccessibility } from '@testUtils';
+
+import { render, screen, checkAccessibility } from '~/testUtils';
 import { ClusterStatus } from './ClusterStatus';
 
 const cluster = {

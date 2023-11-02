@@ -104,4 +104,14 @@ describe('clustersActions', () => {
       });
     });
   });
+
+  describe('getInstallableVersions', () => {
+    it('calls cluster service getInstallableVersions action with HCP', () => {
+      const isRosa = true;
+      const isMarketplaceGcp = true;
+      const isHCP = true;
+      clustersActions.getInstallableVersions(isRosa, isMarketplaceGcp, isHCP);
+      expect(clusterService.getInstallableVersions).toBeCalledWith(isRosa, isMarketplaceGcp, isHCP);
+    });
+  });
 });

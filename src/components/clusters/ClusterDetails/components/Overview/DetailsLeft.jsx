@@ -123,7 +123,7 @@ function DetailsLeft({ cluster, cloudProviders, showAssistedId }) {
             <DescriptionListTerm>Encryption level</DescriptionListTerm>
             <DescriptionListDescription>
               <dl className="pf-l-stack">
-                <dt>FIPS Cryptography enabled</dt>
+                <dt data-testid="fipsCryptographyStatus">FIPS Cryptography enabled</dt>
               </dl>
             </DescriptionListDescription>
           </DescriptionListGroup>

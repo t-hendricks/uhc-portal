@@ -1,34 +1,75 @@
 import * as React from 'react';
 
-import { mockRestrictedEnv, render, screen } from '../../../../../../../testUtils';
+import { mockRestrictedEnv, withState, screen } from '../../../../../../../testUtils';
 import ClusterIngressCard from './ClusterIngressCard';
 
 describe('<ClusterIngressCard />', () => {
-  const isRestrictedEnv = mockRestrictedEnv();
-  describe('in restricted env', () => {
-    const props = {
-      isBYOVPC: true,
-    };
+  const loadedState = {
+    clusters: {
+      details: {
+        cluster: { openshift_version: '4.13.4', api: { url: 'controlPlaneAPIEndpoint' } },
+      },
+    },
+  };
 
-    afterEach(() => {
+  const defaultProps = {
+    isBYOVPC: true,
+    isApiPrivate: true,
+    isAdditionalRouterPrivate: false,
+    hasAdditionalRouter: true,
+    canEdit: false,
+    isReadOnly: false,
+    isSTSEnabled: false,
+    clusterHibernating: false,
+    showConsoleLink: false,
+    openModal: jest.fn(),
+    refreshCluster: jest.fn(),
+    controlPlaneAPIEndpoint: '',
+    additionalRouterAddress: '',
+  };
+
+  describe('in default environment', () => {
+    it('renders footer', async () => {
+      withState(loadedState).render(<ClusterIngressCard {...defaultProps} />);
+      expect(screen.queryByText('Edit cluster ingress')).toBeInTheDocument();
+    });
+
+    it('renders the API as public when isApiPrivate=false', async () => {
+      withState(loadedState).render(<ClusterIngressCard {...defaultProps} isApiPrivate={false} />);
+      expect(screen.queryByText('Public API')).toBeInTheDocument();
+      expect(screen.queryByText('Private API')).not.toBeInTheDocument();
+    });
+
+    it('renders the API as private when isApiPrivate=true', async () => {
+      withState(loadedState).render(<ClusterIngressCard {...defaultProps} isApiPrivate />);
+      expect(screen.queryByText('Public API')).not.toBeInTheDocument();
+      expect(screen.queryByText('Private API')).toBeInTheDocument();
+    });
+  });
+
+  describe('in restricted env', () => {
+    const isRestrictedEnv = mockRestrictedEnv();
+
+    beforeAll(() => {
+      isRestrictedEnv.mockReturnValue(true);
+    });
+
+    afterAll(() => {
       isRestrictedEnv.mockReturnValue(false);
     });
 
     it('does not render footer', async () => {
-      const { rerender } = render(<ClusterIngressCard {...props} />);
-      expect(screen.queryByText('Edit cluster ingress')).toBeInTheDocument();
-
-      isRestrictedEnv.mockReturnValue(true);
-      rerender(<ClusterIngressCard {...props} />);
+      withState(loadedState).render(<ClusterIngressCard {...defaultProps} />);
       expect(screen.queryByText('Edit cluster ingress')).not.toBeInTheDocument();
     });
 
-    it('API and router are shown as private', async () => {
-      const { rerender } = render(<ClusterIngressCard {...props} />);
-      expect(screen.queryByText('Private API')).not.toBeInTheDocument();
+    it('renders the API as private in any case', async () => {
+      const { rerender } = withState(loadedState).render(
+        <ClusterIngressCard {...defaultProps} isApiPrivate={false} />,
+      );
+      expect(screen.queryByText('Private API')).toBeInTheDocument();
 
-      isRestrictedEnv.mockReturnValue(true);
-      rerender(<ClusterIngressCard {...props} />);
+      rerender(<ClusterIngressCard {...defaultProps} isApiPrivate />, {}, loadedState);
       expect(screen.queryByText('Private API')).toBeInTheDocument();
     });
   });

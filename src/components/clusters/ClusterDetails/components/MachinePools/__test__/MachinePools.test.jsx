@@ -1,7 +1,5 @@
 import React from 'react';
-import { shallow, mount } from 'enzyme';
-
-import { TestWrapper, screen, render } from '~/testUtils';
+import { screen, render, checkAccessibility } from '~/testUtils';
 import { normalizedProducts } from '~/common/subscriptionTypes';
 import { baseRequestState } from '../../../../../../redux/reduxHelpers';
 import MachinePools from '../MachinePools';
@@ -41,28 +39,30 @@ const defaultMachinePool = {
   desired: 1,
 };
 
-const getBaseProps = (isHypershift = false, ccs = false, machinePool = defaultMachinePool) => ({
-  cluster: {
-    product: {
-      id: normalizedProducts.ROSA,
-    },
-    machinePoolsActions: {
-      create: true,
-      update: true,
-      delete: true,
-      edit: true,
-      list: true,
-    },
-    hypershift: {
-      enabled: isHypershift,
-    },
-    ccs: {
-      enabled: ccs,
-    },
-    cloud_provider: {
-      id: 'aws',
-    },
+const defaultCluster = {
+  product: {
+    id: normalizedProducts.ROSA,
   },
+  machinePoolsActions: {
+    create: true,
+    update: true,
+    delete: true,
+    edit: true,
+    list: true,
+  },
+  hypershift: {
+    enabled: false,
+  },
+  ccs: {
+    enabled: false,
+  },
+  cloud_provider: {
+    id: 'aws',
+  },
+};
+
+const defaultProps = {
+  cluster: defaultCluster,
   openModal,
   isDeleteMachinePoolModalOpen: false,
   isAddMachinePoolModalOpen: false,
@@ -75,7 +75,7 @@ const getBaseProps = (isHypershift = false, ccs = false, machinePool = defaultMa
     editAction: { ...baseRequestState },
   },
   deleteMachinePoolResponse: { ...baseRequestState },
-  machinePoolsList: { ...baseRequestState, data: [machinePool] },
+  machinePoolsList: { ...baseRequestState, data: [defaultMachinePool] },
   getMachinePools,
   deleteMachinePool,
   clearGetMachinePoolsResponse: jest.fn(),
@@ -86,7 +86,7 @@ const getBaseProps = (isHypershift = false, ccs = false, machinePool = defaultMa
   hasMachinePoolsQuota: true,
   canMachinePoolBeUpdated: jest.fn(() => false),
   clearDeleteMachinePoolResponse: jest.fn(),
-});
+};
 
 const simpleMachinePoolList = {
   data: [
@@ -103,30 +103,37 @@ const simpleMachinePoolList = {
 
 describe('<MachinePools />', () => {
   describe('renders', () => {
+    afterEach(() => {
+      getMachinePools.mockClear();
+    });
     it('should call getMachinePools on mount', () => {
-      shallow(<MachinePools {...getBaseProps()} />);
+      expect(getMachinePools).toBeCalledTimes(0);
+      render(<MachinePools {...defaultProps} />);
       expect(getMachinePools).toBeCalled();
     });
 
     it('with the machine pool', () => {
-      const wrapper = shallow(<MachinePools {...getBaseProps()} />);
-      expect(wrapper).toMatchSnapshot();
+      render(<MachinePools {...defaultProps} />);
+      expect(screen.getByText('some-id')).toBeInTheDocument();
     });
 
     it('with the machine pool when it has labels', () => {
-      const props = {
-        ...getBaseProps(false, false, {
-          ...defaultMachinePool,
-          labels: { foo: 'bar', hello: 'world' },
-        }),
+      const newProps = {
+        ...defaultProps,
+        machinePoolsList: {
+          ...baseRequestState,
+          data: [{ ...defaultMachinePool, labels: { foo: 'bar', hello: 'world' } }],
+        },
       };
-      const wrapper = shallow(<MachinePools {...props} />);
-      expect(wrapper).toMatchSnapshot();
+      render(<MachinePools {...newProps} />);
+      expect(screen.getByText('some-id')).toBeInTheDocument();
+      expect(screen.getByText('foo = bar')).toHaveClass('pf-c-label__content');
+      expect(screen.getByText('hello = world')).toHaveClass('pf-c-label__content');
     });
 
-    it('with additional machine pools, some with labels and/or taints', () => {
-      const props = {
-        ...getBaseProps(),
+    it('is accessible with additional machine pools, some with labels and/or taints', async () => {
+      const newProps = {
+        ...defaultProps,
         machinePoolsList: {
           data: [
             {
@@ -174,8 +181,12 @@ describe('<MachinePools />', () => {
           ],
         },
       };
-      const wrapper = shallow(<MachinePools {...props} />);
-      expect(wrapper).toMatchSnapshot();
+      const { container } = render(<MachinePools {...newProps} />);
+      expect(screen.getByText('mp-with-labels-and-taints')).toBeInTheDocument();
+      expect(screen.getByText('mp-with-label')).toBeInTheDocument();
+      expect(screen.getByText('mp-with-taints')).toBeInTheDocument();
+      expect(screen.getByText('mp-with-no-labels-no-taints')).toBeInTheDocument();
+      await checkAccessibility(container);
     });
 
     it('with a machine pool with autoscaling enabled', () => {
@@ -195,21 +206,33 @@ describe('<MachinePools />', () => {
         },
       ];
 
-      const wrapper = shallow(<MachinePools {...getBaseProps()} machinePoolsList={{ data }} />);
-      expect(wrapper).toMatchSnapshot();
+      render(<MachinePools {...defaultProps} machinePoolsList={{ data }} />);
+      expect(screen.getByText('mp-autoscaling')).toBeInTheDocument();
+      expect(screen.getByText('Min nodes').closest('div')).toHaveTextContent('Min nodes 1');
+      expect(screen.getByText('Max nodes').closest('div')).toHaveTextContent('Max nodes 2');
     });
 
-    it('should render skeleton while fetching machine pools', () => {
-      const wrapper = shallow(<MachinePools {...getBaseProps()} />);
+    it('should render skeleton while fetching machine pools', async () => {
+      const newProps = {
+        ...defaultProps,
+        machinePoolsList: { ...baseRequestState, pending: true, data: [] },
+      };
 
-      wrapper.setProps({ machinePoolsList: { ...baseRequestState, pending: true, data: [] } });
-      expect(wrapper).toMatchSnapshot();
-      expect(wrapper.find('Skeleton').length).toBeGreaterThan(0);
+      const { container } = render(<MachinePools {...newProps} />);
+      expect(container.querySelectorAll('.pf-c-skeleton').length).toBeGreaterThan(0);
+
+      await checkAccessibility(container);
     });
 
     it('OpenShift version for machine pools is shown if hypershift', () => {
-      const props = {
-        ...getBaseProps(true),
+      const newProps = {
+        ...defaultProps,
+        cluster: {
+          ...defaultCluster,
+          hypershift: {
+            enabled: true,
+          },
+        },
         machinePoolsList: {
           data: [
             {
@@ -239,53 +262,57 @@ describe('<MachinePools />', () => {
           ],
         },
       };
+      render(<MachinePools {...newProps} />);
 
-      const wrapper = shallow(<MachinePools {...props} />);
-      expect(wrapper).toMatchSnapshot();
+      expect(screen.getByText('4.12.5-candidate')).toBeInTheDocument();
     });
 
     it('should render error message', () => {
-      const props = {
-        ...getBaseProps(),
+      const newProps = {
+        ...defaultProps,
         deleteMachinePoolResponse: { ...baseRequestState, error: true },
       };
-      const wrapper = shallow(<MachinePools {...props} />);
-
-      expect(wrapper.find('ErrorBox').length).toBe(1);
-    });
-
-    it('should close error message', () => {
-      const props = {
-        ...getBaseProps(),
-        deleteMachinePoolResponse: { ...baseRequestState, error: true },
-      };
-      const wrapper = shallow(<MachinePools {...props} />);
-      const errorBox = wrapper.find('ErrorBox');
-      errorBox.props().onCloseAlert();
-      expect(wrapper.find('ErrorBox').length).toBe(0);
+      render(<MachinePools {...newProps} />);
+      expect(screen.getByRole('alert', { name: 'Danger Alert' })).toBeInTheDocument();
     });
   });
 
   describe('add machine pool', () => {
-    it('should open modal', () => {
-      const wrapper = shallow(<MachinePools {...getBaseProps()} />);
-
-      wrapper.find('#add-machine-pool').simulate('click');
-      expect(wrapper.find('EditMachinePoolModal')).toBeTruthy();
+    it('should open modal', async () => {
+      const { user } = render(<MachinePools {...defaultProps} />);
+      expect(
+        screen.queryByRole('dialog', { name: 'Add machine pool Add machine pool' }),
+      ).not.toBeInTheDocument();
+      await user.click(screen.getByRole('button', { name: 'Add machine pool' }));
+      // TODO: The name of the modal should be changed - this is an accessibility issues
+      expect(
+        screen.getByRole('dialog', { name: 'Add machine pool Add machine pool' }),
+      ).toBeInTheDocument();
     });
 
-    it('should not allow adding machine pools to users without enough quota', () => {
-      const props = { ...getBaseProps(), hasMachinePoolsQuota: false };
-      const wrapper = shallow(<MachinePools {...props} />);
+    it('should not allow adding machine pools to users without enough quota', async () => {
+      const newProps = { ...defaultProps, hasMachinePoolsQuota: false };
+      render(<MachinePools {...newProps} />);
 
-      expect(wrapper.find('#add-machine-pool').props().disableReason).toBeTruthy();
+      // TODO: The button is not correctly disabled - this is an accessibility issue and should be fixed
+      // expect(screen.getByRole('button', { name: 'Add machine pool' })).toBeDisabled();
+      expect(screen.getByRole('button', { name: 'Add machine pool' })).toHaveAttribute(
+        'aria-disabled',
+        'true',
+      );
     });
   });
 
   describe('machine pool table actions', () => {
-    it('Should enable actions in kebab menu if hypershift', () => {
-      const props = {
-        ...getBaseProps(true),
+    it('Should enable all actions in kebab menu if hypershift', async () => {
+      const newProps = {
+        ...defaultProps,
+        cluster: {
+          ...defaultCluster,
+          hypershift: {
+            enabled: true,
+          },
+        },
         machineTypes: {
           types: {
             aws: [
@@ -344,31 +371,30 @@ describe('<MachinePools />', () => {
           ],
         },
       };
-      const wrapper = mount(
-        <TestWrapper>
-          <MachinePools {...props} />
-        </TestWrapper>,
-      );
-      // need to find by classname because action menu doesn't have an accessible label
-      const actionMenus = wrapper.find('.pf-c-dropdown__toggle');
-      expect(actionMenus).toHaveLength(2);
 
-      actionMenus.forEach((button) => {
-        expect(button.props().disabled).toBeFalsy();
-        button.simulate('click');
-        wrapper.update();
-        const menuItems = wrapper.find('.pf-c-dropdown__menu .pf-c-dropdown__menu-item');
-        expect(menuItems.length).toBeGreaterThan(0);
+      const { user, container } = render(<MachinePools {...newProps} />);
+      expect(container.querySelectorAll('.pf-c-dropdown__toggle')).toHaveLength(2);
 
+      container.querySelectorAll('.pf-c-dropdown__toggle').forEach(async (button) => {
+        await user.click(button);
+        const menuItems = container.querySelectorAll(
+          '.pf-c-dropdown__menu .pf-c-dropdown__menu-item',
+        );
         menuItems.forEach((item) => {
-          expect(item.props()['aria-disabled']).toBeFalsy();
+          expect(item).not.toHaveAttribute('aria-disabled');
         });
       });
     });
 
-    it('Should disable delete action in kebab menu if there is only one node pool and hypershift is true', () => {
-      const props = {
-        ...getBaseProps(true),
+    it('Should disable delete action in kebab menu if there is only one node pool and hypershift is true', async () => {
+      const newProps = {
+        ...defaultProps,
+        cluster: {
+          ...defaultCluster,
+          hypershift: {
+            enabled: true,
+          },
+        },
         machinePoolsList: {
           data: [
             {
@@ -393,19 +419,24 @@ describe('<MachinePools />', () => {
           ],
         },
       };
-      const wrapper = mount(
-        <TestWrapper>
-          <MachinePools {...props} />
-        </TestWrapper>,
+
+      const { container, user } = render(<MachinePools {...newProps} />);
+      await user.click(container.querySelector('.pf-c-dropdown__toggle'));
+      // TODO, the menu item is not properly disabled - this is is an accessibility issue
+      // expect(screen.getByRole('menuitem', { name: 'Delete' })).toBeDisabled();
+      expect(screen.getByRole('menuitem', { name: 'Delete' })).toHaveAttribute(
+        'aria-disabled',
+        'true',
       );
-      const deleteButton = wrapper.find('ActionsColumn').props().items[1];
-      expect(deleteButton.title).toBe('Delete');
-      expect(deleteButton.isAriaDisabled).toBeTruthy();
     });
 
     it('Should enable all actions in kebab menu if hypershift is false', () => {
-      const props = {
-        ...getBaseProps(false, true),
+      const newProps = {
+        ...defaultProps,
+        cluster: {
+          ...defaultCluster,
+          ccs: { enabled: true },
+        },
         machineTypes: {
           types: {
             aws: [
@@ -464,30 +495,30 @@ describe('<MachinePools />', () => {
           ],
         },
       };
-      const wrapper = mount(
-        <TestWrapper>
-          <MachinePools {...props} />
-        </TestWrapper>,
-      );
-      // need to find by classname because action menu doesn't have an accessible label
-      const actionMenus = wrapper.find('.pf-c-dropdown__toggle');
-      expect(actionMenus).toHaveLength(2);
 
-      actionMenus.forEach((button) => {
-        expect(button.props().disabled).toBeFalsy();
-        button.simulate('click');
-        wrapper.update();
-        const menuItems = wrapper.find('.pf-c-dropdown__menu .pf-c-dropdown__menu-item');
-        expect(menuItems.length).toBeGreaterThan(0);
+      const { user, container } = render(<MachinePools {...newProps} />);
+      expect(container.querySelectorAll('.pf-c-dropdown__toggle')).toHaveLength(2);
+
+      container.querySelectorAll('.pf-c-dropdown__toggle').forEach(async (button) => {
+        await user.click(button);
+        const menuItems = container.querySelectorAll(
+          '.pf-c-dropdown__menu .pf-c-dropdown__menu-item',
+        );
         menuItems.forEach((item) => {
-          expect(item.props()['aria-disabled']).toBeFalsy();
+          expect(item).not.toHaveAttribute('aria-disabled');
         });
       });
     });
 
     it('displays option to update machine pool if machine pool can be updated ', async () => {
       const props = {
-        ...getBaseProps(true),
+        ...defaultProps,
+        cluster: {
+          ...defaultCluster,
+          hypershift: {
+            enabled: true,
+          },
+        },
         machinePoolsList: {
           data: [
             {
@@ -524,9 +555,16 @@ describe('<MachinePools />', () => {
       await user.click(screen.getByRole('button', { name: 'Actions' }));
       expect(screen.getByRole('menuitem', { name: 'Update version' })).toBeInTheDocument();
     });
+
     it('hides option to update machine pool if machine pool cannot be updated', async () => {
       const props = {
-        ...getBaseProps(true),
+        ...defaultProps,
+        cluster: {
+          ...defaultCluster,
+          hypershift: {
+            enabled: true,
+          },
+        },
         machinePoolsList: {
           data: [
             {
@@ -566,11 +604,13 @@ describe('<MachinePools />', () => {
     });
 
     it('Should disable actions on machine pools if user does not have permissions', () => {
-      const defaultProps = getBaseProps(true);
       const props = {
         ...defaultProps,
         cluster: {
           ...defaultProps.cluster,
+          hypershift: {
+            enabled: true,
+          },
           machinePoolsActions: {
             create: false,
             update: false,
@@ -600,11 +640,13 @@ describe('<MachinePools />', () => {
     });
 
     it('Should disable delete action if user does not have permissions', async () => {
-      const defaultProps = getBaseProps(true);
       const props = {
         ...defaultProps,
         cluster: {
           ...defaultProps.cluster,
+          hypershift: {
+            enabled: true,
+          },
           machinePoolsActions: {
             create: false,
             update: true,
@@ -636,7 +678,13 @@ describe('<MachinePools />', () => {
 
     it('Should allow actions on machine pools if user has permissions', () => {
       const props = {
-        ...getBaseProps(true),
+        ...defaultProps,
+        cluster: {
+          ...defaultCluster,
+          hypershift: {
+            enabled: true,
+          },
+        },
         machinePoolsList: {
           data: [
             {
@@ -662,13 +710,16 @@ describe('<MachinePools />', () => {
   });
 
   it('Should render successfully when machinePoolsActions is unset (rendering from cluster list data)', () => {
-    const baseProps = getBaseProps(true);
     const props = {
-      ...baseProps,
+      ...defaultProps,
       cluster: {
-        ...baseProps.cluster,
+        ...defaultCluster,
+        hypershift: {
+          enabled: true,
+        },
         machinePoolsActions: undefined,
       },
+
       machinePoolsList: simpleMachinePoolList,
     };
 

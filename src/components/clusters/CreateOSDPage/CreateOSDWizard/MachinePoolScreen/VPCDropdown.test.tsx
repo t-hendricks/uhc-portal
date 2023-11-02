@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { fireEvent, render, screen } from '~/testUtils';
+import { withState, render, screen, fireEvent } from '~/testUtils';
 import { GlobalState } from '~/redux/store';
 import VPCDropdown from './VPCDropdown';
 import * as vpcInquiries from '../VPCScreen/useVPCInquiry';
@@ -151,7 +151,7 @@ describe('<VPCDropdown />', () => {
         },
       },
     };
-    render(<VPCDropdown {...defaultProps} />, {}, initialState);
+    withState(initialState).render(<VPCDropdown {...defaultProps} />);
 
     expect(
       screen.getByText(

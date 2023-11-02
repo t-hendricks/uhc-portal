@@ -41,7 +41,8 @@ class CreateOSDCluster extends Page {
     cy.contains('h2', 'Review your dedicated cluster');
   }
 
-  showsFakeClusterBanner = () => cy.contains('div', 'On submit, a fake OSD cluster will be created.');
+  showsFakeClusterBanner = () =>
+    cy.contains('div', 'On submit, a fake OSD cluster will be created.');
 
   get clusterNameInput() {
     return 'input#name';

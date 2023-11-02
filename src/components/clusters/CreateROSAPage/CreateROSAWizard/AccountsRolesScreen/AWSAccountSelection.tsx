@@ -15,13 +15,13 @@ import {
 import './AccountsRolesScreen.scss';
 import links from '~/common/installLinks.mjs';
 import { CloudAccount } from '~/types/accounts_mgmt.v1';
+import { AWS_ACCOUNT_ROSA_LOCALSTORAGE_KEY } from '~/common/localStorageConstants';
 import PopoverHint from '../../../../common/PopoverHint';
 import { hasContract } from './AWSBillingAccount/awsBillingAccountHelper';
 import { useAssociateAWSAccountDrawer } from './AssociateAWSAccountDrawer/AssociateAWSAccountDrawer';
 import FuzzySelect, { FuzzyDataType, FuzzyEntryType } from '../../../../common/FuzzySelect';
 
 const AWS_ACCT_ID_PLACEHOLDER = 'Select an account';
-export const AWS_ACCOUNT_ROSA_LOCALSTORAGE_KEY = 'rosaAwsAccount';
 
 function NoAssociatedAWSAccounts() {
   return (
@@ -185,7 +185,6 @@ function AWSAccountSelection({
             inlineFilterPlaceholderText="Filter by account ID"
             filterValidate={{ pattern: /[\D]/, message: 'Please enter numeric digits only.' }}
             validated={touched && error ? 'error' : undefined}
-            // lastValueStorageKey={AWS_ACCOUNT_ROSA_LOCALSTORAGE_KEY}
             footer={footer}
             aria-describedby="aws-infra-accounts"
           />
