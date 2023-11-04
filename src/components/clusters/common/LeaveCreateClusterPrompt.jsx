@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext, useCallback } from 'react';
 import { useHistory } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { Modal, ModalVariant, Button } from '@patternfly/react-core';
@@ -6,6 +6,7 @@ import { Modal, ModalVariant, Button } from '@patternfly/react-core';
 import { trackEvents, ocmResourceTypeByProduct } from '~/common/analytics';
 import { normalizedProducts } from '~/common/subscriptionTypes';
 import useAnalytics from '~/hooks/useAnalytics';
+import { ROSAWizardContext } from '~/components/clusters/CreateROSAPage/CreateROSAWizard/ROSAWizardContext';
 
 function LeaveCreateClusterPrompt({ product }) {
   const history = useHistory();
@@ -13,6 +14,7 @@ function LeaveCreateClusterPrompt({ product }) {
 
   const [isOpen, setIsOpen] = useState(false);
   const [destinationLocation, setDestinationLocation] = useState('');
+  const { forceLeaveWizard } = useContext(ROSAWizardContext);
 
   useEffect(() => {
     let unblock;
@@ -39,15 +41,21 @@ function LeaveCreateClusterPrompt({ product }) {
     };
   }, [history, isOpen]);
 
-  const onLeave = () => {
+  useEffect(() => {
+    if (forceLeaveWizard) {
+      onLeave();
+    }
+  }, [forceLeaveWizard, onLeave]);
+
+  const onLeave = useCallback(() => {
     track(trackEvents.WizardLeave, {
       resourceType: ocmResourceTypeByProduct[product],
     });
     history.push(destinationLocation);
     setIsOpen(false);
-  };
+  }, [product, destinationLocation, history, track]);
 
-  return isOpen ? (
+  return isOpen && !forceLeaveWizard ? (
     <Modal
       variant={ModalVariant.small}
       title="Leave cluster creation"
