@@ -18,8 +18,8 @@ const SubnetField = ({ cluster }: { cluster: Cluster }) => {
   const fieldProps = React.useMemo(
     () => ({
       input: {
-        value: inputField.value,
         onChange,
+        value: inputField.value,
         name: inputField.name,
       },
       meta: {
@@ -48,7 +48,7 @@ const SubnetField = ({ cluster }: { cluster: Cluster }) => {
 
   return (
     <SubnetSelectField
-      name="subnet.subnet_id"
+      name="subnet"
       privacy="private"
       label="Private subnet name"
       isRequired

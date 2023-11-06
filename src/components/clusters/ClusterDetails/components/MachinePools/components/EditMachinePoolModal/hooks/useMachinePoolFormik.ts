@@ -57,6 +57,8 @@ const isMachinePool = (pool?: MachinePool | NodePool): pool is MachinePool =>
   pool?.kind === 'MachinePool';
 
 const noDecimalTest = (value: number) => value === Math.floor(value);
+const requiredSubnet = (subnet: Subnetwork | undefined) =>
+  subnet === undefined || !!subnet.subnet_id;
 
 const useMachinePoolFormik = ({
   machinePool,
@@ -265,11 +267,7 @@ const useMachinePoolFormik = ({
           useSpotInstances: Yup.boolean(),
           subnet:
             !hasMachinePool && isHypershift
-              ? Yup.object()
-                  .shape({
-                    subnet_id: Yup.string().required(),
-                  })
-                  .required()
+              ? Yup.object().test('subnet-is-required', 'Please select a subnet', requiredSubnet)
               : Yup.mixed(),
           securityGroupIds: Yup.array().of(Yup.string()),
         });
