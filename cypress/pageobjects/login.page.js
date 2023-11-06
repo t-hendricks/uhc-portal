@@ -38,6 +38,37 @@ class Login extends Page {
     this.closePendoIfShowing();
   }
 
+  loginFedRamp(username, password) {
+    Cypress.on('uncaught:exception', (e) => {
+      console.log(`Got application exception: ${e.message}`);
+
+      return false;
+    });
+    cy.get('#username').type(username);
+    cy.get('#kc-login').click();
+    cy.get('#username').type(username);
+    cy.get('#password').type(password);
+    cy.get('#kc-login').click();
+  }
+
+  loginCommercial(username, password) {
+    Cypress.on('uncaught:exception', (e) => {
+      console.log(`Got application exception: ${e.message}`);
+
+      return false;
+    });
+    cy.visit('');
+    cy.get('#username-verification').should('be.visible');
+    cy.get('#username-verification').type(username);
+    cy.get('#username-verification').should('have.value', username);
+    cy.get('#login-show-step2').click();
+    cy.get('#password').should('be.visible');
+    cy.get('#password').type(password);
+    cy.get('#password').should('have.value', password);
+    cy.get('#rh-password-verification-submit-button').click();
+    cy.get('#rh-password-verification-submit-button').should('not.exist');
+  }
+
   closePendoIfShowing() {
     // This might not work, it takes time for Pendo to pop up.
     const closePendoGuideBtn = '._pendo-close-guide';
