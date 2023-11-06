@@ -30,11 +30,11 @@ function ClusterListEmptyState() {
     <EmptyState variant={EmptyStateVariant.large} className="cluster-list-empty-state">
       <EmptyStateIcon icon={PlusCircleIcon} />
       <Title headingLevel="h4" size="2xl">
-        No OpenShift clusters to display
+        Let&#39;s create your first cluster
       </Title>
       <EmptyStateBody>
-        The Red Hat OpenShift Cluster Manager helps you create, register, and manage OpenShift 4
-        clusters. To get started, create your first cluster.
+        You don&#39;t have any clusters yet, but you can easily create or register your first
+        OpenShift 4 cluster.
       </EmptyStateBody>
       <Link to="/create">
         <Button data-testid="create_cluster_btn" className="pf-u-mt-xl">
