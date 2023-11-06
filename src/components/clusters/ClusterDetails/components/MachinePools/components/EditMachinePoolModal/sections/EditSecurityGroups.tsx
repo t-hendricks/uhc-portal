@@ -101,7 +101,6 @@ const EditSecurityGroups = ({ cluster, isEdit }: EditSecurityGroupsProps) => {
       <FormGroup
         fieldId="securityGroupIds"
         label="Security groups"
-        isRequired
         validated={meta.touched && meta.error ? 'error' : 'default'}
       >
         <>
