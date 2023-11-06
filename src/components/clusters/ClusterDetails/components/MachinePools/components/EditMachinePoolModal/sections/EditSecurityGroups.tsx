@@ -102,6 +102,7 @@ const EditSecurityGroups = ({ cluster, isEdit }: EditSecurityGroupsProps) => {
         fieldId="securityGroupIds"
         label="Security groups"
         validated={meta.touched && meta.error ? 'error' : 'default'}
+        helperTextInvalid={meta.error}
       >
         <>
           <SecurityGroupsViewList
