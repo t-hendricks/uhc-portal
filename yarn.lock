@@ -2432,11 +2432,6 @@
   resolved "https://registry.npmjs.org/@redhat-cloud-services/types/-/types-0.0.15.tgz"
   integrity sha512-1aqJcgQZq4uih+LxRpVJQblt2x4o/hlrqSZMYFhWyTLgnVNhJ8Y7B5pwoVjpA5PCE1fBNahrydVwugEKMsDDtg==
 
-"@redhat-cloud-services/types@^0.0.16":
-  version "0.0.16"
-  resolved "https://registry.npmjs.org/@redhat-cloud-services/types/-/types-0.0.16.tgz"
-  integrity sha512-JtIAPT1ZJzgwUvttWjtxe3ufMhUJ0upapJ7yi/MLKFhC46B5X2ht7hgbgIeCv5Nf7QLc8TDsSUXqqr9L93Ek5A==
-
 "@redhat-cloud-services/types@^0.0.17":
   version "0.0.17"
   resolved "https://registry.npmjs.org/@redhat-cloud-services/types/-/types-0.0.17.tgz"
@@ -2446,6 +2441,11 @@
   version "0.0.24"
   resolved "https://registry.yarnpkg.com/@redhat-cloud-services/types/-/types-0.0.24.tgz#25ddb393b7b280af619a1d7ed8185afe935a3a2f"
   integrity sha512-P50stc+mnWLycID46/AKmD/760r5N1eoam//O6MUVriqVorUdht7xkUL78aJZU1vw8WW6xlrDHwz3F6BM148qg==
+
+"@redhat-cloud-services/types@^1.0.3":
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/@redhat-cloud-services/types/-/types-1.0.3.tgz#895fb0822d30599f24afc7587e65d5f5603afa06"
+  integrity sha512-y7M2rj3Xwegd0OBnczT7it86Zq/40Ddz/BVeOlSrbQ5sBD4K3m73OmP3SIT0z4Q7rKMxa206feuIlMxP0wbYKg==
 
 "@reduxjs/toolkit@^1.9.1":
   version "1.9.5"

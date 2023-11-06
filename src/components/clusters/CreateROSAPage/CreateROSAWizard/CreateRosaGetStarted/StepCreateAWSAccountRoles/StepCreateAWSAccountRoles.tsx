@@ -7,7 +7,9 @@ import InstructionCommand from '~/components/common/InstructionCommand';
 import ExternalLink from '~/components/common/ExternalLink';
 import links from '~/common/installLinks.mjs';
 import { RosaCliCommand } from '~/components/clusters/CreateROSAPage/CreateROSAWizard/AccountsRolesScreen/constants/cliCommands';
-import { isRestrictedEnv } from '~/restrictedEnv';
+import { isRestrictedEnv, refreshToken } from '~/restrictedEnv';
+import useChrome from '@redhat-cloud-services/frontend-components/useChrome';
+import type { ChromeAPI } from '@redhat-cloud-services/types';
 
 type StepCreateAWSAccountRolesProps = {
   offlineToken?: string;
@@ -18,12 +20,22 @@ const StepCreateAWSAccountRoles = ({
   offlineToken,
   setOfflineToken,
 }: StepCreateAWSAccountRolesProps) => {
+  const chrome = useChrome();
+  const restrictedEnv = isRestrictedEnv(chrome as unknown as ChromeAPI);
+  const token = restrictedEnv ? refreshToken(chrome as unknown as ChromeAPI) : offlineToken;
+  const getEnv = () => {
+    const env = chrome.getEnvironment();
+    if (env === 'int') {
+      return ' --env=integration';
+    }
+    return '';
+  };
   const loginCommand = `rosa login${
-    isRestrictedEnv() ? ' --govcloud' : ''
-  } --token="${offlineToken}"`;
+    restrictedEnv ? ' --govcloud' : ''
+  }${getEnv()} --token="${token}"`;
 
   React.useEffect(() => {
-    if (!offlineToken) {
+    if (!restrictedEnv && !offlineToken) {
       loadOfflineToken((tokenOrError, errorReason) => {
         setOfflineToken(errorReason || tokenOrError);
       }, window.location.origin);
@@ -42,7 +54,7 @@ const StepCreateAWSAccountRoles = ({
           To authenticate, run this command:
           <div className="pf-u-mt-md">
             <TokenBox
-              token={offlineToken}
+              token={token}
               command={loginCommand}
               textAriaLabel="Copyable ROSA login command"
               trackEvent={trackEvents.ROSALogin}
