@@ -1,8 +1,9 @@
 import React from 'react';
 import { Chip, ChipGroup } from '@patternfly/react-core';
 import { SecurityGroup } from '~/types/clusters_mgmt.v1';
-
 import WithTooltip from '~/components/common/WithTooltip';
+
+const SECURITY_GROUPS_NAME_MAX_WIDTH = '255ch';
 
 const SecurityGroupsViewList = ({
   securityGroups,
@@ -31,7 +32,13 @@ const SecurityGroupsViewList = ({
           const { id = '' } = sg;
           const onClick = onClickItem ? () => onClickItem(id) : undefined;
           return (
-            <Chip id={id} key={id} isReadOnly={isReadOnly} onClick={onClick}>
+            <Chip
+              id={id}
+              key={id}
+              isReadOnly={isReadOnly}
+              onClick={onClick}
+              textMaxWidth={SECURITY_GROUPS_NAME_MAX_WIDTH}
+            >
               {sg.name || id}
             </Chip>
           );
