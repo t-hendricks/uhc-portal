@@ -78,11 +78,11 @@ describe(
         CreateRosaWizardPage.useIMDSv2Radio().check();
         CreateRosaWizardPage.rootDiskSizeInput().type('{selectAll}').type('125');
         cy.get('div')
-          .contains('The worker root disk size must be between 128 GiB and 1024 GiB.')
+          .contains('The worker root disk size must be between 128 GiB and 16384 GiB.')
           .should('be.visible');
-        CreateRosaWizardPage.rootDiskSizeInput().type('{selectAll}').type('1124');
+        CreateRosaWizardPage.rootDiskSizeInput().type('{selectAll}').type('16386');
         cy.get('div')
-          .contains('The worker root disk size must be between 128 GiB and 1024 GiB.')
+          .contains('The worker root disk size must be between 128 GiB and 16384 GiB.')
           .should('be.visible');
         CreateRosaWizardPage.rootDiskSizeInput().clear().type('{selectAll}').type('555');
         CreateRosaWizardPage.editNodeLabelLink().click();
