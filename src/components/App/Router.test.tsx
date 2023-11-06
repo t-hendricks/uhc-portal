@@ -3,6 +3,7 @@ import { mount } from 'enzyme';
 import { MemoryRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import * as useChromeHook from '@redhat-cloud-services/frontend-components/useChrome';
+import { mockRestrictedEnv } from '~/testUtils';
 
 import Router from './Router';
 import { store } from '../../redux/store';
@@ -73,6 +74,7 @@ describe('Router', () => {
         setPageMetadata: mockSetPageMetadata,
       },
     }));
+    mockRestrictedEnv();
   });
   describe('Every route should render: ', () =>
     test.each(routes)(

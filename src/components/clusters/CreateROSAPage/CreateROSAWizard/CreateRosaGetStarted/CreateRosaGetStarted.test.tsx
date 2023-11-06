@@ -1,12 +1,20 @@
 import React from 'react';
 import { MemoryRouter } from 'react-router-dom';
 
-import { render, checkAccessibility, insightsMock, screen, mockRestrictedEnv } from '~/testUtils';
+import {
+  render,
+  checkAccessibility,
+  insightsMock,
+  mockUseChrome,
+  screen,
+  mockRestrictedEnv,
+} from '~/testUtils';
 import * as hooks from '~/hooks/useFeatureGate';
 import { HCP_ROSA_GETTING_STARTED_PAGE } from '~/redux/constants/featureConstants';
 import CreateRosaGetStarted from './CreateRosaGetStarted';
 
 insightsMock();
+mockUseChrome();
 
 const hypershiftMessage =
   /For now, you can only create ROSA with Hosted Control Plane clusters using the CLI/;
