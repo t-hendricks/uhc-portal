@@ -13,8 +13,8 @@ const SubnetField = () => {
   const fieldProps = React.useMemo(
     () => ({
       input: {
-        value: inputField.value,
         onChange,
+        value: inputField.value,
         name: inputField.name,
       },
       meta: {
