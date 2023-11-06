@@ -12,10 +12,10 @@ exports[`<ClusterListEmptyState /> renders correctly 1`] = `
     headingLevel="h4"
     size="2xl"
   >
-    No OpenShift clusters to display
+    Let's create your first cluster
   </Title>
   <EmptyStateBody>
-    The Red Hat OpenShift Cluster Manager helps you create, register, and manage OpenShift 4 clusters. To get started, create your first cluster.
+    You don't have any clusters yet, but you can easily create or register your first OpenShift 4 cluster.
   </EmptyStateBody>
   <Link
     to="/create"
