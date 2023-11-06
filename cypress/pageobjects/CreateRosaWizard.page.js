@@ -278,8 +278,21 @@ class CreateRosaCluster extends Page {
       .siblings()
       .find('div')
       .find('button.pf-c-select__toggle')
-      .click();
-    cy.get('ul[id="installer_role_arn"]').find('button').contains(roleName).click();
+      .then(($btn) => {
+        if ($btn.is(':disabled')) {
+          cy.log('Installer ARN button is disabled there is only one option. Continuing..');
+        } else {
+          cy.get('span')
+            .contains('Installer role')
+            .parent()
+            .parent()
+            .siblings()
+            .find('div')
+            .find('button.pf-c-select__toggle')
+            .click();
+          cy.get('ul[id="installer_role_arn"]').find('button').contains(roleName).click();
+        }
+      });
   }
   selectClusterVersion(version) {
     cy.get('div[name="cluster_version"]').find('button.pf-c-select__toggle').click();
@@ -319,6 +332,18 @@ class CreateRosaCluster extends Page {
 
   enableAutoScaling() {
     cy.get('input[id="autoscalingEnabled"]').check();
+  }
+
+  inputMinNodeCount(minNodeCount) {
+    cy.get('[aria-label="Minimum nodes"]').clear().type(`{rightArrow}${minNodeCount}`);
+    cy.get('body').click();
+    cy.get('[aria-label="Minimum nodes"]').should('have.value', Cypress.env('MIN_NODE_COUNT'));
+  }
+
+  inputMaxNodeCount(maxNodeCount) {
+    cy.get('[aria-label="Maximum nodes"]').clear().type(`{rightArrow}${maxNodeCount}`);
+    cy.get('body').click();
+    cy.get('[aria-label="Maximum nodes"]').should('have.value', maxNodeCount);
   }
 
   disabledAutoScaling() {
@@ -388,6 +413,197 @@ class CreateRosaCluster extends Page {
   }
   setMaximumNodeCount(nodeCount) {
     this.maximumNodeInput().type('{selectAll}').type(nodeCount);
+  }
+
+  waitForClusterId() {
+    // Wait 5 min for cluster id to populate on install page
+    cy.getByTestId('clusterID', { timeout: 300000 }).should('not.contain', 'N/A');
+  }
+
+  waitForClusterReady() {
+    // Wait up to 1 hour for cluster to be Ready
+    cy.get('.pf-u-ml-xs', { timeout: 3600000 }).should('contain', 'Ready');
+  }
+
+  waitForButtonContainingTextToBeEnabled(text, timeout = 30000) {
+    cy.get(`button:contains('${text}')`, { timeout: timeout })
+      .scrollIntoView()
+      .should('be.enabled');
+  }
+
+  clickButtonContainingText(text, options = {}) {
+    if (Object.keys(options).length == 0 && options.constructor === Object) {
+      cy.get(`button:contains('${text}')`)
+        .scrollIntoView()
+        .should('be.visible')
+        .should('be.enabled')
+        .click();
+    } else {
+      cy.get(`button:contains('${text}')`).should('be.enabled').should('be.visible').click(options);
+    }
+  }
+
+  waitForSpinnerToNotExist() {
+    cy.get('.spinner-loading-text').should('not.exist');
+  }
+
+  clickCreateClusterBtn() {
+    cy.getByTestId('create_cluster_btn').click();
+  }
+
+  isRosaCreateClusterDropDownVisible() {
+    cy.get('#rosa-create-cluster-dropdown').scrollIntoView().should('be.visible');
+  }
+
+  clickRosaCreateClusterDropDownVisible() {
+    cy.get('#rosa-create-cluster-dropdown').click();
+  }
+
+  isRosaCreateWithWebUIVisible() {
+    cy.get('#with-web').should('be.visible');
+  }
+
+  clickRosaCreateWithWebUI() {
+    cy.get('#with-web').click();
+  }
+
+  selectAvailabilityZoneRegion(avilabilityZoneRegion) {
+    cy.get('[aria-label="Options menu"]').click();
+    cy.get('li').contains(avilabilityZoneRegion).click();
+  }
+
+  inputPrivateSubnetId(subnetId) {
+    cy.get('#private_subnet_id_0').type(subnetId);
+  }
+
+  enableCustomerManageKeys() {
+    cy.get('#customer_managed_key-true').check().should('be.enabled');
+  }
+
+  inputCustomerManageKeyARN(kmsCustomKeyARN) {
+    cy.get('#kms_key_arn').type(kmsCustomKeyARN).should('have.value', kmsCustomKeyARN);
+  }
+
+  enableEtcEncryption() {
+    cy.get('#etcd_encryption').check().should('be.enabled');
+  }
+
+  enableFips() {
+    cy.get('#fips').check().should('be.enabled');
+  }
+
+  inputRootDiskSize(rootDiskSize) {
+    cy.get('[name="worker_volume_size_gib"]').clear().type(`{rightArrow}${rootDiskSize}`);
+    cy.get('body').click();
+    cy.get('[name="worker_volume_size_gib"]').should('have.value', rootDiskSize);
+  }
+
+  enableIMDSOnly() {
+    cy.getByTestId('imds-required').then(($elem) => {
+      if (!$elem.prop('checked')) {
+        cy.getByTestId('imds-required').check();
+      }
+    });
+  }
+
+  imdsOptionalIsEnabled() {
+    cy.getByTestId('imds-optional').then(($elem) => {
+      if (!$elem.prop('checked')) {
+        cy.getByTestId('imds-optional').check();
+      }
+    });
+  }
+
+  inputNodeLabelKvs(nodeLabelKvs) {
+    cy.wrap(nodeLabelKvs).each((kv, index) => {
+      const key = Object.keys(kv)[0];
+      const value = kv[key];
+      cy.get(`[name="node_labels[${index}].key"]`).type(key);
+      cy.get(`[name="node_labels[${index}].value"]`).type(value);
+      if (index < nodeLabelKvs.length - 1) {
+        CreateRosaWizardPage.clickButtonContainingText('Add additional label');
+      }
+    });
+  }
+
+  enableClusterPrivacyPublic() {
+    cy.getByTestId('cluster_privacy-external').then(($elem) => {
+      if (!$elem.prop('checked')) {
+        cy.getByTestId('cluster_privacy-external').check();
+      }
+    });
+  }
+
+  enableClusterPrivacyPrivate() {
+    cy.getByTestId('cluster_privacy-internal').then(($elem) => {
+      if (!$elem.prop('checked')) {
+        cy.getByTestId('cluster_privacy-internal').check();
+      }
+    });
+  }
+
+  clusterPrivacyIsDisabled() {
+    cy.get('#cluster_privacy-internal').should('be.disabled');
+  }
+
+  enableInstallIntoExistingVpc() {
+    cy.get('#install_to_vpc').check().should('be.enabled');
+  }
+
+  enableConfigureClusterWideProxy() {
+    cy.get('#configure_proxy').check().should('be.enabled');
+  }
+
+  enableUpgradePolicyManual() {
+    cy.getByTestId('upgrade_policy-manual').then(($elem) => {
+      if (!$elem.prop('checked')) {
+        cy.getByTestId('upgrade_policy-manual').check();
+      }
+    });
+  }
+  enableUpgradePolicyAutomatic() {
+    cy.getByTestId('upgrade_policy-automatic').then(($elem) => {
+      if (!$elem.prop('checked')) {
+        cy.getByTestId('upgrade_policy-automatic').check();
+      }
+    });
+  }
+
+  enableRosaRolesProviderCreationModeManual() {
+    cy.getByTestId('rosa_roles_provider_creation_mode-manual').then(($elem) => {
+      if (!$elem.prop('checked')) {
+        cy.getByTestId('rosa_roles_provider_creation_mode-manual').check();
+      }
+    });
+  }
+  enableRosaRolesProviderCreationModeAuto() {
+    cy.getByTestId('rosa_roles_provider_creation_mode-auto').then(($elem) => {
+      if (!$elem.prop('checked')) {
+        cy.getByTestId('rosa_roles_provider_creation_mode-auto').check();
+      }
+    });
+  }
+
+  validateItemsInList(listOfMatchValues, listSelector) {
+    cy.wrap(listOfMatchValues).each((value, index) => {
+      cy.get(listSelector).eq(index).should('contain', value);
+    });
+  }
+
+  clickBody() {
+    cy.get('body').click();
+  }
+
+  validateElementsWithinShouldMethodValue(withinSelector, elementsWithin) {
+    cy.get(withinSelector).within(() => {
+      cy.wrap(elementsWithin).each((elementData) => {
+        if (!elementData.value) {
+          cy.get(elementData.element).should(elementData.method);
+        } else {
+          cy.get(elementData.element).should(elementData.method, elementData.value);
+        }
+      });
+    });
   }
 }
 
