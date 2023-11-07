@@ -545,6 +545,7 @@ class CreateROSAWizardInternal extends React.Component {
                     onBeforeNext={this.onBeforeNext}
                     onBeforeSubmit={this.onBeforeSubmit}
                     isNextDisabled={!!deferredNext}
+                    isHypershiftSelected={isHypershiftSelected}
                     currentStepId={currentStepId}
                   />
                 ) : (

@@ -5,46 +5,44 @@ import { isAsyncValidating } from 'redux-form';
 
 import { WizardFooter, WizardContext, Button } from '@patternfly/react-core';
 
-import { useGlobalState } from '~/redux/hooks';
 import { stepId, hasLoadingState } from './rosaWizardConstants';
+
+// Must return the step in which VPCDropdown is located, as it's in charge of fetching the VPCs
+const getVpcLoadingStep = (isHypershiftSelected) => {
+  if (isHypershiftSelected) {
+    return stepId.CLUSTER_SETTINGS__MACHINE_POOL;
+  }
+
+  return stepId.NETWORKING__VPC_SETTINGS;
+};
 
 const CreateRosaWizardFooter = ({
   firstStepId,
   onBeforeNext,
   onBeforeSubmit,
   onSubmit,
+  isHypershiftSelected,
   isNextDisabled,
   currentStepId,
 }) => {
   const asyncValidating = useSelector(isAsyncValidating('CreateCluster'));
-  const { pending: getAccountIDsLoading } = useSelector(
-    (state) => state.rosaReducer.getAWSAccountIDsResponse,
-  );
-  const { pending: getAccountARNsLoading } = useSelector(
-    (state) => state.rosaReducer.getAWSAccountRolesARNsResponse,
-  );
-  const { pending: getUserRoleLoading } = useSelector(
-    (state) => state.rosaReducer.getUserRoleResponse,
-  );
-  const { pending: getOCMRoleLoading } = useSelector(
-    (state) => state.rosaReducer.getOCMRoleResponse,
-  );
-  const { pending: isVpcsLoading } = useGlobalState((state) => state.ccsInquiries.vpcs);
-  const clusterPrivacy = useGlobalState(
-    (state) => state.form.CreateCluster?.values?.cluster_privacy,
-  );
+  const awsRequests = useSelector((state) => ({
+    accountIDsLoading: state.rosaReducer.getAWSAccountIDsResponse.pending || false,
+    accountARNsLoading: state.rosaReducer.getAWSAccountRolesARNsResponse.pending || false,
+    userRoleLoading: state.rosaReducer.getUserRoleResponse.pending || false,
+    oCMRoleLoading: state.rosaReducer.getOCMRoleResponse.pending || false,
+    vpcsLoading: state.ccsInquiries.vpcs.pending || false,
+  }));
 
-  const isPublicSubnetsLoading =
-    currentStepId === stepId.NETWORKING__CONFIGURATION &&
-    clusterPrivacy === 'external' &&
-    isVpcsLoading;
+  const isRefreshingVPCs =
+    awsRequests.vpcsLoading && currentStepId === getVpcLoadingStep(isHypershiftSelected);
 
   const areAwsResourcesLoading =
-    getAccountIDsLoading ||
-    getAccountARNsLoading ||
-    getUserRoleLoading ||
-    getOCMRoleLoading ||
-    isPublicSubnetsLoading;
+    awsRequests.accountIDsLoading ||
+    awsRequests.accountARNsLoading ||
+    awsRequests.userRoleLoading ||
+    awsRequests.oCMRoleLoading ||
+    isRefreshingVPCs;
 
   return (
     <WizardFooter>
@@ -88,6 +86,7 @@ CreateRosaWizardFooter.propTypes = {
   onBeforeNext: PropTypes.func.isRequired,
   onBeforeSubmit: PropTypes.func.isRequired,
   onSubmit: PropTypes.func.isRequired,
+  isHypershiftSelected: PropTypes.bool,
   isNextDisabled: PropTypes.bool,
   currentStepId: PropTypes.string,
 };
