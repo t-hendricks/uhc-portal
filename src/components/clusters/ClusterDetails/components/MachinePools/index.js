@@ -11,7 +11,7 @@ import {
 } from './MachinePoolsActions';
 
 import {
-  isControlPlaneUpToDate,
+  isHCPControlPlaneUpdating,
   isMachinePoolBehindControlPlane,
 } from './UpdateMachinePools/updateMachinePoolsHelpers';
 import { hasMachinePoolsQuotaSelector } from './MachinePoolsSelectors';
@@ -36,7 +36,7 @@ const mapStateToProps = (state) => {
     machineTypes: state.machineTypes,
     organization: state.userProfile.organization,
     canMachinePoolBeUpdated: (machinePool) =>
-      isControlPlaneUpToDate(state) && isMachinePoolBehindControlPlane(state, machinePool),
+      !isHCPControlPlaneUpdating(state) && isMachinePoolBehindControlPlane(state, machinePool),
   };
 
   const machinePoolsList = isHypershiftCluster(cluster)
