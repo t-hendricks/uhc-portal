@@ -27,7 +27,7 @@ exports[`InstallRHV renders correctly 1`] = `
   />
   <PageSection>
     <InstructionsChooser
-      ipiLearnMoreLink="https://docs.openshift.com/container-platform/4.13/installing/installing_rhv/installing-rhv-default.html"
+      ipiLearnMoreLink="https://docs.openshift.com/container-platform/4.14/installing/installing_rhv/installing-rhv-default.html"
       ipiPageLink="/install/rhv/installer-provisioned"
       name="rhv"
       providerSpecificFeatures={
@@ -37,7 +37,7 @@ exports[`InstallRHV renders correctly 1`] = `
           ],
         }
       }
-      upiLearnMoreLink="https://docs.openshift.com/container-platform/4.13/installing/installing_rhv/installing-rhv-user-infra.html"
+      upiLearnMoreLink="https://docs.openshift.com/container-platform/4.14/installing/installing_rhv/installing-rhv-user-infra.html"
       upiPageLink="/install/rhv/user-provisioned"
     />
   </PageSection>
