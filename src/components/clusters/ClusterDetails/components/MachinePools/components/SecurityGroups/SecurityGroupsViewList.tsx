@@ -1,9 +1,10 @@
 import React from 'react';
 import { Chip, ChipGroup } from '@patternfly/react-core';
 import { SecurityGroup } from '~/types/clusters_mgmt.v1';
-import WithTooltip from '~/components/common/WithTooltip';
 
-const SECURITY_GROUPS_NAME_MAX_WIDTH = '255ch';
+// We increase Patternfly's maximum length of 16ch, as there is bug.
+// The tooltip won't show when mounted but not being visible (eg. in an ExpandableSection)
+const SECURITY_GROUPS_NAME_MAX_WIDTH = '50ch';
 
 const SecurityGroupsViewList = ({
   securityGroups,
@@ -23,28 +24,23 @@ const SecurityGroupsViewList = ({
     ) : null;
   }
   return (
-    <WithTooltip
-      showTooltip={isReadOnly}
-      content="This option cannot be edited from its original setting selection."
-    >
-      <ChipGroup className="pf-u-mb-lg" numChips={itemCount}>
-        {securityGroups.map((sg) => {
-          const { id = '' } = sg;
-          const onClick = onClickItem ? () => onClickItem(id) : undefined;
-          return (
-            <Chip
-              id={id}
-              key={id}
-              isReadOnly={isReadOnly}
-              onClick={onClick}
-              textMaxWidth={SECURITY_GROUPS_NAME_MAX_WIDTH}
-            >
-              {sg.name || id}
-            </Chip>
-          );
-        })}
-      </ChipGroup>
-    </WithTooltip>
+    <ChipGroup className="pf-u-mb-lg" numChips={itemCount}>
+      {securityGroups.map((sg) => {
+        const { id = '' } = sg;
+        const onClick = onClickItem ? () => onClickItem(id) : undefined;
+        return (
+          <Chip
+            id={id}
+            key={id}
+            isReadOnly={isReadOnly}
+            onClick={onClick}
+            textMaxWidth={SECURITY_GROUPS_NAME_MAX_WIDTH}
+          >
+            {sg.name || id}
+          </Chip>
+        );
+      })}
+    </ChipGroup>
   );
 };
 export default SecurityGroupsViewList;
