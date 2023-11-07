@@ -2,8 +2,8 @@ import React from 'react';
 import { Chip, ChipGroup } from '@patternfly/react-core';
 import { SecurityGroup } from '~/types/clusters_mgmt.v1';
 
-// We increase Patternfly's maximum length of 16ch, as there is bug.
-// The tooltip won't show when mounted but not being visible (eg. in an ExpandableSection)
+// We increase Patternfly's maximum length of 16ch, due to https://github.com/patternfly/patternfly-react/issues/9690.
+// The tooltip won't show when mounted but not being visible (e.g. in an ExpandableSection)
 const SECURITY_GROUPS_NAME_MAX_WIDTH = '50ch';
 
 const SecurityGroupsViewList = ({
