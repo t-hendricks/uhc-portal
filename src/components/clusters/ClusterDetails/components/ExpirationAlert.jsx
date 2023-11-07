@@ -26,12 +26,14 @@ function ExpirationAlert({
         className="pf-u-mt-md"
         variant="warning"
         isInline
-        title={`This cluster should have been deleted ${timeUntilExpiryString}.`}
+        title="Cluster failed to delete"
       >
         <>
-          Please contact OCM support at{' '}
-          <a href="mailto: ocm-feedback@redhat.com">ocm-feedback@redhat.com</a> to let us know about
-          this issue.
+          {`This cluster should have been deleted ${timeUntilExpiryString} but is still running.`}{' '}
+          <ExternalLink href="https://access.redhat.com/support/">
+            Contact our customer support.
+          </ExternalLink>
+          .
         </>
       </Alert>
     );
