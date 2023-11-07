@@ -44,13 +44,14 @@ function BasicFieldsSection({
   const isRosa = product === normalizedProducts.ROSA;
 
   const handleCloudRegionChange = () => {
-    // Move the az selection form
-    // to its default value once the cloudRegion selection
-    // changes to avoid incorrect zone.
+    // Clears fields related to the region: Availability zones, subnet IDs, VPCs
     const azCount = isMultiAz ? 3 : 1;
     for (let i = 0; i < azCount; i += 1) {
       change(`az_${i}`, AVAILABILITY_ZONE_PLACEHOLDER);
+      change(`private_subnet_id_${i}`, '');
+      change(`public_subnet_id_${i}`, '');
     }
+    change('selected_vpc', { id: '', name: '' });
 
     // Reset the public subnet ID selection associated with cluster privacy on region change,
     // since the list of values there can change entirely based on the selected region.

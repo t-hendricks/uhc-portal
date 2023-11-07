@@ -128,11 +128,12 @@ export const Details = () => {
   });
 
   const handleCloudRegionChange = () => {
-    // Set az selection to its default value once the cloudRegion changes to avoid incorrect zone.
+    // Clears fields related to the region: Availability zones, subnet IDs, VPCs
     const azCount = isMultiAz ? 3 : 1;
-
     for (let i = 0; i < azCount; i += 1) {
       setFieldValue(`az_${i}`, AvailabilityZonePlaceholder);
+      setFieldValue(`private_subnet_id_${i}`, '');
+      setFieldValue(`public_subnet_id_${i}`, '');
     }
   };
 

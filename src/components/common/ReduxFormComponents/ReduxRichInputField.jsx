@@ -266,6 +266,7 @@ const ReduxRichInputField = (props) => {
             <HelperText component="ul" id={`redux-rich-input-popover-${inputName}`}>
               {evaluatedValidation.map((item) => (
                 <ValidationItem
+                  key={item.text}
                   touched={touched}
                   text={item.text}
                   isValid={item.validated}
