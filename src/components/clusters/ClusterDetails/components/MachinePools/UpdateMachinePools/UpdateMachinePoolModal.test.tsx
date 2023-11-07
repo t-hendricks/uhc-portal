@@ -65,6 +65,25 @@ describe('UpdateMachinePoolModal', () => {
       expect(mockedDispatch.mock.calls[0][0].type).toEqual('OPEN_MODAL');
     });
 
+    it('displays the update button when the machine pool version is behind the control plane and control plane has available upgrades', () => {
+      const newCluster = {
+        ...defaultCluster,
+        version: { ...defaultCluster.version, available_upgrades: ['I am an upgrade object'] },
+      };
+
+      const newState = {
+        ...defaultState,
+        clusters: {
+          details: {
+            cluster: newCluster,
+          },
+        },
+      };
+      withState(newState).render(<UpdatePoolButton machinePool={defaultMachinePool} />);
+
+      expect(screen.getByRole('button')).toBeInTheDocument();
+    });
+
     describe('displays null when', () => {
       it('is not hypershift', () => {
         const newCluster = { ...defaultCluster, hypershift: { enabled: false } };
@@ -152,27 +171,6 @@ describe('UpdateMachinePoolModal', () => {
               items: [
                 { upgrade_type: 'OSD', schedule_type: 'automatic', state: { value: 'started' } },
               ],
-            },
-          },
-        };
-        const { container } = withState(newState).render(
-          <UpdatePoolButton machinePool={defaultMachinePool} />,
-        );
-
-        expect(container).toBeEmptyDOMElement();
-      });
-
-      it('the control plane has available upgrades', () => {
-        const newCluster = {
-          ...defaultCluster,
-          version: { available_upgrades: ['I am an upgrade object'] },
-        };
-
-        const newState = {
-          ...defaultState,
-          clusters: {
-            details: {
-              cluster: newCluster,
             },
           },
         };

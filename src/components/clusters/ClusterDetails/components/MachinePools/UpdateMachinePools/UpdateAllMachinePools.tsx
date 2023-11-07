@@ -11,7 +11,7 @@ import { isHypershiftCluster } from '../../../clusterDetailsHelper';
 import { getMachineOrNodePools } from '../MachinePoolsActions';
 import {
   updateAllMachinePools as updateAllPools,
-  useControlPlaneUpToDate,
+  useHCPControlPlaneUpdating,
   controlPlaneVersionSelector,
   controlPlaneIdSelector,
   compareIsMachinePoolBehindControlPlane,
@@ -30,7 +30,7 @@ const UpdateAllMachinePools = ({
     initialErrorMessage ? [initialErrorMessage] : [],
   );
 
-  const controlPlaneUpToDate = useControlPlaneUpToDate();
+  const controlPlaneUpdating = useHCPControlPlaneUpdating();
 
   const clusterId = useSelector(controlPlaneIdSelector);
 
@@ -40,7 +40,7 @@ const UpdateAllMachinePools = ({
     isHypershiftCluster(state.clusters.details.cluster),
   );
 
-  if (!controlPlaneUpToDate) {
+  if (controlPlaneUpdating) {
     return null;
   }
 
