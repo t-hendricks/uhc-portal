@@ -1,12 +1,11 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { render, checkAccessibility } from '~/testUtils';
 
 import TokenErrorAlert from '../TokenErrorAlert';
 
-describe('TokenErrorAlert', () => {
-  const token = { auths: { foo: 'bar' } };
-  it('renders correctly', () => {
-    const wrapper = shallow(<TokenErrorAlert token={token} />);
-    expect(wrapper).toMatchSnapshot();
+describe('<TokenErrorAlert />', () => {
+  it('is accessible', async () => {
+    const { container } = render(<TokenErrorAlert token={{ auths: { foo: 'bar' } }} />);
+    await checkAccessibility(container);
   });
 });
