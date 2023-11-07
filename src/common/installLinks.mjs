@@ -820,6 +820,15 @@ const urls = {
       [architectures.x86]: {
         [operatingSystems.linux]: `${MIRROR_CLIENTS_STABLE_X86}oc-mirror.tar.gz`,
       },
+      [architectures.arm]: {
+        [operatingSystems.linux]: `${MIRROR_CLIENTS_STABLE_ARM}oc-mirror.tar.gz`,
+      },
+      [architectures.s390x]: {
+        [operatingSystems.linux]: `${MIRROR_CLIENTS_STABLE_IBMZ}oc-mirror.tar.gz`,
+      },
+      [architectures.ppc]: {
+        [operatingSystems.linux]: `${MIRROR_CLIENTS_STABLE_PPC}oc-mirror.tar.gz`,
+      },
     },
   },
 };
