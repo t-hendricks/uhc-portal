@@ -3,31 +3,12 @@ import { AxiosResponse } from 'axios';
 
 import { getAWSVPCDetails } from '~/services/clusterService';
 import { CloudVPC, Cluster } from '~/types/clusters_mgmt.v1';
-import { isHypershiftCluster } from '~/components/clusters/common/clusterStates';
-import { getAWSCloudProviderVPCs } from '~/components/clusters/CreateOSDPage/CreateOSDWizard/ccsInquiriesActions';
+import {
+  CloudProviderVPCRequest,
+  getAWSCloudProviderVPCs,
+} from '~/components/clusters/CreateOSDPage/CreateOSDWizard/ccsInquiriesActions';
 import { securityGroupsSort } from '~/components/clusters/CreateOSDPage/CreateOSDWizard/ccsInquiriesReducer';
-
-/**
- * Builds the request necessary to retrieve a VPC by checking for one of its subnets
- * Is only available for:
- * - STS clusters ("aws.sts")
- * - BYO VPC ("aws.subnet_ids")
- *
- * @param cluster cluster for which we are searching for its VPC
- */
-const vpcBySubnetRequest = (cluster: Cluster) => {
-  const { subnet_ids: subnetIds, sts } = cluster?.aws || {};
-  const subnet = subnetIds && subnetIds.length > 0 ? subnetIds[0] : undefined;
-  const roleArn = sts?.role_arn;
-
-  return !subnet || !roleArn
-    ? undefined
-    : {
-        awsCredentials: { sts: { role_arn: roleArn } },
-        region: cluster.region?.id || '',
-        subnet,
-      };
-};
+import { isHypershiftCluster } from '~/components/clusters/common/clusterStates';
 
 /**
  * Reads the response of VPCs associated to a given subnet.
@@ -53,6 +34,20 @@ const adaptVPCDetails = (vpc: CloudVPC) => {
   return { ...vpc, aws_security_groups: securityGroups };
 };
 
+const fetchVpcByClusterId = async (clusterId: string) => {
+  let vpc;
+  const result = await getAWSVPCDetails(clusterId, { includeSecurityGroups: true });
+  if (result.data?.id) {
+    vpc = result.data;
+  }
+  return vpc;
+};
+
+const fetchVpcByStsCredentials = async (vpcRequestMemo: CloudProviderVPCRequest) => {
+  const vpcList = await getAWSCloudProviderVPCs(vpcRequestMemo).payload;
+  return readVpcFromList(vpcList);
+};
+
 /**
  * React hook for fetching the VPC of a BYO VPC cluster
  * - For Hypershift clusters, we cannot use the endpoint by clusterId.
@@ -65,45 +60,53 @@ export const useAWSVPCFromCluster = (cluster: Cluster) => {
   const [clusterVpc, setClusterVpc] = React.useState<CloudVPC | undefined>();
   const [isLoading, setIsLoading] = React.useState<boolean>(!!cluster.id);
   const [hasError, setHasError] = React.useState<boolean>(false);
-  const shouldFetchByClusterId = !isHypershiftCluster(cluster);
+  const isHypershift = isHypershiftCluster(cluster);
   const clusterId = cluster.id || '';
-  const vpcRequest = React.useMemo(() => vpcBySubnetRequest(cluster), [cluster]);
+
+  const manageVpcFetch = async (vpcPromise: Promise<CloudVPC | undefined>) => {
+    setHasError(false);
+    setIsLoading(true);
+    try {
+      const vpc = await vpcPromise;
+      if (vpc) {
+        setClusterVpc(adaptVPCDetails(vpc));
+      }
+    } catch {
+      setHasError(true);
+      setClusterVpc(undefined);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  // Fetches the VPC by the cluster's id
+  React.useEffect(() => {
+    const loadVpcByClusterId = async () => manageVpcFetch(fetchVpcByClusterId(clusterId));
+    if (clusterId && !isHypershift) {
+      loadVpcByClusterId();
+    }
+  }, [clusterId, isHypershift]);
+
+  // Fetches the VPC by the cluster's STS credentials
+  // The dependencies are the primitive values - if we use an object the event will trigger even when no data has changed.
+  const subnetIds = cluster.aws?.subnet_ids || [];
+  const subnetId = subnetIds.length > 0 ? subnetIds[0] : undefined;
+  const roleArn = cluster.aws?.sts?.role_arn;
+  const regionId = cluster.region?.id || '';
 
   React.useEffect(() => {
-    const fetchVpc = async () => {
-      let vpc;
-      if (shouldFetchByClusterId) {
-        const result = await getAWSVPCDetails(clusterId, { includeSecurityGroups: true });
-        if (result.data?.id) {
-          vpc = result.data;
-        }
-      } else if (vpcRequest) {
-        const vpcList = await getAWSCloudProviderVPCs(vpcRequest).payload;
-        vpc = readVpcFromList(vpcList);
-      }
-      return vpc;
+    const loadVpcByStsCredentials = async () => {
+      const request = {
+        awsCredentials: { sts: { role_arn: roleArn } },
+        region: regionId,
+        subnet: subnetId,
+      };
+      return manageVpcFetch(fetchVpcByStsCredentials(request));
     };
-
-    const loadData = async () => {
-      setHasError(false);
-      setIsLoading(true);
-      try {
-        const vpc = await fetchVpc();
-        if (vpc) {
-          setClusterVpc(adaptVPCDetails(vpc));
-        }
-      } catch {
-        setHasError(true);
-        setClusterVpc(undefined);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    if (clusterId) {
-      loadData();
+    if (isHypershift && roleArn && subnetId && regionId) {
+      loadVpcByStsCredentials();
     }
-  }, [clusterId, shouldFetchByClusterId, vpcRequest]);
+  }, [isHypershift, subnetId, roleArn, regionId]);
 
   return { clusterVpc, isLoading, hasError };
 };

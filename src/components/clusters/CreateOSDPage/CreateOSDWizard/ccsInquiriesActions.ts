@@ -36,6 +36,13 @@ const credentialsFromJSON = async (gcpCredentialsJSON: string): Promise<GCP> => 
   ]);
 };
 
+export type CloudProviderVPCRequest = {
+  awsCredentials: AWSCredentials;
+  region: string;
+  subnet?: string;
+  options?: { includeSecurityGroups: boolean };
+};
+
 /**
  * List AWS VPCs for given CCS account.
  * Optimization: If `subnet` is provided, only VPC attached to that subnet id will be included.
@@ -45,12 +52,7 @@ export const getAWSCloudProviderVPCs = ({
   region,
   subnet,
   options,
-}: {
-  awsCredentials: AWSCredentials;
-  region: string;
-  subnet?: string;
-  options?: { includeSecurityGroups: boolean };
-}) =>
+}: CloudProviderVPCRequest) =>
   action(
     LIST_VPCS,
     listAWSVPCs(awsCredentials, region, subnet, options),
