@@ -27,7 +27,7 @@ exports[`InstallOSP renders correctly 1`] = `
   />
   <PageSection>
     <InstructionsChooser
-      ipiLearnMoreLink="https://docs.openshift.com/container-platform/4.13/installing/installing_openstack/installing-openstack-installer-custom.html"
+      ipiLearnMoreLink="https://docs.openshift.com/container-platform/4.14/installing/installing_openstack/installing-openstack-installer-custom.html"
       ipiPageLink="/install/openstack/installer-provisioned"
       name="openstack"
       providerSpecificFeatures={
@@ -37,7 +37,7 @@ exports[`InstallOSP renders correctly 1`] = `
           ],
         }
       }
-      upiLearnMoreLink="https://docs.openshift.com/container-platform/4.13/installing/installing_openstack/installing-openstack-user.html"
+      upiLearnMoreLink="https://docs.openshift.com/container-platform/4.14/installing/installing_openstack/installing-openstack-user.html"
       upiPageLink="/install/openstack/user-provisioned"
     />
   </PageSection>
