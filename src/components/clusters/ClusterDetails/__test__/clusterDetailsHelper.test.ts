@@ -17,7 +17,7 @@ import {
   isReadyForIdpActions,
   isReadyForRoleAccessActions,
 } from '../clusterDetailsHelper';
-import { defaultMetric } from './clusterDetails.fixtures';
+import { defaultMetric } from './clusterDetailsDefaultMetric.fixtures';
 
 jest.mock('~/components/clusters/common/clusterStates');
 const isHypershiftClusterMock = isHypershiftCluster as jest.Mock;
