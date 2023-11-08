@@ -276,7 +276,7 @@ const useMachinePoolFormik = ({
                 .of(Yup.string())
                 .test(
                   'max-security-groups',
-                  `Up to ${MAX_ADDITIONAL_SECURITY_GROUPS} security groups can be selected.`,
+                  `A maximum of ${MAX_ADDITIONAL_SECURITY_GROUPS} security groups can be selected.`,
                   maxSecurityGroups,
                 ),
         });
