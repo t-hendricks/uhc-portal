@@ -33,7 +33,7 @@ exports[`InstallPower renders correctly 1`] = `
     <OCPInstructions
       channel="stable"
       cloudProviderID="baremetal"
-      docURL="https://docs.openshift.com/container-platform/4.13/installing/installing_ibm_z/installing-ibm-z.html"
+      docURL="https://docs.openshift.com/container-platform/4.14/installing/installing_ibm_z/installing-ibm-z.html"
       installer="s390x-openshift-install"
       isBMIPI={false}
       isUPI={true}
