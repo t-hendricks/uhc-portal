@@ -19,7 +19,7 @@ import { action, ActionType } from 'typesafe-actions';
 import axios, { AxiosResponse } from 'axios';
 import type { Cluster as AICluster } from '@openshift-assisted/types/assisted-installer-service';
 
-import { isHypershiftCluster } from '~/components/clusters/ClusterDetails/clusterDetailsHelper';
+import { isHypershiftCluster } from '~/components/clusters/common/clusterStates';
 import { clustersConstants } from '../constants';
 import {
   accountsService,

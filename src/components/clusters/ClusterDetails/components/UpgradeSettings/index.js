@@ -15,9 +15,8 @@ import {
   clearDeleteScheduleResponse,
 } from '../../../common/Upgrades/clusterUpgradeActions';
 import { editCluster, fetchClusterDetails } from '../../../../../redux/actions/clustersActions';
-import { isHibernating } from '../../../common/clusterStates';
+import { isHibernating, isHypershiftCluster } from '../../../common/clusterStates';
 import { openModal } from '../../../../common/Modal/ModalActions';
-import { isHypershiftCluster } from '../../clusterDetailsHelper';
 
 const reduxFormConfig = {
   form: 'ClusterUpgradeSettings',

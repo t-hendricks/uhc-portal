@@ -6,10 +6,7 @@ import { useDispatch } from 'react-redux';
 import isEqual from 'lodash/isEqual';
 import Modal from '~/components/common/Modal/Modal';
 import { clusterService } from '~/services';
-import {
-  isHypershiftCluster,
-  isMultiAZ,
-} from '~/components/clusters/ClusterDetails/clusterDetailsHelper';
+import { isMultiAZ } from '~/components/clusters/ClusterDetails/clusterDetailsHelper';
 import ErrorBox from '~/components/common/ErrorBox';
 import { getErrorMessage } from '~/common/errors';
 import { Cluster, MachinePool } from '~/types/clusters_mgmt.v1';
@@ -18,7 +15,7 @@ import { ErrorState } from '~/types/types';
 import modals from '~/components/common/Modal/modals';
 import { useGlobalState } from '~/redux/hooks';
 import { closeModal } from '~/components/common/Modal/ModalActions';
-import { isROSA } from '~/components/clusters/common/clusterStates';
+import { isHypershiftCluster, isROSA } from '~/components/clusters/common/clusterStates';
 import { PromiseReducerState } from '~/redux/types';
 
 import EditNodeCountSection from './sections/EditNodeCountSection';

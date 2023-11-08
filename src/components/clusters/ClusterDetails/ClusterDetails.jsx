@@ -40,10 +40,10 @@ import CommonClusterModals from '../common/CommonClusterModals';
 import CancelUpgradeModal from '../common/Upgrades/CancelUpgradeModal';
 
 import { isValid, shouldRefetchQuota } from '../../../common/helpers';
-import { isHypershiftCluster, eventTypes } from './clusterDetailsHelper';
+import { eventTypes } from './clusterDetailsHelper';
 import getClusterName from '../../../common/getClusterName';
 import { subscriptionStatuses, knownProducts } from '../../../common/subscriptionTypes';
-import clusterStates, { isHibernating } from '../common/clusterStates';
+import clusterStates, { isHibernating, isHypershiftCluster } from '../common/clusterStates';
 import AddGrantModal from './components/AccessControl/NetworkSelfServiceSection/AddGrantModal';
 import Unavailable from '../../common/Unavailable';
 import Support from './components/Support';

@@ -29,8 +29,12 @@ const getStateDescription = (state?: clusterStates): string => {
   }
 };
 
-// This function is not meant to return status of uninstalled OCP-AssistedInstall clusters.
-// To display the status for those, use the component <AIClusterStatus />
+/**
+ * This function is not meant to return status of uninstalled OCP-AssistedInstall clusters.
+ * To display the status for those, use the component <AIClusterStatus />
+ *
+ * @param cluster something extending ClusterFromSubscription since components are using either Cluster or ClusterFromSubscription
+ */
 const getClusterStateAndDescription = <E extends ClusterFromSubscription>(
   cluster: E,
 ): ClusterStateAndDescription => {
@@ -79,38 +83,72 @@ const getClusterStateAndDescription = <E extends ClusterFromSubscription>(
   };
 };
 
+/**
+ *
+ * @param cluster something extending ClusterFromSubscription since components are using either Cluster or ClusterFromSubscription
+ */
 const getInflightChecks = <E extends ClusterFromSubscription>(cluster: E): Array<InflightCheck> =>
   Array.isArray(cluster.inflight_checks) ? cluster.inflight_checks : [];
 
+/**
+ *
+ * @param cluster something extending ClusterFromSubscription since components are using either Cluster or ClusterFromSubscription
+ */
 const isHibernating = <E extends ClusterFromSubscription>(cluster: E): boolean =>
   cluster.state === ClusterState.HIBERNATING ||
   cluster.state === ClusterState.POWERING_DOWN ||
   cluster.state === ClusterState.RESUMING;
 
-const hasInflightErrors = <E extends ClusterFromSubscription>(cluster: E) =>
+/**
+ *
+ * @param cluster something extending ClusterFromSubscription since components are using either Cluster or ClusterFromSubscription
+ */
+const hasInflightErrors = <E extends ClusterFromSubscription>(cluster: E): boolean =>
   getInflightChecks(cluster).some(
     (inflightCheck) => inflightCheck.state !== InflightCheckState.PASSED,
   );
 
-const isOSDGCPWaitingForRolesOnHostProject = <E extends ClusterFromSubscription>(cluster: E) =>
+/**
+ *
+ * @param cluster something extending ClusterFromSubscription since components are using either Cluster or ClusterFromSubscription
+ */
+const isOSDGCPWaitingForRolesOnHostProject = <E extends ClusterFromSubscription>(
+  cluster: E,
+): boolean =>
   isOSD(cluster) &&
   cluster?.status?.state === 'waiting' &&
   cluster?.status?.description?.indexOf(cluster?.gcp_network?.vpc_project_id!) !== -1;
 
-const isOSDGCPPendingOnHostProject = <E extends ClusterFromSubscription>(cluster: E) =>
+/**
+ *
+ * @param cluster something extending ClusterFromSubscription since components are using either Cluster or ClusterFromSubscription
+ */
+const isOSDGCPPendingOnHostProject = <E extends ClusterFromSubscription>(cluster: E): boolean =>
   isOSD(cluster) &&
   ['validating', 'pending'].includes(cluster?.status?.state!) &&
   !!cluster?.gcp_network?.vpc_project_id;
 
-// Indicates that this is a ROSA cluster
+/**
+ * Indicates that this is a ROSA cluster
+ *
+ * @param cluster something extending ClusterFromSubscription since components are using either Cluster or ClusterFromSubscription
+ */
 const isROSA = <E extends ClusterFromSubscription | Cluster>(cluster?: E): boolean =>
   cluster?.product?.id === normalizedProducts.ROSA;
 
-// Indicates that this is an OSD cluster
+/**
+ * Indicates that this is an OSD cluster
+ *
+ * @param cluster something extending ClusterFromSubscription since components are using either Cluster or ClusterFromSubscription
+ */
 const isOSD = <E extends ClusterFromSubscription>(cluster: E): boolean =>
   [normalizedProducts.OSD, normalizedProducts.OSDTrial].includes(cluster.product?.id!);
 
-// Indicates that this is a ROSA cluster with manual mode
+/**
+ * Indicates that this is a ROSA cluster with manual mode
+ *
+ * @param cluster something extending ClusterFromSubscription since components are using either Cluster or ClusterFromSubscription
+ */
 const isROSAManualMode = (cluster: ClusterFromSubscription): boolean =>
   isROSA(cluster) && !cluster?.aws?.sts?.auto_mode && !cluster?.aws?.sts?.oidc_config?.id;
 
@@ -135,6 +173,10 @@ const isWaitingROSAManualMode = (cluster: ClusterFromSubscription): boolean =>
   isROSAManualMode(cluster) &&
   !isHypershiftCluster(cluster);
 
+/**
+ *
+ * @param cluster something extending ClusterFromSubscription since components are using either Cluster or ClusterFromSubscription
+ */
 const isOffline = <E extends ClusterFromSubscription>(cluster: E): boolean =>
   isHibernating(cluster) || cluster.state === ClusterState.UNINSTALLING;
 
@@ -142,6 +184,10 @@ const getClusterAIPermissions = (cluster: ClusterWithPermissions) => ({
   canEdit: cluster.canEdit,
 });
 
+/**
+ *
+ * @param cluster something extending ClusterFromSubscription since components are using either Cluster or ClusterFromSubscription
+ */
 const isClusterUpgrading = <E extends ClusterFromSubscription>(cluster: E) =>
   cluster.metrics.upgrade.state === 'running';
 

@@ -7,7 +7,7 @@ import { GlobalState } from '~/redux/store';
 import ExternalLink from '~/components/common/ExternalLink';
 import { NodePool } from '~/types/clusters_mgmt.v1/models/NodePool';
 import links from '~/common/installLinks.mjs';
-import { isHypershiftCluster } from '../../../clusterDetailsHelper';
+import { isHypershiftCluster } from '~/components/clusters/common/clusterStates';
 import { getMachineOrNodePools } from '../MachinePoolsActions';
 import {
   updateAllMachinePools as updateAllPools,

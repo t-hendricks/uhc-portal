@@ -1,10 +1,7 @@
 import * as React from 'react';
 import * as Yup from 'yup';
 import { Cluster, MachinePool, NodePool, Subnetwork } from '~/types/clusters_mgmt.v1';
-import {
-  isHypershiftCluster,
-  isMultiAZ,
-} from '~/components/clusters/ClusterDetails/clusterDetailsHelper';
+import { isMultiAZ } from '~/components/clusters/ClusterDetails/clusterDetailsHelper';
 import {
   checkLabelKey,
   checkLabelValue,
@@ -14,7 +11,7 @@ import {
   checkTaintValue,
 } from '~/common/validators';
 import { GlobalState } from '~/redux/store';
-import { isROSA } from '~/components/clusters/common/clusterStates';
+import { isHypershiftCluster, isROSA } from '~/components/clusters/common/clusterStates';
 import {
   defaultWorkerNodeVolumeSizeGiB,
   getWorkerNodeVolumeSizeMaxGiB,

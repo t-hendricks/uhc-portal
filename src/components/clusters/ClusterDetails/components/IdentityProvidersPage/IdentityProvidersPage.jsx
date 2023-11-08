@@ -16,6 +16,7 @@ import {
 import { Spinner } from '@redhat-cloud-services/frontend-components/Spinner';
 import { PageHeader, PageHeaderTitle } from '@redhat-cloud-services/frontend-components/PageHeader';
 import { AppPage } from '~/components/App/AppPage';
+import { isHypershiftCluster } from '~/components/clusters/common/clusterStates';
 import { isValid } from '../../../../../common/helpers';
 import Breadcrumbs from '../../../../common/Breadcrumbs';
 import IDPForm from './components/IDPForm';
@@ -23,7 +24,6 @@ import Unavailable from '../../../../common/Unavailable';
 import getClusterName from '../../../../../common/getClusterName';
 import { subscriptionStatuses } from '../../../../../common/subscriptionTypes';
 import { IDPTypeNames, singularFormIDP } from './IdentityProvidersHelper';
-import { isHypershiftCluster } from '../../clusterDetailsHelper';
 
 const PAGE_TITLE = 'Red Hat OpenShift Cluster Manager';
 

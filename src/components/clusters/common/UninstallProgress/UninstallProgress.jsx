@@ -15,7 +15,7 @@ import { ExclamationCircleIcon } from '@patternfly/react-icons';
 import AddOnsConstants from '../../ClusterDetails/components/AddOns/AddOnsConstants';
 
 import './UninstallProgress.scss';
-import { isHypershiftCluster } from '../../ClusterDetails/clusterDetailsHelper';
+import { isHypershiftCluster } from '../clusterStates';
 
 class UninstallProgress extends React.Component {
   state = {

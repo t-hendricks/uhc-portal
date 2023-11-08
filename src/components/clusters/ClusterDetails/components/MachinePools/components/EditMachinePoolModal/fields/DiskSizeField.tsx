@@ -11,7 +11,7 @@ import { Cluster } from '~/types/clusters_mgmt.v1';
 import WithTooltip from '~/components/common/WithTooltip';
 import { normalizeProductID } from '~/common/normalize';
 import { normalizedProducts } from '~/common/subscriptionTypes';
-import { isHypershiftCluster } from '~/components/clusters/ClusterDetails/clusterDetailsHelper';
+import { isHypershiftCluster } from '~/components/clusters/common/clusterStates';
 import useFormikOnChange from '../hooks/useFormikOnChange';
 
 import './DiskSizeField.scss';

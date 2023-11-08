@@ -9,7 +9,7 @@ import {
   Flex,
 } from '@patternfly/react-core';
 import * as OCM from '@openshift-assisted/ui-lib/ocm';
-import { isROSA } from '~/components/clusters/common/clusterStates';
+import { isHypershiftCluster, isROSA } from '~/components/clusters/common/clusterStates';
 import { IMDSType } from '~/components/clusters/wizards/common';
 import { isRestrictedEnv } from '~/restrictedEnv';
 
@@ -22,7 +22,6 @@ import { humanizeValueWithUnit, humanizeValueWithUnitGiB } from '../../../../../
 import { subscriptionStatuses } from '../../../../../../common/subscriptionTypes';
 import PopoverHint from '../../../../../common/PopoverHint';
 import ExternalLink from '../../../../../common/ExternalLink';
-import { isHypershiftCluster } from '../../../clusterDetailsHelper';
 import { ClusterStatus } from './ClusterStatus';
 
 const { ClusterStatus: AIClusterStatus } = OCM;

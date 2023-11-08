@@ -1,9 +1,9 @@
 import * as React from 'react';
 import { useDispatch } from 'react-redux';
-import { isHypershiftCluster } from '~/components/clusters/ClusterDetails/clusterDetailsHelper';
 import { Cluster } from '~/types/clusters_mgmt.v1';
 import { useGlobalState } from '~/redux/hooks';
 
+import { isHypershiftCluster } from '~/components/clusters/common/clusterStates';
 import { getMachineOrNodePools } from '../../../MachinePoolsActions';
 
 const useMachinePools = (cluster: Cluster) => {

@@ -4,7 +4,7 @@ import { NodePool } from '~/types/clusters_mgmt.v1/models/NodePool';
 import clusterService from '~/services/clusterService';
 import { GlobalState } from '~/redux/store';
 import { updateStartedSelector } from '~/components/clusters/common/Upgrades/upgradeHelpers';
-import { isHypershiftCluster } from '../../../clusterDetailsHelper';
+import { isHypershiftCluster } from '~/components/clusters/common/clusterStates';
 
 export const controlPlaneIdSelector = (state: GlobalState) =>
   state.clusters.details.cluster.id || '';

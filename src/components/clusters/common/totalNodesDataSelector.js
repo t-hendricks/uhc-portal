@@ -1,5 +1,5 @@
 import get from 'lodash/get';
-import { isHypershiftCluster } from '../ClusterDetails/clusterDetailsHelper';
+import { isHypershiftCluster } from './clusterStates';
 
 const totalNodesDataSelector = (cluster, machinePools) => {
   const isHypershift = isHypershiftCluster(cluster);
