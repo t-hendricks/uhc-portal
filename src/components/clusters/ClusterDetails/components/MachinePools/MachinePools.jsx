@@ -17,10 +17,7 @@ import { Table, TableHeader, TableBody, cellWidth, expandable } from '@patternfl
 import Skeleton from '@redhat-cloud-services/frontend-components/Skeleton';
 
 import { EditClusterAutoScalerForDay2 } from '~/components/clusters/common/EditClusterAutoScalingDialog';
-import {
-  isMultiAZ,
-  isHypershiftCluster,
-} from '~/components/clusters/ClusterDetails/clusterDetailsHelper';
+import { isMultiAZ } from '~/components/clusters/ClusterDetails/clusterDetailsHelper';
 import MachinePoolNodesSummary from './MachinePoolNodesSummary';
 import {
   UpdateAllMachinePools,
@@ -41,7 +38,7 @@ import ErrorBox from '../../../../common/ErrorBox';
 import modals from '../../../../common/Modal/modals';
 import { noQuotaTooltip } from '../../../../../common/helpers';
 import { versionFormatter } from '../../../../../common/versionHelpers';
-import { isHibernating, isROSA } from '../../../common/clusterStates';
+import { isHibernating, isHypershiftCluster, isROSA } from '../../../common/clusterStates';
 import EditMachinePoolModal from './components/EditMachinePoolModal/EditMachinePoolModal';
 
 import './MachinePools.scss';

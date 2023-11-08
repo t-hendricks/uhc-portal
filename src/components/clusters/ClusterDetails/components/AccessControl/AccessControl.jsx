@@ -7,9 +7,8 @@ import OCMRolesSection from './OCMRolesSection';
 import UsersSection from './UsersSection';
 import IDPSection from './IDPSection';
 import NetworkSelfServiceSection from './NetworkSelfServiceSection';
-import { isHibernating } from '../../../common/clusterStates';
+import { isHibernating, isHypershiftCluster } from '../../../common/clusterStates';
 import {
-  isHypershiftCluster,
   isReadyForAwsAccessActions,
   isReadyForIdpActions,
   isReadyForRoleAccessActions,

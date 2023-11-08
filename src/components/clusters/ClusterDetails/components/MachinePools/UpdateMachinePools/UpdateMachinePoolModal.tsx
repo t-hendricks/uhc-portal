@@ -8,6 +8,7 @@ import modalIds from '~/components/common/Modal/modals';
 import shouldShowModal from '~/components/common/Modal/ModalSelectors';
 import { modalActions } from '~/components/common/Modal/ModalActions';
 import { GlobalState } from '~/redux/store';
+import { isHypershiftCluster } from '~/components/clusters/common/clusterStates';
 import {
   useMachinePoolBehindControlPlane,
   useHCPControlPlaneUpdating,
@@ -17,7 +18,6 @@ import {
   controlPlaneIdSelector,
 } from './updateMachinePoolsHelpers';
 
-import { isHypershiftCluster } from '../../../clusterDetailsHelper';
 import { getMachineOrNodePools } from '../MachinePoolsActions';
 
 const updateModalId = modalIds.UPDATE_MACHINE_POOL_VERSION;

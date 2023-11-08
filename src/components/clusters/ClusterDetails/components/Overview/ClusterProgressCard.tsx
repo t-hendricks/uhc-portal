@@ -15,11 +15,11 @@ import DownloadOcCliButton from '~/components/clusters/common/InstallProgress/Do
 import InstallProgress from '~/components/clusters/common/InstallProgress/InstallProgress';
 import UninstallProgress from '~/components/clusters/common/UninstallProgress';
 import clusterStates, {
+  isHypershiftCluster,
   isWaitingHypershiftCluster,
   isWaitingROSAManualMode,
 } from '~/components/clusters/common/clusterStates';
 import { ClusterFromSubscription } from '~/types/types';
-import { isHypershiftCluster } from '../../clusterDetailsHelper';
 import InstallationLogView from './InstallationLogView';
 
 interface ClusterProgressCardProps {

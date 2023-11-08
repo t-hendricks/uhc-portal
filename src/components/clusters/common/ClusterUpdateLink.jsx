@@ -2,12 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Button, Popover } from '@patternfly/react-core';
 import { InfoCircleIcon, OutlinedArrowAltCircleUpIcon } from '@patternfly/react-icons';
-import { isHibernating } from './clusterStates';
+import { isHibernating, isHypershiftCluster } from './clusterStates';
 import links from '../../../common/installLinks.mjs';
 import getClusterName from '../../../common/getClusterName';
 import modals from '../../common/Modal/modals';
 import { subscriptionStatuses } from '../../../common/subscriptionTypes';
-import { isHypershiftCluster } from '../ClusterDetails/clusterDetailsHelper';
 
 const ClusterUpdateLink = ({ cluster, openModal, hideOSDUpdates }) => {
   const { upgrade } = cluster.metrics;

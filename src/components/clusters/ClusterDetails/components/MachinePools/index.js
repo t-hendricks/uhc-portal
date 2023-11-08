@@ -1,6 +1,7 @@
 import { connect } from 'react-redux';
 import get from 'lodash/get';
 import modals from '~/components/common/Modal/modals';
+import { isHypershiftCluster } from '~/components/clusters/common/clusterStates';
 
 import MachinePools from './MachinePools';
 import {
@@ -22,7 +23,6 @@ import { clusterAutoscalerActions } from '../../../../../redux/actions/clusterAu
 import { getMachineTypes } from '../../../../../redux/actions/machineTypesActions';
 import { openModal, closeModal } from '../../../../common/Modal/ModalActions';
 import shouldShowModal from '../../../../common/Modal/ModalSelectors';
-import { isHypershiftCluster } from '../../clusterDetailsHelper';
 
 const mapStateToProps = (state) => {
   const cluster = get(state, 'clusters.details.cluster', {});

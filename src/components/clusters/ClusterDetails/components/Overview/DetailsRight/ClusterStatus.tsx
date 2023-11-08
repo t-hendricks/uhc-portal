@@ -4,8 +4,10 @@ import { Flex } from '@patternfly/react-core';
 
 import { Cluster, NodePool } from '~/types/clusters_mgmt.v1';
 import ClusterStateIcon from '~/components/clusters/common/ClusterStateIcon/ClusterStateIcon';
-import clusterStates, { getStateDescription } from '~/components/clusters/common/clusterStates';
-import { isHypershiftCluster } from '~/components/clusters/ClusterDetails/clusterDetailsHelper';
+import clusterStates, {
+  getStateDescription,
+  isHypershiftCluster,
+} from '~/components/clusters/common/clusterStates';
 
 const numberReadyNodePools = (nodePools: NodePool[]) =>
   nodePools?.filter((pool) => {
@@ -28,6 +30,7 @@ const numberReadyNodePools = (nodePools: NodePool[]) =>
   }).length || 0;
 
 type ClusterWithStateDescription = Omit<Cluster, 'state'> & {
+  // TODO: remove this ClusterWithStateDescription type
   state: { state: string; description: string };
 };
 
@@ -38,7 +41,7 @@ interface ClusterStatusProps {
 }
 
 export const ClusterStatus = ({ cluster, limitedSupport, machinePools }: ClusterStatusProps) => {
-  const isHypershift = isHypershiftCluster(cluster);
+  const isHypershift = isHypershiftCluster(cluster as Omit<Cluster, 'state'>);
   const {
     state: { state: stateName, description: stateDescription },
   } = cluster;

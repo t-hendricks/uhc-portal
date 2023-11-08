@@ -293,6 +293,7 @@ export {
   scrollToFirstField,
   parseReduxFormKeyValueList,
   parseReduxFormTaints,
+  goZeroTime,
   goZeroTime2Null,
   stringToArray,
   arrayToString,
