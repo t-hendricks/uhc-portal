@@ -202,8 +202,10 @@ class ClusterDetails extends Component {
       getSchedules,
       fetchClusterInsights,
       fetchUpgradeGates,
+      useNodeUpgradePolicies,
     } = this.props;
     const clusterID = get(clusterDetails, 'cluster.id');
+    const clusterVersion = clusterDetails.cluster?.version?.id;
     const isManaged = get(clusterDetails, 'cluster.managed', false);
 
     if (shouldRefetchQuota(organization)) {
@@ -226,7 +228,12 @@ class ClusterDetails extends Component {
       getUsers(clusterID);
       getClusterRouters(clusterID);
       this.refreshIDP();
-      getMachineOrNodePools(clusterID, isHypershiftCluster(clusterDetails?.cluster));
+      getMachineOrNodePools(
+        clusterID,
+        isHypershiftCluster(clusterDetails?.cluster),
+        clusterVersion,
+        useNodeUpgradePolicies,
+      );
       getSchedules(clusterID, isHypershiftCluster(clusterDetails?.cluster));
       fetchUpgradeGates();
 
@@ -683,6 +690,7 @@ ClusterDetails.propTypes = {
   }).isRequired,
   fetchUpgradeGates: PropTypes.func,
   clearFiltersAndFlags: PropTypes.func.isRequired,
+  useNodeUpgradePolicies: PropTypes.bool,
 };
 
 ClusterDetails.defaultProps = {

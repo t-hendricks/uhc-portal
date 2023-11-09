@@ -28,7 +28,7 @@ import {
   DELETE_MACHINE_POOL,
   CLEAR_GET_MACHINE_POOLS_RESPONSE,
   CLEAR_DELETE_MACHINE_POOL_RESPONSE,
-} from './MachinePoolsActions';
+} from './machinePoolsActionConstants';
 
 type MachinePoolsState = {
   getMachinePools: PromiseReducerState<{ data: (MachinePool | NodePool)[] }>;

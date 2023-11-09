@@ -3,6 +3,8 @@ import get from 'lodash/get';
 import modals from '~/components/common/Modal/modals';
 import { isHypershiftCluster } from '~/components/clusters/common/clusterStates';
 
+import { HCP_USE_NODE_UPGRADE_POLICIES } from '~/redux/constants/featureConstants';
+import { featureGateSelector } from '~/hooks/useFeatureGate';
 import MachinePools from './MachinePools';
 import {
   getMachineOrNodePools,
@@ -37,6 +39,7 @@ const mapStateToProps = (state) => {
     organization: state.userProfile.organization,
     canMachinePoolBeUpdated: (machinePool) =>
       !isHCPControlPlaneUpdating(state) && isMachinePoolBehindControlPlane(state, machinePool),
+    useNodeUpgradePolicies: featureGateSelector(state, HCP_USE_NODE_UPGRADE_POLICIES),
   };
 
   const machinePoolsList = isHypershiftCluster(cluster)
@@ -57,8 +60,15 @@ const mapDispatchToProps = (dispatch, ownProps) => {
   return {
     openModal: (modalId, data) => dispatch(openModal(modalId, data)),
     closeModal: () => dispatch(closeModal()),
-    getMachinePools: () => {
-      dispatch(getMachineOrNodePools(ownProps.cluster.id, isHypershift));
+    getMachinePools: (skipMachinePoolPolicies) => {
+      dispatch(
+        getMachineOrNodePools(
+          ownProps.cluster.id,
+          isHypershift,
+          ownProps.cluster.version.id,
+          skipMachinePoolPolicies,
+        ),
+      );
       dispatch(
         clusterAutoscalerActions.setHasInitialClusterAutoscaler(!!ownProps.cluster.autoscaler),
       );

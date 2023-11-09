@@ -74,10 +74,11 @@ class MachinePools extends React.Component {
       getOrganizationAndQuota,
       machineTypes,
       getMachineTypes,
+      useNodeUpgradePolicies,
     } = this.props;
 
     if (!machinePoolsList.pending) {
-      getMachinePools();
+      getMachinePools(useNodeUpgradePolicies);
     }
     if (!machineTypes.fulfilled && !machineTypes.pending) {
       getMachineTypes();
@@ -94,6 +95,7 @@ class MachinePools extends React.Component {
       machinePoolsList,
       getOrganizationAndQuota,
       cluster,
+      useNodeUpgradePolicies,
     } = this.props;
     const { deletedRowIndex } = this.state;
 
@@ -103,7 +105,7 @@ class MachinePools extends React.Component {
       !machinePoolsList.pending
     ) {
       getOrganizationAndQuota();
-      getMachinePools();
+      getMachinePools(useNodeUpgradePolicies);
     }
 
     if (
@@ -167,6 +169,7 @@ class MachinePools extends React.Component {
       machineTypes,
       getMachinePools,
       isClusterAutoscalingModalOpen,
+      useNodeUpgradePolicies,
     } = this.props;
 
     const {
@@ -196,7 +199,7 @@ class MachinePools extends React.Component {
 
     const refreshMachinePools = () => {
       if (!machinePoolsList.pending) {
-        getMachinePools();
+        getMachinePools(useNodeUpgradePolicies);
       }
     };
 
@@ -523,6 +526,7 @@ MachinePools.propTypes = {
   getMachineTypes: PropTypes.func.isRequired,
   machineTypes: PropTypes.object.isRequired,
   canMachinePoolBeUpdated: PropTypes.func,
+  useNodeUpgradePolicies: PropTypes.bool,
 };
 
 export default MachinePools;
