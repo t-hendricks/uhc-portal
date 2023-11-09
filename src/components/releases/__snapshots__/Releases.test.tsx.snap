@@ -1098,11 +1098,11 @@ exports[`<Releases /> should render 1`] = `
                                                       className="pf-l-stack__item"
                                                     >
                                                       <ExternalLink
-                                                        href="https://docs.openshift.com/container-platform/4.12/updating/understanding-upgrade-channels-release.html"
+                                                        href="https://docs.openshift.com/container-platform/4.12/updating/understanding_updates/understanding-update-channels-release.html"
                                                         noIcon={true}
                                                       >
                                                         <a
-                                                          href="https://docs.openshift.com/container-platform/4.12/updating/understanding-upgrade-channels-release.html"
+                                                          href="https://docs.openshift.com/container-platform/4.12/updating/understanding_updates/understanding-update-channels-release.html"
                                                           onClick={[Function]}
                                                           rel="noreferrer noopener"
                                                           target="_blank"

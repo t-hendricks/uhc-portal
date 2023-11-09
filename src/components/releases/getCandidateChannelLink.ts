@@ -15,11 +15,17 @@ const getCandidateChannelLink = (version: string | undefined): string | null => 
     return null;
   }
 
-  // docs changed the URL with 4.6+
-  const filename =
-    minor < 6
-      ? `updating-cluster-between-minor.html#candidate-${major}-${minor}-channel`
-      : 'understanding-upgrade-channels-release.html#candidate-version-channel_understanding-upgrade-channels-releases';
+  let filename = 'understanding_updates/understanding-update-channels-release.html';
+  // docs changed the URL with 4.14+
+  if (minor < 14) {
+    // docs changed the URL with 4.6+
+    if (minor < 6) {
+      filename = `updating-cluster-between-minor.html#candidate-${major}-${minor}-channel`;
+    } else {
+      filename =
+        'understanding-upgrade-channels-release.html#candidate-version-channel_understanding-upgrade-channels-releases';
+    }
+  }
 
   return `https://docs.openshift.com/container-platform/${major}.${minor}/updating/${filename}`;
 };

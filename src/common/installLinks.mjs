@@ -100,7 +100,7 @@ const links = {
   SERVERLESS_ABOUT: `${DOCS_BASE}/serverless/about/about-serverless.html`,
   SERVICE_MESH_ABOUT: `${DOCS_BASE}/service_mesh/v2x/ossm-architecture.html`,
   SERVICE_MESH_OCP_DOC: `${OCP_DOC_BASE}/html/service_mesh/index`,
-  VIRT_ABOUT: `${DOCS_BASE}/virt/about-virt.html`,
+  VIRT_ABOUT: `${DOCS_BASE}/virt/about_virt/about-virt.html`,
 
   SUBSCRIPTION_EVAL_INFORMATION: 'https://access.redhat.com/articles/4389911',
   MANAGED_INGRESS_KNOWLEDGE_BASE: 'https://access.redhat.com/articles/7028653',
