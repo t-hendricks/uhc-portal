@@ -683,7 +683,6 @@ const getInstallableVersions = (
   isHCP: boolean = false,
 ) => {
   const versions = clusterService.getInstallableVersions(isRosa, isMarketplaceGcp, isHCP);
-  // console.log('KKD - ', versions);
   return action(clustersConstants.GET_CLUSTER_VERSIONS, versions);
 };
 

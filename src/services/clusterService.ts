@@ -32,6 +32,7 @@ import type {
   InflightCheck,
   ClusterAutoscaler,
   DNSDomain,
+  NodePoolUpgradePolicy,
 } from '../types/clusters_mgmt.v1';
 import type { Subscription } from '../types/accounts_mgmt.v1';
 
@@ -469,6 +470,16 @@ const postControlPlaneUpgradeSchedule = (clusterID: string, schedule: UpgradePol
     schedule,
   );
 
+const postNodePoolUpgradeSchedule = (
+  clusterID: string,
+  nodePoolID: string,
+  schedule: NodePoolUpgradePolicy,
+) =>
+  apiRequest.post<NodePoolUpgradePolicy>(
+    `/api/clusters_mgmt/v1/clusters/${clusterID}/node_pools/${nodePoolID}/upgrade_policies`,
+    schedule,
+  );
+
 const patchUpgradeSchedule = (clusterID: string, policyID: string, schedule: UpgradePolicy) =>
   apiRequest.patch<UpgradePolicy>(
     `/api/clusters_mgmt/v1/clusters/${clusterID}/upgrade_policies/${policyID}`,
@@ -566,6 +577,26 @@ const getMachinePools = (clusterID: string) =>
      */
     total?: number;
   }>(`/api/clusters_mgmt/v1/clusters/${clusterID}/machine_pools`);
+
+const getNodePoolUpgradePolicies = (clusterId: string, nodePoolID: string) =>
+  apiRequest.get<{
+    /**
+     * Retrieved list of node pools.
+     */
+    items?: Array<NodePool>;
+    /**
+     * Index of the requested page, where one corresponds to the first page.
+     */
+    page?: number;
+    /**
+     * Number of items contained in the returned page.
+     */
+    size?: number;
+    /**
+     * Total number of items of the collection.
+     */
+    total?: number;
+  }>(`/api/clusters_mgmt/v1/clusters/${clusterId}/node_pools/${nodePoolID}/upgrade_policies`);
 
 const getNodePools = (clusterID: string) =>
   apiRequest.get<{
@@ -963,6 +994,7 @@ const clusterService = {
   getTriggeredInflightCheckState,
   getMachinePools,
   getNodePools,
+  getNodePoolUpgradePolicies,
   patchNodePool,
   patchMachinePool,
   addMachinePool,
@@ -985,6 +1017,7 @@ const clusterService = {
 export {
   postUpgradeSchedule,
   postControlPlaneUpgradeSchedule,
+  postNodePoolUpgradeSchedule,
   getUpgradeSchedules,
   getControlPlaneUpgradeSchedules,
   getUpgradeScheduleState,

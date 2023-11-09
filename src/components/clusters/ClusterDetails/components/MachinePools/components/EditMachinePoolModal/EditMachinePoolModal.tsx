@@ -21,6 +21,8 @@ import { closeModal } from '~/components/common/Modal/ModalActions';
 import { isROSA } from '~/components/clusters/common/clusterStates';
 import { PromiseReducerState } from '~/redux/types';
 
+import { HCP_USE_NODE_UPGRADE_POLICIES } from '~/redux/constants/featureConstants';
+import { useFeatureGate } from '~/hooks/useFeatureGate';
 import EditNodeCountSection from './sections/EditNodeCountSection';
 import { canUseSpotInstances, normalizeNodePool } from '../../machinePoolsHelper';
 import SpotInstancesSection from './sections/SpotInstancesSection';
@@ -242,6 +244,8 @@ export const ConnectedEditMachinePoolModal = ({
 }: ConnectedEditMachinePoolModalProps) => {
   const data = useGlobalState((state) => state.modal.data);
   const dispatch = useDispatch();
+  const useNodeUpgradePolicies = useFeatureGate(HCP_USE_NODE_UPGRADE_POLICIES);
+
   const onModalClose = () => {
     dispatch(closeModal());
     if (clearMachinePools) {
@@ -269,7 +273,12 @@ export const ConnectedEditMachinePoolModal = ({
       machinePoolsResponse={machinePoolsList}
       onSave={() => {
         if (!machinePoolsResponse.pending) {
-          getMachineOrNodePools(cluster.id, isHypershift)(dispatch);
+          getMachineOrNodePools(
+            cluster.id,
+            isHypershift,
+            cluster.version.raw_id,
+            useNodeUpgradePolicies,
+          )(dispatch);
         }
       }}
     />

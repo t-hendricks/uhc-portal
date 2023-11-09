@@ -1,11 +1,14 @@
 import {
-  GET_MACHINE_POOLS,
-  DELETE_MACHINE_POOL,
-  CLEAR_GET_MACHINE_POOLS_RESPONSE,
   getMachineOrNodePools,
   deleteMachinePool,
   clearGetMachinePoolsResponse,
 } from '../MachinePoolsActions';
+
+import {
+  GET_MACHINE_POOLS,
+  DELETE_MACHINE_POOL,
+  CLEAR_GET_MACHINE_POOLS_RESPONSE,
+} from '../machinePoolsActionConstants';
 import { clusterService } from '../../../../../../services';
 
 jest.mock('../../../../../../services/clusterService');
