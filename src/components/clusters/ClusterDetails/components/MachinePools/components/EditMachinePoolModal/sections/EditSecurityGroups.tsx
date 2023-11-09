@@ -52,7 +52,7 @@ const EditSecurityGroups = ({ cluster, isEdit }: EditSecurityGroupsProps) => {
         isInline
         title="There are no security groups for this Virtual Private Cloud"
       >
-        Security groups can be defined inside the AWS console.
+        To add security groups, go to the Security section of your AWS console.
       </Alert>
     );
   }
@@ -102,6 +102,7 @@ const EditSecurityGroups = ({ cluster, isEdit }: EditSecurityGroupsProps) => {
         fieldId="securityGroupIds"
         label="Security groups"
         validated={meta.touched && meta.error ? 'error' : 'default'}
+        helperTextInvalid={meta.error}
       >
         <>
           <SecurityGroupsViewList
