@@ -60,6 +60,10 @@ const noDecimalTest = (value: number) => value === Math.floor(value);
 const requiredSubnet = (subnet: Subnetwork | undefined) =>
   subnet === undefined || !!subnet.subnet_id;
 
+const MAX_ADDITIONAL_SECURITY_GROUPS = 5;
+
+const maxSecurityGroups = (sgIds: string[]) => sgIds.length <= MAX_ADDITIONAL_SECURITY_GROUPS;
+
 const useMachinePoolFormik = ({
   machinePool,
   cluster,
@@ -269,7 +273,15 @@ const useMachinePoolFormik = ({
             !hasMachinePool && isHypershift
               ? Yup.object().test('subnet-is-required', 'Please select a subnet', requiredSubnet)
               : Yup.mixed(),
-          securityGroupIds: Yup.array().of(Yup.string()),
+          securityGroupIds: isHypershift
+            ? Yup.mixed()
+            : Yup.array()
+                .of(Yup.string())
+                .test(
+                  'max-security-groups',
+                  `A maximum of ${MAX_ADDITIONAL_SECURITY_GROUPS} security groups can be selected.`,
+                  maxSecurityGroups,
+                ),
         });
       }),
     [
