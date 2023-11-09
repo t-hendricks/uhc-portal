@@ -3,7 +3,7 @@
 # Specially designed for QE related pipeline runs.
 
 export ELECTRON_RUN_AS_NODE=1
-
+EXECUTION_EXIT_STATUS=0
 # Checks on Different flavours w.r.t ENVIRONMENT, BROWSER, TAGS
 if [ $1 ]
 then
@@ -20,6 +20,24 @@ fi
 if [ $2 ]; then BROWSER="$2"; fi
 if [ $3 ]; then TAGS="$3"; fi
 
+# TAGS are comma seperated strings and will be combination of day 0/1/2/3 and products or common tags."
+# TAGS are filtered with day1,day2 and day3 categories to spilt the execution model.
+# TAGS="day1+list,smoke,day2+rosa"
+TAGS_ARRAY=($(echo $TAGS | tr ',' "\n"))
+for i in "${!TAGS_ARRAY[@]}"
+do
+      if [[ ${TAGS_ARRAY[$i]} =~ "day1" ]];then
+        DAY1_TAGS+="${TAGS_ARRAY[$i]} "
+      elif [[ ${TAGS_ARRAY[$i]} =~ "day2" ]];then
+        DAY2_TAGS+="${TAGS_ARRAY[$i]} "
+      elif [[ ${TAGS_ARRAY[$i]} =~ "day3" ]];then
+        DAY3_TAGS+="${TAGS_ARRAY[$i]} "
+      else
+        OTHER_TAGS+="${TAGS_ARRAY[$i]} "
+      fi
+done
+DAY1_TAGS+="$OTHER_TAGS"
+
 # Writing env variables used for QE cypress tests to cypress.env.json.
 cat > cypress.env.json << EOF
 {
@@ -33,16 +51,18 @@ cat > cypress.env.json << EOF
 "QE_AWS_ACCESS_KEY_SECRET": "${TEST_QE_AWS_ACCESS_KEY_SECRET}",
 "QE_AWS_REGION": "${TEST_QE_AWS_REGION}",
 "QE_AWS_ID": "${TEST_QE_AWS_ID}",
-"QE_ENV_AUT" : "$1"
+"QE_ENV_AUT" : "$1",
+"QE_ACCOUNT_ROLE_PREFIX" : "cypress-account-roles",
+"QE_OCM_ROLE_PREFIX" : "cypress-ocm-role",
+"QE_USER_ROLE_PREFIX" : "cypress-user-role"
 }
 EOF
 
-echo "**************************************************************"
-echo "** ENVIRONMENT under test : https://$ENVIRONMENT/openshift  **"
+echo "*******************Execution details***************************"
+echo "** ENVIRONMENT URL under test : https://$ENVIRONMENT/openshift  **"
 echo "** BROWSER under test     : $BROWSER  **"
-echo "** Selected case tags are : $TAGS  **"
+echo "** Selected tags for whole executions are : $TAGS  **"
 echo "**************************************************************"
-
 
 cd "$(dirname "$(dirname "$0")")"  # repo root directory (above run/ that contains this script)
 
@@ -53,7 +73,6 @@ if [ -z "${build_number}" ]; then
   build_number=$(date +%s)
 fi
 
-browser_container_name="cypress-tests-${build_number}";
 rosacli_container_name="rosacli-${build_number}";
 
 # Cypress images with browser for containerized runs
@@ -64,27 +83,48 @@ mkdir -p "${PWD}/cypress/videos"
 mkdir -p "${PWD}/cypress/screenshots"
 mkdir -p "${PWD}/run/output/embedded_files"
 
-# Make sure that the pod is always removed:
-function cleanup() {
-  if [ ! -z "${pod_id}" ]; then
-    # Collect the logs:
-    if [ ! -z "${browser_container_id}" ]; then
+function cypress_container_run(){
+  browser_container_name=$1
+  pod_id=$2
+  tags=$3
+  echo "*******************Container profile details***************************"
+  echo "** Continer names                 : $browser_container_name  **"
+  echo "** Selected case tags/profile are : $tags  **"
+  echo "**************************************************************"
+  browser_container_id=$(
+    podman run \
+      --pod "${pod_id}" \
+      --name "${browser_container_name}" \
+      --shm-size "2g" \
+      --security-opt label="disable" \
+      --volume "${PWD}/cypress.config.js:/cypress.config.js" \
+      --volume "${PWD}/tsconfig.json:/tsconfig.json" \
+      --volume "${PWD}/cypress.env.json:/cypress.env.json" \
+      --volume "${PWD}/cypress:/cypress" \
+      --volume "${PWD}/node_modules:/node_modules" \
+      --env "CYPRESS_BASE_URL=https://${ENVIRONMENT}/openshift/" \
+      --env NO_COLOR=1 \
+      --env "CYPRESS_grepTags=${tags}" \
+      --entrypoint=cypress \
+      "${browser_image}" \
+      run --browser ${BROWSER}
+  )
+  cypress_container_id=$(podman ps -a -q -f name=$browser_container_name)
+  echo "Cypress container id is ${cypress_container_id}"
+}
+
+function collect_logs(){
+  browser_container_name =$1
+    if [ ! -z "${browser_container_name}" ]; then
+      echo "Starting log collection from ${browser_container_name}"
       podman logs "${browser_container_name}"
-      podman logs "${browser_container_name}" &> cypress-browser.log
+      podman logs "${browser_container_name}" &> "${browser_container_name}-browser.log"
       echo "copying cypress screenshots & videos to /run/output/embedded_files/..."
       podman cp "${browser_container_name}:/cypress/screenshots/" ${PWD}"/run/output/embedded_files/"
       podman cp "${browser_container_name}:/cypress/videos/" "${PWD}/run/output/embedded_files/"
+      echo "Completed log collection from ${browser_container_name}"
     fi
-    if [ ! -z "${rosacli_container_name}" ]; then
-      echo "copying rosacli prerun logs..."
-      podman logs "${rosacli_container_name}"
-      podman logs "${rosacli_container_name}" &> rosacli-prerun-logs.log
-    fi
-    # Kill all the containers in the pod:
-    podman pod rm --force "${pod_id}"
-  fi
 }
-trap cleanup EXIT
 
 # Create the initially empty pod for cypress runs.
 pod_id=$(
@@ -100,6 +140,7 @@ pod_id=$(
 echo "Cypress testing pod id - $pod_id"
 
 # rosa cli container for executing CLI steps.
+echo "Creating rosa cli container."
 rosacli_container_id=$(
   podman run \
     --pod "${pod_id}" \
@@ -111,25 +152,60 @@ rosacli_container_id=$(
     "${rosacli_image}" \
     sh cypress-qe-prerun.sh cypress.env.json
 )
+rosacli_container_id=$(podman ps -a -q -f name=$rosacli_container_name)
 echo "ROSA CLI container id - $rosacli_container_id"
 
+if [ ! -z "${rosacli_container_name}" ]; then
+    echo "Copying rosacli prerun logs..."
+    podman logs "${rosacli_container_name}"
+    podman logs "${rosacli_container_name}" &> rosacli-prerun-logs.log
+fi
 
 # Add to the pod the Cypress runner & start the runs.
-browser_container_id=$(
-  podman run \
-    --pod "${pod_id}" \
-    --name "${browser_container_name}" \
-    --shm-size "2g" \
-    --security-opt label="disable" \
-    --volume "${PWD}/cypress.config.js:/cypress.config.js" \
-    --volume "${PWD}/tsconfig.json:/tsconfig.json" \
-    --volume "${PWD}/cypress.env.json:/cypress.env.json" \
-    --volume "${PWD}/cypress:/cypress" \
-    --volume "${PWD}/node_modules:/node_modules" \
-    --env "CYPRESS_BASE_URL=https://${ENVIRONMENT}/openshift/" \
-    --env NO_COLOR=1 \
-    --env "CYPRESS_grepTags=${TAGS}" \
-    --entrypoint=cypress \
-    "${browser_image}" \
-    run --browser ${BROWSER}
-)
+# Container that helps for day1 , day0 ,other common tests.
+if [ ! -z "${DAY1_TAGS}" ]; then
+  echo ">> Starting DAY-1 operations + Other common test executions."
+  browser_container_name="cypress-day1-common-tests-${build_number}"
+  cypress_container_run $browser_container_name $pod_id "$DAY1_TAGS"
+  collect_logs $browser_container_name
+  echo ">> Completed DAY-1 operations/ Other common test executions."
+fi
+
+# Sleeps the execution for 1 hr to make day1 clusters ready for day 2 actions.
+if [ ! -z "${DAY1_TAGS}" ] && [ ! -z "${DAY2_TAGS}" ]; then
+    echo "** Sleeps for 50m to make day1 clusters ready for day2 actions. **"
+    sleep 50m
+fi
+
+# Container that helps for day2 tests.
+if [ ! -z "${DAY2_TAGS}" ]; then
+  echo ">> Starting DAY-2 operations test executions."
+  browser_container_name="cypress-day2-tests-${build_number}"
+  cypress_container_run $browser_container_name $pod_id "$DAY2_TAGS"
+  collect_logs $browser_container_name
+  echo ">> Completed DAY-2 operations test executions."
+fi
+
+# Container that helps for day3 cleanup actions.
+if [ ! -z "${DAY3_TAGS}" ]; then
+  echo ">> Starting DAY-3 operations test executions."
+  browser_container_name="cypress-day3-tests-${build_number}";
+  cypress_container_run $browser_container_name $pod_id "$DAY3_TAGS"
+  collect_logs $browser_container_name
+  echo ">> Completed DAY-3 operations test executions."
+fi
+
+browser_logfile_counts=$(find . -type f -name '*browser.log'|wc -l)
+pass_execution_counts=$(grep -F "All specs passed" *browser.log|wc -l)
+if [ $pass_execution_counts -ne $browser_logfile_counts ]; then
+    EXECUTION_EXIT_STATUS=1
+fi
+echo "** $browser_logfile_counts out of $pass_execution_counts executions are passed ! **"
+
+if [ ! -z "${pod_id}" ]; then
+  echo "Cleaning and deleting all pods."
+  # Kill all the containers in the pod:
+  podman pod rm --force "${pod_id}"
+fi
+
+exit $EXECUTION_EXIT_STATUS
