@@ -792,7 +792,7 @@ describe('Field is a valid key value pair', () => {
   const prefixError =
     "A valid key prefix part of a lowercase RFC 1123 subdomain must consist of lower case alphanumeric characters, '-' or '.', and must start and end with an alphanumeric character";
   const multipleSlashError =
-    "A qualified name must consist of alphanumeric characters, '-', '' or '.', and must start and end with an alphanumeric character with an optional DNS subdomain prefix and '/' (e.g. 'example.com/MyName')";
+    "A qualified name must consist of alphanumeric characters, '-', '_' or '.', and must start and end with an alphanumeric character with an optional DNS subdomain prefix and '/' (e.g. 'example.com/MyName')";
 
   it.each([
     [undefined, undefined],

@@ -499,7 +499,7 @@ const labelAndTaintKeyValidations = (
   return [
     {
       validated: !!value && !MULTIPLE_FORWARD_SLASH_REGEX.test(value),
-      text: "A qualified name must consist of alphanumeric characters, '-', '' or '.', and must start and end with an alphanumeric character with an optional DNS subdomain prefix and '/' (e.g. 'example.com/MyName')",
+      text: "A qualified name must consist of alphanumeric characters, '-', '_' or '.', and must start and end with an alphanumeric character with an optional DNS subdomain prefix and '/' (e.g. 'example.com/MyName')",
     },
     {
       validated: typeof prefix === 'undefined' || DNS_SUBDOMAIN_REGEXP.test(prefix),
