@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import { formValueSelector } from 'redux-form';
+import { change, untouch, formValueSelector } from 'redux-form';
 
 import { canConfigureSharedVpc } from '~/components/clusters/wizards/rosa/constants';
 import wizardConnector from '../WizardConnector';
@@ -29,4 +29,9 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps)(wizardConnector(VPCScreen));
+const mapDispatchToProps = () => ({
+  change,
+  untouch,
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(wizardConnector(VPCScreen));

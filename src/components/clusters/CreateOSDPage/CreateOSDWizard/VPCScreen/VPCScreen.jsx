@@ -13,7 +13,30 @@ function VPCScreen({
   isSharedVpcSelected,
   isSharedVpcSelectable,
   hostedZoneDomainName,
+  change,
+  untouch,
 }) {
+  React.useEffect(() => {
+    if (!selectedVPC.id) {
+      const azCount = isMultiAz ? 3 : 1;
+
+      let resetFields = [];
+      for (let i = 0; i < azCount; i += 1) {
+        resetFields = resetFields.concat([
+          `az_${i}`,
+          `private_subnet_id_${i}`,
+          `public_subnet_id_${i}`,
+        ]);
+      }
+      resetFields.forEach((field) => {
+        change(field, '');
+      });
+
+      // Prevent the validation errors from showing - fields have been reset
+      untouch(...resetFields);
+    }
+  }, [change, untouch, isMultiAz, selectedVPC]);
+
   return (
     <Form
       onSubmit={(event) => {
@@ -44,6 +67,8 @@ function VPCScreen({
 VPCScreen.propTypes = {
   cloudProviderID: PropTypes.string,
   isMultiAz: PropTypes.bool,
+  change: PropTypes.func,
+  untouch: PropTypes.func,
   selectedRegion: PropTypes.string,
   selectedVPC: PropTypes.object,
   privateLinkSelected: PropTypes.bool,
