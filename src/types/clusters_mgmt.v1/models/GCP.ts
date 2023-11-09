@@ -2,6 +2,8 @@
 /* tslint:disable */
 /* eslint-disable */
 
+import type { GcpSecurity } from './GcpSecurity';
+
 /**
  * Google cloud platform settings of a cluster.
  */
@@ -38,6 +40,10 @@ export type GCP = {
    * GCP project identifier.
    */
   project_id?: string;
+  /**
+   * GCP Security Settings
+   */
+  security?: GcpSecurity;
   /**
    * GCP token uri
    */

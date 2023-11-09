@@ -30,6 +30,7 @@ import type { Hypershift } from './Hypershift';
 import type { IdentityProvider } from './IdentityProvider';
 import type { InflightCheck } from './InflightCheck';
 import type { Ingress } from './Ingress';
+import type { KubeletConfig } from './KubeletConfig';
 import type { MachinePool } from './MachinePool';
 import type { ManagedService } from './ManagedService';
 import type { Network } from './Network';
@@ -226,6 +227,10 @@ export type Cluster = {
    * List of ingresses on this cluster.
    */
   ingresses?: Array<Ingress>;
+  /**
+   * Details of cluster-wide KubeletConfig
+   */
+  kubelet_config?: KubeletConfig;
   /**
    * Load Balancer quota to be assigned to the cluster.
    */
