@@ -13,7 +13,12 @@ import { useGlobalState } from '~/redux/hooks';
 import { Version } from '~/types/clusters_mgmt.v1';
 import { FieldId } from '~/components/clusters/wizards/osd/constants';
 import { billingModels } from '~/common/subscriptionTypes';
-import FuzzySelect from '~/components/common/FuzzySelect';
+import FuzzySelect, { FuzzyEntryType } from '~/components/common/FuzzySelect';
+import { versionComparator } from '~/common/versionComparator';
+
+function sortFn(a: FuzzyEntryType, b: FuzzyEntryType) {
+  return versionComparator(b.key, a.key);
+}
 
 interface VersionSelectFieldProps {
   label: string;
@@ -170,7 +175,12 @@ export const VersionSelectField = ({ name, label, isDisabled }: VersionSelectFie
           selected={selectedClusterVersion?.raw_id || getSelection()}
           selectionData={versionsData}
           isDisabled={isDisabled}
+          sortFn={sortFn}
           placeholderText="Filter by versions"
+          filterValidate={{
+            pattern: /^[0-9.]*$/gm,
+            message: 'Please enter only digits or periods.',
+          }}
           truncation={100}
           inlineFilterPlaceholderText="Filter by version number"
           toggleId="version-selector"
