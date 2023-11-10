@@ -11,6 +11,10 @@ export type NetworkVerification = {
    */
   cloud_provider_data?: CloudProviderData;
   /**
+   * Cluster ID needed to execute the network verification.
+   */
+  cluster_id?: string;
+  /**
    * Details about each subnet network verification.
    */
   items?: Array<SubnetNetworkVerification>;
