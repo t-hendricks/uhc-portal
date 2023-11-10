@@ -94,10 +94,10 @@ export const linkify = (text, linkFunction, jiraByKey = {}) => {
   );
 
   // Git commits. Shorten on output so it's painless to feed full 40-char hashes into this script.
-  text = text.replace(/[0-9a-f]{7,}/g, (match) =>
+  text = text.replace(/[0-9a-f]{6,}/g, (match) =>
     linkFunction(
       `https://gitlab.cee.redhat.com/service/${REPO}/-/commit/${match}`,
-      match.slice(0, 7),
+      match.slice(0, 9),
     ),
   );
 
