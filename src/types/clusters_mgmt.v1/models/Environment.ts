@@ -7,6 +7,10 @@
  */
 export type Environment = {
   /**
+   * the backplane url for the environment
+   */
+  backplane_url?: string;
+  /**
    * last time that the worker checked for limited support clusters
    */
   last_limited_support_check?: string;

@@ -23,4 +23,8 @@ export type SubnetNetworkVerification = {
    * State of the subnet network verification.
    */
   state?: string;
+  /**
+   * Tags supplied to the network verifier for this subnet.
+   */
+  tags?: Record<string, string>;
 };
