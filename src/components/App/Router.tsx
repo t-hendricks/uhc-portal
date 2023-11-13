@@ -31,13 +31,13 @@ import {
   useLocation,
   withRouter,
 } from 'react-router-dom';
+import apiRequest from '~/services/apiRequest';
 import { useFeatureGate } from '~/hooks/useFeatureGate';
 import { normalizedProducts } from '../../common/subscriptionTypes';
 import {
   ASSISTED_INSTALLER_FEATURE,
   HYPERSHIFT_WIZARD_FEATURE,
 } from '../../redux/constants/featureConstants';
-import apiRequest from '../../services/apiRequest';
 import ArchivedClusterList from '../clusters/ArchivedClusterList';
 import ClusterDetailsClusterOrExternalId from '../clusters/ClusterDetails/ClusterDetailsClusterOrExternalId';
 import ClusterDetailsSubscriptionId from '../clusters/ClusterDetails/ClusterDetailsSubscriptionId';

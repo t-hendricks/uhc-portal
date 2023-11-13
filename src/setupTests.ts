@@ -4,6 +4,9 @@ import { setAutoFreeze } from 'immer';
 import { sprintf } from 'sprintf-js';
 import * as useChromeHook from '@redhat-cloud-services/frontend-components/useChrome';
 
+// Mock apiRequest for all tests
+jest.mock('~/services/apiRequest');
+
 setAutoFreeze(false);
 if (!process.env.LISTENING_TO_UNHANDLED_REJECTION) {
   process.on('unhandledRejection', () => {});

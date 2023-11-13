@@ -7,6 +7,19 @@
     "jest": true
   },
   "rules": {
+    "no-restricted-imports": [
+      "error",
+      {
+        "patterns": [{
+          "group": [
+            "./apiRequest",
+            "../**/apiRequest",
+            "../**/services/apiRequest"
+          ],
+         "message": "Use ~/services/apiRequest that provides mocks in unit tests"
+        }]
+      }
+    ],
     "import/no-extraneous-dependencies": [
       "error",
       {

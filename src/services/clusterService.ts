@@ -1,5 +1,5 @@
 import { AWSCredentials } from '~/types/types';
-import apiRequest from './apiRequest';
+import apiRequest from '~/services/apiRequest';
 import type {
   AddOn,
   AddOnInstallation,

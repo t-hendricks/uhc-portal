@@ -6,7 +6,13 @@ import { HCP_USE_UNMANAGED } from '~/redux/constants/featureConstants';
 import { ROSA_HOSTED_CLI_MIN_VERSION } from '~/components/clusters/CreateROSAPage/CreateROSAWizard/rosaConstants';
 import AccountRolesARNsSection from './AccountRolesARNsSection';
 
+const latestOCPVersion = '4.13.3';
+const latestVersionLoaded = '4.13.5';
+
 jest.mock('~/hooks/useAnalytics', () => jest.fn(() => jest.fn()));
+jest.mock('~/components/releases/hooks', () => ({
+  useOCPLatestVersion: () => [latestOCPVersion, latestVersionLoaded],
+}));
 
 const accountRolesList = [
   {
