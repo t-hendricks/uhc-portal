@@ -96,6 +96,14 @@ const getInflightChecks = (clusterID: string) =>
     total?: number;
   }>(`/api/clusters_mgmt/v1/clusters/${clusterID}/inflight_checks`);
 
+const rerunInflightChecks = (clusterID: string) =>
+  apiRequest.post<unknown>(`/api/clusters_mgmt/v1/network_verifications`, {
+    cluster_id: clusterID,
+  });
+
+const getTriggeredInflightCheckState = (subnetId: string) =>
+  apiRequest.get<unknown>(`/api/clusters_mgmt/v1/network_verifications/${subnetId}`);
+
 const editCluster = (clusterID: string, data: Cluster) =>
   apiRequest.patch<Cluster>(`/api/clusters_mgmt/v1/clusters/${clusterID}`, data);
 
@@ -989,6 +997,8 @@ const clusterService = {
   editClusterIdentityProvider,
   getClusterStatus,
   getInflightChecks,
+  rerunInflightChecks,
+  getTriggeredInflightCheckState,
   getMachinePools,
   getNodePools,
   getNodePoolUpgradePolicies,
