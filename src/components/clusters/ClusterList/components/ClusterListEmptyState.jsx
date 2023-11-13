@@ -10,7 +10,7 @@ import {
   EmptyStateSecondaryActions,
   Button,
 } from '@patternfly/react-core';
-import { OpenshiftIcon } from '@patternfly/react-icons';
+import { PlusCircleIcon } from '@patternfly/react-icons';
 
 import { ASSISTED_INSTALLER_FEATURE } from '../../../../redux/constants/featureConstants';
 import withFeatureGate from '../../../features/with-feature-gate';
@@ -28,13 +28,13 @@ const AssistedInstallerLink = withFeatureGate(
 function ClusterListEmptyState() {
   return (
     <EmptyState variant={EmptyStateVariant.large} className="cluster-list-empty-state">
-      <EmptyStateIcon icon={OpenshiftIcon} color="#c00" />
+      <EmptyStateIcon icon={PlusCircleIcon} />
       <Title headingLevel="h4" size="2xl">
-        No OpenShift clusters to display
+        Let&#39;s create your first cluster
       </Title>
       <EmptyStateBody>
-        The Red Hat OpenShift Cluster Manager helps you create, register, and manage OpenShift 4
-        clusters. To get started, create your first cluster.
+        You don&#39;t have any clusters yet, but you can easily create or register your first
+        OpenShift 4 cluster.
       </EmptyStateBody>
       <Link to="/create">
         <Button data-testid="create_cluster_btn" className="pf-u-mt-xl">

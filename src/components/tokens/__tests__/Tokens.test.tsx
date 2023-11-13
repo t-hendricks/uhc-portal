@@ -19,7 +19,7 @@ import { mount, shallow } from 'enzyme';
 import { BrowserRouter, MemoryRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 
-import { mockRestrictedEnv, render, screen } from '~/testUtils';
+import { mockRestrictedEnv, mockRefreshToken, render, screen } from '~/testUtils';
 
 import { store } from '../../../redux/store';
 import Tokens from '../Tokens';
@@ -39,6 +39,7 @@ window.insights = {
 };
 
 describe('<Tokens />', () => {
+  mockRefreshToken();
   beforeEach(() => {
     jest.clearAllMocks();
   });

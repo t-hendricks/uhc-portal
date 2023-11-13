@@ -168,7 +168,7 @@ class clusterStatusMonitor extends React.Component {
       reason.push(<b>{hostProjectId}</b>);
       reason.push(' host project, who must grant the ');
       reason.push(<b>{dynamicServiceAccount}</b>);
-      reason.push(' service account the following permissions: ');
+      reason.push(' service account the following roles: ');
       reason.push(<b>Compute Network Administrator, </b>);
       reason.push(<b>Compute Security Administrator, </b>);
       reason.push(<b>DNS Administrator.</b>);

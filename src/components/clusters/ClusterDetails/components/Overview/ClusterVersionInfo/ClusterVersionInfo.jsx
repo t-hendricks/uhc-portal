@@ -4,6 +4,8 @@ import get from 'lodash/get';
 import { Button, Flex, Popover } from '@patternfly/react-core';
 
 import { OutlinedQuestionCircleIcon } from '@patternfly/react-icons';
+import getClusterVersion from '~/components/clusters/common/getClusterVersion';
+import { isClusterUpgrading } from '~/components/clusters/common/clusterStates';
 import SupportStatusLabel from '../SupportStatusLabel';
 import ClusterUpdateLink from '../../../../common/ClusterUpdateLink';
 import UpgradeStatus from '../../../../common/Upgrades/UpgradeStatus';
@@ -37,11 +39,8 @@ class ClusterVersionInfo extends React.Component {
   render() {
     const { cluster, openModal, schedules } = this.props;
     const { popoverOpen } = this.state;
-    const isUpgrading = get(cluster, 'metrics.upgrade.state') === 'running';
-    const clusterVersion =
-      (isUpgrading ? cluster.version?.raw_id : cluster.openshift_version) ||
-      cluster.version?.raw_id ||
-      'N/A';
+    const isUpgrading = isClusterUpgrading(cluster);
+    const clusterVersion = getClusterVersion(cluster);
     const channel = get(cluster, 'metrics.channel');
 
     const scheduledUpdate = schedules.items.find(

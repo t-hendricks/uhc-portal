@@ -1,14 +1,21 @@
-import React from 'react';
+import React, { useContext, useCallback } from 'react';
 import { Hint, HintBody, HintTitle } from '@patternfly/react-core';
 import { Link } from 'react-router-dom';
 import { productName } from '~/components/clusters/CreateROSAPage/CreateROSAWizard/CreateRosaGetStarted/CreateRosaGetStarted';
 import { ROSA_HOSTED_CLI_MIN_VERSION } from '~/components/clusters/CreateROSAPage/CreateROSAWizard/rosaConstants';
+import { ROSAWizardContext } from '~/components/clusters/CreateROSAPage/CreateROSAWizard/ROSAWizardContext';
 
 interface PrerequisitesInfoBoxProps {
   showRosaCliRequirement?: boolean;
 }
 export const PrerequisitesInfoBox: React.FC<PrerequisitesInfoBoxProps> = (props) => {
   const { showRosaCliRequirement = true } = props;
+  const { setForceLeaveWizard } = useContext(ROSAWizardContext);
+
+  const onClick = useCallback(() => {
+    setForceLeaveWizard(true);
+  }, [setForceLeaveWizard]);
+
   return (
     <Hint>
       <HintTitle>
@@ -17,7 +24,11 @@ export const PrerequisitesInfoBox: React.FC<PrerequisitesInfoBoxProps> = (props)
       <HintBody>
         <p>
           To create a {productName} (ROSA) cluster via the web interface, you must complete the
-          prerequisite steps on the <Link to="getstarted">Set up ROSA page</Link>.
+          prerequisite steps on the{' '}
+          <Link to="getstarted" onClick={onClick}>
+            Set up ROSA page
+          </Link>
+          .
         </p>
         {showRosaCliRequirement && (
           <p>

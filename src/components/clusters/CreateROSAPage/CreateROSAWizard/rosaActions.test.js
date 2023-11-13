@@ -1,4 +1,5 @@
 import * as rosaActions from './rosaActions';
+import accountRolesList from './rosaActionsMockAccountRolesList';
 
 describe('rosaActions', () => {
   describe('getAWSIDsFromARNs', () => {
@@ -40,75 +41,58 @@ describe('rosaActions', () => {
   });
 
   describe('normalizeAWSAccountRoles', () => {
-    it('returns correct array of AWSAccountRoles objects', () => {
-      const acountRolesList = {
-        kind: 'AccountRolesList',
-        aws_acccount_id: '765374464689',
-        items: [
-          {
-            prefix: 'croche-test',
-            kind: 'AccountRoles',
-            items: [
-              {
-                arn: 'arn:aws:iam::765374464689:role/croche-test-ControlPlane-Role',
-                type: 'ControlPlane',
-              },
-              {
-                arn: 'arn:aws:iam::765374464689:role/croche-test-Installer-Role',
-                type: 'Installer',
-              },
-              {
-                arn: 'arn:aws:iam::765374464689:role/croche-test-Support-Role',
-                type: 'Support',
-              },
-              {
-                arn: 'arn:aws:iam::765374464689:role/croche-test-Worker-Role',
-                type: 'Worker',
-              },
-            ],
-          },
-          {
-            prefix: 'ManagedOpenShift',
-            kind: 'AccountRoles',
-            items: [
-              {
-                arn: 'arn:aws:iam::765374464689:role/ManagedOpenShift-ControlPlane-Role',
-                type: 'ControlPlane',
-              },
-              {
-                arn: 'arn:aws:iam::765374464689:role/ManagedOpenShift-Installer-Role',
-                type: 'Installer',
-              },
-              {
-                arn: 'arn:aws:iam::765374464689:role/ManagedOpenShift-Support-Role',
-                type: 'Support',
-              },
-              {
-                arn: 'arn:aws:iam::765374464689:role/ManagedOpenShift-Worker-Role',
-                type: 'Worker',
-              },
-            ],
-          },
-        ],
-      };
+    it.each([
+      ['myManagedRoles', true],
+      ['myUnManagedRoles', false],
+      ['bothRoles', true],
+      ['bothRoles', false],
+    ])('normalizedAWSAccountRoles return expected result for %s', (expectedPrefix, isManaged) => {
+      const myRoles = rosaActions
+        .normalizeAWSAccountRoles(accountRolesList)
+        .find(
+          ({ prefix, managedPolicies, hcpManagedPolicies }) =>
+            expectedPrefix === prefix &&
+            managedPolicies === isManaged &&
+            hcpManagedPolicies === isManaged,
+        );
+      expect(myRoles).not.toBeUndefined();
+      if (isManaged) {
+        expect(myRoles.managedPolicies).toBeTruthy();
+        expect(myRoles.managedPolicies).toBeTruthy();
+        expect(myRoles.Installer).toEqual(
+          `arn:aws:iam::123456789012:role/${expectedPrefix}-HCP-ROSA-Installer-Role`,
+        );
+        expect(myRoles.Support).toEqual(
+          `arn:aws:iam::123456789012:role/${expectedPrefix}-HCP-ROSA-Support-Role`,
+        );
+        expect(myRoles.Worker).toEqual(
+          `arn:aws:iam::123456789012:role/${expectedPrefix}-HCP-ROSA-Worker-Role`,
+        );
+        expect(myRoles.ControlPlane).toBeUndefined();
+      } else {
+        // not managed
+        expect(myRoles.managedPolicies).toBeFalsy();
+        expect(myRoles.managedPolicies).toBeFalsy();
+        expect(myRoles.Installer).toEqual(
+          `arn:aws:iam::123456789012:role/${expectedPrefix}-Installer-Role`,
+        );
+        expect(myRoles.Support).toEqual(
+          `arn:aws:iam::123456789012:role/${expectedPrefix}-Support-Role`,
+        );
+        expect(myRoles.Worker).toEqual(
+          `arn:aws:iam::123456789012:role/${expectedPrefix}-Worker-Role`,
+        );
+        expect(myRoles.ControlPlane).toEqual(
+          `arn:aws:iam::123456789012:role/${expectedPrefix}-ControlPlane-Role`,
+        );
+      }
+    });
 
-      const AWSAccountRoles = rosaActions.normalizeAWSAccountRoles(acountRolesList);
-      expect(AWSAccountRoles.length).toEqual(2);
-
-      // prefix = 'croche-test'
-      expect(AWSAccountRoles[0].Installer).toEqual(
-        'arn:aws:iam::765374464689:role/croche-test-Installer-Role',
-      );
-      expect(AWSAccountRoles[0].ControlPlane).toEqual(
-        'arn:aws:iam::765374464689:role/croche-test-ControlPlane-Role',
-      );
-      // prefix = 'ManagedOpenShift'
-      expect(AWSAccountRoles[1].Installer).toEqual(
-        'arn:aws:iam::765374464689:role/ManagedOpenShift-Installer-Role',
-      );
-      expect(AWSAccountRoles[1].Support).toEqual(
-        'arn:aws:iam::765374464689:role/ManagedOpenShift-Support-Role',
-      );
+    it('Ignores poorly formed role', () => {
+      const oddRole = rosaActions
+        .normalizeAWSAccountRoles(accountRolesList)
+        .find(({ prefix }) => prefix === 'oddRole');
+      expect(oddRole).toBeUndefined();
     });
   });
 

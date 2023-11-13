@@ -9,8 +9,8 @@ import shouldShowModal from '~/components/common/Modal/ModalSelectors';
 import { modalActions } from '~/components/common/Modal/ModalActions';
 import { GlobalState } from '~/redux/store';
 import {
-  useControlPlaneUpToDate,
   useMachinePoolBehindControlPlane,
+  useHCPControlPlaneUpdating,
   controlPlaneVersionSelector,
   displayControlPlaneVersion,
   updateAllMachinePools as updatePool,
@@ -24,10 +24,11 @@ const updateModalId = modalIds.UPDATE_MACHINE_POOL_VERSION;
 
 export const UpdatePoolButton = ({ machinePool }: { machinePool: NodePool }) => {
   const dispatch = useDispatch();
-  const controlPlaneUpToDate = useControlPlaneUpToDate();
-  const machinePoolCanBeUpdated = useMachinePoolBehindControlPlane(machinePool);
 
-  if (!controlPlaneUpToDate || !machinePoolCanBeUpdated) {
+  const machinePoolBehindControlPlane = useMachinePoolBehindControlPlane(machinePool);
+  const controlPlaneUpdating = useHCPControlPlaneUpdating();
+
+  if (controlPlaneUpdating || !machinePoolBehindControlPlane) {
     return null;
   }
   return (

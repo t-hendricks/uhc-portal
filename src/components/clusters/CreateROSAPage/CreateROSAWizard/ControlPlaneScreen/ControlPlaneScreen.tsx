@@ -24,16 +24,24 @@ type ControlPlaneFieldProps = {
   };
   change: ChangeAction;
   formValues: FormikValues;
+  hasHostedProductQuota: boolean;
 };
 
 const ControlPlaneField = ({
   input: { value, onChange },
   change,
   formValues,
+  hasHostedProductQuota,
 }: ControlPlaneFieldProps) => {
+  const isHostedDisabled = !hasHostedProductQuota;
+
   React.useEffect(() => {
     if (!value) {
-      onChange('true');
+      if (isHostedDisabled) {
+        onChange('false');
+      } else {
+        onChange('true');
+      }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -78,7 +86,11 @@ const ControlPlaneField = ({
 
   return (
     <>
-      <HostedTile handleChange={handleChange} isSelected={value === 'true'} />
+      <HostedTile
+        handleChange={handleChange}
+        isSelected={value === 'true'}
+        isHostedDisabled={isHostedDisabled}
+      />
       <StandAloneTile handleChange={handleChange} isSelected={value === 'false'} />
     </>
   );
@@ -87,9 +99,11 @@ const ControlPlaneField = ({
 const ControlPlaneScreen = ({
   change,
   formValues,
+  hasHostedProductQuota,
 }: {
   change: ChangeAction;
   formValues: FormikValues;
+  hasHostedProductQuota: boolean;
 }) => (
   <Form
     onSubmit={(event) => {
@@ -129,6 +143,7 @@ const ControlPlaneScreen = ({
       }
       change={change}
       formValues={formValues}
+      hasHostedProductQuota={hasHostedProductQuota}
     />
   </Form>
 );

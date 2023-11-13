@@ -3,10 +3,7 @@ import semver from 'semver';
 import { NodePool } from '~/types/clusters_mgmt.v1/models/NodePool';
 import clusterService from '~/services/clusterService';
 import { GlobalState } from '~/redux/store';
-import {
-  hasAvailableUpdatesSelector,
-  updateStartedSelector,
-} from '~/components/clusters/common/Upgrades/upgradeHelpers';
+import { updateStartedSelector } from '~/components/clusters/common/Upgrades/upgradeHelpers';
 import { isHypershiftCluster } from '../../../clusterDetailsHelper';
 
 export const controlPlaneIdSelector = (state: GlobalState) =>
@@ -18,25 +15,23 @@ export const controlPlaneVersionSelector = (state: GlobalState) =>
 export const displayControlPlaneVersion = (controlPlaneVersion: string | undefined) =>
   semver.coerce(controlPlaneVersion)?.version;
 
-export const isControlPlaneUpToDate = (state: GlobalState) => {
-  const availableControlPlaneUpgrades = hasAvailableUpdatesSelector(state);
+export const isHCPControlPlaneUpdating = (state: GlobalState) => {
   const controlPlaneUpgradeStarted = updateStartedSelector(state);
   const controlPlaneVersion = controlPlaneVersionSelector(state);
   const machinePools = state.machinePools?.getMachinePools;
   const isHypershift = isHypershiftCluster(state.clusters.details.cluster);
 
   return (
-    !availableControlPlaneUpgrades &&
-    !controlPlaneUpgradeStarted &&
-    machinePools.data &&
-    machinePools.fulfilled &&
-    !machinePools.error &&
-    controlPlaneVersion &&
-    isHypershift
+    !isHypershift ||
+    !controlPlaneVersion ||
+    controlPlaneUpgradeStarted ||
+    !machinePools.data ||
+    !machinePools.fulfilled ||
+    machinePools.error
   );
 };
 
-export const useControlPlaneUpToDate = () => useSelector(isControlPlaneUpToDate);
+export const useHCPControlPlaneUpdating = () => useSelector(isHCPControlPlaneUpdating);
 
 export const compareIsMachinePoolBehindControlPlane = (
   controlPlaneVersion?: string,
