@@ -11,6 +11,7 @@ import {
   HCP_ROSA_GETTING_STARTED_PAGE,
   HCP_AWS_BILLING_SHOW,
   HCP_AWS_BILLING_REQUIRED,
+  HCP_USE_UNMANAGED,
 } from '../constants/featureConstants';
 import authorizationsService from '../../services/authorizationsService';
 import accountsService from '../../services/accountsService';
@@ -66,6 +67,7 @@ export const features = [
   getSimpleUnleashFeature('hypershift-creation-wizard', HYPERSHIFT_WIZARD_FEATURE),
   getSimpleUnleashFeature('hcp-rosa-getting-started-page', HCP_ROSA_GETTING_STARTED_PAGE),
   getSimpleUnleashFeature('hcp-aws-billing-show', HCP_AWS_BILLING_SHOW),
+  getSimpleUnleashFeature('hcp-use-unmanaged-policies', HCP_USE_UNMANAGED),
   getSimpleUnleashFeature('hcp-aws-billing-required', HCP_AWS_BILLING_REQUIRED),
   getSimpleUnleashFeature('assisted-installer-merge-lists', ASSISTED_INSTALLER_MERGE_LISTS_FEATURE),
   getSimpleUnleashFeature('osd-google-marketplace', OSD_GOOGLE_MARKETPLACE_FEATURE),

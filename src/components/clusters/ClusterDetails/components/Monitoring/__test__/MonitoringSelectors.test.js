@@ -15,6 +15,9 @@ import {
   makeStaleCheckIn,
 } from './Monitoring.fixtures';
 import { monitoringStatuses } from '../monitoringHelper';
+import { isClusterUpgrading } from '../../../../common/clusterStates';
+
+jest.mock('../../../../common/clusterStates');
 
 describe('lastCheckInSelector', () => {
   it('returns something valid if activity_timestamp is missing (unrealistic)', () => {
@@ -47,9 +50,8 @@ describe('clusterHealthSelector', () => {
     };
 
     it('should return DISCONNECTED when subscription Disconnected and metrics are stale', () => {
-      expect(clusterHealthSelector(stateWithOCPDisconnected, makeStaleCheckIn(), null)).toBe(
-        monitoringStatuses.DISCONNECTED,
-      );
+      const result = clusterHealthSelector(stateWithOCPDisconnected, makeStaleCheckIn(), null);
+      expect(result).toBe(monitoringStatuses.DISCONNECTED);
     });
 
     it.todo(
@@ -57,21 +59,26 @@ describe('clusterHealthSelector', () => {
     );
 
     it('should return NO_METRICS when metrics are stale', () => {
-      expect(clusterHealthSelector(stateWithOCPActive, makeStaleCheckIn(), null)).toBe(
-        monitoringStatuses.NO_METRICS,
-      );
+      const result = clusterHealthSelector(stateWithOCPActive, makeStaleCheckIn(), null);
+      expect(result).toBe(monitoringStatuses.NO_METRICS);
+    });
+
+    it('should return UPGRADING when metrics are running', () => {
+      isClusterUpgrading.mockReturnValueOnce(true);
+      const result = clusterHealthSelector(stateWithOCPActive, makeFreshCheckIn(), 0);
+      expect(result).toBe(monitoringStatuses.UPGRADING);
     });
 
     it('should return HEALTHY when metrics are fresh & good', () => {
-      expect(clusterHealthSelector(stateWithOCPActive, makeFreshCheckIn(), 0)).toBe(
-        monitoringStatuses.HEALTHY,
-      );
+      isClusterUpgrading.mockReturnValueOnce(false);
+      const result = clusterHealthSelector(stateWithOCPActive, makeFreshCheckIn(), 0);
+      expect(result).toBe(monitoringStatuses.HEALTHY);
     });
 
     it("handles timestamp in future (relative to browser's clock)", () => {
-      expect(clusterHealthSelector(stateWithOCPActive, makeFutureDate(), 0)).toBe(
-        monitoringStatuses.HEALTHY,
-      );
+      isClusterUpgrading.mockReturnValueOnce(false);
+      const result = clusterHealthSelector(stateWithOCPActive, makeFutureDate(), 0);
+      expect(result).toBe(monitoringStatuses.HEALTHY);
     });
   });
 

@@ -35,7 +35,9 @@ import {
   TextContent,
   Title,
 } from '@patternfly/react-core';
-import { isRestrictedEnv } from '~/restrictedEnv';
+import { isRestrictedEnv, refreshToken } from '~/restrictedEnv';
+import useChrome from '@redhat-cloud-services/frontend-components/useChrome';
+import type { ChromeAPI } from '@redhat-cloud-services/types';
 import links, { tools, channels } from '../../common/installLinks.mjs';
 import Breadcrumbs from '../common/Breadcrumbs';
 import ExternalLink from '../common/ExternalLink';
@@ -91,7 +93,9 @@ const Tokens = (props: Props) => {
     setOfflineToken,
     blockedByTerms,
   } = props;
-
+  const chrome = useChrome();
+  const restrictedEnv = isRestrictedEnv(chrome as unknown as ChromeAPI);
+  const token = restrictedEnv ? refreshToken(chrome as unknown as ChromeAPI) : offlineToken;
   React.useEffect(() => {
     // After requesting token, we might need to reload page doing stronger auth;
     // after that we want the token to show, but we just loaded.
@@ -119,14 +123,14 @@ const Tokens = (props: Props) => {
             <Card className="ocm-c-api-token__card">
               <CardTitle>
                 <Title headingLevel="h2">
-                  {`Connect with ${isRestrictedEnv() ? 'refresh' : 'offline'} tokens`}
+                  {`Connect with ${restrictedEnv ? 'refresh' : 'offline'} tokens`}
                 </Title>
               </CardTitle>
               <CardBody className="ocm-c-api-token__card--body">
                 <TextContent>{leadingInfo}</TextContent>
-                {show || offlineToken ? (
+                {show || token ? (
                   <>
-                    <TokenBox token={offlineToken} />
+                    <TokenBox token={token} />
                     <TextContent className="pf-u-mt-lg">
                       <Title headingLevel="h3">Using your token in the command line</Title>
                       <List component="ol">
@@ -142,11 +146,11 @@ const Tokens = (props: Props) => {
                         <ListItem>
                           Copy and paste the authentication command in your terminal:
                           <Text component="p" />
-                          {offlineToken == null ? (
+                          {offlineToken == null && !restrictedEnv ? (
                             <Skeleton size="md" />
                           ) : (
                             <TokenBox
-                              token={offlineToken}
+                              token={token}
                               command={`${commandName} login --token="{{TOKEN}}"`}
                               showCommandOnError
                               showInstructionsOnError={false}
@@ -157,7 +161,7 @@ const Tokens = (props: Props) => {
 
                       <Title headingLevel="h3">
                         {`Need help connecting with your ${
-                          isRestrictedEnv() ? 'refresh' : 'offline'
+                          restrictedEnv ? 'refresh' : 'offline'
                         } token?`}
                       </Title>
                       <Text component="p">
@@ -186,16 +190,18 @@ const Tokens = (props: Props) => {
               </CardBody>
             </Card>
           </StackItem>
-          <StackItem>
-            <Card className="ocm-c-api-token__card">
-              <CardTitle>
-                <Title headingLevel="h2">Revoke previous tokens</Title>
-              </CardTitle>
-              <CardBody className="ocm-c-api-token__card--body">
-                <RevokeTokensInstructions />
-              </CardBody>
-            </Card>
-          </StackItem>
+          {!restrictedEnv && (
+            <StackItem>
+              <Card className="ocm-c-api-token__card">
+                <CardTitle>
+                  <Title headingLevel="h2">Revoke previous tokens</Title>
+                </CardTitle>
+                <CardBody className="ocm-c-api-token__card--body">
+                  <RevokeTokensInstructions />
+                </CardBody>
+              </Card>
+            </StackItem>
+          )}
         </Stack>
       </PageSection>
     </AppPage>

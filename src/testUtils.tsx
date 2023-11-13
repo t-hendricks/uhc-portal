@@ -6,6 +6,7 @@ import userEvent from '@testing-library/user-event';
 import '@testing-library/jest-dom';
 import { MemoryRouter } from 'react-router';
 import { toHaveNoViolations, axe } from 'jest-axe';
+import useChrome from '@redhat-cloud-services/frontend-components/useChrome';
 
 import { createBrowserHistory } from 'history';
 
@@ -104,17 +105,22 @@ export const checkAccessibility = async (container: HTMLElement | string) => {
   expect(results).toHaveNoViolations();
 };
 
+const stubbedChrome = {
+  ...global.insights.chrome,
+  on: () => () => {},
+  appNavClick: () => {},
+  auth: {
+    getUser: () => Promise.resolve({ data: {} }),
+    getToken: () => Promise.resolve(),
+    getOfflineToken: () => Promise.resolve({ data: { refresh_token: 'hello' } }),
+  },
+  getEnvironment: () => 'prod',
+};
+
 export const insightsMock = () => {
   global.insights = {
     chrome: {
-      ...global.insights.chrome,
-      on: () => () => {},
-      appNavClick: () => {},
-      auth: {
-        getUser: () => Promise.resolve({ data: {} }),
-        getToken: () => Promise.resolve(),
-        getOfflineToken: () => Promise.resolve({ data: { refresh_token: 'hello' } }),
-      },
+      ...stubbedChrome,
     },
   };
 };
@@ -123,6 +129,17 @@ export const mockRestrictedEnv = () => {
   const mock = jest.spyOn(restrictedEnv, 'isRestrictedEnv');
   mock.mockReturnValue(false);
   return mock;
+};
+
+export const mockRefreshToken = () => {
+  const mock = jest.spyOn(restrictedEnv, 'refreshToken');
+  mock.mockReturnValue('mock-refresh-token');
+  return mock;
+};
+
+export const mockUseChrome = () => {
+  const useChromeMock = useChrome as jest.Mock;
+  useChromeMock.mockReturnValue(stubbedChrome);
 };
 
 export const TestRouter = ({ children }: { children: React.ReactNode }) => (

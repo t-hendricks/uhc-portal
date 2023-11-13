@@ -1,11 +1,13 @@
 import * as React from 'react';
 import { shallow } from 'enzyme';
-import { mockRestrictedEnv } from '~/testUtils';
+import { mockRestrictedEnv, mockRefreshToken, mockUseChrome } from '~/testUtils';
 import StepCreateAWSAccountRoles from './StepCreateAWSAccountRoles';
 
 describe('<StepCreateAWSAccountRoles />', () => {
+  mockUseChrome();
   describe('in Restricted env', () => {
     const isRestrictedEnv = mockRestrictedEnv();
+    mockRefreshToken();
 
     afterEach(() => {
       isRestrictedEnv.mockReturnValue(false);

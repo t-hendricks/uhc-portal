@@ -18,6 +18,9 @@ const DNS_ONLY_ALPHANUMERIC_HYPHEN = /^[-a-z0-9]+$/;
 const DNS_START_ALPHA = /^[a-z]/;
 const DNS_END_ALPHANUMERIC = /[a-z0-9]$/;
 
+// Regular expression used to check whether forward slash is multiple times
+const MULTIPLE_FORWARD_SLASH_REGEX = /^.*[/]+.*[/]+.*$/i;
+
 // Regular expression used to check base DNS domains, based on RFC-1035
 const BASE_DOMAIN_REGEXP = /^([a-z]([-a-z0-9]*[a-z0-9])?\.)+[a-z]([-a-z0-9]*[a-z0-9])?$/;
 
@@ -86,10 +89,10 @@ const AWS_NUMERIC_ACCOUNT_ID_REGEX = /^\d{12}$/;
 const GCP_KMS_SERVICE_ACCOUNT_REGEX = /^[a-z0-9.+-]+@[\w.-]+\.[a-z]{2,4}$/;
 
 const AWS_KMS_SERVICE_ACCOUNT_REGEX =
-  /^arn:aws:kms:[\w-]+:\d{12}:key\/[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/;
+  /^arn:aws([-\w]+)?:kms:[\w-]+:\d{12}:key\/[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/;
 
 const AWS_KMS_MULTI_REGION_SERVICE_ACCOUNT_REGEX =
-  /^arn:aws:kms:[\w-]+:\d{12}:key\/mrk-[0-9a-f]{32}$/;
+  /^arn:aws([-\w]+)?:kms:[\w-]+:\d{12}:key\/mrk-[0-9a-f]{32}$/;
 
 /**
  * A valid label key name must consist of alphanumeric characters, '-', '_' or '.',
@@ -117,7 +120,7 @@ type Validations = {
 }[];
 
 // Function to validate that a field is mandatory, i.e. must be a non whitespace string
-const required = (value: string): string | undefined =>
+const required = (value?: string): string | undefined =>
   value && value.trim() ? undefined : 'Field is required';
 
 // Function to validate that a field has a true value.
@@ -132,7 +135,7 @@ const acknowledgePrerequisites = (value: string | boolean): string | undefined =
     : 'Acknowledge that you have read and completed all prerequisites.';
 
 // Function to validate that the identity provider name field doesn't include whitespaces:
-const checkIdentityProviderName = (value: string): string | undefined => {
+const checkIdentityProviderName = (value?: string): string | undefined => {
   if (!value) {
     return 'Name is required.';
   }
@@ -146,7 +149,7 @@ const checkIdentityProviderName = (value: string): string | undefined => {
 };
 
 // Function to validate that the issuer field uses https scheme:
-const checkOpenIDIssuer = (value: string): string | undefined => {
+const checkOpenIDIssuer = (value?: string): string | undefined => {
   if (!value) {
     return 'Issuer URL is required.';
   }
@@ -186,10 +189,14 @@ const checkObjectName = (value: string, objectName: string, maxLen: number): str
   return undefined;
 };
 
-const checkObjectNameValidation = (value: string, objectName: string, maxLen: number) => [
+const checkObjectNameValidation = (
+  value: string | undefined,
+  objectName: string,
+  maxLen: number,
+) => [
   {
     text: `1 - ${maxLen} characters`,
-    validated: value?.length > 0 && value?.length <= maxLen,
+    validated: !!value?.length && value?.length <= maxLen,
   },
   {
     text: 'Consist of lower-case alphanumeric characters, or hyphen (-)',
@@ -205,7 +212,7 @@ const checkObjectNameValidation = (value: string, objectName: string, maxLen: nu
   },
 ];
 
-const checkObjectNameAsyncValidation = (value: string) => [
+const checkObjectNameAsyncValidation = (value?: string) => [
   {
     text: 'Globally unique name in your organization',
     validator: async () => {
@@ -222,10 +229,10 @@ const checkObjectNameAsyncValidation = (value: string) => [
   },
 ];
 
-const clusterNameValidation = (value: string) =>
+const clusterNameValidation = (value?: string) =>
   checkObjectNameValidation(value, 'Cluster', MAX_CLUSTER_NAME_LENGTH);
 
-const clusterNameAsyncValidation = (value: string) => checkObjectNameAsyncValidation(value);
+const clusterNameAsyncValidation = (value?: string) => checkObjectNameAsyncValidation(value);
 
 const checkMachinePoolName = (value: string) =>
   checkObjectName(value, 'Machine pool', MAX_MACHINE_POOL_NAME_LENGTH);
@@ -324,14 +331,14 @@ const k8sNumberParameter = (num: number | string): string | undefined => {
 };
 
 const k8sLogVerbosityParameter = (num: number | string) => {
-  if (num < 1 || num > AUTOSCALER_MAX_LOG_VERBOSITY) {
+  if (+num < 1 || +num > AUTOSCALER_MAX_LOG_VERBOSITY) {
     return `Value must be between 1 and ${AUTOSCALER_MAX_LOG_VERBOSITY}.`;
   }
   return undefined;
 };
 
 const k8sScaleDownUtilizationThresholdParameter = (num: number | string) => {
-  if (num < 0 || num > 1) {
+  if (+num < 0 || +num > 1) {
     return 'Value must be between 0 and 1.';
   }
   return undefined;
@@ -422,7 +429,7 @@ const checkCustomOperatorRolesPrefix = (value: string): string | undefined => {
 };
 
 // Function to validate that the github team is formatted: <org/team>
-const checkGithubTeams = (value: string): string | undefined => {
+const checkGithubTeams = (value?: string): string | undefined => {
   if (!value) {
     return undefined;
   }
@@ -491,8 +498,12 @@ const labelAndTaintKeyValidations = (
 
   return [
     {
+      validated: !!value && !MULTIPLE_FORWARD_SLASH_REGEX.test(value),
+      text: "A qualified name must consist of alphanumeric characters, '-', '_' or '.', and must start and end with an alphanumeric character with an optional DNS subdomain prefix and '/' (e.g. 'example.com/MyName')",
+    },
+    {
       validated: typeof prefix === 'undefined' || DNS_SUBDOMAIN_REGEXP.test(prefix),
-      text: 'Key prefix must be a DNS subdomain: a series of DNS labels separated by dots (.), and must end with a "/"',
+      text: "A valid key prefix part of a lowercase RFC 1123 subdomain must consist of lower case alphanumeric characters, '-' or '.', and must start and end with an alphanumeric character",
     },
     {
       validated: typeof prefix === 'undefined' || prefix.length <= LABEL_KEY_PREFIX_MAX_LENGTH,
@@ -500,7 +511,7 @@ const labelAndTaintKeyValidations = (
     },
     {
       validated: typeof name === 'undefined' || LABEL_KEY_NAME_REGEX.test(name),
-      text: "A valid key name must consist of alphanumeric characters, '-', '.' or '_' and must start and end with an alphanumeric character",
+      text: "A valid key name must consist of alphanumeric characters, '-', '.' , '_'  or '/' and must start and end with an alphanumeric character",
     },
 
     {
@@ -511,7 +522,7 @@ const labelAndTaintKeyValidations = (
       validated: isEmptyValid || value?.length > 0,
       text:
         keyType === 'label'
-          ? "A valid key name must consist of alphanumeric characters, '-', '.' or '_' and must start and end with an alphanumeric character"
+          ? "A valid key name must consist of alphanumeric characters, '-', '.' , '_'  or '/' and must start and end with an alphanumeric character"
           : 'Required',
     },
   ];
@@ -548,7 +559,7 @@ const checkLabelValue = createPessimisticValidator(labelAndTaintValueValidations
 const checkTaintKey = createPessimisticValidator(taintKeyValidations);
 const checkTaintValue = createPessimisticValidator(labelAndTaintValueValidations);
 
-const checkLabels = (input: string | string[]) =>
+const checkLabels = (input?: string | string[]) =>
   parseNodeLabels(input)
     // collect the first error found
     ?.reduce<string | undefined>(
@@ -589,7 +600,7 @@ const checkRouteSelectors = (value: string): string | undefined =>
   checkLabels(value) || validateDuplicateLabels(value);
 
 // Function to validate that the cluster ID field is a UUID:
-const checkClusterUUID = (value: string): string | undefined => {
+const checkClusterUUID = (value?: string): string | undefined => {
   if (!value) {
     return 'Cluster ID is required.';
   }
@@ -690,7 +701,7 @@ const validateCA = (value: string): string | undefined => {
 };
 
 // Function to validate the cluster console URL
-const checkClusterConsoleURL = (value: string, isRequired?: false): string | undefined => {
+const checkClusterConsoleURL = (value?: string, isRequired?: boolean): string | undefined => {
   if (!value) {
     return isRequired ? 'Cluster console URL should not be empty' : undefined;
   }
@@ -716,7 +727,7 @@ const checkClusterConsoleURL = (value: string, isRequired?: false): string | und
 };
 
 // Function to validate that a field contains a correct base DNS domain
-const checkBaseDNSDomain = (value: string): string | undefined => {
+const checkBaseDNSDomain = (value?: string): string | undefined => {
   if (!value) {
     return 'Base DNS domain is required.';
   }
@@ -744,14 +755,14 @@ const checkNoProxyDomains = (value?: string[]) => {
 };
 
 // Function to validate IP address blocks
-const cidr = (value: string): string | undefined => {
+const cidr = (value?: string): string | undefined => {
   if (value && !CIDR_REGEXP.test(value)) {
     return `IP address range '${value}' isn't valid CIDR notation. It must follow the RFC-4632 format: '192.168.0.0/16'.`;
   }
   return undefined;
 };
 
-const getCIDRSubnetLength = (value: string): number | undefined => {
+const getCIDRSubnetLength = (value?: string): number | undefined => {
   if (!value) {
     return undefined;
   }
@@ -759,12 +770,12 @@ const getCIDRSubnetLength = (value: string): number | undefined => {
   return parseInt(value.split('/').pop() ?? '', 10);
 };
 
-const awsMachineCidr = (value: string, formData: Record<string, string>): string | undefined => {
+const awsMachineCidr = (value?: string, formData?: Record<string, string>): string | undefined => {
   if (!value) {
     return undefined;
   }
 
-  const isMultiAz = formData.multi_az === 'true';
+  const isMultiAz = formData?.multi_az === 'true';
   const prefixLength = getCIDRSubnetLength(value);
 
   if (prefixLength != null) {
@@ -814,7 +825,7 @@ const gcpMachineCidr = (value: string, formData: { ['multi_az']: string }): stri
 */
 /* eslint-enable max-len */
 
-const serviceCidr = (value: string): string | undefined => {
+const serviceCidr = (value?: string): string | undefined => {
   if (!value) {
     return undefined;
   }
@@ -831,7 +842,7 @@ const serviceCidr = (value: string): string | undefined => {
   return undefined;
 };
 
-const podCidr = (value: string, formData: Record<string, string>): string | undefined => {
+const podCidr = (value?: string, formData?: Record<string, string>): string | undefined => {
   if (!value) {
     return undefined;
   }
@@ -842,7 +853,7 @@ const podCidr = (value: string, formData: Record<string, string>): string | unde
       return `The subnet mask can't be smaller than /${POD_CIDR_MAX}.`;
     }
 
-    const hostPrefix = getCIDRSubnetLength(formData.network_host_prefix) || 23;
+    const hostPrefix = getCIDRSubnetLength(formData?.network_host_prefix) || 23;
     const maxPodIPs = 2 ** (32 - hostPrefix);
     const maxPodNodes = Math.floor(2 ** (32 - prefixLength) / maxPodIPs);
     if (maxPodNodes < POD_NODES_MIN) {
@@ -853,7 +864,7 @@ const podCidr = (value: string, formData: Record<string, string>): string | unde
   return undefined;
 };
 
-const validateRange = (value: string): string | undefined => {
+const validateRange = (value?: string): string | undefined => {
   if (cidr(value) !== undefined || !value) {
     return undefined;
   }
@@ -873,7 +884,7 @@ const validateRange = (value: string): string | undefined => {
 
 const disjointSubnets =
   (fieldName: string) =>
-  (value: string, formData: { [name: string]: Networks }): string | undefined => {
+  (value: string | undefined, formData: { [name: string]: Networks }): string | undefined => {
     if (!value) {
       return undefined;
     }
@@ -904,7 +915,7 @@ const disjointSubnets =
     return undefined;
   };
 
-const privateAddress = (value: string): string | undefined => {
+const privateAddress = (value?: string): string | undefined => {
   if (cidr(value) !== undefined || !value) {
     return undefined;
   }
@@ -931,9 +942,9 @@ const privateAddress = (value: string): string | undefined => {
 };
 
 const awsSubnetMask =
-  (fieldName: string) =>
-  (value: string): string | undefined => {
-    if (cidr(value) !== undefined || !value) {
+  (fieldName: string | undefined) =>
+  (value?: string): string | undefined => {
+    if (!fieldName || cidr(value) !== undefined || !value) {
       return undefined;
     }
     const awsSubnetMaskRanges: { [key: string]: [number | undefined, number] } = {
@@ -957,7 +968,7 @@ const awsSubnetMask =
   };
 
 // Function to validate IP address masks
-const hostPrefix = (value: string): string | undefined => {
+const hostPrefix = (value?: string): string | undefined => {
   if (!value) {
     return undefined;
   }
@@ -995,10 +1006,10 @@ const nodes = (
   min: { value: number; validationMsg?: string },
   max = MAX_NODE_COUNT,
 ): string | undefined => {
-  if (value === undefined || value < min.value) {
+  if (value === undefined || +value < min.value) {
     return min.validationMsg || `The minimum number of nodes is ${min.value}.`;
   }
-  if (value > max) {
+  if (+value > max) {
     return `Maximum number allowed is ${max}.`;
   }
 
@@ -1057,16 +1068,16 @@ const validateNumericInput = (
   return undefined;
 };
 
-const checkDisconnectedConsoleURL = (value: string) => checkClusterConsoleURL(value, false);
+const checkDisconnectedConsoleURL = (value?: string) => checkClusterConsoleURL(value, false);
 
-const checkDisconnectedvCPU = (value: string) => validateNumericInput(value, { max: 16000 });
+const checkDisconnectedvCPU = (value?: string) => validateNumericInput(value, { max: 16000 });
 
-const checkDisconnectedSockets = (value: string) => validateNumericInput(value, { max: 2000 });
+const checkDisconnectedSockets = (value?: string) => validateNumericInput(value, { max: 2000 });
 
-const checkDisconnectedMemCapacity = (value: string) =>
+const checkDisconnectedMemCapacity = (value?: string) =>
   validateNumericInput(value, { allowDecimal: true, max: 256000 });
 
-const checkDisconnectedNodeCount = (value: string): string | undefined => {
+const checkDisconnectedNodeCount = (value?: string): string | undefined => {
   if (value === '') {
     return undefined;
   }
@@ -1147,7 +1158,7 @@ const atLeastOneRequired =
     return undefined;
   };
 
-const awsNumericAccountID = (input: string): string | undefined => {
+const awsNumericAccountID = (input?: string): string | undefined => {
   if (!input) {
     return 'AWS account ID is required.';
   }
@@ -1418,7 +1429,7 @@ const validateAWSSubnetIsPublic = (
   return undefined;
 };
 
-const validateGCPSubnet = (value: string): string | undefined => {
+const validateGCPSubnet = (value?: string): string | undefined => {
   if (!value) {
     return 'Field is required.';
   }
@@ -1434,7 +1445,7 @@ const validateGCPSubnet = (value: string): string | undefined => {
   return undefined;
 };
 
-const validateGCPKMSServiceAccount = (value: string): string | undefined => {
+const validateGCPKMSServiceAccount = (value?: string): string | undefined => {
   if (!value) {
     return 'Field is required.';
   }

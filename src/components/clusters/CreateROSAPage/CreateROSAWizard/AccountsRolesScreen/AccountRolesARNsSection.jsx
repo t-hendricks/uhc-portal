@@ -25,7 +25,8 @@ import { trackEvents } from '~/common/analytics';
 import useAnalytics from '~/hooks/useAnalytics';
 import { useOCPLatestVersion } from '~/components/releases/hooks';
 import { isSupportedMinorVersion, formatMinorVersion } from '~/common/helpers';
-
+import { useFeatureGate } from '~/hooks/useFeatureGate';
+import { HCP_USE_UNMANAGED } from '~/redux/constants/featureConstants';
 import ErrorBox from '~/components/common/ErrorBox';
 import ExternalLink from '~/components/common/ExternalLink';
 import InstructionCommand from '~/components/common/InstructionCommand';
@@ -38,7 +39,6 @@ import {
 import { AwsRoleErrorAlert } from './AwsRoleErrorAlert';
 import { RosaCliCommand } from './constants/cliCommands';
 
-// todo - WAT!?
 import './AccountsRolesScreen.scss';
 
 const NO_ROLE_DETECTED = 'No role detected';
@@ -103,6 +103,7 @@ function AccountRolesARNsSection({
   const [allARNsFound, setAllARNsFound] = useState(false);
   const [hasARNsError, setHasARNsError] = useState(false);
   const [hasManagedPolicies, setHasManagedPolicies] = useState(false);
+  const useHCPManagedAndUnmanaged = useFeatureGate(HCP_USE_UNMANAGED);
 
   const touchARNsFields = React.useCallback(() => {
     touch('installer_role_arn');
@@ -231,16 +232,14 @@ function AccountRolesARNsSection({
     } else if (getAWSAccountRolesARNsResponse.pending) {
       setHasARNsError(false);
     } else if (getAWSAccountRolesARNsResponse.fulfilled) {
-      const accountRolesARNs = get(getAWSAccountRolesARNsResponse, 'data', []).filter((arn) =>
-        // TODO: restore when managed policies are in place
-        // isHypershiftSelected ? (arn.hcpManagedPolicies && arn.managedPolicies) : (!arn.hcpManagedPolicies && !arn.managedPolicies);
-
-        // Per usage of backend `hcpManagedPolicies` and `managedPolicies` fields:
-        // For hypershift managed policies both fields are true
-        // For rosa classic unmanaged both are false
-        // (out of scope) For rosa classic managed policies (the epic is on hold right now) managedPolicies:true and hcpManagedPolicies:false
-        isHypershiftSelected ? true : !arn.hcpManagedPolicies && !arn.managedPolicies,
-      );
+      const accountRolesARNs = get(getAWSAccountRolesARNsResponse, 'data', []).filter((arn) => {
+        if (isHypershiftSelected && useHCPManagedAndUnmanaged) {
+          return true;
+        }
+        return isHypershiftSelected
+          ? arn.hcpManagedPolicies && arn.managedPolicies
+          : !arn.hcpManagedPolicies && !arn.managedPolicies;
+      });
       setSelectedInstallerRoleAndOptions(accountRolesARNs);
       setAccountRoles(accountRolesARNs);
     } else if (getAWSAccountRolesARNsResponse.error) {
