@@ -73,6 +73,10 @@ type State = {
   archivedCluster: PromiseReducerState;
   unarchivedCluster: PromiseReducerState;
   hibernatingCluster: PromiseReducerState;
+  rerunInflightCheckReq: PromiseReducerState;
+  rerunInflightCheckRes: PromiseReducerState & {
+    checks: any[];
+  };
   resumeHibernatingCluster: PromiseReducerState;
   upgradeGates: PromiseReducerState & {
     gates: VersionGate[];
@@ -143,6 +147,13 @@ const initialState: State = {
   },
   resumeHibernatingCluster: {
     ...baseState,
+  },
+  rerunInflightCheckReq: {
+    ...baseState,
+  },
+  rerunInflightCheckRes: {
+    ...baseState,
+    checks: [],
   },
   upgradeGates: {
     ...baseState,
@@ -462,6 +473,7 @@ const clustersReducer = (
         draft.inflightChecks = {
           ...initialState.inflightChecks,
           pending: true,
+          checks: state.inflightChecks.checks, // preserve previous checks to avoid blips
         };
         break;
       case FULFILLED_ACTION(clustersConstants.GET_INFLIGHT_CHECKS):
@@ -469,6 +481,63 @@ const clustersReducer = (
           ...baseState,
           fulfilled: true,
           checks: action.payload.data.items || [],
+        };
+        break;
+
+      // RERUN INFLIGHT_CHECKS
+      case FULFILLED_ACTION(clustersConstants.RERUN_INFLIGHT_CHECKS):
+        draft.rerunInflightCheckReq = {
+          ...baseState,
+          fulfilled: true,
+        };
+        break;
+      case REJECTED_ACTION(clustersConstants.RERUN_INFLIGHT_CHECKS):
+        draft.rerunInflightCheckReq = {
+          ...initialState.rerunInflightCheckReq,
+          ...getErrorState(action),
+        };
+        break;
+      case PENDING_ACTION(clustersConstants.RERUN_INFLIGHT_CHECKS):
+        draft.rerunInflightCheckRes = {
+          ...initialState.rerunInflightCheckRes,
+        };
+        draft.rerunInflightCheckReq = {
+          ...initialState.rerunInflightCheckReq,
+          pending: true,
+        };
+        break;
+
+      // GET STATES OF SUBNETS WHICH THE VALIDATOR IS BEING RERUN ON
+      case FULFILLED_ACTION(clustersConstants.GET_RERUN_INFLIGHT_CHECKS):
+        draft.rerunInflightCheckRes = {
+          ...baseState,
+          checks: action.payload.data.items || [],
+          fulfilled: true,
+        };
+        break;
+      case REJECTED_ACTION(clustersConstants.GET_RERUN_INFLIGHT_CHECKS):
+        draft.rerunInflightCheckRes = {
+          ...initialState.rerunInflightCheckRes,
+          ...getErrorState(action),
+        };
+        break;
+      case PENDING_ACTION(clustersConstants.GET_RERUN_INFLIGHT_CHECKS):
+        draft.rerunInflightCheckRes = {
+          ...initialState.rerunInflightCheckRes,
+          pending: true,
+          checks: state.rerunInflightCheckRes.checks, // preserve previous checks to avoid blips
+        };
+        break;
+
+      case clustersConstants.CLEAR_INFLIGHT_CHECKS:
+        draft.inflightChecks = {
+          ...initialState.inflightChecks,
+        };
+        draft.rerunInflightCheckReq = {
+          ...initialState.rerunInflightCheckReq,
+        };
+        draft.rerunInflightCheckRes = {
+          ...initialState.rerunInflightCheckRes,
         };
         break;
 

@@ -649,6 +649,32 @@ const getClusterStatus = (clusterID: string) =>
 const getInflightChecks = (clusterID: string) =>
   action(clustersConstants.GET_INFLIGHT_CHECKS, clusterService.getInflightChecks(clusterID));
 
+const rerunInflightChecks = (clusterID: string) =>
+  action(clustersConstants.RERUN_INFLIGHT_CHECKS, clusterService.rerunInflightChecks(clusterID));
+
+const fetchRerunInflightChecks = async (subnetIds: string[]): Promise<any> => {
+  const results = subnetIds.map((subnetId: string) =>
+    clusterService.getTriggeredInflightCheckState(subnetId),
+  );
+  // @ts-ignore  error due to using an older compiler
+  const response = await Promise.allSettled(results);
+  const items = response
+    .filter((res: { status: string }) => res.status !== 'rejected')
+    .map((item: { value: any }) => item?.value?.data);
+  return {
+    data: {
+      items,
+      page: 0,
+      total: 0,
+    },
+  };
+};
+
+const getRerunInflightChecks = (subnetIds: string[]) =>
+  action(clustersConstants.GET_RERUN_INFLIGHT_CHECKS, fetchRerunInflightChecks(subnetIds));
+
+const clearInflightChecks = () => action(clustersConstants.CLEAR_INFLIGHT_CHECKS);
+
 const clearInstallableVersions = () => action(clustersConstants.CLEAR_CLUSTER_VERSIONS_RESPONSE);
 
 const getInstallableVersions = (
@@ -686,6 +712,9 @@ type ClusterAction = ActionType<
   | typeof resetCreatedClusterResponse
   | typeof getClusterStatus
   | typeof getInflightChecks
+  | typeof rerunInflightChecks
+  | typeof clearInflightChecks
+  | typeof getRerunInflightChecks
   | typeof clearInstallableVersions
   | typeof getInstallableVersions
 >;
@@ -706,6 +735,9 @@ const clustersActions = {
   unarchiveCluster,
   getClusterStatus,
   getInflightChecks,
+  rerunInflightChecks,
+  clearInflightChecks,
+  getRerunInflightChecks,
   clearInstallableVersions,
   getInstallableVersions,
 };
@@ -733,6 +765,9 @@ export {
   editClusterConsoleURL,
   getClusterStatus,
   getInflightChecks,
+  rerunInflightChecks,
+  clearInflightChecks,
+  getRerunInflightChecks,
   upgradeTrialCluster,
   clearUpgradeTrialClusterResponse,
   clearInstallableVersions,

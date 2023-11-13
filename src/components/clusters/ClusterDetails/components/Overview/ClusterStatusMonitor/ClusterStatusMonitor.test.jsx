@@ -5,7 +5,7 @@ import fixtures from '../../../__test__/ClusterDetails.fixtures';
 
 jest.useFakeTimers('legacy'); // TODO 'modern'
 
-const { clusterDetails, inflightChecks } = fixtures;
+const { clusterDetails } = fixtures;
 
 const status = {
   pending: false,
@@ -14,12 +14,23 @@ const status = {
     id: clusterDetails.cluster.id,
   },
 };
+const inflightChecks = { fulfilled: true, pending: false, checks: [] };
+const rerunInflightCheckReq = {
+  fulfilled: true,
+  pending: false,
+};
+const rerunInflightCheckRes = {
+  fulfilled: true,
+  pending: false,
+  checks: [],
+};
 
 // TODO: These tests throw warnings due to list items not having unique keys
 
 describe('<ClusterStatusMonitor />', () => {
   const getClusterStatus = jest.fn();
   const getInflightChecks = jest.fn();
+  const resetInflightChecks = jest.fn();
   const refresh = jest.fn();
   const historyPush = jest.fn();
   const history = { push: historyPush };
@@ -29,6 +40,9 @@ describe('<ClusterStatusMonitor />', () => {
     inflightChecks,
     getClusterStatus,
     getInflightChecks,
+    resetInflightChecks,
+    rerunInflightCheckReq,
+    rerunInflightCheckRes,
     status,
     refresh,
     history,
@@ -70,7 +84,6 @@ describe('<ClusterStatusMonitor />', () => {
             state: 'installing',
           },
         }}
-        inflightChecks={{ fulfilled: true, pending: false, checks: [] }}
       />,
     );
 
@@ -99,11 +112,6 @@ describe('<ClusterStatusMonitor />', () => {
           provision_error_message: 'Install taking longer than expected',
         },
       },
-      inflightChecks: {
-        fulfilled: true,
-        pending: false,
-        checks: [],
-      },
     };
 
     render(<ClusterStatusMonitor {...newProps} />);
@@ -123,10 +131,6 @@ describe('<ClusterStatusMonitor />', () => {
           ...status,
           pending: true,
         }}
-        inflightChecks={{
-          pending: true,
-          checks: [],
-        }}
       />,
     );
     expect(refresh).not.toHaveBeenCalled();
@@ -142,11 +146,6 @@ describe('<ClusterStatusMonitor />', () => {
             provision_error_code: 'OCM1002',
             provision_error_message: 'Invalid AWS credentials (authentication)',
           },
-        }}
-        inflightChecks={{
-          fulfilled: true,
-          pending: false,
-          checks: [],
         }}
       />,
     );
@@ -167,11 +166,6 @@ describe('<ClusterStatusMonitor />', () => {
             provision_error_code: 'OCM1002',
             provision_error_message: 'Invalid AWS credentials (authentication)',
           },
-        }}
-        inflightChecks={{
-          fulfilled: true,
-          pending: false,
-          checks: [],
         }}
       />,
     );
