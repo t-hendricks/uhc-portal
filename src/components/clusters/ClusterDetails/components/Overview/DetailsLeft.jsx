@@ -128,6 +128,18 @@ function DetailsLeft({ cluster, cloudProviders, showAssistedId }) {
             </DescriptionListDescription>
           </DescriptionListGroup>
         )}
+        {cluster?.aws?.kms_key_arn ? (
+          <>
+            <DescriptionListGroup>
+              <DescriptionListTerm>Encrypt volumes with custom keys</DescriptionListTerm>
+              <DescriptionListDescription>Enabled</DescriptionListDescription>
+            </DescriptionListGroup>
+            <DescriptionListGroup>
+              <DescriptionListTerm>Custom KMS key ARN</DescriptionListTerm>
+              <DescriptionListDescription>{cluster.aws.kms_key_arn}</DescriptionListDescription>
+            </DescriptionListGroup>
+          </>
+        ) : null}
         <DescriptionListGroup>
           <DescriptionListTerm>Created at</DescriptionListTerm>
           <DescriptionListDescription>
