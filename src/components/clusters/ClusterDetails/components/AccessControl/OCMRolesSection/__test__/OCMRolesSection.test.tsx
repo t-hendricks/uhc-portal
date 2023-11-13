@@ -1,7 +1,7 @@
 import React from 'react';
+import type axios from 'axios';
 
 import { insightsMock, render, within } from '~/testUtils';
-import MockAdapter from 'axios-mock-adapter';
 
 import apiRequest from '~/services/apiRequest';
 import { Subscription } from '~/types/accounts_mgmt.v1';
@@ -10,10 +10,16 @@ import OCMRolesSection from '../OCMRolesSection';
 
 import fixtures from '../../../../__test__/ClusterDetails.fixtures';
 
-const mock = new MockAdapter(apiRequest);
+type MockedJest = jest.Mocked<typeof axios> & jest.Mock;
+const apiRequestMock = apiRequest as unknown as MockedJest;
+
 insightsMock();
 
 describe('<OCMRolesSection />', () => {
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
+
   const { subscription } = fixtures.clusterDetails.cluster;
   const props = {
     subscription: subscription as unknown as Subscription,
@@ -22,12 +28,15 @@ describe('<OCMRolesSection />', () => {
   };
 
   it('should render', async () => {
-    mock
-      .onGet(
-        `/api/accounts_mgmt/v1/subscriptions/${fixtures.clusterDetails.cluster.subscription.id}/role_bindings`,
-      )
-      .reply(200, OCMRoles.data);
+    apiRequestMock.get.mockResolvedValue(OCMRoles);
+
     const { findByRole, getByRole, getAllByRole } = render(<OCMRolesSection {...props} />);
+    expect(apiRequestMock.get).toHaveBeenCalledTimes(1);
+    expect(apiRequestMock.get).toHaveBeenCalledWith(
+      `/api/accounts_mgmt/v1/subscriptions/${fixtures.clusterDetails.cluster.subscription.id}/role_bindings`,
+      expect.objectContaining({}),
+    );
+
     await findByRole('grid', { name: 'OCM Roles and Access' });
     expect(getAllByRole('row')).toHaveLength(5);
     expect(getByRole('button', { name: 'Grant role' })).not.toHaveAttribute(
@@ -49,12 +58,15 @@ describe('<OCMRolesSection />', () => {
   });
 
   it('should disable buttons if no edit access', async () => {
-    mock
-      .onGet(
-        `/api/accounts_mgmt/v1/subscriptions/${fixtures.clusterDetails.cluster.subscription.id}/role_bindings`,
-      )
-      .reply(200, OCMRoles.data);
+    apiRequestMock.get.mockResolvedValue(OCMRoles);
+
     const { findByRole } = render(<OCMRolesSection {...props} canEditOCMRoles={false} />);
+    expect(apiRequest.get).toHaveBeenCalledTimes(1);
+    expect(apiRequest.get).toHaveBeenCalledWith(
+      `/api/accounts_mgmt/v1/subscriptions/${fixtures.clusterDetails.cluster.subscription.id}/role_bindings`,
+      expect.objectContaining({}),
+    );
+
     expect(await findByRole('button', { name: 'Grant role' })).toHaveAttribute('aria-disabled');
     const row1 = await findByRole('row', { name: /Doris Hudson/ });
     within(row1).getByRole('cell', { name: /cluster editor/i });
@@ -71,12 +83,15 @@ describe('<OCMRolesSection />', () => {
       reason:
         'Account with ID 123456 denied access to perform get on Subscription with HTTP call GET /api/accounts_mgmt/v1/subscriptions/7890/role_bindings',
     };
-    mock
-      .onGet(
-        `/api/accounts_mgmt/v1/subscriptions/${fixtures.clusterDetails.cluster.subscription.id}/role_bindings`,
-      )
-      .reply(403, errorResp);
+    apiRequestMock.get.mockRejectedValue({ status: 403, response: { data: errorResp } }); // Mocks the axios format of the error
+
     const { findByRole } = render(<OCMRolesSection {...props} />);
+    expect(apiRequest.get).toHaveBeenCalledTimes(1);
+    expect(apiRequest.get).toHaveBeenCalledWith(
+      `/api/accounts_mgmt/v1/subscriptions/${fixtures.clusterDetails.cluster.subscription.id}/role_bindings`,
+      expect.objectContaining({}),
+    );
+
     const alert = await findByRole('alert', { name: /danger alert/i });
     within(alert).getByRole('heading', { name: /error getting OCM roles and access/i });
     within(alert).getByText(/ACCT-MGMT-11/);
