@@ -96,9 +96,6 @@ import InstallPowerVSIPI from '../clusters/install/InstallPowerVirtualServerIPI'
 import ConnectedInstallPreRelease from '../clusters/install/InstallPreRelease';
 import ConnectedInstallPullSecret from '../clusters/install/InstallPullSecret';
 import ConnectedInstallPullSecretAzure from '../clusters/install/InstallPullSecretAzure';
-import InstallRHV from '../clusters/install/InstallRHV';
-import ConnectedInstallRHVIPI from '../clusters/install/InstallRHVIPI';
-import ConnectedInstallRHVUPI from '../clusters/install/InstallRHVUPI';
 import InstallVSphere from '../clusters/install/InstallVSphere';
 import ConnectedInstallVSphereABI from '../clusters/install/InstallVSphereABI';
 import ConnectedInstallVSphereIPI from '../clusters/install/InstallVSphereIPI';
@@ -257,9 +254,6 @@ const Router: React.FC<RouterProps> = ({ history, planType, clusterId, externalC
             />
             <Route path="/install/openstack/user-provisioned" component={ConnectedInstallOSPUPI} />
             <Route path="/install/openstack" component={InstallOSP} />
-            <Route path="/install/rhv/installer-provisioned" component={ConnectedInstallRHVIPI} />
-            <Route path="/install/rhv/user-provisioned" component={ConnectedInstallRHVUPI} />
-            <Route path="/install/rhv" component={InstallRHV} />
             <Route
               path="/install/azure/arm/installer-provisioned"
               component={ConnectedInstallArmAzureIPI}

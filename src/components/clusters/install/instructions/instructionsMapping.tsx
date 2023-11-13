@@ -468,23 +468,6 @@ const instructionsMapping = {
       channel: channels.STABLE,
     },
   },
-  ovirt: {
-    cloudProvider: 'Red Hat Virtualization',
-    customizations: links.INSTALL_RHV_CUSTOMIZATIONS,
-    ipi: {
-      docURL: links.INSTALL_RHVIPI_GETTING_STARTED,
-      title:
-        'Install OpenShift on Red Hat Virtualization with installer-provisioned infrastructure',
-      installer: tools.X86INSTALLER,
-      channel: channels.STABLE,
-    },
-    upi: {
-      docURL: links.INSTALL_RHVUPI_GETTING_STARTED,
-      title: 'Install OpenShift on Red Hat Virtualization with user-provisioned infrastructure',
-      installer: tools.X86INSTALLER,
-      channel: channels.STABLE,
-    },
-  },
 };
 
 export default instructionsMapping;
