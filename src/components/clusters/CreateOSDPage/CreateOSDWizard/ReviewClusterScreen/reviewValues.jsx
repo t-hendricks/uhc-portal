@@ -158,6 +158,10 @@ const reviewValues = {
       false: 'Disabled',
     },
   },
+  kms_key_arn: {
+    title: 'Custom KMS key ARN',
+    isOptional: true,
+  },
   network_configuration_toggle: {
     title: 'Networking',
     values: {

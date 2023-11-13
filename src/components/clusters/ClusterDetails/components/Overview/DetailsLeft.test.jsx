@@ -18,6 +18,12 @@ const componentText = {
   OWNER: { label: 'Owner', NA: 'N/A' },
   SUBSCRIPTION: { label: 'Subscription billing model' },
   INFRASTRUCTURE: { label: 'Infrastructure billing model' },
+  ENCRYPT_WITH_CUSTOM_KEYS: {
+    label: 'Encrypt volumes with custom keys',
+  },
+  CUSTOM_KMS_KEY: {
+    label: 'Custom KMS key ARN',
+  },
 };
 
 const checkForValue = (label, value) => {
@@ -349,6 +355,42 @@ describe('<DetailsLeft />', () => {
     });
   });
 
+  describe('Custom encryption keys', () => {
+    it('shows KMS key ARN if present', () => {
+      // Arrange
+      const keyARN = 'arn:aws:kms:us-east-1:000000000006:key/98a8df03-1d14-4eb5-84dc-82a3f490dfa9';
+      const cluster = { ...fixtures.ROSAManualClusterDetails.cluster };
+      const ROSAClusterFixture = {
+        ...cluster,
+        aws: {
+          ...cluster.aws,
+          kms_key_arn: keyARN,
+        },
+      };
+
+      const props = { ...defaultProps, cluster: ROSAClusterFixture };
+      render(<DetailsLeft {...props} />);
+
+      // Assert
+      checkForValue(componentText.CUSTOM_KMS_KEY.label, keyARN);
+      checkForValue(componentText.ENCRYPT_WITH_CUSTOM_KEYS.label, 'Enabled');
+    });
+
+    it('hides KMS key ARN if not present', () => {
+      // Arrange
+      const ROSAClusterFixture = {
+        ...fixtures.ROSAManualClusterDetails.cluster,
+      };
+
+      const props = { ...defaultProps, cluster: ROSAClusterFixture };
+      render(<DetailsLeft {...props} />);
+
+      // Assert
+      checkForValueAbsence(componentText.CUSTOM_KMS_KEY.label);
+      checkForValueAbsence(componentText.ENCRYPT_WITH_CUSTOM_KEYS.label);
+    });
+  });
+
   describe('Owner', () => {
     it('shows creator name as the owner', () => {
       // Arrange
@@ -404,7 +446,7 @@ describe('<DetailsLeft />', () => {
     });
   });
 
-  describe('subscription and infrastructure headings', () => {
+  describe('Subscription and infrastructure headings', () => {
     it('shows subscription type and infrastructure headings if managed and not ROSA', () => {
       // Arrange
       const OSDClusterFixture = {

@@ -202,4 +202,35 @@ describe('<ReviewClusterScreen />', () => {
       expect(screen.queryByText(sampleFormData.values.selected_vpc.id)).not.toBeInTheDocument();
     });
   });
+
+  describe('Custom encryption key', () => {
+    const customKeyLabel = 'Custom KMS key ARN';
+    const keyARN = 'arn:aws:kms:us-east-1:000000000006:key/98a8df03-1d14-4eb5-84dc-82a3f490dfa9';
+
+    it('is shown when present', () => {
+      const ConnectedReviewClusterScreen = wizardConnector(ReviewClusterScreen);
+      const newProps = {
+        ...defaultProps,
+        formValues: {
+          ...defaultProps.formValues,
+          kms_key_arn: keyARN,
+        },
+      };
+      render(<ConnectedReviewClusterScreen {...newProps} />);
+
+      expect(screen.getByText(customKeyLabel)).toBeInTheDocument();
+      expect(screen.getByText(keyARN)).toBeInTheDocument();
+    });
+
+    it('is absent when not present', () => {
+      const ConnectedReviewClusterScreen = wizardConnector(ReviewClusterScreen);
+      const newProps = {
+        ...defaultProps,
+      };
+      render(<ConnectedReviewClusterScreen {...newProps} />);
+
+      expect(screen.queryByText(customKeyLabel)).not.toBeInTheDocument();
+      expect(screen.queryByText(keyARN)).not.toBeInTheDocument();
+    });
+  });
 });
