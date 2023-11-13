@@ -2,7 +2,7 @@ import { AxiosResponse } from 'axios';
 
 import config from '~/config';
 
-import apiRequest from '../../services/apiRequest';
+import apiRequest from '~/services/apiRequest';
 import { DemoExperience, DemoExperienceStatusEnum } from './DemoExperienceModels';
 import { AugmentedDemoExperienceStatus, AugmentedDemoExperience } from './augmentedModelTypes';
 

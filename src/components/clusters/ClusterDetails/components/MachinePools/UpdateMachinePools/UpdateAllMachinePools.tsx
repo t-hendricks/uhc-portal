@@ -72,8 +72,9 @@ const UpdateAllMachinePools = ({
           role="alert"
           className="pf-u-mt-md"
         >
-          {errors.map((error) => (
-            <p>{error}</p>
+          {errors.map((error, index) => (
+            // eslint-disable-next-line react/no-array-index-key
+            <p key={index}>{error}</p>
           ))}
         </Alert>
       ) : null}

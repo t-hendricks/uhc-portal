@@ -1,5 +1,5 @@
+import apiRequest from '~/services/apiRequest';
 import createAuthorizationToken from './createAuthorizationToken';
-import apiRequest from '../apiRequest';
 import type { Summary } from '../../types/accounts_mgmt.v1';
 
 const getDashboard = (orgId: string) =>

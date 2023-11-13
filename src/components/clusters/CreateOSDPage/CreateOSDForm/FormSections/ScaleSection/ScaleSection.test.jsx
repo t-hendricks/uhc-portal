@@ -1,5 +1,4 @@
 import React from 'react';
-import MockAdapter from 'axios-mock-adapter';
 
 import { render, screen, checkAccessibility, within, insightsMock } from '~/testUtils';
 import apiRequest from '~/services/apiRequest';
@@ -8,7 +7,6 @@ import ScaleSection from './ScaleSection';
 import { constants } from '../../CreateOSDFormConstants';
 
 insightsMock();
-const axiosMock = new MockAdapter(apiRequest);
 
 const defaultProps = {
   isBYOC: false,
@@ -33,7 +31,7 @@ describe('<ScaleSection />', () => {
     // select aria-label: Compute nodes
   });
   describe('non autoscaling node count hint text', () => {
-    axiosMock.onGet().reply(200); // Some sub component is trying to make an ajax call - this prevents errors
+    apiRequest.get.mockResolvedValue('success');
 
     it('displays appropriate text when HCP wizard', async () => {
       // Arrange
