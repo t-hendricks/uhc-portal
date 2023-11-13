@@ -27,10 +27,12 @@ class Releases extends Page {
       .within(() => {
         cy.get('button[aria-label="More information"]').scrollIntoView().click({ force: true });
       });
-    Docs.getcontainerPlatformDocAbsolutePath(
-      version,
-      'updating/understanding-upgrade-channels-release.html#candidate-version-channel_understanding-upgrade-channels-releases',
-    )
+
+    let relativePath =
+      minor_version >= 14
+        ? 'understanding_updates/understanding-update-channels-release.html'
+        : 'understanding-upgrade-channels-release.html#candidate-version-channel_understanding-upgrade-channels-releases';
+    Docs.getcontainerPlatformDocAbsolutePath(version, 'updating/' + relativePath)
       .should('exist')
       .and('contain.text', 'Learn more about candidate channels');
     cy.get('button[aria-label="Close"]').click();
