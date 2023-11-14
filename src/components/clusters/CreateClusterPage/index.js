@@ -9,8 +9,14 @@ import { tollboothActions } from '../../../redux/actions';
 import { ASSISTED_INSTALLER_FEATURE } from '../../../redux/constants/featureConstants';
 
 const mapStateToProps = (state) => ({
-  hasOSDQuota: hasManagedQuotaSelector(state, normalizedProducts.OSD),
-  hasOSDTrialQuota: hasManagedQuotaSelector(state, normalizedProducts.OSDTrial),
+  hasOSDQuota: hasManagedQuotaSelector(
+    state.userProfile.organization.quotaList,
+    normalizedProducts.OSD,
+  ),
+  hasOSDTrialQuota: hasManagedQuotaSelector(
+    state.userProfile.organization.quotaList,
+    normalizedProducts.OSDTrial,
+  ),
   organization: state.userProfile.organization,
   token: state.tollbooth.token,
   assistedInstallerFeature: featureGateSelector(state, ASSISTED_INSTALLER_FEATURE),

@@ -10,7 +10,10 @@ import {
   MachineType,
   Product,
 } from '~/types/clusters_mgmt.v1';
+import { QuotaCostList } from '~/types/accounts_mgmt.v1';
 import { MAX_NODES } from './constants';
+import { QuotaParams } from '../quotaModel';
+import { clusterBillingModelToRelatedResource } from '../billingModelMapper';
 
 export const getIncludedNodes = ({
   isMultiAz,
@@ -78,15 +81,15 @@ export const getAvailableQuota = ({
   }
   const resourceName = machineTypeResource.generic_name;
 
-  const quotaParams = {
+  const quotaParams: QuotaParams = {
     product,
     cloudProviderID,
     isBYOC: isByoc,
     isMultiAz,
     resourceName,
-    billingModel,
+    billingModel: clusterBillingModelToRelatedResource(billingModel), // TODO: it should handle marketplace-* -> marketplace in future
   };
-  return availableNodesFromQuota(quota || {}, quotaParams);
+  return availableNodesFromQuota(quota as QuotaCostList, quotaParams);
 };
 
 export const getNodeOptions = ({
