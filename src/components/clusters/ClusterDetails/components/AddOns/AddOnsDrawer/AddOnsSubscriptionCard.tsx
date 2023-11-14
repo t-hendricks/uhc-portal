@@ -1,4 +1,3 @@
-import * as React from 'react';
 import {
   Card,
   CardBody,
@@ -7,13 +6,14 @@ import {
   Select,
   SelectOption,
 } from '@patternfly/react-core';
+import * as React from 'react';
+import { BillingQuotaCloudAccounts } from '~/components/clusters/common/quotaModel';
 import ExternalLink from '~/components/common/ExternalLink';
 import {
-  SubscriptionModels,
-  SubscriptionModel,
-  SetSubscriptionModel,
-  CloudAccount,
   CloudProviders,
+  SetSubscriptionModel,
+  SubscriptionModel,
+  SubscriptionModels,
 } from './AddOnsTypes';
 
 const SELECT_ACCOUNT_PLACEHOLDER = 'Select an account';
@@ -46,11 +46,7 @@ const AddOnsSubscriptionCard = ({
   activeCardId: string;
   hasQuota: boolean;
   isReady: boolean;
-  cloudAccounts?: {
-    rhm: CloudAccount[];
-    aws: CloudAccount[];
-    azure: CloudAccount[];
-  };
+  cloudAccounts?: BillingQuotaCloudAccounts;
   installedAddOn: any;
   billingModel: SubscriptionModel;
   name: string;

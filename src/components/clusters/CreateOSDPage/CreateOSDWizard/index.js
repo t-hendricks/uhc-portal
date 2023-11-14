@@ -61,7 +61,7 @@ const mapStateToProps = (state, ownProps) => {
     cloudProviders: state.cloudProviders,
     loadBalancerValues: state.loadBalancerValues,
     persistentStorageValues: state.persistentStorageValues,
-    hasProductQuota: hasManagedQuotaSelector(state, product),
+    hasProductQuota: hasManagedQuotaSelector(state.userProfile.organization.quotaList, product),
     formErrors: {
       ...formSyncErrors,
       ...formAsyncErrors,

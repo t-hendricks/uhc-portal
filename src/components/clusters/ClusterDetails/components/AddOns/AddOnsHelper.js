@@ -1,10 +1,10 @@
 import get from 'lodash/get';
 
+import { QuotaTypes } from '~/components/clusters/common/quotaModel';
 import {
   availableQuota,
   hasPotentialQuota,
   queryFromCluster,
-  quotaTypes,
   addOnBillingQuota,
 } from '../../../common/quotaSelectors';
 
@@ -21,7 +21,7 @@ const isAvailable = (addOn, cluster, organization, quotaList) => {
   return (
     hasPotentialQuota(quotaList, {
       ...queryFromCluster(cluster),
-      resourceType: quotaTypes.ADD_ON,
+      resourceType: QuotaTypes.ADD_ON,
       resourceName: addOn.resource_name,
       // the billing_model field for addon's is addon specific and should not be a filter criteria against the cluster
       billingModel: 'any',
@@ -143,7 +143,7 @@ const hasQuota = (addOn, cluster, organization, quotaList) => {
   const minCount = minQuotaCount(addOn);
   const available = availableQuota(quotaList, {
     ...queryFromCluster(cluster),
-    resourceType: quotaTypes.ADD_ON,
+    resourceType: QuotaTypes.ADD_ON,
     resourceName: addOn.resource_name,
     // the billing_model field for addon's is addon specific and should not be a filter criteria against the cluster
     billingModel: 'any',
@@ -153,7 +153,7 @@ const hasQuota = (addOn, cluster, organization, quotaList) => {
 
 const getAddOnBillingQuota = (addOn, quotaList) =>
   addOnBillingQuota(quotaList, {
-    resourceType: quotaTypes.ADD_ON,
+    resourceType: QuotaTypes.ADD_ON,
     resourceName: addOn.resource_name,
   });
 
@@ -163,7 +163,7 @@ const quotaCostOptions = (resourceName, cluster, quotaList, allOptions, currentV
   currentValue = Number.isNaN(currentValue) ? 0 : currentValue;
   const query = {
     ...queryFromCluster(cluster),
-    resourceType: quotaTypes.ADD_ON,
+    resourceType: QuotaTypes.ADD_ON,
     resourceName,
     // the billing_model field for addon's is addon specific and should not be a filter criteria against the cluster
     billingModel: 'any',
