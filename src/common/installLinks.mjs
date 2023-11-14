@@ -93,7 +93,7 @@ const links = {
   GETTING_SUPPORT: `${DOCS_BASE}/support/getting-support.html`,
   TELEMETRY_INFORMATION: `${DOCS_BASE}/support/remote_health_monitoring/about-remote-health-monitoring.html`,
   REMOTE_HEALTH_INSIGHTS: `${DOCS_BASE}/support/remote_health_monitoring/using-insights-to-identify-issues-with-your-cluster.html`,
-  UPDATING_CLUSTER: `${DOCS_BASE}/updating/updating-cluster-within-minor.html`,
+  UPDATING_CLUSTER: `${DOCS_BASE}/updating/updating_a_cluster/updating-cluster-web-console.html`,
   // TODO https://issues.redhat.com/browse/HAC-5192 to change the link to a public document, not a KB article
   HIBERNATING_CLUSTER: 'https://access.redhat.com/articles/7012966',
   MIGRATING_FROM_3_TO_4: `${DOCS_BASE}/migrating_from_ocp_3_to_4/about-migrating-from-3-to-4.html`,
@@ -152,12 +152,12 @@ const links = {
   INSTALL_AWS_CUSTOMIZATIONS: `${DOCS_BASE}/installing/installing_aws/installing-aws-customizations.html`,
   INSTALL_AWS_VPC: `${DOCS_BASE}/installing/installing_aws/installing-aws-vpc.html`,
   INSTALL_AWS_CUSTOM_VPC_REQUIREMENTS: `${DOCS_BASE}/installing/installing_aws/installing-aws-vpc.html#installation-custom-aws-vpc-requirements_installing-aws-vpc`,
-  INSTALL_AWS_MULTI_ARCH: `${DOCS_BASE}/post_installation_configuration/multi-architecture-configuration.html#creating-a-cluster-with-multi-architecture-compute-machines-on-aws`,
+  INSTALL_AWS_MULTI_ARCH: `${DOCS_BASE}/post_installation_configuration/configuring-multi-arch-compute-machines/creating-multi-arch-compute-nodes-aws.html`,
 
   INSTALL_AZUREUPI_GETTING_STARTED: `${DOCS_BASE}/installing/installing_azure/installing-azure-user-infra.html`,
   INSTALL_AZUREIPI_GETTING_STARTED: `${DOCS_BASE}/installing/installing_azure/installing-azure-default.html`,
   INSTALL_AZURE_CUSTOMIZATIONS: `${DOCS_BASE}/installing/installing_azure/installing-azure-customizations.html`,
-  INSTALL_AZURE_MULTI_ARCH: `${DOCS_BASE}/post_installation_configuration/multi-architecture-configuration.html`,
+  INSTALL_AZURE_MULTI_ARCH: `${DOCS_BASE}/post_installation_configuration/configuring-multi-arch-compute-machines/creating-multi-arch-compute-nodes-azure.html`,
 
   INSTALL_ASHIPI_GETTING_STARTED: `${DOCS_BASE}/installing/installing_azure_stack_hub/installing-azure-stack-hub-default.html`,
   INSTALL_ASHUPI_GETTING_STARTED: `${DOCS_BASE}/installing/installing_azure_stack_hub/installing-azure-stack-hub-user-infra.html`,
@@ -172,7 +172,7 @@ const links = {
   INSTALL_BAREMETAL_CUSTOMIZATIONS: `${DOCS_BASE}/installing/installing_bare_metal/installing-bare-metal-network-customizations.html`,
   RHCOS_BAREMETAL_ISO_X86: `${MIRROR_RHCOS_LATEST_X86}/rhcos-live.x86_64.iso`,
   RHCOS_BAREMETAL_RAW_X86: `${MIRROR_RHCOS_LATEST_X86}/rhcos-metal.x86_64.raw.gz`,
-  INSTALL_BAREMETAL_MULTI_ARCH: `${DOCS_BASE}/post_installation_configuration/multi-architecture-configuration.html#creating-a-cluster-with-multi-architecture-compute-machine-on-bare-metal-technology-preview`,
+  INSTALL_BAREMETAL_MULTI_ARCH: `${DOCS_BASE}/post_installation_configuration/configuring-multi-arch-compute-machines/creating-multi-arch-compute-nodes-bare-metal.html`,
 
   INSTALL_CRC_GETTING_STARTED:
     'https://access.redhat.com/documentation/en-us/red_hat_openshift_local',
