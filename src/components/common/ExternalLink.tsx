@@ -3,6 +3,7 @@ import { Button, ButtonProps, ButtonVariant } from '@patternfly/react-core';
 import { ExternalLinkAltIcon } from '@patternfly/react-icons';
 import { trackEvents } from '~/common/analytics';
 import useAnalytics from '~/hooks/useAnalytics';
+import './ExternalLink.scss';
 
 type Props = {
   href: string;
@@ -14,6 +15,7 @@ type Props = {
   isButton?: boolean;
   variant?: ButtonProps['variant'];
   customTrackProperties?: Record<string, unknown>;
+  'data-testid'?: string;
 };
 
 const ExternalLink = ({
@@ -26,6 +28,7 @@ const ExternalLink = ({
   isButton,
   variant = ButtonVariant.secondary,
   customTrackProperties = {},
+  'data-testid': dataTestId,
 }: Props) => {
   const track = useAnalytics();
 
@@ -69,20 +72,24 @@ const ExternalLink = ({
     rel: 'noreferrer noopener',
     className,
     onClick: handleClick,
+    'data-testid': dataTestId,
   };
 
   const childrenComp = (
     <>
       {children}
       {noTarget ? null : <span className="pf-u-screen-reader"> (new window or tab)</span>}
-      {!noIcon && (
-        <ExternalLinkAltIcon
-          color="#0066cc"
-          size="sm"
-          className="pf-u-ml-sm"
-          data-testid="openInNewWindowIcon"
-        />
-      )}
+      {
+        // TODO: replace it by <Button component="a" href="..." variant="link" icon={<ExternalLinkSquareAltIcon />} ...
+        !noIcon && (
+          <ExternalLinkAltIcon
+            color="#0066cc"
+            size="sm"
+            className="pf-u-ml-sm external-link-alt-icon"
+            data-testid="openInNewWindowIcon"
+          />
+        )
+      }
     </>
   );
   return isButton ? (
