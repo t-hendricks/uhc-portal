@@ -7,8 +7,8 @@ import {
   DescriptionListTerm,
   DescriptionListDescription,
 } from '@patternfly/react-core';
+import MarkdownParser from '~/common/MarkdownParser';
 import ExternalLink from '../../../common/ExternalLink';
-
 import links from '../../../../common/installLinks.mjs';
 
 function LimitedSupportAlert({ limitedSupportReasons, isROSA, isOSD }) {
@@ -46,7 +46,9 @@ function LimitedSupportAlert({ limitedSupportReasons, isROSA, isOSD }) {
           <DescriptionListGroup key={`reason-${index}`}>
             {reason.summary ? <DescriptionListTerm>{reason.summary}</DescriptionListTerm> : null}
             {reason.details ? (
-              <DescriptionListDescription>{reason.details}</DescriptionListDescription>
+              <DescriptionListDescription>
+                <MarkdownParser>{reason.details}</MarkdownParser>
+              </DescriptionListDescription>
             ) : null}
           </DescriptionListGroup>
         ))}

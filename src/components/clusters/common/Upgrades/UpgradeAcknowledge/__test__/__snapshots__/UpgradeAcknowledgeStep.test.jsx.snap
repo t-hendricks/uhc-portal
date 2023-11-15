@@ -148,7 +148,7 @@ exports[`<UpgradeAcknowledgeStep> should render correctly on load 1`] = `
                            (new window or tab)
                         </span>
                         <ExternalLinkAltIcon
-                          className="pf-u-ml-sm"
+                          className="pf-u-ml-sm external-link-alt-icon"
                           color="#0066cc"
                           data-testid="openInNewWindowIcon"
                           noVerticalAlign={false}
@@ -157,7 +157,7 @@ exports[`<UpgradeAcknowledgeStep> should render correctly on load 1`] = `
                           <svg
                             aria-hidden={true}
                             aria-labelledby={null}
-                            className="pf-u-ml-sm"
+                            className="pf-u-ml-sm external-link-alt-icon"
                             data-testid="openInNewWindowIcon"
                             fill="#0066cc"
                             height="1em"
@@ -266,7 +266,7 @@ exports[`<UpgradeAcknowledgeStep> should render correctly on load 1`] = `
                            (new window or tab)
                         </span>
                         <ExternalLinkAltIcon
-                          className="pf-u-ml-sm"
+                          className="pf-u-ml-sm external-link-alt-icon"
                           color="#0066cc"
                           data-testid="openInNewWindowIcon"
                           noVerticalAlign={false}
@@ -275,7 +275,7 @@ exports[`<UpgradeAcknowledgeStep> should render correctly on load 1`] = `
                           <svg
                             aria-hidden={true}
                             aria-labelledby={null}
-                            className="pf-u-ml-sm"
+                            className="pf-u-ml-sm external-link-alt-icon"
                             data-testid="openInNewWindowIcon"
                             fill="#0066cc"
                             height="1em"

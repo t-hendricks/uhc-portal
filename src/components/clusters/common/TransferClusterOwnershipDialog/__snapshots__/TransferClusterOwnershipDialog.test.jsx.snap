@@ -162,7 +162,7 @@ exports[`<TransferClusterOwnershipDialog /> should not crash when subscription i
                             </span>
                             <svg
                               aria-hidden="true"
-                              class="pf-u-ml-sm"
+                              class="pf-u-ml-sm external-link-alt-icon"
                               data-testid="openInNewWindowIcon"
                               fill="#0066cc"
                               height="1em"
@@ -479,7 +479,7 @@ exports[`<TransferClusterOwnershipDialog /> should not crash when subscription i
                                                (new window or tab)
                                             </span>
                                             <ExternalLinkAltIcon
-                                              className="pf-u-ml-sm"
+                                              className="pf-u-ml-sm external-link-alt-icon"
                                               color="#0066cc"
                                               data-testid="openInNewWindowIcon"
                                               noVerticalAlign={false}
@@ -488,7 +488,7 @@ exports[`<TransferClusterOwnershipDialog /> should not crash when subscription i
                                               <svg
                                                 aria-hidden={true}
                                                 aria-labelledby={null}
-                                                className="pf-u-ml-sm"
+                                                className="pf-u-ml-sm external-link-alt-icon"
                                                 data-testid="openInNewWindowIcon"
                                                 fill="#0066cc"
                                                 height="1em"
@@ -789,7 +789,7 @@ exports[`<TransferClusterOwnershipDialog /> should release clusters 1`] = `
                             </span>
                             <svg
                               aria-hidden="true"
-                              class="pf-u-ml-sm"
+                              class="pf-u-ml-sm external-link-alt-icon"
                               data-testid="openInNewWindowIcon"
                               fill="#0066cc"
                               height="1em"
@@ -1106,7 +1106,7 @@ exports[`<TransferClusterOwnershipDialog /> should release clusters 1`] = `
                                                (new window or tab)
                                             </span>
                                             <ExternalLinkAltIcon
-                                              className="pf-u-ml-sm"
+                                              className="pf-u-ml-sm external-link-alt-icon"
                                               color="#0066cc"
                                               data-testid="openInNewWindowIcon"
                                               noVerticalAlign={false}
@@ -1115,7 +1115,7 @@ exports[`<TransferClusterOwnershipDialog /> should release clusters 1`] = `
                                               <svg
                                                 aria-hidden={true}
                                                 aria-labelledby={null}
-                                                className="pf-u-ml-sm"
+                                                className="pf-u-ml-sm external-link-alt-icon"
                                                 data-testid="openInNewWindowIcon"
                                                 fill="#0066cc"
                                                 height="1em"
@@ -1416,7 +1416,7 @@ exports[`<TransferClusterOwnershipDialog /> should show dialog for transferring 
                             </span>
                             <svg
                               aria-hidden="true"
-                              class="pf-u-ml-sm"
+                              class="pf-u-ml-sm external-link-alt-icon"
                               data-testid="openInNewWindowIcon"
                               fill="#0066cc"
                               height="1em"
@@ -1724,7 +1724,7 @@ exports[`<TransferClusterOwnershipDialog /> should show dialog for transferring 
                                                (new window or tab)
                                             </span>
                                             <ExternalLinkAltIcon
-                                              className="pf-u-ml-sm"
+                                              className="pf-u-ml-sm external-link-alt-icon"
                                               color="#0066cc"
                                               data-testid="openInNewWindowIcon"
                                               noVerticalAlign={false}
@@ -1733,7 +1733,7 @@ exports[`<TransferClusterOwnershipDialog /> should show dialog for transferring 
                                               <svg
                                                 aria-hidden={true}
                                                 aria-labelledby={null}
-                                                className="pf-u-ml-sm"
+                                                className="pf-u-ml-sm external-link-alt-icon"
                                                 data-testid="openInNewWindowIcon"
                                                 fill="#0066cc"
                                                 height="1em"
@@ -2065,7 +2065,7 @@ exports[`<TransferClusterOwnershipDialog /> should show error 1`] = `
                             </span>
                             <svg
                               aria-hidden="true"
-                              class="pf-u-ml-sm"
+                              class="pf-u-ml-sm external-link-alt-icon"
                               data-testid="openInNewWindowIcon"
                               fill="#0066cc"
                               height="1em"
@@ -2463,7 +2463,7 @@ exports[`<TransferClusterOwnershipDialog /> should show error 1`] = `
                                                (new window or tab)
                                             </span>
                                             <ExternalLinkAltIcon
-                                              className="pf-u-ml-sm"
+                                              className="pf-u-ml-sm external-link-alt-icon"
                                               color="#0066cc"
                                               data-testid="openInNewWindowIcon"
                                               noVerticalAlign={false}
@@ -2472,7 +2472,7 @@ exports[`<TransferClusterOwnershipDialog /> should show error 1`] = `
                                               <svg
                                                 aria-hidden={true}
                                                 aria-labelledby={null}
-                                                className="pf-u-ml-sm"
+                                                className="pf-u-ml-sm external-link-alt-icon"
                                                 data-testid="openInNewWindowIcon"
                                                 fill="#0066cc"
                                                 height="1em"
