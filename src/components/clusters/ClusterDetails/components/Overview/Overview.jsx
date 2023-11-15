@@ -19,6 +19,7 @@ import { metricsStatusMessages } from '../../../common/ResourceUsage/ResourceUsa
 import clusterStates, {
   getClusterAIPermissions,
   getClusterStateAndDescription,
+  hasInflightErrors,
   isHibernating,
 } from '../../../common/clusterStates';
 import { hasResourceUsageMetrics } from '../Monitoring/monitoringHelper';
@@ -93,7 +94,8 @@ class Overview extends React.Component {
       cluster.state === clusterStates.PENDING ||
       cluster.state === clusterStates.INSTALLING ||
       cluster.state === clusterStates.ERROR ||
-      cluster.state === clusterStates.UNINSTALLING;
+      cluster.state === clusterStates.UNINSTALLING ||
+      hasInflightErrors(cluster);
 
     const showInsightsAdvisor =
       !isRestrictedEnv() &&

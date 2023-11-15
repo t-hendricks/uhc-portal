@@ -1,7 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 import ClustersWithIssuesTableCard from './ClustersWithIssuesTableCard';
-import { clustersWithIssues } from '../Overview.fixtures';
+import { clustersWithIssues } from '../Dashboard.fixtures';
 
 const unhealthyClusters = {
   error: false,
