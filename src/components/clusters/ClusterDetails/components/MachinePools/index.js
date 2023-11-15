@@ -13,10 +13,7 @@ import {
   clearDeleteMachinePoolResponse,
 } from './MachinePoolsActions';
 
-import {
-  isHCPControlPlaneUpdating,
-  isMachinePoolBehindControlPlane,
-} from './UpdateMachinePools/updateMachinePoolsHelpers';
+import { canMachinePoolBeUpgradedSelector } from './UpdateMachinePools/updateMachinePoolsHelpers';
 import { hasMachinePoolsQuotaSelector } from './MachinePoolsSelectors';
 import { normalizeNodePool } from './machinePoolsHelper';
 
@@ -37,8 +34,7 @@ const mapStateToProps = (state) => {
     hasMachinePoolsQuota: hasMachinePoolsQuotaSelector(state),
     machineTypes: state.machineTypes,
     organization: state.userProfile.organization,
-    canMachinePoolBeUpdated: (machinePool) =>
-      !isHCPControlPlaneUpdating(state) && isMachinePoolBehindControlPlane(state, machinePool),
+    canMachinePoolBeUpdated: (machinePool) => canMachinePoolBeUpgradedSelector(state, machinePool),
     useNodeUpgradePolicies: featureGateSelector(state, HCP_USE_NODE_UPGRADE_POLICIES),
   };
 

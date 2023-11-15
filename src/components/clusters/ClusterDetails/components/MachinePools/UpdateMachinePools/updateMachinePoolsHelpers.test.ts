@@ -6,6 +6,7 @@ import {
   isControlPlaneValidForMachinePool,
   isMachinePoolUpgrading,
   isMachinePoolScheduleError,
+  canMachinePoolBeUpgradedSelector,
 } from './updateMachinePoolsHelpers';
 import { NodePoolWithUpgradePolicies } from '../machinePoolCustomTypes';
 
@@ -17,6 +18,7 @@ describe('updateMachinePoolsHelpers', () => {
   afterEach(() => {
     jest.clearAllMocks();
   });
+
   describe('isHCPControlPlaneUpdating', () => {
     // This state should cause isHCPControlPlaneUpdating to return false
     const state = {
@@ -241,6 +243,81 @@ describe('updateMachinePoolsHelpers', () => {
         upgradePolicies: { errorMessage: 'I am an error!', items: [] },
       };
       expect(isMachinePoolScheduleError(machinePool)).toBeTruthy();
+    });
+  });
+  describe('canMachinePoolBeUpgradedSelector', () => {
+    const machinePool = {
+      upgradePolicies: { errorMessage: '', items: [] },
+      version: { id: '4.14.0', available_upgrades: ['4.14.1'] },
+    };
+
+    const state = {
+      clusters: {
+        details: { cluster: { hypershift: { enabled: true }, version: { id: '4.14.1' } } },
+      },
+      machinePools: { getMachinePools: { data: 'machinePoolData', fulfilled: true, error: false } },
+      clusterUpgrades: {
+        schedules: {
+          items: [],
+        },
+      },
+    } as unknown as GlobalState;
+
+    it('returns false when control plane is updating', () => {
+      const newState: GlobalState = {
+        ...state,
+        clusterUpgrades: {
+          schedules: {
+            // @ts-ignore
+            items: [{ upgrade_type: 'OSD', schedule_type: 'manual', state: { value: 'started' } }],
+          },
+        },
+      };
+      expect(canMachinePoolBeUpgradedSelector(newState, machinePool)).toBeFalsy();
+    });
+
+    it('returns false when the machine pool version is the same as the control plane', () => {
+      const controlPlaneVersion = state?.clusters?.details?.cluster?.version?.id;
+      const newMachinePool = {
+        ...machinePool,
+        version: { ...machinePool.version, id: controlPlaneVersion },
+      };
+
+      expect(canMachinePoolBeUpgradedSelector(state, newMachinePool)).toBeFalsy();
+    });
+
+    it('returns false when there is an error getting machine pool update schedules', () => {
+      const newMachinePool = {
+        ...machinePool,
+        upgradePolicies: { errorMessage: 'There was an error', items: [] },
+      };
+
+      expect(canMachinePoolBeUpgradedSelector(state, newMachinePool)).toBeFalsy();
+    });
+
+    it('returns false when the control plane version is not a valid upgrade version', () => {
+      const controlPlaneVersion = state?.clusters?.details?.cluster?.version?.id;
+      const newMachinePool = {
+        ...machinePool,
+        version: { ...machinePool.version, id: '1.1.1', available_upgrades: ['2.2.2'] },
+      };
+
+      expect(controlPlaneVersion).not.toEqual('2.2.2');
+
+      expect(canMachinePoolBeUpgradedSelector(state, newMachinePool)).toBeFalsy();
+    });
+
+    it('returns false when the machine pool is scheduled to be upgraded', () => {
+      const newMachinePool = {
+        ...machinePool,
+        upgradePolicies: { errorMessage: 'There was an error', items: ['I am an upgrade policy'] },
+      } as NodePoolWithUpgradePolicies;
+
+      expect(canMachinePoolBeUpgradedSelector(state, newMachinePool)).toBeFalsy();
+    });
+
+    it('returns true when machine pool can be upgraded', () => {
+      expect(canMachinePoolBeUpgradedSelector(state, machinePool)).toBeTruthy();
     });
   });
 });
