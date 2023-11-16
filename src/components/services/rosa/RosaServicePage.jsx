@@ -24,6 +24,8 @@ import {
 import { CubeIcon } from '@patternfly/react-icons';
 import { Link } from 'react-router-dom';
 import ExternalLink from '~/components/common/ExternalLink';
+import useAnalytics from '~/hooks/useAnalytics';
+import { trackEvents } from '~/common/analytics';
 import Breadcrumbs from '~/components/common/Breadcrumbs';
 import RedHatLogo from '~/styles/images/Logo-Red_Hat-B-Standard-RGB.png';
 import AWSLogo from '~/styles/images/AWSLogo';
@@ -41,25 +43,35 @@ const rosaBannerContents = {
   iconCardBodyClassName: 'rosa-aws-redhat-vertical-logo',
 };
 
-const TryRosaCard = () => (
-  <Card style={{ height: '100%' }}>
-    <CardHeader>
-      <CardTitle>
-        <Title headingLevel="h3">Want a preview of ROSA?</Title>
-      </CardTitle>
-    </CardHeader>
-    <CardBody>Access a no-cost, hands-on Red Hat OpenShift Service on AWS experience.</CardBody>
-    <CardFooter>
-      <Button
-        variant="secondary"
-        component={(props) => <Link {...props} to="/overview/rosa/hands-on" />}
-        isLarge
-      >
-        Try it
-      </Button>
-    </CardFooter>
-  </Card>
-);
+const TryRosaCard = () => {
+  const track = useAnalytics();
+  const rosaHandsOnURL = '/overview/rosa/hands-on';
+  return (
+    <Card style={{ height: '100%' }}>
+      <CardHeader>
+        <CardTitle>
+          <Title headingLevel="h3">Want a preview of ROSA?</Title>
+        </CardTitle>
+      </CardHeader>
+      <CardBody>Access a no-cost, hands-on Red Hat OpenShift Service on AWS experience.</CardBody>
+      <CardFooter>
+        <Button
+          variant="secondary"
+          onClick={() => {
+            track(trackEvents.TryRosaHandsOnExperience, {
+              url: rosaHandsOnURL,
+              path: window.location.pathname,
+            });
+          }}
+          component={(props) => <Link {...props} to={rosaHandsOnURL} />}
+          isLarge
+        >
+          Try it
+        </Button>
+      </CardFooter>
+    </Card>
+  );
+};
 
 const AWSRedHatVerticalLogo = () => (
   <Stack hasGutter>
@@ -136,6 +148,8 @@ const linkTextLabelLinkCardContents = {
 };
 
 function RosaServicePage() {
+  const track = useAnalytics();
+  const createRosaClusterURL = '/create/rosa/getstarted';
   const expandableListArray = (expandableContentArray) => (
     <Card>
       <List isPlain isBordered>
@@ -203,7 +217,13 @@ function RosaServicePage() {
                             <Link
                               {...props}
                               data-testid="register-cluster"
-                              to="/create/rosa/getstarted"
+                              to={createRosaClusterURL}
+                              onClick={() => {
+                                track(trackEvents.CreateClusterROSA, {
+                                  url: createRosaClusterURL,
+                                  path: window.location.pathname,
+                                });
+                              }}
                             />
                           )}
                           isLarge
