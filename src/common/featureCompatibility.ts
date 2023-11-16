@@ -13,6 +13,10 @@ const checkAWSSecurityGroupsCompatibility = (
   clusterParams: ClusterParams,
   options: CompatibilityOptions,
 ) => {
+  if (options.day1) {
+    // This function only validates Day2, for Day1, the Security Groups section is only displayed when the cluster type allows so
+    return false;
+  }
   if (isHypershiftCluster(clusterParams)) {
     return false;
   }
@@ -27,14 +31,6 @@ const checkAWSSecurityGroupsCompatibility = (
   if (!byoVPCSubnets?.length) {
     return false;
   }
-
-  // For Day2, is must be an STS cluster, as otherwise we can't fetch the VPCs with the Security groups
-  const hasSTSRole = clusterParams?.aws?.sts?.role_arn;
-  if (options.day2 && !hasSTSRole) {
-    return false;
-  }
-
-  // TODO camador Oct'23 Handle all cases supported for Day1
   return true;
 };
 
