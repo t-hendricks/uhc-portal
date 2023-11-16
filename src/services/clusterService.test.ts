@@ -1,6 +1,7 @@
 import axios from 'axios';
 import apiRequest from '~/services/apiRequest';
 import { insightsMock } from '~/testUtils';
+import { ScheduleType, UpgradeType } from '~/types/clusters_mgmt.v1';
 import clusterService from './clusterService';
 
 type MockedJest = jest.Mocked<typeof axios> & jest.Mock;
@@ -56,5 +57,42 @@ describe('clusterService', () => {
 
     expect(apiRequestMock.get).toHaveBeenCalledTimes(1);
     expect(getApiGetParams().search).not.toContain("gcp_marketplace_enabled='t'");
+  });
+
+  it('call to post a node pool upgrade policy', async () => {
+    apiRequestMock.post.mockResolvedValue('success');
+    const clusterId = 'myCluster';
+    const nodePoolId = 'myPool1';
+    const schedule = {
+      next_run: 'now + 6 minutes',
+      node_pool_id: nodePoolId,
+      schedule_type: ScheduleType.MANUAL,
+      upgrade_type: UpgradeType.NODE_POOL,
+      version: '4.14.1',
+    };
+
+    await clusterService.postNodePoolUpgradeSchedule(clusterId, nodePoolId, schedule);
+    expect(apiRequestMock.post).toHaveBeenCalledTimes(1);
+    const mockPostCallParams = apiRequestMock.post.mock.calls[0];
+    expect(mockPostCallParams[0]).toEqual(
+      '/api/clusters_mgmt/v1/clusters/myCluster/node_pools/myPool1/upgrade_policies',
+    );
+
+    expect(mockPostCallParams[1]).toEqual(schedule);
+  });
+
+  it('call to get a node pool upgrade policy', async () => {
+    const clusterId = 'myCluster';
+    const nodePoolId = 'myPool1';
+
+    apiRequestMock.get.mockResolvedValue({ items: [], page: 1, size: 0, total: 0 });
+
+    await clusterService.getNodePoolUpgradePolicies(clusterId, nodePoolId);
+    expect(apiRequestMock.get).toHaveBeenCalledTimes(1);
+    const mockGetCallParams = apiRequestMock.get.mock.calls[0];
+
+    expect(mockGetCallParams[0]).toEqual(
+      '/api/clusters_mgmt/v1/clusters/myCluster/node_pools/myPool1/upgrade_policies',
+    );
   });
 });
