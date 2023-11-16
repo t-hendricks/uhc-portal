@@ -82,7 +82,7 @@ export const AwsSubnetFields = (props: AwsSubnetFieldsProps) => {
           response={vpcs}
         />
       )}
-      <SingleSubnetFieldsRow showLabels index={0} vpcs={vpcs} vpcsValid={vpcsValid} {...props} />
+      <SingleSubnetFieldsRow index={0} vpcs={vpcs} vpcsValid={vpcsValid} {...props} />
       {isMultiAz && (
         <>
           <SingleSubnetFieldsRow index={1} vpcs={vpcs} vpcsValid={vpcsValid} {...props} />
@@ -100,11 +100,9 @@ interface SingleSubnetFieldsRowProps {
   usePrivateLink: boolean;
   vpcs: any;
   vpcsValid: boolean;
-  showLabels?: boolean;
 }
 
 const SingleSubnetFieldsRow = ({
-  showLabels = false,
   index,
   region,
   isMultiAz,
@@ -117,6 +115,7 @@ const SingleSubnetFieldsRow = ({
   const privateSubnetIdName = `private_subnet_id_${index}`;
   const publicSubnetIdName = `public_subnet_id_${index}`;
   const vpcsData = { vpcs, vpcsValid };
+  const showLabels = index === 0;
 
   const validateAvailabilityZone = (value: string) =>
     required(value) ||

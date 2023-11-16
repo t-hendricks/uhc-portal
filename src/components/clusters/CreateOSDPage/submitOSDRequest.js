@@ -1,6 +1,5 @@
 import pick from 'lodash/pick';
 import isEmpty from 'lodash/isEmpty';
-import uniq from 'lodash/uniq';
 
 import config from '~/config';
 
@@ -18,50 +17,7 @@ import { NamespaceOwnershipPolicy } from '~/types/clusters_mgmt.v1/models/Namesp
 import { ApplicationIngressType } from '~/components/clusters/wizards/osd/Networking/constants';
 import { getClusterAutoScalingSubmitSettings } from '~/components/clusters/CreateOSDPage/clusterAutoScalingValues';
 import { canConfigureDayOneManagedIngress } from '../wizards/rosa/constants';
-
-const createClusterAzs = ({ formData, isInstallExistingVPC }) => {
-  let AZs = [];
-  if (formData.hypershift === 'true') {
-    AZs = uniq(formData.machine_pools_subnets.map((subnet) => subnet.availability_zone));
-  } else if (isInstallExistingVPC) {
-    AZs.push(formData.az_0);
-    if (formData.multi_az === 'true') {
-      AZs.push(formData.az_1, formData.az_2);
-    }
-  } else {
-    // The backend does not admit an empty list of availability_zones
-    return undefined;
-  }
-  return AZs;
-};
-
-const createClusterAwsSubnetIds = ({ formData, isInstallExistingVPC }) => {
-  const subnetIds = [];
-
-  if (formData.hypershift === 'true') {
-    if (formData.cluster_privacy === 'external') {
-      subnetIds.push(formData.cluster_privacy_public_subnet.subnet_id);
-    }
-    const privateSubnetIds = formData.machine_pools_subnets.map((subnet) => subnet.subnet_id);
-    subnetIds.push(...privateSubnetIds);
-  } else if (isInstallExistingVPC) {
-    const showPublicFields = !formData.use_privatelink;
-
-    subnetIds.push(formData.private_subnet_id_0);
-    if (showPublicFields) {
-      subnetIds.push(formData.public_subnet_id_0);
-    }
-
-    const isMultiAz = formData.multi_az === 'true';
-    if (isMultiAz) {
-      subnetIds.push(formData.private_subnet_id_1, formData.private_subnet_id_2);
-      if (showPublicFields) {
-        subnetIds.push(formData.public_subnet_id_1, formData.public_subnet_id_2);
-      }
-    }
-  }
-  return subnetIds.filter((sn) => !!sn);
-};
+import * as submitRequestHelpers from './submitOSDRequestHelper';
 
 export const createClusterRequest = ({ isWizard = true, cloudProviderID, product }, formData) => {
   const isMultiAz = formData.multi_az === 'true';
@@ -220,17 +176,27 @@ export const createClusterRequest = ({ isWizard = true, cloudProviderID, product
           };
         }
 
-        // Shared VPC
-        const sharedVpc = formData.shared_vpc;
-        if (isInstallExistingVPC && sharedVpc.is_selected && !isHypershiftSelected) {
-          clusterRequest.aws = {
-            ...clusterRequest.aws,
-            private_hosted_zone_id: sharedVpc.hosted_zone_id,
-            private_hosted_zone_role_arn: sharedVpc.hosted_zone_role_arn,
-          };
-          clusterRequest.dns = {
-            base_domain: sharedVpc.base_dns_domain,
-          };
+        if (isInstallExistingVPC && !isHypershiftSelected) {
+          // Shared VPC
+          const sharedVpc = formData.shared_vpc;
+          if (sharedVpc.is_selected) {
+            clusterRequest.aws = {
+              ...clusterRequest.aws,
+              private_hosted_zone_id: sharedVpc.hosted_zone_id,
+              private_hosted_zone_role_arn: sharedVpc.hosted_zone_role_arn,
+            };
+            clusterRequest.dns = {
+              base_domain: sharedVpc.base_dns_domain,
+            };
+          }
+          // Security groups
+          const sgParams = submitRequestHelpers.createSecurityGroupsParams(formData.securityGroups);
+          if (sgParams) {
+            clusterRequest.aws = {
+              ...clusterRequest.aws,
+              ...sgParams,
+            };
+          }
         }
       } else {
         // AWS CCS credentials
@@ -265,8 +231,11 @@ export const createClusterRequest = ({ isWizard = true, cloudProviderID, product
       }
 
       clusterRequest.ccs.disable_scp_checks = formData.disable_scp_checks;
-      clusterRequest.aws.subnet_ids = createClusterAwsSubnetIds({ formData, isInstallExistingVPC });
-      clusterRequest.nodes.availability_zones = createClusterAzs({
+      clusterRequest.aws.subnet_ids = submitRequestHelpers.createClusterAwsSubnetIds({
+        formData,
+        isInstallExistingVPC,
+      });
+      clusterRequest.nodes.availability_zones = submitRequestHelpers.createClusterAzs({
         formData,
         isInstallExistingVPC,
       });

@@ -4,7 +4,7 @@ import { normalizedProducts } from '~/common/subscriptionTypes';
 import {
   isCompatibleFeature,
   CompatibilityOptions,
-  SupportedFeatures,
+  SupportedFeature,
 } from './featureCompatibility';
 
 const anyOptions = {};
@@ -12,7 +12,7 @@ const anyOptions = {};
 describe('isCompatibleFeature', () => {
   describe('Security groups', () => {
     const checkCompatibility = (testCluster: Partial<Cluster>, options: CompatibilityOptions) =>
-      isCompatibleFeature(SupportedFeatures.SECURITY_GROUPS, testCluster, options);
+      isCompatibleFeature(SupportedFeature.SECURITY_GROUPS, testCluster, options);
     describe('are incompatible for', () => {
       it.each([
         ['Hypershift', { hypershift: { enabled: true } }, {}],

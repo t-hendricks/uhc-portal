@@ -131,6 +131,7 @@ const VPCDropdown = ({
         getAWSCloudProviderVPCs({
           awsCredentials: vpcResponse.credentials,
           region: vpcResponse.region,
+          options: isHypershift ? undefined : { includeSecurityGroups: true },
         }),
       );
     }

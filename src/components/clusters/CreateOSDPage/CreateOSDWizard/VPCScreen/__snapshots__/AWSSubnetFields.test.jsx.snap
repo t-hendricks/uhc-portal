@@ -15,7 +15,6 @@ exports[`<AWSSubnetFields /> multi AZ, private + public 1`] = `
     isMultiAz={true}
     privateLinkSelected={false}
     selectedRegion="fake-region"
-    showLabels={true}
   />
   <SingleSubnetFieldsRow
     index={1}
@@ -49,7 +48,6 @@ exports[`<AWSSubnetFields /> multi AZ, private 1`] = `
     isMultiAz={true}
     privateLinkSelected={true}
     selectedRegion="fake-region"
-    showLabels={true}
   />
   <SingleSubnetFieldsRow
     index={1}
@@ -83,7 +81,6 @@ exports[`<AWSSubnetFields /> single AZ, private + public 1`] = `
     isMultiAz={false}
     privateLinkSelected={false}
     selectedRegion="fake-region"
-    showLabels={true}
   />
 </Fragment>
 `;
@@ -103,7 +100,6 @@ exports[`<AWSSubnetFields /> single AZ, private 1`] = `
     isMultiAz={false}
     privateLinkSelected={true}
     selectedRegion="fake-region"
-    showLabels={true}
   />
 </Fragment>
 `;

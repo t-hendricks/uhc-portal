@@ -11,6 +11,7 @@ const defaultProps = {
   cloudProviderID: 'aws',
   isSharedVpcSelected: false,
   hostedZoneDomainName: 'cluster-name.base-domain-name.devshift.org',
+  selectedVPC: { id: '', name: '' },
 };
 
 describe('<InstallToVPC> (AWS)', () => {

@@ -1,9 +1,6 @@
 import * as React from 'react';
-import { Formik } from 'formik';
 
-import { Cluster } from '~/types/clusters_mgmt.v1';
 import { fireEvent, render, screen, within } from '~/testUtils';
-import { FieldId } from '~/components/clusters/wizards/common';
 import EditSecurityGroups from './EditSecurityGroups';
 
 const persistedSecurityGroup = {
@@ -24,7 +21,6 @@ const clusterVpc = {
     persistedSecurityGroup,
   ],
 };
-const fakeCluster = { id: 'my-cluster-id' } as Cluster;
 
 jest.mock(
   '~/components/clusters/CreateOSDPage/CreateOSDWizard/NetworkScreen/useAWSVPCFromCluster',
@@ -39,28 +35,27 @@ const openPFSecurityGroupsSelect = () => {
 };
 
 const renderComponent = ({
-  isEdit,
+  isReadOnly,
   selectedGroupIds,
 }: {
-  isEdit: boolean;
+  isReadOnly: boolean;
   selectedGroupIds: string[];
 }) =>
   render(
-    <Formik
-      initialValues={{
-        [FieldId.SecurityGroupIds]: selectedGroupIds,
-      }}
-      onSubmit={() => {}}
-    >
-      <EditSecurityGroups cluster={fakeCluster} isEdit={isEdit} />
-    </Formik>,
+    <EditSecurityGroups
+      selectedGroupIds={selectedGroupIds}
+      validationError={undefined}
+      clusterVpc={clusterVpc}
+      onChange={() => null}
+      isReadOnly={isReadOnly}
+    />,
   );
 
 describe('<EditSecurityGroups />', () => {
   describe('In edit mode', () => {
     it('shows a list of read-only chips', () => {
       renderComponent({
-        isEdit: true,
+        isReadOnly: true,
         selectedGroupIds: [persistedSecurityGroup.id],
       });
 
@@ -70,7 +65,7 @@ describe('<EditSecurityGroups />', () => {
 
     it('are shown as read-only when in editing mode', () => {
       renderComponent({
-        isEdit: true,
+        isReadOnly: true,
         selectedGroupIds: [persistedSecurityGroup.id],
       });
 
@@ -80,7 +75,7 @@ describe('<EditSecurityGroups />', () => {
 
     it('does not show the Select component', () => {
       renderComponent({
-        isEdit: true,
+        isReadOnly: true,
         selectedGroupIds: [],
       });
 
@@ -91,7 +86,7 @@ describe('<EditSecurityGroups />', () => {
   describe('In creation mode', () => {
     it('shows a list of chips with a close button', () => {
       renderComponent({
-        isEdit: false,
+        isReadOnly: false,
         selectedGroupIds: [persistedSecurityGroup.id],
       });
 
@@ -103,7 +98,7 @@ describe('<EditSecurityGroups />', () => {
 
     it('Has a Select showing all security groups', () => {
       renderComponent({
-        isEdit: false,
+        isReadOnly: false,
         selectedGroupIds: [],
       });
 
@@ -118,7 +113,7 @@ describe('<EditSecurityGroups />', () => {
 
     it('Has a SelectOption with a checkbox for each security group with the correct selection status', () => {
       renderComponent({
-        isEdit: false,
+        isReadOnly: false,
         selectedGroupIds: [persistedSecurityGroup.id],
       });
 

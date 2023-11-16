@@ -222,7 +222,7 @@ const EditMachinePoolModal = ({
                   machineTypes={machineTypesResponse}
                 />
               </ExpandableSection>
-              <EditSecurityGroupsSection cluster={cluster} isEdit={isEdit} />
+              <EditSecurityGroupsSection cluster={cluster} isReadOnly={isEdit} />
               {canUseSpotInstances(cluster) && <SpotInstancesSection isEdit={isEdit} />}
             </Form>
           )}

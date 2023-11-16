@@ -2,9 +2,12 @@ import React from 'react';
 import { Alert, Title, Text } from '@patternfly/react-core';
 import { Field } from 'redux-form';
 
+import { getIncompatibleVersionReason } from '~/common/versionCompatibility';
+import { SupportedFeature } from '~/common/featureCompatibility';
 import { ReduxCheckbox } from '~/components/common/ReduxFormComponents';
 import ExternalLink from '~/components/common/ExternalLink';
 import SharedVPCField from '~/components/clusters/CreateOSDPage/CreateOSDWizard/VPCScreen/SharedVPCField';
+
 import links from '~/common/installLinks.mjs';
 
 import './SharedVPCSection.scss';
@@ -12,19 +15,24 @@ import './SharedVPCSection.scss';
 const SharedVPCSection = ({
   hostedZoneDomainName,
   isSelected,
-  isSharedVpcSelectable,
+  openshiftVersion,
 }: {
   hostedZoneDomainName: string;
   isSelected: boolean;
-  isSharedVpcSelectable: boolean;
+  openshiftVersion: string;
 }) => {
-  if (!isSharedVpcSelectable) {
+  const incompatibleReason = getIncompatibleVersionReason(
+    SupportedFeature.AWS_SHARED_VPC,
+    openshiftVersion,
+    { day1: true },
+  );
+  if (incompatibleReason) {
     return (
       <>
         <Title headingLevel="h3" className="pf-u-mt-lg">
           AWS shared VPC
         </Title>
-        <Text>To use shared VPCs, your cluster must be version 4.13.9 or newer.</Text>
+        <Text>{incompatibleReason}</Text>
       </>
     );
   }

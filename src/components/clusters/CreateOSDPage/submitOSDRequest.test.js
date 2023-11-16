@@ -39,12 +39,19 @@ describe('createClusterRequest', () => {
 
   const rosaFormData = {
     ...baseFormData,
+    product: normalizedProducts.ROSA,
     associated_aws_id: '123456789',
     installer_role_arn: 'arn:aws:iam::123456789:role/Foo-Installer-Role',
     support_role_arn: 'arn:aws:iam::123456789:role/Foo-Support-Role',
     control_plane_role_arn: 'arn:aws:iam::123456789:role/Foo-ControlPlane-Role',
     worker_role_arn: 'arn:aws:iam::123456789:role/Foo-Worker-Role',
     role_mode: 'manual',
+    securityGroups: {
+      applyControlPlaneToAll: false,
+      controlPlane: [],
+      infra: [],
+      worker: [],
+    },
     // TODO: can finish ROSA wizard with machine_type not set?
   };
 
@@ -224,8 +231,6 @@ describe('createClusterRequest', () => {
     // OSD wizard selects `cloud_provider` inside, it's a regular field.
 
     describe('OSD button', () => {
-      const params = { isWizard: true };
-
       it('rhInfra, AWS', () => {
         const data = {
           ...baseFormData,
@@ -234,7 +239,7 @@ describe('createClusterRequest', () => {
           byoc: 'false',
           cloud_provider: 'aws',
         };
-        const request = createClusterRequest(params, data);
+        const request = createClusterRequest({}, data);
         expect(request.billing_model).toEqual('standard');
         expect(request.product).toEqual({ id: 'osd' });
         expect(request.cloud_provider.id).toEqual('aws');
@@ -254,7 +259,7 @@ describe('createClusterRequest', () => {
           ...awsVPCData,
           ...CIDRData,
         };
-        const request = createClusterRequest(params, data);
+        const request = createClusterRequest({}, data);
         expect(request.billing_model).toEqual('standard');
         expect(request.product).toEqual({ id: 'osdtrial' });
         expect(request.cloud_provider.id).toEqual('aws');
@@ -274,7 +279,7 @@ describe('createClusterRequest', () => {
           ...gcpVPCData,
         };
 
-        const request = createClusterRequest(params, data);
+        const request = createClusterRequest({}, data);
         expect(request.billing_model).toEqual('marketplace');
         expect(request.product).toEqual({ id: 'osd' });
         expect(request.cloud_provider.id).toEqual('gcp');
@@ -284,8 +289,6 @@ describe('createClusterRequest', () => {
     });
 
     describe('OSD Trial button', () => {
-      const params = { isWizard: true };
-
       it('CCS, GCP', () => {
         const data = {
           ...baseFormData,
@@ -297,7 +300,7 @@ describe('createClusterRequest', () => {
           cloud_provider: 'gcp',
           gcp_service_account: '{}',
         };
-        const request = createClusterRequest(params, data);
+        const request = createClusterRequest({}, data);
         expect(request.billing_model).toEqual('standard');
         expect(request.product).toEqual({ id: 'osdtrial' });
         expect(request.cloud_provider.id).toEqual('gcp');
@@ -312,7 +315,7 @@ describe('createClusterRequest', () => {
           byoc: 'false',
           cloud_provider: 'gcp',
         };
-        const request = createClusterRequest(params, data);
+        const request = createClusterRequest({}, data);
         expect(request.billing_model).toEqual('standard');
         expect(request.product).toEqual({ id: 'osd' });
         expect(request.cloud_provider.id).toEqual('gcp');
@@ -328,7 +331,7 @@ describe('createClusterRequest', () => {
           cloud_provider: 'aws',
         };
 
-        const request = createClusterRequest(params, data);
+        const request = createClusterRequest({}, data);
         expect(request.billing_model).toEqual('marketplace');
         expect(request.product).toEqual({ id: 'osd' });
         expect(request.cloud_provider.id).toEqual('aws');
@@ -343,19 +346,16 @@ describe('createClusterRequest', () => {
     // (without registering them or connecting to an actual Field component).
 
     describe('ROSA button', () => {
-      const params = { isWizard: true };
-
       it('defaults', () => {
         const data = {
           ...rosaFormData,
           billing_model: 'standard',
-          product: normalizedProducts.ROSA,
           cloud_provider: 'aws',
           byoc: 'true',
           hypershift: 'false',
           ...CIDRData,
         };
-        const request = createClusterRequest(params, data);
+        const request = createClusterRequest({}, data);
         expect(request.billing_model).toEqual('standard');
         expect(request.product).toEqual({ id: 'rosa' });
         expect(request.cloud_provider.id).toEqual('aws');
@@ -367,7 +367,6 @@ describe('createClusterRequest', () => {
         const data = {
           ...rosaFormData,
           billing_model: 'standard',
-          product: normalizedProducts.ROSA,
           cloud_provider: 'aws',
           byoc: 'true',
           hypershift: 'true',
@@ -391,11 +390,63 @@ describe('createClusterRequest', () => {
           },
           ...CIDRData,
         };
-        const request = createClusterRequest(params, data);
+        const request = createClusterRequest({}, data);
 
         expect(request.hypershift.enabled).toBeTruthy();
         expect(request.billing_model).toEqual('marketplace-aws');
         expect(request.aws.subnet_ids).toEqual(['publicSubnet1ID', 'subnet1ID', 'subnet2ID']);
+      });
+
+      describe('AWS Security Groups', () => {
+        const byoVpcData = {
+          ...rosaFormData,
+          cloud_provider: 'aws',
+          byoc: 'true',
+          install_to_vpc: true,
+          shared_vpc: { is_selected: false },
+        };
+
+        it('are not sent if no groups have been selected', () => {
+          const request = createClusterRequest({}, byoVpcData);
+
+          expect(request.aws.additional_control_plane_security_group_ids).toBeUndefined();
+          expect(request.aws.additional_infra_security_group_ids).toBeUndefined();
+          expect(request.aws.additional_compute_security_group_ids).toBeUndefined();
+        });
+
+        describe('when applyControlPlaneToAll', () => {
+          const getTestData = ({ applyControlPlaneToAll }) => ({
+            ...byoVpcData,
+            securityGroups: {
+              applyControlPlaneToAll,
+              controlPlane: ['sg-cp'],
+              infra: ['sg-infra1', 'sg-infra2'],
+              worker: [],
+            },
+          });
+
+          it('is false, each node type uses its own groups', () => {
+            const request = createClusterRequest(
+              {},
+              getTestData({ applyControlPlaneToAll: false }),
+            );
+
+            expect(request.aws.additional_control_plane_security_group_ids).toEqual(['sg-cp']);
+            expect(request.aws.additional_infra_security_group_ids).toEqual([
+              'sg-infra1',
+              'sg-infra2',
+            ]);
+            expect(request.aws.additional_compute_security_group_ids).toBeUndefined();
+          });
+
+          it('is true, the control plane security groups are used for all node types', () => {
+            const request = createClusterRequest({}, getTestData({ applyControlPlaneToAll: true }));
+
+            expect(request.aws.additional_control_plane_security_group_ids).toEqual(['sg-cp']);
+            expect(request.aws.additional_infra_security_group_ids).toEqual(['sg-cp']);
+            expect(request.aws.additional_compute_security_group_ids).toEqual(['sg-cp']);
+          });
+        });
       });
     });
   });
