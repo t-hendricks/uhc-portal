@@ -185,7 +185,10 @@ class Overview extends React.Component {
                 title="This cluster can now be fully-managed"
                 actionClose={
                   <AlertActionCloseButton
-                    onClose={() => localStorage.removeItem(hadInflightErrorKey)}
+                    onClose={() => {
+                      localStorage.removeItem(hadInflightErrorKey);
+                      refresh();
+                    }}
                   />
                 }
               />
