@@ -1,7 +1,7 @@
 import { useSelector } from 'react-redux';
 import semver from 'semver';
 import { NodePool } from '~/types/clusters_mgmt.v1/models/NodePool';
-import clusterService, { postNodePoolUpgradeSchedule } from '~/services/clusterService';
+import clusterService from '~/services/clusterService';
 import { GlobalState } from '~/redux/store';
 import { updateStartedSelector } from '~/components/clusters/common/Upgrades/upgradeHelpers';
 import { isHypershiftCluster } from '~/components/clusters/common/clusterStates';
@@ -97,7 +97,7 @@ export const updateAllMachinePools = async (
       upgrade_type: UpgradeType.NODE_POOL,
     };
 
-    return postNodePoolUpgradeSchedule(clusterId, pool.id || '', schedule);
+    return clusterService.postNodePoolUpgradeSchedule(clusterId, pool.id || '', schedule);
   });
 
   // @ts-ignore  error due to using an older compiler

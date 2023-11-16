@@ -99,6 +99,7 @@ const UpdateAllMachinePools = ({
           className="pf-u-mt-md"
         >
           {errors.map((error, index) => (
+            // There isn't another accessible unique key
             // eslint-disable-next-line react/no-array-index-key
             <p key={index}>{error}</p>
           ))}
