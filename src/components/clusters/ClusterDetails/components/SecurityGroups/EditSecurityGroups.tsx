@@ -1,67 +1,43 @@
 import React from 'react';
 import {
-  Alert,
   FormGroup,
   GridItem,
   Select,
   SelectOption,
   SelectOptionObject,
   SelectVariant,
-  Spinner,
 } from '@patternfly/react-core';
-import { useField } from 'formik';
 
-import { Cluster } from '~/types/clusters_mgmt.v1';
-import { useAWSVPCFromCluster } from '~/components/clusters/CreateOSDPage/CreateOSDWizard/NetworkScreen/useAWSVPCFromCluster';
+import { CloudVPC } from '~/types/clusters_mgmt.v1';
 import { securityGroupsSort } from '~/components/clusters/CreateOSDPage/CreateOSDWizard/ccsInquiriesReducer';
-import SecurityGroupsViewList from '~/components/clusters/ClusterDetails/components/MachinePools/components/SecurityGroups/SecurityGroupsViewList';
-import { EditMachinePoolValues } from '../hooks/useMachinePoolFormik';
-import useFormikOnChange from '../hooks/useFormikOnChange';
 
-const fieldId = 'securityGroupIds';
+import SecurityGroupsViewList from './SecurityGroupsViewList';
 
 export interface EditSecurityGroupsProps {
-  cluster: Cluster;
-  isEdit: boolean;
+  label?: string;
+  validationError?: string;
+  selectedGroupIds: string[];
+  clusterVpc: CloudVPC;
+  isReadOnly: boolean;
+  onChange: (securityGroupIds: string[]) => void;
 }
 
-const EditSecurityGroups = ({ cluster, isEdit }: EditSecurityGroupsProps) => {
+const EditSecurityGroups = ({
+  label = 'Security groups',
+  clusterVpc,
+  selectedGroupIds,
+  validationError,
+  onChange,
+  isReadOnly,
+}: EditSecurityGroupsProps) => {
   const [isOpen, setIsOpen] = React.useState<boolean>(false);
-  const [field, meta] = useField<EditMachinePoolValues['securityGroupIds']>(fieldId);
-  const onChange = useFormikOnChange(fieldId);
-
-  const { clusterVpc, isLoading } = useAWSVPCFromCluster(cluster);
-
-  if (isLoading) {
-    return <Spinner>Loading security groups</Spinner>;
-  }
-
-  if (!clusterVpc) {
-    return (
-      <Alert type="warning" title="Could not load the cluster's VPC" isInline>
-        Please try refreshing the machine pool details
-      </Alert>
-    );
-  }
 
   const vpcSecurityGroups = clusterVpc.aws_security_groups || [];
-  if (vpcSecurityGroups.length === 0) {
-    return (
-      <Alert
-        variant="info"
-        isInline
-        title="There are no security groups for this Virtual Private Cloud"
-      >
-        To add security groups, go to the Security section of your AWS console.
-      </Alert>
-    );
-  }
-
-  const selectedGroupIds = field.value || [];
   const selectedOptions = vpcSecurityGroups.filter((sg) => selectedGroupIds.includes(sg.id || ''));
   selectedOptions.sort(securityGroupsSort);
 
-  if (isEdit) {
+  if (isReadOnly) {
+    // Shows read-only chips, or an empty message if no SGs are selected
     return (
       <SecurityGroupsViewList
         securityGroups={selectedOptions}
@@ -72,7 +48,7 @@ const EditSecurityGroups = ({ cluster, isEdit }: EditSecurityGroupsProps) => {
   }
 
   const onDeleteGroup = (deleteGroupId: string) => {
-    const newGroupIdsValue = field.value.filter((sgId) => sgId !== deleteGroupId);
+    const newGroupIdsValue = selectedGroupIds.filter((sgId) => sgId !== deleteGroupId);
     onChange(newGroupIdsValue);
   };
 
@@ -87,12 +63,11 @@ const EditSecurityGroups = ({ cluster, isEdit }: EditSecurityGroupsProps) => {
       onDeleteGroup(selectedGroupId);
     } else {
       // The SG has been selected
-      const newGroupIds = field.value.concat(selectedGroupId);
-      const x = vpcSecurityGroups.filter((sg) => newGroupIds.includes(sg.id || ''));
-      x.sort(securityGroupsSort);
+      const newGroupIds = selectedGroupIds.concat(selectedGroupId);
+      const selectedGroups = vpcSecurityGroups.filter((sg) => newGroupIds.includes(sg.id || ''));
+      selectedGroups.sort(securityGroupsSort);
 
-      const sortedGroupIds = x.map((group) => group.id);
-      onChange(sortedGroupIds);
+      onChange(selectedGroups.map((group) => group.id || ''));
     }
   };
 
@@ -100,9 +75,10 @@ const EditSecurityGroups = ({ cluster, isEdit }: EditSecurityGroupsProps) => {
     <GridItem>
       <FormGroup
         fieldId="securityGroupIds"
-        label="Security groups"
-        validated={meta.touched && meta.error ? 'error' : 'default'}
-        helperTextInvalid={meta.error}
+        label={label}
+        className="pf-u-mt-md"
+        validated={validationError ? 'error' : 'default'}
+        helperTextInvalid={validationError}
       >
         <>
           <SecurityGroupsViewList

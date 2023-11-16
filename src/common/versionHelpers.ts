@@ -70,32 +70,3 @@ export const isMajorMinorEqualOrGreater = (
   const [major, minor] = splitVersion(clusterVersionRawId);
   return major > expectedMajor || (major === expectedMajor && minor >= expectedMinor);
 };
-
-/**
- *
- * @param clusterVersionRawId A string, i.e. "4.15.5"
- * @param expectedMajor A number, i.e. "4"
- * @param expectedMinor A number
- * @param expectedPatch A number
- * @returns True, if the version provided a raw ID string is equal or greater than the expected major.minor.patch version
- */
-export const isMajorMinorPatchEqualOrGreater = (
-  clusterVersionRawId: string,
-  expectedMajor: number,
-  expectedMinor: number,
-  expectedPatch: number,
-): boolean => {
-  if (!isMajorMinorEqualOrGreater(clusterVersionRawId, expectedMajor, expectedMinor)) {
-    // The version is less than the expected one
-    return false;
-  }
-
-  const [major, minor, patch] = splitVersion(clusterVersionRawId);
-
-  if (major > expectedMajor || (major === expectedMajor && minor > expectedMinor)) {
-    // The version is greater than the expected one, by either the major, or the minor at the same major
-    return true;
-  }
-  // Major and minor are the same, check the patch
-  return patch >= expectedPatch;
-};

@@ -81,6 +81,13 @@ const createOSDInitialValues = ({
           shared_vpc: { is_allowed: false },
         }
       : {
+          securityGroups: {
+            // If "applyControlPlaneToAll" is true, the "controlPlane" SGs apply to all node types
+            applyControlPlaneToAll: true,
+            controlPlane: [],
+            infra: [],
+            worker: [],
+          },
           enable_user_workload_monitoring: 'true',
           worker_volume_size_gib: defaultWorkerNodeVolumeSizeGiB,
           shared_vpc: {

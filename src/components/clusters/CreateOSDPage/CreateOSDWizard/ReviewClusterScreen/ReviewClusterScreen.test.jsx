@@ -91,6 +91,86 @@ describe('<ReviewClusterScreen />', () => {
     });
   });
 
+  describe('Security groups', () => {
+    const getPropsWithSecurityGroups = ({ isHypershiftSelected, securityGroups }) => ({
+      ...defaultProps,
+      isHypershiftSelected,
+      formValues: {
+        ...defaultProps.formValues,
+        securityGroups,
+      },
+    });
+
+    it('is not shown for Hypershift clusters', () => {
+      const ConnectedReviewClusterScreen = wizardConnector(ReviewClusterScreen);
+      const newProps = getPropsWithSecurityGroups({
+        isHypershiftSelected: true,
+        securityGroups: undefined, // The form field is not initialized for HCP
+      });
+      render(<ConnectedReviewClusterScreen {...newProps} />);
+
+      expect(screen.queryByText('Security groups')).not.toBeInTheDocument();
+    });
+
+    it('is shown for ROSA classic clusters', () => {
+      const ConnectedReviewClusterScreen = wizardConnector(ReviewClusterScreen);
+      const newProps = getPropsWithSecurityGroups({
+        isHypershiftSelected: false,
+        securityGroups: {
+          controlPlane: ['sg-ab'],
+          infra: ['sg-cd'],
+          worker: ['sg-ef'],
+        },
+      });
+      render(<ConnectedReviewClusterScreen {...newProps} />);
+
+      expect(screen.getByText('Security groups')).toBeInTheDocument();
+      expect(screen.getByText('Control plane nodes')).toBeInTheDocument();
+      expect(screen.getByText('Infrastructure nodes')).toBeInTheDocument();
+      expect(screen.getByText('Worker nodes')).toBeInTheDocument();
+    });
+
+    it('shows the controlPlane groups as "All nodes" when "applyControlPlaneToAll" is true', () => {
+      const ConnectedReviewClusterScreen = wizardConnector(ReviewClusterScreen);
+      const newProps = getPropsWithSecurityGroups({
+        isHypershiftSelected: false,
+        securityGroups: {
+          applyControlPlaneToAll: true,
+          controlPlane: ['sg-abc'],
+          infra: ['sg-should-be-ignored'],
+          worker: ['sg-should-be-ignored-too'],
+        },
+      });
+      render(<ConnectedReviewClusterScreen {...newProps} />);
+
+      expect(screen.getByText('Security groups')).toBeInTheDocument();
+      expect(screen.getByText('All nodes')).toBeInTheDocument();
+
+      expect(screen.queryByText('Control plane nodes')).not.toBeInTheDocument();
+      expect(screen.queryByText('sg-should-be-ignored')).not.toBeInTheDocument();
+      expect(screen.queryByText('sg-should-be-ignored-too')).not.toBeInTheDocument();
+    });
+
+    it('does not show a node type that does not have groups', () => {
+      const ConnectedReviewClusterScreen = wizardConnector(ReviewClusterScreen);
+      const newProps = getPropsWithSecurityGroups({
+        isHypershiftSelected: false,
+        securityGroups: {
+          applyControlPlaneToAll: false,
+          controlPlane: ['sg-abc'],
+          infra: [],
+          worker: ['sg-def'],
+        },
+      });
+      render(<ConnectedReviewClusterScreen {...newProps} />);
+
+      expect(screen.getByText('Security groups')).toBeInTheDocument();
+      expect(screen.getByText('Control plane nodes')).toBeInTheDocument();
+
+      expect(screen.queryByText('Infrastructure nodes')).not.toBeInTheDocument();
+    });
+  });
+
   describe('Shared VPC settings', () => {
     const getPropsWithSharedVpcSettings = ({ isHypershiftSelected, isSharedVpcSelected }) => ({
       ...defaultProps,

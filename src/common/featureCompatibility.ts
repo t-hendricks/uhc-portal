@@ -1,12 +1,13 @@
-import { isHypershiftCluster } from '~/components/clusters/ClusterDetails/clusterDetailsHelper';
 import { Cluster } from '~/types/clusters_mgmt.v1';
+import { isHypershiftCluster } from '~/components/clusters/ClusterDetails/clusterDetailsHelper';
 
-enum SupportedFeatures {
+enum SupportedFeature {
   SECURITY_GROUPS = 'securityGroups',
+  AWS_SHARED_VPC = 'sharedVPC',
 }
+type CompatibilityOptions = { day1?: boolean; day2?: boolean };
 
 type ClusterParams = Partial<Cluster>;
-type CompatibilityOptions = { day1?: boolean; day2?: boolean };
 
 const checkAWSSecurityGroupsCompatibility = (
   clusterParams: ClusterParams,
@@ -15,6 +16,7 @@ const checkAWSSecurityGroupsCompatibility = (
   if (isHypershiftCluster(clusterParams)) {
     return false;
   }
+
   const cloudProvider = clusterParams?.cloud_provider?.id;
   if (cloudProvider !== 'aws') {
     return false;
@@ -32,8 +34,7 @@ const checkAWSSecurityGroupsCompatibility = (
     return false;
   }
 
-  // TODO camador Oct'23 must be updated to cover Day1 too.
-  // Since ATM this function will only be used for Day2, at this point we can return true
+  // TODO camador Oct'23 Handle all cases supported for Day1
   return true;
 };
 
@@ -44,17 +45,16 @@ const checkAWSSecurityGroupsCompatibility = (
  * @param options when not provided an option, it's assumed it doesn't affect the compatibility status
  */
 const isCompatibleFeature = (
-  feature: SupportedFeatures,
+  feature: SupportedFeature,
   clusterParams: ClusterParams,
   options: CompatibilityOptions,
 ) => {
   switch (feature) {
-    case SupportedFeatures.SECURITY_GROUPS:
+    case SupportedFeature.SECURITY_GROUPS:
       return checkAWSSecurityGroupsCompatibility(clusterParams, options);
-    // TODO camador Oct'23: Move functions such as "canConfigureSharedVpc" etc once the code base is stabilised and merged to all branches
     default:
       return false;
   }
 };
 
-export { isCompatibleFeature, SupportedFeatures, CompatibilityOptions };
+export { isCompatibleFeature, SupportedFeature, CompatibilityOptions };

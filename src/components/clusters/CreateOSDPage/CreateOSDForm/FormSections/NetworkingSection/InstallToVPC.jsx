@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Title, GridItem, Alert } from '@patternfly/react-core';
 
+import SecurityGroupsSection from '~/components/clusters/CreateOSDPage/CreateOSDWizard/VPCScreen/SecurityGroupsSection';
 import links from '../../../../../../common/installLinks.mjs';
 import AWSSubnetFields from '../../../CreateOSDWizard/VPCScreen/AWSSubnetFields';
 import PopoverHint from '../../../../../common/PopoverHint';
@@ -12,11 +13,11 @@ import SharedVPCSection from './SharedVPCSection';
 function InstallToVPC({
   selectedRegion,
   selectedVPC,
+  openshiftVersion,
   isMultiAz,
   privateLinkSelected,
   cloudProviderID,
   isSharedVpcSelected,
-  isSharedVpcSelectable,
   hostedZoneDomainName,
 }) {
   return (
@@ -61,10 +62,11 @@ function InstallToVPC({
             selectedRegion={selectedRegion}
             privateLinkSelected={privateLinkSelected}
           />
+          <SecurityGroupsSection selectedVPC={selectedVPC} openshiftVersion={openshiftVersion} />
           <SharedVPCSection
             hostedZoneDomainName={hostedZoneDomainName}
             isSelected={isSharedVpcSelected}
-            isSharedVpcSelectable={isSharedVpcSelectable}
+            openshiftVersion={openshiftVersion}
           />
         </>
       )}
@@ -101,11 +103,11 @@ function InstallToVPC({
 InstallToVPC.propTypes = {
   hostedZoneDomainName: PropTypes.string,
   selectedRegion: PropTypes.string,
-  selectedVPC: PropTypes.object,
+  selectedVPC: PropTypes.object.isRequired,
+  openshiftVersion: PropTypes.string,
   isMultiAz: PropTypes.bool,
   privateLinkSelected: PropTypes.bool,
   isSharedVpcSelected: PropTypes.bool,
-  isSharedVpcSelectable: PropTypes.bool,
   cloudProviderID: PropTypes.string,
 };
 

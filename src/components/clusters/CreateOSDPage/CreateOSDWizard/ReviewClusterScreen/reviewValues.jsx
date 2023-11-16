@@ -7,6 +7,7 @@ import { billingModels } from '../../../../../common/subscriptionTypes';
 import { humanizeValueWithUnitGiB } from '../../../../../common/units';
 import parseUpdateSchedule from '../../../common/Upgrades/parseUpdateSchedule';
 import AwsVpcTable from './AwsVpcTable';
+import SecurityGroupsTable from './SecurityGroupsTable';
 
 /**
  * reviewValues structure - key: field name
@@ -305,6 +306,15 @@ const reviewValues = {
       const showPublicFields = !allValues.use_privatelink;
       return <AwsVpcTable vpcs={vpcs} showPublicFields={showPublicFields} />;
     },
+  },
+  securityGroups: {
+    title: 'Security groups',
+    valueTransform: (formGroups, allValues) => (
+      <SecurityGroupsTable
+        vpcGroups={allValues.selected_vpc?.aws_security_groups || []}
+        formGroups={formGroups}
+      />
+    ),
   },
   aws_hosted_machine_pools: {
     title: 'Machine pools',
