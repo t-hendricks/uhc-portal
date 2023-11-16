@@ -229,136 +229,140 @@ class clusterStatusMonitor extends React.Component {
   showMissingURLList(inflightErrorStopInstall) {
     const { inflightChecks, rerunInflightChecks, rerunInflightCheckReq, cluster } = this.props;
     const { isExpanded, isErrorOpen, wasRunClicked, isValidatorRunning } = this.state;
-    const inflightError = inflightChecks.checks.find(
-      (check) => check.state === InflightCheckState.FAILED,
-    );
-    if (inflightError) {
-      let documentLink;
-      let subnets = [];
-      let inflightTable;
-      let rerunValidator;
-      const hadInflightErrorKey = `${HAD_INFLIGHT_ERROR_LOCALSTORAGE_KEY}_${cluster.id}`;
-      localStorage.setItem(hadInflightErrorKey, !!inflightError);
-      const reason =
-        'To allow this cluster to be fully-managed, add these URLs to the allowlist of these subnet firewalls. For more information review the egress requirements or contact Red Hat support.';
-      const { details } = inflightError;
-      Object.keys(details).forEach((dkey) => {
-        if (dkey === 'documentation_link') {
-          documentLink = details[dkey];
-        } else if (dkey.startsWith('subnet')) {
-          const egressErrors = [];
-          subnets.push({ name: dkey, egressErrors });
-          Object.keys(details[dkey]).forEach((skey) => {
-            if (skey.startsWith('egress_url_errors')) {
-              egressErrors.push(details[dkey][skey].split(' ').pop());
-            }
-          });
-          egressErrors.sort((a, b) => {
-            const aArr = a.split(':');
-            const bArr = b.split(':');
-            const ret = aArr[1].localeCompare(bArr[1]);
-            return ret === 0 ? aArr[0].localeCompare(bArr[0]) : ret;
-          });
-        }
-      });
-      if (subnets.length) {
-        const hasMore = subnets.length > 1;
-        if (hasMore && !isExpanded) subnets = subnets.slice(0, 1);
-        const columns = [{ title: 'Subnet' }, { title: 'URLs' }];
-        const subnetRow = ({ name, egressErrors }) => (
-          <Tbody>
-            <Tr>
-              <Td />
-              <Td modifier="nowrap">{name}</Td>
-              <Td style={{ whiteSpace: 'break-spaces' }}>{egressErrors.join(',   ')}</Td>
-            </Tr>
-          </Tbody>
-        );
-        inflightTable = (
-          <>
-            <TableComposable
-              aria-label="Missing allowlist URLs"
-              variant={TableVariant.compact}
-              style={{ backgroundColor: 'unset' }}
-            >
-              <Thead>
-                <Tr>
-                  <Th />
-                  {columns.map((column) => (
-                    <Th key={column.title}>{column.title}</Th>
-                  ))}
-                </Tr>
-              </Thead>
-              {subnets.map((subnet) => subnetRow(subnet))}
-            </TableComposable>
-            {hasMore && (
-              <Button
-                variant="link"
-                icon={isExpanded ? <MinusCircleIcon /> : <PlusCircleIcon />}
-                onClick={() => this.toggleExpanded(!isExpanded)}
+    const isClusterValidating =
+      cluster.state === clusterStates.VALIDATING || cluster.state === clusterStates.PENDING;
+    if (!isClusterValidating) {
+      const inflightError = inflightChecks.checks.find(
+        (check) => check.state === InflightCheckState.FAILED,
+      );
+      if (inflightError) {
+        let documentLink;
+        let subnets = [];
+        let inflightTable;
+        let rerunValidator;
+        const hadInflightErrorKey = `${HAD_INFLIGHT_ERROR_LOCALSTORAGE_KEY}_${cluster.id}`;
+        localStorage.setItem(hadInflightErrorKey, !!inflightError);
+        const reason =
+          'To allow this cluster to be fully-managed, add these URLs to the allowlist of these subnet firewalls. For more information review the egress requirements or contact Red Hat support.';
+        const { details } = inflightError;
+        Object.keys(details).forEach((dkey) => {
+          if (dkey === 'documentation_link') {
+            documentLink = details[dkey];
+          } else if (dkey.startsWith('subnet')) {
+            const egressErrors = [];
+            subnets.push({ name: dkey, egressErrors });
+            Object.keys(details[dkey]).forEach((skey) => {
+              if (skey.startsWith('egress_url_errors')) {
+                egressErrors.push(details[dkey][skey].split(' ').pop());
+              }
+            });
+            egressErrors.sort((a, b) => {
+              const aArr = a.split(':');
+              const bArr = b.split(':');
+              const ret = aArr[1].localeCompare(bArr[1]);
+              return ret === 0 ? aArr[0].localeCompare(bArr[0]) : ret;
+            });
+          }
+        });
+        if (subnets.length) {
+          const hasMore = subnets.length > 1;
+          if (hasMore && !isExpanded) subnets = subnets.slice(0, 1);
+          const columns = [{ title: 'Subnet' }, { title: 'URLs' }];
+          const subnetRow = ({ name, egressErrors }) => (
+            <Tbody>
+              <Tr>
+                <Td />
+                <Td modifier="nowrap">{name}</Td>
+                <Td style={{ whiteSpace: 'break-spaces' }}>{egressErrors.join(',   ')}</Td>
+              </Tr>
+            </Tbody>
+          );
+          inflightTable = (
+            <>
+              <TableComposable
+                aria-label="Missing allowlist URLs"
+                variant={TableVariant.compact}
+                style={{ backgroundColor: 'unset' }}
               >
-                {isExpanded ? 'Show less' : 'Show more'}
-              </Button>
-            )}
-          </>
-        );
-        rerunValidator = () => {
-          this.setState({ wasRunClicked: true });
-          rerunInflightChecks(cluster.id);
-        };
-      }
-      // show spinner on rerun button
-      const runningInflightCheck = wasRunClicked || isValidatorRunning;
-      return (
-        <Alert
-          variant={inflightErrorStopInstall ? 'danger' : 'warning'}
-          isInline
-          title="User action required"
-        >
-          <Flex direction={{ default: 'column' }}>
-            <FlexItem>{`${reason}`}</FlexItem>
-            {inflightTable && <FlexItem>{inflightTable}</FlexItem>}
-            <FlexItem>
-              <Flex direction={{ default: 'row' }}>
-                {documentLink && (
+                <Thead>
+                  <Tr>
+                    <Th />
+                    {columns.map((column) => (
+                      <Th key={column.title}>{column.title}</Th>
+                    ))}
+                  </Tr>
+                </Thead>
+                {subnets.map((subnet) => subnetRow(subnet))}
+              </TableComposable>
+              {hasMore && (
+                <Button
+                  variant="link"
+                  icon={isExpanded ? <MinusCircleIcon /> : <PlusCircleIcon />}
+                  onClick={() => this.toggleExpanded(!isExpanded)}
+                >
+                  {isExpanded ? 'Show less' : 'Show more'}
+                </Button>
+              )}
+            </>
+          );
+          rerunValidator = () => {
+            this.setState({ wasRunClicked: true });
+            rerunInflightChecks(cluster.id);
+          };
+        }
+        // show spinner on rerun button
+        const runningInflightCheck = wasRunClicked || isValidatorRunning;
+        return (
+          <Alert
+            variant={inflightErrorStopInstall ? 'danger' : 'warning'}
+            isInline
+            title="User action required"
+          >
+            <Flex direction={{ default: 'column' }}>
+              <FlexItem>{`${reason}`}</FlexItem>
+              {inflightTable && <FlexItem>{inflightTable}</FlexItem>}
+              <FlexItem>
+                <Flex direction={{ default: 'row' }}>
+                  {documentLink && (
+                    <FlexItem>
+                      <ExternalLink noIcon href={documentLink}>
+                        Review egress requirements
+                      </ExternalLink>
+                    </FlexItem>
+                  )}
                   <FlexItem>
-                    <ExternalLink noIcon href={documentLink}>
-                      Review egress requirements
+                    <ExternalLink noIcon href="https://access.redhat.com/support/cases/#/case/new">
+                      Contact support
                     </ExternalLink>
                   </FlexItem>
-                )}
-                <FlexItem>
-                  <ExternalLink noIcon href="https://access.redhat.com/support/cases/#/case/new">
-                    Contact support
-                  </ExternalLink>
-                </FlexItem>
-                <FlexItem>
-                  {runningInflightCheck && (
-                    <span className="pf-u-mr-sm">
-                      <Spinner size="sm" />
-                    </span>
-                  )}
-                  <Button
-                    variant={ButtonVariant.link}
-                    isInline
-                    isDisabled={runningInflightCheck}
-                    onClick={rerunValidator}
-                  >
-                    Rerun network validation
-                  </Button>
-                  {isErrorOpen && (
-                    <ErrorModal
-                      title="Error Rerunning Validator "
-                      errorResponse={rerunInflightCheckReq}
-                      resetResponse={() => this.setState({ isErrorOpen: false })}
-                    />
-                  )}
-                </FlexItem>
-              </Flex>
-            </FlexItem>
-          </Flex>
-        </Alert>
-      );
+                  <FlexItem>
+                    {runningInflightCheck && (
+                      <span className="pf-u-mr-sm">
+                        <Spinner size="sm" />
+                      </span>
+                    )}
+                    <Button
+                      variant={ButtonVariant.link}
+                      isInline
+                      isDisabled={runningInflightCheck}
+                      onClick={rerunValidator}
+                    >
+                      Rerun network validation
+                    </Button>
+                    {isErrorOpen && (
+                      <ErrorModal
+                        title="Error Rerunning Validator "
+                        errorResponse={rerunInflightCheckReq}
+                        resetResponse={() => this.setState({ isErrorOpen: false })}
+                      />
+                    )}
+                  </FlexItem>
+                </Flex>
+              </FlexItem>
+            </Flex>
+          </Alert>
+        );
+      }
     }
     return null;
   }
