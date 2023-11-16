@@ -1,7 +1,6 @@
 import { connect } from 'react-redux';
 import { change, untouch, formValueSelector } from 'redux-form';
 
-import { canConfigureSharedVpc } from '~/components/clusters/wizards/rosa/constants';
 import wizardConnector from '../WizardConnector';
 import VPCScreen from './VPCScreen';
 
@@ -13,7 +12,6 @@ const mapStateToProps = (state) => {
   const sharedVpcSettings = valueSelector(state, 'shared_vpc');
   const selectedVPC = valueSelector(state, 'selected_vpc');
   const isSharedVpcSelected = sharedVpcSettings?.is_selected || false;
-  const isSharedVpcSelectable = canConfigureSharedVpc(version.raw_id);
   const hostedZoneDomainName = isSharedVpcSelected
     ? `${clusterName}.${sharedVpcSettings.base_dns_domain || '<selected-base-domain>'}`
     : undefined;
@@ -22,9 +20,9 @@ const mapStateToProps = (state) => {
     cloudProviderID: valueSelector(state, 'cloud_provider'),
     isMultiAz: valueSelector(state, 'multi_az') === 'true',
     isSharedVpcSelected,
-    isSharedVpcSelectable,
     hostedZoneDomainName,
     selectedVPC,
+    openshiftVersion: version.raw_id,
     selectedRegion: valueSelector(state, 'region'),
   };
 };

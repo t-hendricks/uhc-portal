@@ -9,9 +9,9 @@ function VPCScreen({
   isMultiAz,
   selectedRegion,
   selectedVPC,
+  openshiftVersion,
   privateLinkSelected,
   isSharedVpcSelected,
-  isSharedVpcSelectable,
   hostedZoneDomainName,
   change,
   untouch,
@@ -54,8 +54,8 @@ function VPCScreen({
           isMultiAz={isMultiAz}
           selectedRegion={selectedRegion}
           selectedVPC={selectedVPC}
+          openshiftVersion={openshiftVersion}
           isSharedVpcSelected={isSharedVpcSelected}
-          isSharedVpcSelectable={isSharedVpcSelectable}
           privateLinkSelected={privateLinkSelected}
           hostedZoneDomainName={hostedZoneDomainName}
         />
@@ -71,9 +71,9 @@ VPCScreen.propTypes = {
   untouch: PropTypes.func,
   selectedRegion: PropTypes.string,
   selectedVPC: PropTypes.object,
+  openshiftVersion: PropTypes.string,
   privateLinkSelected: PropTypes.bool,
   isSharedVpcSelected: PropTypes.bool,
-  isSharedVpcSelectable: PropTypes.bool,
   hostedZoneDomainName: PropTypes.string,
 };
 

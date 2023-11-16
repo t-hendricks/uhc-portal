@@ -54,6 +54,12 @@ const ReviewClusterScreen = ({
   const hasAWSVPCSettings = showVPCCheckbox && formValues.install_to_vpc && isAWS;
   const clusterVersionRawId = formValues.cluster_version.raw_id;
 
+  const { securityGroups: formSGs } = formValues;
+  const hasSecurityGroups =
+    isByoc && formSGs
+      ? formSGs.controlPlane.length > 0 || formSGs.infra.length > 0 || formSGs.worker.length > 0
+      : false;
+
   const clusterSettingsFields = [
     ...(!isROSA ? ['cloud_provider'] : []),
     'name',
@@ -254,6 +260,13 @@ const ReviewClusterScreen = ({
           !isHypershiftSelected &&
           ReviewItem({
             name: 'aws_standalone_vpc',
+            formValues,
+          })}
+        {hasAWSVPCSettings &&
+          !isHypershiftSelected &&
+          hasSecurityGroups &&
+          ReviewItem({
+            name: 'securityGroups',
             formValues,
           })}
         {formValues.shared_vpc.is_selected &&

@@ -17,7 +17,6 @@ import {
 } from '../../../../../common/validators';
 
 const SingleSubnetFieldsRow = ({
-  showLabels = false,
   index,
   selectedRegion,
   isMultiAz,
@@ -29,6 +28,8 @@ const SingleSubnetFieldsRow = ({
     validateValueNotPlaceholder(PLACEHOLDER_VALUE),
     required,
   ].filter(Boolean);
+
+  const showLabels = index === 0;
 
   return (
     <>
@@ -88,7 +89,6 @@ const AWSSubnetFields = ({ selectedVPC, selectedRegion, isMultiAz, privateLinkSe
     />
 
     <SingleSubnetFieldsRow
-      showLabels
       index={0}
       selectedRegion={selectedRegion}
       isMultiAz={isMultiAz}
@@ -119,7 +119,6 @@ const AWSSubnetFields = ({ selectedVPC, selectedRegion, isMultiAz, privateLinkSe
 SingleSubnetFieldsRow.propTypes = {
   selectedRegion: PropTypes.string,
   index: PropTypes.number,
-  showLabels: PropTypes.bool,
   isDisabled: PropTypes.bool,
   isMultiAz: PropTypes.bool,
   privateLinkSelected: PropTypes.bool,
