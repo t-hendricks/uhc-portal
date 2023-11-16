@@ -9,14 +9,15 @@ import {
   DELETE_MACHINE_POOL,
   CLEAR_GET_MACHINE_POOLS_RESPONSE,
 } from '../machinePoolsActionConstants';
-import { clusterService } from '../../../../../../services';
+import clusterService from '../../../../../../services/clusterService';
 
 jest.mock('../../../../../../services/clusterService');
+clusterService.getNodePoolUpgradePolicies = jest.fn();
 
 describe('MachinePools actions', () => {
-  let mockDispatch;
-  beforeEach(() => {
-    mockDispatch = jest.fn();
+  const mockDispatch = jest.fn();
+  afterEach(() => {
+    jest.clearAllMocks();
   });
 
   describe('getMachinePools', () => {
@@ -36,6 +37,30 @@ describe('MachinePools actions', () => {
     it('calls clusterService.getNodePools', () => {
       getMachineOrNodePools('mock-cluster-id', true)(mockDispatch);
       expect(clusterService.getNodePools).toBeCalledWith('mock-cluster-id');
+    });
+
+    it('calls getNodePoolUpgradePolicies when HCP, has feature flag, and version is behind control plane', async () => {
+      clusterService.getNodePools.mockReturnValue({
+        data: { items: [{ id: 'myPool', version: { id: '4.14.0' } }] },
+      });
+
+      expect(clusterService.getNodePoolUpgradePolicies).not.toHaveBeenCalled();
+      await getMachineOrNodePools('mock-cluster-id', true, '4.14.1', true)(mockDispatch);
+      expect(clusterService.getNodePools).toBeCalledWith('mock-cluster-id');
+      expect(clusterService.getNodePoolUpgradePolicies).toHaveBeenCalledWith(
+        'mock-cluster-id',
+        'myPool',
+      );
+    });
+
+    it('does not getNodePoolUpgradePolicies when HCP, but no feature flag', async () => {
+      clusterService.getNodePools.mockReturnValue({
+        data: { items: [{ id: 'myPool', version: { id: '4.14.0' } }] },
+      });
+
+      await getMachineOrNodePools('mock-cluster-id', true, '4.14.1', false)(mockDispatch);
+      expect(clusterService.getNodePools).toBeCalledWith('mock-cluster-id');
+      expect(clusterService.getNodePoolUpgradePolicies).not.toHaveBeenCalled();
     });
   });
 

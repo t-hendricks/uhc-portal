@@ -5,6 +5,7 @@ import { withState, checkAccessibility, screen, within, waitFor } from '~/testUt
 import * as updateMachinePoolsHelpers from './updateMachinePoolsHelpers';
 
 import { UpdatePoolButton, UpdateMachinePoolModal } from './UpdateMachinePoolModal';
+import { NodePoolWithUpgradePolicies } from '../machinePoolCustomTypes';
 
 const defaultMachinePool = {
   id: 'my-machine-pool',
@@ -199,6 +200,74 @@ describe('UpdateMachinePoolModal', () => {
         );
 
         expect(container).toBeEmptyDOMElement();
+      });
+
+      describe('shows helper popover when', () => {
+        it('the control plane version is not a valid version for machine pool', async () => {
+          const newMachinePool = {
+            ...defaultMachinePool,
+            version: { id: 'openshift-v4.13.1', available_upgrades: ['4.13.2'] },
+          };
+
+          expect(defaultCluster.version.id).toEqual('openshift-v4.13.3');
+
+          const { user } = withState(defaultState).render(
+            <UpdatePoolButton machinePool={newMachinePool} />,
+          );
+
+          expect(screen.getByRole('button', { name: 'More information' })).toBeInTheDocument();
+
+          await user.click(screen.getByRole('button'));
+          expect(await screen.findByRole('dialog')).toBeInTheDocument();
+
+          expect(
+            screen.getByText(
+              `This machine pool cannot be updated because there isn't a migration path to version openshift-v4.13.3`,
+            ),
+          );
+        });
+
+        it('the machine pool is scheduled to be updated', async () => {
+          const newMachinePool = {
+            ...defaultMachinePool,
+            version: { id: 'openshift-v4.13.1', available_upgrades: ['4.13.3'] },
+            upgradePolicies: { items: ['I am an upgrade policy'] },
+          } as NodePoolWithUpgradePolicies;
+
+          expect(defaultCluster.version.id).toEqual('openshift-v4.13.3');
+
+          const { user } = withState(defaultState).render(
+            <UpdatePoolButton machinePool={newMachinePool} />,
+          );
+
+          expect(screen.getByRole('button', { name: 'More information' })).toBeInTheDocument();
+
+          await user.click(screen.getByRole('button'));
+          expect(await screen.findByRole('dialog')).toBeInTheDocument();
+
+          expect(screen.getByText(`This machine pool is scheduled to be updated`));
+        });
+
+        it('there was error getting machine pool upgrade policies', async () => {
+          const newMachinePool = {
+            ...defaultMachinePool,
+            version: { id: 'openshift-v4.13.1', available_upgrades: ['4.13.3'] },
+            upgradePolicies: { errorMessage: 'I am an error' },
+          } as NodePoolWithUpgradePolicies;
+
+          expect(defaultCluster.version.id).toEqual('openshift-v4.13.3');
+
+          const { user } = withState(defaultState).render(
+            <UpdatePoolButton machinePool={newMachinePool} />,
+          );
+
+          expect(screen.getByRole('button', { name: 'Error' })).toBeInTheDocument();
+
+          await user.click(screen.getByRole('button'));
+          expect(await screen.findByRole('dialog')).toBeInTheDocument();
+
+          expect(screen.getByText(`I am an error`));
+        });
       });
     });
   });

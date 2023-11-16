@@ -2,9 +2,11 @@ import React from 'react';
 import * as reactRedux from 'react-redux';
 import { MemoryRouter } from 'react-router-dom';
 import type axios from 'axios';
+import semver from 'semver';
 import apiRequest from '~/services/apiRequest';
 import { withState, screen, checkAccessibility, within, insightsMock } from '~/testUtils';
 
+import { NodePoolUpgradePolicy } from '~/types/clusters_mgmt.v1';
 import { UpdateAllMachinePools } from './index';
 
 type MockedJest = jest.Mocked<typeof axios> & jest.Mock;
@@ -206,6 +208,113 @@ describe('<UpdateAllMachinePools />', () => {
       expectUpdateButtonAbsence(container);
     });
 
+    it('when control plane version is not a valid version for machine pools', () => {
+      const newState = {
+        ...defaultStore,
+        machinePools: {
+          getMachinePools: {
+            ...defaultMachinePools,
+            data: [
+              {
+                ...machinePoolBehind1,
+                version: { id: '4.12.10', available_upgrades: ['4.12.11'] },
+              },
+            ],
+          },
+        },
+      };
+
+      const rawControlPlaneVersion = semver.coerce(controlPlaneVersion);
+      // Verify test data that machine pools is behind the control plane
+      expect(
+        semver.gt(
+          rawControlPlaneVersion || '',
+          semver.coerce(newState.machinePools.getMachinePools.data[0].version.id) || '',
+        ),
+      ).toBeTruthy();
+
+      // Verify test data that control plane version is not in available upgrades
+      expect(
+        newState.machinePools.getMachinePools.data[0].version.available_upgrades,
+      ).not.toContain(rawControlPlaneVersion?.version);
+
+      const { container } = withState(newState).render(<UpdateAllMachinePools />);
+
+      expectUpdateButtonAbsence(container);
+    });
+
+    it('when machine pools are scheduled to be upgraded', () => {
+      const newState = {
+        ...defaultStore,
+        machinePools: {
+          getMachinePools: {
+            ...defaultMachinePools,
+            data: [
+              {
+                ...machinePoolBehind1,
+                version: { id: '4.12.10', available_upgrades: ['4.12.13'] },
+                upgradePolicies: { items: ['I am an upgrade policy object'] },
+              },
+            ],
+          },
+        },
+      };
+
+      const rawControlPlaneVersion = semver.coerce(controlPlaneVersion);
+      // Verify test data that machine pools is behind the control plane
+      expect(
+        semver.gt(
+          rawControlPlaneVersion || '',
+          semver.coerce(newState.machinePools.getMachinePools.data[0].version.id) || '',
+        ),
+      ).toBeTruthy();
+
+      // Verify test data that control plane version is  in available upgrades
+      expect(newState.machinePools.getMachinePools.data[0].version.available_upgrades).toContain(
+        rawControlPlaneVersion?.version,
+      );
+
+      const { container } = withState(newState).render(<UpdateAllMachinePools />);
+
+      expectUpdateButtonAbsence(container);
+    });
+
+    it('when there are errors getting pool schedules', () => {
+      const newState = {
+        ...defaultStore,
+        machinePools: {
+          getMachinePools: {
+            ...defaultMachinePools,
+            data: [
+              {
+                ...machinePoolBehind1,
+                version: { id: '4.12.10', available_upgrades: ['4.12.13'] },
+                upgradePolicies: { errorMessage: 'This is an error message' },
+              },
+            ],
+          },
+        },
+      };
+
+      const rawControlPlaneVersion = semver.coerce(controlPlaneVersion);
+      // Verify test data that machine pools is behind the control plane
+      expect(
+        semver.gt(
+          rawControlPlaneVersion || '',
+          semver.coerce(newState.machinePools.getMachinePools.data[0].version.id) || '',
+        ),
+      ).toBeTruthy();
+
+      // Verify test data that control plane version is  in available upgrades
+      expect(newState.machinePools.getMachinePools.data[0].version.available_upgrades).toContain(
+        rawControlPlaneVersion?.version,
+      );
+
+      const { container } = withState(newState).render(<UpdateAllMachinePools />);
+
+      expectUpdateButtonAbsence(container);
+    });
+
     describe('when the control plane', () => {
       it('has available update versions', () => {
         const newState = {
@@ -341,6 +450,43 @@ describe('<UpdateAllMachinePools />', () => {
         }),
       ).toBeInTheDocument();
     });
+
+    it('if feature gate is set and machine pool', async () => {
+      const newState = {
+        ...defaultStore,
+        machinePools: {
+          getMachinePools: {
+            ...defaultMachinePools,
+            data: [
+              {
+                ...machinePoolBehind1,
+                version: { id: '4.12.10', available_upgrades: ['4.12.13'] },
+                upgradePolicies: { items: [] },
+              },
+              {
+                ...machinePoolBehind2,
+                version: { id: '4.12.10', available_upgrades: ['4.12.13'] },
+                upgradePolicies: { items: [] },
+              },
+            ],
+          },
+        },
+        features: { HCP_USE_NODE_UPGRADE_POLICIES: true },
+      };
+
+      const { user } = withState(newState).render(<UpdateAllMachinePools />);
+      expectUpdateButtonPresence();
+
+      // Act
+      await user.click(screen.getByRole('button', { name: 'Warning alert details' }));
+
+      // Assert
+      expect(
+        within(screen.getByRole('alert', { name: warningAlertLabel })).getByText('4.12.13', {
+          exact: false,
+        }),
+      ).toBeInTheDocument();
+    });
   });
 
   describe('updates the machine pools', () => {
@@ -352,7 +498,7 @@ describe('<UpdateAllMachinePools />', () => {
       jest.resetAllMocks();
     });
 
-    it.skip('patchNodePool is called for only machine pools with a version that is behind the control plane ', async () => {
+    it('patchNodePool is called for only machine pools with a version that is behind the control plane ', async () => {
       // ARRANGE
       apiRequestMock.patch.mockResolvedValue('success');
       const dummyDispatch = jest.fn();
@@ -380,22 +526,79 @@ describe('<UpdateAllMachinePools />', () => {
       // ASSERT
       // Ensure single call to patch machine pool
       expect(apiRequestMock.patch).toHaveBeenCalledTimes(1);
-      const patchMachinePool = getApiPatchParams(0);
-      expect(patchMachinePool.url).toEqual(
+      const patchMachinePoolParams = apiRequestMock.patch.mock.calls[0];
+
+      expect(patchMachinePoolParams[0]).toEqual(
         `/api/clusters_mgmt/v1/clusters/${clusterId}/node_pools/${machinePoolBehind1.id}`,
       );
-      expect(patchMachinePool.data).toBe(`{"version":{"id":"${controlPlaneVersion}"}}`);
+      expect(patchMachinePoolParams[1]).toEqual({
+        version: { id: 'openshift-v4.12.13-candidate' },
+      });
 
       // Ensure dispatch call to get current state of machine pools
       expect(dummyDispatch).toHaveBeenCalledTimes(1);
     });
 
-    it.skip('shows errors for all patchNodePool requests that fail and is accessible', async () => {
+    it('create node policy is called  with feature gate', async () => {
+      apiRequestMock.post.mockResolvedValue('success');
+      const dummyDispatch = jest.fn();
+      useDispatchMock.mockReturnValue(dummyDispatch);
+
+      const newState = {
+        ...defaultStore,
+        machinePools: {
+          getMachinePools: {
+            ...defaultMachinePools,
+            data: [
+              {
+                ...machinePoolBehind1,
+                version: { id: '4.12.10', available_upgrades: ['4.12.13'] },
+                upgradePolicies: { items: [] },
+              },
+              machinePoolUpToDate1,
+            ],
+          },
+        },
+        features: { HCP_USE_NODE_UPGRADE_POLICIES: true },
+      };
+
+      const { user } = withState(newState).render(<UpdateAllMachinePools />);
+
+      expect(apiRequestMock.post).not.toHaveBeenCalled();
+      expect(dummyDispatch).toHaveBeenCalledTimes(0);
+      expectUpdateButtonPresence();
+
+      // ACT
+      await clickUpdateButton(user);
+
+      // ASSERT
+      expect(apiRequestMock.post).toHaveBeenCalledTimes(1);
+      const mockPostMachinePoolCallParams = apiRequestMock.post.mock.calls[0];
+
+      expect(mockPostMachinePoolCallParams[0]).toEqual(
+        `/api/clusters_mgmt/v1/clusters/${clusterId}/node_pools/${machinePoolBehind1.id}/upgrade_policies`,
+      );
+
+      const payload: NodePoolUpgradePolicy =
+        mockPostMachinePoolCallParams[1] as NodePoolUpgradePolicy;
+      expect(payload.schedule_type).toBe('manual');
+      expect(payload.version).toBe('4.12.13');
+      expect(payload.upgrade_type).toBe('NodePool');
+
+      // Ensure dispatch call to get current state of machine pools
+      expect(dummyDispatch).toHaveBeenCalledTimes(1);
+    });
+
+    it('shows errors for all patchNodePool requests that fail and is accessible', async () => {
       // ARRANGE
       apiRequestMock.patch
         .mockRejectedValueOnce({
-          code: '1234',
-          reason: 'I am a bad server',
+          response: {
+            data: {
+              code: '1234',
+              reason: 'I am a bad server',
+            },
+          },
         })
         .mockResolvedValue('success');
 
@@ -425,17 +628,17 @@ describe('<UpdateAllMachinePools />', () => {
       // ASSERT
       // Ensure two calls to patch machine pools
       expect(apiRequestMock.patch).toHaveBeenCalledTimes(2);
-      const patchMachinePool1 = getApiPatchParams(0);
-      expect(patchMachinePool1.url).toEqual(
+      const patchMachinePool1 = apiRequestMock.patch.mock.calls[0];
+      expect(patchMachinePool1[0]).toEqual(
         `/api/clusters_mgmt/v1/clusters/${clusterId}/node_pools/${machinePoolBehind1.id}`,
       );
-      expect(patchMachinePool1.data).toBe(`{"version":{"id":"${controlPlaneVersion}"}}`);
+      expect(patchMachinePool1[1]).toEqual({ version: { id: controlPlaneVersion } });
 
-      const patchMachinePool2 = getApiPatchParams(1);
-      expect(patchMachinePool2.url).toEqual(
+      const patchMachinePool2 = apiRequestMock.patch.mock.calls[1];
+      expect(patchMachinePool2[0]).toEqual(
         `/api/clusters_mgmt/v1/clusters/${clusterId}/node_pools/${machinePoolBehind2.id}`,
       );
-      expect(patchMachinePool2.data).toBe(`{"version":{"id":"${controlPlaneVersion}"}}`);
+      expect(patchMachinePool2[1]).toEqual({ version: { id: controlPlaneVersion } });
 
       // Ensure dispatch call to get current state of machine pools
       expect(dummyDispatch).toHaveBeenCalledTimes(1);

@@ -581,9 +581,9 @@ const getMachinePools = (clusterID: string) =>
 const getNodePoolUpgradePolicies = (clusterId: string, nodePoolID: string) =>
   apiRequest.get<{
     /**
-     * Retrieved list of node pools.
+     * Retrieved list of node pools upgrade policies.
      */
-    items?: Array<NodePool>;
+    items?: Array<NodePoolUpgradePolicy>;
     /**
      * Index of the requested page, where one corresponds to the first page.
      */
@@ -1019,12 +1019,12 @@ const clusterService = {
   getOperatorRoleCommands,
   getLimitedSupportReasons,
   getOidcConfigurations,
+  postNodePoolUpgradeSchedule,
 };
 
 export {
   postUpgradeSchedule,
   postControlPlaneUpgradeSchedule,
-  postNodePoolUpgradeSchedule,
   getUpgradeSchedules,
   getControlPlaneUpgradeSchedules,
   getUpgradeScheduleState,
