@@ -48,9 +48,14 @@ export const buildOptions = ({
   // no extra node quota = only base cluster size is available
   const optionsAvailable = available > 0 || isEditingCluster;
   let maxValue = isEditingCluster ? available + currentNodeCount : available + included;
+
   const maxNumberOfNodes = isHypershift ? MAX_NODES_HCP : MAX_NODES;
   if (maxValue > maxNumberOfNodes) {
     maxValue = maxNumberOfNodes;
+  }
+
+  if (isHypershift && isEditingCluster && maxValue > MAX_NODES_HCP - currentNodeCount) {
+    maxValue = MAX_NODES_HCP - currentNodeCount;
   }
 
   return optionsAvailable ? range(minNodes, maxValue + 1, increment) : [minNodes];
@@ -142,5 +147,6 @@ export const getNodeOptions = ({
     currentNodeCount,
     minNodes,
     increment: isMultiAz ? 3 : 1,
+    isHypershift: isHypershiftCluster(cluster),
   });
 };
