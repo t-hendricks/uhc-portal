@@ -61,6 +61,7 @@ const openshiftBannerContents: ProductBannerProps = {
 
 function OverviewEmptyState() {
   const track = useAnalytics();
+  const createClusterURL = '/create';
   return (
     <AppPage>
       <ProductBanner
@@ -100,12 +101,12 @@ function OverviewEmptyState() {
               {...props}
               onClick={() => {
                 track(trackEvents.CreateCluster, {
-                  url: '/create',
+                  url: createClusterURL,
                   path: window.location.pathname,
                 });
               }}
               data-testid="create-cluster"
-              to="/create"
+              to={createClusterURL}
             />
           )}
         >

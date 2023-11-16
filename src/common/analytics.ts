@@ -316,6 +316,10 @@ const trackEvents: { [key: string]: TrackEvent } = {
     link_name: 'request-rosa-handson-experience',
     ocm_resource_type: ocmResourceType.ROSA,
   },
+  TryRosaHandsOnExperience: {
+    event: eventNames.LINK_CLICKED,
+    link_name: 'try-rosa-hands-on-internal-link',
+  },
   RosaOverview: {
     event: eventNames.LINK_CLICKED,
     link_name: 'rosa-overview-internal-link',

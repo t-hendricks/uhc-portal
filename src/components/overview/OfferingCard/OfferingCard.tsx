@@ -38,6 +38,12 @@ type OfferingCardProps = {
 export function OfferingCard(props: OfferingCardProps) {
   const track = useAnalytics();
   const { offeringType } = props;
+  const createRosaClusterURL = '/create/rosa/getstarted';
+  const rosaServicePageURL = '/overview/rosa';
+  const createOSDClusterURL = '/create/osd';
+  const createClusterURL = '/create';
+  const registerClusterURL = '/register';
+
   let offeringCardTitle: string | undefined;
   let offeringCardLabel: string = 'Managed service';
   let offeringCardDescriptionList:
@@ -64,12 +70,12 @@ export function OfferingCard(props: OfferingCardProps) {
           variant="secondary"
           onClick={() => {
             track(trackEvents.CreateClusterROSA, {
-              url: '/create/rosa/getstarted',
+              url: createRosaClusterURL,
               path: window.location.pathname,
             });
           }}
           component={(props) => (
-            <Link {...props} data-testid="create-cluster" to="/create/rosa/getstarted" />
+            <Link {...props} data-testid="create-cluster" to={createRosaClusterURL} />
           )}
         >
           Create cluster
@@ -82,11 +88,11 @@ export function OfferingCard(props: OfferingCardProps) {
             <Link
               onClick={() => {
                 track(trackEvents.RosaOverview, {
-                  url: '/overview/rosa',
+                  url: rosaServicePageURL,
                   path: window.location.pathname,
                 });
               }}
-              to="/overview/rosa"
+              to={rosaServicePageURL}
             >
               View details
             </Link>
@@ -120,11 +126,13 @@ export function OfferingCard(props: OfferingCardProps) {
           variant="secondary"
           onClick={() => {
             track(trackEvents.CreateClusterOSD, {
-              url: '/create/osd',
+              url: createOSDClusterURL,
               path: window.location.pathname,
             });
           }}
-          component={(props) => <Link {...props} data-testid="create-cluster" to="/create/osd" />}
+          component={(props) => (
+            <Link {...props} data-testid="create-cluster" to={createOSDClusterURL} />
+          )}
         >
           Create cluster
         </Button>
@@ -148,11 +156,13 @@ export function OfferingCard(props: OfferingCardProps) {
           variant="secondary"
           onClick={() => {
             track(trackEvents.CreateClusterRHOCP, {
-              url: '/create/osd',
+              url: createClusterURL,
               path: window.location.pathname,
             });
           }}
-          component={(props) => <Link {...props} data-testid="create-cluster" to="/create" />}
+          component={(props) => (
+            <Link {...props} data-testid="create-cluster" to={createClusterURL} />
+          )}
         >
           Create cluster
         </Button>
@@ -164,11 +174,11 @@ export function OfferingCard(props: OfferingCardProps) {
             <Link
               onClick={() => {
                 track(trackEvents.RegisterCluster, {
-                  url: '/register',
+                  url: registerClusterURL,
                   path: window.location.pathname,
                 });
               }}
-              to="/register"
+              to={registerClusterURL}
             >
               Register cluster
             </Link>
