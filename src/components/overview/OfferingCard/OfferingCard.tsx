@@ -22,6 +22,8 @@ import {
 } from '@patternfly/react-core';
 import { Link } from 'react-router-dom';
 import ExternalLink from '~/components/common/ExternalLink';
+import useAnalytics from '~/hooks/useAnalytics';
+import { trackEvents } from '~/common/analytics';
 import microsoftLogo from '../../../styles/images/Microsoft_logo.svg';
 import AWSLogo from '../../../styles/images/AWSLogo';
 import RHLogo from '../../../styles/images/RedHatLogo';
@@ -34,6 +36,7 @@ type OfferingCardProps = {
 };
 
 export function OfferingCard(props: OfferingCardProps) {
+  const track = useAnalytics();
   const { offeringType } = props;
   let offeringCardTitle: string | undefined;
   let offeringCardLabel: string = 'Managed service';
@@ -42,8 +45,7 @@ export function OfferingCard(props: OfferingCardProps) {
     | undefined;
   let offeringCardTextBody: string | undefined;
   let offeringCardDocLink: React.ReactNode | undefined;
-  let offeringCardCreationLink: string | undefined;
-  let externalCreationButton: boolean = false;
+  let offeringCardCreationLink: React.ReactNode | undefined;
   let cardLogo: React.ReactNode | undefined;
 
   switch (offeringType) {
@@ -57,11 +59,38 @@ export function OfferingCard(props: OfferingCardProps) {
         },
         { descriptionListTerm: 'Billing type', descriptionListDescription: 'Flexible hourly' },
       ];
-      offeringCardCreationLink = '/create/rosa/getstarted';
+      offeringCardCreationLink = (
+        <Button
+          variant="secondary"
+          onClick={() => {
+            track(trackEvents.CreateClusterROSA, {
+              url: '/create/rosa/getstarted',
+              path: window.location.pathname,
+            });
+          }}
+          component={(props) => (
+            <Link {...props} data-testid="create-cluster" to="/create/rosa/getstarted" />
+          )}
+        >
+          Create cluster
+        </Button>
+      );
       offeringCardDocLink = (
         <Button
           variant={ButtonVariant.link}
-          component={() => <Link to="/overview/rosa">View details</Link>}
+          component={() => (
+            <Link
+              onClick={() => {
+                track(trackEvents.RosaOverview, {
+                  url: '/overview/rosa',
+                  path: window.location.pathname,
+                });
+              }}
+              to="/overview/rosa"
+            >
+              View details
+            </Link>
+          )}
         />
       );
       cardLogo = <AWSLogo className="offering-logo" />;
@@ -76,7 +105,6 @@ export function OfferingCard(props: OfferingCardProps) {
       offeringCardDocLink = (
         <ExternalLink href={docLinks.AZURE_OPENSHIFT_GET_STARTED}>Learn more on Azure</ExternalLink>
       );
-      externalCreationButton = true;
       cardLogo = <img className="offering-logo" src={microsoftLogo} alt="Microsoft Azure logo" />;
       break;
 
@@ -87,7 +115,20 @@ export function OfferingCard(props: OfferingCardProps) {
         { descriptionListTerm: 'Purchase through', descriptionListDescription: 'Red Hat' },
         { descriptionListTerm: 'Billing type', descriptionListDescription: 'Flexible or fixed' },
       ];
-      offeringCardCreationLink = '/create/osd';
+      offeringCardCreationLink = (
+        <Button
+          variant="secondary"
+          onClick={() => {
+            track(trackEvents.CreateClusterOSD, {
+              url: '/create/osd',
+              path: window.location.pathname,
+            });
+          }}
+          component={(props) => <Link {...props} data-testid="create-cluster" to="/create/osd" />}
+        >
+          Create cluster
+        </Button>
+      );
       offeringCardDocLink = (
         <ExternalLink href={docLinks.OPENSHIFT_DEDICATED_LEARN_MORE}>Learn more</ExternalLink>
       );
@@ -102,11 +143,36 @@ export function OfferingCard(props: OfferingCardProps) {
         { descriptionListTerm: 'Purchase through', descriptionListDescription: 'Red Hat' },
         { descriptionListTerm: 'Billing type', descriptionListDescription: 'Annual subscription' },
       ];
-      offeringCardCreationLink = '/create';
+      offeringCardCreationLink = (
+        <Button
+          variant="secondary"
+          onClick={() => {
+            track(trackEvents.CreateClusterRHOCP, {
+              url: '/create/osd',
+              path: window.location.pathname,
+            });
+          }}
+          component={(props) => <Link {...props} data-testid="create-cluster" to="/create" />}
+        >
+          Create cluster
+        </Button>
+      );
       offeringCardDocLink = (
         <Button
           variant={ButtonVariant.link}
-          component={() => <Link to="/register">Register cluster</Link>}
+          component={() => (
+            <Link
+              onClick={() => {
+                track(trackEvents.RegisterCluster, {
+                  url: '/register',
+                  path: window.location.pathname,
+                });
+              }}
+              to="/register"
+            >
+              Register cluster
+            </Link>
+          )}
         />
       );
       cardLogo = (
@@ -190,24 +256,7 @@ export function OfferingCard(props: OfferingCardProps) {
       </CardBody>
       <CardFooter>
         <Flex>
-          {offeringCardCreationLink && (
-            <FlexItem>
-              {externalCreationButton ? (
-                <ExternalLink href={offeringCardCreationLink} isButton variant="secondary">
-                  Create Cluster
-                </ExternalLink>
-              ) : (
-                <Button
-                  variant="secondary"
-                  component={(props) => (
-                    <Link {...props} data-testid="create-cluster" to={offeringCardCreationLink} />
-                  )}
-                >
-                  Create cluster
-                </Button>
-              )}
-            </FlexItem>
-          )}
+          {offeringCardCreationLink && <FlexItem>{offeringCardCreationLink}</FlexItem>}
           {offeringCardDocLink && <FlexItem>{offeringCardDocLink}</FlexItem>}
         </Flex>
       </CardFooter>
