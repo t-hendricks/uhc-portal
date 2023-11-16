@@ -41,8 +41,8 @@ const getNodePoolWithUpgradePolicies = async (
             errorResponse.response?.data?.reason ||
             errorResponse.message ||
             'There was an error fetching upgrade policies for this machine pool.',
+          items: [],
         },
-        items: [],
       };
     }
   });

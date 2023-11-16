@@ -146,3 +146,18 @@ export const isMachinePoolUpgrading = (machinePool: NodePoolWithUpgradePolicies)
 
 export const isMachinePoolScheduleError = (machinePool: NodePoolWithUpgradePolicies) =>
   !!machinePool.upgradePolicies?.errorMessage;
+
+export const canMachinePoolBeUpgradedSelector = (
+  state: GlobalState,
+  machinePool: NodePoolWithUpgradePolicies,
+) => {
+  const controlPlaneVersion = controlPlaneVersionSelector(state);
+
+  return (
+    !isHCPControlPlaneUpdating(state) &&
+    isMachinePoolBehindControlPlane(state, machinePool) &&
+    !isMachinePoolScheduleError(machinePool) &&
+    isControlPlaneValidForMachinePool(machinePool, controlPlaneVersion) &&
+    !isMachinePoolUpgrading(machinePool)
+  );
+};
