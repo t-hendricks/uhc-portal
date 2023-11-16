@@ -1,22 +1,35 @@
 import produce from 'immer';
+import { PromiseActionType, PromiseReducerState } from '~/redux/types';
+import { ClusterLog } from '~/types/service_logs.v1';
+import { ViewOptionsAction } from '~/redux/actions/viewOptionsActions';
+import { viewPaginationConstants } from '~/redux/constants';
+import { getErrorState } from '../../../../../common/errors';
 import {
-  baseRequestState,
   FULFILLED_ACTION,
   PENDING_ACTION,
   REJECTED_ACTION,
+  baseRequestState,
 } from '../../../../../redux/reduxHelpers';
-import { viewPaginationConstants } from '../../../../../redux/constants';
 import { GET_CLUSTER_LOGS, RESET_CLUSTER_HISTORY } from './clusterLogConstants';
-import { getErrorState } from '../../../../../common/errors';
+import { ClusterLogAction } from './clusterLogActions';
 
-const initialState = {
-  requestState: baseRequestState,
+export type State = {
+  requestState: PromiseReducerState<{}>;
+  logs?: Array<ClusterLog>;
+  fetchedClusterLogsAt?: Date;
+};
+
+const initialState: State = {
+  requestState: { ...baseRequestState },
   logs: [],
   fetchedClusterLogsAt: undefined,
 };
 
-function clusterLogReducer(state = initialState, action) {
-  return produce(state, (draft) => {
+const clusterLogReducer = (
+  state: State = initialState,
+  action: PromiseActionType<ClusterLogAction | ViewOptionsAction>,
+) =>
+  produce(state, (draft) => {
     switch (action.type) {
       case PENDING_ACTION(GET_CLUSTER_LOGS):
         draft.requestState = {
@@ -51,7 +64,6 @@ function clusterLogReducer(state = initialState, action) {
         break;
     }
   });
-}
 
 clusterLogReducer.initialState = initialState;
 

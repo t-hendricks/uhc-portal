@@ -1400,7 +1400,7 @@ const validateMultipleMachinePoolsSubnets = (
 
 const isPrivateSubnet = (value: string, allValues: unknown, formProps: OSDSubnetFormProps) => {
   const { vpcs, vpcsValid } = formProps;
-  if (vpcs.fulfilled && vpcsValid) {
+  if (vpcs.fulfilled && vpcsValid && vpcs.data) {
     const subnetInfo = vpcs.data.bySubnetID[value];
     if (subnetInfo && subnetInfo.public) {
       return 'Provided subnet is public, should be private.';
@@ -1411,7 +1411,7 @@ const isPrivateSubnet = (value: string, allValues: unknown, formProps: OSDSubnet
 
 const isPublicSubnet = (value: string, allValues: unknown, formProps: OSDSubnetFormProps) => {
   const { vpcs, vpcsValid } = formProps;
-  if (vpcs.fulfilled && vpcsValid) {
+  if (vpcs.fulfilled && vpcsValid && vpcs.data) {
     const subnetInfo = vpcs.data.bySubnetID[value];
     if (subnetInfo && !subnetInfo.public) {
       return 'Provided subnet is private, should be public.';
