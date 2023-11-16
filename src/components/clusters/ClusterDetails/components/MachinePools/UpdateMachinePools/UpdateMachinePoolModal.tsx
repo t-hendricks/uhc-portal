@@ -14,8 +14,6 @@ import { useFeatureGate } from '~/hooks/useFeatureGate';
 import { HCP_USE_NODE_UPGRADE_POLICIES } from '~/redux/constants/featureConstants';
 import PopoverHint from '~/components/common/PopoverHint';
 import {
-  useMachinePoolBehindControlPlane,
-  useHCPControlPlaneUpdating,
   controlPlaneVersionSelector,
   displayControlPlaneVersion,
   updateAllMachinePools as updatePool,
@@ -23,6 +21,7 @@ import {
   useIsControlPlaneValidForMachinePool,
   isMachinePoolUpgrading,
   isMachinePoolScheduleError,
+  canMachinePoolBeUpgradedSelector,
 } from './updateMachinePoolsHelpers';
 
 import { NodePoolWithUpgradePolicies } from '../machinePoolCustomTypes';
@@ -35,13 +34,24 @@ export const UpdatePoolButton = ({ machinePool }: { machinePool: NodePoolWithUpg
   const controlPlaneVersion = useSelector((state: GlobalState) =>
     controlPlaneVersionSelector(state),
   );
-  const machinePoolBehindControlPlane = useMachinePoolBehindControlPlane(machinePool);
-  const controlPlaneUpdating = useHCPControlPlaneUpdating();
+  const canBeUpdated = useSelector((state: GlobalState) =>
+    canMachinePoolBeUpgradedSelector(state, machinePool),
+  );
   const isAvailableVersion = useIsControlPlaneValidForMachinePool(machinePool);
   const machinePoolUpdating = isMachinePoolUpgrading(machinePool);
 
-  if (controlPlaneUpdating || !machinePoolBehindControlPlane) {
-    return null;
+  if (canBeUpdated) {
+    return (
+      <>
+        <Button
+          variant={ButtonVariant.link}
+          isInline
+          onClick={() => dispatch(modalActions.openModal(updateModalId, { machinePool }))}
+        >
+          Update <OutlinedArrowAltCircleUpIcon />
+        </Button>
+      </>
+    );
   }
 
   if (isMachinePoolScheduleError(machinePool)) {
@@ -84,18 +94,7 @@ export const UpdatePoolButton = ({ machinePool }: { machinePool: NodePoolWithUpg
 
     return <PopoverHint iconClassName={spacing.mlSm} hint={scheduledMessage} />;
   }
-
-  return (
-    <>
-      <Button
-        variant={ButtonVariant.link}
-        isInline
-        onClick={() => dispatch(modalActions.openModal(updateModalId, { machinePool }))}
-      >
-        Update <OutlinedArrowAltCircleUpIcon />
-      </Button>
-    </>
-  );
+  return null;
 };
 
 export const UpdateMachinePoolModal = () => {
