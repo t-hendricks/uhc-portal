@@ -3,6 +3,9 @@ import PropTypes from 'prop-types';
 
 import {
   PageSection,
+  Title,
+  Split,
+  SplitItem,
   CardTitle,
   CardBody,
   EmptyState,
@@ -11,13 +14,13 @@ import {
   Grid,
   GridItem,
 } from '@patternfly/react-core';
-
-import { PageHeader, PageHeaderTitle } from '@redhat-cloud-services/frontend-components/PageHeader';
+import { PageHeader } from '@redhat-cloud-services/frontend-components/PageHeader';
 import Spinner from '@redhat-cloud-services/frontend-components/Spinner';
 
+import ClusterListActions from '../clusters/ClusterList/components/ClusterListActions/ClusterListActions';
 import ConnectedModal from '../common/Modal/ConnectedModal';
 import SmallClusterChart from '../clusters/common/ResourceUsage/SmallClusterChart';
-import OverviewEmptyState from './EmptyState/OverviewEmptyState';
+import DashboardEmptyState from './EmptyState/DashboardEmptyState';
 import ExpiredTrialsCard from './ExpiredTrialsCard';
 import ClustersWithIssuesTableCard from './ClustersWithIssuesTableCard';
 import CostCard from './CostCard';
@@ -28,12 +31,12 @@ import { createOverviewQueryObject } from '../../common/queryHelpers';
 import Unavailable from '../common/Unavailable';
 import InsightsAdvisorCard from './InsightsAdvisorCard/InsightsAdvisorCard';
 
-import './Overview.scss';
+import './Dashboard.scss';
 import { AppPage } from '../App/AppPage';
 
 const PAGE_TITLE = 'Overview | Red Hat OpenShift Cluster Manager';
 
-class Overview extends Component {
+class Dashboard extends Component {
   componentDidMount() {
     const {
       summaryDashboard,
@@ -124,7 +127,7 @@ class Overview extends Component {
     if (summaryDashboard.fulfilled && !totalClusters) {
       return (
         <AppPage title={PAGE_TITLE}>
-          <OverviewEmptyState />
+          <DashboardEmptyState />
         </AppPage>
       );
     }
@@ -132,7 +135,22 @@ class Overview extends Component {
     return (
       <AppPage title={PAGE_TITLE}>
         <PageHeader>
-          <PageHeaderTitle title="Overview" className="page-title" />
+          <Split hasGutter>
+            <SplitItem>
+              <Title
+                headingLevel="h1"
+                size="2xl"
+                className="page-title"
+                widget-type="InsightsPageHeaderTitle"
+              >
+                Dashboard
+              </Title>
+            </SplitItem>
+            <SplitItem isFilled />
+            <SplitItem>
+              <ClusterListActions isDashboardView />
+            </SplitItem>
+          </Split>
         </PageHeader>
         <PageSection>
           <Grid hasGutter className="ocm-c-overview">
@@ -221,7 +239,7 @@ class Overview extends Component {
   }
 }
 
-Overview.propTypes = {
+Dashboard.propTypes = {
   getSummaryDashboard: PropTypes.func.isRequired,
   getUserAccess: PropTypes.func.isRequired,
   invalidateSubscriptions: PropTypes.func.isRequired,
@@ -259,4 +277,4 @@ Overview.propTypes = {
   organization: PropTypes.object.isRequired,
 };
 
-export default Overview;
+export default Dashboard;

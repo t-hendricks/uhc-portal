@@ -29,7 +29,7 @@ import RedHatLogo from '~/styles/images/Logo-Red_Hat-B-Standard-RGB.png';
 import AWSLogo from '~/styles/images/AWSLogo';
 import { AppPage } from '~/components/App/AppPage';
 import { ListTextLabelLinkCard } from '../../common/ListTextLabelLinkCard/ListTextLabelLinkCard';
-import ProductBanner from '../../common/ProductBanner';
+import { ProductBanner } from '../../common/ProductBanner';
 import docLinks from '../../../common/installLinks.mjs';
 import OpenShiftProductIcon from '../../../styles/images/OpenShiftProductIcon.svg';
 
@@ -52,7 +52,7 @@ const TryRosaCard = () => (
     <CardFooter>
       <Button
         variant="secondary"
-        component={(props) => <Link {...props} to="/services/rosa/demo/" />}
+        component={(props) => <Link {...props} to="/overview/rosa/hands-on" />}
         isLarge
       >
         Try it

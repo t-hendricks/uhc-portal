@@ -140,6 +140,10 @@ class ClusterList extends Page {
   clearFilters() {
     cy.get('button', { timeout: 30000 }).contains('Clear filters').click({ force: true });
   }
+
+  isCreateClusterBtnVisible() {
+    cy.getByTestId('create_cluster_btn').should('be.visible');
+  }
 }
 
 export default new ClusterList();

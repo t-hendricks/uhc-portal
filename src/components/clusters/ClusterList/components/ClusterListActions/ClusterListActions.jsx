@@ -21,6 +21,8 @@ import {
   DropdownItem,
   DropdownPosition,
   KebabToggle,
+  Split,
+  SplitItem,
   ToolbarItem,
 } from '@patternfly/react-core';
 import { Link } from 'react-router-dom';
@@ -87,7 +89,7 @@ const toolbarRegisterCluster = (
   </ToolbarItem>
 );
 
-const useItems = () => {
+const useItems = (isDashboardView) => {
   const wide = useMediaQuery('(min-width: 900px)');
 
   const toolbarItems = [];
@@ -95,7 +97,15 @@ const useItems = () => {
 
   toolbarItems.push(toolbarCreateCluster);
   if (!isRestrictedEnv()) {
-    if (wide) {
+    if (isDashboardView) {
+      if (wide) {
+        toolbarItems.push(toolbarRegisterCluster);
+        dropdownItems.push(dropdownArchived);
+      } else {
+        dropdownItems.push(dropdownRegisterCluster);
+        dropdownItems.push(dropdownArchived);
+      }
+    } else if (wide) {
       toolbarItems.push(toolbarRegisterCluster);
       toolbarItems.push(toolbarViewArchivedClusters);
     } else {
@@ -107,10 +117,32 @@ const useItems = () => {
   return [dropdownItems, toolbarItems];
 };
 
-const ClusterListActions = ({ className }) => {
+const ClusterListActions = ({ className, isDashboardView }) => {
   const [isOpen, onToggle] = useState(false);
-  const [dropdownItems, toolbarItems] = useItems();
-
+  const [dropdownItems, toolbarItems] = useItems(isDashboardView);
+  if (isDashboardView) {
+    return (
+      <>
+        <Split hasGutter>
+          {toolbarItems.map((toolbarItem) => (
+            <SplitItem>{toolbarItem}</SplitItem>
+          ))}
+          <SplitItem>
+            <Dropdown
+              data-testid="cluster-list-extra-actions-dropdown"
+              onSelect={() => onToggle(!isOpen)}
+              toggle={<KebabToggle onToggle={onToggle} />}
+              isOpen={isOpen}
+              isPlain
+              dropdownItems={dropdownItems}
+              className={className}
+              position={DropdownPosition.right}
+            />
+          </SplitItem>
+        </Split>
+      </>
+    );
+  }
   return (
     <>
       {toolbarItems}
@@ -134,6 +166,7 @@ const ClusterListActions = ({ className }) => {
 
 ClusterListActions.propTypes = {
   className: PropTypes.string,
+  isDashboardView: PropTypes.bool,
 };
 
 export default ClusterListActions;
