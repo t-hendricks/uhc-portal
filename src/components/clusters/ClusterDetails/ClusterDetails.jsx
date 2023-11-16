@@ -26,7 +26,6 @@ import ClusterDetailsTop from './components/ClusterDetailsTop';
 import TabsRow from './components/TabsRow';
 import Overview from './components/Overview/Overview';
 import Monitoring from './components/Monitoring';
-import ClusterLogs from './components/ClusterLogs';
 import Networking from './components/Networking';
 import AccessControl from './components/AccessControl/AccessControl';
 import AddOns from './components/AddOns';
@@ -53,6 +52,8 @@ import { isUninstalledAICluster } from '../../../common/isAssistedInstallerClust
 import { hasCapability, subscriptionCapabilities } from '../../../common/subscriptionCapabilities';
 import withFeatureGate from '../../features/with-feature-gate';
 import { ASSISTED_INSTALLER_FEATURE } from '../../../redux/constants/featureConstants';
+import { ClusterTabsId } from './components/common/ClusterTabIds';
+import ClusterLogs from './components/ClusterLogs/ClusterLogs';
 
 const { HostsClusterDetailTab, getAddHostsTabState } = OCM;
 const GatedAIHostsClusterDetailTab = withFeatureGate(
@@ -526,11 +527,13 @@ class ClusterDetails extends Component {
                 <ClusterLogs
                   externalClusterID={cluster.external_id}
                   clusterID={cluster.id}
+                  createdAt={cluster.creation_timestamp}
                   history={history}
                   refreshEvent={{
                     type: refreshEvent.type,
                     reset: () => this.setState({ refreshEvent: { type: eventTypes.NONE } }),
                   }}
+                  isVisible={selectedTab === ClusterTabsId.CLUSTER_HISTORY}
                 />
               </ErrorBoundary>
             </TabContent>
@@ -597,7 +600,7 @@ class ClusterDetails extends Component {
               <ErrorBoundary>
                 <GatedAIHostsClusterDetailTab
                   cluster={cluster}
-                  isVisible={selectedTab === 'addAssistedHosts'}
+                  isVisible={selectedTab === ClusterTabsId.ADD_ASSISTED_HOSTS}
                 />
               </ErrorBoundary>
             </TabContent>

@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import { Tabs, TabTitleText, TabTitleIcon, Tooltip, Tab } from '@patternfly/react-core';
 import { ExclamationCircleIcon } from '@patternfly/react-icons';
+import { ClusterTabsId } from './common/ClusterTabIds';
 
 class TabsRow extends React.Component {
   unlisten = null;
@@ -90,7 +91,7 @@ class TabsRow extends React.Component {
         key: 0,
         title: 'Overview',
         contentId: 'overviewTabContent',
-        id: 'overview',
+        id: ClusterTabsId.OVERVIEW,
         show: true,
         ref: overviewTabRef,
       },
@@ -107,14 +108,14 @@ class TabsRow extends React.Component {
           </>
         ),
         contentId: 'monitoringTabContent',
-        id: 'monitoring',
+        id: ClusterTabsId.MONITORING,
         show: displayMonitoringTab,
         ref: monitoringTabRef,
       },
       {
         key: 2,
         title: 'Access control',
-        id: 'accessControl',
+        id: ClusterTabsId.ACCESS_CONTROL,
         contentId: 'accessControlTabContent',
         show: displayAccessControlTab,
         ref: accessControlTabRef,
@@ -123,7 +124,7 @@ class TabsRow extends React.Component {
         key: 3,
         title: 'Add-ons',
         contentId: 'addOnsTabContent',
-        id: 'addOns',
+        id: ClusterTabsId.ADD_ONS,
         show: displayAddOnsTab,
         ref: addOnsTabRef,
       },
@@ -131,7 +132,7 @@ class TabsRow extends React.Component {
         key: 4,
         title: 'Cluster history',
         contentId: 'clusterHistoryTabContent',
-        id: 'clusterHistory',
+        id: ClusterTabsId.CLUSTER_HISTORY,
         show: displayClusterHistoryTab,
         ref: clusterHistoryTabRef,
       },
@@ -139,7 +140,7 @@ class TabsRow extends React.Component {
         key: 5,
         title: 'Networking',
         contentId: 'networkingTabContent',
-        id: 'networking',
+        id: ClusterTabsId.NETWORKING,
         show: displayNetworkingTab,
         ref: networkingTabRef,
       },
@@ -147,7 +148,7 @@ class TabsRow extends React.Component {
         key: 6,
         title: 'Machine pools',
         contentId: 'machinePoolsTabContent',
-        id: 'machinePools',
+        id: ClusterTabsId.MACHINE_POOLS,
         show: displayMachinePoolsTab,
         ref: machinePoolsTabRef,
       },
@@ -155,7 +156,7 @@ class TabsRow extends React.Component {
         key: 7,
         title: 'Support',
         contentId: 'supportTabContent',
-        id: 'support',
+        id: ClusterTabsId.SUPPORT,
         show: displaySupportTab,
         ref: supportTabRef,
       },
@@ -163,7 +164,7 @@ class TabsRow extends React.Component {
         key: 8,
         title: 'Settings',
         contentId: 'upgradeSettingsTabContent',
-        id: 'updateSettings',
+        id: ClusterTabsId.UPDATE_SETTINGS,
         show: displayUpgradeSettingsTab,
         ref: upgradeSettingsTabRef,
       },
@@ -171,7 +172,7 @@ class TabsRow extends React.Component {
         key: 9,
         title: 'Add Hosts',
         contentId: 'addHostsContent',
-        id: 'addAssistedHosts',
+        id: ClusterTabsId.ADD_ASSISTED_HOSTS,
         show: addHostTabDetails.showTab,
         ref: addAssistedTabRef,
         isDisabled: addHostTabDetails.isDisabled,

@@ -31,6 +31,7 @@ import {
 
 import { SearchIcon, WrenchIcon } from '@patternfly/react-icons';
 import { ClusterLog } from '~/types/service_logs.v1/index';
+import { ViewSorting } from '~/types/types';
 import './LogTable.scss';
 import ExternalLink from '~/components/common/ExternalLink';
 
@@ -82,19 +83,14 @@ const emptyState = (colSpan: number) => (
 
 type LogType = ClusterLog & { id: string; doc_references?: Array<string> };
 
-type SortParams = {
-  isAscending: boolean;
-  sortField: string;
-};
-
 type LogTableParams = {
   pending: boolean;
   refreshEvent: {
     type: string;
     reset: () => void;
   };
-  logs: any[];
-  setSorting: (sort: SortParams) => void;
+  logs?: any[];
+  setSorting: (sort: ViewSorting) => void;
 };
 
 const LogTable = ({ logs, setSorting, pending, refreshEvent }: LogTableParams) => {
@@ -218,9 +214,10 @@ const LogTable = ({ logs, setSorting, pending, refreshEvent }: LogTableParams) =
       direction: sortDirection,
     },
     onSort: (_event, index, direction) => {
-      const sorting = {
+      const sorting: ViewSorting = {
         isAscending: direction === SortByDirection.asc,
         sortField: columns[index - 1].sortTitle,
+        sortIndex: index,
       };
       setSorting(sorting);
       setSortColIndex(index);
@@ -247,7 +244,7 @@ const LogTable = ({ logs, setSorting, pending, refreshEvent }: LogTableParams) =
               ))}
             </Tr>
           </Thead>
-          {logs && logs.length > 0
+          {logs?.length
             ? logs.map((log, index) => mapLog(log, index))
             : emptyState(columns.length + 1)}
         </TableComposable>

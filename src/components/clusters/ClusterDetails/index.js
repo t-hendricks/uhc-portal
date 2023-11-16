@@ -23,7 +23,7 @@ import { modalActions } from '../../common/Modal/ModalActions';
 import { getOnDemandMetrics } from './components/Monitoring/MonitoringActions';
 import { getAddOns, getClusterAddOns } from './components/AddOns/AddOnsActions';
 import { getGrants } from './components/AccessControl/NetworkSelfServiceSection/NetworkSelfServiceActions';
-import { clusterLogActions, getClusterHistory } from './components/ClusterLogs/clusterLogActions';
+import { clusterLogActions } from './components/ClusterLogs/clusterLogActions';
 import { getClusterRouters } from './components/Networking/NetworkingActions';
 import { getSchedules } from '../common/Upgrades/clusterUpgradeActions';
 import { viewConstants } from '../../../redux/constants';
@@ -114,7 +114,7 @@ const mapDispatchToProps = (dispatch) =>
       clearGetMachinePoolsResponse,
       clearGetClusterAutoscalerResponse: clusterAutoscalerActions.clearClusterAutoscalerResponse,
       clearListVpcs,
-      getClusterHistory,
+      getClusterHistory: clusterLogActions.getClusterHistory,
       toggleSubscriptionReleased,
       getNotificationContacts: supportActions.getNotificationContacts,
       getSupportCases: supportActions.getSupportCases,
