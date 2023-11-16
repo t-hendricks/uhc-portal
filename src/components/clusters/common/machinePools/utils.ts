@@ -11,7 +11,7 @@ import {
   Product,
 } from '~/types/clusters_mgmt.v1';
 import { QuotaCostList } from '~/types/accounts_mgmt.v1';
-import { MAX_NODES } from './constants';
+import { MAX_NODES, MAX_NODES_HCP } from './constants';
 import { QuotaParams } from '../quotaModel';
 import { clusterBillingModelToRelatedResource } from '../billingModelMapper';
 
@@ -35,6 +35,7 @@ export const buildOptions = ({
   currentNodeCount,
   minNodes,
   increment,
+  isHypershift,
 }: {
   available: number;
   isEditingCluster: boolean;
@@ -42,12 +43,14 @@ export const buildOptions = ({
   minNodes: number;
   increment: number;
   included: number;
+  isHypershift?: boolean;
 }) => {
   // no extra node quota = only base cluster size is available
   const optionsAvailable = available > 0 || isEditingCluster;
   let maxValue = isEditingCluster ? available + currentNodeCount : available + included;
-  if (maxValue > MAX_NODES) {
-    maxValue = MAX_NODES;
+  const maxNumberOfNodes = isHypershift ? MAX_NODES_HCP : MAX_NODES;
+  if (maxValue > maxNumberOfNodes) {
+    maxValue = maxNumberOfNodes;
   }
 
   return optionsAvailable ? range(minNodes, maxValue + 1, increment) : [minNodes];
