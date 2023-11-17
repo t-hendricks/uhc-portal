@@ -11,7 +11,7 @@ import AvailabilityZoneSelection, {
 } from '../../CreateOSDForm/FormSections/NetworkingSection/AvailabilityZoneSelection';
 import {
   required,
-  rosaWizardAWSSubnetValidators,
+  validateAWSSubnet,
   validateValueNotPlaceholder,
   validateUniqueAZ,
 } from '../../../../../common/validators';
@@ -54,7 +54,7 @@ const SingleSubnetFieldsRow = ({
             isDisabled={isDisabled}
             type="text"
             isRequired
-            validate={[required, rosaWizardAWSSubnetValidators.validateROSAWizardSubnet]}
+            validate={[required, validateAWSSubnet]}
           />
         </WithTooltip>
       </GridItem>
@@ -68,7 +68,7 @@ const SingleSubnetFieldsRow = ({
               type="text"
               isRequired
               isDisabled={isDisabled}
-              validate={[required, rosaWizardAWSSubnetValidators.validateROSAWizardSubnet]}
+              validate={[required, validateAWSSubnet]}
             />
           </WithTooltip>
         )}

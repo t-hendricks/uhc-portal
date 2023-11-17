@@ -11,8 +11,6 @@ import {
 import ErrorBox from '~/components/common/ErrorBox';
 import FuzzySelect, { FuzzyEntryType } from '~/components/common/FuzzySelect';
 import { CloudVPC } from '~/types/clusters_mgmt.v1';
-import { formValueSelector } from 'redux-form';
-import { useGlobalState } from '~/redux/hooks';
 import {
   vpcHasPrivateSubnets,
   filterOutRedHatManagedVPCs,
@@ -33,6 +31,7 @@ interface VCPDropdownProps {
   };
   showRefresh?: boolean;
   isHypershift?: boolean;
+  isOSD?: boolean;
 }
 
 const sortVPCOptions = (vpcA: FuzzyEntryType, vpcB: FuzzyEntryType) => {
@@ -56,12 +55,12 @@ const VPCDropdown = ({
   meta: { error, touched },
   showRefresh = false,
   isHypershift = false,
+  isOSD = false,
 }: VCPDropdownProps) => {
   const dispatch = useDispatch();
   const [isOpen, setIsOpen] = React.useState<boolean>(false);
-  const regionID = useGlobalState((state) => valueSelector(state, 'region'));
 
-  const vpcResponse = useAWSVPCInquiry();
+  const vpcResponse = useAWSVPCInquiry(isOSD);
   const originalVPCs = React.useMemo<CloudVPC[]>(() => {
     const vpcs = vpcResponse.data?.items || [];
     return isHypershift ? filterOutRedHatManagedVPCs(vpcs) : vpcs;
@@ -140,7 +139,9 @@ const VPCDropdown = ({
   return (
     <>
       <FormGroup
-        label={`Specify a VPC to install your machine pools into in your selected region: ${regionID}`}
+        label={`Specify a VPC to install your machine pools into in your selected region: ${
+          vpcResponse.region || ''
+        }`}
         validated={touched && error ? 'error' : 'default'}
         isRequired
       >
@@ -187,5 +188,3 @@ const VPCDropdown = ({
 };
 
 export default VPCDropdown;
-
-const valueSelector = formValueSelector('CreateCluster');

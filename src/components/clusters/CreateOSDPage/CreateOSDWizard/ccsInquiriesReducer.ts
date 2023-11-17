@@ -27,7 +27,7 @@ import {
   KeyRing,
   SecurityGroup,
 } from '~/types/clusters_mgmt.v1';
-import { AugmentedSubnetwork, AWSCredentials } from '~/types/types';
+import { AWSCredentials } from '~/types/types';
 
 // Credentials are only stored here as part of metadata on requests,
 // to allow checking whether existing data is relevant.
@@ -42,8 +42,6 @@ export type VPCResponse = {
   subnet?: string; // if set on request, only VPC connected to that subnet were listed.
   data: {
     items: CloudVPC[];
-    // populated for AWS, will be {} otherwise.
-    bySubnetID: Record<string, AugmentedSubnetwork>;
   };
 };
 
@@ -122,7 +120,6 @@ const initialState: State = {
     credentials: undefined,
     region: undefined,
     data: {
-      bySubnetID: {},
       items: [],
     },
   },
@@ -143,26 +140,7 @@ export const securityGroupsSort = (a: SecurityGroup, b: SecurityGroup) => {
 };
 
 /**
- * Indexes AWS VPC subnet details by subnet_id.
- */
-export const indexAWSVPCs = (vpcs: CloudVPC[]): Record<string, AugmentedSubnetwork> => {
-  const bySubnetID = {} as Record<string, AugmentedSubnetwork>;
-  vpcs.forEach((vpcItem) => {
-    // Work around backend currently returning empty aws_subnets as null.
-    (vpcItem.aws_subnets || []).forEach((subnet) => {
-      // for type safety but expected to always be present
-      if (subnet.subnet_id) {
-        // Note: `aws_inquiries/vpcs` returns VPC `.id` (and optionally `.name`),
-        // while `gcp_inquiries/vpcs` returns VPC `.name`.  But this function deals with AWS.
-        bySubnetID[subnet.subnet_id] = { ...subnet, vpc_id: vpcItem.id!, vpc_name: vpcItem.name };
-      }
-    });
-  });
-  return bySubnetID;
-};
-
-/**
- * Enriches response with .bySubnetID entry.
+ * Enriches VPC response
  * Security groups: returns only the non-RH managed, and sorts them by display order
  */
 export const processAWSVPCs = (vpcs: CloudVPC[]) => {
@@ -179,7 +157,6 @@ export const processAWSVPCs = (vpcs: CloudVPC[]) => {
   });
   return {
     items: preProcessedVpcs,
-    bySubnetID: indexAWSVPCs(preProcessedVpcs),
   };
 };
 
@@ -307,8 +284,7 @@ function ccsInquiriesReducer(
         break;
       case FULFILLED_ACTION(LIST_VPCS): {
         const items = action.payload.data.items || [];
-        const data =
-          action.meta?.cloudProvider === 'aws' ? processAWSVPCs(items) : { items, bySubnetID: {} };
+        const data = action.meta?.cloudProvider === 'aws' ? processAWSVPCs(items) : { items };
         draft.vpcs = {
           ...baseRequestState,
           fulfilled: true,
