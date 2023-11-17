@@ -227,7 +227,13 @@ class clusterStatusMonitor extends React.Component {
   }
 
   showMissingURLList(inflightErrorStopInstall) {
-    const { inflightChecks, rerunInflightChecks, rerunInflightCheckReq, cluster } = this.props;
+    const {
+      inflightChecks,
+      rerunInflightChecks,
+      rerunInflightCheckReq,
+      cluster,
+      hasNetworkOndemand,
+    } = this.props;
     const { isExpanded, isErrorOpen, wasRunClicked, isValidatorRunning } = this.state;
     const isClusterValidating =
       cluster.state === clusterStates.VALIDATING || cluster.state === clusterStates.PENDING;
@@ -341,15 +347,17 @@ class clusterStatusMonitor extends React.Component {
                         <Spinner size="sm" />
                       </span>
                     )}
-                    <Button
-                      variant={ButtonVariant.link}
-                      isInline
-                      isDisabled={runningInflightCheck}
-                      onClick={rerunValidator}
-                    >
-                      Rerun network validation
-                    </Button>
-                    {isErrorOpen && (
+                    {hasNetworkOndemand && (
+                      <Button
+                        variant={ButtonVariant.link}
+                        isInline
+                        isDisabled={runningInflightCheck}
+                        onClick={rerunValidator}
+                      >
+                        Rerun network validation
+                      </Button>
+                    )}
+                    {hasNetworkOndemand && isErrorOpen && (
                       <ErrorModal
                         title="Error Rerunning Validator "
                         errorResponse={rerunInflightCheckReq}
@@ -408,6 +416,7 @@ clusterStatusMonitor.propTypes = {
     error: PropTypes.bool,
     checks: PropTypes.array,
   }),
+  hasNetworkOndemand: PropTypes.bool,
   status: PropTypes.shape({
     pending: PropTypes.bool,
     fulfilled: PropTypes.bool,
