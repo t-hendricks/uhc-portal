@@ -42,7 +42,7 @@ import { editSubscriptionSettings } from './subscriptionSettingsActions';
 import isAssistedInstallSubscription from '../../common/isAssistedInstallerCluster';
 import { ASSISTED_INSTALLER_MERGE_LISTS_FEATURE } from '../constants/featureConstants';
 
-import type { Cluster } from '../../types/clusters_mgmt.v1';
+import type { Cluster, UpgradePolicy } from '../../types/clusters_mgmt.v1';
 import {
   SelfResourceReview,
   SelfAccessReview,
@@ -68,13 +68,15 @@ const invalidateClusters = () => action(INVALIDATE_ACTION(clustersConstants.GET_
 
 const createClusterAndUpgradeSchedule = async (
   cluster: Cluster,
-  upgradeSchedule: boolean,
+  upgradeSchedule: UpgradePolicy,
   dispatch: AppThunkDispatch,
 ) => {
   const clusterResponse = await clusterService.postNewCluster(cluster);
   if (upgradeSchedule) {
     const clusterID = clusterResponse.data.id;
-    dispatch(postSchedule(clusterID, upgradeSchedule, isHypershiftCluster(cluster)));
+    if (clusterID) {
+      dispatch(postSchedule(clusterID, upgradeSchedule, isHypershiftCluster(cluster)));
+    }
   }
   dispatch(invalidateClusters());
   return clusterResponse;
@@ -84,7 +86,7 @@ const createClusterAction = (clusterResponse: Promise<AxiosResponse<Cluster, any
   action(clustersConstants.CREATE_CLUSTER, clusterResponse);
 
 const createCluster =
-  (params: Cluster, upgradeSchedule: boolean): AppThunk =>
+  (params: Cluster, upgradeSchedule: UpgradePolicy): AppThunk =>
   (dispatch) =>
     dispatch(
       createClusterAction(createClusterAndUpgradeSchedule(params, upgradeSchedule, dispatch)),
