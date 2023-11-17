@@ -1,5 +1,7 @@
 import { connect } from 'react-redux';
 import { addNotification } from '@redhat-cloud-services/frontend-components-notifications/redux';
+import { featureGateSelector } from '~/hooks/useFeatureGate';
+import { NETWORK_VALIDATOR_ONDEMAND_FEATURE } from '~/redux/constants/featureConstants';
 import {
   getClusterStatus,
   getInflightChecks,
@@ -14,6 +16,7 @@ const mapStateToProps = (state) => ({
   inflightChecks: state.clusters.inflightChecks,
   rerunInflightCheckReq: state.clusters.rerunInflightCheckReq,
   rerunInflightCheckRes: state.clusters.rerunInflightCheckRes,
+  hasNetworkOndemand: featureGateSelector(state, NETWORK_VALIDATOR_ONDEMAND_FEATURE),
 });
 
 const mapDispatchToProps = (dispatch) => ({
