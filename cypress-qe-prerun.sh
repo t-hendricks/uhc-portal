@@ -15,6 +15,9 @@ TEST_QE_AWS_REGION=`echo "$config_json" | jq '.QE_AWS_REGION'`
 TEST_QE_AWS_ID=`echo "$config_json" | jq -r '.QE_AWS_ID'`
 QE_ORGADMIN_OFFLINE_TOKEN=`echo "$config_json" | jq -r '.QE_ORGADMIN_OFFLINE_TOKEN'`
 ENV_AUT=`echo "$config_json" | jq -r '.QE_ENV_AUT'`
+QE_ACCOUNT_ROLE_PREFIX=`echo "$config_json" | jq -r '.QE_ACCOUNT_ROLE_PREFIX'`
+QE_OCM_ROLE_PREFIX=`echo "$config_json" | jq -r '.QE_OCM_ROLE_PREFIX'`
+QE_USER_ROLE_PREFIX=`echo "$config_json" | jq -r '.QE_USER_ROLE_PREFIX'`
 
 
 # Executing ROSA commands for pre-config step.
@@ -34,22 +37,22 @@ linked_userrole=$(rosa list user-roles | awk '$3 == "Yes" { print $2 }')
 if [ ! -z $linked_userrole ];then
   rosa unlink user-role --role-arn $linked_userrole  -y
 fi
-ocmroles_success_msg=$(rosa create ocm-role --prefix cypress-ocm-role --mode auto --admin -y 2>&1)
+ocmroles_success_msg=$(rosa create ocm-role --prefix ${QE_OCM_ROLE_PREFIX} --mode auto --admin -y 2>&1)
 orphen_ocmroles=$(echo $ocmroles_success_msg |  grep "unlink" | sed -n -l4 "s/.*\(arn:aws:iam::${TEST_QE_AWS_ID}:.*[0-9]\).*/\1/p")
 if [ ! -z $orphen_ocmroles ];then
   rosa unlink ocm-role --role-arn $orphen_ocmroles  -y
-  ocmroles_success_msg=$(rosa create ocm-role --prefix cypress-ocm-role --mode auto --admin -y)
+  ocmroles_success_msg=$(rosa create ocm-role --prefix ${QE_OCM_ROLE_PREFIX} --mode auto --admin -y)
 fi
 echo $ocmroles_success_msg
 
-userroles_success_msg=$(rosa create user-role --prefix cypress-user-role --mode auto -y 2>&1)
+userroles_success_msg=$(rosa create user-role --prefix ${QE_USER_ROLE_PREFIX} --mode auto -y 2>&1)
 orphen_userroles=$(echo $userroles_success_msg |  grep "unlink" | sed -n "s/.*\(arn:aws:iam::${TEST_QE_AWS_ID}:.*[0-9]\).*/\1/p")
 
 if [ ! -z $orphen_userroles ];then
   rosa unlink user-role --role-arn $orphen_userroles  -y
-  userroles_success_msg=$(rosa create user-role --prefix cypress-user-role --mode auto -y)
+  userroles_success_msg=$(rosa create user-role --prefix ${QE_USER_ROLE_PREFIX} --mode auto -y)
 fi
 echo $userroles_success_msg
-rosa create account-roles --prefix cypress-account-roles --mode auto -y
+rosa create account-roles --prefix ${QE_ACCOUNT_ROLE_PREFIX} --mode auto -y
 
 echo "Completed ROSA pre-config commands!"
