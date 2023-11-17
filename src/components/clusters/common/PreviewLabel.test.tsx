@@ -1,24 +1,38 @@
 import React from 'react';
-import { mount } from 'enzyme';
+import { render, screen, checkAccessibility } from '~/testUtils';
 
 import { PreviewLabel, GA_DATE, createdPostGa } from '~/components/clusters/common/PreviewLabel';
 
 describe('PreviewLabel', () => {
-  it('pre GA date', () => {
+  it('shows preview label when pre GA date', async () => {
     const now = new Date(GA_DATE);
     now.setSeconds(GA_DATE.getSeconds() - 1);
-    const wrapper = mount(<PreviewLabel creationDateStr={now.toISOString()} />);
-    expect(wrapper).toMatchSnapshot();
     expect(createdPostGa(now.toISOString())).toBe(false);
+    const { container } = render(<PreviewLabel creationDateStr={now.toISOString()} />);
+
+    expect(container.querySelector('.pf-c-label')).toBeInTheDocument();
+    expect(screen.getByText('Preview')).toBeInTheDocument();
+    await checkAccessibility(container);
   });
 
-  it('post GA date', () => {
+  it('does not display preview label on GA date', () => {
     const now = new Date(GA_DATE);
-    const wrapper = mount(<PreviewLabel creationDateStr={now.toISOString()} />);
-    expect(wrapper).toMatchSnapshot();
+    expect(createdPostGa(now.toISOString())).toBe(true);
+
+    const { container } = render(<PreviewLabel creationDateStr={now.toISOString()} />);
+
+    expect(container.querySelector('.pf-c-label')).not.toBeInTheDocument();
+    expect(screen.queryByText('Preview')).not.toBeInTheDocument();
+  });
+
+  it('does not display preview label after GA date', () => {
+    const now = new Date(GA_DATE);
     expect(createdPostGa(now.toISOString())).toBe(true);
     now.setSeconds(GA_DATE.getSeconds() + 1);
-    expect(wrapper).toMatchSnapshot();
-    expect(createdPostGa(now.toISOString())).toBe(true);
+
+    const { container } = render(<PreviewLabel creationDateStr={now.toISOString()} />);
+
+    expect(container.querySelector('.pf-c-label')).not.toBeInTheDocument();
+    expect(screen.queryByText('Preview')).not.toBeInTheDocument();
   });
 });
