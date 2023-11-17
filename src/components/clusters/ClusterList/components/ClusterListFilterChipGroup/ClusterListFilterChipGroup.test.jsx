@@ -1,17 +1,21 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { render, screen, checkAccessibility } from '~/testUtils';
 
 import ClusterListFilterChipGroup from './ClusterListFilterChipGroup';
 
 describe('<ClusterListFilterChipGroup />', () => {
-  it('should render', () => {
-    const wrapper = shallow(
+  it('is accessible', async () => {
+    const { container } = render(
       <ClusterListFilterChipGroup
         setFilter={jest.fn()}
         currentFilters={{ plan_id: ['OSD'] }}
         history={{ location: 'my-url', push: jest.fn() }}
       />,
     );
-    expect(wrapper).toMatchSnapshot();
+
+    await checkAccessibility(container);
+
+    expect(screen.getByRole('button', { name: 'Clear filters' })).toBeInTheDocument();
+    expect(screen.getByText('Cluster type')).toBeInTheDocument();
   });
 });

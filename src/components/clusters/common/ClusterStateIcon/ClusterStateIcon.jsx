@@ -42,18 +42,30 @@ function ClusterStateIcon(props) {
       if (animated) {
         return <Spinner {...iconProps} size={spinnerSize.md} />;
       }
-      return <InProgressIcon {...iconProps} />;
+      return <InProgressIcon {...iconProps} data-icon-type="inprogress" />;
     case clusterStates.DISCONNECTED:
       return <DisconnectedIcon {...iconProps} />;
     case clusterStates.READY:
-      return <CheckCircleIcon color={global_success_color_100.value} {...iconProps} />;
+      return (
+        <CheckCircleIcon
+          color={global_success_color_100.value}
+          {...iconProps}
+          data-icon-type="check"
+        />
+      );
     case clusterStates.UNINSTALLING:
       if (animated) {
         return <Spinner {...iconProps} size={spinnerSize.md} />;
       }
-      return <InProgressIcon {...iconProps} />;
+      return <InProgressIcon {...iconProps} data-icon-type="inprogress" />;
     case clusterStates.ERROR:
-      return <ExclamationCircleIcon color={global_danger_color_100.value} {...iconProps} />;
+      return (
+        <ExclamationCircleIcon
+          color={global_danger_color_100.value}
+          {...iconProps}
+          data-icon-type="exclamation"
+        />
+      );
     case clusterStates.DEPROVISIONED:
       return <BanIcon {...iconProps} />;
     case clusterStates.ARCHIVED:
@@ -63,7 +75,7 @@ function ClusterStateIcon(props) {
     case clusterStates.STALE:
       return <NotStartedIcon {...iconProps} />;
     default:
-      return <UnknownIcon {...iconProps} />;
+      return <UnknownIcon {...iconProps} data-icon-type="unknown" />;
   }
 }
 

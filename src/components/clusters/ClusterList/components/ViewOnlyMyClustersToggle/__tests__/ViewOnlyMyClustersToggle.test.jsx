@@ -1,17 +1,23 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { render, screen, checkAccessibility } from '~/testUtils';
 
 import ViewOnlyMyClustersToggle from '../ViewOnlyMyClustersToggle';
 
-const fakeOnShowClusters = () => {};
+const mockOnShowClusters = jest.fn();
 
 describe('ViewOnlyMyClustersToggle', () => {
-  it('renders default state correctly', () => {
-    const wrapper = shallow(<ViewOnlyMyClustersToggle onChange={fakeOnShowClusters} />);
-    expect(wrapper).toMatchSnapshot();
+  afterEach(() => {
+    jest.clearAllMocks();
   });
-  it('renders selected state correctly', () => {
-    const wrapper = shallow(<ViewOnlyMyClustersToggle isChecked onChange={fakeOnShowClusters} />);
-    expect(wrapper).toMatchSnapshot();
+
+  it('is unchecked when "isChecked" is false', async () => {
+    const { container } = render(<ViewOnlyMyClustersToggle onChange={mockOnShowClusters} />);
+    expect(screen.getByRole('checkbox')).not.toBeChecked();
+    await checkAccessibility(container);
+  });
+
+  it('is checked when "isChecked" is true', () => {
+    render(<ViewOnlyMyClustersToggle isChecked onChange={mockOnShowClusters} />);
+    expect(screen.getByRole('checkbox')).toBeChecked();
   });
 });
