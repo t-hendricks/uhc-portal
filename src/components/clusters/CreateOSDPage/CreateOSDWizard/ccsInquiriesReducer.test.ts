@@ -5,35 +5,6 @@ import vpcResponse from '../../../../../mockdata/api/clusters_mgmt/v1/aws_inquir
 const vpcItems = vpcResponse.items as CloudVPC[];
 
 describe('processAWSVPCs', () => {
-  it('adds bySubnetId with correct data', () => {
-    // Backend has technical difficulties with optional arrays in JSON.
-    // This mockData contains `aws_subnets: null` which is totally a real thing backend
-    // may return even when `aws_subnets: []` would be appropriate.
-    //
-    // Our openapi-derived `CloudVPC` type only describes array | undefined.
-    // TODO: Ideally TS should be aware of `null` possibility!
-    //   For now making a *false promise* to TS that it's `CloudVPC` i.e. without `null`,
-    //   so it will let us test actual run-time handling of actual real data...
-    const result = processAWSVPCs(vpcItems);
-
-    // new API
-    expect(result.bySubnetID['subnet-0d3a4a32658ee415a']).toEqual({
-      vpc_id: 'vpc-0d5c8e4d499be6630',
-      vpc_name: 'SDA-5333-test-new-API-returning-both-name-and-id',
-      subnet_id: 'subnet-0d3a4a32658ee415a',
-      name: 'sda-ocp-410-n7d9b-private-us-east-1a',
-      public: false,
-      availability_zone: 'us-east-1a',
-    });
-    // new API when for vpc and subnet lacking a Name tag
-    expect(result.bySubnetID['subnet-id-without-Name']).toEqual({
-      vpc_id: 'SDA-5333-test-new-API-returning-only-id-for-VPC-without-Name-tag',
-      subnet_id: 'subnet-id-without-Name',
-      public: false,
-      availability_zone: 'us-west-1a',
-    });
-  });
-
   it('returns the VPC items in the same order', () => {
     const result = processAWSVPCs(vpcItems);
 

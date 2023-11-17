@@ -3,10 +3,8 @@ import { get, indexOf, inRange } from 'lodash';
 import cidrTools from 'cidr-tools';
 import { ValidationError, Validator } from 'jsonschema';
 import { clusterService } from '~/services';
-import { State as CcsInquiriesState } from '~/components/clusters/CreateOSDPage/CreateOSDWizard/ccsInquiriesReducer';
 import { workerNodeVolumeSizeMinGiB } from '~/components/clusters/wizards/rosa/constants';
 import type { CloudVPC, GCP, Subnetwork, Taint } from '../types/clusters_mgmt.v1';
-import type { AugmentedSubnetwork } from '../types/types';
 import { sqlString } from './queryHelpers';
 
 type Networks = Parameters<typeof cidrTools['overlap']>[0];
@@ -1307,69 +1305,6 @@ const validateUniqueNodeLabel = createUniqueFieldValidator(
 const validateValueNotPlaceholder = (placeholder: any) => (value: any) =>
   value !== placeholder ? undefined : 'Field is required';
 
-// In the OSD wizard - the AWS VPC validators expect to be passed "OSDSubnetFormProps"
-// This is because they need to validate the data is correct, based on the subnetIds that the users type
-
-// In the ROSA wizard - the validators can use "allValues.selected_vpc", and perform all validations from there
-// Soon, we'll introduce the AZ + subnet dropdowns instead of the IDs, and it won't be possible for the user
-// to select data not belonging to the selected VPC, which will simplify the validators further.
-export type OSDSubnetFormProps = {
-  vpcs: CcsInquiriesState['vpcs'];
-  vpcsValid: boolean;
-  pristine?: boolean;
-};
-
-type BySubnetID = { [id: string]: AugmentedSubnetwork };
-
-/** Finds all bySubnetID info hashes for AWS VPC subnet fields. */
-const awsVPCSubnetInfos = (
-  allValues: { [key: string]: string },
-  vpcsBySubnetID: BySubnetID,
-): AugmentedSubnetwork[] => {
-  const infos: AugmentedSubnetwork[] = [];
-  Object.entries(allValues).forEach(([fieldName, fieldValue]) => {
-    if (fieldName.match(/^(private|public)_subnet_id_/)) {
-      if (vpcsBySubnetID[fieldValue]) {
-        infos.push(vpcsBySubnetID[fieldValue]);
-      }
-    }
-  });
-  return infos;
-};
-
-const isValidSubnet = (
-  value: string,
-  allValues: { [key: string]: string },
-  formProps: OSDSubnetFormProps,
-  name: string,
-): string | undefined => {
-  if (!value) {
-    return undefined;
-  }
-
-  const { vpcs, vpcsValid } = formProps;
-  if (vpcs.fulfilled && vpcsValid) {
-    const subnetInfo = vpcs.data.bySubnetID[value];
-    if (!subnetInfo) {
-      return `No such subnet in region ${vpcs.region}.`;
-    }
-
-    const allInfos = awsVPCSubnetInfos(allValues, vpcs.data.bySubnetID);
-    const usedVPCs = new Set(allInfos.map((info) => info.vpc_id));
-    if (usedVPCs.size > 1) {
-      const vpc = subnetInfo.vpc_name || subnetInfo.vpc_id; // prefer Name tag, not always available
-      return `All subnets must belong to the same VPC (provided subnet VPC: ${vpc}).`;
-    }
-
-    // private_subnet_id_2, public_subnet_id_2 -> az_2.
-    const selectedAZ = allValues[`az_${name.split('_').pop()}`];
-    if (!!selectedAZ && subnetInfo.availability_zone !== selectedAZ) {
-      return `Provided subnet is from different AZ ${subnetInfo.availability_zone}.`;
-    }
-  }
-  return undefined;
-};
-
 const validateRequiredMachinePoolsSubnet = (
   subnet: Subnetwork,
   allValues: unknown,
@@ -1398,31 +1333,10 @@ const validateMultipleMachinePoolsSubnets = (
     : undefined;
 };
 
-const isPrivateSubnet = (value: string, allValues: unknown, formProps: OSDSubnetFormProps) => {
-  const { vpcs, vpcsValid } = formProps;
-  if (vpcs.fulfilled && vpcsValid) {
-    const subnetInfo = vpcs.data.bySubnetID[value];
-    if (subnetInfo && subnetInfo.public) {
-      return 'Provided subnet is public, should be private.';
-    }
-  }
-  return undefined;
-};
-
-const isPublicSubnet = (value: string, allValues: unknown, formProps: OSDSubnetFormProps) => {
-  const { vpcs, vpcsValid } = formProps;
-  if (vpcs.fulfilled && vpcsValid) {
-    const subnetInfo = vpcs.data.bySubnetID[value];
-    if (subnetInfo && !subnetInfo.public) {
-      return 'Provided subnet is private, should be public.';
-    }
-  }
-  return undefined;
-};
-
-const validateROSAWizardSubnet = (
+// Shared validation across ROSA and OSD wizards
+const validateAWSSubnet = (
   value: string,
-  allValues: { selected_vpc?: CloudVPC; az_0: string; az_1: string; az_2: string },
+  allValues: Partial<{ selected_vpc: CloudVPC; az_0: string; az_1: string; az_2: string }>,
   formProps: object,
   name: string,
 ) => {
@@ -1430,6 +1344,10 @@ const validateROSAWizardSubnet = (
   if (!selectedVpc?.id && value) {
     return 'You must select the VPC first';
   }
+  if (selectedVpc?.id && !value) {
+    return 'Field is required';
+  }
+
   const subnet = selectedVpc?.aws_subnets?.find((subnet) => subnet.subnet_id === value);
   if (!subnet) {
     return 'No such subnet exists in the selected VPC';
@@ -1662,16 +1580,6 @@ const validateWorkerVolumeSize = (
     : 'Decimals are not allowed for the worker root disk size. Enter a whole number.';
 };
 
-const osdWizardAWSSubnetValidators = {
-  isValidSubnet,
-  isPrivateSubnet,
-  isPublicSubnet,
-};
-
-const rosaWizardAWSSubnetValidators = {
-  validateROSAWizardSubnet,
-};
-
 const validators = {
   required,
   acknowledgePrerequisites,
@@ -1754,8 +1662,7 @@ export {
   checkLabels,
   validateUniqueAZ,
   validateValueNotPlaceholder,
-  osdWizardAWSSubnetValidators,
-  rosaWizardAWSSubnetValidators,
+  validateAWSSubnet,
   validateGCPHostProjectId,
   validateRequiredMachinePoolsSubnet,
   validateMultipleMachinePoolsSubnets,

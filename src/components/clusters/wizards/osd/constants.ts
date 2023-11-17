@@ -45,7 +45,8 @@ export enum OsdFieldId {
   KeyName = 'key_name',
   KmsKeyArn = 'kms_key_arn',
   KmsServiceAccount = 'kms_service_account',
-  VpcName = 'vpc_name',
+  SelectedVpc = 'selected_vpc', // OSD AWS / ROSA classic
+  VpcName = 'vpc_name', // OSD GCP (shared VPC)
   ComputeSubnet = 'compute_subnet',
   ControlPlaneSubnet = 'control_plane_subnet',
   FirstAvailabilityZone = 'az_0',
