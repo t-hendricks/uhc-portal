@@ -188,7 +188,15 @@ done
 tempBranch="candidate-$(date +"%B-%d-%Y")"
 echo "git checkout -b $tempBranch live_candidate"
 echo " "
+echo "To cherry-pick all commits at once, execute: "
+echo " "
 echo "git cherry-pick -x -m 1 ${reversedReadyToPromoteSHAs[@]}"
+echo " "
+echo "To cherry-pick one commit at a time, execute: "
+echo " "
+for commitSHA in "${reversedReadyToPromoteSHAs[@]}"; do
+  echo "git cherry-pick -x -m 1 ${commitSHA}"
+done
 echo " "
 
 # Release Notes
