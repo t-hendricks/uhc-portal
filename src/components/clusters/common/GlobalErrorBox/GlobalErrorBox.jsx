@@ -10,6 +10,7 @@ function GlobalErrorBox({ errorTitle, errorMessage, clearGlobalError }) {
         isInline
         title={errorTitle}
         actionClose={<AlertActionCloseButton onClose={clearGlobalError} />}
+        role="alert"
       >
         {errorMessage}
       </Alert>

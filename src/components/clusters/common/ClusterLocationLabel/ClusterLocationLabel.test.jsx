@@ -1,48 +1,56 @@
 import React from 'react';
-import { shallow } from 'enzyme';
-
+import { render } from '~/testUtils';
 import ClusterLocationLabel from './ClusterLocationLabel';
 
 describe('<ClusterLocationLabel />', () => {
-  let wrapper;
   const getCloudProviders = jest.fn();
-  beforeEach(() => {
-    wrapper = shallow(
-      <ClusterLocationLabel
-        getCloudProviders={getCloudProviders}
-        cloudProviderID="aws"
-        regionID="us-east-1"
-        cloudProviders={{
-          pending: false,
-          fulfilled: false,
-          error: false,
-          providers: {},
-        }}
-      />,
-    );
+
+  const defaultProps = {
+    getCloudProviders,
+    cloudProviderID: 'aws',
+    regionID: 'us-east-1',
+    cloudProviders: {
+      pending: false,
+      fulfilled: false,
+      error: false,
+      providers: {},
+    },
+  };
+
+  afterEach(() => {
+    jest.clearAllMocks();
   });
-  it('fetches cloud providers if needed', () => {
+
+  it('fetches cloud providers on render', () => {
+    expect(getCloudProviders).not.toBeCalled();
+    render(<ClusterLocationLabel {...defaultProps} />);
     expect(getCloudProviders).toBeCalled();
   });
 
-  it("renders correctly when there's no provider data available", () => {
-    expect(wrapper.text()).toEqual('AWS (us-east-1)');
-    expect(wrapper).toMatchSnapshot();
+  it("displays cloud provider and region when there's no provider data available", () => {
+    expect(defaultProps.cloudProviders.providers).toEqual({});
+    const { container } = render(<ClusterLocationLabel {...defaultProps} />);
+
+    expect(container).toHaveTextContent('AWS (us-east-1)');
   });
 
-  it('renders correctly when region is not known', () => {
-    wrapper.setProps({ cloudProviderID: 'gcp', regionID: 'N/A' });
-    expect(wrapper.text()).toEqual('GCP');
-    expect(wrapper).toMatchSnapshot();
+  it('does not display region  when region is not known', () => {
+    const newProps = { ...defaultProps, cloudProviderID: 'gcp', regionID: 'N/A' };
+    const { container } = render(<ClusterLocationLabel {...newProps} />);
+
+    expect(container).toHaveTextContent('GCP');
   });
 
-  it('renders correctly when providers have been fetched', () => {
-    wrapper.setProps({
+  it('displays content from providers when providers have been fetched', () => {
+    const newProps = {
+      ...defaultProps,
       cloudProviderID: 'baremetal',
       regionID: 'some-region',
       cloudProviders: { fulfilled: true, providers: { baremetal: { display_name: 'Bare Metal' } } },
-    });
-    expect(wrapper.text()).toEqual('Bare Metal (some-region)');
-    expect(wrapper).toMatchSnapshot();
+    };
+
+    const { container } = render(<ClusterLocationLabel {...newProps} />);
+
+    expect(container).toHaveTextContent('Bare Metal (some-region)');
   });
 });

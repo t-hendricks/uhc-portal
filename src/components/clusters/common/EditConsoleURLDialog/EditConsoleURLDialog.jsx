@@ -48,7 +48,7 @@ class EditConsoleURLDialog extends Component {
     const { currentValue } = this.state;
 
     const cancelEdit = () => {
-      this.setState({ currentValue: null });
+      this.setState({ currentValue: '' });
       resetResponse();
       closeModal();
     };

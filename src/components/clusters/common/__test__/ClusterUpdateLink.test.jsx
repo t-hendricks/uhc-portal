@@ -1,5 +1,5 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { render, screen } from '~/testUtils';
 import ClusterUpdateLink from '../ClusterUpdateLink';
 
 describe('<ClusterUpdateLink />', () => {
@@ -12,9 +12,9 @@ describe('<ClusterUpdateLink />', () => {
         },
       },
     };
-    const wrapper = shallow(<ClusterUpdateLink cluster={cluster} />);
-    expect(wrapper).toMatchSnapshot();
-    expect(wrapper).toMatchObject({});
+
+    const { container } = render(<ClusterUpdateLink cluster={cluster} />);
+    expect(container).toBeEmptyDOMElement();
   });
 
   it('renders null for OCP when cluster.subscription.status === Stale', () => {
@@ -29,9 +29,8 @@ describe('<ClusterUpdateLink />', () => {
         status: 'Stale',
       },
     };
-    const wrapper = shallow(<ClusterUpdateLink cluster={cluster} />);
-    expect(wrapper).toMatchSnapshot();
-    expect(wrapper).toMatchObject({});
+    const { container } = render(<ClusterUpdateLink cluster={cluster} />);
+    expect(container).toBeEmptyDOMElement();
   });
 
   it('renders null for OSD when cluster.subscription.status === Stale', () => {
@@ -46,12 +45,11 @@ describe('<ClusterUpdateLink />', () => {
         status: 'Stale',
       },
     };
-    const wrapper = shallow(<ClusterUpdateLink cluster={cluster} />);
-    expect(wrapper).toMatchSnapshot();
-    expect(wrapper).toMatchObject({});
+    const { container } = render(<ClusterUpdateLink cluster={cluster} />);
+    expect(container).toBeEmptyDOMElement();
   });
 
-  it('shows previous and next version numbers when an upgrade is running', () => {
+  it('shows next version numbers when an upgrade is running', () => {
     const cluster = {
       openshift_version: 'some-old-version',
       version: {
@@ -65,7 +63,8 @@ describe('<ClusterUpdateLink />', () => {
         },
       },
     };
-    const wrapper = shallow(<ClusterUpdateLink cluster={cluster} />);
-    expect(wrapper).toMatchSnapshot();
+
+    render(<ClusterUpdateLink cluster={cluster} />);
+    expect(screen.getByText('→ some-new-version')).toBeInTheDocument();
   });
 });
