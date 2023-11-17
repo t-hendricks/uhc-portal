@@ -49,6 +49,7 @@ const EditNodeCountSection = ({
         machineTypes,
         quota: organization.quotaList,
         minNodes: minNodesRequired,
+        editMachinePoolId: machinePool?.id,
       }),
     [
       cluster,
@@ -57,6 +58,7 @@ const EditNodeCountSection = ({
       machineTypes,
       organization.quotaList,
       minNodesRequired,
+      machinePool,
     ],
   );
 

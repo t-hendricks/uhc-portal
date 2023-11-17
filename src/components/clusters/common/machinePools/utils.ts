@@ -107,6 +107,7 @@ export const getNodeOptions = ({
   machineTypeId,
   machinePools,
   minNodes,
+  editMachinePoolId,
 }: {
   cluster: Cluster;
   quota: GlobalState['userProfile']['organization']['quotaList'];
@@ -114,6 +115,7 @@ export const getNodeOptions = ({
   machineTypeId: string | undefined;
   machinePools: MachinePool[];
   minNodes: number;
+  editMachinePoolId?: string;
 }) => {
   const isMultiAz = isMultiAZ(cluster);
 
@@ -127,14 +129,15 @@ export const getNodeOptions = ({
     billingModel: cluster.billing_model,
     product: cluster.product?.id,
   });
+  const isHypershift = isHypershiftCluster(cluster);
 
   const included = getIncludedNodes({
-    isHypershift: isHypershiftCluster(cluster),
+    isHypershift,
     isMultiAz,
   });
 
   const currentNodeCount = machinePools.reduce((acc, mp) => {
-    if (mp.instance_type === machineTypeId) {
+    if (mp.instance_type === machineTypeId && (!isHypershift || mp.id !== editMachinePoolId)) {
       return acc + ((mp.autoscaling ? mp.autoscaling.max_replicas : mp.replicas) || 0);
     }
     return acc;
