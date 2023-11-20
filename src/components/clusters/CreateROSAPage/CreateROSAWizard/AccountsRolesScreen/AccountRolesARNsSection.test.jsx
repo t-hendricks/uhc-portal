@@ -84,8 +84,6 @@ describe('<AccountRolesARNsSection />', () => {
 
   const ConnectedAccountRolesARNsSection = wizardConnector(AccountRolesARNsSection);
 
-  const rosaCLIMessage = `You must use ROSA CLI version ${ROSA_HOSTED_CLI_MIN_VERSION} or above.`;
-
   it('is accessible', async () => {
     const { container } = render(<ConnectedAccountRolesARNsSection {...props} />);
     await checkAccessibility(container);
@@ -350,34 +348,47 @@ describe('<AccountRolesARNsSection />', () => {
     });
   });
 
-  it('shows ROSA CLI requirement message if ARNs are not detected and Hypershift has been selected', () => {
-    const testProps = {
-      ...props,
-      getAWSAccountRolesARNsResponse: {
-        fulfilled: true,
-        error: true,
-        pending: false,
-        data: [],
-      },
-    };
-    render(<ConnectedAccountRolesARNsSection {...testProps} />);
+  describe('ROSA CLI requirement message', () => {
+    const rosaCLIMessage = `You must use ROSA CLI version ${ROSA_HOSTED_CLI_MIN_VERSION} or above.`;
 
-    expect(screen.getByText(rosaCLIMessage)).toBeInTheDocument();
-  });
+    const getIncompleteRoleSets = ({ isHypershift }) =>
+      accountRolesList.map((role) => {
+        const compatibleRoleSets = isHypershift
+          ? ['myManagedRoles']
+          : ['bothRoles', 'myUnManagedRoles'];
+        return compatibleRoleSets.includes(role.prefix) ? { ...role, Support: undefined } : role;
+      });
 
-  it('does not show the ROSA CLI requirement message if ARNs are not detected and ROSA classic has been selected', () => {
-    const newProps = {
-      ...props,
-      getAWSAccountRolesARNsResponse: {
-        fulfilled: true,
-        error: true,
-        pending: false,
-        data: [],
-      },
-      isHypershiftSelected: false,
-    };
-    render(<ConnectedAccountRolesARNsSection {...newProps} />);
+    it('is shown when not all ARNs are detected and Hypershift has been selected', () => {
+      const testProps = {
+        ...props,
+        getAWSAccountRolesARNsResponse: {
+          fulfilled: true,
+          error: false,
+          pending: false,
+          data: getIncompleteRoleSets({ isHypershift: true }),
+        },
+      };
+      render(<ConnectedAccountRolesARNsSection {...testProps} />);
 
-    expect(screen.queryByText(rosaCLIMessage)).not.toBeInTheDocument();
+      expect(screen.getByText(rosaCLIMessage)).toBeInTheDocument();
+    });
+
+    it('is not shown when not all ARNs are detected and ROSA classic has been selected', () => {
+      const newProps = {
+        ...props,
+        getAWSAccountRolesARNsResponse: {
+          fulfilled: true,
+          error: false,
+          pending: false,
+          data: getIncompleteRoleSets({ isHypershift: false }),
+        },
+        isHypershiftSelected: false,
+      };
+      render(<ConnectedAccountRolesARNsSection {...newProps} />);
+
+      expect(screen.queryByText(rosaCLIMessage)).not.toBeInTheDocument();
+      expect(screen.getByText('Some account roles ARNs were not detected')).toBeInTheDocument();
+    });
   });
 });
