@@ -26,16 +26,16 @@ import { SessionTiming } from '@sentry/integrations';
 
 import * as OCM from '@openshift-assisted/ui-lib/ocm';
 
-import config from './config';
+import { authInterceptor } from '~/services/apiRequest';
 
 import getNavClickParams from './common/getNavClickParams';
 import ocmBaseName from './common/getBaseName';
 
 import { userInfoResponse } from './redux/actions/userActions';
 import { detectFeatures } from './redux/actions/featureActions';
-
 import { store } from './redux/store';
-import { authInterceptor } from './services/apiRequest';
+
+import config from './config';
 
 import App from './components/App/App';
 import type { AppThunkDispatch } from './redux/types';

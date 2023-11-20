@@ -8,8 +8,6 @@ import { mockRestrictedEnv } from '~/testUtils';
 import Router from './Router';
 import { store } from '../../redux/store';
 
-jest.mock('../../services/apiRequest');
-
 global.insights = {
   chrome: {
     ...global.insights.chrome,

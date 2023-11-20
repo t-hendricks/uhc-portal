@@ -60,12 +60,6 @@ const ocpTableRows = [
   ],
   [
     <>
-      <Link to="/install/rhv">Red Hat Virtualization</Link>
-    </>,
-    'Full stack automation and pre-existing infrastructure',
-  ],
-  [
-    <>
       <Link to="/install/vsphere">vSphere</Link>
     </>,
     'Full stack automation and pre-existing infrastructure',

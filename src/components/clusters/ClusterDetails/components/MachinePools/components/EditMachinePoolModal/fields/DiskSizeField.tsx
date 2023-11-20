@@ -8,12 +8,13 @@ import {
 import PopoverHint from '~/components/common/PopoverHint';
 import { Cluster } from '~/types/clusters_mgmt.v1';
 
-import './DiskSizeField.scss';
+import WithTooltip from '~/components/common/WithTooltip';
 import { normalizeProductID } from '~/common/normalize';
 import { normalizedProducts } from '~/common/subscriptionTypes';
 import { isHypershiftCluster } from '~/components/clusters/ClusterDetails/clusterDetailsHelper';
 import useFormikOnChange from '../hooks/useFormikOnChange';
-import WithTooltip from '../components/WithTooltip';
+
+import './DiskSizeField.scss';
 
 const fieldId = 'diskSize';
 

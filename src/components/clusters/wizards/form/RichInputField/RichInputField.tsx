@@ -259,6 +259,7 @@ export const RichInputField = ({
             <HelperText component="ul" id={`rich-input-popover-${inputName}`}>
               {evaluatedValidation.map((item) => (
                 <ValidationItem
+                  key={item.text}
                   touched={touched}
                   text={item.text}
                   isValid={!!item.validated}

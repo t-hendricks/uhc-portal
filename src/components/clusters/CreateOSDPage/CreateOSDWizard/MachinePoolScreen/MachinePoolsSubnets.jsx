@@ -35,7 +35,7 @@ function MachinePoolsSubnets({ selectedVPC, isHypershift }) {
         <FieldArray
           name="machine_pools_subnets"
           component={ReduxFormMachinePoolSubnets}
-          selectedVPCID={selectedVPC.id}
+          selectedVPC={selectedVPC}
           warn={subnetWarnings}
         />
       )}

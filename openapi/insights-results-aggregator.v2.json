@@ -801,6 +801,361 @@
         ]
       }
     },
+    "/cluster/{clusterId}/request/{requestId}/report": {
+      "get": {
+        "description": "For the given cluster and request IDs, return the simplified report, if any. Response should have the following format:\n```\n{\n\"cluster\": \"{clusterID}\",\n\"requestID\": \"{requestID}\",\n\"status\": \"{string}\",\n\"report\": \"{simplifiedReportStructure}\",\n}```\nWhere simplifiedReportStructure might look like:\n```[\n\"rule_fqdn\": \"\",\n\"error_key\": \"\",\n\"description\": \"\",\n\"total_risk\": \"\",\n]\n```\n",
+        "operationId": "getReportForRequest",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "clusterId",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/clusterId"
+            }
+          },
+          {
+            "in": "path",
+            "name": "requestId",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/requestId"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "cluster": {
+                      "$ref": "#/components/schemas/clusterId"
+                    },
+                    "report": {
+                      "$ref": "#/components/schemas/simplifiedReport"
+                    },
+                    "requestID": {
+                      "$ref": "#/components/schemas/requestId"
+                    },
+                    "status": {
+                      "$ref": "#/components/schemas/statusResponse"
+                    }
+                  },
+                  "required": [
+                    "cluster",
+                    "requestID",
+                    "status",
+                    "report"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Simplified report for given cluster and request IDs"
+          },
+          "400": {
+            "description": "Invalid request or invalid cluster ID"
+          },
+          "404": {
+            "description": "Cluster or request ID not found"
+          }
+        },
+        "summary": "Retrieve simplified reports for a given cluster and request IDs if available"
+      }
+    },
+    "/cluster/{clusterId}/request/{requestId}/status": {
+      "get": {
+        "description": "The status of the request with given ID if found. The cluster ID is required so only requests for the given cluster are returned, if any. Response should have the following format: ```\n{\n\"cluster\": \"{clusterID}\",\n\"requestID\":\"{requestID}\",\n\"status\": \"{string}\"\n}\n```",
+        "operationId": "getRequestStatusForCluster",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "clusterId",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/clusterId"
+            }
+          },
+          {
+            "description": "Request ID",
+            "in": "path",
+            "name": "requestId",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/requestId"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "cluster": {
+                      "$ref": "#/components/schemas/clusterId"
+                    },
+                    "requestID": {
+                      "$ref": "#/components/schemas/requestId"
+                    },
+                    "status": {
+                      "$ref": "#/components/schemas/statusResponse"
+                    }
+                  },
+                  "required": [
+                    "cluster",
+                    "requestID",
+                    "status"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Stored status for the given cluster and request IDs"
+          },
+          "400": {
+            "description": "Invalid request or invalid cluster ID"
+          },
+          "404": {
+            "description": "Request ID or cluster ID not found"
+          }
+        },
+        "summary": "Check status of a given cluster's request"
+      }
+    },
+    "/cluster/{clusterId}/requests": {
+      "get": {
+        "description": "Provides a list of all the recorded requests for the cluster with given ID, if any. Response should have following format:\n```{\n\"cluster\":\"{clusterID}\",\n\"requests\":[{array}],\n\"status\":\"{string}\"\n}\n```\nWhere {array} contains following objects:\n```{\n\"requestID\": {requestID},\n\"valid: True,\n\"received\": {timestamp},\n\"processed\": {timestamp},\n}\n```",
+        "operationId": "getRequestsForCluster",
+        "parameters": [
+          {
+            "example": "34c3ecc5-624a-49a5-bab8-4fdc5e51a266",
+            "in": "path",
+            "name": "clusterId",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/clusterId"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "cluster": {
+                      "$ref": "#/components/schemas/clusterId"
+                    },
+                    "requests": {
+                      "$ref": "#/components/schemas/gatheringRequests"
+                    },
+                    "status": {
+                      "$ref": "#/components/schemas/statusResponse"
+                    }
+                  },
+                  "required": [
+                    "cluster",
+                    "requests",
+                    "status"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "List of requests available (last 24 hours) for the given organization and cluster and their status."
+          },
+          "400": {
+            "description": "Invalid request (e.g cluster ID with unexpected format)"
+          },
+          "404": {
+            "description": "Cluster not found"
+          }
+        },
+        "summary": "List of requests for given cluster"
+      },
+      "post": {
+        "description": "A list of requests for given cluster, filtered by the provided request IDs, if any. List of request IDs should be in format\n```[\n\"requestID1\",\n\"requestID2\",\n ...,\"requestID3\"\n]\n```\nResponse is in format:\n```{\n\"cluster\": \"{clusterID}\"\n\"requests\": [{array}]\n\"status\": \"{string}\"\n}\n```\nWhere {array} contains the following objects:\n```{\n\"requestID\": {requestID},\n\"valid\": true/false depends if this is valid/known request ID,\n\"received\": {timestamp},\n\"processed\": {timestamp},\n}\n```\n",
+        "operationId": "getRequestsForClusterPostVariant",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "clusterId",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/clusterId"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "items": {
+                  "$ref": "#/components/schemas/requestId"
+                },
+                "type": "array"
+              }
+            }
+          },
+          "description": "List of request IDs",
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "cluster": {
+                      "$ref": "#/components/schemas/clusterId"
+                    },
+                    "requests": {
+                      "$ref": "#/components/schemas/gatheringRequests"
+                    },
+                    "status": {
+                      "$ref": "#/components/schemas/statusResponse"
+                    }
+                  },
+                  "required": [
+                    "cluster",
+                    "requests",
+                    "status"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "List of requests available (last 24 hours) for the given organization and cluster and their status."
+          },
+          "400": {
+            "description": "Invalid request (e.g cluster ID with unexpected format) or payload (empty body or not a list of strings)"
+          },
+          "404": {
+            "description": "Cluster ID not found or no requests found in storage for provided IDs"
+          }
+        },
+        "summary": "Filtered list of stored requests for given cluster ID"
+      }
+    },
+    "/cluster/{clusterId}/upgrade-risks-prediction": {
+      "get": {
+        "description": "Get a prediction of whether a cluster upgrade would fail.",
+        "operationId": "getUpgradeRisksPrediction",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "clusterId",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/clusterId"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "Response data type for GET /cluster/{clusterId}/upgrade-risks-prediction",
+                  "properties": {
+                    "meta": {
+                      "properties": {
+                        "last_checked_at": {
+                          "description": "[Optional] Last time of analysis for given cluster.",
+                          "format": "date-time",
+                          "type": "string"
+                        }
+                      },
+                      "type": "object"
+                    },
+                    "status": {
+                      "$ref": "#/components/schemas/statusResponse"
+                    },
+                    "upgrade_recommendation": {
+                      "properties": {
+                        "upgrade_recommended": {
+                          "type": "boolean"
+                        },
+                        "upgrade_risks_predictors": {
+                          "properties": {
+                            "alerts": {
+                              "items": {
+                                "properties": {
+                                  "name": {
+                                    "example": "APIRemovedInNextEUSReleaseInUse",
+                                    "type": "string"
+                                  },
+                                  "namespace": {
+                                    "example": "openshift-kube-apiserver",
+                                    "type": "string"
+                                  },
+                                  "severity": {
+                                    "example": "info",
+                                    "type": "string"
+                                  },
+                                  "url": {
+                                    "example": "https://my-cluster.com/monitoring/alerts?orderBy=asc&sortBy=Severity&alert-name=APIRemovedInNextEUSReleaseInUse",
+                                    "type": "string"
+                                  }
+                                },
+                                "type": "object"
+                              },
+                              "type": "array"
+                            },
+                            "operator_conditions": {
+                              "items": {
+                                "properties": {
+                                  "condition": {
+                                    "example": "Failing",
+                                    "type": "string"
+                                  },
+                                  "name": {
+                                    "example": "authentication",
+                                    "type": "string"
+                                  },
+                                  "reason": {
+                                    "example": "AsExpected",
+                                    "type": "string"
+                                  },
+                                  "url": {
+                                    "example": "https://my-cluster.com/k8s/cluster/config.openshift.io~v1~ClusterOperator/authentication",
+                                    "type": "string"
+                                  }
+                                },
+                                "type": "object"
+                              },
+                              "type": "array"
+                            }
+                          },
+                          "type": "object"
+                        }
+                      },
+                      "type": "object"
+                    }
+                  },
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Status ok"
+          },
+          "204": {
+            "description": "Status NoContent: happens when the cluster is managed. The upgrade risks prediction is not available for this kind of clusters."
+          },
+          "404": {
+            "description": "Status NotFound: happens when the cluster cannot be found in the Observatorium data"
+          },
+          "503": {
+            "description": "Status NotAvailable: happens when the AMS API or the Upgrade Risks Prediction service is not available."
+          }
+        },
+        "tags": [
+          "prod"
+        ]
+      }
+    },
     "/clusters": {
       "get": {
         "description": "Retrieves all clusters for given organization, retrieves the impacting rules for each cluster and calculates the count of impacting rules by total risk (severity == critical, high, moderate, low)",

@@ -4,25 +4,25 @@ import { normalizedProducts } from '~/common/subscriptionTypes';
 import { baseRequestState } from '../../../../../../redux/reduxHelpers';
 import MachinePools from '../MachinePools';
 
-const vpcs = [
-  {
-    aws_security_groups: [
-      {
-        name: '',
-        id: 'sg-group-without-a-name',
-      },
-      {
-        name: 'abc is my name',
-        id: 'sg-abc',
-      },
-    ],
-  },
-];
+const vpc = {
+  aws_security_groups: [
+    {
+      name: '',
+      id: 'sg-group-without-a-name',
+    },
+    {
+      name: 'abc is my name',
+      id: 'sg-abc',
+    },
+  ],
+};
 
 jest.mock(
-  '~/components/clusters/CreateOSDPage/CreateOSDWizard/NetworkScreen/useAWSVPCsFromCluster',
+  '~/components/clusters/CreateOSDPage/CreateOSDWizard/NetworkScreen/useAWSVPCFromCluster',
   () => ({
-    useAWSVPCsFromCluster: () => ({ fulfilled: true, data: { items: vpcs } }),
+    useAWSVPCFromCluster: () => ({
+      clusterVpc: vpc,
+    }),
   }),
 );
 
@@ -40,6 +40,7 @@ const defaultMachinePool = {
 };
 
 const defaultCluster = {
+  id: 'my-cluster-id',
   product: {
     id: normalizedProducts.ROSA,
   },

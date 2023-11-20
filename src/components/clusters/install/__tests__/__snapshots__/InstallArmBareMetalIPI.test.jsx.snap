@@ -55,7 +55,7 @@ exports[`Arm BareMetal IPI install renders correctly 1`] = `
       }
       channel="stable"
       cloudProviderID="baremetal"
-      docURL="https://docs.openshift.com/container-platform/4.13/installing/installing_bare_metal_ipi/ipi-install-installation-workflow.html"
+      docURL="https://docs.openshift.com/container-platform/4.14/installing/installing_bare_metal_ipi/ipi-install-installation-workflow.html"
       installer="aarch64-openshift-install"
       isBMIPI={true}
       isUPI={false}

@@ -5,7 +5,13 @@ import * as useFeatureGate from '~/hooks/useFeatureGate';
 import { HCP_USE_UNMANAGED } from '~/redux/constants/featureConstants';
 import AccountRolesARNsSection from './AccountRolesARNsSection';
 
+const latestOCPVersion = '4.13.3';
+const latestVersionLoaded = '4.13.5';
+
 jest.mock('~/hooks/useAnalytics', () => jest.fn(() => jest.fn()));
+jest.mock('~/components/releases/hooks', () => ({
+  useOCPLatestVersion: () => [latestOCPVersion, latestVersionLoaded],
+}));
 
 const accountRolesList = [
   {

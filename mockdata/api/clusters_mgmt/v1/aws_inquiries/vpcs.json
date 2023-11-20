@@ -33,6 +33,44 @@
       ]
     },
     {
+      "id": "vpc-with-security-groups",
+      "aws_security_groups": [
+        {
+          "id": "sg-def",
+          "name": "sg-def"
+        },
+        {
+          "id": "sg-no-name",
+          "name": "",
+          "red_hat_managed": false
+        },
+        {
+          "id": "sg-xyz",
+          "name": "sg-a-name-that-should-go-first"
+        },
+        {
+          "id": "sg-abc",
+          "name": "sg-pqr"
+        },
+        {
+          "id": "sg-i-am-ignored",
+          "name": "sg-is-red-hat-managed",
+          "red_hat_managed": true
+        },
+        {
+          "id": "sg-123-no-name",
+          "name": ""
+        }
+      ],
+      "aws_subnets": [
+        {
+          "subnet_id": "subnet-from-a-vpc-with-security-groups",
+          "public": false,
+          "availability_zone": "us-west-1a"
+        }
+      ]
+    },
+    {
       "name": "test-backend-returning-empty-slice-as-null",
       "DETAILS": "https://gitlab.cee.redhat.com/service/uhc-clusters-service/-/merge_requests/3486#note_3297600",
       "aws_subnets": null

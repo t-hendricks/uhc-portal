@@ -1,16 +1,17 @@
 import React from 'react';
 import { mount, ReactWrapper } from 'enzyme';
-import axios from 'axios';
 import { act } from 'react-dom/test-utils';
+import type axios from 'axios';
+
+import apiRequest from '~/services/apiRequest';
 import { mockRestrictedEnv, render, screen } from '~/testUtils';
+
 import Releases from './index';
 import ReleaseChannel from './ReleaseChannel';
 import ocpLifeCycleStatuses from './__mocks__/ocpLifeCycleStatuses';
 
-jest.mock('axios', () => ({
-  ...jest.requireActual('axios'),
-  get: jest.fn().mockImplementation(() => Promise.resolve(ocpLifeCycleStatuses)),
-}));
+type MockedJest = jest.Mocked<typeof axios> & jest.Mock;
+const apiRequestMock = apiRequest as unknown as MockedJest;
 
 jest.mock('./ReleaseChannel', () => ({
   __esModule: true,
@@ -23,6 +24,9 @@ const MockReleaseChannel = ReleaseChannel as jest.Mock;
 describe('<Releases />', () => {
   let wrapper: ReactWrapper;
 
+  beforeEach(() => {
+    apiRequestMock.get.mockResolvedValue(ocpLifeCycleStatuses);
+  });
   beforeAll(() => {
     MockReleaseChannel.mockImplementation(
       ({ channel }: React.ComponentProps<typeof ReleaseChannel>) => (
@@ -42,7 +46,7 @@ describe('<Releases />', () => {
     });
 
     wrapper.update();
-    expect(axios.get).toHaveBeenCalledTimes(1);
+    expect(apiRequestMock.get).toHaveBeenCalledTimes(1);
     expect(wrapper).toMatchSnapshot();
   });
 
@@ -58,7 +62,7 @@ describe('<Releases />', () => {
       await act(async () => {
         render(<Releases />);
       });
-      expect(axios.get).toHaveBeenCalledTimes(1);
+      expect(apiRequestMock.get).toHaveBeenCalledTimes(1);
       expect(screen.queryAllByText(/^stable/).length > 0).toBeTruthy();
       expect(screen.queryAllByText(/^fast/)).toHaveLength(0);
       expect(screen.queryAllByText(/^eus/).length > 0).toBeTruthy();

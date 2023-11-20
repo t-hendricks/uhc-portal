@@ -1,29 +1,27 @@
 import React from 'react';
 import { screen, render } from '~/testUtils';
 
-import { MachinePool } from '~/types/clusters_mgmt.v1';
+import { Cluster, MachinePool } from '~/types/clusters_mgmt.v1';
 
 import MachinePoolExpandedRow from '../components/MachinePoolExpandedRow';
 
-const vpcs = [
-  {
-    aws_security_groups: [
-      {
-        name: '',
-        id: 'sg-group-without-a-name',
-      },
-      {
-        name: 'abc is my name',
-        id: 'sg-abc',
-      },
-    ],
-  },
-];
+const vpc = {
+  aws_security_groups: [
+    {
+      name: '',
+      id: 'sg-group-without-a-name',
+    },
+    {
+      name: 'abc is my name',
+      id: 'sg-abc',
+    },
+  ],
+};
 
 jest.mock(
-  '~/components/clusters/CreateOSDPage/CreateOSDWizard/NetworkScreen/useAWSVPCsFromCluster',
+  '~/components/clusters/CreateOSDPage/CreateOSDWizard/NetworkScreen/useAWSVPCFromCluster',
   () => ({
-    useAWSVPCsFromCluster: () => ({ fulfilled: true, data: { items: vpcs } }),
+    useAWSVPCFromCluster: () => ({ clusterVpc: vpc }),
   }),
 );
 
@@ -44,7 +42,10 @@ const defaultMachinePool: MachinePool = {
   autoscaling: { min_replicas: 0, max_replicas: 4 },
 };
 
+const cluster = { id: 'my-cluster-id' } as Cluster;
+
 const getDefaultProps = (machinePoolProps: Partial<MachinePool>) => ({
+  cluster,
   isMultiZoneCluster: false,
   machinePool: {
     ...defaultMachinePool,

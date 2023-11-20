@@ -1,13 +1,14 @@
 import React from 'react';
-import MockAdapter from 'axios-mock-adapter';
 import * as reactRedux from 'react-redux';
 import { MemoryRouter } from 'react-router-dom';
+import type axios from 'axios';
 import apiRequest from '~/services/apiRequest';
 import { withState, screen, checkAccessibility, within, insightsMock } from '~/testUtils';
 
 import { UpdateAllMachinePools } from './index';
 
-const mock = new MockAdapter(apiRequest); // adds ability to mock axios calls
+type MockedJest = jest.Mocked<typeof axios> & jest.Mock;
+const apiRequestMock = apiRequest as unknown as MockedJest;
 
 jest.mock('react-redux', () => {
   const config = {
@@ -18,6 +19,9 @@ jest.mock('react-redux', () => {
 });
 
 insightsMock();
+
+// @ts-ignore
+const getApiPatchParams = (index: number) => apiRequestMock.patch.mock.calls[index][1]?.params;
 
 // ********************* Variables ***********************
 
@@ -88,7 +92,7 @@ const defaultStore = {
 
 // ********************* Tests ***********************
 
-describe('<UpdateNodePools />', () => {
+describe('<UpdateAllMachinePools />', () => {
   describe('hides the update link', () => {
     it('when all machine pools are at the same version as the control plane', () => {
       const newState = {
@@ -345,12 +349,12 @@ describe('<UpdateNodePools />', () => {
 
     afterEach(() => {
       useDispatchMock.mockClear();
-      mock.reset();
+      jest.resetAllMocks();
     });
 
     it.skip('patchNodePool is called for only machine pools with a version that is behind the control plane ', async () => {
       // ARRANGE
-      mock.onPatch().reply(200);
+      apiRequestMock.patch.mockResolvedValue('success');
       const dummyDispatch = jest.fn();
       useDispatchMock.mockReturnValue(dummyDispatch);
 
@@ -366,7 +370,7 @@ describe('<UpdateNodePools />', () => {
 
       const { user } = withState(newState).render(<UpdateAllMachinePools />);
 
-      expect(mock.history.patch.length).toBe(0);
+      expect(apiRequestMock.patch).not.toHaveBeenCalled();
       expect(dummyDispatch).toHaveBeenCalledTimes(0);
       expectUpdateButtonPresence();
 
@@ -375,8 +379,8 @@ describe('<UpdateNodePools />', () => {
 
       // ASSERT
       // Ensure single call to patch machine pool
-      expect(mock.history.patch.length).toBe(1);
-      const patchMachinePool = mock.history.patch[0];
+      expect(apiRequestMock.patch).toHaveBeenCalledTimes(1);
+      const patchMachinePool = getApiPatchParams(0);
       expect(patchMachinePool.url).toEqual(
         `/api/clusters_mgmt/v1/clusters/${clusterId}/node_pools/${machinePoolBehind1.id}`,
       );
@@ -388,14 +392,12 @@ describe('<UpdateNodePools />', () => {
 
     it.skip('shows errors for all patchNodePool requests that fail and is accessible', async () => {
       // ARRANGE
-      mock
-        .onPatch()
-        .replyOnce(500, {
+      apiRequestMock.patch
+        .mockRejectedValueOnce({
           code: '1234',
           reason: 'I am a bad server',
         })
-        .onPatch()
-        .reply(200);
+        .mockResolvedValue('success');
 
       const dummyDispatch = jest.fn();
       useDispatchMock.mockReturnValue(dummyDispatch);
@@ -412,8 +414,8 @@ describe('<UpdateNodePools />', () => {
 
       const { container, user } = withState(newState).render(<UpdateAllMachinePools />);
 
-      expect(mock.history.patch.length).toBe(0);
-      expect(dummyDispatch).toHaveBeenCalledTimes(0);
+      expect(apiRequestMock.patch).not.toHaveBeenCalled();
+      expect(dummyDispatch).not.toHaveBeenCalled();
       expectUpdateButtonPresence();
       expect(screen.queryByRole('alert', { name: errorBannerHeader })).not.toBeInTheDocument();
 
@@ -422,14 +424,14 @@ describe('<UpdateNodePools />', () => {
 
       // ASSERT
       // Ensure two calls to patch machine pools
-      expect(mock.history.patch.length).toBe(2);
-      const patchMachinePool1 = mock.history.patch[0];
+      expect(apiRequestMock.patch).toHaveBeenCalledTimes(2);
+      const patchMachinePool1 = getApiPatchParams(0);
       expect(patchMachinePool1.url).toEqual(
         `/api/clusters_mgmt/v1/clusters/${clusterId}/node_pools/${machinePoolBehind1.id}`,
       );
       expect(patchMachinePool1.data).toBe(`{"version":{"id":"${controlPlaneVersion}"}}`);
 
-      const patchMachinePool2 = mock.history.patch[1];
+      const patchMachinePool2 = getApiPatchParams(1);
       expect(patchMachinePool2.url).toEqual(
         `/api/clusters_mgmt/v1/clusters/${clusterId}/node_pools/${machinePoolBehind2.id}`,
       );
@@ -457,7 +459,7 @@ describe('<UpdateNodePools />', () => {
 
     it('hides error messages when user clicks on the update machine pool links', async () => {
       // ARRANGE
-      mock.onPatch().reply(200);
+      apiRequestMock.patch.mockResolvedValue('success');
       const dummyDispatch = jest.fn();
       useDispatchMock.mockReturnValue(dummyDispatch);
 
@@ -485,14 +487,9 @@ describe('<UpdateNodePools />', () => {
     });
 
     it('hides the update link while the patchNodePool requests are pending', async () => {
-      // ARRANGE
-      mock.onPatch().reply(
-        () =>
-          new Promise((resolve) => {
-            setTimeout(() => {
-              resolve([201, null]);
-            }, 200); // Introduce a delay so the loading can be caught
-          }),
+      // ARRANGE - Introduce a delay so the loading can be caught
+      apiRequestMock.patch.mockResolvedValue(
+        new Promise((resolve) => setTimeout(resolve, 350, 'success')),
       );
 
       const dummyDispatch = jest.fn();
@@ -513,7 +510,7 @@ describe('<UpdateNodePools />', () => {
       // ACT
       await clickUpdateButton(user);
 
-      // ASSERT
+      // ASSERT - The message is only seen while the PATCH action is pending
       expect(await screen.findByLabelText('Updating machine pools')).toBeInTheDocument();
       expectUpdateButtonAbsence();
     });

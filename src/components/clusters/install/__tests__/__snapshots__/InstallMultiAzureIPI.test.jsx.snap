@@ -29,7 +29,7 @@ exports[`InstallMultiAzureIPI renders correctly 1`] = `
     <OCPInstructions
       channel="stable"
       cloudProviderID="azure"
-      docURL="https://docs.openshift.com/container-platform/4.13/post_installation_configuration/multi-architecture-configuration.html"
+      docURL="https://docs.openshift.com/container-platform/4.14/post_installation_configuration/configuring-multi-arch-compute-machines/creating-multi-arch-compute-nodes-azure.html"
       installer="multi-openshift-install"
       isBMIPI={false}
       isUPI={false}

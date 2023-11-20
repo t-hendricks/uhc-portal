@@ -1,10 +1,7 @@
 import React from 'react';
 import { mount } from 'enzyme';
-
+import apiRequest from '~/services/apiRequest';
 import UpgradeAcknowledgeModal from '../UpgradeAcknowledgeModal/UpgradeAcknowledgeModal';
-import apiRequest from '../../../../../../services/apiRequest';
-
-jest.mock('../../../../../../services/apiRequest');
 
 const ackWord = 'Acknowledge';
 

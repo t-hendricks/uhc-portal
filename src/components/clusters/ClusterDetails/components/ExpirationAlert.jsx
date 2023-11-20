@@ -31,7 +31,7 @@ function ExpirationAlert({
         <>
           {`This cluster should have been deleted ${timeUntilExpiryString} but is still running.`}{' '}
           <ExternalLink href="https://access.redhat.com/support/">
-            Contact our customer support.
+            Contact our customer support
           </ExternalLink>
           .
         </>

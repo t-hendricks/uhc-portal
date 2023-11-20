@@ -1,4 +1,4 @@
-import apiRequest from '../apiRequest';
+import apiRequest from '~/services/apiRequest';
 import type { AccessTokenCfg } from '../../types/accounts_mgmt.v1';
 
 const createAuthorizationToken = () =>
