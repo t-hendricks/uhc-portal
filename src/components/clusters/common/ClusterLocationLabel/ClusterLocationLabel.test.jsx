@@ -31,14 +31,14 @@ describe('<ClusterLocationLabel />', () => {
     expect(defaultProps.cloudProviders.providers).toEqual({});
     const { container } = render(<ClusterLocationLabel {...defaultProps} />);
 
-    expect(container).toHaveTextContent('AWS (us-east-1)');
+    expect(container.textContent).toEqual('AWS (us-east-1)');
   });
 
   it('does not display region  when region is not known', () => {
     const newProps = { ...defaultProps, cloudProviderID: 'gcp', regionID: 'N/A' };
     const { container } = render(<ClusterLocationLabel {...newProps} />);
 
-    expect(container).toHaveTextContent('GCP');
+    expect(container.textContent).toEqual('GCP');
   });
 
   it('displays content from providers when providers have been fetched', () => {
@@ -51,6 +51,6 @@ describe('<ClusterLocationLabel />', () => {
 
     const { container } = render(<ClusterLocationLabel {...newProps} />);
 
-    expect(container).toHaveTextContent('Bare Metal (some-region)');
+    expect(container.textContent).toEqual('Bare Metal (some-region)');
   });
 });

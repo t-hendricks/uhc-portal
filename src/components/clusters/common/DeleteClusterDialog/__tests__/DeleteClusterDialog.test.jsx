@@ -21,6 +21,10 @@ describe('<DeleteClusterDialog />', () => {
     deleteClusterResponse: { fulfilled: false, pending: false, error: false },
   };
 
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
+
   it('is accessible', async () => {
     const { container } = render(<DeleteClusterDialog {...defaultProps} />);
     await checkAccessibility(container);
