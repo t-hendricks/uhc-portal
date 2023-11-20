@@ -19,7 +19,7 @@ import {
   CLEAR_CCS_CREDENTIALS_INQUIRY,
   InquiriesAction,
 } from '~/components/clusters/CreateOSDPage/CreateOSDWizard/ccsInquiriesActions';
-import { CloudVPC, EncryptionKey, KeyRing } from '~/types/clusters_mgmt.v1';
+import { CloudVPC, EncryptionKey, KeyRing, SecurityGroup } from '~/types/clusters_mgmt.v1';
 import { AugmentedSubnetwork, AWSCredentials } from '~/types/types';
 
 // Credentials are only stored here as part of metadata on requests,
@@ -27,6 +27,18 @@ import { AugmentedSubnetwork, AWSCredentials } from '~/types/types';
 // For GCP, it happened to be easier in the actions to store the unparsed JSON;
 // this is not a critical choice, as long as it's comparable.
 type GCPCredentialsJSON = string;
+
+export type VPCResponse = {
+  credentials?: AWSCredentials | GCPCredentialsJSON;
+  cloudProvider?: string;
+  region?: string;
+  subnet?: string; // if set on request, only VPC connected to that subnet were listed.
+  data: {
+    items: CloudVPC[];
+    // populated for AWS, will be {} otherwise.
+    bySubnetID: Record<string, AugmentedSubnetwork>;
+  };
+};
 
 export type State = {
   ccsCredentialsValidity: PromiseReducerState<{
@@ -50,17 +62,7 @@ export type State = {
       items: EncryptionKey[];
     };
   }>;
-  vpcs: PromiseReducerState<{
-    credentials?: AWSCredentials | GCPCredentialsJSON;
-    cloudProvider?: string;
-    region?: string;
-    subnet?: string; // if set on request, only VPC connected to that subnet were listed.
-    data: {
-      items: CloudVPC[];
-      // populated for AWS, will be {} otherwise.
-      bySubnetID: Record<string, AugmentedSubnetwork>;
-    };
-  }>;
+  vpcs: PromiseReducerState<VPCResponse>;
 };
 
 const initialState: State = {
@@ -100,14 +102,26 @@ const initialState: State = {
   },
 };
 
+export const securityGroupsSort = (a: SecurityGroup, b: SecurityGroup) => {
+  // Sorts first VPCs that have a name over those that don't
+  if (a.name && !b.name) {
+    return -1;
+  }
+  if (b.name && !a.name) {
+    return 1;
+  }
+  // Then the rest are sorted alphabetically by their name or ID
+  const aId = a.name || a.id || '';
+  const bId = b.name || b.id || '';
+  return aId.localeCompare(bId);
+};
+
 /**
  * Indexes AWS VPC subnet details by subnet_id.
  */
-export const indexAWSVPCs = (vpcsData: {
-  items?: CloudVPC[];
-}): Record<string, AugmentedSubnetwork> => {
+export const indexAWSVPCs = (vpcs: CloudVPC[]): Record<string, AugmentedSubnetwork> => {
   const bySubnetID = {} as Record<string, AugmentedSubnetwork>;
-  (vpcsData.items || []).forEach((vpcItem) => {
+  vpcs.forEach((vpcItem) => {
     // Work around backend currently returning empty aws_subnets as null.
     (vpcItem.aws_subnets || []).forEach((subnet) => {
       // for type safety but expected to always be present
@@ -121,11 +135,27 @@ export const indexAWSVPCs = (vpcsData: {
   return bySubnetID;
 };
 
-/** Enriches response with .bySubnetID entry. */
-export const processAWSVPCs = (vpcsData: { items: CloudVPC[] }) => ({
-  ...vpcsData,
-  bySubnetID: indexAWSVPCs(vpcsData),
-});
+/**
+ * Enriches response with .bySubnetID entry.
+ * Security groups: returns only the non-RH managed, and sorts them by display order
+ */
+export const processAWSVPCs = (vpcs: CloudVPC[]) => {
+  const preProcessedVpcs = vpcs.map((vpc) => {
+    if (vpc.aws_security_groups) {
+      const sortedSecurityGroups = vpc.aws_security_groups.filter((sg) => !sg.red_hat_managed);
+      sortedSecurityGroups.sort(securityGroupsSort);
+      return {
+        ...vpc,
+        aws_security_groups: sortedSecurityGroups,
+      };
+    }
+    return vpc;
+  });
+  return {
+    items: preProcessedVpcs,
+    bySubnetID: indexAWSVPCs(preProcessedVpcs),
+  };
+};
 
 function ccsInquiriesReducer(
   state: State = initialState,
@@ -216,9 +246,7 @@ function ccsInquiriesReducer(
       case FULFILLED_ACTION(LIST_VPCS): {
         const items = action.payload.data.items || [];
         const data =
-          action.meta?.cloudProvider === 'aws'
-            ? processAWSVPCs({ items })
-            : { items, bySubnetID: {} };
+          action.meta?.cloudProvider === 'aws' ? processAWSVPCs(items) : { items, bySubnetID: {} };
         draft.vpcs = {
           ...baseRequestState,
           fulfilled: true,

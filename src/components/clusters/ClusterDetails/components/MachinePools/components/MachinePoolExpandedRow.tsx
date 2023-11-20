@@ -3,8 +3,8 @@ import { Label, Title, Grid, GridItem } from '@patternfly/react-core';
 import isEmpty from 'lodash/isEmpty';
 
 import { MachinePool } from '~/types/clusters_mgmt.v1/models/MachinePool';
-import { SecurityGroup } from '~/types/clusters_mgmt.v1';
-import { useAWSVPCsFromCluster } from '~/components/clusters/CreateOSDPage/CreateOSDWizard/NetworkScreen/useAWSVPCsFromCluster';
+import { Cluster, SecurityGroup } from '~/types/clusters_mgmt.v1';
+import { useAWSVPCFromCluster } from '~/components/clusters/CreateOSDPage/CreateOSDWizard/NetworkScreen/useAWSVPCFromCluster';
 import { hasSubnets, getSubnetIds } from '../machinePoolsHelper';
 import MachinePoolAutoScalingDetail from '../MachinePoolAutoscalingDetail';
 
@@ -40,17 +40,17 @@ const MachinePoolItemList = ({ title, items }: { title: string; items: string[] 
 );
 
 const MachinePoolExpandedRow = ({
+  cluster,
   isMultiZoneCluster,
   machinePool,
 }: {
+  cluster: Cluster;
   isMultiZoneCluster: boolean;
   machinePool: MachinePool;
 }) => {
   const spotMarketOptions = machinePool?.aws?.spot_market_options;
 
-  const vpcResponse = useAWSVPCsFromCluster({ includeSecurityGroups: true });
-  const clusterVpcs = vpcResponse.data?.items || [];
-  const clusterVpc = clusterVpcs.length === 0 ? null : clusterVpcs[0];
+  const { clusterVpc } = useAWSVPCFromCluster(cluster);
   const securityGroupIds = machinePool.aws?.additional_security_group_ids || [];
 
   return (

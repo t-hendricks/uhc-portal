@@ -1,4 +1,4 @@
-import { MachinePool, NodePool } from '~/types/clusters_mgmt.v1';
+import { AWSMachinePool, MachinePool, NodePool } from '~/types/clusters_mgmt.v1';
 import { EditMachinePoolValues } from './hooks/useMachinePoolFormik';
 
 const getLabels = (labels: EditMachinePoolValues['labels']) =>
@@ -12,33 +12,106 @@ const getLabels = (labels: EditMachinePoolValues['labels']) =>
 const getTaints = (taints: EditMachinePoolValues['taints']) =>
   taints.length === 1 && !taints[0].key ? [] : taints;
 
-export const getBaseMachineOrNodePool = (
+const getAutoscalingParams = (
   values: EditMachinePoolValues,
-  isHypershift: boolean,
   isMultiAz: boolean,
+  isHypershift: boolean,
 ) => {
-  const pool: MachinePool | NodePool = {
+  if (values.autoscaling) {
+    const maxReplica = values.autoscaleMax * (isMultiAz ? 3 : 1);
+    const minReplica = values.autoscaleMin * (isMultiAz ? 3 : 1);
+
+    const autoscaling = isHypershift
+      ? {
+          max_replica: maxReplica,
+          min_replica: minReplica,
+        }
+      : {
+          max_replicas: maxReplica,
+          min_replicas: minReplica,
+        };
+    return {
+      autoscaling,
+    };
+  }
+  return {
+    replicas: values.replicas,
+  };
+};
+
+export const buildMachinePoolRequest = (
+  values: EditMachinePoolValues,
+  {
+    isEdit,
+    isMultiAz,
+    isROSACluster,
+  }: {
+    isEdit: boolean;
+    isMultiAz: boolean;
+    isROSACluster: boolean;
+  },
+): MachinePool => {
+  const machinePool: MachinePool = {
     id: values.name,
     labels: getLabels(values.labels),
     taints: getTaints(values.taints),
+    ...getAutoscalingParams(values, isMultiAz, false),
   };
-  if (values.autoscaling) {
-    const maxReplica = isMultiAz ? values.autoscaleMax * 3 : values.autoscaleMax;
-    const minReplica = isMultiAz ? values.autoscaleMin * 3 : values.autoscaleMin;
-    if (isHypershift) {
-      pool.autoscaling = {
-        max_replica: maxReplica,
-        min_replica: minReplica,
-      };
-    } else {
-      pool.autoscaling = {
-        max_replicas: maxReplica,
-        min_replicas: minReplica,
+
+  if (!isEdit) {
+    const awsConfig: AWSMachinePool = {};
+
+    machinePool.instance_type = values.instanceType;
+
+    if (values.useSpotInstances) {
+      awsConfig.spot_market_options =
+        values.spotInstanceType === 'maximum'
+          ? {
+              max_price: values.maxPrice,
+            }
+          : {};
+    }
+
+    if (values.securityGroupIds.length > 0) {
+      awsConfig.additional_security_group_ids = values.securityGroupIds;
+    }
+    if (isROSACluster) {
+      machinePool.root_volume = {
+        aws: {
+          size: values.diskSize,
+        },
       };
     }
-  } else {
-    pool.replicas = values.replicas;
-  }
 
-  return pool;
+    if (Object.keys(awsConfig).length > 0) {
+      machinePool.aws = awsConfig;
+    }
+  }
+  return machinePool;
+};
+
+export const buildNodePoolRequest = (
+  values: EditMachinePoolValues,
+  {
+    isEdit,
+    isMultiAz,
+  }: {
+    isEdit: boolean;
+    isMultiAz: boolean;
+  },
+): NodePool => {
+  const nodePool: NodePool = {
+    id: values.name,
+    labels: getLabels(values.labels),
+    taints: getTaints(values.taints),
+    ...getAutoscalingParams(values, isMultiAz, true),
+  };
+
+  if (!isEdit) {
+    nodePool.subnet = values.subnet?.subnet_id;
+    nodePool.aws_node_pool = {
+      instance_type: values.instanceType,
+    };
+  }
+  return nodePool;
 };

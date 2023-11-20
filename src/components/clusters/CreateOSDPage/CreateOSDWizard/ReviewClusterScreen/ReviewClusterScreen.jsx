@@ -49,6 +49,7 @@ const ReviewClusterScreen = ({
   const isGCP = formValues.cloud_provider === 'gcp';
   const isROSA = formValues.product === normalizedProducts.ROSA;
   const hasEtcdEncryption = isHypershiftSelected && !!formValues.etcd_key_arn;
+  const hasCustomKeyARN = isByoc && formValues.kms_key_arn;
   const showVPCCheckbox = isROSA || isByoc;
   const hasAWSVPCSettings = showVPCCheckbox && formValues.install_to_vpc && isAWS;
   const clusterVersionRawId = formValues.cluster_version.raw_id;
@@ -64,6 +65,7 @@ const ReviewClusterScreen = ({
     ...(isByoc && isAWS && !isROSA ? ['disable_scp_checks'] : []),
     ...(!isHypershiftSelected ? ['enable_user_workload_monitoring'] : []),
     ...(isByoc ? ['customer_managed_key'] : []),
+    ...(hasCustomKeyARN ? ['kms_key_arn'] : []),
     'etcd_encryption',
     ...(!isHypershiftSelected ? ['fips'] : []),
     ...(hasEtcdEncryption ? ['etcd_key_arn'] : []),

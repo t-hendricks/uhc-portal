@@ -43,6 +43,7 @@ export type GlobalState = Omit<ReturnType<typeof store.getState>, 'rosaReducer'>
     getAWSBillingAccountsResponse: any;
     getAWSAccountIDsResponse: {
       data: any[];
+      pending: boolean;
     };
     offlineToken?: string;
   };

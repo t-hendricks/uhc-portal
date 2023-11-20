@@ -35,7 +35,6 @@ function BasicFieldsSection({
   hasMultiAzQuota,
   change,
   isWizard,
-  handleMultiAZChangeForOldForm,
   isHypershiftSelected,
   clusterPrivacy,
 }) {
@@ -44,13 +43,14 @@ function BasicFieldsSection({
   const isRosa = product === normalizedProducts.ROSA;
 
   const handleCloudRegionChange = () => {
-    // Move the az selection form
-    // to its default value once the cloudRegion selection
-    // changes to avoid incorrect zone.
+    // Clears fields related to the region: Availability zones, subnet IDs, VPCs
     const azCount = isMultiAz ? 3 : 1;
     for (let i = 0; i < azCount; i += 1) {
       change(`az_${i}`, AVAILABILITY_ZONE_PLACEHOLDER);
+      change(`private_subnet_id_${i}`, '');
+      change(`public_subnet_id_${i}`, '');
     }
+    change('selected_vpc', { id: '', name: '' });
 
     // Reset the public subnet ID selection associated with cluster privacy on region change,
     // since the list of values there can change entirely based on the selected region.
@@ -65,9 +65,6 @@ function BasicFieldsSection({
     change('nodes_compute', getNodesCount(isBYOC, isValueMultiAz, true));
     change('min_replicas', getMinReplicasCount(isBYOC, isValueMultiAz, true, isHypershiftSelected));
     change('max_replicas', getMinReplicasCount(isBYOC, isValueMultiAz, true, isHypershiftSelected));
-    if (handleMultiAZChangeForOldForm) {
-      handleMultiAZChangeForOldForm(value);
-    }
   };
 
   return (
@@ -204,7 +201,6 @@ BasicFieldsSection.propTypes = {
   isMultiAz: PropTypes.bool.isRequired,
   showDNSBaseDomain: PropTypes.bool,
   showAvailability: PropTypes.bool,
-  handleMultiAZChangeForOldForm: PropTypes.func,
   change: PropTypes.func.isRequired,
   cloudProviderID: PropTypes.string.isRequired,
   isBYOC: PropTypes.bool.isRequired,

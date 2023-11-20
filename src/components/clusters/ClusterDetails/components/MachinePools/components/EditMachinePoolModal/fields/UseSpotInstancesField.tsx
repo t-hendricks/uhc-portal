@@ -1,9 +1,10 @@
+import * as React from 'react';
 import { Alert, Checkbox, Stack, StackItem } from '@patternfly/react-core';
 import { useField } from 'formik';
-import * as React from 'react';
+
 import links from '~/common/installLinks.mjs';
 import ExternalLink from '~/components/common/ExternalLink';
-import WithTooltip from '../components/WithTooltip';
+import WithTooltip from '~/components/common/WithTooltip';
 
 const fieldId = 'useSpotInstances';
 

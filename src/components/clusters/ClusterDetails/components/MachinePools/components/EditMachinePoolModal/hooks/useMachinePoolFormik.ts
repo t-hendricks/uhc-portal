@@ -41,6 +41,7 @@ export type EditMachinePoolValues = {
   diskSize: number;
   instanceType: string | undefined;
   subnet: Subnetwork | undefined;
+  securityGroupIds: string[];
 };
 
 type UseMachinePoolFormikArgs = {
@@ -56,6 +57,12 @@ const isMachinePool = (pool?: MachinePool | NodePool): pool is MachinePool =>
   pool?.kind === 'MachinePool';
 
 const noDecimalTest = (value: number) => value === Math.floor(value);
+const requiredSubnet = (subnet: Subnetwork | undefined) =>
+  subnet === undefined || !!subnet.subnet_id;
+
+const MAX_ADDITIONAL_SECURITY_GROUPS = 5;
+
+const maxSecurityGroups = (sgIds: string[]) => sgIds.length <= MAX_ADDITIONAL_SECURITY_GROUPS;
 
 const useMachinePoolFormik = ({
   machinePool,
@@ -121,6 +128,7 @@ const useMachinePoolFormik = ({
       diskSize: diskSize || defaultWorkerNodeVolumeSizeGiB,
       instanceType,
       subnet: undefined,
+      securityGroupIds: machinePool?.aws?.additional_security_group_ids || [],
     };
   }, [machinePool, isMultiAz, minNodesRequired]);
 
@@ -263,12 +271,17 @@ const useMachinePoolFormik = ({
           useSpotInstances: Yup.boolean(),
           subnet:
             !hasMachinePool && isHypershift
-              ? Yup.object()
-                  .shape({
-                    subnet_id: Yup.string().required(),
-                  })
-                  .required()
+              ? Yup.object().test('subnet-is-required', 'Please select a subnet', requiredSubnet)
               : Yup.mixed(),
+          securityGroupIds: isHypershift
+            ? Yup.mixed()
+            : Yup.array()
+                .of(Yup.string())
+                .test(
+                  'max-security-groups',
+                  `A maximum of ${MAX_ADDITIONAL_SECURITY_GROUPS} security groups can be selected.`,
+                  maxSecurityGroups,
+                ),
         });
       }),
     [

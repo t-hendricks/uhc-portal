@@ -12,6 +12,7 @@ import {
   HCP_AWS_BILLING_SHOW,
   HCP_AWS_BILLING_REQUIRED,
   HCP_USE_UNMANAGED,
+  SECURITY_GROUPS_FEATURE,
 } from '../constants/featureConstants';
 import authorizationsService from '../../services/authorizationsService';
 import accountsService from '../../services/accountsService';
@@ -72,6 +73,7 @@ export const features = [
   getSimpleUnleashFeature('assisted-installer-merge-lists', ASSISTED_INSTALLER_MERGE_LISTS_FEATURE),
   getSimpleUnleashFeature('osd-google-marketplace', OSD_GOOGLE_MARKETPLACE_FEATURE),
   getSimpleUnleashFeature('osd-gcp-shared-vpc', OSD_GCP_SHARED_VPC_FEATURE),
+  getSimpleUnleashFeature('security-groups-feature', SECURITY_GROUPS_FEATURE),
   {
     name: ASSISTED_INSTALLER_FEATURE,
     action: () =>

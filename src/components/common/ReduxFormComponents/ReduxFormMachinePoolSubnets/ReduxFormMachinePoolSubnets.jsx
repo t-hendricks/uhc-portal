@@ -9,7 +9,7 @@ import { SubnetSelectField } from '~/components/clusters/CreateOSDPage/CreateOSD
 
 import './ReduxFormMachinePoolSubnets.scss';
 
-const ReduxFormMachinePoolSubnets = ({ fields, selectedVPCID, meta: { warning } }) => (
+const ReduxFormMachinePoolSubnets = ({ fields, selectedVPC, meta: { warning } }) => (
   <Grid hasGutter>
     {warning && (
       <GridItem>
@@ -38,7 +38,7 @@ const ReduxFormMachinePoolSubnets = ({ fields, selectedVPCID, meta: { warning } 
               validate={validateMultipleMachinePoolsSubnets}
               isRequired
               privacy="private"
-              selectedVPC={selectedVPCID}
+              selectedVPC={selectedVPC}
               withAutoSelect={false}
               isNewCluster
             />
@@ -67,7 +67,7 @@ const ReduxFormMachinePoolSubnets = ({ fields, selectedVPCID, meta: { warning } 
         variant="link"
         isInline
         className="reduxFormMachinePoolSubnets-addBtn"
-        isDisabled={!selectedVPCID}
+        isDisabled={!selectedVPC.id}
       >
         Add machine pool
       </Button>
@@ -77,7 +77,7 @@ const ReduxFormMachinePoolSubnets = ({ fields, selectedVPCID, meta: { warning } 
 
 ReduxFormMachinePoolSubnets.propTypes = {
   fields: PropTypes.array.isRequired,
-  selectedVPCID: PropTypes.string,
+  selectedVPC: PropTypes.object,
   meta: PropTypes.shape({
     warning: PropTypes.string,
   }),

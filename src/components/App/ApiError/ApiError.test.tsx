@@ -2,11 +2,9 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import { createMemoryHistory } from 'history';
 import type { AxiosResponse } from 'axios';
-import apiRequest from '../../../services/apiRequest';
+import apiRequest from '~/services/apiRequest';
 import ApiError from './ApiError';
 import TermsError from '../../common/TermsGuard/TermsError';
-
-jest.mock('../../../services/apiRequest');
 
 const fixtures = {
   history: createMemoryHistory(),

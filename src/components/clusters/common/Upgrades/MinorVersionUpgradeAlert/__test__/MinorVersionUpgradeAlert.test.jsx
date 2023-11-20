@@ -1,11 +1,9 @@
 import React from 'react';
 import { shallow, mount } from 'enzyme';
 
+import apiRequest from '~/services/apiRequest';
+
 import MinorVersionUpgradeAlert from '../MinorVersionUpgradeAlert';
-
-import apiRequest from '../../../../../../services/apiRequest';
-
-jest.mock('../../../../../../services/apiRequest');
 
 const enableLink = 'Allow the next minor version update';
 const disableLink = 'Disallow this minor version update';

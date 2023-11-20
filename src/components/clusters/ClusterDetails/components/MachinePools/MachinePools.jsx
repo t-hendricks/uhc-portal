@@ -284,6 +284,7 @@ class MachinePools extends React.Component {
         {
           title: (
             <MachinePoolExpandedRow
+              cluster={cluster}
               isMultiZoneCluster={isMultiZoneCluster}
               machinePool={machinePool}
             />
