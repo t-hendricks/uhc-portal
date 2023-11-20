@@ -80,7 +80,7 @@ function ClusterStateIcon(props) {
 }
 
 ClusterStateIcon.propTypes = {
-  clusterState: PropTypes.string.isRequired,
+  clusterState: PropTypes.string,
   limitedSupport: PropTypes.bool,
   animated: PropTypes.bool,
 };
