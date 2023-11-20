@@ -42,10 +42,9 @@ import { RosaCliCommand } from './constants/cliCommands';
 import './AccountsRolesScreen.scss';
 
 const NO_ROLE_DETECTED = 'No role detected';
-const noRoleOption = {
-  name: NO_ROLE_DETECTED,
-  value: NO_ROLE_DETECTED,
-};
+
+const hasNoTrustedRelationshipOnClusterRoleError = ({ errorDetails }) =>
+  errorDetails?.some((error) => error?.Error_Key === 'NoTrustedRelationshipOnClusterRole');
 
 const hasCompleteRoleSet = (role, isHypershiftSelected) =>
   role.Installer && role.Support && role.Worker && (role.ControlPlane || isHypershiftSelected);
@@ -98,12 +97,15 @@ function AccountRolesARNsSection({
   const track = useAnalytics();
   const [isExpanded, setIsExpanded] = useState(true);
   const [accountRoles, setAccountRoles] = useState([]);
-  const [installerRoleOptions, setInstallerRoleOptions] = useState([noRoleOption]);
+  const [installerRoleOptions, setInstallerRoleOptions] = useState([]);
   const [selectedInstallerRole, setSelectedInstallerRole] = useState(NO_ROLE_DETECTED);
-  const [allARNsFound, setAllARNsFound] = useState(false);
-  const [hasARNsError, setHasARNsError] = useState(false);
+  const [showMissingArnsError, setShowMissingArnsError] = useState(false);
+  const [hasFinishedLoadingRoles, setHasFinishedLoadingRoles] = useState(false);
   const [hasManagedPolicies, setHasManagedPolicies] = useState(false);
   const useHCPManagedAndUnmanaged = useFeatureGate(HCP_USE_UNMANAGED);
+  const isMissingOCMRole = hasNoTrustedRelationshipOnClusterRoleError(
+    getAWSAccountRolesARNsResponse,
+  );
 
   const touchARNsFields = React.useCallback(() => {
     touch('installer_role_arn');
@@ -123,10 +125,6 @@ function AccountRolesARNsSection({
     }
   };
 
-  const hasNoTrustedRelationshipOnClusterRoleError = ({ errorDetails }) =>
-    errorDetails?.length &&
-    errorDetails.some((error) => error?.Error_Key === 'NoTrustedRelationshipOnClusterRole');
-
   useEffect(() => {
     // this is required to show any validation error messages for the 4 disabled ARNs fields
     touchARNsFields();
@@ -135,22 +133,24 @@ function AccountRolesARNsSection({
   useEffect(() => {
     setSelectedInstallerRole(NO_ROLE_DETECTED);
     setAccountRoles([]);
-    setInstallerRoleOptions([noRoleOption]);
+    setInstallerRoleOptions([]);
     updateRoleArns(null);
-    setAllARNsFound(false);
+    setShowMissingArnsError(false);
     clearGetAWSAccountRolesARNsResponse();
     onAccountChanged();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedAWSAccountID]);
 
   useEffect(() => {
+    let hasMissingArns = true;
     accountRoles.forEach((role) => {
       if (role.Installer === selectedInstallerRole) {
-        setAllARNsFound(hasCompleteRoleSet(role, isHypershiftSelected));
+        hasMissingArns = !hasCompleteRoleSet(role, isHypershiftSelected);
         updateRoleArns(role);
         change('rosa_max_os_version', role.version);
       }
     });
+    setShowMissingArnsError(hasMissingArns);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedInstallerRole]);
 
@@ -168,29 +168,30 @@ function AccountRolesARNsSection({
   }, [selectedAWSAccountID, getAWSAccountRolesARNsResponse, selectedInstallerRole]);
 
   const setSelectedInstallerRoleAndOptions = (accountRolesARNs) => {
-    const installerOptions = [];
-    if (accountRolesARNs.length === 0) {
+    const installerOptions = accountRolesARNs.map((role) => ({
+      name: role.Installer,
+      value: role.Installer,
+      ...(!isHypershiftSelected &&
+        hasManagedPoliciesByRole(role) && {
+          label: (
+            <Label color="blue" isCompact>
+              Recommended
+            </Label>
+          ),
+        }),
+    }));
+
+    if (installerOptions.length === 0) {
       updateRoleArns(null);
-      installerOptions.push(noRoleOption);
+      setInstallerRoleOptions([]);
       change('rosa_max_os_version', undefined);
-      setAllARNsFound(false);
+      setShowMissingArnsError(true);
     } else {
-      accountRolesARNs.forEach((role) => {
-        installerOptions.push({
-          name: role.Installer,
-          value: role.Installer,
-          ...(!isHypershiftSelected &&
-            hasManagedPoliciesByRole(role) && {
-              label: (
-                <Label color="blue" isCompact>
-                  Recommended
-                </Label>
-              ),
-            }),
-        });
-      });
+      setInstallerRoleOptions(installerOptions);
+      setShowMissingArnsError(false);
     }
-    setInstallerRoleOptions(installerOptions);
+    setAccountRoles(accountRolesARNs);
+    setHasFinishedLoadingRoles(true);
 
     const defaultInstallerRole = getDefaultInstallerRole(
       selectedInstallerRoleARN,
@@ -200,20 +201,15 @@ function AccountRolesARNsSection({
     setSelectedInstallerRole(defaultInstallerRole);
   };
 
-  const resolveARNsErrorTitle = React.useCallback(
-    (response) =>
-      hasNoTrustedRelationshipOnClusterRoleError(response)
-        ? 'Cannot detect an OCM role'
-        : 'Error getting AWS account ARNs',
-    [],
-  );
-
   const trackArnsRefreshed = (response) => {
+    const alertErrorTitle = isMissingOCMRole
+      ? 'Cannot detect an OCM role'
+      : 'Error getting AWS account ARNs';
     track(trackEvents.ARNsRefreshed, {
       customProperties: {
         error: !!response.error,
         ...(response.error && {
-          error_title: resolveARNsErrorTitle(response),
+          error_title: alertErrorTitle,
           error_message: response.errorMessage || undefined, // omit empty strings
           error_code: response.errorCode,
           error_operation_id: response.operationID,
@@ -228,9 +224,9 @@ function AccountRolesARNsSection({
       !getAWSAccountRolesARNsResponse.fulfilled &&
       !getAWSAccountRolesARNsResponse.error
     ) {
+      setHasFinishedLoadingRoles(false);
+      setShowMissingArnsError(false);
       getAWSAccountRolesARNs(selectedAWSAccountID);
-    } else if (getAWSAccountRolesARNsResponse.pending) {
-      setHasARNsError(false);
     } else if (getAWSAccountRolesARNsResponse.fulfilled) {
       const accountRolesARNs = get(getAWSAccountRolesARNsResponse, 'data', []).filter((arn) => {
         if (isHypershiftSelected && useHCPManagedAndUnmanaged) {
@@ -241,12 +237,8 @@ function AccountRolesARNsSection({
           : !arn.hcpManagedPolicies && !arn.managedPolicies;
       });
       setSelectedInstallerRoleAndOptions(accountRolesARNs);
-      setAccountRoles(accountRolesARNs);
     } else if (getAWSAccountRolesARNsResponse.error) {
-      change('installer_role_arn', '');
       setSelectedInstallerRoleAndOptions([]);
-      setAccountRoles([]);
-      setHasARNsError(true);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedAWSAccountID, getAWSAccountRolesARNsResponse]);
@@ -276,6 +268,8 @@ function AccountRolesARNsSection({
   const refreshARNs = () => {
     clearGetAWSAccountRolesARNsResponse();
     getAWSAccountRolesARNs(selectedAWSAccountID);
+    setHasFinishedLoadingRoles(false);
+    setShowMissingArnsError(false);
 
     // Clear the installer role/version if the latest fetched roles do not possess the previously selected one.
     if (!accountRoles.some((role) => role.Installer === selectedInstallerRole)) {
@@ -289,16 +283,6 @@ function AccountRolesARNsSection({
   const rolesOutOfDate =
     latestVersionLoaded && !isSupportedMinorVersion(latestOCPVersion, rosaMaxOSVersion);
   const hasStandaloneManagedRole = !isHypershiftSelected && hasManagedPolicies;
-
-  const arnsErrorAlert = React.useMemo(() => {
-    const alertTitle = resolveARNsErrorTitle(getAWSAccountRolesARNsResponse);
-
-    if (hasNoTrustedRelationshipOnClusterRoleError(getAWSAccountRolesARNsResponse)) {
-      return <AwsRoleErrorAlert title={alertTitle} targetRole="ocm" />;
-    }
-
-    return <ErrorBox message={alertTitle} response={getAWSAccountRolesARNsResponse} />;
-  }, [getAWSAccountRolesARNsResponse, resolveARNsErrorTitle]);
 
   const arnCompatibilityAlertTitle = React.useMemo(() => {
     if (isHypershiftSelected)
@@ -317,8 +301,19 @@ function AccountRolesARNsSection({
       <GridItem>
         <Title headingLevel="h3">Account roles</Title>
       </GridItem>
-      {hasARNsError && <GridItem span={8}>{arnsErrorAlert}</GridItem>}
-      {!getAWSAccountRolesARNsResponse.pending && !allARNsFound && !hasARNsError && (
+      {getAWSAccountRolesARNsResponse.error && (
+        <GridItem span={8}>
+          {isMissingOCMRole ? (
+            <AwsRoleErrorAlert title="Cannot detect an OCM role" targetRole="ocm" />
+          ) : (
+            <ErrorBox
+              message="Error getting AWS account ARNs"
+              response={getAWSAccountRolesARNsResponse}
+            />
+          )}
+        </GridItem>
+      )}
+      {!getAWSAccountRolesARNsResponse.error && hasFinishedLoadingRoles && showMissingArnsError && (
         <GridItem span={8}>
           {isHypershiftSelected ? (
             <Alert isInline variant="danger" title="Some account roles ARNs were not detected.">
@@ -330,9 +325,7 @@ function AccountRolesARNsSection({
               <br />
               After running the command, you may need to refresh using the{' '}
               <strong>Refresh ARNs</strong> button below to populate the ARN fields.
-              {isHypershiftSelected && (
-                <p>You must use ROSA CLI version {ROSA_HOSTED_CLI_MIN_VERSION} or above.</p>
-              )}
+              <p>You must use ROSA CLI version {ROSA_HOSTED_CLI_MIN_VERSION} or above.</p>
             </Alert>
           ) : (
             <AwsRoleErrorAlert
@@ -342,7 +335,7 @@ function AccountRolesARNsSection({
           )}
         </GridItem>
       )}
-      {getAWSAccountRolesARNsResponse.pending && (
+      {!hasFinishedLoadingRoles && (
         <GridItem>
           <div className="spinner-fit-container">
             <Spinner />
@@ -350,7 +343,7 @@ function AccountRolesARNsSection({
           <div className="spinner-loading-text">Loading account roles ARNs...</div>
         </GridItem>
       )}
-      {!getAWSAccountRolesARNsResponse.pending && (
+      {hasFinishedLoadingRoles && (
         <GridItem span={12}>
           <ExpandableSection
             isExpanded={isExpanded}
