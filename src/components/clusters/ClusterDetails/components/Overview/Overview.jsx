@@ -14,10 +14,10 @@ import {
 } from '@patternfly/react-core';
 
 import * as OCM from '@openshift-assisted/ui-lib/ocm';
+import { HAD_INFLIGHT_ERROR_LOCALSTORAGE_KEY } from '~/common/localStorageConstants';
 import { subscriptionStatuses } from '~/common/subscriptionTypes';
 import { ASSISTED_INSTALLER_FEATURE } from '~/redux/constants/featureConstants';
 import { isRestrictedEnv } from '~/restrictedEnv';
-import { HAD_INFLIGHT_ERROR_LOCALSTORAGE_KEY } from '~/common/localStorageConstants';
 import isAssistedInstallSubscription, {
   isAvailableAssistedInstallCluster,
   isUninstalledAICluster,
@@ -28,7 +28,6 @@ import ResourceUsage from '../../../common/ResourceUsage/ResourceUsage';
 import { metricsStatusMessages } from '../../../common/ResourceUsage/ResourceUsage.consts';
 import clusterStates, {
   getClusterAIPermissions,
-  getClusterStateAndDescription,
   hasInflightErrors,
   isHibernating,
 } from '../../../common/clusterStates';
@@ -85,7 +84,6 @@ class Overview extends React.Component {
     let topCard;
 
     const { showInstallSuccessAlert } = this.state;
-    const clusterState = getClusterStateAndDescription(cluster);
     const isArchived = get(cluster, 'subscription.status', false) === subscriptionStatuses.ARCHIVED;
     const isDeprovisioned =
       get(cluster, 'subscription.status', false) === subscriptionStatuses.DEPROVISIONED;
@@ -221,7 +219,7 @@ class Overview extends React.Component {
                       />
                     </GridItem>
                     <GridItem sm={6}>
-                      <DetailsRight cluster={{ ...cluster, state: clusterState }} />
+                      <DetailsRight cluster={{ ...cluster }} />
                     </GridItem>
                   </Grid>
                   {showAssistedInstallerDetailCard && <GatedAIExtraDetailCard />}

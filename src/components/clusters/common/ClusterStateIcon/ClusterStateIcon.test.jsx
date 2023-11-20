@@ -14,6 +14,7 @@ describe('<ClusterStateIcon />', () => {
     ['inprogress', 'uninstalling'],
     ['exclamation', 'error'],
     ['check', 'ready'],
+    [undefined, 'unknown'],
   ])('renders %p icon for %p state', (icon, state) => {
     const { container } = render(<ClusterStateIcon clusterState={state} />);
     expect(container.querySelector('svg')).toHaveAttribute('data-icon-type', icon);
