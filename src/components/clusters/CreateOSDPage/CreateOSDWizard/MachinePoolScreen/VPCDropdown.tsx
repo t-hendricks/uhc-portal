@@ -139,7 +139,7 @@ const VPCDropdown = ({
   return (
     <>
       <FormGroup
-        label={`Specify a VPC to install your machine pools into in your selected region: ${
+        label={`Select a VPC to install your cluster into your selected region: ${
           vpcResponse.region || ''
         }`}
         validated={touched && error ? 'error' : 'default'}
