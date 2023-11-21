@@ -7,9 +7,10 @@ import ProgressList from './ProgressList';
 
 interface InstallProgressProps {
   cluster: ClusterFromSubscription;
+  hasNetworkOndemand: boolean;
 }
 
-const InstallProgress = ({ cluster }: InstallProgressProps) => {
+const InstallProgress = ({ cluster, hasNetworkOndemand }: InstallProgressProps) => {
   const isAnyCheckNotPassedState = getInflightChecks(cluster).some(
     (check) => check.state !== InflightCheckState.PASSED,
   );
@@ -19,7 +20,11 @@ const InstallProgress = ({ cluster }: InstallProgressProps) => {
     cluster.state === clusterStates.PENDING ||
     cluster.state === clusterStates.VALIDATING ||
     cluster.state === clusterStates.WAITING ? (
-    <ProgressList cluster={cluster} actionRequiredInitialOpen />
+    <ProgressList
+      cluster={cluster}
+      hasNetworkOndemand={hasNetworkOndemand}
+      actionRequiredInitialOpen
+    />
   ) : null;
 };
 
