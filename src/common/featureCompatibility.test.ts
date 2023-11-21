@@ -17,6 +17,18 @@ describe('isCompatibleFeature', () => {
       it.each([
         ['Hypershift', { hypershift: { enabled: true } }, {}],
         [
+          'Day1 setup',
+          {
+            product: { id: normalizedProducts.ROSA },
+            cloud_provider: { id: 'aws' },
+            aws: {
+              subnet_ids: ['subnet-private-id'],
+              sts: { role_arn: 'role-arn' },
+            },
+          },
+          { day1: true },
+        ],
+        [
           'ROSA GCP + BYOVPC',
           {
             product: { id: normalizedProducts.ROSA },
@@ -42,30 +54,6 @@ describe('isCompatibleFeature', () => {
             aws: { subnet_ids: undefined },
           },
           anyOptions,
-        ],
-        [
-          'Day2 + ROSA AWS + BYOVPC + non-STS',
-          {
-            product: { id: normalizedProducts.ROSA },
-            cloud_provider: { id: 'aws' },
-            aws: {
-              subnet_ids: ['subnet-private-id'],
-              sts: undefined,
-            },
-          },
-          { day2: true },
-        ],
-        [
-          'Day2 + OSD AWS + BYOVPC + non-STS',
-          {
-            product: { id: normalizedProducts.OSD },
-            cloud_provider: { id: 'aws' },
-            aws: {
-              subnet_ids: ['subnet-private-id'],
-              sts: undefined,
-            },
-          },
-          { day2: true },
         ],
       ])(
         '"%s" clusters',
@@ -101,6 +89,30 @@ describe('isCompatibleFeature', () => {
             aws: {
               subnet_ids: ['subnet-private-id'],
               sts: { role_arn: 'role-arn' },
+            },
+          },
+          { day2: true },
+        ],
+        [
+          'Day2 + ROSA AWS + BYOVPC + non-STS',
+          {
+            product: { id: normalizedProducts.ROSA },
+            cloud_provider: { id: 'aws' },
+            aws: {
+              subnet_ids: ['subnet-private-id'],
+              sts: undefined,
+            },
+          },
+          { day2: true },
+        ],
+        [
+          'Day2 + OSD AWS + BYOVPC + non-STS',
+          {
+            product: { id: normalizedProducts.OSD },
+            cloud_provider: { id: 'aws' },
+            aws: {
+              subnet_ids: ['subnet-private-id'],
+              sts: undefined,
             },
           },
           { day2: true },
