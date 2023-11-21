@@ -391,8 +391,16 @@ const Router: React.FC<RouterProps> = ({ history, planType, clusterId, externalC
             <Route path="/assisted-installer" component={GatedAssistedUiRouter} />
 
             {/* TODO: remove these redirects once links from trials and demo system emails are updated */}
-            <Redirect from="/services/rosa/demo" to="/overview/rosa/hands-on" />
-            <Redirect from="/services/rosa" to="/overview/rosa" />
+            <Route
+              path="/services/rosa/demo"
+              render={(props) => (
+                <Redirect to={`/overview/rosa/hands-on/${props.location.search}`} />
+              )}
+            />
+            <Route
+              path="/services/rosa"
+              render={(props) => <Redirect to={`/overview/rosa${props.location.search}`} />}
+            />
 
             <Route path="/" exact component={ClustersList} />
             <Route component={NotFoundError} />
