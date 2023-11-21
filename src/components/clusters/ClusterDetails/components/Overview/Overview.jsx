@@ -80,8 +80,16 @@ class Overview extends React.Component {
   }
 
   render() {
-    const { cluster, cloudProviders, history, refresh, openModal, insightsData, userAccess } =
-      this.props;
+    const {
+      cluster,
+      cloudProviders,
+      history,
+      refresh,
+      openModal,
+      insightsData,
+      userAccess,
+      hasNetworkOndemand,
+    } = this.props;
     let topCard;
 
     const { showInstallSuccessAlert } = this.state;
@@ -105,7 +113,7 @@ class Overview extends React.Component {
       cluster.state === clusterStates.INSTALLING ||
       cluster.state === clusterStates.ERROR ||
       cluster.state === clusterStates.UNINSTALLING ||
-      hasInflightErrors(cluster);
+      (hasInflightErrors(cluster) && hasNetworkOndemand);
 
     const hadInflightErrorKey = `${HAD_INFLIGHT_ERROR_LOCALSTORAGE_KEY}_${cluster.id}`;
     const showInflightErrorIsFixed =
@@ -269,6 +277,7 @@ Overview.propTypes = {
   cloudProviders: PropTypes.object.isRequired,
   history: PropTypes.object.isRequired,
   refresh: PropTypes.func,
+  hasNetworkOndemand: PropTypes.bool,
   openModal: PropTypes.func.isRequired,
   insightsData: PropTypes.object,
   userAccess: PropTypes.shape({

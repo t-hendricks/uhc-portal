@@ -5,22 +5,26 @@ import { InflightCheckState } from '~/types/clusters_mgmt.v1';
 import clusterStates, { getInflightChecks } from '../clusterStates';
 import ProgressList from './ProgressList';
 
-function InstallProgress({ cluster }) {
-  const inflightChecks = getInflightChecks(cluster);
-  const showInflightProgress = inflightChecks.some(
+const InstallProgress = ({ cluster, hasNetworkOndemand }) => {
+  const isAnyCheckNotPassedState = getInflightChecks(cluster).some(
     (check) => check.state !== InflightCheckState.PASSED,
   );
-  return showInflightProgress ||
+  return isAnyCheckNotPassedState ||
     cluster.state === clusterStates.INSTALLING ||
     cluster.state === clusterStates.PENDING ||
     cluster.state === clusterStates.VALIDATING ||
     cluster.state === clusterStates.WAITING ? (
-    <ProgressList cluster={cluster} actionRequiredInitialOpen />
+    <ProgressList
+      cluster={cluster}
+      hasNetworkOndemand={hasNetworkOndemand}
+      actionRequiredInitialOpen
+    />
   ) : null;
-}
+};
 
 InstallProgress.propTypes = {
   cluster: PropTypes.object.isRequired,
+  hasNetworkOndemand: PropTypes.bool.isRequired,
 };
 
 export default InstallProgress;

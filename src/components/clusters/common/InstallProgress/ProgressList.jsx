@@ -15,7 +15,7 @@ import clusterStates, {
   getInflightChecks,
 } from '../clusterStates';
 
-function ProgressList({ cluster, actionRequiredInitialOpen }) {
+function ProgressList({ cluster, actionRequiredInitialOpen, hasNetworkOndemand }) {
   const isROSACluster = isROSA(cluster);
   const isOSDCluster = isOSD(cluster);
   const isOSDGCPPending = isOSDGCPPendingOnHostProject(cluster);
@@ -139,7 +139,7 @@ function ProgressList({ cluster, actionRequiredInitialOpen }) {
 
     // first steps completed
     const inflightError = inflightChecks.some((check) => check.state === InflightCheckState.FAILED);
-    const networkSettings = inflightError ? warning : completed;
+    const networkSettings = inflightError && hasNetworkOndemand ? warning : completed;
     if (cluster.state === clusterStates.INSTALLING) {
       if (!cluster.status.dns_ready) {
         return {
@@ -244,6 +244,7 @@ function ProgressList({ cluster, actionRequiredInitialOpen }) {
 
 ProgressList.propTypes = {
   cluster: PropTypes.object.isRequired,
+  hasNetworkOndemand: PropTypes.bool,
   actionRequiredInitialOpen: PropTypes.bool,
 };
 
