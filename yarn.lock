@@ -2041,23 +2041,23 @@
     "@nodelib/fs.scandir" "2.1.4"
     fastq "^1.6.0"
 
-"@openshift-assisted/locales@2.27.1":
-  version "2.27.1"
-  resolved "https://registry.yarnpkg.com/@openshift-assisted/locales/-/locales-2.27.1.tgz#9dfe5e0c67ab89092f1b1ab9dac5ba46fb49d909"
-  integrity sha512-aLwhlwqZD68RPjVAYd6dwFXPUYkGzOc4yUv6DIjlNORyn0dheb0lgzpQX27+ToXKnjR59aOHDqIy22aCc0IN0Q==
+"@openshift-assisted/locales@2.28.0":
+  version "2.28.0"
+  resolved "https://registry.yarnpkg.com/@openshift-assisted/locales/-/locales-2.28.0.tgz#d8b612c7fe635849b0b25a39ba77fc605a499b4d"
+  integrity sha512-1jLqHQ/J8G4r3+Or9ROMp7MKOR3qZ3OXO78slfrMPAjfeufo5TX9IuL6rA/2AUreCJHfdHJbRYzCAGqFhLNcIg==
 
-"@openshift-assisted/types@2.27.1":
-  version "2.27.1"
-  resolved "https://registry.yarnpkg.com/@openshift-assisted/types/-/types-2.27.1.tgz#c325f7860ed2c38a9da3b2cda7fae10474da4fbb"
-  integrity sha512-rLG/tQY6oo+47tdGtQraPv2KAq1m6Ixs+5flgkIlp43Dh856T8GcZsigBo4KX6SFSG1POYNXVrQO8nVYBLCcTw==
+"@openshift-assisted/types@2.28.0":
+  version "2.28.0"
+  resolved "https://registry.yarnpkg.com/@openshift-assisted/types/-/types-2.28.0.tgz#93155a51819099424ff2349323e8fcc85296099f"
+  integrity sha512-qn7e4iNRiu7v81Xcv3wAd4YkhXYrGSI5pvWmrG+KYiv9bzDsnagI+IzKRjLpOQ4AMZX4KvY+266chmkUoFFmqg==
 
-"@openshift-assisted/ui-lib@2.27.1":
-  version "2.27.1"
-  resolved "https://registry.yarnpkg.com/@openshift-assisted/ui-lib/-/ui-lib-2.27.1.tgz#6b4e971067ec8d83cce947f90a8672af2d0e2075"
-  integrity sha512-NMWial/5zPQ6VM1Y6B9zN/uiRjNOaII/icqYDUQRmZ1HZ6q4ahP10RSsQP7fv0VxAwgLo30nd/PtUv8r6QCzeQ==
+"@openshift-assisted/ui-lib@2.28.0":
+  version "2.28.0"
+  resolved "https://registry.yarnpkg.com/@openshift-assisted/ui-lib/-/ui-lib-2.28.0.tgz#ae34bd8f2ee8221e11305ac83cf8a7fb181c55d7"
+  integrity sha512-7zCzVPoBQNX7PDV19Zuw2vJuhYpJnmdzQJllCU04JeDDLMNGa99y4SVKUeZN8ohSus5oSSHCb+OGdq+/2FyghA==
   dependencies:
-    "@openshift-assisted/locales" "2.27.1"
-    "@openshift-assisted/types" "2.27.1"
+    "@openshift-assisted/locales" "2.28.0"
+    "@openshift-assisted/types" "2.28.0"
     "@patternfly/patternfly" "^4.222.4"
     "@patternfly/react-code-editor" "^4.82.113"
     "@patternfly/react-core" "^4.168.8"
