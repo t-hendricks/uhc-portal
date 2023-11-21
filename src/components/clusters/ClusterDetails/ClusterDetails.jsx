@@ -296,6 +296,7 @@ class ClusterDetails extends Component {
       assistedInstallerEnabled,
       userAccess,
       gotRouters,
+      hasNetworkOndemand,
     } = this.props;
     const { selectedTab, refreshEvent } = this.state;
 
@@ -479,6 +480,7 @@ class ClusterDetails extends Component {
                 refresh={this.refresh}
                 openModal={openModal}
                 insightsData={insightsData[cluster.external_id]}
+                hasNetworkOndemand={hasNetworkOndemand}
                 userAccess={userAccess}
               />
             </ErrorBoundary>
@@ -682,6 +684,7 @@ ClusterDetails.propTypes = {
   notificationContacts: PropTypes.object.isRequired,
   getNotificationContacts: PropTypes.func.isRequired,
   getSupportCases: PropTypes.func.isRequired,
+  hasNetworkOndemand: PropTypes.bool.isRequired,
   supportCases: PropTypes.object.isRequired,
   assistedInstallerEnabled: PropTypes.bool,
   getSchedules: PropTypes.func,

@@ -146,7 +146,7 @@ class clusterStatusMonitor extends React.Component {
   };
 
   render() {
-    const { status, cluster } = this.props;
+    const { status, cluster, hasNetworkOndemand } = this.props;
 
     if (status.status.id === cluster.id) {
       const inflightErrorStopInstall = status.status.provision_error_code === 'OCM4001';
@@ -169,7 +169,9 @@ class clusterStatusMonitor extends React.Component {
       }
 
       // Rosa inflight error check found urls missing from byo vpc firewall
-      alerts.push(this.showMissingURLList(inflightErrorStopInstall));
+      if (hasNetworkOndemand) {
+        alerts.push(this.showMissingURLList(inflightErrorStopInstall));
+      }
 
       // OSD GCP is waiting on roles to be added to dynamically generated service account for a shared vpc project
       alerts.push(this.showRequiredGCPRoles());
@@ -227,13 +229,7 @@ class clusterStatusMonitor extends React.Component {
   }
 
   showMissingURLList(inflightErrorStopInstall) {
-    const {
-      inflightChecks,
-      rerunInflightChecks,
-      rerunInflightCheckReq,
-      cluster,
-      hasNetworkOndemand,
-    } = this.props;
+    const { inflightChecks, rerunInflightChecks, rerunInflightCheckReq, cluster } = this.props;
     const { isExpanded, isErrorOpen, wasRunClicked, isValidatorRunning } = this.state;
     const isClusterValidating =
       cluster.state === clusterStates.VALIDATING || cluster.state === clusterStates.PENDING;
@@ -347,17 +343,16 @@ class clusterStatusMonitor extends React.Component {
                         <Spinner size="sm" />
                       </span>
                     )}
-                    {hasNetworkOndemand && (
-                      <Button
-                        variant={ButtonVariant.link}
-                        isInline
-                        isDisabled={runningInflightCheck}
-                        onClick={rerunValidator}
-                      >
-                        Rerun network validation
-                      </Button>
-                    )}
-                    {hasNetworkOndemand && isErrorOpen && (
+                    <Button
+                      variant={ButtonVariant.link}
+                      isInline
+                      isDisabled={runningInflightCheck}
+                      onClick={rerunValidator}
+                    >
+                      Rerun network validation
+                    </Button>
+
+                    {isErrorOpen && (
                       <ErrorModal
                         title="Error Rerunning Validator "
                         errorResponse={rerunInflightCheckReq}

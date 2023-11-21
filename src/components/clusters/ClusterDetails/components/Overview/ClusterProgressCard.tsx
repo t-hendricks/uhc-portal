@@ -10,6 +10,8 @@ import {
 } from '@patternfly/react-core';
 import ExclamationCircleIcon from '@patternfly/react-icons/dist/js/icons/exclamation-circle-icon';
 import { global_danger_color_100 as dangerColor } from '@patternfly/react-tokens';
+import { useFeatureGate } from '~/hooks/useFeatureGate';
+import { NETWORK_VALIDATOR_ONDEMAND_FEATURE } from '~/redux/constants/featureConstants';
 
 import DownloadOcCliButton from '~/components/clusters/common/InstallProgress/DownloadOcCliButton';
 import InstallProgress from '~/components/clusters/common/InstallProgress/InstallProgress';
@@ -39,6 +41,8 @@ const ClusterProgressCard = ({ cluster }: ClusterProgressCardProps) => {
     !isError;
   const inProgress = (installationInProgress || isUninstalling) && !isError;
   const estCompletionTime = isHypershiftCluster(cluster) ? '10' : '30 to 60';
+
+  const hasNetworkOndemand = useFeatureGate(NETWORK_VALIDATOR_ONDEMAND_FEATURE);
 
   let titleText;
   if (isError) {
@@ -80,7 +84,7 @@ const ClusterProgressCard = ({ cluster }: ClusterProgressCardProps) => {
         {isUninstalling ? (
           <UninstallProgress cluster={cluster} />
         ) : (
-          <InstallProgress cluster={cluster} />
+          <InstallProgress cluster={cluster} hasNetworkOndemand={hasNetworkOndemand} />
         )}
         <InstallationLogView isExpandable={!isUninstalling} cluster={cluster} />
       </CardBody>

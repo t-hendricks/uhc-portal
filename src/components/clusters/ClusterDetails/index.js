@@ -11,6 +11,7 @@ import { clusterAutoscalerActions } from '~/redux/actions/clusterAutoscalerActio
 import {
   HCP_USE_NODE_UPGRADE_POLICIES,
   ASSISTED_INSTALLER_FEATURE,
+  NETWORK_VALIDATOR_ONDEMAND_FEATURE,
 } from '~/redux/constants/featureConstants';
 import ClusterDetails from './ClusterDetails';
 import { fetchClusterDetails, invalidateClusters } from '../../../redux/actions/clustersActions';
@@ -90,6 +91,7 @@ const mapStateToProps = (state, { location }) => {
     gotRouters: get(clusterRouters, 'getRouters.routers.length', 0) > 0,
     upgradeGates: getUpgradeGates(state),
     useNodeUpgradePolicies: featureGateSelector(state, HCP_USE_NODE_UPGRADE_POLICIES),
+    hasNetworkOndemand: featureGateSelector(state, NETWORK_VALIDATOR_ONDEMAND_FEATURE),
   };
 };
 
