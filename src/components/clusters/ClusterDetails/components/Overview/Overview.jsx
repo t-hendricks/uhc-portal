@@ -2,12 +2,22 @@ import get from 'lodash/get';
 import PropTypes from 'prop-types';
 import React from 'react';
 
-import { Alert, Card, CardBody, CardTitle, Grid, GridItem, Title } from '@patternfly/react-core';
+import {
+  Alert,
+  AlertActionCloseButton,
+  Card,
+  CardBody,
+  CardTitle,
+  Grid,
+  GridItem,
+  Title,
+} from '@patternfly/react-core';
 
 import * as OCM from '@openshift-assisted/ui-lib/ocm';
 import { subscriptionStatuses } from '~/common/subscriptionTypes';
 import { ASSISTED_INSTALLER_FEATURE } from '~/redux/constants/featureConstants';
 import { isRestrictedEnv } from '~/restrictedEnv';
+import { HAD_INFLIGHT_ERROR_LOCALSTORAGE_KEY } from '~/common/localStorageConstants';
 import isAssistedInstallSubscription, {
   isAvailableAssistedInstallCluster,
   isUninstalledAICluster,
@@ -70,8 +80,16 @@ class Overview extends React.Component {
   }
 
   render() {
-    const { cluster, cloudProviders, history, refresh, openModal, insightsData, userAccess } =
-      this.props;
+    const {
+      cluster,
+      cloudProviders,
+      history,
+      refresh,
+      openModal,
+      insightsData,
+      userAccess,
+      hasNetworkOndemand,
+    } = this.props;
     let topCard;
 
     const { showInstallSuccessAlert } = this.state;
@@ -95,7 +113,11 @@ class Overview extends React.Component {
       cluster.state === clusterStates.INSTALLING ||
       cluster.state === clusterStates.ERROR ||
       cluster.state === clusterStates.UNINSTALLING ||
-      hasInflightErrors(cluster);
+      (hasInflightErrors(cluster) && hasNetworkOndemand);
+
+    const hadInflightErrorKey = `${HAD_INFLIGHT_ERROR_LOCALSTORAGE_KEY}_${cluster.id}`;
+    const showInflightErrorIsFixed =
+      !hasInflightErrors(cluster) && localStorage.getItem(hadInflightErrorKey) === 'true';
 
     const showInsightsAdvisor =
       !isRestrictedEnv() &&
@@ -159,6 +181,21 @@ class Overview extends React.Component {
           <Grid hasGutter>
             {showInstallSuccessAlert && (
               <Alert variant="success" isInline title="Cluster installed successfully" />
+            )}
+            {showInflightErrorIsFixed && (
+              <Alert
+                variant="success"
+                isInline
+                title="This cluster can now be fully-managed"
+                actionClose={
+                  <AlertActionCloseButton
+                    onClose={() => {
+                      localStorage.removeItem(hadInflightErrorKey);
+                      refresh();
+                    }}
+                  />
+                }
+              />
             )}
             {shouldMonitorStatus && (
               <ClusterStatusMonitor refresh={refresh} cluster={cluster} history={history} />
@@ -240,6 +277,7 @@ Overview.propTypes = {
   cloudProviders: PropTypes.object.isRequired,
   history: PropTypes.object.isRequired,
   refresh: PropTypes.func,
+  hasNetworkOndemand: PropTypes.bool,
   openModal: PropTypes.func.isRequired,
   insightsData: PropTypes.object,
   userAccess: PropTypes.shape({

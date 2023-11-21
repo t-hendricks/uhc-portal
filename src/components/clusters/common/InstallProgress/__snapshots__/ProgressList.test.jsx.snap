@@ -458,23 +458,24 @@ exports[`<ProgressList /> should render when first step completed 1`] = `
 exports[`<ProgressList /> should render when first step in progress 1`] = `
 <ProgressStepper>
   <ProgressStep
-    description="Preparing account"
+    description="Completed"
+    id="awsAccountSetup"
+    titleId="awsAccountSetup-title"
+    variant="success"
+  >
+    Account setup
+  </ProgressStep>
+  <ProgressStep
+    description="Validating"
     icon={
       <Spinner
         size="sm"
       />
     }
-    id="awsAccountSetup"
-    isCurrent={true}
-    titleId="awsAccountSetup-title"
-    variant="info"
-  >
-    Account setup
-  </ProgressStep>
-  <ProgressStep
     id="networkSettings"
+    isCurrent={true}
     titleId="networkSettings-title"
-    variant="pending"
+    variant="info"
   >
     Network settings
   </ProgressStep>
