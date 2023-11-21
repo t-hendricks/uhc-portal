@@ -113,7 +113,7 @@ const links = {
   SUBSCRIPTION_EVAL_INFORMATION: 'https://access.redhat.com/articles/4389911',
   MANAGED_INGRESS_KNOWLEDGE_BASE: 'https://access.redhat.com/articles/7028653',
 
-  OSD_DEDICATED_ADMIN_ROLE: `${OSD_DOCS_BASE}/osd_cluster_admin/osd-admin-roles.html`,
+  OSD_DEDICATED_ADMIN_ROLE: `${OSD_DOCS_BASE}/authentication/osd-admin-roles.html`,
   OSD_CCS_AWS: `${OSD_DOCS_BASE}/osd_planning/aws-ccs.html`,
   OSD_CCS_AWS_LIMITS: `${OSD_DOCS_BASE}/osd_planning/aws-ccs.html#aws-limits_aws-ccs`,
   OSD_CCS_AWS_SCP: `${OSD_DOCS_BASE}/osd_planning/aws-ccs.html#ccs-aws-scp_aws-ccs`,
