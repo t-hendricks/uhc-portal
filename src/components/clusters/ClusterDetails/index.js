@@ -8,6 +8,11 @@ import { clearListVpcs } from '~/components/clusters/CreateOSDPage/CreateOSDWiza
 import { onClearFiltersAndFlags } from '~/redux/actions/viewOptionsActions';
 
 import { clusterAutoscalerActions } from '~/redux/actions/clusterAutoscalerActions';
+import {
+  HCP_USE_NODE_UPGRADE_POLICIES,
+  ASSISTED_INSTALLER_FEATURE,
+  NETWORK_VALIDATOR_ONDEMAND_FEATURE,
+} from '~/redux/constants/featureConstants';
 import ClusterDetails from './ClusterDetails';
 import { fetchClusterDetails, invalidateClusters } from '../../../redux/actions/clustersActions';
 
@@ -38,7 +43,6 @@ import { issuesAndWarningsSelector } from './components/Monitoring/MonitoringSel
 import issuesCountSelector from './components/Insights/InsightsSelectors';
 import { userCanHibernateClustersSelector } from '../common/HibernateClusterModal/HibernateClusterModalSelectors';
 import { toggleSubscriptionReleased } from '../common/TransferClusterOwnershipDialog/subscriptionReleasedActions';
-import { ASSISTED_INSTALLER_FEATURE } from '../../../redux/constants/featureConstants';
 import supportActions from './components/Support/SupportActions';
 import { getUserAccess } from '../../../redux/actions/costActions';
 
@@ -86,6 +90,8 @@ const mapStateToProps = (state, { location }) => {
     userAccess: state.cost.userAccess,
     gotRouters: get(clusterRouters, 'getRouters.routers.length', 0) > 0,
     upgradeGates: getUpgradeGates(state),
+    useNodeUpgradePolicies: featureGateSelector(state, HCP_USE_NODE_UPGRADE_POLICIES),
+    hasNetworkOndemand: featureGateSelector(state, NETWORK_VALIDATOR_ONDEMAND_FEATURE),
   };
 };
 

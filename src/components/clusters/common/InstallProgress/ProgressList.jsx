@@ -15,7 +15,7 @@ import clusterStates, {
   getInflightChecks,
 } from '../clusterStates';
 
-function ProgressList({ cluster, actionRequiredInitialOpen }) {
+function ProgressList({ cluster, actionRequiredInitialOpen, hasNetworkOndemand }) {
   const isROSACluster = isROSA(cluster);
   const isOSDCluster = isOSD(cluster);
   const isOSDGCPPending = isOSDGCPPendingOnHostProject(cluster);
@@ -27,15 +27,14 @@ function ProgressList({ cluster, actionRequiredInitialOpen }) {
   // helper variables for isPending
   const isPendingState = cluster.state === clusterStates.PENDING;
   const isWaitingState = cluster.state === clusterStates.WAITING;
+  const isValidating = cluster.state === clusterStates.VALIDATING;
   const isAutoMode = cluster?.aws?.sts?.auto_mode;
   const hasOIDCConfig = cluster?.aws?.sts?.oidc_config?.id;
   const doesNotHaveStatusMessage =
     !cluster?.status.description ||
     cluster?.status.description === 'Waiting for OIDC configuration';
 
-  const isPending =
-    isPendingState ||
-    (isWaitingState && (isAutoMode || (hasOIDCConfig && doesNotHaveStatusMessage)));
+  const isWaiting = isWaitingState && (isAutoMode || (hasOIDCConfig && doesNotHaveStatusMessage));
 
   const getProgressData = () => {
     const pending = { variant: 'pending' };
@@ -45,23 +44,30 @@ function ProgressList({ cluster, actionRequiredInitialOpen }) {
     const failed = { variant: 'danger', text: 'Failed' };
     const unknown = { icon: <UnknownIcon className="icon-space-right" />, text: 'Unknown' };
 
-    // first step in progress
+    // Only OSD--User action to add roles to a dynamically generated service account in order for this cluster to use a shared VPC
+    // ROSA this is already created
     if (
-      (isOSDCluster &&
-        (cluster.state === clusterStates.WAITING || cluster.state === clusterStates.PENDING)) ||
-      isOSDGCPPending
+      isOSDCluster &&
+      (cluster.state === clusterStates.WAITING || isOSDGCPPending || isOSDGCPWaiting)
     ) {
+      const accountSetup = isOSDGCPWaiting
+        ? {
+            text: 'Waiting for permissions',
+            variant: 'warning',
+          }
+        : {
+            text: 'Preparing account',
+            ...inProcess,
+          };
       return {
-        awsAccountSetup: {
-          text: isOSDGCPWaiting ? 'Waiting for permissions' : 'Preparing account',
-          ...inProcess,
-        },
+        awsAccountSetup: accountSetup,
         DNSSetup: pending,
         networkSettings: pending,
         clusterInstallation: pending,
       };
     }
 
+    // Only ROSA -- Prompt user to run CLI to create OIDC and User roles
     const inflightChecks = getInflightChecks(cluster);
     if (isROSACluster) {
       if (isWaitingForOIDCProviderOrOperatorRoles) {
@@ -96,12 +102,12 @@ function ProgressList({ cluster, actionRequiredInitialOpen }) {
           clusterInstallation: pending,
         };
       }
-      // Rosa cluster when pending means it is verifying or completed OIDC and operator roles step
-      if (isPending) {
+      // OIDC and operator roles are created at the waiting state
+      if (isWaiting) {
         return {
           awsAccountSetup: completed,
           oidcAndOperatorRolesSetup: {
-            text: 'Pending',
+            text: 'Waiting',
             ...inProcess,
           },
           networkSettings: pending,
@@ -109,10 +115,13 @@ function ProgressList({ cluster, actionRequiredInitialOpen }) {
           clusterInstallation: pending,
         };
       }
-    } // end if isRosaCluster
+    }
+
+    // Both--validating and pending
     if (isROSACluster || isOSDCluster) {
       if (
-        cluster.state === clusterStates.VALIDATING ||
+        isPendingState ||
+        isValidating ||
         inflightChecks.some((check) => check.state === InflightCheckState.RUNNING)
       ) {
         return {
@@ -128,25 +137,9 @@ function ProgressList({ cluster, actionRequiredInitialOpen }) {
       }
     }
 
-    // inflight check stop install
-    const inflightError = inflightChecks.some((check) => check.state === InflightCheckState.FAILED);
-    const inflightErrorStopInstall =
-      cluster.state === clusterStates.ERROR && cluster.status.provision_error_code === 'OCM4001';
-    if (inflightErrorStopInstall) {
-      return {
-        awsAccountSetup: completed,
-        oidcAndOperatorRolesSetup: completed,
-        networkSettings: {
-          ...failed,
-          text: 'Validation failed',
-        },
-        DNSSetup: pending,
-        clusterInstallation: pending,
-      };
-    }
-
     // first steps completed
-    const networkSettings = inflightError ? warning : completed;
+    const inflightError = inflightChecks.some((check) => check.state === InflightCheckState.FAILED);
+    const networkSettings = inflightError && hasNetworkOndemand ? warning : completed;
     if (cluster.state === clusterStates.INSTALLING) {
       if (!cluster.status.dns_ready) {
         return {
@@ -169,14 +162,13 @@ function ProgressList({ cluster, actionRequiredInitialOpen }) {
         },
       };
     }
-    if (inflightError) {
+    if (cluster.state === clusterStates.ERROR || cluster.state === clusterStates.READY) {
       return {
         awsAccountSetup: completed,
         oidcAndOperatorRolesSetup: completed,
         DNSSetup: completed,
         networkSettings,
-        clusterInstallation:
-          cluster.state === clusterStates.ERROR && !inflightErrorStopInstall ? failed : completed,
+        clusterInstallation: cluster.state === clusterStates.ERROR ? failed : completed,
       };
     }
     return {
@@ -252,6 +244,7 @@ function ProgressList({ cluster, actionRequiredInitialOpen }) {
 
 ProgressList.propTypes = {
   cluster: PropTypes.object.isRequired,
+  hasNetworkOndemand: PropTypes.bool,
   actionRequiredInitialOpen: PropTypes.bool,
 };
 
