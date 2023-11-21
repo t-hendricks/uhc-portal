@@ -3,7 +3,7 @@ import { screen, render } from '~/testUtils';
 import ClusterDetailsRedirector from './ClusterDetailsRedirector';
 
 jest.mock('react-router-dom', () => ({
-  Redirect: jest.fn(({ to }) => `Redirected to ${to}`),
+  Redirect: jest.fn(({ to }) => `Redirected to "${to}"`),
 }));
 
 describe('<ClusterDetailsRedirector />', () => {
@@ -55,7 +55,7 @@ describe('<ClusterDetailsRedirector />', () => {
         };
 
         render(<ClusterDetailsRedirector {...newProps} />);
-        expect(screen.getByText('Redirected to /')).toBeInTheDocument();
+        expect(screen.getByText('Redirected to "/"')).toBeInTheDocument();
 
         expect(setGlobalError).toBeCalledWith(
           expect.anything(), // should be a react node/fragment, but I don't know how to check that
@@ -84,7 +84,7 @@ describe('<ClusterDetailsRedirector />', () => {
       };
 
       render(<ClusterDetailsRedirector {...newProps} />);
-      expect(screen.getByText('Redirected to /details/s/foobar#bar')).toBeInTheDocument();
+      expect(screen.getByText('Redirected to "/details/s/foobar#bar"')).toBeInTheDocument();
     });
   });
   it('should clear response on unmount', () => {

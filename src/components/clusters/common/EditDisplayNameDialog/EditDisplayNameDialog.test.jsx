@@ -34,7 +34,8 @@ describe('<EditDisplayNameDialog />', () => {
       ...defaultProps,
       editClusterResponse: { error: true, errorMessage: 'this is an error' },
     };
-    const { container } = render(<EditDisplayNameDialog {...newProps} />);
+    const { rerender, container } = render(<EditDisplayNameDialog {...defaultProps} />);
+    rerender(<EditDisplayNameDialog {...newProps} />);
 
     expect(
       within(screen.getByRole('alert', { name: 'Danger Alert' })).getByText('this is an error'),

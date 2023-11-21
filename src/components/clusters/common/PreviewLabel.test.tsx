@@ -5,10 +5,10 @@ import { PreviewLabel, GA_DATE, createdPostGa } from '~/components/clusters/comm
 
 describe('PreviewLabel', () => {
   it('shows preview label when pre GA date', async () => {
-    const now = new Date(GA_DATE);
-    now.setSeconds(GA_DATE.getSeconds() - 1);
-    expect(createdPostGa(now.toISOString())).toBe(false);
-    const { container } = render(<PreviewLabel creationDateStr={now.toISOString()} />);
+    const gadate = new Date(GA_DATE);
+    gadate.setSeconds(GA_DATE.getSeconds() - 1);
+    expect(createdPostGa(gadate.toISOString())).toBe(false);
+    const { container } = render(<PreviewLabel creationDateStr={gadate.toISOString()} />);
 
     expect(container.querySelector('.pf-c-label')).toBeInTheDocument();
     expect(screen.getByText('Preview')).toBeInTheDocument();
@@ -16,21 +16,21 @@ describe('PreviewLabel', () => {
   });
 
   it('does not display preview label on GA date', () => {
-    const now = new Date(GA_DATE);
-    expect(createdPostGa(now.toISOString())).toBe(true);
+    const gadate = new Date(GA_DATE);
+    expect(createdPostGa(gadate.toISOString())).toBe(true);
 
-    const { container } = render(<PreviewLabel creationDateStr={now.toISOString()} />);
+    const { container } = render(<PreviewLabel creationDateStr={gadate.toISOString()} />);
 
     expect(container.querySelector('.pf-c-label')).not.toBeInTheDocument();
     expect(screen.queryByText('Preview')).not.toBeInTheDocument();
   });
 
   it('does not display preview label after GA date', () => {
-    const now = new Date(GA_DATE);
-    expect(createdPostGa(now.toISOString())).toBe(true);
-    now.setSeconds(GA_DATE.getSeconds() + 1);
+    const gadate = new Date(GA_DATE);
+    gadate.setSeconds(GA_DATE.getSeconds() + 1);
+    expect(createdPostGa(gadate.toISOString())).toBe(true);
 
-    const { container } = render(<PreviewLabel creationDateStr={now.toISOString()} />);
+    const { container } = render(<PreviewLabel creationDateStr={gadate.toISOString()} />);
 
     expect(container.querySelector('.pf-c-label')).not.toBeInTheDocument();
     expect(screen.queryByText('Preview')).not.toBeInTheDocument();
