@@ -30,7 +30,7 @@ MinorVersionUpgradeConfirm.propTypes = {
   isAutomatic: PropTypes.bool,
   isMinorVersionUpgradesEnabled: PropTypes.bool,
   isNextMinorVersionAvailable: PropTypes.bool,
-  getAcks: PropTypes.bool,
+  getAcks: PropTypes.array,
 };
 
 export default MinorVersionUpgradeConfirm;
