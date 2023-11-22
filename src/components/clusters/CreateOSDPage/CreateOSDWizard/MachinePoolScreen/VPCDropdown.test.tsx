@@ -128,7 +128,7 @@ describe('<VPCDropdown />', () => {
 
     it('shows search in select vpc dropdown', async () => {
       render(<VPCDropdown {...defaultProps} />);
-      expect(await screen.findByText(/select a vpc/i)).toBeInTheDocument();
+      expect(await screen.findByText(/^select a vpc$/i)).toBeInTheDocument();
       const selectDropdown = screen.getByRole('button', { name: 'Options menu' });
       fireEvent.keyDown(selectDropdown, { key: 'Enter' }); // this is the only way to open select! using click doesn't work
       expect(screen.getByPlaceholderText('Filter by VPC')).toBeInTheDocument();
@@ -139,7 +139,7 @@ describe('<VPCDropdown />', () => {
 
       expect(
         screen.getByText(
-          `Specify a VPC to install your machine pools into in your selected region: ${testRegion}`,
+          `Select a VPC to install your cluster into your selected region: ${testRegion}`,
         ),
       ).toBeInTheDocument();
     });
