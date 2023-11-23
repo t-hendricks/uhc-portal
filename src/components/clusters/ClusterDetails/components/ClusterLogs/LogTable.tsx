@@ -1,6 +1,6 @@
 /* eslint-disable camelcase */
 import React from 'react';
-import moment from 'moment';
+import dayjs from 'dayjs';
 
 import {
   Bullseye,
@@ -134,7 +134,7 @@ const LogTable = ({ logs, setSorting, pending, refreshEvent }: LogTableParams) =
       doc_references: docReferences,
     } = log;
 
-    const day = moment.utc(timestamp).format('D MMM YYYY, HH:mm UTC');
+    const day = dayjs.utc(timestamp).format('D MMM YYYY, HH:mm UTC');
 
     const hasDocReferences = docReferences && docReferences.length > 0;
 

@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import moment from 'moment';
+import dayjs from 'dayjs';
 import { Alert, Button } from '@patternfly/react-core';
 import modals from '../../../common/Modal/modals';
 import ExternalLink from '../../../common/ExternalLink';
@@ -12,9 +12,9 @@ function ExpirationAlert({
   cluster,
   OSDRHMExpiration,
 }) {
-  const now = moment.utc();
-  const expirationTime = moment.utc(expirationTimestamp);
-  const hours = expirationTime.diff(now, 'hours');
+  const now = dayjs.utc();
+  const expirationTime = dayjs.utc(expirationTimestamp);
+  const hours = expirationTime.diff(now, 'hour');
   const timeUntilExpiryString = now.to(expirationTime);
   const expirationTimeString = expirationTime.local().format('dddd, MMMM Do YYYY, h:mm a');
   let variant;
