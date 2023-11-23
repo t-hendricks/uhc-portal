@@ -9,6 +9,7 @@ import {
   checkNodePoolName,
   checkTaintKey,
   checkTaintValue,
+  validateSecurityGroups,
 } from '~/common/validators';
 import { GlobalState } from '~/redux/store';
 import { isHypershiftCluster, isROSA } from '~/components/clusters/common/clusterStates';
@@ -56,10 +57,6 @@ const isMachinePool = (pool?: MachinePool | NodePool): pool is MachinePool =>
 const noDecimalTest = (value: number) => value === Math.floor(value);
 const requiredSubnet = (subnet: Subnetwork | undefined) =>
   subnet === undefined || !!subnet.subnet_id;
-
-const MAX_ADDITIONAL_SECURITY_GROUPS = 5;
-
-const maxSecurityGroups = (sgIds: string[]) => sgIds.length <= MAX_ADDITIONAL_SECURITY_GROUPS;
 
 const useMachinePoolFormik = ({
   machinePool,
@@ -141,6 +138,7 @@ const useMachinePoolFormik = ({
     () =>
       Yup.lazy<EditMachinePoolValues>((values) => {
         const minNodes = isMultiAz ? minNodesRequired / 3 : minNodesRequired;
+        const secGroupValidation = validateSecurityGroups(values.securityGroupIds);
         const nodeOptions = getNodeOptions({
           cluster,
           machinePools: machinePools.data || [],
@@ -276,8 +274,8 @@ const useMachinePoolFormik = ({
                 .of(Yup.string())
                 .test(
                   'max-security-groups',
-                  `A maximum of ${MAX_ADDITIONAL_SECURITY_GROUPS} security groups can be selected.`,
-                  maxSecurityGroups,
+                  secGroupValidation || '',
+                  () => secGroupValidation === undefined,
                 ),
         });
       }),
