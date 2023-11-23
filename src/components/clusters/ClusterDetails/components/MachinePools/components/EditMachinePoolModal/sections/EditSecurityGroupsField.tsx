@@ -19,7 +19,7 @@ export interface EditSecurityGroupsFieldProps {
 }
 
 const EditSecurityGroupsField = ({ cluster, isReadOnly }: EditSecurityGroupsFieldProps) => {
-  const [field, meta] = useField<EditMachinePoolValues['securityGroupIds']>(fieldId);
+  const [field] = useField<EditMachinePoolValues['securityGroupIds']>(fieldId);
   const onChange = useFormikOnChange(fieldId);
 
   const { clusterVpc, isLoading } = useAWSVPCFromCluster(cluster);
@@ -52,7 +52,6 @@ const EditSecurityGroupsField = ({ cluster, isReadOnly }: EditSecurityGroupsFiel
       clusterVpc={clusterVpc}
       isReadOnly={isReadOnly}
       selectedGroupIds={field.value}
-      validationError={meta.touched ? meta.error : undefined}
       onChange={onChange}
     />
   );

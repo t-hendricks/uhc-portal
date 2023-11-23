@@ -3,7 +3,10 @@ import { get, indexOf, inRange } from 'lodash';
 import cidrTools from 'cidr-tools';
 import { ValidationError, Validator } from 'jsonschema';
 import { clusterService } from '~/services';
-import { workerNodeVolumeSizeMinGiB } from '~/components/clusters/wizards/rosa/constants';
+import {
+  maxAdditionalSecurityGroups,
+  workerNodeVolumeSizeMinGiB,
+} from '~/components/clusters/wizards/rosa/constants';
 import type { CloudVPC, GCP, Subnetwork, Taint } from '../types/clusters_mgmt.v1';
 import { sqlString } from './queryHelpers';
 
@@ -1278,6 +1281,11 @@ const createUniqueFieldValidator =
     return undefined;
   };
 
+const validateSecurityGroups = (securityGroups: string[]) =>
+  securityGroups.length > maxAdditionalSecurityGroups
+    ? `A maximum of ${maxAdditionalSecurityGroups} security groups can be selected.`
+    : undefined;
+
 const validateUniqueAZ = createUniqueFieldValidator(
   'Must select 3 different AZs.',
   (currentFieldName: string, allValues: { [key: string]: unknown }) =>
@@ -1656,6 +1664,7 @@ export {
   awsNumericAccountID,
   validateGCPServiceAccount,
   validateServiceAccountObject,
+  validateSecurityGroups,
   checkMachinePoolName,
   checkNodePoolName,
   checkCustomOperatorRolesPrefix,
