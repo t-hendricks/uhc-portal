@@ -28,12 +28,12 @@
         {
           "subnet_id": "subnet-id-without-Name",
           "public": false,
-          "availability_zone": "us-west-1a"
+          "availability_zone": "us-east-1a"
         }
       ]
     },
     {
-      "id": "vpc-with-security-groups",
+      "id": "vpc-with-security-groups-one",
       "aws_security_groups": [
         {
           "id": "sg-def",
@@ -66,7 +66,41 @@
         {
           "subnet_id": "subnet-from-a-vpc-with-security-groups",
           "public": false,
-          "availability_zone": "us-west-1a"
+          "availability_zone": "us-east-1a"
+        }
+      ]
+    },
+    {
+      "id": "vpc-with-security-groups-two",
+      "aws_security_groups": [
+        {
+          "id": "sg-first-id",
+          "name": "sg-first"
+        },
+        {
+          "id": "sg-second-id",
+          "name": "sg-second"
+        },
+        {
+          "id": "sg-third-id",
+          "name": "sg-third"
+        },
+        {
+          "id": "sg-red-hat-managed-id",
+          "name": "sg-red-hat-managed-id",
+          "red_hat_managed": true
+        }
+      ],
+      "aws_subnets": [
+        {
+          "subnet_id": "sg-two-private-subnet",
+          "public": false,
+          "availability_zone": "us-east-1b"
+        },
+        {
+          "subnet_id": "sg-two-public-subnet",
+          "public": true,
+          "availability_zone": "us-east-1b"
         }
       ]
     },

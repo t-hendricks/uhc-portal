@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { ExpandableSection } from '@patternfly/react-core';
-import { Field, formValueSelector, change } from 'redux-form';
+import { Field, formValueSelector } from 'redux-form';
 
 import { CloudVPC } from '~/types/clusters_mgmt.v1';
 import { useFeatureGate } from '~/hooks/useFeatureGate';
@@ -51,15 +51,6 @@ const SecurityGroupsSection = ({
     ? securityGroups.controlPlane
     : securityGroups.controlPlane.concat(securityGroups.infra).concat(securityGroups.worker);
   const [isExpanded, setIsExpanded] = useState<boolean>(selectedGroups.length > 0);
-
-  React.useEffect(() => {
-    change(CREATE_FORM, fieldId, {
-      applyControlPlaneToAll: false,
-      controlPlane: [],
-      infra: [],
-      worker: [],
-    });
-  }, [selectedVPC.id]);
 
   const onExpandToggle = () => {
     setIsExpanded(!isExpanded);

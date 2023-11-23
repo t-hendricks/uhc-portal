@@ -1,6 +1,7 @@
 import * as React from 'react';
 
 import { fireEvent, render, screen, within } from '~/testUtils';
+
 import EditSecurityGroups from './EditSecurityGroups';
 
 const persistedSecurityGroup = {
@@ -9,6 +10,7 @@ const persistedSecurityGroup = {
 };
 
 const clusterVpc = {
+  id: 'vpc-id',
   aws_security_groups: [
     {
       id: 'sg-abc',
@@ -135,6 +137,36 @@ describe('<EditSecurityGroups />', () => {
       expect(
         within(screen.getByRole('listbox')).getByRole('checkbox', { name: /sg-xyz/ }),
       ).toBeChecked();
+    });
+
+    it('Clears the selected security groups when the VPC changes', () => {
+      const onChangeSpy = jest.fn();
+      const testProps = {
+        selectedGroupIds: [],
+        clusterVpc,
+        onChange: onChangeSpy,
+        isReadOnly: false,
+      };
+
+      // Render with the initial VPC, this will initially set the security groups to empty
+      const { rerender } = render(<EditSecurityGroups {...testProps} />);
+      expect(onChangeSpy).toHaveBeenCalledTimes(1);
+      expect(onChangeSpy).toHaveBeenCalledWith([]);
+      onChangeSpy.mockClear();
+
+      // Re-render with the same VPC, the selected Security groups remains unchanged
+      rerender(<EditSecurityGroups {...testProps} />);
+      expect(onChangeSpy).not.toHaveBeenCalled();
+
+      // Re-render with a different VPC, the selected Security groups are cleared
+      rerender(
+        <EditSecurityGroups
+          {...testProps}
+          clusterVpc={{ ...clusterVpc, id: 'the-vpc-has-changed' }}
+        />,
+      );
+      expect(onChangeSpy).toHaveBeenCalledTimes(1);
+      expect(onChangeSpy).toHaveBeenCalledWith([]);
     });
   });
 });
