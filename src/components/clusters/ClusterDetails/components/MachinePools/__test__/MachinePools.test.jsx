@@ -113,12 +113,12 @@ describe('<MachinePools />', () => {
       expect(getMachinePools).toBeCalled();
     });
 
-    it('with the machine pool', () => {
+    it('the machine pool ID', () => {
       render(<MachinePools {...defaultProps} />);
       expect(screen.getByText('some-id')).toBeInTheDocument();
     });
 
-    it('with the machine pool when it has labels', () => {
+    it('the machine pool labels', () => {
       const newProps = {
         ...defaultProps,
         machinePoolsList: {
@@ -127,9 +127,27 @@ describe('<MachinePools />', () => {
         },
       };
       render(<MachinePools {...newProps} />);
-      expect(screen.getByText('some-id')).toBeInTheDocument();
       expect(screen.getByText('foo = bar')).toHaveClass('pf-c-label__content');
       expect(screen.getByText('hello = world')).toHaveClass('pf-c-label__content');
+    });
+
+    it('a truncated label that is longer than the cut length', () => {
+      const newProps = {
+        ...defaultProps,
+        machinePoolsList: {
+          ...baseRequestState,
+          data: [
+            {
+              ...defaultMachinePool,
+              labels: { label: 'this-label-goes-above-fifty-characters-and-it-will-be-truncated' },
+            },
+          ],
+        },
+      };
+      render(<MachinePools {...newProps} />);
+      expect(
+        screen.getByText('label = this-lab... aracters-and-it-will-be-truncated'),
+      ).toBeInTheDocument();
     });
 
     it('is accessible with additional machine pools, some with labels and/or taints', async () => {

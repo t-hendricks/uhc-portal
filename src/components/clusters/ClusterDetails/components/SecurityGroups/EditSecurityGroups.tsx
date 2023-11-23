@@ -9,6 +9,7 @@ import {
 } from '@patternfly/react-core';
 
 import { CloudVPC } from '~/types/clusters_mgmt.v1';
+import { truncateTextWithEllipsis } from '~/common/helpers';
 import { securityGroupsSort } from '~/components/clusters/CreateOSDPage/CreateOSDWizard/ccsInquiriesReducer';
 
 import SecurityGroupsViewList from './SecurityGroupsViewList';
@@ -21,6 +22,15 @@ export interface EditSecurityGroupsProps {
   isReadOnly: boolean;
   onChange: (securityGroupIds: string[]) => void;
 }
+
+const getDisplayName = (securityGroupName: string) => {
+  if (securityGroupName) {
+    const maxVisibleLength = 50;
+    const displayName = truncateTextWithEllipsis(securityGroupName, maxVisibleLength);
+    return { displayName, isCut: securityGroupName.length > maxVisibleLength };
+  }
+  return { displayName: '--', isCut: false };
+};
 
 const EditSecurityGroups = ({
   label = 'Security groups',
@@ -97,11 +107,11 @@ const EditSecurityGroups = ({
             maxHeight={300}
             menuAppendTo={document.getElementById('edit-mp-modal') || undefined}
           >
-            {vpcSecurityGroups.map((sg) => {
-              const sgId = sg.id || '';
+            {vpcSecurityGroups.map(({ id = '', name = '' }) => {
+              const { displayName, isCut } = getDisplayName(name);
               return (
-                <SelectOption key={sgId} value={sgId} description={sgId}>
-                  {sg.name || '--'}
+                <SelectOption key={id} value={id} description={id} title={isCut ? name : ''}>
+                  {displayName}
                 </SelectOption>
               );
             })}
