@@ -9,6 +9,8 @@ import awsRegions from '../../../../../mockdata/api/clusters_mgmt/v1/aws_inquiri
 const vpcItems = vpcResponse.items as CloudVPC[];
 
 describe('processAWSVPCs', () => {
+  const vpcId = 'vpc-with-security-groups-one';
+
   it('returns the VPC items in the same order', () => {
     const result = processAWSVPCs(vpcItems);
 
@@ -19,7 +21,6 @@ describe('processAWSVPCs', () => {
   });
 
   it('removes the Red Hat managed security groups', () => {
-    const vpcId = 'vpc-with-security-groups';
     const result = processAWSVPCs(vpcItems);
 
     const processedVpcWithSGs = result.items.find((vpc) => vpc.id === vpcId) as CloudVPC;
@@ -33,8 +34,6 @@ describe('processAWSVPCs', () => {
 
   it('sorts the VPC security groups by their display order', () => {
     const result = processAWSVPCs(vpcItems);
-    const vpcId = 'vpc-with-security-groups';
-
     const processedVpcWithSGs = result.items.find((vpc) => vpc.id === vpcId) as CloudVPC;
     const resultSgs = processedVpcWithSGs.aws_security_groups || [];
 

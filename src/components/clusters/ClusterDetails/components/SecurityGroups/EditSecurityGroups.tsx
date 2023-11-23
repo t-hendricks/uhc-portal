@@ -45,6 +45,10 @@ const EditSecurityGroups = ({
   const selectedOptions = vpcSecurityGroups.filter((sg) => selectedGroupIds.includes(sg.id || ''));
   selectedOptions.sort(securityGroupsSort);
 
+  React.useEffect(() => {
+    onChange([]);
+  }, [onChange, clusterVpc.id]);
+
   if (isReadOnly) {
     // Shows read-only chips, or an empty message if no SGs are selected
     return (
