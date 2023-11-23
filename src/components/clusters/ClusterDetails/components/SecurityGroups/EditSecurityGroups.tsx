@@ -11,12 +11,12 @@ import {
 import { CloudVPC } from '~/types/clusters_mgmt.v1';
 import { truncateTextWithEllipsis } from '~/common/helpers';
 import { securityGroupsSort } from '~/components/clusters/CreateOSDPage/CreateOSDWizard/ccsInquiriesReducer';
+import { validateSecurityGroups } from '~/common/validators';
 
 import SecurityGroupsViewList from './SecurityGroupsViewList';
 
 export interface EditSecurityGroupsProps {
   label?: string;
-  validationError?: string;
   selectedGroupIds: string[];
   clusterVpc: CloudVPC;
   isReadOnly: boolean;
@@ -36,7 +36,6 @@ const EditSecurityGroups = ({
   label = 'Security groups',
   clusterVpc,
   selectedGroupIds,
-  validationError,
   onChange,
   isReadOnly,
 }: EditSecurityGroupsProps) => {
@@ -81,6 +80,7 @@ const EditSecurityGroups = ({
     }
   };
 
+  const validationError = validateSecurityGroups(selectedGroupIds);
   return (
     <GridItem>
       <FormGroup

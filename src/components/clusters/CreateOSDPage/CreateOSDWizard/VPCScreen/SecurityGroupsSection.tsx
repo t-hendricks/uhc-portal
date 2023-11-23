@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { ExpandableSection } from '@patternfly/react-core';
 import { Field, formValueSelector, change } from 'redux-form';
 
@@ -7,6 +7,7 @@ import { useFeatureGate } from '~/hooks/useFeatureGate';
 import { SupportedFeature } from '~/common/featureCompatibility';
 import ReduxCheckbox from '~/components/common/ReduxFormComponents/ReduxCheckbox';
 import { getIncompatibleVersionReason } from '~/common/versionCompatibility';
+import { validateSecurityGroups } from '~/common/validators';
 import { SECURITY_GROUPS_FEATURE } from '~/redux/constants/featureConstants';
 import EditSecurityGroups from '~/components/clusters/ClusterDetails/components/SecurityGroups/EditSecurityGroups';
 import SecurityGroupsEmptyAlert from '~/components/clusters/ClusterDetails/components/SecurityGroups/SecurityGroupsEmptyAlert';
@@ -15,7 +16,6 @@ import { useGlobalState } from '~/redux/hooks';
 type SecurityGroupFieldProps = {
   selectedVPC: CloudVPC;
   label?: string;
-  meta: { error: string; touched: boolean };
   input: { onChange: (selectedGroupIds: string[]) => void; value: string[] };
 };
 
@@ -27,14 +27,12 @@ const valueSelector = formValueSelector(CREATE_FORM);
 const SecurityGroupField = ({
   input: { onChange, value: selectedGroupIds },
   label,
-  meta,
   selectedVPC,
 }: SecurityGroupFieldProps) => (
   <EditSecurityGroups
     label={label}
     clusterVpc={selectedVPC}
     selectedGroupIds={selectedGroupIds}
-    validationError={meta.touched ? meta.error : undefined}
     isReadOnly={false}
     onChange={onChange}
   />
@@ -48,10 +46,11 @@ const SecurityGroupsSection = ({
   selectedVPC: CloudVPC;
 }) => {
   const hasFeatureGate = useFeatureGate(SECURITY_GROUPS_FEATURE);
-  const applyControlPlaneToAll = useGlobalState((state) => {
-    const sg = valueSelector(state, fieldId);
-    return sg?.applyControlPlaneToAll;
-  });
+  const securityGroups = useGlobalState((state) => valueSelector(state, fieldId));
+  const selectedGroups = securityGroups.applyControlPlaneToAll
+    ? securityGroups.controlPlane
+    : securityGroups.controlPlane.concat(securityGroups.infra).concat(securityGroups.worker);
+  const [isExpanded, setIsExpanded] = useState<boolean>(selectedGroups.length > 0);
 
   React.useEffect(() => {
     change(CREATE_FORM, fieldId, {
@@ -61,6 +60,10 @@ const SecurityGroupsSection = ({
       worker: [],
     });
   }, [selectedVPC.id]);
+
+  const onExpandToggle = () => {
+    setIsExpanded(!isExpanded);
+  };
 
   if (!hasFeatureGate || !selectedVPC.id) {
     return null;
@@ -76,7 +79,11 @@ const SecurityGroupsSection = ({
     !incompatibleReason && (selectedVPC.aws_security_groups || []).length === 0;
 
   return (
-    <ExpandableSection toggleText="Additional security groups">
+    <ExpandableSection
+      toggleText="Additional security groups"
+      isExpanded={isExpanded}
+      onToggle={onExpandToggle}
+    >
       {incompatibleReason && <div>{incompatibleReason}</div>}
       {showEmptyAlert && <SecurityGroupsEmptyAlert />}
       {!incompatibleReason && !showEmptyAlert && (
@@ -90,22 +97,25 @@ const SecurityGroupsSection = ({
           <Field
             component={SecurityGroupField}
             name={`${fieldId}.controlPlane`}
-            label={applyControlPlaneToAll ? '' : 'Control plane nodes'}
+            label={securityGroups.applyControlPlaneToAll ? '' : 'Control plane nodes'}
             selectedVPC={selectedVPC}
+            validate={validateSecurityGroups}
           />
-          {!applyControlPlaneToAll && (
+          {!securityGroups.applyControlPlaneToAll && (
             <>
               <Field
                 component={SecurityGroupField}
                 name={`${fieldId}.infra`}
                 label="Infrastructure nodes"
                 selectedVPC={selectedVPC}
+                validate={validateSecurityGroups}
               />
               <Field
                 component={SecurityGroupField}
                 name={`${fieldId}.worker`}
                 label="Worker nodes"
                 selectedVPC={selectedVPC}
+                validate={validateSecurityGroups}
               />
             </>
           )}

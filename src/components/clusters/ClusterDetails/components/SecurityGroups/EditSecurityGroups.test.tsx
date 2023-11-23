@@ -44,7 +44,6 @@ const renderComponent = ({
   render(
     <EditSecurityGroups
       selectedGroupIds={selectedGroupIds}
-      validationError={undefined}
       clusterVpc={clusterVpc}
       onChange={() => null}
       isReadOnly={isReadOnly}
