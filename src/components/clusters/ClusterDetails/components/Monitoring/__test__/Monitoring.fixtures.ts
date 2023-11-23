@@ -1,4 +1,12 @@
 import produce from 'immer';
+import moment from 'moment';
+import { defaultMetric } from '~/components/clusters/common/__test__/clusterStates.fixtures';
+import {
+  defaultClusterFromSubscription,
+  defaultSubscription,
+} from '~/components/clusters/common/__test__/defaultClusterFromSubscription.fixtures';
+import { OneMetric } from '~/types/accounts_mgmt.v1';
+import { ClusterFromSubscription } from '~/types/types';
 
 const mockNodes = {
   data: [
@@ -133,7 +141,8 @@ const resourceUsageWithIssues = {
   },
 };
 
-const resourceUsageWithoutIssues = {
+const resourceUsageWithoutIssues: OneMetric = {
+  ...defaultMetric,
   memory: {
     updated_timestamp: '2019-04-28T14:23:19Z',
     used: {
@@ -185,13 +194,11 @@ const resourceUsageWithoutIssues = {
   },
 };
 
-const mockOCPDisconnectedClusterDetails = {
-  kind: 'Cluster',
+const mockOCPDisconnectedClusterDetails: ClusterFromSubscription = {
+  ...defaultClusterFromSubscription,
   id: '19bap5d1h6q3p9qsdjsgjrpv1esfhfnb',
-  href: '/api/clusters_mgmt/v1/clusters/19bap5d1h6q3p9qsdjsgjrpv1esfhfnb',
   name: '1a7744e6-cd0f-4284-918d-357c1f615a4d',
   external_id: '1a7744e6-cd0f-4284-918d-357c1f615a4d',
-  display_name: 'sdqe-ui-ocp',
   creation_timestamp: '2019-11-11T06:07:17.284553Z',
   activity_timestamp: '2019-11-11T06:07:17.284553Z',
   subscription: {
@@ -221,35 +228,10 @@ const mockOCPDisconnectedClusterDetails = {
     status: 'Disconnected',
     last_reconcile_date: '0001-01-01T00:00:00Z',
   },
-  nodes: {
-    total: 0,
-    master: 0,
-    compute: 0,
-  },
   state: 'ready',
-  groups: {
-    kind: 'GroupListLink',
-    href: '/api/clusters_mgmt/v1/clusters/19bap5d1h6q3p9qsdjsgjrpv1esfhfnb/groups',
-  },
-  network: {
-    router_shards: {
-      kind: 'RouterShardListLink',
-      href: '/api/clusters_mgmt/v1/clusters/19bap5d1h6q3p9qsdjsgjrpv1esfhfnb/router_shards',
-      id: '19bap5d1h6q3p9qsdjsgjrpv1esfhfnb',
-    },
-  },
-  multi_az: false,
   managed: false,
-  storage_quota: {
-    value: 0,
-    unit: 'B',
-  },
-  load_balancer_quota: 0,
-  identity_providers: {
-    kind: 'IdentityProviderListLink',
-    href: '/api/clusters_mgmt/v1/clusters/19bap5d1h6q3p9qsdjsgjrpv1esfhfnb/identity_providers',
-  },
   metrics: {
+    ...defaultMetric,
     memory: {
       updated_timestamp: '0001-01-01T00:00:00Z',
       used: {
@@ -289,12 +271,20 @@ const mockOCPDisconnectedClusterDetails = {
         value: 0,
         unit: 'B',
       },
+      used: {
+        unit: 'B',
+        value: 0,
+      },
     },
     compute_nodes_cpu: {
       updated_timestamp: '0001-01-01T00:00:00Z',
       total: {
         value: 0,
         unit: '',
+      },
+      used: {
+        unit: 'B',
+        value: 0,
       },
     },
     storage: {
@@ -309,25 +299,171 @@ const mockOCPDisconnectedClusterDetails = {
       },
     },
     nodes: {},
-    version_update_available: false,
     operating_system: 'Red Hat Enterprise Linux CoreOS',
     upgrade: {
       available: false,
     },
   },
-  addons: {
-    kind: 'AddOnListLink',
-    href: '/api/clusters_mgmt/v1/clusters/19bap5d1h6q3p9qsdjsgjrpv1esfhfnb/addons',
-    items: null,
-  },
-  shouldRedirect: false,
-  canEdit: true,
-  canDelete: true,
 };
 
-const mockOCPActiveClusterDetails = produce(mockOCPDisconnectedClusterDetails, (draft) => {
-  draft.subscription.status = 'Active';
-});
+const mockOCPActiveClusterDetails = produce(
+  mockOCPDisconnectedClusterDetails,
+  (draft: ClusterFromSubscription) => {
+    if (draft.subscription) {
+      draft.subscription.status = 'Active';
+    }
+  },
+);
+
+const archivedCluster: ClusterFromSubscription = {
+  ...defaultClusterFromSubscription,
+  subscription: {
+    ...defaultSubscription,
+    status: 'Archived',
+  },
+};
+
+const disconnectedCluster: ClusterFromSubscription = {
+  ...defaultClusterFromSubscription,
+  subscription: {
+    ...defaultSubscription,
+    status: 'Disconnected',
+  },
+};
+
+const cpuCluster: ClusterFromSubscription = {
+  metrics: {
+    ...defaultMetric,
+    cpu: {
+      updated_timestamp: '2021-04-29T10:20:24.14Z',
+      total: {
+        unit: 'B',
+        value: 843893919744,
+      },
+      used: {
+        unit: 'B',
+        value: 0,
+      },
+    },
+  },
+};
+
+const memoryCluster: ClusterFromSubscription = {
+  metrics: {
+    ...defaultMetric,
+    memory: {
+      updated_timestamp: '2021-04-29T10:20:24.14Z',
+      total: {
+        unit: 'B',
+        value: 843893919744,
+      },
+      used: {
+        unit: 'B',
+        value: 0,
+      },
+    },
+  },
+};
+
+const cpuAndMemoryCluster: ClusterFromSubscription = {
+  metrics: {
+    ...defaultMetric,
+    cpu: {
+      updated_timestamp: '2021-04-29T10:20:24.14Z',
+      total: {
+        unit: 'B',
+        value: 843893919744,
+      },
+      used: {
+        unit: 'B',
+        value: 0,
+      },
+    },
+    memory: {
+      updated_timestamp: '2021-04-29T10:20:24.14Z',
+      total: {
+        unit: 'B',
+        value: 843893919744,
+      },
+      used: {
+        unit: 'B',
+        value: 0,
+      },
+    },
+  },
+};
+
+const cpuAndMemoryClusterThreshold: ClusterFromSubscription = {
+  metrics: {
+    ...defaultMetric,
+    cpu: {
+      updated_timestamp: '2021-04-29T10:20:24.14Z',
+      total: {
+        unit: 'B',
+        value: 1,
+      },
+      used: {
+        unit: 'B',
+        value: 3,
+      },
+    },
+    memory: {
+      updated_timestamp: '2021-04-29T10:20:24.14Z',
+      total: {
+        unit: 'B',
+        value: 1,
+      },
+      used: {
+        unit: 'B',
+        value: 3,
+      },
+    },
+  },
+};
+
+const cpuAndMemoryClusterRecentlyUpdated: ClusterFromSubscription = {
+  metrics: {
+    ...defaultMetric,
+    cpu: {
+      updated_timestamp: moment.utc().format('YYYY-MM-DDTHH:mm:ssZ'),
+      total: {
+        unit: 'B',
+        value: 843893919744,
+      },
+      used: {
+        unit: 'B',
+        value: 0,
+      },
+    },
+    memory: {
+      updated_timestamp: '2021-04-29T10:20:24.14Z',
+      total: {
+        unit: 'B',
+        value: 843893919744,
+      },
+      used: {
+        unit: 'B',
+        value: 0,
+      },
+    },
+  },
+};
+
+const expectedMonitoringItemLinkPropsAlert = {
+  href: 'http://www.example.com/monitoring/alerts?orderBy=asc&sortBy=Severity&alert-name=alertName',
+  rel: 'noopener noreferrer',
+  target: '_blank',
+};
+const expectedMonitoringItemLinkPropsNode = {
+  href: 'http://www.example.com/k8s/cluster/nodes/nodeName',
+  rel: 'noopener noreferrer',
+  target: '_blank',
+};
+const expectedMonitoringItemLinkPropsOperator = {
+  href: 'http://www.example.com/k8s/cluster/config.openshift.io~v1~ClusterOperator/operatorName',
+  rel: 'noopener noreferrer',
+  target: '_blank',
+};
 
 const minute = 60 * 1000;
 const hour = 60 * minute;
@@ -344,6 +480,16 @@ export {
   resourceUsageWithoutIssues,
   mockOCPActiveClusterDetails,
   mockOCPDisconnectedClusterDetails,
+  archivedCluster,
+  disconnectedCluster,
+  cpuCluster,
+  memoryCluster,
+  cpuAndMemoryCluster,
+  cpuAndMemoryClusterRecentlyUpdated,
+  cpuAndMemoryClusterThreshold,
+  expectedMonitoringItemLinkPropsAlert,
+  expectedMonitoringItemLinkPropsNode,
+  expectedMonitoringItemLinkPropsOperator,
   makeFutureDate,
   makeFreshCheckIn,
   makeStaleCheckIn,

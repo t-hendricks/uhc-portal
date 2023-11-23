@@ -1,46 +1,54 @@
-import get from 'lodash/get';
 import moment from 'moment';
-import config from '../../../../../config';
+import { ClusterResource } from '~/types/accounts_mgmt.v1';
+import { ClusterConsole } from '~/types/clusters_mgmt.v1';
+import { ClusterFromSubscription } from '~/types/types';
 import { subscriptionStatuses } from '../../../../../common/subscriptionTypes';
+import config from '../../../../../config';
 import { hasCpuAndMemory } from '../../clusterDetailsHelper';
 
-const monitoringStatuses = {
-  HEALTHY: 'HEALTHY',
-  HAS_ISSUES: 'HAS_ISSUES',
-  DISCONNECTED: 'DISCONNECTED',
-  NO_METRICS: 'NO_METRICS',
-  UPGRADING: 'UPGRADING',
-  UNKNOWN: 'UNKNOWN',
-};
+enum monitoringStatuses {
+  HEALTHY = 'HEALTHY',
+  HAS_ISSUES = 'HAS_ISSUES',
+  DISCONNECTED = 'DISCONNECTED',
+  NO_METRICS = 'NO_METRICS',
+  UPGRADING = 'UPGRADING',
+  UNKNOWN = 'UNKNOWN',
+}
 
-const alertsSeverity = {
-  WARNING: 'warning',
-  CRITICAL: 'critical',
-  INFO: 'info',
-};
+enum alertsSeverity {
+  WARNING = 'warning',
+  CRITICAL = 'critical',
+  INFO = 'info',
+}
 
-const operatorsStatuses = {
-  AVAILABLE: 'available',
-  FAILING: 'failing',
-  UPGRADING: 'upgrading',
-  DEGRADED: 'degraded',
-  UNKNOWN: 'unknown',
-};
+enum operatorsStatuses {
+  AVAILABLE = 'available',
+  FAILING = 'failing',
+  UPGRADING = 'upgrading',
+  DEGRADED = 'degraded',
+  UNKNOWN = 'unknown',
+}
 
-const thresholds = {
-  WARNING: 0.8,
-  DANGER: 0.95,
-};
+enum thresholds {
+  WARNING = 0.8,
+  DANGER = 0.95,
+}
 
-const monitoringItemTypes = {
-  NODE: 'node',
-  ALERT: 'alert',
-  OPERATOR: 'operator',
-};
+enum monitoringItemTypes {
+  NODE = 'node',
+  ALERT = 'alert',
+  OPERATOR = 'operator',
+}
 
 const baseURLProps = {
   rel: 'noopener noreferrer',
   target: '_blank',
+};
+
+type monitoringItemLinkType = {
+  rel: typeof baseURLProps.rel;
+  target: typeof baseURLProps.target;
+  href: string;
 };
 
 /**
@@ -48,7 +56,7 @@ const baseURLProps = {
  * otherwise returns false.
  * @param {Object} obj
  */
-const hasData = (obj) => get(obj, 'data.length', 0) > 0;
+const hasData = (obj: any) => (obj.data?.length ?? 0) > 0;
 
 /**
  * Get the number of issues and warnings by some defined criteria for each of them
@@ -63,8 +71,17 @@ const hasData = (obj) => get(obj, 'data.length', 0) > 0;
  * @param {string} issuesMatch
  * @param {string} warningsMatch
  */
-
-const getIssuesAndWarnings = ({ data, criteria, issuesMatch, warningsMatch }) => {
+const getIssuesAndWarnings = ({
+  data,
+  criteria,
+  issuesMatch,
+  warningsMatch,
+}: {
+  data: Array<any>;
+  criteria: string;
+  issuesMatch: any;
+  warningsMatch?: string;
+}): { issuesCount: number | null; warningsCount: number | null } => {
   if (!data || data.length === 0) {
     return { issuesCount: null, warningsCount: null };
   }
@@ -75,7 +92,7 @@ const getIssuesAndWarnings = ({ data, criteria, issuesMatch, warningsMatch }) =>
     if (element[criteria] === issuesMatch) {
       issuesCount += 1;
     }
-    if (warningsMatch !== null && element[criteria] === warningsMatch) {
+    if (warningsMatch !== null && warningsCount !== null && element[criteria] === warningsMatch) {
       warningsCount += 1;
     }
   });
@@ -85,36 +102,35 @@ const getIssuesAndWarnings = ({ data, criteria, issuesMatch, warningsMatch }) =>
 // metrics are available with max delta of 3 hours from last update
 const maxMetricsTimeDelta = 3;
 
-const hasResourceUsageMetrics = (cluster) => {
-  const metricsLastUpdate = moment.utc(get(cluster, 'metrics.cpu.updated_timestamp', 0));
+const hasResourceUsageMetrics = <E extends ClusterFromSubscription>(cluster: E) => {
+  const metricsLastUpdate = moment.utc(cluster.metrics?.cpu.updated_timestamp ?? 0); // according to model, metrics can't be undefined, but since OCMUI-1034 was technical refactoring, this is about to keep functionallity as it was
   const now = moment.utc();
-  const isArchived = get(cluster, 'subscription.status', false) === subscriptionStatuses.ARCHIVED;
-  const isDisconnected =
-    get(cluster, 'subscription.status', false) === subscriptionStatuses.DISCONNECTED;
+  const isArchived = cluster.subscription?.status === subscriptionStatuses.ARCHIVED;
+  const isDisconnected = cluster.subscription?.status === subscriptionStatuses.DISCONNECTED;
   const showOldMetrics = !!config.configData.showOldMetrics;
 
-  const metricsAvailable =
+  return (
     !isArchived &&
     !isDisconnected &&
-    hasCpuAndMemory(get(cluster, 'metrics.cpu', null), get(cluster, 'metrics.memory', null)) &&
-    (showOldMetrics || now.diff(metricsLastUpdate, 'hours') < maxMetricsTimeDelta);
-
-  return metricsAvailable;
+    hasCpuAndMemory(cluster.metrics?.cpu, cluster.metrics?.memory) &&
+    (showOldMetrics || now.diff(metricsLastUpdate, 'hours') < maxMetricsTimeDelta)
+  );
 };
 
-const resourceUsageIssuesHelper = (cpu, memory, threshold) => {
+const resourceUsageIssuesHelper = (
+  cpu: ClusterResource | undefined,
+  memory: ClusterResource | undefined,
+  threshold: number,
+): number | null => {
   if (!hasCpuAndMemory(cpu, memory)) {
     return null;
   }
 
-  const totalCPU = cpu.total.value;
-  const totalMemory = memory.total.value;
-
   let numOfIssues = 0;
-  if (cpu && totalCPU && cpu.used.value / cpu.total.value > threshold) {
+  if (cpu && cpu.total.value && cpu.used.value / cpu.total.value > threshold) {
     numOfIssues += 1;
   }
-  if (memory && totalMemory && memory.used.value / memory.total.value > threshold) {
+  if (memory && memory.total.value && memory.used.value / memory.total.value > threshold) {
     numOfIssues += 1;
   }
   return numOfIssues;
@@ -122,8 +138,8 @@ const resourceUsageIssuesHelper = (cpu, memory, threshold) => {
 
 // Assure that the base console url is well formatted with trailing '/' and ready
 // for concatenations.
-const consoleURLSetup = (clusterConsole) => {
-  if (clusterConsole && clusterConsole.url) {
+const consoleURLSetup = (clusterConsole?: ClusterConsole) => {
+  if (clusterConsole?.url) {
     let consoleURL = clusterConsole.url;
     if (consoleURL.charAt(consoleURL.length - 1) !== '/') {
       consoleURL += '/';
@@ -133,7 +149,11 @@ const consoleURLSetup = (clusterConsole) => {
   return null;
 };
 
-function monitoringItemLinkProps(clusterConsole, itemType, itemName) {
+function monitoringItemLinkProps(
+  clusterConsole: ClusterConsole | undefined,
+  itemType: monitoringItemTypes | undefined,
+  itemName: string,
+): monitoringItemLinkType | null {
   const consoleURL = consoleURLSetup(clusterConsole);
   let href;
   if (consoleURL) {
@@ -163,6 +183,7 @@ export {
   monitoringItemLinkProps,
   monitoringItemTypes,
   maxMetricsTimeDelta,
+  monitoringItemLinkType,
   hasResourceUsageMetrics,
   getIssuesAndWarnings,
   hasData,
