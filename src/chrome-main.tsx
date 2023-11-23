@@ -63,6 +63,7 @@ class AppEntry extends React.Component {
     insights.chrome.identifyApp('').then(() => {
       insights.chrome.appNavClick(getNavClickParams(window.location.pathname));
     });
+    config.dateConfig();
     insights.chrome.auth.getUser().then((data) => {
       if (data?.identity?.user) {
         store.dispatch(userInfoResponse(data.identity.user));

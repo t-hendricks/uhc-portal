@@ -3,6 +3,7 @@ import Adapter from '@wojtekmaj/enzyme-adapter-react-17';
 import { setAutoFreeze } from 'immer';
 import { sprintf } from 'sprintf-js';
 import * as useChromeHook from '@redhat-cloud-services/frontend-components/useChrome';
+import config from './config';
 
 // Mock apiRequest for all tests
 jest.mock('~/services/apiRequest');
@@ -56,3 +57,5 @@ global.insights = {
 };
 
 configure({ adapter: new Adapter() });
+
+config.dateConfig();

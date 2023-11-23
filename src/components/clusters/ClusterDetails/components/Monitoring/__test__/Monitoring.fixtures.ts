@@ -1,5 +1,5 @@
 import produce from 'immer';
-import moment from 'moment';
+import dayjs from 'dayjs';
 import { defaultMetric } from '~/components/clusters/common/__test__/clusterStates.fixtures';
 import {
   defaultClusterFromSubscription,
@@ -425,7 +425,7 @@ const cpuAndMemoryClusterRecentlyUpdated: ClusterFromSubscription = {
   metrics: {
     ...defaultMetric,
     cpu: {
-      updated_timestamp: moment.utc().format('YYYY-MM-DDTHH:mm:ssZ'),
+      updated_timestamp: dayjs.utc().format('YYYY-MM-DDTHH:mm:ssZ'),
       total: {
         unit: 'B',
         value: 843893919744,

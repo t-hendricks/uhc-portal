@@ -1,4 +1,4 @@
-import moment from 'moment';
+import dayjs from 'dayjs';
 import { ClusterResource } from '~/types/accounts_mgmt.v1';
 import { ClusterConsole } from '~/types/clusters_mgmt.v1';
 import { ClusterFromSubscription } from '~/types/types';
@@ -103,8 +103,8 @@ const getIssuesAndWarnings = ({
 const maxMetricsTimeDelta = 3;
 
 const hasResourceUsageMetrics = <E extends ClusterFromSubscription>(cluster: E) => {
-  const metricsLastUpdate = moment.utc(cluster.metrics?.cpu.updated_timestamp ?? 0); // according to model, metrics can't be undefined, but since OCMUI-1034 was technical refactoring, this is about to keep functionallity as it was
-  const now = moment.utc();
+  const metricsLastUpdate = dayjs.utc(cluster.metrics?.cpu.updated_timestamp ?? 0); // according to model, metrics can't be undefined, but since OCMUI-1034 was technical refactoring, this is about to keep functionallity as it was
+  const now = dayjs.utc();
   const isArchived = cluster.subscription?.status === subscriptionStatuses.ARCHIVED;
   const isDisconnected = cluster.subscription?.status === subscriptionStatuses.DISCONNECTED;
   const showOldMetrics = !!config.configData.showOldMetrics;
@@ -113,7 +113,7 @@ const hasResourceUsageMetrics = <E extends ClusterFromSubscription>(cluster: E) 
     !isArchived &&
     !isDisconnected &&
     hasCpuAndMemory(cluster.metrics?.cpu, cluster.metrics?.memory) &&
-    (showOldMetrics || now.diff(metricsLastUpdate, 'hours') < maxMetricsTimeDelta)
+    (showOldMetrics || now.diff(metricsLastUpdate, 'hour') < maxMetricsTimeDelta)
   );
 };
 

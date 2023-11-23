@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import moment from 'moment';
+import dayjs from 'dayjs';
 import { Button, EmptyState, EmptyStateBody, EmptyStateVariant } from '@patternfly/react-core';
 import { Table, TableBody, TableHeader, TableVariant } from '@patternfly/react-table';
 import { SUPPORT_CASE_URL, isRestrictedEnv } from '~/restrictedEnv';
@@ -60,7 +60,7 @@ class SupportCasesCard extends React.Component {
         </>
       );
 
-      const lastModifiedDate = moment.utc(supportCase.lastModifiedDate).format('D MMM YYYY');
+      const lastModifiedDate = dayjs.utc(supportCase.lastModifiedDate).format('D MMM YYYY');
 
       const lastModifiedBy = (
         <>
