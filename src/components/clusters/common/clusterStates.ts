@@ -87,8 +87,8 @@ const getClusterStateAndDescription = <E extends ClusterFromSubscription>(
  *
  * @param cluster something extending ClusterFromSubscription since components are using either Cluster or ClusterFromSubscription
  */
-const getInflightChecks = <E extends ClusterFromSubscription>(cluster: E): Array<InflightCheck> =>
-  Array.isArray(cluster.inflight_checks) ? cluster.inflight_checks : [];
+const getInflightChecks = <E extends ClusterFromSubscription>(cluster?: E): Array<InflightCheck> =>
+  cluster && Array.isArray(cluster.inflight_checks) ? cluster.inflight_checks : [];
 
 /**
  *
@@ -152,9 +152,9 @@ const isOSD = <E extends ClusterFromSubscription>(cluster: E): boolean =>
 const isROSAManualMode = (cluster: ClusterFromSubscription): boolean =>
   isROSA(cluster) && !cluster?.aws?.sts?.auto_mode && !cluster?.aws?.sts?.oidc_config?.id;
 
-const isHypershiftCluster = (cluster: ClusterFromSubscription | Cluster): boolean =>
-  cluster.hypershift?.enabled ||
-  (cluster.subscription !== undefined &&
+const isHypershiftCluster = (cluster?: ClusterFromSubscription | Cluster): boolean =>
+  cluster?.hypershift?.enabled ||
+  (cluster?.subscription !== undefined &&
     'plan' in cluster.subscription &&
     cluster.subscription.plan?.id === normalizedProducts.ROSA_HyperShift);
 
@@ -188,8 +188,8 @@ const getClusterAIPermissions = (cluster: ClusterWithPermissions) => ({
  *
  * @param cluster something extending ClusterFromSubscription since components are using either Cluster or ClusterFromSubscription
  */
-const isClusterUpgrading = <E extends ClusterFromSubscription>(cluster: E) =>
-  cluster.metrics.upgrade.state === 'running';
+const isClusterUpgrading = <E extends ClusterFromSubscription>(cluster?: E) =>
+  cluster?.metrics.upgrade.state === 'running';
 
 export {
   getClusterStateAndDescription,

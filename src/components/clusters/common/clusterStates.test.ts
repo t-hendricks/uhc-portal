@@ -8,6 +8,7 @@ import {
 import { normalizedProducts, subscriptionStatuses } from '../../../common/subscriptionTypes';
 import clusterStates, {
   getClusterStateAndDescription,
+  getInflightChecks,
   isClusterUpgrading,
   isHibernating,
   isHypershiftCluster,
@@ -160,6 +161,9 @@ describe('getClusterStateAndDescription', () => {
           expect(isHypershiftCluster(cluster)).toBe(expectedResult);
         },
       );
+      it('undefined cluster. It returns false', () => {
+        expect(isHypershiftCluster()).toBe(false);
+      });
     });
     describe('Cluster', () => {
       it.each([
@@ -339,6 +343,52 @@ describe('getClusterStateAndDescription', () => {
 
       // Assert
       expect(isUpgrading).toBe(false);
+    });
+
+    it('cluster undefined', () => {
+      // Act
+      const isUpgrading = isClusterUpgrading();
+
+      // Assert
+      expect(isUpgrading).toBe(false);
+    });
+  });
+
+  describe('getInflightChecks', () => {
+    it('it is array', () => {
+      // Arrange
+      const cluster: ClusterFromSubscription = {
+        ...defaultClusterFromSubscription,
+        inflight_checks: [{ id: 'A' }, { id: 'B' }, { id: 'C' }],
+      };
+
+      // Act
+      const inflightChecks = getInflightChecks(cluster);
+
+      // Assert
+      expect(inflightChecks).toStrictEqual([{ id: 'A' }, { id: 'B' }, { id: 'C' }]);
+    });
+
+    it('it is not array', () => {
+      // Arrange
+      const cluster: ClusterFromSubscription = {
+        ...defaultClusterFromSubscription,
+        inflight_checks: 'whatever' as any,
+      };
+
+      // Act
+      const inflightChecks = getInflightChecks(cluster);
+
+      // Assert
+      expect(inflightChecks).toStrictEqual([]);
+    });
+
+    it('cluster undefined', () => {
+      // Act
+      const inflightChecks = getInflightChecks();
+
+      // Assert
+      expect(inflightChecks).toStrictEqual([]);
     });
   });
 });
