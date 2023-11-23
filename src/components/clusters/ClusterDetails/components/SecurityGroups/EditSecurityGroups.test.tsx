@@ -106,6 +106,17 @@ describe('<EditSecurityGroups />', () => {
 
       expect(within(screen.getByRole('listbox')).getByText('sg-abc')).toBeInTheDocument();
       expect(within(screen.getByRole('listbox')).getByText('sg-xyz')).toBeInTheDocument();
+    });
+
+    it('Shows the name as empty and the id as the description if the group has no name', () => {
+      renderComponent({
+        isReadOnly: false,
+        selectedGroupIds: [],
+      });
+
+      openPFSecurityGroupsSelect();
+
+      expect(within(screen.getByRole('listbox')).getByText('--')).toBeInTheDocument();
       expect(
         within(screen.getByRole('listbox')).getByText('sg-group-without-a-name'),
       ).toBeInTheDocument();

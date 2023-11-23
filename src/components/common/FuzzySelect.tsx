@@ -2,6 +2,7 @@ import Fuse from 'fuse.js';
 import React, { ReactElement, useCallback, ChangeEvent, useMemo, useRef, useEffect } from 'react';
 import { KeyTypes, Select, SelectGroup, SelectOption, SelectProps } from '@patternfly/react-core';
 import { ErrorCircleOIcon } from '@patternfly/react-icons';
+import { truncateTextWithEllipsis } from '~/common/helpers';
 
 export type FuzzyEntryType = {
   key: string;
@@ -18,13 +19,6 @@ export interface FuzzySelectProps extends Omit<SelectProps, 'isGrouped'> {
   filterValidate?: { pattern: RegExp; message: string }; // regex pattern that must be true, else message is shown
   truncation?: number;
   selectionData: FuzzyDataType;
-}
-
-function truncateSelected(selected: string, truncation?: number) {
-  if (truncation && selected && selected.length > truncation) {
-    return `${selected.slice(0, truncation / 3)}... ${selected.slice((-truncation * 2) / 3)}`;
-  }
-  return selected;
 }
 
 function FuzzySelect(props: FuzzySelectProps) {
@@ -234,7 +228,7 @@ function FuzzySelect(props: FuzzySelectProps) {
       <Select
         isOpen={isOpen}
         onFilter={onFilter}
-        selections={truncateSelected(selected, truncation)}
+        selections={truncateTextWithEllipsis(selected, truncation)}
         style={{ maxHeight: '300px', overflowY: 'auto' }}
         ref={ref}
         hasInlineFilter
