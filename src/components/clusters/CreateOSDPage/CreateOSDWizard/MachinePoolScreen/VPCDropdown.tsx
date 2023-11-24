@@ -139,9 +139,9 @@ const VPCDropdown = ({
   return (
     <>
       <FormGroup
-        label={`Select a VPC to install your cluster into your selected region: ${
-          vpcResponse.region || ''
-        }`}
+        label={`Select a VPC to install your ${
+          isHypershift ? 'machine pools' : 'cluster'
+        } into your selected region: ${vpcResponse.region || ''}`}
         validated={touched && error ? 'error' : 'default'}
         isRequired
       >
