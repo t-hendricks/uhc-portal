@@ -2,6 +2,9 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { Field } from 'redux-form';
 import { FormGroup, GridItem, Alert } from '@patternfly/react-core';
+
+import { SupportedFeature } from '~/common/featureCompatibility';
+import { getIncompatibleVersionReason } from '~/common/versionCompatibility';
 import CloudRegionComboBox from './CloudRegionComboBox';
 import { constants } from '../../CreateOSDFormConstants';
 import { noQuotaTooltip } from '../../../../../../common/helpers';
@@ -67,6 +70,23 @@ function BasicFieldsSection({
     change('max_replicas', getMinReplicasCount(isBYOC, isValueMultiAz, true, isHypershiftSelected));
   };
 
+  const handleVersionChange = (clusterVersion) => {
+    // If features become incompatible with the new version, clear their settings
+    const canDefineSecurityGroups = !getIncompatibleVersionReason(
+      SupportedFeature.SECURITY_GROUPS,
+      clusterVersion.raw_id,
+      { day1: true },
+    );
+    if (!canDefineSecurityGroups) {
+      change('securityGroups', {
+        applyControlPlaneToAll: true,
+        controlPlane: [],
+        infra: [],
+        worker: [],
+      });
+    }
+  };
+
   return (
     <>
       {/* cluster name */}
@@ -118,6 +138,7 @@ function BasicFieldsSection({
             isRequired
             validate={(value) => (value ? undefined : ' ')}
             isRosa={isRosa}
+            onChange={handleVersionChange}
           />
         </GridItem>
         <GridItem md={6} />
