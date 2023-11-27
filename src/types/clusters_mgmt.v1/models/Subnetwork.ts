@@ -7,19 +7,27 @@
  */
 export type Subnetwork = {
   /**
-   * The availability zone to which the subnet is related
+   * The CIDR Block of the subnet.
+   */
+  cidr_block?: string;
+  /**
+   * The availability zone to which the subnet is related.
    */
   availability_zone?: string;
   /**
-   * Name of the subnet according to its `Name` tag on AWS
+   * Name of the subnet according to its `Name` tag on AWS.
    */
   name?: string;
   /**
-   * Whether it is a public subnet
+   * Whether or not it is a public subnet.
    */
   public?: boolean;
   /**
-   * The subnet id to be used while installing a cluster
+   * If the resource is RH managed.
+   */
+  red_hat_managed?: boolean;
+  /**
+   * The subnet ID to be used while installing a cluster.
    */
   subnet_id?: string;
 };

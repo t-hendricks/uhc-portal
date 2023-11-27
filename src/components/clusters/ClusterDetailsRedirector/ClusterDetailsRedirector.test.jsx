@@ -1,37 +1,42 @@
 import React from 'react';
-import { shallow } from 'enzyme';
-
+import { screen, render } from '~/testUtils';
 import ClusterDetailsRedirector from './ClusterDetailsRedirector';
 
+jest.mock('react-router-dom', () => ({
+  Redirect: jest.fn(({ to }) => `Redirected to "${to}"`),
+}));
+
 describe('<ClusterDetailsRedirector />', () => {
-  let wrapper;
+  afterAll(() => {
+    jest.unmock('react-router-dom');
+  });
+
   const clearSubscriptionIDForCluster = jest.fn();
   const setGlobalError = jest.fn();
 
+  const fetchSubscriptionIDForCluster = jest.fn();
+  const defaultProps = {
+    fetchSubscriptionIDForCluster,
+    setGlobalError,
+    clearSubscriptionIDForCluster,
+    match: { params: { id: 'foo' } },
+    location: { hash: '#bar' },
+    subscriptionIDResponse: {
+      fulfilled: false,
+    },
+  };
+
   describe('when pending or not yet fulfilled', () => {
-    const fetchSubscriptionIDForCluster = jest.fn();
-    beforeEach(() => {
-      wrapper = shallow(
-        <ClusterDetailsRedirector
-          fetchSubscriptionIDForCluster={fetchSubscriptionIDForCluster}
-          setGlobalError={setGlobalError}
-          clearSubscriptionIDForCluster={clearSubscriptionIDForCluster}
-          match={{ params: { id: 'foo' } }}
-          location={{ hash: '#bar' }}
-          subscriptionIDResponse={{
-            fulfilled: false,
-          }}
-        />,
-      );
+    afterEach(() => {
+      clearSubscriptionIDForCluster.mockClear();
+      setGlobalError.mockClear();
+      fetchSubscriptionIDForCluster.mockClear();
     });
+
     it('should render a spinner', () => {
-      expect(wrapper).toMatchSnapshot();
-      expect(wrapper.find('Spinner').length).toBe(1);
-    });
-    it('should call fetchSubscriptionIDForCluster with the cluster ID', () => {
+      render(<ClusterDetailsRedirector {...defaultProps} />);
+      expect(screen.getByRole('status')).toHaveClass('ins-c-spinner ins-m-center');
       expect(fetchSubscriptionIDForCluster).toBeCalledWith('foo');
-    });
-    it('should not call setGlobalError', () => {
       expect(setGlobalError).not.toBeCalled();
     });
   });
@@ -44,18 +49,14 @@ describe('<ClusterDetailsRedirector />', () => {
     };
     describe('404 error', () => {
       it('should render a redirect to /', () => {
-        wrapper.setProps({
-          subscriptionIDResponse: {
-            ...baseErrorResponse,
-            errorCode: 404,
-          },
-        });
-        expect(wrapper).toMatchSnapshot();
-        const redirect = wrapper.find('Redirect');
-        expect(redirect.length).toBe(1);
-        expect(redirect.props().to).toEqual('/');
-      });
-      it('should call setGlobalError', () => {
+        const newProps = {
+          ...defaultProps,
+          subscriptionIDResponse: { ...baseErrorResponse, errorCode: 404 },
+        };
+
+        render(<ClusterDetailsRedirector {...newProps} />);
+        expect(screen.getByText('Redirected to "/"')).toBeInTheDocument();
+
         expect(setGlobalError).toBeCalledWith(
           expect.anything(), // should be a react node/fragment, but I don't know how to check that
           'clusterDetails',
@@ -65,35 +66,32 @@ describe('<ClusterDetailsRedirector />', () => {
     });
     describe('500 error', () => {
       it('should render an Unavailable message', () => {
-        wrapper.setProps({
-          subscriptionIDResponse: {
-            ...baseErrorResponse,
-            errorCode: 500,
-          },
-        });
-        expect(wrapper).toMatchSnapshot();
-        expect(wrapper.find('Unavailable').length).toBe(1);
+        const newProps = {
+          ...defaultProps,
+          subscriptionIDResponse: { ...baseErrorResponse, errorCode: 500 },
+        };
+
+        render(<ClusterDetailsRedirector {...newProps} />);
+        expect(screen.getByText('This page is temporarily unavailable')).toBeInTheDocument();
       });
     });
   });
   describe('on fulfilled', () => {
     it('should render a redirect', () => {
-      wrapper.setProps({
-        subscriptionIDResponse: {
-          pending: false,
-          error: false,
-          fulfilled: true,
-          id: 'foobar',
-        },
-      });
-      expect(wrapper).toMatchSnapshot();
-      const redirect = wrapper.find('Redirect');
-      expect(redirect.length).toBe(1);
-      expect(redirect.props().to).toEqual('/details/s/foobar#bar');
+      const newProps = {
+        ...defaultProps,
+        subscriptionIDResponse: { pending: false, error: false, fulfilled: true, id: 'foobar' },
+      };
+
+      render(<ClusterDetailsRedirector {...newProps} />);
+      expect(screen.getByText('Redirected to "/details/s/foobar#bar"')).toBeInTheDocument();
     });
   });
   it('should clear response on unmount', () => {
-    wrapper.unmount();
+    clearSubscriptionIDForCluster.mockClear();
+    const { unmount } = render(<ClusterDetailsRedirector {...defaultProps} />);
+    expect(clearSubscriptionIDForCluster).not.toBeCalled();
+    unmount();
     expect(clearSubscriptionIDForCluster).toBeCalled();
   });
 });

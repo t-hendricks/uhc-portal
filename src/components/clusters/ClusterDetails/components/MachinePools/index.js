@@ -2,6 +2,8 @@ import { connect } from 'react-redux';
 import get from 'lodash/get';
 import modals from '~/components/common/Modal/modals';
 
+import { HCP_USE_NODE_UPGRADE_POLICIES } from '~/redux/constants/featureConstants';
+import { featureGateSelector } from '~/hooks/useFeatureGate';
 import MachinePools from './MachinePools';
 import {
   getMachineOrNodePools,
@@ -10,10 +12,7 @@ import {
   clearDeleteMachinePoolResponse,
 } from './MachinePoolsActions';
 
-import {
-  isHCPControlPlaneUpdating,
-  isMachinePoolBehindControlPlane,
-} from './UpdateMachinePools/updateMachinePoolsHelpers';
+import { canMachinePoolBeUpgradedSelector } from './UpdateMachinePools/updateMachinePoolsHelpers';
 import { hasMachinePoolsQuotaSelector } from './MachinePoolsSelectors';
 import { normalizeNodePool } from './machinePoolsHelper';
 
@@ -35,8 +34,8 @@ const mapStateToProps = (state) => {
     hasMachinePoolsQuota: hasMachinePoolsQuotaSelector(state),
     machineTypes: state.machineTypes,
     organization: state.userProfile.organization,
-    canMachinePoolBeUpdated: (machinePool) =>
-      !isHCPControlPlaneUpdating(state) && isMachinePoolBehindControlPlane(state, machinePool),
+    canMachinePoolBeUpdated: (machinePool) => canMachinePoolBeUpgradedSelector(state, machinePool),
+    useNodeUpgradePolicies: featureGateSelector(state, HCP_USE_NODE_UPGRADE_POLICIES),
   };
 
   const machinePoolsList = isHypershiftCluster(cluster)
@@ -57,8 +56,15 @@ const mapDispatchToProps = (dispatch, ownProps) => {
   return {
     openModal: (modalId, data) => dispatch(openModal(modalId, data)),
     closeModal: () => dispatch(closeModal()),
-    getMachinePools: () => {
-      dispatch(getMachineOrNodePools(ownProps.cluster.id, isHypershift));
+    getMachinePools: (skipMachinePoolPolicies) => {
+      dispatch(
+        getMachineOrNodePools(
+          ownProps.cluster.id,
+          isHypershift,
+          ownProps.cluster.version.id,
+          skipMachinePoolPolicies,
+        ),
+      );
       dispatch(
         clusterAutoscalerActions.setHasInitialClusterAutoscaler(!!ownProps.cluster.autoscaler),
       );

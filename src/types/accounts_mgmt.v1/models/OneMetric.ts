@@ -20,6 +20,7 @@ export type OneMetric = {
   health_state?: OneMetric.health_state;
   memory: ClusterResource;
   nodes: ClusterMetricsNodes;
+  nodes_arch?: Array<ClusterMetricsNodes>;
   non_virt_nodes: number;
   openshift_version: string;
   operating_system: string;

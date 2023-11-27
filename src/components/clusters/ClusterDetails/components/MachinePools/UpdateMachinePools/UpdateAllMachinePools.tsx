@@ -7,14 +7,20 @@ import { GlobalState } from '~/redux/store';
 import ExternalLink from '~/components/common/ExternalLink';
 import { NodePool } from '~/types/clusters_mgmt.v1/models/NodePool';
 import links from '~/common/installLinks.mjs';
+import { useFeatureGate } from '~/hooks/useFeatureGate';
+import { HCP_USE_NODE_UPGRADE_POLICIES } from '~/redux/constants/featureConstants';
 import { isHypershiftCluster } from '../../../clusterDetailsHelper';
 import { getMachineOrNodePools } from '../MachinePoolsActions';
+
 import {
   updateAllMachinePools as updateAllPools,
   useHCPControlPlaneUpdating,
   controlPlaneVersionSelector,
   controlPlaneIdSelector,
   compareIsMachinePoolBehindControlPlane,
+  isControlPlaneValidForMachinePool,
+  isMachinePoolUpgrading,
+  isMachinePoolScheduleError,
 } from './updateMachinePoolsHelpers';
 
 const UpdateAllMachinePools = ({
@@ -30,11 +36,15 @@ const UpdateAllMachinePools = ({
     initialErrorMessage ? [initialErrorMessage] : [],
   );
 
+  const useNodeUpdatePolicies = useFeatureGate(HCP_USE_NODE_UPGRADE_POLICIES);
+
   const controlPlaneUpdating = useHCPControlPlaneUpdating();
 
   const clusterId = useSelector(controlPlaneIdSelector);
 
-  const controlPlaneVersion = useSelector(controlPlaneVersionSelector);
+  const controlPlaneVersion = useSelector((state: GlobalState) =>
+    controlPlaneVersionSelector(state),
+  );
   const machinePools = useSelector((state: GlobalState) => state.machinePools?.getMachinePools);
   const isHypershift = useSelector((state: GlobalState) =>
     isHypershiftCluster(state.clusters.details.cluster),
@@ -45,8 +55,12 @@ const UpdateAllMachinePools = ({
   }
 
   const machinePoolsToUpdate =
-    machinePools.data?.filter((pool: NodePool) =>
-      compareIsMachinePoolBehindControlPlane(controlPlaneVersion, pool.version?.id),
+    machinePools.data?.filter(
+      (pool: NodePool) =>
+        compareIsMachinePoolBehindControlPlane(controlPlaneVersion, pool.version?.id) &&
+        isControlPlaneValidForMachinePool(pool, controlPlaneVersion) &&
+        !isMachinePoolScheduleError(pool) &&
+        !isMachinePoolUpgrading(pool),
     ) || [];
 
   if (machinePoolsToUpdate.length === 0) {
@@ -55,10 +69,22 @@ const UpdateAllMachinePools = ({
 
   const updateNodePools = async () => {
     setPending(true);
-    const errors = await updateAllPools(machinePoolsToUpdate, clusterId, controlPlaneVersion || '');
+    const errors = await updateAllPools(
+      machinePoolsToUpdate,
+      clusterId,
+      controlPlaneVersion,
+      useNodeUpdatePolicies,
+    );
     setPending(false);
     setErrors(errors);
-    dispatch(getMachineOrNodePools(clusterId, isHypershift) as any);
+    dispatch(
+      getMachineOrNodePools(
+        clusterId,
+        isHypershift,
+        controlPlaneVersion,
+        useNodeUpdatePolicies,
+      ) as any,
+    );
   };
 
   return (
@@ -73,6 +99,7 @@ const UpdateAllMachinePools = ({
           className="pf-u-mt-md"
         >
           {errors.map((error, index) => (
+            // There isn't another accessible unique key
             // eslint-disable-next-line react/no-array-index-key
             <p key={index}>{error}</p>
           ))}

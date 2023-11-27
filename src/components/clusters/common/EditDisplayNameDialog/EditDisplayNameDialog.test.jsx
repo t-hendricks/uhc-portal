@@ -1,87 +1,100 @@
 import React from 'react';
-import { mount, shallow } from 'enzyme';
-import Modal from '../../../common/Modal/Modal';
-
+import { render, screen, checkAccessibility, within, fireEvent } from '~/testUtils';
 import EditDisplayNameDialog from './EditDisplayNameDialog';
-import ErrorBox from '../../../common/ErrorBox';
 
 describe('<EditDisplayNameDialog />', () => {
-  let wrapper;
   const closeModal = jest.fn();
   const onClose = jest.fn();
   const submit = jest.fn();
   const resetResponse = jest.fn();
 
-  beforeEach(() => {
-    wrapper = shallow(
-      <EditDisplayNameDialog
-        isOpen
-        closeModal={closeModal}
-        onClose={onClose}
-        submit={submit}
-        resetResponse={resetResponse}
-        displayName="some-name"
-        clusterID="some-id"
-        subscriptionID="some-other-id"
-        editClusterResponse={{ errorMessage: '', error: false }}
-      />,
-    );
+  const defaultProps = {
+    isOpen: true,
+    closeModal,
+    onClose,
+    submit,
+    resetResponse,
+    displayName: 'my-display-name',
+    clusterID: 'my-cluster-id',
+    subscriptionID: 'my-subscription-id',
+    editClusterResponse: { errorMessage: '', error: false },
+  };
+
+  afterEach(() => {
+    jest.clearAllMocks();
   });
 
-  it('renders correctly', () => {
-    expect(wrapper).toMatchSnapshot();
+  it('is accessible when first opened', async () => {
+    const { container } = render(<EditDisplayNameDialog {...defaultProps} />);
+    await checkAccessibility(container);
   });
 
-  it('renders correctly when an error occurs', () => {
-    wrapper.setProps({ editClusterResponse: { error: true, errorMessage: 'this is an error' } });
-    expect(wrapper).toMatchSnapshot();
-    expect(wrapper.find(ErrorBox).length).toEqual(1);
+  it('is accessible when an error occurs', async () => {
+    const newProps = {
+      ...defaultProps,
+      editClusterResponse: { error: true, errorMessage: 'this is an error' },
+    };
+    const { rerender, container } = render(<EditDisplayNameDialog {...defaultProps} />);
+    rerender(<EditDisplayNameDialog {...newProps} />);
+
+    expect(
+      within(screen.getByRole('alert', { name: 'Danger Alert' })).getByText('this is an error'),
+    ).toBeInTheDocument();
+    await checkAccessibility(container);
   });
 
-  it('renders correctly when pending', () => {
-    wrapper.setProps({ editClusterResponse: { pending: true, error: false, fulfilled: false } });
-    expect(wrapper).toMatchSnapshot();
-    const modal = wrapper.find(Modal);
-    expect(modal.props().isPending).toBeTruthy();
+  it('is accessible when pending', async () => {
+    const newProps = {
+      ...defaultProps,
+      editClusterResponse: { pending: true, error: false, fulfilled: false },
+    };
+    const { container } = render(<EditDisplayNameDialog {...newProps} />);
+
+    expect(screen.getByText('Loading...')).toBeInTheDocument();
+    expect(screen.getByRole('status')).toBeInTheDocument();
+    await checkAccessibility(container);
   });
 
-  describe('mounted ', () => {
-    beforeEach(() => {
-      wrapper = mount(
-        <EditDisplayNameDialog
-          isOpen
-          closeModal={closeModal}
-          onClose={onClose}
-          submit={submit}
-          resetResponse={resetResponse}
-          displayName="some-name"
-          clusterID="some-id"
-          subscriptionID="some-other-id"
-          editClusterResponse={{ errorMessage: '', error: false }}
-        />,
-      );
-    });
+  it('when cancelled, calls closeModal but not onClose ', async () => {
+    const { user } = render(<EditDisplayNameDialog {...defaultProps} />);
+    expect(closeModal).not.toBeCalled();
+    expect(resetResponse).not.toBeCalled();
 
-    it('when cancelled, calls closeModal but not onClose ', () => {
-      wrapper.find('.pf-m-secondary').at(0).simulate('click');
-      expect(closeModal).toBeCalled();
-      expect(resetResponse).toBeCalled();
-      expect(onClose).not.toBeCalled();
-    });
+    await user.click(screen.getByRole('button', { name: 'Cancel' }));
+    expect(closeModal).toBeCalled();
+    expect(resetResponse).toBeCalled();
+    expect(onClose).not.toBeCalled();
+  });
 
-    it('submits correctly', () => {
-      const input = wrapper.find('.pf-c-form-control');
-      input.instance().value = 'hello';
-      input.at(0).simulate('change');
-      wrapper.find('.pf-m-primary').simulate('click');
-      expect(submit).toBeCalledWith('some-other-id', 'hello');
-    });
+  it('calls submit when Edit button is clicked', async () => {
+    const { user } = render(<EditDisplayNameDialog {...defaultProps} />);
 
-    it('when fulfilled, closes dialog', () => {
-      wrapper.setProps({ editClusterResponse: { fulfilled: true, errorMessage: '' } });
-      expect(closeModal).toBeCalled();
-      expect(resetResponse).toBeCalled();
-      expect(onClose).toBeCalled();
-    });
+    expect(screen.getByRole('button', { name: 'Edit' })).toHaveAttribute('aria-disabled', 'true');
+
+    fireEvent.change(screen.getByRole('textbox'), { target: { value: 'my-new-name' } });
+    expect(screen.getByRole('button', { name: 'Edit' })).toHaveAttribute('aria-disabled', 'false');
+    expect(submit).not.toBeCalled();
+
+    await user.click(screen.getByRole('button', { name: 'Edit' }));
+    expect(submit).toBeCalledWith('my-subscription-id', 'my-new-name');
+  });
+
+  it('once fulfilled calls closeModal, resetResponse, and onClose', () => {
+    const { rerender } = render(<EditDisplayNameDialog {...defaultProps} />);
+
+    expect(closeModal).not.toBeCalled();
+    expect(resetResponse).not.toBeCalled();
+    expect(onClose).not.toBeCalled();
+
+    const newProps = {
+      ...defaultProps,
+      editClusterResponse: { fulfilled: true, errorMessage: '' },
+    };
+
+    rerender(<EditDisplayNameDialog {...newProps} />);
+
+    expect(closeModal).toBeCalled();
+    expect(resetResponse).toBeCalled();
+    expect(onClose).toBeCalled();
   });
 });

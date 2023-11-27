@@ -17,7 +17,7 @@ import links from '~/common/installLinks.mjs';
 import { CloudAccount } from '~/types/accounts_mgmt.v1';
 import { AWS_ACCOUNT_ROSA_LOCALSTORAGE_KEY } from '~/common/localStorageConstants';
 import PopoverHint from '../../../../common/PopoverHint';
-import { hasContract } from './AWSBillingAccount/awsBillingAccountHelper';
+import { getContract } from './AWSBillingAccount/awsBillingAccountHelper';
 import { useAssociateAWSAccountDrawer } from './AssociateAWSAccountDrawer/AssociateAWSAccountDrawer';
 import FuzzySelect, { FuzzyDataType, FuzzyEntryType } from '../../../../common/FuzzySelect';
 
@@ -116,9 +116,9 @@ function AWSAccountSelection({
   const selectionData = useMemo<FuzzyDataType>(
     () =>
       accounts.map((cloudAccount) => ({
-        key: cloudAccount.cloud_account_id,
-        value: cloudAccount.cloud_account_id,
-        description: isBillingAccount && hasContract(cloudAccount) ? 'Contract enabled' : '',
+        key: cloudAccount.cloud_account_id || '',
+        value: cloudAccount.cloud_account_id || '',
+        description: isBillingAccount && !!getContract(cloudAccount) ? 'Contract enabled' : '',
       })),
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [accounts],

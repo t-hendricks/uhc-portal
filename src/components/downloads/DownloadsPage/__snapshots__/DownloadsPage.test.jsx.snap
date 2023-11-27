@@ -402,16 +402,16 @@ exports[`<DownloadsPage> renders 1`] = `
                 "oc-mirror-plugin": Object {
                   "stable": Object {
                     "arm": Object {
-                      "linux": "https://mirror.openshift.com/pub/openshift-v4/aarch64/clients/ocp/stable/oc-mirror.tar.gz",
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/aarch64/clients/ocp/latest/oc-mirror.tar.gz",
                     },
                     "ppc": Object {
-                      "linux": "https://mirror.openshift.com/pub/openshift-v4/ppc64le/clients/ocp/stable/oc-mirror.tar.gz",
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/ppc64le/clients/ocp/latest/oc-mirror.tar.gz",
                     },
                     "s390x": Object {
-                      "linux": "https://mirror.openshift.com/pub/openshift-v4/s390x/clients/ocp/stable/oc-mirror.tar.gz",
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/s390x/clients/ocp/latest/oc-mirror.tar.gz",
                     },
                     "x86": Object {
-                      "linux": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp/stable/oc-mirror.tar.gz",
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp/latest/oc-mirror.tar.gz",
                     },
                   },
                 },
@@ -949,16 +949,16 @@ exports[`<DownloadsPage> renders 1`] = `
                 "oc-mirror-plugin": Object {
                   "stable": Object {
                     "arm": Object {
-                      "linux": "https://mirror.openshift.com/pub/openshift-v4/aarch64/clients/ocp/stable/oc-mirror.tar.gz",
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/aarch64/clients/ocp/latest/oc-mirror.tar.gz",
                     },
                     "ppc": Object {
-                      "linux": "https://mirror.openshift.com/pub/openshift-v4/ppc64le/clients/ocp/stable/oc-mirror.tar.gz",
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/ppc64le/clients/ocp/latest/oc-mirror.tar.gz",
                     },
                     "s390x": Object {
-                      "linux": "https://mirror.openshift.com/pub/openshift-v4/s390x/clients/ocp/stable/oc-mirror.tar.gz",
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/s390x/clients/ocp/latest/oc-mirror.tar.gz",
                     },
                     "x86": Object {
-                      "linux": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp/stable/oc-mirror.tar.gz",
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp/latest/oc-mirror.tar.gz",
                     },
                   },
                 },
@@ -1486,16 +1486,16 @@ exports[`<DownloadsPage> renders 1`] = `
                 "oc-mirror-plugin": Object {
                   "stable": Object {
                     "arm": Object {
-                      "linux": "https://mirror.openshift.com/pub/openshift-v4/aarch64/clients/ocp/stable/oc-mirror.tar.gz",
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/aarch64/clients/ocp/latest/oc-mirror.tar.gz",
                     },
                     "ppc": Object {
-                      "linux": "https://mirror.openshift.com/pub/openshift-v4/ppc64le/clients/ocp/stable/oc-mirror.tar.gz",
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/ppc64le/clients/ocp/latest/oc-mirror.tar.gz",
                     },
                     "s390x": Object {
-                      "linux": "https://mirror.openshift.com/pub/openshift-v4/s390x/clients/ocp/stable/oc-mirror.tar.gz",
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/s390x/clients/ocp/latest/oc-mirror.tar.gz",
                     },
                     "x86": Object {
-                      "linux": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp/stable/oc-mirror.tar.gz",
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp/latest/oc-mirror.tar.gz",
                     },
                   },
                 },
@@ -2027,16 +2027,16 @@ exports[`<DownloadsPage> renders 1`] = `
                 "oc-mirror-plugin": Object {
                   "stable": Object {
                     "arm": Object {
-                      "linux": "https://mirror.openshift.com/pub/openshift-v4/aarch64/clients/ocp/stable/oc-mirror.tar.gz",
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/aarch64/clients/ocp/latest/oc-mirror.tar.gz",
                     },
                     "ppc": Object {
-                      "linux": "https://mirror.openshift.com/pub/openshift-v4/ppc64le/clients/ocp/stable/oc-mirror.tar.gz",
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/ppc64le/clients/ocp/latest/oc-mirror.tar.gz",
                     },
                     "s390x": Object {
-                      "linux": "https://mirror.openshift.com/pub/openshift-v4/s390x/clients/ocp/stable/oc-mirror.tar.gz",
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/s390x/clients/ocp/latest/oc-mirror.tar.gz",
                     },
                     "x86": Object {
-                      "linux": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp/stable/oc-mirror.tar.gz",
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp/latest/oc-mirror.tar.gz",
                     },
                   },
                 },
@@ -2564,16 +2564,16 @@ exports[`<DownloadsPage> renders 1`] = `
                 "oc-mirror-plugin": Object {
                   "stable": Object {
                     "arm": Object {
-                      "linux": "https://mirror.openshift.com/pub/openshift-v4/aarch64/clients/ocp/stable/oc-mirror.tar.gz",
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/aarch64/clients/ocp/latest/oc-mirror.tar.gz",
                     },
                     "ppc": Object {
-                      "linux": "https://mirror.openshift.com/pub/openshift-v4/ppc64le/clients/ocp/stable/oc-mirror.tar.gz",
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/ppc64le/clients/ocp/latest/oc-mirror.tar.gz",
                     },
                     "s390x": Object {
-                      "linux": "https://mirror.openshift.com/pub/openshift-v4/s390x/clients/ocp/stable/oc-mirror.tar.gz",
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/s390x/clients/ocp/latest/oc-mirror.tar.gz",
                     },
                     "x86": Object {
-                      "linux": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp/stable/oc-mirror.tar.gz",
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp/latest/oc-mirror.tar.gz",
                     },
                   },
                 },
@@ -3129,16 +3129,16 @@ exports[`<DownloadsPage> renders 1`] = `
                 "oc-mirror-plugin": Object {
                   "stable": Object {
                     "arm": Object {
-                      "linux": "https://mirror.openshift.com/pub/openshift-v4/aarch64/clients/ocp/stable/oc-mirror.tar.gz",
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/aarch64/clients/ocp/latest/oc-mirror.tar.gz",
                     },
                     "ppc": Object {
-                      "linux": "https://mirror.openshift.com/pub/openshift-v4/ppc64le/clients/ocp/stable/oc-mirror.tar.gz",
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/ppc64le/clients/ocp/latest/oc-mirror.tar.gz",
                     },
                     "s390x": Object {
-                      "linux": "https://mirror.openshift.com/pub/openshift-v4/s390x/clients/ocp/stable/oc-mirror.tar.gz",
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/s390x/clients/ocp/latest/oc-mirror.tar.gz",
                     },
                     "x86": Object {
-                      "linux": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp/stable/oc-mirror.tar.gz",
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp/latest/oc-mirror.tar.gz",
                     },
                   },
                 },
@@ -3665,16 +3665,16 @@ exports[`<DownloadsPage> renders 1`] = `
                 "oc-mirror-plugin": Object {
                   "stable": Object {
                     "arm": Object {
-                      "linux": "https://mirror.openshift.com/pub/openshift-v4/aarch64/clients/ocp/stable/oc-mirror.tar.gz",
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/aarch64/clients/ocp/latest/oc-mirror.tar.gz",
                     },
                     "ppc": Object {
-                      "linux": "https://mirror.openshift.com/pub/openshift-v4/ppc64le/clients/ocp/stable/oc-mirror.tar.gz",
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/ppc64le/clients/ocp/latest/oc-mirror.tar.gz",
                     },
                     "s390x": Object {
-                      "linux": "https://mirror.openshift.com/pub/openshift-v4/s390x/clients/ocp/stable/oc-mirror.tar.gz",
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/s390x/clients/ocp/latest/oc-mirror.tar.gz",
                     },
                     "x86": Object {
-                      "linux": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp/stable/oc-mirror.tar.gz",
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp/latest/oc-mirror.tar.gz",
                     },
                   },
                 },
@@ -4201,16 +4201,16 @@ exports[`<DownloadsPage> renders 1`] = `
                 "oc-mirror-plugin": Object {
                   "stable": Object {
                     "arm": Object {
-                      "linux": "https://mirror.openshift.com/pub/openshift-v4/aarch64/clients/ocp/stable/oc-mirror.tar.gz",
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/aarch64/clients/ocp/latest/oc-mirror.tar.gz",
                     },
                     "ppc": Object {
-                      "linux": "https://mirror.openshift.com/pub/openshift-v4/ppc64le/clients/ocp/stable/oc-mirror.tar.gz",
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/ppc64le/clients/ocp/latest/oc-mirror.tar.gz",
                     },
                     "s390x": Object {
-                      "linux": "https://mirror.openshift.com/pub/openshift-v4/s390x/clients/ocp/stable/oc-mirror.tar.gz",
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/s390x/clients/ocp/latest/oc-mirror.tar.gz",
                     },
                     "x86": Object {
-                      "linux": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp/stable/oc-mirror.tar.gz",
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp/latest/oc-mirror.tar.gz",
                     },
                   },
                 },
@@ -4738,16 +4738,16 @@ exports[`<DownloadsPage> renders 1`] = `
                 "oc-mirror-plugin": Object {
                   "stable": Object {
                     "arm": Object {
-                      "linux": "https://mirror.openshift.com/pub/openshift-v4/aarch64/clients/ocp/stable/oc-mirror.tar.gz",
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/aarch64/clients/ocp/latest/oc-mirror.tar.gz",
                     },
                     "ppc": Object {
-                      "linux": "https://mirror.openshift.com/pub/openshift-v4/ppc64le/clients/ocp/stable/oc-mirror.tar.gz",
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/ppc64le/clients/ocp/latest/oc-mirror.tar.gz",
                     },
                     "s390x": Object {
-                      "linux": "https://mirror.openshift.com/pub/openshift-v4/s390x/clients/ocp/stable/oc-mirror.tar.gz",
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/s390x/clients/ocp/latest/oc-mirror.tar.gz",
                     },
                     "x86": Object {
-                      "linux": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp/stable/oc-mirror.tar.gz",
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp/latest/oc-mirror.tar.gz",
                     },
                   },
                 },
@@ -5287,16 +5287,16 @@ exports[`<DownloadsPage> renders 1`] = `
                 "oc-mirror-plugin": Object {
                   "stable": Object {
                     "arm": Object {
-                      "linux": "https://mirror.openshift.com/pub/openshift-v4/aarch64/clients/ocp/stable/oc-mirror.tar.gz",
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/aarch64/clients/ocp/latest/oc-mirror.tar.gz",
                     },
                     "ppc": Object {
-                      "linux": "https://mirror.openshift.com/pub/openshift-v4/ppc64le/clients/ocp/stable/oc-mirror.tar.gz",
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/ppc64le/clients/ocp/latest/oc-mirror.tar.gz",
                     },
                     "s390x": Object {
-                      "linux": "https://mirror.openshift.com/pub/openshift-v4/s390x/clients/ocp/stable/oc-mirror.tar.gz",
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/s390x/clients/ocp/latest/oc-mirror.tar.gz",
                     },
                     "x86": Object {
-                      "linux": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp/stable/oc-mirror.tar.gz",
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp/latest/oc-mirror.tar.gz",
                     },
                   },
                 },
@@ -5857,16 +5857,16 @@ exports[`<DownloadsPage> renders 1`] = `
                 "oc-mirror-plugin": Object {
                   "stable": Object {
                     "arm": Object {
-                      "linux": "https://mirror.openshift.com/pub/openshift-v4/aarch64/clients/ocp/stable/oc-mirror.tar.gz",
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/aarch64/clients/ocp/latest/oc-mirror.tar.gz",
                     },
                     "ppc": Object {
-                      "linux": "https://mirror.openshift.com/pub/openshift-v4/ppc64le/clients/ocp/stable/oc-mirror.tar.gz",
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/ppc64le/clients/ocp/latest/oc-mirror.tar.gz",
                     },
                     "s390x": Object {
-                      "linux": "https://mirror.openshift.com/pub/openshift-v4/s390x/clients/ocp/stable/oc-mirror.tar.gz",
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/s390x/clients/ocp/latest/oc-mirror.tar.gz",
                     },
                     "x86": Object {
-                      "linux": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp/stable/oc-mirror.tar.gz",
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp/latest/oc-mirror.tar.gz",
                     },
                   },
                 },
@@ -6412,16 +6412,16 @@ exports[`<DownloadsPage> renders 1`] = `
                 "oc-mirror-plugin": Object {
                   "stable": Object {
                     "arm": Object {
-                      "linux": "https://mirror.openshift.com/pub/openshift-v4/aarch64/clients/ocp/stable/oc-mirror.tar.gz",
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/aarch64/clients/ocp/latest/oc-mirror.tar.gz",
                     },
                     "ppc": Object {
-                      "linux": "https://mirror.openshift.com/pub/openshift-v4/ppc64le/clients/ocp/stable/oc-mirror.tar.gz",
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/ppc64le/clients/ocp/latest/oc-mirror.tar.gz",
                     },
                     "s390x": Object {
-                      "linux": "https://mirror.openshift.com/pub/openshift-v4/s390x/clients/ocp/stable/oc-mirror.tar.gz",
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/s390x/clients/ocp/latest/oc-mirror.tar.gz",
                     },
                     "x86": Object {
-                      "linux": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp/stable/oc-mirror.tar.gz",
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp/latest/oc-mirror.tar.gz",
                     },
                   },
                 },
@@ -6954,16 +6954,16 @@ exports[`<DownloadsPage> renders 1`] = `
                 "oc-mirror-plugin": Object {
                   "stable": Object {
                     "arm": Object {
-                      "linux": "https://mirror.openshift.com/pub/openshift-v4/aarch64/clients/ocp/stable/oc-mirror.tar.gz",
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/aarch64/clients/ocp/latest/oc-mirror.tar.gz",
                     },
                     "ppc": Object {
-                      "linux": "https://mirror.openshift.com/pub/openshift-v4/ppc64le/clients/ocp/stable/oc-mirror.tar.gz",
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/ppc64le/clients/ocp/latest/oc-mirror.tar.gz",
                     },
                     "s390x": Object {
-                      "linux": "https://mirror.openshift.com/pub/openshift-v4/s390x/clients/ocp/stable/oc-mirror.tar.gz",
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/s390x/clients/ocp/latest/oc-mirror.tar.gz",
                     },
                     "x86": Object {
-                      "linux": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp/stable/oc-mirror.tar.gz",
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp/latest/oc-mirror.tar.gz",
                     },
                   },
                 },
@@ -7496,16 +7496,16 @@ exports[`<DownloadsPage> renders 1`] = `
                 "oc-mirror-plugin": Object {
                   "stable": Object {
                     "arm": Object {
-                      "linux": "https://mirror.openshift.com/pub/openshift-v4/aarch64/clients/ocp/stable/oc-mirror.tar.gz",
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/aarch64/clients/ocp/latest/oc-mirror.tar.gz",
                     },
                     "ppc": Object {
-                      "linux": "https://mirror.openshift.com/pub/openshift-v4/ppc64le/clients/ocp/stable/oc-mirror.tar.gz",
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/ppc64le/clients/ocp/latest/oc-mirror.tar.gz",
                     },
                     "s390x": Object {
-                      "linux": "https://mirror.openshift.com/pub/openshift-v4/s390x/clients/ocp/stable/oc-mirror.tar.gz",
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/s390x/clients/ocp/latest/oc-mirror.tar.gz",
                     },
                     "x86": Object {
-                      "linux": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp/stable/oc-mirror.tar.gz",
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp/latest/oc-mirror.tar.gz",
                     },
                   },
                 },
@@ -8046,16 +8046,16 @@ exports[`<DownloadsPage> renders 1`] = `
                 "oc-mirror-plugin": Object {
                   "stable": Object {
                     "arm": Object {
-                      "linux": "https://mirror.openshift.com/pub/openshift-v4/aarch64/clients/ocp/stable/oc-mirror.tar.gz",
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/aarch64/clients/ocp/latest/oc-mirror.tar.gz",
                     },
                     "ppc": Object {
-                      "linux": "https://mirror.openshift.com/pub/openshift-v4/ppc64le/clients/ocp/stable/oc-mirror.tar.gz",
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/ppc64le/clients/ocp/latest/oc-mirror.tar.gz",
                     },
                     "s390x": Object {
-                      "linux": "https://mirror.openshift.com/pub/openshift-v4/s390x/clients/ocp/stable/oc-mirror.tar.gz",
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/s390x/clients/ocp/latest/oc-mirror.tar.gz",
                     },
                     "x86": Object {
-                      "linux": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp/stable/oc-mirror.tar.gz",
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp/latest/oc-mirror.tar.gz",
                     },
                   },
                 },
@@ -8587,16 +8587,16 @@ exports[`<DownloadsPage> renders 1`] = `
                 "oc-mirror-plugin": Object {
                   "stable": Object {
                     "arm": Object {
-                      "linux": "https://mirror.openshift.com/pub/openshift-v4/aarch64/clients/ocp/stable/oc-mirror.tar.gz",
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/aarch64/clients/ocp/latest/oc-mirror.tar.gz",
                     },
                     "ppc": Object {
-                      "linux": "https://mirror.openshift.com/pub/openshift-v4/ppc64le/clients/ocp/stable/oc-mirror.tar.gz",
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/ppc64le/clients/ocp/latest/oc-mirror.tar.gz",
                     },
                     "s390x": Object {
-                      "linux": "https://mirror.openshift.com/pub/openshift-v4/s390x/clients/ocp/stable/oc-mirror.tar.gz",
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/s390x/clients/ocp/latest/oc-mirror.tar.gz",
                     },
                     "x86": Object {
-                      "linux": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp/stable/oc-mirror.tar.gz",
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp/latest/oc-mirror.tar.gz",
                     },
                   },
                 },
@@ -9133,16 +9133,16 @@ exports[`<DownloadsPage> renders 1`] = `
                 "oc-mirror-plugin": Object {
                   "stable": Object {
                     "arm": Object {
-                      "linux": "https://mirror.openshift.com/pub/openshift-v4/aarch64/clients/ocp/stable/oc-mirror.tar.gz",
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/aarch64/clients/ocp/latest/oc-mirror.tar.gz",
                     },
                     "ppc": Object {
-                      "linux": "https://mirror.openshift.com/pub/openshift-v4/ppc64le/clients/ocp/stable/oc-mirror.tar.gz",
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/ppc64le/clients/ocp/latest/oc-mirror.tar.gz",
                     },
                     "s390x": Object {
-                      "linux": "https://mirror.openshift.com/pub/openshift-v4/s390x/clients/ocp/stable/oc-mirror.tar.gz",
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/s390x/clients/ocp/latest/oc-mirror.tar.gz",
                     },
                     "x86": Object {
-                      "linux": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp/stable/oc-mirror.tar.gz",
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp/latest/oc-mirror.tar.gz",
                     },
                   },
                 },
@@ -9668,16 +9668,16 @@ exports[`<DownloadsPage> renders 1`] = `
                 "oc-mirror-plugin": Object {
                   "stable": Object {
                     "arm": Object {
-                      "linux": "https://mirror.openshift.com/pub/openshift-v4/aarch64/clients/ocp/stable/oc-mirror.tar.gz",
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/aarch64/clients/ocp/latest/oc-mirror.tar.gz",
                     },
                     "ppc": Object {
-                      "linux": "https://mirror.openshift.com/pub/openshift-v4/ppc64le/clients/ocp/stable/oc-mirror.tar.gz",
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/ppc64le/clients/ocp/latest/oc-mirror.tar.gz",
                     },
                     "s390x": Object {
-                      "linux": "https://mirror.openshift.com/pub/openshift-v4/s390x/clients/ocp/stable/oc-mirror.tar.gz",
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/s390x/clients/ocp/latest/oc-mirror.tar.gz",
                     },
                     "x86": Object {
-                      "linux": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp/stable/oc-mirror.tar.gz",
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp/latest/oc-mirror.tar.gz",
                     },
                   },
                 },
@@ -10214,16 +10214,16 @@ exports[`<DownloadsPage> renders 1`] = `
                 "oc-mirror-plugin": Object {
                   "stable": Object {
                     "arm": Object {
-                      "linux": "https://mirror.openshift.com/pub/openshift-v4/aarch64/clients/ocp/stable/oc-mirror.tar.gz",
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/aarch64/clients/ocp/latest/oc-mirror.tar.gz",
                     },
                     "ppc": Object {
-                      "linux": "https://mirror.openshift.com/pub/openshift-v4/ppc64le/clients/ocp/stable/oc-mirror.tar.gz",
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/ppc64le/clients/ocp/latest/oc-mirror.tar.gz",
                     },
                     "s390x": Object {
-                      "linux": "https://mirror.openshift.com/pub/openshift-v4/s390x/clients/ocp/stable/oc-mirror.tar.gz",
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/s390x/clients/ocp/latest/oc-mirror.tar.gz",
                     },
                     "x86": Object {
-                      "linux": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp/stable/oc-mirror.tar.gz",
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp/latest/oc-mirror.tar.gz",
                     },
                   },
                 },
@@ -10745,16 +10745,16 @@ exports[`<DownloadsPage> renders 1`] = `
                 "oc-mirror-plugin": Object {
                   "stable": Object {
                     "arm": Object {
-                      "linux": "https://mirror.openshift.com/pub/openshift-v4/aarch64/clients/ocp/stable/oc-mirror.tar.gz",
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/aarch64/clients/ocp/latest/oc-mirror.tar.gz",
                     },
                     "ppc": Object {
-                      "linux": "https://mirror.openshift.com/pub/openshift-v4/ppc64le/clients/ocp/stable/oc-mirror.tar.gz",
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/ppc64le/clients/ocp/latest/oc-mirror.tar.gz",
                     },
                     "s390x": Object {
-                      "linux": "https://mirror.openshift.com/pub/openshift-v4/s390x/clients/ocp/stable/oc-mirror.tar.gz",
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/s390x/clients/ocp/latest/oc-mirror.tar.gz",
                     },
                     "x86": Object {
-                      "linux": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp/stable/oc-mirror.tar.gz",
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp/latest/oc-mirror.tar.gz",
                     },
                   },
                 },
@@ -11284,16 +11284,16 @@ exports[`<DownloadsPage> renders 1`] = `
                 "oc-mirror-plugin": Object {
                   "stable": Object {
                     "arm": Object {
-                      "linux": "https://mirror.openshift.com/pub/openshift-v4/aarch64/clients/ocp/stable/oc-mirror.tar.gz",
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/aarch64/clients/ocp/latest/oc-mirror.tar.gz",
                     },
                     "ppc": Object {
-                      "linux": "https://mirror.openshift.com/pub/openshift-v4/ppc64le/clients/ocp/stable/oc-mirror.tar.gz",
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/ppc64le/clients/ocp/latest/oc-mirror.tar.gz",
                     },
                     "s390x": Object {
-                      "linux": "https://mirror.openshift.com/pub/openshift-v4/s390x/clients/ocp/stable/oc-mirror.tar.gz",
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/s390x/clients/ocp/latest/oc-mirror.tar.gz",
                     },
                     "x86": Object {
-                      "linux": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp/stable/oc-mirror.tar.gz",
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp/latest/oc-mirror.tar.gz",
                     },
                   },
                 },

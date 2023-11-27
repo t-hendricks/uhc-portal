@@ -8,7 +8,9 @@ export type AccessReviewResponse = {
   allowed: boolean;
   cluster_id?: string;
   cluster_uuid?: string;
+  is_ocm_internal?: boolean;
   organization_id?: string;
+  reason?: string;
   resource_type?: AccessReviewResponse.resource_type;
   subscription_id?: string;
 };
@@ -63,5 +65,9 @@ export namespace AccessReviewResponse {
     SELF_ACCESS_REVIEW = 'SelfAccessReview',
     SUBSCRIPTION_INTERNAL = 'SubscriptionInternal',
     SUBSCRIPTION_ROLE_BINDING = 'SubscriptionRoleBinding',
+    CLUSTER_SELF_MANAGED = 'ClusterSelfManaged',
+    CLUSTER_SELF_MANAGED_ADDON = 'ClusterSelfManagedAddon',
+    CLUSTER_SELF_MANAGED_LABEL = 'ClusterSelfManagedLabel',
+    CLUSTER_SELF_MANAGED_STATUS = 'ClusterSelfManagedStatus',
   }
 }

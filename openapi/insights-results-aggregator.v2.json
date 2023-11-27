@@ -13,6 +13,13 @@
       }
     },
     "schemas": {
+      "clusterId": {
+        "description": "ID of the cluster in valid UUID format",
+        "format": "uuid",
+        "maxLength": 36,
+        "minLength": 36,
+        "type": "string"
+      },
       "clusterList": {
         "items": {
           "example": [
@@ -103,6 +110,35 @@
         },
         "type": "object"
       },
+      "gatheringRequests": {
+        "description": "List of stored requests for given orgId + clusterId",
+        "items": {
+          "properties": {
+            "processed": {
+              "format": "RFC339Nano",
+              "type": "string"
+            },
+            "received": {
+              "format": "RFC339Nano",
+              "type": "string"
+            },
+            "requestID": {
+              "$ref": "#/components/schemas/requestId"
+            },
+            "valid": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "requestID",
+            "valid",
+            "received",
+            "processed"
+          ],
+          "type": "object"
+        },
+        "type": "array"
+      },
       "ratingSchema": {
         "properties": {
           "rating": {
@@ -123,7 +159,6 @@
             "impacted_clusters_count": 42,
             "likelihood": 4,
             "publish_date": "2020-04-08T00:42:00Z",
-            "risk_of_change": 0,
             "rule_id": "ccx_rules_ocp.external.bug_rules.bug_1821905|BUGZILLA_BUG_1821905",
             "tags": [
               "openshift",
@@ -157,7 +192,7 @@
               "type": "integer"
             },
             "impacted_clusters_count": {
-              "description": "The number of clusters impacted by this rule.",
+              "description": "The number of clusters impacted by this rule. Disabled clusters are excluded from the count. If the rule is acked, it is just marked as disabled:true and the count is still returned.",
               "example": 42,
               "type": "integer"
             },
@@ -177,8 +212,8 @@
               "format": "date-time",
               "type": "string"
             },
-            "risk_of_change": {
-              "description": "Risk of change - values paired with corresponding UI elements. 0 returned when not defined, therefore to hide the UI.",
+            "resolution_risk": {
+              "description": "Indicates the impact of the resolution steps on the cluster and other associated risks. Behaves in the same way as total_risk, 0 is returned when the rule doesn't have a resolution_risk defined.",
               "enum": [
                 0,
                 1,
@@ -259,7 +294,6 @@
           "internal": false,
           "reason": "",
           "resolution": "",
-          "risk_of_change": 0,
           "rule_id": "ccx_rules_ocm.tutorial_rule.report",
           "tags": [
             "openshift",
@@ -297,7 +331,8 @@
           },
           "impacted": {
             "description": "[Optional] Timestamp when the rule first started hitting",
-            "type": "date-time"
+            "format": "date-time",
+            "type": "string"
           },
           "internal": {
             "type": "boolean"
@@ -313,17 +348,6 @@
           "resolution": {
             "description": "Resolution steps of the issue, possibly linking to a resolution article in the knowledge base.",
             "type": "string"
-          },
-          "risk_of_change": {
-            "description": "Risk of change - values paired with corresponding UI elements. 0 returned when not defined, therefore to hide the UI.",
-            "enum": [
-              0,
-              1,
-              2,
-              3,
-              4
-            ],
-            "type": "integer"
           },
           "rule_id": {
             "description": "ID of a rule.",
@@ -353,11 +377,6 @@
               "-1",
               "0",
               "1"
-            ],
-            "x-enum-varnames": [
-              "DISLIKE",
-              "NO_VOTE",
-              "LIKE"
             ],
             "format": "int32",
             "type": "integer"
@@ -408,6 +427,43 @@
         },
         "type": "object"
       },
+      "requestId": {
+        "description": "request ID",
+        "example": "6d2eede257644308a8949c4ec251c5c4",
+        "format": "x-rh-insights-request-id",
+        "type": "string"
+      },
+      "simplifiedReport": {
+        "items": {
+          "properties": {
+            "description": {
+              "type": "string"
+            },
+            "error_key": {
+              "type": "string"
+            },
+            "rule_fqdn": {
+              "type": "string"
+            },
+            "total_risk": {
+              "type": "integer"
+            }
+          },
+          "required": [
+            "rule_fqdn",
+            "error_key",
+            "description",
+            "total_risk"
+          ],
+          "type": "object"
+        },
+        "type": "array"
+      },
+      "statusResponse": {
+        "description": "response status for the processed request",
+        "example": "ok",
+        "type": "string"
+      },
       "systemWideRuleDisable": {
         "description": "An information about rule that has been disabled for whole account",
         "properties": {
@@ -430,11 +486,6 @@
           "rule": {
             "description": "Rule selector: rule ID + error key",
             "example": "foo.bar|baz",
-            "type": "string"
-          },
-          "status": {
-            "description": "Information about the operation status",
-            "example": "ok",
             "type": "string"
           },
           "updated_at": {
@@ -466,7 +517,14 @@
                   "type": "string"
                 },
                 "updated_at": {
-                  "format": "date-time",
+                  "anyOf": [
+                    {
+                      "format": "date-time"
+                    },
+                    {
+                      "maxLength": 0
+                    }
+                  ],
                   "type": "string"
                 }
               },
@@ -689,13 +747,12 @@
         "operationId": "getInfoForCluster",
         "parameters": [
           {
-            "description": "ID of the cluster which must conform to UUID format.",
             "example": "34c3ecc5-624a-49a5-bab8-4fdc5e51a266",
             "in": "path",
             "name": "clusterId",
             "required": true,
             "schema": {
-              "type": "string"
+              "$ref": "#/components/schemas/clusterId"
             }
           }
         ],
@@ -709,10 +766,7 @@
                     "cluster": {
                       "properties": {
                         "cluster_id": {
-                          "format": "uuid",
-                          "maxLength": 36,
-                          "minLength": 36,
-                          "type": "string"
+                          "$ref": "#/components/schemas/clusterId"
                         },
                         "display_name": {
                           "description": "An human-readable name for the cluster",
@@ -722,7 +776,7 @@
                         "managed": {
                           "description": "Indicates whether cluster is managed or not (has 'managed' flag in AMS)",
                           "example": true,
-                          "type": "bool"
+                          "type": "boolean"
                         },
                         "status": {
                           "description": "Status of the cluster, such as Active, Deprovisioned, etc",
@@ -733,10 +787,10 @@
                       "type": "object"
                     },
                     "status": {
-                      "example": "ok",
-                      "type": "string"
+                      "$ref": "#/components/schemas/statusResponse"
                     }
-                  }
+                  },
+                  "type": "object"
                 }
               }
             },
@@ -761,13 +815,12 @@
         "operationId": "getReportsForCluster",
         "parameters": [
           {
-            "description": "ID of the cluster which must conform to UUID format.",
             "example": "34c3ecc5-624a-49a5-bab8-4fdc5e51a266",
             "in": "path",
             "name": "clusterId",
             "required": true,
             "schema": {
-              "type": "string"
+              "$ref": "#/components/schemas/clusterId"
             }
           },
           {
@@ -789,10 +842,13 @@
                 }
               }
             },
-            "description": "Latest available report for the given organization and cluster combination. Returns rules and their descriptions that were hit by the cluster. Disabled rules are ommitted by default unless the get_disabled query param is provided."
+            "description": "Latest available report for the given organization and cluster combination. Returns rules and their descriptions that were hit by the cluster. Disabled rules are omitted by default unless the get_disabled query param is provided."
           },
           "400": {
             "description": "Invalid request, usually caused when some cluster belongs to different organization."
+          },
+          "404": {
+            "description": "Cluster report is not available, probably not connected cluster."
           }
         },
         "summary": "Returns the latest report for the given cluster.",
@@ -1041,7 +1097,7 @@
     },
     "/cluster/{clusterId}/upgrade-risks-prediction": {
       "get": {
-        "description": "Get a prediction of whether a cluster upgrade would fail.",
+        "description": "The title of the rule, a short description.",
         "operationId": "getUpgradeRisksPrediction",
         "parameters": [
           {
@@ -1206,24 +1262,34 @@
                     "content": {
                       "items": {
                         "properties": {
+                          "HasReason": {
+                            "type": "boolean"
+                          },
                           "error_keys": {
                             "additionalProperties": {
                               "properties": {
+                                "HasReason": {
+                                  "type": "boolean"
+                                },
                                 "generic": {
                                   "type": "string"
                                 },
                                 "metadata": {
                                   "properties": {
-                                    "condition": {
-                                      "type": "string"
-                                    },
                                     "description": {
                                       "type": "string"
                                     },
                                     "impact": {
-                                      "type": "integer"
+                                      "type": "string"
                                     },
                                     "likelihood": {
+                                      "enum": [
+                                        0,
+                                        1,
+                                        2,
+                                        3,
+                                        4
+                                      ],
                                       "type": "integer"
                                     },
                                     "publish_date": {
@@ -1236,18 +1302,41 @@
                                       "items": {
                                         "type": "string"
                                       },
+                                      "nullable": true,
                                       "type": "array"
                                     }
                                   },
                                   "type": "object"
                                 },
+                                "more_info": {
+                                  "type": "string"
+                                },
                                 "reason": {
                                   "type": "string"
+                                },
+                                "resolution": {
+                                  "type": "string"
+                                },
+                                "summary": {
+                                  "type": "string"
+                                },
+                                "total_risk": {
+                                  "enum": [
+                                    0,
+                                    1,
+                                    2,
+                                    3,
+                                    4
+                                  ],
+                                  "type": "integer"
                                 }
                               },
                               "type": "object"
                             },
                             "type": "object"
+                          },
+                          "generic": {
+                            "type": "string"
                           },
                           "more_info": {
                             "type": "string"
@@ -1304,8 +1393,7 @@
                       "type": "array"
                     },
                     "status": {
-                      "example": "ok",
-                      "type": "string"
+                      "$ref": "#/components/schemas/statusResponse"
                     }
                   }
                 }
@@ -1354,8 +1442,7 @@
                       "type": "object"
                     },
                     "status": {
-                      "example": "ok",
-                      "type": "string"
+                      "$ref": "#/components/schemas/statusResponse"
                     }
                   },
                   "type": "object"
@@ -1586,8 +1673,8 @@
                           "description": "Resolution steps of the issue, possibly linking to a resolution article in the knowledge base.",
                           "type": "string"
                         },
-                        "risk_of_change": {
-                          "description": "Risk of change - values paired with corresponding UI elements. 0 returned when not defined, therefore to hide the UI.",
+                        "resolution_risk": {
+                          "description": "Indicates the impact of the resolution steps on the cluster and other associated risks. Behaves in the same way as total_risk, 0 is returned when the rule doesn't have a resolution_risk defined.",
                           "enum": [
                             0,
                             1,
@@ -1642,8 +1729,7 @@
                       "type": "array"
                     },
                     "status": {
-                      "example": "ok",
-                      "type": "string"
+                      "$ref": "#/components/schemas/statusResponse"
                     }
                   },
                   "type": "object"
@@ -1754,17 +1840,6 @@
                           "description": "Resolution steps of the issue, possibly linking to a resolution article in the knowledge base.",
                           "type": "string"
                         },
-                        "risk_of_change": {
-                          "description": "Risk of change - values paired with corresponding UI elements. 0 returned when not defined, therefore to hide the UI.",
-                          "enum": [
-                            0,
-                            1,
-                            2,
-                            3,
-                            4
-                          ],
-                          "type": "integer"
-                        },
                         "rule_id": {
                           "type": "string"
                         },
@@ -1810,8 +1885,7 @@
                       "type": "array"
                     },
                     "status": {
-                      "example": "ok",
-                      "type": "string"
+                      "$ref": "#/components/schemas/statusResponse"
                     }
                   },
                   "type": "object"
@@ -1956,8 +2030,7 @@
                       "type": "object"
                     },
                     "status": {
-                      "example": "ok",
-                      "type": "string"
+                      "$ref": "#/components/schemas/statusResponse"
                     }
                   },
                   "type": "object"
