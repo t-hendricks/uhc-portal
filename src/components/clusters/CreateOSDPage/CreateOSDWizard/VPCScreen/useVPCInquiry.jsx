@@ -13,18 +13,15 @@ const valueSelector = formValueSelector('CreateCluster');
 export const isSubnetMatchingPrivacy = (subnet, privacy) =>
   !privacy || (privacy === 'public' && subnet.public) || (privacy === 'private' && !subnet.public);
 
-export const isVPCInquiryValid = (state) => {
-  const { vpcs } = state.ccsInquiries;
+export const lastVpcRequestIsInEffect = (vpcs, newRequest) => {
   if (!vpcs.fulfilled) {
     return false;
   }
-  const cloudProviderID = valueSelector(state, 'cloud_provider');
-  const credentials = ccsCredentialsSelector(cloudProviderID, state);
-  const region = valueSelector(state, 'region');
+
   return (
-    vpcs.cloudProvider === cloudProviderID &&
-    isEqual(vpcs.credentials, credentials) &&
-    vpcs.region === region
+    vpcs.cloudProvider === newRequest.cloudProviderID &&
+    isEqual(vpcs.credentials, newRequest.credentials) &&
+    vpcs.region === newRequest.region
   );
 };
 
@@ -87,12 +84,13 @@ const useReduxVPCRequest = () =>
 export const useAWSVPCInquiry = (isOSD) => {
   const dispatch = useDispatch();
   const vpcs = useSelector((state) => state.ccsInquiries.vpcs);
-  const hasLatestVpcs = useSelector(isVPCInquiryValid);
 
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const requestParams = isOSD ? useFormikVPCRequest() : useReduxVPCRequest();
+  const hasLatestVpcs = lastVpcRequestIsInEffect(vpcs, requestParams);
 
   const { region, cloudProviderID, credentials } = requestParams;
+
   useEffect(() => {
     // The action works similarly for AWS and GCP,
     // but current GCP components don't need it, they fetch the data themselves.

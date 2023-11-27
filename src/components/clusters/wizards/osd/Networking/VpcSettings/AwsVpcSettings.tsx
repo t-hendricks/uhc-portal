@@ -11,8 +11,28 @@ import { useFormState } from '~/components/clusters/wizards/hooks';
 
 export const AwsVpcSettings = () => {
   const {
-    values: { [FieldId.UsePrivateLink]: usePrivateLink },
+    values: {
+      [FieldId.UsePrivateLink]: usePrivateLink,
+      [FieldId.SelectedVpc]: selectedVPC,
+      [FieldId.MultiAz]: multiAz,
+    },
+    setFieldValue,
+    setFieldTouched,
   } = useFormState();
+
+  const isMultiAz = multiAz === 'true';
+
+  React.useEffect(() => {
+    if (!selectedVPC.id) {
+      const azCount = isMultiAz ? 3 : 1;
+      for (let i = 0; i < azCount; i += 1) {
+        [`az_${i}`, `private_subnet_id_${i}`, `public_subnet_id_${i}`].forEach((field) => {
+          setFieldValue(field, '');
+          setFieldTouched(field, false);
+        });
+      }
+    }
+  }, [setFieldValue, isMultiAz, selectedVPC]);
 
   return (
     <>
