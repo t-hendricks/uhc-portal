@@ -24,13 +24,6 @@ const clusterVpc = {
   ],
 };
 
-jest.mock(
-  '~/components/clusters/CreateOSDPage/CreateOSDWizard/NetworkScreen/useAWSVPCFromCluster',
-  () => ({
-    useAWSVPCFromCluster: () => ({ clusterVpc, isFulfilled: true, isLoading: false }),
-  }),
-);
-
 const openPFSecurityGroupsSelect = () => {
   // user.click doesn't work with PF dropdowns, so required to use fireEvent
   fireEvent.click(screen.getByRole('button', { name: 'Options menu' }));
@@ -139,30 +132,50 @@ describe('<EditSecurityGroups />', () => {
       ).toBeChecked();
     });
 
-    it('Clears the selected security groups when the VPC changes', () => {
+    it('should not clear the selected security groups if they belong to the current VPC', () => {
       const onChangeSpy = jest.fn();
-      const testProps = {
-        selectedGroupIds: [],
-        clusterVpc,
-        onChange: onChangeSpy,
-        isReadOnly: false,
-      };
+      render(
+        <EditSecurityGroups
+          onChange={onChangeSpy}
+          selectedGroupIds={['sg-abc']}
+          clusterVpc={clusterVpc}
+          isReadOnly={false}
+        />,
+      );
+      expect(onChangeSpy).not.toHaveBeenCalled();
+    });
 
-      // Render with the initial VPC, this will initially set the security groups to empty
-      const { rerender } = render(<EditSecurityGroups {...testProps} />);
-      expect(onChangeSpy).toHaveBeenCalledTimes(1);
-      expect(onChangeSpy).toHaveBeenCalledWith([]);
-      onChangeSpy.mockClear();
+    it('should clear the selected security groups if they do not belong to the current VPC', () => {
+      const onChangeSpy = jest.fn();
+      const sgsFromFirstVpc = ['sg-abc'];
 
-      // Re-render with the same VPC, the selected Security groups remains unchanged
-      rerender(<EditSecurityGroups {...testProps} />);
+      // Render with the initial VPC and a security group belonging to it
+      const { rerender } = render(
+        <EditSecurityGroups
+          onChange={onChangeSpy}
+          selectedGroupIds={sgsFromFirstVpc}
+          clusterVpc={clusterVpc}
+          isReadOnly={false}
+        />,
+      );
       expect(onChangeSpy).not.toHaveBeenCalled();
 
-      // Re-render with a different VPC, the selected Security groups are cleared
+      // Render with another VPC, while the security group still belonging to the initial VPC
+      const anotherVpc = {
+        id: 'this-is-another-vpc',
+        aws_security_groups: [
+          {
+            id: 'sg-another-security-group',
+            name: 'This is a different security group',
+          },
+        ],
+      };
       rerender(
         <EditSecurityGroups
-          {...testProps}
-          clusterVpc={{ ...clusterVpc, id: 'the-vpc-has-changed' }}
+          onChange={onChangeSpy}
+          selectedGroupIds={sgsFromFirstVpc}
+          clusterVpc={anotherVpc}
+          isReadOnly={false}
         />,
       );
       expect(onChangeSpy).toHaveBeenCalledTimes(1);
