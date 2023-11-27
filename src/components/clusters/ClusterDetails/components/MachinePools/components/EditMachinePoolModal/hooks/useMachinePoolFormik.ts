@@ -146,8 +146,10 @@ const useMachinePoolFormik = ({
           quota: organization.quotaList,
           minNodes,
           machineTypeId: values.instanceType,
+          editMachinePoolId: values.name,
         });
         const maxNodes = nodeOptions.length ? nodeOptions[nodeOptions.length - 1] : 0;
+
         return Yup.object({
           name: Yup.string().test('mp-name', '', (value) => {
             const err = isHypershift ? checkNodePoolName(value) : checkMachinePoolName(value);
