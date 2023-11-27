@@ -9,6 +9,7 @@ import {
   validateValueNotPlaceholder,
   validateAWSSubnet,
 } from '~/common/validators';
+import WithTooltip from '~/components/common/WithTooltip';
 import AvailabilityZoneSelection, {
   PLACEHOLDER_VALUE,
 } from '~/components/clusters/CreateOSDPage/CreateOSDForm/FormSections/NetworkingSection/AvailabilityZoneSelection';
@@ -20,6 +21,7 @@ interface SingleSubnetFieldProps {
   region: string;
   isMultiAz: boolean;
   usePrivateLink: boolean;
+  isDisabled: boolean;
 }
 
 const AwsSingleSubnetField = ({
@@ -27,6 +29,7 @@ const AwsSingleSubnetField = ({
   region,
   isMultiAz,
   usePrivateLink,
+  isDisabled,
 }: SingleSubnetFieldProps) => {
   const { values, getFieldProps, getFieldMeta, setFieldValue } = useFormState();
   const azFieldName = `az_${index}`;
@@ -47,33 +50,42 @@ const AwsSingleSubnetField = ({
   return (
     <>
       <GridItem className="vpc-input-field" md={4}>
-        <Field
-          component={AvailabilityZoneSelection}
-          name={azFieldName}
-          label={showLabels ? 'Availability zone' : undefined}
-          validate={validateAvailabilityZone}
-          region={region}
-          input={{
-            ...getFieldProps(azFieldName),
-            onChange: (value: string) => setFieldValue(azFieldName, value),
-          }}
-          meta={getFieldMeta(azFieldName)}
-        />
+        <WithTooltip showTooltip={isDisabled} content="Select a VPC first">
+          <Field
+            component={AvailabilityZoneSelection}
+            name={azFieldName}
+            label={showLabels ? 'Availability zone' : undefined}
+            validate={validateAvailabilityZone}
+            isDisabled={isDisabled}
+            region={region}
+            input={{
+              ...getFieldProps(azFieldName),
+              onChange: (value: string) => setFieldValue(azFieldName, value),
+            }}
+            meta={getFieldMeta(azFieldName)}
+          />
+        </WithTooltip>
       </GridItem>
       <GridItem md={4}>
-        <TextInputField
-          name={privateSubnetIdName}
-          validate={validatePrivateSubnet}
-          label={showLabels ? 'Private subnet ID' : undefined}
-        />
+        <WithTooltip showTooltip={isDisabled} content="Select a VPC first">
+          <TextInputField
+            name={privateSubnetIdName}
+            label={showLabels ? 'Private subnet ID' : undefined}
+            validate={validatePrivateSubnet}
+            isDisabled={isDisabled}
+          />
+        </WithTooltip>
       </GridItem>
       {!usePrivateLink && (
         <GridItem md={4}>
-          <TextInputField
-            name={publicSubnetIdName}
-            validate={validatePublicSubnet}
-            label={showLabels ? 'Public subnet ID' : undefined}
-          />
+          <WithTooltip showTooltip={isDisabled} content="Select a VPC first">
+            <TextInputField
+              name={publicSubnetIdName}
+              label={showLabels ? 'Public subnet ID' : undefined}
+              validate={validatePublicSubnet}
+              isDisabled={isDisabled}
+            />
+          </WithTooltip>
         </GridItem>
       )}
       {usePrivateLink && <GridItem md={4} />}

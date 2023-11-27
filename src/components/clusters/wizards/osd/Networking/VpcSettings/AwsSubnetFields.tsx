@@ -19,13 +19,16 @@ export const AwsSubnetFields = () => {
   } = values;
 
   const isMultiAz = multiAz === 'true';
+
   const subnetProps = {
     region,
     isMultiAz,
     usePrivateLink,
+    isDisabled: !selectedVPC.id,
   };
 
   const meta = getFieldMeta(FieldId.SelectedVpc);
+
   return (
     <>
       <Grid>
