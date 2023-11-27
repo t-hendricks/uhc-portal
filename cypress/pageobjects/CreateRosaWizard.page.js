@@ -478,6 +478,12 @@ class CreateRosaCluster extends Page {
     });
   }
 
+  hideClusterNameValidation() {
+    // Validation popup on cluster name field create flaky situation on below version field.
+    // To remove the validation popup a click action in cluster left tree required.
+    this.clusterDetailsTree().click();
+  }
+
   inputNodeLabelKvs(nodeLabelKvs) {
     cy.wrap(nodeLabelKvs).each((kv, index) => {
       const key = Object.keys(kv)[0];
