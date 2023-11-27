@@ -14,7 +14,7 @@ import {
   getAvailableQuota as getAvailableQuotaUtil,
   getIncludedNodes,
 } from '../machinePools/utils';
-import { MAX_NODES } from '../machinePools/constants';
+import { MAX_NODES_HCP } from '../machinePools/constants';
 
 const incrementValue = ({ isHypershiftWizard, poolNumber, isMultiAz }) =>
   isHypershiftWizard ? getNodeIncrementHypershift(poolNumber) : getNodeIncrement(isMultiAz);
@@ -45,6 +45,7 @@ class NodeCountInput extends React.Component {
       currentNodeCount,
       minNodes,
       optionValueIncrement,
+      isHypershift: isHypershiftWizard,
     });
 
     if (!options.includes(Number(input.value))) {
@@ -62,7 +63,7 @@ class NodeCountInput extends React.Component {
       // is less than the minimum total nodes
       const prevSelected = prevProps.input?.value / prevProps.poolNumber || minNodes;
       const newValue = prevSelected * poolNumber;
-      if (newValue > minNodes && newValue <= MAX_NODES) {
+      if (newValue > minNodes && newValue <= MAX_NODES_HCP) {
         input.onChange(newValue);
       } else {
         input.onChange(minNodes);
@@ -131,6 +132,7 @@ class NodeCountInput extends React.Component {
       currentNodeCount,
       minNodes,
       increment: optionValueIncrement,
+      isHypershift: isHypershiftWizard,
     });
 
     let notEnoughQuota = options.length < 1;
