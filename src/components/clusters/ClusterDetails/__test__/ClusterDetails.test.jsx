@@ -62,6 +62,8 @@ describe('<ClusterDetails />', () => {
         expect(functions.getMachineOrNodePools).toBeCalledWith(
           fixtures.clusterDetails.cluster.id,
           false,
+          'openshift-v4.6.8',
+          undefined,
         );
       });
 
@@ -191,6 +193,8 @@ describe('<ClusterDetails />', () => {
       expect(functions.getMachineOrNodePools).toBeCalledWith(
         fixtures.ROSAClusterDetails.cluster.id,
         true,
+        'openshift-v4.6.8',
+        undefined,
       );
     });
 

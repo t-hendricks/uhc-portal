@@ -502,7 +502,7 @@ const insightsData = {
       resolution: '',
       created_at: '2020-02-03T08:25:00Z',
       total_risk: 3,
-      risk_of_change: 0,
+      resolution_risk: 0,
       user_vote: 0,
       extra_data: {
         error_key: 'NODES_MINIMUM_REQUIREMENTS_NOT_MET',

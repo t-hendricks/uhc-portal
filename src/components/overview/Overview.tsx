@@ -1,8 +1,10 @@
 import './Overview.scss';
 import React from 'react';
-import { Title, Label, Flex, FlexItem, PageSection } from '@patternfly/react-core';
+import { Button, Title, Label, Flex, FlexItem, PageSection } from '@patternfly/react-core';
 import { Link } from 'react-router-dom';
 import ExternalLink from '~/components/common/ExternalLink';
+import useAnalytics from '~/hooks/useAnalytics';
+import { trackEvents } from '~/common/analytics';
 import { ProductBanner, ProductBannerProps } from '../common/ProductBanner';
 import docLinks from '../../common/installLinks.mjs';
 import {
@@ -58,6 +60,8 @@ const openshiftBannerContents: ProductBannerProps = {
 };
 
 function OverviewEmptyState() {
+  const track = useAnalytics();
+  const createClusterURL = '/create';
   return (
     <AppPage>
       <ProductBanner
@@ -90,7 +94,24 @@ function OverviewEmptyState() {
             <OfferingCard offeringType="DEVSNBX" />
           </FlexItem>
         </Flex>
-        <Link to="/create">View all OpenShift cluster types</Link>
+        <Button
+          variant="link"
+          component={(props) => (
+            <Link
+              {...props}
+              onClick={() => {
+                track(trackEvents.CreateCluster, {
+                  url: createClusterURL,
+                  path: window.location.pathname,
+                });
+              }}
+              data-testid="create-cluster"
+              to={createClusterURL}
+            />
+          )}
+        >
+          View all OpenShift cluster types
+        </Button>
         <Title size="xl" headingLevel="h2" className="pf-u-mt-lg pf-u-mb-lg">
           Recommended Content
         </Title>

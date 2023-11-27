@@ -1,47 +1,100 @@
 import React from 'react';
 import { Button, Alert, AlertVariant, ButtonVariant } from '@patternfly/react-core';
 import { OutlinedArrowAltCircleUpIcon } from '@patternfly/react-icons';
+import spacing from '@patternfly/react-styles/css/utilities/Spacing/spacing';
+import { DateFormat } from '@redhat-cloud-services/frontend-components/DateFormat';
 import { useSelector, useDispatch } from 'react-redux';
-import { NodePool } from '~/types/clusters_mgmt.v1/models/NodePool';
 import Modal from '~/components/common/Modal/Modal';
 import modalIds from '~/components/common/Modal/modals';
 import shouldShowModal from '~/components/common/Modal/ModalSelectors';
 import { modalActions } from '~/components/common/Modal/ModalActions';
 import { GlobalState } from '~/redux/store';
+import { isHypershiftCluster } from '~/components/clusters/common/clusterStates';
+import { useFeatureGate } from '~/hooks/useFeatureGate';
+import { HCP_USE_NODE_UPGRADE_POLICIES } from '~/redux/constants/featureConstants';
+import PopoverHint from '~/components/common/PopoverHint';
 import {
-  useMachinePoolBehindControlPlane,
-  useHCPControlPlaneUpdating,
   controlPlaneVersionSelector,
   displayControlPlaneVersion,
   updateAllMachinePools as updatePool,
   controlPlaneIdSelector,
+  useIsControlPlaneValidForMachinePool,
+  isMachinePoolUpgrading,
+  isMachinePoolScheduleError,
+  canMachinePoolBeUpgradedSelector,
 } from './updateMachinePoolsHelpers';
 
-import { isHypershiftCluster } from '../../../clusterDetailsHelper';
+import { NodePoolWithUpgradePolicies } from '../machinePoolCustomTypes';
 import { getMachineOrNodePools } from '../MachinePoolsActions';
 
 const updateModalId = modalIds.UPDATE_MACHINE_POOL_VERSION;
 
-export const UpdatePoolButton = ({ machinePool }: { machinePool: NodePool }) => {
+export const UpdatePoolButton = ({ machinePool }: { machinePool: NodePoolWithUpgradePolicies }) => {
   const dispatch = useDispatch();
-
-  const machinePoolBehindControlPlane = useMachinePoolBehindControlPlane(machinePool);
-  const controlPlaneUpdating = useHCPControlPlaneUpdating();
-
-  if (controlPlaneUpdating || !machinePoolBehindControlPlane) {
-    return null;
-  }
-  return (
-    <>
-      <Button
-        variant={ButtonVariant.link}
-        isInline
-        onClick={() => dispatch(modalActions.openModal(updateModalId, { machinePool }))}
-      >
-        Update <OutlinedArrowAltCircleUpIcon />
-      </Button>
-    </>
+  const controlPlaneVersion = useSelector((state: GlobalState) =>
+    controlPlaneVersionSelector(state),
   );
+  const canBeUpdated = useSelector((state: GlobalState) =>
+    canMachinePoolBeUpgradedSelector(state, machinePool),
+  );
+  const isAvailableVersion = useIsControlPlaneValidForMachinePool(machinePool);
+  const machinePoolUpdating = isMachinePoolUpgrading(machinePool);
+
+  if (canBeUpdated) {
+    return (
+      <>
+        <Button
+          variant={ButtonVariant.link}
+          isInline
+          onClick={() => dispatch(modalActions.openModal(updateModalId, { machinePool }))}
+        >
+          Update <OutlinedArrowAltCircleUpIcon />
+        </Button>
+      </>
+    );
+  }
+
+  if (isMachinePoolScheduleError(machinePool)) {
+    return (
+      <PopoverHint
+        iconClassName={spacing.mlSm}
+        isError
+        hint={machinePool.upgradePolicies?.errorMessage}
+      />
+    );
+  }
+
+  if (!isAvailableVersion) {
+    return (
+      <PopoverHint
+        iconClassName={spacing.mlSm}
+        hint={`This machine pool cannot be updated because there isn't a migration path to version ${controlPlaneVersion}`}
+      />
+    );
+  }
+
+  if (machinePoolUpdating) {
+    const scheduledMessage = 'This machine pool is scheduled to be updated';
+
+    const schedule = machinePool.upgradePolicies?.items?.[0];
+
+    if (schedule?.next_run && schedule?.version) {
+      return (
+        <PopoverHint
+          iconClassName={spacing.mlSm}
+          hint={
+            <>
+              {scheduledMessage} at <DateFormat type="exact" date={Date.parse(schedule.next_run)} />{' '}
+              to version {schedule.version}
+            </>
+          }
+        />
+      );
+    }
+
+    return <PopoverHint iconClassName={spacing.mlSm} hint={scheduledMessage} />;
+  }
+  return null;
 };
 
 export const UpdateMachinePoolModal = () => {
@@ -50,11 +103,15 @@ export const UpdateMachinePoolModal = () => {
   const isHypershift = useSelector((state: GlobalState) =>
     isHypershiftCluster(state.clusters.details.cluster),
   );
+
+  const useNodeUpdatePolicies = useFeatureGate(HCP_USE_NODE_UPGRADE_POLICIES);
   const clusterId = useSelector(controlPlaneIdSelector);
-  const controlPlaneVersion = useSelector(controlPlaneVersionSelector);
+  const controlPlaneVersion = useSelector((state: GlobalState) =>
+    controlPlaneVersionSelector(state),
+  );
   const isModalOpen = useSelector((state: GlobalState) => shouldShowModal(state, updateModalId));
-  // @ts-ignore
-  const modalData: { machinePool: NodePool } = useSelector(
+  // @ts-ignore - useSelector is return as "any"
+  const modalData: { machinePool: NodePoolWithUpgradePolicies } = useSelector(
     (state: GlobalState) => state.modal.data,
   );
 
@@ -80,12 +137,20 @@ export const UpdateMachinePoolModal = () => {
 
   const updateNodePool = async () => {
     setPending(true);
-    const errors = await updatePool([machinePool], clusterId, controlPlaneVersion || '');
+    const errors = await updatePool(
+      [machinePool],
+      clusterId,
+      controlPlaneVersion || '',
+      useNodeUpdatePolicies,
+    );
 
     setPending(false);
     setError(errors[0] || '');
-    // @ts-ignore
-    dispatch(getMachineOrNodePools(clusterId, isHypershift));
+
+    dispatch(
+      // @ts-ignore -issue with dispatch type
+      getMachineOrNodePools(clusterId, isHypershift, controlPlaneVersion, useNodeUpdatePolicies),
+    );
 
     if (!errors[0]) {
       dispatch(modalActions.closeModal());

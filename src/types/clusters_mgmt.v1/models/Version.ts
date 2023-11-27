@@ -2,6 +2,8 @@
 /* tslint:disable */
 /* eslint-disable */
 
+import type { ImageOverrides } from './ImageOverrides';
+
 /**
  * Representation of an _OpenShift_ version.
  */
@@ -18,6 +20,10 @@ export type Version = {
    * Self link.
    */
   href?: string;
+  /**
+   * GCPMarketplaceEnabled indicates if this version can be used to create GCP Marketplace clusters.
+   */
+  gcp_marketplace_enabled?: boolean;
   /**
    * ROSAEnabled indicates whether this version can be used to create ROSA clusters.
    */
@@ -51,15 +57,15 @@ export type Version = {
    */
   hosted_control_plane_enabled?: boolean;
   /**
+   * ImageOverrides contains the lists of images per cloud provider.
+   */
+  image_overrides?: ImageOverrides;
+  /**
    * RawID is the id of the version - without channel group and prefix.
    */
   raw_id?: string;
   /**
-   * ReleaseImage contains the URI of Openshift release image
+   * ReleaseImage contains the URI of Openshift release image.
    */
   release_image?: string;
-  /**
-   * Whether this version can be used with GCP marketplace
-   */
-  gcp_marketplace_enabled?: boolean;
 };

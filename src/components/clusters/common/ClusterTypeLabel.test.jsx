@@ -1,19 +1,24 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { render, screen, checkAccessibility } from '~/testUtils';
 
 import ClusterTypeLabel from './ClusterTypeLabel';
 import fixtures from '../ClusterDetails/__test__/ClusterDetails.fixtures';
 
 describe('ClusterTypeLabel', () => {
-  it('for ROSA hypershift', () => {
+  it('shows preview label for ROSA hypershift', async () => {
     const { cluster } = fixtures.ROSAHypershiftClusterDetails;
-    const wrapper = shallow(<ClusterTypeLabel cluster={cluster} />);
-    expect(wrapper).toMatchSnapshot();
+    const { container } = render(<ClusterTypeLabel cluster={cluster} />);
+
+    expect(container.querySelector('.pf-c-label')).toBeInTheDocument();
+    expect(screen.getByText('Preview')).toBeInTheDocument();
+    await checkAccessibility(container);
   });
 
-  it('for classic ROSA', () => {
+  it('does not show preview label for classic ROSA', () => {
     const { cluster } = fixtures.ROSAClusterDetails;
-    const wrapper = shallow(<ClusterTypeLabel cluster={cluster} />);
-    expect(wrapper).toMatchSnapshot();
+    const { container } = render(<ClusterTypeLabel cluster={cluster} />);
+
+    expect(container.querySelector('.pf-c-label')).not.toBeInTheDocument();
+    expect(screen.queryByText('Preview')).not.toBeInTheDocument();
   });
 });

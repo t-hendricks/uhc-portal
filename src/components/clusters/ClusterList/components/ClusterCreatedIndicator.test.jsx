@@ -1,5 +1,5 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { render, screen, checkAccessibility } from '~/testUtils';
 import ClusterCreatedIndicator from './ClusterCreatedIndicator';
 import {
   subscriptionSupportLevels,
@@ -9,15 +9,18 @@ import {
 const { SUPPORT_LEVEL, EVALUATION_EXPIRATION_DATE } = subscriptionSettings;
 
 describe('<ClusterCreatedIndicator />', () => {
-  it('should not crash when the cluster has no subscription info', () => {
+  it('should display "N/A" when the cluster has no subscription info', async () => {
     const cluster = {
       managed: false,
       subscription: {
         [EVALUATION_EXPIRATION_DATE]: '2020-01-01T12:00:00Z',
       },
     };
-    const wrapper = shallow(<ClusterCreatedIndicator cluster={cluster} />);
-    expect(wrapper).toMatchSnapshot();
+
+    const { container } = render(<ClusterCreatedIndicator cluster={cluster} />);
+
+    expect(container).toHaveTextContent('N/A');
+    await checkAccessibility(container);
   });
 
   it('should show created date when cluster is OSD', () => {
@@ -29,8 +32,9 @@ describe('<ClusterCreatedIndicator />', () => {
       },
       creation_timestamp: creationTimeStamp,
     };
-    const wrapper = shallow(<ClusterCreatedIndicator cluster={cluster} />);
-    expect(wrapper.text()).toEqual('01 Jan 2020');
+
+    const { container } = render(<ClusterCreatedIndicator cluster={cluster} />);
+    expect(container).toHaveTextContent('01 Jan 2020');
   });
 
   it('should show created date when it has a valid support', () => {
@@ -42,11 +46,12 @@ describe('<ClusterCreatedIndicator />', () => {
       },
       creation_timestamp: creationTimeStamp,
     };
-    const wrapper = shallow(<ClusterCreatedIndicator cluster={cluster} />);
-    expect(wrapper.text()).toEqual('01 Jan 2020');
+
+    const { container } = render(<ClusterCreatedIndicator cluster={cluster} />);
+    expect(container).toHaveTextContent('01 Jan 2020');
   });
 
-  it('should render when cluster is in 60-day trial', () => {
+  it('should have "will expire" popover when cluster is in 60-day trial', async () => {
     const creationTimeStamp = '2020-01-01T00:00:00Z';
     const cluster = {
       managed: false,
@@ -55,11 +60,17 @@ describe('<ClusterCreatedIndicator />', () => {
       },
       creation_timestamp: creationTimeStamp,
     };
-    const wrapper = shallow(<ClusterCreatedIndicator cluster={cluster} />);
-    expect(wrapper.find('Popover').length).toEqual(1);
+
+    const { user } = render(<ClusterCreatedIndicator cluster={cluster} />);
+    await user.click(screen.getByRole('button'));
+    expect(await screen.findByRole('dialog')).toBeInTheDocument();
+
+    expect(
+      screen.getByText('Your OCP cluster evaluation will expire in', { exact: false }),
+    ).toBeInTheDocument();
   });
 
-  it('should render when trial expires', () => {
+  it('should have "expired" popover when trial expired', async () => {
     const creationTimeStamp = '2020-01-01T00:00:00Z';
     const cluster = {
       managed: false,
@@ -68,8 +79,12 @@ describe('<ClusterCreatedIndicator />', () => {
       },
       creation_timestamp: creationTimeStamp,
     };
-    const wrapper = shallow(<ClusterCreatedIndicator cluster={cluster} />);
-    expect(wrapper.find('Popover').length).toEqual(1);
-    expect(wrapper).toMatchSnapshot();
+    const { user } = render(<ClusterCreatedIndicator cluster={cluster} />);
+    await user.click(screen.getByRole('button'));
+    expect(await screen.findByRole('dialog')).toBeInTheDocument();
+
+    expect(
+      screen.getByText('Your 60-day evaluation has expired.', { exact: false }),
+    ).toBeInTheDocument();
   });
 });

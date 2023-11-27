@@ -2,6 +2,9 @@
 /* tslint:disable */
 /* eslint-disable */
 
+import type { ScheduleType } from './ScheduleType';
+import type { UpgradeType } from './UpgradeType';
+
 /**
  * Representation of an upgrade policy that can be set for a cluster.
  */
@@ -35,13 +38,13 @@ export type UpgradePolicy = {
    */
   schedule?: string;
   /**
-   * Schedule type can be either "manual" (single execution) or "automatic" (re-occurring).
+   * Schedule type of the upgrade.
    */
-  schedule_type?: string;
+  schedule_type?: ScheduleType;
   /**
-   * Upgrade type specify the type of the upgrade. Can be "OSD" or "CVE".
+   * Upgrade type specify the type of the upgrade.
    */
-  upgrade_type?: string;
+  upgrade_type?: UpgradeType;
   /**
    * Version is the desired upgrade version.
    */

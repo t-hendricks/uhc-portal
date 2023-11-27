@@ -22,8 +22,10 @@ function InfrastructureModelLabel({ cluster }) {
 
 InfrastructureModelLabel.propTypes = {
   cluster: PropTypes.shape({
-    product: PropTypes.shape({
-      type: PropTypes.oneOf(Object.values(normalizedProducts)).isRequired,
+    subscription: PropTypes.shape({
+      plan: PropTypes.shape({
+        type: PropTypes.oneOf(Object.values(normalizedProducts)).isRequired,
+      }),
     }),
   }),
 };

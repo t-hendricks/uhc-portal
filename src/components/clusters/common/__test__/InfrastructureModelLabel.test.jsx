@@ -1,5 +1,5 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { render } from '~/testUtils';
 
 import InfrastructureModelLabel from '../InfrastructureModelLabel';
 import fixtures from '../../ClusterDetails/__test__/ClusterDetails.fixtures';
@@ -7,19 +7,19 @@ import fixtures from '../../ClusterDetails/__test__/ClusterDetails.fixtures';
 describe('InfrastructureModelLabel', () => {
   it('for OSD rhInfra cluster', () => {
     const { cluster } = fixtures.clusterDetails;
-    const wrapper = shallow(<InfrastructureModelLabel cluster={cluster} />);
-    expect(wrapper).toMatchSnapshot();
+    const { container } = render(<InfrastructureModelLabel cluster={cluster} />);
+    expect(container).toHaveTextContent('Red Hat cloud account');
   });
 
   it('for OSD CCS cluster', () => {
     const { cluster } = fixtures.CCSClusterDetails;
-    const wrapper = shallow(<InfrastructureModelLabel cluster={cluster} />);
-    expect(wrapper).toMatchSnapshot();
+    const { container } = render(<InfrastructureModelLabel cluster={cluster} />);
+    expect(container).toHaveTextContent('Customer cloud subscription');
   });
 
   it('for OSDTrial CCS cluster', () => {
     const { cluster } = fixtures.OSDTrialClusterDetails;
-    const wrapper = shallow(<InfrastructureModelLabel cluster={cluster} />);
-    expect(wrapper).toMatchSnapshot();
+    const { container } = render(<InfrastructureModelLabel cluster={cluster} />);
+    expect(container).toHaveTextContent('Customer cloud subscription');
   });
 });

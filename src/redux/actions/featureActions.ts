@@ -12,6 +12,7 @@ import {
   HCP_AWS_BILLING_REQUIRED,
   HCP_USE_UNMANAGED,
   SECURITY_GROUPS_FEATURE,
+  HCP_USE_NODE_UPGRADE_POLICIES,
 } from '../constants/featureConstants';
 import authorizationsService from '../../services/authorizationsService';
 import { SelfAccessReview } from '../../types/authorizations.v1/models/SelfAccessReview';
@@ -35,6 +36,7 @@ export const features = [
   getSimpleUnleashFeature('hcp-aws-billing-show', HCP_AWS_BILLING_SHOW),
   getSimpleUnleashFeature('hcp-use-unmanaged-policies', HCP_USE_UNMANAGED),
   getSimpleUnleashFeature('hcp-aws-billing-required', HCP_AWS_BILLING_REQUIRED),
+  getSimpleUnleashFeature('hcp-use-node-upgrade-policies', HCP_USE_NODE_UPGRADE_POLICIES),
   getSimpleUnleashFeature('assisted-installer-merge-lists', ASSISTED_INSTALLER_MERGE_LISTS_FEATURE),
   getSimpleUnleashFeature('osd-google-marketplace', OSD_GOOGLE_MARKETPLACE_FEATURE),
   getSimpleUnleashFeature('osd-gcp-shared-vpc', OSD_GCP_SHARED_VPC_FEATURE),

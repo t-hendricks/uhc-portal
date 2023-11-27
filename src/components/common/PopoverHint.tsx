@@ -1,6 +1,6 @@
 import React from 'react';
 import { Button, Popover, PopoverProps } from '@patternfly/react-core';
-import { OutlinedQuestionCircleIcon } from '@patternfly/react-icons';
+import { OutlinedQuestionCircleIcon, ExclamationCircleIcon } from '@patternfly/react-icons';
 
 import './PopoverHint.scss';
 
@@ -11,6 +11,7 @@ interface PopoverHintProps extends Omit<PopoverProps, 'bodyContent'> {
   buttonAriaLabel?: string;
   footer?: React.ReactNode;
   bodyContent?: React.ReactNode | ((hide: () => void) => React.ReactNode);
+  isError?: boolean;
 }
 
 const PopoverHint = ({
@@ -20,6 +21,7 @@ const PopoverHint = ({
   footer,
   bodyContent,
   buttonAriaLabel,
+  isError,
   ...popoverProps
 }: PopoverHintProps) => (
   <>
@@ -32,11 +34,11 @@ const PopoverHint = ({
     >
       <Button
         className="popover-hint-button"
-        aria-label={buttonAriaLabel || 'More information'}
+        aria-label={buttonAriaLabel || (isError ? 'Error' : 'More information')}
         variant="plain"
       >
         <span className={iconClassName}>
-          <OutlinedQuestionCircleIcon />
+          {isError ? <ExclamationCircleIcon className="danger" /> : <OutlinedQuestionCircleIcon />}
         </span>
       </Button>
     </Popover>

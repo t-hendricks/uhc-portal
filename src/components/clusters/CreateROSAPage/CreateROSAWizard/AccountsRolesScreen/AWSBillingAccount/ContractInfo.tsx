@@ -6,34 +6,41 @@ import {
   DescriptionListDescription,
 } from '@patternfly/react-core';
 import { DateFormat } from '@redhat-cloud-services/frontend-components/DateFormat';
-import { Contract } from '~/types/accounts_mgmt.v1/models/Contract';
-import { getDimensionValue } from './awsBillingAccountHelper';
 
-// eslint-disable-next-line camelcase
-const ContractInfo: React.FC<Contract> = ({ start_date, end_date, dimensions }) => (
+import { BillingContract, getDimensionValue } from './awsBillingAccountHelper';
+
+const ContractInfo = ({ contract }: { contract: BillingContract }) => (
   <DescriptionList id="contract-info" isHorizontal>
     <DescriptionListGroup>
       <DescriptionListTerm>Start date:</DescriptionListTerm>
       <DescriptionListDescription>
-        <DateFormat type="onlyDate" date={new Date(start_date)} />
+        {contract.start_date ? (
+          <DateFormat type="onlyDate" date={new Date(contract.start_date)} />
+        ) : (
+          'N/A'
+        )}
       </DescriptionListDescription>
     </DescriptionListGroup>
     <DescriptionListGroup>
       <DescriptionListTerm>End date:</DescriptionListTerm>
       <DescriptionListDescription>
-        <DateFormat type="onlyDate" date={new Date(end_date)} />
+        {contract.end_date ? (
+          <DateFormat type="onlyDate" date={new Date(contract.end_date)} />
+        ) : (
+          'N/A'
+        )}
       </DescriptionListDescription>
     </DescriptionListGroup>
     <DescriptionListGroup>
       <DescriptionListTerm>Number of vCPUs</DescriptionListTerm>
       <DescriptionListDescription>
-        {getDimensionValue(dimensions, 'four_vcpu_hour')}
+        {getDimensionValue(contract.dimensions, 'four_vcpu_hour')}
       </DescriptionListDescription>
     </DescriptionListGroup>
     <DescriptionListGroup>
       <DescriptionListTerm>Number of clusters</DescriptionListTerm>
       <DescriptionListDescription>
-        {getDimensionValue(dimensions, 'control_plane')}
+        {getDimensionValue(contract.dimensions, 'control_plane')}
       </DescriptionListDescription>
     </DescriptionListGroup>
   </DescriptionList>

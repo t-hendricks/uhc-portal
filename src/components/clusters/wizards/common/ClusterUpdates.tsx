@@ -69,7 +69,7 @@ export const ClusterUpdates = () => {
           </ExternalLink>{' '}
           (CVEs) that significantly impact the security or stability of the cluster, updates may be
           automatically scheduled by Red Hat SRE to the latest z-stream version not impacted by the
-          CVE within 48 hours after customer notifications.
+          CVE within 2 business days after customer notifications.
         </Text>
       </GridItem>
 

@@ -29,7 +29,7 @@ import ExternalLink from '../../../../../common/ExternalLink';
 import { getAWSBillingAccountIDs } from '../../rosaActions';
 import AWSAccountSelection from '../AWSAccountSelection';
 import ContractInfo from './ContractInfo';
-import { hasContract } from './awsBillingAccountHelper';
+import { getContract } from './awsBillingAccountHelper';
 
 interface AWSBillingAccountProps {
   change: (field: string, value: string) => void;
@@ -86,7 +86,7 @@ const AWSBillingAccount = ({
   // if there's only one account, select it by default
   useEffect(() => {
     if (cloudAccounts?.length === 1 && !selectedAWSBillingAccountID) {
-      change('billing_account_id', cloudAccounts[0].cloud_account_id);
+      change('billing_account_id', cloudAccounts[0].cloud_account_id || '');
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [cloudAccounts, selectedAWSBillingAccountID]);
@@ -106,7 +106,7 @@ const AWSBillingAccount = ({
   const selectedAccount = cloudAccounts.find(
     (account) => account.cloud_account_id === selectedAWSBillingAccountID,
   );
-  const isContractEnabled = !!selectedAccount && hasContract(selectedAccount);
+  const selectedContract = selectedAccount ? getContract(selectedAccount) : null;
 
   if (!isVisible) {
     return <></>;
@@ -152,10 +152,10 @@ const AWSBillingAccount = ({
           isDisabled={organization.pending || getAWSBillingAccountsResponse.pending}
           isBillingAccount
         />
-        {isContractEnabled ? (
+        {selectedContract ? (
           <Stack>
             <StackItem>
-              <Popover bodyContent={<ContractInfo {...selectedAccount.contracts[0]} />}>
+              <Popover bodyContent={<ContractInfo contract={selectedContract} />}>
                 <Button variant="link" icon={<OutlinedQuestionCircleIcon />}>
                   Contract enabled for this billing account
                 </Button>

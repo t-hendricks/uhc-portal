@@ -1,6 +1,5 @@
 import React from 'react';
-import { shallow } from 'enzyme';
-
+import { render, screen, checkAccessibility } from '~/testUtils';
 import TermsAlert from '../TermsAlert';
 import * as Fixtures from './TermsAlert.fixtures';
 import { buildUrlParams } from '../../../../../../common/queryHelpers';
@@ -9,19 +8,18 @@ import { normalizedProducts } from '../../../../../../common/subscriptionTypes';
 describe('<TermsAlert />', () => {
   describe('TermsAlert OCP', () => {
     const props = { ...Fixtures, subscription: { plan: { id: normalizedProducts.OCP } } };
-    const wrapper = shallow(<TermsAlert {...props} />);
-
-    it('should not render', () => {
-      expect(wrapper).toMatchObject({});
+    it('renders an empty object', () => {
+      const { container } = render(<TermsAlert {...props} />);
+      expect(container).toBeEmptyDOMElement();
     });
   });
 
   describe('TermsAlert has no required terms', () => {
     const props = { ...Fixtures, selfTermsReviewResult: { terms_required: false } };
-    const wrapper = shallow(<TermsAlert {...props} />);
 
-    it('should not render', () => {
-      expect(wrapper).toMatchObject({});
+    it('renders an empty object', () => {
+      const { container } = render(<TermsAlert {...props} />);
+      expect(container).toBeEmptyDOMElement();
     });
   });
 
@@ -31,10 +29,20 @@ describe('<TermsAlert />', () => {
     const locationTest = new URL(currentUrl);
     delete window.location;
     window.location = locationTest;
-    const wrapper = shallow(<TermsAlert {...Fixtures} />);
 
-    it('should render', () => {
-      expect(wrapper).toMatchSnapshot();
+    const selfTermsReview = jest.fn();
+
+    beforeEach(() => {
+      selfTermsReview.mockClear();
+    });
+
+    afterAll(() => {
+      window.location = locationSave;
+    });
+
+    it('is accessible', async () => {
+      const { container } = render(<TermsAlert {...Fixtures} />);
+      await checkAccessibility(container);
     });
     it('should contain link to terms app', () => {
       const params = {
@@ -42,16 +50,12 @@ describe('<TermsAlert />', () => {
         cancelRedirect: currentUrl,
       };
       const redirectUrl = `${Fixtures.tncUrl}&${buildUrlParams(params)}`;
-      const link = wrapper.find('Alert').prop('actionLinks');
-      expect(link).toBeDefined();
-      expect(link.props.href).toEqual(redirectUrl);
+      render(<TermsAlert {...Fixtures} />);
+
+      expect(screen.getByRole('link', { name: 'View Terms and Conditions' })).toHaveAttribute(
+        'href',
+        redirectUrl,
+      );
     });
-
-    window.location = locationSave;
-  });
-
-  it('should call terms review', () => {
-    // not needed for OCP, so it's only called twice.
-    expect(Fixtures.selfTermsReview).toHaveBeenCalledTimes(2);
   });
 });

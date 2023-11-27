@@ -2,7 +2,9 @@
 /* tslint:disable */
 /* eslint-disable */
 
+import type { ScheduleType } from './ScheduleType';
 import type { UpgradePolicyState } from './UpgradePolicyState';
+import type { UpgradeType } from './UpgradeType';
 
 /**
  * Representation of an upgrade policy that can be set for a cluster.
@@ -45,17 +47,17 @@ export type ControlPlaneUpgradePolicy = {
    */
   schedule?: string;
   /**
-   * Schedule type can be either "manual" (single execution) or "automatic" (re-occurring).
+   * Schedule type of the control plane upgrade.
    */
-  schedule_type?: string;
+  schedule_type?: ScheduleType;
   /**
    * State of the upgrade policy for the hosted control plane.
    */
   state?: UpgradePolicyState;
   /**
-   * Upgrade type specify the type of the upgrade. Can only be "ControlPlane".
+   * Upgrade type of the control plane.
    */
-  upgrade_type?: string;
+  upgrade_type?: UpgradeType;
   /**
    * Version is the desired upgrade version.
    */

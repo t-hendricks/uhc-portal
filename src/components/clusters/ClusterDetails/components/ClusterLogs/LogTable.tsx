@@ -1,8 +1,6 @@
 /* eslint-disable camelcase */
 import React from 'react';
 import moment from 'moment';
-import ReactMarkdown from 'react-markdown';
-import remarkGfm from 'remark-gfm';
 
 import {
   Bullseye,
@@ -34,6 +32,7 @@ import { ClusterLog } from '~/types/service_logs.v1/index';
 import './LogTable.scss';
 import ExternalLink from '~/components/common/ExternalLink';
 
+import MarkdownParser from '~/common/MarkdownParser';
 import { eventTypes } from '../../clusterDetailsHelper';
 
 const columns = [
@@ -141,22 +140,6 @@ const LogTable = ({ logs, setSorting, pending, refreshEvent }: LogTableParams) =
 
     const day = moment.utc(timestamp).format('D MMM YYYY, HH:mm UTC');
 
-    const md = (
-      <ReactMarkdown
-        className="markdown"
-        rehypePlugins={[remarkGfm]}
-        components={{
-          // map a link to ExternalLink
-          a(props) {
-            const { href, children } = props;
-            return <ExternalLink href={href ?? ''}>{children}</ExternalLink>;
-          },
-        }}
-      >
-        {description || ''}
-      </ReactMarkdown>
-    );
-
     const hasDocReferences = docReferences && docReferences.length > 0;
 
     const references = hasDocReferences ? (
@@ -203,7 +186,7 @@ const LogTable = ({ logs, setSorting, pending, refreshEvent }: LogTableParams) =
         <Tr isExpanded={isLogExpanded(log)}>
           <Td className="cluster-log" colSpan={columns.length + 1}>
             <ExpandableRowContent>
-              {md}
+              <MarkdownParser>{description}</MarkdownParser>
               {references}
             </ExpandableRowContent>
           </Td>
