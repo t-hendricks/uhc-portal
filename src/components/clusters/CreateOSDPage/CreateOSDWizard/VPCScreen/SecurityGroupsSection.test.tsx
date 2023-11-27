@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, screen } from '~/testUtils';
 import * as hooks from '~/hooks/useFeatureGate';
-import { SECURITY_GROUPS_FEATURE } from '~/redux/constants/featureConstants';
+import { SECURITY_GROUPS_FEATURE_DAY1 } from '~/redux/constants/featureConstants';
 
 import SecurityGroupsSection from './SecurityGroupsSection';
 
@@ -26,7 +26,7 @@ describe('<SecurityGroupsSection />', () => {
   beforeEach(() => {
     jest
       .spyOn(hooks, 'useFeatureGate')
-      .mockImplementation((feature) => feature === SECURITY_GROUPS_FEATURE);
+      .mockImplementation((feature) => feature === SECURITY_GROUPS_FEATURE_DAY1);
   });
 
   afterEach(() => {

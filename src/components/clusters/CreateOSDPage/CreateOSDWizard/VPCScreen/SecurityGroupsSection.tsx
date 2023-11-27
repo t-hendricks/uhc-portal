@@ -8,7 +8,7 @@ import { SupportedFeature } from '~/common/featureCompatibility';
 import ReduxCheckbox from '~/components/common/ReduxFormComponents/ReduxCheckbox';
 import { getIncompatibleVersionReason } from '~/common/versionCompatibility';
 import { validateSecurityGroups } from '~/common/validators';
-import { SECURITY_GROUPS_FEATURE } from '~/redux/constants/featureConstants';
+import { SECURITY_GROUPS_FEATURE_DAY1 } from '~/redux/constants/featureConstants';
 import EditSecurityGroups from '~/components/clusters/ClusterDetails/components/SecurityGroups/EditSecurityGroups';
 import SecurityGroupsEmptyAlert from '~/components/clusters/ClusterDetails/components/SecurityGroups/SecurityGroupsEmptyAlert';
 import { useGlobalState } from '~/redux/hooks';
@@ -45,7 +45,7 @@ const SecurityGroupsSection = ({
   openshiftVersion: string;
   selectedVPC: CloudVPC;
 }) => {
-  const hasFeatureGate = useFeatureGate(SECURITY_GROUPS_FEATURE);
+  const hasFeatureGate = useFeatureGate(SECURITY_GROUPS_FEATURE_DAY1);
   const securityGroups = useGlobalState((state) => valueSelector(state, fieldId));
   const selectedGroups = securityGroups.applyControlPlaneToAll
     ? securityGroups.controlPlane
