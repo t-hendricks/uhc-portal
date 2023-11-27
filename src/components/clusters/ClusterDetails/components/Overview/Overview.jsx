@@ -129,7 +129,8 @@ class Overview extends React.Component {
       !shouldShowLogs(cluster) &&
       !isDeprovisioned &&
       !isArchived &&
-      !isRestrictedEnv();
+      !isRestrictedEnv() &&
+      !hasInflightErrors(cluster);
     const showCostBreakdown =
       !cluster.managed &&
       userAccess.fulfilled &&
@@ -147,7 +148,7 @@ class Overview extends React.Component {
     } else if (
       cluster &&
       !isAssistedInstallSubscription(cluster.subscription) &&
-      shouldShowLogs(cluster)
+      (shouldShowLogs(cluster) || hasInflightErrors(cluster))
     ) {
       topCard = <ClusterProgressCard cluster={cluster} />;
     }
