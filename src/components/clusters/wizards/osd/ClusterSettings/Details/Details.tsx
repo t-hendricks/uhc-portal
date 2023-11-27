@@ -133,6 +133,7 @@ export const Details = () => {
       setFieldValue(`private_subnet_id_${i}`, '');
       setFieldValue(`public_subnet_id_${i}`, '');
     }
+    setFieldValue(FieldId.SelectedVpc, '');
   };
 
   const handleMultiAzChange = (value: string) => {

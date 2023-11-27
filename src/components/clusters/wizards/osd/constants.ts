@@ -117,6 +117,7 @@ export const initialValues: FormikValues = {
   [FieldId.AcknowledgePrereq]: false,
   [FieldId.BillingModel]: billingModels.STANDARD,
   [FieldId.MultiAz]: 'false',
+  [FieldId.SelectedVpc]: { id: '', name: '' },
   [FieldId.InstallToSharedVpc]: false,
   [FieldId.EnableUserWorkloadMonitoring]: true,
   [FieldId.NodeLabels]: [{ key: '', value: '' }],
