@@ -8,7 +8,7 @@ import { useFeatureGate } from '~/hooks/useFeatureGate';
 import { HCP_USE_NODE_UPGRADE_POLICIES } from '~/redux/constants/featureConstants';
 import { getMachineOrNodePools } from '../../../MachinePoolsActions';
 
-const useMachinePools = (cluster: Cluster) => {
+const useMachinePools = (cluster?: Cluster) => {
   const dispatch = useDispatch();
   const useNodeUpgradePolicies = useFeatureGate(HCP_USE_NODE_UPGRADE_POLICIES);
   const hypershiftCluster = isHypershiftCluster(cluster);
@@ -21,7 +21,7 @@ const useMachinePools = (cluster: Cluster) => {
         useNodeUpgradePolicies,
       )(dispatch);
     }
-  }, [dispatch, cluster.id, hypershiftCluster, cluster.version?.id, useNodeUpgradePolicies]);
+  }, [dispatch, cluster?.id, hypershiftCluster, cluster?.version?.id, useNodeUpgradePolicies]);
 
   const machinePoolsResponse = useGlobalState((state) => state.machinePools.getMachinePools);
 
