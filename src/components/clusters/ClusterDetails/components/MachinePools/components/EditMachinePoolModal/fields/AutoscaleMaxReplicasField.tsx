@@ -72,7 +72,7 @@ const AutoscaleMaxReplicasField = ({
           onChange(Number(newValue));
         }}
         id={fieldId}
-        min={minNodes}
+        min={minNodes || 1}
         max={maxNodes}
       />
     </FormGroup>
