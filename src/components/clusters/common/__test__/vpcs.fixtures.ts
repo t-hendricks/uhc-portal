@@ -1,20 +1,9 @@
-import React from 'react';
+import { CloudVPC } from '~/types/clusters_mgmt.v1';
 
-import { render, screen, fireEvent } from '~/testUtils';
-import VPCDropdown from './VPCDropdown';
-import { useAWSVPCInquiry } from '../VPCScreen/useVPCInquiry';
-
-const defaultProps = {
-  selectedVPC: { id: '', name: '' },
-  input: { value: '', onBlur: () => {}, onChange: () => {} },
-  showRefresh: true,
-  meta: { error: '', touched: false },
-};
-
-const vpcList = [
+export const vpcList = [
   {
     name: 'jaosorior-8vns4-vpc',
-    red_hat_managed: false,
+    red_hat_managed: true,
     id: 'vpc-046c3e3efea64c91e',
     cidr_block: '10.0.0.0/16',
     aws_subnets: [
@@ -106,63 +95,4 @@ const vpcList = [
     id: 'vpc-099304b69dd838794',
     cidr_block: '10.0.0.0/19',
   },
-];
-
-jest.mock('./../VPCScreen/useVPCInquiry');
-
-describe('<VPCDropdown />', () => {
-  const requestParams = {
-    region: 'us-west-2',
-  };
-
-  describe('When some VPCs exist', () => {
-    beforeEach(() => {
-      (useAWSVPCInquiry as jest.Mock).mockImplementation(() => ({
-        vpcs: {
-          fulfilled: true,
-          data: { items: vpcList },
-        },
-        requestParams,
-      }));
-    });
-
-    it('shows refresh available', () => {
-      render(<VPCDropdown {...defaultProps} />);
-      expect(screen.getByRole('button', { name: 'Refresh' })).toBeEnabled();
-    });
-
-    it('shows search in select vpc dropdown', async () => {
-      render(<VPCDropdown {...defaultProps} />);
-      expect(await screen.findByText(/^select a vpc$/i)).toBeInTheDocument();
-      const selectDropdown = screen.getByRole('button', { name: 'Options menu' });
-      fireEvent.keyDown(selectDropdown, { key: 'Enter' }); // this is the only way to open select! using click doesn't work
-      expect(screen.getByPlaceholderText('Filter by VPC')).toBeInTheDocument();
-    });
-
-    it('shows the selected cloud provider region information', () => {
-      render(<VPCDropdown {...defaultProps} />);
-
-      expect(
-        screen.getByText(
-          'Select a VPC to install your cluster into your selected region: us-west-2',
-        ),
-      ).toBeInTheDocument();
-    });
-  });
-
-  describe('When no VPCs exist', () => {
-    beforeEach(() => {
-      (useAWSVPCInquiry as jest.Mock).mockImplementation(() => ({
-        vpcs: {
-          fulfilled: true,
-          data: { items: [] },
-        },
-        requestParams,
-      }));
-    });
-    it('shows a message that no VPCs were found', async () => {
-      render(<VPCDropdown {...defaultProps} />);
-      expect(await screen.findByText(/No VPCs found/i)).toBeInTheDocument();
-    });
-  });
-});
+] as CloudVPC[];
