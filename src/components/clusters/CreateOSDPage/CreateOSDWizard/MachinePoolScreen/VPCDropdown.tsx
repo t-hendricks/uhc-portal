@@ -10,7 +10,9 @@ import {
 } from '@patternfly/react-core';
 import ErrorBox from '~/components/common/ErrorBox';
 import FuzzySelect, { FuzzyEntryType } from '~/components/common/FuzzySelect';
+import { VPCResponse } from '~/components/clusters/CreateOSDPage/CreateOSDWizard/ccsInquiriesReducer';
 import { CloudVPC } from '~/types/clusters_mgmt.v1';
+import { AWSCredentials, ErrorState } from '~/types/types';
 import {
   vpcHasPrivateSubnets,
   filterOutRedHatManagedVPCs,
@@ -32,6 +34,11 @@ interface VCPDropdownProps {
   showRefresh?: boolean;
   isHypershift?: boolean;
   isOSD?: boolean;
+}
+
+interface UseAWSVPCInquiry {
+  vpcs: VPCResponse & { pending: boolean; fulfilled: boolean; error: boolean };
+  requestParams: { region: string; cloudProviderID: string; credentials: AWSCredentials };
 }
 
 const sortVPCOptions = (vpcA: FuzzyEntryType, vpcB: FuzzyEntryType) => {
@@ -60,7 +67,7 @@ const VPCDropdown = ({
   const dispatch = useDispatch();
   const [isOpen, setIsOpen] = React.useState<boolean>(false);
 
-  const vpcResponse = useAWSVPCInquiry(isOSD);
+  const { vpcs: vpcResponse, requestParams } = useAWSVPCInquiry(isOSD) as UseAWSVPCInquiry;
   const originalVPCs = React.useMemo<CloudVPC[]>(() => {
     const vpcs = vpcResponse.data?.items || [];
     return isHypershift ? filterOutRedHatManagedVPCs(vpcs) : vpcs;
@@ -124,12 +131,12 @@ const VPCDropdown = ({
   }, [selectedVPC, originalVPCs]);
 
   const refreshVPCs = () => {
-    if (vpcResponse.cloudProvider === 'aws') {
+    if (requestParams.cloudProviderID === 'aws') {
       inputProps.onChange({ id: '', name: '' });
       dispatch(
         getAWSCloudProviderVPCs({
-          awsCredentials: vpcResponse.credentials,
-          region: vpcResponse.region,
+          region: requestParams.region,
+          awsCredentials: requestParams.credentials,
           options: isHypershift ? undefined : { includeSecurityGroups: true },
         }),
       );
@@ -141,7 +148,7 @@ const VPCDropdown = ({
       <FormGroup
         label={`Select a VPC to install your ${
           isHypershift ? 'machine pools' : 'cluster'
-        } into your selected region: ${vpcResponse.region || ''}`}
+        } into your selected region: ${requestParams.region || ''}`}
         validated={touched && error ? 'error' : 'default'}
         isRequired
       >
@@ -180,7 +187,9 @@ const VPCDropdown = ({
               </Tooltip>
             </FlexItem>
           )}
-          {vpcResponse.error && <ErrorBox message="Error retrieving VPCs" response={vpcResponse} />}
+          {vpcResponse.error && (
+            <ErrorBox message="Error retrieving VPCs" response={vpcResponse as ErrorState} />
+          )}
         </Flex>
       </FormGroup>
     </>
