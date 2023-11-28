@@ -316,6 +316,7 @@ const links = {
   AWS_CONSOLE_ROSA_HOME: 'https://console.aws.amazon.com/rosa/home',
   AWS_CONSOLE_ROSA_HOME_GET_STARTED: 'https://console.aws.amazon.com/rosa/home#/get-started',
   AWS_CONSOLE_HOSTED_ZONES: 'https://console.aws.amazon.com/route53/v2/hostedzones',
+  AWS_CONSOLE_SECURITY_GROUPS: 'https://console.aws.amazon.com/ec2/home#SecurityGroups',
   AWS_CLI: 'https://aws.amazon.com/cli/',
   AWS_CLI_INSTRUCTIONS:
     'https://docs.aws.amazon.com/ROSA/latest/userguide/getting-started-sts-auto.html',
