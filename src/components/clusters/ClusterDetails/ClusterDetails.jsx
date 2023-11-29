@@ -42,7 +42,11 @@ import { isValid, shouldRefetchQuota } from '../../../common/helpers';
 import { eventTypes } from './clusterDetailsHelper';
 import getClusterName from '../../../common/getClusterName';
 import { subscriptionStatuses, knownProducts } from '../../../common/subscriptionTypes';
-import clusterStates, { isHibernating, isHypershiftCluster } from '../common/clusterStates';
+import clusterStates, {
+  isHibernating,
+  isHypershiftCluster,
+  canViewMachinePoolTab,
+} from '../common/clusterStates';
 import AddGrantModal from './components/AccessControl/NetworkSelfServiceSection/AddGrantModal';
 import Unavailable from '../../common/Unavailable';
 import Support from './components/Support';
@@ -400,8 +404,6 @@ class ClusterDetails extends Component {
         (cloudProvider === 'gcp' &&
           (get(cluster, 'ccs.enabled') || (gotRouters && canCreateGCPNonCCSCluster)))) &&
       !isArchived;
-    const displayMachinePoolsTab =
-      cluster.managed && (isClusterReady || clusterHibernating) && !isArchived;
     const hideSupportTab = isRestrictedEnv()
       ? false
       : cluster.managed &&
@@ -445,7 +447,7 @@ class ClusterDetails extends Component {
               displayClusterHistoryTab={displayClusterLogs}
               displayNetworkingTab={displayNetworkingTab}
               displaySupportTab={displaySupportTab}
-              displayMachinePoolsTab={displayMachinePoolsTab}
+              displayMachinePoolsTab={canViewMachinePoolTab(cluster)}
               displayUpgradeSettingsTab={displayUpgradeSettingsTab}
               addHostTabDetails={addHostsTabState}
               overviewTabRef={this.overviewTabRef}
@@ -571,7 +573,7 @@ class ClusterDetails extends Component {
               <Support isDisabled={isArchived} />
             </ErrorBoundary>
           </TabContent>
-          {displayMachinePoolsTab && (
+          {canViewMachinePoolTab(cluster) && (
             <TabContent
               eventKey={6}
               id="machinePoolsContent"

@@ -14,7 +14,7 @@ type SecurityGroupsTableProps = {
   };
 };
 
-const buildSecurityGroups = (vpcGroups: SecurityGroup[], selectedGroupIds: string[]) =>
+export const buildSecurityGroups = (vpcGroups: SecurityGroup[], selectedGroupIds: string[]) =>
   selectedGroupIds.map((selectedGroupId) => {
     const sgDetails = vpcGroups.find((vpcGroup) => vpcGroup.id === selectedGroupId) || {
       name: selectedGroupId,
