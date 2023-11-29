@@ -28,7 +28,7 @@ import ResourceUsage from '../../../common/ResourceUsage/ResourceUsage';
 import { metricsStatusMessages } from '../../../common/ResourceUsage/ResourceUsage.consts';
 import clusterStates, {
   getClusterAIPermissions,
-  hasInflightErrors,
+  hasInflightEgressErrors,
   isHibernating,
 } from '../../../common/clusterStates';
 import { hasResourceUsageMetrics } from '../Monitoring/monitoringHelper';
@@ -111,11 +111,11 @@ class Overview extends React.Component {
       cluster.state === clusterStates.INSTALLING ||
       cluster.state === clusterStates.ERROR ||
       cluster.state === clusterStates.UNINSTALLING ||
-      (hasInflightErrors(cluster) && hasNetworkOndemand);
+      (hasInflightEgressErrors(cluster) && hasNetworkOndemand);
 
     const hadInflightErrorKey = `${HAD_INFLIGHT_ERROR_LOCALSTORAGE_KEY}_${cluster.id}`;
     const showInflightErrorIsFixed =
-      !hasInflightErrors(cluster) && localStorage.getItem(hadInflightErrorKey) === 'true';
+      !hasInflightEgressErrors(cluster) && localStorage.getItem(hadInflightErrorKey) === 'true';
 
     const showInsightsAdvisor =
       !isRestrictedEnv() &&
@@ -130,7 +130,7 @@ class Overview extends React.Component {
       !isDeprovisioned &&
       !isArchived &&
       !isRestrictedEnv() &&
-      !hasInflightErrors(cluster);
+      !hasInflightEgressErrors(cluster);
     const showCostBreakdown =
       !cluster.managed &&
       userAccess.fulfilled &&
@@ -148,7 +148,7 @@ class Overview extends React.Component {
     } else if (
       cluster &&
       !isAssistedInstallSubscription(cluster.subscription) &&
-      (shouldShowLogs(cluster) || hasInflightErrors(cluster))
+      (shouldShowLogs(cluster) || hasInflightEgressErrors(cluster))
     ) {
       topCard = <ClusterProgressCard cluster={cluster} />;
     }

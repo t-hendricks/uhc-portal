@@ -103,10 +103,18 @@ const isHibernating = <E extends ClusterFromSubscription>(cluster: E): boolean =
  *
  * @param cluster something extending ClusterFromSubscription since components are using either Cluster or ClusterFromSubscription
  */
-const hasInflightErrors = <E extends ClusterFromSubscription>(cluster: E): boolean =>
-  getInflightChecks(cluster).some(
-    (inflightCheck) => inflightCheck.state !== InflightCheckState.PASSED,
-  );
+const hasInflightEgressErrors = <E extends ClusterFromSubscription>(cluster: E): boolean =>
+  getInflightChecks(cluster).some((inflightCheck) => {
+    if (inflightCheck.state !== InflightCheckState.PASSED) {
+      const { details } = inflightCheck;
+      return Object.keys(details).some(
+        (dkey) =>
+          dkey.startsWith('subnet') &&
+          Object.keys(details[dkey]).some((skey) => skey.startsWith('egress_url_errors')),
+      );
+    }
+    return false;
+  });
 
 /**
  *
@@ -195,7 +203,7 @@ export {
   getClusterStateAndDescription,
   isHibernating,
   isOffline,
-  hasInflightErrors,
+  hasInflightEgressErrors,
   isROSA,
   isOSDGCPWaitingForRolesOnHostProject,
   isOSDGCPPendingOnHostProject,
