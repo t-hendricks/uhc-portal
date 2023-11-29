@@ -150,7 +150,6 @@ class clusterStatusMonitor extends React.Component {
     const { status, cluster, hasNetworkOndemand } = this.props;
 
     if (status.status.id === cluster.id) {
-      const inflightErrorStopInstall = status.status.provision_error_code === 'OCM4001';
       const errorCode = status.status.provision_error_code || '';
       let reason = '';
       if (status.status.provision_error_code) {
@@ -161,7 +160,7 @@ class clusterStatusMonitor extends React.Component {
       const alerts = [];
 
       // Cluster install failure
-      if (status.status.state === clusterStates.ERROR && !inflightErrorStopInstall) {
+      if (status.status.state === clusterStates.ERROR) {
         alerts.push(
           <Alert variant="danger" isInline title={`${errorCode} Cluster installation failed`}>
             {`This cluster cannot be recovered, however you can use the logs and network validation to diagnose the problem: ${reason} ${description}`}
@@ -171,7 +170,7 @@ class clusterStatusMonitor extends React.Component {
 
       // Rosa inflight error check found urls missing from byo vpc firewall
       if (hasNetworkOndemand) {
-        alerts.push(this.showMissingURLList(inflightErrorStopInstall));
+        alerts.push(this.showMissingURLList());
       }
 
       // OSD GCP is waiting on roles to be added to dynamically generated service account for a shared vpc project
@@ -229,7 +228,7 @@ class clusterStatusMonitor extends React.Component {
     return null;
   }
 
-  showMissingURLList(inflightErrorStopInstall) {
+  showMissingURLList() {
     const { inflightChecks, rerunInflightChecks, rerunInflightCheckReq, cluster } = this.props;
     const { isExpanded, isErrorOpen, wasRunClicked, isValidatorRunning } = this.state;
     const isClusterValidating =
@@ -316,11 +315,7 @@ class clusterStatusMonitor extends React.Component {
         // show spinner on rerun button
         const runningInflightCheck = wasRunClicked || isValidatorRunning;
         return (
-          <Alert
-            variant={inflightErrorStopInstall ? 'danger' : 'warning'}
-            isInline
-            title="User action required"
-          >
+          <Alert variant="warning" isInline title="User action required">
             <Flex direction={{ default: 'column' }}>
               <FlexItem>{`${reason}`}</FlexItem>
               {inflightTable && <FlexItem>{inflightTable}</FlexItem>}
@@ -350,7 +345,9 @@ class clusterStatusMonitor extends React.Component {
                       isDisabled={runningInflightCheck}
                       onClick={rerunValidator}
                     >
-                      Rerun network validation
+                      {isValidatorRunning
+                        ? 'Network validation in progress'
+                        : 'Rerun network validation'}
                     </Button>
 
                     {isErrorOpen && (
