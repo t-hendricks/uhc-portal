@@ -32,7 +32,7 @@ export const AwsVpcSettings = () => {
         });
       }
     }
-  }, [setFieldValue, isMultiAz, selectedVPC]);
+  }, [setFieldValue, setFieldTouched, isMultiAz, selectedVPC]);
 
   return (
     <>

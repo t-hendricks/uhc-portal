@@ -42,6 +42,7 @@
     "react/jsx-no-target-blank": [2],
     "react/jsx-props-no-spreading": [0],
     "react/sort-comp": "off",
+    "react-hooks/exhaustive-deps": "error",
     "react/state-in-constructor": [2, "never"],
     "no-param-reassign": [
       "error",
