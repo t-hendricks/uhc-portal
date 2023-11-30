@@ -42,8 +42,6 @@ describe(
       CreateRosaWizardPage.selectAWSInfrastructureAccount(awsAccountID);
       CreateRosaWizardPage.refreshInfrastructureAWSAccountButton().click();
       CreateRosaWizardPage.waitForARNList();
-      CreateRosaWizardPage.refreshInfrastructureAWSAccountButton().click();
-      CreateRosaWizardPage.waitForARNList();
       CreateRosaWizardPage.selectInstallerRole(installerARN);
       cy.get('button').contains('Next').click();
     });
@@ -51,7 +49,7 @@ describe(
     it('Step - Cluster Settings - Select Cluster name, version, regions', () => {
       CreateRosaWizardPage.isClusterDetailsScreen();
       cy.get(CreateRosaWizardPage.clusterNameInput).type(clusterName);
-      CreateRosaWizardPage.clusterDetailsTree().click();
+      CreateRosaWizardPage.hideClusterNameValidation();
       CreateRosaWizardPage.selectClusterVersion(clusterPropertiesFile.Version);
       CreateRosaWizardPage.selectRegion(clusterPropertiesFile.Region);
       CreateRosaWizardPage.selectAvailabilityZone(clusterPropertiesFile.Availability);
@@ -95,8 +93,7 @@ describe(
     it('Step - Cluster roles and policies - role provider mode and its definitions', () => {
       CreateRosaWizardPage.selectRoleProviderMode(clusterPropertiesFile.RoleProviderMode);
       CreateRosaWizardPage.customOperatorPrefixInput().should('be.visible');
-      CreateRosaWizardPage.customOperatorPrefixInput().invoke('val').should('not.be.empty');
-      CreateRosaWizardPage.customOperatorPrefixInput().contains(clusterName);
+      CreateRosaWizardPage.customOperatorPrefixInput().invoke('val').should('include', clusterName);
       cy.get('button').contains('Next').click();
     });
 
