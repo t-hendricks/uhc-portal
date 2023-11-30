@@ -189,14 +189,6 @@ export const createClusterRequest = ({ isWizard = true, cloudProviderID, product
               base_domain: sharedVpc.base_dns_domain,
             };
           }
-          // Security groups
-          const sgParams = submitRequestHelpers.createSecurityGroupsParams(formData.securityGroups);
-          if (sgParams) {
-            clusterRequest.aws = {
-              ...clusterRequest.aws,
-              ...sgParams,
-            };
-          }
         }
       } else {
         // AWS CCS credentials
@@ -204,6 +196,15 @@ export const createClusterRequest = ({ isWizard = true, cloudProviderID, product
           access_key_id: formData.access_key_id,
           account_id: formData.account_id,
           secret_access_key: formData.secret_access_key,
+        };
+      }
+
+      // Security groups
+      const sgParams = submitRequestHelpers.createSecurityGroupsParams(formData.securityGroups);
+      if (sgParams && !isHypershiftSelected) {
+        clusterRequest.aws = {
+          ...clusterRequest.aws,
+          ...sgParams,
         };
       }
 

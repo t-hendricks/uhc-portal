@@ -8,6 +8,7 @@ import ReviewSection, {
   ReviewItem,
 } from '~/components/clusters/CreateOSDPage/CreateOSDWizard/ReviewClusterScreen/ReviewSection';
 import { useFormState } from '~/components/clusters/wizards/hooks';
+import { hasSelectedSecurityGroups } from '~/common/securityGroupsHelpers';
 import {
   CloudProviderType,
   UpgradePolicyType,
@@ -35,6 +36,7 @@ export const ReviewAndCreateContent = ({ isPending }: ReviewAndCreateContentProp
       [FieldId.ClusterPrivacy]: clusterPrivacy,
       [FieldId.ClusterVersion]: clusterVersion,
       [FieldId.ApplicationIngress]: applicationIngress,
+      [FieldId.SecurityGroups]: securityGroups,
     },
     values: formValues,
   } = useFormState();
@@ -45,16 +47,17 @@ export const ReviewAndCreateContent = ({ isPending }: ReviewAndCreateContentProp
   const isAWS = cloudProvider === CloudProviderType.Aws;
   const isGCP = cloudProvider === CloudProviderType.Gcp;
 
+  const hasSecurityGroups = isByoc && hasSelectedSecurityGroups(securityGroups);
+
   const clusterSettingsFields = [
     FieldId.CloudProvider,
     FieldId.ClusterName,
     FieldId.ClusterVersion,
     FieldId.Region,
     FieldId.MultiAz,
-    ...(!isByoc ? [FieldId.PersistentStorage] : []),
-    ...(isByoc && isAWS ? [FieldId.DisableScpChecks] : []),
     FieldId.EnableUserWorkloadMonitoring,
-    ...(isByoc ? [FieldId.CustomerManagedKey] : []),
+    ...(isByoc ? [FieldId.CustomerManagedKey] : [FieldId.PersistentStorage]),
+    ...(isByoc && isAWS ? [FieldId.DisableScpChecks] : []),
     FieldId.EtcdEncryption,
     FieldId.FipsCryptography,
   ];
@@ -131,6 +134,9 @@ export const ReviewAndCreateContent = ({ isPending }: ReviewAndCreateContentProp
         )}
         {isByoc && installToVpc && (
           <ReviewItem name={isAWS ? 'aws_standalone_vpc' : 'gpc_vpc'} formValues={formValues} />
+        )}
+        {isByoc && installToVpc && hasSecurityGroups && (
+          <ReviewItem name="securityGroups" formValues={formValues} />
         )}
         {installToVpc && <ReviewItem name={FieldId.ConfigureProxy} formValues={formValues} />}
         {installToVpc && configureProxy && (

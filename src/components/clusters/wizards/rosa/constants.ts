@@ -78,6 +78,7 @@ export const maxAdditionalSecurityGroups = 5;
 export const defaultWorkerNodeVolumeSizeGiB = 300;
 
 export const workerNodeVolumeSizeMinGiB = 128;
+
 /**
  * Returns ROSA/AWS OSD max worker node volume size, varies per cluster version.
  * In GiB.
