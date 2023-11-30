@@ -234,10 +234,10 @@ class clusterStatusMonitor extends React.Component {
     const isClusterValidating =
       cluster.state === clusterStates.VALIDATING || cluster.state === clusterStates.PENDING;
     if (!isClusterValidating) {
-      if (hasInflightEgressErrors(cluster)) {
-        const inflightError = inflightChecks.checks.find(
-          (check) => check.state === InflightCheckState.FAILED,
-        );
+      const inflightError = inflightChecks.checks.find(
+        (check) => check.state === InflightCheckState.FAILED,
+      );
+      if (hasInflightEgressErrors(cluster) && inflightError) {
         let documentLink;
         let subnets = [];
         let inflightTable;

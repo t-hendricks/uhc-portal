@@ -115,7 +115,9 @@ class Overview extends React.Component {
 
     const hadInflightErrorKey = `${HAD_INFLIGHT_ERROR_LOCALSTORAGE_KEY}_${cluster.id}`;
     const showInflightErrorIsFixed =
-      !hasInflightEgressErrors(cluster) && localStorage.getItem(hadInflightErrorKey) === 'true';
+      !hasInflightEgressErrors(cluster) &&
+      cluster.state !== clusterStates.ERROR &&
+      localStorage.getItem(hadInflightErrorKey) === 'true';
 
     const showInsightsAdvisor =
       !isRestrictedEnv() &&
