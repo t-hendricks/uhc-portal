@@ -46,6 +46,7 @@ FORMAT=${FORMAT:-'%C(dim)A: %ad C: %cs %C(auto) %>(22,mtrunc)%S %h %C(dim)%s⏎ 
   # ("D"-"F" merges in diagram above, rather than individual "o" commits)
   git --no-pager log "^$BASE" "$DEV_REF" --first-parent \
       --color=always --date=iso-strict --pretty="$FORMAT" -z "$@"
+
   # On candidate & stable, cherry-picked master MRs become single-parent commits.
   # Do NOT want --first-parent as each merge to candidate deploys multiple MRs.
   # ("e", "g", "d" picks in diagram above, rather than "*" merges)
@@ -54,8 +55,15 @@ FORMAT=${FORMAT:-'%C(dim)A: %ad C: %cs %C(auto) %>(22,mtrunc)%S %h %C(dim)%s⏎ 
   # cherry-picks already promoted in the past are reachable from both
   # PROMOTED_REF and your EXTRA_REFS, but you want these to show as PROMOTED_REF.
   # %S shows *first* source from which the commit is reachable.
-  git --no-pager log -z "^$BASE" "$PROMOTED_REF" $EXTRA_REFS \
+  git --no-pager log "^$BASE" "$PROMOTED_REF" $EXTRA_REFS \
       --color=always --date=iso-strict --pretty="$FORMAT" -z "$@"
+
+  # During cherry-picking confict, the MR you're trying to add is not yet on EXTRA_REFS.
+  if git rev-parse --verify --quiet CHERRY_PICK_HEAD > /dev/null; then
+    # Show only that one MR, and only if it matches given paths.
+    git --no-pager log CHERRY_PICK_HEAD~1..CHERRY_PICK_HEAD --first-parent \
+        --color=always --date=iso-strict --pretty="$FORMAT %C(bold red)(CHERRY PICKING NOW...)%C(reset)" -z "$@"
+  fi
 } |
 # Fold multi-line commit messages into single line. Optional with log -z but easier to read?
 perl -g -p -e 's/\n/⏎ /g' |
