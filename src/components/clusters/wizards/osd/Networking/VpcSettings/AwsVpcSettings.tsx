@@ -5,9 +5,10 @@ import { Alert, GridItem, Title } from '@patternfly/react-core';
 import PopoverHint from '~/components/common/PopoverHint';
 import ExternalLink from '~/components/common/ExternalLink';
 import links from '~/common/installLinks.mjs';
-import { AwsSubnetFields } from '~/components/clusters/wizards/osd/Networking/VpcSettings/AwsSubnetFields';
 import { FieldId } from '~/components/clusters/wizards/osd/constants';
 import { useFormState } from '~/components/clusters/wizards/hooks';
+import AwsSubnetFields from './AwsSubnetFields';
+import SecurityGroupsSection from './SecurityGroupsSection';
 
 export const AwsVpcSettings = () => {
   const {
@@ -71,6 +72,8 @@ export const AwsVpcSettings = () => {
       />
 
       <AwsSubnetFields />
+
+      <SecurityGroupsSection />
     </>
   );
 };

@@ -49,7 +49,7 @@ const EditSecurityGroupsField = ({ cluster, isReadOnly }: EditSecurityGroupsFiel
   }
   return (
     <EditSecurityGroups
-      clusterVpc={clusterVpc}
+      selectedVPC={clusterVpc}
       isReadOnly={isReadOnly}
       selectedGroupIds={field.value}
       onChange={onChange}
