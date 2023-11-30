@@ -18,7 +18,7 @@ import SecurityGroupsViewList from './SecurityGroupsViewList';
 export interface EditSecurityGroupsProps {
   label?: string;
   selectedGroupIds: string[];
-  clusterVpc: CloudVPC;
+  selectedVPC: CloudVPC;
   isReadOnly: boolean;
   onChange: (securityGroupIds: string[]) => void;
 }
@@ -34,14 +34,14 @@ const getDisplayName = (securityGroupName: string) => {
 
 const EditSecurityGroups = ({
   label = 'Security groups',
-  clusterVpc,
+  selectedVPC,
   selectedGroupIds,
   onChange,
   isReadOnly,
 }: EditSecurityGroupsProps) => {
   const [isOpen, setIsOpen] = React.useState<boolean>(false);
 
-  const vpcSecurityGroups = clusterVpc.aws_security_groups || [];
+  const vpcSecurityGroups = selectedVPC.aws_security_groups || [];
   const selectedGroupsBelongToAnotherVpc =
     !isReadOnly && selectedGroupIds.some((sgId) => vpcSecurityGroups.every((sg) => sg.id !== sgId));
   const selectedOptions = vpcSecurityGroups.filter((sg) => selectedGroupIds.includes(sg.id || ''));
@@ -91,6 +91,7 @@ const EditSecurityGroups = ({
   };
 
   const validationError = validateSecurityGroups(selectedGroupIds);
+
   return (
     <GridItem>
       <FormGroup

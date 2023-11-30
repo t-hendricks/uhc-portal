@@ -39,7 +39,7 @@ const renderComponent = ({
   render(
     <EditSecurityGroups
       selectedGroupIds={selectedGroupIds}
-      clusterVpc={clusterVpc}
+      selectedVPC={clusterVpc}
       onChange={() => null}
       isReadOnly={isReadOnly}
     />,
@@ -138,7 +138,7 @@ describe('<EditSecurityGroups />', () => {
         <EditSecurityGroups
           onChange={onChangeSpy}
           selectedGroupIds={['sg-abc']}
-          clusterVpc={clusterVpc}
+          selectedVPC={clusterVpc}
           isReadOnly={false}
         />,
       );
@@ -154,7 +154,7 @@ describe('<EditSecurityGroups />', () => {
         <EditSecurityGroups
           onChange={onChangeSpy}
           selectedGroupIds={sgsFromFirstVpc}
-          clusterVpc={clusterVpc}
+          selectedVPC={clusterVpc}
           isReadOnly={false}
         />,
       );
@@ -174,7 +174,7 @@ describe('<EditSecurityGroups />', () => {
         <EditSecurityGroups
           onChange={onChangeSpy}
           selectedGroupIds={sgsFromFirstVpc}
-          clusterVpc={anotherVpc}
+          selectedVPC={anotherVpc}
           isReadOnly={false}
         />,
       );

@@ -8,7 +8,7 @@ import { useFormState } from '~/components/clusters/wizards/hooks';
 import { FieldId } from '~/components/clusters/wizards/osd/constants';
 import AwsSingleSubnetField from './AwsSingleSubnetField';
 
-export const AwsSubnetFields = () => {
+const AwsSubnetFields = () => {
   const { values, dirty, getFieldProps, getFieldMeta, setFieldValue } = useFormState();
 
   const {
@@ -61,3 +61,5 @@ export const AwsSubnetFields = () => {
     </>
   );
 };
+
+export default AwsSubnetFields;

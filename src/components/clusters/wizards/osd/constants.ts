@@ -49,6 +49,7 @@ export enum OsdFieldId {
   VpcName = 'vpc_name', // OSD GCP (shared VPC)
   ComputeSubnet = 'compute_subnet',
   ControlPlaneSubnet = 'control_plane_subnet',
+  SecurityGroups = 'securityGroups',
   FirstAvailabilityZone = 'az_0',
   SecondAvailabilityZone = 'az_1',
   ThirdAvailabilityZone = 'az_2',
@@ -118,6 +119,12 @@ export const initialValues: FormikValues = {
   [FieldId.BillingModel]: billingModels.STANDARD,
   [FieldId.MultiAz]: 'false',
   [FieldId.SelectedVpc]: { id: '', name: '' },
+  [FieldId.SecurityGroups]: {
+    applyControlPlaneToAll: true,
+    controlPlane: [],
+    infra: [],
+    worker: [],
+  },
   [FieldId.InstallToSharedVpc]: false,
   [FieldId.EnableUserWorkloadMonitoring]: true,
   [FieldId.NodeLabels]: [{ key: '', value: '' }],
