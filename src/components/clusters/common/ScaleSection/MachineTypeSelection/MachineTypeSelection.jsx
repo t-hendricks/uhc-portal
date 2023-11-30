@@ -6,13 +6,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import { Alert, AlertVariant, FormGroup, Spinner } from '@patternfly/react-core';
-import {
-  Select as SelectDeprecated,
-  SelectGroup as SelectGroupDeprecated,
-  SelectOption as SelectOptionDeprecated,
-} from '@patternfly/react-core/deprecated';
-
-import { FormGroupHelperText } from '~/components/common/FormGroupHelperText';
 import ErrorBox from '~/components/common/ErrorBox';
 import PopoverHint from '~/components/common/PopoverHint';
 import { humanizeValueWithUnit } from '~/common/units';
@@ -26,62 +19,7 @@ import { normalizedProducts, billingModels } from '~/common/subscriptionTypes';
 import { DEFAULT_FLAVOUR_ID } from '~/redux/actions/flavourActions';
 import { constants } from '~/components/clusters/common/CreateOSDFormConstants';
 import sortMachineTypes, { machineCategories } from './sortMachineTypes';
-
-/** Returns useful info about the machine type - CPUs, RAM, [GPUs]. */
-const machineTypeLabel = (machineType) => {
-  if (!machineType) {
-    return '';
-  }
-  const humanizedMemory = humanizeValueWithUnit(machineType.memory.value, machineType.memory.unit);
-  let label = `${machineType.cpu.value} ${machineType.cpu.unit} ${humanizedMemory.value} ${humanizedMemory.unit} RAM`;
-  if (machineType.category === 'accelerated_computing') {
-    const numGPUsStr = machineType.name.match(/\d+ GPU[s]?/g);
-    if (numGPUsStr) {
-      label += ` (${numGPUsStr})`;
-    }
-  }
-  return label;
-};
-
-/** Returns exact id used by cloud provider. */
-const machineTypeDescription = (machineType) => {
-  if (!machineType) {
-    return '';
-  }
-  return machineType.id;
-};
-
-/** Returns useful info plus exact id used by the cloud provider. */
-const machineTypeFullLabel = (machineType) => {
-  if (!machineType) {
-    return '';
-  }
-  return `${machineTypeDescription(machineType)} - ${machineTypeLabel(machineType)}`;
-};
-
-/**
- * Partitions machine types by categories. Keeps relative order within each category.
- * @param machines - Array of machine_types API items.
- * @returns Array of [categoryLabel, categoryMachines] pairs.
- *   Some may contain 0 machines.
- */
-const groupedMachineTypes = (machines) => {
-  const machineGroups = [];
-  const byCategoryName = {};
-  machineCategories.forEach(({ name, label }) => {
-    const categoryMachines = [];
-    byCategoryName[name] = categoryMachines;
-    machineGroups.push([label, categoryMachines]);
-  });
-
-  machines.forEach((machineType) => {
-    if (byCategoryName[machineType.category]) {
-      byCategoryName[machineType.category].push(machineType);
-    }
-  });
-
-  return machineGroups;
-};
+import { TreeViewSelect } from './TreeViewSelect';
 
 // Default selection scenarios:
 // - First time, default is available => select it.
@@ -100,8 +38,8 @@ const MachineTypeSelection = ({
   machine_type_force_choice: machineTypeForceChoice,
   getDefaultFlavour,
   flavours,
-  getMachineTypes,
   machineTypes,
+  machineTypesByRegion,
   isMultiAz,
   isBYOC,
   isMachinePool,
@@ -114,7 +52,6 @@ const MachineTypeSelection = ({
   menuAppendTo,
   ...extraProps
 }) => {
-  const [isOpen, setIsOpen] = React.useState(false);
   const {
     input,
     meta: { error, touched },
@@ -126,10 +63,62 @@ const MachineTypeSelection = ({
     () =>
       organization.fulfilled &&
       machineTypes.fulfilled &&
+      machineTypesByRegion.fulfilled &&
       // Tolerate flavours error gracefully.
       (flavours.fulfilled || flavours.error),
-    [flavours.error, flavours.fulfilled, machineTypes.fulfilled, organization.fulfilled],
+    [
+      flavours.error,
+      flavours.fulfilled,
+      machineTypes.fulfilled,
+      machineTypesByRegion.fulfilled,
+      organization.fulfilled,
+    ],
   );
+
+  React.useEffect(() => {
+    getDefaultFlavour();
+  }, [getDefaultFlavour]);
+
+  React.useEffect(() => {
+    if (isDataReady()) {
+      if (!input.value) {
+        setDefaultValue();
+      }
+
+      // If user had made a choice, then some external param changed like CCS/MultiAz,
+      // (we can get here on mount after switching wizard steps)
+      // and selected type is no longer availble, force user to choose again.
+      if (input.value && !isTypeAvailable(input.value)) {
+        setInvalidValue();
+      }
+    }
+  }, [input.value, isDataReady, isTypeAvailable, setDefaultValue, setInvalidValue]);
+
+  const setDefaultValue = React.useCallback(() => {
+    // Select the type suggested by backend, if possible.
+    if (forceChoiceInput.value) {
+      return; // Keep untouched, wait for user to choose.
+    }
+
+    const defaultType =
+      flavours?.byID[DEFAULT_FLAVOUR_ID]?.[cloudProviderID]?.compute_instance_type;
+
+    if (defaultType && isTypeAvailable(defaultType)) {
+      input.onChange(defaultType);
+    }
+  }, [cloudProviderID, flavours?.byID, forceChoiceInput.value, input, isTypeAvailable]);
+
+  const setInvalidValue = React.useCallback(() => {
+    // Tell redux form the current value of this field is empty.
+    // This will cause it to not pass 'required' validation.
+    // Order might matter here!
+    // If we cleared to '' before force_choice, componentDidUpdate could select new value(?)
+    forceChoiceInput.onChange(true);
+    input.onChange('');
+  }, [forceChoiceInput, input]);
+
+  const [activeMachineTypes, setActiveMachineTypes] = React.useState(machineTypes);
+  const [isMachineTypeFilteredByRegion, setIsMachineTypeFilteredByRegion] = React.useState(true);
 
   /**
    * Checks whether type can be offered, based on quota and ccs_only.
@@ -141,7 +130,7 @@ const MachineTypeSelection = ({
         return false;
       }
 
-      const machineType = machineTypes.typesByID[machineTypeID];
+      const machineType = activeMachineTypes.typesByID[machineTypeID];
       if (!machineType) {
         return false;
       }
@@ -185,38 +174,11 @@ const MachineTypeSelection = ({
       isDataReady,
       isMachinePool,
       isMultiAz,
-      machineTypes.typesByID,
+      activeMachineTypes.typesByID,
       product,
       quota,
     ],
   );
-
-  const setDefaultValue = React.useCallback(() => {
-    // Select the type suggested by backend, if possible.
-    if (forceChoiceInput.value) {
-      return; // Keep untouched, wait for user to choose.
-    }
-
-    const defaultType =
-      flavours?.byID[DEFAULT_FLAVOUR_ID]?.[cloudProviderID]?.compute_instance_type;
-
-    if (defaultType && isTypeAvailable(defaultType)) {
-      input.onChange(defaultType);
-    }
-  }, [cloudProviderID, flavours?.byID, forceChoiceInput.value, input, isTypeAvailable]);
-
-  const setInvalidValue = React.useCallback(() => {
-    // Tell redux form the current value of this field is empty.
-    // This will cause it to not pass 'required' validation.
-    // Order might matter here!
-    // If we cleared to '' before force_choice, componentDidUpdate could select new value(?)
-    forceChoiceInput.onChange(true);
-    input.onChange('');
-  }, [forceChoiceInput, input]);
-
-  React.useEffect(() => {
-    getDefaultFlavour();
-  }, [getDefaultFlavour]);
 
   React.useEffect(() => {
     if (isDataReady()) {
@@ -237,14 +199,21 @@ const MachineTypeSelection = ({
     (_, value) => {
       input.onChange(value);
       forceChoiceInput.onChange(false);
-      setIsOpen(false);
     },
     [forceChoiceInput, input],
   );
 
+  React.useEffect(() => {
+    if (isMachineTypeFilteredByRegion) {
+      setActiveMachineTypes(machineTypesByRegion);
+    } else {
+      setActiveMachineTypes(machineTypes);
+    }
+  }, [isMachineTypeFilteredByRegion, machineTypesByRegion, machineTypes]);
+
   const sortedMachineTypes = React.useMemo(
-    () => sortMachineTypes(machineTypes, cloudProviderID),
-    [cloudProviderID, machineTypes],
+    () => sortMachineTypes(activeMachineTypes, cloudProviderID),
+    [cloudProviderID, activeMachineTypes],
   );
 
   const filteredMachineTypes = React.useMemo(
@@ -252,37 +221,32 @@ const MachineTypeSelection = ({
     [isTypeAvailable, sortedMachineTypes],
   );
 
-  const options = React.useMemo(() => {
+  const machineTypeMap = React.useMemo(() => {
     const machineGroups = groupedMachineTypes(filteredMachineTypes);
-    const hasQuota = isTypeAvailable(machineType.id);
-
     const selectGroups = machineGroups
       .map(([categoryLabel, categoryMachines]) => {
         if (categoryMachines.length > 0) {
-          return (
-            <SelectGroupDeprecated label={categoryLabel} key={categoryLabel}>
-              {categoryMachines.map((machineType) => (
-                <SelectOptionDeprecated
-                  {...extraProps}
-                  key={machineType.id}
-                  id={`machineType.${machineType.id}`}
-                  value={machineType.id}
-                  description={machineTypeDescription(machineType)}
-                  isSelected={hasQuota && input.value === machineType.id}
-                  formValue={machineType.id}
-                >
+          return {
+            name: categoryLabel,
+            searchLabel: categoryLabel,
+            children: categoryMachines.map((machineType) => ({
+              name: (
+                <DropdownItem description={machineTypeDescriptionLabel(machineType)}>
                   {machineTypeLabel(machineType)}
-                </SelectOptionDeprecated>
-              ))}
-            </SelectGroupDeprecated>
-          );
+                </DropdownItem>
+              ),
+              searchLabel: `${machineTypeLabel(machineType)} - ${machineTypeDescriptionLabel(
+                machineType,
+              )} `,
+              id: machineType.id,
+            })),
+          };
         }
-        return null;
+        return undefined;
       })
       .filter(Boolean);
-
     return selectGroups;
-  }, [extraProps, filteredMachineTypes, input.value, isTypeAvailable, machineType.id]);
+  }, [filteredMachineTypes, machineType.id]);
 
   // In the dropdown we put the machine type id in separate description row,
   // but the Select toggle doesn't support that, so combine both into one label.
@@ -312,26 +276,24 @@ const MachineTypeSelection = ({
         fieldId="node_type"
         labelIcon={<PopoverHint hint={constants.computeNodeInstanceTypeHint} />}
       >
-        <SelectDeprecated
-          variant="single"
-          selections={selection}
-          isOpen={isOpen}
-          placeholderText="Select instance type"
-          onToggle={(_event, isExpanded) => setIsOpen(isExpanded)}
-          onSelect={changeHandler}
-          maxHeight={inModal ? 300 : 600}
+        <TreeViewSelect
+          machineTypeMap={machineTypeMap}
+          inModal={inModal}
           menuAppendTo={menuAppendTo}
-        >
-          {options}
-        </SelectDeprecated>
-
-        <FormGroupHelperText touched={touched} error={error} />
+          selected={selection}
+          setSelected={(event, selection) => {
+            changeHandler(event, selection.id);
+          }}
+          isMachineTypeFilteredByRegion={isMachineTypeFilteredByRegion}
+          setIsMachineTypeFilteredByRegion={setIsMachineTypeFilteredByRegion}
+          placeholder="Select instance type"
+        />
       </FormGroup>
     );
   }
 
-  return machineTypes.error ? (
-    <ErrorBox message="Error loading node types" response={machineTypes} />
+  return activeMachineTypes.error ? (
+    <ErrorBox message="Error loading node types" response={activeMachineTypes} />
   ) : (
     <>
       <div className="spinner-fit-container">
@@ -340,6 +302,62 @@ const MachineTypeSelection = ({
       <div className="spinner-loading-text">Loading node types...</div>
     </>
   );
+};
+
+/** Returns useful info about the machine type - CPUs, RAM, [GPUs]. */
+const machineTypeDescriptionLabel = (machineType) => {
+  if (!machineType) {
+    return '';
+  }
+  const humanizedMemory = humanizeValueWithUnit(machineType.memory.value, machineType.memory.unit);
+  let label = `${machineType.cpu.value} ${machineType.cpu.unit} ${humanizedMemory.value} ${humanizedMemory.unit} RAM`;
+  if (machineType.category === 'accelerated_computing') {
+    const numGPUsStr = machineType.name.match(/\d+ GPU[s]?/g);
+    if (numGPUsStr) {
+      label += ` (${numGPUsStr})`;
+    }
+  }
+  return label;
+};
+
+/** Returns exact id used by cloud provider. */
+const machineTypeLabel = (machineType) => {
+  if (!machineType) {
+    return '';
+  }
+  return machineType.id;
+};
+
+/** Returns useful info plus exact id used by the cloud provider. */
+const machineTypeFullLabel = (machineType) => {
+  if (!machineType) {
+    return '';
+  }
+  return `${machineTypeLabel(machineType)} - ${machineTypeDescriptionLabel(machineType)}`;
+};
+
+/**
+ * Partitions machine types by categories. Keeps relative order within each category.
+ * @param machines - Array of machine_types API items.
+ * @returns Array of [categoryLabel, categoryMachines] pairs.
+ *   Some may contain 0 machines.
+ */
+const groupedMachineTypes = (machines) => {
+  const machineGroups = [];
+  const byCategoryName = {};
+  machineCategories.forEach(({ name, label }) => {
+    const categoryMachines = [];
+    byCategoryName[name] = categoryMachines;
+    machineGroups.push([label, categoryMachines]);
+  });
+
+  machines.forEach((machineType) => {
+    if (byCategoryName[machineType.category]) {
+      byCategoryName[machineType.category].push(machineType);
+    }
+  });
+
+  return machineGroups;
 };
 
 const inputMetaPropTypes = PropTypes.shape({
@@ -360,6 +378,7 @@ MachineTypeSelection.propTypes = {
   flavours: PropTypes.object.isRequired,
   getMachineTypes: PropTypes.func.isRequired,
   machineTypes: PropTypes.object.isRequired,
+  machineTypesByRegion: PropTypes.object.isRequired,
   isMultiAz: PropTypes.bool.isRequired,
   isBYOC: PropTypes.bool.isRequired,
   isMachinePool: PropTypes.bool.isRequired,

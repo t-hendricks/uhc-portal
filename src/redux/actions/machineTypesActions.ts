@@ -29,6 +29,32 @@ const machineTypesActions = {
   getMachineTypes,
 };
 
-type MachineTypesAction = ActionType<typeof machineTypesActions>;
+const getMachineTypesByRegion = (
+  accessKeyId: string,
+  accountId: string,
+  secretAccessKey: string,
+  region: string,
+) =>
+  action(
+    machineTypesConstants.GET_MACHINE_TYPES_BY_REGION,
+    clusterService
+      .getMachineTypesByRegion(accessKeyId, accountId, secretAccessKey, region)
+      .then((response) => groupByCloudProvider(response.data.items)),
+  );
 
-export { machineTypesActions, getMachineTypes, groupByCloudProvider, MachineTypesAction };
+const machineTypesByRegionActions = {
+  getMachineTypesByRegion,
+};
+
+type MachineTypesAction = ActionType<typeof machineTypesActions>;
+type MachineTypesByRegionAction = ActionType<typeof machineTypesByRegionActions>;
+
+export {
+  machineTypesActions,
+  machineTypesByRegionActions,
+  getMachineTypesByRegion,
+  getMachineTypes,
+  groupByCloudProvider,
+  MachineTypesAction,
+  MachineTypesByRegionAction,
+};

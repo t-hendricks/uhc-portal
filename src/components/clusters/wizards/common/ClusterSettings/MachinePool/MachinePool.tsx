@@ -5,8 +5,8 @@ import { Field } from 'formik';
 import { Form, Grid, GridItem, Title, Text, ExpandableSection } from '@patternfly/react-core';
 
 import { required } from '~/common/validators';
-import { getMachineTypes } from '~/redux/actions/machineTypesActions';
 import MachineTypeSelection from '~/components/clusters/common/ScaleSection/MachineTypeSelection';
+import { getMachineTypesByRegion, getMachineTypes } from '~/redux/actions/machineTypesActions';
 import { CloudProviderType, FieldId } from '~/components/clusters/wizards/common/constants';
 import { useFormState } from '~/components/clusters/wizards/hooks';
 import ExternalLink from '~/components/common/ExternalLink';
@@ -20,6 +20,7 @@ import useCanClusterAutoscale from '~/components/clusters/ClusterDetails/compone
 import { NodeLabelsFieldArray } from './NodeLabelsFieldArray';
 import { ImdsSectionField } from './ImdsSectionField/ImdsSectionField';
 import { AutoScale } from './AutoScale/AutoScale';
+import { getAwsCcsCredentials } from '../../utils/ccsCredentials';
 
 export const MachinePool = () => {
   const dispatch = useDispatch();
@@ -34,7 +35,12 @@ export const MachinePool = () => {
       [FieldId.Byoc]: byoc,
       [FieldId.NodesCompute]: nodesCompute,
       [FieldId.NodeLabels]: nodeLabels,
+      [FieldId.Region]: region,
+      [FieldId.AccountId]: accountId,
+      [FieldId.AccessKeyId]: accessKeyId,
+      [FieldId.SecretAccessKey]: secretAccessKey,
     },
+    values,
     errors,
     getFieldProps,
     setFieldValue,
@@ -47,6 +53,10 @@ export const MachinePool = () => {
   const isAWS = cloudProvider === CloudProviderType.Aws;
   const canAutoScale = useCanClusterAutoscale(product);
   const [isNodeLabelsExpanded, setIsNodeLabelsExpanded] = React.useState(false);
+  const awsCreds = React.useMemo(
+    () => getAwsCcsCredentials(values),
+    [accountId, accessKeyId, secretAccessKey, values],
+  );
 
   // If no value has been set for compute nodes already,
   // set an initial value based on infrastructure and availability selections.
@@ -76,6 +86,17 @@ export const MachinePool = () => {
   React.useEffect(() => {
     if (nodeLabels[0]?.key) setIsNodeLabelsExpanded(true);
   }, [nodeLabels]);
+
+  React.useEffect(() => {
+    dispatch(
+      getMachineTypesByRegion(
+        awsCreds.access_key_id as string,
+        awsCreds.account_id as string,
+        awsCreds.secret_access_key as string,
+        region,
+      ),
+    );
+  }, [dispatch, awsCreds.access_key_id, awsCreds.account_id, awsCreds.secret_access_key, region]);
 
   const nodeLabelsExpandableSection = (
     <ExpandableSection
