@@ -75,7 +75,10 @@ function ClusterRolesScreen({
 
   const toggleByoOidcConfig = (isChecked) => () => {
     if (isChecked) {
-      change('rosa_roles_provider_creation_mode', roleModes.MANUAL);
+      change(
+        'rosa_roles_provider_creation_mode',
+        isAutoModeAvailable ? roleModes.AUTO : roleModes.MANUAL,
+      );
     } else {
       change('byo_oidc_config_id', '');
       change('byo_oidc_config_id_managed', '');
@@ -103,15 +106,12 @@ function ClusterRolesScreen({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  useEffect(() => {
-    if (!rosaCreationMode && getOCMRoleResponse.fulfilled) {
-      change(
-        'rosa_roles_provider_creation_mode',
-        isAutoModeAvailable ? roleModes.AUTO : roleModes.MANUAL,
-      );
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [rosaCreationMode, isAutoModeAvailable, getOCMRoleResponse.fulfilled]);
+  if (!rosaCreationMode && getOCMRoleResponse.fulfilled) {
+    change(
+      'rosa_roles_provider_creation_mode',
+      getOCMRoleResponse.data?.isAdmin ? roleModes.AUTO : roleModes.MANUAL,
+    );
+  }
 
   useEffect(() => {
     if (getOCMRoleResponse.pending) {
