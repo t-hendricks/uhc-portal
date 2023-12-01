@@ -83,7 +83,7 @@ const useMachinePoolFormik = ({
     let diskSize;
 
     autoscaleMin = machinePool?.autoscaling?.min_replicas || minNodesRequired;
-    autoscaleMax = machinePool?.autoscaling?.max_replicas || minNodesRequired;
+    autoscaleMax = machinePool?.autoscaling?.max_replicas || minNodesRequired || 1;
     const instanceType = machinePool?.instance_type;
 
     if (isMachinePool(machinePool)) {
