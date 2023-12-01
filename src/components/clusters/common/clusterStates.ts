@@ -106,7 +106,7 @@ const isHibernating = <E extends ClusterFromSubscription>(cluster: E): boolean =
 const hasInflightEgressErrors = <E extends ClusterFromSubscription>(cluster: E): boolean =>
   getInflightChecks(cluster).some((inflightCheck) => {
     if (inflightCheck.state !== InflightCheckState.PASSED) {
-      const { details } = inflightCheck;
+      const { details = {} } = inflightCheck;
       return Object.keys(details).some(
         (dkey) =>
           dkey.startsWith('subnet') &&
