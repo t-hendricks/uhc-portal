@@ -1,3 +1,4 @@
+import { getDefaultSecurityGroupsSettings } from '~/common/securityGroupsHelpers';
 import { isRestrictedEnv } from '~/restrictedEnv';
 import { defaultWorkerNodeVolumeSizeGiB } from '~/components/clusters/wizards/rosa/constants';
 import { getDefaultClusterAutoScaling } from '~/components/clusters/CreateOSDPage/clusterAutoScalingValues';
@@ -81,13 +82,7 @@ const createOSDInitialValues = ({
           shared_vpc: { is_allowed: false },
         }
       : {
-          securityGroups: {
-            // If "applyControlPlaneToAll" is true, the "controlPlane" SGs apply to all node types
-            applyControlPlaneToAll: true,
-            controlPlane: [],
-            infra: [],
-            worker: [],
-          },
+          securityGroups: getDefaultSecurityGroupsSettings(),
           enable_user_workload_monitoring: 'true',
           worker_volume_size_gib: defaultWorkerNodeVolumeSizeGiB,
           shared_vpc: {

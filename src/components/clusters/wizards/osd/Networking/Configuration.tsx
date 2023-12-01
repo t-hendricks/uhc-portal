@@ -18,6 +18,7 @@ import { useFormState } from '~/components/clusters/wizards/hooks';
 import { CloudProviderType } from '~/components/clusters/wizards/common/constants';
 import { FieldId } from '~/components/clusters/wizards/osd/constants';
 import { isExactMajorMinor } from '~/common/versionHelpers';
+import { getDefaultSecurityGroupsSettings } from '~/common/securityGroupsHelpers';
 
 import { ApplicationIngressType, ClusterPrivacyType } from './constants';
 import { DefaultIngressFields } from './DefaultIngressFields';
@@ -64,6 +65,12 @@ export const Configuration = () => {
       },
     });
 
+  const clearSecurityGroups = () => {
+    if (values.securityGroups) {
+      setFieldValue(FieldId.SecurityGroups, getDefaultSecurityGroupsSettings());
+    }
+  };
+
   const onClusterPrivacyChange = (value: string) => {
     if (value === ClusterPrivacyType.External) {
       setFieldValue(FieldId.UsePrivateLink, false);
@@ -80,6 +87,7 @@ export const Configuration = () => {
 
       if (!hasSubnets && noAvailZones) {
         setFieldValue(FieldId.InstallToVpc, false);
+        clearSecurityGroups();
 
         // Also unset "Configure a cluster-wide proxy" if enabled
         if (configureProxy) {
@@ -109,6 +117,7 @@ export const Configuration = () => {
 
   const onInstallIntoVPCchange = (checked: boolean) => {
     setFieldValue(FieldId.InstallToVpc, checked);
+    clearSecurityGroups();
     trackCheckedState(trackEvents.InstallIntoVPC, checked);
   };
 
