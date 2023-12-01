@@ -690,9 +690,9 @@ describe('<UpdateAllMachinePools />', () => {
     });
 
     it('hides the update link while the patchNodePool requests are pending', async () => {
-      // ARRANGE - Introduce a delay so the loading can be caught
+      // ARRANGE - Keep the PATCH unresolved during the test, to capture the pending message
       apiRequestMock.patch.mockResolvedValue(
-        new Promise((resolve) => setTimeout(resolve, 350, 'success')),
+        new Promise((resolve) => setTimeout(resolve, 3000, 'success')),
       );
 
       const dummyDispatch = jest.fn();
