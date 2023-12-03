@@ -5,6 +5,14 @@ type SecurityGroupForm = {
   worker: string[];
 };
 
+const getDefaultSecurityGroupsSettings = () => ({
+  // If "applyControlPlaneToAll" is true, the "controlPlane" SGs apply to all node types
+  applyControlPlaneToAll: true,
+  controlPlane: [],
+  infra: [],
+  worker: [],
+});
+
 const hasSelectedSecurityGroups = (securityGroups?: SecurityGroupForm) => {
   if (!securityGroups) {
     return false;
@@ -21,4 +29,4 @@ const hasSelectedSecurityGroups = (securityGroups?: SecurityGroupForm) => {
   );
 };
 
-export { hasSelectedSecurityGroups };
+export { hasSelectedSecurityGroups, getDefaultSecurityGroupsSettings };
