@@ -7,7 +7,7 @@ import { useFeatureGate } from '~/hooks/useFeatureGate';
 import { validateSecurityGroups } from '~/common/validators';
 import { SupportedFeature } from '~/common/featureCompatibility';
 import { getIncompatibleVersionReason } from '~/common/versionCompatibility';
-import { SECURITY_GROUPS_FEATURE } from '~/redux/constants/featureConstants';
+import { SECURITY_GROUPS_FEATURE_DAY1 } from '~/redux/constants/featureConstants';
 import EditSecurityGroups from '~/components/clusters/ClusterDetails/components/SecurityGroups/EditSecurityGroups';
 import SecurityGroupsEmptyAlert from '~/components/clusters/ClusterDetails/components/SecurityGroups/SecurityGroupsEmptyAlert';
 import { CheckboxField } from '~/components/clusters/wizards/form';
@@ -37,8 +37,7 @@ const SecurityGroupField = ({
 );
 
 const SecurityGroupsSection = () => {
-  // TODO CELIA NEEDS TO BE CONVERTED TO USE THE DAY1 FEATURE GATE
-  const hasFeatureGate = useFeatureGate(SECURITY_GROUPS_FEATURE);
+  const hasFeatureGate = useFeatureGate(SECURITY_GROUPS_FEATURE_DAY1);
   const {
     values: {
       [FieldId.SelectedVpc]: selectedVPC,
