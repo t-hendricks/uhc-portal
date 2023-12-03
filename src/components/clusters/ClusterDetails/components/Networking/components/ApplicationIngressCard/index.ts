@@ -49,7 +49,6 @@ const mapStateToProps = (state: GlobalState) => {
     provider,
     canEdit: !!canEdit,
     isReadOnly,
-    isHypershift,
     clusterHibernating,
 
     isNLB: loadBalancer === LoadBalancerFlavor.NLB,
