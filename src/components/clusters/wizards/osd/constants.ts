@@ -13,6 +13,7 @@ import {
   IMDSType,
 } from '~/components/clusters/wizards/common/constants';
 import { BreadcrumbPath } from '~/components/common/Breadcrumbs';
+import { getDefaultSecurityGroupsSettings } from '~/common/securityGroupsHelpers';
 import { getDefaultClusterAutoScaling } from '~/components/clusters/CreateOSDPage/clusterAutoScalingValues';
 import { ApplicationIngressType, ClusterPrivacyType } from './Networking/constants';
 
@@ -119,12 +120,7 @@ export const initialValues: FormikValues = {
   [FieldId.BillingModel]: billingModels.STANDARD,
   [FieldId.MultiAz]: 'false',
   [FieldId.SelectedVpc]: { id: '', name: '' },
-  [FieldId.SecurityGroups]: {
-    applyControlPlaneToAll: true,
-    controlPlane: [],
-    infra: [],
-    worker: [],
-  },
+  [FieldId.SecurityGroups]: getDefaultSecurityGroupsSettings(),
   [FieldId.InstallToSharedVpc]: false,
   [FieldId.EnableUserWorkloadMonitoring]: true,
   [FieldId.NodeLabels]: [{ key: '', value: '' }],

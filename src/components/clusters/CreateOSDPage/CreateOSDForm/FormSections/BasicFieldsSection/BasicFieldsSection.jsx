@@ -5,6 +5,7 @@ import { FormGroup, GridItem, Alert } from '@patternfly/react-core';
 
 import { SupportedFeature } from '~/common/featureCompatibility';
 import { getIncompatibleVersionReason } from '~/common/versionCompatibility';
+import { getDefaultSecurityGroupsSettings } from '~/common/securityGroupsHelpers';
 import CloudRegionComboBox from './CloudRegionComboBox';
 import { constants } from '../../CreateOSDFormConstants';
 import { noQuotaTooltip } from '../../../../../../common/helpers';
@@ -78,12 +79,7 @@ function BasicFieldsSection({
       { day1: true },
     );
     if (!canDefineSecurityGroups) {
-      change('securityGroups', {
-        applyControlPlaneToAll: true,
-        controlPlane: [],
-        infra: [],
-        worker: [],
-      });
+      change('securityGroups', getDefaultSecurityGroupsSettings());
     }
   };
 
