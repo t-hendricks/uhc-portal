@@ -131,7 +131,8 @@ class Overview extends React.Component {
       !shouldShowLogs(cluster) &&
       !isDeprovisioned &&
       !isArchived &&
-      !isRestrictedEnv();
+      !isRestrictedEnv() &&
+      !hasInflightErrors(cluster);
     const showCostBreakdown =
       !cluster.managed &&
       userAccess.fulfilled &&
@@ -146,7 +147,10 @@ class Overview extends React.Component {
 
     if (isHibernating(cluster.state)) {
       topCard = <HibernatingClusterCard cluster={cluster} openModal={openModal} />;
-    } else if (!isAssistedInstallSubscription(cluster.subscription) && shouldShowLogs(cluster)) {
+    } else if (
+      !isAssistedInstallSubscription(cluster.subscription) &&
+      (shouldShowLogs(cluster) || hasInflightErrors(cluster))
+    ) {
       topCard = <ClusterProgressCard cluster={cluster} refresh={refresh} history={history} />;
     }
 
