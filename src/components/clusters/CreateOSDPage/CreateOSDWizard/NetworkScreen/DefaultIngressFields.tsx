@@ -31,6 +31,7 @@ type DefaultIngressFieldsProps = {
   isDay2?: boolean;
   canEditLoadBalancer?: boolean;
   canShowLoadBalancer?: boolean;
+  isHypershiftCluster?: boolean;
 };
 
 export const DefaultIngressFields: React.FC<DefaultIngressFieldsProps> = ({
@@ -40,6 +41,7 @@ export const DefaultIngressFields: React.FC<DefaultIngressFieldsProps> = ({
   hasSufficientIngressEditVersion,
   canEditLoadBalancer,
   canShowLoadBalancer,
+  isHypershiftCluster,
 }) => (
   <>
     {isDay2 && (
@@ -64,7 +66,7 @@ export const DefaultIngressFields: React.FC<DefaultIngressFieldsProps> = ({
       </FormGroup>
     )}
 
-    {hasSufficientIngressEditVersion && (
+    {hasSufficientIngressEditVersion && !isHypershiftCluster && (
       <FormGroup className={className} label="Route selector" labelIcon={<RouteSelectorsPopover />}>
         <Field
           component={ReduxVerticalFormGroup}
@@ -78,7 +80,7 @@ export const DefaultIngressFields: React.FC<DefaultIngressFieldsProps> = ({
       </FormGroup>
     )}
 
-    {hasSufficientIngressEditVersion && (
+    {hasSufficientIngressEditVersion && !isHypershiftCluster && (
       <FormGroup
         className={className}
         label="Excluded namespaces"
@@ -96,7 +98,7 @@ export const DefaultIngressFields: React.FC<DefaultIngressFieldsProps> = ({
       </FormGroup>
     )}
 
-    {isDay2 && hasSufficientIngressEditVersion && (
+    {isDay2 && hasSufficientIngressEditVersion && !isHypershiftCluster && (
       <>
         <FormGroup className={className} label="TLS Secret name">
           <Field
@@ -125,7 +127,7 @@ export const DefaultIngressFields: React.FC<DefaultIngressFieldsProps> = ({
       </>
     )}
 
-    {hasSufficientIngressEditVersion && (
+    {hasSufficientIngressEditVersion && !isHypershiftCluster && (
       <FormGroup
         className={className}
         fieldId="isDefaultRouterNamespaceOwnershipPolicyStrict"
@@ -144,7 +146,7 @@ export const DefaultIngressFields: React.FC<DefaultIngressFieldsProps> = ({
       </FormGroup>
     )}
 
-    {hasSufficientIngressEditVersion && (
+    {hasSufficientIngressEditVersion && !isHypershiftCluster && (
       <FormGroup
         className={className}
         fieldId="isDefaultRouterWildcardPolicyAllowed"
@@ -163,7 +165,7 @@ export const DefaultIngressFields: React.FC<DefaultIngressFieldsProps> = ({
       </FormGroup>
     )}
 
-    {canShowLoadBalancer && (
+    {canShowLoadBalancer && !isHypershiftCluster && (
       <FormGroup
         fieldId="load_balancer_group"
         label="Load balancer type"

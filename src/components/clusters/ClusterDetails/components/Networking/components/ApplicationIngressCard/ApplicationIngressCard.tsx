@@ -37,7 +37,6 @@ import './ApplicationIngressCard.scss';
 type ResolveDisableEditReasonParams = {
   canEdit: boolean;
   isReadOnly: boolean;
-  isHypershift?: boolean;
   clusterHibernating: boolean;
   hasSufficientIngressEditVersion?: boolean;
   canEditLoadBalancer: boolean;
@@ -47,7 +46,6 @@ const resolveDisableEditReason = ({
   canEdit,
   isReadOnly,
   clusterHibernating,
-  isHypershift,
   hasSufficientIngressEditVersion,
   canEditLoadBalancer,
 }: ResolveDisableEditReasonParams) => {
@@ -56,20 +54,12 @@ const resolveDisableEditReason = ({
     !hasSufficientIngressEditVersion &&
     'This operation is available for clusters of version 4.13 or higher.';
   const readOnlyReason = isReadOnly && 'This operation is not available during maintenance';
-  const hypershiftReason =
-    isHypershift && 'This operation is not available for Hosted control plane clusters';
   const hibernatingReason =
     clusterHibernating && 'This operation is not available while cluster is hibernating';
   const canNotEditReason =
     !canEdit &&
     'You do not have permission to edit routers. Only cluster owners, cluster editors, and organization administrators can edit routers.';
-  return (
-    canNotEditDefaultRouterReason ||
-    readOnlyReason ||
-    hibernatingReason ||
-    canNotEditReason ||
-    hypershiftReason
-  );
+  return canNotEditDefaultRouterReason || readOnlyReason || hibernatingReason || canNotEditReason;
 };
 
 type ApplicationIngressCardProps = ResolveDisableEditReasonParams & {
@@ -81,7 +71,6 @@ type ApplicationIngressCardProps = ResolveDisableEditReasonParams & {
 
   defaultRouterAddress?: string;
   isDefaultRouterPrivate?: boolean;
-  isHypershift?: boolean;
 
   defaultRouterSelectors: ClusterRouter['routeSelectors'];
   defaultRouterExcludedNamespacesFlag: ClusterRouter['excludedNamespaces'];
@@ -94,7 +83,6 @@ type ApplicationIngressCardProps = ResolveDisableEditReasonParams & {
 const ApplicationIngressCard: React.FC<ApplicationIngressCardProps> = ({
   canEdit,
   isReadOnly,
-  isHypershift,
   clusterHibernating,
 
   isNLB,
@@ -117,7 +105,6 @@ const ApplicationIngressCard: React.FC<ApplicationIngressCardProps> = ({
   const disableEditReason = resolveDisableEditReason({
     canEdit,
     isReadOnly,
-    isHypershift,
     clusterHibernating,
     hasSufficientIngressEditVersion,
     canEditLoadBalancer,

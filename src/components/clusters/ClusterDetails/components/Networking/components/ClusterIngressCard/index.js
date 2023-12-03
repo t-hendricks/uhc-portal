@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 
-import { isHibernating, isOffline } from '../../../../../common/clusterStates';
+import { isHibernating, isOffline, isHypershiftCluster } from '../../../../../common/clusterStates';
 import { openModal } from '../../../../../../common/Modal/ModalActions';
 import NetworkingSelector, { routeSelectorPairsAsStrings } from '../../NetworkingSelector';
 
@@ -45,6 +45,7 @@ const mapStateToProps = (state) => {
     clusterHibernating,
     showConsoleLink,
     provider,
+    isHypershiftCluster: isHypershiftCluster(cluster),
   };
 };
 
