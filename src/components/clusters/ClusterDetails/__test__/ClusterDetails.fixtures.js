@@ -460,6 +460,7 @@ const ROSAManualClusterDetails = produce(ROSAClusterDetails, (draft) => {
       role_arn: 'arn:aws:iam::123456789012:role/ManagedOpenShift-Installer-Role',
       operator_iam_roles: [
         {
+          name: 'myrole',
           namespace: 'openshift-machine-api',
           role_arn:
             'arn:aws:iam::123456789012:role/cluster-test-openshift-machine-api-aws-cloud-credentials',

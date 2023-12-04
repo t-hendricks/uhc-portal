@@ -1,5 +1,5 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { render, checkAccessibility } from '~/testUtils';
 import produce from 'immer';
 import CloudFormationTab, { getAccountRolePrefix } from './CloudFormationTab';
 import fixtures from '../../ClusterDetails/__test__/ClusterDetails.fixtures';
@@ -19,10 +19,10 @@ describe('<CloudFormationTab />', () => {
     expect(prefix).toBe('Custom-Prefix');
   });
 
-  it('should render correctly', () => {
-    const wrapper = shallow(
+  it('is accessible', async () => {
+    const { container } = render(
       <CloudFormationTab cluster={fixtures.ROSAManualClusterDetails.cluster} />,
     );
-    expect(wrapper).toMatchSnapshot();
+    await checkAccessibility(container);
   });
 });
