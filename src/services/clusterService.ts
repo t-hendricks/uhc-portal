@@ -14,6 +14,7 @@ import type {
   NodePool,
   CloudVPC,
   KeyRing,
+  KubeletConfig,
   EncryptionKey,
   CloudRegion,
   VersionGate,
@@ -958,6 +959,22 @@ const getLimitedSupportReasons = (clusterId: string) =>
     total?: number;
   }>(`/api/clusters_mgmt/v1/clusters/${clusterId}/limited_support_reasons`);
 
+const getKubeletConfiguration = (clusterId: string) =>
+  apiRequest.get<KubeletConfig>(`/api/clusters_mgmt/v1/clusters/${clusterId}/kubelet_config`);
+
+const postKubeletConfiguration = (clusterId: string, config: KubeletConfig) =>
+  apiRequest.post<KubeletConfig>(`/api/clusters_mgmt/v1/clusters/${clusterId}/kubelet_config`, {
+    ...config,
+  });
+
+const patchKubeletConfiguration = (clusterId: string, config: KubeletConfig) =>
+  apiRequest.patch<KubeletConfig>(`/api/clusters_mgmt/v1/clusters/${clusterId}/kubelet_config`, {
+    ...config,
+  });
+
+const deleteKubeletConfiguration = (clusterId: string) =>
+  apiRequest.patch<KubeletConfig>(`/api/clusters_mgmt/v1/clusters/${clusterId}/kubelet_config`);
+
 const clusterService = {
   getClusters,
   postNewCluster,
@@ -1024,6 +1041,10 @@ const clusterService = {
   getLimitedSupportReasons,
   getOidcConfigurations,
   postNodePoolUpgradeSchedule,
+  getKubeletConfiguration,
+  postKubeletConfiguration,
+  patchKubeletConfiguration,
+  deleteKubeletConfiguration,
 };
 
 export {

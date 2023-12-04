@@ -1,7 +1,7 @@
 import get from 'lodash/get';
 
+import { billingModels, normalizedProducts } from '~/common/subscriptionTypes';
 import { availableNodesFromQuota } from '../../../common/quotaSelectors';
-import { normalizedProducts, billingModels } from '../../../../../common/subscriptionTypes';
 
 const hasMachinePoolsQuotaSelector = (state) => {
   const { organization } = state.userProfile;
@@ -44,6 +44,15 @@ const hasOrgLevelAutoscaleCapability = (state) => {
   return !!(autoScaleClusters && autoScaleClusters.value === 'true');
 };
 
+const hasOrgLevelBypassPIDsLimitCapability = (state) => {
+  const capabilities = state?.userProfile?.organization?.details?.capabilities ?? [];
+  return capabilities.some(
+    (capability) =>
+      capability.name === 'capability.organization.bypass_pids_limits' &&
+      capability.value === 'true',
+  );
+};
+
 // on the OSD creation page don't check cluster level capability for autoscaling
 const canAutoScaleOnCreateSelector = (state, product) =>
   product === normalizedProducts.ROSA ||
@@ -53,4 +62,5 @@ export {
   hasMachinePoolsQuotaSelector,
   hasOrgLevelAutoscaleCapability,
   canAutoScaleOnCreateSelector,
+  hasOrgLevelBypassPIDsLimitCapability,
 };
