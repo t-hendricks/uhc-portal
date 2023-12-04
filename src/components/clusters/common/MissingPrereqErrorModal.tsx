@@ -1,18 +1,26 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
-import PropTypes from 'prop-types';
 
-import { Title, Button, WizardContext } from '@patternfly/react-core';
+import { Button, Title, WizardContext } from '@patternfly/react-core';
 import { ExclamationCircleIcon } from '@patternfly/react-icons';
 import { global_danger_color_100 as ExclamationCircleColor } from '@patternfly/react-tokens';
 
 import Modal from '../../common/Modal/Modal';
 import { closeModal } from '../../common/Modal/ModalActions';
 
-const MissingPrereqErrorModal = ({ onRetry, onClose }) => {
+type MissingPrereqErrorModalProps = {
+  onRetry: (...args: any[]) => any;
+  onClose: (...args: any[]) => any;
+  title?: string;
+};
+
+const MissingPrereqErrorModal = ({
+  onRetry,
+  onClose,
+  title = 'Missing prerequisite',
+}: MissingPrereqErrorModalProps) => {
   const { goToStepById } = React.useContext(WizardContext);
   const dispatch = useDispatch();
-  const title = 'Missing prerequisite';
 
   const close = () => {
     dispatch(closeModal());
@@ -61,11 +69,6 @@ const MissingPrereqErrorModal = ({ onRetry, onClose }) => {
       </p>
     </Modal>
   );
-};
-
-MissingPrereqErrorModal.propTypes = {
-  onRetry: PropTypes.func.isRequired,
-  onClose: PropTypes.func.isRequired,
 };
 
 export default MissingPrereqErrorModal;

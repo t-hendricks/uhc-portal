@@ -45,7 +45,7 @@ import ClusterListTable from './components/ClusterListTable';
 import RefreshBtn from '../../common/RefreshButton/RefreshButton';
 import ErrorTriangle from '../common/ErrorTriangle';
 import ErrorBox from '../../common/ErrorBox';
-import GlobalErrorBox from '../common/GlobalErrorBox';
+import GlobalErrorBox from '../common/GlobalErrorBox/GlobalErrorBox';
 import Unavailable from '../../common/Unavailable';
 import CommonClusterModals from '../common/CommonClusterModals';
 
