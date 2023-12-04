@@ -1,5 +1,4 @@
 import React from 'react';
-
 import {
   Title,
   Text,
@@ -16,11 +15,13 @@ import OutlinedQuestionCircleIcon from '@patternfly/react-icons/dist/esm/icons/o
 import CreateOSDWizardIntro from '~/styles/images/CreateOSDWizard-intro.png';
 import { OSD_GOOGLE_MARKETPLACE_FEATURE } from '~/redux/constants/featureConstants';
 import { billingModels, normalizedProducts } from '~/common/subscriptionTypes';
+import { getQueryParam } from '~/common/queryHelpers';
 import ExternalLink from '~/components/common/ExternalLink';
 import {
   getMinReplicasCount,
   getNodesCount,
 } from '~/components/clusters/CreateOSDPage/CreateOSDForm/FormSections/ScaleSection/AutoScaleSection/AutoScaleHelper';
+import { CloudProviderType } from '~/components/clusters/wizards/common/constants';
 import { FieldId } from '~/components/clusters/wizards/osd/constants';
 import { useFormState } from '~/components/clusters/wizards/hooks';
 import { RadioGroupField, RadioGroupOption } from '~/components/clusters/wizards/form';
@@ -34,6 +35,7 @@ import { MarketplaceSelectField } from './MarketplaceSelectField';
 import './BillingModel.scss';
 
 export const BillingModel = () => {
+  const sourceIsGCP = getQueryParam('source') === 'gcp';
   const {
     values: {
       [FieldId.Product]: product,
@@ -234,6 +236,20 @@ export const BillingModel = () => {
     quotas.standardOsd,
     selectedMarketplace,
   ]);
+
+  React.useEffect(() => {
+    if (sourceIsGCP) {
+      setFieldValue(FieldId.MarketplaceSelection, billingModels.MARKETPLACE_GCP, false);
+      setFieldValue(FieldId.CloudProvider, CloudProviderType.Gcp, false);
+
+      // it's possible the select was used before the parent radio button was selected
+      // ensure the parent radio button is selected and the correct values are set
+      setFieldValue(FieldId.BillingModel, billingModels.MARKETPLACE_GCP, false);
+      setFieldValue(FieldId.Byoc, 'true', false);
+      setFieldValue(FieldId.Product, normalizedProducts.OSD, false);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [sourceIsGCP]);
 
   let isRhInfraQuotaDisabled = false;
   let isByocQuotaDisabled = false;
