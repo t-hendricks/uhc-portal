@@ -1,5 +1,6 @@
 import { AWSCredentials } from '~/types/types';
 import apiRequest from '~/services/apiRequest';
+import { AxiosResponse } from 'axios';
 import type {
   AddOn,
   AddOnInstallation,
@@ -543,7 +544,10 @@ const getControlPlaneUpgradeSchedules = (clusterID: string) =>
     params: {},
   });
 
-const getUpgradeScheduleState = (clusterID: string, policyID: string) =>
+const getUpgradeScheduleState = (
+  clusterID: string,
+  policyID: string,
+): Promise<AxiosResponse<UpgradePolicyState>> =>
   apiRequest.get<UpgradePolicyState>(
     `/api/clusters_mgmt/v1/clusters/${clusterID}/upgrade_policies/${policyID}/state`,
   );

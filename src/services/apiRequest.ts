@@ -1,13 +1,13 @@
 import axios from 'axios';
 import type { AxiosRequestConfig, AxiosInstance } from 'axios';
 import * as Sentry from '@sentry/browser';
-import { isRestrictedEnv, restrictedEnvApi } from '~/restrictedEnv';
+import { isRestrictedEnv, getRestrictedEnvApi } from '~/restrictedEnv';
 
 import config from '../config';
 
 const getBaseUrl = (baseUrl: string | undefined) => {
   if (isRestrictedEnv()) {
-    return restrictedEnvApi;
+    return getRestrictedEnvApi();
   }
   return baseUrl || (config.configData.apiGateway ? config.configData.apiGateway : '');
 };
