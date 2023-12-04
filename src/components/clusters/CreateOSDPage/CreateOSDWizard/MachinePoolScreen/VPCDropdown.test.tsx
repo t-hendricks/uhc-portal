@@ -1,8 +1,9 @@
 import React from 'react';
 
+import { CloudVPC } from '~/types/clusters_mgmt.v1';
 import { render, screen, fireEvent } from '~/testUtils';
 import VPCDropdown from './VPCDropdown';
-import { useAWSVPCInquiry } from '../VPCScreen/useVPCInquiry';
+import { useAWSVPCInquiry, filterOutRedHatManagedVPCs } from '../VPCScreen/useVPCInquiry';
 
 const defaultProps = {
   selectedVPC: { id: '', name: '' },
@@ -30,7 +31,7 @@ const vpcList = [
   },
   {
     name: 'caa-e2e-test-vpc',
-    red_hat_managed: false,
+    red_hat_managed: true,
     id: 'vpc-0cbe6c1d5f216cdb9',
     cidr_block: '10.0.0.0/24',
     aws_subnets: [
@@ -124,6 +125,12 @@ describe('<VPCDropdown />', () => {
         },
         requestParams,
       }));
+      // Dummy implementation for the filtering. We only care that it's called, and that it returns vpcs
+      (filterOutRedHatManagedVPCs as jest.Mock).mockImplementation((vpcs: CloudVPC[]) => vpcs);
+    });
+
+    afterEach(() => {
+      jest.clearAllMocks();
     });
 
     it('shows refresh available', () => {
@@ -147,6 +154,14 @@ describe('<VPCDropdown />', () => {
           'Select a VPC to install your cluster into your selected region: us-west-2',
         ),
       ).toBeInTheDocument();
+    });
+
+    it('applies the filtering for the VPCs that are not managed by Red Hat', () => {
+      expect(filterOutRedHatManagedVPCs).not.toHaveBeenCalled();
+
+      render(<VPCDropdown {...defaultProps} />);
+
+      expect(filterOutRedHatManagedVPCs).toHaveBeenCalledTimes(1);
     });
   });
 

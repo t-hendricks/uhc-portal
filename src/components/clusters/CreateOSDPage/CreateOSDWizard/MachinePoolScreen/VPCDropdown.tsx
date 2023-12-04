@@ -68,10 +68,10 @@ const VPCDropdown = ({
   const [isOpen, setIsOpen] = React.useState<boolean>(false);
 
   const { vpcs: vpcResponse, requestParams } = useAWSVPCInquiry(isOSD) as UseAWSVPCInquiry;
-  const originalVPCs = React.useMemo<CloudVPC[]>(() => {
-    const vpcs = vpcResponse.data?.items || [];
-    return isHypershift ? filterOutRedHatManagedVPCs(vpcs) : vpcs;
-  }, [vpcResponse.data?.items, isHypershift]);
+  const originalVPCs = React.useMemo<CloudVPC[]>(
+    () => filterOutRedHatManagedVPCs(vpcResponse.data?.items || []),
+    [vpcResponse.data?.items],
+  );
 
   const onToggle = () => {
     setIsOpen(!isOpen);
