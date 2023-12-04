@@ -29,8 +29,7 @@ export const vpcHasPrivateSubnets = (vpc) =>
   (vpc.aws_subnets || []).some((subnet) => isSubnetMatchingPrivacy(subnet, 'private'));
 
 /**
- * Returns a modified copy of the VPC list where:
- * - The red_hat_managed: true are filtered out for hypershift
+ * Returns only the VPCs that are not managed by Red Hat
 
  * @param vpcs list of VPC items
  * @returns {*} copy of the VPC list
