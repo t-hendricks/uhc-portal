@@ -35,7 +35,7 @@ import ViewOnlyMyClustersToggle from '../ClusterList/components/ViewOnlyMyCluste
 import ArchivedClusterListTable from './components/ArchiveClusterListTable/ArchivedClusterListTable';
 import RefreshBtn from '../../common/RefreshButton/RefreshButton';
 import ErrorTriangle from '../common/ErrorTriangle';
-import GlobalErrorBox from '../common/GlobalErrorBox';
+import GlobalErrorBox from '../common/GlobalErrorBox/GlobalErrorBox';
 import Breadcrumbs from '../../common/Breadcrumbs';
 
 import Unavailable from '../../common/Unavailable';

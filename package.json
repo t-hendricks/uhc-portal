@@ -29,6 +29,7 @@
     "@reduxjs/toolkit": "^1.9.1",
     "@sentry/browser": "^5.19.1",
     "@sentry/integrations": "^5.19.1",
+    "@types/file-saver": "^2.0.5",
     "@types/humanize-duration": "^3.27.1",
     "@wojtekmaj/enzyme-adapter-react-17": "^0.8.0",
     "axios": ">=0.22.0 <1.0.0",
