@@ -1,6 +1,6 @@
 import { Cluster, ClusterState, InflightCheck, InflightCheckState } from '~/types/clusters_mgmt.v1';
 import { ClusterFromSubscription, ClusterWithPermissions } from '~/types/types';
-import { normalizedProducts, subscriptionStatuses } from '../../../common/subscriptionTypes';
+import { normalizedProducts, subscriptionStatuses } from '~/common/subscriptionTypes';
 
 enum SubscriptionDerivedStates {
   UPDATING = 'updating',
@@ -152,6 +152,12 @@ const isROSA = <E extends ClusterFromSubscription | Cluster>(cluster?: E): boole
 const isOSD = <E extends ClusterFromSubscription>(cluster: E): boolean =>
   [normalizedProducts.OSD, normalizedProducts.OSDTrial].includes(cluster.product?.id!);
 
+const isCCS = <E extends ClusterFromSubscription>(cluster: E): boolean =>
+  cluster.ccs?.enabled ?? false;
+
+const isAWS = <E extends ClusterFromSubscription>(cluster: E): boolean =>
+  cluster.subscription?.cloud_provider_id === 'aws';
+
 /**
  * Indicates that this is a ROSA cluster with manual mode
  *
@@ -208,6 +214,8 @@ export {
   isOSDGCPWaitingForRolesOnHostProject,
   isOSDGCPPendingOnHostProject,
   isOSD,
+  isCCS,
+  isAWS,
   isHypershiftCluster,
   isROSAManualMode,
   isWaitingROSAManualMode,

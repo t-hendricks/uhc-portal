@@ -1,11 +1,11 @@
 import { ClusterFromSubscription } from '~/types/types';
 import { Cluster, ClusterState } from '~/types/clusters_mgmt.v1';
+import { normalizedProducts, subscriptionStatuses } from '~/common/subscriptionTypes';
 import {
   defaultClusterFromSubscription,
   defaultMetric,
   defaultSubscription,
 } from './__test__/clusterStates.fixtures';
-import { normalizedProducts, subscriptionStatuses } from '../../../common/subscriptionTypes';
 import clusterStates, {
   getClusterStateAndDescription,
   getInflightChecks,
@@ -18,6 +18,8 @@ import clusterStates, {
   isWaitingForOIDCProviderOrOperatorRolesMode,
   isWaitingHypershiftCluster,
   isWaitingROSAManualMode,
+  isCCS,
+  isAWS,
 } from './clusterStates';
 
 describe('getClusterStateAndDescription', () => {
@@ -265,6 +267,37 @@ describe('getClusterStateAndDescription', () => {
         },
       };
       expect(isOSD(cluster)).toBe(expectedResult);
+    });
+  });
+
+  describe('isCCS', () => {
+    it.each([
+      [true, true],
+      [false, false],
+    ])('ccs enabled: %p. It returns %p', (ccsEnabled: boolean, expectedResult: boolean) => {
+      const cluster: ClusterFromSubscription = {
+        ...defaultClusterFromSubscription,
+        ccs: {
+          enabled: ccsEnabled,
+        },
+      };
+      expect(isCCS(cluster)).toBe(expectedResult);
+    });
+  });
+
+  describe('isAWS', () => {
+    it.each([
+      ['aws', true],
+      ['gcp', false],
+    ])('cloud provider: %p. It returns %p', (cloudProvider: string, expectedResult: boolean) => {
+      const cluster: ClusterFromSubscription = {
+        ...defaultClusterFromSubscription,
+        subscription: {
+          managed: true,
+          cloud_provider_id: cloudProvider,
+        },
+      };
+      expect(isAWS(cluster)).toBe(expectedResult);
     });
   });
 

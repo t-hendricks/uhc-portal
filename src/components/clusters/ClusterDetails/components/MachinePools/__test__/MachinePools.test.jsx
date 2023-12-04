@@ -1,7 +1,7 @@
 import React from 'react';
 import { screen, render, checkAccessibility } from '~/testUtils';
 import { normalizedProducts } from '~/common/subscriptionTypes';
-import { baseRequestState } from '../../../../../../redux/reduxHelpers';
+import { baseRequestState } from '~/redux/reduxHelpers';
 import MachinePools from '../MachinePools';
 
 const vpc = {
@@ -25,6 +25,9 @@ jest.mock(
     }),
   }),
 );
+jest.mock('~/components/clusters/common/MachineConfiguration/MachineConfiguration', () => ({
+  MachineConfiguration: () => <div data-testid="machine-configuration">MachineConfiguration</div>,
+}));
 
 const getMachinePools = jest.fn();
 const deleteMachinePool = jest.fn();
@@ -87,6 +90,7 @@ const defaultProps = {
   hasMachinePoolsQuota: true,
   canMachinePoolBeUpdated: jest.fn(() => false),
   clearDeleteMachinePoolResponse: jest.fn(),
+  hasMachineConfiguration: false,
 };
 
 const simpleMachinePoolList = {
@@ -747,5 +751,111 @@ describe('<MachinePools />', () => {
     expect(container.querySelector('#add-machine-pool')).toHaveAttribute('aria-disabled', 'true');
     // the table does not become rendered because "list" permission is missing
     expect(screen.queryByRole('grid', { name: 'Machine pools' })).not.toBeInTheDocument();
+  });
+
+  describe('Machine configuration', () => {
+    const machineConfigLabel = 'Edit machine configuration';
+
+    it('is not present if feature flag is disabled', () => {
+      render(<MachinePools {...defaultProps} />);
+      expect(screen.queryByRole('button', { name: machineConfigLabel })).not.toBeInTheDocument();
+    });
+
+    it('is present if feature flag is enabled and cluster is ROSA', () => {
+      const props = { ...defaultProps, hasMachineConfiguration: true };
+      render(<MachinePools {...props} />);
+      expect(screen.getByRole('button', { name: machineConfigLabel })).toBeInTheDocument();
+    });
+
+    it('is present if feature flag is enabled and cluster is OSD with CCS on AWS', () => {
+      const props = {
+        ...defaultProps,
+        hasMachineConfiguration: true,
+        cluster: {
+          ...defaultCluster,
+          product: {
+            id: normalizedProducts.OSD,
+          },
+          ccs: {
+            enabled: true,
+          },
+          subscription: {
+            cloud_provider_id: 'aws',
+          },
+        },
+      };
+      render(<MachinePools {...props} />);
+      expect(screen.getByRole('button', { name: machineConfigLabel })).toBeInTheDocument();
+    });
+
+    it('is absent if feature flag is enabled and cluster is OSD with CCS on GCP', () => {
+      const props = {
+        ...defaultProps,
+        hasMachineConfiguration: true,
+        cluster: {
+          ...defaultCluster,
+          product: {
+            id: normalizedProducts.OSD,
+          },
+          ccs: {
+            enabled: true,
+          },
+          subscription: {
+            cloud_provider_id: 'gcp',
+          },
+        },
+      };
+      render(<MachinePools {...props} />);
+      expect(screen.queryByRole('button', { name: machineConfigLabel })).not.toBeInTheDocument();
+    });
+
+    it('is absent if feature flag is enabled and cluster is OSD without CCS', () => {
+      const props = {
+        ...defaultProps,
+        hasMachineConfiguration: true,
+        cluster: {
+          ...defaultCluster,
+          product: {
+            id: normalizedProducts.OSD,
+          },
+          ccs: {
+            enabled: false,
+          },
+          subscription: {
+            cloud_provider_id: 'aws',
+          },
+        },
+      };
+      render(<MachinePools {...props} />);
+      expect(screen.queryByRole('button', { name: machineConfigLabel })).not.toBeInTheDocument();
+    });
+
+    it('is absent if feature flag is enabled and cluster is Hypershift', () => {
+      const props = {
+        ...defaultProps,
+        hasMachineConfiguration: true,
+        cluster: {
+          ...defaultCluster,
+          hypershift: {
+            enabled: true,
+          },
+        },
+      };
+      render(<MachinePools {...props} />);
+      expect(screen.queryByRole('button', { name: machineConfigLabel })).not.toBeInTheDocument();
+    });
+
+    it('shows the machine configuration when clicking on "Edit machine configuration"', async () => {
+      const props = { ...defaultProps, hasMachineConfiguration: true };
+      const machineConfigurationTestID = 'machine-configuration';
+      const { user } = render(<MachinePools {...props} />);
+
+      expect(screen.getByRole('button', { name: machineConfigLabel })).toBeInTheDocument();
+      expect(screen.queryByTestId(machineConfigurationTestID)).not.toBeInTheDocument();
+
+      await user.click(screen.getByRole('button', { name: machineConfigLabel }));
+
+      expect(screen.getByTestId(machineConfigurationTestID)).toBeInTheDocument();
+    });
   });
 });
