@@ -73,9 +73,6 @@
     ],
     "react/jsx-filename-extension": [1, { "extensions": [".tsx", ".jsx"] }],
     // Testing library rules - need further review
-    "testing-library/await-async-queries": "off",
-    "testing-library/no-await-sync-queries": "off",
-    "testing-library/render-result-naming-convention": "off",
     "testing-library/prefer-find-by": "off",
     "testing-library/prefer-screen-queries": "off",
     "testing-library/prefer-presence-queries": "off",
@@ -83,6 +80,7 @@
     "testing-library/no-unnecessary-act": "off",
     "testing-library/no-container": "off",
     "testing-library/no-dom-import": "off",
+    "testing-library/render-result-naming-convention": "error",
     "testing-library/no-debugging-utils": "error"
   },
   "overrides": [
