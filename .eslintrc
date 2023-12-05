@@ -72,14 +72,13 @@
       }
     ],
     "react/jsx-filename-extension": [1, { "extensions": [".tsx", ".jsx"] }],
-    // Testing library rules - need further review
-    "testing-library/prefer-find-by": "error",
-    "testing-library/prefer-screen-queries": "off",
-    "testing-library/prefer-presence-queries": "off",
-    "testing-library/no-wait-for-multiple-assertions": "off",
-    "testing-library/no-unnecessary-act": "off",
+    "testing-library/prefer-screen-queries": "off", // can be automatically fixed if preferred
+    "testing-library/prefer-presence-queries": "off", // can be automatically fixed if preferred
     "testing-library/no-container": "off",
-    "testing-library/no-dom-import": "off",
+    "testing-library/no-dom-import": "error",
+    "testing-library/no-unnecessary-act": "error",
+    "testing-library/prefer-find-by": "error",
+    "testing-library/no-wait-for-multiple-assertions": "error",
     "testing-library/render-result-naming-convention": "error",
     "testing-library/no-debugging-utils": "error"
   },

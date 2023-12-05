@@ -523,6 +523,7 @@ describe('MachineTypeSelection', () => {
 
         await waitFor(() => {
           expect(field.input.onChange).toHaveBeenCalledWith('');
+          // eslint-disable-next-line testing-library/no-wait-for-multiple-assertions
           expect(forceChoiceField.input.onChange).toHaveBeenCalledWith(true);
         });
       });
