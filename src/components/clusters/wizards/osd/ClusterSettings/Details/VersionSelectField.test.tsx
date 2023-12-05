@@ -125,6 +125,7 @@ describe('<VersionSelectField />', () => {
     expect(container.querySelector('fieldset')).not.toBeInTheDocument();
     const menuToggle = container.querySelector('#version-selector')!;
     expect(menuToggle).toBeInTheDocument();
+    // eslint-disable-next-line testing-library/prefer-user-event
     fireEvent.click(menuToggle);
     expect(container.querySelector('fieldset')).toBeInTheDocument();
   });
