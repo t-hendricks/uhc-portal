@@ -28,10 +28,10 @@ describe('AWSAccountSelection tests', () => {
 
     // click option
     expect(
-        await screen.findByRole('option', {
-          name: /74 3358436160/i,
-        }),
-    ).toBeInTheDocument()
+      await screen.findByRole('option', {
+        name: /74 3358436160/i,
+      }),
+    ).toBeInTheDocument();
 
     const option = screen.getByRole('option', {
       name: /74 3358436160/i,

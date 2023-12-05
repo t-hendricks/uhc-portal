@@ -23,30 +23,34 @@ describe('SubnetSelectField tests', () => {
 
     // click option
     expect(
-        await screen.findByRole('option', {
-          name: /ddonati-test403-bsrnf-private-us-east- 1c/i,
-        })
-    ).toBeInTheDocument()
+      await screen.findByRole('option', {
+        name: /ddonati-test403-bsrnf-private-us-east- 1c/i,
+      }),
+    ).toBeInTheDocument();
     let option = screen.getByRole('option', {
       name: /ddonati-test403-bsrnf-private-us-east- 1c/i,
     });
     user.click(option);
-    expect(await screen.findByText(/ddonati-test403-bsrnf-private-us-east-1c/i)).toBeInTheDocument();
+    expect(
+      await screen.findByText(/ddonati-test403-bsrnf-private-us-east-1c/i),
+    ).toBeInTheDocument();
 
     // do the same for a truncated one
     user.click(dropdown);
     user.type(searchbox, 'make');
     expect(
-        await screen.findByRole('option', {
-          name: /ddonati-test403-bsrnf- make -this-big-private-us-east-1d/i,
-        })
-    ).toBeInTheDocument()
+      await screen.findByRole('option', {
+        name: /ddonati-test403-bsrnf- make -this-big-private-us-east-1d/i,
+      }),
+    ).toBeInTheDocument();
 
     option = screen.getByRole('option', {
       name: /ddonati-test403-bsrnf- make -this-big-private-us-east-1d/i,
     });
     user.click(option);
-    expect(await screen.findByText(/ddonati-test4... his-big-private-us-east-1d/i)).toBeInTheDocument();
+    expect(
+      await screen.findByText(/ddonati-test4... his-big-private-us-east-1d/i),
+    ).toBeInTheDocument();
 
     // Assert
     await checkAccessibility(container);
