@@ -3,7 +3,7 @@ import {
   MachineConfiguration,
   MachineConfigurationProps,
 } from '~/components/clusters/common/MachineConfiguration/MachineConfiguration';
-import { checkAccessibility, waitFor, render, screen, fireEvent } from '~/testUtils';
+import { checkAccessibility, waitFor, render, screen } from '~/testUtils';
 import { KubeletConfig } from '~/types/clusters_mgmt.v1';
 import { AxiosResponse } from 'axios';
 
@@ -59,32 +59,28 @@ describe('<MachineConfiguration />', () => {
   });
 
   it('shows an error message when the user enters an invalid value', async () => {
-    render(<MachineConfiguration {...defaultProps} />);
+    const { user } = render(<MachineConfiguration {...defaultProps} />);
 
     expect(await screen.findByLabelText(pidsInputLabel)).toBeInTheDocument();
     expect(screen.getByText(helperText)).toBeInTheDocument();
     expect(screen.queryByText(errorMessage)).not.toBeInTheDocument();
 
-    // invalid value below range
-    fireEvent.change(screen.getByLabelText(pidsInputLabel), {
-      target: { value: 15 },
-    });
+    await user.clear(screen.getByLabelText(pidsInputLabel));
+    await user.type(screen.getByLabelText(pidsInputLabel), '15');
 
     expect(screen.queryByText(helperText)).not.toBeInTheDocument();
     expect(screen.getByText(errorMessage)).toBeInTheDocument();
 
     // valid value
-    fireEvent.change(screen.getByLabelText(pidsInputLabel), {
-      target: { value: 5_000 },
-    });
+    await user.clear(screen.getByLabelText(pidsInputLabel));
+    await user.type(screen.getByLabelText(pidsInputLabel), '5_000');
 
     expect(screen.getByText(helperText)).toBeInTheDocument();
     expect(screen.queryByText(errorMessage)).not.toBeInTheDocument();
 
     // invalid value above range
-    fireEvent.change(screen.getByLabelText(pidsInputLabel), {
-      target: { value: 100_000 },
-    });
+    await user.clear(screen.getByLabelText(pidsInputLabel));
+    await user.type(screen.getByLabelText(pidsInputLabel), '100_000');
 
     expect(screen.queryByText(helperText)).not.toBeInTheDocument();
     expect(screen.getByText(errorMessage)).toBeInTheDocument();
@@ -92,32 +88,30 @@ describe('<MachineConfiguration />', () => {
 
   it('lets the user enter a value above the safe limit, if they have the capability', async () => {
     const props: MachineConfigurationProps = { ...defaultProps, canBypassPIDsLimit: true };
-    render(<MachineConfiguration {...props} />);
+    const { user } = render(<MachineConfiguration {...props} />);
 
     expect(await screen.findByLabelText(pidsInputLabel)).toBeInTheDocument();
     expect(screen.getByText(helperText)).toBeInTheDocument();
     expect(screen.queryByText(unsafeMessage)).not.toBeInTheDocument();
 
-    fireEvent.change(screen.getByLabelText(pidsInputLabel), {
-      target: { value: 100_000 },
-    });
+    await user.clear(screen.getByLabelText(pidsInputLabel));
+    await user.type(screen.getByLabelText(pidsInputLabel, { selector: 'input' }), '100_000');
 
+    expect(await screen.findByText(unsafeMessage)).toBeInTheDocument();
     expect(screen.queryByText(errorMessage)).not.toBeInTheDocument();
-    expect(screen.getByText(unsafeMessage)).toBeInTheDocument();
   });
 
   it('shows the override max limit error only when the provided value is higher', async () => {
     const props: MachineConfigurationProps = { ...defaultProps, canBypassPIDsLimit: true };
-    render(<MachineConfiguration {...props} />);
+    const { user } = render(<MachineConfiguration {...props} />);
 
     expect(await screen.findByLabelText(pidsInputLabel)).toBeInTheDocument();
     expect(screen.getByText(helperText)).toBeInTheDocument();
     expect(screen.queryByText(errorMessage)).not.toBeInTheDocument();
     expect(screen.queryByText(errorMessageOverride)).not.toBeInTheDocument();
 
-    fireEvent.change(screen.getByLabelText(pidsInputLabel), {
-      target: { value: 100_000_000 },
-    });
+    await user.clear(screen.getByLabelText(pidsInputLabel));
+    await user.type(screen.getByLabelText(pidsInputLabel), '100_000_000');
 
     expect(screen.queryByText(helperText)).not.toBeInTheDocument();
     expect(screen.queryByText(errorMessage)).not.toBeInTheDocument();
@@ -129,16 +123,16 @@ describe('<MachineConfiguration />', () => {
     const props: MachineConfigurationProps = {
       ...defaultProps,
     };
-    render(<MachineConfiguration {...props} />);
+    const { user } = render(<MachineConfiguration {...props} />);
 
     expect(await screen.findByLabelText(pidsInputLabel)).toBeInTheDocument();
     expect(screen.getByLabelText(pidsInputLabel)).toHaveValue(initialLimitValue);
 
-    fireEvent.click(screen.getByLabelText('plus'));
+    await user.click(screen.getByLabelText('plus'));
 
     expect(screen.getByLabelText(pidsInputLabel)).toHaveValue(initialLimitValue + 1);
 
-    fireEvent.click(screen.getByLabelText('minus'));
+    await user.click(screen.getByLabelText('minus'));
 
     expect(screen.getByLabelText(pidsInputLabel)).toHaveValue(initialLimitValue);
   });
@@ -147,18 +141,16 @@ describe('<MachineConfiguration />', () => {
     const props: MachineConfigurationProps = {
       ...defaultProps,
     };
-    render(<MachineConfiguration {...props} />);
+    const { user } = render(<MachineConfiguration {...props} />);
 
     expect(await screen.findByLabelText(pidsInputLabel)).toBeInTheDocument();
 
-    fireEvent.change(screen.getByLabelText(pidsInputLabel), {
-      target: { value: 100_000 },
-    });
+    await user.clear(screen.getByLabelText(pidsInputLabel));
+    await user.type(screen.getByLabelText(pidsInputLabel), '100_000');
 
-    await waitFor(() => {
-      screen.getByLabelText(pidsInputLabel).focus();
-    });
+    (await screen.findByLabelText(pidsInputLabel)).focus();
     expect(screen.getByLabelText(pidsInputLabel)).toHaveValue(100_000);
+
     await waitFor(() => {
       screen.getByLabelText(pidsInputLabel).blur();
     });
@@ -170,20 +162,21 @@ describe('<MachineConfiguration />', () => {
     const props: MachineConfigurationProps = {
       ...defaultProps,
     };
-    render(<MachineConfiguration {...props} />);
+    const { user } = render(<MachineConfiguration {...props} />);
 
     expect(await screen.findByLabelText(pidsInputLabel)).toBeInTheDocument();
     expect(screen.getByText('Save changes')).toBeDisabled();
 
-    fireEvent.change(screen.getByLabelText(pidsInputLabel), {
-      target: { value: 10_000 },
-    });
+    await user.clear(screen.getByLabelText(pidsInputLabel));
+    await user.type(screen.getByLabelText(pidsInputLabel), '10_000');
 
     expect(await screen.findByText('Save changes')).toBeEnabled();
 
-    fireEvent.change(screen.getByLabelText(pidsInputLabel), {
-      target: { value: existingConfigResponse.data.pod_pids_limit },
-    });
+    await user.clear(screen.getByLabelText(pidsInputLabel));
+    await user.type(
+      screen.getByLabelText(pidsInputLabel),
+      `${existingConfigResponse.data.pod_pids_limit}`,
+    );
 
     expect(screen.getByText('Save changes')).toBeDisabled();
   });
@@ -200,18 +193,17 @@ describe('<MachineConfiguration />', () => {
         Promise.resolve({ data: {} } as AxiosResponse<KubeletConfig>),
       ),
     };
-    render(<MachineConfiguration {...props} />);
+    const { user } = render(<MachineConfiguration {...props} />);
 
     expect(await screen.findByLabelText(pidsInputLabel)).toBeInTheDocument();
 
-    fireEvent.change(screen.getByLabelText(pidsInputLabel), {
-      target: { value: 5000 },
-    });
+    await user.clear(screen.getByLabelText(pidsInputLabel));
+    await user.type(screen.getByLabelText(pidsInputLabel), '5000');
 
     expect(props.updateMachineConfiguration).toHaveBeenCalledTimes(0);
     expect(props.createMachineConfiguration).toHaveBeenCalledTimes(0);
 
-    fireEvent.click(screen.getByText('Save changes'));
+    await user.click(screen.getByText('Save changes'));
 
     await waitFor(() => {
       expect(props.createMachineConfiguration).toHaveBeenCalledTimes(1);
@@ -231,18 +223,17 @@ describe('<MachineConfiguration />', () => {
       ),
       onClose: jest.fn(),
     };
-    render(<MachineConfiguration {...props} />);
+    const { user } = render(<MachineConfiguration {...props} />);
 
     expect(await screen.findByLabelText(pidsInputLabel)).toBeInTheDocument();
 
-    fireEvent.change(screen.getByLabelText(pidsInputLabel), {
-      target: { value: 5000 },
-    });
+    await user.clear(screen.getByLabelText(pidsInputLabel));
+    await user.type(screen.getByLabelText(pidsInputLabel), '5000');
 
     expect(props.createMachineConfiguration).toHaveBeenCalledTimes(0);
     expect(props.updateMachineConfiguration).toHaveBeenCalledTimes(0);
 
-    fireEvent.click(screen.getByText('Save changes'));
+    await user.click(screen.getByText('Save changes'));
 
     await waitFor(() => {
       expect(props.updateMachineConfiguration).toHaveBeenCalledTimes(1);
@@ -262,19 +253,18 @@ describe('<MachineConfiguration />', () => {
       ),
       onClose: jest.fn(),
     };
-    render(<MachineConfiguration {...props} />);
+    const { user } = render(<MachineConfiguration {...props} />);
 
     expect(await screen.findByLabelText(pidsInputLabel)).toBeInTheDocument();
     expect(screen.getByText('Save changes')).toBeDisabled();
     expect(screen.getByText('Cancel')).toBeEnabled();
 
-    fireEvent.change(screen.getByLabelText(pidsInputLabel), {
-      target: { value: 5000 },
-    });
+    await user.clear(screen.getByLabelText(pidsInputLabel));
+    await user.type(screen.getByLabelText(pidsInputLabel), '5000');
 
     expect(screen.getByText('Save changes')).toBeEnabled();
 
-    fireEvent.click(screen.getByText('Save changes'));
+    await user.click(screen.getByText('Save changes'));
 
     expect(await screen.findByText('Save changes')).toBeDisabled();
     expect(await screen.findByText('Cancel')).toBeDisabled();
@@ -282,12 +272,12 @@ describe('<MachineConfiguration />', () => {
 
   it('calls the onClose callback when clicking the "Cancel" button', async () => {
     const props = { ...defaultProps, onClose: jest.fn() };
-    render(<MachineConfiguration {...props} />);
+    const { user } = render(<MachineConfiguration {...props} />);
 
     expect(await screen.findByLabelText(pidsInputLabel)).toBeInTheDocument();
     expect(props.onClose).toHaveBeenCalledTimes(0);
 
-    fireEvent.click(screen.getByText('Cancel'));
+    await user.click(screen.getByText('Cancel'));
 
     expect(props.onClose).toHaveBeenCalledTimes(1);
   });
@@ -302,14 +292,14 @@ describe('<MachineConfiguration />', () => {
         }),
       onClose: jest.fn(),
     };
-    render(<MachineConfiguration {...props} />);
+    const { user } = render(<MachineConfiguration {...props} />);
 
     expect(await screen.findByText('Unable to retrieve configuration')).toBeInTheDocument();
     expect(screen.queryByLabelText(pidsInputLabel)).not.toBeInTheDocument();
     expect(screen.queryByText('Loading PIDs limit')).not.toBeInTheDocument();
     expect(props.onClose).toHaveBeenCalledTimes(0);
 
-    fireEvent.click(screen.getByText('Close'));
+    await user.click(screen.getByText('Close'));
 
     expect(props.onClose).toHaveBeenCalledTimes(1);
   });
@@ -341,16 +331,15 @@ describe('<MachineConfiguration />', () => {
         }),
       onClose: jest.fn(),
     };
-    render(<MachineConfiguration {...props} />);
+    const { user } = render(<MachineConfiguration {...props} />);
 
     expect(await screen.findByLabelText(pidsInputLabel)).toBeInTheDocument();
     expect(screen.queryByText(savingErrorMessage)).not.toBeInTheDocument();
 
-    fireEvent.change(screen.getByLabelText(pidsInputLabel), {
-      target: { value: 8000 },
-    });
+    await user.clear(screen.getByLabelText(pidsInputLabel));
+    await user.type(screen.getByLabelText(pidsInputLabel), '8000');
 
-    fireEvent.click(screen.getByText('Save changes'));
+    await user.click(screen.getByText('Save changes'));
 
     expect(await screen.findByText(savingErrorMessage)).toBeInTheDocument();
   });

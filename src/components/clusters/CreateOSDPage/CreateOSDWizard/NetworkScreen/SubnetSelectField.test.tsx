@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, screen, waitFor, checkAccessibility, fireEvent } from '~/testUtils';
+import { render, screen, waitFor, checkAccessibility } from '~/testUtils';
 import { SubnetSelectField, SubnetSelectFieldProps } from './SubnetSelectField';
 
 describe('SubnetSelectField tests', () => {
@@ -20,7 +20,8 @@ describe('SubnetSelectField tests', () => {
 
     // type something into search
     const searchbox = screen.getByPlaceholderText(/Filter by subnet/i);
-    fireEvent.change(searchbox, { target: { value: '1c' } });
+    await user.clear(searchbox);
+    await user.type(searchbox, '1c');
 
     // click option
     await waitFor(() =>

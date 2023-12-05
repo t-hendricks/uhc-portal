@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, screen, userEvent, act } from '~/testUtils';
+import { render, screen, act } from '~/testUtils';
 import apiRequest from '~/services/apiRequest';
 
 import MinorVersionUpgradeAlert from '../MinorVersionUpgradeAlert';
@@ -110,11 +110,8 @@ describe('<MinorVersionUpgradeAlert >', () => {
       ...defaultProps,
       isMinorVersionUpgradesEnabled: false,
     };
-    render(<MinorVersionUpgradeAlert {...newProps} />);
+    const { user } = render(<MinorVersionUpgradeAlert {...newProps} />);
 
-    const user = userEvent.setup({
-      delay: null,
-    });
     await act(async () => {
       await user.click(screen.getByRole('button', { name: enableLinkText }));
       await new Promise(process.nextTick); // wait for all promises to finish
@@ -138,10 +135,8 @@ describe('<MinorVersionUpgradeAlert >', () => {
       ...defaultProps,
       isMinorVersionUpgradesEnabled: true,
     };
-    render(<MinorVersionUpgradeAlert {...newProps} />);
-    const user = userEvent.setup({
-      delay: null,
-    });
+    const { user } = render(<MinorVersionUpgradeAlert {...newProps} />);
+
     await act(async () => {
       await user.click(screen.getByRole('button', { name: disableLinkText }));
       await new Promise(process.nextTick); // wait for all promises to finish
@@ -170,10 +165,8 @@ describe('<MinorVersionUpgradeAlert >', () => {
       ...defaultProps,
       isMinorVersionUpgradesEnabled: true,
     };
-    render(<MinorVersionUpgradeAlert {...newProps} />);
-    const user = userEvent.setup({
-      delay: null,
-    });
+    const { user } = render(<MinorVersionUpgradeAlert {...newProps} />);
+
     await user.click(screen.getByRole('button', { name: disableLinkText }));
     await new Promise(process.nextTick); // wait for all promises to finish
     jest.runAllTimers();

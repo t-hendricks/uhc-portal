@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { render, screen, fireEvent, checkAccessibility, within } from '~/testUtils';
+import { render, screen, checkAccessibility, within } from '~/testUtils';
 
 import ExternalLink from './ExternalLink';
 
@@ -198,13 +198,13 @@ describe('<ExternalLink />', () => {
       mockPathname.mockClear();
     });
 
-    it('is called for unknown pathname', () => {
+    it('is called for unknown pathname', async () => {
       // Arrange
       mockPathname.mockReturnValue('/foo');
-      render(<ExternalLink href="http://example.com">Hello World</ExternalLink>);
+      const { user } = render(<ExternalLink href="http://example.com">Hello World</ExternalLink>);
 
       // Act
-      fireEvent.click(screen.getByRole('link'));
+      await user.click(screen.getByRole('link'));
 
       // Assert
       expect(useAnalyticsMock).toHaveBeenCalled();
@@ -220,13 +220,13 @@ describe('<ExternalLink />', () => {
       );
     });
 
-    it('is called for rosa pathname', () => {
+    it('is called for rosa pathname', async () => {
       // Arrange
       mockPathname.mockReturnValue('/rosa');
-      render(<ExternalLink href="http://example.com">Hello World</ExternalLink>);
+      const { user } = render(<ExternalLink href="http://example.com">Hello World</ExternalLink>);
 
       // Act
-      fireEvent.click(screen.getByRole('link'));
+      await user.click(screen.getByRole('link'));
 
       // Arrange
       expect(useAnalyticsMock).toHaveBeenCalled();
@@ -242,13 +242,13 @@ describe('<ExternalLink />', () => {
       );
     });
 
-    it('is called for osd trial pathname', () => {
+    it('is called for osd trial pathname', async () => {
       // Arrange
       mockPathname.mockReturnValue('/osdtrial');
-      render(<ExternalLink href="http://example.com">Hello World</ExternalLink>);
+      const { user } = render(<ExternalLink href="http://example.com">Hello World</ExternalLink>);
 
       // Act
-      fireEvent.click(screen.getByRole('link'));
+      await user.click(screen.getByRole('link'));
 
       // Assert
       expect(useAnalyticsMock).toHaveBeenCalled();
@@ -264,13 +264,13 @@ describe('<ExternalLink />', () => {
       );
     });
 
-    it('is called for osd pathname', () => {
+    it('is called for osd pathname', async () => {
       // Arrange
       mockPathname.mockReturnValue('/osd');
-      render(<ExternalLink href="http://example.com">Hello World</ExternalLink>);
+      const { user } = render(<ExternalLink href="http://example.com">Hello World</ExternalLink>);
 
       // Act
-      fireEvent.click(screen.getByRole('link'));
+      await user.click(screen.getByRole('link'));
 
       // Assert
       expect(useAnalyticsMock).toHaveBeenCalled();
@@ -286,13 +286,13 @@ describe('<ExternalLink />', () => {
       );
     });
 
-    it('is called for crc pathname', () => {
+    it('is called for crc pathname', async () => {
       // Arrange
       mockPathname.mockReturnValue('/crc');
-      render(<ExternalLink href="http://example.com">Hello World</ExternalLink>);
+      const { user } = render(<ExternalLink href="http://example.com">Hello World</ExternalLink>);
 
       // Act
-      fireEvent.click(screen.getByRole('link'));
+      await user.click(screen.getByRole('link'));
 
       // Assert
       expect(useAnalyticsMock).toHaveBeenCalled();
@@ -307,7 +307,7 @@ describe('<ExternalLink />', () => {
         },
       );
     });
-    it('is called with custom tracking properties', () => {
+    it('is called with custom tracking properties', async () => {
       // Arrange
       mockPathname.mockReturnValue('/crc');
       const customProps = {
@@ -320,14 +320,14 @@ describe('<ExternalLink />', () => {
         ocm_cluster_id: 'e-12345',
         ocm_resource_type: 'osd',
       };
-      render(
+      const { user } = render(
         <ExternalLink href="http://example.com" customTrackProperties={customProps}>
           Hello World
         </ExternalLink>,
       );
 
       // Act
-      fireEvent.click(screen.getByRole('link'));
+      await user.click(screen.getByRole('link'));
 
       // Assert
       expect(useAnalyticsMock).toHaveBeenCalled();
