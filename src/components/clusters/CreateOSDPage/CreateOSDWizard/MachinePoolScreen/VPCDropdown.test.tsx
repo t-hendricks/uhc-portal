@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { CloudVPC } from '~/types/clusters_mgmt.v1';
-import { render, screen, fireEvent } from '~/testUtils';
+import { render, screen } from '~/testUtils';
 import VPCDropdown from './VPCDropdown';
 import { useAWSVPCInquiry, filterOutRedHatManagedVPCs } from '../VPCScreen/useVPCInquiry';
 
@@ -139,10 +139,10 @@ describe('<VPCDropdown />', () => {
     });
 
     it('shows search in select vpc dropdown', async () => {
-      render(<VPCDropdown {...defaultProps} />);
+      const { user } = render(<VPCDropdown {...defaultProps} />);
       expect(await screen.findByText(/^select a vpc$/i)).toBeInTheDocument();
       const selectDropdown = screen.getByRole('button', { name: 'Options menu' });
-      fireEvent.keyDown(selectDropdown, { key: 'Enter' }); // this is the only way to open select! using click doesn't work
+      await user.click(selectDropdown);
       expect(screen.getByPlaceholderText('Filter by VPC')).toBeInTheDocument();
     });
 

@@ -77,7 +77,7 @@ const withState = (initialState?: any): TestState => {
 
     render: (ui: React.ReactElement, options?: RenderOptions) => ({
       ...render(ui, { wrapper: Wrapper, ...options }),
-      user: userEvent.setup(),
+      user: userEvent.setup({ delay: null }),
     }),
   };
 };

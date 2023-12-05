@@ -97,7 +97,6 @@ describe('<ProgressList />', () => {
 
     const steps = screen.getAllByRole('listitem');
     expect(steps).toHaveLength(5);
-    screen.debug();
 
     expect(steps[0]).toHaveClass('pf-m-success');
     expect(steps[0].textContent).toEqual('Account setupCompleted');

@@ -80,7 +80,6 @@ describe('<TransferClusterOwnershipDialog />', () => {
     };
 
     render(<TransferClusterOwnershipDialog {...errorProps} />);
-    screen.debug(undefined, Infinity);
     expect(screen.getByRole('dialog')).toBeInTheDocument();
     expect(screen.getByRole('alert')).toBeInTheDocument();
   });
