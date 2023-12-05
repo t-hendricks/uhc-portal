@@ -73,7 +73,7 @@
     ],
     "react/jsx-filename-extension": [1, { "extensions": [".tsx", ".jsx"] }],
     // Testing library rules - need further review
-    "testing-library/prefer-find-by": "off",
+    "testing-library/prefer-find-by": "error",
     "testing-library/prefer-screen-queries": "off",
     "testing-library/prefer-presence-queries": "off",
     "testing-library/no-wait-for-multiple-assertions": "off",

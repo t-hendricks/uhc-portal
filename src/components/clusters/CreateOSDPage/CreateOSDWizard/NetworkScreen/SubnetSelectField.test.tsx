@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, screen, waitFor, checkAccessibility } from '~/testUtils';
+import { render, screen, checkAccessibility } from '~/testUtils';
 import { SubnetSelectField, SubnetSelectFieldProps } from './SubnetSelectField';
 
 describe('SubnetSelectField tests', () => {
@@ -14,9 +14,7 @@ describe('SubnetSelectField tests', () => {
     // click it open
     const dropdown = screen.getByText(/subnet/i);
     user.click(dropdown);
-    await waitFor(() =>
-      expect(screen.getByPlaceholderText(/Filter by subnet/i)).toBeInTheDocument(),
-    );
+    expect(await screen.findByPlaceholderText(/Filter by subnet/i)).toBeInTheDocument();
 
     // type something into search
     const searchbox = screen.getByPlaceholderText(/Filter by subnet/i);
@@ -24,38 +22,31 @@ describe('SubnetSelectField tests', () => {
     await user.type(searchbox, '1c');
 
     // click option
-    await waitFor(() =>
-      expect(
-        screen.getByRole('option', {
+    expect(
+        await screen.findByRole('option', {
           name: /ddonati-test403-bsrnf-private-us-east- 1c/i,
-        }),
-      ).toBeInTheDocument(),
-    );
+        })
+    ).toBeInTheDocument()
     let option = screen.getByRole('option', {
       name: /ddonati-test403-bsrnf-private-us-east- 1c/i,
     });
     user.click(option);
-    await waitFor(() =>
-      expect(screen.getByText(/ddonati-test403-bsrnf-private-us-east-1c/i)).toBeInTheDocument(),
-    );
+    expect(await screen.findByText(/ddonati-test403-bsrnf-private-us-east-1c/i)).toBeInTheDocument();
 
     // do the same for a truncated one
     user.click(dropdown);
     user.type(searchbox, 'make');
-    await waitFor(() =>
-      expect(
-        screen.getByRole('option', {
+    expect(
+        await screen.findByRole('option', {
           name: /ddonati-test403-bsrnf- make -this-big-private-us-east-1d/i,
-        }),
-      ).toBeInTheDocument(),
-    );
+        })
+    ).toBeInTheDocument()
+
     option = screen.getByRole('option', {
       name: /ddonati-test403-bsrnf- make -this-big-private-us-east-1d/i,
     });
     user.click(option);
-    await waitFor(() =>
-      expect(screen.getByText(/ddonati-test4... his-big-private-us-east-1d/i)).toBeInTheDocument(),
-    );
+    expect(await screen.findByText(/ddonati-test4... his-big-private-us-east-1d/i)).toBeInTheDocument();
 
     // Assert
     await checkAccessibility(container);

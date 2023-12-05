@@ -27,13 +27,12 @@ describe('AWSAccountSelection tests', () => {
     await user.type(searchbox, '74');
 
     // click option
-    await waitFor(() =>
-      expect(
-        screen.getByRole('option', {
+    expect(
+        await screen.findByRole('option', {
           name: /74 3358436160/i,
         }),
-      ).toBeInTheDocument(),
-    );
+    ).toBeInTheDocument()
+
     const option = screen.getByRole('option', {
       name: /74 3358436160/i,
     });

@@ -612,9 +612,7 @@ describe('MachineTypeSelection', () => {
         const optionsMenu = screen.getByLabelText('Options menu');
         user.click(optionsMenu);
 
-        await waitFor(() =>
-          expect(screen.getByText('m5.xlarge', { exact: false })).toBeInTheDocument(),
-        );
+        expect(await screen.findByText('m5.xlarge', { exact: false })).toBeInTheDocument();
       });
     });
 
