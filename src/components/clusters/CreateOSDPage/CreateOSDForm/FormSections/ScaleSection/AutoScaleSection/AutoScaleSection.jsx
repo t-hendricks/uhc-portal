@@ -229,7 +229,7 @@ class AutoScaleSection extends React.Component {
     const { isMultiAz, isHypershiftWizard, numPools } = this.props;
 
     if (isHypershiftWizard) {
-      return MAX_NODES_HCP / numPools;
+      return Math.floor(MAX_NODES_HCP / numPools);
     }
     if (isMultiAz) {
       return MAX_NODES / 3;
