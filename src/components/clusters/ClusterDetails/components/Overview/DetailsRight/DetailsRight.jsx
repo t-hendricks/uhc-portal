@@ -9,9 +9,11 @@ import {
   Flex,
 } from '@patternfly/react-core';
 import * as OCM from '@openshift-assisted/ui-lib/ocm';
-import { isROSA } from '~/components/clusters/common/clusterStates';
+import { canViewMachinePoolTab, isROSA } from '~/components/clusters/common/clusterStates';
 import { IMDSType } from '~/components/clusters/wizards/common';
 import { isRestrictedEnv } from '~/restrictedEnv';
+import { hasSecurityGroupIds } from '~/common/securityGroupsHelpers';
+import { useAWSVPCFromCluster } from '~/components/clusters/CreateOSDPage/CreateOSDWizard/NetworkScreen/useAWSVPCFromCluster';
 
 import Timestamp from '../../../../../common/Timestamp';
 import links from '../../../../../../common/installLinks.mjs';
@@ -24,6 +26,7 @@ import PopoverHint from '../../../../../common/PopoverHint';
 import ExternalLink from '../../../../../common/ExternalLink';
 import { isHypershiftCluster } from '../../../clusterDetailsHelper';
 import { ClusterStatus } from './ClusterStatus';
+import SecurityGroupsDisplayByNode from '../../SecurityGroups/SecurityGroupsDetailDisplay';
 
 const { ClusterStatus: AIClusterStatus } = OCM;
 function DetailsRight({
@@ -43,7 +46,7 @@ function DetailsRight({
   const isROSACluster = isROSA(cluster);
   const infraAccount = cluster.subscription?.cloud_account_id || null;
   const hypershiftEtcdEncryptionKey = isHypershift && cluster.aws?.etcd_encryption?.kms_key_arn;
-
+  const { clusterVpc } = useAWSVPCFromCluster(cluster);
   const memoryTotalWithUnit = humanizeValueWithUnit(
     get(cluster, 'metrics.memory.total.value', 0),
     get(cluster, 'metrics.memory.total.unit', 'B'),
@@ -275,6 +278,28 @@ function DetailsRight({
                 </DescriptionListGroup>
               </>
             )}
+          </>
+        )}
+        {/* Security Groups */}
+        {hasSecurityGroupIds(cluster, machinePools) && (
+          <>
+            <DescriptionListGroup>
+              <DescriptionListTerm>Additional security groups</DescriptionListTerm>
+              <DescriptionListDescription>
+                <dl className="pf-l-stack" data-testid="securityGroupsByNode">
+                  <SecurityGroupsDisplayByNode
+                    securityGroups={clusterVpc?.aws_security_groups || []}
+                    securityGroupIdsForControl={
+                      cluster?.aws?.additional_control_plane_security_group_ids
+                    }
+                    securityGroupIdsForInfra={cluster?.aws?.additional_infra_security_group_ids}
+                    machinePoolData={machinePools}
+                    showLinkToMachinePools={canViewMachinePoolTab(cluster)}
+                    showWorkerNodesTogether={false}
+                  />
+                </dl>
+              </DescriptionListDescription>
+            </DescriptionListGroup>
           </>
         )}
         {cluster.aiCluster && (
