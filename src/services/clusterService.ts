@@ -35,6 +35,7 @@ import type {
   ClusterAutoscaler,
   DNSDomain,
   NodePoolUpgradePolicy,
+  ProductTechnologyPreview,
 } from '../types/clusters_mgmt.v1';
 import type { Subscription } from '../types/accounts_mgmt.v1';
 
@@ -974,6 +975,10 @@ const patchKubeletConfiguration = (clusterId: string, config: KubeletConfig) =>
 
 const deleteKubeletConfiguration = (clusterId: string) =>
   apiRequest.patch<KubeletConfig>(`/api/clusters_mgmt/v1/clusters/${clusterId}/kubelet_config`);
+const getTechPreviewStatus = (product: string, id: string) =>
+  apiRequest.get<ProductTechnologyPreview>(
+    `/api/clusters_mgmt/v1/products/${product}/technology_previews/${id}`,
+  );
 
 const clusterService = {
   getClusters,
@@ -1045,6 +1050,7 @@ const clusterService = {
   postKubeletConfiguration,
   patchKubeletConfiguration,
   deleteKubeletConfiguration,
+  getTechPreviewStatus,
 };
 
 export {

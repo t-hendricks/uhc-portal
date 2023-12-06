@@ -1,24 +1,24 @@
 import React from 'react';
 import { render, screen, checkAccessibility } from '~/testUtils';
-
+import * as PreviewLabelFile from '~/components/clusters/common/PreviewLabel';
 import ClusterTypeLabel from './ClusterTypeLabel';
 import fixtures from '../ClusterDetails/__test__/ClusterDetails.fixtures';
 
 describe('ClusterTypeLabel', () => {
+  jest.spyOn(PreviewLabelFile, 'PreviewLabel').mockImplementation(() => <span>PREVIEW LABEL</span>);
+
   it('shows preview label for ROSA hypershift', async () => {
     const { cluster } = fixtures.ROSAHypershiftClusterDetails;
-    const { container } = render(<ClusterTypeLabel cluster={cluster} />);
 
-    expect(container.querySelector('.pf-c-label')).toBeInTheDocument();
-    expect(screen.getByText('Preview')).toBeInTheDocument();
+    const { container } = render(<ClusterTypeLabel cluster={cluster} />);
+    expect(screen.getByText('PREVIEW LABEL')).toBeInTheDocument();
     await checkAccessibility(container);
   });
 
   it('does not show preview label for classic ROSA', () => {
     const { cluster } = fixtures.ROSAClusterDetails;
-    const { container } = render(<ClusterTypeLabel cluster={cluster} />);
+    render(<ClusterTypeLabel cluster={cluster} />);
 
-    expect(container.querySelector('.pf-c-label')).not.toBeInTheDocument();
-    expect(screen.queryByText('Preview')).not.toBeInTheDocument();
+    expect(screen.queryByText('PREVIEW LABEL')).not.toBeInTheDocument();
   });
 });
