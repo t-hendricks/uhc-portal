@@ -13,6 +13,7 @@ import {
   IMDSType,
 } from '~/components/clusters/wizards/common/constants';
 import { BreadcrumbPath } from '~/components/common/Breadcrumbs';
+import { getDefaultSecurityGroupsSettings } from '~/common/securityGroupsHelpers';
 import { getDefaultClusterAutoScaling } from '~/components/clusters/CreateOSDPage/clusterAutoScalingValues';
 import { ApplicationIngressType, ClusterPrivacyType } from './Networking/constants';
 
@@ -45,9 +46,11 @@ export enum OsdFieldId {
   KeyName = 'key_name',
   KmsKeyArn = 'kms_key_arn',
   KmsServiceAccount = 'kms_service_account',
-  VpcName = 'vpc_name',
+  SelectedVpc = 'selected_vpc', // OSD AWS / ROSA classic
+  VpcName = 'vpc_name', // OSD GCP (shared VPC)
   ComputeSubnet = 'compute_subnet',
   ControlPlaneSubnet = 'control_plane_subnet',
+  SecurityGroups = 'securityGroups',
   FirstAvailabilityZone = 'az_0',
   SecondAvailabilityZone = 'az_1',
   ThirdAvailabilityZone = 'az_2',
@@ -116,6 +119,8 @@ export const initialValues: FormikValues = {
   [FieldId.AcknowledgePrereq]: false,
   [FieldId.BillingModel]: billingModels.STANDARD,
   [FieldId.MultiAz]: 'false',
+  [FieldId.SelectedVpc]: { id: '', name: '' },
+  [FieldId.SecurityGroups]: getDefaultSecurityGroupsSettings(),
   [FieldId.InstallToSharedVpc]: false,
   [FieldId.EnableUserWorkloadMonitoring]: true,
   [FieldId.NodeLabels]: [{ key: '', value: '' }],

@@ -8,7 +8,6 @@ import type {
   ClusterState,
   ClusterStatus,
   LimitedSupportReason,
-  Subnetwork,
   VersionGateAgreement,
 } from './clusters_mgmt.v1';
 
@@ -111,12 +110,6 @@ export type AWSCredentials = Pick<
   AWS,
   'account_id' | 'access_key_id' | 'secret_access_key' | 'sts'
 >;
-
-/** A subnet augmented with info from its parent CloudVPC. */
-export type AugmentedSubnetwork = Subnetwork & {
-  ['vpc_id']: string;
-  ['vpc_name']?: string; // presence depends on AWS "Name" tag, not guaranteed.
-};
 
 export type ViewSorting = {
   isAscending: boolean;

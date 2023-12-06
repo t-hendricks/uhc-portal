@@ -7,6 +7,7 @@
     {
       "name": "SDA-5333-test-new-API-returning-both-name-and-id",
       "id": "vpc-0d5c8e4d499be6630",
+      "red_hat_managed": false,
       "aws_subnets": [
         {
           "subnet_id": "subnet-0d3a4a32658ee415a",
@@ -24,16 +25,18 @@
     },
     {
       "id": "SDA-5333-test-new-API-returning-only-id-for-VPC-without-Name-tag",
+      "red_hat_managed": false,
       "aws_subnets": [
         {
           "subnet_id": "subnet-id-without-Name",
           "public": false,
-          "availability_zone": "us-west-1a"
+          "availability_zone": "us-east-1a"
         }
       ]
     },
     {
-      "id": "vpc-with-security-groups",
+      "id": "vpc-with-security-groups-one",
+      "red_hat_managed": false,
       "aws_security_groups": [
         {
           "id": "sg-def",
@@ -66,26 +69,65 @@
         {
           "subnet_id": "subnet-from-a-vpc-with-security-groups",
           "public": false,
-          "availability_zone": "us-west-1a"
+          "availability_zone": "us-east-1a"
+        }
+      ]
+    },
+    {
+      "id": "vpc-with-security-groups-two",
+      "red_hat_managed": false,
+      "aws_security_groups": [
+        {
+          "id": "sg-first-id",
+          "name": "sg-first"
+        },
+        {
+          "id": "sg-second-id",
+          "name": "sg-second"
+        },
+        {
+          "id": "sg-third-id",
+          "name": "sg-third"
+        },
+        {
+          "id": "sg-red-hat-managed-id",
+          "name": "sg-red-hat-managed-id",
+          "red_hat_managed": true
+        }
+      ],
+      "aws_subnets": [
+        {
+          "subnet_id": "sg-two-private-subnet",
+          "public": false,
+          "availability_zone": "us-east-1b"
+        },
+        {
+          "subnet_id": "sg-two-public-subnet",
+          "public": true,
+          "availability_zone": "us-east-1b"
         }
       ]
     },
     {
       "name": "test-backend-returning-empty-slice-as-null",
+      "red_hat_managed": false,
       "DETAILS": "https://gitlab.cee.redhat.com/service/uhc-clusters-service/-/merge_requests/3486#note_3297600",
       "aws_subnets": null
     },
     {
       "name": "test-backend-omitting-empty-slice",
+      "red_hat_managed": false,
       "DETAILS": "https://gitlab.cee.redhat.com/service/uhc-clusters-service/-/merge_requests/3852#note_3668342"
     },
     {
       "name": "test-backend-returning-empty-slice-as-[]",
+      "red_hat_managed": false,
       "aws_subnets": []
     },
     {
       "name": "mbouqsim-test-4-12-xkhvt-vpc",
       "id": "vpc-048a9cb4375326db1",
+      "red_hat_managed": false,
       "aws_subnets": [
         {
           "subnet_id": "subnet-07d6afea8390d724b",
@@ -152,6 +194,7 @@
     {
       "name": "drcluster2-may-11-68fs6-vpc",
       "id": "vpc-09172b63e4129dee7",
+      "red_hat_managed": false,
       "aws_subnets": [
         {
           "subnet_id": "subnet-0640e28b2138377da",
@@ -218,6 +261,7 @@
     {
       "name": "ptsiraki-log230511-bddpl-vpc",
       "id": "vpc-088ee18beb57cc372",
+      "red_hat_managed": false,
       "aws_subnets": [
         {
           "subnet_id": "subnet-0674c2d7845a283a7",
@@ -296,6 +340,7 @@
     {
       "name": "odfcluster-uk-may-11-9c8qx-vpc",
       "id": "vpc-073994cae90cf56ea",
+      "red_hat_managed": false,
       "aws_subnets": [
         {
           "subnet_id": "subnet-005735b8c555d0f8c",
@@ -362,6 +407,7 @@
     {
       "name": "drcluster1-may-11-25cv8-vpc",
       "id": "vpc-0ea69d2a78d599d50",
+      "red_hat_managed": false,
       "aws_subnets": [
         {
           "subnet_id": "subnet-0f4fc9e2143d3d4a2",
@@ -428,6 +474,7 @@
     {
       "name": "thn-oc413-v5-mg79r-vpc",
       "id": "vpc-022f7eec6870769ae",
+      "red_hat_managed": false,
       "aws_subnets": [
         {
           "subnet_id": "subnet-005ea6bb67a614d52",
@@ -494,6 +541,7 @@
     {
       "name": "rhamilto-dhdcm-vpc",
       "id": "vpc-0a6187c40183b6a18",
+      "red_hat_managed": false,
       "aws_subnets": [
         {
           "subnet_id": "subnet-0f91b0e6f3354aabe",
@@ -560,6 +608,7 @@
     {
       "name": "ssheribe-c92-v4pw4-vpc",
       "id": "vpc-09bfa93a36a608b36",
+      "red_hat_managed": false,
       "aws_subnets": [
         {
           "subnet_id": "subnet-09a1447d274b39b98",
@@ -624,8 +673,9 @@
       ]
     },
     {
-      "name": "jsuber-051123-wkhnr-vpc",
+      "name": "jsuber-managed-by-red-hat",
       "id": "vpc-049c005b1967c8482",
+      "red_hat_managed": true,
       "aws_subnets": [
         {
           "subnet_id": "subnet-01688cff860870080",
@@ -692,6 +742,7 @@
     {
       "name": "jhrozek-cluster-05-11-mrcjj-vpc",
       "id": "vpc-03beb35489d52de5c",
+      "red_hat_managed": false,
       "aws_subnets": [
         {
           "subnet_id": "subnet-0e83a3fc7112366bc",
@@ -758,6 +809,7 @@
     {
       "name": "jaosorior-8vns4-vpc",
       "id": "vpc-046c3e3efea64c91e",
+      "red_hat_managed": false,
       "aws_subnets": [
         {
           "subnet_id": "subnet-0ef3450e32176b7a9",
@@ -770,6 +822,7 @@
     {
       "name": "viraj-11-05-2023-kpx54-vpc",
       "id": "vpc-0a682a85d09cb850d",
+      "red_hat_managed": false,
       "aws_subnets": [
         {
           "subnet_id": "subnet-05f4244ff56f197fc",
@@ -836,6 +889,7 @@
     {
       "name": "xcoulon-20230511a-9xpxr-vpc",
       "id": "vpc-0d68023b519fdef9d",
+      "red_hat_managed": false,
       "aws_subnets": [
         {
           "subnet_id": "subnet-0f40f4a8c205e3869",
@@ -902,6 +956,7 @@
     {
       "name": "spasquie-20230511-wtfr6-vpc",
       "id": "vpc-0e57c2dc2dc253e6b",
+      "red_hat_managed": false,
       "aws_subnets": [
         {
           "subnet_id": "subnet-0b660d482456283e4",
@@ -968,6 +1023,7 @@
     {
       "name": "jhrozek-cluster-05-11-6b2x6-vpc",
       "id": "vpc-0155586867c503486",
+      "red_hat_managed": false,
       "aws_subnets": [
         {
           "subnet_id": "subnet-083a05e152b458c5e",
@@ -1034,6 +1090,7 @@
     {
       "name": "spoke-39ff2f79-d5a5-4-t66gz-vpc",
       "id": "vpc-034a9abf8e2f16da3",
+      "red_hat_managed": false,
       "aws_subnets": [
         {
           "subnet_id": "subnet-06a8fc397d7cddd90",
@@ -1112,6 +1169,7 @@
     {
       "name": "fmuntean-devsandbox3-chkvq-vpc",
       "id": "vpc-0e500d7661241bc62",
+      "red_hat_managed": false,
       "aws_subnets": [
         {
           "subnet_id": "subnet-0c7d366068cbc9c43",
@@ -1178,6 +1236,7 @@
     {
       "name": "hub-a89cf4a3-3c78-430-rtb6s-vpc",
       "id": "vpc-024bb11792950ad7c",
+      "red_hat_managed": false,
       "aws_subnets": [
         {
           "subnet_id": "subnet-0a1a99b68c4909b61",
@@ -1256,6 +1315,7 @@
     {
       "name": "example-5kqtl-vpc",
       "id": "vpc-02719dc0176c44199",
+      "red_hat_managed": false,
       "aws_subnets": [
         {
           "subnet_id": "subnet-0a883dabe62e19193",
@@ -1274,6 +1334,7 @@
     {
       "name": "odfcluster-common-may-z7flv-vpc",
       "id": "vpc-0fc8766cc8c589198",
+      "red_hat_managed": false,
       "aws_subnets": [
         {
           "subnet_id": "subnet-08fd2988276a42261",
@@ -1340,6 +1401,7 @@
     {
       "name": "cahartma-0511cluster0-dfkpg-vpc",
       "id": "vpc-0f6c1f20d94dedb6c",
+      "red_hat_managed": false,
       "aws_subnets": [
         {
           "subnet_id": "subnet-0810a5125f62070f7",

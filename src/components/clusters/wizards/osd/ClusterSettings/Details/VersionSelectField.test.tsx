@@ -74,6 +74,7 @@ describe('<VersionSelectField />', () => {
     name: FieldId.ClusterVersion,
     label: 'Version (Google Cloud Marketplace enabled)',
     isDisabled: false,
+    onChange: jest.fn(),
   };
   const defaultValues = {
     ...initialValues,

@@ -1,0 +1,60 @@
+import semver from 'semver';
+
+import { CompatibilityOptions, SupportedFeature } from './featureCompatibility';
+
+type FeatureCompatibility = {
+  label: string;
+  day1?: string;
+  day2?: string;
+};
+
+const featureCompatibilityMap: Record<SupportedFeature, FeatureCompatibility> = {
+  [SupportedFeature.SECURITY_GROUPS]: {
+    label: 'security groups',
+    day1: '4.14.0',
+    day2: '4.11.0',
+  },
+  [SupportedFeature.AWS_SHARED_VPC]: {
+    label: 'shared VPCs',
+    day1: '4.13.9',
+    day2: '4.13.9',
+  },
+};
+
+const incompatibilityReason = (
+  featureCompatibility: FeatureCompatibility,
+  versionToCheck: string,
+  options: CompatibilityOptions,
+) => {
+  const minimumVersion = options.day1 ? featureCompatibility.day1 : featureCompatibility.day2;
+
+  const isCompatible =
+    !minimumVersion ||
+    semver.gte(semver.coerce(versionToCheck) || '', semver.coerce(minimumVersion) || '');
+
+  return isCompatible
+    ? ''
+    : `To use ${featureCompatibility.label}, your cluster must be version ${minimumVersion} or newer.`;
+};
+
+/**
+ * Returns the reason that makes a feature incompatible with a given OpenShift version
+ *
+ * @param feature feature to check
+ * @param versionRawId OpenShift version raw id
+ * @param options compatibility options
+ */
+const getIncompatibleVersionReason = (
+  feature: SupportedFeature,
+  versionRawId: string | undefined,
+  options: CompatibilityOptions,
+) => {
+  // Any feature not defined is assumed to be compatible with any version
+  const featureCompatibility = featureCompatibilityMap[feature];
+  if (!versionRawId || !featureCompatibility) {
+    return '';
+  }
+  return incompatibilityReason(featureCompatibility, versionRawId, options);
+};
+
+export { getIncompatibleVersionReason };

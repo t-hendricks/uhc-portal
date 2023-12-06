@@ -17,6 +17,7 @@ import {
 
 import { getCloudProviders } from '~/redux/actions/cloudProviderActions';
 import { useGlobalState } from '~/redux/hooks/useGlobalState';
+import { Version } from '~/types/clusters_mgmt.v1';
 import { noQuotaTooltip } from '~/common/helpers';
 import ExternalLink from '~/components/common/ExternalLink';
 import links from '~/common/installLinks.mjs';
@@ -42,6 +43,8 @@ import {
   RadioGroupOption,
   RichInputField,
 } from '~/components/clusters/wizards/form';
+import { getIncompatibleVersionReason } from '~/common/versionCompatibility';
+import { SupportedFeature } from '~/common/featureCompatibility';
 import { useFormState } from '~/components/clusters/wizards/hooks';
 import {
   hasAvailableQuota,
@@ -135,6 +138,7 @@ export const Details = () => {
       setFieldValue(`private_subnet_id_${i}`, '');
       setFieldValue(`public_subnet_id_${i}`, '');
     }
+    setFieldValue(FieldId.SelectedVpc, '');
   };
 
   const handleMultiAzChange = (value: string) => {
@@ -144,6 +148,23 @@ export const Details = () => {
     setFieldValue(FieldId.NodesCompute, getNodesCount(isByoc, isMultiAz, true));
     setFieldValue(FieldId.MinReplicas, getMinReplicasCount(isByoc, isMultiAz, true));
     setFieldValue(FieldId.MaxReplicas, '');
+  };
+
+  const handleVersionChange = (clusterVersion: Version) => {
+    // If features become incompatible with the new version, clear their settings
+    const canDefineSecurityGroups = !getIncompatibleVersionReason(
+      SupportedFeature.SECURITY_GROUPS,
+      clusterVersion.raw_id,
+      { day1: true },
+    );
+    if (!canDefineSecurityGroups) {
+      setFieldValue(FieldId.SecurityGroups, {
+        applyControlPlaneToAll: true,
+        controlPlane: [],
+        infra: [],
+        worker: [],
+      });
+    }
   };
 
   const availabilityZoneOptions: RadioGroupOption[] = [
@@ -213,6 +234,7 @@ export const Details = () => {
                   ? 'Version (Google Cloud Marketplace enabled)'
                   : 'Version'
               }
+              onChange={handleVersionChange}
             />
           </GridItem>
 

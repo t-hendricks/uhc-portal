@@ -38,25 +38,23 @@ export const HelperTextInvalid = ({
   const { error, touched } = meta;
   const additionalClasses = className ? ` ${className}` : '';
   if (touched && error) {
-    if (showHelpTextOnError) {
-      if (typeof helpText === 'string') {
-        return (
-          <>
-            {helpText} {error}
-          </>
-        );
-      }
+    if (showHelpTextOnError && typeof helpText === 'string') {
       return (
-        <div
-          className={`pf-c-form__helper-text pf-m-error${additionalClasses}`}
-          id={`${name}-helper`}
-          aria-live="polite"
-        >
+        <>
           {helpText} {error}
-        </div>
+        </>
       );
     }
-    return <div className={`pf-u-background-color-danger${additionalClasses}`}>{error}</div>;
+    return (
+      <div
+        className={`pf-c-form__helper-text pf-m-error${additionalClasses}`}
+        id={`${name}-helper`}
+        aria-live="polite"
+      >
+        {showHelpTextOnError ? <span>{helpText} </span> : null}
+        {error}
+      </div>
+    );
   }
   return null;
 };
@@ -88,7 +86,7 @@ export const TextInputField = ({
             meta={meta}
             helpText={helperText}
             showHelpTextOnError={showHelpTextOnError}
-            name={field.name}
+            name={name || field.name}
           />
         }
         helperText={helperText}

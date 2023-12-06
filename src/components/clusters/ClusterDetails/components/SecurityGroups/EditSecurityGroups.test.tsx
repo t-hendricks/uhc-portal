@@ -1,9 +1,7 @@
 import * as React from 'react';
-import { Formik } from 'formik';
 
-import { Cluster } from '~/types/clusters_mgmt.v1';
 import { fireEvent, render, screen, within } from '~/testUtils';
-import { FieldId } from '~/components/clusters/wizards/common';
+
 import EditSecurityGroups from './EditSecurityGroups';
 
 const persistedSecurityGroup = {
@@ -12,6 +10,7 @@ const persistedSecurityGroup = {
 };
 
 const clusterVpc = {
+  id: 'vpc-id',
   aws_security_groups: [
     {
       id: 'sg-abc',
@@ -24,14 +23,6 @@ const clusterVpc = {
     persistedSecurityGroup,
   ],
 };
-const fakeCluster = { id: 'my-cluster-id' } as Cluster;
-
-jest.mock(
-  '~/components/clusters/CreateOSDPage/CreateOSDWizard/NetworkScreen/useAWSVPCFromCluster',
-  () => ({
-    useAWSVPCFromCluster: () => ({ clusterVpc, isFulfilled: true, isLoading: false }),
-  }),
-);
 
 const openPFSecurityGroupsSelect = () => {
   // user.click doesn't work with PF dropdowns, so required to use fireEvent
@@ -39,28 +30,26 @@ const openPFSecurityGroupsSelect = () => {
 };
 
 const renderComponent = ({
-  isEdit,
+  isReadOnly,
   selectedGroupIds,
 }: {
-  isEdit: boolean;
+  isReadOnly: boolean;
   selectedGroupIds: string[];
 }) =>
   render(
-    <Formik
-      initialValues={{
-        [FieldId.SecurityGroupIds]: selectedGroupIds,
-      }}
-      onSubmit={() => {}}
-    >
-      <EditSecurityGroups cluster={fakeCluster} isEdit={isEdit} />
-    </Formik>,
+    <EditSecurityGroups
+      selectedGroupIds={selectedGroupIds}
+      selectedVPC={clusterVpc}
+      onChange={() => null}
+      isReadOnly={isReadOnly}
+    />,
   );
 
 describe('<EditSecurityGroups />', () => {
   describe('In edit mode', () => {
     it('shows a list of read-only chips', () => {
       renderComponent({
-        isEdit: true,
+        isReadOnly: true,
         selectedGroupIds: [persistedSecurityGroup.id],
       });
 
@@ -70,7 +59,7 @@ describe('<EditSecurityGroups />', () => {
 
     it('are shown as read-only when in editing mode', () => {
       renderComponent({
-        isEdit: true,
+        isReadOnly: true,
         selectedGroupIds: [persistedSecurityGroup.id],
       });
 
@@ -80,7 +69,7 @@ describe('<EditSecurityGroups />', () => {
 
     it('does not show the Select component', () => {
       renderComponent({
-        isEdit: true,
+        isReadOnly: true,
         selectedGroupIds: [],
       });
 
@@ -91,7 +80,7 @@ describe('<EditSecurityGroups />', () => {
   describe('In creation mode', () => {
     it('shows a list of chips with a close button', () => {
       renderComponent({
-        isEdit: false,
+        isReadOnly: false,
         selectedGroupIds: [persistedSecurityGroup.id],
       });
 
@@ -103,7 +92,7 @@ describe('<EditSecurityGroups />', () => {
 
     it('Has a Select showing all security groups', () => {
       renderComponent({
-        isEdit: false,
+        isReadOnly: false,
         selectedGroupIds: [],
       });
 
@@ -111,6 +100,17 @@ describe('<EditSecurityGroups />', () => {
 
       expect(within(screen.getByRole('listbox')).getByText('sg-abc')).toBeInTheDocument();
       expect(within(screen.getByRole('listbox')).getByText('sg-xyz')).toBeInTheDocument();
+    });
+
+    it('Shows the name as empty and the id as the description if the group has no name', () => {
+      renderComponent({
+        isReadOnly: false,
+        selectedGroupIds: [],
+      });
+
+      openPFSecurityGroupsSelect();
+
+      expect(within(screen.getByRole('listbox')).getByText('--')).toBeInTheDocument();
       expect(
         within(screen.getByRole('listbox')).getByText('sg-group-without-a-name'),
       ).toBeInTheDocument();
@@ -118,7 +118,7 @@ describe('<EditSecurityGroups />', () => {
 
     it('Has a SelectOption with a checkbox for each security group with the correct selection status', () => {
       renderComponent({
-        isEdit: false,
+        isReadOnly: false,
         selectedGroupIds: [persistedSecurityGroup.id],
       });
 
@@ -130,6 +130,56 @@ describe('<EditSecurityGroups />', () => {
       expect(
         within(screen.getByRole('listbox')).getByRole('checkbox', { name: /sg-xyz/ }),
       ).toBeChecked();
+    });
+
+    it('should not clear the selected security groups if they belong to the current VPC', () => {
+      const onChangeSpy = jest.fn();
+      render(
+        <EditSecurityGroups
+          onChange={onChangeSpy}
+          selectedGroupIds={['sg-abc']}
+          selectedVPC={clusterVpc}
+          isReadOnly={false}
+        />,
+      );
+      expect(onChangeSpy).not.toHaveBeenCalled();
+    });
+
+    it('should clear the selected security groups if they do not belong to the current VPC', () => {
+      const onChangeSpy = jest.fn();
+      const sgsFromFirstVpc = ['sg-abc'];
+
+      // Render with the initial VPC and a security group belonging to it
+      const { rerender } = render(
+        <EditSecurityGroups
+          onChange={onChangeSpy}
+          selectedGroupIds={sgsFromFirstVpc}
+          selectedVPC={clusterVpc}
+          isReadOnly={false}
+        />,
+      );
+      expect(onChangeSpy).not.toHaveBeenCalled();
+
+      // Render with another VPC, while the security group still belonging to the initial VPC
+      const anotherVpc = {
+        id: 'this-is-another-vpc',
+        aws_security_groups: [
+          {
+            id: 'sg-another-security-group',
+            name: 'This is a different security group',
+          },
+        ],
+      };
+      rerender(
+        <EditSecurityGroups
+          onChange={onChangeSpy}
+          selectedGroupIds={sgsFromFirstVpc}
+          selectedVPC={anotherVpc}
+          isReadOnly={false}
+        />,
+      );
+      expect(onChangeSpy).toHaveBeenCalledTimes(1);
+      expect(onChangeSpy).toHaveBeenCalledWith([]);
     });
   });
 });

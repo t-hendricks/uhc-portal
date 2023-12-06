@@ -277,6 +277,13 @@ const strToKeyValueObject = (input?: string, defaultValue?: string) => {
   }, {});
 };
 
+const truncateTextWithEllipsis = (text?: string, maxLength?: number) => {
+  if (text && maxLength && text.length > maxLength) {
+    return `${text.slice(0, maxLength / 3)}... ${text.slice((-maxLength * 2) / 3)}`;
+  }
+  return text;
+};
+
 export {
   noop,
   isValid,
@@ -296,6 +303,7 @@ export {
   goZeroTime2Null,
   stringToArray,
   arrayToString,
+  truncateTextWithEllipsis,
   isSupportedMinorVersion,
   formatMinorVersion,
   strToKeyValueObject,

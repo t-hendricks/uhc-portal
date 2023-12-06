@@ -1,28 +1,27 @@
 import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { formValueSelector } from 'redux-form';
-import { isEqual } from 'lodash';
+import isEqual from 'lodash/isEqual';
 
-import ccsCredentialsSelector from '../credentialsSelector';
+import { useFormState } from '~/components/clusters/wizards/hooks';
+import { FieldId } from '~/components/clusters/wizards/osd/constants';
+import {
+  vpcInquiryRequestSelector,
+  vpcsSelector,
+} from '~/components/clusters/CreateOSDPage/CreateOSDWizard/VPCScreen/v1VpcSelectors';
 import { clearListVpcs, getAWSCloudProviderVPCs } from '../ccsInquiriesActions';
-
-const valueSelector = formValueSelector('CreateCluster');
 
 export const isSubnetMatchingPrivacy = (subnet, privacy) =>
   !privacy || (privacy === 'public' && subnet.public) || (privacy === 'private' && !subnet.public);
 
-export const isVPCInquiryValid = (state) => {
-  const { vpcs } = state.ccsInquiries;
+export const lastVpcRequestIsInEffect = (vpcs, newRequest) => {
   if (!vpcs.fulfilled) {
     return false;
   }
-  const cloudProviderID = valueSelector(state, 'cloud_provider');
-  const credentials = ccsCredentialsSelector(cloudProviderID, state);
-  const region = valueSelector(state, 'region');
+
   return (
-    vpcs.cloudProvider === cloudProviderID &&
-    isEqual(vpcs.credentials, credentials) &&
-    vpcs.region === region
+    vpcs.cloudProvider === newRequest.cloudProviderID &&
+    isEqual(vpcs.credentials, newRequest.credentials) &&
+    vpcs.region === newRequest.region
   );
 };
 
@@ -30,8 +29,7 @@ export const vpcHasPrivateSubnets = (vpc) =>
   (vpc.aws_subnets || []).some((subnet) => isSubnetMatchingPrivacy(subnet, 'private'));
 
 /**
- * Returns a modified copy of the VPC list where:
- * - The red_hat_managed: true are filtered out for hypershift
+ * Returns only the VPCs that are not managed by Red Hat
 
  * @param vpcs list of VPC items
  * @returns {*} copy of the VPC list
@@ -40,30 +38,58 @@ export const filterOutRedHatManagedVPCs = (vpcs) =>
   vpcs.filter((vpcItem) => !vpcItem.red_hat_managed);
 
 /**
+ * Generates the request parameters to obtain the customer's VPC.
+ * Valid only for Formik Wizard.
+ * If invoked from Redux-form, it will throw an error.
+ *
+ * @returns {object} request params for the VPCs
+ */
+const useFormikVPCRequest = () => {
+  const { values } = useFormState();
+  return {
+    region: values[FieldId.Region],
+    cloudProviderID: values[FieldId.CloudProvider],
+    credentials: {
+      account_id: values[FieldId.AccountId],
+      access_key_id: values[FieldId.AccessKeyId],
+      secret_access_key: values[FieldId.SecretAccessKey],
+    },
+  };
+};
+
+/**
+ * Generates the request parameters to obtain the customer's VPC.
+ * Valid only for Redux-form Wizard.
+ *
+ * @returns {object} request params for the VPCs
+ */
+const useReduxVPCRequest = () => useSelector(vpcInquiryRequestSelector);
+
+/**
  * React hook fetching VPCs on mount and when dependencies change.
- * Request args extracted from redux-form state.
- * Does nothing if GCP selected.
+ * - Works for either Redux-form or Formik clusters
+ * - Does nothing if GCP selected.
+ * @param isOSD Determines the form type
  * @returns current vpcs state.
  */
-export const useAWSVPCInquiry = () => {
+export const useAWSVPCInquiry = (isOSD) => {
   const dispatch = useDispatch();
-  const cloudProviderID = useSelector((state) => valueSelector(state, 'cloud_provider'));
-  const credentials = useSelector(
-    (state) => ccsCredentialsSelector(cloudProviderID, state),
-    isEqual, // TODO: memoize ccsCredentialsSelector itself?
-  );
-  const region = useSelector((state) => valueSelector(state, 'region'));
-  const vpcs = useSelector((state) => state.ccsInquiries.vpcs);
-  const { error: vpcsError } = vpcs;
+  const vpcs = useSelector(vpcsSelector);
 
-  const hasLatestVpcs = useSelector(isVPCInquiryValid);
+  // We must fetch the data from the form state, either the Redux-Form or Formik state.
+  // Formik's "useFormState" will crash when invoked from the Redux-Form wizard
+  // eslint-disable-next-line react-hooks/rules-of-hooks
+  const requestParams = isOSD ? useFormikVPCRequest() : useReduxVPCRequest();
+  const hasLatestVpcs = lastVpcRequestIsInEffect(vpcs, requestParams);
+
+  const { region, cloudProviderID, credentials } = requestParams;
 
   useEffect(() => {
     // The action works similarly for AWS and GCP,
     // but current GCP components don't need it, they fetch the data themselves.
     if (cloudProviderID === 'aws' && !hasLatestVpcs) {
       // Clear stale error state before re-fetching VPCs
-      if (vpcsError) {
+      if (vpcs.error) {
         dispatch(clearListVpcs());
       }
 
@@ -75,8 +101,8 @@ export const useAWSVPCInquiry = () => {
         }),
       );
     }
+    // Adding "credentials" will trigger more than 1 request when the component first receives its data
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [cloudProviderID, credentials, region, hasLatestVpcs]);
-
-  return vpcs;
+  }, [cloudProviderID, region, hasLatestVpcs]);
+  return { vpcs, requestParams };
 };
