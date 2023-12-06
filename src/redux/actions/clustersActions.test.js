@@ -71,6 +71,7 @@ describe('clustersActions', () => {
     it('dispatches successfully', () => {
       const mockGetState = jest.fn().mockImplementation(() => ({
         features: {},
+        clusters: { techPreview: {} },
       }));
       clustersActions.fetchClusters({})(mockDispatch, mockGetState);
       expect(mockDispatch).toBeCalledWith({

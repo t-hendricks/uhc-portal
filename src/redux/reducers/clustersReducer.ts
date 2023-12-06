@@ -29,12 +29,14 @@ import { clustersConstants } from '../constants';
 import type { PromiseActionType, PromiseReducerState } from '../types';
 import type { ClusterAction } from '../actions/clustersActions';
 import type { UpgradeGateAction } from '../actions/upgradeGateActions';
+import type { TechPreviewActions } from '../actions/techPreviewActions';
 import type {
   Cluster,
   ClusterStatus,
   VersionGate,
   Version,
   InflightCheck,
+  ProductTechnologyPreview,
 } from '../../types/clusters_mgmt.v1';
 import type { ErrorState, AugmentedCluster, ClusterWithPermissions } from '../../types/types';
 
@@ -83,6 +85,10 @@ type State = {
   };
   upgradedCluster: PromiseReducerState & {
     cluster: Cluster;
+  };
+
+  techPreview: {
+    [product: string]: { [type: string]: PromiseReducerState & ProductTechnologyPreview };
   };
 };
 
@@ -163,6 +169,7 @@ const initialState: State = {
     ...baseState,
     cluster: emptyCluster,
   },
+  techPreview: {},
 };
 
 const filterAndSortClusterVersions = (versions: Version[]) => {
@@ -180,7 +187,7 @@ const filterAndSortClusterVersions = (versions: Version[]) => {
 
 const clustersReducer = (
   state = initialState,
-  action: PromiseActionType<ClusterAction | UpgradeGateAction>,
+  action: PromiseActionType<ClusterAction | UpgradeGateAction | TechPreviewActions>,
 ): State =>
   // eslint-disable-next-line consistent-return
   produce(state, (draft) => {
@@ -564,6 +571,41 @@ const clustersReducer = (
             : [],
         };
         break;
+
+      // GET_TECH_VERSIONS
+      case REJECTED_ACTION(clustersConstants.GET_TECH_PREVIEW): {
+        if (!draft.techPreview[action.payload.product]) {
+          draft.techPreview[action.payload.product] = {};
+        }
+
+        draft.techPreview[action.payload.product][action.payload.type] = {
+          ...baseState,
+          error: true,
+        };
+        break;
+      }
+
+      case PENDING_ACTION(clustersConstants.GET_TECH_PREVIEW):
+        if (!draft.techPreview[action.payload.product]) {
+          draft.techPreview[action.payload.product] = {};
+        }
+        draft.techPreview[action.payload.product][action.payload.type] = {
+          ...baseState,
+          pending: true,
+        };
+        break;
+
+      case FULFILLED_ACTION(clustersConstants.GET_TECH_PREVIEW):
+        if (!draft.techPreview[action.payload.product]) {
+          draft.techPreview[action.payload.product] = {};
+        }
+        draft.techPreview[action.payload.product][action.payload.type] = {
+          ...baseState,
+          fulfilled: true,
+          ...action.payload.data,
+        };
+        break;
+
       case clustersConstants.CLEAR_CLUSTER_VERSIONS_RESPONSE:
         draft.clusterVersions = {
           ...initialState.clusterVersions,
