@@ -4,9 +4,13 @@ import isEmpty from 'lodash/isEmpty';
 
 import { MachinePool } from '~/types/clusters_mgmt.v1/models/MachinePool';
 import { Cluster, SecurityGroup } from '~/types/clusters_mgmt.v1';
+import { truncateTextWithEllipsis } from '~/common/helpers';
 import { useAWSVPCFromCluster } from '~/components/clusters/CreateOSDPage/CreateOSDWizard/NetworkScreen/useAWSVPCFromCluster';
+
 import { hasSubnets, getSubnetIds } from '../machinePoolsHelper';
 import MachinePoolAutoScalingDetail from '../MachinePoolAutoscalingDetail';
+
+const LABEL_MAX_LENGTH = 50;
 
 const taintsRenderer = (taints: MachinePool['taints']) =>
   (taints || []).map((taint) => `${taint.key} = ${taint.value}:${taint.effect}`);
@@ -26,16 +30,23 @@ const securityGroupsRenderer = (securityGroupIds: string[], securityGroups: Secu
 const MachinePoolItemList = ({ title, items }: { title: string; items: string[] }) => (
   <>
     <Title headingLevel="h4">{title}</Title>
-    {items.map((item, index) => (
-      <Label
-        color="blue"
-        // eslint-disable-next-line react/no-array-index-key
-        key={`${title}-${index}`}
-        className="pf-c-label--break-word pf-u-m-sm pf-u-ml-0"
-      >
-        {item}
-      </Label>
-    ))}
+    {items.map((item, index) => {
+      const isTruncated = item.length > LABEL_MAX_LENGTH;
+      const displayName = isTruncated ? truncateTextWithEllipsis(item, LABEL_MAX_LENGTH) : item;
+
+      return (
+        <Label
+          color="blue"
+          // eslint-disable-next-line react/no-array-index-key
+          key={`${title}-${index}`}
+          className="pf-c-label--break-word pf-u-m-sm pf-u-ml-0"
+          title={isTruncated ? item : ''}
+        >
+          {/* Use HTML tooltip, PF's won't show because the parent tab is initially hidden */}
+          {displayName}
+        </Label>
+      );
+    })}
   </>
 );
 
@@ -48,9 +59,8 @@ const MachinePoolExpandedRow = ({
   isMultiZoneCluster: boolean;
   machinePool: MachinePool;
 }) => {
-  const spotMarketOptions = machinePool?.aws?.spot_market_options;
-
   const { clusterVpc } = useAWSVPCFromCluster(cluster);
+  const spotMarketOptions = machinePool?.aws?.spot_market_options;
   const securityGroupIds = machinePool.aws?.additional_security_group_ids || [];
 
   return (

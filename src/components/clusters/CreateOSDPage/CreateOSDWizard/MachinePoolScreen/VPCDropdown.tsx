@@ -10,9 +10,9 @@ import {
 } from '@patternfly/react-core';
 import ErrorBox from '~/components/common/ErrorBox';
 import FuzzySelect, { FuzzyEntryType } from '~/components/common/FuzzySelect';
+import { VPCResponse } from '~/components/clusters/CreateOSDPage/CreateOSDWizard/ccsInquiriesReducer';
 import { CloudVPC } from '~/types/clusters_mgmt.v1';
-import { formValueSelector } from 'redux-form';
-import { useGlobalState } from '~/redux/hooks';
+import { AWSCredentials, ErrorState } from '~/types/types';
 import {
   vpcHasPrivateSubnets,
   filterOutRedHatManagedVPCs,
@@ -33,6 +33,12 @@ interface VCPDropdownProps {
   };
   showRefresh?: boolean;
   isHypershift?: boolean;
+  isOSD?: boolean;
+}
+
+interface UseAWSVPCInquiry {
+  vpcs: VPCResponse & { pending: boolean; fulfilled: boolean; error: boolean };
+  requestParams: { region: string; cloudProviderID: string; credentials: AWSCredentials };
 }
 
 const sortVPCOptions = (vpcA: FuzzyEntryType, vpcB: FuzzyEntryType) => {
@@ -56,16 +62,16 @@ const VPCDropdown = ({
   meta: { error, touched },
   showRefresh = false,
   isHypershift = false,
+  isOSD = false,
 }: VCPDropdownProps) => {
   const dispatch = useDispatch();
   const [isOpen, setIsOpen] = React.useState<boolean>(false);
-  const regionID = useGlobalState((state) => valueSelector(state, 'region'));
 
-  const vpcResponse = useAWSVPCInquiry();
-  const originalVPCs = React.useMemo<CloudVPC[]>(() => {
-    const vpcs = vpcResponse.data?.items || [];
-    return isHypershift ? filterOutRedHatManagedVPCs(vpcs) : vpcs;
-  }, [vpcResponse.data?.items, isHypershift]);
+  const { vpcs: vpcResponse, requestParams } = useAWSVPCInquiry(isOSD) as UseAWSVPCInquiry;
+  const originalVPCs = React.useMemo<CloudVPC[]>(
+    () => filterOutRedHatManagedVPCs(vpcResponse.data?.items || []),
+    [vpcResponse.data?.items],
+  );
 
   const onToggle = () => {
     setIsOpen(!isOpen);
@@ -125,12 +131,13 @@ const VPCDropdown = ({
   }, [selectedVPC, originalVPCs]);
 
   const refreshVPCs = () => {
-    if (vpcResponse.cloudProvider === 'aws') {
+    if (requestParams.cloudProviderID === 'aws') {
       inputProps.onChange({ id: '', name: '' });
       dispatch(
         getAWSCloudProviderVPCs({
-          awsCredentials: vpcResponse.credentials,
-          region: vpcResponse.region,
+          region: requestParams.region,
+          awsCredentials: requestParams.credentials,
+          options: isHypershift ? undefined : { includeSecurityGroups: true },
         }),
       );
     }
@@ -139,7 +146,9 @@ const VPCDropdown = ({
   return (
     <>
       <FormGroup
-        label={`Specify a VPC to install your machine pools into in your selected region: ${regionID}`}
+        label={`Select a VPC to install your ${
+          isHypershift ? 'machine pools' : 'cluster'
+        } into your selected region: ${requestParams.region || ''}`}
         validated={touched && error ? 'error' : 'default'}
         isRequired
       >
@@ -178,7 +187,9 @@ const VPCDropdown = ({
               </Tooltip>
             </FlexItem>
           )}
-          {vpcResponse.error && <ErrorBox message="Error retrieving VPCs" response={vpcResponse} />}
+          {vpcResponse.error && (
+            <ErrorBox message="Error retrieving VPCs" response={vpcResponse as ErrorState} />
+          )}
         </Flex>
       </FormGroup>
     </>
@@ -186,5 +197,3 @@ const VPCDropdown = ({
 };
 
 export default VPCDropdown;
-
-const valueSelector = formValueSelector('CreateCluster');

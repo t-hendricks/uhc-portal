@@ -1,6 +1,7 @@
+import { getDefaultSecurityGroupsSettings } from '~/common/securityGroupsHelpers';
+import { isRestrictedEnv } from '~/restrictedEnv';
 import { defaultWorkerNodeVolumeSizeGiB } from '~/components/clusters/wizards/rosa/constants';
 import { getDefaultClusterAutoScaling } from '~/components/clusters/CreateOSDPage/clusterAutoScalingValues';
-import { isRestrictedEnv } from '~/restrictedEnv';
 import { normalizedProducts, billingModels } from '../../../common/subscriptionTypes';
 import { IMDSType } from '../wizards/common';
 
@@ -81,6 +82,7 @@ const createOSDInitialValues = ({
           shared_vpc: { is_allowed: false },
         }
       : {
+          securityGroups: getDefaultSecurityGroupsSettings(),
           enable_user_workload_monitoring: 'true',
           worker_volume_size_gib: defaultWorkerNodeVolumeSizeGiB,
           shared_vpc: {

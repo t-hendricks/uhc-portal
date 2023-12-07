@@ -3,6 +3,7 @@ import helpers, {
   parseReduxFormTaints,
   goZeroTime2Null,
   strToKeyValueObject,
+  truncateTextWithEllipsis,
 } from '../helpers';
 
 describe('nestedIsEmpty()', () => {
@@ -128,5 +129,30 @@ describe('strToKeyValueObject', () => {
       foo: '',
       foo2: undefined,
     });
+  });
+
+  describe('truncateTextWithEllipsis', () => {
+    it.each([
+      ['original text is unset', '', 22],
+      ['maxLength is unset', 'this-text-will-not-be-cut', 0],
+      [
+        'original text is shorter than maxLength',
+        'this-text-will-not-be-cut',
+        'this-text-will-not-be-cut'.length + 1,
+      ],
+    ])('returns the original text when %s', (testCase, text, maxLength) =>
+      expect(truncateTextWithEllipsis(text, maxLength)).toBe(text),
+    );
+
+    it.each([
+      ['this-text-will-be-cut', 12, 'this... l-be-cut'],
+      [
+        'very long text, it is longer than forty five characters and it will be truncated down!',
+        45,
+        'very long text,... and it will be truncated down!',
+      ],
+    ])('truncates the original text correctly', (text, maxLength, truncatedText) =>
+      expect(truncateTextWithEllipsis(text, maxLength)).toBe(truncatedText),
+    );
   });
 });

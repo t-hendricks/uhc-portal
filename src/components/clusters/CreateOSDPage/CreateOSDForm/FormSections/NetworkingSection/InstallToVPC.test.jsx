@@ -3,6 +3,7 @@ import { render, screen } from '~/testUtils';
 import React from 'react';
 import InstallToVPC from '~/components/clusters/CreateOSDPage/CreateOSDForm/FormSections/NetworkingSection/InstallToVPC';
 import links from '~/common/installLinks.mjs';
+import { useGlobalState } from '~/redux/hooks';
 
 const defaultProps = {
   selectedRegion: 'us-east-1',
@@ -11,9 +12,23 @@ const defaultProps = {
   cloudProviderID: 'aws',
   isSharedVpcSelected: false,
   hostedZoneDomainName: 'cluster-name.base-domain-name.devshift.org',
+  selectedVPC: { id: '', name: '' },
 };
 
+jest.mock('~/redux/hooks', () => ({
+  useGlobalState: jest.fn(),
+}));
+
 describe('<InstallToVPC> (AWS)', () => {
+  beforeEach(() => {
+    useGlobalState.mockReturnValue({
+      applyControlPlaneToAll: false,
+      controlPlane: [],
+      infra: [],
+      worker: [],
+    });
+  });
+
   it('should have a Shared VPC section', () => {
     const ConnectedReviewClusterScreen = wizardConnector(InstallToVPC);
     render(<ConnectedReviewClusterScreen {...defaultProps} />);

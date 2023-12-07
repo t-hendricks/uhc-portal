@@ -10,7 +10,6 @@ import {
 import {
   isExactMajorMinor,
   isMajorMinorEqualOrGreater,
-  isMajorMinorPatchEqualOrGreater,
   splitVersion,
 } from '~/common/versionHelpers';
 
@@ -74,8 +73,12 @@ export const canSelectImds = (clusterVersionRawId: string): boolean => {
   return major > 4 || (major === 4 && minor >= 11);
 };
 
+export const maxAdditionalSecurityGroups = 5;
+
 export const defaultWorkerNodeVolumeSizeGiB = 300;
+
 export const workerNodeVolumeSizeMinGiB = 128;
+
 /**
  * Returns ROSA/AWS OSD max worker node volume size, varies per cluster version.
  * In GiB.
@@ -91,9 +94,6 @@ export const canConfigureDayOneManagedIngress = (clusterVersionRawId: string): b
 /* When changing, consider updating the COnfiguration and NetworkScreen components as well (they contain 4.13-specific logic */
 export const canConfigureDayTwoManagedIngress = (clusterVersionRawId: string): boolean =>
   isMajorMinorEqualOrGreater(clusterVersionRawId, 4, 13);
-
-export const canConfigureSharedVpc = (clusterVersionRawId: string): boolean =>
-  isMajorMinorPatchEqualOrGreater(clusterVersionRawId, 4, 13, 9);
 
 export const canConfigureLoadBalancer = (
   clusterVersionRawId: string,

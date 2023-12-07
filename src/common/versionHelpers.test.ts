@@ -1,7 +1,6 @@
 import {
   isExactMajorMinor,
   isMajorMinorEqualOrGreater,
-  isMajorMinorPatchEqualOrGreater,
   splitVersion,
   versionFormatter,
 } from './versionHelpers';
@@ -73,27 +72,5 @@ describe('version comparision', () => {
     expect(isMajorMinorEqualOrGreater('4.12.1', 4, 13)).toBeFalsy();
     expect(isMajorMinorEqualOrGreater('4.12.0', 5, 12)).toBeFalsy();
     expect(isMajorMinorEqualOrGreater('hello', 4, 12)).toBeFalsy();
-  });
-
-  it('works for isMajorMinorPatchEqualOrGreater', () => {
-    expect(isMajorMinorPatchEqualOrGreater('5', 4, 12, 1)).toBeTruthy();
-    expect(isMajorMinorPatchEqualOrGreater('5', 4, 12, 0)).toBeTruthy();
-    expect(isMajorMinorPatchEqualOrGreater('5', 4, 0, 0)).toBeTruthy();
-    expect(isMajorMinorPatchEqualOrGreater('3', 4, 0, 1)).toBeFalsy();
-    expect(isMajorMinorPatchEqualOrGreater('3', 4, 2, 0)).toBeFalsy();
-    expect(isMajorMinorPatchEqualOrGreater('4.12', 4, 12, 1)).toBeFalsy();
-    expect(isMajorMinorPatchEqualOrGreater('hello', 4, 12, 1)).toBeFalsy();
-
-    expect(isMajorMinorPatchEqualOrGreater('4.12.2-0', 4, 11, 1)).toBeTruthy();
-    expect(isMajorMinorPatchEqualOrGreater('4.12.2-0', 4, 11, 2)).toBeTruthy();
-    expect(isMajorMinorPatchEqualOrGreater('4.12.2-0', 4, 11, 3)).toBeTruthy();
-
-    expect(isMajorMinorPatchEqualOrGreater('4.12.2-0', 4, 12, 1)).toBeTruthy();
-    expect(isMajorMinorPatchEqualOrGreater('4.12.2-0', 4, 12, 2)).toBeTruthy();
-    expect(isMajorMinorPatchEqualOrGreater('4.12.2-0', 4, 12, 3)).toBeFalsy();
-
-    expect(isMajorMinorPatchEqualOrGreater('4.12.2-0', 4, 13, 1)).toBeFalsy();
-    expect(isMajorMinorPatchEqualOrGreater('4.12.2-0', 4, 13, 2)).toBeFalsy();
-    expect(isMajorMinorPatchEqualOrGreater('4.12.2-0', 4, 13, 3)).toBeFalsy();
   });
 });

@@ -5,33 +5,33 @@ import { SECURITY_GROUPS_FEATURE } from '~/redux/constants/featureConstants';
 
 import { Cluster } from '~/types/clusters_mgmt.v1';
 import WithTooltip from '~/components/common/WithTooltip';
-import { isCompatibleFeature, SupportedFeatures } from '~/common/featureCompatibility';
+import { isCompatibleFeature, SupportedFeature } from '~/common/featureCompatibility';
 import { useFeatureGate } from '~/hooks/useFeatureGate';
-import EditSecurityGroups from './EditSecurityGroups';
+import EditSecurityGroupsField from './EditSecurityGroupsField';
 
 export interface EditSecurityGroupsSectionProps {
   cluster: Cluster;
-  isEdit: boolean;
+  isReadOnly: boolean;
 }
 
-const EditSecurityGroupsSection = ({ cluster, isEdit }: EditSecurityGroupsSectionProps) => {
+const EditSecurityGroupsSection = ({ cluster, isReadOnly }: EditSecurityGroupsSectionProps) => {
   const hasFeatureGate = useFeatureGate(SECURITY_GROUPS_FEATURE);
   const showSecurityGroupSection =
     hasFeatureGate &&
-    isCompatibleFeature(SupportedFeatures.SECURITY_GROUPS, cluster, { day2: true });
+    isCompatibleFeature(SupportedFeature.SECURITY_GROUPS, cluster, { day2: true });
 
   return showSecurityGroupSection ? (
     <ExpandableSection
       toggleContent={
         <WithTooltip
-          showTooltip={isEdit}
+          showTooltip={isReadOnly}
           content="This option cannot be edited from its original setting selection."
         >
           <span>Security groups</span>
         </WithTooltip>
       }
     >
-      <EditSecurityGroups cluster={cluster} isEdit={isEdit} />
+      <EditSecurityGroupsField cluster={cluster} isReadOnly={isReadOnly} />
     </ExpandableSection>
   ) : null;
 };

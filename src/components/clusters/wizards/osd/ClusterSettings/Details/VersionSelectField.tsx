@@ -18,9 +18,15 @@ interface VersionSelectFieldProps {
   label: string;
   name: string;
   isDisabled?: boolean;
+  onChange: (version: Version) => void;
 }
 
-export const VersionSelectField = ({ name, label, isDisabled }: VersionSelectFieldProps) => {
+export const VersionSelectField = ({
+  name,
+  label,
+  isDisabled,
+  onChange,
+}: VersionSelectFieldProps) => {
   const dispatch = useDispatch();
   const [input, { touched, error }] = useField(name);
   const { clusterVersions: getInstallableVersionsResponse } = useGlobalState(
@@ -72,14 +78,15 @@ export const VersionSelectField = ({ name, label, isDisabled }: VersionSelectFie
   };
 
   const onSelect = (
-    _event: React.ChangeEvent<Element> | React.MouseEvent<Element, MouseEvent>,
+    _event: React.ChangeEvent | React.MouseEvent<Element, MouseEvent>,
     value: string | SelectOptionObject,
   ) => {
     setIsOpen(false);
-    setFieldValue(
-      name,
-      versions.find((version) => version.raw_id === value),
-    );
+    const selectedVersion = versions.find((version) => version.raw_id === value);
+    setFieldValue(name, selectedVersion);
+    if (selectedVersion) {
+      onChange(selectedVersion);
+    }
   };
 
   const getSelection = () => {

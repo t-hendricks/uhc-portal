@@ -20,6 +20,7 @@ import { ocmResourceType, trackEvents } from '~/common/analytics';
 import { isRestrictedEnv } from '~/restrictedEnv';
 import { canConfigureDayOneManagedIngress } from '~/components/clusters/wizards/rosa/constants';
 import { isExactMajorMinor } from '~/common/versionHelpers';
+import { getDefaultSecurityGroupsSettings } from '~/common/securityGroupsHelpers';
 
 import { ReduxCheckbox } from '../../../../common/ReduxFormComponents';
 import RadioButtons from '../../../../common/ReduxFormComponents/RadioButtons';
@@ -89,6 +90,11 @@ function NetworkScreen(props) {
 
     if (!hasSubnets && noAvailZones) {
       change('install_to_vpc', false);
+
+      // Clear also associated security groups when the wizard has this option
+      if (formValues.securityGroups) {
+        change('securityGroups', getDefaultSecurityGroupsSettings());
+      }
     }
   };
 
@@ -135,14 +141,19 @@ function NetworkScreen(props) {
 
   const onInstallIntoVPCchange = (checked) => {
     change('install_to_vpc', checked);
-    if (!checked && formValues.shared_vpc.is_selected) {
-      change('shared_vpc', {
-        is_allowed: formValues.shared_vpc.is_allowed,
-        is_selected: false,
-        base_dns_domain: '',
-        hosted_zone_id: '',
-        hosted_zone_role_arn: '',
-      });
+    if (!checked) {
+      if (formValues.shared_vpc.is_selected) {
+        change('shared_vpc', {
+          is_allowed: formValues.shared_vpc.is_allowed,
+          is_selected: false,
+          base_dns_domain: '',
+          hosted_zone_id: '',
+          hosted_zone_role_arn: '',
+        });
+      }
+      if (formValues.securityGroups) {
+        change('securityGroups', getDefaultSecurityGroupsSettings());
+      }
     }
     trackCheckedState(trackEvents.InstallIntoVPC, checked);
   };

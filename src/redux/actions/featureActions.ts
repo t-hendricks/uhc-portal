@@ -12,6 +12,7 @@ import {
   HCP_AWS_BILLING_REQUIRED,
   HCP_USE_UNMANAGED,
   SECURITY_GROUPS_FEATURE,
+  SECURITY_GROUPS_FEATURE_DAY1,
   HCP_USE_NODE_UPGRADE_POLICIES,
 } from '../constants/featureConstants';
 import authorizationsService from '../../services/authorizationsService';
@@ -41,7 +42,8 @@ export const features = [
   getSimpleUnleashFeature('osd-google-marketplace', OSD_GOOGLE_MARKETPLACE_FEATURE),
   getSimpleUnleashFeature('osd-gcp-shared-vpc', OSD_GCP_SHARED_VPC_FEATURE),
   getSimpleUnleashFeature('network-validator-ondemand', NETWORK_VALIDATOR_ONDEMAND_FEATURE),
-  getSimpleUnleashFeature('security-groups-feature', SECURITY_GROUPS_FEATURE),
+  getSimpleUnleashFeature('security-groups-feature-day1', SECURITY_GROUPS_FEATURE_DAY1), // Handles only Day1
+  getSimpleUnleashFeature('security-groups-feature', SECURITY_GROUPS_FEATURE), // Handles only Day2
   {
     name: ASSISTED_INSTALLER_FEATURE,
     action: () =>

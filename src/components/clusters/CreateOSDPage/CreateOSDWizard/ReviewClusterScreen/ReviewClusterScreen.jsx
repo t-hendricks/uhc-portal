@@ -9,6 +9,7 @@ import {
   HCP_AWS_BILLING_SHOW,
 } from '~/redux/constants/featureConstants';
 import { normalizedProducts } from '~/common/subscriptionTypes';
+import { hasSelectedSecurityGroups } from '~/common/securityGroupsHelpers';
 import { getUserRoleForSelectedAWSAccount } from '~/components/clusters/CreateROSAPage/CreateROSAWizard/AccountsRolesScreen/AccountsRolesScreen';
 import {
   stepId,
@@ -53,6 +54,8 @@ const ReviewClusterScreen = ({
   const showVPCCheckbox = isROSA || isByoc;
   const hasAWSVPCSettings = showVPCCheckbox && formValues.install_to_vpc && isAWS;
   const clusterVersionRawId = formValues.cluster_version.raw_id;
+
+  const hasSecurityGroups = isByoc && hasSelectedSecurityGroups(formValues.securityGroups);
 
   const clusterSettingsFields = [
     ...(!isROSA ? ['cloud_provider'] : []),
@@ -254,6 +257,13 @@ const ReviewClusterScreen = ({
           !isHypershiftSelected &&
           ReviewItem({
             name: 'aws_standalone_vpc',
+            formValues,
+          })}
+        {hasAWSVPCSettings &&
+          !isHypershiftSelected &&
+          hasSecurityGroups &&
+          ReviewItem({
+            name: 'securityGroups',
             formValues,
           })}
         {formValues.shared_vpc.is_selected &&
