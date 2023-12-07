@@ -58,6 +58,7 @@ const constants = {
     'To provide support, Red Hat Site Reliability Engineering (SRE) connects to the cluster using only AWS PrivateLink endpoints instead of public endpoints.  This option cannot be changed after a cluster is created.',
   clusterProxyHint:
     'Enable an HTTP or HTTPS proxy to deny direct access to the internet from your cluster.',
+  enableSecureBootHint: `Secure Boot enables the use of Shielded VMs in the Google Cloud Platform. Shielded VMs help protect enterprise workloads from threats like remote attacks, privilege escalation, and malicious insiders.`,
 };
 
 const billingModelConstants = {

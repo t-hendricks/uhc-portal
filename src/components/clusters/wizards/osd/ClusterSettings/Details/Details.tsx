@@ -53,6 +53,8 @@ import {
 } from '~/components/clusters/wizards/common/utils/quotas';
 import { FieldId } from '~/components/clusters/wizards/osd/constants';
 import { billingModels } from '~/common/subscriptionTypes';
+import { GCP_SECURE_BOOT_UI } from '~/redux/constants/featureConstants';
+import { useFeatureGate } from '~/hooks/useFeatureGate';
 import { VersionSelectField } from './VersionSelectField';
 import CloudRegionSelectField from './CloudRegionSelectField';
 import { CustomerManagedEncryption } from './CustomerManagedEncryption';
@@ -202,6 +204,8 @@ export const Details = () => {
     setIsExpanded(!isExpanded);
   };
 
+  const isSecureBootFeatureEnabled = useFeatureGate(GCP_SECURE_BOOT_UI);
+
   return (
     <Form>
       <Grid hasGutter md={6}>
@@ -315,7 +319,23 @@ export const Details = () => {
               </GridItem>
             </>
           )}
-
+          {isGCP && isSecureBootFeatureEnabled && (
+            <GridItem>
+              <FormGroup label="Shielded VM" fieldId={FieldId.SecureBoot}>
+                <Split hasGutter className="pf-u-mb-0">
+                  <SplitItem>
+                    <CheckboxField
+                      name={FieldId.SecureBoot}
+                      label="Enable Secure Boot support for Shielded VMs"
+                    />
+                  </SplitItem>
+                  <SplitItem>
+                    <PopoverHint hint={constants.enableSecureBootHint} />
+                  </SplitItem>
+                </Split>
+              </FormGroup>
+            </GridItem>
+          )}
           <GridItem>
             <Title headingLevel="h4">Monitoring</Title>
           </GridItem>
