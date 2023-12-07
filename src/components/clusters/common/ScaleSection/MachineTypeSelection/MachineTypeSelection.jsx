@@ -19,7 +19,7 @@ import { normalizedProducts, billingModels } from '~/common/subscriptionTypes';
 import { DEFAULT_FLAVOUR_ID } from '~/redux/actions/flavourActions';
 import { constants } from '~/components/clusters/common/CreateOSDFormConstants';
 import sortMachineTypes, { machineCategories } from './sortMachineTypes';
-import { TreeViewSelect } from './TreeViewSelect';
+import { TreeViewSelect, TreeViewSelectMenuItem } from './TreeViewSelect';
 
 // Default selection scenarios:
 // - First time, default is available => select it.
@@ -50,29 +50,20 @@ const MachineTypeSelection = ({
   quota,
   organization,
   menuAppendTo,
-  ...extraProps
 }) => {
   const {
     input,
     meta: { error, touched },
   } = machineType;
   const { input: forceChoiceInput } = machineTypeForceChoice;
-
   /** Checks whether required data arrived. */
   const isDataReady = React.useCallback(
     () =>
       organization.fulfilled &&
       machineTypes.fulfilled &&
-      machineTypesByRegion.fulfilled &&
       // Tolerate flavours error gracefully.
       (flavours.fulfilled || flavours.error),
-    [
-      flavours.error,
-      flavours.fulfilled,
-      machineTypes.fulfilled,
-      machineTypesByRegion.fulfilled,
-      organization.fulfilled,
-    ],
+    [flavours.error, flavours.fulfilled, machineTypes.fulfilled, organization.fulfilled],
   );
 
   React.useEffect(() => {
@@ -120,6 +111,13 @@ const MachineTypeSelection = ({
   const [activeMachineTypes, setActiveMachineTypes] = React.useState(machineTypes);
   const [isMachineTypeFilteredByRegion, setIsMachineTypeFilteredByRegion] = React.useState(true);
 
+  React.useEffect(() => {
+    if (machineTypesByRegion.fulfilled) {
+      setIsMachineTypeFilteredByRegion(true);
+    } else {
+      setIsMachineTypeFilteredByRegion(false);
+    }
+  }, [machineTypesByRegion.fulfilled, machineTypesByRegion.error, machineTypes]);
   /**
    * Checks whether type can be offered, based on quota and ccs_only.
    * Returns false if necessary data not fulfilled yet.
@@ -228,16 +226,17 @@ const MachineTypeSelection = ({
         if (categoryMachines.length > 0) {
           return {
             name: categoryLabel,
-            searchLabel: categoryLabel,
+            category: categoryLabel,
             children: categoryMachines.map((machineType) => ({
               name: (
-                <DropdownItem description={machineTypeDescriptionLabel(machineType)}>
-                  {machineTypeLabel(machineType)}
-                </DropdownItem>
+                <TreeViewSelectMenuItem
+                  name={machineTypeLabel(machineType)}
+                  description={machineTypeDescriptionLabel(machineType)}
+                />
               ),
-              searchLabel: `${machineTypeLabel(machineType)} - ${machineTypeDescriptionLabel(
-                machineType,
-              )} `,
+              category: categoryLabel,
+              nameLabel: machineTypeLabel(machineType),
+              descriptionLabel: machineTypeDescriptionLabel(machineType),
               id: machineType.id,
             })),
           };
@@ -246,7 +245,7 @@ const MachineTypeSelection = ({
       })
       .filter(Boolean);
     return selectGroups;
-  }, [filteredMachineTypes, machineType.id]);
+  }, [filteredMachineTypes]);
 
   // In the dropdown we put the machine type id in separate description row,
   // but the Select toggle doesn't support that, so combine both into one label.
@@ -277,16 +276,20 @@ const MachineTypeSelection = ({
         labelIcon={<PopoverHint hint={constants.computeNodeInstanceTypeHint} />}
       >
         <TreeViewSelect
-          machineTypeMap={machineTypeMap}
+          treeViewSelectionMap={machineTypeMap}
           inModal={inModal}
           menuAppendTo={menuAppendTo}
           selected={selection}
           setSelected={(event, selection) => {
             changeHandler(event, selection.id);
           }}
-          isMachineTypeFilteredByRegion={isMachineTypeFilteredByRegion}
-          setIsMachineTypeFilteredByRegion={setIsMachineTypeFilteredByRegion}
+          treeViewSwitchActive={isMachineTypeFilteredByRegion}
+          setTreeViewSwitchActive={setIsMachineTypeFilteredByRegion}
           placeholder="Select instance type"
+          searchPlaceholder="Find an instance size"
+          includeFilterSwitch={machineTypesByRegion.fulfilled && !machineTypesByRegion.error}
+          switchLabelOn="Show compatible instances only"
+          switchLabelOff="Show compatible instances only"
         />
       </FormGroup>
     );
@@ -368,28 +371,29 @@ const inputMetaPropTypes = PropTypes.shape({
   meta: PropTypes.shape({
     error: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
     touched: PropTypes.bool,
-  }).isRequired,
+  }),
+  id: PropTypes.string,
+  ccs_only: PropTypes.bool,
+  generic_name: PropTypes.string,
 });
 
 MachineTypeSelection.propTypes = {
-  machine_type: inputMetaPropTypes.isRequired,
-  machine_type_force_choice: inputMetaPropTypes.isRequired,
+  machine_type: inputMetaPropTypes,
+  machine_type_force_choice: inputMetaPropTypes,
   getDefaultFlavour: PropTypes.func.isRequired,
   flavours: PropTypes.object.isRequired,
-  getMachineTypes: PropTypes.func.isRequired,
   machineTypes: PropTypes.object.isRequired,
   machineTypesByRegion: PropTypes.object.isRequired,
   isMultiAz: PropTypes.bool.isRequired,
   isBYOC: PropTypes.bool.isRequired,
   isMachinePool: PropTypes.bool.isRequired,
   inModal: PropTypes.bool,
-  cloudProviderID: PropTypes.string.isRequired,
+  cloudProviderID: PropTypes.string,
   product: PropTypes.oneOf(Object.keys(normalizedProducts)).isRequired,
   billingModel: PropTypes.oneOf(Object.values(billingModels)).isRequired,
   quota: PropTypes.object.isRequired,
   organization: PropTypes.object.isRequired,
   menuAppendTo: PropTypes.object,
-  // Plus extraprops passed by redux Field
 };
 
 export default MachineTypeSelection;
