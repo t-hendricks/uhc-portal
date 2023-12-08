@@ -337,6 +337,14 @@ export const createClusterRequest = ({ isWizard = true, cloudProviderID, product
       unit: 'B',
       value: parseFloat(formData.persistent_storage),
     };
+
+    if (actualCloudProviderID === 'gcp') {
+      clusterRequest.gcp = {
+        security: {
+          secure_boot: formData.secure_boot,
+        },
+      };
+    }
   }
 
   if (formData.hypershift) {
