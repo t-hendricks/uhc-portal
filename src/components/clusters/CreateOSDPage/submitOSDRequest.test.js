@@ -52,6 +52,7 @@ describe('createClusterRequest', () => {
       infra: [],
       worker: [],
     },
+    node_drain_grace_period: 60,
     // TODO: can finish ROSA wizard with machine_type not set?
   };
 
@@ -395,6 +396,24 @@ describe('createClusterRequest', () => {
         expect(request.hypershift.enabled).toBeTruthy();
         expect(request.billing_model).toEqual('marketplace-aws');
         expect(request.aws.subnet_ids).toEqual(['publicSubnet1ID', 'subnet1ID', 'subnet2ID']);
+      });
+
+      it('leaves out node_drain_grace_period if Hypershift', () => {
+        const data = {
+          ...rosaFormData,
+          hypershift: 'true',
+        };
+        const request = createClusterRequest({}, data);
+        expect(request.node_drain_grace_period).toBeUndefined();
+      });
+
+      it('includes node_drain_grace_period if rosa classic', () => {
+        const data = {
+          ...rosaFormData,
+          hypershift: 'false',
+        };
+        const request = createClusterRequest({}, data);
+        expect(request.node_drain_grace_period).toEqual({ unit: 'minutes', value: 60 });
       });
 
       describe('AWS Security Groups', () => {
