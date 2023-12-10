@@ -124,8 +124,8 @@ describe('clusterDetailsHelper', () => {
     it.each([
       [false, 'consoleurlvalue', ClusterState.READY, true, false, false],
       [true, 'consoleurlvalue', ClusterState.READY, true, false, true],
-      [true, '', ClusterState.READY, true, false, false],
-      [true, undefined, ClusterState.READY, true, false, false],
+      [true, '', ClusterState.READY, true, false, true],
+      [true, undefined, ClusterState.READY, true, false, true],
       [true, 'consoleurlvalue', undefined, true, false, true],
       [true, 'consoleurlvalue', undefined, false, false, false],
       [true, 'consoleurlvalue', ClusterState.READY, true, true, false],

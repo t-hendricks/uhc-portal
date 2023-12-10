@@ -38,7 +38,8 @@ const isArchivedSubscription = <E extends ClusterFromSubscription>(cluster: E): 
 
 /**
  *
- * @param cluster something extending ClusterFromSubscription since components are using either Cluster or ClusterFromSubscription
+ * @param cluster - something extending ClusterFromSubscription since components are using either Cluster or ClusterFromSubscription
+ * @param needsConsoleUrl - flag indicating if a console url must be present
  */
 const hasValidStatusForActions = <E extends ClusterFromSubscription>(
   cluster: E,
@@ -54,7 +55,7 @@ const hasValidStatusForActions = <E extends ClusterFromSubscription>(
  * @param cluster something extending ClusterFromSubscription since components are using either Cluster or ClusterFromSubscription
  */
 const isReadyForRoleAccessActions = <E extends ClusterFromSubscription>(cluster: E): boolean =>
-  hasValidStatusForActions(cluster, true);
+  hasValidStatusForActions(cluster, false);
 
 /**
  *
