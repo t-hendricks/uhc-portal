@@ -1,10 +1,8 @@
 import React from 'react';
 import { MemoryRouter } from 'react-router-dom';
-
 import { render, screen } from '~/testUtils';
-
 import { normalizedProducts } from '~/common/subscriptionTypes';
-
+import clusterStates from '~/components/clusters/common/clusterStates';
 import AccessControl from './AccessControl';
 
 const buildCluster = ({ clusterProps, subscriptionProps, consoleUrl, apiUrl }) => ({
@@ -93,6 +91,41 @@ describe('<AccessControl />', () => {
       expect(
         screen.getByRole('tab', { name: 'Identity providers', selected: true }),
       ).toBeInTheDocument();
+    });
+  });
+
+  describe('Cluster roles and access', () => {
+    it('is hidden for clusters before they are ready', () => {
+      const hypershiftCluster = buildCluster({
+        clusterProps: {
+          hypershift: { enabled: true },
+          state: clusterStates.INSTALLING,
+        },
+        subscriptionProps: {
+          plan: { id: normalizedProducts.ROSA_HyperShift },
+        },
+        consoleUrl: '',
+      });
+      render(buildComponent(hypershiftCluster));
+
+      expect(
+        screen.queryByRole('tab', { name: 'Cluster Roles and Access' }),
+      ).not.toBeInTheDocument();
+    });
+
+    it('is shown for ready clusters regardless if they have a console URL', () => {
+      const hypershiftCluster = buildCluster({
+        clusterProps: {
+          hypershift: { enabled: true },
+        },
+        subscriptionProps: {
+          plan: { id: normalizedProducts.ROSA_HyperShift },
+        },
+        consoleUrl: '',
+      });
+      render(buildComponent(hypershiftCluster));
+
+      expect(screen.getByRole('tab', { name: 'Cluster Roles and Access' })).toBeInTheDocument();
     });
   });
 });
