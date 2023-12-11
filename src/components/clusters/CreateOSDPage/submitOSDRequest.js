@@ -50,10 +50,6 @@ export const createClusterRequest = ({ isWizard = true, cloudProviderID, product
       id: actualCloudProviderID,
     },
     multi_az: isMultiAz,
-    node_drain_grace_period: {
-      value: formData.node_drain_grace_period,
-      unit: 'minutes',
-    },
     etcd_encryption: formData.etcd_encryption,
     billing_model: billingModels.STANDARD,
     disable_user_workload_monitoring:
@@ -61,6 +57,12 @@ export const createClusterRequest = ({ isWizard = true, cloudProviderID, product
     ...(!isHypershiftSelected && { fips: !!formData.fips }),
   };
 
+  if (!isHypershiftSelected) {
+    clusterRequest.node_drain_grace_period = {
+      value: formData.node_drain_grace_period,
+      unit: 'minutes',
+    };
+  }
   if (isHypershiftSelected) {
     clusterRequest.billing_model = billingModels.MARKETPLACE_AWS;
   } else if (formData.billing_model === billingModels.MARKETPLACE_GCP) {
