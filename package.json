@@ -104,7 +104,7 @@
     "@babel/register": "^7.10.5",
     "@cypress/code-coverage": "^3.10.4",
     "@cypress/grep": "^4",
-    "@redhat-cloud-services/types": "^1.0.3",
+    "@redhat-cloud-services/types": "^1.0.6",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^14.0.0",
     "@testing-library/user-event": "^14.0.4",

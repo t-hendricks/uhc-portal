@@ -7,7 +7,7 @@ import InstructionCommand from '~/components/common/InstructionCommand';
 import ExternalLink from '~/components/common/ExternalLink';
 import links from '~/common/installLinks.mjs';
 import { RosaCliCommand } from '~/components/clusters/CreateROSAPage/CreateROSAWizard/AccountsRolesScreen/constants/cliCommands';
-import { isRestrictedEnv, refreshToken } from '~/restrictedEnv';
+import { isRestrictedEnv, getRefreshToken } from '~/restrictedEnv';
 import useChrome from '@redhat-cloud-services/frontend-components/useChrome';
 import type { ChromeAPI } from '@redhat-cloud-services/types';
 
@@ -22,7 +22,16 @@ const StepCreateAWSAccountRoles = ({
 }: StepCreateAWSAccountRolesProps) => {
   const chrome = useChrome();
   const restrictedEnv = isRestrictedEnv(chrome as unknown as ChromeAPI);
-  const token = restrictedEnv ? refreshToken(chrome as unknown as ChromeAPI) : offlineToken;
+  const [token, setToken] = React.useState<string>('');
+  React.useEffect(() => {
+    if (restrictedEnv) {
+      getRefreshToken(chrome as unknown as ChromeAPI).then((refreshToken) =>
+        setToken(refreshToken),
+      );
+    } else if (offlineToken) {
+      setToken(offlineToken as string);
+    }
+  }, [chrome, restrictedEnv, offlineToken]);
   const getEnv = () => {
     const env = chrome.getEnvironment();
     if (env === 'int') {
