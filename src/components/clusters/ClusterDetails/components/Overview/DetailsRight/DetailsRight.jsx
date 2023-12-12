@@ -15,6 +15,7 @@ import { isRestrictedEnv } from '~/restrictedEnv';
 import { hasSecurityGroupIds } from '~/common/securityGroupsHelpers';
 import { useAWSVPCFromCluster } from '~/components/clusters/CreateOSDPage/CreateOSDWizard/NetworkScreen/useAWSVPCFromCluster';
 
+import { getQueryParam } from '~/common/queryHelpers';
 import Timestamp from '../../../../../common/Timestamp';
 import links from '../../../../../../common/installLinks.mjs';
 import { isAISubscriptionWithoutMetrics } from '../../../../../../common/isAssistedInstallerCluster';
@@ -51,7 +52,7 @@ function DetailsRight({
     get(cluster, 'metrics.memory.total.value', 0),
     get(cluster, 'metrics.memory.total.unit', 'B'),
   );
-
+  const showWorkerNodesTogether = getQueryParam('showWorkerNodesTogether') === 'true';
   const isDisconnected =
     get(cluster, 'subscription.status', '') === subscriptionStatuses.DISCONNECTED;
 
@@ -295,7 +296,7 @@ function DetailsRight({
                     securityGroupIdsForInfra={cluster?.aws?.additional_infra_security_group_ids}
                     machinePoolData={machinePools}
                     showLinkToMachinePools={canViewMachinePoolTab(cluster)}
-                    showWorkerNodesTogether={false}
+                    showWorkerNodesTogether={showWorkerNodesTogether}
                   />
                 </dl>
               </DescriptionListDescription>
