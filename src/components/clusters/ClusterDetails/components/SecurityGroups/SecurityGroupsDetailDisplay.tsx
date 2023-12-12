@@ -6,7 +6,7 @@ import {
   securityGroupsRenderer,
 } from '~/components/clusters/ClusterDetails/components/MachinePools/components/MachinePoolExpandedRow';
 
-const combineMachinePools = (machinePoolData: MachinePool[]): string[] => {
+const getCombinedMachinePoolSecurityGroupIds = (machinePoolData: MachinePool[]): string[] => {
   // Step through the machine pools and combine the security groups into single array
   const securityGroups: string[] = [];
   machinePoolData.forEach((mp) => {
@@ -73,7 +73,7 @@ const SecurityGroupsDisplayByNode = ({
         <MachinePoolItemList
           title={`Compute nodes `}
           items={securityGroupsRenderer(
-            combineMachinePools(machinePoolData) || [],
+            getCombinedMachinePoolSecurityGroupIds(machinePoolData) || [],
             securityGroups || [],
           )}
           showSmallTitle
@@ -81,7 +81,7 @@ const SecurityGroupsDisplayByNode = ({
       </dd>
     )}
 
-    {showLinkToMachinePools && (
+    {showLinkToMachinePools && getCombinedMachinePoolSecurityGroupIds(machinePoolData).length > 0 && (
       <dt>
         See more information in the <Link to="#machinePools">machine pools tab</Link>
       </dt>

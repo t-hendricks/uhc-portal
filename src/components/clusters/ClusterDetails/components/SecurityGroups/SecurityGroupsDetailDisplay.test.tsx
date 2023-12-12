@@ -76,5 +76,35 @@ describe('<SecurityGroupsDetailDisplayByNode />', () => {
       const moreInfoMessage = 'See more information in the';
       expect(screen.getByText(moreInfoMessage)).toBeInTheDocument();
     });
+    it('renders no link to machine pool tab if machine pools have no security group ids, even if the showLink flag is set', () => {
+      render(
+        <BrowserRouter>
+          <SecurityGroupsDisplayByNode
+            securityGroups={securityGroups}
+            securityGroupIdsForControl={securityGroupIdsForControl}
+            securityGroupIdsForInfra={securityGroupIdsForInfra}
+            machinePoolData={[]}
+            showLinkToMachinePools
+          />
+        </BrowserRouter>,
+      );
+      const moreInfoMessage = 'See more information in the';
+      expect(screen.queryByText(moreInfoMessage)).not.toBeInTheDocument();
+    });
+    it('renders no link to machine pool tab because the showLink flag is set to false', () => {
+      render(
+        <BrowserRouter>
+          <SecurityGroupsDisplayByNode
+            securityGroups={securityGroups}
+            securityGroupIdsForControl={securityGroupIdsForControl}
+            securityGroupIdsForInfra={securityGroupIdsForInfra}
+            machinePoolData={machinePoolData}
+            showLinkToMachinePools={false}
+          />
+        </BrowserRouter>,
+      );
+      const moreInfoMessage = 'See more information in the';
+      expect(screen.queryByText(moreInfoMessage)).not.toBeInTheDocument();
+    });
   });
 });
