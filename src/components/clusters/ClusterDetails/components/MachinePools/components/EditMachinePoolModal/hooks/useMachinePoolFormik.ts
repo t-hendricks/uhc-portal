@@ -221,25 +221,37 @@ const useMachinePoolFormik = ({
           ),
           autoscaleMin: values.autoscaling
             ? Yup.number()
-                .min(minNodes, `Input cannot be less than ${minNodes}.`)
-                .max(values.autoscaleMax, 'Min nodes cannot be more than max nodes.')
                 .test(
                   'whole-number',
                   'Decimals are not allowed. Enter a whole number.',
                   noDecimalTest,
                 )
+                .min(minNodes, `Input cannot be less than ${minNodes}.`)
+                .max(values.autoscaleMax, 'Min nodes cannot be more than max nodes.')
             : Yup.number(),
           autoscaleMax: values.autoscaling
             ? Yup.number()
-                .min(values.autoscaleMin || 1, 'Max nodes cannot be less than min nodes.')
+                .test('autoscale-max', '', (value) => {
+                  if (!noDecimalTest(value)) {
+                    return new Yup.ValidationError(
+                      'Decimals are not allowed. Enter a whole number.',
+                      value,
+                      'autoscaleMax',
+                    );
+                  }
+                  if (value < 1) {
+                    return new Yup.ValidationError(
+                      'Max nodes must be greater than 0.',
+                      value,
+                      'autoscaleMax',
+                    );
+                  }
+                  return false;
+                })
+                .min(values.autoscaleMin, 'Max nodes cannot be less than min nodes.')
                 .max(
                   isMultiAz ? maxNodes / 3 : maxNodes,
                   `Input cannot be more than ${isMultiAz ? maxNodes / 3 : maxNodes}.`,
-                )
-                .test(
-                  'whole-number',
-                  'Decimals are not allowed. Enter a whole number.',
-                  noDecimalTest,
                 )
             : Yup.number(),
           autoscaling: Yup.boolean(),
