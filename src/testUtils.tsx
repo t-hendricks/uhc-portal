@@ -132,8 +132,8 @@ export const mockRestrictedEnv = () => {
 };
 
 export const mockRefreshToken = () => {
-  const mock = jest.spyOn(restrictedEnv, 'refreshToken');
-  mock.mockReturnValue('mock-refresh-token');
+  const mock = jest.spyOn(restrictedEnv, 'getRefreshToken');
+  mock.mockImplementationOnce((): Promise<any> => Promise.resolve('mock-refresh-token'));
   return mock;
 };
 

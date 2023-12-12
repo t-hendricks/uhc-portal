@@ -57,7 +57,9 @@ exports[`<Tokens /> Renders loading screen 1`] = `
                 Use this API token to authenticate against your Red Hat OpenShift Cluster Manager account.
               </Text>
             </TextContent>
-            <TokenBox />
+            <TokenBox
+              token=""
+            />
             <TextContent
               className="pf-u-mt-lg"
             >
@@ -307,83 +309,18 @@ exports[`<Tokens /> Renders screen with token 1`] = `
                 Use this API token to authenticate against your Red Hat OpenShift Cluster Manager account.
               </Text>
             </TextContent>
-            <TokenBox
-              token="test-token"
-            />
-            <TextContent
-              className="pf-u-mt-lg"
+            <Link
+              to="/token/show"
             >
-              <Title
-                headingLevel="h3"
+              <Button
+                className="pf-u-mt-md"
+                data-testid="load-token-btn"
+                onClick={[Function]}
+                variant="primary"
               >
-                Using your token in the command line
-              </Title>
-              <List
-                component="ol"
-              >
-                <ListItem>
-                  Download and install the 
-                  <code>
-                    ocm
-                  </code>
-                   command-line tool:
-                   
-                  <SupportLevelBadge
-                    type="DEV_PREVIEW"
-                  />
-                  <Text
-                    component="p"
-                  />
-                  <Connect(DownloadAndOSSelection)
-                    channel="stable"
-                    tool="ocm"
-                  />
-                  <Text
-                    component="p"
-                  />
-                </ListItem>
-                <ListItem>
-                  Copy and paste the authentication command in your terminal:
-                  <Text
-                    component="p"
-                  />
-                  <TokenBox
-                    command="ocm login --token=\\"{{TOKEN}}\\""
-                    showCommandOnError={true}
-                    showInstructionsOnError={false}
-                    token="test-token"
-                  />
-                </ListItem>
-              </List>
-              <Title
-                headingLevel="h3"
-              >
-                Need help connecting with your offline token?
-              </Title>
-              <Text
-                component="p"
-              >
-                Run 
-                <code>
-                  ocm
-                   login --help
-                </code>
-                 for in-terminal guidance, or
-                 
-                <ExternalLink
-                  href="https://access.redhat.com/articles/6114701"
-                  noIcon={true}
-                >
-                  read more about setting up the ocm CLI
-                </ExternalLink>
-                 for more information about setting up the
-                 
-                <code>
-                  ocm
-                </code>
-                 CLI.
-              </Text>
-            </TextContent>
+                Load token
+              </Button>
+            </Link>
           </CardBody>
         </Card>
       </StackItem>
@@ -467,7 +404,9 @@ exports[`<Tokens /> Renders token 1`] = `
                 Use this API token to authenticate against your Red Hat OpenShift Cluster Manager account.
               </Text>
             </TextContent>
-            <TokenBox />
+            <TokenBox
+              token=""
+            />
             <TextContent
               className="pf-u-mt-lg"
             >
