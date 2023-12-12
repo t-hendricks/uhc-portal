@@ -83,7 +83,7 @@ const useMachinePoolFormik = ({
     let diskSize;
 
     autoscaleMin = machinePool?.autoscaling?.min_replicas || minNodesRequired;
-    autoscaleMax = machinePool?.autoscaling?.max_replicas || minNodesRequired || 1;
+    autoscaleMax = machinePool?.autoscaling?.max_replicas || minNodesRequired;
     const instanceType = machinePool?.instance_type;
 
     if (isMachinePool(machinePool)) {
@@ -103,7 +103,7 @@ const useMachinePoolFormik = ({
       name: machinePool?.id || '',
       autoscaling: !!machinePool?.autoscaling,
       autoscaleMin,
-      autoscaleMax,
+      autoscaleMax: autoscaleMax || 1,
       replicas: machinePool?.replicas || minNodesRequired,
       labels: machinePool?.labels
         ? Object.keys(machinePool.labels).map((key) => ({
@@ -231,7 +231,7 @@ const useMachinePoolFormik = ({
             : Yup.number(),
           autoscaleMax: values.autoscaling
             ? Yup.number()
-                .min(values.autoscaleMin, 'Max nodes cannot be less than min nodes.')
+                .min(values.autoscaleMin || 1, 'Max nodes cannot be less than min nodes.')
                 .max(
                   isMultiAz ? maxNodes / 3 : maxNodes,
                   `Input cannot be more than ${isMultiAz ? maxNodes / 3 : maxNodes}.`,
