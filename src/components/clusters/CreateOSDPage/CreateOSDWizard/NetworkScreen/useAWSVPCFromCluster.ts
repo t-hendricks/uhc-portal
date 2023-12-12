@@ -62,6 +62,8 @@ export const useAWSVPCFromCluster = (cluster: Cluster) => {
   const [hasError, setHasError] = React.useState<boolean>(false);
   const isHypershift = isHypershiftCluster(cluster);
   const clusterId = cluster.id || '';
+  const subnetIds = cluster.aws?.subnet_ids || [];
+  const isBYOVPC = subnetIds.length > 0;
 
   const manageVpcFetch = async (vpcPromise: Promise<CloudVPC | undefined>) => {
     setHasError(false);
@@ -82,14 +84,13 @@ export const useAWSVPCFromCluster = (cluster: Cluster) => {
   // Fetches the VPC by the cluster's id
   React.useEffect(() => {
     const loadVpcByClusterId = async () => manageVpcFetch(fetchVpcByClusterId(clusterId));
-    if (clusterId && !isHypershift) {
+    if (clusterId && !isHypershift && isBYOVPC) {
       loadVpcByClusterId();
     }
-  }, [clusterId, isHypershift]);
+  }, [clusterId, isHypershift, isBYOVPC]);
 
   // Fetches the VPC by the cluster's STS credentials
   // The dependencies are the primitive values - if we use an object the event will trigger even when no data has changed.
-  const subnetIds = cluster.aws?.subnet_ids || [];
   const subnetId = subnetIds.length > 0 ? subnetIds[0] : undefined;
   const roleArn = cluster.aws?.sts?.role_arn;
   const regionId = cluster.region?.id || '';
