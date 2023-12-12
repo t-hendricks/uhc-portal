@@ -167,9 +167,17 @@ const canViewMachinePoolTab = (cluster) => {
     cluster?.subscription?.status === subscriptionStatuses.ARCHIVED ||
     cluster?.subscription?.status === subscriptionStatuses.DEPROVISIONED;
 
+  // WARNING - This hack is due to temporary merge conflict with typescript conversion.  This will be removed shortly.
+  let actualClusterState;
+  if (typeof cluster?.state === 'string') {
+    actualClusterState = cluster?.state;
+  } else if (typeof cluster?.state?.state === 'string') {
+    actualClusterState = cluster?.state?.state;
+  }
+
   return (
     (cluster?.managed ?? false) &&
-    (cluster?.state === clusterStates.READY || isHibernating(cluster)) &&
+    (actualClusterState === clusterStates.READY || isHibernating(actualClusterState)) &&
     !isArchived
   );
 };
