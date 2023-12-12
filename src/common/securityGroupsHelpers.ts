@@ -1,3 +1,6 @@
+import { Cluster, MachinePool } from '~/types/clusters_mgmt.v1';
+import { ClusterFromSubscription } from '../types/types';
+
 type SecurityGroupForm = {
   applyControlPlaneToAll: boolean;
   controlPlane: string[];
@@ -29,4 +32,22 @@ const hasSelectedSecurityGroups = (securityGroups?: SecurityGroupForm) => {
   );
 };
 
-export { hasSelectedSecurityGroups, getDefaultSecurityGroupsSettings };
+const hasSecurityGroupIds = (
+  cluster: ClusterFromSubscription | Cluster = {},
+  machinePools: MachinePool[] = [],
+) => {
+  if (
+    (cluster?.aws?.additional_control_plane_security_group_ids ?? []).length > 0 ||
+    (cluster?.aws?.additional_infra_security_group_ids ?? []).length > 0
+  ) {
+    return true;
+  }
+  return machinePools?.some((pool) => {
+    if ((pool?.aws?.additional_security_group_ids ?? []).length > 0) {
+      return true;
+    }
+    return false;
+  });
+};
+
+export { getDefaultSecurityGroupsSettings, hasSelectedSecurityGroups, hasSecurityGroupIds };

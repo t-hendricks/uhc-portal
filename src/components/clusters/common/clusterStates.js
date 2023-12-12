@@ -157,6 +157,31 @@ const getClusterAIPermissions = (cluster) => ({
 
 const isClusterUpgrading = (cluster) => get(cluster, 'metrics.upgrade.state') === 'running';
 
+/**
+ * Indicates cluster is in a state to show the Machine Pool tab
+ *
+ * @param cluster  ClusterFromSubscription
+ */
+const canViewMachinePoolTab = (cluster) => {
+  const isArchived =
+    cluster?.subscription?.status === subscriptionStatuses.ARCHIVED ||
+    cluster?.subscription?.status === subscriptionStatuses.DEPROVISIONED;
+
+  // WARNING - This hack is due to temporary merge conflict with typescript conversion.  This will be removed shortly.
+  let actualClusterState;
+  if (typeof cluster?.state === 'string') {
+    actualClusterState = cluster?.state;
+  } else if (typeof cluster?.state?.state === 'string') {
+    actualClusterState = cluster?.state?.state;
+  }
+
+  return (
+    (cluster?.managed ?? false) &&
+    (actualClusterState === clusterStates.READY || isHibernating(actualClusterState)) &&
+    !isArchived
+  );
+};
+
 export {
   getClusterStateAndDescription,
   isHibernating,
@@ -175,5 +200,6 @@ export {
   hasInflightErrors,
   isWaitingForOIDCProviderOrOperatorRolesMode,
   isClusterUpgrading,
+  canViewMachinePoolTab,
 };
 export default clusterStates;

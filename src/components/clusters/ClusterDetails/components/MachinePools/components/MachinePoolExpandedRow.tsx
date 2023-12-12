@@ -21,15 +21,30 @@ const labelsRenderer = (labels: Record<string, string>) =>
     return `${labelKey}${value ? ' = ' : ''}${value}`;
   });
 
-const securityGroupsRenderer = (securityGroupIds: string[], securityGroups: SecurityGroup[]) =>
+export const securityGroupsRenderer = (
+  securityGroupIds: string[],
+  securityGroups: SecurityGroup[],
+) =>
   securityGroupIds.map((sgId) => {
     const securityGroupName = securityGroups.find((sg) => sg.id === sgId)?.name;
     return securityGroupName || sgId; // Name of a SecurityGroup is optional
   });
 
-const MachinePoolItemList = ({ title, items }: { title: string; items: string[] }) => (
+export const MachinePoolItemList = ({
+  title,
+  items,
+  showSmallTitle = false,
+}: {
+  title: string;
+  items: string[];
+  showSmallTitle?: boolean;
+}) => (
   <>
-    <Title headingLevel="h4">{title}</Title>
+    {!showSmallTitle && <Title headingLevel="h4">{title}</Title>}
+    {showSmallTitle && (
+      <div className="pf-u-font-size-sm pf-u-font-weight-bold pf-u-disabled-color-100">{title}</div>
+    )}
+
     {items.map((item, index) => {
       const isTruncated = item.length > LABEL_MAX_LENGTH;
       const displayName = isTruncated ? truncateTextWithEllipsis(item, LABEL_MAX_LENGTH) : item;

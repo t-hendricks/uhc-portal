@@ -1,4 +1,4 @@
-import { hasSelectedSecurityGroups } from './securityGroupsHelpers';
+import { hasSelectedSecurityGroups, hasSecurityGroupIds } from './securityGroupsHelpers';
 
 describe('hasSelectedSecurityGroups', () => {
   describe('when controlPlane groups apply to all node types', () => {
@@ -58,6 +58,100 @@ describe('hasSelectedSecurityGroups', () => {
         infra: [],
       };
       expect(hasSelectedSecurityGroups(sgs)).toEqual(false);
+    });
+  });
+});
+describe('hasSecurityGroupIds', () => {
+  describe('when controlPlane security groupIds exist', () => {
+    it('returns true when at least one controlPlane groupId exist', () => {
+      const cluster = {
+        aws: {
+          additional_control_plane_security_group_ids: ['sg-abc'],
+        },
+      };
+
+      expect(hasSecurityGroupIds(cluster, [])).toEqual(true);
+    });
+    it('returns false when no controlPlane groupIds exist', () => {
+      const cluster = {
+        aws: {
+          additional_control_plane_security_group_ids: [],
+        },
+      };
+
+      expect(hasSecurityGroupIds(cluster, [])).toEqual(false);
+    });
+  });
+
+  describe('when Infrastructure security groupIds exist', () => {
+    it('returns true when at least one infra groupId exist', () => {
+      const cluster = {
+        aws: {
+          additional_infra_security_group_ids: ['sg-abc'],
+        },
+      };
+
+      expect(hasSecurityGroupIds(cluster, [])).toEqual(true);
+    });
+    it('returns false when no infra groupIds exist', () => {
+      const cluster = {
+        aws: {
+          additional_infra_security_group_ids: [],
+        },
+      };
+
+      expect(hasSecurityGroupIds(cluster, [])).toEqual(false);
+    });
+    it('returns false when cluster undefined', () => {
+      expect(hasSecurityGroupIds()).toEqual(false);
+    });
+  });
+
+  describe('when MachinePools security groupIds exist', () => {
+    it('returns true when at least one machine pool security groupId exist', () => {
+      const machinePools = [
+        {
+          aws: {
+            additional_security_group_ids: [],
+          },
+        },
+        {
+          aws: {
+            additional_security_group_ids: [],
+          },
+        },
+        {
+          aws: {
+            additional_security_group_ids: ['sg-abc'],
+          },
+        },
+      ];
+
+      expect(hasSecurityGroupIds({}, machinePools)).toEqual(true);
+    });
+    it('returns false when no machine pool security groupIds exist', () => {
+      const machinePools = [
+        {
+          aws: {
+            additional_security_group_ids: [],
+          },
+        },
+        {
+          aws: {
+            additional_security_group_ids: [],
+          },
+        },
+        {
+          aws: {
+            additional_security_group_ids: [],
+          },
+        },
+      ];
+
+      expect(hasSecurityGroupIds({}, machinePools)).toEqual(false);
+    });
+    it('returns false when machine pools is undefined', () => {
+      expect(hasSecurityGroupIds({}, undefined)).toEqual(false);
     });
   });
 });
