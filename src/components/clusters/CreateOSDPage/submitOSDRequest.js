@@ -254,6 +254,9 @@ export const createClusterRequest = ({ isWizard = true, cloudProviderID, product
         'auth_provider_x509_cert_url',
         'client_x509_cert_url',
       ]);
+      clusterRequest.gcp.security = {
+        secure_boot: formData.secure_boot,
+      };
       clusterRequest.cloud_provider.display_name = 'gcp';
       clusterRequest.cloud_provider.name = 'gcp';
       clusterRequest.flavour = {
@@ -334,6 +337,14 @@ export const createClusterRequest = ({ isWizard = true, cloudProviderID, product
       unit: 'B',
       value: parseFloat(formData.persistent_storage),
     };
+
+    if (actualCloudProviderID === 'gcp') {
+      clusterRequest.gcp = {
+        security: {
+          secure_boot: formData.secure_boot,
+        },
+      };
+    }
   }
 
   if (formData.hypershift) {

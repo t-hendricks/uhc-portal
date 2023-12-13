@@ -959,6 +959,7 @@ exports[`<Overview /> for an AI cluster should render 1`] = `
                     },
                   }
                 }
+                isDeprovisioned={false}
               />
             </GridItem>
           </Grid>
@@ -1484,6 +1485,7 @@ exports[`<Overview /> for an ARO cluster should render 1`] = `
                     },
                   }
                 }
+                isDeprovisioned={false}
               />
             </GridItem>
           </Grid>
@@ -2079,6 +2081,7 @@ exports[`<Overview /> for an OCP cluster should render 1`] = `
                     },
                   }
                 }
+                isDeprovisioned={false}
               />
             </GridItem>
           </Grid>
@@ -3216,6 +3219,7 @@ exports[`<Overview /> for an OSD cluster should render 1`] = `
                     },
                   }
                 }
+                isDeprovisioned={false}
               />
             </GridItem>
           </Grid>
