@@ -107,6 +107,14 @@ const reviewValues = {
   load_balancers: {
     title: 'Load balancers',
   },
+  secure_boot: {
+    title: 'Secure Boot support for Shielded VMs',
+    isBoolean: true,
+    values: {
+      true: 'Enabled',
+      false: 'Disabled',
+    },
+  },
   enable_user_workload_monitoring: {
     title: 'User workload monitoring',
     isBoolean: true,

@@ -16,6 +16,8 @@ import { hasSecurityGroupIds } from '~/common/securityGroupsHelpers';
 import { useAWSVPCFromCluster } from '~/components/clusters/CreateOSDPage/CreateOSDWizard/NetworkScreen/useAWSVPCFromCluster';
 
 import { getQueryParam } from '~/common/queryHelpers';
+import { GCP_SECURE_BOOT_UI } from '~/redux/constants/featureConstants';
+import { useFeatureGate } from '~/hooks/useFeatureGate';
 import Timestamp from '../../../../../common/Timestamp';
 import links from '../../../../../../common/installLinks.mjs';
 import { isAISubscriptionWithoutMetrics } from '../../../../../../common/isAssistedInstallerCluster';
@@ -41,8 +43,10 @@ function DetailsRight({
   limitedSupport,
   totalActualNodes,
   machinePools,
+  isDeprovisioned,
 }) {
   const isAWS = cluster.subscription?.cloud_provider_id === 'aws';
+  const isGCP = cluster.subscription?.cloud_provider_id === 'gcp';
   const isHypershift = isHypershiftCluster(cluster);
   const isROSACluster = isROSA(cluster);
   const infraAccount = cluster.subscription?.cloud_account_id || null;
@@ -84,6 +88,10 @@ function DetailsRight({
   const workerDesiredNodes = totalDesiredComputeNodes || '-';
   const oidcConfig = cluster.aws?.sts?.oidc_config;
   const imdsConfig = cluster.aws?.ec2_metadata_http_tokens || IMDSType.V1AndV2;
+
+  const isSecureBootFeatureEnabled = useFeatureGate(GCP_SECURE_BOOT_UI);
+  const showSecureBoot = isGCP && isSecureBootFeatureEnabled && !isDeprovisioned;
+  const secureBoot = isGCP && cluster.gcp?.security?.secure_boot;
 
   return (
     <>
@@ -372,6 +380,15 @@ function DetailsRight({
         )}
         {/* Network */}
         <ClusterNetwork cluster={cluster} />
+        {/* Secure Boot */}
+        {showSecureBoot && (
+          <DescriptionListGroup>
+            <DescriptionListTerm>Secure Boot support for Shielded VMs</DescriptionListTerm>
+            <DescriptionListDescription>
+              <span>{secureBoot ? 'Enabled' : 'Disabled'}</span>
+            </DescriptionListDescription>
+          </DescriptionListGroup>
+        )}
         {/* OIDC config */}
         {oidcConfig && (
           <DescriptionListGroup>
@@ -406,6 +423,7 @@ DetailsRight.propTypes = {
   limitedSupport: PropTypes.bool,
   totalActualNodes: PropTypes.oneOfType([PropTypes.number, PropTypes.bool]),
   machinePools: PropTypes.array,
+  isDeprovisioned: PropTypes.bool,
 };
 
 export default DetailsRight;

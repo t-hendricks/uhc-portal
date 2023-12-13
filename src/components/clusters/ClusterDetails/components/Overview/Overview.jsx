@@ -229,7 +229,10 @@ class Overview extends React.Component {
                       />
                     </GridItem>
                     <GridItem sm={6}>
-                      <DetailsRight cluster={{ ...cluster, state: clusterState }} />
+                      <DetailsRight
+                        cluster={{ ...cluster, state: clusterState }}
+                        isDeprovisioned={isDeprovisioned}
+                      />
                     </GridItem>
                   </Grid>
                   {showAssistedInstallerDetailCard && <GatedAIExtraDetailCard />}
