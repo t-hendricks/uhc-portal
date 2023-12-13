@@ -31,8 +31,8 @@ describe('with-feature-gate', () => {
 
   it('should render spinner', async () => {
     const Component = withFeatureGate(MainComponent, 'unknown', FallbackComponent);
-    const wrapped = render(<Component />);
-    await wrapped.findByText('Loading...');
+    const view = render(<Component />);
+    await view.findByText('Loading...');
   });
 
   it('should render main component', async () => {
@@ -43,8 +43,8 @@ describe('with-feature-gate', () => {
       features,
     });
     const Component = withFeatureGate(MainComponent, 'test', FallbackComponent);
-    const wrapped = render(<Component />);
-    await wrapped.findByTestId('main');
+    const view = render(<Component />);
+    await view.findByTestId('main');
   });
 
   it('should render fallback', async () => {
@@ -55,8 +55,8 @@ describe('with-feature-gate', () => {
       features,
     });
     const Component = withFeatureGate(MainComponent, 'test', FallbackComponent);
-    const wrapped = render(<Component />);
-    await wrapped.findByTestId('fallback');
+    const view = render(<Component />);
+    await view.findByTestId('fallback');
   });
 
   it('should pass through props to main component', async () => {

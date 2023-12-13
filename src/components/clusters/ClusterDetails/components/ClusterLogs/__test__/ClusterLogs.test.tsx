@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { screen, render, waitFor } from '~/testUtils';
+import { screen, render } from '~/testUtils';
 import ClusterLogs from '../ClusterLogs';
 import fixtures from '../../../__test__/ClusterDetails.fixtures';
 
@@ -18,6 +18,6 @@ describe('<ClusterLogs />', () => {
         refreshEvent={{ type: '', reset: jest.fn() }}
       />,
     );
-    await waitFor(() => expect(screen.getByTestId('cluster_history_title')).toBeInTheDocument());
+    expect(await screen.findByTestId('cluster_history_title')).toBeInTheDocument();
   });
 });

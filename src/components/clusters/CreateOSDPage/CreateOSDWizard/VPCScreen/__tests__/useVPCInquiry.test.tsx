@@ -53,32 +53,32 @@ describe('useVPCInquiry', () => {
   describe('useAWSVPCInquiry', () => {
     describe('when isOSD=false', () => {
       it('builds the request from the redux-form (v1) state', () => {
-        const inquiryHook = renderHook(() => vpcInquiries.useAWSVPCInquiry(false));
-        const { requestParams } = inquiryHook.result.current as {
+        const view = renderHook(() => vpcInquiries.useAWSVPCInquiry(false));
+        const { requestParams } = view.result.current as {
           requestParams: { region: string };
         };
         expect(requestParams.region).toEqual('us-west-2-v1');
       });
 
       it('returns the vpcsResponse from the redux store', () => {
-        const inquiryHook = renderHook(() => vpcInquiries.useAWSVPCInquiry(false));
-        const { vpcs } = inquiryHook.result.current as { vpcs: VPCResponse };
+        const view = renderHook(() => vpcInquiries.useAWSVPCInquiry(false));
+        const { vpcs } = view.result.current as { vpcs: VPCResponse };
         expect(vpcs.data.items[0].id).toEqual(vpcList[0].id);
       });
     });
 
     describe('when isOSD=true', () => {
       it('builds the request from the Formik (v2) state', () => {
-        const inquiryHook = renderHook(() => vpcInquiries.useAWSVPCInquiry(true));
-        const { requestParams } = inquiryHook.result.current as {
+        const view = renderHook(() => vpcInquiries.useAWSVPCInquiry(true));
+        const { requestParams } = view.result.current as {
           requestParams: { region: string };
         };
         expect(requestParams.region).toEqual('us-west-2-v2');
       });
 
       it('returns the vpcsResponse from the redux store', () => {
-        const inquiryHook = renderHook(() => vpcInquiries.useAWSVPCInquiry(true));
-        const { vpcs } = inquiryHook.result.current as { vpcs: VPCResponse };
+        const view = renderHook(() => vpcInquiries.useAWSVPCInquiry(true));
+        const { vpcs } = view.result.current as { vpcs: VPCResponse };
         expect(vpcs.data.items[0].id).toEqual(vpcList[0].id);
       });
     });

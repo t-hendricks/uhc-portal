@@ -246,7 +246,7 @@ describe('withState()', () => {
 
   it('render(), unmount(), render() with shared state', () => {
     const { render, dispatch } = withState({});
-    const resultA = render(<ConnectedComponent other="A" />);
+    const view = render(<ConnectedComponent other="A" />);
 
     expect(mappedState).toBeCalledTimes(1);
     expect(rendered).toBeCalledTimes(1);
@@ -254,7 +254,7 @@ describe('withState()', () => {
     expect(didMount).toBeCalledTimes(1);
     expect(screen.getByText(/other: A/)).toBeInTheDocument();
 
-    resultA.unmount();
+    view.unmount();
     dispatch({ type: 'GET_DEFAULT_FLAVOUR_PENDING' });
 
     expect(screen.queryByText(/other: A/)).not.toBeInTheDocument();

@@ -1,7 +1,15 @@
 {
   "root": true,
-  "extends": ["airbnb", "plugin:import/typescript", "prettier", "plugin:react-hooks/recommended"],
-  "plugins": ["@typescript-eslint"],
+  "extends": [
+    "airbnb",
+    "plugin:import/typescript",
+    "prettier",
+    "plugin:react-hooks/recommended",
+    "plugin:testing-library/react"
+  ],
+  "plugins": [
+    "@typescript-eslint"
+  ],
   "env": {
     "browser": true,
     "jest": true
@@ -63,7 +71,17 @@
         "tsx": "never"
       }
     ],
-    "react/jsx-filename-extension": [1, { "extensions": [".tsx", ".jsx"] }]
+    "react/jsx-filename-extension": [1, { "extensions": [".tsx", ".jsx"] }],
+    "testing-library/prefer-screen-queries": "off", // can be automatically fixed if preferred
+    "testing-library/prefer-presence-queries": "off", // can be automatically fixed if preferred
+    "testing-library/no-container": "off",
+    "testing-library/no-dom-import": "error",
+    "testing-library/no-unnecessary-act": "error",
+    "testing-library/prefer-find-by": "error",
+    "testing-library/prefer-user-event": "error",
+    "testing-library/no-wait-for-multiple-assertions": "error",
+    "testing-library/render-result-naming-convention": "error",
+    "testing-library/no-debugging-utils": "error"
   },
   "overrides": [
     {
