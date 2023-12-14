@@ -155,7 +155,6 @@ const EditMachinePoolModal = ({
       enableReinitialize
       validateOnMount
     >
-      {}
       {({ isValid, submitForm, isSubmitting, values }) => (
         <Modal
           id="edit-mp-modal"
@@ -164,7 +163,11 @@ const EditMachinePoolModal = ({
           isPending={
             machinePoolsResponse.pending ||
             (!machinePoolsResponse.error && !machinePoolsResponse.fulfilled) ||
-            (!machineTypesResponse.error && !machineTypesResponse.fulfilled)
+            (!machineTypesResponse.error && !machineTypesResponse.fulfilled) ||
+            (isEdit &&
+              machineTypesResponse.fulfilled &&
+              machinePoolsResponse.fulfilled &&
+              !currentMachinePool)
           }
           modalSize="large"
           description={!isEdit && modalDescription}
