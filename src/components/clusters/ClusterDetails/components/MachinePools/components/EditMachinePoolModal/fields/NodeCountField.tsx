@@ -30,10 +30,11 @@ const NodeCountField = ({ minNodesRequired, options, cluster }: NodeCountFieldPr
   const optionExists = options.includes(field.value);
 
   React.useEffect(() => {
-    if (!optionExists) {
+    // options could not be ready yet when NodeCountField renders for the first time
+    if (options.length > 0 && !optionExists) {
       onChange(minNodesRequired);
     }
-  }, [optionExists, minNodesRequired, onChange]);
+  }, [optionExists, minNodesRequired, onChange, options.length]);
 
   const notEnoughQuota = options.length < 1;
 
