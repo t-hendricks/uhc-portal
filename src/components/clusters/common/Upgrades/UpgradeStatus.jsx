@@ -19,7 +19,6 @@ import UpdateGraph from './UpdateGraph/UpdateGraph';
 function UpgradeStatus({
   clusterID,
   canEdit,
-  clusterVersion,
   clusterVersionRawID,
   scheduledUpgrade,
   availableUpgrades = [],
@@ -70,17 +69,6 @@ function UpgradeStatus({
     );
   };
 
-  if (!clusterVersion) {
-    return (
-      <EmptyState variant={EmptyStateVariant.xs}>
-        <Title headingLevel="h4" size="md">
-          Update status is not available
-        </Title>
-        <EmptyStateBody>Update status is not available. Try again later.</EmptyStateBody>
-      </EmptyState>
-    );
-  }
-
   return (
     <>
       <div>
@@ -119,7 +107,6 @@ function UpgradeStatus({
 UpgradeStatus.propTypes = {
   clusterID: PropTypes.string.isRequired,
   canEdit: PropTypes.bool,
-  clusterVersion: PropTypes.string,
   clusterVersionRawID: PropTypes.string,
   scheduledUpgrade: PropTypes.shape({
     version: PropTypes.string,

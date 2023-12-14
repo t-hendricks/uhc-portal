@@ -14,7 +14,7 @@ const ClusterUpdateLink = ({ cluster, openModal, hideOSDUpdates }) => {
   const osdUpgradeAvailable =
     cluster.managed &&
     cluster.version?.available_upgrades?.length > 0 &&
-    cluster.openshift_version &&
+    cluster.version?.raw_id &&
     !hideOSDUpdates;
   const isStale = cluster?.subscription?.status === subscriptionStatuses.STALE;
 
@@ -35,11 +35,9 @@ const ClusterUpdateLink = ({ cluster, openModal, hideOSDUpdates }) => {
 
   // Only show Update tooltip/link for OSD clusters when the feature toggle is enabled
   // or OCP clusters that have available updates
-  if (
-    (cluster.managed &&
-      (!cluster.canEdit || !osdUpgradeAvailable || isHibernating(cluster) || isStale)) ||
-    (!cluster.managed && (!upgrade.available || isStale))
-  ) {
+  const cannotUpgrade =
+    !cluster.canEdit || !osdUpgradeAvailable || isHibernating(cluster) || isStale;
+  if ((cluster.managed && cannotUpgrade) || (!cluster.managed && (!upgrade.available || isStale))) {
     return null;
   }
 
