@@ -432,8 +432,9 @@ class CreateRosaCluster extends Page {
   }
 
   selectAvailabilityZoneRegion(avilabilityZoneRegion) {
-    cy.get('[aria-label="Options menu"]').click();
-    cy.get('li').contains(avilabilityZoneRegion).click();
+    cy.get(".pf-c-select__menu:contains('Select availability zone')").within(() => {
+      cy.get('li').contains(avilabilityZoneRegion).click();
+    });
   }
 
   inputPrivateSubnetId(subnetId) {
