@@ -37,7 +37,7 @@ const SharedVPCField = ({
 }) => {
   const getNestedFieldMeta = (fieldName: string) => ({
     error: get(meta.error, fieldName),
-    touched: meta.touched,
+    touched: get(meta, `${fieldName}.touched`, false),
   });
   return (
     <Grid>
