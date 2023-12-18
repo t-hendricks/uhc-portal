@@ -100,6 +100,16 @@ export const getAvailableQuota = ({
   return availableNodesFromQuota(quota as QuotaCostList, quotaParams);
 };
 
+export type getNodeOptionsType = {
+  cluster: Cluster;
+  quota: GlobalState['userProfile']['organization']['quotaList'];
+  machineTypes: GlobalState['machineTypes'];
+  machineTypeId: string | undefined;
+  machinePools: MachinePool[];
+  minNodes: number;
+  editMachinePoolId?: string;
+};
+
 export const getNodeOptions = ({
   cluster,
   quota,
@@ -108,15 +118,7 @@ export const getNodeOptions = ({
   machinePools,
   minNodes,
   editMachinePoolId,
-}: {
-  cluster: Cluster;
-  quota: GlobalState['userProfile']['organization']['quotaList'];
-  machineTypes: GlobalState['machineTypes'];
-  machineTypeId: string | undefined;
-  machinePools: MachinePool[];
-  minNodes: number;
-  editMachinePoolId?: string;
-}) => {
+}: getNodeOptionsType) => {
   const isMultiAz = isMultiAZ(cluster);
 
   const available = getAvailableQuota({
@@ -136,11 +138,16 @@ export const getNodeOptions = ({
     isMultiAz,
   });
 
-  const currentNodeCount = machinePools.reduce((acc, mp) => {
-    if (mp.instance_type === machineTypeId && (!isHypershift || mp.id !== editMachinePoolId)) {
-      return acc + ((mp.autoscaling ? mp.autoscaling.max_replicas : mp.replicas) || 0);
+  const currentNodeCount = machinePools.reduce((totalCount, mp) => {
+    const mpReplicas = (mp.autoscaling ? mp.autoscaling.max_replicas : mp.replicas) || 0;
+
+    if (
+      (isHypershift && mp.id !== editMachinePoolId) ||
+      (!isHypershift && mp.instance_type === machineTypeId)
+    ) {
+      return totalCount + mpReplicas;
     }
-    return acc;
+    return totalCount;
   }, 0);
 
   return buildOptions({
