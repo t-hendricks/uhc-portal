@@ -137,14 +137,14 @@ const useMachinePoolFormik = ({
   const validationSchema = React.useMemo(
     () =>
       Yup.lazy<EditMachinePoolValues>((values) => {
-        const minNodes = minNodesRequired;
+        const minNodes = isMultiAz ? minNodesRequired / 3 : minNodesRequired;
         const secGroupValidation = validateSecurityGroups(values.securityGroupIds);
         const nodeOptions = getNodeOptions({
           cluster,
           machinePools: machinePools.data || [],
           machineTypes,
           quota: organization.quotaList,
-          minNodes,
+          minNodes: minNodesRequired,
           machineTypeId: values.instanceType,
           editMachinePoolId: values.name,
         });
