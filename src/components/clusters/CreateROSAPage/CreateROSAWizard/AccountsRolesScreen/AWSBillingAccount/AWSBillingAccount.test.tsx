@@ -1,9 +1,15 @@
 import React from 'react';
 import * as reactRedux from 'react-redux';
 import * as helpers from '~/common/helpers';
-import * as useFeatureGate from '~/hooks/useFeatureGate';
 import { HCP_AWS_BILLING_SHOW, HCP_AWS_BILLING_REQUIRED } from '~/redux/constants/featureConstants';
-import { withState, render, screen, checkAccessibility, within } from '~/testUtils';
+import {
+  withState,
+  render,
+  screen,
+  checkAccessibility,
+  within,
+  mockUseFeatureGate,
+} from '~/testUtils';
 import wizardConnector from '~/components/clusters/CreateOSDPage/CreateOSDWizard/WizardConnector';
 import { CloudAccount } from '~/types/accounts_mgmt.v1/models/CloudAccount';
 import AWSBillingAccount from './AWSBillingAccount';
@@ -76,20 +82,21 @@ jest.mock('react-redux', () => {
 describe('<AWSBillingAccount />', () => {
   const useDispatchMock = jest.spyOn(reactRedux, 'useDispatch');
   const shouldRefreshQuotaMock = jest.spyOn(helpers, 'shouldRefetchQuota');
-  const useFeatureGateMock = jest.spyOn(useFeatureGate, 'useFeatureGate');
 
   const ConnectedAWSBillingAccount = wizardConnector(AWSBillingAccount);
 
   afterEach(() => {
-    useDispatchMock.mockClear();
-    shouldRefreshQuotaMock.mockClear();
-    useFeatureGateMock.mockReset();
+    jest.clearAllMocks();
+  });
+  afterAll(() => {
+    jest.resetAllMocks();
   });
 
   it('is accessible', async () => {
     // Arrange
     shouldRefreshQuotaMock.mockReturnValue(false);
-    useFeatureGateMock.mockImplementation((gate) => gate === HCP_AWS_BILLING_SHOW);
+    mockUseFeatureGate([[HCP_AWS_BILLING_SHOW, true]]);
+
     const { container } = withState(defaultState).render(
       <ConnectedAWSBillingAccount {...defaultProps} />,
     );
@@ -124,7 +131,7 @@ describe('<AWSBillingAccount />', () => {
 
   it('populates the billing account id drop down with accounts in Redux state', async () => {
     // Arrange
-    useFeatureGateMock.mockImplementation((gate) => gate === HCP_AWS_BILLING_SHOW);
+    mockUseFeatureGate([[HCP_AWS_BILLING_SHOW, true]]);
     const accountInState = defaultState.rosaReducer.getAWSBillingAccountsResponse.data;
     const { user } = withState(defaultState).render(
       <ConnectedAWSBillingAccount {...defaultProps} />,
@@ -202,7 +209,7 @@ describe('<AWSBillingAccount />', () => {
 
   it('displays an error if get organization returns an error and is accessible', async () => {
     // Arrange
-    useFeatureGateMock.mockImplementation((gate) => gate === HCP_AWS_BILLING_SHOW);
+    mockUseFeatureGate([[HCP_AWS_BILLING_SHOW, true]]);
     const newState = {
       ...defaultState,
       userProfile: {
@@ -221,7 +228,6 @@ describe('<AWSBillingAccount />', () => {
     );
 
     // Assert
-
     expect(screen.getByRole('alert')).toBeInTheDocument();
     expect(
       within(screen.getByRole('alert')).getByText('I am an org error', { exact: false }),
@@ -232,7 +238,7 @@ describe('<AWSBillingAccount />', () => {
 
   it('displays an error if getting billing account returns an error and is accessible', async () => {
     // Arrange
-    useFeatureGateMock.mockImplementation((gate) => gate === HCP_AWS_BILLING_SHOW);
+    mockUseFeatureGate([[HCP_AWS_BILLING_SHOW, true]]);
     const newState = {
       ...defaultState,
       rosaReducer: {
@@ -249,7 +255,6 @@ describe('<AWSBillingAccount />', () => {
     );
 
     // Assert
-
     expect(screen.getByRole('alert')).toBeInTheDocument();
     expect(
       within(screen.getByRole('alert')).getByText('I am a billing account error', { exact: false }),
@@ -260,7 +265,7 @@ describe('<AWSBillingAccount />', () => {
 
   it('displays info alert if the billing and infrastructure account are different and is accessible', async () => {
     // Arrange
-    useFeatureGateMock.mockImplementation((gate) => gate === HCP_AWS_BILLING_SHOW);
+    mockUseFeatureGate([[HCP_AWS_BILLING_SHOW, true]]);
     const newProps = {
       ...defaultProps,
       selectedAWSBillingAccountID: '123',
@@ -329,7 +334,7 @@ describe('<AWSBillingAccount />', () => {
   it('displays empty dom element if HCP_AWS_BILLING_SHOW is false', () => {
     // Arrange
     shouldRefreshQuotaMock.mockReturnValue(false);
-    useFeatureGateMock.mockImplementation(() => false);
+    mockUseFeatureGate([[HCP_AWS_BILLING_SHOW, false]]);
     const { container } = withState(defaultState).render(
       <ConnectedAWSBillingAccount {...defaultProps} />,
     );
@@ -341,7 +346,7 @@ describe('<AWSBillingAccount />', () => {
   it('does not display an empty dom element if HCP_AWS_BILLING_SHOW feature flag is true', () => {
     // Arrange
     shouldRefreshQuotaMock.mockReturnValue(false);
-    useFeatureGateMock.mockImplementation(() => true);
+    mockUseFeatureGate([[HCP_AWS_BILLING_SHOW, true]]);
     const { container } = withState(defaultState).render(
       <ConnectedAWSBillingAccount {...defaultProps} />,
     );
@@ -353,15 +358,10 @@ describe('<AWSBillingAccount />', () => {
   it('makes field not required if HCP_AWS_BILLING_REQUIRED feature flag is false', () => {
     // Arrange
     shouldRefreshQuotaMock.mockReturnValue(false);
-    useFeatureGateMock.mockImplementation((gate) => {
-      if (gate === HCP_AWS_BILLING_SHOW) {
-        return true;
-      }
-      if (gate === HCP_AWS_BILLING_REQUIRED) {
-        return false;
-      }
-      return false;
-    });
+    mockUseFeatureGate([
+      [HCP_AWS_BILLING_SHOW, true],
+      [HCP_AWS_BILLING_REQUIRED, false],
+    ]);
     withState(defaultState).render(<ConnectedAWSBillingAccount {...defaultProps} />);
 
     // Assert
@@ -371,15 +371,10 @@ describe('<AWSBillingAccount />', () => {
   it('makes field required if HCP_AWS_BILLING_REQUIRED feature flag is true', () => {
     // Arrange
     shouldRefreshQuotaMock.mockReturnValue(false);
-    useFeatureGateMock.mockImplementation((gate) => {
-      if (gate === HCP_AWS_BILLING_SHOW) {
-        return true;
-      }
-      if (gate === HCP_AWS_BILLING_REQUIRED) {
-        return true;
-      }
-      return false;
-    });
+    mockUseFeatureGate([
+      [HCP_AWS_BILLING_SHOW, true],
+      [HCP_AWS_BILLING_REQUIRED, true],
+    ]);
     withState(defaultState).render(<ConnectedAWSBillingAccount {...defaultProps} />);
 
     // Assert

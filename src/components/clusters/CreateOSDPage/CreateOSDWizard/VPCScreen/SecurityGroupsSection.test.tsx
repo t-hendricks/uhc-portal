@@ -1,6 +1,5 @@
 import React from 'react';
-import { render, screen } from '~/testUtils';
-import * as hooks from '~/hooks/useFeatureGate';
+import { render, screen, mockUseFeatureGate } from '~/testUtils';
 import { SECURITY_GROUPS_FEATURE_DAY1 } from '~/redux/constants/featureConstants';
 
 import SecurityGroupsSection from './SecurityGroupsSection';
@@ -24,13 +23,15 @@ const defaultProps = {
 
 describe('<SecurityGroupsSection />', () => {
   beforeEach(() => {
-    jest
-      .spyOn(hooks, 'useFeatureGate')
-      .mockImplementation((feature) => feature === SECURITY_GROUPS_FEATURE_DAY1);
+    mockUseFeatureGate([[SECURITY_GROUPS_FEATURE_DAY1, true]]);
   });
 
   afterEach(() => {
     jest.clearAllMocks();
+  });
+
+  afterAll(() => {
+    jest.resetAllMocks();
   });
 
   describe('is displayed when', () => {
@@ -54,8 +55,7 @@ describe('<SecurityGroupsSection />', () => {
     });
 
     it('the feature gate is not enabled', () => {
-      jest.spyOn(hooks, 'useFeatureGate').mockImplementation(() => false);
-
+      mockUseFeatureGate([[SECURITY_GROUPS_FEATURE_DAY1, false]]);
       render(<SecurityGroupsSection {...defaultProps} />);
       expect(screen.queryByText('Additional security groups')).not.toBeInTheDocument();
     });

@@ -8,8 +8,8 @@ import {
   mockUseChrome,
   screen,
   mockRestrictedEnv,
+  mockUseFeatureGate,
 } from '~/testUtils';
-import * as hooks from '~/hooks/useFeatureGate';
 import { HCP_ROSA_GETTING_STARTED_PAGE } from '~/redux/constants/featureConstants';
 import CreateRosaGetStarted from './CreateRosaGetStarted';
 
@@ -21,6 +21,7 @@ const hypershiftMessage =
 const completeAWSMessage = /complete aws prerequisites/i;
 
 describe('<CreateRosaGetStarted />', () => {
+  afterAll(() => jest.resetAllMocks());
   it('is accessible', async () => {
     const { container } = render(
       <MemoryRouter>
@@ -33,9 +34,7 @@ describe('<CreateRosaGetStarted />', () => {
 
   it('shows hypershift info alert if feature flag is enabled', () => {
     // Arrange
-    jest
-      .spyOn(hooks, 'useFeatureGate')
-      .mockImplementation((feature) => feature === HCP_ROSA_GETTING_STARTED_PAGE);
+    mockUseFeatureGate([[HCP_ROSA_GETTING_STARTED_PAGE, true]]);
 
     render(
       <MemoryRouter>
@@ -49,9 +48,7 @@ describe('<CreateRosaGetStarted />', () => {
 
   it('hides hypershift info alert if feature flag is not enabled', () => {
     // Arrange
-    jest
-      .spyOn(hooks, 'useFeatureGate')
-      .mockImplementation((feature) => feature !== HCP_ROSA_GETTING_STARTED_PAGE);
+    mockUseFeatureGate([[HCP_ROSA_GETTING_STARTED_PAGE, false]]);
 
     render(
       <MemoryRouter>
@@ -93,9 +90,7 @@ describe('<CreateRosaGetStarted />', () => {
     });
 
     it('does not show HCP directions', () => {
-      jest
-        .spyOn(hooks, 'useFeatureGate')
-        .mockImplementation((feature) => feature === HCP_ROSA_GETTING_STARTED_PAGE);
+      mockUseFeatureGate([[HCP_ROSA_GETTING_STARTED_PAGE, true]]);
       const { rerender } = render(
         <MemoryRouter>
           <CreateRosaGetStarted />

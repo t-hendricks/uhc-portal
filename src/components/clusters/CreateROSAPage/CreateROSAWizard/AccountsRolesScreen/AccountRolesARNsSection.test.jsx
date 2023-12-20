@@ -1,7 +1,6 @@
 import React from 'react';
-import { render, screen, checkAccessibility } from '~/testUtils';
+import { render, screen, checkAccessibility, mockUseFeatureGate } from '~/testUtils';
 import wizardConnector from '~/components/clusters/CreateOSDPage/CreateOSDWizard/WizardConnector';
-import * as useFeatureGate from '~/hooks/useFeatureGate';
 import { HCP_USE_UNMANAGED } from '~/redux/constants/featureConstants';
 import { ROSA_HOSTED_CLI_MIN_VERSION } from '~/components/clusters/CreateROSAPage/CreateROSAWizard/rosaConstants';
 import AccountRolesARNsSection from './AccountRolesARNsSection';
@@ -55,15 +54,14 @@ const accountRolesList = [
   },
 ];
 
-const gateValue = (wantedGate, value) => (gate) => gate === wantedGate ? value : false;
-
 describe('<AccountRolesARNsSection />', () => {
-  const useFeatureGateMock = jest.spyOn(useFeatureGate, 'useFeatureGate');
   afterEach(() => {
     jest.clearAllMocks();
-    useFeatureGateMock.mockReset();
   });
 
+  afterAll(() => {
+    jest.resetAllMocks();
+  });
   const props = {
     touch: jest.fn(),
     change: jest.fn(),
@@ -122,7 +120,7 @@ describe('<AccountRolesARNsSection />', () => {
   });
 
   it('Shows only managed policy roles for hypershift cluster and feature flag is false', async () => {
-    useFeatureGateMock.mockImplementation(gateValue(HCP_USE_UNMANAGED, false));
+    mockUseFeatureGate([[HCP_USE_UNMANAGED, false]]);
 
     const newProps = { ...props, isHypershiftSelected: true };
     const { user } = render(<ConnectedAccountRolesARNsSection {...newProps} />);
@@ -156,8 +154,7 @@ describe('<AccountRolesARNsSection />', () => {
   });
 
   it('Shows only both managed and unmanaged policy roles for hypershift cluster and feature flag is true', async () => {
-    useFeatureGateMock.mockImplementation(gateValue(HCP_USE_UNMANAGED, true));
-
+    mockUseFeatureGate([[HCP_USE_UNMANAGED, true]]);
     const newProps = { ...props, isHypershiftSelected: true };
     const { user } = render(<ConnectedAccountRolesARNsSection {...newProps} />);
 
@@ -261,7 +258,8 @@ describe('<AccountRolesARNsSection />', () => {
     // Note: These tests work because on mount, the Installer arn drop down only shows the selected version
 
     it('defaults to IAM role with prefix -ManagedOpenShift', () => {
-      useFeatureGateMock.mockImplementation(gateValue(HCP_USE_UNMANAGED, true));
+      mockUseFeatureGate([[HCP_USE_UNMANAGED, true]]);
+
       const roleList = [
         nonManagedCompleteInstallerRole,
         ManagedOpenShiftInstallerRole, // This is the first "-ManagedOpenShift" role
@@ -283,7 +281,8 @@ describe('<AccountRolesARNsSection />', () => {
     });
 
     it('defaults to first managed policy role if no -ManagedOpenShift prefixed role exists', () => {
-      useFeatureGateMock.mockImplementation(gateValue(HCP_USE_UNMANAGED, true));
+      mockUseFeatureGate([[HCP_USE_UNMANAGED, true]]);
+
       const roleList = [
         incompleteNonManagedInstallerRole,
         nonManagedCompleteInstallerRole,
@@ -304,7 +303,8 @@ describe('<AccountRolesARNsSection />', () => {
     });
 
     it('defaults to first complete role set if no -ManagedOpenShift prefix or managed policy role exists', () => {
-      useFeatureGateMock.mockImplementation(gateValue(HCP_USE_UNMANAGED, true));
+      mockUseFeatureGate([[HCP_USE_UNMANAGED, true]]);
+
       const roleList = [
         incompleteNonManagedInstallerRole,
         nonManagedCompleteInstallerRole, // This is the first complete set
@@ -325,7 +325,8 @@ describe('<AccountRolesARNsSection />', () => {
     });
 
     it('defaults to first incomplete role set if no -ManagedOpenshift prefix, managed policy, or complete role set exists', () => {
-      useFeatureGateMock.mockImplementation(gateValue(HCP_USE_UNMANAGED, true));
+      mockUseFeatureGate([[HCP_USE_UNMANAGED, true]]);
+
       const roleList = [
         incompleteNonManagedInstallerRole, // this is the first
         incompleteNonManagedInstallerRole2,
