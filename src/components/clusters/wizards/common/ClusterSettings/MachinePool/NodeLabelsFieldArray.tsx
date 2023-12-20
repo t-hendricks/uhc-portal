@@ -35,7 +35,8 @@ export const NodeLabelsFieldArray = () => {
       if (nodeLabelKeys.includes(value)) {
         return 'Each label must have a different key.';
       }
-
+    }
+    if (value.length > 0) {
       return checkLabelKey(value);
     }
 
@@ -43,7 +44,7 @@ export const NodeLabelsFieldArray = () => {
   };
 
   const validateNodeValue = (value: string) => {
-    if (nodeLabels.length > 1) {
+    if (value.length > 0) {
       return checkLabelValue(value);
     }
 
