@@ -235,7 +235,7 @@ class CreateRosaCluster extends Page {
   }
 
   selectInstallerRole(roleName) {
-    cy.get('span')
+    cy.get('.pf-c-form__label-text')
       .contains('Installer role')
       .parent()
       .parent()
@@ -246,7 +246,7 @@ class CreateRosaCluster extends Page {
         if ($btn.is(':disabled')) {
           cy.log('Installer ARN button is disabled there is only one option. Continuing..');
         } else {
-          cy.get('span')
+          cy.get('.pf-c-form__label-text')
             .contains('Installer role')
             .parent()
             .parent()
