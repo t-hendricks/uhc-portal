@@ -17,6 +17,7 @@ describe('createOSDInitialValues', () => {
         isMultiAz: true,
         isTrialDefault: false,
         isHypershiftSelected: false,
+        machinePoolsSubnets: undefined,
       };
       expect(createOSDInitialValues(props).cluster_privacy).toBe('external');
 

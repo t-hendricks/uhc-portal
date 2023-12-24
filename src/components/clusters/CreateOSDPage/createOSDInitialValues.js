@@ -16,6 +16,7 @@ const createOSDInitialValues = ({
   isMultiAz,
   isTrialDefault,
   isHypershiftSelected = false,
+  machinePoolsSubnets,
 }) => {
   let defaultNodeCount;
   if (isByoc || isTrialDefault) {
@@ -76,7 +77,7 @@ const createOSDInitialValues = ({
     // Optional fields based on whether Hypershift is selected or not
     ...(isHypershiftSelected
       ? {
-          machine_pools_subnets: [newEmptySubnet()],
+          machine_pools_subnets: machinePoolsSubnets ?? [newEmptySubnet()],
           cluster_privacy_public_subnet: newEmptySubnet(),
           worker_volume_size_gib: undefined,
           shared_vpc: { is_allowed: false },

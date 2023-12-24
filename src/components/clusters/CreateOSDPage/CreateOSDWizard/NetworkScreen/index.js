@@ -20,6 +20,7 @@ const mapStateToProps = (state, ownProps) => {
   // hosted ROSA cluster
   const isHypershiftSelected = valueSelector(state, 'hypershift') === 'true';
   const applicationIngress = valueSelector(state, 'applicationIngress');
+  const machinePoolsSubnets = valueSelector(state, 'machine_pools_subnets');
 
   return {
     cloudProviderID,
@@ -40,6 +41,7 @@ const mapStateToProps = (state, ownProps) => {
       isByoc: isCCS,
       isTrialDefault: ownProps.isTrialDefault,
       isHypershiftSelected,
+      machinePoolsSubnets,
     }),
   };
 };

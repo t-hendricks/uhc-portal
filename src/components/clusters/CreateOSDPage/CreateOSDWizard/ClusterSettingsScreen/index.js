@@ -20,6 +20,7 @@ const mapStateToProps = (state, ownProps) => {
   const etcdKeyArn = valueSelector(state, 'etcd_key_arn');
   const isEtcdEncryptionSelected = valueSelector(state, 'etcd_encryption');
   const isFipsCryptoSelected = valueSelector(state, 'fips');
+  const machinePoolsSubnets = valueSelector(state, 'machine_pools_subnets');
 
   const isHypershiftSelected = valueSelector(state, 'hypershift') === 'true';
   const formErrors = {
@@ -48,6 +49,7 @@ const mapStateToProps = (state, ownProps) => {
       isMultiAz,
       isByoc,
       isTrialDefault: ownProps.isTrialDefault,
+      machinePoolsSubnets,
     }),
   };
 };
