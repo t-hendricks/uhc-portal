@@ -7,9 +7,8 @@ import OCMRolesSection from './OCMRolesSection';
 import UsersSection from './UsersSection';
 import IDPSection from './IDPSection';
 import NetworkSelfServiceSection from './NetworkSelfServiceSection';
-import { isHibernating } from '../../../common/clusterStates';
+import { isHibernating, isHypershiftCluster } from '../../../common/clusterStates';
 import {
-  isHypershiftCluster,
   isReadyForAwsAccessActions,
   isReadyForIdpActions,
   isReadyForRoleAccessActions,
@@ -96,7 +95,7 @@ function AccessControl({ cluster, history, refreshEvent = null }) {
               history={history}
               clusterUrls={clusterUrls}
               idpActions={cluster.idpActions}
-              clusterHibernating={isHibernating(cluster.state)}
+              clusterHibernating={isHibernating(cluster)}
               isReadOnly={isReadOnly}
             />
           </Tab>
@@ -108,7 +107,7 @@ function AccessControl({ cluster, history, refreshEvent = null }) {
           >
             <UsersSection
               cluster={cluster}
-              clusterHibernating={isHibernating(cluster.state)}
+              clusterHibernating={isHibernating(cluster)}
               isReadOnly={isReadOnly}
             />
           </Tab>
@@ -133,7 +132,7 @@ function AccessControl({ cluster, history, refreshEvent = null }) {
             <NetworkSelfServiceSection
               clusterID={get(cluster, 'id')}
               canEdit={cluster.canEdit}
-              clusterHibernating={isHibernating(cluster.state)}
+              clusterHibernating={isHibernating(cluster)}
               isReadOnly={isReadOnly}
             />
           </Tab>

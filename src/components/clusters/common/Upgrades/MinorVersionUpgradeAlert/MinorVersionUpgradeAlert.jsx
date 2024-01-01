@@ -57,7 +57,13 @@ const MinorVersionUpgradeAlert = ({
   };
 
   return error ? (
-    <Alert variant="danger" className="automatic-cluster-updates-alert" isInline title={error} />
+    <Alert
+      variant="danger"
+      className="automatic-cluster-updates-alert"
+      isInline
+      title={error}
+      role="alert"
+    />
   ) : (
     <Alert
       isExpandable

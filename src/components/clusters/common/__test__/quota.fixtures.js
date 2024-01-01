@@ -1,11 +1,20 @@
+import { normalizedProducts } from '~/common/subscriptionTypes';
+import { RelatedResource } from '~/types/accounts_mgmt.v1';
 import { userActions } from '../../../../redux/actions/userActions';
 
 import * as quotaCostFixtures from './quota_cost.fixtures';
 
 // This is the quota we use in mockdata mode, pretty much everything is allowed.
 import * as mockQuotaCost from '../../../../../mockdata/api/accounts_mgmt/v1/organizations/1HAXGgCYqHpednsRDiwWsZBmDlA/quota_cost.json';
+import { QuotaTypes } from '../quotaModel';
 
 // Fragments of processed quotaList state
+
+export const emptyQuota = {
+  allowed: 0,
+  consumed: 0,
+  quota_id: 'quota_id',
+};
 
 export const mockQuotaList = userActions.processQuota({ data: mockQuotaCost });
 
@@ -72,6 +81,12 @@ export const addonsQuotaList = userActions.processQuota({
   },
 });
 
+export const addonsQuotaListStandardBillingModel = userActions.processQuota({
+  data: {
+    items: [].concat(quotaCostFixtures.odhAddonStandardBillingModel),
+  },
+});
+
 export const storageQuotaList = userActions.processQuota({
   data: { items: quotaCostFixtures.storage },
 });
@@ -79,3 +94,119 @@ export const storageQuotaList = userActions.processQuota({
 export const loadBalancerQuotaList = userActions.processQuota({
   data: { items: quotaCostFixtures.loadBalancers },
 });
+
+export const quotaWithAccounts = {
+  items: [
+    ...ROSACCSQuotaList.items,
+    {
+      allowed: 1080,
+      cloud_accounts: [
+        {
+          cloud_account_id: '765374464689',
+          cloud_provider_id: 'aws',
+        },
+        {
+          cloud_account_id: 'fakeRHMarketplaceAccount',
+          cloud_provider_id: 'rhm',
+        },
+        {
+          cloud_account_id: 'fakeAzureAccount',
+          cloud_provider_id: 'azure',
+        },
+        {
+          cloud_account_id: 'fakeAwsAccount',
+          cloud_provider_id: 'aws',
+        },
+      ],
+      consumed: 1,
+      href: '/api/accounts_mgmt/v1/organizations/1MK6ieFXd0eu1hERdENAPvpbi7x/quota_cost',
+      kind: 'QuotaCost',
+      organization_id: '1MK6ieFXd0eu1hERdENAPvpbi7x',
+      quota_id: 'cluster|byoc|moa|marketplace',
+      version: '7891248a-fc29-4d27-b6e6-870e9465c2ae',
+    },
+  ],
+};
+
+export const quotaWithoutAccounts = {
+  items: [
+    ...ROSACCSQuotaList.items,
+    {
+      allowed: 1080,
+      cloud_accounts: [
+        {
+          cloud_account_id: 'fakeRHMarketplaceAccount',
+          cloud_provider_id: 'rhm',
+        },
+        {
+          cloud_account_id: 'fakeAzureAccount',
+          cloud_provider_id: 'azure',
+        },
+      ],
+      consumed: 1,
+      href: '/api/accounts_mgmt/v1/organizations/1MK6ieFXd0eu1hERdENAPvpbi7x/quota_cost',
+      kind: 'QuotaCost',
+      organization_id: '1MK6ieFXd0eu1hERdENAPvpbi7x',
+      quota_id: 'cluster|byoc|moa|marketplace',
+      version: '7891248a-fc29-4d27-b6e6-870e9465c2ae',
+    },
+  ],
+};
+
+export const quotaWithAccountsExpected = [
+  { cloud_account_id: '765374464689', cloud_provider_id: 'aws' },
+  { cloud_account_id: 'fakeAwsAccount', cloud_provider_id: 'aws' },
+];
+
+export const paramsRhInfra = {
+  product: normalizedProducts.OSD,
+  cloudProviderID: 'aws',
+  resourceName: 'standard-4',
+  isMultiAz: true,
+  isBYOC: false,
+  billingModel: RelatedResource.billing_model.STANDARD,
+};
+export const paramsCCS = {
+  product: normalizedProducts.OSD,
+  cloudProviderID: 'aws',
+  resourceName: 'standard-4',
+  isMultiAz: true,
+  isBYOC: true,
+  billingModel: RelatedResource.billing_model.STANDARD,
+};
+export const paramsCCSOnDemand = {
+  product: normalizedProducts.OSD,
+  cloudProviderID: 'aws',
+  resourceName: 'standard-4',
+  isMultiAz: true,
+  isBYOC: true,
+  billingModel: RelatedResource.billing_model.MARKETPLACE,
+};
+export const paramsTrial = {
+  product: normalizedProducts.OSDTrial,
+  cloudProviderID: 'aws',
+  resourceName: 'standard-4',
+  isMultiAz: true,
+  isBYOC: true,
+  billingModel: RelatedResource.billing_model.STANDARD,
+};
+export const paramsROSA = {
+  ...paramsCCS,
+  product: normalizedProducts.ROSA,
+};
+export const paramsGCP = {
+  ...paramsRhInfra,
+  billingModel: RelatedResource.billing_model.MARKETPLACE_GCP,
+};
+
+export const paramsAddons = {
+  ...paramsCCSOnDemand,
+  resourceType: QuotaTypes.ADD_ON,
+  resourceName: 'addon-open-data-hub',
+};
+
+export const paramsAddonsStandard = {
+  ...paramsCCSOnDemand,
+  resourceType: QuotaTypes.ADD_ON,
+  resourceName: 'standard-resource-name',
+};

@@ -9,6 +9,7 @@ import {
   canConfigureLoadBalancer,
 } from '~/components/clusters/wizards/rosa/constants';
 import { CloudProviderType } from '~/components/clusters/wizards/common';
+import { isHypershiftCluster } from '../../../../../common/clusterStates';
 
 import modals from '../../../../../../common/Modal/modals';
 import shouldShowModal from '../../../../../../common/Modal/ModalSelectors';
@@ -41,8 +42,6 @@ const mapStateToProps = (state: GlobalState) => {
 
   const provider = cluster?.cloud_provider?.id;
   const isAWS = provider === CloudProviderType.Aws;
-
-  // @ts-ignore
   const isSTSEnabled = cluster?.aws?.sts?.enabled === true;
 
   const clusterRouters = NetworkingSelector(state);
@@ -84,6 +83,7 @@ const mapStateToProps = (state: GlobalState) => {
     hasSufficientIngressEditVersion,
     canEditLoadBalancer,
     canShowLoadBalancer,
+    isHypershiftCluster: isHypershiftCluster(cluster),
   };
 
   return props;

@@ -95,6 +95,9 @@ class ClusterList extends Page {
     });
   }
 
+  openClusterDefinition(clusterName) {
+    cy.get('td[data-label="Name"]').find('a').contains(clusterName).click({ force: true });
+  }
   clickClusterListExtraActions() {
     cy.getByTestId('cluster-list-extra-actions-dropdown').should('be.visible').click();
   }

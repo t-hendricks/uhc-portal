@@ -94,7 +94,7 @@ const OSDSubscriptionCard = ({ quotaCost, marketplace, organizationID, fetchQuot
   }
 
   if (quotaCost.fulfilled) {
-    quotaCost.items.forEach((quotaItem) => {
+    quotaCost.items?.forEach((quotaItem) => {
       // filter out quota you neither have nor consume
       if (quotaItem.consumed === 0 && quotaItem.allowed === 0) {
         return;

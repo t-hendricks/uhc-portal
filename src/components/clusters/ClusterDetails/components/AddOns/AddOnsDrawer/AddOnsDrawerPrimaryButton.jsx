@@ -69,7 +69,7 @@ function AddOnsPrimaryButton(props) {
   const isReadOnly = cluster?.status?.configuration_mode === 'read_only';
   const readOnlyReason = isReadOnly && 'This operation is not available during maintenance';
   const hibernatingReason =
-    isHibernating(cluster.state) && 'This operation is not available while cluster is hibernating';
+    isHibernating(cluster) && 'This operation is not available while cluster is hibernating';
   // a superset of hibernatingReason.
   const notReadyReason = cluster.state !== clusterStates.READY && 'This cluster is not ready';
   const requirementsReason = !activeCardRequirementsFulfilled && 'Prerequisites not met';

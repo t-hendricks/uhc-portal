@@ -1,11 +1,10 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { screen, render, checkAccessibility } from '~/testUtils';
 
 import HibernatingClusterCard from './HibernatingClusterCard';
 import clusterStates from '../clusterStates';
 
 describe('<HibernateClusterModal />', () => {
-  let wrapper;
   const openModal = jest.fn();
   const cluster = {
     id: 'test-id',
@@ -15,12 +14,19 @@ describe('<HibernateClusterModal />', () => {
     },
     state: clusterStates.HIBERNATING,
   };
+  const defaultProps = {
+    cluster,
+    openModal,
+  };
 
-  beforeEach(() => {
-    wrapper = shallow(<HibernatingClusterCard cluster={cluster} openModal={openModal} />);
+  afterEach(() => {
+    jest.clearAllMocks();
   });
 
-  it('renders correctly', () => {
-    expect(wrapper).toMatchSnapshot();
+  it('is accessible', async () => {
+    const { container } = render(<HibernatingClusterCard {...defaultProps} />);
+
+    expect(screen.getByText('Cluster is currently hibernating')).toBeInTheDocument();
+    await checkAccessibility(container);
   });
 });

@@ -14,7 +14,7 @@ import {
 import { Field } from 'redux-form';
 
 import EditClusterAutoScalingDialog from '~/components/clusters/common/EditClusterAutoScalingDialog';
-import { MAX_NODES } from '~/components/clusters/common/machinePools/constants';
+import { MAX_NODES, MAX_NODES_HCP } from '~/components/clusters/common/machinePools/constants';
 import getMinNodesAllowed, { computeNodeHintText } from './AutoScaleHelper';
 import ReduxCheckbox from '../../../../../../common/ReduxFormComponents/ReduxCheckbox';
 import ExternalLink from '../../../../../../common/ExternalLink';
@@ -229,7 +229,7 @@ class AutoScaleSection extends React.Component {
     const { isMultiAz, isHypershiftWizard, numPools } = this.props;
 
     if (isHypershiftWizard) {
-      return MAX_NODES / numPools;
+      return Math.floor(MAX_NODES_HCP / numPools);
     }
     if (isMultiAz) {
       return MAX_NODES / 3;
@@ -358,8 +358,9 @@ class AutoScaleSection extends React.Component {
               className="autoscaling__nodes-formGroup"
               helperText={
                 <HelperText>
-                  {nodesHelpText(autoScaleMinNodesValue)}
-                  {minErrorMessage && errorText(minErrorMessage)}
+                  {!minErrorMessage
+                    ? nodesHelpText(autoScaleMinNodesValue)
+                    : errorText(minErrorMessage)}
                 </HelperText>
               }
             >
@@ -374,8 +375,9 @@ class AutoScaleSection extends React.Component {
               className="autoscaling__nodes-formGroup"
               helperText={
                 <HelperText>
-                  {nodesHelpText(autoScaleMaxNodesValue)}
-                  {maxErrorMessage && errorText(maxErrorMessage)}
+                  {!maxErrorMessage
+                    ? nodesHelpText(autoScaleMaxNodesValue)
+                    : errorText(maxErrorMessage)}
                 </HelperText>
               }
               labelIcon={

@@ -48,7 +48,7 @@ const SubnetField = ({ cluster }: { cluster: Cluster }) => {
 
   return (
     <SubnetSelectField
-      name="subnet.subnet_id"
+      name="subnet"
       privacy="private"
       label="Private subnet name"
       isRequired

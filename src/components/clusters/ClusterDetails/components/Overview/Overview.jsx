@@ -14,10 +14,10 @@ import {
 } from '@patternfly/react-core';
 
 import * as OCM from '@openshift-assisted/ui-lib/ocm';
+import { HAD_INFLIGHT_ERROR_LOCALSTORAGE_KEY } from '~/common/localStorageConstants';
 import { subscriptionStatuses } from '~/common/subscriptionTypes';
 import { ASSISTED_INSTALLER_FEATURE } from '~/redux/constants/featureConstants';
 import { isRestrictedEnv } from '~/restrictedEnv';
-import { HAD_INFLIGHT_ERROR_LOCALSTORAGE_KEY } from '~/common/localStorageConstants';
 import isAssistedInstallSubscription, {
   isAvailableAssistedInstallCluster,
   isUninstalledAICluster,
@@ -28,8 +28,7 @@ import ResourceUsage from '../../../common/ResourceUsage/ResourceUsage';
 import { metricsStatusMessages } from '../../../common/ResourceUsage/ResourceUsage.consts';
 import clusterStates, {
   getClusterAIPermissions,
-  getClusterStateAndDescription,
-  hasInflightErrors,
+  hasInflightEgressErrors,
   isHibernating,
 } from '../../../common/clusterStates';
 import { hasResourceUsageMetrics } from '../Monitoring/monitoringHelper';
@@ -93,7 +92,6 @@ class Overview extends React.Component {
     let topCard;
 
     const { showInstallSuccessAlert } = this.state;
-    const clusterState = getClusterStateAndDescription(cluster);
     const isArchived = get(cluster, 'subscription.status', false) === subscriptionStatuses.ARCHIVED;
     const isDeprovisioned =
       get(cluster, 'subscription.status', false) === subscriptionStatuses.DEPROVISIONED;
@@ -113,11 +111,13 @@ class Overview extends React.Component {
       cluster.state === clusterStates.INSTALLING ||
       cluster.state === clusterStates.ERROR ||
       cluster.state === clusterStates.UNINSTALLING ||
-      (hasInflightErrors(cluster) && hasNetworkOndemand);
+      (hasInflightEgressErrors(cluster) && hasNetworkOndemand);
 
     const hadInflightErrorKey = `${HAD_INFLIGHT_ERROR_LOCALSTORAGE_KEY}_${cluster.id}`;
     const showInflightErrorIsFixed =
-      !hasInflightErrors(cluster) && localStorage.getItem(hadInflightErrorKey) === 'true';
+      !hasInflightEgressErrors(cluster) &&
+      cluster.state !== clusterStates.ERROR &&
+      localStorage.getItem(hadInflightErrorKey) === 'true';
 
     const showInsightsAdvisor =
       !isRestrictedEnv() &&
@@ -126,13 +126,13 @@ class Overview extends React.Component {
       !isDeprovisioned &&
       !isArchived;
     const showResourceUsage =
-      !isHibernating(cluster.state) &&
+      !isHibernating(cluster) &&
       !isAssistedInstallSubscription(cluster.subscription) &&
       !shouldShowLogs(cluster) &&
       !isDeprovisioned &&
       !isArchived &&
       !isRestrictedEnv() &&
-      !hasInflightErrors(cluster);
+      !hasInflightEgressErrors(cluster);
     const showCostBreakdown =
       !cluster.managed &&
       userAccess.fulfilled &&
@@ -145,13 +145,14 @@ class Overview extends React.Component {
     const showDetailsCard = !cluster.aiCluster || !isUninstalledAICluster(cluster);
     const showSubscriptionSettings = !isDeprovisioned && !isArchived;
 
-    if (isHibernating(cluster.state)) {
+    if (isHibernating(cluster)) {
       topCard = <HibernatingClusterCard cluster={cluster} openModal={openModal} />;
     } else if (
+      cluster &&
       !isAssistedInstallSubscription(cluster.subscription) &&
-      (shouldShowLogs(cluster) || hasInflightErrors(cluster))
+      (shouldShowLogs(cluster) || hasInflightEgressErrors(cluster))
     ) {
-      topCard = <ClusterProgressCard cluster={cluster} refresh={refresh} history={history} />;
+      topCard = <ClusterProgressCard cluster={cluster} />;
     }
 
     const resourceUsage = (
@@ -229,10 +230,7 @@ class Overview extends React.Component {
                       />
                     </GridItem>
                     <GridItem sm={6}>
-                      <DetailsRight
-                        cluster={{ ...cluster, state: clusterState }}
-                        isDeprovisioned={isDeprovisioned}
-                      />
+                      <DetailsRight cluster={{ ...cluster }} isDeprovisioned={isDeprovisioned} />
                     </GridItem>
                   </Grid>
                   {showAssistedInstallerDetailCard && <GatedAIExtraDetailCard />}

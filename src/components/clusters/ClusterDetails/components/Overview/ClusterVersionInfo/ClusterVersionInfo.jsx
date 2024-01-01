@@ -5,12 +5,14 @@ import { Button, Flex, Popover } from '@patternfly/react-core';
 
 import { OutlinedQuestionCircleIcon } from '@patternfly/react-icons';
 import getClusterVersion from '~/components/clusters/common/getClusterVersion';
-import { isClusterUpgrading } from '~/components/clusters/common/clusterStates';
+import {
+  isClusterUpgrading,
+  isHypershiftCluster,
+} from '~/components/clusters/common/clusterStates';
 import SupportStatusLabel from '../SupportStatusLabel';
 import ClusterUpdateLink from '../../../../common/ClusterUpdateLink';
 import UpgradeStatus from '../../../../common/Upgrades/UpgradeStatus';
 import UpgradeAcknowledgeLink from '../../../../common/Upgrades/UpgradeAcknowledge/UpgradeAcknowledgeLink';
-import { isHypershiftCluster } from '../../../clusterDetailsHelper';
 
 class ClusterVersionInfo extends React.Component {
   state = {

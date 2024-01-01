@@ -28,8 +28,8 @@ import * as OCM from '@openshift-assisted/ui-lib/ocm';
 import produce from 'immer';
 import { has, get } from 'lodash';
 import { AppPage } from '~/components/App/AppPage';
-
 import { isRestrictedEnv } from '~/restrictedEnv';
+
 import ExternalLink from '../../common/ExternalLink';
 import links, {
   tools,

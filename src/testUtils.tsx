@@ -77,7 +77,7 @@ const withState = (initialState?: any): TestState => {
 
     render: (ui: React.ReactElement, options?: RenderOptions) => ({
       ...render(ui, { wrapper: Wrapper, ...options }),
-      user: userEvent.setup(),
+      user: userEvent.setup({ delay: null }),
     }),
   };
 };
@@ -132,8 +132,8 @@ export const mockRestrictedEnv = () => {
 };
 
 export const mockRefreshToken = () => {
-  const mock = jest.spyOn(restrictedEnv, 'refreshToken');
-  mock.mockReturnValue('mock-refresh-token');
+  const mock = jest.spyOn(restrictedEnv, 'getRefreshToken');
+  mock.mockImplementationOnce((): Promise<any> => Promise.resolve('mock-refresh-token'));
   return mock;
 };
 

@@ -39,7 +39,7 @@ describe('Releases pages tests', () => {
   it('Check all the links from release page(OCP-41253)', { tags: ['smoke'] }, () => {
     Docs.getcontainerPlatformDocAbsolutePath(
       current_version,
-      'updating/understanding-upgrade-channels-release.html',
+      'updating/understanding_updates/understanding-update-channels-release.html',
     )
       .should('exist')
       .and('contain.text', 'Learn more about updating channels');

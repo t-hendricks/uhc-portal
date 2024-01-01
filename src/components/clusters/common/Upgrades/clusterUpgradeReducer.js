@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 import produce from 'immer';
-import moment from 'moment';
+import dayjs from 'dayjs';
 
 import {
   REJECTED_ACTION,
@@ -80,7 +80,7 @@ function UpgradesRecuder(state = initialState, action) {
         break;
       case FULFILLED_ACTION(GET_UPGRADE_SCHEDULES): {
         const items = action.payload?.data?.items || [];
-        items.sort((a, b) => moment(a.next_run).unix() - moment(b.next_run).unix());
+        items.sort((a, b) => dayjs(a.next_run).unix() - dayjs(b.next_run).unix());
         draft.schedules = {
           ...initialState.schedules,
           fulfilled: true,

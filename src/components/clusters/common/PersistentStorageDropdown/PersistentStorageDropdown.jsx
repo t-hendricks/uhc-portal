@@ -9,9 +9,10 @@ import { FormSelect, FormSelectOption, Tooltip } from '@patternfly/react-core';
 import { Spinner } from '@redhat-cloud-services/frontend-components/Spinner';
 import ErrorBox from '../../../common/ErrorBox';
 import { humanizeValueWithUnitGiB } from '../../../../common/units';
-import { availableQuota, quotaTypes } from '../quotaSelectors';
+import { availableQuota } from '../quotaSelectors';
 import { filterPersistentStorageValuesByQuota } from './PersistentStorageDropDownHelper';
 import { noQuotaTooltip } from '../../../../common/helpers';
+import { QuotaTypes } from '../quotaModel';
 
 class PersistentStorageDropdown extends React.Component {
   componentDidMount() {
@@ -59,7 +60,7 @@ class PersistentStorageDropdown extends React.Component {
 
     if (persistentStorageValues.fulfilled) {
       const storageQuota = availableQuota(quotaList, {
-        resourceType: quotaTypes.STORAGE,
+        resourceType: QuotaTypes.STORAGE,
         billingModel,
         product,
         cloudProviderID,

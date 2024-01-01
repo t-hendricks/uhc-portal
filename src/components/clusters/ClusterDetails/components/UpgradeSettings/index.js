@@ -15,9 +15,8 @@ import {
   clearDeleteScheduleResponse,
 } from '../../../common/Upgrades/clusterUpgradeActions';
 import { editCluster, fetchClusterDetails } from '../../../../../redux/actions/clustersActions';
-import { isHibernating } from '../../../common/clusterStates';
+import { isHibernating, isHypershiftCluster } from '../../../common/clusterStates';
 import { openModal } from '../../../../common/Modal/ModalActions';
-import { isHypershiftCluster } from '../../clusterDetailsHelper';
 
 const reduxFormConfig = {
   form: 'ClusterUpgradeSettings',
@@ -39,7 +38,7 @@ const mapStateToProps = (state) => {
   return {
     cluster,
     isAROCluster,
-    clusterHibernating: isHibernating(cluster.state),
+    clusterHibernating: isHibernating(cluster),
     isReadOnly: cluster?.status?.configuration_mode === 'read_only',
     isAutomatic: valueSelector(state, 'upgrade_policy') === 'automatic',
     schedules: state.clusterUpgrades.schedules,

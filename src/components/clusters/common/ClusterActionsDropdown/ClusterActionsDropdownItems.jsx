@@ -1,12 +1,11 @@
 import get from 'lodash/get';
 import React from 'react';
 import { DropdownItem } from '@patternfly/react-core';
-import clusterStates, { isHibernating } from '../clusterStates';
+import clusterStates, { isHibernating, isHypershiftCluster } from '../clusterStates';
 import { subscriptionStatuses, normalizedProducts } from '../../../../common/subscriptionTypes';
 import getClusterName from '../../../../common/getClusterName';
 import modals from '../../../common/Modal/modals';
 import { isAssistedInstallCluster } from '../../../../common/isAssistedInstallerCluster';
-import { isHypershiftCluster } from '../../ClusterDetails/clusterDetailsHelper';
 
 /**
  * Helper using reason message why it's disabled as source-of-truth
@@ -50,7 +49,7 @@ function actionResolver(
   const isClusterReady = cluster.state === clusterStates.READY;
   // Superset of more specific uninstallingMessage.
   const notReadyMessage = !isClusterReady && <span>This cluster is not ready</span>;
-  const isClusterInHibernatingProcess = isHibernating(cluster.state);
+  const isClusterInHibernatingProcess = isHibernating(cluster);
   const hibernatingMessage =
     isClusterInHibernatingProcess &&
     (cluster.state === clusterStates.RESUMING ? (

@@ -4,7 +4,6 @@ import { Wizard, Title } from '@patternfly/react-core';
 import { Spinner } from '@redhat-cloud-services/frontend-components/Spinner';
 import { DateFormat } from '@redhat-cloud-services/frontend-components/DateFormat';
 
-import { isHypershiftCluster } from '~/components/clusters/ClusterDetails/clusterDetailsHelper';
 import modals from '../../../../common/Modal/modals';
 import VersionSelectionGrid from './VersionSelectionGrid';
 import UpgradeTimeSelection from './UpgradeTimeSelection';
@@ -13,6 +12,7 @@ import FinishedStep from './FinishedStep';
 import './UpgradeWizard.scss';
 
 import clusterService from '../../../../../services/clusterService';
+import { isHypershiftCluster } from '../../clusterStates';
 
 class UpgradeWizard extends React.Component {
   state = {

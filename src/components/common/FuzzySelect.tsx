@@ -16,7 +16,7 @@ export interface FuzzySelectProps extends Omit<SelectProps, 'isGrouped'> {
   fuzziness?: number;
   selected?: string;
   sortFn?: (a: FuzzyEntryType, b: FuzzyEntryType) => number;
-  filterValidate?: { pattern: RegExp; message: string };
+  filterValidate?: { pattern: RegExp; message: string }; // regex pattern that must be true, else message is shown
   truncation?: number;
   selectionData: FuzzyDataType;
 }
@@ -30,6 +30,8 @@ function FuzzySelect(props: FuzzySelectProps) {
     truncation, // if seleted value above this # of characters, truncate selected
     selectionData,
     isOpen,
+    toggleId,
+    ...rest
   } = props;
 
   // const [isInnerOpen, setIsInnerOpen] = useState(false);
@@ -57,18 +59,20 @@ function FuzzySelect(props: FuzzySelectProps) {
     }
   }, [isOpen]);
 
-  const { selectionList, isGrouped } = useMemo<{
+  const { selectionList, isGrouped, groupOrder } = useMemo<{
     selectionList: FuzzyEntryType[];
+    groupOrder: string[];
     isGrouped: boolean;
   }>(() => {
     if (Array.isArray(selectionData)) {
-      return { selectionList: selectionData as FuzzyEntryType[], isGrouped: false };
+      return { selectionList: selectionData as FuzzyEntryType[], isGrouped: false, groupOrder: [] };
     }
     let allLists: FuzzyEntryType[] = [];
     Object.entries(selectionData || {}).forEach(([_group, list]) => {
       allLists = [...allLists, ...list];
     });
-    return { selectionList: allLists, isGrouped: true };
+    const groupOrder = Object.keys(selectionData) as string[];
+    return { selectionList: allLists, isGrouped: true, groupOrder };
   }, [selectionData]);
 
   const selectOptions = useMemo<ReactElement[]>(() => {
@@ -85,22 +89,20 @@ function FuzzySelect(props: FuzzySelectProps) {
         </SelectOption>
       ));
     }
-    return Object.entries(selectionData || {})
-      .sort(([groupa], [groupb]) => groupa.localeCompare(groupb))
-      .map(([group, list]) => (
-        <SelectGroup label={group} key={group}>
-          {list.map(({ key, value, description, disabled }) => (
-            <SelectOption
-              value={value || key}
-              key={key}
-              description={description}
-              isDisabled={disabled}
-            >
-              {key}
-            </SelectOption>
-          ))}
-        </SelectGroup>
-      ));
+    return Object.entries(selectionData || {}).map(([group, list]) => (
+      <SelectGroup label={group} key={group}>
+        {list.map(({ key, value, description, disabled }) => (
+          <SelectOption
+            value={value || key}
+            key={key}
+            description={description}
+            isDisabled={disabled}
+          >
+            {key}
+          </SelectOption>
+        ))}
+      </SelectGroup>
+    ));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectionData]);
 
@@ -111,7 +113,8 @@ function FuzzySelect(props: FuzzySelectProps) {
       }
       // feature requested: https://github.com/patternfly/patternfly-react/issues/9407
       if (filterValidate) {
-        if (filterValidate.pattern.test(text)) {
+        filterValidate.pattern.lastIndex = 0;
+        if (!filterValidate.pattern.test(text)) {
           return [
             <SelectOption
               isDisabled
@@ -200,19 +203,21 @@ function FuzzySelect(props: FuzzySelectProps) {
         ));
       }
       // create filtered grouped select options
-      return Object.entries(matchedMap).map(([groupKey, list]) => (
-        <SelectGroup label={groupKey} key={groupKey}>
-          {list.map((entry) => (
-            <SelectOption
-              className="pf-c-dropdown__menu-item"
-              key={Object.keys(entry)[0]}
-              value={valueMap[Object.keys(entry)[0]]}
-            >
-              {Object.values(entry)}
-            </SelectOption>
-          ))}
-        </SelectGroup>
-      ));
+      return Object.entries(matchedMap)
+        .sort(([groupa], [groupb]) => groupOrder.indexOf(groupa) - groupOrder.indexOf(groupb))
+        .map(([groupKey, list]) => (
+          <SelectGroup label={groupKey} key={groupKey}>
+            {list.map((entry) => (
+              <SelectOption
+                className="pf-c-dropdown__menu-item"
+                key={Object.keys(entry)[0]}
+                value={valueMap[Object.keys(entry)[0]]}
+              >
+                {Object.values(entry)}
+              </SelectOption>
+            ))}
+          </SelectGroup>
+        ));
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [selectionList, selectionData, selectOptions],
@@ -221,7 +226,6 @@ function FuzzySelect(props: FuzzySelectProps) {
   return (
     <div ref={containerRef}>
       <Select
-        {...props}
         isOpen={isOpen}
         onFilter={onFilter}
         selections={truncateTextWithEllipsis(selected, truncation)}
@@ -229,6 +233,8 @@ function FuzzySelect(props: FuzzySelectProps) {
         ref={ref}
         hasInlineFilter
         isGrouped={isGrouped}
+        toggleId={toggleId}
+        {...rest}
       >
         {selectOptions}
       </Select>
@@ -236,7 +242,9 @@ function FuzzySelect(props: FuzzySelectProps) {
   );
 }
 
-// get longest common strings
+// find the longest common string between two strings
+// iow for these two strings 873456 and 98745687 the longest common string is 456
+// we use this to find the the characters that match with the search term in order to boldface it
 const lcss = (str1: string, str2: string) => {
   let matches;
   let item = str1;
@@ -244,10 +252,14 @@ const lcss = (str1: string, str2: string) => {
   let ret: { beg: number; end: number }[] = [];
   do {
     // find all occurances of current longest string
+    // save them and replace with spaces
     let match;
     matches = [];
-    const res = lcs(item, find);
-    if (res.length > 1) {
+    let res = lcs(item, find);
+    if (res.length > 0) {
+      // escape search pattern (ex: if there's a period, escape to \\.)
+      const { length: len } = res;
+      res = res.replace(/[-[\]{}()*+?.,\\^$|#]/g, '\\$&');
       const regex = new RegExp(res, 'g');
       do {
         match = regex.exec(item);
@@ -262,12 +274,17 @@ const lcss = (str1: string, str2: string) => {
             return { beg, end };
           }),
         ];
-        item = item.replace(regex, () => ' '.repeat(res.length));
-        find = find.replace(regex, () => '');
+        // so that we don't constantly find the same matches over and over again
+        // we replace the matching characters with spaces
+        // iow the above strings become '987   87' and '873   ' so that 456 isn't found again
+        item = item.replace(regex, () => ' '.repeat(len));
+        find = find.replace(regex, () => ' '.repeat(len));
       }
     }
   } while (find.length && matches.length);
 
+  // longest common strings will be found out of order
+  // but when we create the string it needs in order
   ret.sort(({ beg: begA }, { beg: begB }) => begA - begB);
 
   return ret;
@@ -283,6 +300,8 @@ const lcs = (str1: string, str2: string) => {
   let i = 0;
   let j = 0;
   while (i < str1Length) {
+    // create an array the length of the 2nd string
+    // to count the number of times a character is present in both strings
     const subArray = new Array(str2Length);
     j = 0;
     while (j < str2Length) {
@@ -297,7 +316,12 @@ const lcs = (str1: string, str2: string) => {
   while (i < str1Length) {
     j = 0;
     while (j < str2Length) {
-      if (str1[i] !== str2[j]) {
+      // if the characters don't match, set count to 0
+      // also set matching spaces to 0 since we are replacing previouly found
+      //  matches above with spaces, we don't want spaces to match either
+      // otherwise the spaces in these two strings '987   89' and '873   '
+      //  will be returned as the longest common string instead of 87
+      if (str1[i] !== str2[j] || (str1[i] === ' ' && str2[j] === ' ')) {
         num[i][j] = 0;
       } else {
         if (i === 0 || j === 0) {

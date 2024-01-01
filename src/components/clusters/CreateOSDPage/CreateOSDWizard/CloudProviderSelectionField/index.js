@@ -1,9 +1,10 @@
 import { connect } from 'react-redux';
 import { formValueSelector } from 'redux-form';
 
-import { availableQuota, quotaTypes } from '../../../common/quotaSelectors';
+import { availableQuota } from '../../../common/quotaSelectors';
 
 import CloudProviderSelectionField from './CloudProviderSelectionField';
+import { QuotaTypes } from '../../../common/quotaModel';
 
 const mapStateToProps = (state) => {
   const valueSelector = formValueSelector('CreateCluster');
@@ -18,7 +19,7 @@ const mapStateToProps = (state) => {
   return {
     product,
     hasGcpQuota: quotaQuery({
-      resourceType: quotaTypes.CLUSTER,
+      resourceType: QuotaTypes.CLUSTER,
       cloudProviderID: 'gcp',
       product,
       billingModel,
@@ -26,7 +27,7 @@ const mapStateToProps = (state) => {
     }),
 
     hasAwsQuota: quotaQuery({
-      resourceType: quotaTypes.CLUSTER,
+      resourceType: QuotaTypes.CLUSTER,
       cloudProviderID: 'aws',
       product,
       billingModel,

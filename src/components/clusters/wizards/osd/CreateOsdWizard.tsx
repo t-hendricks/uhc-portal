@@ -38,6 +38,7 @@ import {
 import { useFormState } from '~/components/clusters/wizards/hooks';
 import { AppPage } from '~/components/App/AppPage';
 import { osdWizardFormValidator } from '~/components/clusters/wizards/osd/formValidators';
+import { QuotaCostList } from '~/types/accounts_mgmt.v1';
 import {
   ariaLabel,
   breadcrumbs,
@@ -155,7 +156,7 @@ const CreateOsdWizardInternal = () => {
   const createClusterResponse = useGlobalState((state) => state.clusters.createdCluster);
 
   const hasProductQuota =
-    availableClustersFromQuota(organization.quotaList, {
+    availableClustersFromQuota(organization.quotaList as QuotaCostList, {
       product,
     }) >= 1;
 

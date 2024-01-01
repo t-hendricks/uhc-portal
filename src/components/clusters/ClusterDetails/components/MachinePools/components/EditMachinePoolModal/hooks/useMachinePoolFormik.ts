@@ -1,10 +1,7 @@
 import * as React from 'react';
 import * as Yup from 'yup';
 import { Cluster, MachinePool, NodePool, Subnetwork } from '~/types/clusters_mgmt.v1';
-import {
-  isHypershiftCluster,
-  isMultiAZ,
-} from '~/components/clusters/ClusterDetails/clusterDetailsHelper';
+import { isMultiAZ } from '~/components/clusters/ClusterDetails/clusterDetailsHelper';
 import {
   checkLabelKey,
   checkLabelValue,
@@ -15,7 +12,7 @@ import {
   validateSecurityGroups,
 } from '~/common/validators';
 import { GlobalState } from '~/redux/store';
-import { isROSA } from '~/components/clusters/common/clusterStates';
+import { isHypershiftCluster, isROSA } from '~/components/clusters/common/clusterStates';
 import {
   defaultWorkerNodeVolumeSizeGiB,
   getWorkerNodeVolumeSizeMaxGiB,
@@ -106,7 +103,7 @@ const useMachinePoolFormik = ({
       name: machinePool?.id || '',
       autoscaling: !!machinePool?.autoscaling,
       autoscaleMin,
-      autoscaleMax,
+      autoscaleMax: autoscaleMax || 1,
       replicas: machinePool?.replicas || minNodesRequired,
       labels: machinePool?.labels
         ? Object.keys(machinePool.labels).map((key) => ({
@@ -147,10 +144,12 @@ const useMachinePoolFormik = ({
           machinePools: machinePools.data || [],
           machineTypes,
           quota: organization.quotaList,
-          minNodes,
+          minNodes: minNodesRequired,
           machineTypeId: values.instanceType,
+          editMachinePoolId: values.name,
         });
         const maxNodes = nodeOptions.length ? nodeOptions[nodeOptions.length - 1] : 0;
+
         return Yup.object({
           name: Yup.string().test('mp-name', '', (value) => {
             const err = isHypershift ? checkNodePoolName(value) : checkMachinePoolName(value);
@@ -222,25 +221,37 @@ const useMachinePoolFormik = ({
           ),
           autoscaleMin: values.autoscaling
             ? Yup.number()
-                .min(minNodes, `Input cannot be less than ${minNodes}.`)
-                .max(values.autoscaleMax, 'Min nodes cannot be more than max nodes.')
                 .test(
                   'whole-number',
                   'Decimals are not allowed. Enter a whole number.',
                   noDecimalTest,
                 )
+                .min(minNodes, `Input cannot be less than ${minNodes}.`)
+                .max(values.autoscaleMax, 'Min nodes cannot be more than max nodes.')
             : Yup.number(),
           autoscaleMax: values.autoscaling
             ? Yup.number()
+                .test('autoscale-max', '', (value) => {
+                  if (!noDecimalTest(value)) {
+                    return new Yup.ValidationError(
+                      'Decimals are not allowed. Enter a whole number.',
+                      value,
+                      'autoscaleMax',
+                    );
+                  }
+                  if (value < 1) {
+                    return new Yup.ValidationError(
+                      'Max nodes must be greater than 0.',
+                      value,
+                      'autoscaleMax',
+                    );
+                  }
+                  return false;
+                })
                 .min(values.autoscaleMin, 'Max nodes cannot be less than min nodes.')
                 .max(
                   isMultiAz ? maxNodes / 3 : maxNodes,
                   `Input cannot be more than ${isMultiAz ? maxNodes / 3 : maxNodes}.`,
-                )
-                .test(
-                  'whole-number',
-                  'Decimals are not allowed. Enter a whole number.',
-                  noDecimalTest,
                 )
             : Yup.number(),
           autoscaling: Yup.boolean(),

@@ -235,7 +235,7 @@ const reviewValues = {
         {
           // eslint-disable-next-line react/destructuring-assignment
           labels.map((label) => (
-            <Label color="blue">{`${label.key} = ${label.value || ''}`}</Label>
+            <Label color="blue" isTruncated>{`${label.key} = ${label.value || ''}`}</Label>
           ))
         }
       </LabelGroup>
@@ -401,7 +401,7 @@ const reviewValues = {
       <LabelGroup>
         {/* eslint-disable-next-line react/destructuring-assignment */}
         {noProxyDomains.map((domain) => (
-          <Label isCompact color="blue">
+          <Label color="blue" isCompact isTruncated>
             {domain}
           </Label>
         ))}

@@ -1,25 +1,24 @@
-import { AxiosResponse } from 'axios';
 import { ViewOptions } from '~/types/types';
-import { ClusterLogList } from '~/types/service_logs.v1';
 import {
   ONLY_MY_CLUSTERS_TOGGLE_CLUSTERS_LIST,
   ONLY_MY_CLUSTERS_TOGGLE_CLUSTER_ARCHIVES_LIST,
 } from '~/common/localStorageConstants';
-import { FULFILLED_ACTION, REJECTED_ACTION } from '../reduxHelpers';
+import { ClusterLogAction } from '../../components/clusters/ClusterDetails/components/ClusterLogs/clusterLogActions';
+import { GET_CLUSTER_LOGS } from '../../components/clusters/ClusterDetails/components/ClusterLogs/clusterLogConstants';
+import type { ClusterAction } from '../actions/clustersActions';
+import type { DashboardsAction } from '../actions/dashboardsActions';
+import type { SubscriptionsAction } from '../actions/subscriptionsActions';
+import type { ViewOptionsAction } from '../actions/viewOptionsActions';
 import {
   clustersConstants,
   dashboardsConstants,
   subscriptionsConstants,
   viewConstants,
-  viewPaginationConstants,
   viewOptionsConstants,
+  viewPaginationConstants,
 } from '../constants';
-import { GET_CLUSTER_LOGS } from '../../components/clusters/ClusterDetails/components/ClusterLogs/clusterLogConstants';
-import type { ViewOptionsAction } from '../actions/viewOptionsActions';
+import { FULFILLED_ACTION, REJECTED_ACTION } from '../reduxHelpers';
 import type { PromiseActionType } from '../types';
-import type { DashboardsAction } from '../actions/dashboardsActions';
-import type { ClusterAction } from '../actions/clustersActions';
-import type { SubscriptionsAction } from '../actions/subscriptionsActions';
 
 type ViewState = ViewOptions;
 
@@ -107,14 +106,7 @@ const viewOptionsReducer = (
     | DashboardsAction
     | ClusterAction
     | SubscriptionsAction
-    // TODO reference cluster logs action when `clusterLogActions.js` is converted to typescript
-    | {
-        type: 'GET_CLUSTER_LOGS';
-        payload: Promise<{
-          externalClusterID: string;
-          logs: AxiosResponse<ClusterLogList>;
-        }>;
-      }
+    | ClusterLogAction
     // TODO create typescript action
     | {
         type: 'VIEW_MY_CLUSTERS_ONLY_CHANGED';
