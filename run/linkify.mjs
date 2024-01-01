@@ -42,7 +42,8 @@ export const getJiraStatuses = async () => {
   try {
     // HAC & OCMUI boards allow unauthenticated requests :-)
     // Note: Even mentioning a closed board e.g. `project in (OCMUI, OCM)` results in 400 error.
-    const params = new URLSearchParams({ jql: jiraQuery, maxResults: 100 });
+    const fields = 'key,priority,status,resolution,summary';
+    const params = new URLSearchParams({ jql: jiraQuery, maxResults: 100, fields });
     const url = `https://issues.redhat.com/rest/api/2/search?${params}`;
     const response = await fetch(url);
     const body = await response.text();
