@@ -41,9 +41,8 @@ would output:
 
   A: ... C: ...              master  DDDD  Merge branch 'D' into 'master' ...
 
+  A: ... C: ...              master  PPPP  Merge branch 'P' into 'master' ...
   A: "   C: month ago        stable  pppp  Merge branch 'P' into 'master' ...⏎ (cherry picked from commit PPPP)
-
-(TODO: that last "stable" or "candidate" can show without "master" pair when cherry-pick predates merge.)
 `;
 
 const scriptArgs = process.argv.slice(2); // 0 is `node` path, 1 is script full path.
@@ -94,6 +93,8 @@ const gitPromises = {
   // On master, --first-parent attributes diffs to the merge commit that landed the MR.
   // ("D" - "F" merges in diagram above, rather than individual "o" commits)
   dev: $`git --no-pager log ^${BASE} ${DEV_REF} --first-parent --pretty=${FORMAT} --color=always --date=iso-strict -z ${gitLogArgs}`,
+  // Full history — won't show all, just for handling corner case "p" in diagram above.
+  devAll: $`git --no-pager log ${DEV_REF} --first-parent --pretty=${FORMAT} --color=always --date=iso-strict -z ${gitLogArgs}`,
 
   // On candidate & stable, cherry - picked master MRs become single - parent commits.
   // Do NOT want `--first-parent` as each merge to candidate deploys multiple MRs.
@@ -152,22 +153,42 @@ Object.entries(parsedLogs).forEach(([key, logs]) => {
   });
 });
 
-const dates = Object.keys(byDate);
-dates.sort(); // by authorDate = by order MRs were merged to master
-dates.reverse();
-dates.forEach((date) => {
-  const byHash = byDate[date];
-  Object.values(byHash).forEach((byKey) => {
-    // Show dev separately, even if same hash as below (because merged, or being picked).
-    if (byKey.dev) {
-      console.log(byKey.dev.line);
-    }
-    // Among these we nearly always merge, e.g. it's enough to say a cherry-pick is in stable,
-    // that implies it's also in candidate.
-    const leastSpecific = byKey.stable || byKey.candidate || byKey.extra || byKey.pick;
-    if (leastSpecific) {
-      console.log(leastSpecific.line);
+Object.keys(byDate)
+  .sort() // by authorDate = by order MRs were merged to master
+  .reverse()
+  .forEach((date) => {
+    const lines = [];
+    // Detect corner case ("p" in diagram above): when MR was cherry-picked and later covered by a
+    // a master->candidate merge, it can come up in stable/candidate but no longer in dev.
+    let foundDev = false;
+
+    const byHash = byDate[date];
+    Object.values(byHash).forEach((byKey) => {
+      // Show dev separately, even if same hash as below (because merged, or being picked).
+      if (byKey.dev) {
+        lines.push(byKey.dev.line);
+        foundDev = true;
+      }
+
+      // Among these we nearly always merge, e.g. it's enough to say a cherry-pick is in stable,
+      // that implies it's also in candidate.
+      const leastSpecific = byKey.stable || byKey.candidate || byKey.extra || byKey.pick;
+      if (leastSpecific) {
+        lines.push(leastSpecific.line);
+      }
+    });
+
+    // Some byDate[date] will only have old `devAll` lines; skip unless we have relevant content.
+    if (lines.length > 0) {
+      // But if do have relevant content, just not from dev, dig up devAll line(s).
+      if (!foundDev) {
+        Object.values(byHash).forEach((byKey) => {
+          if (byKey.devAll) {
+            console.log(byKey.devAll.line);
+          }
+        });
+      }
+      lines.forEach((line) => console.log(line));
+      console.log(''); // blank line between same-authorDate groups.
     }
   });
-  console.log(''); // blank line between same-authorDate groups.
-});
