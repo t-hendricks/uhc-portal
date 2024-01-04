@@ -50,13 +50,19 @@ const CreateRosaWizardFooter = ({
         {({ activeStep, onNext, onBack, onClose }) => (
           <>
             {activeStep.id === stepId.REVIEW_AND_CREATE ? (
-              <Button variant="primary" type="submit" onClick={() => onBeforeSubmit(onSubmit)}>
+              <Button
+                variant="primary"
+                type="submit"
+                data-testid="create-cluster-button"
+                onClick={() => onBeforeSubmit(onSubmit)}
+              >
                 Create cluster
               </Button>
             ) : (
               <Button
                 variant="primary"
                 type="submit"
+                data-testid="wizard-next-button"
                 onClick={() => onBeforeNext(onNext)}
                 isLoading={
                   hasLoadingState(activeStep.id) && (asyncValidating || areAwsResourcesLoading)
@@ -68,10 +74,15 @@ const CreateRosaWizardFooter = ({
                 Next
               </Button>
             )}
-            <Button variant="secondary" onClick={onBack} isDisabled={activeStep.id === firstStepId}>
+            <Button
+              variant="secondary"
+              data-testid="wizard-back-button"
+              onClick={onBack}
+              isDisabled={activeStep.id === firstStepId}
+            >
               Back
             </Button>
-            <Button variant="link" onClick={onClose}>
+            <Button variant="link" data-testid="wizard-cancel-button" onClick={onClose}>
               Cancel
             </Button>
           </>
