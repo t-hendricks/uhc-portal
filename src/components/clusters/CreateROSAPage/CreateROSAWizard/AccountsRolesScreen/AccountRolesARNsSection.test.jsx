@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, screen, fireEvent, checkAccessibility } from '~/testUtils';
+import { render, screen, checkAccessibility } from '~/testUtils';
 import wizardConnector from '~/components/clusters/CreateOSDPage/CreateOSDWizard/WizardConnector';
 import * as useFeatureGate from '~/hooks/useFeatureGate';
 import { HCP_USE_UNMANAGED } from '~/redux/constants/featureConstants';
@@ -91,11 +91,10 @@ describe('<AccountRolesARNsSection />', () => {
 
   it('Shows only unmanaged policy roles for non hypershift cluster', async () => {
     const newProps = { ...props, isHypershiftSelected: false };
-    render(<ConnectedAccountRolesARNsSection {...newProps} />);
+    const { user } = render(<ConnectedAccountRolesARNsSection {...newProps} />);
 
     // expand installer drop-down
-    // user.click doesn't work with PF dropdowns, so required to use fireEvent
-    fireEvent.click(screen.getByRole('button', { name: 'Options menu' }));
+    await user.click(screen.getByRole('button', { name: 'Options menu' }));
 
     expect(
       screen.getByRole('option', {
@@ -122,15 +121,14 @@ describe('<AccountRolesARNsSection />', () => {
     ).not.toBeInTheDocument();
   });
 
-  it('Shows only managed policy roles for hypershift cluster and feature flag is false', () => {
+  it('Shows only managed policy roles for hypershift cluster and feature flag is false', async () => {
     useFeatureGateMock.mockImplementation(gateValue(HCP_USE_UNMANAGED, false));
 
     const newProps = { ...props, isHypershiftSelected: true };
-    render(<ConnectedAccountRolesARNsSection {...newProps} />);
+    const { user } = render(<ConnectedAccountRolesARNsSection {...newProps} />);
 
     // expand installer drop-down
-    // user.click doesn't work with PF dropdowns, so required to use fireEvent
-    fireEvent.click(screen.getByRole('button', { name: 'Options menu' }));
+    await user.click(screen.getByRole('button', { name: 'Options menu' }));
 
     expect(
       screen.queryByRole('option', {
@@ -157,15 +155,14 @@ describe('<AccountRolesARNsSection />', () => {
     ).toBeInTheDocument();
   });
 
-  it('Shows only both managed and unmanaged policy roles for hypershift cluster and feature flag is true', () => {
+  it('Shows only both managed and unmanaged policy roles for hypershift cluster and feature flag is true', async () => {
     useFeatureGateMock.mockImplementation(gateValue(HCP_USE_UNMANAGED, true));
 
     const newProps = { ...props, isHypershiftSelected: true };
-    render(<ConnectedAccountRolesARNsSection {...newProps} />);
+    const { user } = render(<ConnectedAccountRolesARNsSection {...newProps} />);
 
     // expand installer drop-down
-    // user.click doesn't work with PF dropdowns, so required to use fireEvent
-    fireEvent.click(screen.getByRole('button', { name: 'Options menu' }));
+    await user.click(screen.getByRole('button', { name: 'Options menu' }));
 
     expect(
       screen.getByRole('option', {

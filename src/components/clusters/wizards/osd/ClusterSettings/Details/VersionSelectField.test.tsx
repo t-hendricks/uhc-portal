@@ -110,7 +110,6 @@ describe('<VersionSelectField />', () => {
         <VersionSelectField {...defaultProps} />
       </Formik>,
     );
-
     expect(screen.queryByText('4.13.1')).not.toBeInTheDocument();
     expect(screen.queryByText('4.12.13')).toBeInTheDocument();
   });
@@ -123,12 +122,11 @@ describe('<VersionSelectField />', () => {
     );
 
     expect(screen.queryByText('Version (Google Cloud Marketplace enabled)')).toBeInTheDocument();
-    expect(screen.queryByText('4.13.1')).not.toBeInTheDocument();
-    expect(screen.queryByText('4.12.12')).not.toBeInTheDocument();
+    expect(container.querySelector('fieldset')).not.toBeInTheDocument();
     const menuToggle = container.querySelector('#version-selector')!;
     expect(menuToggle).toBeInTheDocument();
+    // eslint-disable-next-line testing-library/prefer-user-event
     fireEvent.click(menuToggle);
-    expect(screen.queryByText('4.13.1')).toBeInTheDocument();
-    expect(screen.queryByText('4.12.12')).toBeInTheDocument();
+    expect(container.querySelector('fieldset')).toBeInTheDocument();
   });
 });

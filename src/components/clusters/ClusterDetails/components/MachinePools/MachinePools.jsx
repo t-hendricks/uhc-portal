@@ -5,6 +5,8 @@ import isEmpty from 'lodash/isEmpty';
 import get from 'lodash/get';
 
 import {
+  Button,
+  ButtonVariant,
   Card,
   CardBody,
   CardFooter,
@@ -12,15 +14,19 @@ import {
   Divider,
   EmptyState,
   Label,
+  Toolbar,
+  ToolbarContent,
+  ToolbarItem,
 } from '@patternfly/react-core';
 import { Table, TableHeader, TableBody, cellWidth, expandable } from '@patternfly/react-table';
 import Skeleton from '@redhat-cloud-services/frontend-components/Skeleton';
 
 import { EditClusterAutoScalerForDay2 } from '~/components/clusters/common/EditClusterAutoScalingDialog';
-import {
-  isMultiAZ,
-  isHypershiftCluster,
-} from '~/components/clusters/ClusterDetails/clusterDetailsHelper';
+import { isMultiAZ } from '~/components/clusters/ClusterDetails/clusterDetailsHelper';
+import { MachineConfiguration } from '~/components/clusters/common/MachineConfiguration/MachineConfiguration';
+import { noQuotaTooltip } from '~/common/helpers';
+import { versionFormatter } from '~/common/versionHelpers';
+import { clusterService } from '~/services';
 import MachinePoolNodesSummary from './MachinePoolNodesSummary';
 import {
   UpdateAllMachinePools,
@@ -39,9 +45,14 @@ import {
 import ButtonWithTooltip from '../../../../common/ButtonWithTooltip';
 import ErrorBox from '../../../../common/ErrorBox';
 import modals from '../../../../common/Modal/modals';
-import { noQuotaTooltip } from '../../../../../common/helpers';
-import { versionFormatter } from '../../../../../common/versionHelpers';
-import { isHibernating, isROSA } from '../../../common/clusterStates';
+import {
+  isHibernating,
+  isHypershiftCluster,
+  isROSA,
+  isOSD,
+  isCCS,
+  isAWS,
+} from '../../../common/clusterStates';
 import EditMachinePoolModal from './components/EditMachinePoolModal/EditMachinePoolModal';
 
 import './MachinePools.scss';
@@ -65,6 +76,7 @@ const initialState = {
   hideDeleteMachinePoolError: false,
   editMachinePoolId: undefined,
   addMachinePool: false,
+  showMachinePoolsConfigModal: false,
 };
 
 class MachinePools extends React.Component {
@@ -173,6 +185,8 @@ class MachinePools extends React.Component {
       getMachinePools,
       isClusterAutoscalingModalOpen,
       useNodeUpgradePolicies,
+      hasMachineConfiguration,
+      canBypassPIDsLimit,
     } = this.props;
 
     const {
@@ -181,6 +195,7 @@ class MachinePools extends React.Component {
       hideDeleteMachinePoolError,
       addMachinePool,
       editMachinePoolId,
+      showMachinePoolsConfigModal,
     } = this.state;
     const machinePoolsActions = cluster?.machinePoolsActions || {}; // Data not defined on the cluster list response
     const hasMachinePools = !!machinePoolsList.data.length;
@@ -191,6 +206,11 @@ class MachinePools extends React.Component {
     );
     const isHypershift = isHypershiftCluster(cluster);
     const isRosa = isROSA(cluster);
+    const isOsd = isOSD(cluster);
+    const isCcs = isCCS(cluster);
+    const isAws = isAWS(cluster);
+    const showMachineConfigurationAction =
+      hasMachineConfiguration && ((isRosa && !isHypershift) || (isOsd && isCcs && isAws));
 
     if (hasMachinePools && machinePoolsList.error) {
       return (
@@ -220,8 +240,7 @@ class MachinePools extends React.Component {
     const isReadOnly = cluster?.status?.configuration_mode === 'read_only';
     const readOnlyReason = isReadOnly && 'This operation is not available during maintenance';
     const hibernatingReason =
-      isHibernating(cluster.state) &&
-      'This operation is not available while cluster is hibernating';
+      isHibernating(cluster) && 'This operation is not available while cluster is hibernating';
     const canNotCreateReason =
       !machinePoolsActions.create &&
       'You do not have permission to add a machine pool. Only cluster owners, cluster editors, machine pool editors and Organization Administrators can add machine pools.';
@@ -400,36 +419,58 @@ class MachinePools extends React.Component {
                 {machinePoolsList.error && (
                   <ErrorBox message="Error retrieving machine pools" response={machinePoolsList} />
                 )}
-                <ButtonWithTooltip
-                  disableReason={
-                    readOnlyReason || hibernatingReason || canNotCreateReason || quotaReason
-                  }
-                  id="add-machine-pool"
-                  onClick={() =>
-                    this.setState(
-                      produce((draft) => {
-                        draft.addMachinePool = true;
-                      }),
-                    )
-                  }
-                  variant="secondary"
-                  className="pf-u-mb-lg pf-u-mr-md"
-                >
-                  Add machine pool
-                </ButtonWithTooltip>
-                {!isHypershift && (
-                  <ButtonWithTooltip
-                    id="edit-existing-cluster-autoscaling"
-                    disableReason={
-                      readOnlyReason || hibernatingReason || canNotEditAutoscalerReason
-                    }
-                    onClick={() => openModal(modals.EDIT_CLUSTER_AUTOSCALING_V1)}
-                    variant="secondary"
-                    className="pf-u-mb-lg"
-                  >
-                    Edit cluster autoscaling
-                  </ButtonWithTooltip>
-                )}
+                <Toolbar>
+                  <ToolbarContent>
+                    <ToolbarItem>
+                      <ButtonWithTooltip
+                        disableReason={
+                          readOnlyReason || hibernatingReason || canNotCreateReason || quotaReason
+                        }
+                        id="add-machine-pool"
+                        onClick={() =>
+                          this.setState(
+                            produce((draft) => {
+                              draft.addMachinePool = true;
+                            }),
+                          )
+                        }
+                        variant={ButtonVariant.secondary}
+                      >
+                        Add machine pool
+                      </ButtonWithTooltip>
+                    </ToolbarItem>
+                    {!isHypershift && (
+                      <ToolbarItem>
+                        <ButtonWithTooltip
+                          id="edit-existing-cluster-autoscaling"
+                          disableReason={
+                            readOnlyReason || hibernatingReason || canNotEditAutoscalerReason
+                          }
+                          onClick={() => openModal(modals.EDIT_CLUSTER_AUTOSCALING_V1)}
+                          variant={ButtonVariant.secondary}
+                        >
+                          Edit cluster autoscaling
+                        </ButtonWithTooltip>
+                      </ToolbarItem>
+                    )}
+                    {showMachineConfigurationAction && (
+                      <ToolbarItem>
+                        <Button
+                          variant={ButtonVariant.secondary}
+                          onClick={() =>
+                            this.setState(
+                              produce((draft) => {
+                                draft.showMachinePoolsConfigModal = true;
+                              }),
+                            )
+                          }
+                        >
+                          Edit machine configuration
+                        </Button>
+                      </ToolbarItem>
+                    )}
+                  </ToolbarContent>
+                </Toolbar>
                 <Divider />
                 {deleteMachinePoolResponse.error && !hideDeleteMachinePoolError && (
                   <ErrorBox
@@ -503,6 +544,22 @@ class MachinePools extends React.Component {
             clusterAutoscalerResponse={clusterAutoscalerResponse}
           />
         )}
+        {showMachinePoolsConfigModal && (
+          <MachineConfiguration
+            clusterID={cluster.id}
+            getMachineConfiguration={clusterService.getKubeletConfiguration}
+            createMachineConfiguration={clusterService.postKubeletConfiguration}
+            updateMachineConfiguration={clusterService.patchKubeletConfiguration}
+            onClose={() =>
+              this.setState(
+                produce((draft) => {
+                  draft.showMachinePoolsConfigModal = false;
+                }),
+              )
+            }
+            canBypassPIDsLimit={canBypassPIDsLimit}
+          />
+        )}
       </>
     );
   }
@@ -531,6 +588,8 @@ MachinePools.propTypes = {
   machineTypes: PropTypes.object.isRequired,
   canMachinePoolBeUpdated: PropTypes.func,
   useNodeUpgradePolicies: PropTypes.bool,
+  hasMachineConfiguration: PropTypes.bool,
+  canBypassPIDsLimit: PropTypes.bool,
 };
 
 export default MachinePools;

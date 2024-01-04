@@ -1,5 +1,6 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+
+import { render, screen, checkAccessibility } from '~/testUtils';
 import ProgressList from './ProgressList';
 import clusterStates from '../clusterStates';
 import { normalizedProducts } from '../../../../common/subscriptionTypes';
@@ -35,33 +36,81 @@ describe('<ProgressList />', () => {
     state: clusterStates.WAITING,
   };
 
-  let wrapper;
-  beforeEach(() => {
-    wrapper = shallow(<ProgressList cluster={firstStepPending} />);
+  it('when cluster is pending, the first step is complete and second step is validating', async () => {
+    const { container } = render(<ProgressList cluster={firstStepPending} />);
+
+    const steps = screen.getAllByRole('listitem');
+    expect(steps).toHaveLength(4);
+
+    expect(steps[0]).toHaveClass('pf-m-success');
+    expect(steps[0].textContent).toEqual('Account setupCompleted');
+
+    expect(steps[1]).toHaveAttribute('aria-current');
+    expect(steps[1].textContent).toEqual('Network settingsValidating');
+
+    expect(steps[2]).toHaveClass('pf-m-pending');
+    expect(steps[3]).toHaveClass('pf-m-pending');
+
+    await checkAccessibility(container);
   });
 
-  it('should render when first step in progress', () => {
-    expect(wrapper).toMatchSnapshot();
+  it('when cluster is installing: first, second, third steps are complete', () => {
+    render(<ProgressList cluster={firstStepCompleted} />);
+
+    const steps = screen.getAllByRole('listitem');
+    expect(steps).toHaveLength(4);
+
+    expect(steps[0]).toHaveClass('pf-m-success');
+    expect(steps[0].textContent).toEqual('Account setupCompleted');
+
+    expect(steps[1]).toHaveClass('pf-m-success');
+    expect(steps[1].textContent).toEqual('Network settingsCompleted');
+
+    expect(steps[2]).toHaveClass('pf-m-success');
+    expect(steps[2].textContent).toEqual('DNS setupCompleted');
+
+    expect(steps[3]).toHaveAttribute('aria-current');
+    expect(steps[3].textContent).toEqual('Cluster installationInstalling cluster');
   });
-  it('should render when first step completed', () => {
-    wrapper.setProps({ cluster: firstStepCompleted });
-    expect(wrapper).toMatchSnapshot();
+
+  it('when cluster is installing and dns is ready: first, second, third steps are complete', () => {
+    render(<ProgressList cluster={secondStepCompleted} />);
+
+    const steps = screen.getAllByRole('listitem');
+    expect(steps).toHaveLength(4);
+
+    expect(steps[0]).toHaveClass('pf-m-success');
+    expect(steps[0].textContent).toEqual('Account setupCompleted');
+
+    expect(steps[1]).toHaveClass('pf-m-success');
+    expect(steps[1].textContent).toEqual('Network settingsCompleted');
+
+    expect(steps[2]).toHaveClass('pf-m-success');
+    expect(steps[2].textContent).toEqual('DNS setupCompleted');
+
+    expect(steps[3]).toHaveAttribute('aria-current');
+    expect(steps[3].textContent).toEqual('Cluster installationInstalling cluster');
   });
-  it('should render when second step completed', () => {
-    wrapper.setProps({ cluster: secondStepCompleted });
-    expect(wrapper).toMatchSnapshot();
-  });
+
   it('should render for ROSA manual mode', () => {
-    wrapper.setProps({ cluster: rosaManualMode });
-    expect(wrapper).toMatchSnapshot();
-  });
+    render(<ProgressList cluster={rosaManualMode} />);
 
-  describe('OIDC step (RTL test)', () => {
-    // Currently there isn't a way, from the rendered HTML code
-    // to tell what state each step is in
-    // so therefore there isn't a way to test the state of the progress bar
-    // work should be done to add proper aria roles and labels to each step
+    const steps = screen.getAllByRole('listitem');
+    expect(steps).toHaveLength(5);
 
-    it.todo('OIDC step');
+    expect(steps[0]).toHaveClass('pf-m-success');
+    expect(steps[0].textContent).toEqual('Account setupCompleted');
+
+    expect(steps[1]).toHaveAttribute('aria-current');
+    expect(steps[1].textContent).toEqual('OIDC and operator rolesAction required');
+
+    expect(steps[2]).toHaveClass('pf-m-pending');
+    expect(steps[2].textContent).toEqual('Network settings');
+
+    expect(steps[3]).toHaveClass('pf-m-pending');
+    expect(steps[3].textContent).toEqual('DNS setup');
+
+    expect(steps[4]).toHaveClass('pf-m-pending');
+    expect(steps[4].textContent).toEqual('Cluster installation');
   });
 });

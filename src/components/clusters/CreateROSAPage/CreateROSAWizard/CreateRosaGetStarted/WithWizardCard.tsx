@@ -15,7 +15,7 @@ import { DesktopIcon } from '@patternfly/react-icons';
 import { Link } from 'react-router-dom';
 
 const WithWizard = () => (
-  <Card>
+  <Card isFlat isFullHeight>
     <CardTitle>
       <Title headingLevel="h3" size="lg">
         <DesktopIcon className="ocm-c-wizard-get-started--card-icon" />

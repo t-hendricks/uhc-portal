@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { fireEvent, render, screen, within } from '~/testUtils';
+import { UserEventType, render, screen, within } from '~/testUtils';
 
 import EditSecurityGroups from './EditSecurityGroups';
 
@@ -24,9 +24,8 @@ const clusterVpc = {
   ],
 };
 
-const openPFSecurityGroupsSelect = () => {
-  // user.click doesn't work with PF dropdowns, so required to use fireEvent
-  fireEvent.click(screen.getByRole('button', { name: 'Options menu' }));
+const openPFSecurityGroupsSelect = async (user: UserEventType) => {
+  await user.click(screen.getByRole('button', { name: 'Options menu' }));
 };
 
 const renderComponent = ({
@@ -90,25 +89,25 @@ describe('<EditSecurityGroups />', () => {
       ).toBeInTheDocument();
     });
 
-    it('Has a Select showing all security groups', () => {
-      renderComponent({
+    it('Has a Select showing all security groups', async () => {
+      const { user } = renderComponent({
         isReadOnly: false,
         selectedGroupIds: [],
       });
 
-      openPFSecurityGroupsSelect();
+      await openPFSecurityGroupsSelect(user);
 
       expect(within(screen.getByRole('listbox')).getByText('sg-abc')).toBeInTheDocument();
       expect(within(screen.getByRole('listbox')).getByText('sg-xyz')).toBeInTheDocument();
     });
 
-    it('Shows the name as empty and the id as the description if the group has no name', () => {
-      renderComponent({
+    it('Shows the name as empty and the id as the description if the group has no name', async () => {
+      const { user } = renderComponent({
         isReadOnly: false,
         selectedGroupIds: [],
       });
 
-      openPFSecurityGroupsSelect();
+      await openPFSecurityGroupsSelect(user);
 
       expect(within(screen.getByRole('listbox')).getByText('--')).toBeInTheDocument();
       expect(
@@ -116,13 +115,13 @@ describe('<EditSecurityGroups />', () => {
       ).toBeInTheDocument();
     });
 
-    it('Has a SelectOption with a checkbox for each security group with the correct selection status', () => {
-      renderComponent({
+    it('Has a SelectOption with a checkbox for each security group with the correct selection status', async () => {
+      const { user } = renderComponent({
         isReadOnly: false,
         selectedGroupIds: [persistedSecurityGroup.id],
       });
 
-      openPFSecurityGroupsSelect();
+      await openPFSecurityGroupsSelect(user);
 
       expect(
         within(screen.getByRole('listbox')).getByRole('checkbox', { name: /sg-abc/ }),

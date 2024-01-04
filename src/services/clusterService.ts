@@ -14,6 +14,7 @@ import type {
   NodePool,
   CloudVPC,
   KeyRing,
+  KubeletConfig,
   EncryptionKey,
   CloudRegion,
   VersionGate,
@@ -34,6 +35,7 @@ import type {
   ClusterAutoscaler,
   DNSDomain,
   NodePoolUpgradePolicy,
+  ProductTechnologyPreview,
 } from '../types/clusters_mgmt.v1';
 import type { Subscription } from '../types/accounts_mgmt.v1';
 
@@ -831,9 +833,11 @@ const listGCPKeys = (credentials: GCP, location: string, ring: string) =>
 
 /**
  * List AWS regions for given CCS account.
- * @param {*} credentials { accountID, accessKey, secretKey } object
+ * @param {Object} credentials
+ * @param {string} [openshiftVersionId] Optional. Exclude regions known to be incompatible
+ *   with this version.
  */
-const listAWSRegions = (credentials: AWSCredentials) =>
+const listAWSRegions = (credentials: AWSCredentials, openshiftVersionId?: string) =>
   apiRequest.post<{
     /**
      * Retrieved list of regions.
@@ -858,6 +862,11 @@ const listAWSRegions = (credentials: AWSCredentials) =>
     total?: number;
   }>('/api/clusters_mgmt/v1/aws_inquiries/regions', {
     aws: credentials,
+    ...(openshiftVersionId && {
+      version: {
+        id: openshiftVersionId,
+      },
+    }),
   });
 
 const getUpgradeGates = () =>
@@ -951,6 +960,26 @@ const getLimitedSupportReasons = (clusterId: string) =>
     total?: number;
   }>(`/api/clusters_mgmt/v1/clusters/${clusterId}/limited_support_reasons`);
 
+const getKubeletConfiguration = (clusterId: string) =>
+  apiRequest.get<KubeletConfig>(`/api/clusters_mgmt/v1/clusters/${clusterId}/kubelet_config`);
+
+const postKubeletConfiguration = (clusterId: string, config: KubeletConfig) =>
+  apiRequest.post<KubeletConfig>(`/api/clusters_mgmt/v1/clusters/${clusterId}/kubelet_config`, {
+    ...config,
+  });
+
+const patchKubeletConfiguration = (clusterId: string, config: KubeletConfig) =>
+  apiRequest.patch<KubeletConfig>(`/api/clusters_mgmt/v1/clusters/${clusterId}/kubelet_config`, {
+    ...config,
+  });
+
+const deleteKubeletConfiguration = (clusterId: string) =>
+  apiRequest.patch<KubeletConfig>(`/api/clusters_mgmt/v1/clusters/${clusterId}/kubelet_config`);
+const getTechPreviewStatus = (product: string, id: string) =>
+  apiRequest.get<ProductTechnologyPreview>(
+    `/api/clusters_mgmt/v1/products/${product}/technology_previews/${id}`,
+  );
+
 const clusterService = {
   getClusters,
   postNewCluster,
@@ -1017,6 +1046,11 @@ const clusterService = {
   getLimitedSupportReasons,
   getOidcConfigurations,
   postNodePoolUpgradeSchedule,
+  getKubeletConfiguration,
+  postKubeletConfiguration,
+  patchKubeletConfiguration,
+  deleteKubeletConfiguration,
+  getTechPreviewStatus,
 };
 
 export {

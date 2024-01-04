@@ -43,8 +43,6 @@ describe(
         CreateRosaWizardPage.selectAWSInfrastructureAccount(awsAccountID);
         CreateRosaWizardPage.refreshInfrastructureAWSAccountButton().click();
         CreateRosaWizardPage.waitForARNList();
-        CreateRosaWizardPage.refreshInfrastructureAWSAccountButton().click();
-        CreateRosaWizardPage.waitForARNList();
         CreateRosaWizardPage.selectInstallerRole(installerARN);
         cy.get('button').contains('Next').click({ force: true });
       });
@@ -104,7 +102,9 @@ describe(
       it('Step - Cluster roles and policies - advanced  options', () => {
         CreateRosaWizardPage.selectRoleProviderMode('Auto');
         CreateRosaWizardPage.customOperatorPrefixInput().should('be.visible');
-        CreateRosaWizardPage.customOperatorPrefixInput().invoke('val').should('not.be.empty');
+        CreateRosaWizardPage.customOperatorPrefixInput()
+          .invoke('val')
+          .should('include', clusterName);
         CreateRosaWizardPage.customOperatorPrefixInput().type('{selectAll}').type(clusterName);
         cy.get('button').contains('Next').click();
       });

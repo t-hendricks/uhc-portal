@@ -327,7 +327,7 @@ const ReviewClusterScreen = ({
         {ReviewItem({ name: 'upgrade_policy', formValues })}
         {formValues.upgrade_policy === 'automatic' &&
           ReviewItem({ name: 'automatic_upgrade_schedule', formValues })}
-        {ReviewItem({ name: 'node_drain_grace_period', formValues })}
+        {!isHypershiftSelected && ReviewItem({ name: 'node_drain_grace_period', formValues })}
       </ReviewSection>
 
       {config.fakeOSD && <DebugClusterRequest {...clusterRequestParams} />}

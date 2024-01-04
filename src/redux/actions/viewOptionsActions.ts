@@ -20,7 +20,7 @@ const onPageInput = (pageNumber: number, viewType: string) =>
 const onPerPageSelect = (pageSize: number, viewType: string) =>
   action(viewPaginationConstants.SET_PER_PAGE, { viewType, pageSize });
 
-const onListFilterSet = (filter: string, viewType: string) =>
+const onListFilterSet = (filter: string | object, viewType: string) =>
   action(viewPaginationConstants.VIEW_SET_LIST_FILTER, { viewType, filter });
 
 const onListFlagsSet = (key: string, value: ViewFlags, viewType: string) =>

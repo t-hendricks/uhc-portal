@@ -1,5 +1,5 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { render, screen, checkAccessibility } from '~/testUtils';
 import InstallProgress from './InstallProgress';
 import clusterStates from '../clusterStates';
 import fixtures from '../../ClusterDetails/__test__/ClusterDetails.fixtures';
@@ -10,22 +10,17 @@ describe('<InstallProgress />', () => {
     state: clusterStates.INSTALLING,
   };
 
-  let wrapper;
-  beforeEach(() => {
-    wrapper = shallow(<InstallProgress cluster={clusterInstalling} />);
+  it('is accessible when installing cluster', async () => {
+    const { container } = render(<InstallProgress cluster={clusterInstalling} />);
+
+    expect(screen.getByText('Installing cluster')).toBeInTheDocument();
+    await checkAccessibility(container);
   });
 
-  it('should render correclty installing cluster', () => {
-    expect(wrapper).toMatchSnapshot();
-  });
+  it('returns empty component  when uninstalling cluster', () => {
+    const uninstallingCluster = { ...clusterInstalling, state: clusterStates.UNINSTALLING };
+    const { container } = render(<InstallProgress cluster={uninstallingCluster} />);
 
-  it('should render correclty uninstalling cluster', () => {
-    wrapper.setProps({
-      cluster: {
-        ...fixtures.clusterDetails.cluster,
-        state: clusterStates.UNINSTALLING,
-      },
-    });
-    expect(wrapper).toMatchSnapshot();
+    expect(container).toBeEmptyDOMElement();
   });
 });

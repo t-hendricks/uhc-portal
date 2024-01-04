@@ -1,5 +1,5 @@
 import React from 'react';
-import { screen, render, waitFor, checkAccessibility, fireEvent } from '~/testUtils';
+import { screen, render, waitFor, checkAccessibility } from '~/testUtils';
 import AWSAccountSelection, { AWSAccountSelectionProps } from './AWSAccountSelection';
 
 describe('AWSAccountSelection tests', () => {
@@ -19,22 +19,20 @@ describe('AWSAccountSelection tests', () => {
     const dropdown = screen.getByText(/select an account/i);
     user.click(dropdown);
 
-    await waitFor(() =>
-      expect(screen.getByPlaceholderText(/Filter by account id/i)).toBeInTheDocument(),
-    );
+    expect(await screen.findByPlaceholderText(/Filter by account id/i)).toBeInTheDocument();
 
     // // type something into search
     const searchbox = screen.getByPlaceholderText(/Filter by account id/i);
-    fireEvent.change(searchbox, { target: { value: '74' } });
+    await user.clear(searchbox);
+    await user.type(searchbox, '74');
 
     // click option
-    await waitFor(() =>
-      expect(
-        screen.getByRole('option', {
-          name: /74 3358436160/i,
-        }),
-      ).toBeInTheDocument(),
-    );
+    expect(
+      await screen.findByRole('option', {
+        name: /74 3358436160/i,
+      }),
+    ).toBeInTheDocument();
+
     const option = screen.getByRole('option', {
       name: /74 3358436160/i,
     });

@@ -10,6 +10,7 @@ import { HAD_INFLIGHT_ERROR_LOCALSTORAGE_KEY } from '~/common/localStorageConsta
 
 import { InflightCheckState } from '~/types/clusters_mgmt.v1';
 import clusterStates, {
+  hasInflightEgressErrors,
   isOSDGCPWaitingForRolesOnHostProject,
 } from '../../../../common/clusterStates';
 import getClusterName from '../../../../../../common/getClusterName';
@@ -236,7 +237,7 @@ class clusterStatusMonitor extends React.Component {
       const inflightError = inflightChecks.checks.find(
         (check) => check.state === InflightCheckState.FAILED,
       );
-      if (inflightError) {
+      if (hasInflightEgressErrors(cluster) && inflightError) {
         let documentLink;
         let subnets = [];
         let inflightTable;

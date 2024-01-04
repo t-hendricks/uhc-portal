@@ -59,6 +59,7 @@ describe('<Releases />', () => {
     it('should render only stable releases', async () => {
       isRestrictedEnv.mockReturnValue(true);
 
+      // eslint-disable-next-line testing-library/no-unnecessary-act
       await act(async () => {
         render(<Releases />);
       });

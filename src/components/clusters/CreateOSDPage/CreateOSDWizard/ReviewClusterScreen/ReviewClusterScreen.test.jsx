@@ -13,9 +13,9 @@ const setAWSBillingAcctVisible = (gate, awsBillingVisible) => {
   return false; // return all other feature flags as false
 };
 const defaultProps = {
+  formValues: sampleFormData.values,
   change: () => {},
   clusterRequestParams: {},
-  formValues: sampleFormData.values,
   getUserRole: () => {},
   getOCMRole: () => {},
   getOCMRoleResponse: () => {},
@@ -311,6 +311,32 @@ describe('<ReviewClusterScreen />', () => {
 
       expect(screen.queryByText(customKeyLabel)).not.toBeInTheDocument();
       expect(screen.queryByText(keyARN)).not.toBeInTheDocument();
+    });
+  });
+
+  describe('Node drain grace period', () => {
+    it('shows if not hypershift', () => {
+      const ConnectedReviewClusterScreen = wizardConnector(ReviewClusterScreen);
+      const newProps = {
+        ...defaultProps,
+        isHypershiftSelected: false,
+        node_drain_grace_period: 60,
+      };
+      render(<ConnectedReviewClusterScreen {...newProps} />);
+
+      expect(screen.getByText('Node draining')).toBeInTheDocument();
+    });
+
+    it('does not show if hypershift', () => {
+      const ConnectedReviewClusterScreen = wizardConnector(ReviewClusterScreen);
+      const newProps = {
+        ...defaultProps,
+        isHypershiftSelected: true,
+        node_drain_grace_period: 60,
+      };
+      render(<ConnectedReviewClusterScreen {...newProps} />);
+
+      expect(screen.queryByText('Node draining')).not.toBeInTheDocument();
     });
   });
 });

@@ -183,7 +183,7 @@ function AWSAccountSelection({
             isDisabled={isDisabled}
             placeholderText={AWS_ACCT_ID_PLACEHOLDER}
             inlineFilterPlaceholderText="Filter by account ID"
-            filterValidate={{ pattern: /[\D]/, message: 'Please enter numeric digits only.' }}
+            filterValidate={{ pattern: /^\d*$/, message: 'Please enter numeric digits only.' }}
             validated={touched && error ? 'error' : undefined}
             footer={footer}
             aria-describedby="aws-infra-accounts"

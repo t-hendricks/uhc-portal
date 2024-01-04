@@ -25,11 +25,18 @@ import modals from '../../../../../../common/Modal/modals';
 
 import './ClusterIngressCard.scss';
 
-const resolveDisableEditReason = ({ canEdit, isReadOnly, isSTSEnabled, clusterHibernating }) => {
+const resolveDisableEditReason = ({
+  canEdit,
+  isReadOnly,
+  isSTSEnabled,
+  clusterHibernating,
+  isHypershiftCluster,
+}) => {
   const readOnlyReason = isReadOnly && 'This operation is not available during maintenance';
   const STSEnabledReason =
     isSTSEnabled &&
-    'This operation is not available for clusters using Security Token Service (STS)';
+    !isHypershiftCluster &&
+    'Cluster ingress can only be edited for ROSA hosted control plane clusters or clusters not using Security Token Service (STS)';
   const hibernatingReason =
     clusterHibernating && 'This operation is not available while cluster is hibernating';
   const canNotEditReason =
@@ -59,6 +66,7 @@ class ClusterIngressCard extends React.Component {
       isReadOnly,
       isSTSEnabled,
       clusterHibernating,
+      isHypershiftCluster,
     } = this.props;
 
     const disableEditReason = resolveDisableEditReason({
@@ -66,6 +74,7 @@ class ClusterIngressCard extends React.Component {
       isReadOnly,
       isSTSEnabled,
       clusterHibernating,
+      isHypershiftCluster,
     });
 
     return (
@@ -147,6 +156,7 @@ class ClusterIngressCard extends React.Component {
                 onClick={this.handleEditSettings}
                 disableReason={disableEditReason}
                 isAriaDisabled={!!disableEditReason}
+                data-testId="edit-cluster-ingress"
               >
                 Edit cluster ingress
               </ButtonWithTooltip>
@@ -172,6 +182,7 @@ ClusterIngressCard.propTypes = {
   canEdit: PropTypes.bool.isRequired,
   isReadOnly: PropTypes.bool.isRequired,
   isSTSEnabled: PropTypes.bool.isRequired,
+  isHypershiftCluster: PropTypes.bool.isRequired,
   clusterHibernating: PropTypes.bool.isRequired,
   showConsoleLink: PropTypes.bool.isRequired,
 };

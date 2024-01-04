@@ -95,4 +95,16 @@ describe('clusterService', () => {
       '/api/clusters_mgmt/v1/clusters/myCluster/node_pools/myPool1/upgrade_policies',
     );
   });
+
+  it('call to get technology preview data', async () => {
+    apiRequestMock.get.mockResolvedValue({});
+
+    await clusterService.getTechPreviewStatus('myProduct', 'myType');
+    expect(apiRequestMock.get).toHaveBeenCalledTimes(1);
+    const mockGetCallParams = apiRequestMock.get.mock.calls[0];
+
+    expect(mockGetCallParams[0]).toEqual(
+      '/api/clusters_mgmt/v1/products/myProduct/technology_previews/myType',
+    );
+  });
 });

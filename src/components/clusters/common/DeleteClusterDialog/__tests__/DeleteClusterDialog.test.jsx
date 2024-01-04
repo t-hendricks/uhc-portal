@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, screen, checkAccessibility, fireEvent } from '~/testUtils';
+import { render, screen, checkAccessibility } from '~/testUtils';
 import DeleteClusterDialog from '../DeleteClusterDialog';
 
 describe('<DeleteClusterDialog />', () => {
@@ -37,16 +37,16 @@ describe('<DeleteClusterDialog />', () => {
   });
 
   it('delete button is enabled  after inputting the cluster name', async () => {
-    render(<DeleteClusterDialog {...defaultProps} />);
+    const { user } = render(<DeleteClusterDialog {...defaultProps} />);
     expect(screen.getByRole('button', { name: 'Delete' })).toHaveAttribute('aria-disabled', 'true');
 
-    // user.type doesn't trigger the validation - reverting back to fireEvent
-    //  await user.type(screen.getByRole('textbox'), 'wrong_name');
-    fireEvent.change(screen.getByRole('textbox'), { target: { value: 'wrong-name' } });
+    await user.type(screen.getByRole('textbox'), 'wrong_name');
 
     expect(screen.getByRole('button', { name: 'Delete' })).toHaveAttribute('aria-disabled', 'true');
 
-    fireEvent.change(screen.getByRole('textbox'), { target: { value: 'my-cluster-name' } });
+    await user.clear(screen.getByRole('textbox'));
+    await user.type(screen.getByRole('textbox'), 'my-cluster-name');
+
     expect(screen.getByRole('button', { name: 'Delete' })).toHaveAttribute(
       'aria-disabled',
       'false',
@@ -55,7 +55,8 @@ describe('<DeleteClusterDialog />', () => {
 
   it('should call deleteCluster correctly', async () => {
     const { user } = render(<DeleteClusterDialog {...defaultProps} />);
-    fireEvent.change(screen.getByRole('textbox'), { target: { value: 'my-cluster-name' } });
+
+    await user.type(screen.getByRole('textbox'), 'my-cluster-name');
 
     expect(deleteCluster).not.toHaveBeenCalled();
     await user.click(screen.getByRole('button', { name: 'Delete' }));

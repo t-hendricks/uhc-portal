@@ -26,7 +26,6 @@ import ClusterDetailsTop from './components/ClusterDetailsTop';
 import TabsRow from './components/TabsRow';
 import Overview from './components/Overview/Overview';
 import Monitoring from './components/Monitoring';
-import ClusterLogs from './components/ClusterLogs';
 import Networking from './components/Networking';
 import AccessControl from './components/AccessControl/AccessControl';
 import AddOns from './components/AddOns';
@@ -40,10 +39,14 @@ import CommonClusterModals from '../common/CommonClusterModals';
 import CancelUpgradeModal from '../common/Upgrades/CancelUpgradeModal';
 
 import { isValid, shouldRefetchQuota } from '../../../common/helpers';
-import { isHypershiftCluster, eventTypes } from './clusterDetailsHelper';
+import { eventTypes } from './clusterDetailsHelper';
 import getClusterName from '../../../common/getClusterName';
 import { subscriptionStatuses, knownProducts } from '../../../common/subscriptionTypes';
-import clusterStates, { isHibernating, canViewMachinePoolTab } from '../common/clusterStates';
+import clusterStates, {
+  isHibernating,
+  isHypershiftCluster,
+  canViewMachinePoolTab,
+} from '../common/clusterStates';
 import AddGrantModal from './components/AccessControl/NetworkSelfServiceSection/AddGrantModal';
 import Unavailable from '../../common/Unavailable';
 import Support from './components/Support';
@@ -53,6 +56,8 @@ import { isUninstalledAICluster } from '../../../common/isAssistedInstallerClust
 import { hasCapability, subscriptionCapabilities } from '../../../common/subscriptionCapabilities';
 import withFeatureGate from '../../features/with-feature-gate';
 import { ASSISTED_INSTALLER_FEATURE } from '../../../redux/constants/featureConstants';
+import { ClusterTabsId } from './components/common/ClusterTabIds';
+import ClusterLogs from './components/ClusterLogs/ClusterLogs';
 
 const { HostsClusterDetailTab, getAddHostsTabState } = OCM;
 const GatedAIHostsClusterDetailTab = withFeatureGate(
@@ -355,7 +360,7 @@ class ClusterDetails extends Component {
       this.setState({ selectedTab: tabId });
     };
 
-    const clusterHibernating = isHibernating(cluster.state);
+    const clusterHibernating = isHibernating(cluster);
     const isArchived =
       get(cluster, 'subscription.status', false) === subscriptionStatuses.ARCHIVED ||
       get(cluster, 'subscription.status', false) === subscriptionStatuses.DEPROVISIONED;
@@ -533,11 +538,13 @@ class ClusterDetails extends Component {
                 <ClusterLogs
                   externalClusterID={cluster.external_id}
                   clusterID={cluster.id}
+                  createdAt={cluster.creation_timestamp}
                   history={history}
                   refreshEvent={{
                     type: refreshEvent.type,
                     reset: () => this.setState({ refreshEvent: { type: eventTypes.NONE } }),
                   }}
+                  isVisible={selectedTab === ClusterTabsId.CLUSTER_HISTORY}
                 />
               </ErrorBoundary>
             </TabContent>
@@ -604,7 +611,7 @@ class ClusterDetails extends Component {
               <ErrorBoundary>
                 <GatedAIHostsClusterDetailTab
                   cluster={cluster}
-                  isVisible={selectedTab === 'addAssistedHosts'}
+                  isVisible={selectedTab === ClusterTabsId.ADD_ASSISTED_HOSTS}
                 />
               </ErrorBoundary>
             </TabContent>

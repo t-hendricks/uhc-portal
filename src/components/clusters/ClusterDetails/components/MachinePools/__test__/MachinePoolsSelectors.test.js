@@ -1,10 +1,11 @@
+import { baseRequestState } from '~/redux/reduxHelpers';
+import { normalizedProducts } from '~/common/subscriptionTypes';
 import {
   hasMachinePoolsQuotaSelector,
   hasOrgLevelAutoscaleCapability,
+  hasOrgLevelBypassPIDsLimitCapability,
 } from '../MachinePoolsSelectors';
-import { baseRequestState } from '../../../../../../redux/reduxHelpers';
 import { stateWithQuota, stateWithNoQuota } from './MachinePools.fixtures';
-import { normalizedProducts } from '../../../../../../common/subscriptionTypes';
 
 describe('machinePoolsSelector', () => {
   const stateWithoutAutoscaleCapability = {
@@ -69,5 +70,33 @@ describe('machinePoolsSelector', () => {
       normalizedProducts.OSD,
     );
     expect(result).toBe(false);
+  });
+
+  describe('hasOrgLevelBypassPIDsLimitCapability', () => {
+    it.each([
+      ['returns true if the capability is present', 'true', true],
+      ['returns false if the capability is absent', 'false', false],
+    ])('%p', (title, capabilityValue, expected) => {
+      // Arrange
+      const state = {
+        userProfile: {
+          organization: {
+            details: {
+              capabilities: [
+                {
+                  name: 'capability.organization.bypass_pids_limits',
+                  value: capabilityValue,
+                  inherited: false,
+                },
+              ],
+            },
+          },
+        },
+      };
+      // Act
+      const result = hasOrgLevelBypassPIDsLimitCapability(state);
+      // Assert
+      expect(result).toBe(expected);
+    });
   });
 });

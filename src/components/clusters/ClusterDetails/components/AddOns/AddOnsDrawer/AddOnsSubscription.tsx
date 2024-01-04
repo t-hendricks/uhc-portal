@@ -1,4 +1,3 @@
-import * as React from 'react';
 import {
   Card,
   CardBody,
@@ -8,9 +7,11 @@ import {
   FormGroup,
   Radio,
 } from '@patternfly/react-core';
+import * as React from 'react';
+import { BillingQuota } from '~/components/clusters/common/quotaModel';
 import AddOnsConstants from '../AddOnsConstants';
 import AddOnsSubscriptionCard from './AddOnsSubscriptionCard';
-import { SubscriptionModels, SetSubscriptionModel, CloudAccount } from './AddOnsTypes';
+import { SetSubscriptionModel, SubscriptionModels } from './AddOnsTypes';
 
 const AddOnsSubscription = ({
   activeCardId,
@@ -20,23 +21,7 @@ const AddOnsSubscription = ({
   setAddonsDrawer,
 }: {
   activeCardId: string;
-  billingQuota: {
-    standard?: {
-      allowed: number;
-      consumed: number;
-      cost: number;
-    };
-    marketplace?: {
-      allowed: number;
-      consumed: number;
-      cost: number;
-      cloudAccounts: {
-        rhm: CloudAccount[];
-        aws: CloudAccount[];
-        azure: CloudAccount[];
-      };
-    };
-  };
+  billingQuota: BillingQuota;
   installedAddOn: any;
   subscriptionModels: SubscriptionModels;
   setAddonsDrawer: (props: any) => void;

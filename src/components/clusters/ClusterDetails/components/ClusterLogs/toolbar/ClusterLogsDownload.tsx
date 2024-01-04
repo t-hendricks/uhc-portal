@@ -1,5 +1,5 @@
 import React from 'react';
-import moment from 'moment';
+import dayjs from 'dayjs';
 import { Alert, Button, FormGroup, Modal, Radio, Stack, StackItem } from '@patternfly/react-core';
 import { serviceLogService } from '~/services';
 import { createServiceLogQueryObject } from '~/common/queryHelpers';
@@ -46,7 +46,7 @@ const ClusterLogsDownload = ({
         query,
       );
 
-      const timestamp = moment().format('YYYY-MM-DD HHmm');
+      const timestamp = dayjs().format('YYYY-MM-DD HHmm');
 
       let formatted: any = data;
       if (format === 'json') {

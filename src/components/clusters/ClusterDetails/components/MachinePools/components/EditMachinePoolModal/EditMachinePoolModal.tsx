@@ -6,10 +6,7 @@ import { useDispatch } from 'react-redux';
 import isEqual from 'lodash/isEqual';
 import Modal from '~/components/common/Modal/Modal';
 import { clusterService } from '~/services';
-import {
-  isHypershiftCluster,
-  isMultiAZ,
-} from '~/components/clusters/ClusterDetails/clusterDetailsHelper';
+import { isMultiAZ } from '~/components/clusters/ClusterDetails/clusterDetailsHelper';
 import ErrorBox from '~/components/common/ErrorBox';
 import { getErrorMessage } from '~/common/errors';
 import { Cluster, MachinePool } from '~/types/clusters_mgmt.v1';
@@ -18,7 +15,7 @@ import { ErrorState } from '~/types/types';
 import modals from '~/components/common/Modal/modals';
 import { useGlobalState } from '~/redux/hooks';
 import { closeModal } from '~/components/common/Modal/ModalActions';
-import { isROSA } from '~/components/clusters/common/clusterStates';
+import { isHypershiftCluster, isROSA } from '~/components/clusters/common/clusterStates';
 import { PromiseReducerState } from '~/redux/types';
 
 import { HCP_USE_NODE_UPGRADE_POLICIES } from '~/redux/constants/featureConstants';
@@ -95,12 +92,14 @@ const EditMachinePoolModal = ({
   machinePoolsResponse,
   machineTypesResponse,
 }: EditMachinePoolModalProps) => {
+  const getIsEditValue = React.useCallback(
+    () => !!isInitEdit || !!machinePoolId,
+    [isInitEdit, machinePoolId],
+  );
+
   const [submitError, setSubmitError] = React.useState<AxiosError<any>>();
-  const [currentMPId, setCurrentMPId] = React.useState<string | undefined>(machinePoolId);
-  const isEdit = !!isInitEdit || !!machinePoolId;
-
-  const currentMachinePool = machinePoolsResponse.data?.find((mp) => mp.id === currentMPId);
-
+  const [currentMachinePool, setCurrentMachinePool] = React.useState<MachinePool>();
+  const [isEdit, setIsEdit] = React.useState<boolean>(getIsEditValue());
   const { initialValues, validationSchema } = useMachinePoolFormik({
     machinePool: currentMachinePool,
     cluster,
@@ -108,13 +107,32 @@ const EditMachinePoolModal = ({
     machineTypes: machineTypesResponse,
   });
 
-  const firstMachinePoolId = machinePoolsResponse.data?.[0]?.id;
+  const setCurrentMPId = React.useCallback(
+    (id: string) => setCurrentMachinePool(machinePoolsResponse.data?.find((mp) => mp.id === id)),
+    [setCurrentMachinePool, machinePoolsResponse.data],
+  );
 
   React.useEffect(() => {
-    if (!currentMPId && isEdit && firstMachinePoolId) {
-      setCurrentMPId(firstMachinePoolId);
+    if (machinePoolsResponse.pending) {
+      setCurrentMachinePool(undefined);
+    } else if (machinePoolsResponse.data?.length) {
+      if (machinePoolId) {
+        setCurrentMPId(machinePoolId);
+      } else if (isEdit) {
+        setCurrentMachinePool(machinePoolsResponse.data[0]);
+      }
     }
-  }, [isEdit, currentMPId, firstMachinePoolId]);
+  }, [
+    machinePoolsResponse.pending,
+    machinePoolsResponse.data,
+    machinePoolId,
+    isEdit,
+    setCurrentMPId,
+  ]);
+
+  React.useEffect(() => {
+    setIsEdit(getIsEditValue());
+  }, [getIsEditValue]);
 
   return (
     <Formik<EditMachinePoolValues>
@@ -124,7 +142,7 @@ const EditMachinePoolModal = ({
           await submitEdit({
             cluster,
             values,
-            currentMPId,
+            currentMPId: currentMachinePool?.id,
           });
           onSave?.();
           onClose();
@@ -137,15 +155,19 @@ const EditMachinePoolModal = ({
       enableReinitialize
       validateOnMount
     >
-      {}
       {({ isValid, submitForm, isSubmitting, values }) => (
         <Modal
           id="edit-mp-modal"
           title={isEdit ? 'Edit machine pool' : 'Add machine pool'}
           onClose={isSubmitting ? undefined : onClose}
           isPending={
+            machinePoolsResponse.pending ||
             (!machinePoolsResponse.error && !machinePoolsResponse.fulfilled) ||
-            (!machineTypesResponse.error && !machineTypesResponse.fulfilled)
+            (!machineTypesResponse.error && !machineTypesResponse.fulfilled) ||
+            (isEdit &&
+              machineTypesResponse.fulfilled &&
+              machinePoolsResponse.fulfilled &&
+              !currentMachinePool)
           }
           modalSize="large"
           description={!isEdit && modalDescription}
@@ -206,7 +228,7 @@ const EditMachinePoolModal = ({
                 cluster={cluster}
                 machinePools={machinePoolsResponse.data || []}
                 isEdit={isEdit}
-                currentMPId={currentMPId}
+                currentMPId={currentMachinePool?.id}
                 setCurrentMPId={setCurrentMPId}
               />
               <EditNodeCountSection
@@ -221,7 +243,7 @@ const EditMachinePoolModal = ({
                 <EditTaintsSection
                   cluster={cluster}
                   machinePools={machinePoolsResponse.data || []}
-                  machinePoolId={currentMPId}
+                  machinePoolId={currentMachinePool?.id}
                   machineTypes={machineTypesResponse}
                 />
               </ExpandableSection>

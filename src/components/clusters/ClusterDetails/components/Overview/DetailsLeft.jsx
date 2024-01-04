@@ -10,13 +10,13 @@ import {
 import spacing from '@patternfly/react-styles/css/utilities/Spacing/spacing';
 
 import getBillingModelLabel from '~/components/clusters/common/getBillingModelLabel';
+import { isHypershiftCluster } from '~/components/clusters/common/clusterStates';
 import Timestamp from '../../../../common/Timestamp';
 import PopoverHint from '../../../../common/PopoverHint';
 import ClusterTypeLabel from '../../../common/ClusterTypeLabel';
 import InfrastructureModelLabel from '../../../common/InfrastructureModelLabel';
 import ClusterVersionInfo from './ClusterVersionInfo';
 import { normalizedProducts } from '../../../../../common/subscriptionTypes';
-import { isHypershiftCluster } from '../../clusterDetailsHelper';
 
 const getIdFields = (cluster, showAssistedId) => {
   let label = 'Cluster ID';

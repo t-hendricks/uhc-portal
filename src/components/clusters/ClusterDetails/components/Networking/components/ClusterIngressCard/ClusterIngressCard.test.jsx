@@ -20,6 +20,7 @@ describe('<ClusterIngressCard />', () => {
     canEdit: false,
     isReadOnly: false,
     isSTSEnabled: false,
+    isHypershiftCluster: false,
     clusterHibernating: false,
     showConsoleLink: false,
     openModal: jest.fn(),
@@ -46,7 +47,6 @@ describe('<ClusterIngressCard />', () => {
       expect(screen.queryByText('Private API')).toBeInTheDocument();
     });
   });
-
   describe('in restricted env', () => {
     const isRestrictedEnv = mockRestrictedEnv();
 
@@ -71,6 +71,17 @@ describe('<ClusterIngressCard />', () => {
 
       rerender(<ClusterIngressCard {...defaultProps} isApiPrivate />, {}, loadedState);
       expect(screen.queryByText('Private API')).toBeInTheDocument();
+    });
+  });
+  describe('ROSA classic', () => {
+    it('disables editing cluster ingress', async () => {
+      const props = {
+        ...defaultProps,
+        isSTSEnabled: true,
+        isHypershiftCluster: false,
+      };
+      withState(loadedState).render(<ClusterIngressCard {...props} />);
+      expect(screen.getByTestId('edit-cluster-ingress')).toHaveAttribute('aria-disabled', 'true');
     });
   });
 });

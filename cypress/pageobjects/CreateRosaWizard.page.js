@@ -90,42 +90,6 @@ class CreateRosaCluster extends Page {
 
   individualUpdateRadio = () => cy.getByTestId('upgrade_policy-manual');
 
-  supportRoleInput = () => cy.get('input[id="support_role_arn"]');
-
-  workerRoleInput = () => cy.get('input[id="worker_role_arn"]');
-
-  controlPlaneRoleInput = () => cy.get('input[id="control_plane_role_arn"]');
-
-  minimumNodeInput = () => cy.get('input[aria-label="Minimum nodes"]');
-
-  maximumNodeInput = () => cy.get('input[aria-label="Maximum nodes"]');
-
-  minimumNodeCountMinusButton = () => this.minimumNodeInput().prev();
-
-  minimumNodeCountPlusButton = () => this.minimumNodeInput().next();
-
-  maximumNodeCountMinusButton = () => this.maximumNodeInput().prev();
-
-  maximumNodeCountPlusButton = () => this.maximumNodeInput().next();
-
-  cidrDefaultValuesCheckBox = () => cy.get('input[id="cidr_default_values_toggle"]');
-
-  createModeAutoRadio = () => cy.getByTestId('rosa_roles_provider_creation_mode-auto');
-
-  createModeManualRadio = () => cy.getByTestId('rosa_roles_provider_creation_mode-manual');
-
-  applicationIngressDefaultSettingsRadio = () => cy.getByTestId('applicationIngress-default');
-
-  applicationIngressCustomSettingsRadio = () => cy.getByTestId('applicationIngress-custom');
-
-  clusterPrivacyPublicRadio = () => cy.getByTestId('cluster_privacy-external');
-
-  clusterPrivacyPrivateRadio = () => cy.getByTestId('cluster_privacy-internal');
-
-  recurringUpdateRadio = () => cy.getByTestId('upgrade_policy-automatic');
-
-  individualUpdateRadio = () => cy.getByTestId('upgrade_policy-manual');
-
   isCreateRosaPage() {
     super.assertUrlIncludes('/openshift/create/rosa/wizard');
   }
@@ -271,7 +235,7 @@ class CreateRosaCluster extends Page {
   }
 
   selectInstallerRole(roleName) {
-    cy.get('span')
+    cy.get('.pf-c-form__label-text')
       .contains('Installer role')
       .parent()
       .parent()
@@ -282,7 +246,7 @@ class CreateRosaCluster extends Page {
         if ($btn.is(':disabled')) {
           cy.log('Installer ARN button is disabled there is only one option. Continuing..');
         } else {
-          cy.get('span')
+          cy.get('.pf-c-form__label-text')
             .contains('Installer role')
             .parent()
             .parent()
@@ -468,8 +432,9 @@ class CreateRosaCluster extends Page {
   }
 
   selectAvailabilityZoneRegion(avilabilityZoneRegion) {
-    cy.get('[aria-label="Options menu"]').click();
-    cy.get('li').contains(avilabilityZoneRegion).click();
+    cy.get(".pf-c-select__menu:contains('Select availability zone')").within(() => {
+      cy.get('li').contains(avilabilityZoneRegion).click();
+    });
   }
 
   inputPrivateSubnetId(subnetId) {
@@ -512,6 +477,12 @@ class CreateRosaCluster extends Page {
         cy.getByTestId('imds-optional').check();
       }
     });
+  }
+
+  hideClusterNameValidation() {
+    // Validation popup on cluster name field create flaky situation on below version field.
+    // To remove the validation popup a click action in cluster left tree required.
+    this.clusterDetailsTree().click();
   }
 
   inputNodeLabelKvs(nodeLabelKvs) {

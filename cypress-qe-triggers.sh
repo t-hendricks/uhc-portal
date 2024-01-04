@@ -9,7 +9,7 @@ node --version
 # NOTE : Enable inline ENVIRONMENT, BROWSER and TAGS variables and modify the values for debug runs from local setup.
 # ENVIRONMENT="staging"
 # BROWSER="chrome"
-# TAGS="smoke"
+# TAGS="smoke,day1+rosa,day2+rosa"
 echo "$ENVIRONMENT"
 echo "$BROWSER"
 echo "$TAGS"
@@ -19,8 +19,4 @@ echo "$TAGS"
 yarn install
 
 # Calls the qe pod creation and runner script with parameterized values read from Jenkins/Executor. 
-timeout \
-  --signal "TERM" \
-  --kill-after "2m" \
-  "60m" \
-  "run/cypress-qe-executor.sh" $ENVIRONMENT $BROWSER $TAGS
+sh "${PWD}/run/cypress-qe-executor.sh" $ENVIRONMENT $BROWSER $TAGS

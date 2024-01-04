@@ -75,8 +75,8 @@ const GCP_SUBNET_NAME_MAXLEN = 63;
 // Maximum node count
 const MAX_NODE_COUNT = 180;
 
-const AWS_USER_OR_GROUP_ARN_REGEX = /^arn:aws:iam::\d{12}:(user|group)\/\S+/;
-const AWS_ROLE_ARN_REGEX = /^arn:aws:iam::\d{12}:role\/\S+/;
+const AWS_USER_OR_GROUP_ARN_REGEX = /^arn:aws([-\w]+)?:iam::\d{12}:(user|group)\/\S+/;
+const AWS_ROLE_ARN_REGEX = /^arn:aws([-\w]+)?:iam::\d{12}:role\/\S+/;
 const AWS_PRIVATE_HOSTED_ZONE_ID_REGEX = /^Z[0-9A-Z]{3,}/;
 
 const LABEL_VALUE_MAX_LENGTH = 63;

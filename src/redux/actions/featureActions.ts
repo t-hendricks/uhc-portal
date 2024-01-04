@@ -14,6 +14,7 @@ import {
   SECURITY_GROUPS_FEATURE,
   SECURITY_GROUPS_FEATURE_DAY1,
   HCP_USE_NODE_UPGRADE_POLICIES,
+  ENABLE_MACHINE_CONFIGURATION,
   GCP_SECURE_BOOT_UI,
 } from '../constants/featureConstants';
 import authorizationsService from '../../services/authorizationsService';
@@ -45,6 +46,7 @@ export const features = [
   getSimpleUnleashFeature('network-validator-ondemand', NETWORK_VALIDATOR_ONDEMAND_FEATURE),
   getSimpleUnleashFeature('security-groups-feature-day1', SECURITY_GROUPS_FEATURE_DAY1), // Handles only Day1
   getSimpleUnleashFeature('security-groups-feature', SECURITY_GROUPS_FEATURE), // Handles only Day2
+  getSimpleUnleashFeature('enable-machine-configuration', ENABLE_MACHINE_CONFIGURATION),
   getSimpleUnleashFeature('gcp-secure-boot-ui', GCP_SECURE_BOOT_UI),
   {
     name: ASSISTED_INSTALLER_FEATURE,

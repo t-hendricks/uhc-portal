@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 
-import { isHibernating, isOffline } from '../../../../../common/clusterStates';
+import { isHibernating, isOffline, isHypershiftCluster } from '../../../../../common/clusterStates';
 import { openModal } from '../../../../../../common/Modal/ModalActions';
 import NetworkingSelector, { routeSelectorPairsAsStrings } from '../../NetworkingSelector';
 
@@ -28,8 +28,8 @@ const mapStateToProps = (state) => {
   const { canEdit } = cluster;
   const isReadOnly = cluster?.status?.configuration_mode === 'read_only';
   const isSTSEnabled = cluster?.aws?.sts?.enabled === true;
-  const clusterHibernating = isHibernating(cluster.state);
-  const showConsoleLink = consoleURL && !isOffline(cluster.state);
+  const clusterHibernating = isHibernating(cluster);
+  const showConsoleLink = consoleURL && !isOffline(cluster);
 
   return {
     consoleURL,
@@ -45,6 +45,7 @@ const mapStateToProps = (state) => {
     clusterHibernating,
     showConsoleLink,
     provider,
+    isHypershiftCluster: isHypershiftCluster(cluster),
   };
 };
 

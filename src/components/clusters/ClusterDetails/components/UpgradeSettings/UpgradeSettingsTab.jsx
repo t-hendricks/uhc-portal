@@ -21,11 +21,10 @@ import ErrorBox from '../../../../common/ErrorBox';
 import modals from '../../../../common/Modal/modals';
 import UserWorkloadMonitoringSection from '../../../common/UserWorkloadMonitoringSection';
 import '../../../common/Upgrades/UpgradeSettingsFields.scss';
-import clusterStates from '../../../common/clusterStates';
+import clusterStates, { isHypershiftCluster } from '../../../common/clusterStates';
 import ButtonWithTooltip from '../../../../common/ButtonWithTooltip';
 import MinorVersionUpgradeAlert from '../../../common/Upgrades/MinorVersionUpgradeAlert';
 import UpgradeAcknowledgeWarning from '../../../common/Upgrades/UpgradeAcknowledge/UpgradeAcknowledgeWarning';
-import { isHypershiftCluster } from '../../clusterDetailsHelper';
 import { UpdateAllMachinePools } from '../MachinePools/UpdateMachinePools';
 
 class UpgradeSettingsTab extends React.Component {

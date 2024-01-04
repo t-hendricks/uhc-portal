@@ -46,9 +46,6 @@ describe(
         CreateRosaWizardPage.selectAWSInfrastructureAccount(awsAccountID);
         CreateRosaWizardPage.refreshInfrastructureAWSAccountButton().click();
         CreateRosaWizardPage.waitForARNList();
-        // duplicated steps because installer ARNs are not populated as per account selection for the first time.
-        CreateRosaWizardPage.refreshInfrastructureAWSAccountButton().click();
-        CreateRosaWizardPage.waitForARNList();
         CreateRosaWizardPage.selectInstallerRole(installerARN);
         cy.get('button').contains('Next').click();
       });
@@ -72,12 +69,15 @@ describe(
       });
 
       it('Step - Cluster Settings - configuration - Select cluster privacy', () => {
+        CreateRosaWizardPage.clusterPrivacyPublicRadio().should('be.checked');
+        CreateRosaWizardPage.clusterPrivacyPrivateRadio().should('not.be.checked');
         CreateRosaWizardPage.selectClusterPrivacy('private');
         CreateRosaWizardPage.selectClusterPrivacy('public');
         cy.get('button').contains('Next').click();
       });
 
       it('Step - Cluster Settings - CIDR Ranges - CIDR default values', () => {
+        CreateRosaWizardPage.cidrDefaultValuesCheckBox().should('be.checked');
         CreateRosaWizardPage.useCIDRDefaultValues(false);
         CreateRosaWizardPage.useCIDRDefaultValues(true);
         CreateRosaWizardPage.machineCIDRInput().should('have.value', '10.0.0.0/16');
@@ -88,13 +88,20 @@ describe(
       });
 
       it('Step - Cluster roles and policies - role provider mode and its definitions', () => {
+        CreateRosaWizardPage.createModeAutoRadio().should('be.checked');
+        CreateRosaWizardPage.createModeManualRadio().should('not.be.checked');
+        CreateRosaWizardPage.selectRoleProviderMode('Manual');
         CreateRosaWizardPage.selectRoleProviderMode('Auto');
         CreateRosaWizardPage.customOperatorPrefixInput().should('be.visible');
-        CreateRosaWizardPage.customOperatorPrefixInput().invoke('val').should('not.be.empty');
+        CreateRosaWizardPage.customOperatorPrefixInput()
+          .invoke('val')
+          .should('include', clusterName);
         cy.get('button').contains('Next').click();
       });
 
       it('Step - Cluster update - update statergies and its definitions', () => {
+        CreateRosaWizardPage.individualUpdateRadio().should('be.checked');
+        CreateRosaWizardPage.recurringUpdateRadio().should('not.be.checked');
         CreateRosaWizardPage.selectUpdateStratergy('Recurring updates');
         cy.get('button').contains('Next').click();
       });

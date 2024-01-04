@@ -61,7 +61,7 @@ const AWSBillingAccount = ({
     // if there is (recent) quota data in global state
     if (!shouldRefetchQuota(organization)) {
       // extract billing accounts out of it
-      setCloudAccounts(getAwsBillingAccountsFromQuota(organization.quotaList));
+      setCloudAccounts(getAwsBillingAccountsFromQuota(organization.quotaList?.items));
     } else {
       refresh();
     }
@@ -138,7 +138,7 @@ const AWSBillingAccount = ({
           required={isRequired}
           refresh={{
             onRefresh: refresh,
-            text: 'Refresh to view newly associated AWS billing accounts.',
+            text: 'Refresh to view any new AWS billing accounts. It can take up to 5 minutes to sync new accounts.',
           }}
           extendedHelpText={
             <>
