@@ -242,7 +242,6 @@ class UpgradeSettingsTab extends React.Component {
               <UpgradeStatus
                 clusterID={cluster.id}
                 canEdit={cluster.canEdit}
-                clusterVersion={cluster.openshift_version || cluster?.version?.id}
                 clusterVersionRawID={cluster?.version?.raw_id}
                 scheduledUpgrade={scheduledUpgrade}
                 availableUpgrades={availableUpgrades}

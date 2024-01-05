@@ -80,7 +80,6 @@ class ClusterVersionInfo extends React.Component {
                       <UpgradeStatus
                         clusterID={cluster.id}
                         canEdit={cluster.canEdit}
-                        clusterVersion={cluster.openshift_version}
                         clusterVersionRawID={cluster.version?.raw_id}
                         scheduledUpgrade={scheduledUpdate}
                         openModal={openModal}
