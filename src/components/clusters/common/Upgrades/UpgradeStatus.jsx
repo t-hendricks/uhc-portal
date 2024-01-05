@@ -69,6 +69,17 @@ function UpgradeStatus({
     );
   };
 
+  if (!clusterVersionRawID) {
+    return (
+      <EmptyState variant={EmptyStateVariant.xs}>
+        <Title headingLevel="h4" size="md">
+          Update status is not available
+        </Title>
+        <EmptyStateBody>Update status is not available. Try again later.</EmptyStateBody>
+      </EmptyState>
+    );
+  }
+
   return (
     <>
       <div>
