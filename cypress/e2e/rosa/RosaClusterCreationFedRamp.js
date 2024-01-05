@@ -2,6 +2,7 @@ import Login from '../../pageobjects/login.page';
 import ClusterListPage from '../../pageobjects/ClusterList.page';
 import CreateRosaWizardPage from '../../pageobjects/CreateRosaWizard.page';
 import ClusterDetailsPage from '../../pageobjects/ClusterDetails.page';
+import * as path from 'path';
 
 Cypress.config({
   defaultCommandTimeout: 180000,
@@ -20,6 +21,23 @@ Cypress.env(
   'clusterName',
   `${Cypress.env('QE_CLUSTER_NAME_PREFIX')}-${Math.random().toString(36).substring(2, 4)}`,
 );
+Cypress.env(
+  'validationsResultFile',
+  path.join(Cypress.config('downloadsFolder'), 'validations-deployment-result'),
+);
+
+export const workflowValidationTestTitles = [
+  'Post Install: Tabs Validations',
+  'Post Install: Overview Validations',
+  'Post Install: Access Control Validations',
+  'Post Installation: Add-ons Validations',
+  'Post Installation: Cluster history Validations',
+  'Post Installation: Networking Validations',
+  'Post Installation: Machine pools Validations',
+  'Post Installation: Support Validations',
+  'Post Installation: Settings Validations',
+  'Post Installation: Cluster List Validations',
+];
 
 describe('Create ROSA Cluster in FedRamp (OCP-TBD)', { tags: ['fedramp'] }, () => {
   before(() => {
@@ -47,6 +65,24 @@ describe('Create ROSA Cluster in FedRamp (OCP-TBD)', { tags: ['fedramp'] }, () =
       ClusterDetailsPage.deleteClusterNameInput().clear().type(Cypress.env('clusterName'));
       ClusterDetailsPage.deleteClusterConfirm().click();
       ClusterDetailsPage.waitForDeleteClusterActionComplete();
+    }
+  });
+
+  afterEach(function () {
+    if (this.currentTest.state === 'failed') {
+      if (workflowValidationTestTitles.includes(this.currentTest.title)) {
+        cy.log(
+          `Writing file - ${Cypress.env('validationsResultFile')} with Contents - ${
+            this.currentTest.state
+          } - ${this.currentTest.title}`,
+        );
+        cy.writeFile(
+          Cypress.env('validationsResultFile'),
+          `${this.currentTest.state}: ${this.currentTest.title}\n`,
+          { flag: 'a+' },
+        );
+        return false;
+      }
     }
   });
 
@@ -550,8 +586,7 @@ describe('Create ROSA Cluster in FedRamp (OCP-TBD)', { tags: ['fedramp'] }, () =
     it('Post Installation: Machine pools Validations', () => {
       cy.get('.pf-c-tabs__item-text').contains('Machine pools');
       CreateRosaWizardPage.clickButtonContainingText('Machine pools');
-      // BUG: Machine pool returns empty list in GOV_CLOUD env
-      // cy.get('#add-machine-pool').should('be.visible').should('be.enabled');
+      cy.get('#add-machine-pool').should('be.visible').should('be.enabled');
       cy.get('#edit-existing-cluster-autoscaling').should('be.visible').should('be.enabled');
       cy.get('[data-label="Machine pool"]').contains('Machine pool');
       cy.get('[data-label="Instance type"]').contains('Instance type');
@@ -633,7 +668,7 @@ describe('Create ROSA Cluster in FedRamp (OCP-TBD)', { tags: ['fedramp'] }, () =
         cy.get('.pf-c-card__title').should('contain', 'Update strategy');
         cy.get('.pf-l-grid__item').should(
           'contain',
-          'Note: In the event of Critical security concerns (new window or tab) (CVEs) that significantly impact the security or stability of the cluster, updates may be automatically scheduled by Red Hat SRE to the latest z-stream version not impacted by the CVE within 48 hours after customer notifications.',
+          'Note: In the event of Critical security concerns (new window or tab) (CVEs) that significantly impact the security or stability of the cluster, updates may be automatically scheduled by Red Hat SRE to the latest z-stream version not impacted by the CVE within 2 business days after customer notifications.',
         );
         if (Cypress.env('UPDATE_STRATEGY') == 'Individual updates') {
           cy.getByTestId('upgrade_policy-manual').should('be.checked');
