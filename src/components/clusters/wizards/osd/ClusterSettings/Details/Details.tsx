@@ -46,13 +46,11 @@ import {
 import { getIncompatibleVersionReason } from '~/common/versionCompatibility';
 import { SupportedFeature } from '~/common/featureCompatibility';
 import { useFormState } from '~/components/clusters/wizards/hooks';
-import {
-  hasAvailableQuota,
-  quotaParams,
-  QuotaParams,
-} from '~/components/clusters/wizards/common/utils/quotas';
+import { hasAvailableQuota, quotaParams } from '~/components/clusters/wizards/common/utils/quotas';
 import { FieldId } from '~/components/clusters/wizards/osd/constants';
 import { billingModels } from '~/common/subscriptionTypes';
+import { QuotaCostList } from '~/types/accounts_mgmt.v1';
+import { QuotaParams } from '~/components/clusters/common/quotaModel';
 import { GCP_SECURE_BOOT_UI } from '~/redux/constants/featureConstants';
 import { useFeatureGate } from '~/hooks/useFeatureGate';
 import { VersionSelectField } from './VersionSelectField';
@@ -122,12 +120,12 @@ export const Details = () => {
     cloudProviderID: cloudProvider,
   } as QuotaParams;
 
-  const hasSingleAzResources = hasAvailableQuota(quotaList, {
+  const hasSingleAzResources = hasAvailableQuota(quotaList as QuotaCostList, {
     ...quotaParams.singleAzResources,
     ...azQuotaParams,
   });
 
-  const hasMultiAzResources = hasAvailableQuota(quotaList, {
+  const hasMultiAzResources = hasAvailableQuota(quotaList as QuotaCostList, {
     ...quotaParams.multiAzResources,
     ...azQuotaParams,
   });

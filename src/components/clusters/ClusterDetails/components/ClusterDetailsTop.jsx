@@ -65,8 +65,8 @@ function ClusterDetailsTop(props) {
   const hasIdentityProviders = clusterIdentityProviders.clusterIDPList.length > 0;
   const showIDPMessage =
     cluster.managed &&
+    cluster.idpActions?.create &&
     cluster.state === clusterStates.READY &&
-    consoleURL &&
     clusterIdentityProviders.fulfilled &&
     !hasIdentityProviders;
 
@@ -106,7 +106,7 @@ function ClusterDetailsTop(props) {
   );
 
   let launchConsole;
-  if (consoleURL && !isOffline(cluster.state)) {
+  if (consoleURL && !isOffline(cluster)) {
     launchConsole = (
       <a
         href={consoleURL}
@@ -239,7 +239,9 @@ function ClusterDetailsTop(props) {
 
       {showIDPMessage && (
         <Split>
-          <SplitItem isFilled>{cluster.canEdit && <IdentityProvidersHint />}</SplitItem>
+          <SplitItem isFilled>
+            <IdentityProvidersHint />
+          </SplitItem>
         </Split>
       )}
       {cluster.expiration_timestamp && (

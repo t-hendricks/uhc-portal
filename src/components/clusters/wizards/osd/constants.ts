@@ -139,11 +139,11 @@ export const initialValues: FormikValues = {
   [FieldId.DisableScpChecks]: false,
   [FieldId.CustomerManagedKey]: 'false',
   [FieldId.IMDS]: IMDSType.V1AndV2,
-  [FieldId.ClusterAutoscaling]: getDefaultClusterAutoScaling(),
   [FieldId.ApplicationIngress]: ApplicationIngressType.Default,
   [FieldId.DefaultRouterExcludedNamespacesFlag]: '',
   [FieldId.IsDefaultRouterNamespaceOwnershipPolicyStrict]: true,
   [FieldId.IsDefaultRouterWildcardPolicyAllowed]: false,
+  [FieldId.ClusterAutoscaling]: getDefaultClusterAutoScaling(),
 };
 
 export const initialTouched = {

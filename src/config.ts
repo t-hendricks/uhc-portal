@@ -1,3 +1,7 @@
+import dayjs from 'dayjs';
+import utc from 'dayjs/plugin/utc';
+import relativeTime from 'dayjs/plugin/relativeTime';
+import advancedFormat from 'dayjs/plugin/advancedFormat';
 import { ENV_OVERRIDE_LOCALSTORAGE_KEY } from './common/localStorageConstants';
 
 type EnvConfig = {
@@ -103,6 +107,12 @@ const config = {
         });
       }
     });
+  },
+
+  dateConfig() {
+    dayjs.extend(utc);
+    dayjs.extend(relativeTime);
+    dayjs.extend(advancedFormat);
   },
 };
 

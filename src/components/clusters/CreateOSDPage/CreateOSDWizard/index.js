@@ -61,7 +61,7 @@ const mapStateToProps = (state, ownProps) => {
     cloudProviders: state.cloudProviders,
     loadBalancerValues: state.loadBalancerValues,
     persistentStorageValues: state.persistentStorageValues,
-    hasProductQuota: hasManagedQuotaSelector(state, product),
+    hasProductQuota: hasManagedQuotaSelector(state.userProfile.organization.quotaList, product),
     formErrors: {
       ...formSyncErrors,
       ...formAsyncErrors,
@@ -93,7 +93,8 @@ const mapDispatchToProps = (dispatch) => ({
   getLoadBalancers: () => dispatch(getLoadBalancerValues()),
   getGCPCloudProviderVPCs: (type, credentials, region) =>
     dispatch(getGCPCloudProviderVPCs(type, credentials, region)),
-  getAWSCloudProviderRegions: (credentials) => dispatch(getAWSCloudProviderRegions(credentials)),
+  getAWSCloudProviderRegions: (type, credentials) =>
+    dispatch(getAWSCloudProviderRegions(type, credentials)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(withRouter(CreateOSDWizard));

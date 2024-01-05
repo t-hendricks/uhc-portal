@@ -12,6 +12,7 @@ import clusterStates, {
   isWaitingForOIDCProviderOrOperatorRolesMode,
   isOSDGCPWaitingForRolesOnHostProject,
   isOSDGCPPendingOnHostProject,
+  hasInflightEgressErrors,
   getInflightChecks,
 } from '../clusterStates';
 
@@ -69,6 +70,7 @@ function ProgressList({ cluster, actionRequiredInitialOpen, hasNetworkOndemand }
 
     // Only ROSA -- Prompt user to run CLI to create OIDC and User roles
     const inflightChecks = getInflightChecks(cluster);
+    const hasInflightErrors = hasInflightEgressErrors(cluster);
     if (isROSACluster) {
       if (isWaitingForOIDCProviderOrOperatorRoles) {
         // Show link to Action required modal for creation of ROSA operator roles and
@@ -138,8 +140,7 @@ function ProgressList({ cluster, actionRequiredInitialOpen, hasNetworkOndemand }
     }
 
     // first steps completed
-    const inflightError = inflightChecks.some((check) => check.state === InflightCheckState.FAILED);
-    const networkSettings = inflightError && hasNetworkOndemand ? warning : completed;
+    const networkSettings = hasInflightErrors && hasNetworkOndemand ? warning : completed;
     if (cluster.state === clusterStates.INSTALLING) {
       if (!cluster.status.dns_ready) {
         return {

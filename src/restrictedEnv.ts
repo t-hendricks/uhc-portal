@@ -18,4 +18,4 @@ export const getRestrictedEnvApi = (chrome?: ChromeAPI) => {
 export const SUPPORT_CASE_URL = 'https://redhatgov.servicenowservices.com/css';
 export const SUPPORTED_RESTRICTED_ENV_OCP_VERSIONS = ['4.11'];
 
-export const refreshToken = (chrome: ChromeAPI) => chrome.auth.getRefreshToken();
+export const getRefreshToken = (chrome: ChromeAPI) => chrome.auth.getRefreshToken();

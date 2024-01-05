@@ -1,36 +1,35 @@
 import React from 'react';
 import {
-  Text,
   Card,
-  Title,
-  Spinner,
   CardBody,
   CardTitle,
+  Spinner,
+  Text,
   TextVariants,
+  Title,
 } from '@patternfly/react-core';
 import ExclamationCircleIcon from '@patternfly/react-icons/dist/js/icons/exclamation-circle-icon';
 import { global_danger_color_100 as dangerColor } from '@patternfly/react-tokens';
 import { useFeatureGate } from '~/hooks/useFeatureGate';
 import { NETWORK_VALIDATOR_ONDEMAND_FEATURE } from '~/redux/constants/featureConstants';
 
-import { Cluster } from '~/types/clusters_mgmt.v1';
-import clusterStates, {
-  isWaitingROSAManualMode,
-  isWaitingHypershiftCluster,
-} from '~/components/clusters/common/clusterStates';
-import UninstallProgress from '~/components/clusters/common/UninstallProgress';
-import InstallProgress from '~/components/clusters/common/InstallProgress/InstallProgress';
 import DownloadOcCliButton from '~/components/clusters/common/InstallProgress/DownloadOcCliButton';
+import InstallProgress from '~/components/clusters/common/InstallProgress/InstallProgress';
+import UninstallProgress from '~/components/clusters/common/UninstallProgress';
+import clusterStates, {
+  isHypershiftCluster,
+  isWaitingHypershiftCluster,
+  isWaitingROSAManualMode,
+  hasInflightEgressErrors,
+} from '~/components/clusters/common/clusterStates';
+import { ClusterFromSubscription } from '~/types/types';
 import InstallationLogView from './InstallationLogView';
-import { isHypershiftCluster } from '../../clusterDetailsHelper';
 
 interface ClusterProgressCardProps {
-  cluster?: Cluster;
-  history: Object;
-  refresh?: Function;
+  cluster: ClusterFromSubscription;
 }
 
-const ClusterProgressCard = ({ cluster = {}, history, refresh }: ClusterProgressCardProps) => {
+const ClusterProgressCard = ({ cluster }: ClusterProgressCardProps) => {
   const isError = cluster.state === clusterStates.ERROR;
   const isPending = cluster.state === clusterStates.PENDING;
   const isValidating = cluster.state === clusterStates.VALIDATING;
@@ -43,7 +42,7 @@ const ClusterProgressCard = ({ cluster = {}, history, refresh }: ClusterProgress
     !isError;
   const inProgress = (installationInProgress || isUninstalling) && !isError;
   const estCompletionTime = isHypershiftCluster(cluster) ? '10' : '30 to 60';
-
+  const hasInflightErrors = hasInflightEgressErrors(cluster);
   const hasNetworkOndemand = useFeatureGate(NETWORK_VALIDATOR_ONDEMAND_FEATURE);
 
   let titleText;
@@ -59,34 +58,40 @@ const ClusterProgressCard = ({ cluster = {}, history, refresh }: ClusterProgress
 
   return (
     <Card>
-      <CardTitle>
-        <Title
-          headingLevel="h2"
-          size="lg"
-          className="card-title pf-u-display-inline-block pf-u-mr-md"
-        >
-          {inProgress && <Spinner size="sm" className="progressing-icon pf-u-mr-md" />}
-          {isError && (
-            <span className="pf-u-mr-xs">
-              <ExclamationCircleIcon color={dangerColor.value} />{' '}
-            </span>
+      {!hasInflightErrors && (
+        <CardTitle>
+          <Title
+            headingLevel="h2"
+            size="lg"
+            className="card-title pf-u-display-inline-block pf-u-mr-md"
+          >
+            {inProgress && <Spinner size="sm" className="progressing-icon pf-u-mr-md" />}
+            {isError && (
+              <span className="pf-u-mr-xs">
+                <ExclamationCircleIcon color={dangerColor.value} />{' '}
+              </span>
+            )}
+            {titleText}
+          </Title>
+          {(installationInProgress || isWaitingROSAManual) && !isUninstalling && (
+            <DownloadOcCliButton />
           )}
-          {titleText}
-        </Title>
-        {(installationInProgress || isWaitingROSAManual) && !isUninstalling && (
-          <DownloadOcCliButton />
-        )}
-        {installationInProgress && !isUninstalling && (
-          <Text component={TextVariants.p} className="expected-cluster-installation-text">
-            Cluster creation usually takes {estCompletionTime} minutes to complete.
-          </Text>
-        )}
-      </CardTitle>
+          {installationInProgress && !isUninstalling && (
+            <Text component={TextVariants.p} className="expected-cluster-installation-text">
+              Cluster creation usually takes {estCompletionTime} minutes to complete.
+            </Text>
+          )}
+        </CardTitle>
+      )}
       <CardBody>
         {isUninstalling ? (
           <UninstallProgress cluster={cluster} />
         ) : (
-          <InstallProgress cluster={cluster} hasNetworkOndemand={hasNetworkOndemand} />
+          <InstallProgress
+            cluster={cluster}
+            hasNetworkOndemand={hasNetworkOndemand}
+            hasInflightErrors={hasInflightErrors}
+          />
         )}
         <InstallationLogView isExpandable={!isUninstalling} cluster={cluster} />
       </CardBody>

@@ -18,14 +18,6 @@
 .PHONY: setup
 setup: node_modules insights-proxy-check
 
-.PHONY: js-lint
-js-lint: node_modules
-	yarn lint
-
-.PHONY: test
-test: node_modules
-	yarn test
-
 .PHONY: node_modules
 node_modules:
 	yarn install
@@ -53,10 +45,10 @@ run/ocm-api-metamodel:
 .PHONY: openapi
 openapi: run/ocm-api-model run/ocm-api-metamodel
 	# Download those we use. See openapi/README.md.
-	curl https://api.stage.openshift.com/api/accounts_mgmt/v1/openapi | jq . > openapi/accounts_mgmt.v1.json 
-	curl https://api.stage.openshift.com/api/authorizations/v1/openapi | jq . > openapi/authorizations.v1.json 
-	curl https://api.stage.openshift.com/api/service_logs/v1/openapi | jq . > openapi/service_logs.v1.json 
-	curl https://api.stage.openshift.com/api/upgrades_info/v1/openapi | jq . > openapi/upgrades_info.v1.json 
+	curl https://api.stage.openshift.com/api/accounts_mgmt/v1/openapi | jq . > openapi/accounts_mgmt.v1.json
+	curl https://api.stage.openshift.com/api/authorizations/v1/openapi | jq . > openapi/authorizations.v1.json
+	curl https://api.stage.openshift.com/api/service_logs/v1/openapi | jq . > openapi/service_logs.v1.json
+	curl https://api.stage.openshift.com/api/upgrades_info/v1/openapi | jq . > openapi/upgrades_info.v1.json
 	curl https://console.redhat.com/api/insights-results-aggregator/v1/openapi.json | jq . > openapi/insights-results-aggregator.v1.json
 	curl https://console.redhat.com/api/insights-results-aggregator/v2/openapi.json | jq . > openapi/insights-results-aggregator.v2.json
 	curl https://console.redhat.com/api/cost-management/v1/openapi.json | jq . > openapi/cost-management.v1.json

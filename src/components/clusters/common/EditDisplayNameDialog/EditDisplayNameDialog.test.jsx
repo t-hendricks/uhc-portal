@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, screen, checkAccessibility, within, fireEvent } from '~/testUtils';
+import { render, screen, checkAccessibility, within } from '~/testUtils';
 import EditDisplayNameDialog from './EditDisplayNameDialog';
 
 describe('<EditDisplayNameDialog />', () => {
@@ -71,7 +71,9 @@ describe('<EditDisplayNameDialog />', () => {
 
     expect(screen.getByRole('button', { name: 'Edit' })).toHaveAttribute('aria-disabled', 'true');
 
-    fireEvent.change(screen.getByRole('textbox'), { target: { value: 'my-new-name' } });
+    await user.clear(screen.getByRole('textbox'));
+    await user.type(screen.getByRole('textbox'), 'my-new-name');
+
     expect(screen.getByRole('button', { name: 'Edit' })).toHaveAttribute('aria-disabled', 'false');
     expect(submit).not.toBeCalled();
 

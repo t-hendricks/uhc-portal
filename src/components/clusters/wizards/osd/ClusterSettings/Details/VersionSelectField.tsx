@@ -1,18 +1,24 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { useField } from 'formik';
-import get from 'lodash/get';
 
-import { Select, SelectOption, FormGroup, SelectOptionObject } from '@patternfly/react-core';
+import { SelectOptionObject, FormGroup } from '@patternfly/react-core';
 import { Spinner } from '@redhat-cloud-services/frontend-components/Spinner';
 
 import ErrorBox from '~/components/common/ErrorBox';
+import { useOCPLifeCycleStatusData } from '~/components/releases/hooks';
 import { useFormState } from '~/components/clusters/wizards/hooks';
 import { clustersActions } from '~/redux/actions';
 import { useGlobalState } from '~/redux/hooks';
 import { Version } from '~/types/clusters_mgmt.v1';
 import { FieldId } from '~/components/clusters/wizards/osd/constants';
 import { billingModels } from '~/common/subscriptionTypes';
+import FuzzySelect, { FuzzyEntryType } from '~/components/common/FuzzySelect';
+import { versionComparator } from '~/common/versionComparator';
+
+function sortFn(a: FuzzyEntryType, b: FuzzyEntryType) {
+  return versionComparator(b.key, a.key);
+}
 
 interface VersionSelectFieldProps {
   label: string;
@@ -20,6 +26,16 @@ interface VersionSelectFieldProps {
   isDisabled?: boolean;
   onChange: (version: Version) => void;
 }
+
+type VersionIdData = {
+  versionRawId: string;
+  versionId: string;
+};
+
+const SupportStatusType = {
+  Full: 'Full Support',
+  Maintenance: 'Maintenance Support',
+};
 
 export const VersionSelectField = ({
   name,
@@ -41,6 +57,12 @@ export const VersionSelectField = ({
   } = useFormState();
   const [isOpen, setIsOpen] = useState(false);
   const [versions, setVersions] = useState<Version[]>([]);
+  const [statusData] = useOCPLifeCycleStatusData();
+  const statusVersions = statusData?.[0]?.versions;
+  const supportVersionMap = statusVersions?.reduce((acc: Record<string, string>, version) => {
+    acc[version.name] = version.type;
+    return acc;
+  }, {});
 
   const isMarketplaceGcp = billingModel === billingModels.MARKETPLACE_GCP;
 
@@ -90,10 +112,39 @@ export const VersionSelectField = ({
   };
 
   const getSelection = () => {
-    const selectedVersion = versions.find(
-      (version) => get(input, 'value.raw_id') === version.raw_id,
-    );
+    const selectedVersion = versions.find((version) => input?.value?.raw_id === version.raw_id);
     return selectedVersion ? selectedVersion.raw_id : '';
+  };
+
+  const getVersionsBySupportType = React.useMemo(() => {
+    const fullSupport: VersionIdData[] = [];
+    const maintenanceSupport: VersionIdData[] = [];
+
+    versions.forEach((version: Version) => {
+      const { raw_id: versionRawId, id: versionId } = version;
+      if (versionRawId && versionId) {
+        const majorMinorVersion = parseFloat(versionRawId);
+        if (supportVersionMap?.[majorMinorVersion] === SupportStatusType.Full) {
+          fullSupport.push({ versionRawId, versionId });
+        } else {
+          maintenanceSupport.push({ versionRawId, versionId });
+        }
+      }
+    });
+    return { fullSupport, maintenanceSupport };
+  }, [supportVersionMap, versions]);
+
+  const versionsData = {
+    'Full support': getVersionsBySupportType.fullSupport.map((version) => ({
+      key: version.versionRawId,
+      value: version.versionRawId,
+      groupKey: 'Full support',
+    })),
+    'Maintenance support': getVersionsBySupportType.maintenanceSupport.map((version) => ({
+      key: version.versionRawId,
+      value: version.versionRawId,
+      groupKey: 'Maintenance support',
+    })),
   };
 
   return (
@@ -122,26 +173,25 @@ export const VersionSelectField = ({
       )}
 
       {getInstallableVersionsResponse.fulfilled && (
-        <Select
+        <FuzzySelect
           label={label}
+          aria-label={label}
           isOpen={isOpen}
-          selections={selectedClusterVersion?.raw_id || getSelection()}
           onToggle={onToggle}
           onSelect={onSelect}
+          selected={selectedClusterVersion?.raw_id || getSelection()}
+          selectionData={versionsData}
           isDisabled={isDisabled}
+          sortFn={sortFn}
+          placeholderText="Filter by versions"
+          filterValidate={{
+            pattern: /^[0-9.]*$/gm,
+            message: 'Please enter only digits or periods.',
+          }}
+          truncation={100}
+          inlineFilterPlaceholderText="Filter by version number"
           toggleId="version-selector"
-        >
-          {versions.map((version) => (
-            <SelectOption
-              className="pf-c-dropdown__menu-item"
-              isSelected={selectedClusterVersion?.raw_id === version.raw_id}
-              value={version.raw_id}
-              key={version.id}
-            >
-              {`${version.raw_id}`}
-            </SelectOption>
-          ))}
-        </Select>
+        />
       )}
     </FormGroup>
   );

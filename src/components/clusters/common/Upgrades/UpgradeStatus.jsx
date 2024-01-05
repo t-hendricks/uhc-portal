@@ -50,7 +50,7 @@ function UpgradeStatus({
     let icon;
     let text;
     if (upgradeState === 'started' || upgradeState === 'delayed') {
-      icon = <InProgressIcon />;
+      icon = <InProgressIcon class="ocm-upgrade-in-progress-icon" />;
       if (upgradeState === 'delayed') {
         text = 'Update in progress (delayed)';
       } else {

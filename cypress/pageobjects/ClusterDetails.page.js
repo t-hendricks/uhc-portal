@@ -26,6 +26,11 @@ class ClusterDetails extends Page {
 
   editDisplayNameInput = () => cy.get('input[id="edit-display-name-input"]');
 
+  overviewTab = () => cy.get('button[aria-controls="overviewTabContent"]');
+  accessControlTab = () => cy.get('button[aria-controls="overviewTabContent"]');
+  machinePoolsTab = () => cy.get('button[aria-controls="machinePoolsTabContent"]');
+  networkingTab = () => cy.get('button[aria-controls="networkingTabContent"]');
+
   editDisplaynameConfirm = () =>
     cy.get('div[aria-label="Edit display name"]').find('footer').find('button').first();
 
@@ -80,6 +85,8 @@ class ClusterDetails extends Page {
 
   clusterHostPrefixLabelValue = () => cy.getByTestId('hostPrefix').should('exist');
 
+  clusterMachinePoolTable = () => cy.get('table[aria-label="Machine pools"]');
+
   waitForEditUrlModalToLoad = () => {
     cy.getByTestId('edit-console-url-dialog', { timeout: 30000 }).should('be.visible');
     cy.get('input[id="edit-console-url-input"]', { timeout: 30000 }).should('be.visible');
@@ -87,6 +94,34 @@ class ClusterDetails extends Page {
 
   clusterDetailsPageRefresh() {
     cy.get('button[aria-label="Refresh"]').click();
+  }
+
+  getMachinePoolName(index = 1) {
+    return this.clusterMachinePoolTable()
+      .find('tr')
+      .eq(index)
+      .find('td[data-label="Machine pool"]');
+  }
+
+  getMachinePoolInstanceType(index) {
+    return this.clusterMachinePoolTable()
+      .find('tr')
+      .eq(index)
+      .find('td[data-label="Instance type"]');
+  }
+
+  getMachinePoolAvailabilityZones(index) {
+    return this.clusterMachinePoolTable()
+      .find('tr')
+      .eq(index)
+      .find('td[data-label="Availability zones"]');
+  }
+
+  getMachinePoolNodeCount(index) {
+    return this.clusterMachinePoolTable().find('tr').eq(index).find('td[data-label="Node count"]');
+  }
+  getMachinePoolNodeAutoscaling(index) {
+    return this.clusterMachinePoolTable().find('tr').eq(index).find('td[data-label="Autoscaling"]');
   }
 
   waitForEditUrlModalToClear = () => {

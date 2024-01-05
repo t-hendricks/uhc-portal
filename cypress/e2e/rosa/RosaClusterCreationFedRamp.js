@@ -62,6 +62,11 @@ describe('Create ROSA Cluster in FedRamp (OCP-TBD)', { tags: ['fedramp'] }, () =
     });
 
     it('Step - Accounts and roles - Select Account roles, ARN definitions', () => {
+      if (!Cypress.env('GOV_CLOUD')) {
+        CreateRosaWizardPage.isControlPlaneTypeScreen();
+        CreateRosaWizardPage.selectStandaloneControlPlaneTypeOption();
+        cy.get(CreateRosaWizardPage.primaryButton).click({ force: true });
+      }
       CreateRosaWizardPage.isAccountsAndRolesScreen();
       CreateRosaWizardPage.selectAWSInfrastructureAccount(Cypress.env('QE_AWS_ID'));
       CreateRosaWizardPage.refreshInfrastructureAWSAccountButton().click();
@@ -122,6 +127,9 @@ describe('Create ROSA Cluster in FedRamp (OCP-TBD)', { tags: ['fedramp'] }, () =
       if (Cypress.env('GOV_CLOUD')) {
         CreateRosaWizardPage.clusterPrivacyIsDisabled();
         CreateRosaWizardPage.clickButtonContainingText('Next');
+        CreateRosaWizardPage.clickButtonContainingText('Select a VPC');
+        CreateRosaWizardPage.clickButtonContainingText(Cypress.env('VPC_NAME'));
+        CreateRosaWizardPage.clickButtonContainingText('Select availability zone');
         CreateRosaWizardPage.selectAvailabilityZoneRegion(Cypress.env('AVAILABILITY_ZONE_REGION'));
         CreateRosaWizardPage.inputPrivateSubnetId(Cypress.env('SUBNET_ID'));
         if (Cypress.env('INSTALL_INTO_AWS_SHARED_VPC')) {
@@ -142,6 +150,9 @@ describe('Create ROSA Cluster in FedRamp (OCP-TBD)', { tags: ['fedramp'] }, () =
         if (Cypress.env('CLUSTER_PRIVACY') == 'private') {
           CreateRosaWizardPage.enableClusterPrivacyPrivate();
           CreateRosaWizardPage.clickButtonContainingText('Next');
+          CreateRosaWizardPage.clickButtonContainingText('Select a VPC');
+          CreateRosaWizardPage.clickButtonContainingText(Cypress.env('VPC_NAME'));
+          CreateRosaWizardPage.clickButtonContainingText('Select availability zone');
           CreateRosaWizardPage.selectAvailabilityZoneRegion(
             Cypress.env('AVAILABILITY_ZONE_REGION'),
           );

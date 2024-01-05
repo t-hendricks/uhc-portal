@@ -7,7 +7,7 @@ import {
 import NodeCountInput from './NodeCountInput';
 import * as quotaSelectors from '../quotaSelectors';
 import { normalizedProducts, billingModels } from '../../../../common/subscriptionTypes';
-import { MAX_NODES } from '../machinePools/constants';
+import { MAX_NODES, MAX_NODES_HCP } from '../machinePools/constants';
 
 const getMinNodesRequired = ({ isDefaultMachinePool, isByoc, isMultiAz }) =>
   RealGetMinNodesRequired(isDefaultMachinePool, isByoc, isMultiAz);
@@ -405,37 +405,40 @@ describe('<NodeCountInput>', () => {
       });
 
       it('sends onchange with minimum nodes when the number the user picked * number of new pools is greater than max nodes', () => {
+        const maxNodes = MAX_NODES_HCP;
+        const maxNodesForThreePools = MAX_NODES_HCP / 3;
+
         // Arrange
         mockAvailableNodes.mockReturnValue(200);
         const onChange = jest.fn();
         const newProps = { ...baseProps({}), machineType: 'fake', isHypershiftWizard: true };
-        const inputProps = { ...newProps.input, onChange, value: 180 };
+        const inputProps = { ...newProps.input, onChange, value: maxNodes };
 
         const { rerender } = render(
           <NodeCountInput
             {...newProps}
             input={inputProps}
-            poolNumber={60}
-            minNodes={getMinNodesRequiredHypershift(60)}
+            poolNumber={maxNodesForThreePools}
+            minNodes={getMinNodesRequiredHypershift(maxNodesForThreePools)}
           />,
         );
         // verify initial value
         expect(onChange).toBeCalledTimes(0);
-        expect(screen.getByRole('combobox')).toHaveValue(`${180}`); // 180 = 3 nodes * 60 pools
+        expect(screen.getByRole('combobox')).toHaveValue(`${maxNodes}`); // 60 = 3 nodes * 20 pools
 
         rerender(
           <NodeCountInput
             {...newProps}
             input={inputProps}
-            poolNumber={65}
-            minNodes={getMinNodesRequiredHypershift(65)}
+            poolNumber={maxNodesForThreePools + 5}
+            minNodes={getMinNodesRequiredHypershift(maxNodesForThreePools + 5)}
           />,
         );
 
         // Assert
-        expect(65 * 3).toBeGreaterThan(MAX_NODES);
+        expect((maxNodesForThreePools + 5) * 3).toBeGreaterThan(maxNodes);
         expect(onChange).toBeCalledTimes(1);
-        expect(onChange).toBeCalledWith(getMinNodesRequiredHypershift(65));
+        expect(onChange).toBeCalledWith(getMinNodesRequiredHypershift(maxNodesForThreePools + 5));
       });
     });
   });

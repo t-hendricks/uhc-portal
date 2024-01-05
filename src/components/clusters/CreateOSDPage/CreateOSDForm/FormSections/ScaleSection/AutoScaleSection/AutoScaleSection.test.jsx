@@ -2,6 +2,7 @@ import React from 'react';
 
 import { render, screen, checkAccessibility, within } from '~/testUtils';
 import wizardConnector from '~/components/clusters/CreateOSDPage/CreateOSDWizard/WizardConnector';
+import { MAX_NODES_HCP } from '~/components/clusters/common/machinePools/constants';
 import AutoScaleSection from './AutoScaleSection';
 import { constants } from '../../../CreateOSDFormConstants';
 
@@ -14,6 +15,9 @@ const defaultProps = {
   change: () => {},
   isHypershiftWizard: true,
   isHypershiftMachinePool: false,
+  autoScaleMinNodesValue: '1',
+  autoScaleMaxNodesValue: '1',
+  numPools: 2,
 };
 
 describe('<AutoScaleSection />', () => {
@@ -150,5 +154,54 @@ describe('<AutoScaleSection />', () => {
         within(screen.getByRole('dialog')).getByText(constants.computeNodeCountHint),
       ).toBeInTheDocument();
     });
+  });
+
+  it('Error shows whole number when over the limit', async () => {
+    const numPools = 4;
+    const enteredNum = 50;
+
+    const newProps = {
+      ...defaultProps,
+      numPools,
+    };
+
+    // Validate test input
+    expect(MAX_NODES_HCP % numPools).not.toEqual(0); // ensure max user can enter is not a whole number
+    expect(enteredNum * numPools).toBeGreaterThan(MAX_NODES_HCP); // entered value is over total max nodes
+
+    const { user } = render(<ConnectedAutoScaleSection {...newProps} />);
+
+    const maxNodesInput = screen.getByRole('spinbutton', { name: 'Maximum nodes' });
+
+    await user.clear(maxNodesInput);
+    await user.type(maxNodesInput, `${enteredNum}`);
+
+    // Ensure that shown number is a whole number
+    const maxUserCanEnter = Math.floor(MAX_NODES_HCP / numPools);
+    expect(
+      await screen.findByText(`Input cannot be more than ${maxUserCanEnter}.`),
+    ).toBeInTheDocument();
+  });
+
+  it('Error not shown when not over the limit', async () => {
+    const numPools = 4;
+    const enteredNum = 10;
+
+    const newProps = {
+      ...defaultProps,
+      numPools,
+    };
+
+    // Validate test input
+    expect(enteredNum * numPools).toBeLessThan(MAX_NODES_HCP); // entered value is under total max nodes
+
+    const { user } = render(<ConnectedAutoScaleSection {...newProps} />);
+
+    const maxNodesInput = screen.getByRole('spinbutton', { name: 'Maximum nodes' });
+
+    await user.clear(maxNodesInput);
+    await user.type(maxNodesInput, `${enteredNum}`);
+
+    expect(screen.queryByText(/Input cannot be more than/)).not.toBeInTheDocument();
   });
 });

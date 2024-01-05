@@ -1,10 +1,10 @@
 import get from 'lodash/get';
-import { isHibernating } from '~/components/clusters/common/clusterStates';
+import { isHibernating, isHypershiftCluster } from '~/components/clusters/common/clusterStates';
 import { normalizeProductID } from '~/common/normalize';
 import { normalizedProducts } from '~/common/subscriptionTypes';
 import { checkLabels } from '../../../../../common/validators';
 import { asArray } from '../../../../../common/helpers';
-import { isHypershiftCluster, isMultiAZ } from '../../clusterDetailsHelper';
+import { isMultiAZ } from '../../clusterDetailsHelper';
 
 const NON_CCS_DEFAULT_POOL = 'worker';
 
@@ -236,7 +236,7 @@ const getAddMachinePoolDisabledReason = (cluster) => {
   if (isReadOnly) {
     return 'This operation is not available during maintenance.';
   }
-  if (isHibernating(cluster.state)) {
+  if (isHibernating(cluster)) {
     return 'This operation is not available while cluster is hibernating.';
   }
   if (!cluster.canEdit) {

@@ -1,5 +1,5 @@
 import React from 'react';
-import { mount } from 'enzyme';
+import { render, screen, checkAccessibility } from '~/testUtils';
 
 import CancelUpgradeModal from './CancelUpgradeModal';
 
@@ -8,38 +8,48 @@ describe('<CancelUpgradeModal />', () => {
   const deleteSchedule = jest.fn();
   const clearDeleteScheduleResponse = jest.fn();
 
-  let wrapper;
-  beforeEach(() => {
-    wrapper = mount(
-      <CancelUpgradeModal
-        isOpen
-        closeModal={closeModal}
-        deleteSchedule={deleteSchedule}
-        deleteScheduleRequest={{}}
-        schedule={{
-          id: 'foo',
-          cluster_id: 'bar',
-          version: 'v1.2.3',
-          next_run: new Date('2020-11-02').toISOString(),
-        }}
-        clearDeleteScheduleResponse={clearDeleteScheduleResponse}
-        isHypershift={false}
-      />,
-    );
+  const defaultProps = {
+    isOpen: true,
+    closeModal,
+    deleteSchedule,
+    deleteScheduleRequest: {},
+    schedule: {
+      id: 'myScheduleId',
+      cluster_id: 'myClusterId',
+      version: 'v1.2.3',
+      next_run: new Date('2020-11-02').toISOString(),
+    },
+    clearDeleteScheduleResponse,
+    isHypershift: false,
+  };
+
+  afterEach(() => {
+    jest.clearAllMocks();
   });
 
-  it('renders correctly', () => {
-    expect(wrapper).toMatchSnapshot();
+  it('is accessible', async () => {
+    const { container } = render(<CancelUpgradeModal {...defaultProps} />);
+    await checkAccessibility(container);
   });
 
-  it('correctly calls deleteSchedule', () => {
-    const primaryButton = wrapper.find('Button[variant="primary"]');
-    primaryButton.simulate('click');
-    expect(deleteSchedule).toBeCalledWith('bar', 'foo', false);
+  it('calls deleteSchedule when button is clicked', async () => {
+    const { user } = render(<CancelUpgradeModal {...defaultProps} />);
+    expect(deleteSchedule).not.toBeCalled();
+
+    await user.click(screen.getByRole('button', { name: 'Cancel this update' }));
+    expect(deleteSchedule).toBeCalledWith('myClusterId', 'myScheduleId', false);
   });
 
   it('clears request state when fulfilled and closes modal', () => {
-    wrapper.setProps({ deleteScheduleRequest: { fulfilled: true } });
+    const { rerender } = render(<CancelUpgradeModal {...defaultProps} />);
+    expect(clearDeleteScheduleResponse).not.toBeCalled();
+    expect(closeModal).not.toBeCalled();
+
+    const fulfilledProps = {
+      ...defaultProps,
+      deleteScheduleRequest: { fulfilled: true },
+    };
+    rerender(<CancelUpgradeModal {...fulfilledProps} />);
     expect(clearDeleteScheduleResponse).toBeCalled();
     expect(closeModal).toBeCalled();
   });

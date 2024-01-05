@@ -9,15 +9,19 @@ import {
   Flex,
 } from '@patternfly/react-core';
 import * as OCM from '@openshift-assisted/ui-lib/ocm';
-import { canViewMachinePoolTab, isROSA } from '~/components/clusters/common/clusterStates';
+import {
+  canViewMachinePoolTab,
+  isHypershiftCluster,
+  isROSA,
+} from '~/components/clusters/common/clusterStates';
 import { IMDSType } from '~/components/clusters/wizards/common';
 import { isRestrictedEnv } from '~/restrictedEnv';
 import { hasSecurityGroupIds } from '~/common/securityGroupsHelpers';
 import { useAWSVPCFromCluster } from '~/components/clusters/CreateOSDPage/CreateOSDWizard/NetworkScreen/useAWSVPCFromCluster';
 
-import { getQueryParam } from '~/common/queryHelpers';
 import { GCP_SECURE_BOOT_UI } from '~/redux/constants/featureConstants';
 import { useFeatureGate } from '~/hooks/useFeatureGate';
+import { getQueryParam } from '~/common/queryHelpers';
 import Timestamp from '../../../../../common/Timestamp';
 import links from '../../../../../../common/installLinks.mjs';
 import { isAISubscriptionWithoutMetrics } from '../../../../../../common/isAssistedInstallerCluster';
@@ -27,7 +31,6 @@ import { humanizeValueWithUnit, humanizeValueWithUnitGiB } from '../../../../../
 import { subscriptionStatuses } from '../../../../../../common/subscriptionTypes';
 import PopoverHint from '../../../../../common/PopoverHint';
 import ExternalLink from '../../../../../common/ExternalLink';
-import { isHypershiftCluster } from '../../../clusterDetailsHelper';
 import { ClusterStatus } from './ClusterStatus';
 import SecurityGroupsDisplayByNode from '../../SecurityGroups/SecurityGroupsDetailDisplay';
 

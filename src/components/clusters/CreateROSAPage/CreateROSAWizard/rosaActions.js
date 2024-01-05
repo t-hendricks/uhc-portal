@@ -98,7 +98,7 @@ export const getAWSBillingAccountIDs = (organizationID) => (dispatch) =>
       if (!response.data || !response.data.items) {
         return [];
       }
-      return getAwsBillingAccountsFromQuota(response.data);
+      return getAwsBillingAccountsFromQuota(response.data.items);
     }),
   });
 

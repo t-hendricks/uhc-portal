@@ -16,7 +16,7 @@ import links from '~/common/installLinks.mjs';
 import { RosaCliCommand } from '../AccountsRolesScreen/constants/cliCommands';
 
 const WithCLICard = () => (
-  <Card>
+  <Card isFlat isFullHeight>
     <CardTitle>
       <Title headingLevel="h3" size="lg">
         <CodeIcon className="ocm-c-wizard-get-started--card-icon" />

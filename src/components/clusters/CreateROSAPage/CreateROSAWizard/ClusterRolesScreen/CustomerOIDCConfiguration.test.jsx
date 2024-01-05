@@ -1,7 +1,8 @@
 import React from 'react';
 
-import { fireEvent, render, screen } from '~/testUtils';
+import { waitFor, render, screen } from '~/testUtils';
 import wizardConnector from '~/components/clusters/CreateOSDPage/CreateOSDWizard/WizardConnector';
+
 import CustomerOIDCConfiguration from './CustomerOIDCConfiguration';
 
 const oidcConfigs = [{ id: 'config1' }, { id: 'config2' }, { id: 'config3' }];
@@ -17,35 +18,41 @@ const defaultProps = {
 };
 
 describe('<CustomerOIDCConfiguration />', () => {
+  jest.useFakeTimers();
+
+  afterEach(() => {
+    jest.runOnlyPendingTimers();
+  });
+  afterAll(() => {
+    jest.useRealTimers();
+  });
+
   describe('Show spinner when refreshing/loading OIDC configurations', () => {
-    beforeEach(() => {
-      jest.useFakeTimers();
-    });
-    afterEach(() => {
-      jest.runOnlyPendingTimers();
-      jest.useRealTimers();
-    });
-    it('shows spinner initially', () => {
+    it('shows spinner initially', async () => {
       const ConnectedCustomerOIDCConfiguration = wizardConnector(CustomerOIDCConfiguration);
       render(<ConnectedCustomerOIDCConfiguration {...defaultProps} />);
 
       expect(screen.getByRole('button', { name: 'Loading... Refresh' })).toBeDisabled();
       expect(screen.getByRole('progressbar')).toBeInTheDocument();
+
+      await waitFor(() => {
+        expect(screen.getByRole('button', { name: /Refresh/ })).toHaveAttribute(
+          'aria-disabled',
+          'false',
+        );
+      });
     });
 
-    it.skip('hides spinner after OIDC refresh is done', async () => {
-      // Skipping unsure why the internal isLoading isn't changing
-      // even though we are telling test to advance timers
+    it('hides spinner after OIDC refresh is done', async () => {
       const ConnectedCustomerOIDCConfiguration = wizardConnector(CustomerOIDCConfiguration);
       render(<ConnectedCustomerOIDCConfiguration {...defaultProps} />);
+      await waitFor(() => {
+        expect(screen.getByRole('button', { name: /Refresh/ })).toHaveAttribute(
+          'aria-disabled',
+          'false',
+        );
+      });
 
-      await new Promise(process.nextTick); // wait for all promises to finish
-      jest.runAllTimers();
-      // In theory any of these should work but doesn't
-      // jest.advanceTimersByTime(550)
-      // jest.runOnlyPendingTimers();
-
-      expect(screen.getByRole('button', { name: 'Refresh' })).toBeEnabled();
       expect(screen.queryByRole('progressbar')).not.toBeInTheDocument();
     });
   });
@@ -54,17 +61,32 @@ describe('<CustomerOIDCConfiguration />', () => {
     it('shows with no options in dropdown', async () => {
       const ConnectedCustomerOIDCConfiguration = wizardConnector(CustomerOIDCConfiguration);
       render(<ConnectedCustomerOIDCConfiguration {...defaultProps} />);
-      // For unit test, this works because config ids take a while to load
+
+      // Check while data is still loading
       expect(await screen.findByText(/No OIDC configurations found/i)).toBeInTheDocument();
+
+      await waitFor(() => {
+        expect(screen.getByRole('button', { name: /Refresh/ })).toHaveAttribute(
+          'aria-disabled',
+          'false',
+        );
+      });
     });
 
     it('shows search in select oidc config id dropdown', async () => {
       const ConnectedCustomerOIDCConfiguration = wizardConnector(CustomerOIDCConfiguration);
-      render(<ConnectedCustomerOIDCConfiguration {...defaultProps} />);
+      const { user } = render(<ConnectedCustomerOIDCConfiguration {...defaultProps} />);
+      await waitFor(() => {
+        expect(screen.getByRole('button', { name: /Refresh/ })).toHaveAttribute(
+          'aria-disabled',
+          'false',
+        );
+      });
+
       expect(await screen.findByText(/select a config id/i)).toBeInTheDocument();
 
       const selectDropdown = screen.getByRole('button', { name: 'Options menu' });
-      fireEvent.keyDown(selectDropdown, { key: 'Enter' }); // this is the only way to open select! using click doesn't work
+      await user.click(selectDropdown);
       expect(await screen.findByPlaceholderText('Filter by config ID')).toBeInTheDocument();
     });
   });

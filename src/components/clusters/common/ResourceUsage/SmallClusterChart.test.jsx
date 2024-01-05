@@ -1,5 +1,5 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { render, screen } from '~/testUtils';
 import { parseValueWithUnit } from '../../../../common/units';
 import SmallClusterChart from './SmallClusterChart';
 
@@ -14,19 +14,28 @@ const memory = {
     unit: 'B',
   },
 };
+// TODO: This component is not fully testable because a large portion of the data is only displayed in SVGs
+// and is not accessible.  Besides not easily testable this is a large accessibility concern.
 
 describe('<SmallClusterChart />', () => {
-  it('should render', () => {
-    const wrapper = shallow(
-      <SmallClusterChart
-        title="Memory"
-        total={getValue(memory.total)}
-        used={getValue(memory.used)}
-        unit="B"
-        humanize
-        donutId="memory_donut"
-      />,
-    );
-    expect(wrapper).toMatchSnapshot();
+  const defaultProps = {
+    title: 'Memory',
+    total: getValue(memory.total),
+    used: getValue(memory.used),
+    unit: 'B',
+    humanize: true,
+    donutId: 'memory_donut',
+    availableTitle: 'Available',
+    usedTitle: 'Used',
+  };
+  it('should render', async () => {
+    render(<SmallClusterChart {...defaultProps} />);
+
+    expect(screen.getByText('Used: 15.41 GiB')).toBeInTheDocument();
+    expect(screen.getByText('Available: 61.23 GiB')).toBeInTheDocument();
+    expect(screen.getAllByRole('img')).toHaveLength(1);
+
+    // This fails due to numerous accessibility issues
+    // await checkAccessibility(container);
   });
 });

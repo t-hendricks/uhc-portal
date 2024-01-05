@@ -4,7 +4,7 @@ import { Tooltip } from '@patternfly/react-core';
 
 import get from 'lodash/get';
 
-import { PreviewLabel, createdPostGa } from '~/components/clusters/common/PreviewLabel';
+import { PreviewLabel } from '~/components/clusters/common/PreviewLabel';
 import { normalizedProducts } from '../../../common/subscriptionTypes';
 
 function ClusterTypeLabel({ cluster }) {
@@ -37,9 +37,7 @@ function ClusterTypeLabel({ cluster }) {
     [normalizedProducts.ROSA_HyperShift]: {
       name: 'ROSA',
       tooltip: 'Red Hat OpenShift Service on AWS',
-      label: createdPostGa(creationDateStr) ? null : (
-        <PreviewLabel creationDateStr={creationDateStr} />
-      ),
+      label: <PreviewLabel creationDateStr={creationDateStr} />, // PreviewLabel will return null if created after creationDate
     },
     [normalizedProducts.ARO]: {
       name: 'ARO',

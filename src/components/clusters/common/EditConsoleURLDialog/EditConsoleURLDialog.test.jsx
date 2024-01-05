@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { screen, render, checkAccessibility, fireEvent, within } from '~/testUtils';
+import { screen, render, checkAccessibility, within } from '~/testUtils';
 
 import EditConsoleURLDialog from './EditConsoleURLDialog';
 
@@ -48,11 +48,9 @@ describe('<EditConsoleURLDialog />', () => {
 
     expect(screen.getByRole('button', { name: 'Save' })).toHaveAttribute('aria-disabled', 'true');
 
-    // user.type doesn't trigger validation
-    // await user.type(screen.getByRole('textbox'), 'http://www.my-new-console-ulr.com');
-    fireEvent.change(screen.getByRole('textbox'), {
-      target: { value: 'http://www.my-new-console-url.com' },
-    });
+    await user.clear(screen.getByRole('textbox'));
+    await user.type(screen.getByRole('textbox'), 'http://www.my-new-console-url.com');
+
     expect(screen.getByRole('button', { name: 'Save' })).toHaveAttribute('aria-disabled', 'false');
 
     expect(submit).not.toBeCalled();

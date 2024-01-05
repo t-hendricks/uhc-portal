@@ -35,7 +35,7 @@ import {
   TextContent,
   Title,
 } from '@patternfly/react-core';
-import { isRestrictedEnv, refreshToken } from '~/restrictedEnv';
+import { isRestrictedEnv, getRefreshToken } from '~/restrictedEnv';
 import useChrome from '@redhat-cloud-services/frontend-components/useChrome';
 import type { ChromeAPI } from '@redhat-cloud-services/types';
 import links, { tools, channels } from '../../common/installLinks.mjs';
@@ -95,7 +95,16 @@ const Tokens = (props: Props) => {
   } = props;
   const chrome = useChrome();
   const restrictedEnv = isRestrictedEnv(chrome as unknown as ChromeAPI);
-  const token = restrictedEnv ? refreshToken(chrome as unknown as ChromeAPI) : offlineToken;
+  const [token, setToken] = React.useState<string>('');
+  React.useEffect(() => {
+    if (restrictedEnv) {
+      getRefreshToken(chrome as unknown as ChromeAPI).then((refreshToken) =>
+        setToken(refreshToken),
+      );
+    } else if (offlineToken) {
+      setToken(offlineToken as string);
+    }
+  }, [chrome, restrictedEnv, offlineToken]);
   React.useEffect(() => {
     // After requesting token, we might need to reload page doing stronger auth;
     // after that we want the token to show, but we just loaded.

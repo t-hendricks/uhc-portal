@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import get from 'lodash/get';
-import moment from 'moment';
+import dayjs from 'dayjs';
 import { Popover, PopoverPosition, Button } from '@patternfly/react-core';
 import { ExclamationTriangleIcon, ExclamationCircleIcon } from '@patternfly/react-icons';
 import { DateFormat } from '@redhat-cloud-services/frontend-components/DateFormat';
@@ -61,7 +61,7 @@ function ClusterCreatedIndicator({ cluster }) {
   ) {
     const clusterCreationTime = get(cluster, 'creation_timestamp', false);
     if (clusterCreationTime) {
-      return moment(cluster.creation_timestamp).format('DD MMM YYYY');
+      return dayjs(cluster.creation_timestamp).format('DD MMM YYYY');
     }
     return 'N/A';
   }

@@ -22,6 +22,7 @@ type EditApplicationIngressDialogProps = {
   hasSufficientIngressEditVersion?: boolean;
   canEditLoadBalancer?: boolean;
   canShowLoadBalancer?: boolean;
+  isHypershiftCluster?: boolean;
 };
 
 const EditApplicationIngressDialog: React.FC<EditApplicationIngressDialogProps> = ({
@@ -38,6 +39,7 @@ const EditApplicationIngressDialog: React.FC<EditApplicationIngressDialogProps> 
   hasSufficientIngressEditVersion,
   canEditLoadBalancer,
   canShowLoadBalancer,
+  isHypershiftCluster,
 }) => {
   if (!isOpen) {
     return null;
@@ -74,6 +76,8 @@ const EditApplicationIngressDialog: React.FC<EditApplicationIngressDialogProps> 
           hasSufficientIngressEditVersion={hasSufficientIngressEditVersion}
           canEditLoadBalancer={canEditLoadBalancer}
           canShowLoadBalancer={canShowLoadBalancer}
+          areFieldsDisabled={isHypershiftCluster}
+          isHypershiftCluster={isHypershiftCluster}
         />
       </Form>
     </Modal>

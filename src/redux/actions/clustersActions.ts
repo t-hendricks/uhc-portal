@@ -19,7 +19,9 @@ import { action, ActionType } from 'typesafe-actions';
 import axios, { AxiosResponse } from 'axios';
 import type { Cluster as AICluster } from '@openshift-assisted/types/assisted-installer-service';
 
-import { isHypershiftCluster } from '~/components/clusters/ClusterDetails/clusterDetailsHelper';
+import { isHypershiftCluster } from '~/components/clusters/common/clusterStates';
+
+import { techPreviewStatusSelector, dispatchTechPreviewStatus } from '../hooks/clusterHooks';
 import { clustersConstants } from '../constants';
 import {
   accountsService,
@@ -351,6 +353,7 @@ const fetchClustersAndPermissions = async (
 
       // fetch managed clusters by subscription
       const clustersQuery = buildSearchQuery(managedSubsriptions, 'cluster_id');
+
       try {
         return await clusterService.getClusters(clustersQuery).then((response) => {
           const clusters = response?.data?.items;
@@ -430,10 +433,15 @@ const fetchClustersAction = (
 
 const fetchClusters =
   (params: Parameters<typeof fetchClustersAndPermissions>[0]): AppThunk =>
-  (dispatch, getState) =>
+  (dispatch, getState) => {
+    // Fetch tech preview if not already in state
+    if (!techPreviewStatusSelector(getState(), 'rosa', 'hcp')) {
+      dispatchTechPreviewStatus(dispatch, 'rosa', 'hcp');
+    }
     dispatch(
       fetchClustersAction(params, getState().features[ASSISTED_INSTALLER_MERGE_LISTS_FEATURE]),
     );
+  };
 
 const fetchSingleClusterAndPermissions = async (
   subscriptionID: string,

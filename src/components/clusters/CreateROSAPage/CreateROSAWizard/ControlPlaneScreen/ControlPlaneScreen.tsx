@@ -10,9 +10,9 @@ import ExternalLink from '~/components/common/ExternalLink';
 
 import AWSLogo from '~/styles/images/AWS.png';
 import RedHat from '~/styles/images/Logo-Red_Hat-B-Standard-RGB.png';
+import { ApplicationIngressType } from '~/components/clusters/wizards/osd/Networking/constants';
 import { PrerequisitesInfoBox } from '~/components/clusters/CreateROSAPage/CreateROSAWizard/common/PrerequisitesInfoBox';
 import { WelcomeMessage } from '~/components/clusters/CreateROSAPage/CreateROSAWizard/common/WelcomeMessage';
-import { ApplicationIngressType } from '~/components/clusters/wizards/osd/Networking/constants';
 import StandAloneTile from './StandAloneTile';
 import HostedTile from './HostedTile';
 import { hypershiftValue } from './ControlPlaneCommon';

@@ -8,9 +8,10 @@ import { FormSelect, FormSelectOption, Tooltip } from '@patternfly/react-core';
 
 import { Spinner } from '@redhat-cloud-services/frontend-components/Spinner';
 import ErrorBox from '../../../common/ErrorBox';
-import { availableQuota, quotaTypes } from '../quotaSelectors';
+import { availableQuota } from '../quotaSelectors';
 import { filterLoadBalancerValuesByQuota } from './LoadBalancersDropdownHelper';
 import { noQuotaTooltip } from '../../../../common/helpers';
+import { QuotaTypes } from '../quotaModel';
 
 class LoadBalancersDropdown extends React.Component {
   componentDidMount() {
@@ -40,7 +41,7 @@ class LoadBalancersDropdown extends React.Component {
     );
     if (loadBalancerValues.fulfilled) {
       const query = {
-        resourceType: quotaTypes.LOAD_BALANCER,
+        resourceType: QuotaTypes.LOAD_BALANCER,
         billingModel,
         product,
         cloudProviderID,
