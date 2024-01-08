@@ -1,20 +1,23 @@
 .ocm-c-pre-release__card {
-  margin-top: var(--pf-global--spacer--md);
+  margin-top: var(--pf-v5-global--spacer--md);
+  .pf-v5-c-card__title {
+    padding: 0;
+  }
   &--header:first-child {
-    background-color: var(--pf-global--warning-color--100);
+    background-color: var(--pf-v5-global--warning-color--100);
     font-weight: normal;
-    padding-bottom: var(--pf-global--spacer--sm);
-    padding-left: var (--pf-global--spacer--lg);
-    padding-top: var(--pf-global--spacer--sm);
+    padding-bottom: var(--pf-v5-global--spacer--sm);
+    padding-left: var(--pf-v5-global--spacer--lg);
+    padding-top: var(--pf-v5-global--spacer--sm);
   }
   &--body {
     max-width: 700px;
-    margin-top: var(--pf-global--spacer--md);
+    margin-top: var(--pf-v5-global--spacer--md);
     small {
-      margin-top: var(--pf-global--spacer--md);
+      margin-top: var(--pf-v5-global--spacer--md);
     }
     ul li {
-      font-weight: var(--pf-global--FontWeight--bold);
+      font-weight: var(--pf-v5-global--FontWeight--bold);
     }
   }
 }

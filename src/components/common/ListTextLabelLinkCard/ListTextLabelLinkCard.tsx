@@ -21,12 +21,12 @@ export function ListTextLabelLinkCard(props: ListTextLabelLinkCardProps) {
       <List isPlain isBordered>
         {textLabelLinkItems.length &&
           textLabelLinkItems.map(({ listItemText, listItemLabel, listItemLink }, index) => {
-            let splitClassName = 'pf-u-pt-md pf-u-pr-md pf-u-pb-md pf-u-pl-md';
+            let splitClassName = 'pf-v5-u-pt-md pf-v5-u-pr-md pf-v5-u-pb-md pf-v5-u-pl-md';
             if (index === textLabelLinkItems.length - 1) {
-              splitClassName += ' pf-u-pb-lg';
+              splitClassName += ' pf-v5-u-pb-lg';
             }
             if (index === 0) {
-              splitClassName += ' pf-u-pt-lg';
+              splitClassName += ' pf-v5-u-pt-lg';
             }
 
             return (

@@ -3,7 +3,7 @@ import ClusterListPage from '../../pageobjects/ClusterList.page';
 
 describe('OCM Cluster archives page', () => {
   before(() => {
-    cy.visit('/');
+    cy.visit('/', { retryOnNetworkFailure: true });
     Login.isLoginPageUrl();
     Login.login();
 
@@ -64,7 +64,7 @@ describe('OCM Cluster archives page', () => {
         ClusterListPage.clickClusterTypes('ARO');
         ClusterListPage.clickClusterTypes('OCP');
         ClusterListPage.clearFilters();
-        ClusterListPage.filterTxtField().should('be.visible').click();
+        ClusterListPage.filterTxtField().should('be.visible').click({ force: true });
         ClusterListPage.filterTxtField().clear().type('smoke cluster');
         ClusterListPage.filterTxtField().clear();
         ClusterListPage.waitForArchiveDataReady();
@@ -73,7 +73,8 @@ describe('OCM Cluster archives page', () => {
       it('Cluster archives page : view only cluster options & its actions', () => {
         ClusterListPage.viewOnlyMyCluster().click({ force: true });
         ClusterListPage.viewOnlyMyClusterHelp().click();
-        ClusterListPage.tooltipviewOnlyMyCluster().contains(
+        ClusterListPage.tooltipviewOnlyMyCluster().should(
+          'include',
           'Show only the clusters you previously archived, or all archived clusters in your organization.',
         );
         ClusterListPage.clusterListRefresh();

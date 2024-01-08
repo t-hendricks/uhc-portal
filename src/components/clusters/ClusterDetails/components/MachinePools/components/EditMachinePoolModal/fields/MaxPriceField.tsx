@@ -2,6 +2,7 @@ import { FormGroup, NumberInput } from '@patternfly/react-core';
 import { useField } from 'formik';
 import * as React from 'react';
 import { SPOT_MIN_PRICE } from '~/components/clusters/common/machinePools/constants';
+import { FormGroupHelperText } from '~/components/common/FormGroupHelperText';
 import { EditMachinePoolValues } from '../hooks/useMachinePoolFormik';
 
 import './MaxPriceField.scss';
@@ -19,12 +20,7 @@ const MaxPriceField = ({ isEdit }: MaxPriceFieldProps) => {
   const onChange = useFormikOnChange(fieldId);
 
   return (
-    <FormGroup
-      fieldId="maxPrice"
-      isRequired
-      validated={touched && error ? 'error' : 'default'}
-      helperTextInvalid={touched && error}
-    >
+    <FormGroup fieldId="maxPrice" isRequired>
       <NumberInput
         {...maxPriceField}
         id="maxPrice"
@@ -46,6 +42,8 @@ const MaxPriceField = ({ isEdit }: MaxPriceFieldProps) => {
         min={SPOT_MIN_PRICE}
         isDisabled={isEdit}
       />
+
+      <FormGroupHelperText touched={touched} error={error} />
     </FormGroup>
   );
 };

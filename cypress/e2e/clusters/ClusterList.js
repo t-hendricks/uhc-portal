@@ -3,7 +3,7 @@ import ClusterListPage from '../../pageobjects/ClusterList.page';
 
 describe('OCM Mainpage - cluster list page', () => {
   before(() => {
-    cy.visit('/');
+    cy.visit('/', { retryOnNetworkFailure: true });
     Login.isLoginPageUrl();
     Login.login();
 

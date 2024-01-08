@@ -1,8 +1,8 @@
 import React from 'react';
-import { Popover } from '@patternfly/react-core';
-import { HelpIcon } from '@patternfly/react-icons';
+import { Popover, Icon } from '@patternfly/react-core';
+import { HelpIcon } from '@patternfly/react-icons/dist/esm/icons/help-icon';
 // eslint-disable-next-line camelcase
-import { global_Color_dark_200 } from '@patternfly/react-tokens';
+import { global_Color_dark_200 } from '@patternfly/react-tokens/dist/esm/global_Color_dark_200';
 
 import links from '../../../common/installLinks.mjs';
 import ExternalLink from '../../common/ExternalLink';
@@ -28,7 +28,9 @@ const InfoPopover = () => (
       </>
     }
   >
-    <HelpIcon className="ocm-insights--info-popover__icon" color={global_Color_dark_200.value} />
+    <Icon className="ocm-insights--info-popover__icon">
+      <HelpIcon color={global_Color_dark_200.value} />
+    </Icon>
   </Popover>
 );
 

@@ -1,6 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Select, SelectOption, FormGroup } from '@patternfly/react-core';
+import { FormGroup } from '@patternfly/react-core';
+import {
+  Select as SelectDeprecated,
+  SelectOption as SelectOptionDeprecated,
+} from '@patternfly/react-core/deprecated';
 
 class PodDistruptionBudgetGraceSelect extends React.Component {
   state = { isOpen: false };
@@ -20,21 +24,21 @@ class PodDistruptionBudgetGraceSelect extends React.Component {
     const { input, isDisabled } = this.props;
     return (
       <FormGroup label="Grace period" className="ocm-c-upgrades-pdb-select">
-        <Select
+        <SelectDeprecated
           isOpen={isOpen}
           selections={input.value}
-          onToggle={this.onToggle}
+          onToggle={(_event, isOpen) => this.onToggle(isOpen)}
           onSelect={this.onSelect}
           isDisabled={isDisabled}
           direction="up"
         >
-          <SelectOption value={15}>15 minutes</SelectOption>
-          <SelectOption value={30}>30 minutes</SelectOption>
-          <SelectOption value={60}>1 hour</SelectOption>
-          <SelectOption value={2 * 60}>2 hours</SelectOption>
-          <SelectOption value={4 * 60}>4 hours</SelectOption>
-          <SelectOption value={8 * 60}>8 hours</SelectOption>
-        </Select>
+          <SelectOptionDeprecated value={15}>15 minutes</SelectOptionDeprecated>
+          <SelectOptionDeprecated value={30}>30 minutes</SelectOptionDeprecated>
+          <SelectOptionDeprecated value={60}>1 hour</SelectOptionDeprecated>
+          <SelectOptionDeprecated value={2 * 60}>2 hours</SelectOptionDeprecated>
+          <SelectOptionDeprecated value={4 * 60}>4 hours</SelectOptionDeprecated>
+          <SelectOptionDeprecated value={8 * 60}>8 hours</SelectOptionDeprecated>
+        </SelectDeprecated>
       </FormGroup>
     );
   }

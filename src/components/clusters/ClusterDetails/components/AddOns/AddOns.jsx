@@ -5,11 +5,13 @@ import {
   EmptyState,
   EmptyStateBody,
   EmptyStateIcon,
-  Title,
-  EmptyStateSecondaryActions,
   Button,
+  EmptyStateActions,
+  EmptyStateHeader,
+  EmptyStateFooter,
 } from '@patternfly/react-core';
-import { PlusCircleIcon, CubesIcon } from '@patternfly/react-icons';
+import { CubesIcon } from '@patternfly/react-icons/dist/esm/icons/cubes-icon';
+import { PlusCircleIcon } from '@patternfly/react-icons/dist/esm/icons/plus-circle-icon';
 import { Spinner } from '@redhat-cloud-services/frontend-components/Spinner';
 import ErrorBox from '../../../../common/ErrorBox';
 import { availableAddOns } from './AddOnsHelper';
@@ -68,23 +70,26 @@ class AddOns extends React.Component {
     if (isHypershift) {
       return (
         <EmptyState>
-          <EmptyStateIcon icon={CubesIcon} />
-          <Title headingLevel="h5" size="lg">
-            Coming soon
-          </Title>
+          <EmptyStateHeader
+            titleText="Coming soon"
+            icon={<EmptyStateIcon icon={CubesIcon} />}
+            headingLevel="h5"
+          />
           <EmptyStateBody>
             Add-ons will be available soon for hosted control plane clusters.
           </EmptyStateBody>
-          <EmptyStateSecondaryActions>
-            <Button
-              variant="link"
-              onClick={() => {
-                document.location.hash = 'overview';
-              }}
-            >
-              Go back to overview
-            </Button>
-          </EmptyStateSecondaryActions>
+          <EmptyStateFooter>
+            <EmptyStateActions>
+              <Button
+                variant="link"
+                onClick={() => {
+                  document.location.hash = 'overview';
+                }}
+              >
+                Go back to overview
+              </Button>
+            </EmptyStateActions>
+          </EmptyStateFooter>
         </EmptyState>
       );
     }
@@ -105,11 +110,13 @@ class AddOns extends React.Component {
     if (!hasAddOns) {
       return (
         <EmptyState>
-          <EmptyStateIcon icon={PlusCircleIcon} />
+          <EmptyStateHeader
+            titleText="No add-ons available for this cluster"
+            icon={<EmptyStateIcon icon={PlusCircleIcon} />}
+            headingLevel="h5"
+          />
           {addOns.error && <ErrorBox message="Error getting add-ons" response={addOns} />}
-          <Title headingLevel="h5" size="lg">
-            No add-ons available for this cluster
-          </Title>
+
           <EmptyStateBody>There are no add-ons available for this cluster.</EmptyStateBody>
         </EmptyState>
       );

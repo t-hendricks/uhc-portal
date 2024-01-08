@@ -1,6 +1,6 @@
 import React from 'react';
-import { Popover, PopoverPosition, Label } from '@patternfly/react-core';
-import { InfoCircleIcon } from '@patternfly/react-icons';
+import { Popover, PopoverPosition, Label, Icon } from '@patternfly/react-core';
+import { InfoCircleIcon } from '@patternfly/react-icons/dist/esm/icons/info-circle-icon';
 
 import links from '../../common/installLinks.mjs';
 import ExternalLink from './ExternalLink';
@@ -39,7 +39,7 @@ const SupportLevelBadge = ({ type }: { type: SupportLevelType }) => {
   const badgeInfo = badgeLevels[type];
   const infoElem = (
     <>
-      <div className="pf-u-mb-sm">{badgeInfo.text}</div>
+      <div className="pf-v5-u-mb-sm">{badgeInfo.text}</div>
       <ExternalLink href={badgeInfo.link}>Learn more</ExternalLink>
     </>
   );
@@ -51,8 +51,12 @@ const SupportLevelBadge = ({ type }: { type: SupportLevelType }) => {
         onClick={(event) => {
           event.preventDefault();
         }}
-        icon={<InfoCircleIcon color="var(--pf-c-label__content--Color)" />}
-        className="pf-u-ml-md pf-u-display-inline"
+        icon={
+          <Icon>
+            <InfoCircleIcon color="var(--pf-v5-c-label__content--Color)" />
+          </Icon>
+        }
+        className="pf-v5-u-ml-md pf-v5-u-display-inline"
       >
         {badgeInfo.title}
       </Label>

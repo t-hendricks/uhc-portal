@@ -10,7 +10,7 @@ type Props = {
 const RevokeTokensInstructions = ({ reason }: Props) => (
   <TextContent className="ocm-c-revoke-tokens">
     {reason && (
-      <p className="pf-u-mt-sm">
+      <p className="pf-v5-u-mt-sm">
         <strong>{reason}</strong>
       </p>
     )}

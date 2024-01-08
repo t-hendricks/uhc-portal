@@ -1,11 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { Field, FieldProps, useField } from 'formik';
-import { Select, SelectOption, FormGroup, SelectOptionObject } from '@patternfly/react-core';
+import { FormGroup } from '@patternfly/react-core';
+import {
+  Select as SelectDeprecated,
+  SelectOption as SelectOptionDeprecated,
+  SelectOptionObject as SelectOptionObjectDeprecated,
+} from '@patternfly/react-core/deprecated';
 import { useFormState } from '~/components/clusters/wizards/hooks';
 import { FieldId } from '~/components/clusters/wizards/osd/constants';
 import { billingModels, normalizedProducts } from '~/common/subscriptionTypes';
 import { CloudProviderType } from '~/components/clusters/wizards/common/constants';
-import { HelperTextInvalid } from '~/components/clusters/wizards/form/TextInputField';
+import { FormGroupHelperText } from '~/components/common/FormGroupHelperText';
 
 export interface MarketplaceSelectFieldProps {
   hasGcpQuota: boolean;
@@ -79,7 +84,7 @@ export const MarketplaceSelectField = ({
 
   const onSelect = (
     _event: React.ChangeEvent<Element> | React.MouseEvent<Element, MouseEvent> | any,
-    value: string | SelectOptionObject,
+    value: string | SelectOptionObjectDeprecated,
   ) => {
     setFieldTouched(FieldId.MarketplaceSelection, true, false);
     if (!value || value === 'placeholder') {
@@ -112,29 +117,17 @@ export const MarketplaceSelectField = ({
   return (
     <Field name={FieldId.MarketplaceSelection} validate={validate}>
       {({ field, form, meta }: FieldProps) => (
-        <FormGroup
-          {...input}
-          fieldId={field.name}
-          validated={
-            meta.touched && meta.error && billingModel.startsWith(billingModels.MARKETPLACE)
-              ? 'error'
-              : 'default'
-          }
-          helperTextInvalid={<HelperTextInvalid meta={meta} className="pf-u-w-100" />}
-          isRequired
-          isInline
-          className="pf-u-mt-sm"
-        >
-          <Select
+        <FormGroup {...input} fieldId={field.name} isRequired isInline className="pf-v5-u-mt-sm">
+          <SelectDeprecated
             isOpen={isOpen}
             selections={selectedMarketplace}
-            onToggle={onToggle}
+            onToggle={(_event, isExpanded: boolean) => onToggle(isExpanded)}
             onSelect={onSelect}
             isDisabled={!hasGcpQuota && !hasRhmQuota}
           >
             {marketplaceOptions.map(({ label, value, isDisabled, description, isPlaceholder }) => (
-              <SelectOption
-                className="pf-c-dropdown__menu-item"
+              <SelectOptionDeprecated
+                className="pf-v5-c-dropdown__menu-item"
                 isSelected={selectedMarketplace === value}
                 value={value}
                 key={value}
@@ -143,9 +136,11 @@ export const MarketplaceSelectField = ({
                 isPlaceholder={isPlaceholder}
               >
                 {label}
-              </SelectOption>
+              </SelectOptionDeprecated>
             ))}
-          </Select>
+          </SelectDeprecated>
+
+          <FormGroupHelperText touched={meta.touched} error={meta.error} />
         </FormGroup>
       )}
     </Field>

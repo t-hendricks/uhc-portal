@@ -33,7 +33,7 @@ function TransferClusterOwnershipInfo({ subscription = {} }) {
   return (
     <Alert
       id="transfer-cluster-ownership-alert"
-      className="pf-u-mt-md"
+      className="pf-v5-u-mt-md"
       variant="info"
       isInline
       title="Cluster ownership transfer initiated"

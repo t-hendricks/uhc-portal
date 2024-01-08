@@ -12,9 +12,9 @@ const StepDownloadROSACli = () => (
       <code>PATH</code>.
     </Text>
     <TextList component="ol">
-      <TextListItem className="pf-u-mb-lg">
+      <TextListItem className="pf-v5-u-mb-lg">
         <Text component={TextVariants.p}>Download the latest version of the ROSA CLI</Text>
-        <Text component={TextVariants.p} className="pf-u-mt-md">
+        <Text component={TextVariants.p} className="pf-v5-u-mt-md">
           <DownloadAndOSSelection tool={tools.ROSA} channel={channels.STABLE} />
         </Text>
         <Text component="p">
@@ -23,7 +23,7 @@ const StepDownloadROSACli = () => (
       </TextListItem>
       <TextListItem>
         <Text component={TextVariants.p}>Download the AWS CLI version 2</Text>
-        <Text component={TextVariants.p} className="pf-u-mt-md">
+        <Text component={TextVariants.p} className="pf-v5-u-mt-md">
           <ExternalLink href={links.AWS_CLI}>Instructions to install the AWS CLI</ExternalLink>
         </Text>
       </TextListItem>

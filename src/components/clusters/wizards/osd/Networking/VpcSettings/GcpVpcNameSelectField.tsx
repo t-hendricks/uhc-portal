@@ -21,6 +21,7 @@ import { CloudProviderType } from '~/components/clusters/wizards/common/constant
 import { FieldId } from '~/components/clusters/wizards/osd/constants';
 import { getGcpCcsCredentials } from '~/components/clusters/wizards/common/utils/ccsCredentials';
 import { CloudVPC } from '~/types/clusters_mgmt.v1';
+import { FormGroupHelperText } from '~/components/common/FormGroupHelperText';
 
 interface GcpVpcNameSelectFieldProps {
   input: FieldInputProps<FormSelectProps>;
@@ -32,6 +33,7 @@ interface GcpVpcNameSelectFieldProps {
   region: string;
   hasDependencies: boolean;
   matchesDependencies: boolean;
+  helperText?: string;
 }
 
 export const GcpVpcNameSelectField = ({
@@ -40,6 +42,7 @@ export const GcpVpcNameSelectField = ({
   emptyPlaceholder,
   label,
   meta,
+  helperText,
 }: GcpVpcNameSelectFieldProps) => {
   const dispatch = useDispatch();
   const { values } = useFormState();
@@ -119,12 +122,7 @@ export const GcpVpcNameSelectField = ({
   ]);
 
   return (
-    <FormGroup
-      label={label}
-      validated={meta.touched && meta.error ? 'error' : 'default'}
-      helperTextInvalid={meta.error}
-      fieldId={input.name}
-    >
+    <FormGroup label={label} fieldId={input.name}>
       {matchesDependencies && vpcs.error && (
         <Alert
           variant="danger"
@@ -137,6 +135,10 @@ export const GcpVpcNameSelectField = ({
       <FormSelect aria-label={label} isDisabled={!(showOptions && items.length > 0)} {...input}>
         {selectOptions}
       </FormSelect>
+
+      <FormGroupHelperText touched={meta.touched} error={meta.error}>
+        {helperText}
+      </FormGroupHelperText>
     </FormGroup>
   );
 };

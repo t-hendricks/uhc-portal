@@ -13,7 +13,7 @@ import {
   Stack,
   StackItem,
 } from '@patternfly/react-core';
-import { OutlinedQuestionCircleIcon } from '@patternfly/react-icons';
+import { OutlinedQuestionCircleIcon } from '@patternfly/react-icons/dist/esm/icons/outlined-question-circle-icon';
 import { Link } from 'react-router-dom';
 import semver from 'semver';
 
@@ -67,7 +67,7 @@ const Releases = () => {
                       aria-label="Version help"
                       bodyContent={
                         <>
-                          <p className="pf-u-mb-md">
+                          <p className="pf-v5-u-mb-md">
                             The most recent versions aren&apos;t always available for every cluster.
                             To keep your cluster up to date with the recommended version, run
                             regular updates from the <Link to="/">clusters list</Link>.
@@ -101,7 +101,7 @@ const Releases = () => {
                         <GalleryItem key={version.name} data-testid={`version-${version.name}`}>
                           <Card isFlat className="ocm-l-ocp-releases__card">
                             <CardTitle>
-                              <div className="ocm-l-ocp-releases__card-title pf-u-mb-sm">
+                              <div className="ocm-l-ocp-releases__card-title pf-v5-u-mb-sm">
                                 {releaseNotesLink ? (
                                   <ExternalLink href={releaseNotesLink} noIcon>
                                     {renderProductName(version.name)}
@@ -110,7 +110,7 @@ const Releases = () => {
                                   renderProductName(version.name)
                                 )}
                               </div>
-                              <Divider className="ocm-l-ocp-releases__divider pf-u-mt-lg pf-u-mb-sm" />
+                              <Divider className="ocm-l-ocp-releases__divider pf-v5-u-mt-lg pf-v5-u-mb-sm" />
                             </CardTitle>
                             <CardBody>
                               <div className="ocm-l-ocp-releases__subheading">Channel details</div>

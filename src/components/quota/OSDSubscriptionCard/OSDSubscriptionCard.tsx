@@ -3,13 +3,11 @@ import { Link } from 'react-router-dom';
 import get from 'lodash/get';
 import startCase from 'lodash/startCase';
 import { Card, CardBody, CardTitle, Stack, StackItem } from '@patternfly/react-core';
-import {
-  ExclamationTriangleIcon,
-  ResourcesAlmostEmptyIcon,
-  ResourcesAlmostFullIcon,
-  ResourcesFullIcon,
-  OutlinedCircleIcon,
-} from '@patternfly/react-icons';
+import { ExclamationTriangleIcon } from '@patternfly/react-icons/dist/esm/icons/exclamation-triangle-icon';
+import { ResourcesAlmostEmptyIcon } from '@patternfly/react-icons/dist/esm/icons/resources-almost-empty-icon';
+import { ResourcesAlmostFullIcon } from '@patternfly/react-icons/dist/esm/icons/resources-almost-full-icon';
+import { ResourcesFullIcon } from '@patternfly/react-icons/dist/esm/icons/resources-full-icon';
+import { OutlinedCircleIcon } from '@patternfly/react-icons/dist/esm/icons/outlined-circle-icon';
 import { IRowCell } from '@patternfly/react-table';
 import type { GlobalState } from '~/redux/store';
 import ExternalLink from '../../common/ExternalLink';

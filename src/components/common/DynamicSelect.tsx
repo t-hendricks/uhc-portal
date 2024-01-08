@@ -1,4 +1,6 @@
 import React from 'react';
+import { WrappedFieldMetaProps, WrappedFieldInputProps } from 'redux-form';
+
 import {
   Alert,
   Button,
@@ -8,7 +10,8 @@ import {
   Text,
   TextContent,
 } from '@patternfly/react-core';
-import { WrappedFieldMetaProps, WrappedFieldInputProps } from 'redux-form';
+
+import { FormGroupHelperText } from '~/components/common/FormGroupHelperText';
 import { PromiseReducerState } from '~/redux/types';
 import ErrorBox from './ErrorBox';
 
@@ -142,15 +145,7 @@ class DynamicSelect extends React.Component<Props> {
     const value = this.currentValueIrrelevant() ? '' : input.value;
 
     return (
-      <FormGroup
-        label={label}
-        labelIcon={labelIcon}
-        validated={meta.touched && meta.error ? 'error' : 'default'}
-        helperText={helperText}
-        helperTextInvalid={meta.error}
-        fieldId={input.name}
-        isRequired={isRequired}
-      >
+      <FormGroup label={label} labelIcon={labelIcon} fieldId={input.name} isRequired={isRequired}>
         {error}
         <FormSelect
           aria-label={label}
@@ -161,6 +156,10 @@ class DynamicSelect extends React.Component<Props> {
         >
           {options}
         </FormSelect>
+
+        <FormGroupHelperText touched={meta.touched} error={meta.error}>
+          {helperText}
+        </FormGroupHelperText>
       </FormGroup>
     );
   }

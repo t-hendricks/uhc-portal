@@ -3,7 +3,6 @@ import {
   AlertVariant,
   ButtonVariant,
   Card,
-  CardActions,
   CardBody,
   CardHeader,
   CardTitle,
@@ -20,7 +19,8 @@ import {
   TextVariants,
   Title,
 } from '@patternfly/react-core';
-import { CheckCircleIcon, WarningTriangleIcon } from '@patternfly/react-icons';
+import { CheckCircleIcon } from '@patternfly/react-icons/dist/esm/icons/check-circle-icon';
+import { WarningTriangleIcon } from '@patternfly/react-icons/dist/esm/icons/warning-triangle-icon';
 import React from 'react';
 
 import { useLocation } from 'react-router-dom';
@@ -66,7 +66,7 @@ const CreateRosaGetStarted = () => {
   return (
     <AppPage>
       <PageTitle breadcrumbs={breadcrumbs} title={title(productName)}>
-        <TextContent className="pf-u-mt-md">
+        <TextContent className="pf-v5-u-mt-md">
           <Text component={TextVariants.p}>
             ROSA allows you to deploy fully operational and managed Red Hat OpenShift clusters while
             leveraging the full breadth and depth of AWS.{' '}
@@ -87,7 +87,7 @@ const CreateRosaGetStarted = () => {
                   toggleContent={
                     <div>
                       <span>Complete AWS prerequisites</span>
-                      <span className="pf-u-ml-sm">
+                      <span className="pf-v5-u-ml-sm">
                         {isAWSPrereqOpen ? (
                           <WarningTriangleIcon className="warning" />
                         ) : (
@@ -97,7 +97,7 @@ const CreateRosaGetStarted = () => {
                     </div>
                   }
                 >
-                  <TextContent className="pf-u-mt-md">
+                  <TextContent className="pf-v5-u-mt-md">
                     <Title headingLevel="h2">Have you prepared your AWS account?</Title>
                     <Text component={TextVariants.p}>
                       You will need to enable AWS, configure Elastic Load Balancer (ELB), and verify
@@ -119,7 +119,7 @@ const CreateRosaGetStarted = () => {
           <StackItem>
             <Card>
               <CardBody>
-                <Split className="pf-u-mb-lg">
+                <Split className="pf-v5-u-mb-lg">
                   <SplitItem isFilled>
                     <Title headingLevel="h2">Complete ROSA prerequisites</Title>
                   </SplitItem>
@@ -146,17 +146,24 @@ const CreateRosaGetStarted = () => {
           {/* ************ Start of Deploy the cluster and setup access cards ***************** */}
           <StackItem>
             <Card>
-              <CardHeader>
-                <CardActions>
-                  <ExternalLink href={links.ROSA_GET_STARTED}>
-                    More information on ROSA cluster creation
-                  </ExternalLink>
-                </CardActions>
+              <CardHeader
+                className="rosa-get-started"
+                actions={{
+                  actions: (
+                    <>
+                      <ExternalLink href={links.ROSA_GET_STARTED}>
+                        More information on ROSA cluster creation
+                      </ExternalLink>
+                    </>
+                  ),
+                  hasNoOffset: false,
+                }}
+              >
                 <CardTitle>
                   <Title headingLevel="h2" size="xl">
                     Deploy the cluster and set up access
                   </Title>
-                  <Text component={TextVariants.p} className="pf-u-font-weight-normal">
+                  <Text component={TextVariants.p} className="pf-v5-u-font-weight-normal">
                     Select a deployment method
                   </Text>
                 </CardTitle>
@@ -167,9 +174,8 @@ const CreateRosaGetStarted = () => {
                   <Alert
                     variant={AlertVariant.info}
                     isInline
-                    className="pf-u-mb-md"
+                    className="pf-v5-u-mb-md"
                     component="p"
-                    aria-label=""
                     title="For now, you can only create ROSA with Hosted Control Plane clusters using the CLI.  You'll be able to create ROSA with Hosted Control Plane clusters using the web interface soon."
                     data-testid="hcp-directions"
                   />

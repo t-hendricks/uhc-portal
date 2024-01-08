@@ -1,34 +1,35 @@
-.pf-c-button.ocm-flat-radio-button {
-  color: var(--pf-global--Color--100);
-  padding-bottom: var(--pf-global--spacer--md);
-  padding-top: var(--pf-global--spacer--md);
+.pf-v5-c-button.ocm-flat-radio-button {
+  color: var(--pf-v5-global--Color--100);
+  padding-bottom: var(--pf-v5-global--spacer--md);
+  padding-top: var(--pf-v5-global--spacer--md);
   text-align: left;
   white-space: normal;
 
-  &:hover, &.selected {
+  &:hover,
+  &.selected {
     // hover+selected colors
     &.pf-m-tertiary::after {
-      border-color: var(--pf-global--active-color--100);
-      border-width: var(--pf-global--BorderWidth--md);
+      border-color: var(--pf-v5-global--active-color--100);
+      border-width: var(--pf-v5-global--BorderWidth--md);
     }
     h4 {
-      color: var(--pf-global--active-color--100);
+      color: var(--pf-v5-global--active-color--100);
     }
   }
 
   &.pf-m-aria-disabled {
-    background-color: var(--pf-global--disabled-color--200);
+    background-color: var(--pf-v5-global--disabled-color--200);
     // no border for disabled
     &.pf-m-tertiary::after {
       border-width: 0 !important;
     }
     h4 {
-      color: var(--pf-global--Color--100);
+      color: var(--pf-v5-global--Color--100);
     }
   }
 
   &.selected.pf-m-tertiary::after {
     // wider border for selected
-    border-width: var(--pf-global--BorderWidth--lg);
+    border-width: var(--pf-v5-global--BorderWidth--lg);
   }
 }

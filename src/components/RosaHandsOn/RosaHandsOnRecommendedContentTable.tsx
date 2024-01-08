@@ -1,6 +1,6 @@
 import React from 'react';
 import { PageSection, Label } from '@patternfly/react-core';
-import { TableComposable, Tr, Td, Tbody } from '@patternfly/react-table';
+import { Table, Tr, Td, Tbody } from '@patternfly/react-table';
 import ExternalLink from '../common/ExternalLink';
 
 const content = [
@@ -23,7 +23,7 @@ const content = [
 
 const RosaHandsOnRecommendedContentTable = () => (
   <PageSection style={{ paddingBottom: 'unset', paddingTop: 'unset' }}>
-    <TableComposable aria-label="Recommended content table">
+    <Table aria-label="Recommended content table">
       {content.map((item) => (
         <Tbody>
           <Tr>
@@ -39,7 +39,7 @@ const RosaHandsOnRecommendedContentTable = () => (
           </Tr>
         </Tbody>
       ))}
-    </TableComposable>
+    </Table>
   </PageSection>
 );
 

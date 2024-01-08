@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { useField } from 'formik';
 
-import { SelectOptionObject, FormGroup } from '@patternfly/react-core';
+import { FormGroup } from '@patternfly/react-core';
+import { SelectOptionObject as SelectOptionObjectDeprecated } from '@patternfly/react-core/deprecated';
 import { Spinner } from '@redhat-cloud-services/frontend-components/Spinner';
 
 import ErrorBox from '~/components/common/ErrorBox';
@@ -15,6 +16,7 @@ import { FieldId } from '~/components/clusters/wizards/osd/constants';
 import { billingModels } from '~/common/subscriptionTypes';
 import FuzzySelect, { FuzzyEntryType } from '~/components/common/FuzzySelect';
 import { versionComparator } from '~/common/versionComparator';
+import { FormGroupHelperText } from '~/components/common/FormGroupHelperText';
 
 function sortFn(a: FuzzyEntryType, b: FuzzyEntryType) {
   return versionComparator(b.key, a.key);
@@ -90,7 +92,14 @@ export const VersionSelectField = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [versions, selectedClusterVersion?.raw_id]);
 
-  const onToggle = (isExpanded: boolean) => {
+  const onToggle = (
+    _event:
+      | Event
+      | React.MouseEvent<Element, MouseEvent>
+      | React.ChangeEvent<Element>
+      | React.KeyboardEvent<Element>,
+    isExpanded: boolean,
+  ) => {
     setIsOpen(isExpanded);
     // In case of backend error, don't want infinite loop reloading,
     // but allow manual reload by opening the dropdown.
@@ -101,7 +110,7 @@ export const VersionSelectField = ({
 
   const onSelect = (
     _event: React.ChangeEvent | React.MouseEvent<Element, MouseEvent>,
-    value: string | SelectOptionObject,
+    value: string | SelectOptionObjectDeprecated,
   ) => {
     setIsOpen(false);
     const selectedVersion = versions.find((version) => version.raw_id === value);
@@ -148,14 +157,7 @@ export const VersionSelectField = ({
   };
 
   return (
-    <FormGroup
-      {...input}
-      label={label}
-      fieldId={name}
-      validated={error ? 'error' : undefined}
-      helperTextInvalid={touched && error}
-      isRequired
-    >
+    <FormGroup {...input} label={label} fieldId={name} isRequired>
       {getInstallableVersionsResponse.error && (
         <ErrorBox
           message="Error getting cluster versions"
@@ -193,6 +195,8 @@ export const VersionSelectField = ({
           toggleId="version-selector"
         />
       )}
+
+      <FormGroupHelperText touched={touched} error={error} />
     </FormGroup>
   );
 };

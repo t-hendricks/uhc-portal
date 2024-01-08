@@ -8,21 +8,16 @@ exports[`<Support /> should render with notification contacts 1`] = `
     <CardTitle
       className="ocm-c-support-notification-contacts__card--header"
     >
-      <Title
-        className="card-title"
-        headingLevel="h2"
-      >
-        Notification contacts
-      </Title>
+      Notification contacts
+    </CardTitle>
+    <CardBody
+      className="ocm-c-support-notification-contacts__card--body"
+    >
       <div
         className="support-subtitle"
       >
         Add users to be contacted in the event of notifications about this cluster.
       </div>
-    </CardTitle>
-    <CardBody
-      className="ocm-c-support-notification-contacts__card--body"
-    >
       <AddNotificationContactButton
         canEdit={true}
         openModal={[MockFunction]}
@@ -69,12 +64,7 @@ exports[`<Support /> should render with notification contacts 1`] = `
     <CardTitle
       className="ocm-c-support-support-cases__card--header"
     >
-      <Title
-        className="card-title"
-        headingLevel="h2"
-      >
-        Support cases
-      </Title>
+      Support cases
     </CardTitle>
     <CardBody
       className="ocm-c-support-support-cases__card--body"
@@ -104,21 +94,16 @@ exports[`<Support /> should render without notification contacts 1`] = `
     <CardTitle
       className="ocm-c-support-notification-contacts__card--header"
     >
-      <Title
-        className="card-title"
-        headingLevel="h2"
-      >
-        Notification contacts
-      </Title>
+      Notification contacts
+    </CardTitle>
+    <CardBody
+      className="ocm-c-support-notification-contacts__card--body"
+    >
       <div
         className="support-subtitle"
       >
         Add users to be contacted in the event of notifications about this cluster.
       </div>
-    </CardTitle>
-    <CardBody
-      className="ocm-c-support-notification-contacts__card--body"
-    >
       <AddNotificationContactButton
         canEdit={true}
         openModal={[MockFunction]}
@@ -150,12 +135,7 @@ exports[`<Support /> should render without notification contacts 1`] = `
     <CardTitle
       className="ocm-c-support-support-cases__card--header"
     >
-      <Title
-        className="card-title"
-        headingLevel="h2"
-      >
-        Support cases
-      </Title>
+      Support cases
     </CardTitle>
     <CardBody
       className="ocm-c-support-support-cases__card--body"

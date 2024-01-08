@@ -87,7 +87,7 @@ class AddOnsDeleteModal extends Component {
               type="text"
               value={addOnNameInput}
               placeholder="Enter name"
-              onChange={this.setValue}
+              onChange={(_event, newInput) => this.setValue(newInput)}
               aria-label="addon name"
             />
           </Form>

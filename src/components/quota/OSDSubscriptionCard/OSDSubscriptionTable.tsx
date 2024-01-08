@@ -1,5 +1,10 @@
 import React from 'react';
-import { Table, TableHeader, TableBody, IRowCell } from '@patternfly/react-table';
+import { IRowCell } from '@patternfly/react-table';
+import {
+  Table as TableDeprecated,
+  TableHeader as TableHeaderDeprecated,
+  TableBody as TableBodyDeprecated,
+} from '@patternfly/react-table/deprecated';
 import orderBy from 'lodash/orderBy';
 
 import PopoverHint from '../../common/PopoverHint';
@@ -34,10 +39,10 @@ const OSDSubscriptionTable = ({ rows, children }: Props) => {
 
   return (
     <>
-      <Table aria-label="Quota Table" cells={columns} rows={sortedRows}>
-        <TableHeader />
-        <TableBody />
-      </Table>
+      <TableDeprecated aria-label="Quota Table" cells={columns} rows={sortedRows}>
+        <TableHeaderDeprecated />
+        <TableBodyDeprecated />
+      </TableDeprecated>
       {children}
     </>
   );

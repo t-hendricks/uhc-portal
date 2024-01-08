@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { setNestedObjectValues } from 'formik';
 
-import { Button } from '@patternfly/react-core';
-import { useWizardContext, WizardFooterWrapper } from '@patternfly/react-core/next';
+import { Button, useWizardContext, WizardFooterWrapper } from '@patternfly/react-core';
 import { scrollToFirstField } from '~/common/helpers';
 import { getScrollErrorIds } from '~/components/clusters/wizards/form/utils';
 import { useFormState } from '~/components/clusters/wizards/hooks';

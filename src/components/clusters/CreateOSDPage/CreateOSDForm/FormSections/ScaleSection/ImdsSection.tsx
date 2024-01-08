@@ -38,7 +38,7 @@ const ImdsSection = ({
             onChange: onChangeImds,
           }}
           isDisabled={isDisabled}
-          className="pf-u-mb-md"
+          className="pf-v5-u-mb-md"
           options={imdsOptions}
           disableDefaultValueHandling
         />

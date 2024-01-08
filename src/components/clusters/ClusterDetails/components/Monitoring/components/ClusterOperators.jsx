@@ -1,14 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Table, TableHeader, TableBody, TableVariant } from '@patternfly/react-table';
-
+import { TableVariant } from '@patternfly/react-table';
 import {
-  ExclamationCircleIcon,
-  InProgressIcon,
-  UnknownIcon,
-  CheckCircleIcon,
-  ExclamationTriangleIcon,
-} from '@patternfly/react-icons';
+  Table as TableDeprecated,
+  TableHeader as TableHeaderDeprecated,
+  TableBody as TableBodyDeprecated,
+} from '@patternfly/react-table/deprecated';
+
+import { ExclamationCircleIcon } from '@patternfly/react-icons/dist/esm/icons/exclamation-circle-icon';
+import { InProgressIcon } from '@patternfly/react-icons/dist/esm/icons/in-progress-icon';
+import { UnknownIcon } from '@patternfly/react-icons/dist/esm/icons/unknown-icon';
+import { CheckCircleIcon } from '@patternfly/react-icons/dist/esm/icons/check-circle-icon';
+import { ExclamationTriangleIcon } from '@patternfly/react-icons/dist/esm/icons/exclamation-triangle-icon';
 
 import {
   operatorsStatuses,
@@ -69,16 +72,16 @@ function ClusterOperatorsTable({ operators = [], clusterConsole }) {
   });
 
   return (
-    <Table
+    <TableDeprecated
       variant={TableVariant.compact}
       borders={false}
       cells={columns}
       rows={rows}
       aria-label="operators"
     >
-      <TableHeader />
-      <TableBody />
-    </Table>
+      <TableHeaderDeprecated />
+      <TableBodyDeprecated />
+    </TableDeprecated>
   );
 }
 

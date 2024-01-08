@@ -22,7 +22,7 @@ class ReduxFormRadioGroup extends React.Component {
         {items.map((item) => (
           <Radio
             isChecked={value === null ? item.isChecked === true : value === item.value}
-            onChange={this.handleChange}
+            onChange={(event, _) => this.handleChange(_, event)}
             value={item.value}
             label={item.label}
             isDisabled={isDisabled}

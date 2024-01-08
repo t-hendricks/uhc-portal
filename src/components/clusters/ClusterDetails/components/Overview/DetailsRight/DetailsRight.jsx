@@ -226,7 +226,7 @@ function DetailsRight({
                     />
                   </DescriptionListTerm>
                   <DescriptionListDescription>
-                    <dl className="pf-l-stack">
+                    <dl className="pf-v5-l-stack">
                       {!isHypershift && (
                         <Flex data-testid="controlPlaneNodesCountContainer">
                           <dt>Control plane: </dt>
@@ -266,7 +266,7 @@ function DetailsRight({
                 <DescriptionListGroup>
                   <DescriptionListTerm>Nodes</DescriptionListTerm>
                   <DescriptionListDescription>
-                    <dl className="pf-l-stack">
+                    <dl className="pf-v5-l-stack">
                       {!isHypershift && (
                         <Flex data-testid="controlPlaneNodesCountContainer">
                           <dt>Control plane: </dt>
@@ -364,7 +364,7 @@ function DetailsRight({
               <DescriptionListDescription>Enabled</DescriptionListDescription>
               <DescriptionListDescription>
                 <span className="autoscale-data-t">Min:</span> {totalMinNodesCount}
-                <span className="pf-u-ml-lg autoscale-data-t">Max: </span>
+                <span className="pf-v5-u-ml-lg autoscale-data-t">Max: </span>
                 {totalMaxNodesCount}
               </DescriptionListDescription>
             </DescriptionListGroup>
@@ -397,7 +397,7 @@ function DetailsRight({
           <DescriptionListGroup>
             <DescriptionListTerm>OIDC Configuration</DescriptionListTerm>
             <DescriptionListDescription>
-              <dl className="pf-l-stack">
+              <dl className="pf-v5-l-stack">
                 <Flex>
                   <dt>Type:</dt>
                   <dd>{oidcConfig?.managed ? 'Red Hat managed' : 'Self-managed'}</dd>

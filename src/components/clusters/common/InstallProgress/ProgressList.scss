@@ -1,16 +1,15 @@
-
 .icon-space-right {
   margin-right: 5px;
 }
 
 .progressing-icon {
+  --pf-v5-c-spinner--diameter: var(--pf-v5-c-spinner--m-md--diameter) !important;
   vertical-align: middle;
-  padding-right: 10px;
 }
 
 .expected-cluster-installation-text {
-  color: var(--pf-global--Color--400);
-  padding-top: var(--pf-global--spacer--sm);
-  font-size: var(--pf-global--FontSize--md);
-  font-weight: var(--pf-global--FontWeight--light);
+  color: var(--pf-v5-global--Color--400);
+  padding-top: var(--pf-v5-global--spacer--sm);
+  font-size: var(--pf-v5-global--FontSize--md);
+  font-weight: var(--pf-v5-global--FontWeight--normal);
 }

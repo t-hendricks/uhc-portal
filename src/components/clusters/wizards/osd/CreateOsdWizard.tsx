@@ -4,13 +4,14 @@ import { Redirect, useHistory } from 'react-router-dom';
 import { Formik, FormikValues } from 'formik';
 import omit from 'lodash/omit';
 
-import { Banner, PageSection } from '@patternfly/react-core';
 import {
+  Banner,
+  PageSection,
   Wizard,
   WizardStep,
   WizardStepChangeScope,
   WizardStepType,
-} from '@patternfly/react-core/next';
+} from '@patternfly/react-core';
 import { Spinner } from '@redhat-cloud-services/frontend-components';
 
 import config from '~/config';
@@ -128,7 +129,7 @@ export const CreateOsdWizard = ({ product }: CreateOsdWizardProps) => {
           />
           <PageSection>
             {config.fakeOSD && (
-              <Banner variant="warning">On submit, a fake OSD cluster will be created.</Banner>
+              <Banner variant="gold">On submit, a fake OSD cluster will be created.</Banner>
             )}
             <CreateOsdWizardInternal />
           </PageSection>

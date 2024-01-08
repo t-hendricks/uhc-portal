@@ -8,9 +8,14 @@ import {
   StackItem,
   ButtonVariant,
 } from '@patternfly/react-core';
-import { Table, TableHeader, TableBody, expandable, cellWidth } from '@patternfly/react-table';
+import { expandable, cellWidth } from '@patternfly/react-table';
+import {
+  Table as TableDeprecated,
+  TableHeader as TableHeaderDeprecated,
+  TableBody as TableBodyDeprecated,
+} from '@patternfly/react-table/deprecated';
 import { Link } from 'react-router-dom';
-import { ArrowRightIcon } from '@patternfly/react-icons';
+import { ArrowRightIcon } from '@patternfly/react-icons/dist/esm/icons/arrow-right-icon';
 import * as OCM from '@openshift-assisted/ui-lib/ocm';
 import { isRestrictedEnv } from '~/restrictedEnv';
 
@@ -332,15 +337,15 @@ const ManagedServices = ({ hasQuota, trialEnabled }) => {
   }
 
   return (
-    <Table
+    <TableDeprecated
       aria-label="Managed services table"
       rows={rows}
       cells={getColumns()}
       onCollapse={onCollapse}
     >
-      <TableHeader />
-      <TableBody />
-    </Table>
+      <TableHeaderDeprecated />
+      <TableBodyDeprecated />
+    </TableDeprecated>
   );
 };
 
@@ -349,7 +354,7 @@ const runItYourself = () => {
   const rows = [
     [
       <>
-        <Link to="/install/alibaba/installer-provisioned" className="pf-u-mr-xs">
+        <Link to="/install/alibaba/installer-provisioned" className="pf-v5-u-mr-xs">
           Alibaba Cloud
         </Link>
         <TechnologyPreview position={PreviewBadgePosition.inline} />
@@ -388,7 +393,7 @@ const runItYourself = () => {
     ],
     [
       <>
-        <Link to="/install/azure/multi/installer-provisioned" className="pf-u-mr-xs">
+        <Link to="/install/azure/multi/installer-provisioned" className="pf-v5-u-mr-xs">
           Azure (multi-architecture)
         </Link>
       </>,
@@ -429,10 +434,15 @@ const runItYourself = () => {
     ],
   ];
   return (
-    <Table className="run-it-yourself" aria-label="Run it yourself" cells={columns} rows={rows}>
-      <TableHeader />
-      <TableBody />
-    </Table>
+    <TableDeprecated
+      className="run-it-yourself"
+      aria-label="Run it yourself"
+      cells={columns}
+      rows={rows}
+    >
+      <TableHeaderDeprecated />
+      <TableBodyDeprecated />
+    </TableDeprecated>
   );
 };
 

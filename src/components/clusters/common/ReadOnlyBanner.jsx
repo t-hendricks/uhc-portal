@@ -6,7 +6,7 @@ import { Banner, Text } from '@patternfly/react-core';
 function ReadOnlyBanner({ isReadOnly, someReadOnly }) {
   if (isReadOnly) {
     return (
-      <Banner variant="warning" className="configuration_mode_read_only">
+      <Banner variant="gold" className="configuration_mode_read_only">
         <Text>
           <b>You will be unable to configure your cluster during maintenance.</b>
         </Text>
@@ -20,7 +20,7 @@ function ReadOnlyBanner({ isReadOnly, someReadOnly }) {
   }
   if (someReadOnly) {
     return (
-      <Banner variant="warning" className="configuration_mode_read_only">
+      <Banner variant="gold" className="configuration_mode_read_only">
         <Text>
           <b>You will be unable to configure some of your clusters during maintenance.</b>
         </Text>

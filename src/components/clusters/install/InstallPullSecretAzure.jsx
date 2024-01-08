@@ -33,10 +33,10 @@ class InstallPullSecretAzure extends Component {
               Red Hat content access
             </Title>
             <Card>
-              <div className="pf-l-grid pf-m-gutter ocm-page">
+              <div className="pf-v5-l-grid pf-m-gutter ocm-page">
                 {token.error && <TokenErrorAlert token={token} />}
-                <div className="pf-c-content">
-                  <h3 className="pf-c-title pf-m-md downloads-subtitle">Pull secret</h3>
+                <div className="pf-v5-c-content">
+                  <h3 className="pf-v5-c-title pf-m-md downloads-subtitle">Pull secret</h3>
                   <PullSecretSection token={token} text={azureText} />
                   <Alert
                     variant="info"

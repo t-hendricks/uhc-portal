@@ -3,8 +3,7 @@ import { useDispatch } from 'react-redux';
 import { Formik, FormikValues } from 'formik';
 import omit from 'lodash/omit';
 
-import { Banner, PageSection } from '@patternfly/react-core';
-import { Wizard, WizardStep } from '@patternfly/react-core/next';
+import { Banner, PageSection, Wizard, WizardStep } from '@patternfly/react-core';
 
 import config from '~/config';
 import { useGlobalState } from '~/redux/hooks';
@@ -63,7 +62,7 @@ export const CreateRosaWizard = () => {
         <PageTitle title="Create a ROSA Cluster" breadcrumbs={<Breadcrumbs path={breadcrumbs} />} />
         <PageSection>
           {config.fakeOSD && ( // TODO Is ?fake=true supported for ROSA clusters?
-            <Banner variant="warning">On submit, a fake ROSA cluster will be created.</Banner>
+            <Banner variant="gold">On submit, a fake ROSA cluster will be created.</Banner>
           )}
           <CreateRosaWizardInternal />
         </PageSection>

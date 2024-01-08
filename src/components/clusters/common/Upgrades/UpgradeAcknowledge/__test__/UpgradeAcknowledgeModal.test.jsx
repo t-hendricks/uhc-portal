@@ -7,7 +7,7 @@ const ackWord = 'Acknowledge';
 
 const clickSubmitButton = (wrapper) => {
   expect(wrapper.find('TextInput[data-testid="acknowledgeTextInput"]')).toHaveLength(1);
-  wrapper.find('TextInput[data-testid="acknowledgeTextInput"]').invoke('onChange')(ackWord);
+  wrapper.find('TextInput[data-testid="acknowledgeTextInput"]').invoke('onChange')(null, ackWord);
   wrapper.find('ModalBoxFooter button').find({ type: 'submit' }).simulate('click');
   wrapper.update();
   return wrapper;

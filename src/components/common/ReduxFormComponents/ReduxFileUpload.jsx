@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { FileUpload, FormGroup } from '@patternfly/react-core';
 
+import { FormGroupHelperText } from '~/components/common/FormGroupHelperText';
 import PopoverHint from '../PopoverHint';
 
 class ReduxFileUpload extends React.Component {
@@ -83,19 +84,9 @@ class ReduxFileUpload extends React.Component {
     } = this.props;
     const { filename } = this.state;
 
-    const helperTextInvalidText = () => {
-      if ((dirty || touched) && error) {
-        return error;
-      }
-      return '';
-    };
-
     return (
       <FormGroup
         fieldId={name}
-        helperText={helpText}
-        helperTextInvalid={helperTextInvalidText()}
-        validated={(dirty || touched) && error ? 'error' : 'default'}
         label={label}
         labelIcon={
           extendedHelpText && <PopoverHint title={extendedHelpTitle} hint={extendedHelpText} />
@@ -110,7 +101,6 @@ class ReduxFileUpload extends React.Component {
           type="text"
           value={value}
           filename={filename}
-          onChange={this.handleFileChange}
           validated={(dirty || touched) && error ? 'error' : 'default'}
           onClearClick={this.handleClear}
           dropzoneProps={{
@@ -118,6 +108,10 @@ class ReduxFileUpload extends React.Component {
             onDropRejected: this.handleFileRejected,
           }}
         />
+
+        <FormGroupHelperText touched={dirty || touched} error={error}>
+          {helpText}
+        </FormGroupHelperText>
       </FormGroup>
     );
   }

@@ -1,5 +1,6 @@
 import * as React from 'react';
-import { FormGroup, SelectOption } from '@patternfly/react-core';
+import { FormGroup } from '@patternfly/react-core';
+import { SelectOption as SelectOptionDeprecated } from '@patternfly/react-core/deprecated';
 
 import { Cluster, MachinePool } from '~/types/clusters_mgmt.v1';
 import TextField from '~/components/common/formik/TextField';
@@ -28,9 +29,9 @@ const EditDetailsSection = ({
       <FormGroup fieldId="machine-pool" label="Machine pool">
         <SelectField fieldId="machine-pool" onSelect={setCurrentMPId} value={currentMPId}>
           {machinePools.map((mp) => (
-            <SelectOption key={mp.id} value={mp.id}>
+            <SelectOptionDeprecated key={mp.id} value={mp.id}>
               {mp.id || ''}
-            </SelectOption>
+            </SelectOptionDeprecated>
           ))}
         </SelectField>
       </FormGroup>

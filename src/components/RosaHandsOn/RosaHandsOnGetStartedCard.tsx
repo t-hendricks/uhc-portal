@@ -17,12 +17,14 @@ import {
   ToolbarContent,
   ToolbarItem,
   Title,
+  Icon,
 } from '@patternfly/react-core';
 import { Link } from 'react-router-dom';
 
-import { CheckIcon, HelpIcon } from '@patternfly/react-icons';
+import { CheckIcon } from '@patternfly/react-icons/dist/esm/icons/check-icon';
+import { HelpIcon } from '@patternfly/react-icons/dist/esm/icons/help-icon';
 // eslint-disable-next-line camelcase
-import { global_link_Color_dark } from '@patternfly/react-tokens';
+import { global_link_Color_dark } from '@patternfly/react-tokens/dist/esm/global_link_Color_dark';
 import RosaHandsOnIcon from './RosaHandsOnIcons/RosaHandsOnIcon';
 import ExternalLink from '../common/ExternalLink';
 import { MAX_DURATION, rosaHandsOnLinks } from './constants';
@@ -42,7 +44,11 @@ const CheckListItem = ({
   popoverHeader?: React.ReactNode;
 }) => (
   <ListItem
-    icon={<CheckIcon color={global_link_Color_dark.value} size="md" />}
+    icon={
+      <Icon size="md">
+        <CheckIcon color={global_link_Color_dark.value} />
+      </Icon>
+    }
     style={{ alignItems: 'baseline' }}
   >
     <Text>

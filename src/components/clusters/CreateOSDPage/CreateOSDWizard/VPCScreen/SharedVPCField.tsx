@@ -15,10 +15,10 @@ import { required, validatePrivateHostedZoneId, validateRoleARN } from '~/common
 function HostedZoneHelpText({ domainName }: { domainName: string }) {
   return (
     <TextContent>
-      <Text component={TextVariants.small} className="pf-u-color-100">
+      <Text component={TextVariants.small} className="pf-v5-u-color-100">
         Enter the private hosted zone ID that&apos;s linked to the AWS owner account you want to
         use. The private hosted zone must have been created with
-        <strong className="pf-u-font-size-md"> {domainName} </strong>as the domain name.
+        <strong className="pf-v5-u-font-size-md"> {domainName} </strong>as the domain name.
         <ExternalLink href={links.AWS_CONSOLE_HOSTED_ZONES}> AWS console</ExternalLink>
       </Text>
     </TextContent>
@@ -44,7 +44,7 @@ const SharedVPCField = ({
       <GridItem span={10}>
         <Instructions wide>
           <Instruction simple>
-            <TextContent className="pf-u-pb-md">
+            <TextContent className="pf-v5-u-pb-md">
               <Text component={TextVariants.p}>
                 Select an existing base DNS domain or reserve a new base DNS domain.
               </Text>
@@ -61,7 +61,7 @@ const SharedVPCField = ({
           </Instruction>
 
           <Instruction simple>
-            <TextContent className="pf-u-pb-md">
+            <TextContent className="pf-v5-u-pb-md">
               <Text component={TextVariants.p}>
                 Associate your DNS domain with a private hosted zone.
               </Text>
@@ -79,7 +79,7 @@ const SharedVPCField = ({
           </Instruction>
 
           <Instruction simple>
-            <TextContent className="pf-u-pb-md">
+            <TextContent className="pf-v5-u-pb-md">
               <Text component={TextVariants.p}>Provide the role ARN for the existing VPC.</Text>
             </TextContent>
             <Field

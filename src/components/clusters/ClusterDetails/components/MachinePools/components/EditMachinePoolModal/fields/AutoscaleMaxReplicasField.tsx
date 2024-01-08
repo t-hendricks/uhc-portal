@@ -10,6 +10,7 @@ import PopoverHint from '~/components/common/PopoverHint';
 import { Cluster } from '~/types/clusters_mgmt.v1';
 import { isHypershiftCluster } from '~/components/clusters/common/clusterStates';
 import { computeNodeHintText } from '~/components/clusters/CreateOSDPage/CreateOSDForm/FormSections/ScaleSection/AutoScaleSection/AutoScaleHelper';
+import { FormGroupHelperText } from '~/components/common/FormGroupHelperText';
 import useFormikOnChange from '../hooks/useFormikOnChange';
 
 type AutoscaleMaxReplicasFieldProps = {
@@ -59,9 +60,6 @@ const AutoscaleMaxReplicasField = ({
           }
         />
       }
-      helperText={isMultiAz && `x 3 zones = ${field.value * 3}`}
-      validated={touched && error ? 'error' : 'default'}
-      helperTextInvalid={touched ? error : undefined}
     >
       <NumberInput
         {...field}
@@ -75,6 +73,10 @@ const AutoscaleMaxReplicasField = ({
         min={minNodes || 1}
         max={maxNodes}
       />
+
+      <FormGroupHelperText touched={touched} error={error}>
+        {isMultiAz && `x 3 zones = ${field.value * 3}`}
+      </FormGroupHelperText>
     </FormGroup>
   );
 };

@@ -2,13 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import { Label } from '@patternfly/react-core';
-import {
-  CheckCircleIcon,
-  ExclamationCircleIcon,
-  InProgressIcon,
-  UnknownIcon,
-  CubesIcon,
-} from '@patternfly/react-icons';
+import { CheckCircleIcon } from '@patternfly/react-icons/dist/esm/icons/check-circle-icon';
+import { ExclamationCircleIcon } from '@patternfly/react-icons/dist/esm/icons/exclamation-circle-icon';
+import { InProgressIcon } from '@patternfly/react-icons/dist/esm/icons/in-progress-icon';
+import { UnknownIcon } from '@patternfly/react-icons/dist/esm/icons/unknown-icon';
+import { CubesIcon } from '@patternfly/react-icons/dist/esm/icons/cubes-icon';
 
 import { hasRequirements } from './AddOnsHelper';
 

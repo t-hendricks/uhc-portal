@@ -277,7 +277,7 @@ export const BillingModel = () => {
     },
   ];
 
-  const onBillingModelChange = (value: string) => {
+  const onBillingModelChange = (_event: React.FormEvent<HTMLDivElement>, value: string) => {
     let selectedProduct = normalizedProducts.OSD;
 
     if (value !== billingModels.STANDARD) {
@@ -291,7 +291,7 @@ export const BillingModel = () => {
     setFieldValue(FieldId.Product, selectedProduct);
   };
 
-  const onByocChange = (value: string) => {
+  const onByocChange = (_event: React.FormEvent<HTMLDivElement>, value: string) => {
     const isBYOC = value === 'true';
     const isMultiAz = values[FieldId.MultiAz] === 'true';
 
@@ -304,8 +304,8 @@ export const BillingModel = () => {
     <Flex alignItems={{ default: 'alignItemsFlexStart' }}>
       <FlexItem flex={{ default: 'flex_3' }}>
         <Stack hasGutter>
-          <StackItem className="pf-u-mb-xl">
-            <Title headingLevel="h2" className="pf-u-pb-md">
+          <StackItem className="pf-v5-u-mb-xl">
+            <Title headingLevel="h2" className="pf-v5-u-pb-md">
               Welcome to Red Hat OpenShift Dedicated
             </Title>
             <Text component="p" id="welcome-osd-text">
@@ -316,7 +316,7 @@ export const BillingModel = () => {
           </StackItem>
 
           <StackItem>
-            <Title headingLevel="h3" className="pf-u-mb-sm">
+            <Title headingLevel="h3" className="pf-v5-u-mb-sm">
               Subscription type
             </Title>
             <RadioGroupField
@@ -327,7 +327,7 @@ export const BillingModel = () => {
           </StackItem>
 
           <StackItem>
-            <Title headingLevel="h3" className="pf-u-mb-sm">
+            <Title headingLevel="h3" className="pf-v5-u-mb-sm">
               Infrastructure type
             </Title>
 

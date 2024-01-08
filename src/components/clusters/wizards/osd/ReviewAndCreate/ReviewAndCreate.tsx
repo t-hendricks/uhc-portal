@@ -1,6 +1,7 @@
 import React from 'react';
 
-import { useWizardFooter } from '@patternfly/react-core/next';
+import { useWizardFooter } from '@patternfly/react-core';
+
 import { useGlobalState } from '~/redux/hooks/useGlobalState';
 import CreateClusterErrorModal from '~/components/clusters/common/CreateClusterErrorModal';
 import { useFormState } from '~/components/clusters/wizards/hooks';
@@ -41,7 +42,7 @@ export const ReviewAndCreate = ({ track }: ReviewAndCreateProps) => {
   );
 
   return (
-    <div className="pf-u-mb-md">
+    <div className="pf-v5-u-mb-md">
       <ReviewAndCreateContent isPending={createClusterResponse.pending} />
       {isErrorModalOpen && <CreateClusterErrorModal onRetry={submitForm} />}
     </div>

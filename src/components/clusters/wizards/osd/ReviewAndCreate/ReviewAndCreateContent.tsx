@@ -1,8 +1,15 @@
 import React from 'react';
 import isEmpty from 'lodash/isEmpty';
 
-import { Bullseye, Spinner, Stack, StackItem, Title } from '@patternfly/react-core';
-import { useWizardContext } from '@patternfly/react-core/next';
+import {
+  Bullseye,
+  Spinner,
+  Stack,
+  StackItem,
+  Title,
+  useWizardContext,
+} from '@patternfly/react-core';
+
 import config from '~/config';
 import ReviewSection, {
   ReviewItem,
@@ -72,7 +79,7 @@ export const ReviewAndCreateContent = ({ isPending }: ReviewAndCreateContentProp
         <Stack>
           <StackItem>
             <Bullseye>
-              <Spinner size="xl" isSVG />
+              <Spinner size="xl" />
             </Bullseye>
           </StackItem>
           <StackItem>

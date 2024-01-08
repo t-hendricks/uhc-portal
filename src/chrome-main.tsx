@@ -17,6 +17,7 @@ import React from 'react';
 import './i18n';
 import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
+
 // No type definitions
 // @ts-ignore
 import NotificationPortal from '@redhat-cloud-services/frontend-components-notifications/NotificationPortal';

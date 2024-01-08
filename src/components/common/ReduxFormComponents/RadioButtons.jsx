@@ -28,13 +28,14 @@ class RadioButtons extends React.Component {
     }
   }
 
-  changeHandler = (value, event) => {
+  changeHandler = (event) => {
     const { input, onChangeCallback } = this.props;
     const newValue = event.target.value;
 
-    input.onChange(newValue, event);
+    input.onChange(newValue);
+
     if (onChangeCallback) {
-      onChangeCallback(input.name, newValue);
+      onChangeCallback(event, newValue);
     }
   };
 
@@ -52,7 +53,7 @@ class RadioButtons extends React.Component {
       <>
         {options.map((option) => {
           const button = (
-            <SplitItem className="pf-u-mr-sm">
+            <SplitItem className="pf-v5-u-mr-sm">
               <Radio
                 className={className || ''}
                 isChecked={input.value === option.value}
@@ -72,7 +73,7 @@ class RadioButtons extends React.Component {
           );
 
           return (
-            <Split hasGutter key={`${input.name}-${option.value}-fragment`}>
+            <Split key={`${input.name}-${option.value}-fragment`}>
               {option.tooltipText ? (
                 <Tooltip content={option.tooltipText} position="right">
                   {button}

@@ -1,11 +1,13 @@
 import React from 'react';
 import { PropTypes } from 'prop-types';
-import { AngleDoubleDownIcon, AngleDoubleUpIcon, EqualsIcon } from '@patternfly/react-icons';
-import { global_palette_blue_50 as blue50 } from '@patternfly/react-tokens/dist/js/global_palette_blue_50';
-import { global_palette_blue_300 as blue300 } from '@patternfly/react-tokens/dist/js/global_palette_blue_300';
-import { global_palette_gold_400 as gold400 } from '@patternfly/react-tokens/dist/js/global_palette_gold_400';
-import { global_palette_orange_300 as orange300 } from '@patternfly/react-tokens/dist/js/global_palette_orange_300';
-import { global_palette_red_200 as red200 } from '@patternfly/react-tokens/dist/js/global_palette_red_200';
+import { AngleDoubleDownIcon } from '@patternfly/react-icons/dist/esm/icons/angle-double-down-icon';
+import { AngleDoubleUpIcon } from '@patternfly/react-icons/dist/esm/icons/angle-double-up-icon';
+import { EqualsIcon } from '@patternfly/react-icons/dist/esm/icons/equals-icon';
+import { global_palette_blue_50 as blue50 } from '@patternfly/react-tokens/dist/esm/global_palette_blue_50';
+import { global_palette_blue_300 as blue300 } from '@patternfly/react-tokens/dist/esm/global_palette_blue_300';
+import { global_palette_gold_400 as gold400 } from '@patternfly/react-tokens/dist/esm/global_palette_gold_400';
+import { global_palette_orange_300 as orange300 } from '@patternfly/react-tokens/dist/esm/global_palette_orange_300';
+import { global_palette_red_200 as red200 } from '@patternfly/react-tokens/dist/esm/global_palette_red_200';
 import { ChartLabel } from '@patternfly/react-charts';
 import { advisorBaseName } from '~/common/getBaseName';
 

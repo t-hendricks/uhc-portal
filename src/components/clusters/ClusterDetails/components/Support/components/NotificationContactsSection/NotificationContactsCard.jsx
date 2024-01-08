@@ -1,6 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Table, TableBody, TableHeader, TableVariant } from '@patternfly/react-table';
+import { TableVariant } from '@patternfly/react-table';
+import {
+  Table as TableDeprecated,
+  TableHeader as TableHeaderDeprecated,
+  TableBody as TableBodyDeprecated,
+} from '@patternfly/react-table/deprecated';
 import { EmptyState } from '@patternfly/react-core';
 import ErrorBox from '../../../../../../common/ErrorBox';
 
@@ -104,7 +109,7 @@ class NotificationContactsCard extends React.Component {
             />
           </EmptyState>
         )}
-        <Table
+        <TableDeprecated
           aria-label="Notification Contacts"
           actions={actions}
           variant={TableVariant.compact}
@@ -112,9 +117,9 @@ class NotificationContactsCard extends React.Component {
           rows={rows}
           areActionsDisabled={() => isDisabled}
         >
-          <TableHeader />
-          <TableBody />
-        </Table>
+          <TableHeaderDeprecated />
+          <TableBodyDeprecated />
+        </TableDeprecated>
       </>
     );
   }

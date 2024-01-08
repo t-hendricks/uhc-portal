@@ -28,7 +28,7 @@ function InstallToVPC({
             <Title headingLevel="h4" size="md">
               Install into an existing VPC
               <PopoverHint
-                iconClassName="pf-u-ml-sm"
+                iconClassName="pf-v5-u-ml-sm"
                 hint={
                   <>
                     Your VPC must have public and private subnets. Public subnets are associated
@@ -76,7 +76,7 @@ function InstallToVPC({
             <Title headingLevel="h4" size="md">
               Existing VPC
               <PopoverHint
-                iconClassName="pf-u-ml-sm"
+                iconClassName="pf-v5-u-ml-sm"
                 hint={
                   <>
                     {

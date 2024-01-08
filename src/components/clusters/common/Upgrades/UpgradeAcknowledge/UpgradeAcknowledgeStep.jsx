@@ -98,7 +98,7 @@ const UpgradeAcknowledgeStep = (props) => {
                 isRequired
                 id="upgradeAcknowledgementModalText"
                 type="text"
-                onChange={(val) => setTypedWord(val)}
+                onChange={(_event, val) => setTypedWord(val)}
                 placeholder="Type here"
                 data-testid="acknowledgeTextInput"
               />

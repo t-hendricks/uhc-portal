@@ -3,7 +3,11 @@ import PropTypes from 'prop-types';
 import { useSelector } from 'react-redux';
 import { isAsyncValidating } from 'redux-form';
 
-import { WizardFooter, WizardContext, Button } from '@patternfly/react-core';
+import { Button } from '@patternfly/react-core';
+import {
+  WizardFooter as WizardFooterDeprecated,
+  WizardContext as WizardContextDeprecated,
+} from '@patternfly/react-core/deprecated';
 
 import { stepId, hasLoadingState } from './rosaWizardConstants';
 
@@ -45,8 +49,8 @@ const CreateRosaWizardFooter = ({
     isRefreshingVPCs;
 
   return (
-    <WizardFooter>
-      <WizardContext.Consumer>
+    <WizardFooterDeprecated>
+      <WizardContextDeprecated.Consumer>
         {({ activeStep, onNext, onBack, onClose }) => (
           <>
             {activeStep.id === stepId.REVIEW_AND_CREATE ? (
@@ -76,8 +80,8 @@ const CreateRosaWizardFooter = ({
             </Button>
           </>
         )}
-      </WizardContext.Consumer>
-    </WizardFooter>
+      </WizardContextDeprecated.Consumer>
+    </WizardFooterDeprecated>
   );
 };
 

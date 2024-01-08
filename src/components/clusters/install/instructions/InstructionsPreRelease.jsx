@@ -12,7 +12,7 @@ import {
   Stack,
   StackItem,
 } from '@patternfly/react-core';
-import { CodeIcon } from '@patternfly/react-icons';
+import { CodeIcon } from '@patternfly/react-icons/dist/esm/icons/code-icon';
 
 import links, { tools, channels } from '../../../../common/installLinks.mjs';
 import ExternalLink from '../../../common/ExternalLink';

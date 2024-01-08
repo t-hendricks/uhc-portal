@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import get from 'lodash/get';
 
 import { Spinner } from '@redhat-cloud-services/frontend-components/Spinner';
-import { Button, Alert, Split, SplitItem, Title } from '@patternfly/react-core';
+import { Button, Alert, Split, SplitItem, Title, Flex } from '@patternfly/react-core';
 
 import { PreviewLabel } from '~/components/clusters/common/PreviewLabel';
 import clusterStates, { isOffline } from '../../common/clusterStates';
@@ -86,7 +86,7 @@ function ClusterDetailsTop(props) {
   const IdentityProvidersHint = () => (
     <Alert
       id="idpHint"
-      className="pf-u-mt-md"
+      className="pf-v5-u-mt-md"
       variant="warning"
       isInline
       title="Missing identity providers"
@@ -190,14 +190,14 @@ function ClusterDetailsTop(props) {
   return (
     <div id="cl-details-top" className="top-row">
       <Split>
-        <SplitItem className="pf-u-pb-md">{breadcrumbs}</SplitItem>
+        <SplitItem className="pf-v5-u-pb-md">{breadcrumbs}</SplitItem>
       </Split>
       <Split id="cl-details-top-row">
         <SplitItem>
           <Title size="2xl" headingLevel="h1" className="cl-details-page-title">
             {clusterName}
             {showPreviewLabel && (
-              <PreviewLabel creationDateStr={creationDateStr} className="pf-u-ml-sm" />
+              <PreviewLabel creationDateStr={creationDateStr} className="pf-v5-u-ml-sm" />
             )}
           </Title>
         </SplitItem>
@@ -209,7 +209,12 @@ function ClusterDetailsTop(props) {
         </SplitItem>
         <SplitItem isFilled />
         <SplitItem>
-          <span id="cl-details-btns">
+          <Flex
+            flexWrap={{ default: 'nowrap' }}
+            alignItems={{ default: 'alignItemsCenter' }}
+            spaceItems={{ default: 'spaceItemsSm' }}
+            id="cl-details-btns"
+          >
             {!isArchived && !isDeprovisioned ? (
               <>
                 {launchConsole}
@@ -227,7 +232,7 @@ function ClusterDetailsTop(props) {
                 useShortTimer={!Object.values(clusterStates).includes(cluster.state)}
               />
             )}
-          </span>
+          </Flex>
         </SplitItem>
       </Split>
 

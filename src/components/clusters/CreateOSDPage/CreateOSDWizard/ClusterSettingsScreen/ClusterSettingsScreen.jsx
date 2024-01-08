@@ -180,7 +180,7 @@ function ClusterSettingsScreen({
           />
 
           {!isHypershiftSelected && isEtcdEncryptionSelected && (
-            <GridItem md={6} className="pf-u-mt-lg">
+            <GridItem md={6} className="pf-v5-u-mt-lg">
               <FormGroup fieldId="fips" id="fipsCrypto" label="FIPS cryptography">
                 <Field
                   component={ReduxCheckbox}

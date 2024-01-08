@@ -10,11 +10,7 @@ exports[`<RefreshButton /> renders correctly 1`] = `
     onClick={[MockFunction]}
     variant="plain"
   >
-    <RedoIcon
-      color="currentColor"
-      noVerticalAlign={false}
-      size="sm"
-    />
+    <RedoIcon />
   </Button>
 </Tooltip>
 `;
@@ -29,11 +25,7 @@ exports[`<RefreshButton autoRefresh /> renders correctly 1`] = `
     onClick={[MockFunction]}
     variant="plain"
   >
-    <RedoIcon
-      color="currentColor"
-      noVerticalAlign={false}
-      size="sm"
-    />
+    <RedoIcon />
   </Button>
 </Tooltip>
 `;

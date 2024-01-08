@@ -1,11 +1,6 @@
 import { connect } from 'react-redux';
 import AddOnsDrawer from './AddOnsDrawer';
-import {
-  addClusterAddOn,
-  updateClusterAddOn,
-  setSubscriptionModel,
-  setAddonsDrawer,
-} from '../AddOnsActions';
+import { addClusterAddOn, updateClusterAddOn, setAddonsDrawer } from '../AddOnsActions';
 import { modalActions } from '../../../../../common/Modal/ModalActions';
 
 const mapStateToProps = (state) => ({
@@ -21,7 +16,6 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = {
   addClusterAddOn,
   updateClusterAddOn,
-  setSubscriptionModel,
   openModal: modalActions.openModal,
   setAddonsDrawer,
 };

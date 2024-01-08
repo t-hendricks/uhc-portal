@@ -62,7 +62,7 @@ class CloudRegionComboBox extends React.Component {
           aria-label="Region"
           isDisabled={disabled}
           {...input}
-          onChange={this.onChange}
+          onChange={(_event, value) => this.onChange(value)}
         >
           {availableRegions.map((region) => regionOption(region))}
         </FormSelect>

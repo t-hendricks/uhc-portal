@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, screen, checkAccessibility, within } from '~/testUtils';
+import { render, screen, checkAccessibility } from '~/testUtils';
 import wizardConnector from '~/components/clusters/CreateOSDPage/CreateOSDWizard/WizardConnector';
 import ScaleClusterDialog from './ScaleClusterDialog';
 
@@ -97,11 +97,7 @@ describe('<ScaleClusterDialog />', () => {
 
     // There are multiple errors due to the redux state not being in shape that is
     // expected for child components.  The logic we are checking is in the first alert.
-    expect(
-      within(screen.getAllByRole('alert', { name: 'Danger Alert' })[0]).getByText(
-        'this is an error',
-      ),
-    ).toBeInTheDocument();
+    expect(screen.getByText('this is an error')).toBeInTheDocument();
   });
 
   describe('fetching data -', () => {

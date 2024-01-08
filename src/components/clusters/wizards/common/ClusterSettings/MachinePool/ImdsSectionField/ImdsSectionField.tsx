@@ -42,7 +42,7 @@ export const ImdsSectionField = () => {
           id="imds"
           ariaLabel="Instance Metadata Service"
           isDisabled={isDisabled}
-          className="pf-u-mb-md"
+          className="pf-v5-u-mb-md"
           input={{
             ...getFieldProps(FieldId.IMDS),
             onChange,

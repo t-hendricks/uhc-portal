@@ -1,6 +1,5 @@
 import React from 'react';
 import { TextContent, Text } from '@patternfly/react-core';
-import spacing from '@patternfly/react-styles/css/utilities/Spacing/spacing';
 
 import PageTitle from '../../../common/PageTitle';
 
@@ -14,7 +13,7 @@ export const InstructionsChooserPageTitle = ({
   breadcrumbs,
 }: InstructionsChooserPageTitleProps) => (
   <PageTitle title={`Create an OpenShift Cluster: ${cloudName}`} breadcrumbs={breadcrumbs}>
-    <TextContent className={spacing.mtSm}>
+    <TextContent className="pf-v5-u-mt-sm">
       <Text component="p">Select the installation type that best fits your needs.</Text>
     </TextContent>
   </PageTitle>

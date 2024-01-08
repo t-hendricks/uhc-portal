@@ -40,13 +40,6 @@ exports[`<AutoScaleSection /> renders correctly for multiAz 1`] = `
         <FormGroup
           className="autoscaling__nodes-formGroup"
           fieldId="nodes_min"
-          helperText={
-            <HelperText>
-              <HelperTextItem>
-                x 3 zones = 0
-              </HelperTextItem>
-            </HelperText>
-          }
           isRequired={true}
           label="Minimum nodes per zone"
         >
@@ -68,19 +61,19 @@ exports[`<AutoScaleSection /> renders correctly for multiAz 1`] = `
               ]
             }
           />
+          <FormGroupHelperText>
+            <HelperText>
+              <HelperTextItem>
+                x 3 zones = 0
+              </HelperTextItem>
+            </HelperText>
+          </FormGroupHelperText>
         </FormGroup>
       </SplitItem>
       <SplitItem>
         <FormGroup
           className="autoscaling__nodes-formGroup"
           fieldId="nodes_max"
-          helperText={
-            <HelperText>
-              <HelperTextItem>
-                x 3 zones = 0
-              </HelperTextItem>
-            </HelperText>
-          }
           isRequired={true}
           label="Maximum nodes per zone"
           labelIcon={
@@ -114,6 +107,13 @@ exports[`<AutoScaleSection /> renders correctly for multiAz 1`] = `
               ]
             }
           />
+          <FormGroupHelperText>
+            <HelperText>
+              <HelperTextItem>
+                x 3 zones = 0
+              </HelperTextItem>
+            </HelperText>
+          </FormGroupHelperText>
         </FormGroup>
       </SplitItem>
     </Split>
@@ -197,7 +197,6 @@ exports[`<AutoScaleSection /> renders correctly when autoscale enabled 1`] = `
         <FormGroup
           className="autoscaling__nodes-formGroup"
           fieldId="nodes_min"
-          helperText={<HelperText />}
           isRequired={true}
           label="Minimum node count"
         >
@@ -219,13 +218,15 @@ exports[`<AutoScaleSection /> renders correctly when autoscale enabled 1`] = `
               ]
             }
           />
+          <FormGroupHelperText>
+            <HelperText />
+          </FormGroupHelperText>
         </FormGroup>
       </SplitItem>
       <SplitItem>
         <FormGroup
           className="autoscaling__nodes-formGroup"
           fieldId="nodes_max"
-          helperText={<HelperText />}
           isRequired={true}
           label="Maximum node count"
           labelIcon={
@@ -259,6 +260,9 @@ exports[`<AutoScaleSection /> renders correctly when autoscale enabled 1`] = `
               ]
             }
           />
+          <FormGroupHelperText>
+            <HelperText />
+          </FormGroupHelperText>
         </FormGroup>
       </SplitItem>
     </Split>

@@ -4,16 +4,17 @@ import React, { useState, useEffect, createRef, ReactElement, useCallback, useMe
 import {
   Button,
   FormGroup,
-  Title,
   EmptyStateBody,
   EmptyState,
   Tooltip,
   Flex,
   FlexItem,
   ButtonProps,
+  EmptyStateHeader,
 } from '@patternfly/react-core';
 import './AccountsRolesScreen.scss';
 import links from '~/common/installLinks.mjs';
+import { FormGroupHelperText } from '~/components/common/FormGroupHelperText';
 import { CloudAccount } from '~/types/accounts_mgmt.v1';
 import { AWS_ACCOUNT_ROSA_LOCALSTORAGE_KEY } from '~/common/localStorageConstants';
 import PopoverHint from '../../../../common/PopoverHint';
@@ -26,9 +27,7 @@ const AWS_ACCT_ID_PLACEHOLDER = 'Select an account';
 function NoAssociatedAWSAccounts() {
   return (
     <EmptyState className="no-associated-aws-accounts_empty-state">
-      <Title headingLevel="h6" size="md" data-testid="no_associated_accounts">
-        No associated accounts were found.
-      </Title>
+      <EmptyStateHeader titleText="No associated accounts were found." headingLevel="h6" />
       <EmptyStateBody>Associate an AWS account to your Red Hat account.</EmptyStateBody>
     </EmptyState>
   );
@@ -98,7 +97,7 @@ function AWSAccountSelection({
   }, [isOpen, hasAWSAccounts]);
 
   const onToggle = useCallback(
-    (toggleOpenValue: boolean | ((prevState: boolean) => boolean)) => {
+    (_, toggleOpenValue: boolean | ((prevState: boolean) => boolean)) => {
       setIsOpen(toggleOpenValue);
     },
     [setIsOpen],
@@ -166,9 +165,7 @@ function AWSAccountSelection({
       label={label}
       labelIcon={extendedHelpText ? <PopoverHint hint={extendedHelpText} /> : undefined}
       className="aws-account-selection"
-      validated={touched && error ? 'error' : undefined}
-      helperTextInvalid={touched && error}
-      isRequired={required}
+      isRequired
     >
       <Flex>
         <FlexItem grow={{ default: 'grow' }}>
@@ -197,7 +194,7 @@ function AWSAccountSelection({
                 isLoading={isLoading}
                 isDisabled={isDisabled}
                 isInline
-                isSmall
+                size="sm"
                 variant="secondary"
                 onClick={() => {
                   onRefresh();
@@ -209,6 +206,8 @@ function AWSAccountSelection({
           </FlexItem>
         )}
       </Flex>
+
+      <FormGroupHelperText touched={touched} error={error} />
     </FormGroup>
   );
 }

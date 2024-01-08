@@ -46,7 +46,7 @@ function ActionRequiredModal({ cluster, isOpen, onClose }) {
     return (
       <Stack hasGutter>
         <StackItem>
-          <TextContent className="pf-u-pb-md">
+          <TextContent className="pf-v5-u-pb-md">
             <Text component={TextVariants.p}>
               Your cluster will proceed to ready state only after the operator roles and OIDC
               provider are created.
@@ -64,7 +64,7 @@ function ActionRequiredModal({ cluster, isOpen, onClose }) {
           </TextContent>
         </StackItem>
         <StackItem>
-          <TextContent className="pf-u-pb-md">
+          <TextContent className="pf-v5-u-pb-md">
             <Text component={TextVariants.p}>
               {' '}
               To create an OIDC provider, run the following command:

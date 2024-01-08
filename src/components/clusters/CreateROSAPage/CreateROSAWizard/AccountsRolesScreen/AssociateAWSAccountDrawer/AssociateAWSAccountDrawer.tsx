@@ -114,7 +114,7 @@ const AssociateRolesDrawerContent = forwardRef<HTMLInputElement, AssociateRolesD
                 </StackItem>
               )}
               <StackItem>
-                <Text component={TextVariants.p} className="pf-u-mr-md">
+                <Text component={TextVariants.p} className="pf-v5-u-mr-md">
                   {footer}
                 </Text>
               </StackItem>

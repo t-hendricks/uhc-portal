@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, screen, checkAccessibility, within } from '~/testUtils';
+import { render, screen, checkAccessibility } from '~/testUtils';
 import EditDisplayNameDialog from './EditDisplayNameDialog';
 
 describe('<EditDisplayNameDialog />', () => {
@@ -37,9 +37,8 @@ describe('<EditDisplayNameDialog />', () => {
     const { rerender, container } = render(<EditDisplayNameDialog {...defaultProps} />);
     rerender(<EditDisplayNameDialog {...newProps} />);
 
-    expect(
-      within(screen.getByRole('alert', { name: 'Danger Alert' })).getByText('this is an error'),
-    ).toBeInTheDocument();
+    expect(screen.getByTestId('alert-error')).toBeInTheDocument();
+
     await checkAccessibility(container);
   });
 

@@ -117,7 +117,7 @@ describe('<ClusterStatusMonitor />', () => {
     render(<ClusterStatusMonitor {...newProps} />);
 
     expect(
-      within(screen.getByLabelText('Warning Alert')).getByText(
+      within(screen.getByTestId('alert-long-install')).getByText(
         /Installation is taking longer than expected/,
       ),
     ).toBeInTheDocument();
@@ -169,6 +169,6 @@ describe('<ClusterStatusMonitor />', () => {
         }}
       />,
     );
-    expect(screen.getByLabelText('Danger Alert')).toBeInTheDocument();
+    expect(screen.getByText('Danger alert:')).toBeInTheDocument();
   });
 });

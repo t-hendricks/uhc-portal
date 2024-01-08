@@ -5,13 +5,13 @@ exports[`<ReduxFormKeyValueList /> should render when there is no input - initia
   hasGutter={true}
 >
   <GridItem
-    className="pf-c-form__label pf-c-form__label-text"
+    className="pf-v5-c-form__label pf-v5-c-form__label-text"
     span={4}
   >
     Key
   </GridItem>
   <GridItem
-    className="pf-c-form__label pf-c-form__label-text"
+    className="pf-v5-c-form__label pf-v5-c-form__label-text"
     span={4}
   >
     Value
@@ -46,13 +46,7 @@ exports[`<ReduxFormKeyValueList /> should render when there is no input - initia
   >
     <Button
       className="reduxFormKeyValueList-removeBtn-disabled"
-      icon={
-        <MinusCircleIcon
-          color="currentColor"
-          noVerticalAlign={false}
-          size="sm"
-        />
-      }
+      icon={<MinusCircleIcon />}
       isDisabled={true}
       onClick={[Function]}
       variant="link"
@@ -61,13 +55,7 @@ exports[`<ReduxFormKeyValueList /> should render when there is no input - initia
   <GridItem>
     <ButtonWithTooltip
       className="reduxFormKeyValueList-addBtn"
-      icon={
-        <PlusCircleIcon
-          color="currentColor"
-          noVerticalAlign={false}
-          size="sm"
-        />
-      }
+      icon={<PlusCircleIcon />}
       isInline={true}
       onClick={[Function]}
       variant="link"
@@ -83,13 +71,13 @@ exports[`<ReduxFormKeyValueList /> should render with input 1`] = `
   hasGutter={true}
 >
   <GridItem
-    className="pf-c-form__label pf-c-form__label-text"
+    className="pf-v5-c-form__label pf-v5-c-form__label-text"
     span={4}
   >
     Key
   </GridItem>
   <GridItem
-    className="pf-c-form__label pf-c-form__label-text"
+    className="pf-v5-c-form__label pf-v5-c-form__label-text"
     span={4}
   >
     Value
@@ -124,13 +112,7 @@ exports[`<ReduxFormKeyValueList /> should render with input 1`] = `
   >
     <Button
       className="reduxFormKeyValueList-removeBtn"
-      icon={
-        <MinusCircleIcon
-          color="currentColor"
-          noVerticalAlign={false}
-          size="sm"
-        />
-      }
+      icon={<MinusCircleIcon />}
       isDisabled={false}
       onClick={[Function]}
       variant="link"
@@ -163,13 +145,7 @@ exports[`<ReduxFormKeyValueList /> should render with input 1`] = `
   >
     <Button
       className="reduxFormKeyValueList-removeBtn"
-      icon={
-        <MinusCircleIcon
-          color="currentColor"
-          noVerticalAlign={false}
-          size="sm"
-        />
-      }
+      icon={<MinusCircleIcon />}
       isDisabled={false}
       onClick={[Function]}
       variant="link"
@@ -178,13 +154,7 @@ exports[`<ReduxFormKeyValueList /> should render with input 1`] = `
   <GridItem>
     <ButtonWithTooltip
       className="reduxFormKeyValueList-addBtn"
-      icon={
-        <PlusCircleIcon
-          color="currentColor"
-          noVerticalAlign={false}
-          size="sm"
-        />
-      }
+      icon={<PlusCircleIcon />}
       isInline={true}
       onClick={[Function]}
       variant="link"

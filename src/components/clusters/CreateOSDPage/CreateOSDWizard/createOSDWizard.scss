@@ -1,26 +1,22 @@
-.pf-c-wizard.osd-wizard {
+.pf-v5-c-wizard.osd-wizard {
   min-height: 60vh;
-  .pf-c-wizard__footer {
+  .pf-v5-c-wizard__footer {
     z-index: 0;
   }
   .ocm-c-wizard-intro-image {
     height: 200px;
     width: 200px;
-    right: var(--pf-global--spacer--md);
-    top: var(--pf-global--spacer--xl);
+    right: var(--pf-v5-global--spacer--md);
+    top: var(--pf-v5-global--spacer--xl);
     position: absolute;
   }
-  .pf-c-wizard__main-body {
-    padding-bottom: var(--pf-global--spacer--sm);
-    padding-top: var(--pf-global--spacer--xl);
-  }
   #node-labels-alert {
-    margin-top: var(--pf-global--spacer--md);
+    margin-top: var(--pf-v5-global--spacer--md);
   }
-  .pf-l-grid.pf-m-gutter {
-    grid-gap: var(--pf-global--spacer--lg); // match --pf-c-form--GridGap 24px
+  .pf-v5-l-grid.pf-m-gutter {
+    grid-gap: var(--pf-v5-global--spacer--lg); // match --pf-v5-c-form--GridGap 24px
   }
-  .pf-c-form__field-group {
+  .pf-v5-c-form__field-group {
     border-top: 0;
   }
 }

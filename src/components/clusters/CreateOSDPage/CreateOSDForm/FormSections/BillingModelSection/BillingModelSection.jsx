@@ -13,7 +13,7 @@ import {
   Text,
   Title,
 } from '@patternfly/react-core';
-import { OutlinedQuestionCircleIcon } from '@patternfly/react-icons';
+import { OutlinedQuestionCircleIcon } from '@patternfly/react-icons/dist/esm/icons/outlined-question-circle-icon';
 
 import RadioButtons from '../../../../../common/ReduxFormComponents/RadioButtons';
 import ExternalLink from '../../../../../common/ExternalLink';
@@ -172,7 +172,7 @@ function BillingModelSection({
   return (
     <>
       <GridItem span={8}>
-        <Title headingLevel="h2" className="pf-u-pb-md">
+        <Title headingLevel="h2" className="pf-v5-u-pb-md">
           Welcome to Red Hat OpenShift Dedicated
         </Title>
         <Text component="p" id="welcome-osd-text">

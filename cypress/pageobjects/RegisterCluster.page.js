@@ -13,9 +13,9 @@ class RegisterCluster extends Page {
 
   clusterURLError = () => cy.get('div[id="web_console_url-helper"]');
 
-  cancelButton = () => cy.get('button.pf-c-button.pf-m-secondary');
+  cancelButton = () => cy.get('button.pf-v5-c-button.pf-m-secondary');
 
-  submitButton = () => cy.get('article#register-cluster button.pf-c-button.pf-m-primary');
+  submitButton = () => cy.get('button[type="submit"]');
 }
 
 export default new RegisterCluster();

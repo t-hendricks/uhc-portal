@@ -1,4 +1,5 @@
-import { FormGroup, SelectOption, Tooltip } from '@patternfly/react-core';
+import { FormGroup, Tooltip } from '@patternfly/react-core';
+import { SelectOption as SelectOptionDeprecated } from '@patternfly/react-core/deprecated';
 import { useField } from 'formik';
 import * as React from 'react';
 import PopoverHint from '~/components/common/PopoverHint';
@@ -10,6 +11,8 @@ import { isMultiAZ } from '~/components/clusters/ClusterDetails/clusterDetailsHe
 import { normalizeProductID } from '~/common/normalize';
 import { normalizedProducts } from '~/common/subscriptionTypes';
 import { noQuotaTooltip } from '~/common/helpers';
+import { FormGroupHelperText } from '~/components/common/FormGroupHelperText';
+
 import useFormikOnChange from '../hooks/useFormikOnChange';
 import SelectField from './SelectField';
 
@@ -48,9 +51,9 @@ const NodeCountField = ({ minNodesRequired, options, cluster }: NodeCountFieldPr
       isDisabled={notEnoughQuota}
     >
       {options.map((option) => (
-        <SelectOption key={option} value={`${option}`}>
+        <SelectOptionDeprecated key={option} value={`${option}`}>
           {`${isMultiAz ? option / 3 : option}`}
-        </SelectOption>
+        </SelectOptionDeprecated>
       ))}
     </SelectField>
   );
@@ -77,7 +80,6 @@ const NodeCountField = ({ minNodesRequired, options, cluster }: NodeCountFieldPr
           }
         />
       }
-      helperText={isMultiAz && `x 3 zones = ${field.value}`}
     >
       {notEnoughQuota ? (
         <Tooltip content={noQuotaTooltip} position="right">
@@ -86,6 +88,8 @@ const NodeCountField = ({ minNodesRequired, options, cluster }: NodeCountFieldPr
       ) : (
         selectField
       )}
+
+      <FormGroupHelperText>{isMultiAz && `x 3 zones = ${field.value}`}</FormGroupHelperText>
     </FormGroup>
   );
 };

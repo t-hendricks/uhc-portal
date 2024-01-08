@@ -5,7 +5,8 @@ import './AddOnsDrawer.scss';
 
 import { Button, FlexItem, Popover } from '@patternfly/react-core';
 
-import { PencilAltIcon, OutlinedQuestionCircleIcon } from '@patternfly/react-icons';
+import { PencilAltIcon } from '@patternfly/react-icons/dist/esm/icons/pencil-alt-icon';
+import { OutlinedQuestionCircleIcon } from '@patternfly/react-icons/dist/esm/icons/outlined-question-circle-icon';
 
 import { hasParameters, parameterAndValue } from '../AddOnsHelper';
 

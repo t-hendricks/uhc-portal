@@ -9,6 +9,7 @@ import {
   EmptyStateBody,
   EmptyState,
   CardTitle,
+  EmptyStateHeader,
 } from '@patternfly/react-core';
 import { Link } from 'react-router-dom';
 import ResourceUsage from '../../clusters/common/ResourceUsage/ResourceUsage';
@@ -27,7 +28,7 @@ const TopOverviewSection = ({
   const errorBody = (
     <CardBody>
       <EmptyState>
-        <Title headingLevel="h2">No data available</Title>
+        <EmptyStateHeader titleText="No data available" headingLevel="h2" />
         <EmptyStateBody>
           There was an error fetching the data. Try refreshing the page.
         </EmptyStateBody>
@@ -87,7 +88,7 @@ const TopOverviewSection = ({
   ) : (
     <CardBody>
       <EmptyState>
-        <Title headingLevel="h2">No data available</Title>
+        <EmptyStateHeader titleText="No data available" headingLevel="h2" />
         <EmptyStateBody>
           Check individual clusters web console if you expect that they should be sending metrics.
           Note that data is not available for clusters that are installing.
