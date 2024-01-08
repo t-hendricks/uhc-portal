@@ -29,7 +29,6 @@ import {
 } from '~/types/accounts_mgmt.v1';
 import type {
   Subscription,
-  SubscriptionList,
   SubscriptionCreateRequest,
   SubscriptionPatchRequest,
 } from '~/types/accounts_mgmt.v1';
@@ -276,153 +275,111 @@ const fetchClustersAndPermissions = async (
   clusterRequestParams: Parameters<typeof accountsService.getSubscriptions>[0],
   aiMergeListsFeatureFlag: boolean | undefined,
 ) => {
-  let subscriptions: AxiosResponse<SubscriptionList, any>;
-  let canEdit: {
-    [clusterID: string]: boolean;
-  };
-  let canDelete: {
-    [clusterID: string]: boolean;
-  };
-
-  const promises = [
-    accountsService.getSubscriptions(clusterRequestParams).then((response) => {
-      subscriptions = mapListResponse(response, normalizeSubscription);
-    }),
+  const [subscriptions, canDelete, canEdit] = await Promise.all([
+    accountsService
+      .getSubscriptions(clusterRequestParams)
+      .then((response) => mapListResponse(response, normalizeSubscription)),
     authorizationsService
       .selfResourceReview({
         action: SelfResourceReviewRequest.action.DELETE,
         resource_type: SelfResourceReview.resource_type.CLUSTER,
       })
-      .then((response) => {
-        canDelete = buildPermissionDict(response);
-      }),
+      .then((response) => buildPermissionDict(response)),
     authorizationsService
       .selfResourceReview({
         action: SelfResourceReviewRequest.action.UPDATE,
         resource_type: SelfResourceReview.resource_type.CLUSTER,
       })
-      .then((response) => {
-        canEdit = buildPermissionDict(response);
-      }),
-  ];
+      .then((response) => buildPermissionDict(response)),
+  ]);
 
-  const handler = () => {
-    const items = subscriptions?.data?.items?.filter(
-      (item) => aiMergeListsFeatureFlag || !isAssistedInstallSubscription(item),
-    );
+  const items = subscriptions?.data?.items?.filter(
+    (item) => aiMergeListsFeatureFlag || !isAssistedInstallSubscription(item),
+  );
 
-    if (!items) {
-      return {
-        data: {
-          items: [] as ClusterWithPermissions[],
-          page: 0,
-          total: 0,
-          queryParams: { ...clusterRequestParams },
-        },
-      };
-    }
-
-    // map subscription ID to subscription info
-    // Note: Map keeps order of insertions.
-    // Will display them in order returned by getSubscriptions().
-    const subscriptionMap = new Map<string, MapEntry>();
-    items.forEach((item) => {
-      if (item.cluster_id) {
-        subscriptionMap.set(item.cluster_id, {
-          subscription: item,
-        });
-      }
-    });
-
-    const enrichForClusterService = async () => {
-      // clusters-service only needed for managed clusters.
-      const managedSubsriptions = items.filter(
-        (s) => s.managed && s.status !== subscriptionStatuses.DEPROVISIONED,
-      );
-      if (managedSubsriptions.length === 0) {
-        return {
-          data: {
-            items: createResponseForFetchClusters(subscriptionMap, canEdit, canDelete),
-            page: subscriptions.data.page,
-            total: subscriptions.data.total || 0,
-            queryParams: { ...clusterRequestParams },
-          },
-        };
-      }
-
-      // fetch managed clusters by subscription
-      const clustersQuery = buildSearchQuery(managedSubsriptions, 'cluster_id');
-
-      try {
-        return await clusterService.getClusters(clustersQuery).then((response) => {
-          const clusters = response?.data?.items;
-          clusters?.forEach((cluster) => {
-            if (cluster.id) {
-              const entry = subscriptionMap.get(cluster.id);
-              if (entry !== undefined) {
-                // store cluster into subscription map
-                entry.cluster = cluster;
-              }
-            }
-          });
-          return {
-            data: {
-              items: createResponseForFetchClusters(subscriptionMap, canEdit, canDelete),
-              page: subscriptions.data.page,
-              total: subscriptions.data.total || 0,
-              queryParams: { ...clusterRequestParams },
-            },
-          };
-        });
-      } catch (e) {
-        return {
-          // When clusters service is down, return AMS data only
-          data: {
-            items: createResponseForFetchClusters(subscriptionMap, canEdit, canDelete),
-            page: subscriptions.data.page,
-            total: subscriptions.data.total || 0,
-            queryParams: { ...clusterRequestParams },
-            meta: {
-              clustersServiceError: e,
-            },
-          },
-        };
-      }
+  if (!items) {
+    return {
+      data: {
+        items: [] as ClusterWithPermissions[],
+        page: 0,
+        total: 0,
+        queryParams: { ...clusterRequestParams },
+      },
     };
+  }
 
-    const subscriptionIds: string[] = [];
-    if (aiMergeListsFeatureFlag) {
-      subscriptionMap.forEach(({ subscription }) => {
-        if (isAssistedInstallSubscription(subscription) && subscription.id) {
-          subscriptionIds.push(subscription.id);
-        }
+  // map subscription ID to subscription info
+  // Note: Map keeps order of insertions.
+  // Will display them in order returned by getSubscriptions().
+  const subscriptionMap = new Map<string, MapEntry>();
+  items.forEach((item) => {
+    if (item.cluster_id) {
+      subscriptionMap.set(item.cluster_id, {
+        subscription: item,
       });
     }
+  });
 
-    let aiClusters = [] as AICluster[];
-    if (subscriptionIds.length > 0) {
-      assistedService
-        .getAIClustersBySubscription(subscriptionIds)
-        .then((res) => {
-          aiClusters = res.data;
-        })
-        .catch((error) => {
-          Sentry.captureException(error);
-        });
-    }
+  const subscriptionIds: string[] = [];
+  if (aiMergeListsFeatureFlag) {
+    subscriptionMap.forEach(({ subscription }) => {
+      if (isAssistedInstallSubscription(subscription) && subscription.id) {
+        subscriptionIds.push(subscription.id);
+      }
+    });
+  }
 
+  if (subscriptionIds.length > 0) {
+    const aiClusters = await assistedService
+      .getAIClustersBySubscription(subscriptionIds)
+      .then((res) => res.data)
+      .catch((error) => {
+        Sentry.captureException(error);
+        return [];
+      });
     aiClusters.forEach((aiCluster) => {
       const entry = subscriptionMap.get(aiCluster.id);
       if (entry) {
         entry.aiCluster = aiCluster;
       }
     });
+  }
 
-    return enrichForClusterService();
+  // clusters-service only needed for managed clusters.
+  const managedSubscriptions = items.filter(
+    (s) => s.managed && s.status !== subscriptionStatuses.DEPROVISIONED,
+  );
+
+  // fetch managed clusters by subscription
+  let clustersServiceError: unknown;
+  if (managedSubscriptions.length > 0) {
+    const clustersQuery = buildSearchQuery(managedSubscriptions, 'cluster_id');
+    try {
+      await clusterService.getClusters(clustersQuery).then((response) => {
+        const clusters = response?.data?.items;
+        clusters?.forEach((cluster) => {
+          if (cluster.id) {
+            const entry = subscriptionMap.get(cluster.id);
+            if (entry !== undefined) {
+              // store cluster into subscription map
+              entry.cluster = cluster;
+            }
+          }
+        });
+      });
+    } catch (e) {
+      clustersServiceError = e;
+    }
+  }
+  return {
+    data: {
+      items: createResponseForFetchClusters(subscriptionMap, canEdit, canDelete),
+      page: subscriptions.data.page,
+      total: subscriptions.data.total || 0,
+      queryParams: { ...clusterRequestParams },
+      ...(clustersServiceError ? { meta: { clustersServiceError } } : {}),
+    },
   };
-
-  await Promise.all(promises);
-  return handler();
 };
 
 const fetchClustersAction = (
