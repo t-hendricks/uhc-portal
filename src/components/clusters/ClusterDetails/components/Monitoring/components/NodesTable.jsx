@@ -1,8 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Table, TableHeader, TableBody, TableVariant } from '@patternfly/react-table';
+import { TableVariant } from '@patternfly/react-table';
+import {
+  Table as TableDeprecated,
+  TableHeader as TableHeaderDeprecated,
+  TableBody as TableBodyDeprecated,
+} from '@patternfly/react-table/deprecated';
 
-import { CheckCircleIcon, ExclamationCircleIcon } from '@patternfly/react-icons';
+import { CheckCircleIcon } from '@patternfly/react-icons/dist/esm/icons/check-circle-icon';
+import { ExclamationCircleIcon } from '@patternfly/react-icons/dist/esm/icons/exclamation-circle-icon';
 import { monitoringItemLinkProps, monitoringItemTypes } from '../monitoringHelper';
 
 function NodesTable({ nodes = [], clusterConsole }) {
@@ -43,16 +49,16 @@ function NodesTable({ nodes = [], clusterConsole }) {
   });
 
   return (
-    <Table
+    <TableDeprecated
       variant={TableVariant.compact}
       borders={false}
       cells={columns}
       rows={rows}
       aria-label="nodes"
     >
-      <TableHeader />
-      <TableBody />
-    </Table>
+      <TableHeaderDeprecated />
+      <TableBodyDeprecated />
+    </TableDeprecated>
   );
 }
 

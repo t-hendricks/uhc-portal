@@ -1,7 +1,7 @@
 import React, { ReactElement, useMemo } from 'react';
 import { Field } from 'formik';
 
-import { Alert, AlertActionLink, GridItem, Title } from '@patternfly/react-core';
+import { Alert, AlertActionLink, GridItem, Title, useWizardContext } from '@patternfly/react-core';
 import { useFeatureGate } from '~/hooks/useFeatureGate';
 
 import PopoverHint from '~/components/common/PopoverHint';
@@ -11,7 +11,6 @@ import links from '~/common/installLinks.mjs';
 import { useFormState } from '~/components/clusters/wizards/hooks';
 import { FieldId, StepId } from '~/components/clusters/wizards/osd/constants';
 import { versionComparator } from '~/common/versionComparator';
-import { useWizardContext } from '@patternfly/react-core/next';
 import { OSD_GCP_SHARED_VPC_FEATURE } from '~/redux/constants/featureConstants';
 import { GcpVpcNameSelectField } from './GcpVpcNameSelectField';
 import { GcpVpcSubnetSelectField } from './GcpVpcSubnetSelectField';
@@ -33,7 +32,10 @@ export const GcpVpcSettings = () => {
 
   const { goToStepById } = useWizardContext();
 
-  const onInstallIntoSharedVPCchange = (checked: boolean) => {
+  const onInstallIntoSharedVPCchange = (
+    _event: React.FormEvent<HTMLInputElement>,
+    checked: boolean,
+  ) => {
     setFieldValue(FieldId.InstallToSharedVpc, checked);
   };
 
@@ -43,7 +45,7 @@ export const GcpVpcSettings = () => {
       return (
         <>
           {wrongVersion && (
-            <div className="pf-u-mt-md">
+            <div className="pf-v5-u-mt-md">
               <Alert
                 variant="danger"
                 isInline
@@ -58,14 +60,14 @@ export const GcpVpcSettings = () => {
               />
             </div>
           )}
-          <div className="pf-u-mt-md" style={{ display: wrongVersion ? 'none' : 'block' }}>
+          <div className="pf-v5-u-mt-md" style={{ display: wrongVersion ? 'none' : 'block' }}>
             <TextInputField
               name={FieldId.SharedHostProjectID}
               label="Host project ID"
               validate={validateGCPHostProjectId}
             />
 
-            <div className="pf-u-mt-md">
+            <div className="pf-v5-u-mt-md">
               <Alert
                 variant="info"
                 isInline
@@ -87,7 +89,7 @@ export const GcpVpcSettings = () => {
           <Title headingLevel="h4" size="md">
             GCP shared VPC
           </Title>
-          <div className="pf-u-mt-md  pf-u-mb-lg">
+          <div className="pf-v5-u-mt-md  pf-v5-u-mb-lg">
             <CheckboxField
               name={FieldId.InstallToSharedVpc}
               label="Install into GCP shared VPC"
@@ -110,7 +112,7 @@ export const GcpVpcSettings = () => {
         <Title headingLevel="h4" size="md">
           Existing VPC
           <PopoverHint
-            iconClassName="pf-u-ml-sm"
+            iconClassName="pf-v5-u-ml-sm"
             hint={
               <>
                 Install into a non-default subnet shared by another account in your CP organization
@@ -121,12 +123,15 @@ export const GcpVpcSettings = () => {
             }
           />
         </Title>
-        <div className="pf-u-ml-sm pf-u-mt-md  pf-u-mb-lg" style={{ width: 'fit-content' }}>
-          <p className="pf-u-mt-sm">
+        <div
+          className="pf-v5-u-ml-sm pf-v5-u-mt-md  pf-v5-u-mb-lg"
+          style={{ width: 'fit-content' }}
+        >
+          <p className="pf-v5-u-mt-sm">
             To install into an existing VPC, you need to ensure that your VPC is configured with a
             control plane subnet and compute subnet.
           </p>
-          <p className="pf-u-mt-sm">
+          <p className="pf-v5-u-mt-sm">
             You&#39;ll also need to match these VPC subnets when you define the CIDR ranges.
           </p>
         </div>
@@ -206,7 +211,7 @@ export const GcpVpcSettings = () => {
 
       {installToSharedVpc && (
         <GridItem span={9}>
-          <div className="pf-u-mt-md  pf-u-mb-lg">
+          <div className="pf-v5-u-mt-md  pf-v5-u-mb-lg">
             <Alert
               variant="info"
               isInline

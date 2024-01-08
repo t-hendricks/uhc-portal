@@ -58,8 +58,29 @@ exports[`<DownloadsPage> renders 1`] = `
         }
         selectedCategory="ALL"
       >
-        <TableComposable
+        <Table
+          actionsMenuAppendTo="inline"
           aria-label="CLI tools table"
+          borders={true}
+          canCollapseAll={false}
+          canSelectAll={true}
+          canSortFavorites={true}
+          className=""
+          collapseAllAriaLabel=""
+          contentId="expanded-content"
+          dropdownDirection="down"
+          dropdownPosition="right"
+          expandId="expandable-toggle"
+          gridBreakPoint="grid-md"
+          isHeaderSelectDisabled={false}
+          isNested={false}
+          isStickyHeader={false}
+          isTreeTable={false}
+          ouiaSafe={true}
+          role="grid"
+          rowLabeledBy="simple-node"
+          selectVariant="checkbox"
+          variant={null}
         >
           <ColumnHeadings />
           <ToolAndDescriptionRows
@@ -2766,7 +2787,7 @@ exports[`<DownloadsPage> renders 1`] = `
               }
             }
           />
-        </TableComposable>
+        </Table>
       </DownloadsSection>
       <DownloadsSection
         category="DEV"
@@ -2783,8 +2804,29 @@ exports[`<DownloadsPage> renders 1`] = `
         }
         selectedCategory="ALL"
       >
-        <TableComposable
+        <Table
+          actionsMenuAppendTo="inline"
           aria-label="Developer tools table"
+          borders={true}
+          canCollapseAll={false}
+          canSelectAll={true}
+          canSortFavorites={true}
+          className=""
+          collapseAllAriaLabel=""
+          contentId="expanded-content"
+          dropdownDirection="down"
+          dropdownPosition="right"
+          expandId="expandable-toggle"
+          gridBreakPoint="grid-md"
+          isHeaderSelectDisabled={false}
+          isNested={false}
+          isStickyHeader={false}
+          isTreeTable={false}
+          ouiaSafe={true}
+          role="grid"
+          rowLabeledBy="simple-node"
+          selectVariant="checkbox"
+          variant={null}
         >
           <ColumnHeadings />
           <ToolAndDescriptionRows
@@ -5489,7 +5531,7 @@ exports[`<DownloadsPage> renders 1`] = `
               }
             }
           />
-        </TableComposable>
+        </Table>
       </DownloadsSection>
       <DownloadsSection
         category="INSTALLATION"
@@ -5507,8 +5549,29 @@ exports[`<DownloadsPage> renders 1`] = `
         }
         selectedCategory="ALL"
       >
-        <TableComposable
+        <Table
+          actionsMenuAppendTo="inline"
           aria-label="OpenShift installation table"
+          borders={true}
+          canCollapseAll={false}
+          canSelectAll={true}
+          canSortFavorites={true}
+          className=""
+          collapseAllAriaLabel=""
+          contentId="expanded-content"
+          dropdownDirection="down"
+          dropdownPosition="right"
+          expandId="expandable-toggle"
+          gridBreakPoint="grid-md"
+          isHeaderSelectDisabled={false}
+          isNested={false}
+          isStickyHeader={false}
+          isTreeTable={false}
+          ouiaSafe={true}
+          role="grid"
+          rowLabeledBy="simple-node"
+          selectVariant="checkbox"
+          variant={null}
         >
           <ColumnHeadings />
           <ToolAndDescriptionRows
@@ -8789,7 +8852,7 @@ exports[`<DownloadsPage> renders 1`] = `
               }
             }
           />
-        </TableComposable>
+        </Table>
       </DownloadsSection>
       <DownloadsSection
         category="DISCONNECTED_INSTALLATION"
@@ -8800,8 +8863,29 @@ exports[`<DownloadsPage> renders 1`] = `
         }
         selectedCategory="ALL"
       >
-        <TableComposable
+        <Table
+          actionsMenuAppendTo="inline"
           aria-label="OpenShift disconnected installation tools table"
+          borders={true}
+          canCollapseAll={false}
+          canSelectAll={true}
+          canSortFavorites={true}
+          className=""
+          collapseAllAriaLabel=""
+          contentId="expanded-content"
+          dropdownDirection="down"
+          dropdownPosition="right"
+          expandId="expandable-toggle"
+          gridBreakPoint="grid-md"
+          isHeaderSelectDisabled={false}
+          isNested={false}
+          isStickyHeader={false}
+          isTreeTable={false}
+          ouiaSafe={true}
+          role="grid"
+          rowLabeledBy="simple-node"
+          selectVariant="checkbox"
+          variant={null}
         >
           <ColumnHeadings />
           <ToolAndDescriptionRows
@@ -9870,7 +9954,7 @@ exports[`<DownloadsPage> renders 1`] = `
               }
             }
           />
-        </TableComposable>
+        </Table>
       </DownloadsSection>
       <DownloadsSection
         category="CUSTOM_INSTALLATION"
@@ -9881,8 +9965,29 @@ exports[`<DownloadsPage> renders 1`] = `
         }
         selectedCategory="ALL"
       >
-        <TableComposable
+        <Table
+          actionsMenuAppendTo="inline"
           aria-label="OpenShift installation customization downloads table"
+          borders={true}
+          canCollapseAll={false}
+          canSelectAll={true}
+          canSortFavorites={true}
+          className=""
+          collapseAllAriaLabel=""
+          contentId="expanded-content"
+          dropdownDirection="down"
+          dropdownPosition="right"
+          expandId="expandable-toggle"
+          gridBreakPoint="grid-md"
+          isHeaderSelectDisabled={false}
+          isNested={false}
+          isStickyHeader={false}
+          isTreeTable={false}
+          ouiaSafe={true}
+          role="grid"
+          rowLabeledBy="simple-node"
+          selectVariant="checkbox"
+          variant={null}
         >
           <ColumnHeadings />
           <ToolAndDescriptionRows
@@ -11486,14 +11591,35 @@ exports[`<DownloadsPage> renders 1`] = `
               }
             }
           />
-        </TableComposable>
+        </Table>
       </DownloadsSection>
       <DownloadsSection
         category="TOKENS"
         selectedCategory="ALL"
       >
-        <TableComposable
+        <Table
+          actionsMenuAppendTo="inline"
           aria-label="Tokens table"
+          borders={true}
+          canCollapseAll={false}
+          canSelectAll={true}
+          canSortFavorites={true}
+          className=""
+          collapseAllAriaLabel=""
+          contentId="expanded-content"
+          dropdownDirection="down"
+          dropdownPosition="right"
+          expandId="expandable-toggle"
+          gridBreakPoint="grid-md"
+          isHeaderSelectDisabled={false}
+          isNested={false}
+          isStickyHeader={false}
+          isTreeTable={false}
+          ouiaSafe={true}
+          role="grid"
+          rowLabeledBy="simple-node"
+          selectVariant="checkbox"
+          variant={null}
         >
           <TokensHeadings />
           <ExpandableRowPair
@@ -11680,13 +11806,7 @@ exports[`<DownloadsPage> renders 1`] = `
                     >
                       <Button
                         data-testid="view-api-token-btn"
-                        icon={
-                          <ArrowRightIcon
-                            color="currentColor"
-                            noVerticalAlign={false}
-                            size="sm"
-                          />
-                        }
+                        icon={<ArrowRightIcon />}
                         iconPosition="right"
                         variant="secondary"
                       >
@@ -11809,7 +11929,7 @@ exports[`<DownloadsPage> renders 1`] = `
               }
             }
           />
-        </TableComposable>
+        </Table>
       </DownloadsSection>
     </PageSection>
   </PageSection>

@@ -1,6 +1,7 @@
 import { FormGroup, TextInput } from '@patternfly/react-core';
 import { useField } from 'formik';
 import * as React from 'react';
+import { FormGroupHelperText } from '../FormGroupHelperText';
 
 type TextFieldProps = {
   fieldId: string;
@@ -13,21 +14,17 @@ const TextField = ({ fieldId, label, isRequired, isDisabled }: TextFieldProps) =
   const [field, { error, touched }] = useField(fieldId);
 
   return (
-    <FormGroup
-      fieldId={fieldId}
-      label={label}
-      isRequired={isRequired}
-      validated={(touched || field.value) && error ? 'error' : 'default'}
-      helperTextInvalid={touched || field.value ? error : undefined}
-    >
+    <FormGroup fieldId={fieldId} label={label} isRequired={isRequired}>
       <TextInput
         {...field}
         id={fieldId}
-        onChange={(value, event) => {
+        onChange={(event, value) => {
           field.onChange(event);
         }}
         isDisabled={isDisabled}
       />
+
+      <FormGroupHelperText touched={touched} error={error} />
     </FormGroup>
   );
 };

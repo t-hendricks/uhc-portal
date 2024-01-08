@@ -59,9 +59,9 @@ const StepCreateAWSAccountRoles = ({
         policies
       </Title>
       <List component={ListComponent.ol} type={OrderType.number}>
-        <ListItem className="pf-u-mb-lg">
+        <ListItem className="pf-v5-u-mb-lg">
           To authenticate, run this command:
-          <div className="pf-u-mt-md">
+          <div className="pf-v5-u-mt-md">
             <TokenBox
               token={token}
               command={loginCommand}
@@ -76,7 +76,7 @@ const StepCreateAWSAccountRoles = ({
           <InstructionCommand
             trackEvent={trackEvents.CopyCreateAccountRoles}
             textAriaLabel="Copyable ROSA create account-roles command"
-            className="pf-u-mt-md"
+            className="pf-v5-u-mt-md"
           >
             {RosaCliCommand.CreateAccountRoles}
           </InstructionCommand>

@@ -1,10 +1,10 @@
 .cluster-log__toolbar {
-  .pf-c-toolbar__group,
-  .pf-c-toolbar__content-section {
+  .pf-v5-c-toolbar__group,
+  .pf-v5-c-toolbar__content-section {
     align-items: start;
   }
 }
 
 .cluster-log__resources {
-  padding-top: var(--pf-global--spacer--sm);
+  padding-top: var(--pf-v5-global--spacer--sm);
 }

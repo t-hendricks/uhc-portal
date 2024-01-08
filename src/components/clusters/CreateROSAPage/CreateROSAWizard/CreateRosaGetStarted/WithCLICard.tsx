@@ -8,7 +8,7 @@ import {
   Text,
   TextVariants,
 } from '@patternfly/react-core';
-import { CodeIcon } from '@patternfly/react-icons';
+import { CodeIcon } from '@patternfly/react-icons/dist/esm/icons/code-icon';
 import InstructionCommand from '~/components/common/InstructionCommand';
 import { trackEvents } from '~/common/analytics';
 import ExternalLink from '~/components/common/ExternalLink';
@@ -24,7 +24,7 @@ const WithCLICard = () => (
       </Title>
     </CardTitle>
     <CardBody>
-      <Text component={TextVariants.p} className="pf-u-mb-sm">
+      <Text component={TextVariants.p} className="pf-v5-u-mb-sm">
         Run the create command in your terminal to begin setup in interactive mode.
       </Text>
       <InstructionCommand

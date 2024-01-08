@@ -1,5 +1,4 @@
 .ocm--cost-breakdown-card {
-
   &__body {
     display: flex;
     flex-direction: column;
@@ -10,16 +9,16 @@
     }
 
     .ocm--cost-title {
-      .pf-c-title {
+      .pf-v5-c-title {
         display: inline;
       }
     }
 
     .ocm--cost-total {
-      font-weight: var(--pf-global--FontWeight--light);
+      font-weight: var(--pf-v5-global--FontWeight--normal);
     }
 
-    .pf-c-empty-state {
+    .pf-v5-c-empty-state {
       padding: 0;
     }
   }

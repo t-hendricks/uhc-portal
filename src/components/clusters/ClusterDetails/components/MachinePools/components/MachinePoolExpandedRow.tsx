@@ -42,7 +42,9 @@ export const MachinePoolItemList = ({
   <>
     {!showSmallTitle && <Title headingLevel="h4">{title}</Title>}
     {showSmallTitle && (
-      <div className="pf-u-font-size-sm pf-u-font-weight-bold pf-u-disabled-color-100">{title}</div>
+      <div className="pf-v5-u-font-size-sm pf-v5-u-font-weight-bold pf-v5-u-disabled-color-100">
+        {title}
+      </div>
     )}
 
     {items.map((item, index) => {
@@ -54,7 +56,7 @@ export const MachinePoolItemList = ({
           color="blue"
           // eslint-disable-next-line react/no-array-index-key
           key={`${title}-${index}`}
-          className="pf-c-label--break-word pf-u-m-sm pf-u-ml-0"
+          className="pf-v5-c-label--break-word pf-v5-u-m-sm pf-v5-u-ml-0"
           title={isTruncated ? item : ''}
         >
           {/* Use HTML tooltip, PF's won't show because the parent tab is initially hidden */}

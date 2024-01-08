@@ -168,7 +168,7 @@ describe(
 
       it('Step - Review and create step -its definitions', () => {
         // Some situation the ARN spinner in progress and blocks cluster creation.
-        cy.get('.pf-c-spinner', { timeout: 30000 }).should('not.exist');
+        cy.get('.pf-v5-c-spinner', { timeout: 30000 }).should('not.exist');
         CreateRosaWizardPage.isClusterPropertyMatchesValue('Control plane', 'Classic');
         CreateRosaWizardPage.isClusterPropertyMatchesValue('Availability', 'Multi-zone');
         CreateRosaWizardPage.isClusterPropertyMatchesValue('User workload monitoring', 'Enabled');

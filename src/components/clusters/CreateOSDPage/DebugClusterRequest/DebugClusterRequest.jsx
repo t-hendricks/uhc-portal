@@ -25,7 +25,7 @@ const DebugClusterRequest = ({ formValues, isWizard, cloudProviderID, product })
 
   return (
     <GridItem>
-      <Banner variant="info">
+      <Banner variant="blue">
         <ExpandableSection toggleText="Debug: cluster request to be sent">
           <pre>{JSON.stringify(clusterRequest, null, 2)}</pre>
         </ExpandableSection>

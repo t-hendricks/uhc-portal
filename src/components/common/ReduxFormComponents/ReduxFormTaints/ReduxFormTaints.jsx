@@ -2,7 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Field } from 'redux-form';
 import { Button, Grid, GridItem } from '@patternfly/react-core';
-import { PlusCircleIcon, MinusCircleIcon } from '@patternfly/react-icons';
+import { PlusCircleIcon } from '@patternfly/react-icons/dist/esm/icons/plus-circle-icon';
+import { MinusCircleIcon } from '@patternfly/react-icons/dist/esm/icons/minus-circle-icon';
 
 import { getRandomID } from '~/common/helpers';
 import { checkTaintKey, checkTaintValue } from '~/common/validators';
@@ -19,13 +20,13 @@ const ReduxFormTaints = ({
   canAddMore,
 }) => (
   <Grid hasGutter>
-    <GridItem span={3} className="pf-c-form__label pf-c-form__label-text">
+    <GridItem span={3} className="pf-v5-c-form__label pf-v5-c-form__label-text">
       Key
     </GridItem>
-    <GridItem span={3} className="pf-c-form__label pf-c-form__label-text">
+    <GridItem span={3} className="pf-v5-c-form__label pf-v5-c-form__label-text">
       Value
     </GridItem>
-    <GridItem span={3} className="pf-c-form__label pf-c-form__label-text">
+    <GridItem span={3} className="pf-v5-c-form__label pf-v5-c-form__label-text">
       Effect
     </GridItem>
     <GridItem span={3} />
@@ -89,7 +90,7 @@ const ReduxFormTaints = ({
         variant="link"
         isInline
         isDisabled={!canAddMore}
-        className="reduxFormKeyValueList-addBtn pf-u-mb-lg"
+        className="reduxFormKeyValueList-addBtn pf-v5-u-mb-lg"
       >
         Add taint
       </Button>

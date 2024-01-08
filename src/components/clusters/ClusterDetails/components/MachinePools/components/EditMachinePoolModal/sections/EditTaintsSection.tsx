@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { FieldArray, useField } from 'formik';
 import { Button, FormGroup, Grid, GridItem, Text, TextVariants } from '@patternfly/react-core';
-import { PlusCircleIcon } from '@patternfly/react-icons';
+import { PlusCircleIcon } from '@patternfly/react-icons/dist/esm/icons/plus-circle-icon';
 
 import { Cluster, MachinePool } from '~/types/clusters_mgmt.v1';
 import { GlobalState } from '~/redux/store';

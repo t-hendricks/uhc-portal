@@ -1,8 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import { TextInput } from '@patternfly/react-core';
 
-import { render, checkAccessibility } from '~/testUtils';
+import { render, checkAccessibility, screen, fireEvent } from '~/testUtils';
 import AddOnsDeleteModal from '../AddOnsDeleteModal';
 
 describe('<AddOnsDeleteModal />', () => {
@@ -39,14 +38,19 @@ describe('<AddOnsDeleteModal />', () => {
     await checkAccessibility(container);
   });
 
-  it('delete button should be enabled only after inputting the add on name', () => {
-    expect(wrapper.find('Modal').props().isPrimaryDisabled).toBeTruthy(); // disabled at first
+  it('delete button should be enabled only after inputting the add on name', async () => {
+    const { getByTestId } = render(<AddOnsDeleteModal {...props} />);
+    const input = screen.getByPlaceholderText(/Enter name/i);
 
-    wrapper.find(TextInput).simulate('change', 'fake');
-    expect(wrapper.find('Modal').props().isPrimaryDisabled).toBeTruthy(); // disabled when unrelated input
+    expect(getByTestId('btn-primary')).toBeDisabled(); // disabled at first
 
-    wrapper.find(TextInput).simulate('change', 'fake-addon-name');
-    expect(wrapper.find('Modal').props().isPrimaryDisabled).toBeFalsy(); // enabled when correct
+    // eslint-disable-next-line testing-library/prefer-user-event
+    fireEvent.change(input, { target: { value: 'fake' } });
+    expect(getByTestId('btn-primary')).toBeDisabled(); // disabled when unrelated input
+
+    // eslint-disable-next-line testing-library/prefer-user-event
+    fireEvent.change(input, { target: { value: 'fake-addon-name' } });
+    expect(getByTestId('btn-primary')).toBeEnabled(); // enabled when correct
   });
 
   it('should close modal on cancel', () => {

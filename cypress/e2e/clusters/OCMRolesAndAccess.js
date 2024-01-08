@@ -12,7 +12,7 @@ describe('OCM Roles And Access', { tags: ['ci'] }, () => {
   const { username } = getAuthConfig();
 
   before(() => {
-    cy.visit('/');
+    cy.visit('/', { retryOnNetworkFailure: true });
     Login.isLoginPageUrl();
     Login.login();
 
@@ -57,12 +57,11 @@ describe('OCM Roles And Access', { tags: ['ci'] }, () => {
 
   it('successfully displays the newly added user', () => {
     OCMRolesAndAccessPage.usernameCell().should('have.text', username);
-    OCMRolesAndAccessPage.OCMRolesAndAccessTableActionButton().should('exist');
   });
 
   it('successfully deletes the user', () => {
-    OCMRolesAndAccessPage.OCMRolesAndAccessTableActionButton().click();
-    OCMRolesAndAccessPage.OCMRolesAndAccessTableDeleteButton().click();
+    OCMRolesAndAccessPage.OCMRolesAndAccessTableActionButton().focus().click();
+    OCMRolesAndAccessPage.OCMRolesAndAccessTableDeleteButton().focus().click();
     OCMRolesAndAccessPage.usernameCell().should('not.exist');
   });
 

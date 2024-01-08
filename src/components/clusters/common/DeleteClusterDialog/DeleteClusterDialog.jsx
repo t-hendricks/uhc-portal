@@ -98,7 +98,7 @@ class DeleteClusterDialog extends React.Component {
               type="text"
               value={clusterNameInput}
               placeholder="Enter name"
-              onChange={this.setValue}
+              onChange={(_event, newInput) => this.setValue(newInput)}
               aria-label="cluster name"
             />
           </Form>

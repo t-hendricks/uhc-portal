@@ -33,7 +33,7 @@ const SpotInstancesSection = ({ isEdit }: SpotInstancesSectionProps) => {
             {...onDemandTypeField}
             isChecked={onDemandTypeField.checked}
             id="spotinstance-ondemand"
-            onChange={(_, e) => onDemandTypeField.onChange(e)}
+            onChange={(e, _) => onDemandTypeField.onChange(e)}
             label="Use On-Demand instance price"
             description="The maximum price defaults to charge up to the On-Demand Instance price."
             isDisabled={isEdit}
@@ -41,7 +41,7 @@ const SpotInstancesSection = ({ isEdit }: SpotInstancesSectionProps) => {
           <Radio
             {...maximumTypeField}
             isChecked={maximumTypeField.checked}
-            onChange={(_, e) => maximumTypeField.onChange(e)}
+            onChange={(e, _) => maximumTypeField.onChange(e)}
             id="spotinstance-max"
             label={
               <>

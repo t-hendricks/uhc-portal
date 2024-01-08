@@ -14,10 +14,9 @@ function actionResolver(subscription) {
   const getKey = (item) => `${subscription.id}.menu.${item}`;
   const consoleURL = subscription.console_url;
   const adminConsoleEnabled = {
-    component: 'a',
     title: 'Open console',
-    href: consoleURL,
-    target: '_blank',
+    to: consoleURL,
+    isExternalLink: true,
     rel: 'noopener noreferrer',
     key: getKey('adminconsole'),
   };

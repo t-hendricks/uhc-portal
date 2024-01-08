@@ -19,6 +19,7 @@ import PopoverHint from '~/components/common/PopoverHint';
 import Instruction from '~/components/common/Instruction';
 import Instructions from '~/components/common/Instructions';
 import FuzzySelect from '~/components/common/FuzzySelect';
+import { FormGroupHelperText } from '~/components/common/FormGroupHelperText';
 import validators from '../../../../../common/validators';
 import links from '../../../../../common/installLinks.mjs';
 import ReduxVerticalFormGroup from '../../../../common/ReduxFormComponents/ReduxVerticalFormGroup';
@@ -29,7 +30,7 @@ function CreateOIDCProviderInstructions() {
       aria-label="oidc-creation-instructions"
       position="top"
       maxWidth="22rem"
-      style={{ '--pf-c-popover--c-button--sibling--PaddingRight': '2rem' }}
+      style={{ '--pf-v5-c-popover--c-button--sibling--PaddingRight': '2rem' }}
       bodyContent={
         <TextContent>
           <p>
@@ -119,7 +120,7 @@ function CustomerOIDCConfiguration({
     <>
       <Instructions wide>
         <Instruction simple>
-          <TextContent className="pf-u-pb-md">
+          <TextContent className="pf-v5-u-pb-md">
             <Text component={TextVariants.p}>
               Select your existing OIDC config id or <CreateOIDCProviderInstructions />.
             </Text>
@@ -137,8 +138,6 @@ function CustomerOIDCConfiguration({
                 }
               />
             }
-            validated={error ? 'error' : undefined}
-            helperTextInvalid={touched && error}
             isRequired
           >
             <Flex>
@@ -148,7 +147,7 @@ function CustomerOIDCConfiguration({
                   label="Config ID"
                   aria-label="Config ID"
                   isOpen={isDropdownOpen}
-                  onToggle={setIsDropdownOpen}
+                  onToggle={(_ev, isOpen) => setIsDropdownOpen(isOpen)}
                   onSelect={onSelect}
                   selected={byoOidcConfigID}
                   selectionData={selectionData}
@@ -162,7 +161,7 @@ function CustomerOIDCConfiguration({
               <FlexItem>
                 <Button
                   variant="secondary"
-                  className="pf-u-mt-md"
+                  className="pf-v5-u-mt-md"
                   onClick={refreshOidcConfigs}
                   isLoading={isLoading}
                   isDisabled={isLoading}
@@ -171,11 +170,13 @@ function CustomerOIDCConfiguration({
                 </Button>
               </FlexItem>
             </Flex>
+
+            <FormGroupHelperText touched={touched} error={error} />
           </FormGroup>
         </Instruction>
 
         <Instruction simple>
-          <TextContent className="pf-u-pb-md">
+          <TextContent className="pf-v5-u-pb-md">
             <Text component={TextVariants.p}>Enter an Operator role prefix.</Text>
           </TextContent>
 
@@ -206,7 +207,7 @@ function CustomerOIDCConfiguration({
         </Instruction>
 
         <Instruction simple>
-          <TextContent className="pf-u-pb-md">
+          <TextContent className="pf-v5-u-pb-md">
             <Text component={TextVariants.p}>Run the command to create a new Operator Roles.</Text>
           </TextContent>
           {operatorRolesCliCommand ? (

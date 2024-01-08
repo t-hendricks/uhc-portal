@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Button, Form, FormGroup } from '@patternfly/react-core';
 
 import { Field } from 'redux-form';
-import { LevelUpAltIcon } from '@patternfly/react-icons';
+import { LevelUpAltIcon } from '@patternfly/react-icons/dist/esm/icons/level-up-alt-icon';
 import Modal from '../../../../../common/Modal/Modal';
 import { getParameterValue, getParameters, quotaCostOptions } from '../AddOnsHelper';
 import {

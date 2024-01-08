@@ -79,7 +79,7 @@ exports[`<CloudRegionComboBox /> when region list needs to be fetched renders co
         role="status"
       >
         <span
-          className="pf-u-screen-reader"
+          className="pf-v5-u-screen-reader"
         >
           Loading...
         </span>
@@ -178,7 +178,6 @@ exports[`<CloudRegionComboBox /> when the region list is available renders corre
     aria-label="Region"
     className="cloud-region-combo-box"
     isDisabled={false}
-    isIconSprite={false}
     isRequired={false}
     onBlur={[Function]}
     onChange={[Function]}
@@ -187,63 +186,90 @@ exports[`<CloudRegionComboBox /> when the region list is available renders corre
     validated="default"
     value="eu-west-1"
   >
-    <select
-      aria-invalid={false}
-      aria-label="Region"
-      className="pf-c-form-control cloud-region-combo-box"
-      data-ouia-component-id="OUIA-Generated-FormSelect-default-1"
-      data-ouia-component-type="PF4/FormSelect"
-      data-ouia-safe={true}
-      disabled={false}
-      onBlur={[Function]}
-      onChange={[Function]}
-      onFocus={[Function]}
-      required={false}
-      value="eu-west-1"
+    <span
+      className="pf-v5-c-form-control cloud-region-combo-box"
     >
-      <FormSelectOption
-        isDisabled={false}
-        key="us-east-1"
-        label="us-east-1, N. Virginia"
-        value="us-east-1"
-      >
-        <option
-          className=""
-          disabled={false}
-          value="us-east-1"
-        >
-          us-east-1, N. Virginia
-        </option>
-      </FormSelectOption>
-      <FormSelectOption
-        isDisabled={false}
-        key="eu-west-1"
-        label="eu-west-1, Ireland"
+      <select
+        aria-invalid={false}
+        aria-label="Region"
+        data-ouia-component-id="OUIA-Generated-FormSelect-default-1"
+        data-ouia-component-type="PF5/FormSelect"
+        data-ouia-safe={true}
+        disabled={false}
+        onBlur={[Function]}
+        onChange={[Function]}
+        onFocus={[Function]}
+        required={false}
         value="eu-west-1"
       >
-        <option
-          className=""
-          disabled={false}
+        <FormSelectOption
+          isDisabled={false}
+          key="us-east-1"
+          label="us-east-1, N. Virginia"
+          value="us-east-1"
+        >
+          <option
+            className=""
+            disabled={false}
+            value="us-east-1"
+          >
+            us-east-1, N. Virginia
+          </option>
+        </FormSelectOption>
+        <FormSelectOption
+          isDisabled={false}
+          key="eu-west-1"
+          label="eu-west-1, Ireland"
           value="eu-west-1"
         >
-          eu-west-1, Ireland
-        </option>
-      </FormSelectOption>
-      <FormSelectOption
-        isDisabled={false}
-        key="single-az-3"
-        label="single-az-3, Antarctica"
-        value="single-az-3"
-      >
-        <option
-          className=""
-          disabled={false}
+          <option
+            className=""
+            disabled={false}
+            value="eu-west-1"
+          >
+            eu-west-1, Ireland
+          </option>
+        </FormSelectOption>
+        <FormSelectOption
+          isDisabled={false}
+          key="single-az-3"
+          label="single-az-3, Antarctica"
           value="single-az-3"
         >
-          single-az-3, Antarctica
-        </option>
-      </FormSelectOption>
-    </select>
+          <option
+            className=""
+            disabled={false}
+            value="single-az-3"
+          >
+            single-az-3, Antarctica
+          </option>
+        </FormSelectOption>
+      </select>
+      <span
+        className="pf-v5-c-form-control__utilities"
+      >
+        <span
+          className="pf-v5-c-form-control__toggle-icon"
+        >
+          <CaretDownIcon>
+            <svg
+              aria-hidden={true}
+              aria-labelledby={null}
+              className="pf-v5-svg"
+              fill="currentColor"
+              height="1em"
+              role="img"
+              viewBox="0 0 320 512"
+              width="1em"
+            >
+              <path
+                d="M31.3 192h257.3c17.8 0 26.7 21.5 14.1 34.1L174.1 354.8c-7.8 7.8-20.5 7.8-28.3 0L17.2 226.1C4.6 213.5 13.5 192 31.3 192z"
+              />
+            </svg>
+          </CaretDownIcon>
+        </span>
+      </span>
+    </span>
   </FormSelect>
 </CloudRegionComboBox>
 `;
@@ -327,7 +353,7 @@ exports[`<CloudRegionComboBox /> when the request is pending renders correctly 1
         role="status"
       >
         <span
-          className="pf-u-screen-reader"
+          className="pf-v5-u-screen-reader"
         >
           Loading...
         </span>
@@ -426,17 +452,18 @@ exports[`<CloudRegionComboBox /> when there was an error renders correctly 1`] =
   >
     <Alert
       className="error-box"
+      data-testid="alert-error"
       isInline={true}
       role="alert"
       title="Error loading region list"
       variant="danger"
     >
       <div
-        aria-label="Danger Alert"
-        className="pf-c-alert pf-m-inline pf-m-danger error-box"
+        className="pf-v5-c-alert pf-m-inline pf-m-danger error-box"
         data-ouia-component-id="OUIA-Generated-Alert-danger-1"
-        data-ouia-component-type="PF4/Alert"
+        data-ouia-component-type="PF5/Alert"
         data-ouia-safe={true}
+        data-testid="alert-error"
         onMouseEnter={[Function]}
         onMouseLeave={[Function]}
         role="alert"
@@ -445,24 +472,16 @@ exports[`<CloudRegionComboBox /> when there was an error renders correctly 1`] =
           variant="danger"
         >
           <div
-            className="pf-c-alert__icon"
+            className="pf-v5-c-alert__icon"
           >
-            <ExclamationCircleIcon
-              color="currentColor"
-              noVerticalAlign={false}
-              size="sm"
-            >
+            <ExclamationCircleIcon>
               <svg
                 aria-hidden={true}
                 aria-labelledby={null}
+                className="pf-v5-svg"
                 fill="currentColor"
                 height="1em"
                 role="img"
-                style={
-                  Object {
-                    "verticalAlign": "-0.125em",
-                  }
-                }
                 viewBox="0 0 512 512"
                 width="1em"
               >
@@ -474,17 +493,17 @@ exports[`<CloudRegionComboBox /> when there was an error renders correctly 1`] =
           </div>
         </AlertIcon>
         <h4
-          className="pf-c-alert__title"
+          className="pf-v5-c-alert__title"
         >
           <span
-            className="pf-u-screen-reader"
+            className="pf-v5-screen-reader"
           >
             Danger alert:
           </span>
           Error loading region list
         </h4>
         <div
-          className="pf-c-alert__description"
+          className="pf-v5-c-alert__description"
         >
           <span>
             This is an error message

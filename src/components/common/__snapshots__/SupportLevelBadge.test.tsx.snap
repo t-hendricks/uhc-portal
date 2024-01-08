@@ -5,7 +5,7 @@ exports[`<SupportLevelBadge> renders for cooperative community badges 1`] = `
   bodyContent={
     <React.Fragment>
       <div
-        className="pf-u-mb-sm"
+        className="pf-v5-u-mb-sm"
       >
         Cooperative Community Support provides assistance to Red Hat customers that have questions
 about community-provided software that is often used with our Red Hat products
@@ -20,14 +20,14 @@ about community-provided software that is often used with our Red Hat products
   position="top"
 >
   <Label
-    className="pf-u-ml-md pf-u-display-inline"
+    className="pf-v5-u-ml-md pf-v5-u-display-inline"
     color="orange"
     icon={
-      <InfoCircleIcon
-        color="var(--pf-c-label__content--Color)"
-        noVerticalAlign={false}
-        size="sm"
-      />
+      <Icon>
+        <InfoCircleIcon
+          color="var(--pf-v5-c-label__content--Color)"
+        />
+      </Icon>
     }
     onClick={[Function]}
     style={
@@ -46,7 +46,7 @@ exports[`<SupportLevelBadge> renders for devPreview badges 1`] = `
   bodyContent={
     <React.Fragment>
       <div
-        className="pf-u-mb-sm"
+        className="pf-v5-u-mb-sm"
       >
         Developer preview features provide early access to upcoming product innovations, enabling
 you to test functionality and provide feedback during the development process.
@@ -61,14 +61,14 @@ you to test functionality and provide feedback during the development process.
   position="top"
 >
   <Label
-    className="pf-u-ml-md pf-u-display-inline"
+    className="pf-v5-u-ml-md pf-v5-u-display-inline"
     color="orange"
     icon={
-      <InfoCircleIcon
-        color="var(--pf-c-label__content--Color)"
-        noVerticalAlign={false}
-        size="sm"
-      />
+      <Icon>
+        <InfoCircleIcon
+          color="var(--pf-v5-c-label__content--Color)"
+        />
+      </Icon>
     }
     onClick={[Function]}
     style={

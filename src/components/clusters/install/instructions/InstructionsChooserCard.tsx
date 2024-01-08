@@ -9,8 +9,8 @@ import {
   List,
   ListItem,
   CardFooter,
+  Icon,
 } from '@patternfly/react-core';
-import spacing from '@patternfly/react-styles/css/utilities/Spacing/spacing';
 import CheckIcon from '@patternfly/react-icons/dist/esm/icons/check-icon';
 import ExternalLink from '~/components/common/ExternalLink';
 
@@ -53,13 +53,17 @@ export const InstructionsChooserCard = ({
       </CardTitle>
       <CardBody id={`${id}-description`}>
         {body}
-        <List isPlain className={`${spacing.mtLg} ${spacing.ml_0} ${spacing.pl_0}`}>
+        <List isPlain className="pf-v5-u-mt-lg pf-v5-u-ml-0 pf-v5-u-pl-0">
           {featureListItems.map((item, index) => (
             <ListItem
               // These can be arbitrary JSX (no easy string key to use) and they will never change order once the page is rendered, so it is safe to use the array index as the key
               // eslint-disable-next-line react/no-array-index-key
               key={index}
-              icon={<CheckIcon color="var(--pf-global--palette--green-400)" size="md" />}
+              icon={
+                <Icon size="md">
+                  <CheckIcon color="var(--pf-v5-global--palette--green-400)" />
+                </Icon>
+              }
             >
               {item}
             </ListItem>

@@ -1,7 +1,13 @@
 import Fuse from 'fuse.js';
 import React, { ReactElement, useCallback, ChangeEvent, useMemo, useRef, useEffect } from 'react';
-import { KeyTypes, Select, SelectGroup, SelectOption, SelectProps } from '@patternfly/react-core';
-import { ErrorCircleOIcon } from '@patternfly/react-icons';
+import { KeyTypes } from '@patternfly/react-core';
+import {
+  Select as SelectDeprecated,
+  SelectGroup as SelectGroupDeprecated,
+  SelectOption as SelectOptionDeprecated,
+  SelectProps as SelectPropsDeprecated,
+} from '@patternfly/react-core/deprecated';
+import { ErrorCircleOIcon } from '@patternfly/react-icons/dist/esm/icons/error-circle-o-icon';
 import { truncateTextWithEllipsis } from '~/common/helpers';
 
 export type FuzzyEntryType = {
@@ -12,7 +18,7 @@ export type FuzzyEntryType = {
   disabled?: boolean;
 };
 export type FuzzyDataType = FuzzyEntryType[] | Record<string, FuzzyEntryType[]>;
-export interface FuzzySelectProps extends Omit<SelectProps, 'isGrouped'> {
+export interface FuzzySelectProps extends Omit<SelectPropsDeprecated, 'isGrouped'> {
   fuzziness?: number;
   selected?: string;
   sortFn?: (a: FuzzyEntryType, b: FuzzyEntryType) => number;
@@ -35,7 +41,7 @@ function FuzzySelect(props: FuzzySelectProps) {
   } = props;
 
   // const [isInnerOpen, setIsInnerOpen] = useState(false);
-  const ref = useRef<Select>(null);
+  const ref = useRef<SelectDeprecated>(null);
   const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -45,14 +51,16 @@ function FuzzySelect(props: FuzzySelectProps) {
         // unfortunately it also captures left/right which means you can't move the caret around your filter input text
         // this code grabs left/right arrows before they bubble up to the input and PF kills them
         // fix request: https://github.com/patternfly/patternfly-react/issues/9404
-        const input = containerRef.current.getElementsByClassName(
-          'pf-c-form-control pf-m-search',
-        )?.[0] as HTMLInputElement;
-        input.onkeydown = (e) => {
-          if (e.key === KeyTypes.ArrowLeft || e.key === KeyTypes.ArrowRight) {
-            e.stopPropagation();
-          }
-        };
+        const input = containerRef.current.querySelector(
+          '.pf-v5-c-select__menu-search input',
+        ) as HTMLInputElement;
+        if (input) {
+          input.onkeydown = (e) => {
+            if (e.key === KeyTypes.ArrowLeft || e.key === KeyTypes.ArrowRight) {
+              e.stopPropagation();
+            }
+          };
+        }
       }
     } else if (ref.current) {
       ref.current?.onClose();
@@ -78,30 +86,30 @@ function FuzzySelect(props: FuzzySelectProps) {
   const selectOptions = useMemo<ReactElement[]>(() => {
     if (Array.isArray(selectionData)) {
       return selectionData.sort(sortFn).map(({ key, value, description, disabled }) => (
-        <SelectOption
-          className="pf-c-dropdown__menu-item"
+        <SelectOptionDeprecated
+          className="pf-v5-c-dropdown__menu-item"
           key={key}
           value={value || key}
           description={description}
           isDisabled={disabled}
         >
           {key}
-        </SelectOption>
+        </SelectOptionDeprecated>
       ));
     }
     return Object.entries(selectionData || {}).map(([group, list]) => (
-      <SelectGroup label={group} key={group}>
+      <SelectGroupDeprecated label={group} key={group}>
         {list.map(({ key, value, description, disabled }) => (
-          <SelectOption
+          <SelectOptionDeprecated
             value={value || key}
             key={key}
             description={description}
             isDisabled={disabled}
           >
             {key}
-          </SelectOption>
+          </SelectOptionDeprecated>
         ))}
-      </SelectGroup>
+      </SelectGroupDeprecated>
     ));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectionData]);
@@ -116,19 +124,19 @@ function FuzzySelect(props: FuzzySelectProps) {
         filterValidate.pattern.lastIndex = 0;
         if (!filterValidate.pattern.test(text)) {
           return [
-            <SelectOption
+            <SelectOptionDeprecated
               isDisabled
               key={0}
-              style={{ color: 'var(--pf-global--danger-color--100)' }}
+              style={{ color: 'var(--pf-v5-global--danger-color--100)' }}
               isNoResultsOption
             >
               <div>
-                <span className="pf-u-mr-sm">
+                <span className="pf-v5-u-mr-sm">
                   <ErrorCircleOIcon />
                 </span>
                 <span>{filterValidate.message}</span>
               </div>
-            </SelectOption>,
+            </SelectOptionDeprecated>,
           ];
         }
       }
@@ -193,30 +201,30 @@ function FuzzySelect(props: FuzzySelectProps) {
       // create filtered select options
       if (matchedList.length) {
         return matchedList.map((entry) => (
-          <SelectOption
-            className="pf-c-dropdown__menu-item"
+          <SelectOptionDeprecated
+            className="pf-v5-c-dropdown__menu-item"
             key={Object.keys(entry)[0]}
             value={valueMap[Object.keys(entry)[0]]}
           >
             {Object.values(entry)}
-          </SelectOption>
+          </SelectOptionDeprecated>
         ));
       }
       // create filtered grouped select options
       return Object.entries(matchedMap)
         .sort(([groupa], [groupb]) => groupOrder.indexOf(groupa) - groupOrder.indexOf(groupb))
         .map(([groupKey, list]) => (
-          <SelectGroup label={groupKey} key={groupKey}>
+          <SelectGroupDeprecated label={groupKey} key={groupKey}>
             {list.map((entry) => (
-              <SelectOption
-                className="pf-c-dropdown__menu-item"
+              <SelectOptionDeprecated
+                className="pf-v5-c-dropdown__menu-item"
                 key={Object.keys(entry)[0]}
                 value={valueMap[Object.keys(entry)[0]]}
               >
                 {Object.values(entry)}
-              </SelectOption>
+              </SelectOptionDeprecated>
             ))}
-          </SelectGroup>
+          </SelectGroupDeprecated>
         ));
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -225,7 +233,7 @@ function FuzzySelect(props: FuzzySelectProps) {
 
   return (
     <div ref={containerRef}>
-      <Select
+      <SelectDeprecated
         isOpen={isOpen}
         onFilter={onFilter}
         selections={truncateTextWithEllipsis(selected, truncation)}
@@ -237,7 +245,7 @@ function FuzzySelect(props: FuzzySelectProps) {
         {...rest}
       >
         {selectOptions}
-      </Select>
+      </SelectDeprecated>
     </div>
   );
 }

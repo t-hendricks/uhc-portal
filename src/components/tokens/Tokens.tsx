@@ -122,7 +122,7 @@ const Tokens = (props: Props) => {
   const pageTitle = 'OpenShift Cluster Manager API Token';
   return (
     <AppPage title="API Token | OpenShift Cluster Manager">
-      <PageHeader>
+      <PageHeader className="pf-v5-u-mb-md">
         <Breadcrumbs path={[{ label: 'Downloads', path: '/downloads' }, { label: pageTitle }]} />
         <PageHeaderTitle title={pageTitle} />
       </PageHeader>
@@ -140,7 +140,7 @@ const Tokens = (props: Props) => {
                 {show || token ? (
                   <>
                     <TokenBox token={token} />
-                    <TextContent className="pf-u-mt-lg">
+                    <TextContent className="pf-v5-u-mt-lg">
                       <Title headingLevel="h3">Using your token in the command line</Title>
                       <List component="ol">
                         <ListItem>
@@ -184,7 +184,7 @@ const Tokens = (props: Props) => {
                   <Link to={showPath}>
                     <Button
                       variant="primary"
-                      className="pf-u-mt-md"
+                      className="pf-v5-u-mt-md"
                       data-testid="load-token-btn"
                       onClick={() =>
                         loadOfflineToken((tokenOrError, errorReason) => {

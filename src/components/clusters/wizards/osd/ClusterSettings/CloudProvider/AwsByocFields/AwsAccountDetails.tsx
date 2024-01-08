@@ -52,7 +52,7 @@ export const AwsAccountDetails = () => {
 
         <GridItem>
           <Alert
-            className="bottom-alert pf-u-mt-0"
+            className="bottom-alert pf-v5-u-mt-0"
             variant="warning"
             title={billingModelConstants.awsCredentialsWarning}
             isInline

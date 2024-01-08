@@ -46,9 +46,9 @@ describe('<HibernateClusterModal />', () => {
       hibernateClusterResponse: { error: true, errorMessage: 'this is an error' },
     };
     render(<HibernateClusterModal {...newProps} />);
-    expect(screen.getByRole('alert', { name: 'Danger Alert' })).toBeInTheDocument();
+    expect(screen.getByTestId('alert-error')).toBeInTheDocument();
     expect(
-      within(screen.getByRole('alert', { name: 'Danger Alert' })).getByText('this is an error'),
+      within(screen.getByTestId('alert-error')).getByText('this is an error'),
     ).toBeInTheDocument();
   });
 

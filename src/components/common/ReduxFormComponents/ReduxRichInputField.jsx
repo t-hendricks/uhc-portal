@@ -8,14 +8,14 @@ import {
   HelperText,
   HelperTextItem,
   Button,
+  InputGroupItem,
 } from '@patternfly/react-core';
-import {
-  SpinnerIcon,
-  InfoCircleIcon,
-  CheckCircleIcon,
-  ExclamationCircleIcon,
-} from '@patternfly/react-icons';
-
+import { SpinnerIcon } from '@patternfly/react-icons/dist/esm/icons/spinner-icon';
+import { InfoCircleIcon } from '@patternfly/react-icons/dist/esm/icons/info-circle-icon';
+import { CheckCircleIcon } from '@patternfly/react-icons/dist/esm/icons/check-circle-icon';
+import { ExclamationCircleIcon } from '@patternfly/react-icons/dist/esm/icons/exclamation-circle-icon';
+import IconStatusColor from '@patternfly/react-tokens/dist/esm/c_form_control__icon_m_status_Color';
+import { FormGroupHelperText } from '~/components/common/FormGroupHelperText';
 import PopoverHint from '../PopoverHint';
 
 import './ReduxRichInputField.scss';
@@ -39,7 +39,7 @@ const ValidationItem = ({ text, touched, isValid, isValidating, isInitialized })
 
   return (
     <HelperTextItem variant={variant} hasIcon isDynamic component="li" key={text}>
-      <span className="pf-u-screen-reader">{iconAlt}</span>
+      <span className="pf-v5-u-screen-reader">{iconAlt}</span>
       {text}
     </HelperTextItem>
   );
@@ -241,19 +241,17 @@ const ReduxRichInputField = (props) => {
   return (
     <FormGroup
       fieldId={inputName}
-      validated={isValid ? 'default' : 'error'}
       label={label}
       isRequired={isRequired}
       labelIcon={extendedHelpText && <PopoverHint hint={extendedHelpText} />}
       className={`${formGroupClass || ''}`}
-      helperText={helpText}
-      helperTextInvalid={helpText}
     >
       <Popover
         aria-label={helpTitle}
         headerContent={helpTitle}
         isVisible={showPopover}
         position="top-end"
+        withFocusTrap={false}
         shouldClose={() => {
           if (isFocused) {
             setIsFocused(false);
@@ -280,53 +278,61 @@ const ReduxRichInputField = (props) => {
         footerContent={helpExample}
       >
         <InputGroup>
-          <TextInput
-            value={inputValue}
-            isRequired={isRequired}
-            id={inputName}
-            name={inputName}
-            validated={isValid ? 'default' : 'error'}
-            isDisabled={disabled}
-            type={type}
-            autocomplete="off"
-            aria-invalid={!isValid}
-            onBlur={(e) => {
-              setIsFocused(false);
-              setShowPopover(false);
-              input.onBlur(e);
-              setTouched(true);
-            }}
-            onClick={() => {
-              setIsFocused(true);
-              setShowPopover(true);
-            }}
-            onFocus={() => {
-              setIsFocused(true);
-              setShowPopover(true);
-            }}
-            onChange={(val) => {
-              inputOnChange(val);
-              if (!touched && val?.length) {
+          <InputGroupItem isFill>
+            <TextInput
+              style={{ [IconStatusColor.name]: 'transparent' }}
+              value={inputValue}
+              isRequired={isRequired}
+              id={inputName}
+              name={inputName}
+              validated={isValid ? 'default' : 'error'}
+              isDisabled={disabled}
+              type={type}
+              autocomplete="off"
+              aria-invalid={!isValid}
+              onBlur={(e) => {
+                setIsFocused(false);
+                setShowPopover(false);
+                input.onBlur(e);
                 setTouched(true);
-              }
-            }}
-            ref={textInputRef}
-            aria-describedby={`redux-rich-input-popover-${inputName}`}
-            className={`${inputClassName} redux-rich-input-field`}
-          />
-          <ValidationIconButton
-            touched={touched}
-            isValid={isValid}
-            hasFailures={hasFailures}
-            isValidating={isValidating}
-            onClick={(e) => {
-              e.stopPropagation();
-              setShowPopover(true);
-              textInputRef.current.focus();
-            }}
-          />
+              }}
+              onClick={() => {
+                setIsFocused(true);
+                setShowPopover(true);
+              }}
+              onFocus={() => {
+                setIsFocused(true);
+                setShowPopover(true);
+              }}
+              onChange={(_event, val) => {
+                inputOnChange(val);
+                if (!touched && val?.length) {
+                  setTouched(true);
+                }
+              }}
+              ref={textInputRef}
+              aria-describedby={`redux-rich-input-popover-${inputName}`}
+              className={`${inputClassName} redux-rich-input-field`}
+            />
+          </InputGroupItem>
+          <InputGroupItem>
+            <ValidationIconButton
+              touched={touched}
+              isValid={isValid}
+              hasFailures={hasFailures}
+              isValidating={isValidating}
+              onClick={(e) => {
+                e.stopPropagation();
+                setShowPopover(true);
+                textInputRef.current.focus();
+              }}
+            />
+          </InputGroupItem>
         </InputGroup>
       </Popover>
+      <FormGroupHelperText touched={touched} error={error}>
+        {helpText}
+      </FormGroupHelperText>
     </FormGroup>
   );
 };

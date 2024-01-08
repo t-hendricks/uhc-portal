@@ -4,13 +4,15 @@ import {
   Card,
   CardBody,
   EmptyState,
-  Title,
   EmptyStateIcon,
   EmptyStateVariant,
   EmptyStateBody,
-  EmptyStateSecondaryActions,
+  EmptyStateActions,
+  EmptyStateHeader,
+  EmptyStateFooter,
 } from '@patternfly/react-core';
-import { AsleepIcon, InProgressIcon } from '@patternfly/react-icons';
+import { AsleepIcon } from '@patternfly/react-icons/dist/esm/icons/asleep-icon';
+import { InProgressIcon } from '@patternfly/react-icons/dist/esm/icons/in-progress-icon';
 
 import clusterStates from '../clusterStates';
 import modals from '../../../common/Modal/modals';
@@ -63,23 +65,26 @@ function HibernatingClusterCard({ cluster, openModal }) {
   return (
     <Card>
       <CardBody>
-        <EmptyState variant={EmptyStateVariant.small}>
-          <EmptyStateIcon icon={icon} />
-          <Title headingLevel="h4" size="lg">
-            {title}
-          </Title>
+        <EmptyState variant={EmptyStateVariant.sm}>
+          <EmptyStateHeader
+            titleText={title}
+            icon={<EmptyStateIcon icon={icon} />}
+            headingLevel="h4"
+          />
           <EmptyStateBody>{body}</EmptyStateBody>
-          {showButton && (
-            <EmptyStateSecondaryActions>
-              <ButtonWithTooltip
-                variant="link"
-                disableReason={buttonDisableReason}
-                onClick={openResumeClusterModal}
-              >
-                Resume from Hibernation
-              </ButtonWithTooltip>
-            </EmptyStateSecondaryActions>
-          )}
+          <EmptyStateFooter>
+            <EmptyStateActions>
+              {showButton && (
+                <ButtonWithTooltip
+                  variant="link"
+                  disableReason={buttonDisableReason}
+                  onClick={openResumeClusterModal}
+                >
+                  Resume from Hibernation
+                </ButtonWithTooltip>
+              )}
+            </EmptyStateActions>
+          </EmptyStateFooter>
         </EmptyState>
       </CardBody>
     </Card>

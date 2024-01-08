@@ -1,7 +1,7 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import { Field } from 'formik';
-import { CheckboxField } from 'formik-pf';
+import { CheckboxField } from '~/components/clusters/wizards/form/CheckboxField';
 
 import {
   Form,
@@ -141,7 +141,7 @@ export const Details = () => {
     setFieldValue(FieldId.SelectedVpc, '');
   };
 
-  const handleMultiAzChange = (value: string) => {
+  const handleMultiAzChange = (_event: React.FormEvent<HTMLDivElement>, value: string) => {
     const isMultiAz = value === 'true';
 
     // When multiAz changes, update the node count
@@ -338,7 +338,7 @@ export const Details = () => {
             <Title headingLevel="h4">Monitoring</Title>
           </GridItem>
 
-          <Split hasGutter className="pf-u-mb-0">
+          <Split hasGutter className="pf-v5-u-mb-0">
             <SplitItem>
               <CheckboxField
                 name={FieldId.EnableUserWorkloadMonitoring}
@@ -356,7 +356,7 @@ export const Details = () => {
               />
             </SplitItem>
           </Split>
-          <div className="pf-u-font-size-sm pf-u-color-200 pf-u-ml-lg pf-u-mt-xs">
+          <div className="pf-v5-u-font-size-sm pf-v5-u-color-200 pf-v5-u-ml-lg pf-v5-u-mt-xs">
             {constants.enableUserWorkloadMonitoringHint}
           </div>
           <ExpandableSection
@@ -396,20 +396,20 @@ export const Details = () => {
                       />
                     </SplitItem>
                   </Split>
-                  <div className="pf-u-font-size-sm pf-u-color-200 pf-u-ml-lg pf-u-mt-xs">
+                  <div className="pf-v5-u-font-size-sm pf-v5-u-color-200 pf-v5-u-ml-lg pf-v5-u-mt-xs">
                     Add more encryption for OpenShift and Kubernetes API resources.
                   </div>
                 </GridItem>
               </FormGroup>
 
               {etcdEncryption && (
-                <FormGroup label="FIPS cryptography" className="pf-u-mt-md">
+                <FormGroup label="FIPS cryptography" className="pf-v5-u-mt-md">
                   <GridItem>
                     <CheckboxField
                       name={FieldId.FipsCryptography}
                       label="Enable FIPS cryptography"
                     />
-                    <div className="pf-u-font-size-sm pf-u-color-200 pf-u-ml-lg pf-u-mt-xs">
+                    <div className="pf-v5-u-font-size-sm pf-v5-u-color-200 pf-v5-u-ml-lg pf-v5-u-mt-xs">
                       Install a cluster that uses FIPS Validated / Modules in Process cryptographic
                       libraries on the x86_64 architecture.
                     </div>

@@ -3,7 +3,8 @@ import { PropTypes } from 'prop-types';
 import { Field } from 'redux-form';
 import pullAt from 'lodash/pullAt';
 import { Button, GridItem } from '@patternfly/react-core';
-import { PlusCircleIcon, MinusCircleIcon } from '@patternfly/react-icons';
+import { PlusCircleIcon } from '@patternfly/react-icons/dist/esm/icons/plus-circle-icon';
+import { MinusCircleIcon } from '@patternfly/react-icons/dist/esm/icons/minus-circle-icon';
 import ReduxVerticalFormGroup from './ReduxVerticalFormGroup';
 import { getRandomID } from '../../../common/helpers';
 import ButtonWithTooltip from '../ButtonWithTooltip';
@@ -12,12 +13,12 @@ import './RenderArrayFields.scss';
 
 const LabelGridItem = ({ fieldSpan, label, isRequired, helpText }) => (
   <GridItem className="field-array-title" span={fieldSpan}>
-    <p className="pf-c-form__label-text" id="field-array-label">
+    <p className="pf-v5-c-form__label-text" id="field-array-label">
       {label}
-      {isRequired ? <span className="pf-c-form__label-required">*</span> : null}
+      {isRequired ? <span className="pf-v5-c-form__label-required">*</span> : null}
     </p>
     {helpText ? (
-      <p className="pf-c-form__helper-text" id="field-array-help-text">
+      <p className="pf-v5-c-form__helper-text" id="field-array-help-text">
         {helpText}
       </p>
     ) : null}
@@ -57,7 +58,7 @@ AddMoreButtonGridItem.propTypes = {
 const FieldArrayErrorGridItem = ({ isLast, errorMessage, touched, isGroupError }) => {
   if (errorMessage && isLast && (touched || isGroupError)) {
     return (
-      <GridItem className="field-grid-item pf-c-form__helper-text pf-m-error">
+      <GridItem className="field-grid-item pf-v5-c-form__helper-text pf-m-error">
         {errorMessage}
       </GridItem>
     );

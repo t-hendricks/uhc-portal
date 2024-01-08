@@ -1,12 +1,10 @@
 import React from 'react';
 
 import { Button } from '@patternfly/react-core';
-import {
-  CheckCircleIcon,
-  ExclamationCircleIcon,
-  InfoCircleIcon,
-  SpinnerIcon,
-} from '@patternfly/react-icons';
+import { CheckCircleIcon } from '@patternfly/react-icons/dist/esm/icons/check-circle-icon';
+import { ExclamationCircleIcon } from '@patternfly/react-icons/dist/esm/icons/exclamation-circle-icon';
+import { InfoCircleIcon } from '@patternfly/react-icons/dist/esm/icons/info-circle-icon';
+import { SpinnerIcon } from '@patternfly/react-icons/dist/esm/icons/spinner-icon';
 
 import './ValidationIconButton.scss';
 

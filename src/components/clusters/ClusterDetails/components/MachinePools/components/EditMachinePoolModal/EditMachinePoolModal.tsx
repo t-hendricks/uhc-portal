@@ -196,7 +196,7 @@ const EditMachinePoolModal = ({
                   }
                   onClick={submitForm}
                   isLoading={isSubmitting}
-                  className="pf-u-mr-md"
+                  className="pf-v5-u-mr-md"
                   data-testid="submit-btn"
                 >
                   {isEdit ? 'Save' : 'Add machine pool'}

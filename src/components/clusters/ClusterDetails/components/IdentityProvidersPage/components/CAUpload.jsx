@@ -1,12 +1,27 @@
 import React from 'react';
+
 import PropTypes from 'prop-types';
-import { FormGroup, TextInput, InputGroup, TextArea, Button } from '@patternfly/react-core';
+import {
+  FormGroup,
+  TextInput,
+  InputGroup,
+  TextArea,
+  Button,
+  InputGroupItem,
+} from '@patternfly/react-core';
+
+import { FormGroupHelperText } from '~/components/common/FormGroupHelperText';
 import PopoverHint from '../../../../../common/PopoverHint';
+
 import './CAUpload.scss';
 
 export const MAX_FILE_SIZE = 4000000; // 4MB
-export const ACCEPT =
-  '.pem,.crt,.ca,.cert,application/x-pem-file,application/x-x509-ca-cert,text/plain';
+
+export const ACCEPT = {
+  'text/plain': ['.pem', '.crt', '.ca', '.cert'],
+  'application/x-pem-file': ['.pem'],
+  'application/x-x509-ca-cert': ['.crt', '.ca', '.cert'],
+};
 
 // To be used inside redux-form Field component.
 class CAUpload extends React.Component {
@@ -63,33 +78,29 @@ class CAUpload extends React.Component {
     const { label, helpText, extendedHelpText, isRequired, input, isDisabled } = this.props;
     const { errorMessage, fileName, certValue, showCAText } = this.state;
 
-    const baseButtonClass = 'pf-c-button pf-m-tertiary co-btn-file';
+    const baseButtonClass = 'pf-v5-c-button pf-m-tertiary co-btn-file';
     const buttonClass = isDisabled ? `${baseButtonClass} pf-m-disabled` : baseButtonClass;
     const shouldShowCAText = !isDisabled && certValue !== '' && showCAText;
 
     return (
-      <FormGroup
-        className="ca-upload"
-        fieldId={input.name}
-        validated={!errorMessage ? 'default' : 'error'}
-        label={label}
-        helperText={helpText}
-        helperTextInvalid={errorMessage}
-        isRequired={isRequired}
-      >
+      <FormGroup className="ca-upload" fieldId={input.name} label={label} isRequired={isRequired}>
         {extendedHelpText && <PopoverHint hint={extendedHelpText} />}
         <InputGroup>
-          <TextInput
-            value={fileName}
-            isRequired={isRequired}
-            id={input.name}
-            name={input.name}
-            isReadOnly
-          />
-          <span className={buttonClass}>
-            <input type="file" onChange={this.fileUpload} disabled={isDisabled} accept={ACCEPT} />
-            Browse&hellip;
-          </span>
+          <InputGroupItem isFill>
+            <TextInput
+              value={fileName}
+              isRequired={isRequired}
+              id={input.name}
+              name={input.name}
+              readOnlyVariant="default"
+            />
+          </InputGroupItem>
+          <InputGroupItem>
+            <span className={buttonClass}>
+              <input type="file" onChange={this.fileUpload} disabled={isDisabled} accept={ACCEPT} />
+              Browse&hellip;
+            </span>
+          </InputGroupItem>
         </InputGroup>
 
         {shouldShowCAText ? (
@@ -102,7 +113,7 @@ class CAUpload extends React.Component {
               value={certValue}
               id={`${input.name}_text`}
               name={`${input.name}_text`}
-              onChange={this.updateCertificateValue}
+              onChange={(_event, value) => this.updateCertificateValue(value)}
               className="ca-textarea"
             />
           </>
@@ -117,6 +128,10 @@ class CAUpload extends React.Component {
             </Button>
           </>
         )}
+
+        <FormGroupHelperText touched error={errorMessage}>
+          {helpText}
+        </FormGroupHelperText>
       </FormGroup>
     );
   }

@@ -1,14 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-import {
-  Card,
-  CardBody,
-  CardFooter,
-  CardHeader,
-  CardHeaderMain,
-  CardTitle,
-} from '@patternfly/react-core';
+import { Card, CardBody, CardFooter, CardHeader, CardTitle } from '@patternfly/react-core';
 
 import AddOnStateLabel from '../AddOnStateLabel';
 
@@ -28,8 +21,7 @@ class AddOnsCard extends Component {
 
     return (
       <Card
-        isHoverable
-        isSelectable
+        isSelectableRaised
         isSelected={activeCard === addOn.id}
         key={addOn.id}
         ouiaId={`card-addon-${addOn.id}`}
@@ -37,9 +29,7 @@ class AddOnsCard extends Component {
         className="ocm-c-addons__card"
       >
         <CardHeader className="ocm-c-addons__card--header">
-          <CardHeaderMain>
-            {addOn.icon && <img alt={addOn.name} src={`data:image/png;base64,${addOn.icon}`} />}
-          </CardHeaderMain>
+          {addOn.icon && <img alt={addOn.name} src={`data:image/png;base64,${addOn.icon}`} />}
         </CardHeader>
         <CardTitle>{addOn.name}</CardTitle>
         <CardBody className="ocm-c-addons__card--body">

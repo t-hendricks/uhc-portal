@@ -48,7 +48,7 @@ export const ClusterUpdates = () => {
     },
   ];
 
-  const onUpgradePolicyChange = (value: string) => {
+  const onUpgradePolicyChange = (_event: React.FormEvent<HTMLDivElement>, value: string) => {
     if (value === UpgradePolicyType.Manual) {
       setFieldValue(
         FieldId.AutomaticUpgradeSchedule,
@@ -62,7 +62,7 @@ export const ClusterUpdates = () => {
       <GridItem>
         <Title headingLevel="h3">Cluster update strategy</Title>
 
-        <Text component={TextVariants.p} className="pf-u-mt-sm">
+        <Text component={TextVariants.p} className="pf-v5-u-mt-sm">
           In the event of{' '}
           <ExternalLink href="https://access.redhat.com/security/updates/classification/#critical">
             Critical security concerns
@@ -91,7 +91,7 @@ export const ClusterUpdates = () => {
                   onChange: (value: string) =>
                     setFieldValue(FieldId.AutomaticUpgradeSchedule, value),
                 }}
-                className="pf-u-mt-md"
+                className="pf-v5-u-mt-md"
               />
             )}
           </GridItem>

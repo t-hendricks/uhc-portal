@@ -5,7 +5,7 @@ exports[`<VersionCard> should render correctly when recommended 1`] = `
   className="version-card"
   id="4.5.20"
   isCompact={true}
-  isSelectable={true}
+  isSelectableRaised={true}
   onClick={[MockFunction]}
   onKeyDown={[MockFunction]}
 >
@@ -21,13 +21,7 @@ exports[`<VersionCard> should render correctly when recommended 1`] = `
       <SplitItem>
         <Label
           color="blue"
-          icon={
-            <StarIcon
-              color="currentColor"
-              noVerticalAlign={false}
-              size="sm"
-            />
-          }
+          icon={<StarIcon />}
         >
           Recommended
         </Label>
@@ -57,7 +51,7 @@ exports[`<VersionCard> should render correctly when selected & not recommended 1
   className="version-card"
   id="4.5.16"
   isCompact={true}
-  isSelectable={true}
+  isSelectableRaised={true}
   isSelected={true}
   onClick={[MockFunction]}
   onKeyDown={[MockFunction]}
@@ -96,7 +90,7 @@ exports[`<VersionCard> should render tooltip when has unmet cluster acknowledgem
   className="version-card"
   id="4.5.20"
   isCompact={true}
-  isSelectable={true}
+  isSelectableRaised={true}
   onClick={[MockFunction]}
   onKeyDown={[MockFunction]}
 >
@@ -112,11 +106,7 @@ exports[`<VersionCard> should render tooltip when has unmet cluster acknowledgem
             isInline={true}
             variant="link"
           >
-            <InfoCircleIcon
-              color="currentColor"
-              noVerticalAlign={false}
-              size="sm"
-            />
+            <InfoCircleIcon />
           </Button>
         </Tooltip>
       </SplitItem>
@@ -126,13 +116,7 @@ exports[`<VersionCard> should render tooltip when has unmet cluster acknowledgem
       <SplitItem>
         <Label
           color="blue"
-          icon={
-            <StarIcon
-              color="currentColor"
-              noVerticalAlign={false}
-              size="sm"
-            />
-          }
+          icon={<StarIcon />}
         >
           Recommended
         </Label>

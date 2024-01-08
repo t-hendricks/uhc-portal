@@ -96,7 +96,8 @@ const UpdateAllMachinePools = ({
           isExpandable
           isInline
           role="alert"
-          className="pf-u-mt-md"
+          className="pf-v5-u-mt-md"
+          data-testid="alert-danger"
         >
           {errors.map((error, index) => (
             // There isn't another accessible unique key
@@ -106,19 +107,20 @@ const UpdateAllMachinePools = ({
         </Alert>
       ) : null}
       <Alert
-        className={goToMachinePoolTab ? 'pf-u-mb-lg' : 'pf-u-mt-lg'}
+        className={goToMachinePoolTab ? 'pf-v5-u-mb-lg' : 'pf-v5-u-mt-lg'}
         isExpandable
         isInline
         role="alert"
         variant={AlertVariant.warning}
         title="Update available for Machine pools"
+        data-testid="alert-warning"
         actionLinks={
           <>
             {pending && !goToMachinePoolTab ? (
               <Spinner size="sm" aria-label="Updating machine pools" />
             ) : null}
             {!pending && !goToMachinePoolTab ? (
-              <AlertActionLink onClick={() => updateNodePools()}>
+              <AlertActionLink onClick={() => updateNodePools()} data-testid="btn-update-all">
                 Update all Machine pools now
               </AlertActionLink>
             ) : null}

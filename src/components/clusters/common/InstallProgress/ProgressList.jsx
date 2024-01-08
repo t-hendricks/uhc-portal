@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { ProgressStepper, ProgressStep, Spinner } from '@patternfly/react-core';
-import UnknownIcon from '@patternfly/react-icons/dist/js/icons/unknown-icon';
+import UnknownIcon from '@patternfly/react-icons/dist/esm/icons/unknown-icon';
 import { InflightCheckState } from '~/types/clusters_mgmt.v1';
 import './ProgressList.scss';
 import ActionRequiredLink from './ActionRequiredLink';

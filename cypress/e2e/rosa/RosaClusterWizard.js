@@ -15,7 +15,7 @@ const interceptAndReturnMockARNs = (mockFile) =>
 
 describe.skip('Rosa cluster tests', { tags: ['ci'] }, () => {
   before(() => {
-    cy.visit('/');
+    cy.visit('/', { retryOnNetworkFailure: true });
     Login.isLoginPageUrl();
     Login.login();
 

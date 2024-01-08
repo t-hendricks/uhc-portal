@@ -12,7 +12,7 @@ const Instructions = ({ children, wide }: Props) => (
   <TextContent className="ocm-instructions">
     <TextList
       component={TextListVariants.ol}
-      className={`ocm-instructions__list ${wide ? 'pf-u-max-width' : ''}`}
+      className={`ocm-instructions__list ${wide ? 'pf-v5-u-max-width' : ''}`}
     >
       {children}
     </TextList>

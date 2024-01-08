@@ -425,7 +425,7 @@ describe('<VersionSelection />', () => {
 
       // Assert
       expect(
-        within(screen.getByRole('alert')).getByText(/Error getting cluster versions/),
+        within(screen.getByTestId('alert-error')).getByText(/Error getting cluster versions/),
       ).toBeInTheDocument();
       expect(screen.getByText('This is a custom error message')).toBeInTheDocument();
       expect(screen.queryByLabelText(componentText.BUTTON.label)).not.toBeInTheDocument();

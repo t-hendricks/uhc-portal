@@ -80,13 +80,13 @@ export const MachinePool = () => {
   const nodeLabelsExpandableSection = (
     <ExpandableSection
       toggleText="Add node labels"
-      className="pf-u-mt-md"
-      onToggle={(isExpanded) => setIsNodeLabelsExpanded(isExpanded)}
+      className="pf-v5-u-mt-md"
+      onToggle={(_event, isExpanded) => setIsNodeLabelsExpanded(isExpanded)}
       isExpanded={isNodeLabelsExpanded}
       data-testid="node-labels-toggle"
     >
       <Title headingLevel="h3">Node labels (optional)</Title>
-      <p className="pf-u-mb-md">
+      <p className="pf-v5-u-mb-md">
         Configure labels that will apply to all nodes in this machine pool.
       </p>
       <NodeLabelsFieldArray />
@@ -107,7 +107,7 @@ export const MachinePool = () => {
     <Form>
       <GridItem>
         <Title headingLevel="h3">Default machine pool</Title>
-        <Text component="p" className="pf-u-mt-sm">
+        <Text component="p" className="pf-v5-u-mt-sm">
           Select a compute node instance type and count for your default machine pool. After cluster
           creation, your selected default machine pool instance type is permanent.
         </Text>

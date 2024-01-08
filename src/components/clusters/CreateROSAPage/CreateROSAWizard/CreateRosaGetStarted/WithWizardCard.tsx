@@ -11,7 +11,7 @@ import {
   Text,
   TextVariants,
 } from '@patternfly/react-core';
-import { DesktopIcon } from '@patternfly/react-icons';
+import { DesktopIcon } from '@patternfly/react-icons/dist/esm/icons/desktop-icon';
 import { Link } from 'react-router-dom';
 
 const WithWizard = () => (
@@ -23,7 +23,7 @@ const WithWizard = () => (
       </Title>
     </CardTitle>
     <CardBody>
-      <Text component={TextVariants.p} className="pf-u-mb-sm">
+      <Text component={TextVariants.p} className="pf-v5-u-mb-sm">
         You can deploy your cluster with the web interface.
       </Text>
       {/* TODO: PatternFly incorrectly puts the content of an alert as a h4 - this text should not be a heading */}

@@ -40,13 +40,14 @@ describe('<UpgradeAcknowledgeStep>', () => {
   });
 
   it('should not be confirmed on empty confirm text', () => {
-    wrapper.find('TextInput[data-testid="acknowledgeTextInput"]').invoke('onChange')('');
+    wrapper.find('TextInput[data-testid="acknowledgeTextInput"]').invoke('onChange')(null, '');
     wrapper.update();
     expect(confirmedMock.mock.calls[confirmedMock.mock.calls.length - 1][0]).toEqual(false);
   });
 
   it('should not be confirmed if wrong confirm word is typed', () => {
     wrapper.find('TextInput[data-testid="acknowledgeTextInput"]').invoke('onChange')(
+      null,
       'notCorrectWord',
     );
     wrapper.update();
@@ -54,7 +55,7 @@ describe('<UpgradeAcknowledgeStep>', () => {
   });
 
   it('should confirm if correct confirm word is typed', () => {
-    wrapper.find('TextInput[data-testid="acknowledgeTextInput"]').invoke('onChange')(ackWord);
+    wrapper.find('TextInput[data-testid="acknowledgeTextInput"]').invoke('onChange')(null, ackWord);
     wrapper.update();
     expect(confirmedMock.mock.calls[confirmedMock.mock.calls.length - 1][0]).toEqual(true);
   });

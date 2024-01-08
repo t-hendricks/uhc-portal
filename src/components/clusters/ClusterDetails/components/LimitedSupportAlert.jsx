@@ -24,7 +24,7 @@ function LimitedSupportAlert({ limitedSupportReasons, isROSA, isOSD }) {
     <Alert
       id="limited-support-alert"
       variant="danger"
-      className="pf-u-mt-md"
+      className="pf-v5-u-mt-md"
       isInline
       isExpandable={limitedSupportReasons.length > 1}
       title={title}

@@ -3,11 +3,11 @@
 */
 
 //PF4 Styles
-$pf-global--enable-reset: false;
-$pf-global--disable-fontawesome: true;
-$pf-global--font-path: "~@patternfly/patternfly/assets/fonts/";
+$pf-v5-global--enable-reset: false;
+$pf-v5-global--disable-fontawesome: true;
+$pf-v5-global--font-path: '~@patternfly/patternfly/assets/fonts/';
 
-@import "~react-datepicker/dist/react-datepicker.css";
+@import '~react-datepicker/dist/react-datepicker.css';
 
 body {
   margin: 0;
@@ -19,5 +19,5 @@ body {
   height: 100%;
 }
 
-@import "./app";
-@import "./log-window";
+@import './app';
+@import './log-window';
