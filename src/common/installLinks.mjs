@@ -81,8 +81,7 @@ const links = {
   ROSA_DEFINITION_DOC: `${ROSA_CP_DOCS_BASE}/introduction_to_rosa/policies-and-service-definition#rosa-service-definition`,
   WHAT_IS_OPENSHIFT: 'https://www.redhat.com/en/technologies/cloud-computing/openshift',
   WHAT_IS_ROSA: 'https://www.redhat.com/en/technologies/cloud-computing/openshift/aws',
-  ROSA_COMMUNITY_SLACK:
-    'https://join.slack.com/t/rosa-community/shared_invite/zt-1c5v1njip-dj70G3EoIX4HDR_famOx3Q',
+  ROSA_COMMUNITY_SLACK: 'https://red.ht/rosa-slack',
   ROSA_QUICKSTART: `${ROSA_CP_DOCS_BASE}/getting_started/rosa-quickstart-guide-ui`,
   ROSA_PRICING: 'https://aws.amazon.com/rosa/pricing',
   IDP_HTPASSWD: `${DOCS_BASE}/authentication/identity_providers/configuring-htpasswd-identity-provider.html`,
