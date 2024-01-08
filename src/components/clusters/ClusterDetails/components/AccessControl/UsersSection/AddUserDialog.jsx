@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 
 import { Form, TextInput, FormGroup, Radio } from '@patternfly/react-core';
 
+import { FormGroupHelperText } from '~/components/common/FormGroupHelperText';
 import Modal from '../../../../../common/Modal/Modal';
 import ErrorBox from '../../../../../common/ErrorBox';
 import ExternalLink from '../../../../../common/ExternalLink';
@@ -83,22 +84,18 @@ class AddUserDialog extends Component {
                 e.preventDefault();
               }}
             >
-              <FormGroup
-                helperTextInvalid={validationMessage}
-                validated={(userIdTouched ? !validationMessage : true) ? 'default' : 'error'}
-                label="User ID"
-                isRequired
-                fieldId="user-id"
-              >
+              <FormGroup label="User ID" isRequired fieldId="user-id">
                 <TextInput
                   value={userId}
                   isRequired
                   id="user-id"
                   type="text"
                   validated={(userIdTouched ? !validationMessage : true) ? 'default' : 'error'}
-                  onChange={this.setUserIdValue}
+                  onChange={(_event, userIdValue) => this.setUserIdValue(userIdValue)}
                   aria-label="user id"
                 />
+
+                <FormGroupHelperText touched={userIdTouched} error={validationMessage} />
               </FormGroup>
               <h3 id="user-group-select">Group</h3>
               <Radio
@@ -106,7 +103,7 @@ class AddUserDialog extends Component {
                 key={dedicatedAdmin}
                 isChecked={selectedGroup === dedicatedAdmin}
                 name={dedicatedAdmin}
-                onChange={this.setGroupValue}
+                onChange={(event, _) => this.setGroupValue(_, event)}
                 label={
                   <>
                     {dedicatedAdmin}
@@ -129,7 +126,7 @@ class AddUserDialog extends Component {
                   key={clusterAdmin}
                   isChecked={selectedGroup === clusterAdmin}
                   name={clusterAdmin}
-                  onChange={this.setGroupValue}
+                  onChange={(event, _) => this.setGroupValue(_, event)}
                   label={
                     <>
                       {clusterAdmin}

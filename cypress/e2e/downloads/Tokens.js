@@ -4,7 +4,7 @@ import ClusterListPage from '../../pageobjects/ClusterList.page';
 
 describe('Token pages', { tags: ['ci', 'smoke'] }, () => {
   beforeEach(() => {
-    cy.visit('/');
+    cy.visit('/', { retryOnNetworkFailure: true });
     Login.isLoginPageUrl();
     Login.login();
 
@@ -28,7 +28,7 @@ describe('Token pages', { tags: ['ci', 'smoke'] }, () => {
 
   it('ocm and rosa revoke token page (OCP-23060)', () => {
     //TODO: Check on loading new token creation, currentlyit creates issues with offline tokens
-    cy.visit('/token');
+    cy.visit('/token', { retryOnNetworkFailure: true });
     TokenPages.waitTokenPageIsLoaded();
     TokenPages.checkRevokePrevousToken();
     TokenPages.navigateToROSAToken();

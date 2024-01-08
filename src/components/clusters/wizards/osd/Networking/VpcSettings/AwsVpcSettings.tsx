@@ -41,7 +41,7 @@ export const AwsVpcSettings = () => {
         <Title headingLevel="h4" size="md">
           Install into an existing VPC
           <PopoverHint
-            iconClassName="pf-u-ml-sm"
+            iconClassName="pf-v5-u-ml-sm"
             hint={
               <>
                 Your VPC must have public and private subnets. Public subnets are associated with
@@ -53,7 +53,7 @@ export const AwsVpcSettings = () => {
             }
           />
         </Title>
-        <p className="pf-u-mt-sm">
+        <p className="pf-v5-u-mt-sm">
           {`To install into an existing VPC, you need to ensure that your VPC is configured with
                 ${
                   !usePrivateLink ? 'a public and' : ''

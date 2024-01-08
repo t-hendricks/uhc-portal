@@ -74,7 +74,7 @@ describe('AWSAccountSelection tests', () => {
     const { container } = render(<AWSAccountSelection {...newProps} />);
 
     // Unfortunately the only way to tell if the field is required is to find the hidden "*" in the label tag
-    expect(container.querySelector('label')?.textContent).toEqual('AWS billing account');
+    expect(container.querySelector('label')?.textContent).toEqual('AWS billing account *');
   });
 
   it('field is required if required prop is not set (aka default to required)', () => {

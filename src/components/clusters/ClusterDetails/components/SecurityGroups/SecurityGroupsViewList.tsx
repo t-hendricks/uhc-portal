@@ -20,11 +20,11 @@ const SecurityGroupsViewList = ({
   const itemCount = securityGroups.length;
   if (itemCount === 0) {
     return emptyMessage ? (
-      <div className="pf-u-font-size-sm pf-u-disabled-color-100">{emptyMessage}</div>
+      <div className="pf-v5-u-font-size-sm pf-v5-u-disabled-color-100">{emptyMessage}</div>
     ) : null;
   }
   return (
-    <ChipGroup className="pf-u-mb-lg" numChips={itemCount}>
+    <ChipGroup className="pf-v5-u-mb-lg" numChips={itemCount}>
       {securityGroups.map((sg) => {
         const { id = '' } = sg;
         const onClick = onClickItem ? () => onClickItem(id) : undefined;

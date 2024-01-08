@@ -6,6 +6,7 @@ import {
   getNodeIncrement,
   getNodeIncrementHypershift,
 } from '~/components/clusters/ClusterDetails/components/MachinePools/machinePoolsHelper';
+import { FormGroupHelperText } from '~/components/common/FormGroupHelperText';
 import { noQuotaTooltip } from '../../../../common/helpers';
 import { billingModels, normalizedProducts } from '../../../../common/subscriptionTypes';
 import PopoverHint from '../../../common/PopoverHint';
@@ -193,7 +194,6 @@ class NodeCountInput extends React.Component {
       <FormGroup
         fieldId={input.name}
         label={label}
-        helperText={helpText}
         labelIcon={
           extendedHelpText && (
             <PopoverHint hint={extendedHelpText} buttonAriaLabel={buttonAriaLabel} />
@@ -208,6 +208,7 @@ class NodeCountInput extends React.Component {
           formSelect
         )}
         {showTotalNodes()}
+        <FormGroupHelperText>{helpText}</FormGroupHelperText>
       </FormGroup>
     );
   }

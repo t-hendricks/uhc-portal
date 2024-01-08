@@ -13,6 +13,7 @@ import {
 } from '@patternfly/react-core';
 import { Field } from 'redux-form';
 
+import { FormGroupHelperText } from '~/components/common/FormGroupHelperText';
 import EditClusterAutoScalingDialog from '~/components/clusters/common/EditClusterAutoScalingDialog';
 import { MAX_NODES, MAX_NODES_HCP } from '~/components/clusters/common/machinePools/constants';
 import getMinNodesAllowed, { computeNodeHintText } from './AutoScaleHelper';
@@ -356,15 +357,16 @@ class AutoScaleSection extends React.Component {
               isRequired
               fieldId="nodes_min"
               className="autoscaling__nodes-formGroup"
-              helperText={
+            >
+              {minField}
+
+              <FormGroupHelperText>
                 <HelperText>
                   {!minErrorMessage
                     ? nodesHelpText(autoScaleMinNodesValue)
                     : errorText(minErrorMessage)}
                 </HelperText>
-              }
-            >
-              {minField}
+              </FormGroupHelperText>
             </FormGroup>
           </SplitItem>
           <SplitItem>
@@ -373,13 +375,6 @@ class AutoScaleSection extends React.Component {
               isRequired
               fieldId="nodes_max"
               className="autoscaling__nodes-formGroup"
-              helperText={
-                <HelperText>
-                  {!maxErrorMessage
-                    ? nodesHelpText(autoScaleMaxNodesValue)
-                    : errorText(maxErrorMessage)}
-                </HelperText>
-              }
               labelIcon={
                 <PopoverHint
                   buttonAriaLabel="Compute node count information"
@@ -401,6 +396,14 @@ class AutoScaleSection extends React.Component {
               }
             >
               {maxField}
+
+              <FormGroupHelperText>
+                <HelperText>
+                  {!maxErrorMessage
+                    ? nodesHelpText(autoScaleMaxNodesValue)
+                    : errorText(maxErrorMessage)}
+                </HelperText>
+              </FormGroupHelperText>
             </FormGroup>
           </SplitItem>
         </Split>
@@ -445,7 +448,7 @@ class AutoScaleSection extends React.Component {
                 <Button
                   data-testid="set-cluster-autoscaling-btn"
                   variant="secondary"
-                  className="pf-u-mt-md"
+                  className="pf-v5-u-mt-md"
                   onClick={openEditClusterAutoScalingModal}
                   isDisabled={!autoscalingEnabled}
                 >

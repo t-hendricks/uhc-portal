@@ -1,6 +1,6 @@
 import get from 'lodash/get';
 import React from 'react';
-import { DropdownItem } from '@patternfly/react-core';
+import { DropdownItem as DropdownItemDeprecated } from '@patternfly/react-core/deprecated';
 import clusterStates, { isHibernating, isHypershiftCluster } from '../clusterStates';
 import { subscriptionStatuses, normalizedProducts } from '../../../../common/subscriptionTypes';
 import getClusterName from '../../../../common/getClusterName';
@@ -86,9 +86,8 @@ function actionResolver(
     title: 'Open console',
     key: getKey('adminconsole'),
     ...disableIfTooltip(uninstallingMessage || hibernatingMessage || consoleDisabledMessage, {
-      component: 'a',
-      href: consoleURL,
-      target: '_blank',
+      to: consoleURL,
+      isExternalLink: true,
       rel: 'noopener noreferrer',
     }),
   });
@@ -358,7 +357,7 @@ function dropDownItems({
     inClusterList,
   );
   const menuItems = actions.map((action) => (
-    <DropdownItem {...action}>{action.title}</DropdownItem>
+    <DropdownItemDeprecated {...action}>{action.title}</DropdownItemDeprecated>
   ));
   return menuItems;
 }

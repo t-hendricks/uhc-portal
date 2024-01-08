@@ -122,7 +122,7 @@ function GCPByocFields({ isValidating }) {
           isRequired
           label="Service account JSON"
           helpText="Upload a JSON file or type to add"
-          className="pf-c-form-control"
+          className="pf-v5-c-form-control"
         />
       </GridItem>
       <GridItem>{isValidating && <>Validating...</>}</GridItem>

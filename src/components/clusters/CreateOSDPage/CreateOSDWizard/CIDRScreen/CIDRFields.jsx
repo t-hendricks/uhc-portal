@@ -100,7 +100,7 @@ function CIDRFields({
       </>
     ) : null;
 
-  const onDefaultValuesToggle = (isChecked) => {
+  const onDefaultValuesToggle = (_event, isChecked) => {
     if (isChecked) {
       change('network_machine_cidr', MACHINE_CIDR_DEFAULT);
       change('network_service_cidr', SERVICE_CIDR_DEFAULT);
@@ -118,7 +118,7 @@ function CIDRFields({
           variant="info"
           title="CIDR ranges cannot be changed after you create your cluster."
         >
-          <p className="pf-u-mb-md">
+          <p className="pf-v5-u-mb-md">
             Specify non-overlapping ranges for machine, service, and pod ranges. Each range should
             correspond to the first IP address in their subnet.
           </p>
@@ -149,7 +149,7 @@ function CIDRFields({
           validate={machineCidrValidators}
           disabled={isFieldDisabled}
           helpText={
-            <div className="pf-c-form__helper-text">
+            <div className="pf-v5-c-form__helper-text">
               {cloudProviderID === 'aws'
                 ? `Subnet mask must be between /${validators.AWS_MACHINE_CIDR_MIN} and /${awsMachineCIDRMax}.`
                 : `Range must be private. Subnet mask must be at most /${validators.GCP_MACHINE_CIDR_MAX}.`}

@@ -1,13 +1,7 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
-import {
-  Button,
-  Flex,
-  FlexItem,
-  FormGroup,
-  SelectOptionObject,
-  Tooltip,
-} from '@patternfly/react-core';
+import { Button, Flex, FlexItem, FormGroup, Tooltip } from '@patternfly/react-core';
+import { SelectOptionObject as SelectOptionObjectDeprecated } from '@patternfly/react-core/deprecated';
 import ErrorBox from '~/components/common/ErrorBox';
 import FuzzySelect, { FuzzyEntryType } from '~/components/common/FuzzySelect';
 import { VPCResponse } from '~/components/clusters/CreateOSDPage/CreateOSDWizard/ccsInquiriesReducer';
@@ -24,7 +18,7 @@ interface VCPDropdownProps {
   selectedVPC: CloudVPC;
   input: {
     value: string;
-    onChange: (selectedVPC: CloudVPC | SelectOptionObject) => void;
+    onChange: (selectedVPC: CloudVPC | SelectOptionObjectDeprecated) => void;
     onBlur: () => void;
   };
   meta: {
@@ -79,7 +73,7 @@ const VPCDropdown = ({
 
   const onSelect = (
     _: React.MouseEvent | React.ChangeEvent,
-    selectedVPCID: string | SelectOptionObject,
+    selectedVPCID: string | SelectOptionObjectDeprecated,
   ) => {
     // We want the form to store the original VPC object, rather than the option items
     const selectedItem = originalVPCs.find(
@@ -125,14 +119,14 @@ const VPCDropdown = ({
       (item) => item?.id === selectedVPC.id || item?.name === selectedVPC.name,
     );
     if (originalVPCs.length > 0 && (selectedVPC.id || selectedVPC.name) && !isValidSelection) {
-      inputProps.onChange({ id: '', name: '' });
+      inputProps.onChange({ id: '', name: '' } as SelectOptionObjectDeprecated);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedVPC, originalVPCs]);
 
   const refreshVPCs = () => {
     if (requestParams.cloudProviderID === 'aws') {
-      inputProps.onChange({ id: '', name: '' });
+      inputProps.onChange({ id: '', name: '' } as SelectOptionObjectDeprecated);
       dispatch(
         getAWSCloudProviderVPCs({
           region: requestParams.region,
@@ -149,7 +143,6 @@ const VPCDropdown = ({
         label={`Select a VPC to install your ${
           isHypershift ? 'machine pools' : 'cluster'
         } into your selected region: ${requestParams.region || ''}`}
-        validated={touched && error ? 'error' : 'default'}
         isRequired
       >
         <Flex>
@@ -178,7 +171,7 @@ const VPCDropdown = ({
                   isLoading={vpcResponse.pending}
                   isDisabled={vpcResponse.pending}
                   isInline
-                  isSmall
+                  size="sm"
                   variant="secondary"
                   onClick={refreshVPCs}
                 >

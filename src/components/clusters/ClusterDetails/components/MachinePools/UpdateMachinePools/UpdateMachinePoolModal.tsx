@@ -1,7 +1,6 @@
 import React from 'react';
 import { Button, Alert, AlertVariant, ButtonVariant } from '@patternfly/react-core';
-import { OutlinedArrowAltCircleUpIcon } from '@patternfly/react-icons';
-import spacing from '@patternfly/react-styles/css/utilities/Spacing/spacing';
+import { OutlinedArrowAltCircleUpIcon } from '@patternfly/react-icons/dist/esm/icons/outlined-arrow-alt-circle-up-icon';
 import { DateFormat } from '@redhat-cloud-services/frontend-components/DateFormat';
 import { useSelector, useDispatch } from 'react-redux';
 import Modal from '~/components/common/Modal/Modal';
@@ -57,7 +56,7 @@ export const UpdatePoolButton = ({ machinePool }: { machinePool: NodePoolWithUpg
   if (isMachinePoolScheduleError(machinePool)) {
     return (
       <PopoverHint
-        iconClassName={spacing.mlSm}
+        iconClassName="pf-v5-u-ml-sm"
         isError
         hint={machinePool.upgradePolicies?.errorMessage}
       />
@@ -67,7 +66,7 @@ export const UpdatePoolButton = ({ machinePool }: { machinePool: NodePoolWithUpg
   if (!isAvailableVersion) {
     return (
       <PopoverHint
-        iconClassName={spacing.mlSm}
+        iconClassName="pf-v5-u-ml-sm"
         hint={`This machine pool cannot be updated because there isn't a migration path to version ${controlPlaneVersion}`}
       />
     );
@@ -81,7 +80,7 @@ export const UpdatePoolButton = ({ machinePool }: { machinePool: NodePoolWithUpg
     if (schedule?.next_run && schedule?.version) {
       return (
         <PopoverHint
-          iconClassName={spacing.mlSm}
+          iconClassName="pf-v5-u-ml-sm"
           hint={
             <>
               {scheduledMessage} at <DateFormat type="exact" date={Date.parse(schedule.next_run)} />{' '}
@@ -92,7 +91,7 @@ export const UpdatePoolButton = ({ machinePool }: { machinePool: NodePoolWithUpg
       );
     }
 
-    return <PopoverHint iconClassName={spacing.mlSm} hint={scheduledMessage} />;
+    return <PopoverHint iconClassName="pf-v5-u-ml-sm" hint={scheduledMessage} />;
   }
   return null;
 };
@@ -176,7 +175,7 @@ export const UpdateMachinePoolModal = () => {
           isExpandable
           isInline
           role="alert"
-          className="pf-u-mt-md"
+          className="pf-v5-u-mt-md"
         >
           <p>{error}</p>
         </Alert>

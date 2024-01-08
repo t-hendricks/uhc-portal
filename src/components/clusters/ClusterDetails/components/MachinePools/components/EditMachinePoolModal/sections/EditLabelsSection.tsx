@@ -1,8 +1,10 @@
 import { Button, FormGroup, Grid, GridItem, Text, TextVariants } from '@patternfly/react-core';
 import { FieldArray, useField } from 'formik';
 import * as React from 'react';
-import { PlusCircleIcon } from '@patternfly/react-icons';
+import { PlusCircleIcon } from '@patternfly/react-icons/dist/esm/icons/plus-circle-icon';
 import TextField from '~/components/common/formik/TextField';
+import { FormGroupHelperText } from '~/components/common/FormGroupHelperText';
+
 import { EditMachinePoolValues } from '../hooks/useMachinePoolFormik';
 import FieldArrayRemoveButton from '../components/FieldArrayRemoveButton';
 
@@ -12,16 +14,14 @@ const EditLabelsSection = () => {
   const [input] = useField<EditMachinePoolValues['labels']>('labels');
   return (
     <GridItem>
-      <FormGroup
-        fieldId="labels"
-        label="Node labels"
-        helperText={
+      <FormGroup fieldId="labels" label="Node labels">
+        <FormGroupHelperText>
           <div className="uhc-labels-section__description">
             Labels help you organize and select resources. Adding labels below will let you query
             for objects that have similar, overlapping or dissimilar labels.
           </div>
-        }
-      />
+        </FormGroupHelperText>
+      </FormGroup>
       <FieldArray
         name="labels"
         render={({ push, remove }) => (

@@ -110,7 +110,7 @@ const EditClusterWideProxyDialog = (props) => {
                 Enable an HTTP or HTTPS proxy to deny direct access to the Internet from your
                 cluster
               </Text>
-              <Text className="pf-u-mt-sm">
+              <Text className="pf-v5-u-mt-sm">
                 <ExternalLink href={links.CONFIGURE_PROXY_URL}>
                   Learn more about configuring a cluster-wide proxy
                 </ExternalLink>
@@ -168,7 +168,7 @@ const EditClusterWideProxyDialog = (props) => {
             <GridItem sm={12} md={10} xl2={11}>
               {!openFileUpload ? (
                 <>
-                  <Text className="ocm-c-networking-vpc-details__card pf-c-form__label-text pf-c-form__group-label">
+                  <Text className="ocm-c-networking-vpc-details__card pf-v5-c-form__label-text pf-v5-c-form__group-label">
                     Additional Trust Bundle{' '}
                     <PopoverHint
                       headerContent="Additional trust bundle"

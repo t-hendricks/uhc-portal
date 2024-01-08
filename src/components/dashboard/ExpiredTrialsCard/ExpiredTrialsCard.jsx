@@ -6,12 +6,17 @@ import {
   Card,
   CardTitle,
   CardBody,
-  Title,
   EmptyState,
   EmptyStateBody,
+  EmptyStateHeader,
 } from '@patternfly/react-core';
 
-import { Table, TableHeader, TableBody, TableVariant } from '@patternfly/react-table';
+import { TableVariant } from '@patternfly/react-table';
+import {
+  Table as TableDeprecated,
+  TableHeader as TableHeaderDeprecated,
+  TableBody as TableBodyDeprecated,
+} from '@patternfly/react-table/deprecated';
 
 import ViewPaginationRow from '../../clusters/common/ViewPaginationRow/viewPaginationRow';
 import { viewConstants } from '../../../redux/constants';
@@ -48,7 +53,7 @@ class ExpiredTrialsCard extends React.Component {
           <CardTitle>Expired trials</CardTitle>
           <CardBody>
             <EmptyState>
-              <Title headingLevel="h2">No data available</Title>
+              <EmptyStateHeader titleText="No data available" headingLevel="h2" />
               <EmptyStateBody>
                 There was an error fetching the data. Try refreshing the page.
               </EmptyStateBody>
@@ -103,7 +108,7 @@ class ExpiredTrialsCard extends React.Component {
       <Card className="ocm-overview-clusters__card">
         <CardTitle>Expired Trials</CardTitle>
         <CardBody>
-          <Table
+          <TableDeprecated
             aria-label="Expired Trials"
             cells={columns}
             rows={rows}
@@ -111,9 +116,9 @@ class ExpiredTrialsCard extends React.Component {
             actionResolver={showSkeleton ? undefined : actionResolver}
             areActionsDisabled={areActionsDisabled}
           >
-            <TableHeader />
-            <TableBody />
-          </Table>
+            <TableHeaderDeprecated />
+            <TableBodyDeprecated />
+          </TableDeprecated>
           <ViewPaginationRow
             viewType={viewConstants.OVERVIEW_EXPIRED_TRIALS}
             currentPage={viewOptions.currentPage}

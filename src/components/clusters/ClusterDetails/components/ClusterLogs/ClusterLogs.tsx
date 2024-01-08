@@ -1,10 +1,10 @@
 import {
   Card,
-  CardActions,
   CardBody,
   CardHeader,
   CardTitle,
   EmptyState,
+  EmptyStateHeader,
   EmptyStateIcon,
   PageSection,
   Title,
@@ -154,16 +154,25 @@ const ClusterLogs = ({
 
   return (
     <Card className="ocm-c-overview-cluster-history__card">
-      <CardHeader className="ocm-c-overview-cluster-history__card--header">
+      <CardHeader
+        actions={{
+          actions: (
+            <>
+              Updated &nbsp;
+              {fetchedClusterLogsAt && (
+                <LiveDateFormat timestamp={fetchedClusterLogsAt.getTime()} />
+              )}
+            </>
+          ),
+          hasNoOffset: false,
+        }}
+        className="ocm-c-overview-cluster-history__card--header"
+      >
         <CardTitle className="ocm-c-overview-cluster-history__card--header">
           <Title headingLevel="h2" className="card-title" data-testid="cluster_history_title">
             Cluster history
           </Title>
         </CardTitle>
-        <CardActions>
-          Updated &nbsp;
-          {fetchedClusterLogsAt && <LiveDateFormat timestamp={fetchedClusterLogsAt.getTime()} />}
-        </CardActions>
       </CardHeader>
       <CardBody className="ocm-c-overview-cluster-history__card--body">
         {requestState.error && !ignoreErrors && (
@@ -186,10 +195,11 @@ const ClusterLogs = ({
           <>
             <PageSection>
               <EmptyState>
-                <EmptyStateIcon icon={SearchIcon} />
-                <Title size="lg" headingLevel="h4">
-                  No cluster log entries found
-                </Title>
+                <EmptyStateHeader
+                  titleText="No cluster log entries found"
+                  icon={<EmptyStateIcon icon={SearchIcon} />}
+                  headingLevel="h4"
+                />
               </EmptyState>
             </PageSection>
           </>

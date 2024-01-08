@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Card, CardBody, CardTitle, Title } from '@patternfly/react-core';
+import { Card, CardBody, CardTitle } from '@patternfly/react-core';
 
 import NotificationContactsCard from './components/NotificationContactsSection';
 import SupportCasesCard from './components/SupportCasesSection';
@@ -40,15 +40,13 @@ const Support = ({
   <>
     <Card className="ocm-c-support-notification-contacts__card">
       <CardTitle className="ocm-c-support-notification-contacts__card--header">
-        <Title headingLevel="h2" className="card-title">
-          Notification contacts
-        </Title>
+        Notification contacts
+      </CardTitle>
+      <CardBody className="ocm-c-support-notification-contacts__card--body">
         <div className="support-subtitle">
           Add users to be contacted in the event of notifications about this cluster.
           {clusterOwnerMsg(clusterCreator)}
         </div>
-      </CardTitle>
-      <CardBody className="ocm-c-support-notification-contacts__card--body">
         {!isDisabled && <AddNotificationContactSection canEdit={canEdit} openModal={openModal} />}
         <NotificationContactsCard
           subscriptionID={subscriptionID}
@@ -66,11 +64,7 @@ const Support = ({
       </CardBody>
     </Card>
     <Card className="ocm-c-support-support-cases__card">
-      <CardTitle className="ocm-c-support-support-cases__card--header">
-        <Title headingLevel="h2" className="card-title">
-          Support cases
-        </Title>
-      </CardTitle>
+      <CardTitle className="ocm-c-support-support-cases__card--header">Support cases</CardTitle>
       <CardBody className="ocm-c-support-support-cases__card--body">
         <SupportCasesCard
           subscriptionID={subscriptionID}

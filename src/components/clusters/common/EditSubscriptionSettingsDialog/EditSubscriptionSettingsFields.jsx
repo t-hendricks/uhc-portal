@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { get, findIndex, isEqual } from 'lodash';
+
 import {
   Alert,
   FormGroup,
@@ -9,9 +10,11 @@ import {
   Text,
   TextContent,
   TextVariants,
+  Icon,
 } from '@patternfly/react-core';
+import { ExternalLinkAltIcon } from '@patternfly/react-icons/dist/esm/icons/external-link-alt-icon';
 
-import { ExternalLinkAltIcon } from '@patternfly/react-icons';
+import { FormGroupHelperText } from '~/components/common/FormGroupHelperText';
 import { ReduxFormRadioGroup } from '../../../common/ReduxFormComponents';
 import links from '../../../../common/installLinks.mjs';
 import {
@@ -333,7 +336,10 @@ class EditSubscriptionSettingsFields extends Component {
         title={billingModelAlertText}
       >
         <a href={links.OCM_DOCS_SUBSCRIPTIONS} target="_blank" rel="noreferrer noopener">
-          Learn more about subscriptions <ExternalLinkAltIcon color="#0066cc" size="sm" />
+          Learn more about subscriptions{' '}
+          <Icon size="sm">
+            <ExternalLinkAltIcon color="#0066cc" />
+          </Icon>
         </a>
       </Alert>
     );
@@ -343,7 +349,7 @@ class EditSubscriptionSettingsFields extends Component {
     const radioGroupClassName = radioGroupClasses.join(' ');
     let tooltips = null;
     if (isDisabledByBillingModel) {
-      const radioGroupSelector = `.${radioGroupClasses.join('.')} .pf-c-form__group-control`;
+      const radioGroupSelector = `.${radioGroupClasses.join('.')} .pf-v5-c-form__group-control`;
       // we need the tip on all the 4 form groups
       const startPos = isBillingModelVisible ? 1 : 0;
       const radioGroupComponents = [0, 1, 2, 3].map((idx) => (
@@ -353,7 +359,7 @@ class EditSubscriptionSettingsFields extends Component {
             <div>Red Hat Marketplace subscription settings are pre-set and cannot be altered.</div>
           }
           position="right"
-          reference={() => {
+          triggerRef={() => {
             const groupEls = document.querySelectorAll(radioGroupSelector);
             const groupPos = startPos + idx;
             if (groupPos < groupEls.length) {
@@ -372,11 +378,9 @@ class EditSubscriptionSettingsFields extends Component {
 
     // show validation error on system_units numeric input for disconnected clusters
     const isDisconnectedSub = this.isDisconnected(initialSettings);
-    let systemUnitsNumericIsValid = true;
     let systemUnitsNumericErrorMsg = '';
     if (isDisconnectedSub) {
       const validationResult = this.validateSystemUnitsNumericField();
-      systemUnitsNumericIsValid = validationResult.isValid;
       systemUnitsNumericErrorMsg = validationResult.errorMsg;
     }
 
@@ -553,15 +557,11 @@ class EditSubscriptionSettingsFields extends Component {
               : 'Number of compute cores (excluding control plane nodes)'
           }
           isRequired={isDisconnectedSub}
-          helperText={
-            isDisconnectedSub
-              ? `${cpuSocketLabel} value can be any integer larger than ${MIN_VAL}`
-              : ''
-          }
-          helperTextInvalid={systemUnitsNumericErrorMsg}
-          validated={systemUnitsNumericIsValid ? 'default' : 'error'}
         >
           {CpuSocketNumberField}
+          <FormGroupHelperText touched error={systemUnitsNumericErrorMsg}>
+            {isDisconnectedSub && `${systemUnits} value can be any integer larger than ${MIN_VAL}`}
+          </FormGroupHelperText>
         </FormGroup>
         {tooltips}
       </>

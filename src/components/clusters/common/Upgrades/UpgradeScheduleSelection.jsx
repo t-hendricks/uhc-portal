@@ -1,14 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { FormGroup, Grid, GridItem, Button, Alert } from '@patternfly/react-core';
 import {
-  Select,
-  SelectOption,
-  FormGroup,
-  Grid,
-  GridItem,
-  Button,
-  Alert,
-} from '@patternfly/react-core';
+  Select as SelectDeprecated,
+  SelectOption as SelectOptionDeprecated,
+} from '@patternfly/react-core/deprecated';
 import parseUpdateSchedule from './parseUpdateSchedule';
 import './UpgradeSettingsFields.scss';
 
@@ -102,9 +98,9 @@ class UpgradeScheduleSelection extends React.Component {
       for (let hour = 0; hour < 24; hour += 1) {
         const value = `${hour.toString().padStart(2, 0)}:00`;
         ret.push(
-          <SelectOption key={value} value={hour.toString()}>
+          <SelectOptionDeprecated key={value} value={hour.toString()}>
             {value} UTC
-          </SelectOption>,
+          </SelectOptionDeprecated>,
         );
       }
       return ret;
@@ -123,38 +119,38 @@ class UpgradeScheduleSelection extends React.Component {
         <FormGroup label="Select a day and start time" className="ocm-upgrade-schedule-selection">
           <Grid hasGutter>
             <GridItem sm={6} md={6}>
-              <Select
+              <SelectDeprecated
                 isOpen={daySelectOpen}
                 selections={selectedDay}
-                onToggle={this.toggleDaySelect}
+                onToggle={(_event, isOpen) => this.toggleDaySelect(isOpen)}
                 onSelect={this.onDaySelect}
                 isDisabled={isDisabled}
               >
-                <SelectOption isPlaceholder isDisabled value="">
+                <SelectOptionDeprecated isPlaceholder isDisabled value="">
                   Select day
-                </SelectOption>
+                </SelectOptionDeprecated>
                 {['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'].map(
                   (day, idx) => (
-                    <SelectOption key={day} value={idx.toString()}>
+                    <SelectOptionDeprecated key={day} value={idx.toString()}>
                       {day}
-                    </SelectOption>
+                    </SelectOptionDeprecated>
                   ),
                 )}
-              </Select>
+              </SelectDeprecated>
             </GridItem>
             <GridItem sm={6} md={6}>
-              <Select
+              <SelectDeprecated
                 isOpen={timeSelectOpen}
                 selections={selectedHour}
-                onToggle={this.toggleHourSelect}
+                onToggle={(_event, isOpen) => this.toggleHourSelect(isOpen)}
                 onSelect={this.onHourSelect}
                 isDisabled={isDisabled}
               >
-                <SelectOption isPlaceholder isDisabled value="">
+                <SelectOptionDeprecated isPlaceholder isDisabled value="">
                   Select hour
-                </SelectOption>
+                </SelectOptionDeprecated>
                 {makeHourList()}
-              </Select>
+              </SelectDeprecated>
             </GridItem>
           </Grid>
         </FormGroup>

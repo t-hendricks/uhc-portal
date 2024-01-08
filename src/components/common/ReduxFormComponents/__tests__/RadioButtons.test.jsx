@@ -38,12 +38,11 @@ describe('<RadioButtons />', () => {
   });
 
   it('should call onChange properly when changed', () => {
-    // TODO not sure why we have both onChange and onChangeCallback
     const option = wrapper.find('Radio[value="option-1"]');
     const mockEvent = { target: { value: option.props().value } };
-    option.simulate('change', undefined, mockEvent);
-    expect(props.input.onChange).toHaveBeenLastCalledWith('option-1', mockEvent);
-    expect(props.onChangeCallback).toHaveBeenLastCalledWith('test-radio-buttons', 'option-1');
+
+    option.simulate('change', mockEvent);
+    expect(props.input.onChange).toHaveBeenLastCalledWith('option-1');
   });
 
   it('should revert to default when value is changed to empty string', () => {

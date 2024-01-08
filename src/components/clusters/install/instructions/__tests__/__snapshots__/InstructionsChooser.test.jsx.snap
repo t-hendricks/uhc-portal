@@ -2,7 +2,7 @@
 
 exports[`InstructionsChooser renders correctly with AI and UPI 1`] = `
 <div
-  className="pf-c-content ocm-page instructions-chooser"
+  className="pf-v5-c-content ocm-page instructions-chooser"
   data-ouia-component-id="undefined-instructions-chooser"
 >
   <InstructionsChooserCard
@@ -21,13 +21,7 @@ exports[`InstructionsChooser renders correctly with AI and UPI 1`] = `
       <React.Fragment>
         <Label
           color="blue"
-          icon={
-            <StarIcon
-              color="currentColor"
-              noVerticalAlign={false}
-              size="sm"
-            />
-          }
+          icon={<StarIcon />}
         >
           Recommended
         </Label>
@@ -65,7 +59,7 @@ exports[`InstructionsChooser renders correctly with AI and UPI 1`] = `
 
 exports[`InstructionsChooser renders correctly with AI enabled 1`] = `
 <div
-  className="pf-c-content ocm-page instructions-chooser"
+  className="pf-v5-c-content ocm-page instructions-chooser"
   data-ouia-component-id="undefined-instructions-chooser"
 >
   <InstructionsChooserCard
@@ -84,13 +78,7 @@ exports[`InstructionsChooser renders correctly with AI enabled 1`] = `
       <React.Fragment>
         <Label
           color="blue"
-          icon={
-            <StarIcon
-              color="currentColor"
-              noVerticalAlign={false}
-              size="sm"
-            />
-          }
+          icon={<StarIcon />}
         >
           Recommended
         </Label>
@@ -149,7 +137,7 @@ exports[`InstructionsChooser renders correctly with AI enabled 1`] = `
 
 exports[`InstructionsChooser renders correctly with default settings 1`] = `
 <div
-  className="pf-c-content ocm-page instructions-chooser"
+  className="pf-v5-c-content ocm-page instructions-chooser"
   data-ouia-component-id="undefined-instructions-chooser"
 >
   <InstructionsChooserCard

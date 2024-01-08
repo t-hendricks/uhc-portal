@@ -1,16 +1,9 @@
 import React, { useEffect, useMemo, useState } from 'react';
-import {
-  FormGroup,
-  FormGroupProps,
-  FormHelperText,
-  HelperText,
-  HelperTextItem,
-  NumberInput,
-  Text,
-  TextContent,
-  TextVariants,
-} from '@patternfly/react-core';
+import { FormGroup, NumberInput, Text, TextContent, TextVariants } from '@patternfly/react-core';
 import PopoverHint from '~/components/common/PopoverHint';
+import { FormGroupHelperText } from '~/components/common/FormGroupHelperText';
+import ExclamationTriangleIcon from '@patternfly/react-icons/dist/esm/icons/exclamation-triangle-icon';
+import ExclamationCircleIcon from '@patternfly/react-icons/dist/esm/icons/exclamation-circle-icon';
 
 interface PIDsLimitInputProps {
   value?: number;
@@ -37,27 +30,27 @@ export const PIDsLimitInput: React.FC<PIDsLimitInputProps> = (props) => {
 
   const validation: {
     helperText: string;
-    hasHelperTextIcon: boolean;
-    status: FormGroupProps['validated'];
+    icon: React.ReactNode;
+    status: 'warning' | 'error' | 'default';
   } = useMemo(() => {
     if (isUnsafe) {
       return {
         helperText: `Setting a PIDs limit higher than ${safeMaxValue.toLocaleString()} on your cluster could potentially cause your workloads to fail unexpectedly.`,
-        hasHelperTextIcon: true,
+        icon: <ExclamationTriangleIcon />,
         status: 'warning',
       };
     }
     if (!isValid) {
       return {
         helperText: validationMessage,
-        hasHelperTextIcon: true,
+        icon: <ExclamationCircleIcon />,
         status: 'error',
       };
     }
     // isValid
     return {
       helperText: `The safe PIDs limit range is ${minValue.toLocaleString()} - ${safeMaxValue.toLocaleString()}`,
-      hasHelperTextIcon: false,
+      icon: null,
       status: 'default',
     };
   }, [isUnsafe, isValid, minValue, safeMaxValue, validationMessage]);
@@ -131,9 +124,8 @@ export const PIDsLimitInput: React.FC<PIDsLimitInputProps> = (props) => {
         }
         isRequired
         fieldId="pids-limit"
-        validated={validation.status}
       >
-        <TextContent className="pf-u-mb-md">
+        <TextContent className="pf-v5-u-mb-md">
           <Text component={TextVariants.p}>
             Adjusting the PIDs limit will result in all nodes that are not control plane nodes to
             reboot, potentially impacting workload downtime.
@@ -155,16 +147,15 @@ export const PIDsLimitInput: React.FC<PIDsLimitInputProps> = (props) => {
           inputAriaLabel="PIDs limit"
           minusBtnAriaLabel="minus"
           plusBtnAriaLabel="plus"
-          allowEmptyInput
           validated={validation.status}
         />
-        <FormHelperText isHidden={false} component="div">
-          <HelperText id="pids-limit-helper-text">
-            <HelperTextItem variant={validation.status} hasIcon={validation.hasHelperTextIcon}>
-              {validation.helperText}
-            </HelperTextItem>
-          </HelperText>
-        </FormHelperText>
+        <FormGroupHelperText
+          id="pids-limit-helper-text"
+          variant={validation.status}
+          icon={validation.icon}
+        >
+          {validation.helperText}
+        </FormGroupHelperText>
       </FormGroup>
     </>
   );

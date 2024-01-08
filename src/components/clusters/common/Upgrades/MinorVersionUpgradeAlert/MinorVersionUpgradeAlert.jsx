@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Alert, AlertActionLink, Spinner } from '@patternfly/react-core';
-import ArrowCircleUpIcon from '@patternfly/react-icons/dist/js/icons/arrow-circle-up-icon';
+import ArrowCircleUpIcon from '@patternfly/react-icons/dist/esm/icons/arrow-circle-up-icon';
 import links from '../../../../../common/installLinks.mjs';
 import ExternalLink from '../../../../common/ExternalLink';
 import { patchUpgradeSchedule } from '../../../../../services/clusterService';
@@ -63,6 +63,7 @@ const MinorVersionUpgradeAlert = ({
       isInline
       title={error}
       role="alert"
+      data-testid="alert-error"
     />
   ) : (
     <Alert
@@ -84,6 +85,7 @@ const MinorVersionUpgradeAlert = ({
           )}
         </>
       }
+      data-testid="alert-success"
     >
       {isMinorVersionUpgradesEnabled ? (
         <p data-testid="minorVersionUpgradeAlertDisableMessage">

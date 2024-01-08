@@ -1,9 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { Title, EmptyState, EmptyStateBody, EmptyStateIcon } from '@patternfly/react-core';
+import {
+  EmptyState,
+  EmptyStateBody,
+  EmptyStateIcon,
+  EmptyStateHeader,
+} from '@patternfly/react-core';
 
-import { ExclamationTriangleIcon } from '@patternfly/react-icons';
+import { ExclamationTriangleIcon } from '@patternfly/react-icons/dist/esm/icons/exclamation-triangle-icon';
 
 import { DateFormat } from '@redhat-cloud-services/frontend-components/DateFormat';
 
@@ -17,9 +22,7 @@ function MonitoringEmptyState({
   return (
     <EmptyState>
       {!hideIcon && <EmptyStateIcon icon={ExclamationTriangleIcon} />}
-      <Title headingLevel="h5" size="lg">
-        {title}
-      </Title>
+      <EmptyStateHeader titleText={<>{title}</>} headingLevel="h5" />
       <EmptyStateBody>
         {children}
         {!hideLastCheckIn && (

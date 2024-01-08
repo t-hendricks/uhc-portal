@@ -21,7 +21,7 @@ $groups-chart-max-width: 500px;
 
         .ocm-insights--risk-item {
           &__label {
-            color: var(--pf-global--Color--200);
+            color: var(--pf-v5-global--Color--200);
           }
         }
 
@@ -32,11 +32,11 @@ $groups-chart-max-width: 500px;
     }
 
     .enabled-link {
-      fill: var(--pf-global--link--Color) !important;
+      fill: var(--pf-v5-global--link--Color) !important;
       cursor: pointer;
 
       &:hover {
-        fill: var(--pf-global--link--Color--hover) !important;
+        fill: var(--pf-v5-global--link--Color--hover) !important;
         text-decoration: underline;
       }
     }
@@ -47,7 +47,7 @@ $groups-chart-max-width: 500px;
   }
 
   &--advisor-empty-state {
-    .pf-c-empty-state__body {
+    .pf-v5-c-empty-state__body {
       max-width: 550px;
     }
   }
@@ -57,7 +57,7 @@ $groups-chart-max-width: 500px;
   &__icon {
     &:hover {
       cursor: pointer;
-      fill: var(--pf-global--Color--100);
+      fill: var(--pf-v5-global--Color--100);
       transition: ease 0.3s;
     }
   }

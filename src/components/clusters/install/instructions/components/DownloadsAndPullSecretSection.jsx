@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Stack, StackItem, Text, TextContent } from '@patternfly/react-core';
-import { ExternalLinkAltIcon } from '@patternfly/react-icons';
+import { Stack, StackItem, Text, TextContent, Icon } from '@patternfly/react-core';
+import { ExternalLinkAltIcon } from '@patternfly/react-icons/dist/esm/icons/external-link-alt-icon';
 
 import PullSecretSection from './PullSecretSection';
 import DownloadAndOSSelection from './DownloadAndOSSelection';
@@ -48,7 +48,10 @@ function DownloadsAndPullSecretSection({
                       rel="noreferrer noopener"
                       target="_blank"
                     >
-                      latest installer documentation <ExternalLinkAltIcon size="sm" />
+                      latest installer documentation{' '}
+                      <Icon size="sm">
+                        <ExternalLinkAltIcon />
+                      </Icon>
                     </Text>
                     .
                   </Text>

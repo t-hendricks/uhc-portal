@@ -8,21 +8,23 @@ import {
   EmptyState,
   EmptyStateIcon,
   EmptyStateBody,
-  Title,
   Label,
+  EmptyStateHeader,
 } from '@patternfly/react-core';
 import {
-  Table,
-  TableHeader,
-  TableBody,
   sortable,
   classNames,
   Visibility,
   SortByDirection,
   cellWidth,
 } from '@patternfly/react-table';
-import ExclamationTriangleIcon from '@patternfly/react-icons/dist/js/icons/exclamation-triangle-icon';
-import { global_warning_color_100 as warningColor } from '@patternfly/react-tokens';
+import {
+  Table as TableDeprecated,
+  TableHeader as TableHeaderDeprecated,
+  TableBody as TableBodyDeprecated,
+} from '@patternfly/react-table/deprecated';
+import ExclamationTriangleIcon from '@patternfly/react-icons/dist/esm/icons/exclamation-triangle-icon';
+import { global_warning_color_100 as warningColor } from '@patternfly/react-tokens/dist/esm/global_warning_color_100';
 
 import { Link } from 'react-router-dom';
 import * as OCM from '@openshift-assisted/ui-lib/ocm';
@@ -64,10 +66,11 @@ function ClusterListTable(props) {
   if (!isPending && (!clusters || clusters.length === 0)) {
     return (
       <EmptyState>
-        <EmptyStateIcon icon={SearchIcon} />
-        <Title headingLevel="h4" size="lg">
-          No clusters found.
-        </Title>
+        <EmptyStateHeader
+          titleText="No clusters found."
+          icon={<EmptyStateIcon icon={SearchIcon} />}
+          headingLevel="h4"
+        />
         <EmptyStateBody>
           This filter criteria matches no clusters.
           <br />
@@ -199,7 +202,7 @@ function ClusterListTable(props) {
           {hasLimitedSupport
             ? linkToClusterDetails(
                 cluster,
-                <Label color="red" className="pf-u-ml-xs">
+                <Label color="red" className="pf-v5-u-ml-xs">
                   Limited support
                 </Label>,
               )
@@ -269,7 +272,7 @@ function ClusterListTable(props) {
         );
 
   return (
-    <Table
+    <TableDeprecated
       aria-label="Cluster List"
       cells={columns}
       rows={rows}
@@ -278,9 +281,9 @@ function ClusterListTable(props) {
       sortBy={sortBy}
       ouiaId="clusterList"
     >
-      <TableHeader />
-      <TableBody />
-    </Table>
+      <TableHeaderDeprecated />
+      <TableBodyDeprecated />
+    </TableDeprecated>
   );
 }
 

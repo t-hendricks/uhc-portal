@@ -4,7 +4,8 @@ import { FieldArray } from 'formik';
 import classNames from 'classnames';
 
 import { Button, Split, SplitItem, Stack, StackItem } from '@patternfly/react-core';
-import { MinusCircleIcon, PlusCircleIcon } from '@patternfly/react-icons';
+import { MinusCircleIcon } from '@patternfly/react-icons/dist/esm/icons/minus-circle-icon';
+import { PlusCircleIcon } from '@patternfly/react-icons/dist/esm/icons/plus-circle-icon';
 
 import { checkLabelKey, checkLabelValue } from '~/common/validators';
 import { FieldId } from '~/components/clusters/wizards/common/constants';
@@ -90,7 +91,7 @@ export const NodeLabelsFieldArray = () => {
                         isInline
                         isDisabled={isRemoveDisabled}
                         className={`${classNames(
-                          isRemoveDisabled && 'pf-u-disabled-color-200',
+                          isRemoveDisabled && 'pf-v5-u-disabled-color-200',
                         )} ${classNames(
                           index === 0 ? 'label-button-padding-lg' : 'label-button-padding-sm',
                         )}`}

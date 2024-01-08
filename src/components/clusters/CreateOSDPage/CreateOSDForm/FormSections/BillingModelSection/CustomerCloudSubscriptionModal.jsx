@@ -16,7 +16,7 @@ const contentByCloudProvider = (cloudProviderID) => {
           you or your company. This allows you to pay AWS directly for public cloud costs,
           leveraging your existing relationship.
         </TextContent>
-        <Title headingLevel="h3" size="lg" className="pf-u-mt-sm">
+        <Title headingLevel="h3" size="lg" className="pf-v5-u-mt-sm">
           Important
         </Title>
         <TextContent>
@@ -59,7 +59,7 @@ const contentByCloudProvider = (cloudProviderID) => {
         owned by you or your company. This allows you to pay Google Cloud directly for public cloud
         costs, leveraging your existing relationship.
       </TextContent>
-      <Title headingLevel="h3" size="lg" className="pf-u-mt-sm">
+      <Title headingLevel="h3" size="lg" className="pf-v5-u-mt-sm">
         Important
       </Title>
       <TextContent>
@@ -74,7 +74,7 @@ const contentByCloudProvider = (cloudProviderID) => {
           </ListItem>
           <ListItem>
             An IAM service account called “osd-ccs-admin” exists with the following roles attached:
-            <List className="pf-u-pb-xs">
+            <List className="pf-v5-u-pb-xs">
               <ListItem>DNS Administrator</ListItem>
               <ListItem>Organization Policy Viewer</ListItem>
               <ListItem>Owner</ListItem>

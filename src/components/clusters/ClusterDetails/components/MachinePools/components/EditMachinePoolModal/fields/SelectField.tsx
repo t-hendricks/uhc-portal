@@ -1,4 +1,7 @@
-import { Select, SelectProps } from '@patternfly/react-core';
+import {
+  Select as SelectDeprecated,
+  SelectProps as SelectPropsDeprecated,
+} from '@patternfly/react-core/deprecated';
 import * as React from 'react';
 
 type SelectFieldProps = {
@@ -6,13 +9,13 @@ type SelectFieldProps = {
   fieldId: string;
   onSelect: (value: string) => void;
   isDisabled?: boolean;
-  children: SelectProps['children'];
+  children: SelectPropsDeprecated['children'];
 };
 
 const SelectField = ({ value, fieldId, onSelect, isDisabled, children }: SelectFieldProps) => {
   const [isOpen, setIsOpen] = React.useState(false);
   return (
-    <Select
+    <SelectDeprecated
       selections={value}
       id={fieldId}
       onSelect={(_, newValue) => {
@@ -21,12 +24,12 @@ const SelectField = ({ value, fieldId, onSelect, isDisabled, children }: SelectF
       }}
       isDisabled={isDisabled}
       isOpen={isOpen}
-      onToggle={setIsOpen}
+      onToggle={(_, isOpen) => setIsOpen(isOpen)}
       menuAppendTo={document.getElementById('edit-mp-modal') || undefined}
       maxHeight={300}
     >
       {children}
-    </Select>
+    </SelectDeprecated>
   );
 };
 

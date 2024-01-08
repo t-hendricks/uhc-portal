@@ -92,19 +92,19 @@ const GovCloudForm = ({
             <Checkbox
               label="I am a U.S. citizen."
               isChecked={isUSCitizen}
-              onChange={setIsUSCitizen}
+              onChange={(_event, value) => setIsUSCitizen(value)}
               id="citizen-checkbox"
             />
             <Checkbox
               label="I have undergone a successful background check sponsored by my government agency or government contract sponsoring agency."
               isChecked={backgroundCheck}
-              onChange={setBackgroundCheck}
+              onChange={(_event, value) => setBackgroundCheck(value)}
               id="check-checkbox"
             />
             <Checkbox
               label="I will be subject to initial and annual refresher security training."
               isChecked={securityTraining}
-              onChange={setSecurityTraining}
+              onChange={(_event, value) => setSecurityTraining(value)}
               id="training-checkbox"
             />
           </StackItem>
@@ -125,7 +125,11 @@ const GovCloudForm = ({
                   </>
                 }
               >
-                <TextInput value={contractID} onChange={setContractID} isRequired />
+                <TextInput
+                  value={contractID}
+                  onChange={(_, value) => setContractID(value)}
+                  isRequired
+                />
               </FormGroup>
             </StackItem>
           )}
@@ -156,7 +160,7 @@ const GovCloudForm = ({
                 filename={fileUpload?.name}
                 filenamePlaceholder="Drag and drop a file or upload one"
                 dropzoneProps={{
-                  accept: '.pdf',
+                  accept: { pdf: ['.pdf'] },
                   maxSize: maxFileSize,
                   onDropRejected: () => {
                     setFileReadError(
@@ -179,7 +183,7 @@ const GovCloudForm = ({
                   setFileReadError(undefined);
                   setFileUpload(undefined);
                 }}
-                onReadFailed={(error) => {
+                onReadFailed={(_event, error) => {
                   setFileReadError(error.message);
                   setIsReadingFile(false);
                 }}

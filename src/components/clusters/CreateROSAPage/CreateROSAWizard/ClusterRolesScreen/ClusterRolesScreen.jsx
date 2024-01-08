@@ -161,14 +161,14 @@ function ClusterRolesScreen({
 
   const EnableAutoModeTip = (
     <Alert
-      className="pf-u-ml-lg"
+      className="pf-v5-u-ml-lg"
       variant="info"
       isInline
       isExpandable
       title="If you would like to enable auto mode, expand the alert and follow the steps below."
     >
-      <TextContent className="pf-u-font-size-sm">
-        <Text component={TextVariants.p} className="pf-u-mb-sm">
+      <TextContent className="pf-v5-u-font-size-sm">
+        <Text component={TextVariants.p} className="pf-v5-u-mb-sm">
           Create the Admin OCM role using the following command in the ROSA CLI. Only one OCM role
           can be linked per Red Hat org.{' '}
           <PopoverHint title="If an OCM role with basic privileges exists in your account, you might need to delete or unlink the role before creating an OCM role with administrative privileges." />
@@ -179,7 +179,7 @@ function ClusterRolesScreen({
         >
           rosa create ocm-role --admin
         </InstructionCommand>
-        <Text component={TextVariants.p} className="pf-u-mb-sm">
+        <Text component={TextVariants.p} className="pf-v5-u-mb-sm">
           If not yet linked, run the following command to associate the OCM role with your AWS{' '}
           account.
         </Text>
@@ -189,7 +189,7 @@ function ClusterRolesScreen({
         >
           rosa link ocm-role &lt;arn&gt;
         </InstructionCommand>
-        <Text component={TextVariants.p} className="pf-u-mb-sm">
+        <Text component={TextVariants.p} className="pf-v5-u-mb-sm">
           After running the command, you may need to refresh using the button below to enable auto
           mode.
         </Text>
@@ -276,7 +276,7 @@ function ClusterRolesScreen({
             <div className="spinner-fit-container">
               <Spinner />
             </div>
-            <div className="spinner-loading-text pf-u-ml-xl">Checking for admin OCM role...</div>
+            <div className="spinner-loading-text pf-v5-u-ml-xl">Checking for admin OCM role...</div>
           </GridItem>
         )}
         {getOCMRoleResponse.fulfilled && !hasByoOidcConfig && (

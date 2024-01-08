@@ -3,11 +3,10 @@
 exports[`<RadioButtons /> should render - basic 1`] = `
 <Fragment>
   <Split
-    hasGutter={true}
     key="test-radio-buttons-option-1-fragment"
   >
     <SplitItem
-      className="pf-u-mr-sm"
+      className="pf-v5-u-mr-sm"
     >
       <Radio
         aria-label="Option 1"
@@ -26,11 +25,10 @@ exports[`<RadioButtons /> should render - basic 1`] = `
     </SplitItem>
   </Split>
   <Split
-    hasGutter={true}
     key="test-radio-buttons-test-default-fragment"
   >
     <SplitItem
-      className="pf-u-mr-sm"
+      className="pf-v5-u-mr-sm"
     >
       <Radio
         aria-label="the default"

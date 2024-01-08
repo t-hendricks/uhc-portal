@@ -48,7 +48,11 @@ class RHCOSDownloadAndSelect extends React.Component {
     return (
       <Split hasGutter className="os-based-download">
         <SplitItem key="select-arch">
-          <FormSelect value={selection} onChange={this.onChange} aria-label="select-arch-dropdown">
+          <FormSelect
+            value={selection}
+            onChange={(_event, selection) => this.onChange(selection)}
+            aria-label="select-arch-dropdown"
+          >
             {this.options.map((option) => (
               <FormSelectOption
                 isDisabled={option.disabled}

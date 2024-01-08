@@ -26,7 +26,7 @@ function GCPCustomerManagedEncryption({ selectedRegion }) {
             component={KMSKeyLocationComboBox}
             name="key_location"
             selectedRegion={selectedRegion}
-            className="pf-c-form-control"
+            className="pf-v5-c-form-control"
           />
         </FormGroup>
       </GridItem>
@@ -60,7 +60,7 @@ function GCPCustomerManagedEncryption({ selectedRegion }) {
           refreshButtonText="Refresh custom key rings"
           validate={required}
           isRequired
-          className="pf-c-form-control"
+          className="pf-v5-c-form-control"
         />
       </GridItem>
       <GridItem md={6} />
@@ -92,7 +92,7 @@ function GCPCustomerManagedEncryption({ selectedRegion }) {
           refreshButtonText="Refresh custom keys"
           validate={required}
           isRequired
-          className="pf-c-form-control"
+          className="pf-v5-c-form-control"
         />
       </GridItem>
       <GridItem md={6} />

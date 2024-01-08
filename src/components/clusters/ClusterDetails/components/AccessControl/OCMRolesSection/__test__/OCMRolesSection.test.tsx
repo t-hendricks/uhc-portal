@@ -1,7 +1,7 @@
 import React from 'react';
 import type axios from 'axios';
 
-import { insightsMock, render, within } from '~/testUtils';
+import { insightsMock, render, within, waitFor } from '~/testUtils';
 
 import apiRequest from '~/services/apiRequest';
 import { Subscription } from '~/types/accounts_mgmt.v1';
@@ -45,9 +45,7 @@ describe('<OCMRolesSection />', () => {
     );
     const row1 = getByRole('row', { name: /Doris Hudson/ });
     within(row1).getByRole('cell', { name: 'Cluster editor' });
-    within(row1)
-      .getByRole('button', { name: /actions/i })
-      .click();
+    within(row1).getByRole('button', { name: 'Kebab toggle' }).click();
     expect(await findByRole('menuitem', { name: 'Delete' })).toBeEnabled();
     const row2 = getByRole('row', { name: /Jak Valdez/ });
     within(row2).getByRole('cell', { name: 'Cluster viewer' });
@@ -70,7 +68,7 @@ describe('<OCMRolesSection />', () => {
     expect(await findByRole('button', { name: 'Grant role' })).toHaveAttribute('aria-disabled');
     const row1 = await findByRole('row', { name: /Doris Hudson/ });
     within(row1).getByRole('cell', { name: /cluster editor/i });
-    expect(within(row1).getByRole('button', { name: /actions/i })).toBeDisabled();
+    expect(within(row1).getByRole('button', { name: 'Kebab toggle' })).toBeDisabled();
   });
 
   it('should render error', async () => {
@@ -85,14 +83,15 @@ describe('<OCMRolesSection />', () => {
     };
     apiRequestMock.get.mockRejectedValue({ status: 403, response: { data: errorResp } }); // Mocks the axios format of the error
 
-    const { findByRole } = render(<OCMRolesSection {...props} />);
+    const { getByTestId } = render(<OCMRolesSection {...props} />);
     expect(apiRequest.get).toHaveBeenCalledTimes(1);
     expect(apiRequest.get).toHaveBeenCalledWith(
       `/api/accounts_mgmt/v1/subscriptions/${fixtures.clusterDetails.cluster.subscription.id}/role_bindings`,
       expect.objectContaining({}),
     );
 
-    const alert = await findByRole('alert', { name: /danger alert/i });
+    await waitFor(() => expect(getByTestId('alert-error')).toBeVisible());
+    const alert = getByTestId('alert-error');
     within(alert).getByRole('heading', { name: /error getting OCM roles and access/i });
     within(alert).getByText(/ACCT-MGMT-11/);
     within(alert).getByText(/Account with ID 123456 denied access to perform get/);

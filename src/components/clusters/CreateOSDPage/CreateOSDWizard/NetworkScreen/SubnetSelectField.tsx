@@ -1,10 +1,12 @@
 import React, { ChangeEvent, MouseEvent, useCallback, useEffect, useMemo, useState } from 'react';
-import { Flex, FlexItem, FormGroup, SelectOptionObject } from '@patternfly/react-core';
+import { Flex, FlexItem, FormGroup } from '@patternfly/react-core';
+import { SelectOptionObject as SelectOptionObjectDeprecated } from '@patternfly/react-core/deprecated';
 import { WrappedFieldInputProps, WrappedFieldMetaProps } from 'redux-form';
 
 import { CloudVPC, Subnetwork } from '~/types/clusters_mgmt.v1';
 import { isSubnetMatchingPrivacy } from '~/components/clusters/CreateOSDPage/CreateOSDWizard/VPCScreen/useVPCInquiry';
 import FuzzySelect, { FuzzyDataType, FuzzyEntryType } from '~/components/common/FuzzySelect';
+import { FormGroupHelperText } from '~/components/common/FormGroupHelperText';
 
 const TRUNCATE_THRESHOLD = 40;
 
@@ -102,7 +104,7 @@ export const SubnetSelectField = ({
   }, [withAutoSelect, hasOptions, subnetList, selectedSubnet]);
 
   const onSelect = useCallback(
-    (_: MouseEvent | ChangeEvent, selectedSubnet: string | SelectOptionObject) => {
+    (_: MouseEvent | ChangeEvent, selectedSubnet: string | SelectOptionObjectDeprecated) => {
       input.onChange(selectedSubnet);
       setSelectedSubnet(selectedSubnet);
       setIsExpanded(false);
@@ -116,8 +118,6 @@ export const SubnetSelectField = ({
       fieldId={name}
       label={label}
       id={input.name}
-      validated={isInputTouched && inputError ? 'error' : undefined}
-      helperTextInvalid={isInputTouched && inputError}
       isRequired={isRequired}
       className={className}
     >
@@ -127,7 +127,7 @@ export const SubnetSelectField = ({
             label={label}
             aria-label={label}
             isOpen={isExpanded}
-            onToggle={(isExpanded) => setIsExpanded(isExpanded)}
+            onToggle={(_, isExpanded) => setIsExpanded(isExpanded)}
             onSelect={onSelect}
             selected={selectedSubnet?.name || selectedSubnet?.subnet_id}
             selectionData={subnetsByAZ}
@@ -139,6 +139,8 @@ export const SubnetSelectField = ({
           />
         </FlexItem>
       </Flex>
+
+      <FormGroupHelperText touched={isInputTouched} error={inputError} />
     </FormGroup>
   );
 };

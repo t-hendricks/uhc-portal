@@ -6,7 +6,7 @@ import { TrackEvent } from '~/common/analytics';
 import './InstructionCommand.scss';
 
 type Props = {
-  children?: React.ReactNode;
+  children: string;
   textAriaLabel?: string;
   trackEvent?: TrackEvent;
   className?: string;

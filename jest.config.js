@@ -9,14 +9,15 @@ const config = {
     '^.+\\.(js|jsx|mjs)$': 'babel-jest',
   },
   transformIgnorePatterns: [
-    '<rootDir>/node_modules/(?!(@patternfly|react-monaco-editor|monaco-editor|lodash-es)/)'
+    '<rootDir>/node_modules/(?!(@patternfly|react-monaco-editor|monaco-editor|lodash-es)/)',
   ],
   testPathIgnorePatterns: ['<rootDir>/cache/Cypress/'],
   moduleNameMapper: {
     /* Map Assisted UI lib to a mock that defines the same API but won't import the actual code */
     '@openshift-assisted/ui-lib/ocm': '<rootDir>/__mocks__/assistedUiMock.ts',
     /* Map Assisted UI lib translations to a mock file too */
-    '@openshift-assisted/locales/([a-z]{2,3}/translation.json)': '<rootDir>/__mocks__/assistedUiTranslationMock.json',
+    '@openshift-assisted/locales/([a-z]{2,3}/translation.json)':
+      '<rootDir>/__mocks__/assistedUiTranslationMock.json',
     '\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$':
       '<rootDir>/__mocks__/fileMock.js',
     '\\.(css|less|scss)$': '<rootDir>/__mocks__/styleMock.js',
@@ -34,6 +35,7 @@ const config = {
   },
   moduleFileExtensions: ['js', 'jsx', 'ts', 'tsx', 'json', 'node', 'mjs'],
   collectCoverageFrom: ['src/'],
+  testTimeout: 10000,
 };
 
 module.exports = config;

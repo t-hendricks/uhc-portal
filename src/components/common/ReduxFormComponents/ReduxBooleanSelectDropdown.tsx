@@ -1,15 +1,14 @@
 import React from 'react';
 import { WrappedFieldInputProps, WrappedFieldMetaProps } from 'redux-form';
 
+import { Flex, FormGroup, LabelProps } from '@patternfly/react-core';
 import {
-  Flex,
-  FormGroup,
-  LabelProps,
-  Select,
-  SelectOption,
-  SelectOptionObject,
-} from '@patternfly/react-core';
+  Select as SelectDeprecated,
+  SelectOption as SelectOptionDeprecated,
+  SelectOptionObject as SelectOptionObjectDeprecated,
+} from '@patternfly/react-core/deprecated';
 import PopoverHint from '../PopoverHint';
+import { FormGroupHelperText } from '../FormGroupHelperText';
 
 interface ReduxSelectOption {
   name: string;
@@ -46,26 +45,26 @@ export const ReduxBooleanSelectDropdown = ({
 
   const onSelect = (
     event: React.MouseEvent<Element, MouseEvent> | React.ChangeEvent<Element>,
-    value: string | SelectOptionObject,
+    value: string | SelectOptionObjectDeprecated,
   ) => {
     input.onChange(value);
     setIsExpanded(false);
   };
 
   const formSelect = (
-    <Select
+    <SelectDeprecated
       {...input}
       id={input.name}
       name={input.name}
       isDisabled={disabled}
       isOpen={isExpanded}
       selections={`${Boolean(input.value)}`}
-      onToggle={(isExpanded) => setIsExpanded(isExpanded)}
+      onToggle={(_event, isExpanded) => setIsExpanded(isExpanded)}
       onSelect={onSelect}
       onBlur={(event) => event.stopPropagation()}
       {...extraProps}
     >
-      <SelectOption value="true">
+      <SelectOptionDeprecated value="true">
         <Flex
           flexWrap={{ default: 'nowrap' }}
           spaceItems={{ default: 'spaceItemsSm' }}
@@ -73,8 +72,8 @@ export const ReduxBooleanSelectDropdown = ({
         >
           true
         </Flex>
-      </SelectOption>
-      <SelectOption value="false">
+      </SelectOptionDeprecated>
+      <SelectOptionDeprecated value="false">
         <Flex
           flexWrap={{ default: 'nowrap' }}
           spaceItems={{ default: 'spaceItemsSm' }}
@@ -82,22 +81,23 @@ export const ReduxBooleanSelectDropdown = ({
         >
           false
         </Flex>
-      </SelectOption>
-    </Select>
+      </SelectOptionDeprecated>
+    </SelectDeprecated>
   );
 
   return isFormGroup ? (
     <FormGroup
       fieldId={input.name}
       label={label}
-      validated={touched && error ? 'error' : 'default'}
       isRequired={isRequired}
       labelIcon={extendedHelpText ? <PopoverHint hint={extendedHelpText} /> : undefined}
-      helperText={helpText}
-      helperTextInvalid={touched && error ? `${helpText} ${error}` : ''}
       className={formGroupClass}
     >
       {formSelect}
+
+      <FormGroupHelperText touched={touched} error={error}>
+        {helpText}
+      </FormGroupHelperText>
     </FormGroup>
   ) : (
     formSelect

@@ -12,7 +12,7 @@ exports[`Customer Cloud Subscription modal; should render for AWS 1`] = `
     With this subscription option, the cluster will be provisioned in an AWS account owned by you or your company. This allows you to pay AWS directly for public cloud costs, leveraging your existing relationship.
   </TextContent>
   <Title
-    className="pf-u-mt-sm"
+    className="pf-v5-u-mt-sm"
     headingLevel="h3"
     size="lg"
   >
@@ -77,7 +77,7 @@ exports[`Customer Cloud Subscription modal; should render for GCP 1`] = `
     With this subscription option, the cluster will be provisioned in a Google Cloud account owned by you or your company. This allows you to pay Google Cloud directly for public cloud costs, leveraging your existing relationship.
   </TextContent>
   <Title
-    className="pf-u-mt-sm"
+    className="pf-v5-u-mt-sm"
     headingLevel="h3"
     size="lg"
   >
@@ -101,7 +101,7 @@ exports[`Customer Cloud Subscription modal; should render for GCP 1`] = `
       <ListItem>
         An IAM service account called “osd-ccs-admin” exists with the following roles attached:
         <List
-          className="pf-u-pb-xs"
+          className="pf-v5-u-pb-xs"
         >
           <ListItem>
             DNS Administrator

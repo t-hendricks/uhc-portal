@@ -441,7 +441,9 @@ describe('MachineTypeSelection', () => {
 
         const options = screen
           .getAllByRole('option')
-          .map((option) => option.querySelector('.pf-c-select__menu-item-description').textContent);
+          .map(
+            (option) => option.querySelector('.pf-v5-c-select__menu-item-description').textContent,
+          );
 
         expect(options).not.toContain('m5.12xlarge');
         expect(options).not.toContain('g4dn.2xlarge');
@@ -553,7 +555,9 @@ describe('MachineTypeSelection', () => {
 
         const options = screen
           .getAllByRole('option')
-          .map((option) => option.querySelector('.pf-c-select__menu-item-description').textContent);
+          .map(
+            (option) => option.querySelector('.pf-v5-c-select__menu-item-description').textContent,
+          );
 
         expect(options).not.toContain('m5.12xlarge');
         expect(options).not.toContain('g4dn.2xlarge');
@@ -719,7 +723,9 @@ describe('MachineTypeSelection', () => {
 
         const options = screen
           .getAllByRole('option')
-          .map((option) => option.querySelector('.pf-c-select__menu-item-description').textContent);
+          .map(
+            (option) => option.querySelector('.pf-v5-c-select__menu-item-description').textContent,
+          );
 
         expect(options).toContain('m5.xlarge');
         expect(options).not.toContain('foo.2xbar');

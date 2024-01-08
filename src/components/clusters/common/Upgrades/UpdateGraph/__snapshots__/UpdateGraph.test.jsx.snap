@@ -62,11 +62,7 @@ exports[`<UpdateGraph /> should render when additional versions are available 1`
   <div
     className="ocm-upgrade-additional-versions-available"
   >
-    <InfoCircleIcon
-      color="currentColor"
-      noVerticalAlign={false}
-      size="sm"
-    />
+    <InfoCircleIcon />
     Additional versions available between 1.2.3 and 1.2.4
   </div>
   <Connect(UpgradeAcknowledgeWarning)

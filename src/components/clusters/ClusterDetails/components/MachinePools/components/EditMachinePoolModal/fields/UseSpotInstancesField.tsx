@@ -26,7 +26,7 @@ const UseSpotInstancesField = ({ children, isDisabled }: UseSpotInstancesFieldPr
             {...field}
             label="Use Amazon EC2 Spot Instance"
             isChecked={field.value as boolean}
-            onChange={(checked, event) => {
+            onChange={(event, checked) => {
               field.onChange(event);
             }}
             id={fieldId}

@@ -179,12 +179,9 @@ describe('<CloudRegionComboBox />', () => {
     });
 
     it('should call handleCloudRegionChange on selection', () => {
-      wrapper
-        .find('.cloud-region-combo-box')
-        .at(0)
-        .simulate('change', {
-          target: { value: availableRegions[0].id, selectedIndex: 0 },
-        });
+      wrapper.find('select').simulate('change', {
+        target: { value: availableRegions[0].id, selectedIndex: 0 },
+      });
       expect(handleCloudRegionChange).toBeCalled();
     });
 

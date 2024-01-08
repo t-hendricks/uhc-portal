@@ -1,4 +1,4 @@
-import { SelectOption } from '@patternfly/react-core';
+import { SelectOption as SelectOptionDeprecated } from '@patternfly/react-core/deprecated';
 import { useField } from 'formik';
 import * as React from 'react';
 import useFormikOnChange from '../hooks/useFormikOnChange';
@@ -16,9 +16,9 @@ const TaintEffectField = ({ fieldId, isDisabled }: TaintEffectFieldProps) => {
   const onChange = useFormikOnChange(fieldId);
   return (
     <SelectField value={field.value} fieldId={fieldId} onSelect={onChange} isDisabled={isDisabled}>
-      <SelectOption value="NoSchedule">NoSchedule</SelectOption>
-      <SelectOption value="NoExecute">NoExecute</SelectOption>
-      <SelectOption value="PreferNoSchedule">PreferNoSchedule</SelectOption>
+      <SelectOptionDeprecated value="NoSchedule">NoSchedule</SelectOptionDeprecated>
+      <SelectOptionDeprecated value="NoExecute">NoExecute</SelectOptionDeprecated>
+      <SelectOptionDeprecated value="PreferNoSchedule">PreferNoSchedule</SelectOptionDeprecated>
     </SelectField>
   );
 };
