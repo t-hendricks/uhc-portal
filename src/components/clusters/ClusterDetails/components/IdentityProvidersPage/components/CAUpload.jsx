@@ -16,12 +16,8 @@ import PopoverHint from '../../../../../common/PopoverHint';
 import './CAUpload.scss';
 
 export const MAX_FILE_SIZE = 4000000; // 4MB
-
-export const ACCEPT = {
-  'text/plain': ['.pem', '.crt', '.ca', '.cert'],
-  'application/x-pem-file': ['.pem'],
-  'application/x-x509-ca-cert': ['.crt', '.ca', '.cert'],
-};
+export const ACCEPT =
+  '.pem,.crt,.ca,.cert,application/x-pem-file,application/x-x509-ca-cert,text/plain';
 
 // To be used inside redux-form Field component.
 class CAUpload extends React.Component {
