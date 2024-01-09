@@ -84,6 +84,7 @@ class GCPVPCName extends React.Component {
     // https://github.com/patternfly/patternfly-react/issues/5687
     const value = this.currentValueIrrelevant() ? '' : input.value;
 
+    const { onChange, ...restInput } = input;
     return (
       <FormGroup label={label} fieldId={input.name}>
         {matchesDependencies && vpcs.error && (
@@ -98,7 +99,8 @@ class GCPVPCName extends React.Component {
         <FormSelect
           aria-label={label}
           isDisabled={!(show && items.length > 0)}
-          {...input}
+          {...restInput}
+          onChange={(_event, value) => onChange(value)}
           value={value}
         >
           {options}

@@ -103,6 +103,8 @@ export const GcpVpcSubnetSelectField = ({
     return options;
   }, [emptyPlaceholder, items, placeholder, showOptions, vpcs.pending]);
 
+  const { onChange, ...restInput } = input;
+
   return (
     <FormGroup label={label} fieldId={input.name}>
       {matchesDependencies && vpcs.error && (
@@ -114,7 +116,12 @@ export const GcpVpcSubnetSelectField = ({
           Verify that your entered service account details are correct
         </Alert>
       )}
-      <FormSelect aria-label={label} isDisabled={!(showOptions && items.length > 0)} {...input}>
+      <FormSelect
+        aria-label={label}
+        isDisabled={!(showOptions && items.length > 0)}
+        {...restInput}
+        onChange={(_event, value) => onChange(value)}
+      >
         {selectOptions}
       </FormSelect>
 

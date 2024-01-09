@@ -121,6 +121,8 @@ export const GcpVpcNameSelectField = ({
     isCurrentValueIrrelevant,
   ]);
 
+  const { onChange, ...restInput } = input;
+
   return (
     <FormGroup label={label} fieldId={input.name}>
       {matchesDependencies && vpcs.error && (
@@ -132,7 +134,12 @@ export const GcpVpcNameSelectField = ({
           Verify that your entered service account details are correct
         </Alert>
       )}
-      <FormSelect aria-label={label} isDisabled={!(showOptions && items.length > 0)} {...input}>
+      <FormSelect
+        aria-label={label}
+        isDisabled={!(showOptions && items.length > 0)}
+        {...restInput}
+        onChange={(_event, value) => onChange(value)}
+      >
         {selectOptions}
       </FormSelect>
 

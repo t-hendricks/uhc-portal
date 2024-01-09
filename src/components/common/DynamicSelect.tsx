@@ -144,6 +144,8 @@ class DynamicSelect extends React.Component<Props> {
     // https://github.com/patternfly/patternfly-react/issues/5687
     const value = this.currentValueIrrelevant() ? '' : input.value;
 
+    const { onChange, ...restInput } = input;
+
     return (
       <FormGroup label={label} labelIcon={labelIcon} fieldId={input.name} isRequired={isRequired}>
         {error}
@@ -151,7 +153,8 @@ class DynamicSelect extends React.Component<Props> {
           aria-label={label}
           isDisabled={!(show && items.length > 0)}
           validated={meta.touched && meta.error ? 'error' : 'default'}
-          {...input}
+          {...restInput}
+          onChange={(_event, value) => onChange(value)}
           value={value}
         >
           {options}

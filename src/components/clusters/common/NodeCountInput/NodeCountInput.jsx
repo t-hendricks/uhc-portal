@@ -165,12 +165,15 @@ class NodeCountInput extends React.Component {
       />
     );
 
+    const { onChange, ...restInput } = input;
+
     const formSelect = (
       <FormSelect
         aria-label="Compute nodes"
         isDisabled={notEnoughQuota}
         className="quota-dropdown"
-        {...input}
+        onChange={(_event, value) => onChange(value)}
+        {...restInput}
       >
         {options.map((value) => option(value))}
       </FormSelect>
@@ -231,6 +234,7 @@ NodeCountInput.propTypes = {
     name: PropTypes.string.isRequired,
     value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     onChange: PropTypes.func.isRequired,
+    onBlur: PropTypes.func.isRequired,
   }),
   cloudProviderID: PropTypes.string.isRequired,
   product: PropTypes.oneOf(Object.keys(normalizedProducts)).isRequired,

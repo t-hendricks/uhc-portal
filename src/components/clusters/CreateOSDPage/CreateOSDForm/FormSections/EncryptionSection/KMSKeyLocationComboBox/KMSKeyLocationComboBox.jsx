@@ -17,8 +17,13 @@ class KMSKeyLocationComboBox extends React.Component {
 
   render() {
     const { kmsRegionsArray, input } = this.props;
+    const { onChange, ...restInput } = input;
     return (
-      <FormSelect aria-label="KMS location" {...input}>
+      <FormSelect
+        aria-label="KMS location"
+        onChange={(_event, value) => onChange(value)}
+        {...restInput}
+      >
         {kmsRegionsArray.map((location) => (
           <FormSelectOption key={location} value={location} label={location} />
         ))}

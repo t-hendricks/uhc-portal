@@ -17,7 +17,7 @@ exports[`<DynamicSelect> empty data: empty 1`] = `
     isDisabled={true}
     isRequired={false}
     onBlur={[Function]}
-    onChange={[MockFunction]}
+    onChange={[Function]}
     onFocus={[Function]}
     ouiaSafe={true}
     validated="default"
@@ -47,7 +47,7 @@ exports[`<DynamicSelect> error, touched: shows error 1`] = `
     isDisabled={true}
     isRequired={false}
     onBlur={[Function]}
-    onChange={[MockFunction]}
+    onChange={[Function]}
     onFocus={[Function]}
     ouiaSafe={true}
     validated="error"
@@ -76,7 +76,7 @@ exports[`<DynamicSelect> error, untouched: no error 1`] = `
     isDisabled={true}
     isRequired={false}
     onBlur={[Function]}
-    onChange={[MockFunction]}
+    onChange={[Function]}
     onFocus={[Function]}
     ouiaSafe={true}
     validated="default"
@@ -105,7 +105,7 @@ exports[`<DynamicSelect> gets data: items 1`] = `
     isDisabled={false}
     isRequired={false}
     onBlur={[Function]}
-    onChange={[MockFunction]}
+    onChange={[Function]}
     onFocus={[Function]}
     ouiaSafe={true}
     validated="default"
@@ -145,7 +145,7 @@ exports[`<DynamicSelect> gets data: loading 1`] = `
     isDisabled={true}
     isRequired={false}
     onBlur={[Function]}
-    onChange={[MockFunction]}
+    onChange={[Function]}
     onFocus={[Function]}
     ouiaSafe={true}
     validated="default"
@@ -174,21 +174,7 @@ exports[`<DynamicSelect> resets when selected value no longer valid option: new 
     isDisabled={false}
     isRequired={false}
     onBlur={[Function]}
-    onChange={
-      [MockFunction] {
-        "calls": Array [
-          Array [
-            "",
-          ],
-        ],
-        "results": Array [
-          Object {
-            "type": "return",
-            "value": undefined,
-          },
-        ],
-      }
-    }
+    onChange={[Function]}
     onFocus={[Function]}
     ouiaSafe={true}
     validated="default"
@@ -228,7 +214,7 @@ exports[`<DynamicSelect> without dependencies: blank 1`] = `
     isDisabled={true}
     isRequired={false}
     onBlur={[Function]}
-    onChange={[MockFunction]}
+    onChange={[Function]}
     onFocus={[Function]}
     ouiaSafe={true}
     validated="default"
