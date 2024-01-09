@@ -15,10 +15,6 @@ import {
 import links from '~/common/installLinks.mjs';
 import { checkNoProxyDomains, validateCA, validateUrl } from '~/common/validators';
 import { stringToArray } from '~/common/helpers';
-import {
-  ACCEPT,
-  MAX_FILE_SIZE,
-} from '~/components/clusters/ClusterDetails/components/IdentityProvidersPage/components/CAUpload';
 import { constants } from '~/components/clusters/CreateOSDPage/CreateOSDForm/CreateOSDFormConstants';
 import {
   DISABLED_NO_PROXY_PLACEHOLDER,
@@ -32,6 +28,13 @@ import ExternalLink from '~/components/common/ExternalLink';
 import { useFormState } from '~/components/clusters/wizards/hooks';
 import { FileUploadField, TextInputField } from '~/components/clusters/wizards/form';
 import { FieldId, StepName } from '~/components/clusters/wizards/osd/constants';
+
+export const MAX_FILE_SIZE = 4000000; // 4MB
+export const ACCEPT = {
+  'text/plain': ['.pem', '.crt', '.ca', '.cert'],
+  'application/x-pem-file': ['.pem'],
+  'application/x-x509-ca-cert': ['.crt', '.ca', '.cert'],
+};
 
 export const ClusterProxy = () => {
   const {
