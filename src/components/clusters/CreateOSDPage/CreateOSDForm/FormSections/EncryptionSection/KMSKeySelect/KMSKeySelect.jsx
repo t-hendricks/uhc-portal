@@ -87,6 +87,8 @@ class KMSKeySelect extends React.Component {
     // https://github.com/patternfly/patternfly-react/issues/5687
     const value = this.currentValueIrrelevant() ? '' : input.value;
 
+    const { onChange, ...restInput } = input;
+
     return (
       <FormGroup label={label} labelIcon={labelIcon} fieldId={input.name}>
         {matchesDependencies && requestStatus.error && (
@@ -95,7 +97,8 @@ class KMSKeySelect extends React.Component {
         <FormSelect
           aria-label={label}
           isDisabled={!(show && items.length > 0)}
-          {...input}
+          {...restInput}
+          onChange={(_event, value) => onChange(value)}
           value={value}
         >
           {options}
