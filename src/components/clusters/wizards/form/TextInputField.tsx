@@ -92,7 +92,7 @@ export const TextInputField = ({
           validated={meta.touched && meta.error ? 'error' : 'default'}
           onBlur={() => form.setFieldTouched(name, true)}
           onChange={(event, _) => field.onChange(event)}
-          value={field.value || ''}
+          value={field.value || (type === 'number' ? 0 : '')}
           type={type}
           {...input}
         />
