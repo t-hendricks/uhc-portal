@@ -43,7 +43,7 @@ const sortVPCOptions = (vpcA: FuzzyEntryType, vpcB: FuzzyEntryType) => {
   if (vpcB.disabled && !vpcA.disabled) {
     return -1;
   }
-  return vpcA.key.localeCompare(vpcB.key);
+  return vpcA.label.localeCompare(vpcB.label);
 };
 
 const VPCDropdown = ({
@@ -76,9 +76,7 @@ const VPCDropdown = ({
     selectedVPCID: string | SelectOptionObjectDeprecated,
   ) => {
     // We want the form to store the original VPC object, rather than the option items
-    const selectedItem = originalVPCs.find(
-      (vpc) => vpc.id === selectedVPCID || vpc.name === selectedVPCID,
-    );
+    const selectedItem = originalVPCs.find((vpc) => vpc.id === selectedVPCID);
     if (selectedItem) {
       inputProps.onChange(selectedItem);
       setIsOpen(false);
@@ -95,10 +93,10 @@ const VPCDropdown = ({
 
     const vpcOptions = originalVPCs.map((vpcItem) => {
       const isDisabledVPC = !vpcHasPrivateSubnets(vpcItem);
-      const optionId = vpcItem.name || (vpcItem.id as string);
+      const optionId = vpcItem.id as string;
       return {
-        key: optionId,
-        value: optionId,
+        entryId: optionId,
+        label: vpcItem.name || optionId,
         description: isDisabledVPC ? 'This VPC has no private subnets' : '',
         disabled: isDisabledVPC,
       };
@@ -115,10 +113,8 @@ const VPCDropdown = ({
       return;
     }
 
-    const isValidSelection = originalVPCs.some(
-      (item) => item?.id === selectedVPC.id || item?.name === selectedVPC.name,
-    );
-    if (originalVPCs.length > 0 && (selectedVPC.id || selectedVPC.name) && !isValidSelection) {
+    const isValidSelection = originalVPCs.some((item) => item?.id === selectedVPC.id);
+    if (originalVPCs.length > 0 && selectedVPC.id && !isValidSelection) {
       inputProps.onChange({ id: '', name: '' } as SelectOptionObjectDeprecated);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -155,11 +151,11 @@ const VPCDropdown = ({
               onToggle={onToggle}
               onSelect={onSelect}
               sortFn={sortVPCOptions}
-              selected={selectedVPC?.name || selectedVPC?.id}
+              selectedEntryId={selectedVPC?.id}
               selectionData={selectData.options}
               isDisabled={vpcResponse.pending || selectData.options.length === 0}
               placeholderText={selectData.placeholder}
-              inlineFilterPlaceholderText="Filter by VPC"
+              inlineFilterPlaceholderText="Filter by VPC ID / name"
               validated={touched && error ? 'error' : 'default'}
             />
           </FlexItem>
