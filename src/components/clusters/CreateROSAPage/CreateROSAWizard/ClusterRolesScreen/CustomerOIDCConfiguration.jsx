@@ -108,8 +108,8 @@ function CustomerOIDCConfiguration({
   const selectionData = useMemo(
     () =>
       oidcConfigs.map((oidcConfig) => ({
-        key: oidcConfig.id,
-        value: oidcConfig.id,
+        entryId: oidcConfig.id,
+        label: oidcConfig.id,
         description: oidcConfig.issuer_url ? `Issuer URL: ${oidcConfig.issuer_url}` : undefined,
       })),
     [oidcConfigs],
@@ -148,7 +148,7 @@ function CustomerOIDCConfiguration({
                   isOpen={isDropdownOpen}
                   onToggle={(_ev, isOpen) => setIsDropdownOpen(isOpen)}
                   onSelect={onSelect}
-                  selected={byoOidcConfigID}
+                  selectedEntryId={byoOidcConfigID}
                   selectionData={selectionData}
                   isDisabled={oidcConfigs.length === 0 || isLoading}
                   placeholderText={

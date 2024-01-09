@@ -143,7 +143,7 @@ describe('<VPCDropdown />', () => {
       expect(await screen.findByText(/^select a vpc$/i)).toBeInTheDocument();
       const selectDropdown = screen.getByRole('button', { name: 'Options menu' });
       await user.click(selectDropdown);
-      expect(screen.getByPlaceholderText('Filter by VPC')).toBeInTheDocument();
+      expect(screen.getByPlaceholderText('Filter by VPC ID / name')).toBeInTheDocument();
     });
 
     it('shows the selected cloud provider region information', () => {
