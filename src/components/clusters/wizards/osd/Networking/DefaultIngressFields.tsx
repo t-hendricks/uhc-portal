@@ -44,7 +44,7 @@ export const DefaultIngressFields: React.FC<DefaultIngressFieldsProps> = () => {
             }}
           />
 
-          <FormGroupHelperText error={routeSelectorFieldMeta.error}>
+          <FormGroupHelperText touched error={routeSelectorFieldMeta.error}>
             {RouteSelectorsHelpText}
           </FormGroupHelperText>
         </FormGroup>
@@ -64,7 +64,7 @@ export const DefaultIngressFields: React.FC<DefaultIngressFieldsProps> = () => {
             }}
           />
 
-          <FormGroupHelperText error={excludedNamespacesFieldMeta.error}>
+          <FormGroupHelperText touched error={excludedNamespacesFieldMeta.error}>
             {ExcludedNamespacesHelpText}
           </FormGroupHelperText>
         </FormGroup>
