@@ -47,7 +47,7 @@ function ReduxCheckbox(props) {
             {...extraProps}
             label={
               <>
-                <span>{label}</span>
+                {label}
                 {isRequired ? (
                   <span
                     className="pf-v5-c-form__label-required redux-checkbox-required"
