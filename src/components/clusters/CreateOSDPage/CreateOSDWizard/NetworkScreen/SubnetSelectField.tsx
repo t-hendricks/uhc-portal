@@ -61,10 +61,11 @@ export const SubnetSelectField = ({
         isSubnetMatchingPrivacy(subnet, privacy) &&
         (allowedAZ === undefined || allowedAZ.includes(subnetAZ))
       ) {
+        const subnetId = subnet.subnet_id as string;
         const entry: FuzzyEntryType = {
-          key: subnet.name || subnet.subnet_id || 'unknown',
-          groupKey: subnetAZ,
-          value: subnet,
+          groupId: subnetAZ,
+          entryId: subnetId,
+          label: subnet.name || subnetId,
         };
         if (subnetsByAZ[subnetAZ]) {
           subnetsByAZ[subnetAZ].push(entry);
@@ -104,9 +105,10 @@ export const SubnetSelectField = ({
   }, [withAutoSelect, hasOptions, subnetList, selectedSubnet]);
 
   const onSelect = useCallback(
-    (_: MouseEvent | ChangeEvent, selectedSubnet: string | SelectOptionObjectDeprecated) => {
-      input.onChange(selectedSubnet);
-      setSelectedSubnet(selectedSubnet);
+    (_: MouseEvent | ChangeEvent, selectedSubnetId: string | SelectOptionObjectDeprecated) => {
+      const subnet = subnetList.find((subnet) => subnet.subnet_id === selectedSubnetId);
+      input.onChange(subnet);
+      setSelectedSubnet(subnet);
       setIsExpanded(false);
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -129,12 +131,12 @@ export const SubnetSelectField = ({
             isOpen={isExpanded}
             onToggle={(_, isExpanded) => setIsExpanded(isExpanded)}
             onSelect={onSelect}
-            selected={selectedSubnet?.name || selectedSubnet?.subnet_id}
+            selectedEntryId={selectedSubnet?.subnet_id}
             selectionData={subnetsByAZ}
             isDisabled={isDisabled || !hasOptions}
             placeholderText={placeholder(hasOptions, hasSubnetNames)}
             truncation={TRUNCATE_THRESHOLD}
-            inlineFilterPlaceholderText={`Filter by subnet ${hasSubnetNames ? 'name' : 'ID'}`}
+            inlineFilterPlaceholderText="Filter by subnet ID / name"
             validated={inputError ? 'error' : undefined}
           />
         </FlexItem>

@@ -2,61 +2,6 @@ import React from 'react';
 import { render, screen, checkAccessibility } from '~/testUtils';
 import { SubnetSelectField, SubnetSelectFieldProps } from './SubnetSelectField';
 
-describe('SubnetSelectField tests', () => {
-  beforeEach(() => {
-    jest.clearAllMocks();
-  });
-
-  it('select subnet', async () => {
-    // render dropdown
-    const { container, user } = render(<SubnetSelectField {...defaultProps} />);
-
-    // click it open
-    const dropdown = screen.getByText(/subnet/i);
-    user.click(dropdown);
-    expect(await screen.findByPlaceholderText(/Filter by subnet/i)).toBeInTheDocument();
-
-    // type something into search
-    const searchbox = screen.getByPlaceholderText(/Filter by subnet/i);
-    await user.clear(searchbox);
-    await user.type(searchbox, '1c');
-
-    // click option
-    expect(
-      await screen.findByRole('option', {
-        name: /ddonati-test403-bsrnf-private-us-east- 1c/i,
-      }),
-    ).toBeInTheDocument();
-    let option = screen.getByRole('option', {
-      name: /ddonati-test403-bsrnf-private-us-east- 1c/i,
-    });
-    user.click(option);
-    expect(
-      await screen.findByText(/ddonati-test403-bsrnf-private-us-east-1c/i),
-    ).toBeInTheDocument();
-
-    // do the same for a truncated one
-    user.click(dropdown);
-    user.type(searchbox, 'make');
-    expect(
-      await screen.findByRole('option', {
-        name: /ddonati-test403-bsrnf- make -this-big-private-us-east-1d/i,
-      }),
-    ).toBeInTheDocument();
-
-    option = screen.getByRole('option', {
-      name: /ddonati-test403-bsrnf- make -this-big-private-us-east-1d/i,
-    });
-    user.click(option);
-    expect(
-      await screen.findByText(/ddonati-test4... his-big-private-us-east-1d/i),
-    ).toBeInTheDocument();
-
-    // Assert
-    await checkAccessibility(container);
-  });
-});
-
 const selectedVPC = {
   name: 'ddonati-test403-bsrnf-vpc',
   id: 'vpc-04cbedcecd229b9d7',
@@ -93,7 +38,13 @@ const selectedVPC = {
     },
     {
       subnet_id: 'subnet-0e5424551f5f2e9f4',
-      name: 'ddonati-test403-bsrnf-private-us-east-1c',
+      name: 'ddonati-test403-bsrnf-private-us-east-1c1',
+      public: false,
+      availability_zone: 'us-east-1c',
+    },
+    {
+      subnet_id: 'subnet-052a82c226608a8ee',
+      name: 'ddonati-test403-bsrnf-private-us-east-1c2',
       public: false,
       availability_zone: 'us-east-1c',
     },
@@ -104,22 +55,10 @@ const selectedVPC = {
       availability_zone: 'us-east-1a',
     },
     {
-      subnet_id: 'subnet-052a82c226608a8ee',
-      name: 'ddonati-test403-bsrnf-private-us-east-1f',
-      public: false,
-      availability_zone: 'us-east-1f',
-    },
-    {
       subnet_id: 'subnet-07d9cfd4551bfeb48',
       name: 'ddonati-test403-bsrnf-public-us-east-1d',
       public: true,
       availability_zone: 'us-east-1d',
-    },
-    {
-      subnet_id: 'subnet-0002e6f75e3317496',
-      name: 'ddonati-test403-bsrnf-public-us-east-1f',
-      public: true,
-      availability_zone: 'us-east-1f',
     },
   ],
 };
@@ -144,3 +83,80 @@ const defaultProps: SubnetSelectFieldProps = {
   withAutoSelect: false,
   selectedVPC,
 };
+
+describe('SubnetSelectField', () => {
+  it('is accessible', async () => {
+    // render dropdown
+    const { container } = render(<SubnetSelectField {...defaultProps} />);
+
+    // Assert
+    await checkAccessibility(container);
+  });
+
+  it('renders the private subnets when privacy=private', async () => {
+    // render dropdown
+    const { user } = render(<SubnetSelectField {...defaultProps} />);
+
+    // click it open
+    const placeHolder = screen.getByText(/Subnet name/i);
+    user.click(placeHolder);
+
+    // Verify the number of options and that only private subnets are shown
+    expect(await screen.findAllByRole('option')).toHaveLength(5);
+
+    expect(
+      await screen.findByRole('option', {
+        name: /ddonati-test403-bsrnf-private-us-east-1a/i,
+      }),
+    ).toBeInTheDocument();
+
+    expect(
+      screen.queryByRole('option', {
+        name: /ddonati-test403-bsrnf-public-us-east-1a/i,
+      }),
+    ).not.toBeInTheDocument();
+  });
+
+  it('renders the public subnets when privacy=public', async () => {
+    // render dropdown
+    const { user } = render(<SubnetSelectField {...defaultProps} privacy="public" />);
+
+    // click it open
+    const placeHolder = screen.getByText(/Subnet name/i);
+    user.click(placeHolder);
+
+    // Verify the number of options and that only private subnets are shown
+    expect(await screen.findAllByRole('option')).toHaveLength(4);
+
+    expect(
+      await screen.findByRole('option', {
+        name: /ddonati-test403-bsrnf-public-us-east-1a/i,
+      }),
+    ).toBeInTheDocument();
+
+    expect(
+      screen.queryByRole('option', {
+        name: /ddonati-test403-bsrnf-private-us-east-1a/i,
+      }),
+    ).not.toBeInTheDocument();
+  });
+
+  it('filters subnet by text', async () => {
+    // render dropdown
+    const { user } = render(<SubnetSelectField {...defaultProps} />);
+
+    // click it open
+    const placeHolder = screen.getByText(/Subnet name/i);
+    user.click(placeHolder);
+    expect(await screen.findByPlaceholderText(/Filter by subnet/i)).toBeInTheDocument();
+
+    // type something matching into search
+    const searchBox = screen.getByPlaceholderText(/Filter by subnet/i);
+    await user.clear(searchBox);
+    await user.type(searchBox, '1c');
+
+    // We just assert that there's the expected number of results.
+    // Verifying which those are is tested in FuzzySelect
+    expect(await screen.findAllByRole('option')).toHaveLength(2);
+  });
+});
