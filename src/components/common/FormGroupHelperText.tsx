@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { isValidElement } from 'react';
 
 import {
   FormHelperText,
@@ -43,9 +43,12 @@ export const FormGroupHelperText = ({
     return null;
   }
 
+  // We must ensure "error" can be rendered, see https://issues.redhat.com/browse/OCMUI-1231
+  const isValidError = typeof error === 'string' || isValidElement(error);
+
   return (
     <FormHelperText>
-      {touched && error ? (
+      {touched && error && isValidError ? (
         <HelperText id={id}>
           <HelperTextItem variant="error" icon={<ExclamationCircleIcon />}>
             {error}
