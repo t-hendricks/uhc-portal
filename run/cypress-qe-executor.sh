@@ -9,6 +9,8 @@ if [ $1 ]
 then
   if [ $1 = 'staging' ]; then
     ENVIRONMENT="qaprodauth.console.redhat.com"
+  elif [ $1 = 'staging-new' ]; then
+    ENVIRONMENT="console.dev.redhat.com"
   elif [ $1 = 'production' ]; then
     ENVIRONMENT="console.redhat.com"
   elif [ $1 = 'production-preview' ]; then
@@ -19,6 +21,12 @@ then
 fi
 if [ $2 ]; then BROWSER="$2"; fi
 if [ $3 ]; then TAGS="$3"; fi
+
+if [[ $1 =~ "production" ]]; then
+  ENV_AUT="production"
+else
+  ENV_AUT="staging"
+fi
 
 # TAGS are comma seperated strings and will be combination of day 0/1/2/3 and products or common tags."
 # TAGS are filtered with day1,day2 and day3 categories to spilt the execution model.
@@ -51,7 +59,7 @@ cat > cypress.env.json << EOF
 "QE_AWS_ACCESS_KEY_SECRET": "${TEST_QE_AWS_ACCESS_KEY_SECRET}",
 "QE_AWS_REGION": "${TEST_QE_AWS_REGION}",
 "QE_AWS_ID": "${TEST_QE_AWS_ID}",
-"QE_ENV_AUT" : "$1",
+"QE_ENV_AUT" : "${ENV_AUT}",
 "QE_ACCOUNT_ROLE_PREFIX" : "cypress-account-roles",
 "QE_OCM_ROLE_PREFIX" : "cypress-ocm-role",
 "QE_USER_ROLE_PREFIX" : "cypress-user-role"
