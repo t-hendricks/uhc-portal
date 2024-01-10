@@ -38,9 +38,9 @@ const GovCloudForm = ({
   onSubmitSuccess: () => void;
   hasGovEmail: boolean;
 }) => {
-  const [isUSCitizen, setIsUSCitizen] = React.useState(false);
-  const [backgroundCheck, setBackgroundCheck] = React.useState(false);
-  const [securityTraining, setSecurityTraining] = React.useState(false);
+  const [isUSPerson, setIsUSPerson] = React.useState(false);
+  const [govContract, setGovContract] = React.useState(false);
+  const [authPerson, setAuthPerson] = React.useState(false);
   const [fileUpload, setFileUpload] = React.useState<File>();
   const [uploadError, setUploadError] = React.useState<string>();
   const [fileReadError, setFileReadError] = React.useState<string>();
@@ -48,7 +48,7 @@ const GovCloudForm = ({
   const [isReadingFile, setIsReadingFile] = React.useState(false);
   const [contractID, setContractID] = React.useState<string>();
 
-  const formReady = isUSCitizen && backgroundCheck && securityTraining;
+  const formReady = isUSPerson && govContract && authPerson;
   return (
     <Card style={{ maxWidth: '80rem', borderTopColor: '#e00', borderTopStyle: 'solid' }}>
       <CardTitle>
@@ -73,38 +73,44 @@ const GovCloudForm = ({
           <StackItem>
             <TextContent>
               <Text component={TextVariants.p}>
-                Federal and other government agencies, commercial organizations, and FISMA R&D
-                Universities wishing to utilize the FedRAMP High (agency) approved Red Hat OpenShift
-                Service on AWS (ROSA) environment should utilize the following form in order to
-                request access to use the ROSA offering. Federal and government agencies can be
-                granted access to the ROSA environment without further verification. However,
-                commercial organizations and FISMA R&D Universities will need to provide
-                documentation to show that they are supporting a government contract or in the
-                process of bidding on a government contract (RFP, RFI, pre-bid stage) as well as
-                being subject to a background check, confirmation of US Person and agreement to
-                Rules of Behavior. Upon submission, this form will be processed by Red Hat. If
-                further information is required you will receive a follow up email, or you will
-                receive instructions on how to access the service.
+                Red Hat OpenShift Service on AWS (ROSA) in the GovCloud Region has been authorized
+                (agency) under the Federal Risk Assessment and Management Program (FedRAMP) High and
+                DoD Cloud Computing Security Requirements Guide (SRG). Access to the service is
+                limited to U.S. government entities and U.S. government customers supporting
+                government contractors and/or grants.
+              </Text>
+              <Text component={TextVariants.p}>
+                Federal and government agencies can be granted access to the ROSA environment
+                without further verification. However, commercial organizations and FISMA R&D
+                universities will need to provide documentation to show that they are supporting a
+                government contract or in the process of bidding on a government contract (RFP, RFI,
+                pre-bid stage), confirmation of U.S. Person only access at the root level and
+                agreement to the FedRAMP Rules of Behavior.
+              </Text>
+              <Text component={TextVariants.p}>
+                Upon submission, this form will be processed by Red Hat. If further information is
+                required you will receive a follow up email, or you will receive instructions on how
+                to access the service. By checking the boxes below you confirm that:
               </Text>
             </TextContent>
           </StackItem>
           <StackItem>
             <Checkbox
-              label="I am a U.S. citizen."
-              isChecked={isUSCitizen}
-              onChange={(_event, value) => setIsUSCitizen(value)}
+              label="Requestor is U.S. Person as defined by the International Traffic in Arms Regulations, 22 CFR 120.62."
+              isChecked={isUSPerson}
+              onChange={(_event, value) => setIsUSPerson(value)}
               id="citizen-checkbox"
             />
             <Checkbox
-              label="I have undergone a successful background check sponsored by my government agency or government contract sponsoring agency."
-              isChecked={backgroundCheck}
-              onChange={(_event, value) => setBackgroundCheck(value)}
+              label="Requestor will use the service to support a U.S. government contract and/or grant."
+              isChecked={govContract}
+              onChange={(_event, value) => setGovContract(value)}
               id="check-checkbox"
             />
             <Checkbox
-              label="I will be subject to initial and annual refresher security training."
-              isChecked={securityTraining}
-              onChange={(_event, value) => setSecurityTraining(value)}
+              label="Requestor will only authorize US Persons to manage and access root account keys to the service."
+              isChecked={authPerson}
+              onChange={(_event, value) => setAuthPerson(value)}
               id="training-checkbox"
             />
           </StackItem>
@@ -119,7 +125,7 @@ const GovCloudForm = ({
                       target="_blank"
                       rel="noreferrer noopener"
                     >
-                      US Spending government
+                      U.S. Spending government
                     </a>{' '}
                     website.
                   </>
@@ -224,9 +230,9 @@ const GovCloudForm = ({
                       await fedrampService.createIncident(
                         fileUpload,
                         {
-                          isUSCitizen,
-                          backgroundCheck,
-                          securityTraining,
+                          isUSPerson,
+                          authPerson,
+                          govContract,
                         },
                         contractID,
                       );
