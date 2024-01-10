@@ -1,11 +1,17 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { screen, checkAccessibility, TestRouter, render } from '~/testUtils';
 
 import InstallBareMetal from '../InstallBareMetal';
 
 describe('BareMetal install', () => {
-  it('renders correctly', () => {
-    const wrapper = shallow(<InstallBareMetal />);
-    expect(wrapper).toMatchSnapshot();
+  it('is accessible', async () => {
+    const { container } = render(
+      <TestRouter>
+        <InstallBareMetal />
+      </TestRouter>,
+    );
+
+    expect(await screen.findByText('Create an OpenShift Cluster: Bare Metal')).toBeInTheDocument();
+    await checkAccessibility(container);
   });
 });

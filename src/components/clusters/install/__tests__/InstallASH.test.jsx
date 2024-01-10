@@ -1,11 +1,19 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { screen, checkAccessibility, TestRouter, render } from '~/testUtils';
 
 import InstallASH from '../InstallASH';
 
 describe('InstallASH', () => {
-  it('renders correctly', () => {
-    const wrapper = shallow(<InstallASH />);
-    expect(wrapper).toMatchSnapshot();
+  it('is accessible', async () => {
+    const { container } = render(
+      <TestRouter>
+        <InstallASH />
+      </TestRouter>,
+    );
+
+    expect(
+      await screen.findByText('Create an OpenShift Cluster: Azure Stack Hub'),
+    ).toBeInTheDocument();
+    await checkAccessibility(container);
   });
 });

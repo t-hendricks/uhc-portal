@@ -1,11 +1,17 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { screen, checkAccessibility, TestRouter, render } from '~/testUtils';
 
 import InstallGCP from '../InstallGCP';
 
 describe('InstallGCP', () => {
-  it('renders correctly', () => {
-    const wrapper = shallow(<InstallGCP />);
-    expect(wrapper).toMatchSnapshot();
+  it('is accessible', async () => {
+    const { container } = render(
+      <TestRouter>
+        <InstallGCP />
+      </TestRouter>,
+    );
+
+    expect(await screen.findByText('Create an OpenShift Cluster: GCP')).toBeInTheDocument();
+    await checkAccessibility(container);
   });
 });
