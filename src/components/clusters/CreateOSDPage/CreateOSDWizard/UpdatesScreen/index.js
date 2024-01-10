@@ -15,6 +15,7 @@ const mapStateToProps = (state, ownProps) => {
   const isHypershiftSelected = valueSelector(state, 'hypershift') === 'true';
   const isAutomaticUpgrade = valueSelector(state, 'upgrade_policy') === 'automatic';
   const product = valueSelector(state, 'product');
+  const machinePoolsSubnets = valueSelector(state, 'machine_pools_subnets');
 
   return {
     initialValues: createOSDInitialValues({
@@ -24,6 +25,7 @@ const mapStateToProps = (state, ownProps) => {
       isMultiAz,
       isTrialDefault: ownProps.isTrialDefault,
       isHypershiftSelected,
+      machinePoolsSubnets,
     }),
     isAutomaticUpgrade,
     product,

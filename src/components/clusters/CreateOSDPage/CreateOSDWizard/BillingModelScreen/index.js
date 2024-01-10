@@ -14,6 +14,7 @@ const mapStateToProps = (state, ownProps) => {
   const isMultiAz = valueSelector(state, 'multi_az') === 'true';
   const isByoc = valueSelector(state, 'byoc') === 'true';
   const billingModel = valueSelector(state, 'billing_model');
+  const machinePoolsSubnets = valueSelector(state, 'machine_pools_subnets');
 
   return {
     initialValues: createOSDInitialValues({
@@ -21,6 +22,7 @@ const mapStateToProps = (state, ownProps) => {
       isMultiAz,
       isByoc,
       isTrialDefault: ownProps.isTrialDefault,
+      machinePoolsSubnets,
     }),
     byocSelected: isByoc,
     billingModel,
