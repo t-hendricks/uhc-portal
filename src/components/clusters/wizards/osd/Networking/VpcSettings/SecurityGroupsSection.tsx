@@ -87,7 +87,8 @@ const SecurityGroupsSection = () => {
             label="Apply the same security groups to all node types (control plane, infrastructure, worker)"
             input={{
               ...getFieldProps(`${fieldId}.applyControlPlaneToAll`),
-              onChange: setValue(`${fieldId}.applyControlPlaneToAll`),
+              onChange: (_event: React.FormEvent<HTMLInputElement>, checked: boolean) =>
+                setFieldValue(`${fieldId}.applyControlPlaneToAll`, checked),
             }}
           />
           <Field
