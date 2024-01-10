@@ -29,7 +29,7 @@ const mapStateToProps = (state, ownProps) => {
   const selectedVPC = valueSelector(state, 'selected_vpc') ?? { id: '', name: '' };
   const clusterVersionRawId = valueSelector(state, 'cluster_version.raw_id');
   const imds = valueSelector(state, 'imds');
-  const machinePools = valueSelector(state, 'machine_pools_subnets');
+  const machinePoolsSubnets = valueSelector(state, 'machine_pools_subnets');
   const maxWorkerVolumeSizeGiB = getWorkerNodeVolumeSizeMaxGiB(clusterVersionRawId);
 
   return {
@@ -44,10 +44,10 @@ const mapStateToProps = (state, ownProps) => {
     imds,
     clusterVersionRawId,
     minNodesRequired: isHypershiftSelected
-      ? getMinNodesRequiredHypershift(machinePools?.length)
+      ? getMinNodesRequiredHypershift(machinePoolsSubnets?.length)
       : getMinNodesRequired(true, isByoc, isMultiAz),
     nodeIncrement: isHypershiftSelected
-      ? getNodeIncrementHypershift(machinePools?.length)
+      ? getNodeIncrementHypershift(machinePoolsSubnets?.length)
       : getNodeIncrement(isMultiAz),
     isHypershiftCluster: isHypershiftSelected,
     maxWorkerVolumeSizeGiB,
@@ -63,8 +63,9 @@ const mapStateToProps = (state, ownProps) => {
       isByoc,
       isTrialDefault: ownProps.isTrialDefault,
       isHypershiftSelected,
+      machinePoolsSubnets,
     }),
-    poolNumber: machinePools?.length,
+    poolNumber: machinePoolsSubnets?.length,
   };
 };
 
