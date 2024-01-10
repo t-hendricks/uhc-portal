@@ -1,5 +1,5 @@
-import './RosaServicePage.scss';
 import React from 'react';
+import PropTypes from 'prop-types';
 import {
   Button,
   CardBody,
@@ -35,6 +35,8 @@ import { ListTextLabelLinkCard } from '../../common/ListTextLabelLinkCard/ListTe
 import { ProductBanner } from '../../common/ProductBanner';
 import docLinks from '../../../common/installLinks.mjs';
 import OpenShiftProductIcon from '../../../styles/images/OpenShiftProductIcon.svg';
+
+import './RosaServicePage.scss';
 
 const rosaBannerContents = {
   icon: <img src={OpenShiftProductIcon} alt="OpenShift" />,
@@ -83,6 +85,32 @@ const AWSRedHatVerticalLogo = () => (
     <AWSLogo height="2.5em" width="5em" />
   </Stack>
 );
+
+const ExpandableListCard = ({ items }) => (
+  <Card>
+    <List isPlain isBordered>
+      {items.map(({ title, contents }) => (
+        <ListItem className="rosa-expandable-list-item" key={title}>
+          <ExpandableSection
+            className="rosa-expandable-section"
+            toggleContent={<Text component={TextVariants.h3}>{title}</Text>}
+            displaySize="lg"
+          >
+            {contents}
+          </ExpandableSection>
+        </ListItem>
+      ))}
+    </List>
+  </Card>
+);
+ExpandableListCard.propTypes = {
+  items: PropTypes.arrayOf(
+    PropTypes.shape({
+      title: PropTypes.node,
+      contents: PropTypes.node,
+    }),
+  ),
+};
 
 const benefitsExpandableContents = [
   {
@@ -151,28 +179,11 @@ const linkTextLabelLinkCardContents = {
 function RosaServicePage() {
   const track = useAnalytics();
   const createRosaClusterURL = '/create/rosa/getstarted';
-  const expandableListArray = (expandableContentArray) => (
-    <Card>
-      <List isPlain isBordered>
-        {expandableContentArray.map(({ title, contents }) => (
-          <ListItem className="rosa-expandable-list-item" key={title}>
-            <ExpandableSection
-              className="rosa-expandable-section"
-              toggleContent={<Text component={TextVariants.h3}>{title}</Text>}
-              displaySize="lg"
-            >
-              {contents}
-            </ExpandableSection>
-          </ListItem>
-        ))}
-      </List>
-    </Card>
-  );
 
   return (
     <AppPage>
       <ProductBanner
-        icon={AWSRedHatVerticalLogo()}
+        icon={<AWSRedHatVerticalLogo />}
         learnMoreLink={rosaBannerContents.learnMoreLink}
         title={rosaBannerContents.title}
         text={rosaBannerContents.text}
@@ -247,12 +258,12 @@ function RosaServicePage() {
         <Title className="pf-v5-u-mt-lg pf-v5-u-mb-lg" headingLevel="h2">
           Benefits
         </Title>
-        <Card>{expandableListArray(benefitsExpandableContents)}</Card>
+        <ExpandableListCard items={benefitsExpandableContents} />
 
         <Title className="pf-v5-u-mt-lg pf-v5-u-mb-lg" headingLevel="h2">
           Features
         </Title>
-        <Card>{expandableListArray(featuresExpandableContents)}</Card>
+        <ExpandableListCard items={featuresExpandableContents} />
 
         <Title className="pf-v5-u-mt-lg pf-v5-u-mb-lg" headingLevel="h2">
           Pricing
