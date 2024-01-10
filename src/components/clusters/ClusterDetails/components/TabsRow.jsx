@@ -195,7 +195,7 @@ class TabsRow extends React.Component {
       () => {
         const { initialTabKey, activeTabKey } = this.state;
         if (initialTabKey === null && historyPush) {
-          history.push({
+          history.replace({
             ...(previousTabKey && previousTabKey !== activeTabKey
               ? { pathname: location.pathname }
               : location),
