@@ -1,5 +1,4 @@
 import get from 'lodash/get';
-import PropTypes from 'prop-types';
 import React from 'react';
 import {
   EmptyState,
@@ -21,6 +20,7 @@ import {
 } from '@patternfly/react-table/deprecated';
 import SearchIcon from '@patternfly/react-icons/dist/esm/icons/search-icon';
 import { Link } from 'react-router-dom';
+import { ClusterWithPermissions, ViewOptions, ViewSorting } from '~/types/types';
 import ButtonWithTooltip from '../../../../common/ButtonWithTooltip';
 import ClusterLocationLabel from '../../../common/ClusterLocationLabel';
 import getClusterName from '../../../../../common/getClusterName';
@@ -29,9 +29,19 @@ import ClusterTypeLabel from '../../../common/ClusterTypeLabel';
 import { subscriptionStatuses } from '../../../../../common/subscriptionTypes';
 import { getClusterStateAndDescription } from '../../../common/clusterStates';
 
-function ArchivedClusterListTable(props) {
-  const { viewOptions, setSorting } = props;
-  const { clusters, openModal } = props;
+type ArchivedClusterListTableProps = {
+  clusters: ClusterWithPermissions[];
+  openModal: (modalName: string, data?: unknown) => void;
+  setSorting: (sorting: ViewSorting) => void;
+  viewOptions: ViewOptions;
+};
+
+const ArchivedClusterListTable = ({
+  viewOptions,
+  setSorting,
+  clusters,
+  openModal,
+}: ArchivedClusterListTableProps) => {
   if (!clusters || clusters.length === 0) {
     return (
       <EmptyState>
@@ -50,9 +60,9 @@ function ArchivedClusterListTable(props) {
   }
 
   const hiddenOnMdOrSmaller = classNames(
-    Visibility.visibleOnLg,
-    Visibility.hiddenOnMd,
-    Visibility.hiddenOnSm,
+    Visibility.visibleOnLg || '',
+    Visibility.hiddenOnMd || '',
+    Visibility.hiddenOnSm || '',
   );
 
   const columns = [
@@ -63,29 +73,34 @@ function ArchivedClusterListTable(props) {
     '',
   ];
 
-  const sortColumns = {
-    Name: 'display_name',
-    Status: 'status',
-  };
-
   const sortBy = {
     index: viewOptions.sorting.sortIndex,
     direction: viewOptions.sorting.isAscending ? SortByDirection.asc : SortByDirection.desc,
   };
 
-  const onSortToggle = (_event, index, direction) => {
+  const onSortToggle = (_event: object, index: number, direction: string) => {
+    type Column = {
+      title: string;
+    };
+
+    const sortColumns = {
+      Name: 'display_name',
+      Status: 'status',
+    };
+
     const sorting = { ...viewOptions.sorting };
     sorting.isAscending = direction === SortByDirection.asc;
-    sorting.sortField = sortColumns[columns[index].title];
+    const column = columns[index] as Column;
+    sorting.sortField = sortColumns[column.title as keyof typeof sortColumns];
     sorting.sortIndex = index;
     setSorting(sorting);
   };
 
-  const clusterRow = (cluster) => {
+  const clusterRow = (cluster: ClusterWithPermissions) => {
     const provider = get(cluster, 'cloud_provider.id', 'N/A');
     const name = getClusterName(cluster);
 
-    const clusterName = <Link to={`/details/s/${cluster.subscription.id}`}>{name}</Link>;
+    const clusterName = <Link to={`/details/s/${cluster.subscription?.id}`}>{name}</Link>;
 
     const clusterStatus = getClusterStateAndDescription(cluster).description;
 
@@ -109,7 +124,7 @@ function ArchivedClusterListTable(props) {
       </ButtonWithTooltip>
     );
     const unarchiveBtnCondition =
-      cluster.subscription.status !== subscriptionStatuses.DEPROVISIONED && unarchiveBtn;
+      cluster.subscription?.status !== subscriptionStatuses.DEPROVISIONED && unarchiveBtn;
 
     return [
       { title: clusterName },
@@ -131,10 +146,12 @@ function ArchivedClusterListTable(props) {
     ];
   };
 
+  const rows = clusters.map(clusterRow);
+
   return (
     <TableDeprecated
       cells={columns}
-      rows={clusters.map((cluster) => clusterRow(cluster))}
+      rows={rows}
       onSort={onSortToggle}
       sortBy={sortBy}
       aria-label="Archived clusters"
@@ -143,13 +160,6 @@ function ArchivedClusterListTable(props) {
       <TableBodyDeprecated />
     </TableDeprecated>
   );
-}
-
-ArchivedClusterListTable.propTypes = {
-  clusters: PropTypes.array.isRequired,
-  viewOptions: PropTypes.object.isRequired,
-  setSorting: PropTypes.func.isRequired,
-  openModal: PropTypes.func.isRequired,
 };
 
 export default ArchivedClusterListTable;
