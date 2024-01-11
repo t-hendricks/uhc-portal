@@ -142,7 +142,7 @@ class UpgradeSettingsTab extends React.Component {
     const hibernatingClusterInfo = (
       <Alert
         variant="info"
-        className="pf-u-mb-md"
+        className="pf-v5-u-mb-md"
         isInline
         title="Version updates will not occur while this cluster is Hibernating.
             Once resumed, updates will start according to the selected updates strategy."
@@ -242,6 +242,7 @@ class UpgradeSettingsTab extends React.Component {
               <UpgradeStatus
                 clusterID={cluster.id}
                 canEdit={cluster.canEdit}
+                clusterVersion={cluster.openshift_version || cluster?.version?.id}
                 clusterVersionRawID={cluster?.version?.raw_id}
                 scheduledUpgrade={scheduledUpgrade}
                 availableUpgrades={availableUpgrades}

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import get from 'lodash/get';
 import { Button, Flex, Popover } from '@patternfly/react-core';
 
-import { OutlinedQuestionCircleIcon } from '@patternfly/react-icons';
+import { OutlinedQuestionCircleIcon } from '@patternfly/react-icons/dist/esm/icons/outlined-question-circle-icon';
 import getClusterVersion from '~/components/clusters/common/getClusterVersion';
 import {
   isClusterUpgrading,
@@ -51,7 +51,7 @@ class ClusterVersionInfo extends React.Component {
 
     return (
       <div>
-        <dl className="pf-l-stack">
+        <dl className="pf-v5-l-stack">
           <Flex>
             <dt>OpenShift: </dt>
             <dd>
@@ -80,6 +80,7 @@ class ClusterVersionInfo extends React.Component {
                       <UpgradeStatus
                         clusterID={cluster.id}
                         canEdit={cluster.canEdit}
+                        clusterVersion={cluster.openshift_version}
                         clusterVersionRawID={cluster.version?.raw_id}
                         scheduledUpgrade={scheduledUpdate}
                         openModal={openModal}

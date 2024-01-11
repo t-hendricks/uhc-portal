@@ -253,7 +253,7 @@ class MachinePools extends React.Component {
     // https://issues.redhat.com/browse/OCM-5468
     const canNotCreateOrEditReason =
       !machinePoolsActions.update &&
-      'You do not have permission to create or edit machine pools. Only cluster owners, cluster editors, machine pool editors and Organization Administrators can edit machine pools.';
+      'You do not have permission to add or edit machine pools. Only cluster owners, cluster editors, machine pool editors and Organization Administrators can edit machine pools.';
 
     const canNotEditAutoscalerReason =
       (!cluster?.canEditClusterAutoscaler &&
