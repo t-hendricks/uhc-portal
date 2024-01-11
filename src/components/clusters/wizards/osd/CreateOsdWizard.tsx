@@ -257,7 +257,7 @@ const CreateOsdWizardInternal = () => {
         id="osd-wizard"
         onClose={onClose}
         onStepChange={onStepChange}
-        footer={<CreateOsdWizardFooter />}
+        footer={<CreateOsdWizardFooter track={() => trackStepChange(trackEvents.WizardSubmit)} />}
         nav={{ 'aria-label': `${ariaLabel} steps` }}
         isVisitRequired
       >
@@ -319,7 +319,7 @@ const CreateOsdWizardInternal = () => {
           <ClusterUpdates />
         </WizardStep>
         <WizardStep name={StepName.Review} id={StepId.Review}>
-          <ReviewAndCreate track={() => trackStepChange(trackEvents.WizardSubmit)} />
+          <ReviewAndCreate />
         </WizardStep>
       </Wizard>
       <LeaveCreateClusterPrompt product={product} />
