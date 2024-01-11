@@ -26,7 +26,7 @@ const AWSCustomerManagedEncryption = ({ fieldName, region, keyArn }: Props) => (
         helpText={!keyArn ? 'Provide a custom key ARN' : ''}
         extendedHelpText={
           <>
-            <p className="pf-u-mb-sm">{constants.awsKeyARN}</p>
+            <p className="pf-v5-u-mb-sm">{constants.awsKeyARN}</p>
             <ExternalLink href="https://docs.aws.amazon.com/kms/latest/developerguide/find-cmk-id-arn.html">
               Finding the key ID and ARN
             </ExternalLink>

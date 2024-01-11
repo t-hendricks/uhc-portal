@@ -1,8 +1,10 @@
 import React from 'react';
 
-import { FormGroup, FormGroupProps, TextInput, TextInputProps } from '@patternfly/react-core';
 import { Field, FieldConfig, FieldProps, FieldValidator } from 'formik';
+import { FormGroup, FormGroupProps, TextInput, TextInputProps } from '@patternfly/react-core';
+
 import PopoverHint from '~/components/common/PopoverHint';
+import { FormGroupHelperText } from '~/components/common/FormGroupHelperText';
 
 interface TextInputFieldProps {
   name: string;
@@ -47,7 +49,7 @@ export const HelperTextInvalid = ({
     }
     return (
       <div
-        className={`pf-c-form__helper-text pf-m-error${additionalClasses}`}
+        className={`pf-v5-c-form__helper-text pf-m-error${additionalClasses}`}
         id={`${name}-helper`}
         aria-live="polite"
       >
@@ -72,7 +74,6 @@ export const TextInputField = ({
   formGroup,
   input,
   type,
-  showHelpTextOnError,
 }: TextInputFieldProps) => (
   <Field name={name} validate={validate} {...field}>
     {({ field, form, meta }: FieldProps) => (
@@ -80,16 +81,6 @@ export const TextInputField = ({
         fieldId={field.name}
         label={label}
         className={formGroupClassName}
-        validated={meta.touched && meta.error ? 'error' : 'default'}
-        helperTextInvalid={
-          <HelperTextInvalid
-            meta={meta}
-            helpText={helperText}
-            showHelpTextOnError={showHelpTextOnError}
-            name={name || field.name}
-          />
-        }
-        helperText={helperText}
         {...(tooltip && { labelIcon: <PopoverHint hint={tooltip} /> })}
         {...(validate && { isRequired: true })}
         {...formGroup}
@@ -100,11 +91,15 @@ export const TextInputField = ({
           isDisabled={isDisabled}
           validated={meta.touched && meta.error ? 'error' : 'default'}
           onBlur={() => form.setFieldTouched(name, true)}
-          onChange={(_, event) => field.onChange(event)}
+          onChange={(event, _) => field.onChange(event)}
           value={field.value || (type === 'number' ? 0 : '')}
           type={type}
           {...input}
         />
+
+        <FormGroupHelperText touched={meta.touched} error={meta.error}>
+          {helperText}
+        </FormGroupHelperText>
       </FormGroup>
     )}
   </Field>

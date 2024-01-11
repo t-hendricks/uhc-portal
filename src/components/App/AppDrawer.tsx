@@ -22,10 +22,10 @@ export const AppDrawer: React.FC<PropsWithChildren<{}>> = ({ children }) => {
 
   const drawerTransitionDuration = useMemo(() => {
     if (drawerDiv) {
-      const drawerElements = drawerDiv.getElementsByClassName('pf-c-drawer');
+      const drawerElements = drawerDiv.getElementsByClassName('pf-v5-c-drawer');
       if (drawerElements.length) {
         const transitionDurationString = getComputedStyle(drawerElements[0]).getPropertyValue(
-          '--pf-c-drawer__panel--TransitionDuration',
+          '--pf-v5-c-drawer__panel--TransitionDuration',
         );
         try {
           const transitionDuration = parseInt(transitionDurationString, 10);
@@ -85,10 +85,8 @@ export const AppDrawer: React.FC<PropsWithChildren<{}>> = ({ children }) => {
               ...otherSettings,
             });
             // wait for drawer to transition open before calling onExpand callback
-            // call onExpand manually to avoid https://github.com/patternfly/patternfly-react/issues/8510 (fixed in PF 5)
             setTimeout(() => {
               setIsOpening(false);
-              drawerProps?.onExpand?.();
             }, drawerTransitionDuration);
           },
           // if drawer was previously open, wait for it to transition closed before re-opening

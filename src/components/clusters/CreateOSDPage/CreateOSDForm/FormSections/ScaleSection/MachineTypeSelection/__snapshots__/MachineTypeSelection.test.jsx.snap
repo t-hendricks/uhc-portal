@@ -31,8 +31,6 @@ exports[`MachineTypeSelection when the machine types list is available with an e
 exports[`MachineTypeSelection when the machine types list is available with rhinfra quota covering previous selection renders correctly 1`] = `
 <FormGroup
   fieldId="node_type"
-  helperTextInvalid={false}
-  isHelperTextBeforeField={true}
   isRequired={true}
   label="Compute node instance type"
   labelIcon={
@@ -41,7 +39,6 @@ exports[`MachineTypeSelection when the machine types list is available with rhin
     determines the amount of memory and vCPU allocated to each compute node."
     />
   }
-  validated="default"
 >
   <Select
     aria-describedby=""
@@ -84,7 +81,6 @@ exports[`MachineTypeSelection when the machine types list is available with rhin
     ouiaSafe={true}
     placeholderText="Select instance type"
     position="left"
-    removeFindDomNode={false}
     removeSelectionAriaLabel="Remove"
     selections="m5.4xlarge - 16 vCPU 64 GiB RAM"
     shouldResetOnSelect={true}
@@ -157,6 +153,10 @@ exports[`MachineTypeSelection when the machine types list is available with rhin
       </SelectOption>
     </SelectGroup>
   </Select>
+  <FormGroupHelperText
+    error={false}
+    touched={false}
+  />
 </FormGroup>
 `;
 

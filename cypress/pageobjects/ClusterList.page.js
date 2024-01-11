@@ -1,4 +1,3 @@
-import get from 'lodash/get';
 import Page from './page';
 
 /**
@@ -9,21 +8,21 @@ class ClusterList extends Page {
     super.assertUrlIncludes('/openshift/');
   }
 
-  filterTxtField = () => cy.getByTestId('filterInputClusterList', { timeout: 50000 });
+  filterTxtField = () => cy.get('input[aria-label="Filter"]', { timeout: 15000 });
   viewOnlyMyCluster = () => cy.get('label > input[id="view-only-my-clusters"]');
   viewOnlyMyClusterHelp = () => cy.get('label[for="view-only-my-clusters"]').find('button').first();
-  tooltipviewOnlyMyCluster = () => cy.get('div.pf-c-popover__body');
+  tooltipviewOnlyMyCluster = () => cy.get('div.pf-v5-c-popover__body');
   viewClusterArchives = () =>
-    cy.get('div.pf-c-toolbar__item').find('a').contains('View cluster archives');
+    cy.get('.pf-v5-c-toolbar__content').find('a').contains('View cluster archives');
   assistedInstallerClusters = () =>
-    cy.get('ul.pf-c-dropdown__menu').find('a').contains('Assisted Installer clusters');
+    cy.get('.pf-v5-c-toolbar__content').find('a').contains('Assisted Installer clusters');
   registerCluster = () => cy.getByTestId('register-cluster-item');
   showActiveClusters = () => cy.get('a').contains('Show active clusters');
-  itemPerPage = () => cy.get('button[aria-label="Items per page"]').last();
+  itemPerPage = () => cy.get('#options-menu-bottom-toggle').last();
   goToLastPageBtn = () => cy.get('button[aria-label="Go to last page"]').last();
   goToFirstPageBtn = () => cy.get('button[aria-label="Go to first page"]').last();
-  typeColumnsInClusterList = () => cy.get('td[data-label="Type"] > span');
-  filterdClusterTypesValues = () => cy.get('span.pf-c-chip__text');
+  typeColumnsInClusterList = () => cy.get('td[data-label="Type"] span');
+  filterdClusterTypesValues = () => cy.get('span.pf-v5-c-chip__text');
 
   isRegisterClusterUrl() {
     super.assertUrlIncludes('/openshift/register');
@@ -46,7 +45,7 @@ class ClusterList extends Page {
   }
 
   clusterListRefresh() {
-    cy.get('button[aria-label="Refresh"]').click();
+    cy.get('button[aria-label="Refresh"]').scrollIntoView().click({ force: true });
   }
 
   clickClusterTypeFilters() {
@@ -101,6 +100,10 @@ class ClusterList extends Page {
   clickClusterListExtraActions() {
     cy.getByTestId('cluster-list-extra-actions-dropdown').should('be.visible').click();
   }
+  clickClusterListExtraActions() {
+    cy.get('button.pf-v5-c-dropdown__toggle').should('be.visible').click();
+  }
+
   clickClusterListTableHeader(header) {
     cy.get('th[data-label="' + header + '"]', { timeout: 20000 })
       .should('be.visible')
@@ -111,8 +114,16 @@ class ClusterList extends Page {
     cy.getByTestId('appDrawerContent').scrollTo(direction);
   }
 
+  scrollToPagination() {
+    cy.get('#options-menu-bottom-pagination').scrollIntoView();
+  }
+
+  scrollToFilter() {
+    cy.get('input[aria-label="Filter"]').scrollIntoView();
+  }
+
   clickPerPageItem(count) {
-    cy.get('button[data-action="per-page-' + count + '"]')
+    cy.get('li[data-action="per-page-' + count + '"]')
       .scrollIntoView()
       .click();
   }
@@ -126,13 +137,13 @@ class ClusterList extends Page {
   searchForClusterWithStatus(status) {
     cy.contains('td[data-label="Status"]', status)
       .siblings()
-      .get('td[class="pf-c-table__action"] > div')
+      .get('td.pf-v5-c-table__action > div')
       .first()
       .click();
   }
 
   waitForDataReady() {
-    cy.get('div[data-ready="true"]', { timeout: 30000 }).should('exist');
+    cy.get('div[data-ready="true"]', { timeout: 60000 }).should('exist');
   }
 
   waitForArchiveDataReady() {

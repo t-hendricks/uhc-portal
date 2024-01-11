@@ -22,7 +22,7 @@ const AssociateAWSAccountStep: React.FC<PropsWithChildren<AssociateAWSAccountSte
   initiallyExpanded,
 }) => {
   const [isExpanded, setIsExpanded] = React.useState(initiallyExpanded);
-  const onToggle = (isExpanded: boolean) => {
+  const onToggle = (_: React.MouseEvent<Element, MouseEvent>, isExpanded: boolean) => {
     setIsExpanded(isExpanded);
   };
 
@@ -30,7 +30,7 @@ const AssociateAWSAccountStep: React.FC<PropsWithChildren<AssociateAWSAccountSte
 
   return expandable ? (
     <ExpandableSection
-      onToggle={onToggle}
+      onToggle={(event, isExpanded) => onToggle(event, isExpanded)}
       isExpanded={isExpanded}
       isActive={isExpanded}
       toggleContent={

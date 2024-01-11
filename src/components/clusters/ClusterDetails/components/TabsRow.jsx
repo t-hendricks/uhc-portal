@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import { Tabs, TabTitleText, TabTitleIcon, Tooltip, Tab } from '@patternfly/react-core';
-import { ExclamationCircleIcon } from '@patternfly/react-icons';
+import { ExclamationCircleIcon } from '@patternfly/react-icons/dist/esm/icons/exclamation-circle-icon';
 import { ClusterTabsId } from './common/ClusterTabIds';
 
 class TabsRow extends React.Component {
@@ -195,7 +195,7 @@ class TabsRow extends React.Component {
       () => {
         const { initialTabKey, activeTabKey } = this.state;
         if (initialTabKey === null && historyPush) {
-          history.push({
+          history.replace({
             ...(previousTabKey && previousTabKey !== activeTabKey
               ? { pathname: location.pathname }
               : location),

@@ -104,7 +104,7 @@ describe('<NetworkSelfServiceSection />', () => {
   it('should render skeleton when pending and no grants are set', () => {
     const newProps = { ...props, grants: { ...baseResponse, pending: true, data: [] } };
     const { container } = render(<NetworkSelfServiceSection {...newProps} />);
-    expect(container.querySelectorAll('.pf-c-skeleton').length).toBeGreaterThan(0);
+    expect(container.querySelectorAll('.pf-v5-c-skeleton').length).toBeGreaterThan(0);
   });
 
   it('is accessible with grants', () => {

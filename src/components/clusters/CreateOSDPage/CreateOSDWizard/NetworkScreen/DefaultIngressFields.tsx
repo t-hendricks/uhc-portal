@@ -169,7 +169,7 @@ export const DefaultIngressFields: React.FC<DefaultIngressFieldsProps> = ({
       <FormGroup
         fieldId="load_balancer_group"
         label="Load balancer type"
-        className={classNames('pf-u-pb-md', className)}
+        className={classNames('pf-v5-u-pb-md', className)}
         labelIcon={<LoadBalancerPopover />}
       >
         <Field

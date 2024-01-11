@@ -1,6 +1,6 @@
 .shared-vpc-domain-select {
 
-  .pf-c-select__toggle-text {
+  .pf-v5-c-select__toggle-text {
     width: 100%;
     text-align: left;
   }
@@ -11,16 +11,16 @@
   }
 
   /* Making the spinner more visible inside the dropdown  */
-  .pf-c-spinner {
-    --pf-c-spinner--Color: black;
-    --pf-c-spinner--stroke-width: 3px;
+  .pf-v5-c-spinner {
+    --pf-v5-c-spinner--Color: black;
+    --pf-v5-c-spinner--stroke-width: 3px;
   }
 
   /* Copy DNS name / Delete DNS icon */
-  .dns-domain-action-icon .pf-c-button {
+  .dns-domain-action-icon .pf-v5-c-button {
     background-color: unset;
     &.pf-m-aria-disabled {
-      background-color: var(--pf-global--disabled-color--300);
+      background-color: var(--pf-v5-global--disabled-color--300);
     }
   }
 }

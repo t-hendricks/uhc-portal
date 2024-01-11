@@ -1,11 +1,19 @@
 import React, { createRef, useState, useEffect, useReducer } from 'react';
 import { FormikErrors } from 'formik';
 import { WrappedFieldInputProps } from 'redux-form';
-import { FormGroup, TextInput, InputGroup, Popover, HelperText } from '@patternfly/react-core';
+import {
+  FormGroup,
+  TextInput,
+  InputGroup,
+  Popover,
+  HelperText,
+  InputGroupItem,
+} from '@patternfly/react-core';
 
 import { useFormState } from '~/components/clusters/wizards/hooks';
 import PopoverHint from '~/components/common/PopoverHint';
 import { ValidationItem, ValidationIconButton } from '~/components/clusters/wizards/common';
+import { FormGroupHelperText } from '~/components/common/FormGroupHelperText';
 
 import './RichInputField.scss';
 
@@ -234,19 +242,17 @@ export const RichInputField = ({
   return (
     <FormGroup
       fieldId={inputName}
-      validated={isValid ? 'default' : 'error'}
       label={label}
       isRequired={isRequired}
       labelIcon={extendedHelpText ? <PopoverHint hint={extendedHelpText} /> : undefined}
       className={`${formGroupClass || ''}`}
-      helperText={helpText}
-      helperTextInvalid={helpText}
     >
       <Popover
         aria-label={helpTitle}
         headerContent={helpTitle}
         isVisible={showPopover}
         position="top-end"
+        withFocusTrap={false}
         shouldClose={() => {
           if (isFocused) {
             setIsFocused(false);
@@ -273,53 +279,58 @@ export const RichInputField = ({
         footerContent={helpExample}
       >
         <InputGroup>
-          <TextInput
-            value={inputValue}
-            isRequired={isRequired}
-            id={inputName}
-            name={inputName}
-            validated={isValid ? 'default' : 'error'}
-            isDisabled={disabled}
-            type={type}
-            autoComplete="off"
-            aria-invalid={!isValid}
-            onBlur={() => {
-              setIsFocused(false);
-              setShowPopover(false);
-              validateField(inputName);
-              setTouched(true);
-            }}
-            onClick={() => {
-              setIsFocused(true);
-              setShowPopover(true);
-            }}
-            onFocus={() => {
-              setIsFocused(true);
-              setShowPopover(true);
-            }}
-            onChange={(val) => {
-              inputOnChange(val);
-              if (!touched && val?.length) {
+          <InputGroupItem isFill>
+            <TextInput
+              value={inputValue}
+              isRequired={isRequired}
+              id={inputName}
+              name={inputName}
+              isDisabled={disabled}
+              type={type}
+              autoComplete="off"
+              onBlur={() => {
+                setIsFocused(false);
+                setShowPopover(false);
+                validateField(inputName);
                 setTouched(true);
-              }
-            }}
-            ref={textInputRef}
-            aria-describedby={`rich-input-popover-${inputName}`}
-            className={`${inputClassName} rich-input-field`}
-          />
-          <ValidationIconButton
-            touched={touched}
-            isValid={isValid}
-            hasFailures={hasFailures}
-            isValidating={isValidating}
-            onClick={(e) => {
-              e.stopPropagation();
-              setShowPopover(true);
-              textInputRef.current?.focus();
-            }}
-          />
+              }}
+              onClick={() => {
+                setIsFocused(true);
+                setShowPopover(true);
+              }}
+              onFocus={() => {
+                setIsFocused(true);
+                setShowPopover(true);
+              }}
+              onChange={(_event, val) => {
+                inputOnChange(val);
+                if (!touched && val?.length) {
+                  setTouched(true);
+                }
+              }}
+              ref={textInputRef}
+              aria-describedby={`rich-input-popover-${inputName}`}
+              className={`${inputClassName} rich-input-field`}
+            />
+          </InputGroupItem>
+          <InputGroupItem>
+            <ValidationIconButton
+              touched={touched}
+              isValid={isValid}
+              hasFailures={hasFailures}
+              isValidating={isValidating}
+              onClick={(e) => {
+                e.stopPropagation();
+                setShowPopover(true);
+                textInputRef.current?.focus();
+              }}
+            />
+          </InputGroupItem>
         </InputGroup>
       </Popover>
+      <FormGroupHelperText touched={touched} error={error as string}>
+        {helpText}
+      </FormGroupHelperText>
     </FormGroup>
   );
 };

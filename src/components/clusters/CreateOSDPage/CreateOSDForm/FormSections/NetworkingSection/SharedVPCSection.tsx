@@ -29,7 +29,7 @@ const SharedVPCSection = ({
   if (incompatibleReason) {
     return (
       <>
-        <Title headingLevel="h3" className="pf-u-mt-lg">
+        <Title headingLevel="h3" className="pf-v5-u-mt-lg">
           AWS shared VPC
         </Title>
         <Text>{incompatibleReason}</Text>
@@ -55,7 +55,7 @@ const SharedVPCSection = ({
       {isSelected && (
         <section className="shared-vpc-instructions">
           <Alert
-            className="pf-u-mb-md"
+            className="pf-v5-u-mb-md"
             variant="info"
             isInline
             title={

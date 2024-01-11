@@ -77,12 +77,14 @@ class PersistentStorageDropdown extends React.Component {
       const notEnoughQuota = filteredStorageValues.values.length <= 1;
       const isDisabled = disabled || notEnoughQuota;
 
+      const { onChange, ...restInput } = input;
       const formSelect = (
         <FormSelect
           className="quota-dropdown"
           aria-label="Persistent Storage"
           isDisabled={isDisabled}
-          {...input}
+          onChange={(_event, value) => onChange(value)}
+          {...restInput}
         >
           {filteredStorageValues.values.map((value) => storageOption(value))}
         </FormSelect>

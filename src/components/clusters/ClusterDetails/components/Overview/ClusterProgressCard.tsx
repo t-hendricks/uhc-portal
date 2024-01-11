@@ -8,8 +8,8 @@ import {
   TextVariants,
   Title,
 } from '@patternfly/react-core';
-import ExclamationCircleIcon from '@patternfly/react-icons/dist/js/icons/exclamation-circle-icon';
-import { global_danger_color_100 as dangerColor } from '@patternfly/react-tokens';
+import ExclamationCircleIcon from '@patternfly/react-icons/dist/esm/icons/exclamation-circle-icon';
+import { global_danger_color_100 as dangerColor } from '@patternfly/react-tokens/dist/esm/global_danger_color_100';
 import { useFeatureGate } from '~/hooks/useFeatureGate';
 import { NETWORK_VALIDATOR_ONDEMAND_FEATURE } from '~/redux/constants/featureConstants';
 
@@ -63,11 +63,11 @@ const ClusterProgressCard = ({ cluster }: ClusterProgressCardProps) => {
           <Title
             headingLevel="h2"
             size="lg"
-            className="card-title pf-u-display-inline-block pf-u-mr-md"
+            className="card-title pf-v5-u-display-inline-block pf-v5-u-mr-md"
           >
-            {inProgress && <Spinner size="sm" className="progressing-icon pf-u-mr-md" />}
+            {inProgress && <Spinner size="sm" className="progressing-icon pf-v5-u-mr-md" />}
             {isError && (
-              <span className="pf-u-mr-xs">
+              <span className="pf-v5-u-mr-xs">
                 <ExclamationCircleIcon color={dangerColor.value} />{' '}
               </span>
             )}

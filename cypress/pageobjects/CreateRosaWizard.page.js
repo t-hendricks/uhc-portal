@@ -1,11 +1,8 @@
 import Page from './page';
-import LeaveCreateClusterPrompt from './LeaveCreateClusterPrompt';
-import ClusterListPage from './ClusterList.page';
-import CreateClusterPage from './CreateCluster.page';
-import { ThinkPeaksIconConfig } from '@patternfly/react-icons';
 
 class CreateRosaCluster extends Page {
-  clusterDetailsTree = () => cy.get('li.pf-c-wizard__nav-item').find('button').contains('Details');
+  clusterDetailsTree = () =>
+    cy.get('li.pf-v5-c-wizard__nav-item').find('button').contains('Details');
 
   rosaCreateClusterButton = () => cy.getByTestId('rosa-create-cluster-button');
 
@@ -14,7 +11,7 @@ class CreateRosaCluster extends Page {
   rosaClusterWithWeb = () => cy.get('a').contains('With web interface');
 
   reviewAndCreateTree = () =>
-    cy.get('li.pf-c-wizard__nav-item').find('button').contains('Review and create');
+    cy.get('li.pf-v5-c-wizard__nav-item').find('button').contains('Review and create');
 
   machineCIDRInput = () => cy.get('input[id="network_machine_cidr"]');
 
@@ -161,7 +158,7 @@ class CreateRosaCluster extends Page {
   showsNoAssociatedAccounts = () => cy.getByTestId('no_associated_accounts').should('be.visible');
 
   isSelectedVersion = (testVersion) => {
-    cy.get('button.pf-c-select__menu-item.pf-m-selected')
+    cy.get('button.pf-v5-c-select__menu-item.pf-m-selected')
       .scrollIntoView()
       .invoke('text')
       .should('eq', testVersion);
@@ -172,19 +169,19 @@ class CreateRosaCluster extends Page {
   }
 
   get accountIdMenuItem() {
-    return '.pf-c-select__menu-item';
+    return '.pf-v5-c-select__menu-item';
   }
 
   get associatedAccountsDropdown() {
-    return 'button.pf-c-select__toggle:not(.pf-m-disabled)[aria-describedby="aws-infra-accounts"]';
+    return 'button.pf-v5-c-select__toggle:not(.pf-m-disabled)[aria-describedby="aws-infra-accounts"]';
   }
 
   get versionsDropdown() {
-    return 'div[name="cluster_version"] button.pf-c-select__toggle';
+    return 'div[name="cluster_version"] button.pf-v5-c-select__toggle';
   }
 
   get ARNFieldRequiredMsg() {
-    return '.pf-c-expandable-section.pf-m-expanded .pf-c-form__helper-text.pf-m-error';
+    return '.pf-v5-c-expandable-section.pf-m-expanded .pf-v5-c-helper-text__item.pf-m-error';
   }
 
   get clusterNameInput() {
@@ -192,11 +189,11 @@ class CreateRosaCluster extends Page {
   }
 
   get clusterNameInputError() {
-    return 'ul#rich-input-popover-name li.pf-c-helper-text__item.pf-m-error.pf-m-dynamic';
+    return 'ul#rich-input-popover-name li.pf-v5-c-helper-text__item.pf-m-error.pf-m-dynamic';
   }
 
   get primaryButton() {
-    return '.rosa-wizard button.pf-c-button.pf-m-primary';
+    return '.rosa-wizard button.pf-v5-c-button.pf-m-primary';
   }
 
   selectStandaloneControlPlaneTypeOption() {
@@ -222,44 +219,46 @@ class CreateRosaCluster extends Page {
       .contains('How to associate a new AWS account')
       .siblings()
       .find('div')
-      .find('button.pf-c-select__toggle')
+      .find('button.pf-v5-c-select__toggle')
       .click();
-    cy.get('input.pf-m-search', { timeout: 50000 }).clear().type(accountID);
+    cy.get('input[placeholder*="Filter by account ID"]', { timeout: 50000 })
+      .clear()
+      .type(accountID);
     cy.get('div[label="Associated AWS infrastructure account"]')
       .find('button')
       .contains(accountID)
       .click();
   }
   waitForARNList() {
-    cy.get('span.pf-c-button__progress', { timeout: 80000 }).should('not.exist');
+    cy.get('span.pf-v5-c-button__progress', { timeout: 80000 }).should('not.exist');
   }
 
   selectInstallerRole(roleName) {
-    cy.get('.pf-c-form__label-text')
+    cy.get('.pf-v5-c-form__label-text')
       .contains('Installer role')
       .parent()
       .parent()
       .siblings()
       .find('div')
-      .find('button.pf-c-select__toggle')
+      .find('button.pf-v5-c-select__toggle')
       .then(($btn) => {
         if ($btn.is(':disabled')) {
           cy.log('Installer ARN button is disabled there is only one option. Continuing..');
         } else {
-          cy.get('.pf-c-form__label-text')
+          cy.get('.pf-v5-c-form__label-text')
             .contains('Installer role')
             .parent()
             .parent()
             .siblings()
             .find('div')
-            .find('button.pf-c-select__toggle')
+            .find('button.pf-v5-c-select__toggle')
             .click();
           cy.get('ul[id="installer_role_arn"]').find('button').contains(roleName).click();
         }
       });
   }
   selectClusterVersion(version) {
-    cy.get('div[name="cluster_version"]').find('button.pf-c-select__toggle').click();
+    cy.get('div[name="cluster_version"]').find('button.pf-v5-c-select__toggle').click();
     cy.get('ul[label="Version"]').find('button').contains(version).click();
   }
 
@@ -284,7 +283,7 @@ class CreateRosaCluster extends Page {
       .parent()
       .siblings()
       .find('div')
-      .find('button.pf-c-select__toggle')
+      .find('button.pf-v5-c-select__toggle')
       .click();
     cy.get('li').contains(computeNodeType).click();
   }
@@ -364,7 +363,7 @@ class CreateRosaCluster extends Page {
   }
 
   isClusterPropertyMatchesValue(property, value) {
-    cy.get('span.pf-c-description-list__text')
+    cy.get('span.pf-v5-c-description-list__text')
       .contains(property)
       .parent()
       .siblings()
@@ -386,7 +385,7 @@ class CreateRosaCluster extends Page {
 
   waitForClusterReady() {
     // Wait up to 1 hour for cluster to be Ready
-    cy.get('.pf-u-ml-xs', { timeout: 3600000 }).should('contain', 'Ready');
+    cy.get('.pf-v5-u-ml-xs', { timeout: 3600000 }).should('contain', 'Ready');
   }
 
   waitForButtonContainingTextToBeEnabled(text, timeout = 30000) {

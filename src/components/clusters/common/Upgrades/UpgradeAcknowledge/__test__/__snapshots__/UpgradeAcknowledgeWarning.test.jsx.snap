@@ -32,11 +32,7 @@ exports[`<UpgradeAcknowledgeWarning> Display confirmation if  clusterMetAcks and
     className="ocm-upgrade-additional-versions-available"
     data-testid="confirmAckReceived"
   >
-    <InfoCircleIcon
-      color="currentColor"
-      noVerticalAlign={false}
-      size="sm"
-    />
+    <InfoCircleIcon />
     Administrator acknowledgement was received.
   </div>
 </Fragment>
@@ -48,11 +44,7 @@ exports[`<UpgradeAcknowledgeWarning> Display infoCircle if isManual AND if is In
     className="ocm-upgrade-additional-versions-available"
     data-testid="infoMessageUnmetAcks"
   >
-    <InfoCircleIcon
-      color="currentColor"
-      noVerticalAlign={false}
-      size="sm"
-    />
+    <InfoCircleIcon />
      
     Administrator acknowledgement is required before updating from 4.8.10 to 4.9.11
   </div>

@@ -1,18 +1,18 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Tooltip } from '@patternfly/react-core';
 import {
-  Dropdown,
-  DropdownToggle,
-  KebabToggle,
-  DropdownPosition,
-  Tooltip,
-} from '@patternfly/react-core';
+  Dropdown as DropdownDeprecated,
+  DropdownToggle as DropdownToggleDeprecated,
+  KebabToggle as KebabToggleDeprecated,
+  DropdownPosition as DropdownPositionDeprecated,
+} from '@patternfly/react-core/deprecated';
 import { dropDownItems } from './ClusterActionsDropdownItems';
 
 class ClusterActionsDropdown extends React.Component {
   constructor(props) {
     super(props);
-    this.onToggle = (isOpen) => {
+    this.onToggle = (_, isOpen) => {
       this.setState({
         isOpen,
       });
@@ -44,11 +44,11 @@ class ClusterActionsDropdown extends React.Component {
     const { isOpen } = this.state;
 
     const toggleComponent = isKebab ? (
-      <KebabToggle isDisabled={disabled} onToggle={this.onToggle} />
+      <KebabToggleDeprecated isDisabled={disabled} onToggle={this.onToggle} />
     ) : (
-      <DropdownToggle isDisabled={disabled} onToggle={this.onToggle}>
+      <DropdownToggleDeprecated isDisabled={disabled} onToggle={this.onToggle}>
         Actions
-      </DropdownToggle>
+      </DropdownToggleDeprecated>
     );
 
     const menuItems = dropDownItems({
@@ -64,8 +64,8 @@ class ClusterActionsDropdown extends React.Component {
     });
 
     const dropdown = (
-      <Dropdown
-        position={DropdownPosition.right}
+      <DropdownDeprecated
+        position={DropdownPositionDeprecated.right}
         onSelect={this.onSelect}
         dropdownItems={menuItems}
         toggle={toggleComponent}

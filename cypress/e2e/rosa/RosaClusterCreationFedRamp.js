@@ -2,6 +2,7 @@ import Login from '../../pageobjects/login.page';
 import ClusterListPage from '../../pageobjects/ClusterList.page';
 import CreateRosaWizardPage from '../../pageobjects/CreateRosaWizard.page';
 import ClusterDetailsPage from '../../pageobjects/ClusterDetails.page';
+import * as path from 'path';
 
 Cypress.config({
   defaultCommandTimeout: 180000,
@@ -20,6 +21,23 @@ Cypress.env(
   'clusterName',
   `${Cypress.env('QE_CLUSTER_NAME_PREFIX')}-${Math.random().toString(36).substring(2, 4)}`,
 );
+Cypress.env(
+  'validationsResultFile',
+  path.join(Cypress.config('downloadsFolder'), 'validations-deployment-result'),
+);
+
+export const workflowValidationTestTitles = [
+  'Post Install: Tabs Validations',
+  'Post Install: Overview Validations',
+  'Post Install: Access Control Validations',
+  'Post Installation: Add-ons Validations',
+  'Post Installation: Cluster history Validations',
+  'Post Installation: Networking Validations',
+  'Post Installation: Machine pools Validations',
+  'Post Installation: Support Validations',
+  'Post Installation: Settings Validations',
+  'Post Installation: Cluster List Validations',
+];
 
 describe('Create ROSA Cluster in FedRamp (OCP-TBD)', { tags: ['fedramp'] }, () => {
   before(() => {
@@ -47,6 +65,24 @@ describe('Create ROSA Cluster in FedRamp (OCP-TBD)', { tags: ['fedramp'] }, () =
       ClusterDetailsPage.deleteClusterNameInput().clear().type(Cypress.env('clusterName'));
       ClusterDetailsPage.deleteClusterConfirm().click();
       ClusterDetailsPage.waitForDeleteClusterActionComplete();
+    }
+  });
+
+  afterEach(function () {
+    if (this.currentTest.state === 'failed') {
+      if (workflowValidationTestTitles.includes(this.currentTest.title)) {
+        cy.log(
+          `Writing file - ${Cypress.env('validationsResultFile')} with Contents - ${
+            this.currentTest.state
+          } - ${this.currentTest.title}`,
+        );
+        cy.writeFile(
+          Cypress.env('validationsResultFile'),
+          `${this.currentTest.state}: ${this.currentTest.title}\n`,
+          { flag: 'a+' },
+        );
+        return false;
+      }
     }
   });
 
@@ -352,7 +388,7 @@ describe('Create ROSA Cluster in FedRamp (OCP-TBD)', { tags: ['fedramp'] }, () =
           'Support',
           'Settings',
         ];
-        CreateRosaWizardPage.validateItemsInList(tabsListGovCloud, '.pf-c-tabs__list > li');
+        CreateRosaWizardPage.validateItemsInList(tabsListGovCloud, '.pf-v5-c-tabs__list > li');
       } else {
         const tabsListCommercial = [
           'Overview',
@@ -364,7 +400,7 @@ describe('Create ROSA Cluster in FedRamp (OCP-TBD)', { tags: ['fedramp'] }, () =
           'Support',
           'Settings',
         ];
-        CreateRosaWizardPage.validateItemsInList(tabsListCommercial, '.pf-c-tabs__list > li');
+        CreateRosaWizardPage.validateItemsInList(tabsListCommercial, '.pf-v5-c-tabs__list > li');
       }
     });
     it('Post Install: Overview Validations', () => {
@@ -376,13 +412,13 @@ describe('Create ROSA Cluster in FedRamp (OCP-TBD)', { tags: ['fedramp'] }, () =
       if (Cypress.env('GOV_CLOUD')) {
         cy.getByTestId('resource-usage').should('not.exist');
         // BUG: These elements are missing data-testids
-        cy.get('.pf-c-description-list__text').contains('Total vCPU').should('not.exist');
-        cy.get('.pf-c-description-list__text').contains('Total memory').should('not.exist');
+        cy.get('.pf-v5-c-description-list__text').contains('Total vCPU').should('not.exist');
+        cy.get('.pf-v5-c-description-list__text').contains('Total memory').should('not.exist');
       } else {
         cy.getByTestId('resource-usage').should('exist');
         // BUG: These elements are missing data-testids
-        cy.get('.pf-c-description-list__text').contains('Total vCPU').should('exist');
-        cy.get('.pf-c-description-list__text').contains('Total memory').should('exist');
+        cy.get('.pf-v5-c-description-list__text').contains('Total vCPU').should('exist');
+        cy.get('.pf-v5-c-description-list__text').contains('Total memory').should('exist');
       }
       // BUG: This element is missing data-testids
       // cy.getByTestId('version')
@@ -430,13 +466,13 @@ describe('Create ROSA Cluster in FedRamp (OCP-TBD)', { tags: ['fedramp'] }, () =
     it('Post Install: Access Control Validations', () => {
       CreateRosaWizardPage.clickButtonContainingText('Access control');
       // Identity providers
-      cy.get('.pf-c-tabs__item-text').contains('Identity providers').should('exist');
+      cy.get('.pf-v5-c-tabs__item-text').contains('Identity providers').should('exist');
       CreateRosaWizardPage.clickButtonContainingText('Identity providers');
       cy.get('#add-identity-provider').should('be.visible').click();
       const providers = ['GitHub', 'Google', 'OpenID', 'LDAP', 'GitLab', 'htpasswd'];
-      CreateRosaWizardPage.validateItemsInList(providers, '.pf-c-dropdown__menu > li');
+      CreateRosaWizardPage.validateItemsInList(providers, '.pf-v5-c-dropdown__menu > li');
       // Section: Cluster Roles and Access
-      cy.get('.pf-c-tabs__item-text').contains('Cluster Roles and Access').should('exist');
+      cy.get('.pf-v5-c-tabs__item-text').contains('Cluster Roles and Access').should('exist');
       CreateRosaWizardPage.clickButtonContainingText('Cluster Roles and Access');
       CreateRosaWizardPage.clickButtonContainingText('Add user');
       cy.get('[aria-label="Add cluster user"]').should('be.visible');
@@ -447,7 +483,7 @@ describe('Create ROSA Cluster in FedRamp (OCP-TBD)', { tags: ['fedramp'] }, () =
       CreateRosaWizardPage.clickButtonContainingText('Cancel', { force: true, multiple: true });
       cy.get('[aria-label="Add cluster user"]').should('not.exist');
       // Section: OCM Roles and Access
-      cy.get('.pf-c-tabs__item-text').contains('OCM Roles and Access').should('exist');
+      cy.get('.pf-v5-c-tabs__item-text').contains('OCM Roles and Access').should('exist');
       CreateRosaWizardPage.clickButtonContainingText('OCM Roles and Access');
       CreateRosaWizardPage.clickButtonContainingText('Grant role');
       cy.get('[aria-label="Grant role"]').should('be.visible');
@@ -460,7 +496,7 @@ describe('Create ROSA Cluster in FedRamp (OCP-TBD)', { tags: ['fedramp'] }, () =
         'Identity provider editor',
         'Machine pool editor',
       ];
-      CreateRosaWizardPage.validateItemsInList(roles, '.pf-c-select__menu > li');
+      CreateRosaWizardPage.validateItemsInList(roles, '.pf-v5-c-select__menu > li');
       CreateRosaWizardPage.clickBody();
       cy.get('[type="submit"]').contains('Grant role').should('be.visible');
       // TODO: Investigate why force and multiple true are needed
@@ -469,37 +505,37 @@ describe('Create ROSA Cluster in FedRamp (OCP-TBD)', { tags: ['fedramp'] }, () =
     });
     it('Post Installation: Add-ons Validations', () => {
       if (Cypress.env('GOV_CLOUD')) {
-        cy.get('.pf-c-tabs__item-text').contains('Add-ons').should('not.exist');
+        cy.get('.pf-v5-c-tabs__item-text').contains('Add-ons').should('not.exist');
       } else {
-        cy.get('.pf-c-tabs__item-text').contains('Add-ons').should('exist');
+        cy.get('.pf-v5-c-tabs__item-text').contains('Add-ons').should('exist');
       }
     });
     it('Post Installation: Cluster history Validations', () => {
-      cy.get('.pf-c-tabs__item-text').contains('Cluster history').should('exist');
+      cy.get('.pf-v5-c-tabs__item-text').contains('Cluster history').should('exist');
       CreateRosaWizardPage.clickButtonContainingText('Cluster history');
       CreateRosaWizardPage.clickButtonContainingText('Last month', { force: true, multiple: true });
       const timeOptions = ['Last month', 'Last week', 'Last 72 hours', 'Custom'];
-      CreateRosaWizardPage.validateItemsInList(timeOptions, '.pf-c-select__menu > li');
+      CreateRosaWizardPage.validateItemsInList(timeOptions, '.pf-v5-c-select__menu > li');
       CreateRosaWizardPage.clickBody();
       cy.get('[aria-label="Conditional filter"]').click();
       const filterOptions = ['Description', 'Severity', 'Type', 'Logged by'];
-      CreateRosaWizardPage.validateItemsInList(filterOptions, '.pf-c-dropdown__menu > li');
+      CreateRosaWizardPage.validateItemsInList(filterOptions, '.pf-v5-c-dropdown__menu > li');
       CreateRosaWizardPage.clickBody();
       cy.getByTestId('download-btn').should('exist').should('contain', 'Download history');
       // BUG: Cluster history log lines do not populate for GOV_CLOUD env
     });
     it('Post Installation: Networking Validations', () => {
-      cy.get('.pf-c-tabs__item-text').contains('Networking').should('exist');
+      cy.get('.pf-v5-c-tabs__item-text').contains('Networking').should('exist');
       CreateRosaWizardPage.clickButtonContainingText('Networking');
       // TODO: Validate actual values
-      cy.get('#networkingTabContent > .pf-l-grid > :nth-child(1) > .pf-c-card').within(() => {
+      cy.get('#networkingTabContent > .pf-l-grid > :nth-child(1) > .pf-v5-c-card').within(() => {
         if (Cypress.env('CLUSTER_PRIVACY') == 'private') {
-          cy.get('.pf-c-content').should('contain', 'Private API');
+          cy.get('.pf-v5-c-content').should('contain', 'Private API');
         } else {
-          cy.get('.pf-c-content').should('contain', 'Public API');
+          cy.get('.pf-v5-c-content').should('contain', 'Public API');
         }
       });
-      cy.get('#networkingTabContent > .pf-l-grid > :nth-child(3) > .pf-c-card').within(() => {
+      cy.get('#networkingTabContent > .pf-l-grid > :nth-child(3) > .pf-v5-c-card').within(() => {
         if (Cypress.env('GOV_CLOUD')) {
           // TODO: Check if there is a way to make this more specific
           cy.get('#default_router_address').should('exist');
@@ -507,51 +543,50 @@ describe('Create ROSA Cluster in FedRamp (OCP-TBD)', { tags: ['fedramp'] }, () =
           cy.get('#default_router_address').should('exist');
         }
         if (Cypress.env('CLUSTER_PRIVACY') == 'private') {
-          cy.get('.pf-c-content').should('contain', 'Private router');
+          cy.get('.pf-v5-c-content').should('contain', 'Private router');
         } else {
-          cy.get('.pf-c-content').should('contain', 'Public router');
+          cy.get('.pf-v5-c-content').should('contain', 'Public router');
         }
         cy.get('#defaultRouterSelectors').should('exist');
         cy.get('#defaultRouterExcludedNamespacesFlag').should('exist');
         cy.get('#clusterRoutesTlsSecretRef').should('exist');
         cy.get('#clusterRoutesHostname').should('exist');
-        cy.get(':nth-child(6) > .pf-c-form__group-control')
+        cy.get(':nth-child(6) > .pf-v5-c-form__group-control')
           .contains('Inter-namespace ownership')
           .within(() => {
-            cy.get('.pf-c-switch__input').should('be.disabled');
+            cy.get('.pf-v5-c-switch__input').should('be.disabled');
           });
-        cy.get(':nth-child(7) > .pf-c-form__group-control')
+        cy.get(':nth-child(7) > .pf-v5-c-form__group-control')
           .contains('Disallowed')
           .within(() => {
-            cy.get('.pf-c-switch__input').should('be.disabled');
+            cy.get('.pf-v5-c-switch__input').should('be.disabled');
           });
-        cy.get(':nth-child(8) > .pf-c-form__group-control')
+        cy.get(':nth-child(8) > .pf-v5-c-form__group-control')
           .contains('Classic Load Balancer')
           .within(() => {
-            cy.get('.pf-c-switch__input').should('be.disabled');
+            cy.get('.pf-v5-c-switch__input').should('be.disabled');
           });
-        cy.get('.pf-c-action-list > .pf-c-button')
+        cy.get('.pf-v5-c-action-list > .pf-v5-c-button')
           .scrollIntoView()
           .contains('Edit application ingress')
           .should('be.enabled');
       });
       if (Cypress.env('CLUSTER_PRIVACY') == 'private') {
         const elementsWithinNetworkingTabCard5 = [
-          { element: '.pf-c-title', method: 'contain', value: 'VPC Details' },
-          { element: '.pf-c-description-list__text', method: 'contain', value: 'Enabled' },
-          { element: '.pf-c-title', method: 'contain', value: 'Cluster-wide Proxy' },
+          { element: '.pf-v5-c-title', method: 'contain', value: 'VPC Details' },
+          { element: '.pf-v5-c-description-list__text', method: 'contain', value: 'Enabled' },
+          { element: '.pf-v5-c-title', method: 'contain', value: 'Cluster-wide Proxy' },
         ];
         CreateRosaWizardPage.validateElementsWithinShouldMethodValue(
-          '#networkingTabContent > .pf-l-grid > :nth-child(5) > .pf-c-card',
+          '#networkingTabContent > .pf-l-grid > :nth-child(5) > .pf-v5-c-card',
           elementsWithinNetworkingTabCard5,
         );
       }
     });
     it('Post Installation: Machine pools Validations', () => {
-      cy.get('.pf-c-tabs__item-text').contains('Machine pools');
+      cy.get('.pf-v5-c-tabs__item-text').contains('Machine pools');
       CreateRosaWizardPage.clickButtonContainingText('Machine pools');
-      // BUG: Machine pool returns empty list in GOV_CLOUD env
-      // cy.get('#add-machine-pool').should('be.visible').should('be.enabled');
+      cy.get('#add-machine-pool').should('be.visible').should('be.enabled');
       cy.get('#edit-existing-cluster-autoscaling').should('be.visible').should('be.enabled');
       cy.get('[data-label="Machine pool"]').contains('Machine pool');
       cy.get('[data-label="Instance type"]').contains('Instance type');
@@ -561,23 +596,23 @@ describe('Create ROSA Cluster in FedRamp (OCP-TBD)', { tags: ['fedramp'] }, () =
       // BUG: Validate day1 machines pool row values. BLOCKER because above mentioned bug
     });
     it('Post Installation: Support Validations', () => {
-      cy.get('.pf-c-tabs__item-text').contains('Support');
+      cy.get('.pf-v5-c-tabs__item-text').contains('Support');
       CreateRosaWizardPage.clickButtonContainingText('Support');
       CreateRosaWizardPage.clickButtonContainingText('Add notification contact');
       const elementsWithinAddNotificationContact = [
         {
-          element: '.pf-c-modal-box__title-text',
+          element: '.pf-v5-c-modal-box__title-text',
           method: 'contain',
           value: 'Add notification contact',
         },
         {
-          element: '.pf-u-mb-xl',
+          element: '.pf-v5-u-mb-xl',
           method: 'contain',
           value:
             'Identify the user to be added as notification contact. These users will be contacted in the event of notifications about this cluster.',
         },
         {
-          element: '.pf-c-form__label-text',
+          element: '.pf-v5-c-form__label-text',
           method: 'contain',
           value: 'Red Hat username or email',
         },
@@ -608,13 +643,13 @@ describe('Create ROSA Cluster in FedRamp (OCP-TBD)', { tags: ['fedramp'] }, () =
       }
     });
     it('Post Installation: Settings Validations', () => {
-      cy.get('.pf-c-tabs__item-text').contains('Settings');
+      cy.get('.pf-v5-c-tabs__item-text').contains('Settings');
       CreateRosaWizardPage.clickButtonContainingText('Settings');
       const elementsWithinUpgradeMonitoringCard1 = [
-        { element: '.pf-c-title', method: 'contain', value: 'Monitoring' },
+        { element: '.pf-v5-c-title', method: 'contain', value: 'Monitoring' },
         { element: '#enable_user_workload_monitoring', method: 'be.checked' },
         {
-          element: '.pf-c-check__label',
+          element: '.pf-v5-c-check__label',
           method: 'contain',
           value: 'Enable user workload monitoring',
         },
@@ -626,14 +661,14 @@ describe('Create ROSA Cluster in FedRamp (OCP-TBD)', { tags: ['fedramp'] }, () =
         },
       ];
       CreateRosaWizardPage.validateElementsWithinShouldMethodValue(
-        '.ocm-c-upgrade-monitoring > :nth-child(1) > .pf-c-card > .pf-c-card__body',
+        '.ocm-c-upgrade-monitoring > :nth-child(1) > .pf-v5-c-card > .pf-v5-c-card__body',
         elementsWithinUpgradeMonitoringCard1,
       );
-      cy.get('.ocm-c-upgrade-monitoring > :nth-child(2) > .pf-c-card').within(() => {
-        cy.get('.pf-c-card__title').should('contain', 'Update strategy');
+      cy.get('.ocm-c-upgrade-monitoring > :nth-child(2) > .pf-v5-c-card').within(() => {
+        cy.get('.pf-v5-c-card__title').should('contain', 'Update strategy');
         cy.get('.pf-l-grid__item').should(
           'contain',
-          'Note: In the event of Critical security concerns (new window or tab) (CVEs) that significantly impact the security or stability of the cluster, updates may be automatically scheduled by Red Hat SRE to the latest z-stream version not impacted by the CVE within 48 hours after customer notifications.',
+          'Note: In the event of Critical security concerns (new window or tab) (CVEs) that significantly impact the security or stability of the cluster, updates may be automatically scheduled by Red Hat SRE to the latest z-stream version not impacted by the CVE within 2 business days after customer notifications.',
         );
         if (Cypress.env('UPDATE_STRATEGY') == 'Individual updates') {
           cy.getByTestId('upgrade_policy-manual').should('be.checked');
@@ -642,14 +677,14 @@ describe('Create ROSA Cluster in FedRamp (OCP-TBD)', { tags: ['fedramp'] }, () =
           cy.getByTestId('upgrade_policy-manual').should('not.be.checked');
           cy.getByTestId('upgrade_policy-automatic').should('be.checked');
         }
-        cy.get('.pf-c-radio__description')
+        cy.get('.pf-v5-c-radio__description')
           .eq(0)
           .invoke('text')
           .should(
             'contain',
             'Schedule each update individually. Take into consideration end of life dates from the lifecycle policy (new window or tab) when planning updates.',
           );
-        cy.get('.pf-c-radio__description')
+        cy.get('.pf-v5-c-radio__description')
           .eq(1)
           .invoke('text')
           .should(
@@ -657,11 +692,11 @@ describe('Create ROSA Cluster in FedRamp (OCP-TBD)', { tags: ['fedramp'] }, () =
             "The cluster will be automatically updated based on your preferred day and start time when new patch updates (z-stream (new window or tab)) are available. When a new minor version is available, you'll be notified and must manually allow the cluster to update to the next minor version.",
           );
         cy.get('h4').should('contain', 'Node draining');
-        cy.get('.pf-c-content').should(
+        cy.get('.pf-v5-c-content').should(
           'contain',
           'You may set a grace period for how long pod disruption budget-protected workloads will be respected during updates. After this grace period, any workloads protected by pod disruption budgets that have not been successfully drained from a node will be forcibly evicted.',
         );
-        cy.get('.pf-c-form__label').should('contain', 'Grace period');
+        cy.get('.pf-v5-c-form__label').should('contain', 'Grace period');
         CreateRosaWizardPage.clickButtonContainingText('1 hour');
         const gracePeriodOptions = [
           '15 minutes',
@@ -671,20 +706,20 @@ describe('Create ROSA Cluster in FedRamp (OCP-TBD)', { tags: ['fedramp'] }, () =
           '4 hours',
           '8 hours',
         ];
-        CreateRosaWizardPage.validateItemsInList(gracePeriodOptions, '.pf-c-select__menu > li');
+        CreateRosaWizardPage.validateItemsInList(gracePeriodOptions, '.pf-v5-c-select__menu > li');
       });
       cy.get('#clusterdetails-content').click();
       const elementsWithinUpgradeMonitoringCard3 = [
-        { element: '.pf-c-card__title', method: 'contain', value: 'Update status' },
-        { element: '.pf-c-button', method: 'contain', value: 'Update' },
+        { element: '.pf-v5-c-card__title', method: 'contain', value: 'Update status' },
+        { element: '.pf-v5-c-button', method: 'contain', value: 'Update' },
       ];
       CreateRosaWizardPage.validateElementsWithinShouldMethodValue(
-        '.ocm-c-upgrade-monitoring > :nth-child(3) > .pf-c-card',
+        '.ocm-c-upgrade-monitoring > :nth-child(3) > .pf-v5-c-card',
         elementsWithinUpgradeMonitoringCard3,
       );
     });
     it('Post Installation: Cluster List Validations', () => {
-      cy.get('.pf-c-breadcrumb__link').contains('Clusters').click();
+      cy.get('.pf-v5-c-breadcrumb__link').contains('Clusters').click();
       cy.get('#cluster-list-header').should('contain', 'Clusters');
       if (Cypress.env('GOV_CLOUD')) {
         const govCloudNavBarItems = ['Clusters', 'Releases', 'Downloads'];
@@ -693,9 +728,9 @@ describe('Create ROSA Cluster in FedRamp (OCP-TBD)', { tags: ['fedramp'] }, () =
         cy.getByTestId('create_cluster_btn').should('be.visible');
         cy.get('#view-only-my-clusters').should('have.attr', 'aria-label', 'View only my clusters');
         cy.getByTestId('register-cluster-item').should('not.exist');
-        cy.get('.pf-c-dropdown__toggle').contains('Cluster type').should('not.exist');
+        cy.get('.pf-v5-c-dropdown__toggle').contains('Cluster type').should('not.exist');
         // TODO: Check to see if we are going to be adding this to FedRamp
-        // cy.get('.pf-c-toolbar__item > a').should('have.attr', 'href', '/openshift/archived')
+        // cy.get('.pf-v5-c-toolbar__item > a').should('have.attr', 'href', '/openshift/archived')
       } else {
         const commercialCloudNavBarItems = [
           'Clusters',
@@ -738,8 +773,8 @@ describe('Create ROSA Cluster in FedRamp (OCP-TBD)', { tags: ['fedramp'] }, () =
         cy.getByTestId('create_cluster_btn').should('be.visible');
         cy.get('#view-only-my-clusters').should('have.attr', 'aria-label', 'View only my clusters');
         cy.getByTestId('register-cluster-item').should('exist');
-        cy.get('.pf-c-dropdown__toggle').contains('Cluster type').should('exist');
-        cy.get('.pf-c-toolbar__content-section > :nth-child(5) > a').should(
+        cy.get('.pf-v5-c-dropdown__toggle').contains('Cluster type').should('exist');
+        cy.get('.pf-v5-c-toolbar__content-section > :nth-child(5) > a').should(
           'have.attr',
           'href',
           '/openshift/archived',

@@ -2,9 +2,7 @@
 
 exports[`<DynamicSelect> empty data: empty 1`] = `
 <FormGroup
-  helperTextInvalid={null}
   label="Label"
-  validated="default"
 >
   <Alert
     isInline={true}
@@ -17,10 +15,9 @@ exports[`<DynamicSelect> empty data: empty 1`] = `
     aria-label="Label"
     className=""
     isDisabled={true}
-    isIconSprite={false}
     isRequired={false}
     onBlur={[Function]}
-    onChange={[MockFunction]}
+    onChange={[Function]}
     onFocus={[Function]}
     ouiaSafe={true}
     validated="default"
@@ -33,23 +30,24 @@ exports[`<DynamicSelect> empty data: empty 1`] = `
       value=""
     />
   </FormSelect>
+  <FormGroupHelperText
+    error={null}
+    touched={false}
+  />
 </FormGroup>
 `;
 
 exports[`<DynamicSelect> error, touched: shows error 1`] = `
 <FormGroup
-  helperTextInvalid="Bad!"
   label="Label"
-  validated="error"
 >
   <FormSelect
     aria-label="Label"
     className=""
     isDisabled={true}
-    isIconSprite={false}
     isRequired={false}
     onBlur={[Function]}
-    onChange={[MockFunction]}
+    onChange={[Function]}
     onFocus={[Function]}
     ouiaSafe={true}
     validated="error"
@@ -61,23 +59,24 @@ exports[`<DynamicSelect> error, touched: shows error 1`] = `
       value=""
     />
   </FormSelect>
+  <FormGroupHelperText
+    error="Bad!"
+    touched={true}
+  />
 </FormGroup>
 `;
 
 exports[`<DynamicSelect> error, untouched: no error 1`] = `
 <FormGroup
-  helperTextInvalid="Bad!"
   label="Label"
-  validated="default"
 >
   <FormSelect
     aria-label="Label"
     className=""
     isDisabled={true}
-    isIconSprite={false}
     isRequired={false}
     onBlur={[Function]}
-    onChange={[MockFunction]}
+    onChange={[Function]}
     onFocus={[Function]}
     ouiaSafe={true}
     validated="default"
@@ -89,23 +88,24 @@ exports[`<DynamicSelect> error, untouched: no error 1`] = `
       value=""
     />
   </FormSelect>
+  <FormGroupHelperText
+    error="Bad!"
+    touched={false}
+  />
 </FormGroup>
 `;
 
 exports[`<DynamicSelect> gets data: items 1`] = `
 <FormGroup
-  helperTextInvalid={null}
   label="Label"
-  validated="default"
 >
   <FormSelect
     aria-label="Label"
     className=""
     isDisabled={false}
-    isIconSprite={false}
     isRequired={false}
     onBlur={[Function]}
-    onChange={[MockFunction]}
+    onChange={[Function]}
     onFocus={[Function]}
     ouiaSafe={true}
     validated="default"
@@ -128,23 +128,24 @@ exports[`<DynamicSelect> gets data: items 1`] = `
       value="Bar"
     />
   </FormSelect>
+  <FormGroupHelperText
+    error={null}
+    touched={false}
+  />
 </FormGroup>
 `;
 
 exports[`<DynamicSelect> gets data: loading 1`] = `
 <FormGroup
-  helperTextInvalid={null}
   label="Label"
-  validated="default"
 >
   <FormSelect
     aria-label="Label"
     className=""
     isDisabled={true}
-    isIconSprite={false}
     isRequired={false}
     onBlur={[Function]}
-    onChange={[MockFunction]}
+    onChange={[Function]}
     onFocus={[Function]}
     ouiaSafe={true}
     validated="default"
@@ -156,37 +157,24 @@ exports[`<DynamicSelect> gets data: loading 1`] = `
       value=""
     />
   </FormSelect>
+  <FormGroupHelperText
+    error={null}
+    touched={false}
+  />
 </FormGroup>
 `;
 
 exports[`<DynamicSelect> resets when selected value no longer valid option: new items 1`] = `
 <FormGroup
-  helperTextInvalid={null}
   label="Label"
-  validated="default"
 >
   <FormSelect
     aria-label="Label"
     className=""
     isDisabled={false}
-    isIconSprite={false}
     isRequired={false}
     onBlur={[Function]}
-    onChange={
-      [MockFunction] {
-        "calls": Array [
-          Array [
-            "",
-          ],
-        ],
-        "results": Array [
-          Object {
-            "type": "return",
-            "value": undefined,
-          },
-        ],
-      }
-    }
+    onChange={[Function]}
     onFocus={[Function]}
     ouiaSafe={true}
     validated="default"
@@ -209,23 +197,24 @@ exports[`<DynamicSelect> resets when selected value no longer valid option: new 
       value="Baz"
     />
   </FormSelect>
+  <FormGroupHelperText
+    error={null}
+    touched={false}
+  />
 </FormGroup>
 `;
 
 exports[`<DynamicSelect> without dependencies: blank 1`] = `
 <FormGroup
-  helperTextInvalid={null}
   label="Label"
-  validated="default"
 >
   <FormSelect
     aria-label="Label"
     className=""
     isDisabled={true}
-    isIconSprite={false}
     isRequired={false}
     onBlur={[Function]}
-    onChange={[MockFunction]}
+    onChange={[Function]}
     onFocus={[Function]}
     ouiaSafe={true}
     validated="default"
@@ -237,5 +226,9 @@ exports[`<DynamicSelect> without dependencies: blank 1`] = `
       value=""
     />
   </FormSelect>
+  <FormGroupHelperText
+    error={null}
+    touched={false}
+  />
 </FormGroup>
 `;

@@ -161,20 +161,20 @@ class ArchivedClusterList extends Component {
                   <ToolbarItem>
                     <ClusterListFilter view={viewConstants.ARCHIVED_CLUSTERS_VIEW} />
                   </ToolbarItem>
-                  <ToolbarItem className="pf-l-split__item split-margin-left">
+                  <ToolbarItem className="pf-v5-l-split__item split-margin-left">
                     <ClusterListFilterDropDown
                       view={viewConstants.ARCHIVED_CLUSTERS_VIEW}
                       isDisabled={pending}
                     />
                   </ToolbarItem>
-                  <ToolbarItem className="pf-l-split__item split-margin-left">
+                  <ToolbarItem className="pf-v5-l-split__item split-margin-left">
                     <ViewOnlyMyClustersToggle
                       view={viewConstants.ARCHIVED_CLUSTERS_VIEW}
                       bodyContent="Show only the clusters you previously archived, or all archived clusters in your organization."
                       localStorageKey={ONLY_MY_CLUSTERS_TOGGLE_CLUSTER_ARCHIVES_LIST}
                     />
                   </ToolbarItem>
-                  <ToolbarItem className="pf-l-split__item split-margin-left">
+                  <ToolbarItem className="pf-v5-l-split__item split-margin-left">
                     <div className="show-active-clusters-link">
                       <Link to="/">Show active clusters</Link>
                     </div>
@@ -186,7 +186,7 @@ class ArchivedClusterList extends Component {
                     )}
                   </ToolbarItem>
                   <ToolbarItem
-                    alignment={{ default: 'alignRight' }}
+                    align={{ default: 'alignRight' }}
                     variant="pagination"
                     className="pf-m-hidden visible-on-lgplus"
                   >

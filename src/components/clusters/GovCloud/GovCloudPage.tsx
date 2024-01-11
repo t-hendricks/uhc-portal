@@ -10,7 +10,7 @@ import { useHasGovEmail } from './use-gov-email';
 
 import './GovCloudPage.css';
 
-const govCloudTitle = 'FedRAMP ROSA Access';
+const govCloudTitle = 'Access request for Red Hat OpenShift Service on AWS (ROSA) FedRAMP';
 
 const GovCloudPage = () => {
   const [showConfirm, setShowConfirm] = React.useState(false);

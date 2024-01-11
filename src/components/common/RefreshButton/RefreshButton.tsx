@@ -1,5 +1,5 @@
 import React from 'react';
-import { RedoIcon } from '@patternfly/react-icons';
+import { RedoIcon } from '@patternfly/react-icons/dist/esm/icons/redo-icon';
 import { Tooltip, TooltipPosition, Button } from '@patternfly/react-core';
 
 type Props = {

@@ -30,70 +30,82 @@ exports[`<KMSKeyLocationComboBox /> when location needs to be fetched renders co
     aria-label="KMS location"
     className=""
     isDisabled={false}
-    isIconSprite={false}
     isRequired={false}
     onBlur={[Function]}
-    onChange={
-      [MockFunction] {
-        "calls": Array [
-          Array [
-            undefined,
-          ],
-        ],
-        "results": Array [
-          Object {
-            "type": "return",
-            "value": undefined,
-          },
-        ],
-      }
-    }
+    onChange={[Function]}
     onFocus={[Function]}
     ouiaSafe={true}
     validated="default"
     value=""
   >
-    <select
-      aria-invalid={false}
-      aria-label="KMS location"
-      className="pf-c-form-control"
-      data-ouia-component-id="OUIA-Generated-FormSelect-default-1"
-      data-ouia-component-type="PF4/FormSelect"
-      data-ouia-safe={true}
-      disabled={false}
-      onBlur={[Function]}
-      onChange={[Function]}
-      onFocus={[Function]}
-      required={false}
-      value=""
+    <span
+      className="pf-v5-c-form-control"
     >
-      <FormSelectOption
-        key="us-east-1"
-        label="us-east-1"
-        value="us-east-1"
+      <select
+        aria-invalid={false}
+        aria-label="KMS location"
+        data-ouia-component-id="OUIA-Generated-FormSelect-default-1"
+        data-ouia-component-type="PF5/FormSelect"
+        data-ouia-safe={true}
+        disabled={false}
+        onBlur={[Function]}
+        onChange={[Function]}
+        onFocus={[Function]}
+        required={false}
+        value=""
       >
-        <option
-          className=""
-          disabled={false}
+        <FormSelectOption
+          key="us-east-1"
+          label="us-east-1"
           value="us-east-1"
         >
-          us-east-1
-        </option>
-      </FormSelectOption>
-      <FormSelectOption
-        key="global"
-        label="global"
-        value="global"
-      >
-        <option
-          className=""
-          disabled={false}
+          <option
+            className=""
+            disabled={false}
+            value="us-east-1"
+          >
+            us-east-1
+          </option>
+        </FormSelectOption>
+        <FormSelectOption
+          key="global"
+          label="global"
           value="global"
         >
-          global
-        </option>
-      </FormSelectOption>
-    </select>
+          <option
+            className=""
+            disabled={false}
+            value="global"
+          >
+            global
+          </option>
+        </FormSelectOption>
+      </select>
+      <span
+        className="pf-v5-c-form-control__utilities"
+      >
+        <span
+          className="pf-v5-c-form-control__toggle-icon"
+        >
+          <CaretDownIcon>
+            <svg
+              aria-hidden={true}
+              aria-labelledby={null}
+              className="pf-v5-svg"
+              fill="currentColor"
+              height="1em"
+              role="img"
+              viewBox="0 0 320 512"
+              width="1em"
+            >
+              <path
+                d="M31.3 192h257.3c17.8 0 26.7 21.5 14.1 34.1L174.1 354.8c-7.8 7.8-20.5 7.8-28.3 0L17.2 226.1C4.6 213.5 13.5 192 31.3 192z"
+              />
+            </svg>
+          </CaretDownIcon>
+        </span>
+      </span>
+    </span>
   </FormSelect>
 </KMSKeyLocationComboBox>
 `;

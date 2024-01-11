@@ -71,7 +71,7 @@ export const Configuration = () => {
     }
   };
 
-  const onClusterPrivacyChange = (value: string) => {
+  const onClusterPrivacyChange = (_event: React.FormEvent<HTMLInputElement>, value: string) => {
     if (value === ClusterPrivacyType.External) {
       setFieldValue(FieldId.UsePrivateLink, false);
 
@@ -97,7 +97,7 @@ export const Configuration = () => {
     }
   };
 
-  const onPrivateLinkChange = (checked: boolean) => {
+  const onPrivateLinkChange = (_event: React.FormEvent<HTMLInputElement>, checked: boolean) => {
     setFieldValue(FieldId.UsePrivateLink, checked);
 
     if (checked) {
@@ -105,7 +105,7 @@ export const Configuration = () => {
     }
   };
 
-  const onClusterProxyChange = (checked: boolean) => {
+  const onClusterProxyChange = (_event: React.FormEvent<HTMLInputElement>, checked: boolean) => {
     trackCheckedState(trackEvents.ConfigureClusterWideProxy, checked);
     setFieldValue(FieldId.ConfigureProxy, checked);
 
@@ -115,7 +115,7 @@ export const Configuration = () => {
     }
   };
 
-  const onInstallIntoVPCchange = (checked: boolean) => {
+  const onInstallIntoVPCchange = (_event: React.FormEvent<HTMLInputElement>, checked: boolean) => {
     setFieldValue(FieldId.InstallToVpc, checked);
     clearSecurityGroups();
     trackCheckedState(trackEvents.InstallIntoVPC, checked);
@@ -155,7 +155,7 @@ export const Configuration = () => {
       <Grid hasGutter>
         <GridItem>
           <Title headingLevel="h3">Networking configuration</Title>
-          <Text className="pf-u-mt-sm">Configure network access for your cluster.</Text>
+          <Text className="pf-v5-u-mt-sm">Configure network access for your cluster.</Text>
         </GridItem>
 
         {showClusterPrivacy && (
@@ -164,7 +164,7 @@ export const Configuration = () => {
               <Title headingLevel="h4" size="xl" className="privacy-heading">
                 Cluster privacy
               </Title>
-              <Text className="pf-u-mt-sm">
+              <Text className="pf-v5-u-mt-sm">
                 Install your cluster with all public or private API endpoints and application
                 routes.
               </Text>
@@ -202,7 +202,7 @@ export const Configuration = () => {
               <Title headingLevel="h4" size="xl" className="privacy-heading">
                 Virtual Private Cloud (VPC)
               </Title>
-              <Text className="pf-u-mt-sm">
+              <Text className="pf-v5-u-mt-sm">
                 By default, a new VPC will be created for your cluster. Alternatively, you may opt
                 to install to an existing VPC below.
               </Text>
@@ -217,7 +217,7 @@ export const Configuration = () => {
                   isDisabled={usePrivateLink || configureProxy}
                 />
 
-                <div className="pf-u-ml-lg pf-u-mt-md">
+                <div className="pf-v5-u-ml-lg pf-v5-u-mt-md">
                   {isPrivateCluster && cloudProvider === CloudProviderType.Aws && (
                     <CheckboxField
                       name={FieldId.UsePrivateLink}
@@ -229,7 +229,7 @@ export const Configuration = () => {
                     />
                   )}
                   {showConfigureProxy && (
-                    <div className="pf-u-mt-md">
+                    <div className="pf-v5-u-mt-md">
                       <CheckboxField
                         name={FieldId.ConfigureProxy}
                         label="Configure a cluster-wide proxy"
@@ -252,7 +252,7 @@ export const Configuration = () => {
               <Title headingLevel="h4" size="xl">
                 Application ingress settings
               </Title>
-              <Text className="pf-u-mt-sm">
+              <Text className="pf-v5-u-mt-sm">
                 Ingress is configured by default.{' '}
                 {isManagedIngressAllowed
                   ? 'Customize settings if needed.'
@@ -276,7 +276,7 @@ export const Configuration = () => {
                   <RadioGroupField
                     name={FieldId.ApplicationIngress}
                     options={applicationIngressOptions}
-                    onChange={onApplicationIngressChange}
+                    onChange={(_event, value) => onApplicationIngressChange(value)}
                   />
                 </GridItem>
                 {applicationIngress === ApplicationIngressType.Custom && <DefaultIngressFields />}

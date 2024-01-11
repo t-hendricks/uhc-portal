@@ -1,19 +1,17 @@
-.rich-input-field,
-.rich-input-field[aria-invalid='true'] {
-  background-image: none; // Hides default PatternFly icon
-}
-
 .rich-input-field {
-  border-right: none;
-  border-bottom-width: var(--pf-c-form-control--invalid--BorderBottomWidth);
-
-  &_not-valid {
-    border-bottom-color: var(--pf-global--danger-color--100);
+  &.pf-v5-c-form-control {
+    --pf-v5-c-form-control__icon--m-status--Color: transparent;
+    &::after {
+      border-bottom-width: var(--pf-v5-global--BorderWidth--md);
+    }
   }
-  &_valid {
-    border-bottom-color: var(--pf-global--success-color--100);
+  &.rich-input-field_not-valid::after {
+    border-bottom-color: var(--pf-v5-global--danger-color--100);
   }
-  &_info {
-    border-bottom-color: var(--pf-global--info-color--100);
+  &.rich-input-field_valid::after {
+    border-bottom-color: var(--pf-v5-global--success-color--100);
+  }
+  &.rich-input-field_info::after {
+    border-bottom-color: var(--pf-v5-global--info-color--100);
   }
 }

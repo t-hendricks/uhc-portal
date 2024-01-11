@@ -48,7 +48,6 @@ exports[`<AvailabilityZoneSelection /> should render 1`] = `
     ouiaSafe={true}
     placeholderText=""
     position="left"
-    removeFindDomNode={false}
     removeSelectionAriaLabel="Remove"
     selections="Select availability zone"
     shouldResetOnSelect={true}
@@ -223,5 +222,6 @@ exports[`<AvailabilityZoneSelection /> should render 1`] = `
       fake-regionf
     </SelectOption>
   </Select>
+  <FormGroupHelperText />
 </FormGroup>
 `;

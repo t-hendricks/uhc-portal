@@ -28,6 +28,8 @@ const Prerequisites = ({
         toggleText={toggleText}
         isExpanded={isExpanded}
         onToggle={onToggle}
+        contentId="prerequisites-content"
+        toggleId="prerequisites-toggle"
         {...restProps}
       >
         <div className="prerequisites-section">{children}</div>

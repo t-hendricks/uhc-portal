@@ -41,6 +41,7 @@ const ErrorBox = ({
       title={message}
       role={variant === 'danger' ? 'alert' : undefined}
       className="error-box"
+      data-testid="alert-error"
       {...(showCloseBtn && closeAlertProp)}
     >
       {children && (

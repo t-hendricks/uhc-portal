@@ -1,10 +1,12 @@
 import React, { ChangeEvent, MouseEvent, useCallback, useEffect, useMemo, useState } from 'react';
-import { Flex, FlexItem, FormGroup, SelectOptionObject } from '@patternfly/react-core';
+import { Flex, FlexItem, FormGroup } from '@patternfly/react-core';
+import { SelectOptionObject as SelectOptionObjectDeprecated } from '@patternfly/react-core/deprecated';
 import { WrappedFieldInputProps, WrappedFieldMetaProps } from 'redux-form';
 
 import { CloudVPC, Subnetwork } from '~/types/clusters_mgmt.v1';
 import { isSubnetMatchingPrivacy } from '~/components/clusters/CreateOSDPage/CreateOSDWizard/VPCScreen/useVPCInquiry';
 import FuzzySelect, { FuzzyDataType, FuzzyEntryType } from '~/components/common/FuzzySelect';
+import { FormGroupHelperText } from '~/components/common/FormGroupHelperText';
 
 const TRUNCATE_THRESHOLD = 40;
 
@@ -59,10 +61,11 @@ export const SubnetSelectField = ({
         isSubnetMatchingPrivacy(subnet, privacy) &&
         (allowedAZ === undefined || allowedAZ.includes(subnetAZ))
       ) {
+        const subnetId = subnet.subnet_id as string;
         const entry: FuzzyEntryType = {
-          key: subnet.name || subnet.subnet_id || 'unknown',
-          groupKey: subnetAZ,
-          value: subnet,
+          groupId: subnetAZ,
+          entryId: subnetId,
+          label: subnet.name || subnetId,
         };
         if (subnetsByAZ[subnetAZ]) {
           subnetsByAZ[subnetAZ].push(entry);
@@ -102,9 +105,10 @@ export const SubnetSelectField = ({
   }, [withAutoSelect, hasOptions, subnetList, selectedSubnet]);
 
   const onSelect = useCallback(
-    (_: MouseEvent | ChangeEvent, selectedSubnet: string | SelectOptionObject) => {
-      input.onChange(selectedSubnet);
-      setSelectedSubnet(selectedSubnet);
+    (_: MouseEvent | ChangeEvent, selectedSubnetId: string | SelectOptionObjectDeprecated) => {
+      const subnet = subnetList.find((subnet) => subnet.subnet_id === selectedSubnetId);
+      input.onChange(subnet);
+      setSelectedSubnet(subnet);
       setIsExpanded(false);
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -116,8 +120,6 @@ export const SubnetSelectField = ({
       fieldId={name}
       label={label}
       id={input.name}
-      validated={isInputTouched && inputError ? 'error' : undefined}
-      helperTextInvalid={isInputTouched && inputError}
       isRequired={isRequired}
       className={className}
     >
@@ -127,18 +129,20 @@ export const SubnetSelectField = ({
             label={label}
             aria-label={label}
             isOpen={isExpanded}
-            onToggle={(isExpanded) => setIsExpanded(isExpanded)}
+            onToggle={(_, isExpanded) => setIsExpanded(isExpanded)}
             onSelect={onSelect}
-            selected={selectedSubnet?.name || selectedSubnet?.subnet_id}
+            selectedEntryId={selectedSubnet?.subnet_id}
             selectionData={subnetsByAZ}
             isDisabled={isDisabled || !hasOptions}
             placeholderText={placeholder(hasOptions, hasSubnetNames)}
             truncation={TRUNCATE_THRESHOLD}
-            inlineFilterPlaceholderText={`Filter by subnet ${hasSubnetNames ? 'name' : 'ID'}`}
+            inlineFilterPlaceholderText="Filter by subnet ID / name"
             validated={inputError ? 'error' : undefined}
           />
         </FlexItem>
       </Flex>
+
+      <FormGroupHelperText touched={isInputTouched} error={inputError} />
     </FormGroup>
   );
 };

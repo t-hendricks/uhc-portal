@@ -1,5 +1,5 @@
-import './RosaServicePage.scss';
 import React from 'react';
+import PropTypes from 'prop-types';
 import {
   Button,
   CardBody,
@@ -20,8 +20,9 @@ import {
   TextVariants,
   Divider,
   Stack,
+  Icon,
 } from '@patternfly/react-core';
-import { CubeIcon } from '@patternfly/react-icons';
+import { CubeIcon } from '@patternfly/react-icons/dist/esm/icons/cube-icon';
 import { Link } from 'react-router-dom';
 import ExternalLink from '~/components/common/ExternalLink';
 import useAnalytics from '~/hooks/useAnalytics';
@@ -34,6 +35,8 @@ import { ListTextLabelLinkCard } from '../../common/ListTextLabelLinkCard/ListTe
 import { ProductBanner } from '../../common/ProductBanner';
 import docLinks from '../../../common/installLinks.mjs';
 import OpenShiftProductIcon from '../../../styles/images/OpenShiftProductIcon.svg';
+
+import './RosaServicePage.scss';
 
 const rosaBannerContents = {
   icon: <img src={OpenShiftProductIcon} alt="OpenShift" />,
@@ -64,7 +67,7 @@ const TryRosaCard = () => {
             });
           }}
           component={(props) => <Link {...props} to={rosaHandsOnURL} />}
-          isLarge
+          size="lg"
         >
           Try it
         </Button>
@@ -82,6 +85,32 @@ const AWSRedHatVerticalLogo = () => (
     <AWSLogo height="2.5em" width="5em" />
   </Stack>
 );
+
+const ExpandableListCard = ({ items }) => (
+  <Card>
+    <List isPlain isBordered>
+      {items.map(({ title, contents }) => (
+        <ListItem className="rosa-expandable-list-item" key={title}>
+          <ExpandableSection
+            className="rosa-expandable-section"
+            toggleContent={<Text component={TextVariants.h3}>{title}</Text>}
+            displaySize="lg"
+          >
+            {contents}
+          </ExpandableSection>
+        </ListItem>
+      ))}
+    </List>
+  </Card>
+);
+ExpandableListCard.propTypes = {
+  items: PropTypes.arrayOf(
+    PropTypes.shape({
+      title: PropTypes.node,
+      contents: PropTypes.node,
+    }),
+  ),
+};
 
 const benefitsExpandableContents = [
   {
@@ -120,7 +149,7 @@ const featuresExpandableContents = [
 ];
 
 const linkTextLabelLinkCardContents = {
-  cardClassName: 'pf-u-mb-lg',
+  cardClassName: 'pf-v5-u-mb-lg',
   textLabelLinkItems: [
     {
       listItemText: 'Product Documentation for Red Hat OpenShift Service on AWS 4',
@@ -150,28 +179,11 @@ const linkTextLabelLinkCardContents = {
 function RosaServicePage() {
   const track = useAnalytics();
   const createRosaClusterURL = '/create/rosa/getstarted';
-  const expandableListArray = (expandableContentArray) => (
-    <Card>
-      <List isPlain isBordered>
-        {expandableContentArray.map(({ title, contents }) => (
-          <ListItem className="rosa-expandable-list-item" key={title}>
-            <ExpandableSection
-              className="rosa-expandable-section"
-              toggleContent={<Text component={TextVariants.h3}>{title}</Text>}
-              displaySize="large"
-            >
-              {contents}
-            </ExpandableSection>
-          </ListItem>
-        ))}
-      </List>
-    </Card>
-  );
 
   return (
     <AppPage>
       <ProductBanner
-        icon={AWSRedHatVerticalLogo()}
+        icon={<AWSRedHatVerticalLogo />}
         learnMoreLink={rosaBannerContents.learnMoreLink}
         title={rosaBannerContents.title}
         text={rosaBannerContents.text}
@@ -188,7 +200,7 @@ function RosaServicePage() {
         }
       />
       <PageSection>
-        <TextContent className="pf-u-mb-lg">
+        <TextContent className="pf-v5-u-mb-lg">
           <Title headingLevel="h2">Get started with ROSA</Title>
         </TextContent>
         <Flex>
@@ -199,7 +211,9 @@ function RosaServicePage() {
                   <CardHeader>
                     <CardTitle>
                       <Title headingLevel="h3">
-                        <CubeIcon size="md" className="pf-u-mr-sm rosa-cube-icon" />
+                        <Icon size="md">
+                          <CubeIcon className="pf-v5-u-mr-sm rosa-cube-icon" />
+                        </Icon>
                         Create a ROSA cluster
                       </Title>
                     </CardTitle>
@@ -226,7 +240,7 @@ function RosaServicePage() {
                               }}
                             />
                           )}
-                          isLarge
+                          size="lg"
                         >
                           Begin setup
                         </Button>
@@ -241,17 +255,17 @@ function RosaServicePage() {
             <TryRosaCard />
           </FlexItem>
         </Flex>
-        <Title className="pf-u-mt-lg pf-u-mb-lg" headingLevel="h2">
+        <Title className="pf-v5-u-mt-lg pf-v5-u-mb-lg" headingLevel="h2">
           Benefits
         </Title>
-        <Card>{expandableListArray(benefitsExpandableContents)}</Card>
+        <ExpandableListCard items={benefitsExpandableContents} />
 
-        <Title className="pf-u-mt-lg pf-u-mb-lg" headingLevel="h2">
+        <Title className="pf-v5-u-mt-lg pf-v5-u-mb-lg" headingLevel="h2">
           Features
         </Title>
-        <Card>{expandableListArray(featuresExpandableContents)}</Card>
+        <ExpandableListCard items={featuresExpandableContents} />
 
-        <Title className="pf-u-mt-lg pf-u-mb-lg" headingLevel="h2">
+        <Title className="pf-v5-u-mt-lg pf-v5-u-mb-lg" headingLevel="h2">
           Pricing
         </Title>
         <Flex>
@@ -292,11 +306,11 @@ function RosaServicePage() {
           </FlexItem>
         </Flex>
 
-        <div className="pf-u-mt-md">
+        <div className="pf-v5-u-mt-md">
           <ExternalLink href={docLinks.ROSA_PRICING}>Learn more about pricing</ExternalLink>
         </div>
 
-        <Title headingLevel="h2" className="pf-u-mt-lg pf-u-mb-lg">
+        <Title headingLevel="h2" className="pf-v5-u-mt-lg pf-v5-u-mb-lg">
           Recommended content
         </Title>
 

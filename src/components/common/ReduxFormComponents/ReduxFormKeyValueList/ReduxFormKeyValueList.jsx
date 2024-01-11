@@ -1,8 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Field } from 'redux-form';
+
 import { Button, Grid, GridItem, TextInput } from '@patternfly/react-core';
-import { PlusCircleIcon, MinusCircleIcon } from '@patternfly/react-icons';
+import { PlusCircleIcon } from '@patternfly/react-icons/dist/esm/icons/plus-circle-icon';
+import { MinusCircleIcon } from '@patternfly/react-icons/dist/esm/icons/minus-circle-icon';
 import ButtonWithTooltip from '../../ButtonWithTooltip';
 
 import { getRandomID, nodeKeyValueTooltipText } from '../../../../common/helpers';
@@ -19,7 +21,7 @@ const LabelKey = ({ forceTouch, input, meta: { touched, error } }) => (
     />
 
     {(touched || forceTouch) && error && (
-      <span className="pf-c-form__helper-text pf-m-error">{error}</span>
+      <span className="pf-v5-c-form__helper-text pf-m-error">{error}</span>
     )}
   </>
 );
@@ -42,7 +44,7 @@ const LabelValue = ({ forceTouch, input, meta: { touched, error } }) => (
       {...input}
     />
     {(touched || forceTouch) && error && (
-      <span className="pf-c-form__helper-text pf-m-error">{error}</span>
+      <span className="pf-v5-c-form__helper-text pf-m-error">{error}</span>
     )}
   </>
 );
@@ -59,10 +61,10 @@ LabelValue.propTypes = {
 const hasInvalidKeys = (fieldsArray) => fieldsArray && fieldsArray.some((field) => !field.key);
 const ReduxFormKeyValueList = ({ fields, forceTouch }) => (
   <Grid hasGutter>
-    <GridItem span={4} className="pf-c-form__label pf-c-form__label-text">
+    <GridItem span={4} className="pf-v5-c-form__label pf-v5-c-form__label-text">
       Key
     </GridItem>
-    <GridItem span={4} className="pf-c-form__label pf-c-form__label-text">
+    <GridItem span={4} className="pf-v5-c-form__label pf-v5-c-form__label-text">
       Value
     </GridItem>
     <GridItem span={4} />

@@ -2,6 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Alert, FormGroup, FormSelect, FormSelectOption } from '@patternfly/react-core';
 
+import { FormGroupHelperText } from '~/components/common/FormGroupHelperText';
+
 class GCPVPCSubnet extends React.Component {
   componentDidMount() {
     if (this.currentValueIrrelevant()) {
@@ -71,13 +73,10 @@ class GCPVPCSubnet extends React.Component {
     // https://github.com/patternfly/patternfly-react/issues/5687
     const value = this.currentValueIrrelevant() ? '' : input.value;
 
+    const { onChange, ...restInput } = input;
+
     return (
-      <FormGroup
-        label={label}
-        validated={meta.touched && meta.invalid ? 'error' : 'default'}
-        helperTextInvalid={meta.error}
-        fieldId={input.name}
-      >
+      <FormGroup label={label} fieldId={input.name}>
         {matchesDependencies && vpcs.error && (
           <Alert
             variant="danger"
@@ -90,11 +89,14 @@ class GCPVPCSubnet extends React.Component {
         <FormSelect
           aria-label={label}
           isDisabled={!(show && items.length > 0)}
-          {...input}
+          {...restInput}
+          onChange={(_event, value) => onChange(value)}
           value={value}
         >
           {options}
         </FormSelect>
+
+        <FormGroupHelperText touched={meta.touched} error={meta.error} />
       </FormGroup>
     );
   }

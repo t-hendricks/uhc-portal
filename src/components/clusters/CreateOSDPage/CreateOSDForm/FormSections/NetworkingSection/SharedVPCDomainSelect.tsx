@@ -1,16 +1,12 @@
 import React from 'react';
+import { Button, FormGroup, Spinner, Flex, FlexItem, Tooltip } from '@patternfly/react-core';
 import {
-  Button,
-  Select,
-  SelectOption,
-  FormGroup,
-  SelectOptionObject,
-  Spinner,
-  Flex,
-  FlexItem,
-  Tooltip,
-} from '@patternfly/react-core';
-import { CopyIcon, TrashIcon } from '@patternfly/react-icons';
+  Select as SelectDeprecated,
+  SelectOption as SelectOptionDeprecated,
+  SelectOptionObject as SelectOptionObjectDeprecated,
+} from '@patternfly/react-core/deprecated';
+import { CopyIcon } from '@patternfly/react-icons/dist/esm/icons/copy-icon';
+import { TrashIcon } from '@patternfly/react-icons/dist/esm/icons/trash-icon';
 import { WrappedFieldInputProps, WrappedFieldMetaProps } from 'redux-form';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import { useDispatch } from 'react-redux';
@@ -20,6 +16,7 @@ import { useGlobalState } from '~/redux/hooks';
 import ErrorBox from '~/components/common/ErrorBox';
 
 import './SharedVPCDomainSelect.scss';
+import { FormGroupHelperText } from '~/components/common/FormGroupHelperText';
 
 const PLACEHOLDER_TEXT = 'Select base DNS domain';
 const CREATE_LOADER_TEXT = 'Reserving new base DNS domain...';
@@ -73,7 +70,7 @@ const SharedVPCDomainSelect = ({ label, input, meta }: SharedVPCDomainSelectProp
 
   const onSelect = (
     _: React.MouseEvent | React.ChangeEvent,
-    selection: string | SelectOptionObject,
+    selection: string | SelectOptionObjectDeprecated,
   ) => {
     if (!isDisabled) {
       setIsOpen(false);
@@ -102,19 +99,19 @@ const SharedVPCDomainSelect = ({ label, input, meta }: SharedVPCDomainSelectProp
   };
 
   const selectOptions = dnsDomains.map((domain) => (
-    <SelectOption key={domain.id} value={domain.id} isDisabled={isDisabled}>
+    <SelectOptionDeprecated key={domain.id} value={domain.id} isDisabled={isDisabled}>
       {domain.id}
-    </SelectOption>
+    </SelectOptionDeprecated>
   ));
 
   // A hidden item to display the spinner while a new DNS domain is being created
   if (isUpdatingDomains) {
     selectOptions.unshift(
-      <SelectOption key="loader" value={actionText} isPlaceholder>
+      <SelectOptionDeprecated key="loader" value={actionText} isPlaceholder>
         <div className="shared-vpc-loading-content">
           {actionText} <Spinner size="md" />
         </div>
-      </SelectOption>,
+      </SelectOptionDeprecated>,
     );
   }
 
@@ -126,19 +123,13 @@ const SharedVPCDomainSelect = ({ label, input, meta }: SharedVPCDomainSelectProp
   };
 
   return (
-    <FormGroup
-      label={label}
-      validated={meta.error ? 'error' : undefined}
-      helperTextInvalid={meta.touched && meta.error}
-      isRequired
-      className="shared-vpc-domain-select"
-    >
+    <FormGroup label={label} isRequired className="shared-vpc-domain-select">
       <Flex>
-        <FlexItem flex={{ default: 'flex_1' }} className="pf-u-m-0">
-          <Select
+        <FlexItem flex={{ default: 'flex_1' }} className="pf-v5-u-m-0">
+          <SelectDeprecated
             isOpen={isOpen}
             selections={input.value || (isUpdatingDomains ? actionText : PLACEHOLDER_TEXT)}
-            onToggle={onToggle}
+            onToggle={(_event, isOpen: boolean) => onToggle(isOpen)}
             onSelect={onSelect}
             onFilter={onFilter}
             maxHeight={MAX_SELECT_HEIGHT}
@@ -150,7 +141,7 @@ const SharedVPCDomainSelect = ({ label, input, meta }: SharedVPCDomainSelectProp
               <Button
                 isInline
                 variant="link"
-                className="pf-u-py-sm"
+                className="pf-v5-u-py-sm"
                 onClick={createNewDnsDomain}
                 isDisabled={isDisabled}
               >
@@ -159,7 +150,7 @@ const SharedVPCDomainSelect = ({ label, input, meta }: SharedVPCDomainSelectProp
             }
           >
             {selectOptions}
-          </Select>
+          </SelectDeprecated>
         </FlexItem>
 
         <FlexItem grow={{ default: undefined }} className="dns-domain-action-icon">
@@ -199,6 +190,8 @@ const SharedVPCDomainSelect = ({ label, input, meta }: SharedVPCDomainSelectProp
           }}
         />
       )}
+
+      <FormGroupHelperText touched={meta.touched} error={meta.error} />
     </FormGroup>
   );
 };

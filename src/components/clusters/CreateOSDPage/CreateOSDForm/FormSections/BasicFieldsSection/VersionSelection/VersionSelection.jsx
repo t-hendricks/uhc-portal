@@ -4,9 +4,6 @@ import React, { useState, useEffect } from 'react';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import {
-  Select,
-  SelectOption,
-  SelectGroup,
   FormGroup,
   TextList,
   TextListVariants,
@@ -20,12 +17,18 @@ import {
   Grid,
   GridItem,
 } from '@patternfly/react-core';
+import {
+  Select as SelectDeprecated,
+  SelectOption as SelectOptionDeprecated,
+  SelectGroup as SelectGroupDeprecated,
+} from '@patternfly/react-core/deprecated';
 import { Spinner } from '@redhat-cloud-services/frontend-components/Spinner';
-import { OutlinedQuestionCircleIcon } from '@patternfly/react-icons';
+import { OutlinedQuestionCircleIcon } from '@patternfly/react-icons/dist/esm/icons/outlined-question-circle-icon';
 import { isSupportedMinorVersion } from '~/common/helpers';
 import { useOCPLifeCycleStatusData } from '~/components/releases/hooks';
 import { MIN_MANAGED_POLICY_VERSION } from '~/components/clusters/CreateROSAPage/CreateROSAWizard/rosaConstants';
 import { RosaCliCommand } from '~/components/clusters/CreateROSAPage/CreateROSAWizard/AccountsRolesScreen/constants/cliCommands';
+import { FormGroupHelperText } from '~/components/common/FormGroupHelperText';
 import InstructionCommand from '../../../../../../common/InstructionCommand';
 import ErrorBox from '../../../../../../common/ErrorBox';
 
@@ -68,7 +71,7 @@ function VersionSelection({
     [rosaMaxOSVersion],
   );
 
-  const toggleCompatibleVersions = (showCompatible, ev) => {
+  const toggleCompatibleVersions = (ev, showCompatible) => {
     ev.preventDefault();
     ev.stopPropagation();
     setShowOnlyCompatibleVersions(showCompatible);
@@ -76,21 +79,21 @@ function VersionSelection({
 
   const RosaVersionErrorAlert = () => (
     <Alert
-      className="pf-u-ml-lg"
+      className="pf-v5-u-ml-lg"
       variant="danger"
       isInline
       role="alert"
       title="There is no version compatible with the selected ARNs in previous step"
     >
       <TextList component={TextListVariants.ol} className="ocm-c-wizard-alert-steps">
-        <TextListItem className="pf-u-mb-sm">
-          <Text component={TextVariants.p} className="pf-u-mb-sm">
+        <TextListItem className="pf-v5-u-mb-sm">
+          <Text component={TextVariants.p} className="pf-v5-u-mb-sm">
             Please select different ARNs or create new account roles using the following command in
             the ROSA CLI
           </Text>
         </TextListItem>
-        <TextListItem className="pf-u-mb-sm">
-          <Text component={TextVariants.p} className="pf-u-mb-sm">
+        <TextListItem className="pf-v5-u-mb-sm">
+          <Text component={TextVariants.p} className="pf-v5-u-mb-sm">
             <InstructionCommand textAriaLabel="Copyable ROSA create account-roles command">
               {isHypershiftSelected
                 ? RosaCliCommand.CreateAccountRolesHCP
@@ -204,7 +207,7 @@ function VersionSelection({
     isValidRosaVersion,
   ]);
 
-  const onToggle = (toggleOpenValue) => {
+  const onToggle = (_event, toggleOpenValue) => {
     setIsOpen(toggleOpenValue);
     // In case of backend error, don't want infinite loop reloading,
     // but allow manual reload by opening the dropdown.
@@ -246,8 +249,8 @@ function VersionSelection({
       }
 
       const selectOption = (
-        <SelectOption
-          className="pf-c-dropdown__menu-item"
+        <SelectOptionDeprecated
+          className="pf-v5-c-dropdown__menu-item"
           isSelected={selectedClusterVersion?.raw_id === version.raw_id}
           value={version.raw_id}
           formValue={version.raw_id}
@@ -256,7 +259,7 @@ function VersionSelection({
           description={selectOptionDescription(isIncompatible, isHostedDisabled(version))}
         >
           {`${version.raw_id}`}
-        </SelectOption>
+        </SelectOptionDeprecated>
       );
 
       switch (supportVersionMap?.[versionName(version)]) {
@@ -285,13 +288,7 @@ function VersionSelection({
 
   return (
     <>
-      <FormGroup
-        {...input}
-        label={label}
-        validated={error ? 'error' : undefined}
-        helperTextInvalid={touched && error}
-        isRequired
-      >
+      <FormGroup {...input} label={label} isRequired>
         {getInstallableVersionsResponse.error && (
           <ErrorBox
             message="Error getting cluster versions"
@@ -309,7 +306,7 @@ function VersionSelection({
         {getInstallableVersionsResponse.fulfilled && !rosaVersionError && (
           <Grid>
             <GridItem>
-              <Select
+              <SelectDeprecated
                 label={label}
                 aria-label={label}
                 isOpen={isOpen}
@@ -321,7 +318,7 @@ function VersionSelection({
               >
                 {isRosa && selectOptions.hasIncompatibleVersions ? (
                   <Switch
-                    className="pf-u-align-items-center pf-u-mx-md pf-u-mb-sm pf-u-font-size-sm"
+                    className="pf-v5-u-align-items-center pf-v5-u-mx-md pf-v5-u-mb-sm pf-v5-u-font-size-sm"
                     id="view-only-compatible-versions"
                     aria-label="View only compatible versions"
                     key={`compatible-switch-${showOnlyCompatibleVersions}`}
@@ -336,7 +333,7 @@ function VersionSelection({
                           }
                           enableFlip={false}
                         >
-                          <Button variant="plain" className="pf-u-p-0 pf-u-ml-md">
+                          <Button variant="plain" className="pf-v5-u-p-0 pf-v5-u-ml-md">
                             <OutlinedQuestionCircleIcon />
                           </Button>
                         </Popover>
@@ -347,19 +344,25 @@ function VersionSelection({
                     onChange={toggleCompatibleVersions}
                   />
                 ) : (
-                  <span className="pf-u-display-none">&nbsp;</span>
+                  <span className="pf-v5-u-display-none">&nbsp;</span>
                 )}
-                <SelectGroup label="Full support">{selectOptions.fullSupport}</SelectGroup>
-                <SelectGroup
+                <SelectGroupDeprecated label="Full support">
+                  {selectOptions.fullSupport}
+                </SelectGroupDeprecated>
+                <SelectGroupDeprecated
                   label="Maintenance support"
-                  className={classNames(!selectOptions.maintenanceSupport?.length && 'pf-u-hidden')}
+                  className={classNames(
+                    !selectOptions.maintenanceSupport?.length && 'pf-v5-u-hidden',
+                  )}
                 >
                   {selectOptions.maintenanceSupport}
-                </SelectGroup>
-              </Select>
+                </SelectGroupDeprecated>
+              </SelectDeprecated>
             </GridItem>
           </Grid>
         )}
+
+        <FormGroupHelperText touched={touched} error={error} />
       </FormGroup>
     </>
   );

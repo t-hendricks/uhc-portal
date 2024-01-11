@@ -9,15 +9,12 @@ import {
   GridItem,
   Title,
   Text,
+  useWizardContext,
 } from '@patternfly/react-core';
-import { useWizardContext } from '@patternfly/react-core/next';
+
 import links from '~/common/installLinks.mjs';
 import { checkNoProxyDomains, validateCA, validateUrl } from '~/common/validators';
 import { stringToArray } from '~/common/helpers';
-import {
-  ACCEPT,
-  MAX_FILE_SIZE,
-} from '~/components/clusters/ClusterDetails/components/IdentityProvidersPage/components/CAUpload';
 import { constants } from '~/components/clusters/CreateOSDPage/CreateOSDForm/CreateOSDFormConstants';
 import {
   DISABLED_NO_PROXY_PLACEHOLDER,
@@ -31,6 +28,13 @@ import ExternalLink from '~/components/common/ExternalLink';
 import { useFormState } from '~/components/clusters/wizards/hooks';
 import { FileUploadField, TextInputField } from '~/components/clusters/wizards/form';
 import { FieldId, StepName } from '~/components/clusters/wizards/osd/constants';
+
+export const MAX_FILE_SIZE = 4000000; // 4MB
+export const ACCEPT = {
+  'text/plain': ['.pem', '.crt', '.ca', '.cert'],
+  'application/x-pem-file': ['.pem'],
+  'application/x-x509-ca-cert': ['.crt', '.ca', '.cert'],
+};
 
 export const ClusterProxy = () => {
   const {
@@ -72,7 +76,7 @@ export const ClusterProxy = () => {
     <Form>
       <GridItem>
         <Title headingLevel="h3">Cluster-wide proxy</Title>
-        <Text className="pf-u-mt-sm">{constants.clusterProxyHint}</Text>
+        <Text className="pf-v5-u-mt-sm">{constants.clusterProxyHint}</Text>
         <ExternalLink href={links.OSD_CLUSTER_WIDE_PROXY}>
           Learn more about configuring a cluster-wide proxy
         </ExternalLink>
@@ -117,7 +121,7 @@ export const ClusterProxy = () => {
               helperText={NO_PROXY_HELPER_TEXT}
               isDisabled={!httpProxyUrl && !httpsProxyUrl}
               input={{
-                onChange: (value: string) =>
+                onChange: (_, value: string) =>
                   setFieldValue(FieldId.NoProxyDomains, stringToArray(value)),
                 placeholder:
                   !httpProxyUrl && !httpsProxyUrl
@@ -133,7 +137,7 @@ export const ClusterProxy = () => {
               label="Additional trust bundle"
               tooltip={
                 <>
-                  <Title headingLevel="h6" className="pf-u-mb-sm">
+                  <Title headingLevel="h6" className="pf-v5-u-mb-sm">
                     Additional trust bundle
                   </Title>
                   <p>
@@ -168,7 +172,7 @@ export const ClusterProxy = () => {
                     {
                       "Complete at least 1 of the fields above. If you don't want to set a cluster-wide proxy, disable this option in the "
                     }
-                    <strong style={{ fontSize: 'var(--pf-global--FontSize--md)' }}>
+                    <strong style={{ fontSize: 'var(--pf-v5-global--FontSize--md)' }}>
                       {'Networking > Configuration'}
                     </strong>
                     {' step.'}

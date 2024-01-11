@@ -9,7 +9,7 @@ export const ExpandableReviewItem = ({ children, initiallyExpanded }) => {
     setIsExpanded(initiallyExpanded);
   }, [initiallyExpanded]);
 
-  const onToggle = (toggleValue) => {
+  const onToggle = (_event, toggleValue) => {
     setIsExpanded(toggleValue);
   };
 

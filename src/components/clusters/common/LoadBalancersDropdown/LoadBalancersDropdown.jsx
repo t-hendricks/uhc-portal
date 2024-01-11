@@ -56,12 +56,14 @@ class LoadBalancersDropdown extends React.Component {
       );
       const notEnoughQuota = filteredValues.values.length <= 1;
       const isDisabled = disabled || notEnoughQuota;
+      const { onChange, ...restInput } = input;
       const formSelect = (
         <FormSelect
           className="quota-dropdown"
           aria-label="Load Balancers"
           isDisabled={isDisabled}
-          {...input}
+          onChange={(_event, value) => onChange(value)}
+          {...restInput}
         >
           {filteredValues.values.map((value) => loadBalancerOption(value.toString()))}
         </FormSelect>

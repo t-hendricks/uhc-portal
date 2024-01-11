@@ -40,7 +40,7 @@ const OCPInstructions = (props) => {
           {token.error && (
             <>
               <TokenErrorAlert token={token} />
-              <div className="pf-u-mb-lg" />
+              <div className="pf-v5-u-mb-lg" />
             </>
           )}
           <Instructions>

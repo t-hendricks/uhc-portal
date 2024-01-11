@@ -3,16 +3,19 @@ import { BrowserRouter } from 'react-router-dom';
 
 import { render, screen, checkAccessibility } from '~/testUtils';
 import RosaServicePage from './RosaServicePage';
-import clusterService from '../../../services/clusterService';
-
-jest.mock('../../../services/clusterService');
-clusterService.getClusters.mockResolvedValue({
-  data: { kind: 'ClusterList', page: 0, size: 0, total: 0, items: [] },
-});
 
 describe('<RosaServicePage />', () => {
-  it('contains correct links', async () => {
-    const { container, user } = render(
+  it('is accessible', async () => {
+    const { container } = render(
+      <BrowserRouter>
+        <RosaServicePage />
+      </BrowserRouter>,
+    );
+    await checkAccessibility(container);
+  });
+
+  it('has a link for "begin setup"', () => {
+    render(
       <BrowserRouter>
         <RosaServicePage />
       </BrowserRouter>,
@@ -22,6 +25,14 @@ describe('<RosaServicePage />', () => {
       'href',
       '/create/rosa/getstarted',
     );
+  });
+
+  it('has a working link for "self-service deployment"', async () => {
+    const { user } = render(
+      <BrowserRouter>
+        <RosaServicePage />
+      </BrowserRouter>,
+    );
 
     const selfServiceButton = screen.getByText('Self-service deployment');
     await user.click(selfServiceButton);
@@ -30,7 +41,14 @@ describe('<RosaServicePage />', () => {
         'Create fully-managed OpenShift clusters in minutes so you can get up and running quickly.',
       ),
     ).toBeVisible();
+  });
 
+  it('has a working link for "seamless integration"', async () => {
+    const { user } = render(
+      <BrowserRouter>
+        <RosaServicePage />
+      </BrowserRouter>,
+    );
     const seamlessIntegrationButton = screen.getByText(
       'Seamless integration with other AWS services',
     );
@@ -40,7 +58,14 @@ describe('<RosaServicePage />', () => {
         'A native AWS service accessed on demand from the AWS Management Console. Take advantage of seamless integration with other AWS cloud native services.',
       ),
     ).toBeVisible();
+  });
 
+  it('has a working link for "maximum availability"', async () => {
+    const { user } = render(
+      <BrowserRouter>
+        <RosaServicePage />
+      </BrowserRouter>,
+    );
     const maximumAvailabilityButton = screen.getByText('Maximum availability');
     await user.click(maximumAvailabilityButton);
     expect(
@@ -48,6 +73,14 @@ describe('<RosaServicePage />', () => {
         'Deploy clusters across multiple Availability Zones in supported regions to maximize availability.',
       ),
     ).toBeVisible();
+  });
+
+  it('has a working link for "deploying applications"', async () => {
+    const { user } = render(
+      <BrowserRouter>
+        <RosaServicePage />
+      </BrowserRouter>,
+    );
 
     const deployApplicationsButton = screen.getByText('Deploy applications where they need to be');
     await user.click(deployApplicationsButton);
@@ -77,7 +110,42 @@ describe('<RosaServicePage />', () => {
       'href',
       'https://aws.amazon.com/rosa/pricing',
     );
+  });
 
-    await checkAccessibility(container);
+  it('has a working link for "flexible consumption"', async () => {
+    const { user } = render(
+      <BrowserRouter>
+        <RosaServicePage />
+      </BrowserRouter>,
+    );
+
+    const flexibleConsumptionButton = screen.getByText('Flexible consumption-based pricing');
+    await user.click(flexibleConsumptionButton);
+    expect(
+      screen.getByText(
+        'Scale as per your business needs and pay as you go with flexible pricing with an on-demand hourly or annual billing model.',
+      ),
+    );
+  });
+
+  it('has a working link for "fully-managed service"', async () => {
+    const { user } = render(
+      <BrowserRouter>
+        <RosaServicePage />
+      </BrowserRouter>,
+    );
+
+    const fullyManagedButton = screen.getByText('Fully-managed service');
+    await user.click(fullyManagedButton);
+    expect(
+      screen.getByText(
+        'Fully-managed OpenShift service, backed by a global Site Reliability Engineering (SRE) team and an enterprise class SLA, enabling customers to focus on applications, not managing infrastructure.',
+      ),
+    );
+
+    expect(screen.getByText('Learn more about pricing', { selector: 'a' })).toHaveAttribute(
+      'href',
+      'https://aws.amazon.com/rosa/pricing',
+    );
   });
 });

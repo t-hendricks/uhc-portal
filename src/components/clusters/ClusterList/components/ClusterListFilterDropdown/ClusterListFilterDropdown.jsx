@@ -1,14 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import { Checkbox } from '@patternfly/react-core';
 import {
-  Dropdown,
-  DropdownToggle,
-  DropdownGroup,
-  DropdownItem,
-  Checkbox,
-} from '@patternfly/react-core';
-import { FilterIcon } from '@patternfly/react-icons';
+  Dropdown as DropdownDeprecated,
+  DropdownToggle as DropdownToggleDeprecated,
+  DropdownGroup as DropdownGroupDeprecated,
+  DropdownItem as DropdownItemDeprecated,
+} from '@patternfly/react-core/deprecated';
+import { FilterIcon } from '@patternfly/react-icons/dist/esm/icons/filter-icon';
 import get from 'lodash/get';
 
 import { productFilterOptions } from '../../../../../common/subscriptionTypes';
@@ -18,7 +18,7 @@ import './ClusterListFilterDropdown.scss';
 class ClusterListFilterDropdown extends React.Component {
   constructor(props) {
     super(props);
-    this.onToggle = (isOpen) => {
+    this.onToggle = (_, isOpen) => {
       this.setState({ isOpen });
     };
   }
@@ -54,9 +54,9 @@ class ClusterListFilterDropdown extends React.Component {
         selected[activeFilter] = true;
       });
       return (
-        <DropdownGroup key={`filtergroup-${group.key}`} label={group.label}>
+        <DropdownGroupDeprecated key={`filtergroup-${group.key}`} label={group.label}>
           {group.options.map((option) => {
-            const onChange = (checked) => {
+            const onChange = (_event, checked) => {
               if (checked) {
                 setFilterAndQueryParams({
                   ...currentFilters,
@@ -70,26 +70,25 @@ class ClusterListFilterDropdown extends React.Component {
               }
             };
             return (
-              <DropdownItem key={option.key}>
+              <DropdownItemDeprecated key={option.key}>
                 <Checkbox
-                  className="pf-c-dropdown__menu-item"
                   isChecked={selected[option.key]}
                   id={option.key}
                   label={option.label}
                   onChange={onChange}
                 />
-              </DropdownItem>
+              </DropdownItemDeprecated>
             );
           })}
-        </DropdownGroup>
+        </DropdownGroupDeprecated>
       );
     });
     return (
-      <Dropdown
+      <DropdownDeprecated
         toggle={
-          <DropdownToggle onToggle={this.onToggle} isDisabled={isDisabled}>
+          <DropdownToggleDeprecated onToggle={this.onToggle} isDisabled={isDisabled}>
             <FilterIcon /> Cluster type
-          </DropdownToggle>
+          </DropdownToggleDeprecated>
         }
         isOpen={isOpen}
         dropdownItems={dropdownItems}

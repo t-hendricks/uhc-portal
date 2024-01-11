@@ -131,8 +131,8 @@ describe('<MachinePools />', () => {
         },
       };
       render(<MachinePools {...newProps} />);
-      expect(screen.getByText('foo = bar')).toHaveClass('pf-c-label__content');
-      expect(screen.getByText('hello = world')).toHaveClass('pf-c-label__content');
+      expect(screen.getByText('foo = bar')).toHaveClass('pf-v5-c-label__text');
+      expect(screen.getByText('hello = world')).toHaveClass('pf-v5-c-label__text');
     });
 
     it('a truncated label that is longer than the cut length', () => {
@@ -242,7 +242,7 @@ describe('<MachinePools />', () => {
       };
 
       const { container } = render(<MachinePools {...newProps} />);
-      expect(container.querySelectorAll('.pf-c-skeleton').length).toBeGreaterThan(0);
+      expect(container.querySelectorAll('.pf-v5-c-skeleton').length).toBeGreaterThan(0);
 
       await checkAccessibility(container);
     });
@@ -296,7 +296,7 @@ describe('<MachinePools />', () => {
         deleteMachinePoolResponse: { ...baseRequestState, error: true },
       };
       render(<MachinePools {...newProps} />);
-      expect(screen.getByRole('alert', { name: 'Danger Alert' })).toBeInTheDocument();
+      expect(screen.getByTestId('alert-error')).toBeInTheDocument();
     });
   });
 
@@ -396,12 +396,12 @@ describe('<MachinePools />', () => {
       };
 
       const { user, container } = render(<MachinePools {...newProps} />);
-      expect(container.querySelectorAll('.pf-c-dropdown__toggle')).toHaveLength(2);
+      expect(screen.getAllByRole('button', { name: 'Kebab toggle' })).toHaveLength(2);
 
-      container.querySelectorAll('.pf-c-dropdown__toggle').forEach(async (button) => {
+      screen.getAllByRole('button', { name: 'Kebab toggle' }).forEach(async (button) => {
         await user.click(button);
         const menuItems = container.querySelectorAll(
-          '.pf-c-dropdown__menu .pf-c-dropdown__menu-item',
+          '.pf-v5-c-dropdown__menu .pf-v5-c-dropdown__menu-item',
         );
         menuItems.forEach((item) => {
           expect(item).not.toHaveAttribute('aria-disabled');
@@ -443,8 +443,8 @@ describe('<MachinePools />', () => {
         },
       };
 
-      const { container, user } = render(<MachinePools {...newProps} />);
-      await user.click(container.querySelector('.pf-c-dropdown__toggle'));
+      const { user } = render(<MachinePools {...newProps} />);
+      await user.click(screen.getByRole('button', { name: 'Kebab toggle' }));
       // TODO, the menu item is not properly disabled - this is is an accessibility issue
       // expect(screen.getByRole('menuitem', { name: 'Delete' })).toBeDisabled();
       expect(screen.getByRole('menuitem', { name: 'Delete' })).toHaveAttribute(
@@ -520,12 +520,12 @@ describe('<MachinePools />', () => {
       };
 
       const { user, container } = render(<MachinePools {...newProps} />);
-      expect(container.querySelectorAll('.pf-c-dropdown__toggle')).toHaveLength(2);
+      expect(screen.getAllByRole('button', { name: 'Kebab toggle' })).toHaveLength(2);
 
-      container.querySelectorAll('.pf-c-dropdown__toggle').forEach(async (button) => {
+      screen.getAllByRole('button', { name: 'Kebab toggle' }).forEach(async (button) => {
         await user.click(button);
         const menuItems = container.querySelectorAll(
-          '.pf-c-dropdown__menu .pf-c-dropdown__menu-item',
+          '.pf-v5-c-dropdown__menu .pf-v5-c-dropdown__menu-item',
         );
         menuItems.forEach((item) => {
           expect(item).not.toHaveAttribute('aria-disabled');
@@ -575,7 +575,7 @@ describe('<MachinePools />', () => {
 
       const { user } = render(<MachinePools {...props} />);
 
-      await user.click(screen.getByRole('button', { name: 'Actions' }));
+      await user.click(screen.getByRole('button', { name: 'Kebab toggle' }));
       expect(screen.getByRole('menuitem', { name: 'Update version' })).toBeInTheDocument();
     });
 
@@ -621,7 +621,7 @@ describe('<MachinePools />', () => {
 
       const { user } = render(<MachinePools {...props} />);
 
-      await user.click(screen.getByRole('button', { name: 'Actions' }));
+      await user.click(screen.getByRole('button', { name: 'Kebab toggle' }));
       expect(screen.getAllByRole('menuitem').length).not.toEqual(0);
       expect(screen.queryByRole('menuitem', { name: 'Update version' })).not.toBeInTheDocument();
     });
@@ -659,7 +659,7 @@ describe('<MachinePools />', () => {
       // add machine pool button is disabled
       expect(container.querySelector('#add-machine-pool')).toHaveAttribute('aria-disabled', 'true');
       // table actions are disabled
-      expect(container.querySelector('.pf-c-dropdown__toggle')).toBeDisabled();
+      expect(screen.queryByRole('button', { name: 'Kebab toggle' })).toBeDisabled();
     });
 
     it('Should disable delete action if user does not have permissions', async () => {
@@ -692,7 +692,7 @@ describe('<MachinePools />', () => {
         },
       };
       const { user } = render(<MachinePools {...props} />);
-      await user.click(screen.getByRole('button', { name: 'Actions' }));
+      await user.click(screen.getByRole('button', { name: 'Kebab toggle' }));
       expect(screen.queryByRole('menuitem', { name: 'Delete' })).toHaveAttribute(
         'aria-disabled',
         'true',
@@ -728,7 +728,7 @@ describe('<MachinePools />', () => {
         'false',
       );
       // table actions are enabled
-      expect(container.querySelector('.pf-c-dropdown__toggle')).toBeEnabled();
+      expect(screen.getByRole('button', { name: 'Kebab toggle' })).toBeEnabled();
     });
   });
 

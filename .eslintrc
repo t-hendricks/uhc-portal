@@ -18,14 +18,30 @@
     "no-restricted-imports": [
       "error",
       {
-        "patterns": [{
-          "group": [
-            "./apiRequest",
-            "../**/apiRequest",
-            "../**/services/apiRequest"
-          ],
-         "message": "Use ~/services/apiRequest that provides mocks in unit tests"
-        }]
+        "patterns": [
+          {
+            "group": ["./apiRequest", "../**/apiRequest", "../**/services/apiRequest"],
+            "message": "Use ~/services/apiRequest that provides mocks in unit tests"
+          },
+          {
+            "group": ["@patternfly/react-icons/dist/js**"],
+            "message": "Import using the full esm path `@patternfly/react-icons/dist/esm/icons/<icon>` instead"
+          },
+          {
+            "group": ["@patternfly/react-tokens/dist/js**"],
+            "message": "Import using the full esm path `@patternfly/react-tokens/dist/esm/icons/<icon>` instead"
+          }
+        ],
+        "paths": [
+          {
+            "name": "@patternfly/react-icons",
+            "message": "Import using full path `@patternfly/react-icons/dist/esm/icons/<icon>` instead"
+          },
+          {
+            "name": "@patternfly/react-tokens",
+            "message": "Import using full path `@patternfly/react-tokens/dist/esm/<token>` instead"
+          }
+        ]
       }
     ],
     "import/no-extraneous-dependencies": [
@@ -125,9 +141,7 @@
     "import/resolver": {
       "alias": {
         "extensions": [".js", ".jsx", ".ts", ".tsx"],
-        "map": [
-          ["~", "./src"]
-        ]
+        "map": [["~", "./src"]]
       }
     }
   }

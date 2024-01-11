@@ -2,8 +2,13 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import dayjs from 'dayjs';
 import { Button, EmptyState, EmptyStateBody, EmptyStateVariant } from '@patternfly/react-core';
-import { Table, TableBody, TableHeader, TableVariant } from '@patternfly/react-table';
 import { SUPPORT_CASE_URL, isRestrictedEnv } from '~/restrictedEnv';
+import { TableVariant } from '@patternfly/react-table';
+import {
+  Table as TableDeprecated,
+  TableHeader as TableHeaderDeprecated,
+  TableBody as TableBodyDeprecated,
+} from '@patternfly/react-table/deprecated';
 import { normalizedProducts } from '../../../../../../../common/subscriptionTypes';
 
 const productMap = {
@@ -100,18 +105,18 @@ class SupportCasesCard extends React.Component {
         )}
         {!isRestrictedEnv() && (
           <>
-            <Table
+            <TableDeprecated
               aria-label="Support Cases"
               variant={TableVariant.compact}
               cells={columns}
               rows={rows}
               data-testid="support-cases-table"
             >
-              <TableHeader />
-              <TableBody />
-            </Table>
+              <TableHeaderDeprecated />
+              <TableBodyDeprecated />
+            </TableDeprecated>
             {!hasRows && (
-              <EmptyState variant={EmptyStateVariant.small}>
+              <EmptyState variant={EmptyStateVariant.sm}>
                 <EmptyStateBody>You have no open support cases</EmptyStateBody>
               </EmptyState>
             )}

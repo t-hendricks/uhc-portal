@@ -3,13 +3,9 @@
 exports[`DeveloperPreviewSection with default parameters renders correctly 1`] = `
 <Fragment>
   <span
-    className="pf-c-label pf-m-compact dev-preview-label"
+    className="pf-v5-c-label pf-m-compact dev-preview-label"
   >
-    <CodeIcon
-      color="currentColor"
-      noVerticalAlign={false}
-      size="sm"
-    />
+    <CodeIcon />
      Developer Preview
   </span>
    
@@ -25,13 +21,9 @@ exports[`DeveloperPreviewSection with default parameters renders correctly 1`] =
 exports[`DeveloperPreviewSection with devPreviewLink renders correctly 1`] = `
 <Fragment>
   <span
-    className="pf-c-label pf-m-compact dev-preview-label"
+    className="pf-v5-c-label pf-m-compact dev-preview-label"
   >
-    <CodeIcon
-      color="currentColor"
-      noVerticalAlign={false}
-      size="sm"
-    />
+    <CodeIcon />
      Developer Preview
   </span>
    

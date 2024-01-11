@@ -1,14 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Radio, Title, FormGroup, Form, TextInput } from '@patternfly/react-core';
 import {
-  Radio,
-  Title,
-  FormGroup,
-  Form,
-  TextInput,
-  Select,
-  SelectOption,
-} from '@patternfly/react-core';
+  Select as SelectDeprecated,
+  SelectOption as SelectOptionDeprecated,
+} from '@patternfly/react-core/deprecated';
 import { DateFormat } from '@redhat-cloud-services/frontend-components/DateFormat';
 import DatePicker from 'react-datepicker';
 
@@ -28,7 +24,7 @@ class UpgradeTimeSelection extends React.Component {
     return atLeastOneHourFromNow;
   };
 
-  modeChange = (_, event) => {
+  modeChange = (event) => {
     const { onSet, timestamp } = this.props;
     if (event.target.value === 'now') {
       onSet({ type: 'now' }); // empty timestamp = now
@@ -68,7 +64,7 @@ class UpgradeTimeSelection extends React.Component {
       setTimeout(() => {
         requestAnimationFrame(() => {
           const selected = document.querySelector(
-            '#upgrade-time-select-dropdown .pf-c-select__menu-item.pf-m-selected',
+            '#upgrade-time-select-dropdown .pf-v5-c-select__menu-item.pf-m-selected',
           );
           if (selected) {
             selected.scrollIntoView({ block: 'center' });
@@ -85,9 +81,13 @@ class UpgradeTimeSelection extends React.Component {
         date.setHours(hour);
         date.setMinutes(0);
         ret.push(
-          <SelectOption value={value} key={value} isDisabled={this.getDefaultTimestamp() > date}>
+          <SelectOptionDeprecated
+            value={value}
+            key={value}
+            isDisabled={this.getDefaultTimestamp() > date}
+          >
             {value}
-          </SelectOption>,
+          </SelectOptionDeprecated>,
         );
       }
       return ret;
@@ -140,11 +140,11 @@ class UpgradeTimeSelection extends React.Component {
                   selected={timestamp && new Date(timestamp)}
                   onChange={this.setDate}
                   dateFormat="yyyy-MM-dd"
-                  customInput={<TextInput iconVariant="calendar" />}
+                  customInput={<TextInput />}
                   minDate={new Date()}
                   maxDate={maxDate}
                 />
-                <Select
+                <SelectDeprecated
                   selections={getSelectedTime()}
                   onSelect={this.setTime}
                   onToggle={() =>
@@ -154,7 +154,7 @@ class UpgradeTimeSelection extends React.Component {
                   id="upgrade-time-select-dropdown"
                 >
                   {makeSelectOptions()}
-                </Select>
+                </SelectDeprecated>
               </FormGroup>
               <dl className="cluster-upgrade-dl">
                 <dt>UTC </dt>

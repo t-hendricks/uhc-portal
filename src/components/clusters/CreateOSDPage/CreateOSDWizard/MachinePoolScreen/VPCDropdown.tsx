@@ -1,13 +1,7 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
-import {
-  Button,
-  Flex,
-  FlexItem,
-  FormGroup,
-  SelectOptionObject,
-  Tooltip,
-} from '@patternfly/react-core';
+import { Button, Flex, FlexItem, FormGroup, Tooltip } from '@patternfly/react-core';
+import { SelectOptionObject as SelectOptionObjectDeprecated } from '@patternfly/react-core/deprecated';
 import ErrorBox from '~/components/common/ErrorBox';
 import FuzzySelect, { FuzzyEntryType } from '~/components/common/FuzzySelect';
 import { VPCResponse } from '~/components/clusters/CreateOSDPage/CreateOSDWizard/ccsInquiriesReducer';
@@ -24,7 +18,7 @@ interface VCPDropdownProps {
   selectedVPC: CloudVPC;
   input: {
     value: string;
-    onChange: (selectedVPC: CloudVPC | SelectOptionObject) => void;
+    onChange: (selectedVPC: CloudVPC | SelectOptionObjectDeprecated) => void;
     onBlur: () => void;
   };
   meta: {
@@ -49,7 +43,7 @@ const sortVPCOptions = (vpcA: FuzzyEntryType, vpcB: FuzzyEntryType) => {
   if (vpcB.disabled && !vpcA.disabled) {
     return -1;
   }
-  return vpcA.key.localeCompare(vpcB.key);
+  return vpcA.label.localeCompare(vpcB.label);
 };
 
 const VPCDropdown = ({
@@ -79,12 +73,10 @@ const VPCDropdown = ({
 
   const onSelect = (
     _: React.MouseEvent | React.ChangeEvent,
-    selectedVPCID: string | SelectOptionObject,
+    selectedVPCID: string | SelectOptionObjectDeprecated,
   ) => {
     // We want the form to store the original VPC object, rather than the option items
-    const selectedItem = originalVPCs.find(
-      (vpc) => vpc.id === selectedVPCID || vpc.name === selectedVPCID,
-    );
+    const selectedItem = originalVPCs.find((vpc) => vpc.id === selectedVPCID);
     if (selectedItem) {
       inputProps.onChange(selectedItem);
       setIsOpen(false);
@@ -101,10 +93,10 @@ const VPCDropdown = ({
 
     const vpcOptions = originalVPCs.map((vpcItem) => {
       const isDisabledVPC = !vpcHasPrivateSubnets(vpcItem);
-      const optionId = vpcItem.name || (vpcItem.id as string);
+      const optionId = vpcItem.id as string;
       return {
-        key: optionId,
-        value: optionId,
+        entryId: optionId,
+        label: vpcItem.name || optionId,
         description: isDisabledVPC ? 'This VPC has no private subnets' : '',
         disabled: isDisabledVPC,
       };
@@ -121,18 +113,16 @@ const VPCDropdown = ({
       return;
     }
 
-    const isValidSelection = originalVPCs.some(
-      (item) => item?.id === selectedVPC.id || item?.name === selectedVPC.name,
-    );
-    if (originalVPCs.length > 0 && (selectedVPC.id || selectedVPC.name) && !isValidSelection) {
-      inputProps.onChange({ id: '', name: '' });
+    const isValidSelection = originalVPCs.some((item) => item?.id === selectedVPC.id);
+    if (originalVPCs.length > 0 && selectedVPC.id && !isValidSelection) {
+      inputProps.onChange({ id: '', name: '' } as SelectOptionObjectDeprecated);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedVPC, originalVPCs]);
 
   const refreshVPCs = () => {
     if (requestParams.cloudProviderID === 'aws') {
-      inputProps.onChange({ id: '', name: '' });
+      inputProps.onChange({ id: '', name: '' } as SelectOptionObjectDeprecated);
       dispatch(
         getAWSCloudProviderVPCs({
           region: requestParams.region,
@@ -149,7 +139,6 @@ const VPCDropdown = ({
         label={`Select a VPC to install your ${
           isHypershift ? 'machine pools' : 'cluster'
         } into your selected region: ${requestParams.region || ''}`}
-        validated={touched && error ? 'error' : 'default'}
         isRequired
       >
         <Flex>
@@ -162,11 +151,11 @@ const VPCDropdown = ({
               onToggle={onToggle}
               onSelect={onSelect}
               sortFn={sortVPCOptions}
-              selected={selectedVPC?.name || selectedVPC?.id}
+              selectedEntryId={selectedVPC?.id}
               selectionData={selectData.options}
               isDisabled={vpcResponse.pending || selectData.options.length === 0}
               placeholderText={selectData.placeholder}
-              inlineFilterPlaceholderText="Filter by VPC"
+              inlineFilterPlaceholderText="Filter by VPC ID / name"
               validated={touched && error ? 'error' : 'default'}
             />
           </FlexItem>
@@ -178,7 +167,7 @@ const VPCDropdown = ({
                   isLoading={vpcResponse.pending}
                   isDisabled={vpcResponse.pending}
                   isInline
-                  isSmall
+                  size="sm"
                   variant="secondary"
                   onClick={refreshVPCs}
                 >

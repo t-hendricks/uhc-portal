@@ -9,7 +9,7 @@ describe('Register cluster flow', { tags: ['ci', 'smoke'] }, () => {
   const displayName = `cypress-${clusterID}`;
 
   before(() => {
-    cy.visit('/');
+    cy.visit('/', { retryOnNetworkFailure: true });
     Login.isLoginPageUrl();
     Login.login();
 
@@ -29,11 +29,11 @@ describe('Register cluster flow', { tags: ['ci', 'smoke'] }, () => {
     RegisterClusterPage.clusterIDError().should('be.visible');
     RegisterClusterPage.clusterIDError().should(
       'have.text',
-      " Cluster ID 'not really a uuid' is not a valid UUID.",
+      "Cluster ID 'not really a uuid' is not a valid UUID.",
     );
     RegisterClusterPage.clusterIDInput().clear();
     RegisterClusterPage.clusterIDError().should('be.visible');
-    RegisterClusterPage.clusterIDError().should('have.text', ' Cluster ID is required.');
+    RegisterClusterPage.clusterIDError().should('have.text', 'Cluster ID is required.');
   });
 
   it('shows error when display name is not valid', () => {
@@ -41,7 +41,7 @@ describe('Register cluster flow', { tags: ['ci', 'smoke'] }, () => {
     RegisterClusterPage.displayNameError().should('be.visible');
     RegisterClusterPage.displayNameError().should(
       'have.text',
-      ' Cluster display name may not exceed 63 characters.',
+      'Cluster display name may not exceed 63 characters.',
     );
   });
 
@@ -50,12 +50,12 @@ describe('Register cluster flow', { tags: ['ci', 'smoke'] }, () => {
     RegisterClusterPage.clusterURLError().should('be.visible');
     RegisterClusterPage.clusterURLError().should(
       'have.text',
-      ' The URL should include the scheme prefix (http://, https://)',
+      'The URL should include the scheme prefix (http://, https://)',
     );
     RegisterClusterPage.clusterURLInput().clear();
     RegisterClusterPage.clusterURLInput().type('https://uwu').blur();
     RegisterClusterPage.clusterURLError().should('be.visible');
-    RegisterClusterPage.clusterURLError().should('have.text', ' Invalid URL');
+    RegisterClusterPage.clusterURLError().should('have.text', 'Invalid URL');
   });
 
   it('redirects to cluster list when clicking cancel', () => {

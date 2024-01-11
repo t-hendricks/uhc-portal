@@ -1,14 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Button, Popover, Switch } from '@patternfly/react-core';
-import { OutlinedQuestionCircleIcon } from '@patternfly/react-icons';
+import { OutlinedQuestionCircleIcon } from '@patternfly/react-icons/dist/esm/icons/outlined-question-circle-icon';
 
 function ViewOnlyMyClustersToggle(props) {
   const { isChecked, onChange, bodyContent } = props;
 
   return (
     <Switch
-      className="pf-u-ml-lg pf-u-align-items-center"
+      className="pf-v5-u-ml-lg pf-v5-u-align-items-center"
       id="view-only-my-clusters"
       aria-label="View only my clusters"
       label={
@@ -23,7 +23,7 @@ function ViewOnlyMyClustersToggle(props) {
       }
       hasCheckIcon
       isChecked={isChecked}
-      onChange={onChange}
+      onChange={(event, value) => onChange(value)}
     />
   );
 }

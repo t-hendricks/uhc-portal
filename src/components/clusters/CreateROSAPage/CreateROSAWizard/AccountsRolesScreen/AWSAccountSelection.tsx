@@ -4,39 +4,39 @@ import React, { useState, useEffect, createRef, ReactElement, useCallback, useMe
 import {
   Button,
   FormGroup,
-  Title,
   EmptyStateBody,
   EmptyState,
   Tooltip,
   Flex,
   FlexItem,
   ButtonProps,
+  EmptyStateHeader,
 } from '@patternfly/react-core';
-import './AccountsRolesScreen.scss';
 import links from '~/common/installLinks.mjs';
+import { FormGroupHelperText } from '~/components/common/FormGroupHelperText';
 import { CloudAccount } from '~/types/accounts_mgmt.v1';
 import { AWS_ACCOUNT_ROSA_LOCALSTORAGE_KEY } from '~/common/localStorageConstants';
 import PopoverHint from '../../../../common/PopoverHint';
 import { getContract } from './AWSBillingAccount/awsBillingAccountHelper';
 import { useAssociateAWSAccountDrawer } from './AssociateAWSAccountDrawer/AssociateAWSAccountDrawer';
-import FuzzySelect, { FuzzyDataType, FuzzyEntryType } from '../../../../common/FuzzySelect';
+import FuzzySelect, { FuzzyEntryType, FuzzyDataType } from '../../../../common/FuzzySelect';
+
+import './AccountsRolesScreen.scss';
 
 const AWS_ACCT_ID_PLACEHOLDER = 'Select an account';
 
 function NoAssociatedAWSAccounts() {
   return (
     <EmptyState className="no-associated-aws-accounts_empty-state">
-      <Title headingLevel="h6" size="md" data-testid="no_associated_accounts">
-        No associated accounts were found.
-      </Title>
+      <EmptyStateHeader titleText="No associated accounts were found." headingLevel="h6" />
       <EmptyStateBody>Associate an AWS account to your Red Hat account.</EmptyStateBody>
     </EmptyState>
   );
 }
 
 function sortFn(a: FuzzyEntryType, b: FuzzyEntryType) {
-  const ret = b.key.length - a.key.length;
-  return ret || b.key.localeCompare(a.key);
+  const ret = b.label.length - a.label.length;
+  return ret || b.label.localeCompare(a.label);
 }
 export interface AWSAccountSelectionProps {
   isDisabled?: boolean;
@@ -98,7 +98,7 @@ function AWSAccountSelection({
   }, [isOpen, hasAWSAccounts]);
 
   const onToggle = useCallback(
-    (toggleOpenValue: boolean | ((prevState: boolean) => boolean)) => {
+    (_, toggleOpenValue: boolean | ((prevState: boolean) => boolean)) => {
       setIsOpen(toggleOpenValue);
     },
     [setIsOpen],
@@ -115,11 +115,14 @@ function AWSAccountSelection({
 
   const selectionData = useMemo<FuzzyDataType>(
     () =>
-      accounts.map((cloudAccount) => ({
-        key: cloudAccount.cloud_account_id || '',
-        value: cloudAccount.cloud_account_id || '',
-        description: isBillingAccount && !!getContract(cloudAccount) ? 'Contract enabled' : '',
-      })),
+      accounts.map((cloudAccount) => {
+        const accountId = cloudAccount.cloud_account_id as string;
+        return {
+          entryId: accountId,
+          label: accountId,
+          description: isBillingAccount && !!getContract(cloudAccount) ? 'Contract enabled' : '',
+        };
+      }),
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [accounts],
   );
@@ -166,16 +169,14 @@ function AWSAccountSelection({
       label={label}
       labelIcon={extendedHelpText ? <PopoverHint hint={extendedHelpText} /> : undefined}
       className="aws-account-selection"
-      validated={touched && error ? 'error' : undefined}
-      helperTextInvalid={touched && error}
-      isRequired={required}
+      isRequired
     >
       <Flex>
         <FlexItem grow={{ default: 'grow' }}>
           <FuzzySelect
             label={label}
             isOpen={isOpen}
-            selected={hasAWSAccounts ? selectedAWSAccountID : ''}
+            selectedEntryId={hasAWSAccounts ? selectedAWSAccountID : ''}
             selectionData={selectionData}
             onToggle={onToggle}
             onSelect={onSelect}
@@ -197,7 +198,7 @@ function AWSAccountSelection({
                 isLoading={isLoading}
                 isDisabled={isDisabled}
                 isInline
-                isSmall
+                size="sm"
                 variant="secondary"
                 onClick={() => {
                   onRefresh();
@@ -209,6 +210,8 @@ function AWSAccountSelection({
           </FlexItem>
         )}
       </Flex>
+
+      <FormGroupHelperText touched={touched} error={error} />
     </FormGroup>
   );
 }

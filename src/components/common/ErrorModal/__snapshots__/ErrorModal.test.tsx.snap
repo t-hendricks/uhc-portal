@@ -10,8 +10,6 @@ exports[`<ErrorModal /> should render 1`] = `
     >
       <ExclamationCircleIcon
         color="#c9190b"
-        noVerticalAlign={false}
-        size="sm"
       />
        
       Error Modal

@@ -6,20 +6,20 @@ exports[`<ReleaseChannel /> should render 1`] = `
 >
   <ReleaseChannelName>
     <dt
-      className="pf-c-description-list__term pf-u-mt-md"
+      className="pf-v5-c-description-list__term pf-v5-u-mt-md"
     >
       stable-4.6
     </dt>
   </ReleaseChannelName>
   <ReleaseChannelDescription>
     <dd
-      className="pf-c-description-list__description ocm-l-ocp-releases__channel-detail"
+      className="pf-v5-c-description-list__description ocm-l-ocp-releases__channel-detail"
     >
       <Level
         className="ocm-l-ocp-releases__channel-detail-level"
       >
         <div
-          className="pf-l-level ocm-l-ocp-releases__channel-detail-level"
+          className="pf-v5-l-level ocm-l-ocp-releases__channel-detail-level"
         >
           <LevelItem>
             <div>
@@ -37,7 +37,7 @@ exports[`<ReleaseChannel /> should render 1`] = `
                 >
                   4.6.12
                   <span
-                    className="pf-u-screen-reader"
+                    className="pf-v5-u-screen-reader"
                   >
                      (new window or tab)
                   </span>

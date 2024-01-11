@@ -1,8 +1,6 @@
 /**
  * Taken from https://github.com/patternfly-labs/formik-pf/blob/main/src/components/RadioButtonField/RadioButtonField.tsx
  * Adjusted ability to target a radio button
- * TODO: Contribute back to the lib then pull in newer version and delete this file
- * Need until this feature is added and can be pulled in https://github.com/patternfly-labs/formik-pf/issues/25
  */
 import React from 'react';
 import { Radio, FormGroupProps } from '@patternfly/react-core';

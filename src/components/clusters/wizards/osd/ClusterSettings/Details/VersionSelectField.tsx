@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { useField } from 'formik';
 
-import { SelectOptionObject, FormGroup } from '@patternfly/react-core';
+import { FormGroup } from '@patternfly/react-core';
+import { SelectOptionObject as SelectOptionObjectDeprecated } from '@patternfly/react-core/deprecated';
 import { Spinner } from '@redhat-cloud-services/frontend-components/Spinner';
 
 import ErrorBox from '~/components/common/ErrorBox';
@@ -14,11 +15,11 @@ import { Version } from '~/types/clusters_mgmt.v1';
 import { FieldId } from '~/components/clusters/wizards/osd/constants';
 import { billingModels } from '~/common/subscriptionTypes';
 import FuzzySelect, { FuzzyEntryType } from '~/components/common/FuzzySelect';
+import { FormGroupHelperText } from '~/components/common/FormGroupHelperText';
+
 import { versionComparator } from '~/common/versionComparator';
 
-function sortFn(a: FuzzyEntryType, b: FuzzyEntryType) {
-  return versionComparator(b.key, a.key);
-}
+const sortFn = (a: FuzzyEntryType, b: FuzzyEntryType) => versionComparator(b.label, a.label);
 
 interface VersionSelectFieldProps {
   label: string;
@@ -26,11 +27,6 @@ interface VersionSelectFieldProps {
   isDisabled?: boolean;
   onChange: (version: Version) => void;
 }
-
-type VersionIdData = {
-  versionRawId: string;
-  versionId: string;
-};
 
 const SupportStatusType = {
   Full: 'Full Support',
@@ -90,7 +86,14 @@ export const VersionSelectField = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [versions, selectedClusterVersion?.raw_id]);
 
-  const onToggle = (isExpanded: boolean) => {
+  const onToggle = (
+    _event:
+      | Event
+      | React.MouseEvent<Element, MouseEvent>
+      | React.ChangeEvent<Element>
+      | React.KeyboardEvent<Element>,
+    isExpanded: boolean,
+  ) => {
     setIsOpen(isExpanded);
     // In case of backend error, don't want infinite loop reloading,
     // but allow manual reload by opening the dropdown.
@@ -101,61 +104,47 @@ export const VersionSelectField = ({
 
   const onSelect = (
     _event: React.ChangeEvent | React.MouseEvent<Element, MouseEvent>,
-    value: string | SelectOptionObject,
+    newVersionRawId: string | SelectOptionObjectDeprecated,
   ) => {
     setIsOpen(false);
-    const selectedVersion = versions.find((version) => version.raw_id === value);
+    const selectedVersion = versions.find((version) => version.raw_id === newVersionRawId);
     setFieldValue(name, selectedVersion);
     if (selectedVersion) {
       onChange(selectedVersion);
     }
   };
 
-  const getSelection = () => {
-    const selectedVersion = versions.find((version) => input?.value?.raw_id === version.raw_id);
-    return selectedVersion ? selectedVersion.raw_id : '';
-  };
-
-  const getVersionsBySupportType = React.useMemo(() => {
-    const fullSupport: VersionIdData[] = [];
-    const maintenanceSupport: VersionIdData[] = [];
+  const versionsData = React.useMemo(() => {
+    const fullSupport: FuzzyEntryType[] = [];
+    const maintenanceSupport: FuzzyEntryType[] = [];
 
     versions.forEach((version: Version) => {
       const { raw_id: versionRawId, id: versionId } = version;
       if (versionRawId && versionId) {
         const majorMinorVersion = parseFloat(versionRawId);
-        if (supportVersionMap?.[majorMinorVersion] === SupportStatusType.Full) {
-          fullSupport.push({ versionRawId, versionId });
+
+        const hasFullSupport = supportVersionMap?.[majorMinorVersion] === SupportStatusType.Full;
+        const versionEntry = {
+          entryId: versionRawId,
+          label: versionRawId,
+          groupKey: hasFullSupport ? 'Full support' : 'Maintenance support',
+        };
+
+        if (hasFullSupport) {
+          fullSupport.push(versionEntry);
         } else {
-          maintenanceSupport.push({ versionRawId, versionId });
+          maintenanceSupport.push(versionEntry);
         }
       }
     });
-    return { fullSupport, maintenanceSupport };
+    return {
+      'Full support': fullSupport,
+      'Maintenance support': maintenanceSupport,
+    };
   }, [supportVersionMap, versions]);
 
-  const versionsData = {
-    'Full support': getVersionsBySupportType.fullSupport.map((version) => ({
-      key: version.versionRawId,
-      value: version.versionRawId,
-      groupKey: 'Full support',
-    })),
-    'Maintenance support': getVersionsBySupportType.maintenanceSupport.map((version) => ({
-      key: version.versionRawId,
-      value: version.versionRawId,
-      groupKey: 'Maintenance support',
-    })),
-  };
-
   return (
-    <FormGroup
-      {...input}
-      label={label}
-      fieldId={name}
-      validated={error ? 'error' : undefined}
-      helperTextInvalid={touched && error}
-      isRequired
-    >
+    <FormGroup {...input} label={label} fieldId={name} isRequired>
       {getInstallableVersionsResponse.error && (
         <ErrorBox
           message="Error getting cluster versions"
@@ -179,7 +168,7 @@ export const VersionSelectField = ({
           isOpen={isOpen}
           onToggle={onToggle}
           onSelect={onSelect}
-          selected={selectedClusterVersion?.raw_id || getSelection()}
+          selectedEntryId={selectedClusterVersion?.raw_id}
           selectionData={versionsData}
           isDisabled={isDisabled}
           sortFn={sortFn}
@@ -193,6 +182,8 @@ export const VersionSelectField = ({
           toggleId="version-selector"
         />
       )}
+
+      <FormGroupHelperText touched={touched} error={error} />
     </FormGroup>
   );
 };

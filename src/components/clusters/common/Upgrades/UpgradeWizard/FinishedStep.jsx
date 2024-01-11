@@ -5,15 +5,16 @@ import {
   EmptyState,
   EmptyStateIcon,
   EmptyStateBody,
-  EmptyStateSecondaryActions,
-  Title,
   Button,
+  EmptyStateActions,
+  EmptyStateHeader,
+  EmptyStateFooter,
 } from '@patternfly/react-core';
 import { DateFormat } from '@redhat-cloud-services/frontend-components/DateFormat';
-import { CheckCircleIcon } from '@patternfly/react-icons';
+import { CheckCircleIcon } from '@patternfly/react-icons/dist/esm/icons/check-circle-icon';
 import { Spinner } from '@redhat-cloud-services/frontend-components/Spinner';
 // eslint-disable-next-line camelcase
-import { global_success_color_100 } from '@patternfly/react-tokens';
+import { global_success_color_100 } from '@patternfly/react-tokens/dist/esm/global_success_color_100';
 
 import ErrorBox from '../../../../common/ErrorBox';
 
@@ -29,11 +30,12 @@ function FinishedStep({ requestStatus, close, scheduleType, upgradeTimestamp }) 
     return <Spinner className="wizard-step-body" centered />;
   }
   return (
-    <EmptyState variant="large" className="wizard-step-body">
-      <EmptyStateIcon icon={CheckCircleIcon} color={global_success_color_100.value} />
-      <Title headingLevel="h4" size="lg">
-        Scheduled cluster update
-      </Title>
+    <EmptyState variant="lg" className="wizard-step-body">
+      <EmptyStateHeader
+        titleText="Scheduled cluster update"
+        icon={<EmptyStateIcon icon={CheckCircleIcon} color={global_success_color_100.value} />}
+        headingLevel="h4"
+      />
       <EmptyStateBody>
         Your update was successfully scheduled to start within{' '}
         {scheduleType === 'now' ? (
@@ -45,9 +47,11 @@ function FinishedStep({ requestStatus, close, scheduleType, upgradeTimestamp }) 
         )}
         .
       </EmptyStateBody>
-      <EmptyStateSecondaryActions>
-        <Button onClick={close}>Close</Button>
-      </EmptyStateSecondaryActions>
+      <EmptyStateFooter>
+        <EmptyStateActions>
+          <Button onClick={close}>Close</Button>
+        </EmptyStateActions>
+      </EmptyStateFooter>
     </EmptyState>
   );
 }

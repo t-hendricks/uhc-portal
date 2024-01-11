@@ -30,30 +30,26 @@ const getApiPatchParams = (index: number) => apiRequestMock.patch.mock.calls[ind
 const controlPlaneVersion = 'openshift-v4.12.13-candidate';
 const clusterId = 'myClusterId';
 
-const updateButtonText = 'Update all Machine pools now';
+const updateAllButtonTestId = 'btn-update-all';
 const errorBannerHeader = 'Some machine pools could not be updated';
-const errorAlertLabel = 'Danger Alert';
-const warningAlertLabel = 'Warning Alert';
+const errorAlertTestId = 'alert-danger';
+const warningAlertTestId = 'alert-warning';
 const goToMachinePoolText = 'Go to Machine pools list';
 
 // ********************* Helpers ***********************
 
 const expectUpdateButtonPresence = () => {
-  expect(
-    within(screen.getByRole('alert', { name: warningAlertLabel })).getByRole('button', {
-      name: updateButtonText,
-    }),
-  ).toBeInTheDocument();
+  expect(screen.getByTestId(updateAllButtonTestId)).toBeInTheDocument();
 };
 
 const expectUpdateButtonAbsence = (container?: HTMLElement) => {
-  expect(screen.queryByRole('button', { name: updateButtonText })).not.toBeInTheDocument();
+  expect(screen.queryByTestId(updateAllButtonTestId)).not.toBeInTheDocument();
   if (container) expect(container.firstChild).toBeNull();
 };
 
 // The type for the user isn't easily available
 const clickUpdateButton = async (user: any) => {
-  await user.click(screen.getByRole('button', { name: updateButtonText }));
+  await user.click(screen.getByTestId(updateAllButtonTestId));
 };
 
 // ********************* Default store values ***********************
@@ -441,11 +437,11 @@ describe('<UpdateAllMachinePools />', () => {
       expectUpdateButtonPresence();
 
       // Act
-      await user.click(screen.getByRole('button', { name: 'Warning alert details' }));
+      await user.click(screen.getByLabelText('Warning alert details'));
 
       // Assert
       expect(
-        within(screen.getByRole('alert', { name: warningAlertLabel })).getByText('4.12.13', {
+        within(screen.getByTestId(warningAlertTestId)).getByText('4.12.13', {
           exact: false,
         }),
       ).toBeInTheDocument();
@@ -482,7 +478,44 @@ describe('<UpdateAllMachinePools />', () => {
 
       // Assert
       expect(
-        within(screen.getByRole('alert', { name: warningAlertLabel })).getByText('4.12.13', {
+        within(screen.getByTestId('alert-warning')).getByText('4.12.13', {
+          exact: false,
+        }),
+      ).toBeInTheDocument();
+    });
+
+    it('if feature gate is set and machine pool', async () => {
+      const newState = {
+        ...defaultStore,
+        machinePools: {
+          getMachinePools: {
+            ...defaultMachinePools,
+            data: [
+              {
+                ...machinePoolBehind1,
+                version: { id: '4.12.10', available_upgrades: ['4.12.13'] },
+                upgradePolicies: { items: [] },
+              },
+              {
+                ...machinePoolBehind2,
+                version: { id: '4.12.10', available_upgrades: ['4.12.13'] },
+                upgradePolicies: { items: [] },
+              },
+            ],
+          },
+        },
+        features: { HCP_USE_NODE_UPGRADE_POLICIES: true },
+      };
+
+      const { user } = withState(newState).render(<UpdateAllMachinePools />);
+      expectUpdateButtonPresence();
+
+      // Act
+      await user.click(screen.getByRole('button', { name: 'Warning alert details' }));
+
+      // Assert
+      expect(
+        within(screen.getByTestId('alert-warning')).getByText('4.12.13', {
           exact: false,
         }),
       ).toBeInTheDocument();
@@ -645,16 +678,14 @@ describe('<UpdateAllMachinePools />', () => {
 
       // Ensure alert is shown
       expect(
-        within(screen.getByRole('alert', { name: errorAlertLabel })).getByText(errorBannerHeader),
+        within(screen.getByTestId(errorAlertTestId)).getByText(errorBannerHeader),
       ).toBeInTheDocument();
 
       // Make sure error text from api is shown
       await user.click(screen.getByRole('button', { name: 'Danger alert details' }));
-      expect(
-        screen
-          .getByRole('alert', { name: errorAlertLabel })
-          .querySelector('.pf-c-alert__description')?.textContent,
-      ).toEqual('1234 - I am a bad server');
+      expect(screen.getByTestId(errorAlertTestId).querySelector('p')?.textContent).toEqual(
+        '1234 - I am a bad server',
+      );
 
       // Check for accessibility
       await checkAccessibility(container);
@@ -680,13 +711,13 @@ describe('<UpdateAllMachinePools />', () => {
         <UpdateAllMachinePools initialErrorMessage="This is an error" />,
       );
       expectUpdateButtonPresence();
-      expect(screen.getByRole('alert', { name: errorAlertLabel })).toBeInTheDocument();
+      expect(screen.getByTestId(errorAlertTestId)).toBeInTheDocument();
 
       // ACT
       await clickUpdateButton(user);
 
       // ASSERT
-      expect(screen.queryByRole('alert', { name: errorAlertLabel })).not.toBeInTheDocument();
+      expect(screen.queryByTestId(errorAlertTestId)).not.toBeInTheDocument();
     });
 
     it('hides the update link while the patchNodePool requests are pending', async () => {
@@ -738,7 +769,7 @@ describe('<UpdateAllMachinePools />', () => {
 
       expectUpdateButtonAbsence();
       expect(
-        within(screen.getByRole('alert', { name: warningAlertLabel })).getByRole('link', {
+        within(screen.getByTestId(warningAlertTestId)).getByRole('link', {
           name: goToMachinePoolText,
         }),
       ).toBeInTheDocument();
@@ -762,7 +793,7 @@ describe('<UpdateAllMachinePools />', () => {
 
       expectUpdateButtonPresence();
       expect(
-        within(screen.getByRole('alert', { name: warningAlertLabel })).queryByRole('link', {
+        within(screen.getByTestId(warningAlertTestId)).queryByRole('link', {
           name: goToMachinePoolText,
         }),
       ).not.toBeInTheDocument();

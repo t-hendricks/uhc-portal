@@ -1,4 +1,6 @@
 import React from 'react';
+import { WrappedFieldMetaProps, WrappedFieldInputProps } from 'redux-form';
+
 import {
   Alert,
   Button,
@@ -8,7 +10,8 @@ import {
   Text,
   TextContent,
 } from '@patternfly/react-core';
-import { WrappedFieldMetaProps, WrappedFieldInputProps } from 'redux-form';
+
+import { FormGroupHelperText } from '~/components/common/FormGroupHelperText';
 import { PromiseReducerState } from '~/redux/types';
 import ErrorBox from './ErrorBox';
 
@@ -141,26 +144,25 @@ class DynamicSelect extends React.Component<Props> {
     // https://github.com/patternfly/patternfly-react/issues/5687
     const value = this.currentValueIrrelevant() ? '' : input.value;
 
+    const { onChange, ...restInput } = input;
+
     return (
-      <FormGroup
-        label={label}
-        labelIcon={labelIcon}
-        validated={meta.touched && meta.error ? 'error' : 'default'}
-        helperText={helperText}
-        helperTextInvalid={meta.error}
-        fieldId={input.name}
-        isRequired={isRequired}
-      >
+      <FormGroup label={label} labelIcon={labelIcon} fieldId={input.name} isRequired={isRequired}>
         {error}
         <FormSelect
           aria-label={label}
           isDisabled={!(show && items.length > 0)}
           validated={meta.touched && meta.error ? 'error' : 'default'}
-          {...input}
+          {...restInput}
+          onChange={(_event, value) => onChange(value)}
           value={value}
         >
           {options}
         </FormSelect>
+
+        <FormGroupHelperText touched={meta.touched} error={meta.error}>
+          {helperText}
+        </FormGroupHelperText>
       </FormGroup>
     );
   }

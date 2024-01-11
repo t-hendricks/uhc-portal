@@ -13,19 +13,22 @@
     vertical-align: top;
   }
   dd > dl > dd {
-    margin-bottom: var(--pf-global--spacer--sm);
+    margin-bottom: var(--pf-v5-global--spacer--sm);
   }
 }
 
 .upgrade-schedule-datepicker {
-  .react-datepicker-wrapper, .react-datepicker__tab-loop, .pf-c-select {
+  .react-datepicker-wrapper,
+  .react-datepicker__tab-loop,
+  .pf-v5-c-select {
     display: inline-block;
   }
-  .react-datepicker-wrapper, .pf-c-select {
+  .react-datepicker-wrapper,
+  .pf-v5-c-select {
     width: 20%;
   }
-  .pf-c-select {
-    margin-left: var(--pf-global--spacer--xl);
+  .pf-v5-c-select {
+    margin-left: var(--pf-v5-global--spacer--xl);
     > ul {
       max-height: 300px;
       overflow-y: auto;
@@ -34,7 +37,7 @@
 }
 
 .ocm-upgrade-wizard {
-   .pf-c-wizard__main-body {
+  .pf-v5-c-wizard__main-body {
     padding: 0;
     display: flex;
     flex-flow: column;
@@ -55,7 +58,7 @@
 
   #version-grid-wrapper {
     height: 100%;
-    background-color: var(--pf-global--BackgroundColor--200);
+    background-color: var(--pf-v5-global--BackgroundColor--200);
   }
 
   .version-select-step-title {
@@ -69,8 +72,8 @@
 
   .version-card {
     height: 100%;
-    
-    .pf-c-label__content {
+
+    .pf-v5-c-label__content {
       font-weight: 400;
     }
   }

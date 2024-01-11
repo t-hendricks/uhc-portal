@@ -43,7 +43,7 @@ const AutoscalingField = ({ cluster }: AutoscalingFieldProps) => {
           </>
         }
         isChecked={field.value as boolean}
-        onChange={(checked, event) => {
+        onChange={(event, checked) => {
           field.onChange(event);
         }}
         id={fieldId}

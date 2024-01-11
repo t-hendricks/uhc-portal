@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Wizard, Title } from '@patternfly/react-core';
+import { Title } from '@patternfly/react-core';
+import { Wizard as WizardDeprecated } from '@patternfly/react-core/deprecated';
 import { Spinner } from '@redhat-cloud-services/frontend-components/Spinner';
 import { DateFormat } from '@redhat-cloud-services/frontend-components/DateFormat';
 
@@ -235,7 +236,7 @@ class UpgradeWizard extends React.Component {
       },
     ];
     return (
-      <Wizard
+      <WizardDeprecated
         title="Update cluster"
         className="ocm-upgrade-wizard"
         description={clusterName}

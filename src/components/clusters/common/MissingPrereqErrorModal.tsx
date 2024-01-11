@@ -1,9 +1,11 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
 
-import { Button, Title, WizardContext } from '@patternfly/react-core';
-import { ExclamationCircleIcon } from '@patternfly/react-icons';
-import { global_danger_color_100 as ExclamationCircleColor } from '@patternfly/react-tokens';
+import { Button, Icon, Title } from '@patternfly/react-core';
+import { WizardContext as WizardContextDeprecated } from '@patternfly/react-core/deprecated';
+
+import { ExclamationCircleIcon } from '@patternfly/react-icons/dist/esm/icons/exclamation-circle-icon';
+import { global_danger_color_100 as ExclamationCircleColor } from '@patternfly/react-tokens/dist/esm/global_danger_color_100';
 
 import Modal from '../../common/Modal/Modal';
 import { closeModal } from '../../common/Modal/ModalActions';
@@ -19,7 +21,7 @@ const MissingPrereqErrorModal = ({
   onClose,
   title = 'Missing prerequisite',
 }: MissingPrereqErrorModalProps) => {
-  const { goToStepById } = React.useContext(WizardContext);
+  const { goToStepById } = React.useContext(WizardContextDeprecated);
   const dispatch = useDispatch();
 
   const close = () => {
@@ -36,7 +38,9 @@ const MissingPrereqErrorModal = ({
     <Modal
       header={
         <Title headingLevel="h2" size="2xl">
-          <ExclamationCircleIcon color={ExclamationCircleColor.value} className="pf-u-mr-sm" />
+          <Icon className="pf-v5-u-mr-sm">
+            <ExclamationCircleIcon color={ExclamationCircleColor.value} />
+          </Icon>
           {title}
         </Title>
       }
@@ -64,7 +68,7 @@ const MissingPrereqErrorModal = ({
         <strong>AdministratorAccess</strong> policy.
       </p>
 
-      <p className="pf-u-mt-md">
+      <p className="pf-v5-u-mt-md">
         Make sure the IAM user exists in your AWS account and try creating the cluster again.
       </p>
     </Modal>
