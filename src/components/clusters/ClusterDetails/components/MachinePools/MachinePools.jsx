@@ -247,12 +247,6 @@ class MachinePools extends React.Component {
     const quotaReason = !hasMachinePoolsQuota && noQuotaTooltip;
     const hibernatingReason =
       isHibernating(cluster) && 'This operation is not available while cluster is hibernating';
-    // const canNotCreateReason =
-    //   !machinePoolsActions.create &&
-    //   'You do not have permission to add a machine pool. Only cluster owners, cluster editors, machine pool editors and Organization Administrators can add machine pools.';
-    // const canNotEditReason =
-    //   !machinePoolsActions.update &&
-    //   'You do not have permission to edit machine pools. Only cluster owners, cluster editors, machine pool editors and Organization Administrators can edit machine pools.';
     // Workaround until these are fixed, once fixed revert changes:
     // https://issues.redhat.com/browse/OCMUI-1221
     // https://issues.redhat.com/browse/OCM-5468
