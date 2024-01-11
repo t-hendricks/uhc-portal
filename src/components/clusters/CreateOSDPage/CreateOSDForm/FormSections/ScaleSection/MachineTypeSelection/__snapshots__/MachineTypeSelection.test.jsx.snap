@@ -51,8 +51,8 @@ exports[`MachineTypeSelection when the machine types list is available with rhin
     selected="m5.4xlarge - 16 vCPU 64 GiB RAM"
     setSelected={[Function]}
     setTreeViewSwitchActive={[Function]}
-    switchLabelOff="Show compatible instances only"
-    switchLabelOn="Show compatible instances only"
+    switchLabelOffText="Show compatible instances only"
+    switchLabelOnText="Show compatible instances only"
     treeViewSelectionMap={
       Array [
         Object {

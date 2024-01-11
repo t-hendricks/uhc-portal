@@ -1,9 +1,10 @@
 
-.tree-view-select-in-modal .pf-c-dropdown__menu {
+.pf-v5-c-dropdown.tree-view-select-in-modal {
     max-height: 300px;
-    overflow: auto;
+    width: 100%;
 }
-.tree-view-select .pf-c-dropdown__menu {
+
+.pf-v5-c-dropdown.tree-view-select {
     max-height: 600px;
-    overflow: auto;
+    width: 100%;
 }

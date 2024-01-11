@@ -288,8 +288,8 @@ const MachineTypeSelection = ({
           placeholder="Select instance type"
           searchPlaceholder="Find an instance size"
           includeFilterSwitch={machineTypesByRegion.fulfilled && !machineTypesByRegion.error}
-          switchLabelOn="Show compatible instances only"
-          switchLabelOff="Show compatible instances only"
+          switchLabelOnText="Show compatible instances only"
+          switchLabelOffText="Show compatible instances only"
         />
       </FormGroup>
     );

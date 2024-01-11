@@ -257,19 +257,24 @@ const getMachineTypesByRegion = (
      * regardless of the size of the page.
      */
     total?: number;
-  }>('/api/clusters_mgmt/v1/aws_inquiries/machine_types', {
-    params: {
-      size: -1,
+  }>(
+    '/api/clusters_mgmt/v1/aws_inquiries/machine_types',
+    {
+      aws: {
+        access_key_id: accessKeyId,
+        account_id: accountId,
+        secret_access_key: secretAccessKey,
+      },
+      region: {
+        id: region,
+      },
     },
-    aws: {
-      access_key_id: accessKeyId,
-      account_id: accountId,
-      secret_access_key: secretAccessKey,
+    {
+      params: {
+        size: -1,
+      },
     },
-    region: {
-      id: region,
-    },
-  });
+  );
 
 const getStorageQuotaValues = () =>
   apiRequest.get<{ items: number[] }>('/api/clusters_mgmt/v1/storage_quota_values');

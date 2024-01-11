@@ -85,8 +85,8 @@ const TreeViewSelectTestWrapper = () => {
       includeFilterSwitch
       placeholder="Select instance type"
       searchPlaceholder="Find an instance size"
-      switchLabelOn="Show compatible instances only"
-      switchLabelOff="Show compatible instances only"
+      switchLabelOnText="Show compatible instances only"
+      switchLabelOffText="Show compatible instances only"
     />
   );
 };
@@ -97,7 +97,7 @@ describe('TreeViewSelect ', () => {
 
     expect(screen.getByText('Select instance type')).toBeInTheDocument();
     await user.click(screen.getByLabelText('TreeViewSelect toggle'));
-    expect(container.querySelector('.pf-c-tree-view')).toBeInTheDocument();
+    expect(container.querySelector('.pf-v5-c-tree-view')).toBeInTheDocument();
     await checkAccessibility(container);
   });
 
@@ -106,7 +106,7 @@ describe('TreeViewSelect ', () => {
 
     expect(screen.getByText('Select instance type')).toBeInTheDocument();
     await user.click(screen.getByLabelText('TreeViewSelect toggle'));
-    expect(container.querySelector('.pf-c-tree-view')).toBeInTheDocument();
+    expect(container.querySelector('.pf-v5-c-tree-view')).toBeInTheDocument();
 
     const input = await screen.findByLabelText('Search input');
     await user.type(input, machineTypeMapFiltered[0].children![0].id!);
@@ -120,9 +120,9 @@ describe('TreeViewSelect ', () => {
 
     expect(screen.getByText('Select instance type')).toBeInTheDocument();
     await user.click(screen.getByLabelText('TreeViewSelect toggle'));
-    expect(container.querySelector('.pf-c-tree-view')).toBeInTheDocument();
+    expect(container.querySelector('.pf-v5-c-tree-view')).toBeInTheDocument();
 
-    await user.click(screen.getByTestId('simple-switch'));
+    await user.click(screen.getByTestId('display-switch'));
 
     const input = await screen.findByLabelText('Search input');
     await user.type(input, machineTypeMap[1].category!);
@@ -136,7 +136,7 @@ describe('TreeViewSelect ', () => {
 
     expect(screen.getByText('Select instance type')).toBeInTheDocument();
     await user.click(screen.getByLabelText('TreeViewSelect toggle'));
-    expect(container.querySelector('.pf-c-tree-view')).toBeInTheDocument();
+    expect(container.querySelector('.pf-v5-c-tree-view')).toBeInTheDocument();
 
     const input = await screen.findByLabelText('Search input');
     await user.type(input, 'c5a.Olarge');
@@ -150,7 +150,7 @@ describe('TreeViewSelect ', () => {
 
     expect(screen.getByText('Select instance type')).toBeInTheDocument();
     await user.click(screen.getByLabelText('TreeViewSelect toggle'));
-    expect(container.querySelector('.pf-c-tree-view')).toBeInTheDocument();
+    expect(container.querySelector('.pf-v5-c-tree-view')).toBeInTheDocument();
 
     const input = await screen.findByLabelText('Search input');
     await user.type(input, 'c5a.O0large');

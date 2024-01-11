@@ -2,7 +2,6 @@ import './TreeViewSelect.scss';
 import React, { useState, useEffect } from 'react';
 import Fuse from 'fuse.js';
 import {
-  Dropdown,
   MenuToggle,
   Switch,
   Stack,
@@ -16,6 +15,7 @@ import {
   TreeViewDataItem,
   TreeViewSearch,
 } from '@patternfly/react-core';
+import { Dropdown as DropdownDeprecated } from '@patternfly/react-core/deprecated';
 
 export interface TreeViewData extends TreeViewDataItem {
   category?: string;
@@ -38,8 +38,8 @@ interface TreeViewSelectProps {
     selection: TreeViewData | TreeViewDataItem,
   ) => void;
   placeholder?: string;
-  switchLabelOn?: string;
-  switchLabelOff?: string;
+  switchLabelOnText?: string;
+  switchLabelOffText?: string;
   searchPlaceholder?: string;
 }
 
@@ -71,8 +71,8 @@ export function TreeViewSelect(props: TreeViewSelectProps) {
     menuAppendTo,
     inModal,
     searchPlaceholder,
-    switchLabelOn,
-    switchLabelOff,
+    switchLabelOnText,
+    switchLabelOffText,
   } = props;
   const [isOpen, setIsOpen] = useState(false);
   const [filteredItems, setFilteredItems] = useState(treeViewSelectionMap);
@@ -80,19 +80,6 @@ export function TreeViewSelect(props: TreeViewSelectProps) {
   useEffect(() => {
     setFilteredItems(treeViewSelectionMap);
   }, [treeViewSelectionMap]);
-
-  // remove with PF5 update
-  useEffect(() => {
-    if (isOpen && filteredItems.length) {
-      const treeViewButtons = document.querySelectorAll('button.pf-c-tree-view__node');
-      treeViewButtons.forEach((treeViewButton) => {
-        treeViewButton.setAttribute('type', 'button');
-      });
-    }
-    if (!isOpen) {
-      setFilteredItems(treeViewSelectionMap);
-    }
-  }, [isOpen, filteredItems, treeViewSelectionMap]);
 
   const onSearch = (evt: React.ChangeEvent<HTMLInputElement>) => {
     if (evt.target.value === '') {
@@ -136,10 +123,10 @@ export function TreeViewSelect(props: TreeViewSelectProps) {
             className="pf-u-pt-xs pf-u-pb-sm pf-u-pl-md pf-u-pr-sm"
           >
             <Switch
-              id="simple-switch"
-              data-testid="simple-switch"
-              label={switchLabelOn}
-              labelOff={switchLabelOff}
+              id="display-switch"
+              data-testid="display-switch"
+              label={switchLabelOnText}
+              labelOff={switchLabelOffText}
               isChecked={treeViewSwitchActive}
               onChange={() => {
                 setTreeViewSwitchActive(!treeViewSwitchActive);
@@ -149,7 +136,8 @@ export function TreeViewSelect(props: TreeViewSelectProps) {
         )}
         <ToolbarItem widths={{ default: '100%' }}>
           <TreeViewSearch
-            className="pf-u-pt-sm pf-u-pb-sm pf-u-pl-sm pf-u-pr-sm"
+            autoComplete="off"
+            className="pf-u-pt-sm pf-u-pb-sm pf-u-pl-sm pf-u-pr-sm pf-u-w-inherit"
             placeholder={searchPlaceholder}
             onSearch={onSearch}
             id="input-search"
@@ -167,8 +155,9 @@ export function TreeViewSelect(props: TreeViewSelectProps) {
       setIsOpen(false);
     }
   });
+  // continue to use deprecated dropdown as menuAppendTo (deprecated) is being used elsewhere
   return (
-    <Dropdown
+    <DropdownDeprecated
       id="tree-view-dropdown"
       aria-label="Options menu"
       menuAppendTo={menuAppendTo}
@@ -177,7 +166,7 @@ export function TreeViewSelect(props: TreeViewSelectProps) {
       toggle={
         <MenuToggle
           aria-label="TreeViewSelect toggle"
-          isFullWidth
+          style={{ maxWidth: 'none', width: '100%' }}
           onClick={(e) => {
             setIsOpen(!isOpen);
           }}
@@ -186,9 +175,6 @@ export function TreeViewSelect(props: TreeViewSelectProps) {
         </MenuToggle>
       }
       isOpen={isOpen}
-      style={{
-        width: '70em',
-      }}
     >
       {toolbar}
       <TreeView
@@ -202,6 +188,6 @@ export function TreeViewSelect(props: TreeViewSelectProps) {
         data={filteredItems}
         useMemo
       />
-    </Dropdown>
+    </DropdownDeprecated>
   );
 }
