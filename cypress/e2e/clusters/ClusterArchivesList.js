@@ -73,10 +73,11 @@ describe('OCM Cluster archives page', () => {
       it('Cluster archives page : view only cluster options & its actions', () => {
         ClusterListPage.viewOnlyMyCluster().click({ force: true });
         ClusterListPage.viewOnlyMyClusterHelp().click();
-        ClusterListPage.tooltipviewOnlyMyCluster().should(
-          'include',
-          'Show only the clusters you previously archived, or all archived clusters in your organization.',
-        );
+        cy.get('div')
+          .contains(
+            'Show only the clusters you previously archived, or all archived clusters in your organization',
+          )
+          .should('be.visible');
         ClusterListPage.clusterListRefresh();
       });
     },
