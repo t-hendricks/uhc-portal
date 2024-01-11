@@ -5,18 +5,28 @@ import { Button, useWizardContext, WizardFooterWrapper } from '@patternfly/react
 import { scrollToFirstField } from '~/common/helpers';
 import { getScrollErrorIds } from '~/components/clusters/wizards/form/utils';
 import { useFormState } from '~/components/clusters/wizards/hooks';
+import { useGlobalState } from '~/redux/hooks/useGlobalState';
+import { StepId } from '~/components/clusters/wizards/osd/constants';
 
 interface CreateOsdWizardFooterProps {
   isLoading?: boolean;
   onNext?(): void | Promise<void>;
+  track?(): void;
 }
 
-export const CreateOsdWizardFooter = ({ isLoading, onNext }: CreateOsdWizardFooterProps) => {
+export const CreateOsdWizardFooter = ({
+  isLoading,
+  onNext,
+  track = () => {},
+}: CreateOsdWizardFooterProps) => {
   const { goToNextStep, goToPrevStep, close, activeStep, steps } = useWizardContext();
-  const { values, validateForm, setTouched, isValidating } = useFormState();
+  const { values, validateForm, setTouched, isValidating, submitForm } = useFormState();
   // used to determine the actions' disabled state.
   // (as a more exclusive rule than isValidating, which relying upon would block progress to the next step)
   const [isNextDeferred, setIsNextDeferred] = useState<boolean>(false);
+
+  const createClusterResponse = useGlobalState((state) => state.clusters.createdCluster);
+  const isSubmitting = createClusterResponse.pending;
 
   const isButtonLoading = isValidating || isLoading;
   const isButtonDisabled = isNextDeferred || isLoading;
@@ -52,16 +62,32 @@ export const CreateOsdWizardFooter = ({ isLoading, onNext }: CreateOsdWizardFoot
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isValidating, isNextDeferred]);
 
-  return (
+  return isSubmitting ? (
+    <></>
+  ) : (
     <WizardFooterWrapper>
-      <Button
-        variant="primary"
-        onClick={onValidateNext}
-        isLoading={isButtonLoading}
-        isDisabled={isButtonDisabled}
-      >
-        Next
-      </Button>
+      {activeStep.id === StepId.Review ? (
+        <Button
+          variant="primary"
+          onClick={() => {
+            submitForm();
+            track();
+          }}
+          isLoading={isButtonLoading}
+          isDisabled={isButtonDisabled}
+        >
+          Create cluster
+        </Button>
+      ) : (
+        <Button
+          variant="primary"
+          onClick={onValidateNext}
+          isLoading={isButtonLoading}
+          isDisabled={isButtonDisabled}
+        >
+          Next
+        </Button>
+      )}
       <Button
         variant="secondary"
         onClick={goToPrevStep}
