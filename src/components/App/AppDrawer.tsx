@@ -74,14 +74,14 @@ export const AppDrawer: React.FC<PropsWithChildren<{}>> = ({ children }) => {
         } else {
           // set up drawer initially closed so it can transition open properly
           setDrawerSettings({
-            drawerProps: { ...drawerProps, isExpanded: false, onExpand: undefined },
+            drawerProps: { ...drawerProps, isExpanded: false },
             ...otherSettings,
           });
         }
         setTimeout(
           () => {
             setDrawerSettings({
-              drawerProps: { ...drawerProps, isExpanded: true, onExpand: undefined },
+              drawerProps: { ...drawerProps, isExpanded: true },
               ...otherSettings,
             });
             // wait for drawer to transition open before calling onExpand callback
@@ -94,8 +94,14 @@ export const AppDrawer: React.FC<PropsWithChildren<{}>> = ({ children }) => {
         );
       }
     },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [drawerSettings, drawerTransitionDuration, isOpening, setIsOpening, setDrawerSettings],
+    [
+      closeDrawer,
+      drawerSettings,
+      drawerTransitionDuration,
+      isOpening,
+      setIsOpening,
+      setDrawerSettings,
+    ],
   );
 
   const contextValue = useMemo(() => ({ openDrawer, closeDrawer }), [openDrawer, closeDrawer]);

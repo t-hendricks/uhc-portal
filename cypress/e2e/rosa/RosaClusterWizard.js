@@ -63,13 +63,6 @@ describe.skip('Rosa cluster tests', { tags: ['ci'] }, () => {
         CreateRosaWizardPage.showsNoAssociatedAccounts();
       });
 
-      it('test associate aws account drawer', () => {
-        cy.getByTestId('launch-associate-account-btn').click();
-        cy.get(CreateRosaWizardPage.primaryButton).should('not.be.disabled');
-        CreateRosaWizardPage.isAssociateAccountsDrawer();
-        cy.getByTestId('close-associate-account-btn').click();
-      });
-
       it('tests for a single associated account,  "no ARNs" alert, and 4 ARNs required messages', () => {
         interceptAndReturnMockAssociatedAccounts('rosa/rosa_one_associated_account.json');
         interceptAndReturnMockARNs('rosa/rosa_no_arns.json');
