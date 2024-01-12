@@ -99,7 +99,7 @@ class UsersSection extends React.Component {
               bodyContent={<p>User IDs are matched by the cluster&apos;s identity providers.</p>}
             >
               <Button variant="plain" isInline aria-label="Help">
-                <Icon size="sm">
+                <Icon size="md">
                   <HelpIcon />
                 </Icon>
               </Button>
@@ -122,7 +122,7 @@ class UsersSection extends React.Component {
               }
             >
               <Button variant="plain" isInline aria-label="Help">
-                <Icon size="sm">
+                <Icon size="md">
                   <HelpIcon />
                 </Icon>
               </Button>

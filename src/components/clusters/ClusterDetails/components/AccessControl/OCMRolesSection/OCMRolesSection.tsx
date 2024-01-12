@@ -196,7 +196,7 @@ function OCMRolesSection({
         }
       >
         <Button variant="plain" isInline>
-          <Icon size="sm">
+          <Icon size="md">
             <HelpIcon />
           </Icon>
         </Button>
@@ -215,7 +215,7 @@ function OCMRolesSection({
         bodyContent={<p>The OpenShift Cluster Manager role that is granted to this user.</p>}
       >
         <Button variant="plain" isInline>
-          <Icon size="sm">
+          <Icon size="md">
             <HelpIcon />
           </Icon>
         </Button>
