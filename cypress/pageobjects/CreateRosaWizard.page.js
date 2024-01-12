@@ -179,7 +179,7 @@ class CreateRosaCluster extends Page {
   }
 
   isAssociateAccountsDrawer() {
-    cy.contains('h2', 'How to associate a new AWS account');
+    cy.contains('span', 'How to associate a new AWS account').should('have.focus');
     cy.contains('continue to step');
   }
 
@@ -299,6 +299,7 @@ class CreateRosaCluster extends Page {
       .contains(accountID)
       .click();
   }
+
   waitForARNList() {
     cy.get('span.pf-v5-c-button__progress', { timeout: 80000 }).should('not.exist');
   }
@@ -327,23 +328,22 @@ class CreateRosaCluster extends Page {
         }
       });
   }
+
   selectClusterVersion(version) {
     cy.get('div[name="cluster_version"]').find('button.pf-v5-c-select__toggle').click();
     cy.get('ul[label="Version"]').find('button').contains(version).click();
   }
 
   addNodeLabelKeyAndValue(key, value = '', index = 0) {
-    cy.get('input[name="node_labels[' + index + '].key"]')
-      .clear()
-      .type(key);
-    cy.get('input[name="node_labels[' + index + '].value"]')
-      .clear()
-      .type(value);
+    cy.get(`input[name="node_labels[${index}].key"]`).clear().type(key);
+    cy.get(`input[name="node_labels[${index}].value"]`).clear().type(value);
   }
+
   isNodeLabelKeyAndValue(key, value = '', index = 0) {
-    cy.get('input[name="node_labels[' + index + '].key"]').should('have.value', key);
-    cy.get('input[name="node_labels[' + index + '].value"]').should('have.value', value);
+    cy.get(`input[name="node_labels[${index}].key"]`).should('have.value', key);
+    cy.get(`input[name="node_labels[${index}].value"]`).should('have.value', value);
   }
+
   selectRegion(region) {
     cy.get('select[name="region"]').select(region);
   }
@@ -444,6 +444,7 @@ class CreateRosaCluster extends Page {
   setMinimumNodeCount(nodeCount) {
     this.minimumNodeInput().type('{selectAll}').type(nodeCount);
   }
+
   setMaximumNodeCount(nodeCount) {
     this.maximumNodeInput().type('{selectAll}').type(nodeCount);
   }
@@ -459,9 +460,7 @@ class CreateRosaCluster extends Page {
   }
 
   waitForButtonContainingTextToBeEnabled(text, timeout = 30000) {
-    cy.get(`button:contains('${text}')`, { timeout: timeout })
-      .scrollIntoView()
-      .should('be.enabled');
+    cy.get(`button:contains('${text}')`, { timeout }).scrollIntoView().should('be.enabled');
   }
 
   clickButtonContainingText(text, options = {}) {
@@ -601,6 +600,7 @@ class CreateRosaCluster extends Page {
       }
     });
   }
+
   enableUpgradePolicyAutomatic() {
     cy.getByTestId('upgrade_policy-automatic').then(($elem) => {
       if (!$elem.prop('checked')) {
@@ -616,6 +616,7 @@ class CreateRosaCluster extends Page {
       }
     });
   }
+
   enableRosaRolesProviderCreationModeAuto() {
     cy.getByTestId('rosa_roles_provider_creation_mode-auto').then(($elem) => {
       if (!$elem.prop('checked')) {

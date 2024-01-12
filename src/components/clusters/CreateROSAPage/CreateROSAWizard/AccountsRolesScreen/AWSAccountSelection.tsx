@@ -27,7 +27,10 @@ const AWS_ACCT_ID_PLACEHOLDER = 'Select an account';
 
 function NoAssociatedAWSAccounts() {
   return (
-    <EmptyState className="no-associated-aws-accounts_empty-state">
+    <EmptyState
+      data-testid="no_associated_accounts"
+      className="no-associated-aws-accounts_empty-state"
+    >
       <EmptyStateHeader titleText="No associated accounts were found." headingLevel="h6" />
       <EmptyStateBody>Associate an AWS account to your Red Hat account.</EmptyStateBody>
     </EmptyState>
@@ -149,12 +152,7 @@ function AWSAccountSelection({
     return (
       <>
         {!hasAWSAccounts && <NoAssociatedAWSAccounts />}
-        <Button
-          ref={associateAWSAccountBtnRef}
-          data-testid="launch-associate-account-btn"
-          variant="secondary"
-          {...btnProps}
-        >
+        <Button ref={associateAWSAccountBtnRef} variant="secondary" {...btnProps}>
           {isBillingAccount
             ? 'Connect ROSA to a new AWS billing account'
             : 'How to associate a new AWS account'}
