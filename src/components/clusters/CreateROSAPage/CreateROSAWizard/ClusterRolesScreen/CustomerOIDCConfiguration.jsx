@@ -4,7 +4,6 @@ import { Field } from 'redux-form';
 import {
   Button,
   ClipboardCopy,
-  ClipboardCopyVariant,
   Flex,
   FlexItem,
   FormGroup,
@@ -211,13 +210,20 @@ function CustomerOIDCConfiguration({
             <Text component={TextVariants.p}>Run the command to create a new Operator Roles.</Text>
           </TextContent>
           {operatorRolesCliCommand ? (
-            <ClipboardCopy
-              textAriaLabel="Copyable ROSA create operator-roles"
-              variant={ClipboardCopyVariant.expansion}
-              isReadOnly
-            >
-              {operatorRolesCliCommand}
-            </ClipboardCopy>
+            <>
+              <ClipboardCopy
+                textAriaLabel="Copyable ROSA create operator-roles"
+                // variant={ClipboardCopyVariant.expansion} // temporarily disabled due to  https://github.com/patternfly/patternfly-react/issues/9962
+                isReadOnly
+              >
+                {operatorRolesCliCommand}
+              </ClipboardCopy>
+              <div className="pf-v5-c-clipboard-copy">
+                <div className="pf-v5-c-clipboard-copy__expandable-content">
+                  {operatorRolesCliCommand}
+                </div>
+              </div>
+            </>
           ) : (
             <Skeleton fontSize="md" />
           )}
