@@ -63,6 +63,8 @@ const createOSDInitialValues = ({
     cluster_autoscaling: clusterAutoScaling,
     product: product || (isTrialDefault ? normalizedProducts.OSDTrial : normalizedProducts.OSD),
     imds: IMDSType.V1AndV2,
+    etcd_encryption: !!isRestrictedEnv(),
+    fips: !!isRestrictedEnv(),
 
     applicationIngress: 'default',
     defaultRouterSelectors: '',
