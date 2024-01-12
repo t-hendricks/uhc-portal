@@ -232,6 +232,7 @@ function AccountsRolesScreen({
           <Button
             variant="secondary"
             className="pf-v5-u-mt-md"
+            data-testid="launch-associate-account-btn"
             ref={openDrawerButtonRef}
             onClick={onClick}
           >

@@ -6,8 +6,8 @@ import ClusterDetailsPage from '../../pageobjects/ClusterDetails.page';
 // awsAccountID,rolePrefix and installerARN are set by prerun script for smoke requirements.
 const awsAccountID = Cypress.env('QE_AWS_ID');
 const rolePrefix = Cypress.env('QE_ACCOUNT_ROLE_PREFIX');
-const installerARN = 'arn:aws:iam::' + awsAccountID + ':role/' + rolePrefix + '-Installer-Role';
-const clusterName = `smkrosa-` + (Math.random() + 1).toString(36).substring(7);
+const installerARN = `arn:aws:iam::${awsAccountID}:role/${rolePrefix}-Installer-Role`;
+const clusterName = `smkrosa-${(Math.random() + 1).toString(36).substring(7)}`;
 const clusterVersion = '4.12.25';
 
 describe(
@@ -43,6 +43,9 @@ describe(
 
       it('Step - Accounts and roles - Select Account roles, ARN definitions', () => {
         CreateRosaWizardPage.isAccountsAndRolesScreen();
+        cy.getByTestId('launch-associate-account-btn').click();
+        CreateRosaWizardPage.isAssociateAccountsDrawer();
+        cy.getByTestId('close-associate-account-btn').click();
         CreateRosaWizardPage.selectAWSInfrastructureAccount(awsAccountID);
         CreateRosaWizardPage.refreshInfrastructureAWSAccountButton().click();
         CreateRosaWizardPage.waitForARNList();
