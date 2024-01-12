@@ -5,7 +5,10 @@ import UpgradeAcknowledgeStep from '../UpgradeAcknowledgeStep';
 import Modal from '../../../../../common/Modal/Modal';
 import { getErrorState } from '../../../../../../common/errors';
 import ErrorBox from '../../../../../common/ErrorBox';
-import clusterService, { patchUpgradeSchedule } from '../../../../../../services/clusterService';
+import clusterService, {
+  patchUpgradeSchedule,
+  patchControlPlaneUpgradeSchedule,
+} from '../../../../../../services/clusterService';
 
 const UpgradeAcknowledgeModal = (props) => {
   const [pending, setPending] = useState(false);
@@ -23,6 +26,7 @@ const UpgradeAcknowledgeModal = (props) => {
     isOpen,
     automaticUpgradePolicyId,
     setUpgradePolicy,
+    isHypershift,
   } = props;
 
   useEffect(() => {
@@ -45,7 +49,8 @@ const UpgradeAcknowledgeModal = (props) => {
     const foundErrors = [];
     if (automaticUpgradePolicyId) {
       try {
-        const patchUpgradeScheduleResponse = await patchUpgradeSchedule(
+        const requestPatch = isHypershift ? patchControlPlaneUpgradeSchedule : patchUpgradeSchedule;
+        const patchUpgradeScheduleResponse = await requestPatch(
           clusterId,
           automaticUpgradePolicyId,
           { enable_minor_version_upgrades: true },
@@ -129,9 +134,14 @@ UpgradeAcknowledgeModal.propTypes = {
   clusterId: PropTypes.string,
   automaticUpgradePolicyId: PropTypes.string,
   isOpen: PropTypes.bool,
-  modalData: PropTypes.shape,
+  modalData: PropTypes.shape({
+    fromVersion: PropTypes.string,
+    toVersion: PropTypes.string,
+    unmetAcknowledgements: PropTypes.arrayOf(PropTypes.object),
+  }),
   setGate: PropTypes.func,
   setUpgradePolicy: PropTypes.func,
+  isHypershift: PropTypes.bool,
 };
 
 UpgradeAcknowledgeModal.defaultProps = {};
