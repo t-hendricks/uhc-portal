@@ -29,10 +29,10 @@
         "LogVerbosityLimitError": "Value must be between 1 and 6",
         "ThreasholdLimitError": "Value must be between 0 and 1",
         "InvalidTimeValueError": "Not a valid time value",
-        "WhitespaceLabelValueError": "Format should be a comma-separated list of labels. Labels must not contain whitespaces",
-        "EmptyLabelValueError": "Format should be a comma-separated list of labels. Empty labels are not allowed",
+        "WhitespaceLabelValueError": "Labels must not contain whitespaces",
+        "EmptyLabelValueError": "Empty labels are not allowed",
         "MinMaxLimitError": "The minimum cannot be above the maximum value",
-        "InvalidGPUValueError": "Format should be a comma-separated list of \"<gpu_type>:<min>:<max>\" Invalid params",
+        "InvalidGPUValueError": "Invalid params",
         "RequiredFieldError": "Field is required"
       },
       "RootDiskSize": {

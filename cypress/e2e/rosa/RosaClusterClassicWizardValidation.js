@@ -6,7 +6,7 @@ const clusterFieldValidations = require('../../fixtures/rosa/RosaClusterClassicW
 
 // awsAccountID,rolePrefix and installerARN are set by prerun script for smoke requirements.
 const awsAccountID = Cypress.env('QE_AWS_ID');
-const rolePrefix = 'cypress-account-roles';
+const rolePrefix = Cypress.env('QE_ACCOUNT_ROLE_PREFIX');
 const installerARN = 'arn:aws:iam::' + awsAccountID + ':role/' + rolePrefix + '-Installer-Role';
 const clusterName = `smkrosa-` + (Math.random() + 1).toString(36).substring(7);
 

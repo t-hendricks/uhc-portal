@@ -106,6 +106,8 @@ class NodesInput extends React.Component {
         onChange={this.onChange}
         onPlus={this.onPlus}
         inputAriaLabel={ariaLabel}
+        minusBtnAriaLabel={`${ariaLabel} minus`}
+        plusBtnAriaLabel={`${ariaLabel} plus`}
         widthChars={4}
         inputProps={{
           onBlur: (e) => {
