@@ -160,7 +160,7 @@ class NetworkSelfServiceSection extends React.Component {
               bodyContent={<p>Amazon Resource Names (ARNs) uniquely identify AWS resources.</p>}
             >
               <Button variant="plain" isInline>
-                <Icon size="sm">
+                <Icon size="md">
                   <HelpIcon />
                 </Icon>
               </Button>
