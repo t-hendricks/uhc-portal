@@ -1,17 +1,11 @@
 import React from 'react';
-import { render, screen } from '~/testUtils';
-import * as useFeatureGate from '~/hooks/useFeatureGate';
+import { render, screen, mockUseFeatureGate } from '~/testUtils';
+
 import { HCP_AWS_BILLING_SHOW } from '~/redux/constants/featureConstants';
 import wizardConnector from '../WizardConnector';
 import sampleFormData from './mockHCPCluster';
 import ReviewClusterScreen from './ReviewClusterScreen';
 
-const setAWSBillingAcctVisible = (gate, awsBillingVisible) => {
-  if (gate === HCP_AWS_BILLING_SHOW) {
-    return awsBillingVisible;
-  }
-  return false; // return all other feature flags as false
-};
 const defaultProps = {
   formValues: sampleFormData.values,
   change: () => {},
@@ -26,17 +20,19 @@ const defaultProps = {
 };
 
 describe('<ReviewClusterScreen />', () => {
+  afterAll(() => {
+    jest.resetAllMocks();
+  });
   describe('AWS Billing account', () => {
-    const useFeatureGateMock = jest.spyOn(useFeatureGate, 'useFeatureGate');
     afterEach(() => {
       jest.clearAllMocks();
-      useFeatureGateMock.mockReset();
     });
+
     describe('is shown when', () => {
       it('isHypershift, has "show" feature flag, and has value', () => {
         const ConnectedReviewClusterScreen = wizardConnector(ReviewClusterScreen);
         const newProps = { ...defaultProps, isHypershiftSelected: true };
-        useFeatureGateMock.mockImplementation((gate) => setAWSBillingAcctVisible(gate, true));
+        mockUseFeatureGate([[HCP_AWS_BILLING_SHOW, true]]);
         render(<ConnectedReviewClusterScreen {...newProps} />);
 
         expect(screen.getByText('AWS infrastructure account ID')).toBeInTheDocument();
@@ -52,7 +48,7 @@ describe('<ReviewClusterScreen />', () => {
           isHypershiftSelected: true,
           formValues: { ...sampleFormData.values, billing_account_id: undefined },
         };
-        useFeatureGateMock.mockImplementation((gate) => setAWSBillingAcctVisible(gate, true));
+        mockUseFeatureGate([[HCP_AWS_BILLING_SHOW, true]]);
         render(<ConnectedReviewClusterScreen {...newProps} />);
 
         expect(screen.getByText('AWS infrastructure account ID')).toBeInTheDocument();
@@ -64,7 +60,7 @@ describe('<ReviewClusterScreen />', () => {
       it('isHypershift and "show" feature flag is false', () => {
         const ConnectedReviewClusterScreen = wizardConnector(ReviewClusterScreen);
         const newProps = { ...defaultProps, isHypershiftSelected: true };
-        useFeatureGateMock.mockImplementation((gate) => setAWSBillingAcctVisible(gate, false));
+        mockUseFeatureGate([[HCP_AWS_BILLING_SHOW, false]]);
         render(<ConnectedReviewClusterScreen {...newProps} />);
 
         expect(defaultProps.formValues.billing_account_id).toEqual('123456789012');
@@ -78,7 +74,7 @@ describe('<ReviewClusterScreen />', () => {
       it('is not isHypershift', () => {
         const ConnectedReviewClusterScreen = wizardConnector(ReviewClusterScreen);
         const newProps = { ...defaultProps, isHypershiftSelected: false };
-        useFeatureGateMock.mockImplementation((gate) => setAWSBillingAcctVisible(gate, true));
+        mockUseFeatureGate([[HCP_AWS_BILLING_SHOW, true]]);
         render(<ConnectedReviewClusterScreen {...newProps} />);
 
         expect(defaultProps.formValues.billing_account_id).toEqual('123456789012');

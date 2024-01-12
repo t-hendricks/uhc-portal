@@ -72,6 +72,7 @@ const INITIAL_OSL_VIEW_STATE: ViewState = {
     loggedBy: '',
   },
   sorting: {
+    sortIndex: 0,
     sortField: 'timestamp',
     isAscending: false,
   },

@@ -2,14 +2,24 @@ import React from 'react';
 import { MemoryRouter, Router } from 'react-router-dom';
 import { createMemoryHistory } from 'history';
 
-import { render, checkAccessibility, screen, mockRestrictedEnv } from '~/testUtils';
-import * as hooks from '~/hooks/useFeatureGate';
+import {
+  render,
+  checkAccessibility,
+  screen,
+  mockRestrictedEnv,
+  mockUseFeatureGate,
+} from '~/testUtils';
+
 import { HCP_ROSA_GETTING_STARTED_PAGE } from '~/redux/constants/featureConstants';
 import CreateClusterDropDown from './CreateClusterDropDown';
 
 const getStartedPath = '/create/rosa/getstarted';
 
 describe('<CreateClusterDropDown />', () => {
+  afterAll(() => {
+    jest.resetAllMocks();
+  });
+
   it('is accessible', async () => {
     // Arrange
     const { container } = render(
@@ -77,9 +87,7 @@ describe('<CreateClusterDropDown />', () => {
 
   it('shows hypershift helper text when feature flags are enabled', async () => {
     // Arrange
-    jest
-      .spyOn(hooks, 'useFeatureGate')
-      .mockImplementation((feature) => feature === HCP_ROSA_GETTING_STARTED_PAGE);
+    mockUseFeatureGate([[HCP_ROSA_GETTING_STARTED_PAGE, true]]);
 
     const { user } = render(
       <MemoryRouter>
@@ -98,9 +106,7 @@ describe('<CreateClusterDropDown />', () => {
 
   it('hides hypershift helper text when feature flags are not enabled', async () => {
     // Arrange
-    jest
-      .spyOn(hooks, 'useFeatureGate')
-      .mockImplementation((feature) => feature !== HCP_ROSA_GETTING_STARTED_PAGE);
+    mockUseFeatureGate([[HCP_ROSA_GETTING_STARTED_PAGE, false]]);
 
     const { user } = render(
       <MemoryRouter>
@@ -128,9 +134,7 @@ describe('<CreateClusterDropDown />', () => {
 
     it('does not show hypershift helper text', async () => {
       isRestrictedEnv.mockReturnValue(true);
-      jest
-        .spyOn(hooks, 'useFeatureGate')
-        .mockImplementation((feature) => feature === HCP_ROSA_GETTING_STARTED_PAGE);
+      mockUseFeatureGate([[HCP_ROSA_GETTING_STARTED_PAGE, true]]);
 
       const { user } = render(
         <MemoryRouter>

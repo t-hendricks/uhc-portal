@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, screen, act } from '~/testUtils';
+import { render, screen, userEvent, act } from '~/testUtils';
 import apiRequest from '~/services/apiRequest';
 
 import MinorVersionUpgradeAlert from '../MinorVersionUpgradeAlert';
@@ -177,5 +177,90 @@ describe('<MinorVersionUpgradeAlert >', () => {
     );
     expect(setUpgradePolicy).not.toHaveBeenCalled();
     expect(screen.getByTestId('alert-success')).toBeInTheDocument();
+  });
+  it('(HCP) API call is made when user clicks on enable with hosted control plane cluster', async () => {
+    const apiReturnValue = { data: { enable_minor_version_upgrades: true } };
+    apiRequest.patch.mockResolvedValue(apiReturnValue);
+
+    const newProps = {
+      ...defaultProps,
+      isMinorVersionUpgradesEnabled: false,
+      isHypershift: true,
+    };
+    render(<MinorVersionUpgradeAlert {...newProps} />);
+
+    const user = userEvent.setup({
+      delay: null,
+    });
+    await act(async () => {
+      await user.click(screen.getByRole('button', { name: enableLinkText }));
+      await new Promise(process.nextTick); // wait for all promises to finish
+      jest.runAllTimers();
+    });
+
+    expect(apiRequest.patch).toHaveBeenCalledWith(
+      '/api/clusters_mgmt/v1/clusters/myClusterId/control_plane/upgrade_policies/myUpgradePolicyId',
+      { enable_minor_version_upgrades: true },
+    );
+    expect(setUpgradePolicy.mock.calls).toHaveLength(1);
+    expect(setUpgradePolicy.mock.calls[0][0]).toEqual(apiReturnValue.data);
+    expect(screen.queryByRole('alert', { name: 'Danger Alert' })).not.toBeInTheDocument();
+  });
+
+  it('(HCP) API call is made when user clicks on disable with hosted control plane cluster', async () => {
+    const apiReturnValue = { data: { enable_minor_version_upgrades: false } };
+    apiRequest.patch.mockResolvedValue(apiReturnValue);
+
+    const newProps = {
+      ...defaultProps,
+      isMinorVersionUpgradesEnabled: true,
+      isHypershift: true,
+    };
+    render(<MinorVersionUpgradeAlert {...newProps} />);
+    const user = userEvent.setup({
+      delay: null,
+    });
+    await act(async () => {
+      await user.click(screen.getByRole('button', { name: disableLinkText }));
+      await new Promise(process.nextTick); // wait for all promises to finish
+      jest.runAllTimers();
+    });
+
+    expect(apiRequest.patch).toHaveBeenCalledWith(
+      '/api/clusters_mgmt/v1/clusters/myClusterId/control_plane/upgrade_policies/myUpgradePolicyId',
+      { enable_minor_version_upgrades: false },
+    );
+    expect(setUpgradePolicy.mock.calls).toHaveLength(1);
+    expect(setUpgradePolicy.mock.calls[0][0]).toEqual(apiReturnValue.data);
+
+    expect(screen.queryByRole('alert', { name: 'Danger Alert' })).not.toBeInTheDocument();
+  });
+
+  it('(HCP) Error is shown if patch API call fails with hosted control plane cluster', async () => {
+    const patchError = {
+      response: {
+        data: { reason: 'an error happened' },
+      },
+    };
+    apiRequest.patch.mockRejectedValue(patchError);
+
+    const newProps = {
+      ...defaultProps,
+      isMinorVersionUpgradesEnabled: true,
+      isHypershift: true,
+    };
+    render(<MinorVersionUpgradeAlert {...newProps} />);
+    const user = userEvent.setup({
+      delay: null,
+    });
+    await user.click(screen.getByRole('button', { name: disableLinkText }));
+    await new Promise(process.nextTick); // wait for all promises to finish
+    jest.runAllTimers();
+
+    expect(apiRequest.patch).toHaveBeenCalledWith(
+      '/api/clusters_mgmt/v1/clusters/myClusterId/control_plane/upgrade_policies/myUpgradePolicyId',
+      { enable_minor_version_upgrades: false },
+    );
+    expect(setUpgradePolicy).not.toHaveBeenCalled();
   });
 });

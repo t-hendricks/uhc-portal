@@ -5,7 +5,6 @@ import isEmpty from 'lodash/isEmpty';
 import get from 'lodash/get';
 
 import {
-  Button,
   ButtonVariant,
   Card,
   CardBody,
@@ -50,7 +49,7 @@ import {
 import ButtonWithTooltip from '../../../../common/ButtonWithTooltip';
 import ErrorBox from '../../../../common/ErrorBox';
 import modals from '../../../../common/Modal/modals';
-import {
+import clusterStates, {
   isHibernating,
   isHypershiftCluster,
   isROSA,
@@ -216,6 +215,10 @@ class MachinePools extends React.Component {
     const isAws = isAWS(cluster);
     const showMachineConfigurationAction =
       hasMachineConfiguration && ((isRosa && !isHypershift) || (isOsd && isCcs && isAws));
+    const isMachineConfigurationActionDisabled = cluster?.state !== clusterStates.READY;
+    const isMachineConfigurationActionDisabledReason =
+      isMachineConfigurationActionDisabled &&
+      `Machine configuration is only available when the cluster is ready.`;
 
     if (hasMachinePools && machinePoolsList.error) {
       return (
@@ -467,8 +470,8 @@ class MachinePools extends React.Component {
                     )}
                     {showMachineConfigurationAction && (
                       <ToolbarItem>
-                        <Button
-                          variant={ButtonVariant.secondary}
+                        <ButtonWithTooltip
+                          disableReason={isMachineConfigurationActionDisabledReason}
                           onClick={() =>
                             this.setState(
                               produce((draft) => {
@@ -476,9 +479,10 @@ class MachinePools extends React.Component {
                               }),
                             )
                           }
+                          variant={ButtonVariant.secondary}
                         >
                           Edit machine configuration
-                        </Button>
+                        </ButtonWithTooltip>
                       </ToolbarItem>
                     )}
                   </ToolbarContent>

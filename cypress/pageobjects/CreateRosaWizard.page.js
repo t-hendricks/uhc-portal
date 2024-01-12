@@ -6,6 +6,12 @@ class CreateRosaCluster extends Page {
 
   rosaCreateClusterButton = () => cy.getByTestId('rosa-create-cluster-button');
 
+  rosaNextButton = () => cy.getByTestId('wizard-next-button');
+
+  rosaBackButton = () => cy.getByTestId('wizard-back-button');
+
+  rosaCancelButton = () => cy.getByTestId('wizard-cancel-button');
+
   rosaClusterWithCLI = () => cy.get('a').contains('With CLI');
 
   rosaClusterWithWeb = () => cy.get('a').contains('With web interface');
@@ -28,6 +34,12 @@ class CreateRosaCluster extends Page {
   multiZoneAvilabilityRadio = () => cy.getByTestId('multi_az-true');
 
   advancedEncryptionLink = () => cy.get('span').contains('Advanced Encryption');
+
+  useDefaultKMSKeyRadio = () => cy.getByTestId('customer_managed_key-false');
+
+  useCustomKMSKeyRadio = () => cy.getByTestId('customer_managed_key-true');
+
+  kmsKeyARNHelpText = () => cy.get('#kms_key_arn-helper');
 
   enableAdditionalEtcdEncryptionCheckbox = () => cy.get('input[id="etcd_encryption"]');
 
@@ -61,6 +73,12 @@ class CreateRosaCluster extends Page {
 
   maximumNodeInput = () => cy.get('input[aria-label="Maximum nodes"]');
 
+  clusterNameValidationSuccessIndicator = () =>
+    cy.get('button[aria-label="All validation rules met"]');
+
+  clusterNameValidationFailureIndicator = () =>
+    cy.get('button[aria-label="Not all validation rules met"]');
+
   minimumNodeCountMinusButton = () => this.minimumNodeInput().prev();
 
   minimumNodeCountPlusButton = () => this.minimumNodeInput().next();
@@ -68,6 +86,53 @@ class CreateRosaCluster extends Page {
   maximumNodeCountMinusButton = () => this.maximumNodeInput().prev();
 
   maximumNodeCountPlusButton = () => this.maximumNodeInput().next();
+
+  editClusterAutoscalingSettingsButton = () =>
+    cy.getByTestId('set-cluster-autoscaling-btn', { timeout: 80000 });
+
+  clusterAutoscalingLogVerbosityInput = () =>
+    cy.get('input[id="cluster_autoscaling.log_verbosity"]');
+
+  clusterAutoscalingMaxNodeProvisionTimeInput = () =>
+    cy.get('input[id="cluster_autoscaling.max_node_provision_time"]');
+
+  clusterAutoscalingBalancingIgnoredLabelsInput = () =>
+    cy.get('input[id="cluster_autoscaling.balancing_ignored_labels"]');
+
+  clusterAutoscalingCoresTotalMinInput = () =>
+    cy.get('input[id="cluster_autoscaling.resource_limits.cores.min"]');
+
+  clusterAutoscalingCoresTotalMaxInput = () =>
+    cy.get('input[id="cluster_autoscaling.resource_limits.cores.max"]');
+
+  clusterAutoscalingMemoryTotalMinInput = () =>
+    cy.get('input[id="cluster_autoscaling.resource_limits.memory.min"]');
+
+  clusterAutoscalingMemoryTotalMaxInput = () =>
+    cy.get('input[id="cluster_autoscaling.resource_limits.memory.max"]');
+
+  clusterAutoscalingGPUsInput = () =>
+    cy.get('input[id="cluster_autoscaling.resource_limits.gpus"]');
+
+  clusterAutoscalingScaleDownUtilizationThresholdInput = () =>
+    cy.get('input[id="cluster_autoscaling.scale_down.utilization_threshold"]');
+
+  clusterAutoscalingScaleDownUnneededTimeInput = () =>
+    cy.get('input[id="cluster_autoscaling.scale_down.unneeded_time"]');
+
+  clusterAutoscalingScaleDownDelayAfterAddInput = () =>
+    cy.get('input[id="cluster_autoscaling.scale_down.delay_after_add"]');
+
+  clusterAutoscalingScaleDownDelayAfterDeleteInput = () =>
+    cy.get('input[id="cluster_autoscaling.scale_down.delay_after_delete"]');
+
+  clusterAutoscalingScaleDownDelayAfterFailureInput = () =>
+    cy.get('input[id="cluster_autoscaling.scale_down.delay_after_failure"]');
+
+  clusterAutoscalingRevertAllToDefaultsButton = () =>
+    cy.get('button').contains('Revert all to defaults');
+
+  clusterAutoscalingCloseButton = () => cy.get('button').contains('Close');
 
   cidrDefaultValuesCheckBox = () => cy.get('input[id="cidr_default_values_toggle"]');
 
@@ -78,6 +143,11 @@ class CreateRosaCluster extends Page {
   applicationIngressDefaultSettingsRadio = () => cy.getByTestId('applicationIngress-default');
 
   applicationIngressCustomSettingsRadio = () => cy.getByTestId('applicationIngress-custom');
+
+  applicationIngressRouterSelectorsInput = () => cy.get('input#defaultRouterSelectors');
+
+  applicationIngressExcludedNamespacesInput = () =>
+    cy.get('input#defaultRouterExcludedNamespacesFlag');
 
   clusterPrivacyPublicRadio = () => cy.getByTestId('cluster_privacy-external');
 
@@ -445,7 +515,7 @@ class CreateRosaCluster extends Page {
   }
 
   inputCustomerManageKeyARN(kmsCustomKeyARN) {
-    cy.get('#kms_key_arn').type(kmsCustomKeyARN).should('have.value', kmsCustomKeyARN);
+    cy.get('#kms_key_arn').clear().type(kmsCustomKeyARN).should('have.value', kmsCustomKeyARN);
   }
 
   enableEtcEncryption() {
@@ -552,6 +622,10 @@ class CreateRosaCluster extends Page {
         cy.getByTestId('rosa_roles_provider_creation_mode-auto').check();
       }
     });
+  }
+
+  get clusterNameInputError() {
+    return 'ul#rich-input-popover-name li.pf-c-helper-text__item.pf-m-error.pf-m-dynamic';
   }
 
   validateItemsInList(listOfMatchValues, listSelector) {
