@@ -142,7 +142,9 @@ const VPCDropdown = ({
         isRequired
       >
         <Flex>
-          <FlexItem grow={{ default: 'grow' }}>
+          {/* The min-width property is necessary to allow PF Select to truncate overflowing text. See OCMUI-796 for more details.
+           This is likely to be removed when dropping deprecated Select component used by FuzzySelect */}
+          <FlexItem flex={{ default: 'flex_1' }} style={{ minWidth: 0 }}>
             <FuzzySelect
               {...inputProps}
               label="Select a VPC"
