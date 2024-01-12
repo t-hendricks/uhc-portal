@@ -4,7 +4,10 @@ import { Alert, AlertActionLink, Spinner } from '@patternfly/react-core';
 import ArrowCircleUpIcon from '@patternfly/react-icons/dist/esm/icons/arrow-circle-up-icon';
 import links from '../../../../../common/installLinks.mjs';
 import ExternalLink from '../../../../common/ExternalLink';
-import { patchUpgradeSchedule } from '../../../../../services/clusterService';
+import {
+  patchUpgradeSchedule,
+  patchControlPlaneUpgradeSchedule,
+} from '../../../../../services/clusterService';
 
 const actionLink = (onChange, isCurrentlyEnabled) => (
   <AlertActionLink onClick={() => onChange(!isCurrentlyEnabled)}>
@@ -23,6 +26,7 @@ const MinorVersionUpgradeAlert = ({
   setUpgradePolicy,
   isNextMinorVersionAvailable,
   isRosa,
+  isHypershift,
 }) => {
   const [loading, setLoading] = React.useState(false);
   const [error, setError] = React.useState(null);
@@ -42,7 +46,8 @@ const MinorVersionUpgradeAlert = ({
     setError(null);
 
     try {
-      const response = await patchUpgradeSchedule(clusterId, automaticUpgradePolicyId, {
+      const requestPatch = isHypershift ? patchControlPlaneUpgradeSchedule : patchUpgradeSchedule;
+      const response = await requestPatch(clusterId, automaticUpgradePolicyId, {
         enable_minor_version_upgrades: isEnable,
       });
 
@@ -114,6 +119,7 @@ MinorVersionUpgradeAlert.propTypes = {
   setUpgradePolicy: PropTypes.func,
   isNextMinorVersionAvailable: PropTypes.bool,
   isRosa: PropTypes.bool,
+  isHypershift: PropTypes.bool,
 };
 MinorVersionUpgradeAlert.defaultProps = {
   isMinorVersionUpgradesEnabled: false,
