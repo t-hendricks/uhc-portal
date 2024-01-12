@@ -64,7 +64,7 @@ class CopyPullSecret extends React.Component {
 }
 CopyPullSecret.propTypes = {
   pendoID: PropTypes.string,
-  track: PropTypes.object.isRequired,
+  track: PropTypes.func.isRequired,
   token: PropTypes.object.isRequired,
   text: PropTypes.string,
   variant: PropTypes.oneOf(['link-tooltip', 'link-inplace']).isRequired,
