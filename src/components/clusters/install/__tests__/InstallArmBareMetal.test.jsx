@@ -1,11 +1,17 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { screen, render, checkAccessibility, TestRouter } from '~/testUtils';
 
 import InstallArmBareMetal from '../InstallArmBareMetal';
 
 describe('ARM Bare Metal install', () => {
-  it('renders correctly', () => {
-    const wrapper = shallow(<InstallArmBareMetal />);
-    expect(wrapper).toMatchSnapshot();
+  it('is accessible', async () => {
+    const { container } = render(
+      <TestRouter>
+        <InstallArmBareMetal />
+      </TestRouter>,
+    );
+
+    expect(screen.getByText('ARM Bare Metal')).toBeInTheDocument();
+    await checkAccessibility(container);
   });
 });
