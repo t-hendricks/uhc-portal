@@ -1,22 +1,42 @@
 import React from 'react';
-import { shallow } from 'enzyme';
 
+import { screen, render, checkAccessibility } from '~/testUtils';
 import CustomerCloudSubscriptionModal from '../CreateOSDForm/FormSections/BillingModelSection/CustomerCloudSubscriptionModal';
 
 describe('Customer Cloud Subscription modal;', () => {
-  let wrapper;
+  const closeModal = jest.fn();
 
-  it('should render for AWS', () => {
-    wrapper = shallow(
-      <CustomerCloudSubscriptionModal cloudProviderID="aws" closeModal={jest.fn()} />,
+  const defaultProps = {
+    closeModal,
+  };
+
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
+  it('should render for AWS', async () => {
+    const { container } = render(
+      <CustomerCloudSubscriptionModal cloudProviderID="aws" {...defaultProps} />,
     );
-    expect(wrapper).toMatchSnapshot();
+    expect(
+      screen.getByText('It is also recommended that you have at least Business Support from AWS', {
+        exact: false,
+      }),
+    ).toBeInTheDocument();
+    await checkAccessibility(container);
   });
 
-  it('should render for GCP', () => {
-    wrapper = shallow(
-      <CustomerCloudSubscriptionModal cloudProviderID="gcp" closeModal={jest.fn()} />,
+  it('should render for GCP', async () => {
+    const { container } = render(
+      <CustomerCloudSubscriptionModal cloudProviderID="gcp" {...defaultProps} />,
     );
-    expect(wrapper).toMatchSnapshot();
+    expect(
+      screen.getByText(
+        'It is also recommended that you have at least Production support from GCP',
+        {
+          exact: false,
+        },
+      ),
+    ).toBeInTheDocument();
+    await checkAccessibility(container);
   });
 });

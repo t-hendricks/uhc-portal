@@ -104,8 +104,8 @@ UpgradeAcknowledgeWarning.propTypes = {
   openModal: PropTypes.func,
   clusterId: PropTypes.string,
   openshiftVersion: PropTypes.string,
-  fromVersion: PropTypes.func,
-  toVersion: PropTypes.func,
+  fromVersion: PropTypes.string,
+  toVersion: PropTypes.string,
   getAcks: PropTypes.array,
   isManual: PropTypes.bool,
 };
