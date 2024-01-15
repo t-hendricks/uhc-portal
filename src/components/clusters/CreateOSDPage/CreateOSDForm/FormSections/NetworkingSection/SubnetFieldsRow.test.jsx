@@ -1,14 +1,17 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { render, screen, checkAccessibility } from '~/testUtils';
+import wizardConnector from '~/components/clusters/CreateOSDPage/CreateOSDWizard/WizardConnector';
 import SubnetFields from './SubnetFields';
 
 describe('<SubnetFields />', () => {
-  let wrapper;
-  beforeEach(() => {
-    wrapper = shallow(<SubnetFields selectedRegion="fake-region" />);
-  });
+  const ConnectedSubnetFieldRow = wizardConnector(SubnetFields);
+  const defaultProps = {
+    selectedRegion: 'myRegion',
+  };
+  it('is accessible', async () => {
+    const { container } = render(<ConnectedSubnetFieldRow {...defaultProps} />);
 
-  it('should render', () => {
-    expect(wrapper).toMatchSnapshot();
+    expect(screen.getByText('Private subnet ID')).toBeInTheDocument();
+    await checkAccessibility(container);
   });
 });

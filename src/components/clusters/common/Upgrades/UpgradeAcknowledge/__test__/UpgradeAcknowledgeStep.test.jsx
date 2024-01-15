@@ -1,10 +1,8 @@
 import React from 'react';
-import { mount } from 'enzyme';
-
+import { render, screen, checkAccessibility } from '~/testUtils';
 import UpgradeAcknowledgeStep from '../UpgradeAcknowledgeStep';
 
 describe('<UpgradeAcknowledgeStep>', () => {
-  let wrapper;
   const ackWord = 'Acknowledge';
   const confirmedMock = jest.fn();
 
@@ -21,56 +19,58 @@ describe('<UpgradeAcknowledgeStep>', () => {
     },
   ];
 
-  beforeEach(() => {
+  const defaultProps = {
+    confirmed: confirmedMock,
+    unmetAcknowledgements: ackArray,
+    fromVersion: '4.8.2',
+    toVersion: '4.9.12',
+  };
+
+  afterEach(() => {
     confirmedMock.mockClear();
-
-    wrapper = mount(
-      <UpgradeAcknowledgeStep
-        confirmed={confirmedMock}
-        unmetAcknowledgements={ackArray}
-        fromVersion="4.8.2"
-        toVersion="4.9.12"
-      />,
-    );
   });
 
-  it('should render correctly on load', () => {
-    expect(wrapper.find('[data-testid="unmetAcknowledgement"]')).toHaveLength(ackArray.length);
-    expect(wrapper).toMatchSnapshot();
+  it('should render correctly on load', async () => {
+    const { container } = render(<UpgradeAcknowledgeStep {...defaultProps} />);
+
+    expect(screen.getAllByRole('listitem')).toHaveLength(ackArray.length);
+
+    await checkAccessibility(container);
   });
 
-  it('should not be confirmed on empty confirm text', () => {
-    wrapper.find('TextInput[data-testid="acknowledgeTextInput"]').invoke('onChange')(null, '');
-    wrapper.update();
-    expect(confirmedMock.mock.calls[confirmedMock.mock.calls.length - 1][0]).toEqual(false);
+  it.each(ackArray)('acknowledgement %o is displayed', (ackItem) => {
+    render(<UpgradeAcknowledgeStep {...defaultProps} />);
+    expect(screen.getByText(ackItem.description)).toBeInTheDocument();
   });
 
-  it('should not be confirmed if wrong confirm word is typed', () => {
-    wrapper.find('TextInput[data-testid="acknowledgeTextInput"]').invoke('onChange')(
-      null,
-      'notCorrectWord',
-    );
-    wrapper.update();
-    expect(confirmedMock.mock.calls[confirmedMock.mock.calls.length - 1][0]).toEqual(false);
+  it('should not be confirmed on empty confirm text', async () => {
+    const { user } = render(<UpgradeAcknowledgeStep {...defaultProps} />);
+    await user.clear(screen.getByRole('textbox'));
+
+    expect(confirmedMock).toHaveBeenLastCalledWith(false);
   });
 
-  it('should confirm if correct confirm word is typed', () => {
-    wrapper.find('TextInput[data-testid="acknowledgeTextInput"]').invoke('onChange')(null, ackWord);
-    wrapper.update();
-    expect(confirmedMock.mock.calls[confirmedMock.mock.calls.length - 1][0]).toEqual(true);
+  it('should not be confirmed if wrong confirm word is typed', async () => {
+    const { user } = render(<UpgradeAcknowledgeStep {...defaultProps} />);
+    await user.clear(screen.getByRole('textbox'));
+    await user.type(screen.getByRole('textbox'), 'notCorrectWord');
+    expect(confirmedMock).toHaveBeenLastCalledWith(false);
+  });
+
+  it('should confirm if correct confirm word is typed', async () => {
+    const { user } = render(<UpgradeAcknowledgeStep {...defaultProps} />);
+    await user.clear(screen.getByRole('textbox'));
+    await user.type(screen.getByRole('textbox'), ackWord);
+
+    expect(confirmedMock).toHaveBeenLastCalledWith(true);
   });
 
   it('is confirmed on load if initiallyConfirmed is true', () => {
-    wrapper = mount(
-      <UpgradeAcknowledgeStep
-        confirmed={confirmedMock}
-        unmetAcknowledgements={ackArray}
-        fromVersion="4.8.2"
-        toVersion="4.9.12"
-        initiallyConfirmed
-      />,
-    );
-
-    expect(confirmedMock.mock.calls[confirmedMock.mock.calls.length - 1][0]).toEqual(true);
+    const newProps = {
+      ...defaultProps,
+      initiallyConfirmed: true,
+    };
+    render(<UpgradeAcknowledgeStep {...newProps} />);
+    expect(confirmedMock).toHaveBeenLastCalledWith(true);
   });
 });

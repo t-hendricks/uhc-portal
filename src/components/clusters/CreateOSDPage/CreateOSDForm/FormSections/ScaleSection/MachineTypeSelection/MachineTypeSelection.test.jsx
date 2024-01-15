@@ -1,7 +1,6 @@
 import React from 'react';
-import { shallow } from 'enzyme';
 
-import { render, screen, waitFor } from '~/testUtils';
+import { render, screen, waitFor, within, checkAccessibility } from '~/testUtils';
 import MachineTypeSelection from './MachineTypeSelection';
 
 import {
@@ -203,15 +202,27 @@ const unknownCategoryMachineTypes = [
   },
 ];
 
-// A stateful redux-form field.
+const fieldOnChange = jest.fn();
+
 const fieldProps = (initialValue) => {
   const input = {
     value: initialValue,
-    onChange: jest.fn((newValue) => {
-      // Hack: this mutates the already passed prop.
-      // Ideally to simulate redux/react, we should instead call wrapper.setProps(), afterwards?
-      input.value = newValue;
-    }),
+    onChange: fieldOnChange,
+  };
+  return {
+    input,
+    meta: {
+      error: false,
+      touched: false,
+    },
+  };
+};
+
+const forceChoiceFieldOnChange = jest.fn();
+const forceChoiceFieldProps = (initialValue) => {
+  const input = {
+    value: initialValue,
+    onChange: forceChoiceFieldOnChange,
   };
   return {
     input,
@@ -223,218 +234,133 @@ const fieldProps = (initialValue) => {
 };
 
 describe('MachineTypeSelection', () => {
+  const getDefaultFlavour = jest.fn();
+  const getMachineTypes = jest.fn();
+  const field = fieldProps();
+  const forceChoiceField = forceChoiceFieldProps();
+
+  const defaultProps = {
+    flavours: baseFlavoursState,
+    machineTypes: baseState,
+    machine_type: field,
+    machine_type_force_choice: forceChoiceField,
+    isMultiAz: false,
+    quota: {},
+    organization: organizationState,
+    getDefaultFlavour,
+    getMachineTypes,
+    isBYOC: false,
+    cloudProviderID: 'aws',
+    isMachinePool: false,
+    product: 'OSD',
+    billingModel: 'standard',
+  };
+
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
+
   it('flavours are fetched on render', () => {
-    const field = fieldProps(undefined);
-    const forceChoiceField = fieldProps(false);
-    const getDefaultFlavour = jest.fn();
-    const getMachineTypes = jest.fn();
-
-    render(
-      <MachineTypeSelection
-        flavours={baseFlavoursState}
-        machineTypes={baseState}
-        machine_type={field}
-        machine_type_force_choice={forceChoiceField}
-        isMultiAz={false}
-        quota={{}}
-        organization={organizationState}
-        getDefaultFlavour={getDefaultFlavour}
-        getMachineTypes={getMachineTypes}
-        isBYOC={false}
-        cloudProviderID="aws"
-        isMachinePool={false}
-        product="OSD"
-        billingModel="standard"
-      />,
-    );
-
+    render(<MachineTypeSelection {...defaultProps} />);
     expect(getDefaultFlavour).toBeCalled();
   });
 
   describe('with an error loading machineTypes', () => {
-    let field;
-    let forceChoiceField;
-    let getDefaultFlavour;
-    let getMachineTypes;
-    let wrapper;
-    beforeEach(() => {
-      const state = {
-        ...baseState,
-        error: true,
-        errorMessage: 'This is an error message',
-      };
+    const errorState = {
+      ...baseState,
+      error: true,
+      errorMessage: 'This is an error message',
+    };
 
-      field = fieldProps(undefined);
-      forceChoiceField = fieldProps(false);
-      getDefaultFlavour = jest.fn();
-      getMachineTypes = jest.fn();
-      wrapper = shallow(
-        <MachineTypeSelection
-          flavours={fulfilledFlavoursState}
-          machineTypes={state}
-          machine_type={field}
-          machine_type_force_choice={forceChoiceField}
-          isMultiAz={false}
-          quota={{}}
-          organization={organizationState}
-          getDefaultFlavour={getDefaultFlavour}
-          getMachineTypes={getMachineTypes}
-          isBYOC={false}
-          cloudProviderID="aws"
-          isMachinePool={false}
-          product="OSD"
-          billingModel="standard"
-        />,
-      );
-    });
+    const errorProps = {
+      ...defaultProps,
+      machineTypes: errorState,
+    };
+    it('displays an error alert', async () => {
+      const { container } = render(<MachineTypeSelection {...errorProps} />);
 
-    it('renders correctly', () => {
-      expect(wrapper).toMatchSnapshot();
+      expect(within(screen.getByRole('alert')).getByText('This is an error message'));
+      await checkAccessibility(container);
     });
   });
 
   describe('when the request is pending', () => {
-    let field;
-    let forceChoiceField;
-    let getDefaultFlavour;
-    let getMachineTypes;
-    let wrapper;
-    const flavoursState = {
+    const pendingFlavoursState = {
       ...baseFlavoursState,
       pending: true,
     };
-    const state = {
+
+    const pendingState = {
       ...baseState,
       pending: true,
       fulfilled: false,
     };
-    beforeEach(() => {
-      field = fieldProps(undefined);
-      forceChoiceField = fieldProps(false);
-      getDefaultFlavour = jest.fn();
-      getMachineTypes = jest.fn();
-      wrapper = shallow(
-        <MachineTypeSelection
-          flavours={flavoursState}
-          machineTypes={state}
-          machine_type={field}
-          machine_type_force_choice={forceChoiceField}
-          isMultiAz={false}
-          quota={{}}
-          organization={organizationState}
-          getDefaultFlavour={getDefaultFlavour}
-          getMachineTypes={getMachineTypes}
-          isBYOC={false}
-          cloudProviderID="aws"
-          isMachinePool={false}
-          product="OSD"
-          billingModel="standard"
-        />,
-      );
-    });
 
-    it('renders correctly', () => {
-      expect(wrapper).toMatchSnapshot();
+    const pendingProps = {
+      ...defaultProps,
+      flavours: pendingFlavoursState,
+      machineTypes: pendingState,
+    };
+
+    it('renders correctly', async () => {
+      const { container } = render(<MachineTypeSelection {...pendingProps} />);
+
+      expect(screen.getByRole('progressbar')).toBeInTheDocument();
+      expect(screen.getByText('Loading node types...')).toBeInTheDocument();
+      await checkAccessibility(container);
     });
   });
 
   describe('when the machine types list is available', () => {
-    let field;
-    let forceChoiceField;
-    let getDefaultFlavour;
-    let getMachineTypes;
-    let wrapper;
-
     describe('with an error loading flavours', () => {
-      beforeEach(() => {
-        const flavoursState = {
-          ...baseFlavoursState,
-          error: true,
-          errorMessage: 'Out of vanilla ice cream',
-        };
+      const errorFlavoursState = {
+        ...baseFlavoursState,
+        error: true,
+        errorMessage: 'Out of vanilla ice cream',
+      };
+      const errorProps = {
+        ...defaultProps,
+        flavours: errorFlavoursState,
+        machineTypes: fulfilledMachineState,
+      };
 
-        field = fieldProps(undefined);
-        forceChoiceField = fieldProps(false);
-        getDefaultFlavour = jest.fn();
-        getMachineTypes = jest.fn();
-        wrapper = shallow(
-          <MachineTypeSelection
-            flavours={flavoursState}
-            machineTypes={fulfilledMachineState}
-            machine_type={field}
-            machine_type_force_choice={forceChoiceField}
-            isMultiAz={false}
-            quota={rhQuotaList}
-            organization={organizationState}
-            getDefaultFlavour={getDefaultFlavour}
-            getMachineTypes={getMachineTypes}
-            isBYOC={false}
-            cloudProviderID="aws"
-            isMachinePool={false}
-            product="OSD"
-            billingModel="standard"
-          />,
-        );
-      });
+      it('displays an error', async () => {
+        const { container } = render(<MachineTypeSelection {...errorProps} />);
 
-      it('renders correctly', () => {
-        expect(wrapper).toMatchSnapshot();
+        expect(
+          within(screen.getByRole('alert')).getByText(
+            'You do not have enough quota to create a cluster with the minimum required worker capacity.',
+            { exact: false },
+          ),
+        ).toBeInTheDocument();
+        await checkAccessibility(container);
       });
 
       it('does not select default', () => {
-        expect(field.input.onChange).not.toHaveBeenCalled();
+        render(<MachineTypeSelection {...errorProps} />);
+        expect(fieldOnChange).not.toHaveBeenCalled();
       });
     });
 
     describe('with rhinfra quota available', () => {
       const quota = rhQuotaList;
-      const field = fieldProps(undefined);
-      const forceChoiceField = fieldProps(false);
-      const getDefaultFlavour = jest.fn();
-      const getMachineTypes = jest.fn();
+
+      const quotaAvailableProps = {
+        ...defaultProps,
+        flavours: fulfilledFlavoursState,
+        machineTypes: fulfilledMachineState,
+        quota,
+        isMultiAz: true,
+      };
 
       it('selects default according to flavours API', async () => {
-        render(
-          <MachineTypeSelection
-            flavours={fulfilledFlavoursState}
-            machineTypes={fulfilledMachineState}
-            machine_type={field}
-            machine_type_force_choice={forceChoiceField}
-            quota={quota}
-            organization={organizationState}
-            getDefaultFlavour={getDefaultFlavour}
-            getMachineTypes={getMachineTypes}
-            isMultiAz
-            isBYOC={false}
-            isMachinePool={false}
-            cloudProviderID="aws"
-            product="OSD"
-            billingModel="standard"
-          />,
-        );
+        render(<MachineTypeSelection {...quotaAvailableProps} />);
 
-        await waitFor(() => expect(field.input.onChange).toBeCalledWith('m5.xlarge'));
+        await waitFor(() => expect(fieldOnChange).toBeCalledWith('m5.xlarge'));
       });
 
       it('does not display ccs_only machine types, only machines with quota', async () => {
-        const { user } = render(
-          <MachineTypeSelection
-            flavours={fulfilledFlavoursState}
-            machineTypes={fulfilledMachineState}
-            machine_type={field}
-            machine_type_force_choice={forceChoiceField}
-            quota={quota}
-            organization={organizationState}
-            getDefaultFlavour={getDefaultFlavour}
-            getMachineTypes={getMachineTypes}
-            isMultiAz
-            isBYOC={false}
-            isMachinePool={false}
-            cloudProviderID="aws"
-            product="OSD"
-            billingModel="standard"
-          />,
-        );
+        const { user } = render(<MachineTypeSelection {...quotaAvailableProps} />);
 
         const optionsMenu = screen.getByLabelText('Options menu');
         await user.click(optionsMenu);
@@ -451,104 +377,64 @@ describe('MachineTypeSelection', () => {
     });
 
     describe('with rhinfra quota covering previous selection', () => {
-      beforeEach(() => {
-        const quota = rhQuotaList;
-        field = fieldProps('m5.4xlarge');
-        forceChoiceField = fieldProps(false);
-        getDefaultFlavour = jest.fn();
-        getMachineTypes = jest.fn();
-        wrapper = shallow(
-          <MachineTypeSelection
-            flavours={fulfilledFlavoursState}
-            machineTypes={fulfilledMachineState}
-            machine_type={field}
-            machine_type_force_choice={forceChoiceField}
-            quota={quota}
-            organization={organizationState}
-            getDefaultFlavour={getDefaultFlavour}
-            getMachineTypes={getMachineTypes}
-            isMultiAz
-            isBYOC={false}
-            isMachinePool={false}
-            cloudProviderID="aws"
-            product="OSD"
-            billingModel="standard"
-          />,
-        );
-      });
+      const quota = rhQuotaList;
+      const field = fieldProps('m5.4xlarge');
 
-      it('renders correctly', () => {
-        expect(wrapper).toMatchSnapshot();
+      const previousSelectionProps = {
+        ...defaultProps,
+        flavours: fulfilledFlavoursState,
+        machineTypes: fulfilledMachineState,
+        machine_type: field,
+
+        quota,
+        isMultiAz: true,
+      };
+
+      it('is accessible', async () => {
+        const { container } = render(<MachineTypeSelection {...previousSelectionProps} />);
+        await checkAccessibility(container);
       });
 
       it('keeps selection', () => {
-        expect(field.input.onChange).not.toHaveBeenCalled();
+        render(<MachineTypeSelection {...previousSelectionProps} />);
+        expect(fieldOnChange).not.toHaveBeenCalled();
       });
 
-      it('does not display ccs_only machine types, only machines with quota', () => {
-        const types = wrapper
-          .find('SelectOption')
-          .getElements()
-          .map((e) => e.key);
-        expect(types).toContain('m5.xlarge');
-        expect(types).toContain('m5.4xlarge');
-        expect(types).not.toContain('m5.12xlarge');
+      it('does not display ccs_only machine types, only machines with quota', async () => {
+        const { user } = render(<MachineTypeSelection {...previousSelectionProps} />);
+        expect(screen.queryByText('m5.xlarge', { exact: false })).not.toBeInTheDocument();
+
+        await user.click(screen.getByRole('button', { name: 'Options menu' }));
+
+        expect(screen.getByText('m5.xlarge')).toBeInTheDocument();
+        expect(screen.getByText('m5.4xlarge')).toBeInTheDocument();
+        expect(screen.queryByText('m5.12xlarge')).not.toBeInTheDocument();
       });
     });
 
     describe('with rhinfra quota not covering previous selection', () => {
       const quota = rhQuotaList;
       const field = fieldProps('m5.12xlarge');
-      const forceChoiceField = fieldProps(false);
-      const getDefaultFlavour = jest.fn();
-      const getMachineTypes = jest.fn();
+
+      const previousSelectionProps = {
+        ...defaultProps,
+        flavours: fulfilledFlavoursState,
+        machineTypes: fulfilledMachineState,
+        machine_type: field,
+        quota,
+        isMultiAz: true,
+      };
 
       it('clears selection to force manual choice', async () => {
-        render(
-          <MachineTypeSelection
-            flavours={fulfilledFlavoursState}
-            machineTypes={fulfilledMachineState}
-            machine_type={field}
-            machine_type_force_choice={forceChoiceField}
-            quota={quota}
-            organization={organizationState}
-            getDefaultFlavour={getDefaultFlavour}
-            getMachineTypes={getMachineTypes}
-            isMultiAz
-            isBYOC={false}
-            isMachinePool={false}
-            cloudProviderID="aws"
-            product="OSD"
-            billingModel="standard"
-          />,
-        );
-
+        render(<MachineTypeSelection {...previousSelectionProps} />);
         await waitFor(() => {
           expect(field.input.onChange).toHaveBeenCalledWith('');
-          // eslint-disable-next-line testing-library/no-wait-for-multiple-assertions
-          expect(forceChoiceField.input.onChange).toHaveBeenCalledWith(true);
         });
+        expect(forceChoiceFieldOnChange).toHaveBeenCalledWith(true);
       });
 
       it('does not display ccs_only machine types, only machines with quota', async () => {
-        const { user } = render(
-          <MachineTypeSelection
-            flavours={fulfilledFlavoursState}
-            machineTypes={fulfilledMachineState}
-            machine_type={field}
-            machine_type_force_choice={forceChoiceField}
-            quota={quota}
-            organization={organizationState}
-            getDefaultFlavour={getDefaultFlavour}
-            getMachineTypes={getMachineTypes}
-            isMultiAz
-            isBYOC={false}
-            isMachinePool={false}
-            cloudProviderID="aws"
-            product="OSD"
-            billingModel="standard"
-          />,
-        );
+        const { user } = render(<MachineTypeSelection {...previousSelectionProps} />);
 
         const optionsMenu = screen.getByLabelText('Options menu');
         await user.click(optionsMenu);
@@ -566,53 +452,24 @@ describe('MachineTypeSelection', () => {
 
     describe('byoc with sufficient byoc quota available', () => {
       const quota = CCSQuotaList;
-      const field = fieldProps(undefined);
-      const forceChoiceField = fieldProps(false);
-      const getDefaultFlavour = jest.fn();
-      const getMachineTypes = jest.fn();
+
+      const byocProps = {
+        ...defaultProps,
+        flavours: fulfilledFlavoursState,
+        machineTypes: fulfilledMachineState,
+        quota,
+        isMultiAz: true,
+        isBYOC: true,
+      };
 
       it('selects default according to flavours API', async () => {
-        render(
-          <MachineTypeSelection
-            flavours={fulfilledFlavoursState}
-            machineTypes={fulfilledMachineState}
-            machine_type={field}
-            machine_type_force_choice={forceChoiceField}
-            quota={quota}
-            organization={organizationState}
-            getDefaultFlavour={getDefaultFlavour}
-            getMachineTypes={getMachineTypes}
-            isMultiAz
-            isBYOC
-            isMachinePool={false}
-            cloudProviderID="aws"
-            product="OSD"
-            billingModel="standard"
-          />,
-        );
+        render(<MachineTypeSelection {...byocProps} />);
 
-        await waitFor(() => expect(field.input.onChange).toBeCalledWith('m5.xlarge'));
+        await waitFor(() => expect(fieldOnChange).toBeCalledWith('m5.xlarge'));
       });
 
       it('displays only machine types with quota', async () => {
-        const { user } = render(
-          <MachineTypeSelection
-            flavours={fulfilledFlavoursState}
-            machineTypes={fulfilledMachineState}
-            machine_type={field}
-            machine_type_force_choice={forceChoiceField}
-            quota={quota}
-            organization={organizationState}
-            getDefaultFlavour={getDefaultFlavour}
-            getMachineTypes={getMachineTypes}
-            isMultiAz
-            isBYOC
-            isMachinePool={false}
-            cloudProviderID="aws"
-            product="OSD"
-            billingModel="standard"
-          />,
-        );
+        const { user } = render(<MachineTypeSelection {...byocProps} />);
 
         const optionsMenu = screen.getByLabelText('Options menu');
         user.click(optionsMenu);
@@ -622,38 +479,31 @@ describe('MachineTypeSelection', () => {
     });
 
     describe('byoc lacking enough byoc node quota', () => {
-      beforeEach(() => {
-        const quota = CCSOneNodeRemainingQuotaList;
-        field = fieldProps(undefined);
-        forceChoiceField = fieldProps(false);
-        getDefaultFlavour = jest.fn();
-        getMachineTypes = jest.fn();
-        wrapper = shallow(
-          <MachineTypeSelection
-            flavours={fulfilledFlavoursState}
-            machineTypes={fulfilledMachineState}
-            machine_type={field}
-            machine_type_force_choice={forceChoiceField}
-            quota={quota}
-            organization={organizationState}
-            getDefaultFlavour={getDefaultFlavour}
-            getMachineTypes={getMachineTypes}
-            isMachinePool={false}
-            isMultiAz
-            isBYOC
-            cloudProviderID="aws"
-            product="OSD"
-            billingModel="standard"
-          />,
-        );
-      });
+      const quota = CCSOneNodeRemainingQuotaList;
 
-      it('renders correctly', () => {
-        expect(wrapper).toMatchSnapshot();
+      const byocProps = {
+        ...defaultProps,
+        flavours: fulfilledFlavoursState,
+        machineTypes: fulfilledMachineState,
+        quota,
+        isMultiAz: true,
+        isBYOC: true,
+      };
+
+      it('displays an alert', () => {
+        render(<MachineTypeSelection {...byocProps} />);
+
+        expect(
+          within(screen.getByRole('alert')).getByText(
+            'You do not have enough quota to create a cluster with the minimum required worker capacity.',
+            { exact: false },
+          ),
+        ).toBeInTheDocument();
       });
 
       it('does not select default', () => {
-        expect(field.input.onChange).not.toHaveBeenCalled();
+        render(<MachineTypeSelection {...byocProps} />);
+        expect(fieldOnChange).not.toHaveBeenCalled();
       });
     });
   });
@@ -669,54 +519,25 @@ describe('MachineTypeSelection', () => {
       typesByID: mapMachineTypesById(moreTypes),
     };
     const quota = CCSQuotaList;
-    const field = fieldProps(undefined);
-    const forceChoiceField = fieldProps(false);
-    const getDefaultFlavour = jest.fn();
-    const getMachineTypes = jest.fn();
+
+    const unknownCategoryProps = {
+      ...defaultProps,
+      machineTypes: state,
+      flavours: fulfilledFlavoursState,
+      isMultiAz: true,
+      isBYOC: true,
+      quota,
+    };
 
     describe('byoc with sufficient byoc quota available', () => {
       it('selects default according to flavours API', async () => {
-        render(
-          <MachineTypeSelection
-            flavours={fulfilledFlavoursState}
-            machineTypes={state}
-            machine_type={field}
-            machine_type_force_choice={forceChoiceField}
-            quota={quota}
-            organization={organizationState}
-            getDefaultFlavour={getDefaultFlavour}
-            getMachineTypes={getMachineTypes}
-            isMultiAz
-            isBYOC
-            isMachinePool={false}
-            cloudProviderID="aws"
-            product="OSD"
-            billingModel="standard"
-          />,
-        );
+        render(<MachineTypeSelection {...unknownCategoryProps} />);
 
-        await waitFor(() => expect(field.input.onChange).toBeCalledWith('m5.xlarge'));
+        await waitFor(() => expect(fieldOnChange).toBeCalledWith('m5.xlarge'));
       });
 
       it('displays only machine types with quota from known categories', async () => {
-        const { user } = render(
-          <MachineTypeSelection
-            flavours={fulfilledFlavoursState}
-            machineTypes={state}
-            machine_type={field}
-            machine_type_force_choice={forceChoiceField}
-            quota={quota}
-            organization={organizationState}
-            getDefaultFlavour={getDefaultFlavour}
-            getMachineTypes={getMachineTypes}
-            isMultiAz
-            isBYOC
-            isMachinePool={false}
-            cloudProviderID="aws"
-            product="OSD"
-            billingModel="standard"
-          />,
-        );
+        const { user } = render(<MachineTypeSelection {...unknownCategoryProps} />);
 
         const optionsMenu = screen.getByLabelText('Options menu');
         await user.click(optionsMenu);

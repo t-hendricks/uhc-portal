@@ -1,24 +1,27 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { render, screen, checkAccessibility, TestRouter } from '~/testUtils';
 
 import UpgradeAcknowledgeLink from '../UpgradeAcknowledgeLink/UpgradeAcknowledgeLink';
 
-let wrapper;
-
 describe('<UpgradeAcknowledgeLink>', () => {
-  beforeEach(() => {
-    wrapper = shallow(<UpgradeAcknowledgeLink clusterId="myClusterId" hasAcks={false} />);
-  });
-
   it('should show nothing if there is not unmet acknowledgements', () => {
-    expect(wrapper.isEmptyRender()).toBe(true);
+    const { container } = render(
+      <UpgradeAcknowledgeLink clusterId="myClusterId" hasAcks={false} />,
+    );
+    expect(container).toBeEmptyDOMElement();
   });
 
-  it('should show link if has unmet acknowledgements', () => {
-    wrapper.setProps({
-      hasAcks: true,
-    });
-    expect(wrapper.isEmptyRender()).toBe(false);
-    expect(wrapper).toMatchSnapshot();
+  it('should show link if has unmet acknowledgements', async () => {
+    const { container } = render(
+      <TestRouter>
+        <UpgradeAcknowledgeLink clusterId="myClusterId" hasAcks />
+      </TestRouter>,
+    );
+
+    expect(screen.getByRole('link', { name: 'Warning Approval required' })).toHaveAttribute(
+      'href',
+      '/details/myClusterId#updateSettings',
+    );
+    await checkAccessibility(container);
   });
 });

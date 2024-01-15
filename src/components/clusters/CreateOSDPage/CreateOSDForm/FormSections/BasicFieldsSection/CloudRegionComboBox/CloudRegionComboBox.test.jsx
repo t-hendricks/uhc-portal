@@ -1,5 +1,5 @@
 import React from 'react';
-import { mount } from 'enzyme';
+import { screen, render, checkAccessibility, within } from '~/testUtils';
 
 import DisconnectedCloudRegionComboBox from './CloudRegionComboBox';
 
@@ -33,112 +33,99 @@ const regions = {
     supports_multi_az: false,
   },
 };
+
 const availableRegions = Object.values(regions).filter((region) => region.enabled);
 
 describe('<CloudRegionComboBox />', () => {
+  const onChange = jest.fn();
+  const handleCloudRegionChange = jest.fn();
+  const initialState = {
+    error: false,
+    errorMessage: '',
+    pending: false,
+    fulfilled: false,
+    providers: {},
+  };
+
+  const defaultProps = {
+    cloudProviderID: 'aws',
+    cloudProviders: initialState,
+    isMultiAz: false,
+    input: { onChange },
+    availableRegions,
+    handleCloudRegionChange,
+    disabled: false,
+  };
+
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
+
   describe('when region list needs to be fetched', () => {
-    let onChange;
-    let handleCloudRegionChange;
-    let wrapper;
-    beforeEach(() => {
-      const state = {
-        error: false,
-        errorMessage: '',
-        pending: false,
-        fulfilled: false,
-        providers: {},
-      };
+    it('is accessible', async () => {
+      const { container } = render(<DisconnectedCloudRegionComboBox {...defaultProps} />);
 
-      onChange = jest.fn();
-      handleCloudRegionChange = jest.fn();
-      wrapper = mount(
-        <DisconnectedCloudRegionComboBox
-          cloudProviderID="aws"
-          cloudProviders={state}
-          isMultiAz={false}
-          input={{ onChange }}
-          availableRegions={availableRegions}
-          handleCloudRegionChange={handleCloudRegionChange}
-          disabled={false}
-        />,
-      );
-    });
+      expect(
+        within(screen.getByRole('status')).getByText('Loading', { exact: false }),
+      ).toBeInTheDocument();
 
-    it('renders correctly', () => {
-      expect(wrapper).toMatchSnapshot();
+      expect(screen.getByText('Loading region list', { exact: false })).toBeInTheDocument();
+      await checkAccessibility(container);
     });
   });
 
   describe('when there was an error', () => {
-    let onChange;
-    let handleCloudRegionChange;
-    let wrapper;
-    beforeEach(() => {
-      const state = {
-        error: true,
-        errorMessage: 'This is an error message',
-        pending: false,
-        fulfilled: false,
-        providers: {},
-      };
+    const errorState = {
+      ...initialState,
+      error: true,
+      errorMessage: 'This is an error message',
+    };
 
-      onChange = jest.fn();
-      handleCloudRegionChange = jest.fn();
-      wrapper = mount(
-        <DisconnectedCloudRegionComboBox
-          cloudProviderID="aws"
-          cloudProviders={state}
-          isMultiAz={false}
-          input={{ onChange }}
-          availableRegions={availableRegions}
-          handleCloudRegionChange={handleCloudRegionChange}
-          disabled={false}
-        />,
-      );
-    });
+    const errorProps = {
+      ...defaultProps,
+      cloudProviders: errorState,
+    };
 
-    it('renders correctly', () => {
-      expect(wrapper).toMatchSnapshot();
+    it('is accessible', async () => {
+      const { container } = render(<DisconnectedCloudRegionComboBox {...errorProps} />);
+
+      expect(
+        within(screen.getByRole('alert')).getByText('Error loading region list'),
+      ).toBeInTheDocument();
+
+      expect(
+        within(screen.getByRole('alert')).getByText('This is an error message'),
+      ).toBeInTheDocument();
+      await checkAccessibility(container);
     });
   });
 
   describe('when the request is pending', () => {
-    let onChange;
-    let handleCloudRegionChange;
-    let wrapper;
-    const state = {
-      error: false,
-      errorMessage: '',
+    const pendingState = {
+      ...initialState,
       pending: true,
-      fulfilled: false,
-      providers: {},
     };
-    beforeEach(() => {
-      onChange = jest.fn();
-      handleCloudRegionChange = jest.fn();
-      wrapper = mount(
-        <DisconnectedCloudRegionComboBox
-          cloudProviderID="aws"
-          cloudProviders={state}
-          isMultiAz={false}
-          input={{ onChange }}
-          availableRegions={availableRegions}
-          handleCloudRegionChange={handleCloudRegionChange}
-          disabled={false}
-        />,
-      );
-    });
 
-    it('renders correctly', () => {
-      expect(wrapper).toMatchSnapshot();
+    const pendingProps = {
+      ...defaultProps,
+      cloudProviders: pendingState,
+    };
+
+    it('is accessible', async () => {
+      const { container } = render(<DisconnectedCloudRegionComboBox {...pendingProps} />);
+
+      expect(
+        within(screen.getByRole('status')).getByText('Loading', { exact: false }),
+      ).toBeInTheDocument();
+
+      expect(screen.getByText('Loading region list', { exact: false })).toBeInTheDocument();
+      await checkAccessibility(container);
     });
   });
 
   describe('when the region list is available', () => {
-    const state = {
-      error: false,
-      errorMessage: '',
-      pending: false,
+    const fulfilledState = {
+      ...initialState,
       fulfilled: true,
       providers: {
         aws: {
@@ -147,65 +134,82 @@ describe('<CloudRegionComboBox />', () => {
       },
     };
 
-    let onChange;
-    let handleCloudRegionChange;
-    let wrapper;
-    beforeEach(() => {
-      onChange = jest.fn();
-      handleCloudRegionChange = jest.fn();
-      wrapper = mount(
-        <DisconnectedCloudRegionComboBox
-          cloudProviderID="aws"
-          cloudProviders={state}
-          isMultiAz={false}
-          input={{ onChange, value: 'eu-west-1' }}
-          availableRegions={availableRegions}
-          handleCloudRegionChange={handleCloudRegionChange}
-          disabled={false}
-        />,
+    const fulfilledProps = {
+      ...defaultProps,
+      cloudProviders: fulfilledState,
+    };
+
+    it('is accessible', async () => {
+      const { container } = render(<DisconnectedCloudRegionComboBox {...fulfilledProps} />);
+
+      expect(screen.getAllByRole('option').length).toBeGreaterThan(0);
+
+      await checkAccessibility(container);
+    });
+
+    describe('only shows enabled regions', () => {
+      it.each(['us-east-1, N. Virginia', 'eu-west-1, Ireland', 'single-az-3, Antarctica'])(
+        ' %s is an option',
+        (region) => {
+          render(<DisconnectedCloudRegionComboBox {...fulfilledProps} />);
+
+          expect(screen.getByRole('option', { name: region })).toBeInTheDocument();
+        },
       );
     });
 
-    it('renders correctly', () => {
-      expect(wrapper).toMatchSnapshot();
-    });
+    it('should call handleCloudRegionChange on selection', async () => {
+      expect(handleCloudRegionChange).not.toBeCalled();
+      const { user } = render(<DisconnectedCloudRegionComboBox {...fulfilledProps} />);
 
-    it('renders only enabled regions', () => {
-      const options = wrapper
-        .find('FormSelectOption')
-        .getElements()
-        .map((e) => e.key);
-      expect(options).toEqual(['us-east-1', 'eu-west-1', 'single-az-3']);
-    });
+      expect(handleCloudRegionChange).toBeCalledTimes(1);
+      expect(handleCloudRegionChange).toBeCalledWith();
 
-    it('should call handleCloudRegionChange on selection', () => {
-      wrapper.find('select').simulate('change', {
-        target: { value: availableRegions[0].id, selectedIndex: 0 },
-      });
-      expect(handleCloudRegionChange).toBeCalled();
+      await user.selectOptions(
+        screen.getByRole('combobox'),
+        screen.getByRole('option', { name: 'single-az-3, Antarctica' }),
+      );
+
+      expect(handleCloudRegionChange).toBeCalledTimes(2);
+      expect(handleCloudRegionChange).toHaveBeenLastCalledWith();
     });
 
     it('keeps region if compatible with multi-AZ', () => {
-      wrapper.setProps({ isMultiAz: true });
-      expect(handleCloudRegionChange).not.toBeCalled();
-      expect(onChange).not.toBeCalled();
+      const { rerender } = render(<DisconnectedCloudRegionComboBox {...fulfilledProps} />);
+      expect(handleCloudRegionChange).toBeCalledTimes(1);
+      expect(handleCloudRegionChange).toHaveBeenLastCalledWith();
+
+      expect(onChange).toBeCalledTimes(1);
+      expect(onChange).toBeCalledWith('us-east-1');
+
+      rerender(<DisconnectedCloudRegionComboBox {...fulfilledProps} isMultiAz />);
+
+      expect(handleCloudRegionChange).toBeCalledTimes(1);
+      expect(onChange).toBeCalledTimes(1);
     });
 
     it('resets region if incompatible with multi-AZ', () => {
-      wrapper = mount(
+      const { rerender } = render(
         <DisconnectedCloudRegionComboBox
-          cloudProviderID="aws"
-          cloudProviders={state}
-          isMultiAz={false}
+          {...fulfilledProps}
           input={{ onChange, value: 'single-az-3' }}
-          availableRegions={availableRegions}
-          handleCloudRegionChange={handleCloudRegionChange}
-          disabled={false}
         />,
       );
-      wrapper.setProps({ isMultiAz: true });
-      expect(handleCloudRegionChange).toBeCalled();
-      expect(onChange).toBeCalled();
+      expect(handleCloudRegionChange).not.toBeCalled();
+      expect(onChange).not.toBeCalled();
+
+      rerender(
+        <DisconnectedCloudRegionComboBox
+          {...fulfilledProps}
+          input={{ onChange, value: 'single-az-3' }}
+          isMultiAz
+        />,
+      );
+      expect(handleCloudRegionChange).toBeCalledTimes(1);
+      expect(handleCloudRegionChange).toHaveBeenLastCalledWith();
+
+      expect(onChange).toBeCalledTimes(1);
+      expect(onChange).toBeCalledWith('us-east-1');
     });
   });
 });

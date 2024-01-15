@@ -41,6 +41,7 @@ class AvailabilityZoneSelection extends React.Component {
           onToggle={(_event, isOpen) => this.onToggle(isOpen)}
           onSelect={this.onSelect}
           isDisabled={isDisabled}
+          aria-label={label}
         >
           <SelectOptionDeprecated key={0} value={PLACEHOLDER_VALUE} isPlaceholder />
           {['a', 'b', 'c', 'd', 'e', 'f'].map((letter) => {
