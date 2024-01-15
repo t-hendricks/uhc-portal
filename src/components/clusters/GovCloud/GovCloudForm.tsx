@@ -108,7 +108,7 @@ const GovCloudForm = ({
               id="check-checkbox"
             />
             <Checkbox
-              label="Requestor will only authorize US Persons to manage and access root account keys to the service."
+              label="Requestor will only authorize U.S. Persons to manage and access root account keys to the service."
               isChecked={authPerson}
               onChange={(_event, value) => setAuthPerson(value)}
               id="training-checkbox"
