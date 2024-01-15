@@ -1,31 +1,50 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+
+import { screen, render, checkAccessibility } from '~/testUtils';
 import AvailabilityZoneSelection from './AvailabilityZoneSelection';
 
 describe('<AvailabilityZoneSelection />', () => {
   const onChange = jest.fn();
 
-  let wrapper;
-  beforeEach(() => {
-    wrapper = shallow(
-      <AvailabilityZoneSelection
-        label="some label"
-        region="fake-region"
-        input={{
-          value: '',
-          onChange,
-        }}
-        meta={{}}
-      />,
-    );
+  const defaultProps = {
+    label: 'some label',
+    region: 'fake-region',
+    input: {
+      value: '',
+      onChange,
+    },
+    meta: {},
+  };
+
+  afterEach(() => {
+    jest.clearAllMocks();
   });
 
-  it('should render', () => {
-    expect(wrapper).toMatchSnapshot();
+  it('is accessible', async () => {
+    const { container } = render(<AvailabilityZoneSelection {...defaultProps} />);
+
+    expect(screen.getByText('some label')).toBeInTheDocument();
+
+    expect(screen.getByRole('button', { name: 'Options menu' })).toBeInTheDocument();
+    await checkAccessibility(container);
+  });
+
+  it('is accessible expanded', async () => {
+    const { container, user } = render(<AvailabilityZoneSelection {...defaultProps} />);
+
+    expect(screen.getByText('some label')).toBeInTheDocument();
+
+    await user.click(screen.getByRole('button', { name: 'Options menu' }));
+
+    expect(screen.getAllByRole('option')).toHaveLength(7);
+    expect(screen.getByRole('option', { name: 'fake-regionf' })).toBeInTheDocument();
+
+    await checkAccessibility(container);
   });
 
   it('should show error on error', () => {
-    wrapper.setProps({ meta: { touched: true, error: 'some error message' } });
-    expect(wrapper.find('FormGroupHelperText').props().error).toEqual('some error message');
+    const errorProps = { ...defaultProps, meta: { touched: true, error: 'some error message' } };
+    render(<AvailabilityZoneSelection {...errorProps} />);
+    expect(screen.getByText('some error message')).toBeInTheDocument();
   });
 });

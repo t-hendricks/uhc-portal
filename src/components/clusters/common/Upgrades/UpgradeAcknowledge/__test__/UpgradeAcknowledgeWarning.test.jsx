@@ -1,115 +1,151 @@
 import React from 'react';
-import { shallow } from 'enzyme';
 
+import { render, screen, checkAccessibility } from '~/testUtils';
 import UpgradeAcknowledgeWarning from '../UpgradeAcknowledgeWarning/UpgradeAcknowledgeWarning';
 
 const unMetAcks = [{ title: 'myUnmetAcks' }];
 const metAcks = [{ title: 'myMetAcks' }];
 
 describe('<UpgradeAcknowledgeWarning>', () => {
-  let wrapper;
   const openModal = jest.fn();
-  beforeEach(() => {
+
+  const defaultProps = {
+    openModal,
+    clusterId: 'myClusterId',
+    fromVersion: '4.8.10',
+    toVersion: '4.9.11',
+    getAcks: [unMetAcks, metAcks],
+    openshiftVersion: 'my.openshift.version',
+  };
+
+  afterEach(() => {
     openModal.mockClear();
-    wrapper = shallow(
-      <UpgradeAcknowledgeWarning
-        openModal={openModal}
-        clusterId="myClusterId"
-        fromVersion="4.8.10"
-        toVersion="4.9.11"
-        getAcks={[unMetAcks, metAcks]}
-        openshiftVersion="my.openshift.version"
-      />,
-    );
   });
 
   it('Displays nothing if cluster id is unknown', () => {
-    wrapper.setProps({
+    const newProps = {
+      ...defaultProps,
       clusterId: undefined,
-    });
-    expect(wrapper.isEmptyRender()).toBe(true);
+    };
+    const { container } = render(<UpgradeAcknowledgeWarning {...newProps} />);
+    expect(container).toBeEmptyDOMElement();
   });
 
   it('Displays nothing if openshiftVersion is unknown', () => {
-    wrapper.setProps({
+    const newProps = {
+      ...defaultProps,
       openshiftVersion: undefined,
-    });
-    expect(wrapper.isEmptyRender()).toBe(true);
+    };
+    const { container } = render(<UpgradeAcknowledgeWarning {...newProps} />);
+    expect(container).toBeEmptyDOMElement();
   });
 
-  it('Display empty fragment if no clusterUnmetAcks AND do not show confirm', () => {
-    wrapper.setProps({
+  it('Display nothing if no clusterUnmetAcks AND do not show confirm', () => {
+    const newProps = {
+      ...defaultProps,
       showConfirm: false,
       getAcks: [[], metAcks],
-    });
-    expect(wrapper).toMatchInlineSnapshot('<Fragment />');
+    };
+    const { container } = render(<UpgradeAcknowledgeWarning {...newProps} />);
+    expect(container).toBeEmptyDOMElement();
   });
 
-  it('Display confirmation if  clusterMetAcks and is yStream approved', () => {
-    wrapper.setProps({
+  it('Display confirmation if  clusterMetAcks and is yStream approved', async () => {
+    const newProps = {
+      ...defaultProps,
       showConfirm: true,
       getAcks: [[], metAcks],
       isMinorVersionUpgradesEnabled: true,
-    });
-    expect(wrapper.find('[data-testid="confirmAckReceived"]')).toHaveLength(1);
-    expect(wrapper).toMatchSnapshot();
+    };
+    const { container } = render(<UpgradeAcknowledgeWarning {...newProps} />);
+
+    expect(screen.getByText('Administrator acknowledgement was received.')).toBeInTheDocument();
+    await checkAccessibility(container);
   });
 
   it('Display confirmation if there is only clusterMetAcks and is not yStream approved', () => {
-    wrapper.setProps({
+    const newProps = {
+      ...defaultProps,
       showConfirm: true,
       getAcks: [[], metAcks],
       isMinorVersionUpgradesEnabled: false,
-    });
-    expect(wrapper.find('[data-testid="confirmAckReceived"]')).toHaveLength(1);
+    };
+    render(<UpgradeAcknowledgeWarning {...newProps} />);
+
+    expect(screen.getByText('Administrator acknowledgement was received.')).toBeInTheDocument();
   });
 
-  it('Display infoCircle if isManual AND if is Info', () => {
-    wrapper.setProps({
+  it('Display message if isManual AND if is Info', () => {
+    const newProps = {
+      ...defaultProps,
       isManual: true,
       isInfo: true,
       getAcks: [unMetAcks, []],
-    });
-    expect(wrapper.find('[data-testid="infoMessageUnmetAcks"]')).toHaveLength(1);
-    expect(wrapper).toMatchSnapshot();
+    };
+    render(<UpgradeAcknowledgeWarning {...newProps} />);
+
+    expect(
+      screen.getByText(
+        'Administrator acknowledgement is required before updating from 4.8.10 to 4.9.11',
+      ),
+    ).toBeInTheDocument();
+
+    expect(screen.queryByRole('button', { name: 'Provide approval' })).not.toBeInTheDocument();
   });
 
-  it('Hide infoCircle if isManual but has a scheduled upgrade', () => {
-    wrapper.setProps({
+  it('displays nothing if isManual but has a scheduled upgrade', () => {
+    const newProps = {
+      ...defaultProps,
       isManual: true,
       isInfo: true,
       getAcks: [unMetAcks, []],
       hasScheduledManual: true,
-    });
-    expect(wrapper.find('[data-testid="infoMessageUnmetAcks"]')).toHaveLength(0);
-    expect(wrapper).toMatchSnapshot();
+    };
+    const { container } = render(<UpgradeAcknowledgeWarning {...newProps} />);
+    expect(container).toBeEmptyDOMElement();
   });
 
-  it('Display empty fragment if isManual AND if is not Info', () => {
-    wrapper.setProps({
+  it('Display nothing if isManual AND if is not Info', () => {
+    const newProps = {
+      ...defaultProps,
       isManual: true,
       isInfo: false,
       getAcks: [unMetAcks, []],
-    });
-    expect(wrapper).toMatchInlineSnapshot('<Fragment />');
+    };
+    const { container } = render(<UpgradeAcknowledgeWarning {...newProps} />);
+    expect(container).toBeEmptyDOMElement();
   });
 
   it('Display alert if is not manual', () => {
-    wrapper.setProps({
+    const newProps = {
+      ...defaultProps,
       isManual: false,
       getAcks: [unMetAcks, []],
-    });
-    expect(wrapper.find('[data-testid="alertMessageUnmetAcks"]')).toHaveLength(1);
-    expect(wrapper).toMatchSnapshot();
+    };
+    render(<UpgradeAcknowledgeWarning {...newProps} />);
+    expect(
+      screen.getByText(
+        'Administrator acknowledgement is required before updating from 4.8.10 to 4.9.11',
+      ),
+    ).toBeInTheDocument();
+
+    expect(screen.getByRole('button', { name: 'Provide approval' })).toBeInTheDocument();
   });
 
   it('Set correct info when opening modal', () => {
-    wrapper.setProps({
+    const newProps = {
+      ...defaultProps,
       isManual: false,
       isPlain: true,
       getAcks: [unMetAcks, []],
-    });
-    expect(wrapper.find('[data-testid="alertMessageUnmetAcks"]')).toHaveLength(1);
-    expect(wrapper).toMatchSnapshot();
+    };
+    render(<UpgradeAcknowledgeWarning {...newProps} />);
+    expect(
+      screen.getByText(
+        'Administrator acknowledgement is required before updating from 4.8.10 to 4.9.11',
+      ),
+    ).toBeInTheDocument();
+
+    expect(screen.getByRole('button', { name: 'Provide approval' })).toBeInTheDocument();
   });
 });

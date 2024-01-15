@@ -241,7 +241,7 @@ const MachineTypeSelection = ({
   if (isDataReady()) {
     if (filteredMachineTypes.length === 0) {
       return (
-        <Alert variant={AlertVariant.danger} isInline title={noMachineTypes}>
+        <Alert variant={AlertVariant.danger} isInline title={noMachineTypes} role="alert">
           <ExternalLink href="https://cloud.redhat.com/products/dedicated/contact/">
             Contact sales to purchase additional quota.
           </ExternalLink>

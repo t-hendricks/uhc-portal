@@ -1,27 +1,27 @@
 import React from 'react';
-import { mount } from 'enzyme';
+import { render, screen, checkAccessibility } from '~/testUtils';
 
 import DisconnectedKMSKeyLocationComboBox from './KMSKeyLocationComboBox';
 
 const kmsRegionsArray = ['us-east-1', 'global'];
 
 describe('<KMSKeyLocationComboBox />', () => {
+  const onChange = jest.fn();
+
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
+  const defaultProps = {
+    input: { onChange },
+    kmsRegionsArray,
+  };
   describe('when location needs to be fetched', () => {
-    let wrapper;
-    let onChange;
+    it('renders correctly', async () => {
+      const { container } = render(<DisconnectedKMSKeyLocationComboBox {...defaultProps} />);
 
-    beforeEach(() => {
-      onChange = jest.fn();
-      wrapper = mount(
-        <DisconnectedKMSKeyLocationComboBox
-          input={{ onChange }}
-          kmsRegionsArray={kmsRegionsArray}
-        />,
-      );
-    });
-
-    it('renders correctly', () => {
-      expect(wrapper).toMatchSnapshot();
+      expect(screen.getByRole('option', { name: 'us-east-1' })).toBeInTheDocument();
+      expect(screen.getByRole('option', { name: 'global' })).toBeInTheDocument();
+      await checkAccessibility(container);
     });
   });
 });
