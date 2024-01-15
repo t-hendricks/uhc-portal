@@ -79,13 +79,13 @@ class CreateRosaCluster extends Page {
   clusterNameValidationFailureIndicator = () =>
     cy.get('button[aria-label="Not all validation rules met"]');
 
-  minimumNodeCountMinusButton = () => this.minimumNodeInput().prev();
+  minimumNodeCountMinusButton = () => cy.get('button[aria-label="Minimum nodes minus"]');
 
-  minimumNodeCountPlusButton = () => this.minimumNodeInput().next();
+  minimumNodeCountPlusButton = () => cy.get('button[aria-label="Minimum nodes plus"]');
 
-  maximumNodeCountMinusButton = () => this.maximumNodeInput().prev();
+  maximumNodeCountMinusButton = () => cy.get('button[aria-label="Maximum nodes minus"]');
 
-  maximumNodeCountPlusButton = () => this.maximumNodeInput().next();
+  maximumNodeCountPlusButton = () => cy.get('button[aria-label="Maximum nodes plus"]');
 
   editClusterAutoscalingSettingsButton = () =>
     cy.getByTestId('set-cluster-autoscaling-btn', { timeout: 80000 });
