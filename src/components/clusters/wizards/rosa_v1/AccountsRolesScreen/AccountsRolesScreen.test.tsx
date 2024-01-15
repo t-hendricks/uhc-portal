@@ -1,7 +1,7 @@
 import React from 'react';
 import { withState, checkAccessibility, insightsMock, screen } from '~/testUtils';
 import { MemoryRouter } from 'react-router-dom';
-import wizardConnector from '~/components/clusters/CreateOSDPage/CreateOSDWizard/WizardConnector';
+import wizardConnector from '~/components/clusters/wizards/common/WizardConnector';
 import { normalizeSTSUsersByAWSAccounts } from '~/redux/actions/rosaActions';
 import AccountsRolesScreen, {
   AccountsRolesScreenProps,

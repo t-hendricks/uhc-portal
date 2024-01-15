@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { render, screen, checkAccessibility, within } from '~/testUtils';
-import wizardConnector from '~/components/clusters/CreateOSDPage/CreateOSDWizard/WizardConnector';
+import wizardConnector from '~/components/clusters/wizards/common/WizardConnector';
 import { MAX_NODES_HCP } from '~/components/clusters/common/machinePools/constants';
 import AutoScaleSection from './AutoScaleSection';
 import { constants } from '~/components/clusters/common/CreateOSDFormConstants';

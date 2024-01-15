@@ -28,7 +28,7 @@ import PageTitle from '~/components/common/PageTitle';
 import Breadcrumbs from '~/components/common/Breadcrumbs';
 import usePreventBrowserNav from '~/hooks/usePreventBrowserNav';
 import LeaveCreateClusterPrompt from '~/components/clusters/common/LeaveCreateClusterPrompt';
-import submitOSDRequest from '~/components/clusters/CreateOSDPage/submitOSDRequest';
+import submitOSDRequest from '~/components/clusters/wizards/common/submitOSDRequest';
 import Unavailable from '~/components/common/Unavailable';
 import { availableClustersFromQuota } from '~/components/clusters/common/quotaSelectors';
 import {

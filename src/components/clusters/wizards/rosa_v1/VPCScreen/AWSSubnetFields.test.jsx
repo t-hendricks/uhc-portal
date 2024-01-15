@@ -1,6 +1,6 @@
 import React from 'react';
 import { screen, render, checkAccessibility } from '~/testUtils';
-import wizardConnector from '~/components/clusters/CreateOSDPage/CreateOSDWizard/WizardConnector';
+import wizardConnector from '~/components/clusters/wizards/common/WizardConnector';
 import AWSSubnetFields from './AWSSubnetFields';
 import {
   useAWSVPCInquiry,

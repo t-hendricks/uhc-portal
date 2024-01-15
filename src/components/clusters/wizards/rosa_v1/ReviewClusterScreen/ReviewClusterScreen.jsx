@@ -11,10 +11,7 @@ import {
 import { normalizedProducts } from '~/common/subscriptionTypes';
 import { hasSelectedSecurityGroups } from '~/common/securityGroupsHelpers';
 import { getUserRoleForSelectedAWSAccount } from '~/components/clusters/wizards/rosa_v1/AccountsRolesScreen/AccountsRolesScreen';
-import {
-  stepId,
-  stepNameById,
-} from '~/components/clusters/CreateOSDPage/CreateOSDWizard/osdWizardConstants';
+import { stepId, stepNameById } from '~/components/clusters/wizards/common/osdWizardConstants';
 import {
   stepId as rosaStepId,
   stepNameById as rosaStepNameById,

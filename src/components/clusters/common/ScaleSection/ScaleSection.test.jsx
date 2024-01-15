@@ -2,7 +2,7 @@ import React from 'react';
 
 import { render, screen, checkAccessibility, within, insightsMock } from '~/testUtils';
 import apiRequest from '~/services/apiRequest';
-import wizardConnector from '~/components/clusters/CreateOSDPage/CreateOSDWizard/WizardConnector';
+import wizardConnector from '~/components/clusters/wizards/common/WizardConnector';
 import ScaleSection from './ScaleSection';
 import { constants } from '~/components/clusters/common/CreateOSDFormConstants';
 

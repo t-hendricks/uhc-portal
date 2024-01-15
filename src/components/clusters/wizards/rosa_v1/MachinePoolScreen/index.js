@@ -12,9 +12,9 @@ import { openModal } from '~/components/common/Modal/ModalActions';
 import modals from '~/components/common/Modal/modals';
 import { canAutoScaleOnCreateSelector } from '../../../ClusterDetails/components/MachinePools/MachinePoolsSelectors';
 
-import wizardConnector from '../../../CreateOSDPage/CreateOSDWizard/WizardConnector';
+import wizardConnector from '~/components/clusters/wizards/common/WizardConnector';
 import MachinePoolScreen from './MachinePoolScreen';
-import createOSDInitialValues from '../../../CreateOSDPage/createOSDInitialValues';
+import createOSDInitialValues from '../../common/createOSDInitialValues';
 
 const mapStateToProps = (state, ownProps) => {
   const valueSelector = formValueSelector('CreateCluster');

@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { render, screen, checkAccessibility } from '~/testUtils';
-import wizardConnector from '~/components/clusters/CreateOSDPage/CreateOSDWizard/WizardConnector';
+import wizardConnector from '~/components/clusters/wizards/common/WizardConnector';
 import AutoScaleSection from '../AutoScaleSection';
 import { normalizedProducts } from '~/common/subscriptionTypes';
 

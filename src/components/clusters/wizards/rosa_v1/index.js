@@ -23,7 +23,7 @@ import CreateROSAWizard from './CreateROSAWizard';
 import shouldShowModal from '../../../common/Modal/ModalSelectors';
 import { openModal, closeModal } from '../../../common/Modal/ModalActions';
 import { hasManagedQuotaSelector } from '../../common/quotaSelectors';
-import submitOSDRequest from '../../CreateOSDPage/submitOSDRequest';
+import submitOSDRequest from '../common/submitOSDRequest';
 
 const mapStateToProps = (state) => {
   const { organization } = state.userProfile;

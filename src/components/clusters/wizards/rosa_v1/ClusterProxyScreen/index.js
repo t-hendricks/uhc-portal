@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 import { formValueSelector, change, getFormValues } from 'redux-form';
 
-import wizardConnector from '../../../CreateOSDPage/CreateOSDWizard/WizardConnector';
+import wizardConnector from '~/components/clusters/wizards/common/WizardConnector';
 import ClusterProxyScreen from './ClusterProxyScreen';
 
 const mapStateToProps = (state) => {

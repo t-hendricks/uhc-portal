@@ -2,7 +2,7 @@ import React from 'react';
 import { render, screen, mockUseFeatureGate } from '~/testUtils';
 
 import { HCP_AWS_BILLING_SHOW } from '~/redux/constants/featureConstants';
-import wizardConnector from '~/components/clusters/CreateOSDPage/CreateOSDWizard/WizardConnector';
+import wizardConnector from '~/components/clusters/wizards/common/WizardConnector';
 import sampleFormData from './mockHCPCluster';
 import ReviewClusterScreen from './ReviewClusterScreen';
 

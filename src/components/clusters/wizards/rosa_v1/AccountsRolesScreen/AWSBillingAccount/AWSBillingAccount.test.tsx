@@ -10,7 +10,7 @@ import {
   within,
   mockUseFeatureGate,
 } from '~/testUtils';
-import wizardConnector from '~/components/clusters/CreateOSDPage/CreateOSDWizard/WizardConnector';
+import wizardConnector from '~/components/clusters/wizards/common/WizardConnector';
 import { CloudAccount } from '~/types/accounts_mgmt.v1/models/CloudAccount';
 import AWSBillingAccount from './AWSBillingAccount';
 

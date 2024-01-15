@@ -1,10 +1,10 @@
 import { connect } from 'react-redux';
 import { formValueSelector } from 'redux-form';
 
-import wizardConnector from '../../../CreateOSDPage/CreateOSDWizard/WizardConnector';
+import wizardConnector from '~/components/clusters/wizards/common/WizardConnector';
 import UpdatesScreen from './UpdatesScreen';
 
-import createOSDInitialValues from '../../../CreateOSDPage/createOSDInitialValues';
+import createOSDInitialValues from '../../common/createOSDInitialValues';
 
 const mapStateToProps = (state, ownProps) => {
   const valueSelector = formValueSelector('CreateCluster');

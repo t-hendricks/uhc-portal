@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { formValueSelector } from 'redux-form';
 
 import { getGCPCloudProviderVPCs } from '~/redux/actions/ccsInquiriesActions';
-import ccsCredentialsSelector from '~/components/clusters/CreateOSDPage/CreateOSDWizard/credentialsSelector';
+import ccsCredentialsSelector from '~/components/clusters/wizards/common/credentialsSelector';
 
 import GCPVPCName from './GCPVPCName';
 

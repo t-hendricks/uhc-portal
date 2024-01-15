@@ -7,7 +7,7 @@ import {
   getOCMRole,
   clearGetOcmRoleResponse,
 } from '~/redux/actions/rosaActions';
-import wizardConnector from '../../../CreateOSDPage/CreateOSDWizard/WizardConnector';
+import wizardConnector from '~/components/clusters/wizards/common/WizardConnector';
 import ReviewClusterScreen from './ReviewClusterScreen';
 import { canAutoScaleOnCreateSelector } from '../../../ClusterDetails/components/MachinePools/MachinePoolsSelectors';
 

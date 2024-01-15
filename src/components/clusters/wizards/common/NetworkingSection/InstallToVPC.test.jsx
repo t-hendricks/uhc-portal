@@ -1,4 +1,4 @@
-import wizardConnector from '~/components/clusters/CreateOSDPage/CreateOSDWizard/WizardConnector';
+import wizardConnector from '~/components/clusters/wizards/common/WizardConnector';
 import { render, screen } from '~/testUtils';
 import React from 'react';
 import InstallToVPC from '~/components/clusters/wizards/common/NetworkingSection/InstallToVPC';

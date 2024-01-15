@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { formValueSelector } from 'redux-form';
 
 import { getGCPKeys } from '~/redux/actions/ccsInquiriesActions';
-import ccsCredentialsSelector from '~/components/clusters/CreateOSDPage/CreateOSDWizard/credentialsSelector';
+import ccsCredentialsSelector from '~/components/clusters/wizards/common/credentialsSelector';
 
 import DynamicSelect from '~/components/common/DynamicSelect';
 

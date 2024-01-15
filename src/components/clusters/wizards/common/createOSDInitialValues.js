@@ -1,9 +1,9 @@
 import { getDefaultSecurityGroupsSettings } from '~/common/securityGroupsHelpers';
 import { isRestrictedEnv } from '~/restrictedEnv';
 import { defaultWorkerNodeVolumeSizeGiB } from '~/components/clusters/wizards/rosa/constants';
-import { getDefaultClusterAutoScaling } from '~/components/clusters/CreateOSDPage/clusterAutoScalingValues';
-import { normalizedProducts, billingModels } from '../../../common/subscriptionTypes';
-import { IMDSType } from '../wizards/common';
+import { getDefaultClusterAutoScaling } from '~/components/clusters/common/clusterAutoScalingValues';
+import { normalizedProducts, billingModels } from '../../../../common/subscriptionTypes';
+import { IMDSType } from './index';
 
 export const AWS_DEFAULT_REGION = 'us-east-1';
 export const GCP_DEFAULT_REGION = 'us-east1';

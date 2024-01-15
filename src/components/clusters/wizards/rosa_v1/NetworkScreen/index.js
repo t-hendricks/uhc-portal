@@ -2,9 +2,9 @@ import { connect } from 'react-redux';
 import { formValueSelector, getFormValues } from 'redux-form';
 
 import { openModal } from '~/components/common/Modal/ModalActions';
-import createOSDInitialValues from '../../../CreateOSDPage/createOSDInitialValues';
+import createOSDInitialValues from '../../common/createOSDInitialValues';
 
-import wizardConnector from '../../../CreateOSDPage/CreateOSDWizard/WizardConnector';
+import wizardConnector from '~/components/clusters/wizards/common/WizardConnector';
 import NetworkScreen from './NetworkScreen';
 
 const mapStateToProps = (state, ownProps) => {

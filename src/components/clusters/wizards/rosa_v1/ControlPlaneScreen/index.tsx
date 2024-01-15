@@ -3,7 +3,7 @@ import { getFormValues } from 'redux-form';
 import { GlobalState } from '~/redux/store';
 import { QuotaCostList } from '~/types/accounts_mgmt.v1';
 import { hasHostedQuotaSelector } from '../../../common/quotaSelectors';
-import wizardConnector from '../../../CreateOSDPage/CreateOSDWizard/WizardConnector';
+import wizardConnector from '~/components/clusters/wizards/common/WizardConnector';
 
 import ControlPlaneScreen from './ControlPlaneScreen';
 

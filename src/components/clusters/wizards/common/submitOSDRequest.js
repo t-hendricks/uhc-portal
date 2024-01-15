@@ -15,8 +15,8 @@ import { billingModels } from '~/common/subscriptionTypes';
 import { WildcardPolicy } from '~/types/clusters_mgmt.v1/models/WildcardPolicy';
 import { NamespaceOwnershipPolicy } from '~/types/clusters_mgmt.v1/models/NamespaceOwnershipPolicy';
 import { ApplicationIngressType } from '~/components/clusters/wizards/osd/Networking/constants';
-import { getClusterAutoScalingSubmitSettings } from '~/components/clusters/CreateOSDPage/clusterAutoScalingValues';
-import { canConfigureDayOneManagedIngress } from '../wizards/rosa/constants';
+import { getClusterAutoScalingSubmitSettings } from '~/components/clusters/common/clusterAutoScalingValues';
+import { canConfigureDayOneManagedIngress } from '../rosa/constants';
 import * as submitRequestHelpers from './submitOSDRequestHelper';
 
 export const createClusterRequest = ({ isWizard = true, cloudProviderID, product }, formData) => {

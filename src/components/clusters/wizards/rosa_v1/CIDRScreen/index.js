@@ -7,7 +7,7 @@ import {
   HOST_PREFIX_DEFAULT,
   POD_CIDR_DEFAULT,
 } from '~/components/clusters/common/networkingConstants';
-import wizardConnector from '../../../CreateOSDPage/CreateOSDWizard/WizardConnector';
+import wizardConnector from '~/components/clusters/wizards/common/WizardConnector';
 import CIDRScreen from './CIDRScreen';
 
 const mapStateToProps = (state) => {
