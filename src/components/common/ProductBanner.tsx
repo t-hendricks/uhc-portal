@@ -28,7 +28,7 @@ export const ProductBanner = (props: ProductBannerProps) => {
     <PageHeader>
       {breadcrumbs}
       <Split>
-        <SplitItem className="pf-u-pr-md">
+        <SplitItem className="pf-v5-u-pr-md">
           <CardBody className={iconCardBodyClassName}>{icon}</CardBody>
         </SplitItem>
         <Divider
@@ -36,7 +36,7 @@ export const ProductBanner = (props: ProductBannerProps) => {
             default: 'vertical',
           }}
         />
-        <SplitItem className="pf-u-pl-md">
+        <SplitItem className="pf-v5-u-pl-md">
           <Stack hasGutter>
             <StackItem isFilled>
               <CardTitle>

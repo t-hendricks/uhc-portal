@@ -1,15 +1,18 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Card, CardTitle, CardBody, Bullseye, Title } from '@patternfly/react-core';
+import { Card, CardTitle, CardBody, Bullseye, Title, Icon } from '@patternfly/react-core';
 
-import { ExclamationCircleIcon, OkIcon } from '@patternfly/react-icons';
+import { ExclamationCircleIcon } from '@patternfly/react-icons/dist/esm/icons/exclamation-circle-icon';
+import { OkIcon } from '@patternfly/react-icons/dist/esm/icons/ok-icon';
 
 import {
   // eslint-disable-next-line camelcase
   global_danger_color_100,
+} from '@patternfly/react-tokens/dist/esm/global_danger_color_100';
+import {
   // eslint-disable-next-line camelcase
   global_success_color_100,
-} from '@patternfly/react-tokens';
+} from '@patternfly/react-tokens/dist/esm/global_success_color_100';
 
 const ClustersWithIssuesCard = ({ totalUnhealthyClusters, totalConnectedClusters, isError }) => {
   if (isError) {
@@ -44,15 +47,15 @@ const ClustersWithIssuesCard = ({ totalUnhealthyClusters, totalConnectedClusters
   const icon =
     totalUnhealthyClusters === 0 ? (
       <>
-        <OkIcon className="status-icon" color={global_success_color_100.value} size="sm" />
+        <Icon className="status-icon" size="sm">
+          <OkIcon color={global_success_color_100.value} />
+        </Icon>
       </>
     ) : (
       <>
-        <ExclamationCircleIcon
-          className="status-icon"
-          color={global_danger_color_100.value}
-          size="sm"
-        />
+        <Icon className="status-icon" size="sm">
+          <ExclamationCircleIcon color={global_danger_color_100.value} />
+        </Icon>
       </>
     );
 

@@ -1,7 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+
 import { FormGroup, FormSelect, FormSelectOption } from '@patternfly/react-core';
 
+import { FormGroupHelperText } from '~/components/common/FormGroupHelperText';
 import ErrorBox from '../../../../../../common/ErrorBox';
 
 class KMSKeySelect extends React.Component {
@@ -85,26 +87,26 @@ class KMSKeySelect extends React.Component {
     // https://github.com/patternfly/patternfly-react/issues/5687
     const value = this.currentValueIrrelevant() ? '' : input.value;
 
+    const { onChange, ...restInput } = input;
+
     return (
-      <FormGroup
-        label={label}
-        labelIcon={labelIcon}
-        validated={meta.touched && meta.invalid ? 'error' : 'default'}
-        helperText={helperText}
-        helperTextInvalid={meta.error}
-        fieldId={input.name}
-      >
+      <FormGroup label={label} labelIcon={labelIcon} fieldId={input.name}>
         {matchesDependencies && requestStatus.error && (
           <ErrorBox message={requestErrorTitle} response={requestStatus} />
         )}
         <FormSelect
           aria-label={label}
           isDisabled={!(show && items.length > 0)}
-          {...input}
+          {...restInput}
+          onChange={(_event, value) => onChange(value)}
           value={value}
         >
           {options}
         </FormSelect>
+
+        <FormGroupHelperText touched={meta.touched} error={meta.error}>
+          {helperText}
+        </FormGroupHelperText>
       </FormGroup>
     );
   }

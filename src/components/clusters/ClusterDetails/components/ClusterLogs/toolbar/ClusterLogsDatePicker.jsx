@@ -1,6 +1,10 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { Select, SelectOption, DatePicker, ToolbarItem, isValidDate } from '@patternfly/react-core';
+import { DatePicker, ToolbarItem, isValidDate } from '@patternfly/react-core';
+import {
+  Select as SelectDeprecated,
+  SelectOption as SelectOptionDeprecated,
+} from '@patternfly/react-core/deprecated';
 
 // Local timezone UTC offset
 const offset = new Date().getTimezoneOffset() * 60000;
@@ -236,8 +240,8 @@ const ClusterLogsDatePicker = ({ setFilter, currentFilter, createdAt }) => {
   };
 
   const dateSelector = (
-    <Select
-      onToggle={setSelectorOpen}
+    <SelectDeprecated
+      onToggle={(_event, val) => setSelectorOpen(val)}
       onSelect={onSelectorSelect}
       selections={selected}
       isOpen={selectorOpen}
@@ -246,9 +250,9 @@ const ClusterLogsDatePicker = ({ setFilter, currentFilter, createdAt }) => {
     >
       {options.map((option, index) => (
         // eslint-disable-next-line react/no-array-index-key
-        <SelectOption key={index} value={option.value} isDisabled={option.isDisabled} />
+        <SelectOptionDeprecated key={index} value={option.value} isDisabled={option.isDisabled} />
       ))}
-    </Select>
+    </SelectDeprecated>
   );
 
   return (

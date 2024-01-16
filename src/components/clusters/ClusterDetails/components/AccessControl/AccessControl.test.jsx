@@ -39,7 +39,7 @@ describe('<AccessControl />', () => {
       });
       render(buildComponent(singleTabCluster));
 
-      const cardBody = document.querySelector('.pf-c-card__body');
+      const cardBody = document.querySelector('.pf-v5-c-card__body');
       expect(cardBody.classList).toContain('single-tab');
       expect(screen.getAllByRole('tab')).toHaveLength(1);
     });
@@ -52,7 +52,7 @@ describe('<AccessControl />', () => {
       });
       render(buildComponent(multipleTabCluster));
 
-      const cardBody = document.querySelector('.pf-c-card__body');
+      const cardBody = document.querySelector('.pf-v5-c-card__body');
       expect(cardBody.classList).not.toContain('single-tab');
       expect(screen.getAllByRole('tab')).toHaveLength(3);
     });

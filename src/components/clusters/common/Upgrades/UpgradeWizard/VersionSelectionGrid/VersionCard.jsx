@@ -11,7 +11,8 @@ import {
   Button,
   Tooltip,
 } from '@patternfly/react-core';
-import { StarIcon, InfoCircleIcon } from '@patternfly/react-icons';
+import { StarIcon } from '@patternfly/react-icons/dist/esm/icons/star-icon';
+import { InfoCircleIcon } from '@patternfly/react-icons/dist/esm/icons/info-circle-icon';
 import { versionRegEx } from '../../../../../../common/versionComparator';
 import ExternalLink from '../../../../../common/ExternalLink';
 
@@ -56,7 +57,7 @@ const VersionCard = (props) => {
       id={version}
       onKeyDown={onKeyDown}
       onClick={onClick}
-      isSelectable
+      isSelectableRaised
       isCompact
       isSelected={isSelected}
     >

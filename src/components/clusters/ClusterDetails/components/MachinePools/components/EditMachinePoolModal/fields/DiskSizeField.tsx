@@ -12,6 +12,7 @@ import WithTooltip from '~/components/common/WithTooltip';
 import { normalizeProductID } from '~/common/normalize';
 import { normalizedProducts } from '~/common/subscriptionTypes';
 import { isHypershiftCluster } from '~/components/clusters/common/clusterStates';
+import { FormGroupHelperText } from '~/components/common/FormGroupHelperText';
 import useFormikOnChange from '../hooks/useFormikOnChange';
 
 import './DiskSizeField.scss';
@@ -37,8 +38,6 @@ const DiskSizeField = ({ cluster, isEdit }: DiskSizeFieldProps) => {
       fieldId={fieldId}
       label="Root disk size"
       isRequired
-      validated={touched && error ? 'error' : 'default'}
-      helperTextInvalid={touched ? error : undefined}
       labelIcon={
         <PopoverHint
           hint={`Root disks are AWS EBS volumes attached as the primary disk for AWS EC2 instances. The root disk size for this machine pool group of nodes must be between ${workerNodeVolumeSizeMinGiB}GiB and ${maxWorkerVolumeSizeGiB}GiB.`}
@@ -64,6 +63,8 @@ const DiskSizeField = ({ cluster, isEdit }: DiskSizeFieldProps) => {
           isDisabled={isEdit}
         />
       </WithTooltip>
+
+      <FormGroupHelperText touched={touched} error={error} />
     </FormGroup>
   ) : null;
 };

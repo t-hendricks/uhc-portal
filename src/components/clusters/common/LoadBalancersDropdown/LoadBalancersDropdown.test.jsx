@@ -64,7 +64,7 @@ describe('<LoadBalancersDropdown />', () => {
       render(<LoadBalancersDropdown {...errorProps} />);
       expect(getLoadBalancers).not.toBeCalled();
       expect(
-        within(screen.getByRole('alert')).getByText('This is an error message'),
+        within(screen.getByTestId('alert-error')).getByText('This is an error message'),
       ).toBeInTheDocument();
     });
   });

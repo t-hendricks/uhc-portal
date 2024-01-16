@@ -1,8 +1,8 @@
 .ocp-infrastructure {
-  .pf-l-stack__item:not(:last-child) {
+  .pf-v5-l-stack__item:not(:last-child) {
     margin-bottom: 24px;
   }
-  .pf-l-gallery {
+  .pf-v5-l-gallery {
     a {
       height: 212px;
       &.card-badge-container {
@@ -13,7 +13,7 @@
         margin: 10px;
       }
       &.ibm-or-power {
-        &.card-badge-container{
+        &.card-badge-container {
           position: relative;
           z-index: 2;
           top: 11px;
@@ -32,19 +32,19 @@
           height: 54px;
         }
         h5 {
-          margin-bottom: var(--pf-global--spacer--xs);
+          margin-bottom: var(--pf-v5-global--spacer--xs);
         }
         span {
           display: block;
-          font-size: var(--pf-global--FontSize--xs);
+          font-size: var(--pf-v5-global--FontSize--xs);
         }
       }
     }
   }
 
   @media only screen and (min-width: 769px) {
-    .pf-l-gallery {
-       --pf-l-gallery--GridTemplateColumns: repeat(auto-fill, minmax(380px, 1fr));
+    .pf-v5-l-gallery {
+      --pf-v5-l-gallery--GridTemplateColumns: repeat(auto-fill, minmax(380px, 1fr));
     }
   }
 
@@ -52,6 +52,5 @@
     .ocm-page {
       margin: 0 !important;
     }
-  } 
-  
+  }
 }

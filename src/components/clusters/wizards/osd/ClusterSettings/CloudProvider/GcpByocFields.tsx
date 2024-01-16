@@ -48,13 +48,13 @@ export const GcpByocFields = () => {
 
       <Flex direction={{ default: 'column' }} spaceItems={{ default: 'spaceItemsLg' }}>
         <GridItem>
-          <Title headingLevel="h3" className="pf-u-mb-sm">
+          <Title headingLevel="h3" className="pf-v5-u-mb-sm">
             GCP service account
           </Title>
 
           <Prerequisites acknowledgementRequired initiallyExpanded>
             {billingModel === billingModels.MARKETPLACE_GCP && (
-              <Hint className="pf-u-mb-md pf-u-mt-sm">
+              <Hint className="pf-v5-u-mb-md pf-v5-u-mt-sm">
                 <HintTitle>
                   <strong>{gcpTitle}</strong>
                 </HintTitle>
@@ -159,7 +159,7 @@ export const GcpByocFields = () => {
                 </>
               }
             />
-            <p className="pf-u-mt-md">{ccsCredentialsValidity.pending && 'Validating...'}</p>
+            <p className="pf-v5-u-mt-md">{ccsCredentialsValidity.pending && 'Validating...'}</p>
           </GridItem>
         </Grid>
       </Flex>

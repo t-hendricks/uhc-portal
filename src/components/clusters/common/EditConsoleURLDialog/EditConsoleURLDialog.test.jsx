@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { screen, render, checkAccessibility, within } from '~/testUtils';
+import { screen, render, checkAccessibility } from '~/testUtils';
 
 import EditConsoleURLDialog from './EditConsoleURLDialog';
 
@@ -72,8 +72,6 @@ describe('<EditConsoleURLDialog />', () => {
 
     render(<EditConsoleURLDialog {...newProps} />);
 
-    expect(
-      within(screen.getByRole('alert', { name: 'Danger Alert' })).getByText('this is an error'),
-    ).toBeInTheDocument();
+    expect(screen.getByTestId('alert-error')).toBeInTheDocument();
   });
 });

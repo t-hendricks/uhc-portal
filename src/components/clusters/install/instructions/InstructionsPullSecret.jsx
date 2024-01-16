@@ -10,7 +10,7 @@ function InstructionsPullSecret({ token }) {
     <>
       <Card>
         <CardBody>
-          <div className="pf-c-content ocm-page">
+          <div className="pf-v5-c-content ocm-page">
             <Title headingLevel="h3" size="2xl">
               Pull secret
             </Title>

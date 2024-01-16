@@ -7,14 +7,20 @@ import {
   EmptyStateIcon,
   EmptyStateBody,
   CardTitle,
+  EmptyStateHeader,
 } from '@patternfly/react-core';
-import { Table, TableHeader, TableBody, textCenter, TableVariant } from '@patternfly/react-table';
+import { textCenter, TableVariant } from '@patternfly/react-table';
+import {
+  Table as TableDeprecated,
+  TableHeader as TableHeaderDeprecated,
+  TableBody as TableBodyDeprecated,
+} from '@patternfly/react-table/deprecated';
 import { Link } from 'react-router-dom';
-import { CheckCircleIcon } from '@patternfly/react-icons';
+import { CheckCircleIcon } from '@patternfly/react-icons/dist/esm/icons/check-circle-icon';
 import {
   // eslint-disable-next-line camelcase
   global_success_color_100,
-} from '@patternfly/react-tokens';
+} from '@patternfly/react-tokens/dist/esm/global_success_color_100';
 import getClusterName from '../../../common/getClusterName';
 import { getIssuesCount } from '../overviewHelpers';
 import { actionResolver } from './ClustersWithIssuesActionResolver';
@@ -39,7 +45,11 @@ class ClustersWithIssuesTableCard extends React.Component {
           <CardTitle>Clusters with issues</CardTitle>
           <CardBody>
             <EmptyState>
-              <EmptyStateIcon icon={CheckCircleIcon} color={global_success_color_100.value} />
+              <EmptyStateHeader
+                icon={
+                  <EmptyStateIcon icon={CheckCircleIcon} color={global_success_color_100.value} />
+                }
+              />
               <EmptyStateBody>No issues detected</EmptyStateBody>
             </EmptyState>
           </CardBody>
@@ -81,7 +91,7 @@ class ClustersWithIssuesTableCard extends React.Component {
       <Card className="ocm-overview-clusters__card">
         <CardTitle>Clusters with issues</CardTitle>
         <CardBody>
-          <Table
+          <TableDeprecated
             className="clusters-with-issues"
             aria-label="Clusters with issues"
             cells={columns}
@@ -89,9 +99,9 @@ class ClustersWithIssuesTableCard extends React.Component {
             actionResolver={resolver}
             variant={TableVariant.compact}
           >
-            <TableHeader />
-            <TableBody />
-          </Table>
+            <TableHeaderDeprecated />
+            <TableBodyDeprecated />
+          </TableDeprecated>
           <ViewPaginationRow
             viewType={viewConstants.OVERVIEW_VIEW}
             currentPage={viewOptions.currentPage}

@@ -40,7 +40,7 @@ describe('<SubscriptionCompliancy />', () => {
     ];
     const newProps = { ...props, cluster };
     const { container } = render(<SubscriptionCompliancy {...newProps} />);
-    expect(screen.getByLabelText('Warning Alert')).toBeInTheDocument();
+    expect(screen.getByText('Warning alert:')).toBeInTheDocument();
     expect(screen.getByText('OpenShift evaluation expiration date')).toBeInTheDocument();
     expect(
       screen.queryByText(
@@ -64,7 +64,7 @@ describe('<SubscriptionCompliancy />', () => {
     cluster.canEdit = false;
     const newProps = { ...props, cluster };
     const { container } = render(<SubscriptionCompliancy {...newProps} />);
-    expect(screen.getByLabelText('Warning Alert')).toBeInTheDocument();
+    expect(screen.getByText('Warning alert:')).toBeInTheDocument();
     expect(screen.getByText('OpenShift evaluation expiration date')).toBeInTheDocument();
     expect(
       screen.getByText(
@@ -81,7 +81,7 @@ describe('<SubscriptionCompliancy />', () => {
     cluster.subscription.capabilities = [];
     const newProps = { ...props, cluster };
     const { container } = render(<SubscriptionCompliancy {...newProps} />);
-    expect(screen.getByLabelText('Danger Alert')).toBeInTheDocument();
+    expect(screen.getByText('Danger alert:')).toBeInTheDocument();
     expect(screen.getByText('Your 60-day OpenShift evaluation has expired')).toBeInTheDocument();
     expect(
       screen.queryByText(
@@ -98,7 +98,7 @@ describe('<SubscriptionCompliancy />', () => {
     cluster.canEdit = false;
     const newProps = { ...props, cluster };
     const { container } = render(<SubscriptionCompliancy {...newProps} />);
-    expect(screen.getByLabelText('Danger Alert')).toBeInTheDocument();
+    expect(screen.getByText('Danger alert:')).toBeInTheDocument();
     expect(screen.getByText('Your 60-day OpenShift evaluation has expired')).toBeInTheDocument();
     expect(
       screen.getByText(

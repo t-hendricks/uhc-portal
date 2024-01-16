@@ -9,14 +9,21 @@ import {
   CardBody,
   CardFooter,
   CardTitle,
-  Dropdown,
-  DropdownItem,
-  DropdownToggle,
   Stack,
   StackItem,
   Tooltip,
 } from '@patternfly/react-core';
-import { Table, TableHeader, TableBody, TableVariant, cellWidth } from '@patternfly/react-table';
+import {
+  Dropdown as DropdownDeprecated,
+  DropdownItem as DropdownItemDeprecated,
+  DropdownToggle as DropdownToggleDeprecated,
+} from '@patternfly/react-core/deprecated';
+import { TableVariant, cellWidth } from '@patternfly/react-table';
+import {
+  Table as TableDeprecated,
+  TableHeader as TableHeaderDeprecated,
+  TableBody as TableBodyDeprecated,
+} from '@patternfly/react-table/deprecated';
 import Skeleton from '@redhat-cloud-services/frontend-components/Skeleton';
 import ClipboardCopyLinkButton from '../../../../../common/ClipboardCopyLinkButton';
 
@@ -120,7 +127,7 @@ class IDPSection extends React.Component {
     const cannotCreateReason = disableReason || (!idpActions.create && notAllowedReason('add'));
 
     const IDPDropdownOptions = Object.values(IDPTypeNames).map((idpName) => (
-      <DropdownItem
+      <DropdownItemDeprecated
         key={idpName}
         component={
           <Link
@@ -136,17 +143,17 @@ class IDPSection extends React.Component {
     ));
     const { dropdownOpen } = this.state;
     let addIDPDropdown = (
-      <Dropdown
+      <DropdownDeprecated
         toggle={
-          <DropdownToggle
+          <DropdownToggleDeprecated
             id="add-identity-provider"
             isDisabled={cannotCreateReason}
-            onToggle={(isOpen) => {
+            onToggle={(_event, isOpen) => {
               this.setState({ dropdownOpen: isOpen });
             }}
           >
             Add identity provider
-          </DropdownToggle>
+          </DropdownToggleDeprecated>
         }
         isOpen={dropdownOpen}
         dropdownItems={IDPDropdownOptions}
@@ -183,7 +190,7 @@ class IDPSection extends React.Component {
             <StackItem>{addIDPDropdown}</StackItem>
             <StackItem>
               {hasIDPs && idpActions.list && (
-                <Table
+                <TableDeprecated
                   aria-label="Identity Providers"
                   actionResolver={idpActionResolver}
                   variant={TableVariant.compact}
@@ -191,9 +198,9 @@ class IDPSection extends React.Component {
                   rows={identityProviders.clusterIDPList.map(idpRow)}
                   areActionsDisabled={() => !!disableReason}
                 >
-                  <TableHeader />
-                  <TableBody />
-                </Table>
+                  <TableHeaderDeprecated />
+                  <TableBodyDeprecated />
+                </TableDeprecated>
               )}
             </StackItem>
           </Stack>

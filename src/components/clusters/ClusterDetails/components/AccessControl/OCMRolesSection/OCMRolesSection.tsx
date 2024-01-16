@@ -2,7 +2,7 @@ import React, { ReactNode, useState, useEffect } from 'react';
 
 import map from 'lodash/map';
 import get from 'lodash/get';
-import { HelpIcon } from '@patternfly/react-icons';
+import { HelpIcon } from '@patternfly/react-icons/dist/esm/icons/help-icon';
 import {
   Title,
   Button,
@@ -12,8 +12,14 @@ import {
   CardTitle,
   CardBody,
   CardFooter,
+  Icon,
 } from '@patternfly/react-core';
-import { Table, TableHeader, TableBody, TableVariant, IRowData } from '@patternfly/react-table';
+import { IRowData, TableVariant } from '@patternfly/react-table';
+import {
+  Table as TableDeprecated,
+  TableHeader as TableHeaderDeprecated,
+  TableBody as TableBodyDeprecated,
+} from '@patternfly/react-table/deprecated';
 
 import Skeleton from '@redhat-cloud-services/frontend-components/Skeleton';
 
@@ -190,7 +196,9 @@ function OCMRolesSection({
         }
       >
         <Button variant="plain" isInline>
-          <HelpIcon size="sm" />
+          <Icon size="md">
+            <HelpIcon />
+          </Icon>
         </Button>
       </Popover>
     </>
@@ -207,7 +215,9 @@ function OCMRolesSection({
         bodyContent={<p>The OpenShift Cluster Manager role that is granted to this user.</p>}
       >
         <Button variant="plain" isInline>
-          <HelpIcon size="sm" />
+          <Icon size="md">
+            <HelpIcon />
+          </Icon>
         </Button>
       </Popover>
     </>
@@ -295,7 +305,7 @@ function OCMRolesSection({
       </CardBody>
       <CardBody>
         {errorBox}
-        <Table
+        <TableDeprecated
           aria-label="OCM Roles and Access"
           actions={actions}
           variant={TableVariant.compact}
@@ -303,9 +313,9 @@ function OCMRolesSection({
           rows={rows}
           areActionsDisabled={() => !!disableReason}
         >
-          <TableHeader />
-          <TableBody />
-        </Table>
+          <TableHeaderDeprecated />
+          <TableBodyDeprecated />
+        </TableDeprecated>
         <OCMRolesDialog
           onSubmit={handleDialogSubmit}
           row={modalData as OCMRolesRow}

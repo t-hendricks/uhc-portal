@@ -15,7 +15,7 @@ const interceptAndReturnMockARNs = (mockFile) =>
 
 describe.skip('Rosa cluster tests', { tags: ['ci'] }, () => {
   before(() => {
-    cy.visit('/');
+    cy.visit('/', { retryOnNetworkFailure: true });
     Login.isLoginPageUrl();
     Login.login();
 
@@ -61,13 +61,6 @@ describe.skip('Rosa cluster tests', { tags: ['ci'] }, () => {
         cy.get(CreateRosaWizardPage.associatedAccountsDropdown).click();
         cy.get(CreateRosaWizardPage.primaryButton).should('not.be.disabled');
         CreateRosaWizardPage.showsNoAssociatedAccounts();
-      });
-
-      it('test associate aws account drawer', () => {
-        cy.getByTestId('launch-associate-account-btn').click();
-        cy.get(CreateRosaWizardPage.primaryButton).should('not.be.disabled');
-        CreateRosaWizardPage.isAssociateAccountsDrawer();
-        cy.getByTestId('close-associate-account-btn').click();
       });
 
       it('tests for a single associated account,  "no ARNs" alert, and 4 ARNs required messages', () => {

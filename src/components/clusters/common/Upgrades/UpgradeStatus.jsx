@@ -5,13 +5,11 @@ import {
   EmptyState,
   EmptyStateBody,
   EmptyStateVariant,
-  Title,
+  EmptyStateHeader,
 } from '@patternfly/react-core';
-import {
-  OutlinedArrowAltCircleUpIcon,
-  CheckCircleIcon,
-  InProgressIcon,
-} from '@patternfly/react-icons';
+import { OutlinedArrowAltCircleUpIcon } from '@patternfly/react-icons/dist/esm/icons/outlined-arrow-alt-circle-up-icon';
+import { CheckCircleIcon } from '@patternfly/react-icons/dist/esm/icons/check-circle-icon';
+import { InProgressIcon } from '@patternfly/react-icons/dist/esm/icons/in-progress-icon';
 import { DateFormat } from '@redhat-cloud-services/frontend-components/DateFormat';
 import './UpgradeStatus.scss';
 import UpdateGraph from './UpdateGraph/UpdateGraph';
@@ -73,9 +71,7 @@ function UpgradeStatus({
   if (!clusterVersion) {
     return (
       <EmptyState variant={EmptyStateVariant.xs}>
-        <Title headingLevel="h4" size="md">
-          Update status is not available
-        </Title>
+        <EmptyStateHeader titleText="Update status is not available" headingLevel="h4" />
         <EmptyStateBody>Update status is not available. Try again later.</EmptyStateBody>
       </EmptyState>
     );

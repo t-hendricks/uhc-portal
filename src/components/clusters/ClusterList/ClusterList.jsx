@@ -21,14 +21,8 @@ import React, { Component } from 'react';
 
 import { PageHeader, PageHeaderTitle } from '@redhat-cloud-services/frontend-components/PageHeader';
 import Spinner from '@redhat-cloud-services/frontend-components/Spinner';
-import {
-  Card,
-  PageHeaderTools,
-  PageSection,
-  Toolbar,
-  ToolbarItem,
-  ToolbarContent,
-} from '@patternfly/react-core';
+import { Card, PageSection, Toolbar, ToolbarItem, ToolbarContent } from '@patternfly/react-core';
+import { PageHeaderTools as PageHeaderToolsDeprecated } from '@patternfly/react-core/deprecated';
 import { AppPage } from '~/components/App/AppPage';
 import { isRestrictedEnv } from '~/restrictedEnv';
 import { ONLY_MY_CLUSTERS_TOGGLE_CLUSTERS_LIST } from '~/common/localStorageConstants';
@@ -206,12 +200,12 @@ class ClusterList extends Component {
         <ReadOnlyBanner someReadOnly={someReadOnly} />
         <PageHeader id="cluster-list-header">
           <PageHeaderTitle title="Clusters" className="page-title" />
-          <PageHeaderTools>
+          <PageHeaderToolsDeprecated>
             {showSpinner && <Spinner size="lg" className="cluster-list-spinner" />}
             {error && (
               <ErrorTriangle errorMessage={errorMessage} className="cluster-list-warning" />
             )}
-          </PageHeaderTools>
+          </PageHeaderToolsDeprecated>
           <RefreshBtn
             autoRefresh={!anyModalOpen}
             isDisabled={isPendingNoData}
@@ -284,7 +278,7 @@ class ClusterList extends Component {
                     localStorageKey={ONLY_MY_CLUSTERS_TOGGLE_CLUSTERS_LIST}
                   />
                   <ToolbarItem
-                    alignment={{ default: 'alignRight' }}
+                    align={{ default: 'alignRight' }}
                     variant="pagination"
                     className="pf-m-hidden visible-on-lgplus"
                   >

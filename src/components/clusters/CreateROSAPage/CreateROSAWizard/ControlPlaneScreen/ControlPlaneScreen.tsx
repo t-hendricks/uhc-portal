@@ -116,7 +116,7 @@ const ControlPlaneScreen = ({
       <img src={RedHat} className="ocm-c-wizard-intro-image-top" aria-hidden="true" alt="" />
       <img src={AWSLogo} className="ocm-c-wizard-intro-image-bottom" aria-hidden="true" alt="" />
     </div>
-    <Grid hasGutter className="pf-u-mt-md">
+    <Grid hasGutter className="pf-v5-u-mt-md">
       <GridItem span={10}>
         <WelcomeMessage />
       </GridItem>
@@ -124,7 +124,7 @@ const ControlPlaneScreen = ({
         <PrerequisitesInfoBox />
       </GridItem>
       <GridItem span={10}>
-        <Title headingLevel="h3" className="pf-u-mb-sm">
+        <Title headingLevel="h3" className="pf-v5-u-mb-sm">
           Select an AWS control plane type
         </Title>
         <Text component={TextVariants.p}>

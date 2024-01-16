@@ -7,7 +7,6 @@ import {
   DescriptionListGroup,
   DescriptionListDescription,
 } from '@patternfly/react-core';
-import spacing from '@patternfly/react-styles/css/utilities/Spacing/spacing';
 
 import getBillingModelLabel from '~/components/clusters/common/getBillingModelLabel';
 import { isHypershiftCluster } from '~/components/clusters/common/clusterStates';
@@ -101,7 +100,7 @@ function DetailsLeft({ cluster, cloudProviders, showAssistedId }) {
             Version
             {isHypershift && (
               <PopoverHint
-                iconClassName={spacing.mlSm}
+                iconClassName="pf-v5-u-ml-sm"
                 hint="This version is only for the control plane. Worker nodes may have a different version."
               />
             )}
@@ -122,7 +121,7 @@ function DetailsLeft({ cluster, cloudProviders, showAssistedId }) {
           <DescriptionListGroup>
             <DescriptionListTerm>Encryption level</DescriptionListTerm>
             <DescriptionListDescription>
-              <dl className="pf-l-stack">
+              <dl className="pf-v5-l-stack">
                 <dt data-testid="fipsCryptographyStatus">FIPS Cryptography enabled</dt>
               </dl>
             </DescriptionListDescription>

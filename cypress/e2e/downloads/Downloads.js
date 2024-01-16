@@ -11,7 +11,7 @@ const OSLocalTitle = 'Download and open the OpenShift Local';
 
 describe('Downloads page', { tags: ['ci', 'smoke'] }, () => {
   before(() => {
-    cy.visit('/');
+    cy.visit('/', { retryOnNetworkFailure: true });
     Login.isLoginPageUrl();
     Login.login();
 

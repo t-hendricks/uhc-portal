@@ -1,9 +1,7 @@
 .downloads-section-header {
-  padding-top: var(--pf-global--spacer--xl);
-  padding-left: var(--pf-global--spacer--xl);
-  padding-right: var(--pf-global--spacer--xl);
+  padding: var(--pf-v5-global--spacer--lg);
+
   .description {
-    margin-top: var(--pf-global--spacer--sm);
+    margin-top: var(--pf-v5-global--spacer--sm);
   }
-  padding-bottom: var(--pf-global--spacer--lg);
 }

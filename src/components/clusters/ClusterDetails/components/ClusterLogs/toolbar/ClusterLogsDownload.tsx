@@ -104,7 +104,7 @@ const ClusterLogsDownload = ({
                   id="json-format"
                   isChecked={format === 'json'}
                   name="format"
-                  onChange={(checked) => checked && setFormat('json')}
+                  onChange={(_event, checked) => checked && setFormat('json')}
                   label="JSON"
                   isDisabled={isDownloading}
                 />
@@ -112,7 +112,7 @@ const ClusterLogsDownload = ({
                   id="csv-format"
                   isChecked={format === 'csv'}
                   name="format"
-                  onChange={(checked) => checked && setFormat('csv')}
+                  onChange={(_event, checked) => checked && setFormat('csv')}
                   label="CSV"
                   isDisabled={isDownloading}
                 />

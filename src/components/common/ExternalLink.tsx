@@ -1,6 +1,6 @@
 import React from 'react';
-import { Button, ButtonProps, ButtonVariant } from '@patternfly/react-core';
-import { ExternalLinkAltIcon } from '@patternfly/react-icons';
+import { Button, ButtonProps, ButtonVariant, Icon } from '@patternfly/react-core';
+import { ExternalLinkAltIcon } from '@patternfly/react-icons/dist/esm/icons/external-link-alt-icon';
 import { trackEvents } from '~/common/analytics';
 import useAnalytics from '~/hooks/useAnalytics';
 import './ExternalLink.scss';
@@ -78,16 +78,13 @@ const ExternalLink = ({
   const childrenComp = (
     <>
       {children}
-      {noTarget ? null : <span className="pf-u-screen-reader"> (new window or tab)</span>}
+      {noTarget ? null : <span className="pf-v5-u-screen-reader"> (new window or tab)</span>}
       {
         // TODO: replace it by <Button component="a" href="..." variant="link" icon={<ExternalLinkSquareAltIcon />} ...
         !noIcon && (
-          <ExternalLinkAltIcon
-            color="#0066cc"
-            size="sm"
-            className="pf-u-ml-sm external-link-alt-icon"
-            data-testid="openInNewWindowIcon"
-          />
+          <Icon size="md" className="external-link-alt-icon">
+            <ExternalLinkAltIcon color="#0066cc" data-testid="openInNewWindowIcon" />
+          </Icon>
         )
       }
     </>

@@ -98,6 +98,7 @@ const Modal = ({
                   onClick={onPrimaryClick}
                   type="submit"
                   isDisabled={isPrimaryDisabled}
+                  data-testid="btn-primary"
                 >
                   {primaryText}
                 </Button>
@@ -110,6 +111,7 @@ const Modal = ({
                   target="_blank"
                   href={primaryLink}
                   isDisabled={isPrimaryDisabled}
+                  data-testid="btn-primary"
                 >
                   {primaryText}
                 </Button>
@@ -120,6 +122,7 @@ const Modal = ({
                   variant="secondary"
                   onClick={onSecondaryClick}
                   isDisabled={isSecondaryDisabled}
+                  data-testid="btn-secondary"
                 >
                   {secondaryText}
                 </Button>
@@ -132,12 +135,18 @@ const Modal = ({
                   target="_blank"
                   href={secondaryLink}
                   isDisabled={isSecondaryDisabled}
+                  data-testid="btn-secondary"
                 >
                   {secondaryText}
                 </Button>
               ),
               showTertiary && (
-                <Button key="tertiary" variant="secondary" onClick={onTertiaryClick}>
+                <Button
+                  key="tertiary"
+                  variant="secondary"
+                  onClick={onTertiaryClick}
+                  data-testid="btn-tertiary"
+                >
                   {tertiaryText}
                 </Button>
               ),

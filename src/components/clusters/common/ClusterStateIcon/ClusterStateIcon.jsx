@@ -2,21 +2,21 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import {
-  CheckCircleIcon,
-  DisconnectedIcon,
-  UnknownIcon,
-  ExclamationCircleIcon,
-  InProgressIcon,
-  BanIcon,
-  FolderOpenIcon,
-  AsleepIcon,
-  NotStartedIcon,
-} from '@patternfly/react-icons';
+import { CheckCircleIcon } from '@patternfly/react-icons/dist/esm/icons/check-circle-icon';
+import { DisconnectedIcon } from '@patternfly/react-icons/dist/esm/icons/disconnected-icon';
+import { UnknownIcon } from '@patternfly/react-icons/dist/esm/icons/unknown-icon';
+import { ExclamationCircleIcon } from '@patternfly/react-icons/dist/esm/icons/exclamation-circle-icon';
+import { InProgressIcon } from '@patternfly/react-icons/dist/esm/icons/in-progress-icon';
+import { BanIcon } from '@patternfly/react-icons/dist/esm/icons/ban-icon';
+import { FolderOpenIcon } from '@patternfly/react-icons/dist/esm/icons/folder-open-icon';
+import { AsleepIcon } from '@patternfly/react-icons/dist/esm/icons/asleep-icon';
+import { NotStartedIcon } from '@patternfly/react-icons/dist/esm/icons/not-started-icon';
 
 // eslint-disable-next-line camelcase
-import { global_danger_color_100, global_success_color_100 } from '@patternfly/react-tokens';
-import { Spinner, spinnerSize } from '@patternfly/react-core';
+import { global_danger_color_100 } from '@patternfly/react-tokens/dist/esm/global_danger_color_100';
+// eslint-disable-next-line camelcase
+import { global_success_color_100 } from '@patternfly/react-tokens/dist/esm/global_success_color_100';
+import { Spinner, spinnerSize, Icon } from '@patternfly/react-core';
 import clusterStates from '../clusterStates';
 
 function ClusterStateIcon(props) {
@@ -24,11 +24,15 @@ function ClusterStateIcon(props) {
 
   const iconProps = {
     className: 'clusterstate',
-    size: 'sm',
+    size: 'md',
   };
 
   if (limitedSupport && clusterState !== clusterStates.ERROR) {
-    return <ExclamationCircleIcon color={global_danger_color_100.value} {...iconProps} />;
+    return (
+      <Icon {...iconProps}>
+        <ExclamationCircleIcon color={global_danger_color_100.value} />
+      </Icon>
+    );
   }
 
   switch (clusterState) {
@@ -42,40 +46,71 @@ function ClusterStateIcon(props) {
       if (animated) {
         return <Spinner {...iconProps} size={spinnerSize.md} />;
       }
-      return <InProgressIcon {...iconProps} data-icon-type="inprogress" />;
+      return (
+        <Icon {...iconProps}>
+          <InProgressIcon data-icon-type="inprogress" />
+        </Icon>
+      );
     case clusterStates.DISCONNECTED:
-      return <DisconnectedIcon {...iconProps} />;
+      return (
+        <Icon {...iconProps}>
+          <DisconnectedIcon />
+        </Icon>
+      );
     case clusterStates.READY:
       return (
-        <CheckCircleIcon
-          color={global_success_color_100.value}
-          {...iconProps}
-          data-icon-type="check"
-        />
+        <Icon {...iconProps}>
+          <CheckCircleIcon color={global_success_color_100.value} data-icon-type="check" />
+        </Icon>
       );
     case clusterStates.UNINSTALLING:
       if (animated) {
         return <Spinner {...iconProps} size={spinnerSize.md} />;
       }
-      return <InProgressIcon {...iconProps} data-icon-type="inprogress" />;
+      return (
+        <Icon {...iconProps}>
+          <InProgressIcon data-icon-type="inprogress" />
+        </Icon>
+      );
     case clusterStates.ERROR:
       return (
-        <ExclamationCircleIcon
-          color={global_danger_color_100.value}
-          {...iconProps}
-          data-icon-type="exclamation"
-        />
+        <Icon {...iconProps}>
+          <ExclamationCircleIcon
+            color={global_danger_color_100.value}
+            data-icon-type="exclamation"
+          />
+        </Icon>
       );
     case clusterStates.DEPROVISIONED:
-      return <BanIcon {...iconProps} />;
+      return (
+        <Icon {...iconProps}>
+          <BanIcon />
+        </Icon>
+      );
     case clusterStates.ARCHIVED:
-      return <FolderOpenIcon {...iconProps} />;
+      return (
+        <Icon {...iconProps}>
+          <FolderOpenIcon />
+        </Icon>
+      );
     case clusterStates.HIBERNATING:
-      return <AsleepIcon {...iconProps} />;
+      return (
+        <Icon {...iconProps}>
+          <AsleepIcon />
+        </Icon>
+      );
     case clusterStates.STALE:
-      return <NotStartedIcon {...iconProps} />;
+      return (
+        <Icon {...iconProps}>
+          <NotStartedIcon />
+        </Icon>
+      );
     default:
-      return <UnknownIcon {...iconProps} data-icon-type="unknown" />;
+      return (
+        <Icon {...iconProps}>
+          <UnknownIcon data-icon-type="unknown" />
+        </Icon>
+      );
   }
 }
 

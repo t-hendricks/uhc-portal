@@ -1,14 +1,15 @@
 #autoscaling {
-    .autoscaling__nodes-formGroup, .autoscaling__nodes-formGroup > .pf-c-form__group-control{
-      >input {
-       width: 60px;
-       margin-right: var(--pf-global--spacer--sm);
-      }
-      >span {
-       margin-right: var(--pf-global--spacer--sm);
-      }
+  .autoscaling__nodes-formGroup,
+  .autoscaling__nodes-formGroup > .pf-v5-c-form__group-control {
+    > input {
+      width: 60px;
+      margin-right: var(--pf-v5-global--spacer--sm);
     }
-    .autoscaling__container {
-      margin-top: var(--pf-global--spacer--md);
+    > span {
+      margin-right: var(--pf-v5-global--spacer--sm);
     }
+  }
+  .autoscaling__container {
+    margin-top: var(--pf-v5-global--spacer--md);
+  }
 }

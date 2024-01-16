@@ -1,12 +1,9 @@
-import {
-  Card,
-  CardBody,
-  CardFooter,
-  CardTitle,
-  Select,
-  SelectOption,
-} from '@patternfly/react-core';
 import * as React from 'react';
+import { Card, CardBody, CardFooter, CardTitle } from '@patternfly/react-core';
+import {
+  Select as SelectDeprecated,
+  SelectOption as SelectOptionDeprecated,
+} from '@patternfly/react-core/deprecated';
 import { BillingQuotaCloudAccounts } from '~/components/clusters/common/quotaModel';
 import ExternalLink from '~/components/common/ExternalLink';
 import {
@@ -77,7 +74,7 @@ const AddOnsSubscriptionCard = ({
       id={billingModel}
       isSelectableRaised
       isSelected={activeSubscription?.billingModel === billingModel}
-      isDisabledRaised={!hasCloudAccounts || !hasQuota || !isReady}
+      isDisabled={!hasCloudAccounts || !hasQuota || !isReady}
       onClick={() => {
         if (account) {
           // re-select
@@ -105,7 +102,7 @@ const AddOnsSubscriptionCard = ({
         </CardFooter>
       ) : (
         <CardFooter>
-          <Select
+          <SelectDeprecated
             isOpen={isOpen}
             selections={account}
             onToggle={() => setIsOpen(!isOpen)}
@@ -127,11 +124,11 @@ const AddOnsSubscriptionCard = ({
           >
             {cloudAccounts &&
               cloudAccounts[cloudProvider].map(({ cloud_account_id: accountId }) => (
-                <SelectOption key={accountId} value={accountId}>
+                <SelectOptionDeprecated key={accountId} value={accountId}>
                   {accountId}
-                </SelectOption>
+                </SelectOptionDeprecated>
               ))}
-          </Select>
+          </SelectDeprecated>
         </CardFooter>
       )}
     </Card>

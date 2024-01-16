@@ -1,11 +1,13 @@
 import React, { useContext } from 'react';
-import { Button, WizardContext } from '@patternfly/react-core';
+import { Button } from '@patternfly/react-core';
+import { WizardContext as WizardContextDeprecated } from '@patternfly/react-core/deprecated';
+
 import { getAccountAndRolesStepId } from '~/components/clusters/CreateROSAPage/CreateROSAWizard/rosaWizardConstants';
 import { HYPERSHIFT_WIZARD_FEATURE } from '~/redux/constants/featureConstants';
 import { useFeatureGate } from '~/hooks/useFeatureGate';
 
 export const BackToAssociateAwsAccountLink = () => {
-  const { goToStepById } = useContext(WizardContext);
+  const { goToStepById } = useContext(WizardContextDeprecated);
   const isHypershiftEnabled = useFeatureGate(HYPERSHIFT_WIZARD_FEATURE);
   const accountStepId = getAccountAndRolesStepId(isHypershiftEnabled);
   return (

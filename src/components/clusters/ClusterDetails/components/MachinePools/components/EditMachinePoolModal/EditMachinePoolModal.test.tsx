@@ -27,11 +27,7 @@ describe('<EditMachinePoolModal />', () => {
           }}
         />,
       );
-      expect(
-        screen.getByRole('alert', {
-          name: /danger alert/i,
-        }),
-      ).toBeInTheDocument();
+      expect(screen.getByTestId('alert-error')).toBeInTheDocument();
 
       expect(screen.getByTestId('submit-btn')).toBeDisabled();
       expect(screen.getByTestId('cancel-btn')).toBeEnabled();
@@ -58,11 +54,7 @@ describe('<EditMachinePoolModal />', () => {
           }}
         />,
       );
-      expect(
-        screen.getByRole('alert', {
-          name: /danger alert/i,
-        }),
-      ).toBeInTheDocument();
+      expect(screen.getByTestId('alert-error')).toBeInTheDocument();
 
       expect(screen.getByTestId('submit-btn')).toBeDisabled();
       expect(screen.getByTestId('cancel-btn')).toBeEnabled();

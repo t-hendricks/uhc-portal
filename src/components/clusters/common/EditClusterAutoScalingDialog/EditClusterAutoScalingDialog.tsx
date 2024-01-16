@@ -144,9 +144,9 @@ function EditClusterAutoScalingDialog({
         </Text>
 
         {!isWizard && (
-          <div className="pf-u-mt-md">
+          <div className="pf-v5-u-mt-md">
             <Switch
-              className="pf-u-ml-0 pf-u-mb-md"
+              className="pf-v5-u-ml-0 pf-v5-u-mb-md"
               label="Autoscale cluster"
               labelOff="Autoscale cluster"
               isChecked={isScalingSelected}

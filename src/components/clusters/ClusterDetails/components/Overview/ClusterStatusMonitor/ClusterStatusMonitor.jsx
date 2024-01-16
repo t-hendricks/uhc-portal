@@ -5,7 +5,7 @@ import get from 'lodash/get';
 import PlusCircleIcon from '@patternfly/react-icons/dist/esm/icons/plus-circle-icon';
 import MinusCircleIcon from '@patternfly/react-icons/dist/esm/icons/minus-circle-icon';
 import { Alert, Flex, FlexItem, Button, ButtonVariant, Spinner } from '@patternfly/react-core';
-import { TableVariant, TableComposable, Thead, Tr, Th, Tbody, Td } from '@patternfly/react-table';
+import { TableVariant, Table, Thead, Tr, Th, Tbody, Td } from '@patternfly/react-table';
 import { HAD_INFLIGHT_ERROR_LOCALSTORAGE_KEY } from '~/common/localStorageConstants';
 
 import { InflightCheckState } from '~/types/clusters_mgmt.v1';
@@ -186,6 +186,7 @@ class clusterStatusMonitor extends React.Component {
             variant="warning"
             isInline
             title={`${errorCode} Installation is taking longer than expected`}
+            data-testid="alert-long-install"
           >
             {reason}
           </Alert>,
@@ -281,7 +282,7 @@ class clusterStatusMonitor extends React.Component {
           );
           inflightTable = (
             <>
-              <TableComposable
+              <Table
                 aria-label="Missing allowlist URLs"
                 variant={TableVariant.compact}
                 style={{ backgroundColor: 'unset' }}
@@ -295,7 +296,7 @@ class clusterStatusMonitor extends React.Component {
                   </Tr>
                 </Thead>
                 {subnets.map((subnet) => subnetRow(subnet))}
-              </TableComposable>
+              </Table>
               {hasMore && (
                 <Button
                   variant="link"
@@ -335,7 +336,7 @@ class clusterStatusMonitor extends React.Component {
                   </FlexItem>
                   <FlexItem>
                     {runningInflightCheck && (
-                      <span className="pf-u-mr-sm">
+                      <span className="pf-v5-u-mr-sm">
                         <Spinner size="sm" />
                       </span>
                     )}

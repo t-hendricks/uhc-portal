@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { ExternalLinkAltIcon } from '@patternfly/react-icons';
-import { Stack, StackItem, Text } from '@patternfly/react-core';
+import { ExternalLinkAltIcon } from '@patternfly/react-icons/dist/esm/icons/external-link-alt-icon';
+import { Stack, StackItem, Text, Icon } from '@patternfly/react-core';
 import { tools } from '../../../../../../common/installLinks.mjs';
 import RHCOSDownloadAndSelect from './RHCOSDownloadAndSelect';
 import DownloadButton from '../DownloadButton';
@@ -35,7 +35,7 @@ const RHCOSSection = (props) => {
       );
     });
     return (
-      <Stack hasGutter className="pf-u-mt-md">
+      <Stack hasGutter className="pf-v5-u-mt-md">
         {buttons}
       </Stack>
     );
@@ -49,7 +49,11 @@ const RHCOSSection = (props) => {
         )}{' '}
         {rhcos.learnMoreURL && (
           <Text component="a" href={rhcos.learnMoreURL} rel="noreferrer noopener" target="_blank">
-            Learn more <ExternalLinkAltIcon size="sm" />.
+            Learn more{' '}
+            <Icon size="sm">
+              <ExternalLinkAltIcon />
+            </Icon>
+            .
           </Text>
         )}
       </Text>

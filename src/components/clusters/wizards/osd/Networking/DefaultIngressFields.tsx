@@ -2,7 +2,7 @@ import React from 'react';
 
 import { FormGroup, GridItem, Split, SplitItem } from '@patternfly/react-core';
 import { Field } from 'formik';
-import { CheckboxField } from 'formik-pf';
+import { CheckboxField } from '~/components/clusters/wizards/form/CheckboxField';
 
 import { checkRouteSelectors, validateNamespacesList } from '~/common/validators';
 import {
@@ -15,6 +15,7 @@ import {
 } from '~/components/clusters/ClusterDetails/components/Networking/components/ApplicationIngressCard/ExcludedNamespacesPopover';
 import { NamespaceOwnerPolicyPopover } from '~/components/clusters/ClusterDetails/components/Networking/components/ApplicationIngressCard/NamespaceOwnerPolicyPopover';
 import { WildcardPolicyPopover } from '~/components/clusters/ClusterDetails/components/Networking/components/ApplicationIngressCard/WildcardsPolicyPopover';
+import { FormGroupHelperText } from '~/components/common/FormGroupHelperText';
 
 import { useFormState } from '../../hooks';
 import { FieldId } from '../constants';
@@ -30,50 +31,46 @@ export const DefaultIngressFields: React.FC<DefaultIngressFieldsProps> = () => {
   return (
     <>
       <GridItem span={9}>
-        <FormGroup
-          label="Route selector"
-          labelIcon={<RouteSelectorsPopover />}
-          helperText={RouteSelectorsHelpText}
-          helperTextInvalid={routeSelectorFieldMeta.error}
-          validated={routeSelectorFieldMeta.error ? 'error' : 'default'}
-        >
+        <FormGroup label="Route selector" labelIcon={<RouteSelectorsPopover />}>
           <Field
             name={FieldId.DefaultRouterSelectors}
             type="text"
             validate={checkRouteSelectors}
-            className="pf-u-w-100"
+            className="pf-v5-u-w-100"
             input={{
               ...getFieldProps(FieldId.DefaultRouterSelectors),
               onChange: (value: string) =>
                 setFieldValue(FieldId.DefaultRouterSelectors, value, false),
             }}
           />
+
+          <FormGroupHelperText touched error={routeSelectorFieldMeta.error}>
+            {RouteSelectorsHelpText}
+          </FormGroupHelperText>
         </FormGroup>
       </GridItem>
 
       <GridItem span={9}>
-        <FormGroup
-          label="Excluded namespaces"
-          labelIcon={<ExcludedNamespacesPopover />}
-          helperText={ExcludedNamespacesHelpText}
-          helperTextInvalid={excludedNamespacesFieldMeta.error}
-          validated={excludedNamespacesFieldMeta.error ? 'error' : 'default'}
-        >
+        <FormGroup label="Excluded namespaces" labelIcon={<ExcludedNamespacesPopover />}>
           <Field
             name={FieldId.DefaultRouterExcludedNamespacesFlag}
             type="text"
             validate={validateNamespacesList}
-            className="pf-u-w-100"
+            className="pf-v5-u-w-100"
             input={{
               ...getFieldProps(FieldId.DefaultRouterExcludedNamespacesFlag),
               onChange: (value: string) =>
                 setFieldValue(FieldId.DefaultRouterExcludedNamespacesFlag, value, false),
             }}
           />
+
+          <FormGroupHelperText touched error={excludedNamespacesFieldMeta.error}>
+            {ExcludedNamespacesHelpText}
+          </FormGroupHelperText>
         </FormGroup>
       </GridItem>
 
-      <Split hasGutter className="pf-u-mb-0">
+      <Split hasGutter className="pf-v5-u-mb-0">
         <SplitItem>
           <CheckboxField
             name={FieldId.IsDefaultRouterNamespaceOwnershipPolicyStrict}
@@ -85,7 +82,7 @@ export const DefaultIngressFields: React.FC<DefaultIngressFieldsProps> = () => {
         </SplitItem>
       </Split>
 
-      <Split hasGutter className="pf-u-mb-0">
+      <Split hasGutter className="pf-v5-u-mb-0">
         <SplitItem>
           <CheckboxField
             name={FieldId.IsDefaultRouterWildcardPolicyAllowed}

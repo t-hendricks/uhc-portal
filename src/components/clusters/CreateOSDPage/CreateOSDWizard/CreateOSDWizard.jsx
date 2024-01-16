@@ -2,15 +2,12 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { Redirect } from 'react-router-dom';
 
+import { Banner, Grid, PageSection, Button } from '@patternfly/react-core';
 import {
-  Banner,
-  Wizard,
-  Grid,
-  PageSection,
-  WizardFooter,
-  WizardContext,
-  Button,
-} from '@patternfly/react-core';
+  Wizard as WizardDeprecated,
+  WizardFooter as WizardFooterDeprecated,
+  WizardContext as WizardContextDeprecated,
+} from '@patternfly/react-core/deprecated';
 
 import { Spinner } from '@redhat-cloud-services/frontend-components';
 
@@ -407,7 +404,7 @@ class CreateOSDWizardInternal extends React.Component {
         name: stepNameById[stepId.REVIEW_AND_CREATE],
         component: (
           <ErrorBoundary>
-            <WizardContext.Consumer>
+            <WizardContextDeprecated.Consumer>
               {({ goToStepById }) => (
                 <ReviewClusterScreen
                   isCreateClusterPending={createClusterResponse.pending}
@@ -415,7 +412,7 @@ class CreateOSDWizardInternal extends React.Component {
                   goToStepById={goToStepById}
                 />
               )}
-            </WizardContext.Consumer>
+            </WizardContextDeprecated.Consumer>
             {isErrorModalOpen && <CreateClusterErrorModal onRetry={onSubmit} />}
           </ErrorBoundary>
         ),
@@ -507,8 +504,8 @@ class CreateOSDWizardInternal extends React.Component {
     }
 
     const footer = (
-      <WizardFooter>
-        <WizardContext.Consumer>
+      <WizardFooterDeprecated>
+        <WizardContextDeprecated.Consumer>
           {({ activeStep, onNext, onBack, onClose }) => (
             <>
               {activeStep.id === stepId.REVIEW_AND_CREATE ? (
@@ -545,8 +542,8 @@ class CreateOSDWizardInternal extends React.Component {
               </Button>
             </>
           )}
-        </WizardContext.Consumer>
-      </WizardFooter>
+        </WizardContextDeprecated.Consumer>
+      </WizardFooterDeprecated>
     );
 
     return (
@@ -554,10 +551,10 @@ class CreateOSDWizardInternal extends React.Component {
         {title}
         <PageSection>
           {config.fakeOSD && (
-            <Banner variant="warning">On submit, a fake OSD cluster will be created.</Banner>
+            <Banner variant="gold">On submit, a fake OSD cluster will be created.</Banner>
           )}
           <div className="ocm-page">
-            <Wizard
+            <WizardDeprecated
               className="osd-wizard"
               navAriaLabel={`${ariaTitle} steps`}
               mainAriaLabel={`${ariaTitle} content`}

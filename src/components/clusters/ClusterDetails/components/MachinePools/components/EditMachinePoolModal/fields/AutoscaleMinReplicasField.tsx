@@ -3,6 +3,7 @@ import { useField } from 'formik';
 import * as React from 'react';
 import { isMultiAZ } from '~/components/clusters/ClusterDetails/clusterDetailsHelper';
 import { MAX_NODES } from '~/components/clusters/common/machinePools/constants';
+import { FormGroupHelperText } from '~/components/common/FormGroupHelperText';
 import { Cluster } from '~/types/clusters_mgmt.v1';
 import useFormikOnChange from '../hooks/useFormikOnChange';
 
@@ -26,14 +27,7 @@ const AutoscaleMinReplicasField = ({
   const maxNodes = isMultiAz ? MAX_NODES / 3 : MAX_NODES;
 
   return (
-    <FormGroup
-      fieldId={fieldId}
-      label="Minimum nodes count"
-      isRequired
-      helperText={isMultiAz && `x 3 zones = ${field.value * 3}`}
-      validated={touched && error ? 'error' : 'default'}
-      helperTextInvalid={touched ? error : undefined}
-    >
+    <FormGroup fieldId={fieldId} label="Minimum nodes count" isRequired>
       <NumberInput
         {...field}
         onPlus={() => onChange(field.value + 1)}
@@ -46,6 +40,10 @@ const AutoscaleMinReplicasField = ({
         min={minNodes}
         max={maxNodes}
       />
+
+      <FormGroupHelperText touched={touched} error={error}>
+        {isMultiAz && `x 3 zones = ${field.value * 3}`}
+      </FormGroupHelperText>
     </FormGroup>
   );
 };

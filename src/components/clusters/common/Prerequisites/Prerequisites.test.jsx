@@ -13,7 +13,7 @@ describe('<Prerequisites/>', () => {
   it('is expanded when initiallyExpanded is set to true', async () => {
     const { container } = render(<Prerequisites initiallyExpanded>{Children}</Prerequisites>);
 
-    expect(container.querySelector('.pf-c-expandable-section__content')).not.toHaveAttribute(
+    expect(container.querySelector('.pf-v5-c-expandable-section__content')).not.toHaveAttribute(
       'hidden',
     );
     expect(
@@ -29,12 +29,14 @@ describe('<Prerequisites/>', () => {
         {Children}
       </ConnectedPrerequisites>,
     );
-    expect(container.querySelector('.pf-c-expandable-section__content')).toHaveAttribute('hidden');
+    expect(container.querySelector('.pf-v5-c-expandable-section__content')).toHaveAttribute(
+      'hidden',
+    );
     expect(
       screen.getByText('Before continuing, confirm that all prerequisites are met'),
     ).not.toBeVisible();
 
-    expect(screen.getByLabelText(inputLabel)).toBeInTheDocument();
+    expect(screen.getByText(inputLabel)).toBeInTheDocument();
 
     // There is an error where the checkbox is required but is not coded as such
     // expect(screen.getByLabelText(inputLabel)).toBeRequired();

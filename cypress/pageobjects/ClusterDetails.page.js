@@ -2,7 +2,8 @@ import PropTypes from 'prop-types';
 import Page from './page';
 
 class ClusterDetails extends Page {
-  isClusterDetailsPage = (displayName) => cy.contains('h1', displayName, { timeout: 10000 });
+  isClusterDetailsPage = (displayName) =>
+    cy.contains('.cl-details-page-title', displayName, { timeout: 10000 });
 
   addConsoleURLButton = () => cy.get('button').contains('Add console URL');
 
@@ -39,10 +40,10 @@ class ClusterDetails extends Page {
   archiveClusterDialogConfirm = () =>
     cy.get('div[aria-label="Archive cluster"]').find('footer').find('button').first();
 
-  successNotification = () => cy.get('div.pf-c-alert.pf-m-success.notification-item');
+  successNotification = () => cy.get('div.pf-v5-c-alert.pf-m-success.notification-item');
 
   unarchiveClusterButton = () =>
-    cy.get('span[id="cl-details-btns"]').contains('button', 'Unarchive', { timeout: 15000 });
+    cy.get('[id="cl-details-btns"]').contains('button', 'Unarchive', { timeout: 15000 });
 
   waitForUnarchiveClusterModalToLoad = () => {
     cy.getByTestId(' unarchive-cluster-dialog', { timeout: 30000 }).should('be.visible');
@@ -174,7 +175,7 @@ class ClusterDetails extends Page {
   }
 
   checkInstallationStepStatus(step, status = '') {
-    let installStep = cy.get('div.pf-c-progress-stepper__step-title').contains(step);
+    let installStep = cy.get('div.pf-v5-c-progress-stepper__step-title').contains(step);
     if (status == '') {
       installStep.should('be.visible');
     } else {
@@ -183,7 +184,7 @@ class ClusterDetails extends Page {
   }
 
   waitForInstallerScreenToLoad = () => {
-    cy.get('li.pf-c-wizard__nav-item', { timeout: 30000 }).should('not.exist');
+    cy.get('li.pf-v5-c-wizard__nav-item', { timeout: 30000 }).should('not.exist');
     cy.get('div.cluster-loading-container', { timeout: 100000 }).should('not.exist');
   };
 

@@ -17,7 +17,7 @@ export const AwsRoleErrorAlert = ({ title, targetRole }: AwsRoleErrorAlertProps)
   );
   return (
     <Alert variant="danger" isInline title={title}>
-      <TextContent className="pf-u-font-size-sm">
+      <TextContent className="pf-v5-u-font-size-sm">
         <Text component={TextVariants.p}>
           To continue,{' '}
           <Button variant="link" isInline onClick={onClick}>

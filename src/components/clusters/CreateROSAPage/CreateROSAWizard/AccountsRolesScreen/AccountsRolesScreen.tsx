@@ -182,7 +182,7 @@ function AccountsRolesScreen({
 
   return (
     <Form onSubmit={() => false}>
-      <Grid hasGutter className="pf-u-mt-md">
+      <Grid hasGutter className="pf-v5-u-mt-md">
         {!isHypershiftEnabled && (
           <>
             <GridItem span={12}>
@@ -231,7 +231,8 @@ function AccountsRolesScreen({
           />
           <Button
             variant="secondary"
-            className="pf-u-mt-md"
+            className="pf-v5-u-mt-md"
+            data-testid="launch-associate-account-btn"
             ref={openDrawerButtonRef}
             onClick={onClick}
           >
@@ -262,7 +263,7 @@ function AccountsRolesScreen({
         )}
 
         {(getUserRoleResponse?.error || noUserForSelectedAWSAcct) && (
-          <GridItem span={8} className="pf-u-mt-sm">
+          <GridItem span={8} className="pf-v5-u-mt-sm">
             <AwsRoleErrorAlert title="A user-role could not be detected" targetRole="user" />
           </GridItem>
         )}

@@ -2,11 +2,14 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import get from 'lodash/get';
 import dayjs from 'dayjs';
-import { Popover, PopoverPosition, Button } from '@patternfly/react-core';
-import { ExclamationTriangleIcon, ExclamationCircleIcon } from '@patternfly/react-icons';
+import { Popover, PopoverPosition, Button, Icon } from '@patternfly/react-core';
+import { ExclamationTriangleIcon } from '@patternfly/react-icons/dist/esm/icons/exclamation-triangle-icon';
+import { ExclamationCircleIcon } from '@patternfly/react-icons/dist/esm/icons/exclamation-circle-icon';
 import { DateFormat } from '@redhat-cloud-services/frontend-components/DateFormat';
 // eslint-disable-next-line camelcase
-import { global_warning_color_100, global_danger_color_100 } from '@patternfly/react-tokens';
+import { global_warning_color_100 } from '@patternfly/react-tokens/dist/esm/global_warning_color_100';
+// eslint-disable-next-line camelcase
+import { global_danger_color_100 } from '@patternfly/react-tokens/dist/esm/global_danger_color_100';
 import ExternalLink from '../../../common/ExternalLink';
 import {
   subscriptionSupportLevels,
@@ -45,7 +48,11 @@ function ClusterCreatedIndicator({ cluster }) {
         <Button
           variant="link"
           isInline
-          icon={<ExclamationTriangleIcon color={global_warning_color_100.value} />}
+          icon={
+            <Icon>
+              <ExclamationTriangleIcon color={global_warning_color_100.value} />
+            </Icon>
+          }
         >
           {trialExpiresStr}
           &nbsp; left
@@ -77,7 +84,11 @@ function ClusterCreatedIndicator({ cluster }) {
         <Button
           variant="link"
           isInline
-          icon={<ExclamationCircleIcon color={global_danger_color_100.value} />}
+          icon={
+            <Icon>
+              <ExclamationCircleIcon color={global_danger_color_100.value} />
+            </Icon>
+          }
         >
           Evaluation expired
         </Button>
@@ -127,7 +138,11 @@ function ClusterCreatedIndicator({ cluster }) {
       <Button
         variant="link"
         isInline
-        icon={<ExclamationTriangleIcon color={global_warning_color_100.value} />}
+        icon={
+          <Icon>
+            <ExclamationTriangleIcon color={global_warning_color_100.value} />
+          </Icon>
+        }
       >
         {OCPTrialExpiresStr}
         &nbsp; left

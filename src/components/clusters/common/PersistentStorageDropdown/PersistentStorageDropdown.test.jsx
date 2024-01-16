@@ -53,9 +53,7 @@ describe('<PersistentStorageDropdown />', () => {
       const { container } = render(<PersistentStorageDropdown {...errorProps} />);
 
       expect(
-        within(screen.getByRole('alert', { name: 'Danger Alert' })).getByText(
-          'This is an error message',
-        ),
+        within(screen.getByTestId('alert-error')).getByText('This is an error message'),
       ).toBeInTheDocument();
       await checkAccessibility(container);
     });

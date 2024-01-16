@@ -15,7 +15,7 @@ const ToggleGroupTabs = ({ tabs }: ToggleGroupTabsProps) => {
       activeKey={activeTabKey}
       onSelect={(event, key) => setActiveTabKey(key)}
       isBox
-      className="pf-u-mt-lg associate-roles-drawer__tabs pf-u-mb-sm"
+      className="pf-v5-u-mt-lg associate-roles-drawer__tabs pf-v5-u-mb-sm"
     >
       {tabs.map((tab, index) => (
         <Tab eventKey={index} title={<TabTitleText>{tab.title}</TabTitleText>}>

@@ -81,7 +81,7 @@ describe('<TransferClusterOwnershipDialog />', () => {
 
     render(<TransferClusterOwnershipDialog {...errorProps} />);
     expect(screen.getByRole('dialog')).toBeInTheDocument();
-    expect(screen.getByRole('alert')).toBeInTheDocument();
+    expect(screen.getByTestId('alert-error')).toBeInTheDocument();
   });
 
   it('should display modal when subscription is undefined', () => {

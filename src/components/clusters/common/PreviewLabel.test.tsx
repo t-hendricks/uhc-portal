@@ -4,12 +4,12 @@ import * as hooks from '~/redux/hooks';
 import { PreviewLabel, createdPostGa, GA_DATE_STR } from './PreviewLabel';
 
 const expectLabelToBePresent = (container: HTMLElement) => {
-  expect(container.querySelector('.pf-c-label')).toBeInTheDocument();
+  expect(container.querySelector('.pf-v5-c-label')).toBeInTheDocument();
   expect(screen.getByText('Preview')).toBeInTheDocument();
 };
 
 const expectLabelToBeAbsent = (container: HTMLElement) => {
-  expect(container.querySelector('.pf-c-label')).not.toBeInTheDocument();
+  expect(container.querySelector('.pf-v5-c-label')).not.toBeInTheDocument();
   expect(screen.queryByText('Preview')).not.toBeInTheDocument();
 };
 

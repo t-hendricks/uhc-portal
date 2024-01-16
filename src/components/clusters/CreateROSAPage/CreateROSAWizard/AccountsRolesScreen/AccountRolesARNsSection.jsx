@@ -18,7 +18,6 @@ import {
   Title,
   Label,
 } from '@patternfly/react-core';
-import spacing from '@patternfly/react-styles/css/utilities/Spacing/spacing';
 import { Spinner } from '@redhat-cloud-services/frontend-components/Spinner';
 import links from '~/common/installLinks.mjs';
 import { trackEvents } from '~/common/analytics';
@@ -476,7 +475,7 @@ function AccountRolesARNsSection({
                   >
                     {rolesOutOfDate && !(hasStandaloneManagedRole || isHypershiftSelected) && (
                       <TextContent>
-                        <Text component={TextVariants.p} className={spacing.mtSm}>
+                        <Text component={TextVariants.p} className="pf-v5-u-mt-sm">
                           <strong>
                             To update account roles to the latest OpenShift version (
                             {formatMinorVersion(latestOCPVersion)}):
@@ -490,7 +489,7 @@ function AccountRolesARNsSection({
                               <Link to="/downloads#tool-rosa">rosa</Link> CLIs
                             </Text>
                           </TextListItem>
-                          <TextListItem className="pf-u-mb-sm">
+                          <TextListItem className="pf-v5-u-mb-sm">
                             <Text component={TextVariants.p}>Recreate ARNs using</Text>
                             <Text component={TextVariants.p}>
                               <InstructionCommand textAriaLabel="Copyable ROSA create account-roles command">

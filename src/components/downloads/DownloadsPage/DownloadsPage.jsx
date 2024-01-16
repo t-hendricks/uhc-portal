@@ -12,16 +12,9 @@ import {
   TextContent,
 } from '@patternfly/react-core';
 import { PageHeader, PageHeaderTitle } from '@redhat-cloud-services/frontend-components/PageHeader';
-import {
-  TableComposable,
-  Thead,
-  Tbody,
-  Tr,
-  Th,
-  Td,
-  ExpandableRowContent,
-} from '@patternfly/react-table';
-import { ArrowRightIcon } from '@patternfly/react-icons';
+import { Thead, Tbody, Tr, Th, Td, ExpandableRowContent } from '@patternfly/react-table';
+import { Table as TableDeprecated } from '@patternfly/react-table/deprecated';
+import { ArrowRightIcon } from '@patternfly/react-icons/dist/esm/icons/arrow-right-icon';
 import { Link } from 'react-router-dom';
 import * as OCM from '@openshift-assisted/ui-lib/ocm';
 
@@ -184,7 +177,7 @@ export const downloadChoice = (
   const { OS, architecture } =
     selections[tool] || initialSelection(urls, tool, channel, detectOS());
   // Callbacks for dropdowns:
-  const onChangeOS = (newOS) => {
+  const onChangeOS = (_event, newOS) => {
     let newArchitecture = architecture;
     // Invalidate arch selection if not compatible
     if (!has(urls, [tool, channel, architecture, newOS])) {
@@ -193,7 +186,7 @@ export const downloadChoice = (
     }
     setSelections({ ...selections, [tool]: { OS: newOS, architecture: newArchitecture } });
   };
-  const onChangeArchitecture = (newArchitecture) => {
+  const onChangeArchitecture = (_event, newArchitecture) => {
     setSelections({ ...selections, [tool]: { OS, architecture: newArchitecture } });
   };
 
@@ -948,7 +941,7 @@ class DownloadsPage extends React.Component {
     window.removeEventListener('hashchange', this.focusRowByHash);
   }
 
-  setCategory = (selectedCategory) => {
+  setCategory = (_event, selectedCategory) => {
     const { expanded } = this.state;
     this.setState({ selectedCategory });
     this.updateURL(selectedCategory, expanded);
@@ -972,7 +965,7 @@ class DownloadsPage extends React.Component {
    */
   updateURL = (selectedCategory, expanded) => {
     let lastExpanded = null;
-    const shownKeys = downloadsCategories.find((c) => c.key === selectedCategory).tools;
+    const shownKeys = downloadsCategories.find((c) => c.key === selectedCategory)?.tools;
     shownKeys.forEach((key) => {
       if (expanded[key]) {
         lastExpanded = key;
@@ -1019,8 +1012,8 @@ class DownloadsPage extends React.Component {
     const urls = urlsSelector(githubReleases);
 
     // Expand if at least one collapsed, collapse if all expanded.
-    const shownKeys = downloadsCategories.find((c) => c.key === selectedCategory).tools;
-    const allExpanded = shownKeys.every((key) => expanded[key]);
+    const shownKeys = downloadsCategories.find((c) => c.key === selectedCategory)?.tools;
+    const allExpanded = shownKeys?.every((key) => expanded[key]);
     const willExpandAll = !allExpanded;
 
     const expandCollapseAll = () => {
@@ -1075,7 +1068,7 @@ class DownloadsPage extends React.Component {
                 </Text>
               }
             >
-              <TableComposable aria-label="CLI tools table">
+              <TableDeprecated aria-label="CLI tools table">
                 <ColumnHeadings />
                 {cliToolRows(
                   expanded,
@@ -1085,7 +1078,7 @@ class DownloadsPage extends React.Component {
                   this.toolRefs,
                   urls,
                 )}
-              </TableComposable>
+              </TableDeprecated>
             </DownloadsSection>
 
             {!isRestrictedEnv() && (
@@ -1103,7 +1096,7 @@ class DownloadsPage extends React.Component {
                     </Text>
                   }
                 >
-                  <TableComposable aria-label="Developer tools table">
+                  <TableDeprecated aria-label="Developer tools table">
                     <ColumnHeadings />
                     {devToolRows(
                       expanded,
@@ -1113,7 +1106,7 @@ class DownloadsPage extends React.Component {
                       this.toolRefs,
                       urls,
                     )}
-                  </TableComposable>
+                  </TableDeprecated>
                 </DownloadsSection>
                 <DownloadsSection
                   selectedCategory={selectedCategory}
@@ -1128,7 +1121,7 @@ class DownloadsPage extends React.Component {
                     </Text>
                   }
                 >
-                  <TableComposable aria-label="OpenShift installation table">
+                  <TableDeprecated aria-label="OpenShift installation table">
                     <ColumnHeadings />
                     {installationRows(
                       expanded,
@@ -1138,7 +1131,7 @@ class DownloadsPage extends React.Component {
                       this.toolRefs,
                       urls,
                     )}
-                  </TableComposable>
+                  </TableDeprecated>
                 </DownloadsSection>
 
                 <DownloadsSection
@@ -1150,7 +1143,7 @@ class DownloadsPage extends React.Component {
                     </Text>
                   }
                 >
-                  <TableComposable aria-label="OpenShift disconnected installation tools table">
+                  <TableDeprecated aria-label="OpenShift disconnected installation tools table">
                     <ColumnHeadings />
                     {disconnectedInstallationRows(
                       expanded,
@@ -1160,7 +1153,7 @@ class DownloadsPage extends React.Component {
                       this.toolRefs,
                       urls,
                     )}
-                  </TableComposable>
+                  </TableDeprecated>
                 </DownloadsSection>
 
                 <DownloadsSection
@@ -1173,7 +1166,7 @@ class DownloadsPage extends React.Component {
                     </Text>
                   }
                 >
-                  <TableComposable aria-label="OpenShift installation customization downloads table">
+                  <TableDeprecated aria-label="OpenShift installation customization downloads table">
                     <ColumnHeadings />
                     {customInstallationRows(
                       expanded,
@@ -1183,16 +1176,16 @@ class DownloadsPage extends React.Component {
                       this.toolRefs,
                       urls,
                     )}
-                  </TableComposable>
+                  </TableDeprecated>
                 </DownloadsSection>
               </>
             )}
 
             <DownloadsSection category="TOKENS" selectedCategory={selectedCategory}>
-              <TableComposable aria-label="Tokens table">
+              <TableDeprecated aria-label="Tokens table">
                 <TokensHeadings />
                 {tokenRows(expanded, this.setExpanded, this.toolRefs, token)}
-              </TableComposable>
+              </TableDeprecated>
             </DownloadsSection>
           </PageSection>
         </PageSection>
