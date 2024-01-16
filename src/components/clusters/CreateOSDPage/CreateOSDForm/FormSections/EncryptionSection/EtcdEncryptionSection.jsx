@@ -25,11 +25,17 @@ function EtcdEncryptionSection({
         <Field
           component={ReduxCheckbox}
           name="etcd_encryption"
-          label="Enable additional etcd encryption"
+          label={
+            isHypershiftSelected
+              ? 'Encrypt etcd with a custom KMS key'
+              : 'Enable additional etcd encryption'
+          }
           isDisabled={isFipsCryptoSelected}
           extendedHelpText={
             <>
-              {constants.enableAdditionalEtcdHint}{' '}
+              {isHypershiftSelected
+                ? constants.enableAdditionalEtcdHypershiftHint
+                : constants.enableAdditionalEtcdHint}{' '}
               <ExternalLink
                 href={isRosa ? links.ROSA_SERVICE_ETCD_ENCRYPTION : links.OSD_ETCD_ENCRYPTION}
               >
@@ -40,7 +46,9 @@ function EtcdEncryptionSection({
         />
 
         <div className="ocm-c--reduxcheckbox-description">
-          Add more encryption for OpenShift and Kubernetes API resources.
+          {isHypershiftSelected
+            ? 'Etcd is always encrypted, but you can specify a custom KMS key if desired.'
+            : 'Add more encryption for OpenShift and Kubernetes API resources.'}
         </div>
         {needsCustomEtcdKey && (
           <GridItem>
