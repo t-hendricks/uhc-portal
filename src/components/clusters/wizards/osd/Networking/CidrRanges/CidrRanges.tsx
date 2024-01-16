@@ -19,7 +19,7 @@ import { constants } from '~/components/clusters/CreateOSDPage/CreateOSDForm/Cre
 import {
   HOST_PREFIX_DEFAULT,
   MACHINE_CIDR_DEFAULT,
-  podCidrDefaultValue,
+  POD_CIDR_DEFAULT,
   SERVICE_CIDR_DEFAULT,
 } from '~/components/clusters/CreateOSDPage/CreateOSDForm/FormSections/NetworkingSection/networkingConstants';
 import ExternalLink from '~/components/common/ExternalLink';
@@ -51,9 +51,9 @@ export const CidrRanges = () => {
 
   React.useEffect(() => {
     if (networkPodCidr === undefined) {
-      setFieldValue(FieldId.NetworkPodCidr, podCidrDefaultValue(cloudProvider));
+      setFieldValue(FieldId.NetworkPodCidr, POD_CIDR_DEFAULT);
     }
-  }, [cloudProvider, networkPodCidr, setFieldValue]);
+  }, [networkPodCidr, setFieldValue]);
 
   const awsMachineCIDRMax = isMultiAz
     ? validators.AWS_MACHINE_CIDR_MAX_MULTI_AZ
@@ -80,7 +80,7 @@ export const CidrRanges = () => {
     if (checked) {
       setFieldValue(FieldId.NetworkMachineCidr, MACHINE_CIDR_DEFAULT);
       setFieldValue(FieldId.NetworkServiceCidr, SERVICE_CIDR_DEFAULT);
-      setFieldValue(FieldId.NetworkPodCidr, podCidrDefaultValue(cloudProvider));
+      setFieldValue(FieldId.NetworkPodCidr, POD_CIDR_DEFAULT);
       setFieldValue(FieldId.NetworkHostPrefix, HOST_PREFIX_DEFAULT);
 
       // Untouch all fields after setting defaults to reset validation
@@ -211,7 +211,7 @@ export const CidrRanges = () => {
                   </Text>
                 </>
               }
-              input={{ placeholder: podCidrDefaultValue(cloudProvider) }}
+              input={{ placeholder: POD_CIDR_DEFAULT }}
             />
           </GridItem>
 
