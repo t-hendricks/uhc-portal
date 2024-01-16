@@ -107,4 +107,17 @@ describe('clusterService', () => {
       '/api/clusters_mgmt/v1/products/myProduct/technology_previews/myType',
     );
   });
+
+  it('call to get enabled add ons', async () => {
+    apiRequestMock.get.mockResolvedValue({});
+
+    await clusterService.getEnabledAddOns('myClusterId');
+    expect(apiRequestMock.get).toHaveBeenCalledTimes(1);
+    const mockGetCallParams = apiRequestMock.get.mock.calls[0];
+
+    expect(mockGetCallParams[0]).toEqual(
+      '/api/clusters_mgmt/v1/clusters/myClusterId/addon_inquiries',
+    );
+    expect(getApiGetParams().search).toContain("enabled='t'");
+  });
 });

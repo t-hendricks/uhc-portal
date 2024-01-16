@@ -295,7 +295,7 @@ const createNewDnsDomain = () =>
 const deleteDnsDomain = (id: string) =>
   apiRequest.delete<unknown>(`/api/clusters_mgmt/v1/dns_domains/${id}`, {});
 
-const getAddOns = (clusterID: string) =>
+const getEnabledAddOns = (clusterID: string) =>
   apiRequest.get<{
     /**
      * Retrieved list of add-ons.
@@ -314,7 +314,13 @@ const getAddOns = (clusterID: string) =>
      * regardless of the size of the page.
      */
     total?: number;
-  }>(`/api/clusters_mgmt/v1/clusters/${clusterID}/addon_inquiries`);
+  }>(`/api/clusters_mgmt/v1/clusters/${clusterID}/addon_inquiries`, {
+    // Request all enabled add-ons
+    params: {
+      size: -1,
+      search: `enabled='t'`,
+    },
+  });
 
 const getClusterAddOns = (clusterID: string) =>
   apiRequest.get<AddOn>(`/api/clusters_mgmt/v1/clusters/${clusterID}/addons`);
@@ -1003,7 +1009,7 @@ const clusterService = {
   getDnsDomains,
   createNewDnsDomain,
   deleteDnsDomain,
-  getAddOns,
+  getEnabledAddOns,
   getClusterAddOns,
   addClusterAddOn,
   updateClusterAddOn,
