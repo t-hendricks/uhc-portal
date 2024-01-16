@@ -34,7 +34,7 @@ describe('<IDPSection />', () => {
   it('should render (no IDPs)', async () => {
     const { container } = render(<IDPSection {...props} />);
     expect(screen.queryByRole('grid')).not.toBeInTheDocument();
-    expect(container.querySelectorAll('.pf-c-skeleton').length).toBe(0);
+    expect(container.querySelectorAll('.pf-v5-c-skeleton').length).toBe(0);
     await checkAccessibility(container);
   });
 
@@ -47,7 +47,7 @@ describe('<IDPSection />', () => {
 
     const newProps = { ...props, identityProviders: IDPs };
     const { container } = render(<IDPSection {...newProps} />);
-    expect(container.querySelectorAll('.pf-c-skeleton').length).toBeGreaterThan(0);
+    expect(container.querySelectorAll('.pf-v5-c-skeleton').length).toBeGreaterThan(0);
     await checkAccessibility(container);
   });
 
@@ -75,7 +75,7 @@ describe('<IDPSection />', () => {
       expect(screen.getByRole('grid')).toBeInTheDocument();
       expect(screen.getByRole('cell', { name: 'hi' })).toBeInTheDocument();
       expect(screen.getByRole('cell', { name: 'hello' })).toBeInTheDocument();
-      expect(container.querySelectorAll('.pf-c-skeleton').length).toBe(0);
+      expect(container.querySelectorAll('.pf-v5-c-skeleton').length).toBe(0);
       await checkAccessibility(container);
     });
 
@@ -85,7 +85,7 @@ describe('<IDPSection />', () => {
       expect(screen.getByRole('grid')).toBeInTheDocument();
       expect(screen.getByRole('cell', { name: 'hi' })).toBeInTheDocument();
       expect(screen.getByRole('cell', { name: 'hello' })).toBeInTheDocument();
-      expect(container.querySelectorAll('.pf-c-skeleton').length).toBe(0);
+      expect(container.querySelectorAll('.pf-v5-c-skeleton').length).toBe(0);
       await checkAccessibility(container);
     });
   });

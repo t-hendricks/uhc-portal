@@ -1,18 +1,17 @@
 import React from 'react';
+import { FormGroup, GridItem } from '@patternfly/react-core';
 import {
-  FormGroup,
-  GridItem,
-  Select,
-  SelectOption,
-  SelectOptionObject,
-  SelectVariant,
-} from '@patternfly/react-core';
+  Select as SelectDeprecated,
+  SelectOption as SelectOptionDeprecated,
+  SelectOptionObject as SelectOptionObjectDeprecated,
+} from '@patternfly/react-core/deprecated';
 
 import { CloudVPC } from '~/types/clusters_mgmt.v1';
 import { truncateTextWithEllipsis } from '~/common/helpers';
 import { securityGroupsSort } from '~/components/clusters/CreateOSDPage/CreateOSDWizard/ccsInquiriesReducer';
 import { validateSecurityGroups } from '~/common/validators';
 
+import { FormGroupHelperText } from '~/components/common/FormGroupHelperText';
 import SecurityGroupsViewList from './SecurityGroupsViewList';
 
 export interface EditSecurityGroupsProps {
@@ -73,7 +72,7 @@ const EditSecurityGroups = ({
 
   const onSelect = (
     _: React.MouseEvent | React.ChangeEvent,
-    value: string | SelectOptionObject,
+    value: string | SelectOptionObjectDeprecated,
   ) => {
     const selectedGroupId = value as string;
     const wasPreviouslySelected = selectedGroupIds.includes(selectedGroupId);
@@ -94,26 +93,20 @@ const EditSecurityGroups = ({
 
   return (
     <GridItem>
-      <FormGroup
-        fieldId="securityGroupIds"
-        label={label}
-        className="pf-u-mt-md"
-        validated={validationError ? 'error' : 'default'}
-        helperTextInvalid={validationError}
-      >
+      <FormGroup fieldId="securityGroupIds" label={label} className="pf-v5-u-mt-md">
         <>
           <SecurityGroupsViewList
             securityGroups={selectedOptions}
             isReadOnly={false}
             onClickItem={onDeleteGroup}
           />
-          <Select
-            variant={SelectVariant.checkbox}
+          <SelectDeprecated
+            variant="checkbox"
             selections={selectedGroupIds}
             isOpen={isOpen}
             placeholderText="Select security groups"
             aria-labelledby="Select AWS security groups"
-            onToggle={(isExpanded) => setIsOpen(isExpanded)}
+            onToggle={(_event, isExpanded) => setIsOpen(isExpanded)}
             onSelect={onSelect}
             maxHeight={300}
             menuAppendTo={document.getElementById('edit-mp-modal') || undefined}
@@ -121,14 +114,20 @@ const EditSecurityGroups = ({
             {vpcSecurityGroups.map(({ id = '', name = '' }) => {
               const { displayName, isCut } = getDisplayName(name);
               return (
-                <SelectOption key={id} value={id} description={id} title={isCut ? name : ''}>
+                <SelectOptionDeprecated
+                  key={id}
+                  value={id}
+                  description={id}
+                  title={isCut ? name : ''}
+                >
                   {displayName}
-                </SelectOption>
+                </SelectOptionDeprecated>
               );
             })}
-          </Select>
+          </SelectDeprecated>
         </>
       </FormGroup>
+      <FormGroupHelperText touched error={validationError} />
     </GridItem>
   );
 };

@@ -1,15 +1,15 @@
 import React from 'react';
 import { WrappedFieldInputProps, WrappedFieldMetaProps } from 'redux-form';
 
+import { Flex, FormGroup, LabelProps } from '@patternfly/react-core';
+
 import {
-  Flex,
-  FormGroup,
-  LabelProps,
-  Select,
-  SelectOption,
-  SelectOptionObject,
-} from '@patternfly/react-core';
+  Select as SelectDeprecated,
+  SelectOption as SelectOptionDeprecated,
+  SelectOptionObject as SelectOptionObjectDeprecated,
+} from '@patternfly/react-core/deprecated';
 import PopoverHint from '../PopoverHint';
+import { FormGroupHelperText } from '../FormGroupHelperText';
 
 interface ReduxSelectOption {
   name: string;
@@ -44,28 +44,28 @@ export const ReduxSelectDropdown = ({
   const [isExpanded, setIsExpanded] = React.useState(false);
 
   const onSelect = (
-    event: React.MouseEvent<Element, MouseEvent> | React.ChangeEvent<Element>,
-    value: string | SelectOptionObject,
+    _: React.MouseEvent<Element, MouseEvent> | React.ChangeEvent<Element>,
+    value: string | SelectOptionObjectDeprecated,
   ) => {
     input.onChange(value);
     setIsExpanded(false);
   };
 
   const formSelect = (
-    <Select
+    <SelectDeprecated
       {...input}
       id={input.name}
       name={input.name}
       isDisabled={disabled}
       isOpen={isExpanded}
       selections={input.value}
-      onToggle={(isExpanded) => setIsExpanded(isExpanded)}
+      onToggle={(_event, isExpanded) => setIsExpanded(isExpanded)}
       onSelect={onSelect}
       onBlur={(event) => event.stopPropagation()}
       {...extraProps}
     >
       {options.map((option) => (
-        <SelectOption key={option.value} value={option.value}>
+        <SelectOptionDeprecated key={option.value} value={option.value}>
           {option.label ? (
             <Flex
               flexWrap={{ default: 'nowrap' }}
@@ -78,22 +78,23 @@ export const ReduxSelectDropdown = ({
           ) : (
             option.name
           )}
-        </SelectOption>
+        </SelectOptionDeprecated>
       ))}
-    </Select>
+    </SelectDeprecated>
   );
 
   return isFormGroup ? (
     <FormGroup
       fieldId={input.name}
       label={label}
-      validated={touched && error ? 'error' : 'default'}
       isRequired={isRequired}
       labelIcon={extendedHelpText ? <PopoverHint hint={extendedHelpText} /> : undefined}
-      helperText={helpText}
-      helperTextInvalid={touched && error ? `${helpText} ${error}` : ''}
     >
       {formSelect}
+
+      <FormGroupHelperText touched={touched} error={error}>
+        {helpText}
+      </FormGroupHelperText>
     </FormGroup>
   ) : (
     formSelect

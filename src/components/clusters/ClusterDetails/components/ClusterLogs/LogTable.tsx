@@ -9,15 +9,15 @@ import {
   EmptyStateIcon,
   EmptyStateVariant,
   Text,
-  Title,
   Spinner,
   TextVariants,
+  EmptyStateHeader,
 } from '@patternfly/react-core';
 
 import {
   SortByDirection,
   TableVariant,
-  TableComposable,
+  Table,
   Thead,
   Tr,
   Th,
@@ -27,7 +27,8 @@ import {
   ExpandableRowContent,
 } from '@patternfly/react-table';
 
-import { SearchIcon, WrenchIcon } from '@patternfly/react-icons';
+import { SearchIcon } from '@patternfly/react-icons/dist/esm/icons/search-icon';
+import { WrenchIcon } from '@patternfly/react-icons/dist/esm/icons/wrench-icon';
 import { ClusterLog } from '~/types/service_logs.v1/index';
 import { ViewSorting } from '~/types/types';
 import './LogTable.scss';
@@ -64,11 +65,12 @@ const emptyState = (colSpan: number) => (
     <Tr>
       <Td colSpan={colSpan}>
         <Bullseye>
-          <EmptyState variant={EmptyStateVariant.small}>
-            <EmptyStateIcon icon={SearchIcon} />
-            <Title headingLevel="h2" size="lg">
-              No results found
-            </Title>
+          <EmptyState variant={EmptyStateVariant.sm}>
+            <EmptyStateHeader
+              titleText="No results found"
+              icon={<EmptyStateIcon icon={SearchIcon} />}
+              headingLevel="h2"
+            />
             <EmptyStateBody>
               No results match the filter criteria. Remove all filters or clear all filters to show
               results.
@@ -160,7 +162,7 @@ const LogTable = ({ logs, setSorting, pending, refreshEvent }: LogTableParams) =
     const isInternal = internal_only; // summary.trim() === 'INTERNAL';
 
     return (
-      <Tbody className={isInternal ? 'pf-u-background-color-danger' : undefined} key={rowIndex}>
+      <Tbody className={isInternal ? 'pf-v5-u-background-color-danger' : undefined} key={rowIndex}>
         <Tr>
           <Td
             expand={{
@@ -216,7 +218,7 @@ const LogTable = ({ logs, setSorting, pending, refreshEvent }: LogTableParams) =
       {showSpinner ? (
         <Spinner size="lg" />
       ) : (
-        <TableComposable aria-label="Expandable table" variant={TableVariant.compact}>
+        <Table aria-label="Expandable table" variant={TableVariant.compact}>
           <Thead>
             <Tr>
               <Th />
@@ -230,7 +232,7 @@ const LogTable = ({ logs, setSorting, pending, refreshEvent }: LogTableParams) =
           {logs?.length
             ? logs.map((log, index) => mapLog(log, index))
             : emptyState(columns.length + 1)}
-        </TableComposable>
+        </Table>
       )}
     </Bullseye>
   );

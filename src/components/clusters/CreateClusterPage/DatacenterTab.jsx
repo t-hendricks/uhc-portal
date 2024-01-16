@@ -10,7 +10,11 @@ import {
   SplitItem,
   Split,
 } from '@patternfly/react-core';
-import { Table, TableHeader, TableBody } from '@patternfly/react-table';
+import {
+  Table as TableDeprecated,
+  TableHeader as TableHeaderDeprecated,
+  TableBody as TableBodyDeprecated,
+} from '@patternfly/react-table/deprecated';
 import { Link } from 'react-router-dom';
 import OutlinedQuestionCircleIcon from '@patternfly/react-icons/dist/esm/icons/outlined-question-circle-icon';
 
@@ -75,7 +79,7 @@ const ocpTableRows = [
 const DatacenterTab = ({ assistedInstallerFeature }) => (
   <>
     {assistedInstallerFeature && (
-      <PageSection variant="light">
+      <PageSection variant="light" className="pf-v5-u-p-lg">
         <Stack hasGutter>
           <StackItem>
             <Title headingLevel="h2" className="ocm-ocp-datacenter-title">
@@ -94,7 +98,7 @@ const DatacenterTab = ({ assistedInstallerFeature }) => (
                   Create cluster
                 </Button>
               </SplitItem>
-              <SplitItem className="pf-u-align-self-center">
+              <SplitItem className="pf-v5-u-align-self-center">
                 <Link to="/install/metal/agent-based">Run Agent-based Installer locally</Link>
                 <Popover bodyContent="Runs Assisted Installer securely and locally to create clusters in disconnected or air-gapped environments.">
                   <Button variant="plain" onClick={(e) => e.preventDefault()}>
@@ -119,15 +123,15 @@ const DatacenterTab = ({ assistedInstallerFeature }) => (
           installer program.
         </StackItem>
         <StackItem>
-          <Table
+          <TableDeprecated
             className="install-options-table"
             aria-label="Installation options table"
             cells={ocpTableColumns}
             rows={ocpTableRows}
           >
-            <TableHeader />
-            <TableBody />
-          </Table>
+            <TableHeaderDeprecated />
+            <TableBodyDeprecated />
+          </TableDeprecated>
         </StackItem>
       </Stack>
     </PageSection>

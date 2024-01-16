@@ -14,7 +14,7 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Field } from 'redux-form';
 
-import { OutlinedQuestionCircleIcon } from '@patternfly/react-icons';
+import { OutlinedQuestionCircleIcon } from '@patternfly/react-icons/dist/esm/icons/outlined-question-circle-icon';
 
 import { shouldRefetchQuota } from '~/common/helpers';
 import links from '~/common/installLinks.mjs';
@@ -95,7 +95,7 @@ const AWSBillingAccount = ({
     <ExternalLink
       isButton
       variant="secondary"
-      className="pf-u-mt-md"
+      className="pf-v5-u-mt-md"
       href={links.AWS_CONSOLE_ROSA_HOME}
       noIcon
     >

@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+
 import {
   FormGroup,
   TextInput,
@@ -13,8 +14,13 @@ import {
   MenuItem,
   MenuItemAction,
   Popper,
+  InputGroupItem,
 } from '@patternfly/react-core';
-import { EyeIcon, EyeSlashIcon, RedoIcon } from '@patternfly/react-icons';
+import { EyeIcon } from '@patternfly/react-icons/dist/esm/icons/eye-icon';
+import { EyeSlashIcon } from '@patternfly/react-icons/dist/esm/icons/eye-slash-icon';
+import { RedoIcon } from '@patternfly/react-icons/dist/esm/icons/redo-icon';
+
+import { FormGroupHelperText } from '~/components/common/FormGroupHelperText';
 import PopoverHint from '../PopoverHint';
 
 // To be used inside redux-form Field component.
@@ -50,28 +56,6 @@ const ReduxVerticalFormGroup = ({
   };
   const isPassword = extraProps.type === 'password';
   const redoId = `${extraProps.id || ''}-redo`;
-
-  const helperTextInvalid = () => {
-    if (touched && error && typeof error === 'string') {
-      if (showHelpTextOnError) {
-        if (typeof helpText === 'string') {
-          return `${helpText} ${error}`;
-        }
-        return (
-          <div
-            className="pf-c-form__helper-text pf-m-error"
-            id={`${input.name}-helper`}
-            aria-live="polite"
-          >
-            {helpText} {error}
-          </div>
-        );
-      }
-      return error;
-    }
-    return isPassword ? helpText : '';
-  };
-
   const isValid = hasOtherValidation || !touched || !error;
 
   let { onFocus } = input;
@@ -124,6 +108,7 @@ const ReduxVerticalFormGroup = ({
                   onClick={regenerateAutocomplete}
                   actionId="redo"
                   id={redoId}
+                  aria-label="Redo"
                 />
               }
             >
@@ -137,28 +122,35 @@ const ReduxVerticalFormGroup = ({
 
   const inputGroup = (
     <InputGroup className={isValid && 'valid-field'}>
-      {inputPrefix ? <InputGroupText>{inputPrefix}</InputGroupText> : null}
-      <InputComponent
-        id={input.name}
-        // ref={inputRef}
-        isRequired={isRequired}
-        validated={isValid ? 'default' : 'error'}
-        {...disabledProp}
-        {...input}
-        {...extraProps}
-        type={isPassword && !inputValueHidden ? 'text' : extraProps.type}
-        onFocus={onFocus}
-        onBlur={onBlur}
-        className={formGroupClass}
-      />
+      {inputPrefix ? (
+        <InputGroupItem>
+          <InputGroupText>{inputPrefix}</InputGroupText>
+        </InputGroupItem>
+      ) : null}
+      <InputGroupItem isFill>
+        <InputComponent
+          id={input.name}
+          isRequired={isRequired}
+          validated={isValid ? 'default' : 'error'}
+          {...disabledProp}
+          {...input}
+          {...extraProps}
+          type={isPassword && !inputValueHidden ? 'text' : extraProps.type}
+          onFocus={onFocus}
+          onBlur={onBlur}
+          className={formGroupClass}
+        />
+      </InputGroupItem>
       {isPassword && (
-        <Button
-          aria-label={inputValueHidden ? 'show-password' : 'hide-password'}
-          variant="control"
-          onClick={() => setInputValueHidden((prev) => !prev)}
-        >
-          {inputValueHidden ? <EyeSlashIcon /> : <EyeIcon />}
-        </Button>
+        <InputGroupItem>
+          <Button
+            aria-label={inputValueHidden ? 'show-password' : 'hide-password'}
+            variant="control"
+            onClick={() => setInputValueHidden((prev) => !prev)}
+          >
+            {inputValueHidden ? <EyeSlashIcon /> : <EyeIcon />}
+          </Button>
+        </InputGroupItem>
       )}
     </InputGroup>
   );
@@ -166,10 +158,7 @@ const ReduxVerticalFormGroup = ({
   return (
     <FormGroup
       fieldId={input.name}
-      validated={isValid ? 'default' : 'error'}
       label={label}
-      helperText={helpText}
-      helperTextInvalid={helperTextInvalid()}
       isRequired={isRequired}
       labelIcon={extendedHelpText && <PopoverHint hint={extendedHelpText} />}
       className={formGroupClass}
@@ -183,6 +172,10 @@ const ReduxVerticalFormGroup = ({
         />
       )}
       {!getAutocompleteValue && inputGroup}
+
+      <FormGroupHelperText touched={touched} error={error} id={`${input.name}-helper`}>
+        {helpText}
+      </FormGroupHelperText>
     </FormGroup>
   );
 };

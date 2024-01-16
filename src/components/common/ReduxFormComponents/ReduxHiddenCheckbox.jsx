@@ -10,7 +10,7 @@ import ReduxCheckbox from '~/components/common/ReduxFormComponents/ReduxCheckbox
      Ex: change('detected_ocm_and_user_roles', false|true);
 */
 const ReduxHiddenCheckbox = ({ name }) => (
-  <span className="pf-u-display-none">
+  <span className="pf-v5-u-display-none">
     <Field
       component={ReduxCheckbox}
       name={`${name}`}

@@ -5,12 +5,14 @@ exports[`<Quota /> OSDSubscriptionCard Empty should render empty OSD quota summa
   className="subscriptions-empty-state"
 >
   <EmptyState>
-    <Title
+    <EmptyStateHeader
       headingLevel="h4"
-      size="2xl"
-    >
-      You do not have any quota
-    </Title>
+      titleText={
+        <React.Fragment>
+          You do not have any quota
+        </React.Fragment>
+      }
+    />
     <EmptyStateBody>
       <p>
         <a
@@ -24,6 +26,7 @@ exports[`<Quota /> OSDSubscriptionCard Empty should render empty OSD quota summa
         to get started with OpenShift Dedicated.
       </p>
     </EmptyStateBody>
+    <EmptyStateFooter />
   </EmptyState>
 </PageSection>
 `;
@@ -33,12 +36,14 @@ exports[`<Quota /> OSDSubscriptionCard Error should render error OSD quota summa
   className="subscriptions-empty-state"
 >
   <EmptyState>
-    <Title
+    <EmptyStateHeader
       headingLevel="h4"
-      size="2xl"
-    >
-      Unable to retrieve quota information
-    </Title>
+      titleText={
+        <React.Fragment>
+          Unable to retrieve quota information
+        </React.Fragment>
+      }
+    />
     <EmptyStateBody>
       <p>
         An error has occured! Try again or contact support by including this error message:
@@ -48,11 +53,13 @@ exports[`<Quota /> OSDSubscriptionCard Error should render error OSD quota summa
         Operation ID: N/A
       </p>
     </EmptyStateBody>
-    <Button
-      onClick={[MockFunction]}
-    >
-      Try again
-    </Button>
+    <EmptyStateFooter>
+      <Button
+        onClick={[MockFunction]}
+      >
+        Try again
+      </Button>
+    </EmptyStateFooter>
   </EmptyState>
 </PageSection>
 `;
@@ -104,11 +111,7 @@ exports[`<Quota /> OSDSubscriptionCard should render 1`] = `
                 "OSD",
                 "0 of 17",
                 Object {
-                  "title": <OutlinedCircleIcon
-                    color="currentColor"
-                    noVerticalAlign={false}
-                    size="sm"
-                  />,
+                  "title": <OutlinedCircleIcon />,
                 },
               ],
               Array [
@@ -121,11 +124,7 @@ exports[`<Quota /> OSDSubscriptionCard should render 1`] = `
                 "OSD",
                 "4 of 27",
                 Object {
-                  "title": <ResourcesAlmostEmptyIcon
-                    color="currentColor"
-                    noVerticalAlign={false}
-                    size="sm"
-                  />,
+                  "title": <ResourcesAlmostEmptyIcon />,
                 },
               ],
               Array [
@@ -138,11 +137,7 @@ exports[`<Quota /> OSDSubscriptionCard should render 1`] = `
                 "ANY",
                 "0 of 15",
                 Object {
-                  "title": <OutlinedCircleIcon
-                    color="currentColor"
-                    noVerticalAlign={false}
-                    size="sm"
-                  />,
+                  "title": <OutlinedCircleIcon />,
                 },
               ],
             ]

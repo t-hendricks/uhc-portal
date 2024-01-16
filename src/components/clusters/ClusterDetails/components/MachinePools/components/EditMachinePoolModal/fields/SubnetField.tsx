@@ -41,7 +41,7 @@ const SubnetField = ({ cluster }: { cluster: Cluster }) => {
         isInline
         isPlain
         title="Failed to load the machine pool VPC. Please try refreshing the page."
-        className="pf-u-mb-sm"
+        className="pf-v5-u-mb-sm"
       />
     );
   }

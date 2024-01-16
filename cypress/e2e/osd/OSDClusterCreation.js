@@ -13,7 +13,7 @@ describe('OSD cluster tests', { tags: ['ci'] }, () => {
     // baseUrl ends in '.../openshift/'.  To goto sub-pages you
     // only need to specify relative path to baseUrl.
     // Ex: cy.visit('/create/osd');
-    cy.visit('/');
+    cy.visit('/', { retryOnNetworkFailure: true });
     Login.isLoginPageUrl();
     Login.login();
 

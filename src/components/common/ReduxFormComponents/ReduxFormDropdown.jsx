@@ -2,6 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import { FormGroup, FormSelect, FormSelectOption } from '@patternfly/react-core';
+
+import { FormGroupHelperText } from '~/components/common/FormGroupHelperText';
 import PopoverHint from '../PopoverHint';
 
 class DropDownSelect extends React.Component {
@@ -38,7 +40,7 @@ class DropDownSelect extends React.Component {
         name={input.name}
         value={value}
         {...input}
-        onChange={this.onChange}
+        onChange={(event, value) => this.onChange(value, event)}
         isDisabled={disabled}
         {...extraProps}
       >
@@ -52,13 +54,13 @@ class DropDownSelect extends React.Component {
       <FormGroup
         fieldId={input.name}
         label={label}
-        validated={touched && error ? 'error' : null}
         isRequired={isRequired}
         labelIcon={extendedHelpText && <PopoverHint hint={extendedHelpText} />}
-        helperText={helpText}
-        helperTextInvalid={touched && error ? `${helpText} ${error}` : ''}
       >
         {formSelect}
+        <FormGroupHelperText touched={touched} error={error}>
+          {helpText}
+        </FormGroupHelperText>
       </FormGroup>
     ) : (
       formSelect

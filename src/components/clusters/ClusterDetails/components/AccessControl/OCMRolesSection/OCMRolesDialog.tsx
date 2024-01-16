@@ -3,17 +3,21 @@ import React, { useState, useEffect } from 'react';
 import {
   Form,
   TextInput,
-  Select,
-  SelectOption,
   FormGroup,
   Text,
   TextContent,
   TextVariants,
 } from '@patternfly/react-core';
+import {
+  Select as SelectDeprecated,
+  SelectOption as SelectOptionDeprecated,
+} from '@patternfly/react-core/deprecated';
 
 import { useGlobalState } from '~/redux/hooks';
 import { useDispatch } from 'react-redux';
 import shouldShowModal from '~/components/common/Modal/ModalSelectors';
+import { FormGroupHelperText } from '~/components/common/FormGroupHelperText';
+
 import modals from '../../../../../common/Modal/modals';
 import Modal from '../../../../../common/Modal/Modal';
 import PopoverHint from '../../../../../common/PopoverHint';
@@ -139,7 +143,7 @@ function OCMRolesDialog({ onSubmit, row, productId }: OCMRolesDialogProps) {
       isPrimaryDisabled={isPrimaryDisabled}
       id="ocm-roles-access-dialog"
     >
-      <p className="pf-u-mb-xl">
+      <p className="pf-v5-u-mb-xl">
         Allow users in your organization to edit or view clusters. These permissions only apply to
         cluster management in OpenShift Cluster Manager.
       </p>
@@ -171,23 +175,23 @@ function OCMRolesDialog({ onSubmit, row, productId }: OCMRolesDialogProps) {
           }
           isRequired
           fieldId="username"
-          validated={usernameValidationMsg || APIErrorMsg ? 'error' : 'default'}
-          helperTextInvalid={usernameValidationMsg || APIErrorMsg}
         >
           <TextInput
             value={username}
             isRequired
             id="username"
             type="text"
-            onChange={handleUsernameChange}
+            onChange={(_event, inputVal: string) => handleUsernameChange(inputVal)}
             isDisabled={!row.isCreating}
             validated={usernameValidationMsg || APIErrorMsg ? 'error' : 'default'}
             aria-label="username"
           />
+
+          <FormGroupHelperText touched error={usernameValidationMsg || APIErrorMsg} />
         </FormGroup>
         <FormGroup label="Role" isRequired>
-          <Select
-            onToggle={setIsDropdownOpen}
+          <SelectDeprecated
+            onToggle={(_event, val) => setIsDropdownOpen(val)}
             onSelect={(e, selection) => {
               setRoleID(selection as string);
               setIsDropdownOpen(false);
@@ -197,11 +201,15 @@ function OCMRolesDialog({ onSubmit, row, productId }: OCMRolesDialogProps) {
             menuAppendTo={() => document.body}
           >
             {options.map((option) => (
-              <SelectOption key={option.id} value={option.id} description={option.description}>
+              <SelectOptionDeprecated
+                key={option.id}
+                value={option.id}
+                description={option.description}
+              >
                 {option.name}
-              </SelectOption>
+              </SelectOptionDeprecated>
             ))}
-          </Select>
+          </SelectDeprecated>
         </FormGroup>
       </Form>
     </Modal>

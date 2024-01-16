@@ -16,7 +16,7 @@ import { OfferingCard } from './OfferingCard/OfferingCard';
 import { AppPage } from '../App/AppPage';
 
 const linkTextLabelLinkCardContents: ListTextLabelLinkCardProps = {
-  cardClassName: 'pf-u-mb-lg',
+  cardClassName: 'pf-v5-u-mb-lg',
   textLabelLinkItems: [
     {
       listItemText: 'Using Red Hat OpenShift Cluster Manager to work with your OpenShift clusters',
@@ -71,26 +71,26 @@ function OverviewEmptyState() {
         text={openshiftBannerContents.text}
       />
       <PageSection>
-        <Title size="xl" headingLevel="h2" className="pf-u-mt-lg">
+        <Title size="xl" headingLevel="h2" className="pf-v5-u-mt-lg">
           Featured OpenShift cluster types
         </Title>
-        <Flex className="pf-u-mb-lg">
-          <FlexItem className="pf-u-pt-md">
+        <Flex className="pf-v5-u-mb-lg">
+          <FlexItem className="pf-v5-u-pt-md">
             <OfferingCard offeringType="RHOSD" />
           </FlexItem>
-          <FlexItem className="pf-u-pt-md">
+          <FlexItem className="pf-v5-u-pt-md">
             <OfferingCard offeringType="AWS" />
           </FlexItem>
-          <FlexItem className="pf-u-pt-md">
+          <FlexItem className="pf-v5-u-pt-md">
             <OfferingCard offeringType="Azure" />
           </FlexItem>
-          <FlexItem className="pf-u-pt-md">
+          <FlexItem className="pf-v5-u-pt-md">
             <OfferingCard offeringType="RHOCP" />
           </FlexItem>
-          <FlexItem className="pf-u-pt-md">
+          <FlexItem className="pf-v5-u-pt-md">
             <OfferingCard offeringType="RHOIBM" />
           </FlexItem>
-          <FlexItem className="pf-u-pt-md">
+          <FlexItem className="pf-v5-u-pt-md">
             <OfferingCard offeringType="DEVSNBX" />
           </FlexItem>
         </Flex>
@@ -112,7 +112,7 @@ function OverviewEmptyState() {
         >
           View all OpenShift cluster types
         </Button>
-        <Title size="xl" headingLevel="h2" className="pf-u-mt-lg pf-u-mb-lg">
+        <Title size="xl" headingLevel="h2" className="pf-v5-u-mt-lg pf-v5-u-mb-lg">
           Recommended Content
         </Title>
         <ListTextLabelLinkCard {...linkTextLabelLinkCardContents} />

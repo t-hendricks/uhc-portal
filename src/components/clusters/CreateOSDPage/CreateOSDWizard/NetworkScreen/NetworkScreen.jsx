@@ -119,7 +119,7 @@ function NetworkScreen(props) {
     }
   };
 
-  const onPrivateLinkChange = (checked) => {
+  const onPrivateLinkChange = (_event, checked) => {
     if (checked) {
       change('install_to_vpc', true);
     }
@@ -130,7 +130,7 @@ function NetworkScreen(props) {
     change('use_privatelink', true);
   }
 
-  const onClusterProxyChange = (checked) => {
+  const onClusterProxyChange = (_event, checked) => {
     trackCheckedState(trackEvents.ConfigureClusterWideProxy, checked);
     change('configure_proxy', checked);
     if (checked && !formValues.install_to_vpc) {
@@ -139,7 +139,7 @@ function NetworkScreen(props) {
     }
   };
 
-  const onInstallIntoVPCchange = (checked) => {
+  const onInstallIntoVPCchange = (_event, checked) => {
     change('install_to_vpc', checked);
     if (!checked) {
       if (formValues.shared_vpc.is_selected) {
@@ -232,7 +232,7 @@ function NetworkScreen(props) {
                       component={SubnetSelectField}
                       name="cluster_privacy_public_subnet"
                       label="Public subnet name"
-                      className="pf-u-mt-md pf-u-ml-lg"
+                      className="pf-v5-u-mt-md pf-v5-u-ml-lg"
                       isRequired
                       validate={validateRequiredMachinePoolsSubnet}
                       withAutoSelect={false}
@@ -346,7 +346,7 @@ function NetworkScreen(props) {
               <Title headingLevel="h4" size="xl">
                 Application ingress settings
               </Title>
-              <Text className="pf-u-mt-sm">
+              <Text className="pf-v5-u-mt-sm">
                 Ingress is configured by default.{' '}
                 {isManagedIngressAllowed
                   ? 'Customize settings if needed.'
@@ -385,7 +385,7 @@ function NetworkScreen(props) {
                     extraField: applicationIngress !== 'default' && (
                       <DefaultIngressFields
                         hasSufficientIngressEditVersion
-                        className="pf-u-mt-md pf-u-ml-lg"
+                        className="pf-v5-u-mt-md pf-v5-u-ml-lg"
                         isDay2={false}
                         canShowLoadBalancer={false}
                       />

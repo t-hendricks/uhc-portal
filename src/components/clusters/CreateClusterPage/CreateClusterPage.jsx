@@ -3,7 +3,9 @@ import PropTypes from 'prop-types';
 import { Tabs, Tab, TabTitleText, TabTitleIcon, PageSection } from '@patternfly/react-core';
 
 import { Spinner } from '@redhat-cloud-services/frontend-components/Spinner';
-import { ServerIcon, CloudIcon, LaptopIcon } from '@patternfly/react-icons';
+import { ServerIcon } from '@patternfly/react-icons/dist/esm/icons/server-icon';
+import { CloudIcon } from '@patternfly/react-icons/dist/esm/icons/cloud-icon';
+import { LaptopIcon } from '@patternfly/react-icons/dist/esm/icons/laptop-icon';
 import { isRestrictedEnv } from '~/restrictedEnv';
 
 import './CreateClusterPage.scss';

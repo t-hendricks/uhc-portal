@@ -6,7 +6,6 @@ exports[`<DownloadsCategoryDropdown /> should render 1`] = `
   className=""
   data-testid="downloads-category-dropdown"
   isDisabled={false}
-  isIconSprite={false}
   isRequired={false}
   onBlur={[Function]}
   onChange={[Function]}

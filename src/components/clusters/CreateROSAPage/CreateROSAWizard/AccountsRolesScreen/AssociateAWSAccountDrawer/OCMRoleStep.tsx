@@ -15,13 +15,13 @@ const OCMRoleStep = (props: AssociateAWSAccountStepProps) => {
   const { expandable } = props;
   return (
     <AssociateAWSAccountStep {...props}>
-      <Title headingLevel="h4" className="pf-u-mb-md" size="md">
+      <Title headingLevel="h4" className="pf-v5-u-mb-md" size="md">
         First, check if a role exists and is linked with:
       </Title>
 
       <InstructionCommand
         textAriaLabel={`Copyable ROSA ${RosaCliCommand.ListOcmRole} command`}
-        className="pf-u-mb-lg"
+        className="pf-v5-u-mb-lg"
       >
         {RosaCliCommand.ListOcmRole}
       </InstructionCommand>
@@ -33,7 +33,7 @@ const OCMRoleStep = (props: AssociateAWSAccountStepProps) => {
         title={`If there is an existing role and it's already linked to your Red Hat account, ${
           expandable ? 'you can continue to step 2' : 'no further action is needed'
         }.`}
-        className="pf-u-mb-lg"
+        className="pf-v5-u-mb-lg"
       />
 
       <Title headingLevel="h3" size="md">
@@ -64,7 +64,7 @@ const OCMRoleStep = (props: AssociateAWSAccountStepProps) => {
                 >
                   {RosaCliCommand.OcmRole}
                 </InstructionCommand>
-                <div className="pf-u-mt-md pf-u-mb-md">OR</div>
+                <div className="pf-v5-u-mt-md pf-v5-u-mb-md">OR</div>
                 <strong>Admin OCM role</strong>
                 <InstructionCommand
                   textAriaLabel="Copyable ROSA create ocm-role --admin"
@@ -76,7 +76,7 @@ const OCMRoleStep = (props: AssociateAWSAccountStepProps) => {
                   title="Help me decide"
                   bodyContent={
                     <>
-                      <Text component={TextVariants.p} className="pf-u-mb-md">
+                      <Text component={TextVariants.p} className="pf-v5-u-mb-md">
                         The <strong>basic role</strong> enables OpenShift Cluster Manager to detect
                         the AWS IAM roles and policies required by ROSA.
                       </Text>
@@ -107,7 +107,7 @@ const OCMRoleStep = (props: AssociateAWSAccountStepProps) => {
                   variant={AlertVariant.info}
                   isInline
                   isPlain
-                  className="ocm-instruction-block_alert pf-u-mt-lg"
+                  className="ocm-instruction-block_alert pf-v5-u-mt-lg"
                   title="You must have organization administrator privileges in your Red Hat account to run this command. After you link the OCM role with your Red Hat organization, it is visible for all users in the organization."
                 />
               </>

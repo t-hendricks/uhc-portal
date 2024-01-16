@@ -5,16 +5,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import { Alert, AlertVariant, FormGroup, Spinner } from '@patternfly/react-core';
 import {
-  FormGroup,
-  Select,
-  SelectGroup,
-  SelectOption,
-  Spinner,
-  Alert,
-  AlertVariant,
-} from '@patternfly/react-core';
+  Select as SelectDeprecated,
+  SelectGroup as SelectGroupDeprecated,
+  SelectOption as SelectOptionDeprecated,
+} from '@patternfly/react-core/deprecated';
 
+import { FormGroupHelperText } from '~/components/common/FormGroupHelperText';
 import ErrorBox from '../../../../../../common/ErrorBox';
 import PopoverHint from '../../../../../../common/PopoverHint';
 import { humanizeValueWithUnit } from '../../../../../../../common/units';
@@ -81,44 +79,6 @@ const MachineTypeSelection = ({
     getDefaultFlavour();
   }, [getDefaultFlavour]);
 
-  React.useEffect(() => {
-    if (isDataReady()) {
-      if (!input.value) {
-        setDefaultValue();
-      }
-
-      // If user had made a choice, then some external param changed like CCS/MultiAz,
-      // (we can get here on mount after switching wizard steps)
-      // and selected type is no longer availble, force user to choose again.
-      if (input.value && !isTypeAvailable(input.value)) {
-        setInvalidValue();
-      }
-    }
-  }, [input.value, isDataReady, isTypeAvailable, setDefaultValue, setInvalidValue]);
-
-  const setDefaultValue = React.useCallback(() => {
-    // Select the type suggested by backend, if possible.
-    if (forceChoiceInput.value) {
-      return; // Keep untouched, wait for user to choose.
-    }
-
-    const defaultType =
-      flavours?.byID[DEFAULT_FLAVOUR_ID]?.[cloudProviderID]?.compute_instance_type;
-
-    if (defaultType && isTypeAvailable(defaultType)) {
-      input.onChange(defaultType);
-    }
-  }, [cloudProviderID, flavours?.byID, forceChoiceInput.value, input, isTypeAvailable]);
-
-  const setInvalidValue = React.useCallback(() => {
-    // Tell redux form the current value of this field is empty.
-    // This will cause it to not pass 'required' validation.
-    // Order might matter here!
-    // If we cleared to '' before force_choice, componentDidUpdate could select new value(?)
-    forceChoiceInput.onChange(true);
-    input.onChange('');
-  }, [forceChoiceInput, input]);
-
   /**
    * Checks whether type can be offered, based on quota and ccs_only.
    * Returns false if necessary data not fulfilled yet.
@@ -179,6 +139,44 @@ const MachineTypeSelection = ({
     ],
   );
 
+  React.useEffect(() => {
+    if (isDataReady()) {
+      if (!input.value) {
+        setDefaultValue();
+      }
+
+      // If user had made a choice, then some external param changed like CCS/MultiAz,
+      // (we can get here on mount after switching wizard steps)
+      // and selected type is no longer availble, force user to choose again.
+      if (input.value && !isTypeAvailable(input.value)) {
+        setInvalidValue();
+      }
+    }
+  }, [input.value, isDataReady, isTypeAvailable, setDefaultValue, setInvalidValue]);
+
+  const setDefaultValue = React.useCallback(() => {
+    // Select the type suggested by backend, if possible.
+    if (forceChoiceInput.value) {
+      return; // Keep untouched, wait for user to choose.
+    }
+
+    const defaultType =
+      flavours?.byID[DEFAULT_FLAVOUR_ID]?.[cloudProviderID]?.compute_instance_type;
+
+    if (defaultType && isTypeAvailable(defaultType)) {
+      input.onChange(defaultType);
+    }
+  }, [cloudProviderID, flavours?.byID, forceChoiceInput.value, input, isTypeAvailable]);
+
+  const setInvalidValue = React.useCallback(() => {
+    // Tell redux form the current value of this field is empty.
+    // This will cause it to not pass 'required' validation.
+    // Order might matter here!
+    // If we cleared to '' before force_choice, componentDidUpdate could select new value(?)
+    forceChoiceInput.onChange(true);
+    input.onChange('');
+  }, [forceChoiceInput, input]);
+
   const changeHandler = React.useCallback(
     (_, value) => {
       input.onChange(value);
@@ -206,9 +204,9 @@ const MachineTypeSelection = ({
       .map(([categoryLabel, categoryMachines]) => {
         if (categoryMachines.length > 0) {
           return (
-            <SelectGroup label={categoryLabel} key={categoryLabel}>
+            <SelectGroupDeprecated label={categoryLabel} key={categoryLabel}>
               {categoryMachines.map((machineType) => (
-                <SelectOption
+                <SelectOptionDeprecated
                   {...extraProps}
                   key={machineType.id}
                   id={`machineType.${machineType.id}`}
@@ -218,9 +216,9 @@ const MachineTypeSelection = ({
                   formValue={machineType.id}
                 >
                   {machineTypeLabel(machineType)}
-                </SelectOption>
+                </SelectOptionDeprecated>
               ))}
-            </SelectGroup>
+            </SelectGroupDeprecated>
           );
         }
         return null;
@@ -255,24 +253,23 @@ const MachineTypeSelection = ({
       <FormGroup
         label="Compute node instance type"
         isRequired
-        validated={touched && error ? 'error' : 'default'}
-        isHelperTextBeforeField
-        helperTextInvalid={touched && error}
         fieldId="node_type"
         labelIcon={<PopoverHint hint={constants.computeNodeInstanceTypeHint} />}
       >
-        <Select
+        <SelectDeprecated
           variant="single"
           selections={selection}
           isOpen={isOpen}
           placeholderText="Select instance type"
-          onToggle={(isExpanded) => setIsOpen(isExpanded)}
+          onToggle={(_event, isExpanded) => setIsOpen(isExpanded)}
           onSelect={changeHandler}
           maxHeight={inModal ? 300 : 600}
           menuAppendTo={menuAppendTo}
         >
           {options}
-        </Select>
+        </SelectDeprecated>
+
+        <FormGroupHelperText touched={touched} error={error} />
       </FormGroup>
     );
   }

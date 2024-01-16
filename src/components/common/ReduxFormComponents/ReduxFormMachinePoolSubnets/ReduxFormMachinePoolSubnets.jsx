@@ -2,7 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Field } from 'redux-form';
 import { Alert, Button, Grid, GridItem } from '@patternfly/react-core';
-import { PlusCircleIcon, MinusCircleIcon } from '@patternfly/react-icons';
+import { PlusCircleIcon } from '@patternfly/react-icons/dist/esm/icons/plus-circle-icon';
+import { MinusCircleIcon } from '@patternfly/react-icons/dist/esm/icons/minus-circle-icon';
 
 import { validateMultipleMachinePoolsSubnets } from '~/common/validators';
 import { SubnetSelectField } from '~/components/clusters/CreateOSDPage/CreateOSDWizard/NetworkScreen/SubnetSelectField';
@@ -16,10 +17,10 @@ const ReduxFormMachinePoolSubnets = ({ fields, selectedVPC, meta: { warning } })
         <Alert variant="warning" isPlain isInline title={warning} />
       </GridItem>
     )}
-    <GridItem span={2} className="pf-c-form__label pf-c-form__label-text">
+    <GridItem span={2} className="pf-v5-c-form__label pf-v5-c-form__label-text">
       Machine pool
     </GridItem>
-    <GridItem span={4} className="pf-c-form__label pf-c-form__label-text">
+    <GridItem span={4} className="pf-v5-c-form__label pf-v5-c-form__label-text">
       Private subnet name
     </GridItem>
     <GridItem span={6} />

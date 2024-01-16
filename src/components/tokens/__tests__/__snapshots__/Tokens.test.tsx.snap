@@ -4,7 +4,9 @@ exports[`<Tokens /> Renders loading screen 1`] = `
 <AppPage
   title="API Token | OpenShift Cluster Manager"
 >
-  <PageHeader>
+  <PageHeader
+    className="pf-v5-u-mb-md"
+  >
     <Breadcrumbs
       path={
         Array [
@@ -61,7 +63,7 @@ exports[`<Tokens /> Renders loading screen 1`] = `
               token=""
             />
             <TextContent
-              className="pf-u-mt-lg"
+              className="pf-v5-u-mt-lg"
             >
               <Title
                 headingLevel="h3"
@@ -161,7 +163,9 @@ exports[`<Tokens /> Renders screen with button 1`] = `
 <AppPage
   title="API Token | OpenShift Cluster Manager"
 >
-  <PageHeader>
+  <PageHeader
+    className="pf-v5-u-mb-md"
+  >
     <Breadcrumbs
       path={
         Array [
@@ -218,7 +222,7 @@ exports[`<Tokens /> Renders screen with button 1`] = `
               to="/token/show"
             >
               <Button
-                className="pf-u-mt-md"
+                className="pf-v5-u-mt-md"
                 data-testid="load-token-btn"
                 onClick={[Function]}
                 variant="primary"
@@ -256,7 +260,9 @@ exports[`<Tokens /> Renders screen with token 1`] = `
 <AppPage
   title="API Token | OpenShift Cluster Manager"
 >
-  <PageHeader>
+  <PageHeader
+    className="pf-v5-u-mb-md"
+  >
     <Breadcrumbs
       path={
         Array [
@@ -313,7 +319,7 @@ exports[`<Tokens /> Renders screen with token 1`] = `
               to="/token/show"
             >
               <Button
-                className="pf-u-mt-md"
+                className="pf-v5-u-mt-md"
                 data-testid="load-token-btn"
                 onClick={[Function]}
                 variant="primary"
@@ -351,7 +357,9 @@ exports[`<Tokens /> Renders token 1`] = `
 <AppPage
   title="API Token | OpenShift Cluster Manager"
 >
-  <PageHeader>
+  <PageHeader
+    className="pf-v5-u-mb-md"
+  >
     <Breadcrumbs
       path={
         Array [
@@ -408,7 +416,7 @@ exports[`<Tokens /> Renders token 1`] = `
               token=""
             />
             <TextContent
-              className="pf-u-mt-lg"
+              className="pf-v5-u-mt-lg"
             >
               <Title
                 headingLevel="h3"

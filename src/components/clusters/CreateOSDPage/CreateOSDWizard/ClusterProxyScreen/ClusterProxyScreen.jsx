@@ -1,16 +1,8 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { Field } from 'redux-form';
-import {
-  Form,
-  Grid,
-  GridItem,
-  Title,
-  Text,
-  Alert,
-  AlertActionLink,
-  WizardContext,
-} from '@patternfly/react-core';
+import { Form, Grid, GridItem, Title, Text, Alert, AlertActionLink } from '@patternfly/react-core';
+import { WizardContext as WizardContextDeprecated } from '@patternfly/react-core/deprecated';
 
 import { stringToArray } from '~/common/helpers';
 import { constants } from '../../CreateOSDForm/CreateOSDFormConstants';
@@ -79,20 +71,20 @@ function ClusterProxyScreen({
           {
             "Complete at least 1 of the fields above. If you don't want to set a cluster-wide proxy, disable this option in the "
           }
-          <strong style={{ fontSize: 'var(--pf-global--FontSize--md)' }}>
+          <strong style={{ fontSize: 'var(--pf-v5-global--FontSize--md)' }}>
             {'Networking > Configuration'}
           </strong>
           {' step.'}
         </span>
       }
       actionLinks={
-        <WizardContext.Consumer>
+        <WizardContextDeprecated.Consumer>
           {({ goToStepByName }) => (
             <AlertActionLink onClick={() => goToStepByName('Configuration')}>
               Back to the networking configuration
             </AlertActionLink>
           )}
-        </WizardContext.Consumer>
+        </WizardContextDeprecated.Consumer>
       }
     />
   );
@@ -121,7 +113,7 @@ function ClusterProxyScreen({
         </GridItem>
         <GridItem>
           <Text>{constants.clusterProxyHint}</Text>
-          <Text className="pf-u-mt-sm">
+          <Text className="pf-v5-u-mt-sm">
             <ExternalLink href={configureProxyUrl}>
               Learn more about configuring a cluster-wide proxy
             </ExternalLink>

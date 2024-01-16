@@ -3,7 +3,7 @@ import { useHistory } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 import { Button } from '@patternfly/react-core';
-import { TimesCircleIcon } from '@patternfly/react-icons';
+import { TimesCircleIcon } from '@patternfly/react-icons/dist/esm/icons/times-circle-icon';
 
 import DeleteClusterDialog from '../DeleteClusterDialog';
 
@@ -16,7 +16,7 @@ function CancelClusterButton({ cluster, defaultOpen }) {
       <Button
         variant="link"
         icon={<TimesCircleIcon />}
-        className="pf-u-mr-md"
+        className="pf-v5-u-mr-md"
         onClick={() => setIsCancelModalOpen(true)}
         isInline
       >

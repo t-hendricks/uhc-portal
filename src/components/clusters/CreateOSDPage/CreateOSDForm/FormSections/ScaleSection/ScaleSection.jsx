@@ -54,10 +54,10 @@ function ScaleSection({
     <ExpandableSection
       toggleText="Add node labels"
       isExpanded={isNodeLabelsExpanded}
-      onToggle={setIsNodeLabelsExpanded}
+      onToggle={(_event, val) => setIsNodeLabelsExpanded(val)}
     >
       <Title headingLevel="h3">Node labels (optional)</Title>
-      <p className="pf-u-mb-md">
+      <p className="pf-v5-u-mb-md">
         Configure labels that will apply to all nodes in this machine pool.
       </p>
       <FieldArray name="node_labels" component={ReduxFormKeyValueList} />

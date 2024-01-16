@@ -1,12 +1,5 @@
 import React from 'react';
-import {
-  FormGroup,
-  GridItem,
-  HelperText,
-  HelperTextItem,
-  Flex,
-  Button,
-} from '@patternfly/react-core';
+import { FormGroup, GridItem, HelperTextItem, Flex, Button } from '@patternfly/react-core';
 import { Field } from 'formik';
 import { useDispatch } from 'react-redux';
 
@@ -23,6 +16,7 @@ import getMinNodesAllowed from '~/components/clusters/CreateOSDPage/CreateOSDFor
 import { CheckboxField } from '~/components/clusters/wizards/form/CheckboxField';
 import { useFormState } from '~/components/clusters/wizards/hooks';
 import { MAX_NODES } from '~/components/clusters/common/machinePools/constants';
+import { FormGroupHelperText } from '~/components/common/FormGroupHelperText';
 import { NodesInput } from './NodesInput';
 import ClusterAutoScaleSettingsDialog from './ClusterAutoScaleSettingsDialog';
 
@@ -126,27 +120,13 @@ export const AutoScale = ({ isDefaultMachinePool }: AutoScaleProps) => {
     <Flex
       flexWrap={{ default: 'nowrap' }}
       spaceItems={{ default: 'spaceItemsMd' }}
-      className="pf-u-mt-md"
+      className="pf-v5-u-mt-md"
     >
       <FormGroup
         label={isMultiAz ? 'Minimum nodes per zone' : 'Minimum node count'}
         isRequired
         fieldId="nodes_min"
         className="autoscaling__nodes-formGroup"
-        helperText={
-          <HelperText>
-            {isMultiAz && (
-              <HelperTextItem>{`x 3 zones = ${
-                (parseInt(minReplicas, 10) || 0) * 3
-              }`}</HelperTextItem>
-            )}
-            {minErrorMessage && (
-              <HelperTextItem variant="error" hasIcon>
-                {minErrorMessage}
-              </HelperTextItem>
-            )}
-          </HelperText>
-        }
       >
         <Field
           component={NodesInput}
@@ -165,26 +145,23 @@ export const AutoScale = ({ isDefaultMachinePool }: AutoScaleProps) => {
           }}
           meta={getFieldMeta(FieldId.MinReplicas)}
         />
+
+        <FormGroupHelperText>
+          {isMultiAz && (
+            <HelperTextItem>{`x 3 zones = ${(parseInt(minReplicas, 10) || 0) * 3}`}</HelperTextItem>
+          )}
+          {minErrorMessage && (
+            <HelperTextItem variant="error" hasIcon>
+              {minErrorMessage}
+            </HelperTextItem>
+          )}
+        </FormGroupHelperText>
       </FormGroup>
       <FormGroup
         label={isMultiAz ? 'Maximum nodes per zone' : 'Maximum node count'}
         isRequired
         fieldId="nodes_max"
         className="autoscaling__nodes-formGroup"
-        helperText={
-          <HelperText>
-            {isMultiAz && (
-              <HelperTextItem>{`x 3 zones = ${
-                (parseInt(maxReplicas, 10) || 0) * 3
-              }`}</HelperTextItem>
-            )}
-            {maxErrorMessage && (
-              <HelperTextItem variant="error" hasIcon>
-                {maxErrorMessage}
-              </HelperTextItem>
-            )}
-          </HelperText>
-        }
         labelIcon={
           <PopoverHint
             hint={
@@ -221,6 +198,17 @@ export const AutoScale = ({ isDefaultMachinePool }: AutoScaleProps) => {
           }}
           meta={getFieldMeta(FieldId.MaxReplicas)}
         />
+
+        <FormGroupHelperText>
+          {isMultiAz && (
+            <HelperTextItem>{`x 3 zones = ${(parseInt(maxReplicas, 10) || 0) * 3}`}</HelperTextItem>
+          )}
+          {maxErrorMessage && (
+            <HelperTextItem variant="error" hasIcon>
+              {maxErrorMessage}
+            </HelperTextItem>
+          )}
+        </FormGroupHelperText>
       </FormGroup>
     </Flex>
   );
@@ -252,7 +240,7 @@ export const AutoScale = ({ isDefaultMachinePool }: AutoScaleProps) => {
           <Button
             data-testid="set-cluster-autoscaling-btn"
             variant="secondary"
-            className="pf-u-mt-md"
+            className="pf-v5-u-mt-md"
             onClick={openEditClusterAutoScalingModal}
             isDisabled={!autoscalingEnabled}
           >

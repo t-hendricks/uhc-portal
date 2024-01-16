@@ -1,5 +1,5 @@
 const pfReactIconsMapper = {
-  IconSize: '@patternfly/react-icons/dist/js/createIcon',
+  IconSize: '@patternfly/react-icons/dist/esm/createIcon',
 };
 
 module.exports = {
@@ -24,7 +24,7 @@ module.exports = {
       'transform-imports',
       {
         '@patternfly/react-icons': {
-          transform: importName => pfReactIconsMapper[importName] || `@patternfly/react-icons/dist/js/icons/${importName
+          transform: importName => pfReactIconsMapper[importName] || `@patternfly/react-icons/dist/esm/icons/${importName
             .split(/(?=[A-Z])/)
             .join('-')
             .toLowerCase()}`,

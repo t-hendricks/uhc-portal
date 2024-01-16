@@ -1,17 +1,13 @@
-import {
-  Banner,
-  Bullseye,
-  PageSection,
-  Stack,
-  StackItem,
-  Wizard,
-  WizardContext,
-} from '@patternfly/react-core';
 import { Spinner } from '@redhat-cloud-services/frontend-components';
 import { isMatch } from 'lodash';
 import PropTypes from 'prop-types';
 import React, { useState } from 'react';
 import { Redirect } from 'react-router-dom';
+import { Banner, Bullseye, PageSection, Stack, StackItem } from '@patternfly/react-core';
+import {
+  Wizard as WizardDeprecated,
+  WizardContext as WizardContextDeprecated,
+} from '@patternfly/react-core/deprecated';
 
 import { ocmResourceType, trackEvents } from '~/common/analytics';
 import { scrollToFirstField, shouldRefetchQuota } from '~/common/helpers';
@@ -415,7 +411,7 @@ class CreateROSAWizardInternal extends React.Component {
         name: stepNameById[stepId.REVIEW_AND_CREATE],
         component: (
           <ErrorBoundary>
-            <WizardContext.Consumer>
+            <WizardContextDeprecated.Consumer>
               {({ goToStepById }) =>
                 !createClusterResponse.pending ? (
                   <ReviewClusterScreen
@@ -440,7 +436,7 @@ class CreateROSAWizardInternal extends React.Component {
                   </Bullseye>
                 )
               }
-            </WizardContext.Consumer>
+            </WizardContextDeprecated.Consumer>
           </ErrorBoundary>
         ),
         canJumpTo: this.canJumpTo(stepId.REVIEW_AND_CREATE),
@@ -522,11 +518,11 @@ class CreateROSAWizardInternal extends React.Component {
         {title}
         <PageSection>
           {config.fakeOSD && ( // TODO Is ?fake=true supported for ROSA clusters?
-            <Banner variant="warning">On submit, a fake ROSA cluster will be created.</Banner>
+            <Banner variant="gold">On submit, a fake ROSA cluster will be created.</Banner>
           )}
           <div className="ocm-page">
             {isErrorModalOpen && <CreateClusterErrorModal />}
-            <Wizard
+            <WizardDeprecated
               className="rosa-wizard"
               navAriaLabel={`${ariaTitle} steps`}
               mainAriaLabel={`${ariaTitle} content`}

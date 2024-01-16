@@ -3,7 +3,7 @@ import { Alert } from '@patternfly/react-core';
 
 const ClusterNonEditableAlert = () => (
   <Alert
-    className="ai-non-editable-alert pf-u-mt-md"
+    className="ai-non-editable-alert pf-v5-u-mt-md"
     isInline
     variant="info"
     title="You cannot edit the cluster."

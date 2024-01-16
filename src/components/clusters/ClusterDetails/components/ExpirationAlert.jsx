@@ -23,7 +23,7 @@ function ExpirationAlert({
     return (
       <Alert
         id="expiration-alert"
-        className="pf-u-mt-md"
+        className="pf-v5-u-mt-md"
         variant="warning"
         isInline
         title="Cluster failed to delete"
@@ -79,7 +79,7 @@ function ExpirationAlert({
   return (
     <Alert
       id="expiration-alert"
-      className="pf-u-mt-md"
+      className="pf-v5-u-mt-md"
       variant={variant}
       isInline
       title={`This cluster will be deleted ${timeUntilExpiryString}.`}
@@ -88,7 +88,7 @@ function ExpirationAlert({
       {trialExpiration && (
         <Button
           variant="secondary"
-          className="pf-u-mt-sm"
+          className="pf-v5-u-mt-sm"
           onClick={() => openModal(modals.UPGRADE_TRIAL_CLUSTER, upgradeTrialProps)}
         >
           Upgrade from trial

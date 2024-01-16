@@ -1,20 +1,23 @@
 import Page from './page';
-import LeaveCreateClusterPrompt from './LeaveCreateClusterPrompt';
-import ClusterListPage from './ClusterList.page';
-import CreateClusterPage from './CreateCluster.page';
-import { ThinkPeaksIconConfig } from '@patternfly/react-icons';
 
 class CreateRosaCluster extends Page {
-  clusterDetailsTree = () => cy.get('li.pf-c-wizard__nav-item').find('button').contains('Details');
+  clusterDetailsTree = () =>
+    cy.get('li.pf-v5-c-wizard__nav-item').find('button').contains('Details');
 
   rosaCreateClusterButton = () => cy.getByTestId('rosa-create-cluster-button');
+
+  rosaNextButton = () => cy.getByTestId('wizard-next-button');
+
+  rosaBackButton = () => cy.getByTestId('wizard-back-button');
+
+  rosaCancelButton = () => cy.getByTestId('wizard-cancel-button');
 
   rosaClusterWithCLI = () => cy.get('a').contains('With CLI');
 
   rosaClusterWithWeb = () => cy.get('a').contains('With web interface');
 
   reviewAndCreateTree = () =>
-    cy.get('li.pf-c-wizard__nav-item').find('button').contains('Review and create');
+    cy.get('li.pf-v5-c-wizard__nav-item').find('button').contains('Review and create');
 
   machineCIDRInput = () => cy.get('input[id="network_machine_cidr"]');
 
@@ -31,6 +34,12 @@ class CreateRosaCluster extends Page {
   multiZoneAvilabilityRadio = () => cy.getByTestId('multi_az-true');
 
   advancedEncryptionLink = () => cy.get('span').contains('Advanced Encryption');
+
+  useDefaultKMSKeyRadio = () => cy.getByTestId('customer_managed_key-false');
+
+  useCustomKMSKeyRadio = () => cy.getByTestId('customer_managed_key-true');
+
+  kmsKeyARNHelpText = () => cy.get('#kms_key_arn-helper');
 
   enableAdditionalEtcdEncryptionCheckbox = () => cy.get('input[id="etcd_encryption"]');
 
@@ -64,13 +73,66 @@ class CreateRosaCluster extends Page {
 
   maximumNodeInput = () => cy.get('input[aria-label="Maximum nodes"]');
 
-  minimumNodeCountMinusButton = () => this.minimumNodeInput().prev();
+  clusterNameValidationSuccessIndicator = () =>
+    cy.get('button[aria-label="All validation rules met"]');
 
-  minimumNodeCountPlusButton = () => this.minimumNodeInput().next();
+  clusterNameValidationFailureIndicator = () =>
+    cy.get('button[aria-label="Not all validation rules met"]');
 
-  maximumNodeCountMinusButton = () => this.maximumNodeInput().prev();
+  minimumNodeCountMinusButton = () => cy.get('button[aria-label="Minimum nodes minus"]');
 
-  maximumNodeCountPlusButton = () => this.maximumNodeInput().next();
+  minimumNodeCountPlusButton = () => cy.get('button[aria-label="Minimum nodes plus"]');
+
+  maximumNodeCountMinusButton = () => cy.get('button[aria-label="Maximum nodes minus"]');
+
+  maximumNodeCountPlusButton = () => cy.get('button[aria-label="Maximum nodes plus"]');
+
+  editClusterAutoscalingSettingsButton = () =>
+    cy.getByTestId('set-cluster-autoscaling-btn', { timeout: 80000 });
+
+  clusterAutoscalingLogVerbosityInput = () =>
+    cy.get('input[id="cluster_autoscaling.log_verbosity"]');
+
+  clusterAutoscalingMaxNodeProvisionTimeInput = () =>
+    cy.get('input[id="cluster_autoscaling.max_node_provision_time"]');
+
+  clusterAutoscalingBalancingIgnoredLabelsInput = () =>
+    cy.get('input[id="cluster_autoscaling.balancing_ignored_labels"]');
+
+  clusterAutoscalingCoresTotalMinInput = () =>
+    cy.get('input[id="cluster_autoscaling.resource_limits.cores.min"]');
+
+  clusterAutoscalingCoresTotalMaxInput = () =>
+    cy.get('input[id="cluster_autoscaling.resource_limits.cores.max"]');
+
+  clusterAutoscalingMemoryTotalMinInput = () =>
+    cy.get('input[id="cluster_autoscaling.resource_limits.memory.min"]');
+
+  clusterAutoscalingMemoryTotalMaxInput = () =>
+    cy.get('input[id="cluster_autoscaling.resource_limits.memory.max"]');
+
+  clusterAutoscalingGPUsInput = () =>
+    cy.get('input[id="cluster_autoscaling.resource_limits.gpus"]');
+
+  clusterAutoscalingScaleDownUtilizationThresholdInput = () =>
+    cy.get('input[id="cluster_autoscaling.scale_down.utilization_threshold"]');
+
+  clusterAutoscalingScaleDownUnneededTimeInput = () =>
+    cy.get('input[id="cluster_autoscaling.scale_down.unneeded_time"]');
+
+  clusterAutoscalingScaleDownDelayAfterAddInput = () =>
+    cy.get('input[id="cluster_autoscaling.scale_down.delay_after_add"]');
+
+  clusterAutoscalingScaleDownDelayAfterDeleteInput = () =>
+    cy.get('input[id="cluster_autoscaling.scale_down.delay_after_delete"]');
+
+  clusterAutoscalingScaleDownDelayAfterFailureInput = () =>
+    cy.get('input[id="cluster_autoscaling.scale_down.delay_after_failure"]');
+
+  clusterAutoscalingRevertAllToDefaultsButton = () =>
+    cy.get('button').contains('Revert all to defaults');
+
+  clusterAutoscalingCloseButton = () => cy.get('button').contains('Close');
 
   cidrDefaultValuesCheckBox = () => cy.get('input[id="cidr_default_values_toggle"]');
 
@@ -81,6 +143,11 @@ class CreateRosaCluster extends Page {
   applicationIngressDefaultSettingsRadio = () => cy.getByTestId('applicationIngress-default');
 
   applicationIngressCustomSettingsRadio = () => cy.getByTestId('applicationIngress-custom');
+
+  applicationIngressRouterSelectorsInput = () => cy.get('input#defaultRouterSelectors');
+
+  applicationIngressExcludedNamespacesInput = () =>
+    cy.get('input#defaultRouterExcludedNamespacesFlag');
 
   clusterPrivacyPublicRadio = () => cy.getByTestId('cluster_privacy-external');
 
@@ -112,7 +179,7 @@ class CreateRosaCluster extends Page {
   }
 
   isAssociateAccountsDrawer() {
-    cy.contains('h2', 'How to associate a new AWS account');
+    cy.contains('span', 'How to associate a new AWS account').should('have.focus');
     cy.contains('continue to step');
   }
 
@@ -161,7 +228,7 @@ class CreateRosaCluster extends Page {
   showsNoAssociatedAccounts = () => cy.getByTestId('no_associated_accounts').should('be.visible');
 
   isSelectedVersion = (testVersion) => {
-    cy.get('button.pf-c-select__menu-item.pf-m-selected')
+    cy.get('button.pf-v5-c-select__menu-item.pf-m-selected')
       .scrollIntoView()
       .invoke('text')
       .should('eq', testVersion);
@@ -172,19 +239,19 @@ class CreateRosaCluster extends Page {
   }
 
   get accountIdMenuItem() {
-    return '.pf-c-select__menu-item';
+    return '.pf-v5-c-select__menu-item';
   }
 
   get associatedAccountsDropdown() {
-    return 'button.pf-c-select__toggle:not(.pf-m-disabled)[aria-describedby="aws-infra-accounts"]';
+    return 'button.pf-v5-c-select__toggle:not(.pf-m-disabled)[aria-describedby="aws-infra-accounts"]';
   }
 
   get versionsDropdown() {
-    return 'div[name="cluster_version"] button.pf-c-select__toggle';
+    return 'div[name="cluster_version"] button.pf-v5-c-select__toggle';
   }
 
   get ARNFieldRequiredMsg() {
-    return '.pf-c-expandable-section.pf-m-expanded .pf-c-form__helper-text.pf-m-error';
+    return '.pf-v5-c-expandable-section.pf-m-expanded .pf-v5-c-helper-text__item.pf-m-error';
   }
 
   get clusterNameInput() {
@@ -192,11 +259,11 @@ class CreateRosaCluster extends Page {
   }
 
   get clusterNameInputError() {
-    return 'ul#rich-input-popover-name li.pf-c-helper-text__item.pf-m-error.pf-m-dynamic';
+    return 'ul#rich-input-popover-name li.pf-v5-c-helper-text__item.pf-m-error.pf-m-dynamic';
   }
 
   get primaryButton() {
-    return '.rosa-wizard button.pf-c-button.pf-m-primary';
+    return '.rosa-wizard button.pf-v5-c-button.pf-m-primary';
   }
 
   selectStandaloneControlPlaneTypeOption() {
@@ -222,59 +289,61 @@ class CreateRosaCluster extends Page {
       .contains('How to associate a new AWS account')
       .siblings()
       .find('div')
-      .find('button.pf-c-select__toggle')
+      .find('button.pf-v5-c-select__toggle')
       .click();
-    cy.get('input.pf-m-search', { timeout: 50000 }).clear().type(accountID);
+    cy.get('input[placeholder*="Filter by account ID"]', { timeout: 50000 })
+      .clear()
+      .type(accountID);
     cy.get('div[label="Associated AWS infrastructure account"]')
       .find('button')
       .contains(accountID)
       .click();
   }
+
   waitForARNList() {
-    cy.get('span.pf-c-button__progress', { timeout: 80000 }).should('not.exist');
+    cy.get('span.pf-v5-c-button__progress', { timeout: 80000 }).should('not.exist');
   }
 
   selectInstallerRole(roleName) {
-    cy.get('.pf-c-form__label-text')
+    cy.get('.pf-v5-c-form__label-text')
       .contains('Installer role')
       .parent()
       .parent()
       .siblings()
       .find('div')
-      .find('button.pf-c-select__toggle')
+      .find('button.pf-v5-c-select__toggle')
       .then(($btn) => {
         if ($btn.is(':disabled')) {
           cy.log('Installer ARN button is disabled there is only one option. Continuing..');
         } else {
-          cy.get('.pf-c-form__label-text')
+          cy.get('.pf-v5-c-form__label-text')
             .contains('Installer role')
             .parent()
             .parent()
             .siblings()
             .find('div')
-            .find('button.pf-c-select__toggle')
+            .find('button.pf-v5-c-select__toggle')
             .click();
           cy.get('ul[id="installer_role_arn"]').find('button').contains(roleName).click();
         }
       });
   }
+
   selectClusterVersion(version) {
-    cy.get('div[name="cluster_version"]').find('button.pf-c-select__toggle').click();
+    cy.get('div[name="cluster_version"]').find('button.pf-v5-c-select__toggle').click();
     cy.get('ul[label="Version"]').find('button').contains(version).click();
   }
 
   addNodeLabelKeyAndValue(key, value = '', index = 0) {
-    cy.get('input[name="node_labels[' + index + '].key"]')
-      .clear()
-      .type(key);
-    cy.get('input[name="node_labels[' + index + '].value"]')
-      .clear()
-      .type(value);
+    cy.get(`input[name="node_labels[${index}].key"]`).clear().type(key);
+    cy.get(`input[name="node_labels[${index}].value"]`).clear().type(value);
   }
+
   isNodeLabelKeyAndValue(key, value = '', index = 0) {
-    cy.get('input[name="node_labels[' + index + '].key"]').should('have.value', key);
-    cy.get('input[name="node_labels[' + index + '].value"]').should('have.value', value);
+    cy.get(`input[name="node_labels[${index}].key"]`).should('have.value', key);
+    cy.get(`input[name="node_labels[${index}].value"]`).should('have.value', value);
   }
+
   selectRegion(region) {
     cy.get('select[name="region"]').select(region);
   }
@@ -284,7 +353,7 @@ class CreateRosaCluster extends Page {
       .parent()
       .siblings()
       .find('div')
-      .find('button.pf-c-select__toggle')
+      .find('button.pf-v5-c-select__toggle')
       .click();
     cy.get('li').contains(computeNodeType).click();
   }
@@ -364,7 +433,7 @@ class CreateRosaCluster extends Page {
   }
 
   isClusterPropertyMatchesValue(property, value) {
-    cy.get('span.pf-c-description-list__text')
+    cy.get('span.pf-v5-c-description-list__text')
       .contains(property)
       .parent()
       .siblings()
@@ -375,6 +444,7 @@ class CreateRosaCluster extends Page {
   setMinimumNodeCount(nodeCount) {
     this.minimumNodeInput().type('{selectAll}').type(nodeCount);
   }
+
   setMaximumNodeCount(nodeCount) {
     this.maximumNodeInput().type('{selectAll}').type(nodeCount);
   }
@@ -386,13 +456,11 @@ class CreateRosaCluster extends Page {
 
   waitForClusterReady() {
     // Wait up to 1 hour for cluster to be Ready
-    cy.get('.pf-u-ml-xs', { timeout: 3600000 }).should('contain', 'Ready');
+    cy.get('.pf-v5-u-ml-xs', { timeout: 3600000 }).should('contain', 'Ready');
   }
 
   waitForButtonContainingTextToBeEnabled(text, timeout = 30000) {
-    cy.get(`button:contains('${text}')`, { timeout: timeout })
-      .scrollIntoView()
-      .should('be.enabled');
+    cy.get(`button:contains('${text}')`, { timeout }).scrollIntoView().should('be.enabled');
   }
 
   clickButtonContainingText(text, options = {}) {
@@ -446,7 +514,7 @@ class CreateRosaCluster extends Page {
   }
 
   inputCustomerManageKeyARN(kmsCustomKeyARN) {
-    cy.get('#kms_key_arn').type(kmsCustomKeyARN).should('have.value', kmsCustomKeyARN);
+    cy.get('#kms_key_arn').clear().type(kmsCustomKeyARN).should('have.value', kmsCustomKeyARN);
   }
 
   enableEtcEncryption() {
@@ -532,6 +600,7 @@ class CreateRosaCluster extends Page {
       }
     });
   }
+
   enableUpgradePolicyAutomatic() {
     cy.getByTestId('upgrade_policy-automatic').then(($elem) => {
       if (!$elem.prop('checked')) {
@@ -547,12 +616,17 @@ class CreateRosaCluster extends Page {
       }
     });
   }
+
   enableRosaRolesProviderCreationModeAuto() {
     cy.getByTestId('rosa_roles_provider_creation_mode-auto').then(($elem) => {
       if (!$elem.prop('checked')) {
         cy.getByTestId('rosa_roles_provider_creation_mode-auto').check();
       }
     });
+  }
+
+  get clusterNameInputError() {
+    return 'ul#rich-input-popover-name li.pf-c-helper-text__item.pf-m-error.pf-m-dynamic';
   }
 
   validateItemsInList(listOfMatchValues, listSelector) {

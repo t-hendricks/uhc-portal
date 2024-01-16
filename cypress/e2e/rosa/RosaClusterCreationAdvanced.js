@@ -5,7 +5,7 @@ import ClusterDetailsPage from '../../pageobjects/ClusterDetails.page';
 
 // awsAccountID,rolePrefix and installerARN are set by prerun script for smoke requirements.
 const awsAccountID = Cypress.env('QE_AWS_ID');
-const rolePrefix = 'cypress-account-roles';
+const rolePrefix = Cypress.env('QE_ACCOUNT_ROLE_PREFIX');
 const installerARN = 'arn:aws:iam::' + awsAccountID + ':role/' + rolePrefix + '-Installer-Role';
 const clusterName = `smkrosa-` + (Math.random() + 1).toString(36).substring(7);
 
@@ -168,7 +168,7 @@ describe(
 
       it('Step - Review and create step -its definitions', () => {
         // Some situation the ARN spinner in progress and blocks cluster creation.
-        cy.get('.pf-c-spinner', { timeout: 30000 }).should('not.exist');
+        cy.get('.pf-v5-c-spinner', { timeout: 30000 }).should('not.exist');
         CreateRosaWizardPage.isClusterPropertyMatchesValue('Control plane', 'Classic');
         CreateRosaWizardPage.isClusterPropertyMatchesValue('Availability', 'Multi-zone');
         CreateRosaWizardPage.isClusterPropertyMatchesValue('User workload monitoring', 'Enabled');

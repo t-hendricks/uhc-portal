@@ -18,7 +18,12 @@ import {
   ToolbarContent,
   ToolbarItem,
 } from '@patternfly/react-core';
-import { Table, TableHeader, TableBody, cellWidth, expandable } from '@patternfly/react-table';
+import { cellWidth, expandable } from '@patternfly/react-table';
+import {
+  Table as TableDeprecated,
+  TableHeader as TableHeaderDeprecated,
+  TableBody as TableBodyDeprecated,
+} from '@patternfly/react-table/deprecated';
 import Skeleton from '@redhat-cloud-services/frontend-components/Skeleton';
 
 import { EditClusterAutoScalerForDay2 } from '~/components/clusters/common/EditClusterAutoScalingDialog';
@@ -487,7 +492,7 @@ class MachinePools extends React.Component {
                   />
                 )}
                 {machinePoolsActions.list && (
-                  <Table
+                  <TableDeprecated
                     aria-label="Machine pools"
                     cells={columns}
                     rows={rows}
@@ -508,9 +513,9 @@ class MachinePools extends React.Component {
                     }
                     areActionsDisabled={() => tableActionsDisabled}
                   >
-                    <TableHeader />
-                    <TableBody />
-                  </Table>
+                    <TableHeaderDeprecated />
+                    <TableBodyDeprecated />
+                  </TableDeprecated>
                 )}
               </CardBody>
             </Card>

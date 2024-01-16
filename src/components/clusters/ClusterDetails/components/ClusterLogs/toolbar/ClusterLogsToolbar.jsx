@@ -54,7 +54,7 @@ class ClusterLogsToolbar extends React.PureComponent {
                 viewOptions={viewOptions}
               />
             </ToolbarItem>
-            <ToolbarItem alignment={{ default: 'alignRight' }} variant="pagination">
+            <ToolbarItem align={{ default: 'alignRight' }} variant="pagination">
               <ViewPaginationRow
                 viewType={viewConstants.CLUSTER_LOGS_VIEW}
                 currentPage={viewOptions.currentPage}

@@ -1,17 +1,24 @@
 import get from 'lodash/get';
 import PropTypes from 'prop-types';
 import React from 'react';
-import { EmptyState, EmptyStateBody, EmptyStateIcon, Title } from '@patternfly/react-core';
+import {
+  EmptyState,
+  EmptyStateBody,
+  EmptyStateIcon,
+  EmptyStateHeader,
+} from '@patternfly/react-core';
 import {
   cellWidth,
   classNames,
   sortable,
   SortByDirection,
-  Table,
-  TableBody,
-  TableHeader,
   Visibility,
 } from '@patternfly/react-table';
+import {
+  Table as TableDeprecated,
+  TableHeader as TableHeaderDeprecated,
+  TableBody as TableBodyDeprecated,
+} from '@patternfly/react-table/deprecated';
 import SearchIcon from '@patternfly/react-icons/dist/esm/icons/search-icon';
 import { Link } from 'react-router-dom';
 import ButtonWithTooltip from '../../../../common/ButtonWithTooltip';
@@ -28,10 +35,11 @@ function ArchivedClusterListTable(props) {
   if (!clusters || clusters.length === 0) {
     return (
       <EmptyState>
-        <EmptyStateIcon icon={SearchIcon} />
-        <Title headingLevel="h4" size="lg">
-          No archived clusters found.
-        </Title>
+        <EmptyStateHeader
+          titleText="No archived clusters found."
+          icon={<EmptyStateIcon icon={SearchIcon} />}
+          headingLevel="h4"
+        />
         <EmptyStateBody>
           This filter criteria matches no clusters.
           <br />
@@ -124,16 +132,16 @@ function ArchivedClusterListTable(props) {
   };
 
   return (
-    <Table
+    <TableDeprecated
       cells={columns}
       rows={clusters.map((cluster) => clusterRow(cluster))}
       onSort={onSortToggle}
       sortBy={sortBy}
       aria-label="Archived clusters"
     >
-      <TableHeader />
-      <TableBody />
-    </Table>
+      <TableHeaderDeprecated />
+      <TableBodyDeprecated />
+    </TableDeprecated>
   );
 }
 

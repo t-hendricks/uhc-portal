@@ -49,11 +49,11 @@ class CreateOSDCluster extends Page {
   }
 
   get clusterNameInputError() {
-    return 'ul#rich-input-popover-name li.pf-c-helper-text__item.pf-m-error.pf-m-dynamic';
+    return 'ul#rich-input-popover-name li.pf-v5-c-helper-text__item.pf-m-error.pf-m-dynamic';
   }
 
   get primaryButton() {
-    return '#osd-wizard button.pf-c-button.pf-m-primary';
+    return '#osd-wizard button.pf-v5-c-button.pf-m-primary';
   }
 
   get CCSSelected() {

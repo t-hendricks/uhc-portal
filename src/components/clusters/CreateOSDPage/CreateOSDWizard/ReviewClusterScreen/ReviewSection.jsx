@@ -13,7 +13,7 @@ import {
   TextContent,
   TextVariants,
 } from '@patternfly/react-core';
-import { ExclamationCircleIcon } from '@patternfly/react-icons';
+import { ExclamationCircleIcon } from '@patternfly/react-icons/dist/esm/icons/exclamation-circle-icon';
 import { BackToAssociateAwsAccountLink } from '~/components/clusters/CreateROSAPage/CreateROSAWizard/common/BackToAssociateAwsAccountLink';
 import PopoverHintWithTitle from '~/components/common/PopoverHintWithTitle';
 import reviewValues from './reviewValues';
@@ -116,7 +116,7 @@ const ReviewSection = ({ initiallyExpanded, title, children, onGoToStep }) => {
     setIsExpanded(initiallyExpanded);
   }, [initiallyExpanded]);
 
-  const onToggle = (toggleValue) => {
+  const onToggle = (_event, toggleValue) => {
     setIsExpanded(toggleValue);
   };
 
@@ -139,13 +139,13 @@ const ReviewSection = ({ initiallyExpanded, title, children, onGoToStep }) => {
             <Button
               variant="link"
               isInline
-              className="pf-u-font-size-sm pf-u-ml-sm"
+              className="pf-v5-u-font-size-sm pf-v5-u-ml-sm"
               onClick={(event) => {
                 event.stopPropagation();
                 onGoToStep();
               }}
             >
-              Edit <span className="pf-u-screen-reader">{title}</span> step
+              Edit <span className="pf-v5-u-screen-reader">{title}</span> step
             </Button>
           </div>
         }

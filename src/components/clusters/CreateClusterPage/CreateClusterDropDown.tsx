@@ -1,14 +1,11 @@
 import React from 'react';
+import { Button, ButtonVariant, HelperText, HelperTextItem } from '@patternfly/react-core';
 import {
-  Button,
-  ButtonVariant,
-  Dropdown,
-  DropdownPosition,
-  DropdownToggle,
-  DropdownItem,
-  HelperText,
-  HelperTextItem,
-} from '@patternfly/react-core';
+  Dropdown as DropdownDeprecated,
+  DropdownPosition as DropdownPositionDeprecated,
+  DropdownToggle as DropdownToggleDeprecated,
+  DropdownItem as DropdownItemDeprecated,
+} from '@patternfly/react-core/deprecated';
 import { Link } from 'react-router-dom';
 import { useFeatureGate } from '~/hooks/useFeatureGate';
 import { HCP_ROSA_GETTING_STARTED_PAGE } from '~/redux/constants/featureConstants';
@@ -35,7 +32,7 @@ const CreateClusterDropDown = ({ toggleId }: CreateClusterDropDownProps) => {
   };
 
   const dropdownItems = [
-    <DropdownItem
+    <DropdownItemDeprecated
       key="getstarted"
       component={
         <Link id="with-cli" to={getStartedPath}>
@@ -51,7 +48,7 @@ const CreateClusterDropDown = ({ toggleId }: CreateClusterDropDownProps) => {
       }
     />,
 
-    <DropdownItem
+    <DropdownItemDeprecated
       key="wizard"
       component={
         <Link id="with-web" to="/create/rosa/wizard">
@@ -70,22 +67,22 @@ const CreateClusterDropDown = ({ toggleId }: CreateClusterDropDownProps) => {
 
   return (
     <>
-      <Dropdown
+      <DropdownDeprecated
         onSelect={onDropDownSelect}
         toggle={
-          <DropdownToggle
+          <DropdownToggleDeprecated
             id={toggleId}
             ref={dropDownRef}
             toggleVariant={ButtonVariant.primary}
-            onToggle={setOpen}
+            onToggle={(_event, isOpen) => setOpen(isOpen)}
             className="create-button"
           >
             Create cluster
-          </DropdownToggle>
+          </DropdownToggleDeprecated>
         }
         isOpen={isOpen}
         dropdownItems={dropdownItems}
-        position={DropdownPosition.right}
+        position={DropdownPositionDeprecated.right}
         data-testid="rosa-create-cluster-button"
       />
       <br />

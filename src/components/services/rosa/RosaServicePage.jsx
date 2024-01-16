@@ -20,8 +20,9 @@ import {
   TextVariants,
   Divider,
   Stack,
+  Icon,
 } from '@patternfly/react-core';
-import { CubeIcon } from '@patternfly/react-icons';
+import { CubeIcon } from '@patternfly/react-icons/dist/esm/icons/cube-icon';
 import { Link } from 'react-router-dom';
 import ExternalLink from '~/components/common/ExternalLink';
 import useAnalytics from '~/hooks/useAnalytics';
@@ -64,7 +65,7 @@ const TryRosaCard = () => {
             });
           }}
           component={(props) => <Link {...props} to={rosaHandsOnURL} />}
-          isLarge
+          size="lg"
         >
           Try it
         </Button>
@@ -120,7 +121,7 @@ const featuresExpandableContents = [
 ];
 
 const linkTextLabelLinkCardContents = {
-  cardClassName: 'pf-u-mb-lg',
+  cardClassName: 'pf-v5-u-mb-lg',
   textLabelLinkItems: [
     {
       listItemText: 'Product Documentation for Red Hat OpenShift Service on AWS 4',
@@ -158,7 +159,7 @@ function RosaServicePage() {
             <ExpandableSection
               className="rosa-expandable-section"
               toggleContent={<Text component={TextVariants.h3}>{title}</Text>}
-              displaySize="large"
+              displaySize="lg"
             >
               {contents}
             </ExpandableSection>
@@ -188,7 +189,7 @@ function RosaServicePage() {
         }
       />
       <PageSection>
-        <TextContent className="pf-u-mb-lg">
+        <TextContent className="pf-v5-u-mb-lg">
           <Title headingLevel="h2">Get started with ROSA</Title>
         </TextContent>
         <Flex>
@@ -199,7 +200,9 @@ function RosaServicePage() {
                   <CardHeader>
                     <CardTitle>
                       <Title headingLevel="h3">
-                        <CubeIcon size="md" className="pf-u-mr-sm rosa-cube-icon" />
+                        <Icon size="md">
+                          <CubeIcon className="pf-v5-u-mr-sm rosa-cube-icon" />
+                        </Icon>
                         Create a ROSA cluster
                       </Title>
                     </CardTitle>
@@ -226,7 +229,7 @@ function RosaServicePage() {
                               }}
                             />
                           )}
-                          isLarge
+                          size="lg"
                         >
                           Begin setup
                         </Button>
@@ -241,17 +244,17 @@ function RosaServicePage() {
             <TryRosaCard />
           </FlexItem>
         </Flex>
-        <Title className="pf-u-mt-lg pf-u-mb-lg" headingLevel="h2">
+        <Title className="pf-v5-u-mt-lg pf-v5-u-mb-lg" headingLevel="h2">
           Benefits
         </Title>
         <Card>{expandableListArray(benefitsExpandableContents)}</Card>
 
-        <Title className="pf-u-mt-lg pf-u-mb-lg" headingLevel="h2">
+        <Title className="pf-v5-u-mt-lg pf-v5-u-mb-lg" headingLevel="h2">
           Features
         </Title>
         <Card>{expandableListArray(featuresExpandableContents)}</Card>
 
-        <Title className="pf-u-mt-lg pf-u-mb-lg" headingLevel="h2">
+        <Title className="pf-v5-u-mt-lg pf-v5-u-mb-lg" headingLevel="h2">
           Pricing
         </Title>
         <Flex>
@@ -292,11 +295,11 @@ function RosaServicePage() {
           </FlexItem>
         </Flex>
 
-        <div className="pf-u-mt-md">
+        <div className="pf-v5-u-mt-md">
           <ExternalLink href={docLinks.ROSA_PRICING}>Learn more about pricing</ExternalLink>
         </div>
 
-        <Title headingLevel="h2" className="pf-u-mt-lg pf-u-mb-lg">
+        <Title headingLevel="h2" className="pf-v5-u-mt-lg pf-v5-u-mb-lg">
           Recommended content
         </Title>
 

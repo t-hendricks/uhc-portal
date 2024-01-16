@@ -74,7 +74,7 @@ export const CidrRanges = () => {
       </>
     ) : null;
 
-  const onDefaultValuesToggle = (checked: boolean) => {
+  const onDefaultValuesToggle = (_event: React.FormEvent<HTMLInputElement>, checked: boolean) => {
     setFieldValue(FieldId.CidrDefaultValuesEnabled, checked);
 
     if (checked) {
@@ -101,10 +101,10 @@ export const CidrRanges = () => {
             id="advanced-networking-alert"
             isInline
             variant="info"
-            className="pf-u-mt-sm"
+            className="pf-v5-u-mt-sm"
             title="CIDR ranges cannot be changed after you create your cluster."
           >
-            <p className="pf-u-mb-md">
+            <p className="pf-v5-u-mb-md">
               Specify non-overlapping ranges for machine, service, and pod ranges. Each range should
               correspond to the first IP address in their subnet.
             </p>
@@ -137,7 +137,7 @@ export const CidrRanges = () => {
               validate={(value: string) => validateMachineCidr(value)(values)}
               isDisabled={isDefaultValuesChecked}
               helperText={
-                <div className="pf-c-form__helper-text">
+                <div className="pf-v5-c-form__helper-text">
                   {cloudProvider === CloudProviderType.Aws
                     ? `Subnet mask must be between /${validators.AWS_MACHINE_CIDR_MIN} and /${awsMachineCIDRMax}.`
                     : `Range must be private. Subnet mask must be at most /${validators.GCP_MACHINE_CIDR_MAX}.`}
@@ -225,7 +225,7 @@ export const CidrRanges = () => {
               tooltip={constants.hostPrefixHint}
               input={{
                 placeholder: HOST_PREFIX_DEFAULT,
-                onChange: (value) =>
+                onChange: (_event, value) =>
                   setFieldValue(FieldId.NetworkHostPrefix, formatHostPrefix(value)),
               }}
             />

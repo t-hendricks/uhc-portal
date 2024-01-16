@@ -48,7 +48,7 @@ export const CloudRegionSelectField = ({
         aria-label="Region"
         isDisabled={isDisabled}
         value={field.value}
-        onChange={(value) => {
+        onChange={(_event, value) => {
           handleCloudRegionChange?.();
           setFieldValue(field.name, value);
         }}

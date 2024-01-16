@@ -2,7 +2,12 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Select, SelectOption, FormGroup } from '@patternfly/react-core';
+import { FormGroup } from '@patternfly/react-core';
+import {
+  Select as SelectDeprecated,
+  SelectOption as SelectOptionDeprecated,
+} from '@patternfly/react-core/deprecated';
+import { FormGroupHelperText } from '~/components/common/FormGroupHelperText';
 
 const PLACEHOLDER_VALUE = 'Select availability zone';
 
@@ -29,35 +34,30 @@ class AvailabilityZoneSelection extends React.Component {
       meta: { error, touched },
     } = this.props;
     return (
-      <FormGroup
-        {...input}
-        label={label}
-        className="ocm-c-create-osd-az-select"
-        validated={error ? 'error' : undefined}
-        helperTextInvalid={touched && error}
-        isRequired
-      >
-        <Select
+      <FormGroup {...input} label={label} className="ocm-c-create-osd-az-select" isRequired>
+        <SelectDeprecated
           isOpen={isOpen}
           selections={input.value || PLACEHOLDER_VALUE}
-          onToggle={this.onToggle}
+          onToggle={(_event, isOpen) => this.onToggle(isOpen)}
           onSelect={this.onSelect}
           isDisabled={isDisabled}
         >
-          <SelectOption key={0} value={PLACEHOLDER_VALUE} isPlaceholder />
+          <SelectOptionDeprecated key={0} value={PLACEHOLDER_VALUE} isPlaceholder />
           {['a', 'b', 'c', 'd', 'e', 'f'].map((letter) => {
             // AWS availability zones are comprised from the region name
             // followed by a single letter. For more information please see:
             // https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-regions-availability-zones.html#concepts-availability-zones
             const avalabilityZone = region + letter;
             return (
-              <SelectOption
+              <SelectOptionDeprecated
                 key={letter}
                 value={avalabilityZone}
-              >{`${avalabilityZone}`}</SelectOption>
+              >{`${avalabilityZone}`}</SelectOptionDeprecated>
             );
           })}
-        </Select>
+        </SelectDeprecated>
+
+        <FormGroupHelperText touched={touched} error={error} />
       </FormGroup>
     );
   }

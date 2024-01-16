@@ -9,8 +9,9 @@ import {
   Text,
   TextContent,
   Title,
+  Icon,
 } from '@patternfly/react-core';
-import { ExternalLinkAltIcon } from '@patternfly/react-icons';
+import { ExternalLinkAltIcon } from '@patternfly/react-icons/dist/esm/icons/external-link-alt-icon';
 import useAnalytics from '~/hooks/useAnalytics';
 import { trackEvents } from '~/common/analytics';
 import TokenErrorAlert from '../install/instructions/components/TokenErrorAlert';
@@ -27,7 +28,7 @@ const LocalTab = ({ token }) => {
   const track = useAnalytics();
   return (
     <>
-      <PageSection>
+      <PageSection className="pf-v5-u-p-lg">
         <Split hasGutter>
           <Title headingLevel="h2">Red Hat OpenShift Local</Title>
           <SplitItem>
@@ -44,11 +45,11 @@ const LocalTab = ({ token }) => {
             unless you enable cluster monitoring and telemetry.
           </Text>
         </TextContent>
-        <Divider className="pf-u-mt-lg pf-u-mb-xl" />
+        <Divider className="pf-v5-u-mt-lg pf-v5-u-mb-xl" />
         {token.error && (
           <>
             <TokenErrorAlert token={token} />
-            <div className="pf-u-mb-lg" />
+            <div className="pf-v5-u-mb-lg" />
           </>
         )}
         <Instructions>
@@ -82,7 +83,9 @@ const LocalTab = ({ token }) => {
                 }}
               >
                 View the OpenShift Local Getting started guide{' '}
-                <ExternalLinkAltIcon color="#0066cc" size="sm" />
+                <Icon size="sm">
+                  <ExternalLinkAltIcon color="#0066cc" />
+                </Icon>
               </a>
             </Text>
           </Instruction>

@@ -151,7 +151,7 @@ const ReviewClusterScreen = ({
 
   return (
     <div className="ocm-create-osd-review-screen">
-      <Title headingLevel="h2" className="pf-u-pb-md">
+      <Title headingLevel="h2" className="pf-v5-u-pb-md">
         Review your {isROSA ? 'ROSA' : 'dedicated'} cluster
       </Title>
       {isROSA && (

@@ -176,6 +176,6 @@ describe('<MinorVersionUpgradeAlert >', () => {
       { enable_minor_version_upgrades: false },
     );
     expect(setUpgradePolicy).not.toHaveBeenCalled();
-    expect(await screen.findByRole('alert', { name: 'Danger Alert' })).toBeInTheDocument();
+    expect(screen.getByTestId('alert-success')).toBeInTheDocument();
   });
 });

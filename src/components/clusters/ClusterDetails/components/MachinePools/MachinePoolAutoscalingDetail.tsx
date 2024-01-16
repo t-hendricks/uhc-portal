@@ -17,7 +17,7 @@ const MachinePoolAutoScalingDetail = ({
   autoscaling: MachinePoolAutoscaling;
 }) => (
   <>
-    <Title headingLevel="h4" className="pf-u-mb-sm pf-u-mt-lg">
+    <Title headingLevel="h4" className="pf-v5-u-mb-sm pf-v5-u-mt-lg">
       Autoscaling
     </Title>
     <Split hasGutter>

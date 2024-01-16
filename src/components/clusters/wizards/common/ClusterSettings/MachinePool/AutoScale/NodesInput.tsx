@@ -64,6 +64,8 @@ export const NodesInput = ({
       onChange={(event) => input.onChange(Number((event.target as HTMLInputElement).value))}
       onPlus={onButtonPress(true)}
       inputAriaLabel={ariaLabel}
+      minusBtnAriaLabel={`${ariaLabel} minus`}
+      plusBtnAriaLabel={`${ariaLabel} plus`}
       widthChars={4}
       inputProps={{
         onBlur: (event: React.ChangeEvent<HTMLInputElement>) => {

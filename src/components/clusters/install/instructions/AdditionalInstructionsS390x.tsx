@@ -1,5 +1,5 @@
-import { List, ListItem, Text } from '@patternfly/react-core';
-import { ExternalLinkAltIcon } from '@patternfly/react-icons';
+import { Icon, List, ListItem, Text } from '@patternfly/react-core';
+import { ExternalLinkAltIcon } from '@patternfly/react-icons/dist/esm/icons/external-link-alt-icon';
 import React from 'react';
 import links from '../../../../common/installLinks.mjs';
 
@@ -15,7 +15,11 @@ const AdditionalInstructionsS390x = () => (
         rel="noreferrer noopener"
         data-testid="install-ibmz-zvm-link"
       >
-        Learn more <ExternalLinkAltIcon size="sm" />.
+        Learn more{' '}
+        <Icon size="sm">
+          <ExternalLinkAltIcon />
+        </Icon>
+        .
       </Text>
     </ListItem>
     <ListItem>
@@ -28,7 +32,11 @@ const AdditionalInstructionsS390x = () => (
         rel="noreferrer noopener"
         data-testid="install-ibmz-rhcos-link"
       >
-        Learn more <ExternalLinkAltIcon size="sm" />.{' '}
+        Learn more{' '}
+        <Icon size="sm">
+          <ExternalLinkAltIcon />
+        </Icon>
+        .{' '}
       </Text>
     </ListItem>
   </List>
