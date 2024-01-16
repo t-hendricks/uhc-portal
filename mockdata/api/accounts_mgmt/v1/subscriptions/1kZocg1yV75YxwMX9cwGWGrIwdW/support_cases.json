@@ -1,5 +1,51 @@
 {
   "response": {
-    "docs": []
+    "numFound": 4,
+    "docs": [
+      {
+        "case_summary": "You cannot start a deployment again if HPA is enabled and its set to 0 via the UI",
+        "case_description": "What are you experiencing? What are you expecting to happen?\r\nBecause the up arrows are disabled when HPA(Screenshot1) is set for a deployment or deploymentconfig. There is no way to increase the replica count from 0 to x. \r\n\r\nAnd because the HPA won't scale a deployment or DC if the replica count is 0(screenshot-2), it means there's no way to start the deployment/dc again via the UI. \r\n\r\nYou need to do it via the commandline, e.g.  kubectl scale deployment -n my-test1 --replicas 3 \r\n\r\nDefine the value or impact to you or the business\r\nUsability",
+        "case_number": "01234501",
+        "case_createdDate": "2023-10-19T06:56:03Z",
+        "case_owner": "Red Hatter C",
+        "case_status": "Waiting on Red Hat",
+        "case_severity": "4 (Low)",
+        "case_lastModifiedByName": "Hydra E2E 2",
+        "case_lastModifiedDate": "2023-12-28T03:47:45Z"
+      },
+      {
+        "case_summary": "Enable header based sticky session on multiple pods",
+        "case_description": "What are you experiencing? What are you expecting to happen?\nHeader based session stickiness is not working with multiple pods\n\nDefine the value or impact to you or the business\nFunctionality in the application is not working\n\nWhen does this behavior occur? Frequency? Repeatedly? At certain times?\nRepeatedly",
+        "case_number": "01234502",
+        "case_createdDate": "2023-07-11T12:16:08Z",
+        "case_owner": "Red Hatter A",
+        "case_status": "Waiting on Customer",
+        "case_severity": "4 (Low)",
+        "case_lastModifiedByName": "Red Hatter A",
+        "case_lastModifiedDate": "2023-12-28T10:13:38Z"
+      },
+      {
+        "case_summary": "console.redhat.com subscription counter doubled overnight without cluster growth",
+        "case_description": "What are you experiencing? What are you expecting to happen?\nconsole.redhat.com subscription counter for OpenShift overnight started reporting double the core amount on all 6 our clusters\nhttps://console.redhat.com/openshift/subscriptions/openshift\n\nnumbers we saw before were consistent with the sum of cores provisioned on our worker nodes ; new numbers are confusing, we need to understand asap if this is a bug. \nThis tool is being used for budget evaluations and situation witnessed right now undermines our ability to plan or extend properly our contract. \n\nDefine the value or impact to you or the business\nthere is urgency as budget planning just finished and the revised numbers from console shown today are not matching previously estimated numbers\n\nWhere are you experiencing this behavior? What environment?\nall 6 clusters\n\nWhen does this behavior occur? Frequency? Repeatedly? At certain times?\nstarted appearing tonight",
+        "case_number": "01234503",
+        "case_createdDate": "2023-12-15T07:39:17Z",
+        "case_owner": "Red Hatter B",
+        "case_status": "Waiting on Red Hat",
+        "case_severity": "3 (Normal)",
+        "case_lastModifiedByName": "Red Hatter A",
+        "case_lastModifiedDate": "2024-01-02T12:36:05Z"
+      },
+      {
+        "case_summary": "Is there a max transfer size between pods?",
+        "case_description": "What are you experiencing? What are you expecting to happen?\nWe're trying to sending files between pods, but we seen to get a error whenever we try to send anything over 100k\n\nDefine the value or impact to you or the business\nquestion",
+        "case_number": "01234504",
+        "case_createdDate": "2024-01-08T08:07:59Z",
+        "case_owner": "Red Hatter A",
+        "case_status": "Waiting on Red Hat",
+        "case_severity": "4 (Low)",
+        "case_lastModifiedByName": "Customer X",
+        "case_lastModifiedDate": "2024-01-08T12:27:47Z"
+      }
+    ]
   }
 }
