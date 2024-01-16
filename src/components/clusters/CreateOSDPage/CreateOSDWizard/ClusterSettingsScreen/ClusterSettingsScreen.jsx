@@ -5,6 +5,7 @@ import { Field } from 'redux-form';
 
 import ReduxCheckbox from '~/components/common/ReduxFormComponents/ReduxCheckbox';
 import { validateAWSKMSKeyARN } from '~/common/validators';
+import { isRestrictedEnv } from '~/restrictedEnv';
 import PopoverHint from '../../../../common/PopoverHint';
 import PersistentStorageDropdown from '../../../common/PersistentStorageDropdown';
 import LoadBalancersDropdown from '../../../common/LoadBalancersDropdown';
@@ -187,6 +188,7 @@ function ClusterSettingsScreen({
                   name="fips"
                   label="Enable FIPS cryptography"
                   extendedHelpText="Installs and configures your cluster to use only FIPS validated cryptographic libraries for core components and the node operating system."
+                  isDisabled={isRestrictedEnv()}
                 />
                 <div className="ocm-c--reduxcheckbox-description">
                   Install a cluster that uses FIPS Validated / Modules in Process cryptographic
