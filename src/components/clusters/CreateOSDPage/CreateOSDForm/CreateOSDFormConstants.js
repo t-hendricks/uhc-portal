@@ -1,3 +1,5 @@
+import { MIN_SECURE_BOOT_VERSION } from '../../wizards/osd/constants';
+
 const constants = {
   clusterNameHint:
     'This name identifies your cluster in OpenShift Cluster Manager and forms part of the cluster console subdomain.',
@@ -60,7 +62,7 @@ const constants = {
     'To provide support, Red Hat Site Reliability Engineering (SRE) connects to the cluster using only AWS PrivateLink endpoints instead of public endpoints.  This option cannot be changed after a cluster is created.',
   clusterProxyHint:
     'Enable an HTTP or HTTPS proxy to deny direct access to the internet from your cluster.',
-  enableSecureBootHint: `Secure Boot enables the use of Shielded VMs in the Google Cloud Platform. Shielded VMs help protect enterprise workloads from threats like remote attacks, privilege escalation, and malicious insiders.`,
+  enableSecureBootHint: `Secure Boot enables the use of Shielded VMs in the Google Cloud Platform. Shielded VMs help protect enterprise workloads from threats like remote attacks, privilege escalation, and malicious insiders. Secure Boot support requires OpenShift version ${MIN_SECURE_BOOT_VERSION} or above.`,
 };
 
 const billingModelConstants = {
