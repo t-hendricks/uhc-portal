@@ -44,6 +44,7 @@ const EditNodeCountSection = ({
     () =>
       getNodeOptions({
         cluster,
+        machinePool,
         machinePools,
         machineTypeId: values.instanceType,
         machineTypes,
@@ -53,12 +54,12 @@ const EditNodeCountSection = ({
       }),
     [
       cluster,
+      machinePool,
       machinePools,
       values.instanceType,
       machineTypes,
       organization.quotaList,
       minNodesRequired,
-      machinePool,
     ],
   );
 
@@ -87,6 +88,7 @@ const EditNodeCountSection = ({
             </Grid>
           ) : (
             <NodeCountField
+              mpAvailZones={machinePool?.availability_zones?.length}
               minNodesRequired={minNodesRequired}
               cluster={cluster}
               options={options}

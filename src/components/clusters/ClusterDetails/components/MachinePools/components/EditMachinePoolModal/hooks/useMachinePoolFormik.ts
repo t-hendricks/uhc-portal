@@ -142,6 +142,7 @@ const useMachinePoolFormik = ({
         const nodeOptions = getNodeOptions({
           cluster,
           machinePools: machinePools.data || [],
+          machinePool,
           machineTypes,
           quota: organization.quotaList,
           minNodes: minNodesRequired,
@@ -300,6 +301,7 @@ const useMachinePoolFormik = ({
       rosa,
       maxDiskSize,
       hasMachinePool,
+      machinePool,
       machinePools.data,
       organization,
       cluster,
