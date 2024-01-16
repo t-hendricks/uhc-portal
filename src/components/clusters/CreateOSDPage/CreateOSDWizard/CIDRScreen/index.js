@@ -5,7 +5,7 @@ import {
   MACHINE_CIDR_DEFAULT,
   SERVICE_CIDR_DEFAULT,
   HOST_PREFIX_DEFAULT,
-  podCidrDefaultValue,
+  POD_CIDR_DEFAULT,
 } from '../../CreateOSDForm/FormSections/NetworkingSection/networkingConstants';
 import wizardConnector from '../WizardConnector';
 import CIDRScreen from './CIDRScreen';
@@ -26,7 +26,7 @@ const mapStateToProps = (state) => {
       cidr_default_values_toggle: values.cidr_default_values_toggle ?? true,
       network_machine_cidr: values.network_machine_cidr || MACHINE_CIDR_DEFAULT,
       network_service_cidr: values.network_service_cidr || SERVICE_CIDR_DEFAULT,
-      network_pod_cidr: values.network_pod_cidr || podCidrDefaultValue(cloudProviderID),
+      network_pod_cidr: values.network_pod_cidr || POD_CIDR_DEFAULT,
       network_host_prefix: values.network_host_prefix || HOST_PREFIX_DEFAULT,
     },
     formValues: getFormValues('CreateCluster')(state) ?? {},

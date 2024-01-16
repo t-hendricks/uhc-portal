@@ -11,7 +11,7 @@ import {
   MACHINE_CIDR_DEFAULT,
   SERVICE_CIDR_DEFAULT,
   HOST_PREFIX_DEFAULT,
-  podCidrDefaultValue,
+  POD_CIDR_DEFAULT,
 } from '../../CreateOSDForm/FormSections/NetworkingSection/networkingConstants';
 import { constants } from '../../CreateOSDForm/CreateOSDFormConstants';
 import ReduxVerticalFormGroup from '../../../../common/ReduxFormComponents/ReduxVerticalFormGroup';
@@ -104,7 +104,7 @@ function CIDRFields({
     if (isChecked) {
       change('network_machine_cidr', MACHINE_CIDR_DEFAULT);
       change('network_service_cidr', SERVICE_CIDR_DEFAULT);
-      change('network_pod_cidr', podCidrDefaultValue(cloudProviderID));
+      change('network_pod_cidr', POD_CIDR_DEFAULT);
       change('network_host_prefix', HOST_PREFIX_DEFAULT);
     }
   };
@@ -214,7 +214,7 @@ function CIDRFields({
           component={ReduxVerticalFormGroup}
           name="network_pod_cidr"
           label="Pod CIDR"
-          placeholder={podCidrDefaultValue(cloudProviderID)}
+          placeholder={POD_CIDR_DEFAULT}
           type="text"
           validate={podCidrValidators}
           disabled={isFieldDisabled}
