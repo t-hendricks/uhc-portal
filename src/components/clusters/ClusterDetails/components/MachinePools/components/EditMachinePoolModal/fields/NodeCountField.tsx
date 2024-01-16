@@ -7,7 +7,7 @@ import { constants } from '~/components/clusters/CreateOSDPage/CreateOSDForm/Cre
 import ExternalLink from '~/components/common/ExternalLink';
 import links from '~/common/installLinks.mjs';
 import { Cluster } from '~/types/clusters_mgmt.v1';
-import { isMultiAZ } from '~/components/clusters/ClusterDetails/clusterDetailsHelper';
+import { isMPoolAz } from '~/components/clusters/ClusterDetails/clusterDetailsHelper';
 import { normalizeProductID } from '~/common/normalize';
 import { normalizedProducts } from '~/common/subscriptionTypes';
 import { noQuotaTooltip } from '~/common/helpers';
@@ -19,17 +19,21 @@ import SelectField from './SelectField';
 const fieldId = 'replicas';
 
 type NodeCountFieldProps = {
+  mpAvailZones: number | undefined;
   minNodesRequired: number;
   options: number[];
   cluster: Cluster;
 };
 
-const NodeCountField = ({ minNodesRequired, options, cluster }: NodeCountFieldProps) => {
+const NodeCountField = ({
+  minNodesRequired,
+  options,
+  cluster,
+  mpAvailZones,
+}: NodeCountFieldProps) => {
   const [field] = useField<number>(fieldId);
   const onChange = useFormikOnChange(fieldId);
-
-  const isMultiAz = isMultiAZ(cluster);
-
+  const isMultiPoolAz = isMPoolAz(cluster, mpAvailZones);
   const optionExists = options.includes(field.value);
 
   React.useEffect(() => {
@@ -52,7 +56,7 @@ const NodeCountField = ({ minNodesRequired, options, cluster }: NodeCountFieldPr
     >
       {options.map((option) => (
         <SelectOptionDeprecated key={option} value={`${option}`}>
-          {`${isMultiAz ? option / 3 : option}`}
+          {`${isMultiPoolAz ? option / 3 : option}`}
         </SelectOptionDeprecated>
       ))}
     </SelectField>
@@ -61,7 +65,7 @@ const NodeCountField = ({ minNodesRequired, options, cluster }: NodeCountFieldPr
   return (
     <FormGroup
       fieldId={fieldId}
-      label={isMultiAz ? 'Compute node count (per zone)' : 'Compute node count'}
+      label={isMultiPoolAz ? 'Compute node count (per zone)' : 'Compute node count'}
       isRequired
       labelIcon={
         <PopoverHint
@@ -89,7 +93,7 @@ const NodeCountField = ({ minNodesRequired, options, cluster }: NodeCountFieldPr
         selectField
       )}
 
-      <FormGroupHelperText>{isMultiAz && `x 3 zones = ${field.value}`}</FormGroupHelperText>
+      <FormGroupHelperText>{isMultiPoolAz && `x 3 zones = ${field.value}`}</FormGroupHelperText>
     </FormGroup>
   );
 };

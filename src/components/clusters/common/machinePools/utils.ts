@@ -1,5 +1,5 @@
 import range from 'lodash/range';
-import { isMultiAZ } from '~/components/clusters/ClusterDetails/clusterDetailsHelper';
+import { isMPoolAz, isMultiAZ } from '~/components/clusters/ClusterDetails/clusterDetailsHelper';
 import { isHypershiftCluster } from '~/components/clusters/common/clusterStates';
 import { availableNodesFromQuota } from '~/components/clusters/common/quotaSelectors';
 import { GlobalState } from '~/redux/store';
@@ -106,20 +106,23 @@ export type getNodeOptionsType = {
   machineTypes: GlobalState['machineTypes'];
   machineTypeId: string | undefined;
   machinePools: MachinePool[];
+  machinePool: MachinePool | undefined;
   minNodes: number;
   editMachinePoolId?: string;
 };
-
 export const getNodeOptions = ({
   cluster,
   quota,
   machineTypes,
   machineTypeId,
   machinePools,
+  machinePool,
   minNodes,
   editMachinePoolId,
 }: getNodeOptionsType) => {
   const isMultiAz = isMultiAZ(cluster);
+
+  const isMPoolAZ = isMPoolAz(cluster, machinePool?.availability_zones?.length);
 
   const available = getAvailableQuota({
     quota,
@@ -156,7 +159,7 @@ export const getNodeOptions = ({
     included,
     currentNodeCount,
     minNodes,
-    increment: isMultiAz ? 3 : 1,
+    increment: isMPoolAZ ? 3 : 1,
     isHypershift: isHypershiftCluster(cluster),
   });
 };
