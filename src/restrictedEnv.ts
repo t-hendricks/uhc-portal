@@ -7,7 +7,7 @@ export const isRestrictedEnv = (chrome?: ChromeAPI) =>
 export const getRestrictedEnvApi = (chrome?: ChromeAPI) => {
   const env = (chrome || insights.chrome).getEnvironment();
   if (env === 'frh') {
-    return 'https://api-temp.***REMOVED***.com';
+    return 'https://api.***REMOVED***.com';
   }
   if (env === 'frhStage') {
     return 'https://api.stage.***REMOVED***.com';
