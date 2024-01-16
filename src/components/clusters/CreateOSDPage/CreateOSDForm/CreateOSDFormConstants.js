@@ -33,6 +33,8 @@ const constants = {
     The SCP will still be enforced even if the checks are bypassed.`,
   enableAdditionalEtcdHint:
     'When you enable etcd encryption, encryption keys are created. These keys are rotated on a weekly basis.',
+  enableAdditionalEtcdHypershiftHint:
+    'Etcd is always encrypted by ROSA keys. If you want to provide your own AWS KMS key to encrypt etcd, you may do that here.',
   autoscaleHint:
     'Autoscaling automatically adds and removes nodes from the cluster based on resource requirements.',
   keyRing:
