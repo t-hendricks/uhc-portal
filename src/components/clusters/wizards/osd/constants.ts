@@ -155,3 +155,4 @@ export const clusterNameHint =
 export const documentTitle =
   'Create an OpenShift Dedicated cluster | Red Hat OpenShift Cluster Manager';
 export const ariaLabel = 'Create OpenShift Dedicated cluster wizard';
+export const MIN_SECURE_BOOT_VERSION = '4.13.0';
