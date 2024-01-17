@@ -34,7 +34,6 @@ const config = {
     },
   },
   moduleFileExtensions: ['js', 'jsx', 'ts', 'tsx', 'json', 'node', 'mjs'],
-  collectCoverageFrom: ['src/'],
   testTimeout: 10000,
 };
 
