@@ -77,6 +77,7 @@ type EditMachinePoolModalProps = {
   onSave?: () => void;
   machinePoolId?: string;
   isEdit?: boolean;
+  shouldDisplayClusterName?: boolean;
   machinePoolsResponse: PromiseReducerState<{
     data: MachinePool[];
   }>;
@@ -91,6 +92,7 @@ const EditMachinePoolModal = ({
   isEdit: isInitEdit,
   machinePoolsResponse,
   machineTypesResponse,
+  shouldDisplayClusterName,
 }: EditMachinePoolModalProps) => {
   const getIsEditValue = React.useCallback(
     () => !!isInitEdit || !!machinePoolId,
@@ -159,6 +161,7 @@ const EditMachinePoolModal = ({
         <Modal
           id="edit-mp-modal"
           title={isEdit ? 'Edit machine pool' : 'Add machine pool'}
+          secondaryTitle={shouldDisplayClusterName ? cluster.name : undefined}
           onClose={isSubmitting ? undefined : onClose}
           isPending={
             machinePoolsResponse.pending ||
@@ -274,7 +277,7 @@ export const ConnectedEditMachinePoolModal = ({
       clearGetMachinePoolsResponse()(dispatch);
     }
   };
-  const { cluster } = data as any;
+  const { cluster, shouldDisplayClusterName } = data as any;
   const machinePoolsResponse = useMachinePools(cluster);
   const machineTypesResponse = useMachineTypes();
 
@@ -288,6 +291,7 @@ export const ConnectedEditMachinePoolModal = ({
 
   return cluster ? (
     <EditMachinePoolModal
+      shouldDisplayClusterName={shouldDisplayClusterName}
       cluster={cluster}
       onClose={onModalClose}
       isEdit
