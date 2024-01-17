@@ -147,6 +147,7 @@ function actionResolver(
         onClick: () =>
           openModal(modals.EDIT_MACHINE_POOL, {
             cluster,
+            shouldDisplayClusterName: inClusterList,
           }),
       },
     ),
