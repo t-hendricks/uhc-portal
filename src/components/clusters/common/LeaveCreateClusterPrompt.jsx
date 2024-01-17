@@ -63,7 +63,12 @@ function LeaveCreateClusterPrompt({ product }) {
       isOpen={isOpen}
       onClose={() => setIsOpen(false)}
       actions={[
-        <Button key="leave" variant="primary" onClick={onLeave} data-testid="submit-button">
+        <Button
+          key="leave"
+          variant="primary"
+          onClick={onLeave}
+          data-testid="leave-cluster-prompt-button"
+        >
           Leave
         </Button>,
         <Button

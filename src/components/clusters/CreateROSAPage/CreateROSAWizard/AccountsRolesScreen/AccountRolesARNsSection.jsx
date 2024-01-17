@@ -339,7 +339,9 @@ function AccountRolesARNsSection({
           <div className="spinner-fit-container">
             <Spinner />
           </div>
-          <div className="spinner-loading-text">Loading account roles ARNs...</div>
+          <div className="spinner-loading-text" data-testid="spinner-loading-arn-text">
+            Loading account roles ARNs...
+          </div>
         </GridItem>
       )}
       {hasFinishedLoadingRoles && (
