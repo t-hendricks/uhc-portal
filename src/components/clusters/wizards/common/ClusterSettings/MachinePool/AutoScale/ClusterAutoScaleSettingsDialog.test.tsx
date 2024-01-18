@@ -2,7 +2,7 @@ import React from 'react';
 import { Formik } from 'formik';
 import merge from 'lodash/merge';
 
-import { withState, checkAccessibility, screen, within, UserEventType } from '~/testUtils';
+import { withState, checkAccessibility, screen, within, UserEventType, waitFor } from '~/testUtils';
 import modals from '~/components/common/Modal/modals';
 import { ClusterAutoscaler } from '~/types/clusters_mgmt.v1';
 import { FieldId } from '~/components/clusters/wizards/common';
@@ -112,7 +112,7 @@ describe('<ClusterAutoScaleSettingsDialog />', () => {
 
       // Assert
       expect(getTestInputField()).toHaveValue(440.5); // It's a range between 0 and 1
-      expect(getModalActionButton('Close')).toBeDisabled();
+      await waitFor(() => expect(getModalActionButton('Close')).toBeDisabled());
     });
 
     it('"Close" button becomes enabled when the error is fixed', async () => {
@@ -125,7 +125,7 @@ describe('<ClusterAutoScaleSettingsDialog />', () => {
       await updateTestInputValue(user, { typeValue: '0.33', clearBefore: true });
 
       // Assert
-      expect(getModalActionButton('Close')).toBeEnabled();
+      await waitFor(() => expect(getModalActionButton('Close')).toBeEnabled());
     });
   });
 });
