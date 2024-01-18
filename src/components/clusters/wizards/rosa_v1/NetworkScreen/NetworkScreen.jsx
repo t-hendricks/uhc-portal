@@ -31,7 +31,6 @@ import RadioButtons from '../../../../common/ReduxFormComponents/RadioButtons';
 import links from '../../../../../common/installLinks.mjs';
 import { PLACEHOLDER_VALUE } from '../../common/NetworkingSection/AvailabilityZoneSelection';
 
-
 function NetworkScreen(props) {
   const {
     change,

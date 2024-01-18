@@ -25,7 +25,7 @@ import validators, {
 } from '../../../../../../common/validators';
 import RadioButtons from '../../../../../common/ReduxFormComponents/RadioButtons';
 import VersionSelection from './VersionSelection';
-import { createOperatorRolesHashPrefix } from "../../ClusterRolesScreen/ClusterRolesScreen";
+import { createOperatorRolesHashPrefix } from '../../ClusterRolesScreen/ClusterRolesScreen';
 
 function BasicFieldsSection({
   pending,
