@@ -16,6 +16,7 @@ limitations under the License.
 import React from 'react';
 import './i18n';
 import { BrowserRouter } from 'react-router-dom';
+import { CompatRouter } from 'react-router-dom-v5-compat';
 import { Provider } from 'react-redux';
 
 // No type definitions
@@ -122,7 +123,9 @@ class AppEntry extends React.Component {
               /* Block the default browser prompt (window.confirm). */
             }}
           >
-            <App />
+            <CompatRouter>
+              <App />
+            </CompatRouter>
           </BrowserRouter>
         </Provider>
       );
