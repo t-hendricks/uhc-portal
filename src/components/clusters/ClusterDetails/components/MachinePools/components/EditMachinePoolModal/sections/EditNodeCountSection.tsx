@@ -76,10 +76,15 @@ const EditNodeCountSection = ({
           {values.autoscaling ? (
             <Grid hasGutter>
               <GridItem span={5}>
-                <AutoscaleMinReplicasField minNodes={minNodesRequired} cluster={cluster} />
+                <AutoscaleMinReplicasField
+                  minNodes={minNodesRequired}
+                  cluster={cluster}
+                  mpAvailZones={machinePool?.availability_zones?.length}
+                />
               </GridItem>
               <GridItem span={5}>
                 <AutoscaleMaxReplicasField
+                  mpAvailZones={machinePool?.availability_zones?.length}
                   minNodes={minNodesRequired}
                   cluster={cluster}
                   options={options}

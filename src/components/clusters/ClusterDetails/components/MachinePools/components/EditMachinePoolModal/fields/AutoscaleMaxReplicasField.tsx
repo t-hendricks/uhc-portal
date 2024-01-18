@@ -4,7 +4,7 @@ import * as React from 'react';
 import links from '~/common/installLinks.mjs';
 import { normalizeProductID } from '~/common/normalize';
 import { normalizedProducts } from '~/common/subscriptionTypes';
-import { isMultiAZ } from '~/components/clusters/ClusterDetails/clusterDetailsHelper';
+import { isMPoolAz } from '~/components/clusters/ClusterDetails/clusterDetailsHelper';
 import ExternalLink from '~/components/common/ExternalLink';
 import PopoverHint from '~/components/common/PopoverHint';
 import { Cluster } from '~/types/clusters_mgmt.v1';
@@ -17,6 +17,7 @@ type AutoscaleMaxReplicasFieldProps = {
   minNodes: number;
   cluster: Cluster;
   options: number[];
+  mpAvailZones?: number;
 };
 
 const fieldId = 'autoscaleMax';
@@ -25,17 +26,17 @@ const AutoscaleMaxReplicasField = ({
   minNodes: initMinNodes,
   cluster,
   options,
+  mpAvailZones,
 }: AutoscaleMaxReplicasFieldProps) => {
   const [field, { error, touched }] = useField<number>(fieldId);
   const onChange = useFormikOnChange(fieldId);
-
-  const isMultiAz = isMultiAZ(cluster);
+  const isMultizoneMachinePool = isMPoolAz(cluster, mpAvailZones);
   const isRosa = normalizeProductID(cluster.product?.id) === normalizedProducts.ROSA;
 
   const maxValue = options.length ? options[options.length - 1] : 0;
 
-  const minNodes = isMultiAz ? initMinNodes / 3 : initMinNodes;
-  const maxNodes = isMultiAz ? maxValue / 3 : maxValue;
+  const minNodes = isMultizoneMachinePool ? initMinNodes / 3 : initMinNodes;
+  const maxNodes = isMultizoneMachinePool ? maxValue / 3 : maxValue;
 
   return (
     <FormGroup
@@ -75,7 +76,7 @@ const AutoscaleMaxReplicasField = ({
       />
 
       <FormGroupHelperText touched={touched} error={error}>
-        {isMultiAz && `x 3 zones = ${field.value * 3}`}
+        {isMultizoneMachinePool && `x 3 zones = ${field.value * 3}`}
       </FormGroupHelperText>
     </FormGroup>
   );

@@ -1,7 +1,7 @@
 import * as React from 'react';
 import * as Yup from 'yup';
 import { Cluster, MachinePool, NodePool, Subnetwork } from '~/types/clusters_mgmt.v1';
-import { isMultiAZ } from '~/components/clusters/ClusterDetails/clusterDetailsHelper';
+import { isMPoolAz } from '~/components/clusters/ClusterDetails/clusterDetailsHelper';
 import {
   checkLabelKey,
   checkLabelValue,
@@ -64,7 +64,7 @@ const useMachinePoolFormik = ({
   machineTypes,
   machinePools,
 }: UseMachinePoolFormikArgs) => {
-  const isMultiAz = isMultiAZ(cluster);
+  const isMachinePoolMz = isMPoolAz(cluster, machinePool?.availability_zones?.length);
   const rosa = isROSA(cluster);
 
   const minNodesRequired = getClusterMinNodes({
@@ -94,7 +94,7 @@ const useMachinePoolFormik = ({
       diskSize = machinePool.root_volume?.aws?.size || machinePool.root_volume?.gcp?.size;
     }
 
-    if (isMultiAz) {
+    if (isMachinePoolMz) {
       autoscaleMin /= 3;
       autoscaleMax /= 3;
     }
@@ -124,7 +124,7 @@ const useMachinePoolFormik = ({
       subnet: undefined,
       securityGroupIds: machinePool?.aws?.additional_security_group_ids || [],
     };
-  }, [machinePool, isMultiAz, minNodesRequired]);
+  }, [machinePool, isMachinePoolMz, minNodesRequired]);
 
   const isHypershift = isHypershiftCluster(cluster);
 
@@ -137,7 +137,7 @@ const useMachinePoolFormik = ({
   const validationSchema = React.useMemo(
     () =>
       Yup.lazy<EditMachinePoolValues>((values) => {
-        const minNodes = isMultiAz ? minNodesRequired / 3 : minNodesRequired;
+        const minNodes = isMachinePoolMz ? minNodesRequired / 3 : minNodesRequired;
         const secGroupValidation = validateSecurityGroups(values.securityGroupIds);
         const nodeOptions = getNodeOptions({
           cluster,
@@ -251,8 +251,8 @@ const useMachinePoolFormik = ({
                 })
                 .min(values.autoscaleMin, 'Max nodes cannot be less than min nodes.')
                 .max(
-                  isMultiAz ? maxNodes / 3 : maxNodes,
-                  `Input cannot be more than ${isMultiAz ? maxNodes / 3 : maxNodes}.`,
+                  isMachinePoolMz ? maxNodes / 3 : maxNodes,
+                  `Input cannot be more than ${isMachinePoolMz ? maxNodes / 3 : maxNodes}.`,
                 )
             : Yup.number(),
           autoscaling: Yup.boolean(),
@@ -297,7 +297,7 @@ const useMachinePoolFormik = ({
     [
       isHypershift,
       minNodesRequired,
-      isMultiAz,
+      isMachinePoolMz,
       rosa,
       maxDiskSize,
       hasMachinePool,
