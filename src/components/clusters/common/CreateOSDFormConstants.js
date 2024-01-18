@@ -1,4 +1,4 @@
-import { MIN_SECURE_BOOT_VERSION } from '../../wizards/osd/constants';
+import { MIN_SECURE_BOOT_VERSION } from '../wizards/osd/constants';
 
 const constants = {
   clusterNameHint:
