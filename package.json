@@ -9,9 +9,9 @@
   "license": "Apache-2.0",
   "dependencies": {
     "@babel/eslint-parser": "^7.22.5",
-    "@openshift-assisted/locales": "2.28.1",
-    "@openshift-assisted/types": "2.28.1",
-    "@openshift-assisted/ui-lib": "2.28.1",
+    "@openshift-assisted/locales": "2.29.0",
+    "@openshift-assisted/types": "2.29.0",
+    "@openshift-assisted/ui-lib": "2.29.0",
     "@openshift-console/dynamic-plugin-sdk": "0.0.3",
     "@patternfly/patternfly": "5.1.0",
     "@patternfly/react-charts": "7.1.2",
