@@ -11,10 +11,7 @@ import {
   FormSelectProps,
 } from '@patternfly/react-core';
 
-import {
-  getGCPCloudProviderVPCs,
-  LIST_VPCS,
-} from '~/components/clusters/CreateOSDPage/CreateOSDWizard/ccsInquiriesActions';
+import { getGCPCloudProviderVPCs, LIST_VPCS } from '~/redux/actions/ccsInquiriesActions';
 import { useGlobalState } from '~/redux/hooks/useGlobalState';
 import { useFormState } from '~/components/clusters/wizards/hooks';
 import { CloudProviderType } from '~/components/clusters/wizards/common/constants';

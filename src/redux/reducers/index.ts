@@ -39,12 +39,12 @@ import entitlementConfigReducer from './entitlementConfigReducer';
 import clusterUpgrades from '../../components/clusters/common/Upgrades/clusterUpgradeReducer';
 import machinePools from '../../components/clusters/ClusterDetails/components/MachinePools/MachinePoolsReducer';
 import githubReducer from './githubReducer';
-import ccsInquiriesReducer from '../../components/clusters/CreateOSDPage/CreateOSDWizard/ccsInquiriesReducer';
+import ccsInquiriesReducer from './ccsInquiriesReducer';
 import ocmRolesReducer from './OCMRolesReducer';
 
 import featuresReducer from './featuresReducer';
 import apiErrorReducer from '../../components/App/ApiError/ApiErrorReducer';
-import rosaReducer from '../../components/clusters/CreateROSAPage/CreateROSAWizard/rosaReducer';
+import rosaReducer from '~/redux/reducers/rosaReducer';
 
 const reducers = {
   clusters: clustersReducer,

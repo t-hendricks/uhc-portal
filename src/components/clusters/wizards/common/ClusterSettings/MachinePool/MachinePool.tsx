@@ -6,15 +6,15 @@ import { Form, Grid, GridItem, Title, Text, ExpandableSection } from '@patternfl
 
 import { required } from '~/common/validators';
 import { getMachineTypes } from '~/redux/actions/machineTypesActions';
-import MachineTypeSelection from '~/components/clusters/CreateOSDPage/CreateOSDForm/FormSections/ScaleSection/MachineTypeSelection';
+import MachineTypeSelection from '~/components/clusters/common/ScaleSection/MachineTypeSelection';
 import { CloudProviderType, FieldId } from '~/components/clusters/wizards/common/constants';
 import { useFormState } from '~/components/clusters/wizards/hooks';
 import ExternalLink from '~/components/common/ExternalLink';
-import { constants } from '~/components/clusters/CreateOSDPage/CreateOSDForm/CreateOSDFormConstants';
+import { constants } from '~/components/clusters/common/CreateOSDFormConstants';
 import links from '~/common/installLinks.mjs';
 import NodeCountInput from '~/components/clusters/common/NodeCountInput';
 import { normalizedProducts } from '~/common/subscriptionTypes';
-import { getNodesCount } from '~/components/clusters/CreateOSDPage/CreateOSDForm/FormSections/ScaleSection/AutoScaleSection/AutoScaleHelper';
+import { getNodesCount } from '~/components/clusters/common/ScaleSection/AutoScaleSection/AutoScaleHelper';
 import { getMinNodesRequired } from '~/components/clusters/ClusterDetails/components/MachinePools/machinePoolsHelper';
 import useCanClusterAutoscale from '~/components/clusters/ClusterDetails/components/MachinePools/components/EditMachinePoolModal/hooks/useCanClusterAutoscale';
 import { NodeLabelsFieldArray } from './NodeLabelsFieldArray';

@@ -3,7 +3,7 @@ import { SelectOption as SelectOptionDeprecated } from '@patternfly/react-core/d
 import { useField } from 'formik';
 import * as React from 'react';
 import PopoverHint from '~/components/common/PopoverHint';
-import { constants } from '~/components/clusters/CreateOSDPage/CreateOSDForm/CreateOSDFormConstants';
+import { constants } from '~/components/clusters/common/CreateOSDFormConstants';
 import ExternalLink from '~/components/common/ExternalLink';
 import links from '~/common/installLinks.mjs';
 import { Cluster } from '~/types/clusters_mgmt.v1';

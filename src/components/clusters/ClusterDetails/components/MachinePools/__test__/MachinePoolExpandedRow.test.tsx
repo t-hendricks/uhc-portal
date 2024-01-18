@@ -18,12 +18,9 @@ const vpc = {
   ],
 };
 
-jest.mock(
-  '~/components/clusters/CreateOSDPage/CreateOSDWizard/NetworkScreen/useAWSVPCFromCluster',
-  () => ({
-    useAWSVPCFromCluster: () => ({ clusterVpc: vpc }),
-  }),
-);
+jest.mock('~/components/clusters/common/useAWSVPCFromCluster', () => ({
+  useAWSVPCFromCluster: () => ({ clusterVpc: vpc }),
+}));
 
 const defaultMachinePool: MachinePool = {
   aws: {

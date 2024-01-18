@@ -25,7 +25,7 @@ import links from '~/common/installLinks.mjs';
 import {
   getMinReplicasCount,
   getNodesCount,
-} from '~/components/clusters/CreateOSDPage/CreateOSDForm/FormSections/ScaleSection/AutoScaleSection/AutoScaleHelper';
+} from '~/components/clusters/common/ScaleSection/AutoScaleSection/AutoScaleHelper';
 import {
   asyncValidateClusterName,
   clusterNameAsyncValidation,
@@ -33,12 +33,12 @@ import {
   createPessimisticValidator,
   validateAWSKMSKeyARN,
 } from '~/common/validators';
-import { constants } from '~/components/clusters/CreateOSDPage/CreateOSDForm/CreateOSDFormConstants';
+import { constants } from '~/components/clusters/common/CreateOSDFormConstants';
 import { CloudProviderType } from '~/components/clusters/wizards/common/constants';
 import PopoverHint from '~/components/common/PopoverHint';
 import PersistentStorageDropdown from '~/components/clusters/common/PersistentStorageDropdown';
 import LoadBalancersDropdown from '~/components/clusters/common/LoadBalancersDropdown';
-import { PLACEHOLDER_VALUE as AvailabilityZonePlaceholder } from '~/components/clusters/CreateOSDPage/CreateOSDForm/FormSections/NetworkingSection/AvailabilityZoneSelection';
+import { PLACEHOLDER_VALUE as AvailabilityZonePlaceholder } from '~/components/clusters/wizards/common/NetworkingSection/AvailabilityZoneSelection';
 import {
   RadioGroupField,
   RadioGroupOption,

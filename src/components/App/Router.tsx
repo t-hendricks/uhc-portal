@@ -44,8 +44,8 @@ import ClusterDetailsSubscriptionId from '../clusters/ClusterDetails/ClusterDeta
 import IdentityProvidersPage from '../clusters/ClusterDetails/components/IdentityProvidersPage';
 import ClustersList from '../clusters/ClusterList';
 import CreateClusterPage from '../clusters/CreateClusterPage';
-import CreateROSAWizard from '../clusters/CreateROSAPage/CreateROSAWizard';
-import GetStartedWithROSA from '../clusters/CreateROSAPage/CreateROSAWizard/CreateRosaGetStarted';
+import CreateROSAWizard from '../clusters/wizards/rosa_v1/';
+import GetStartedWithROSA from '../clusters/wizards/rosa_v1/CreateRosaGetStarted';
 import InsightsAdvisorRedirector from '../clusters/InsightsAdvisorRedirector';
 import RegisterCluster from '../clusters/RegisterCluster';
 import InstallASH from '../clusters/install/InstallASH';

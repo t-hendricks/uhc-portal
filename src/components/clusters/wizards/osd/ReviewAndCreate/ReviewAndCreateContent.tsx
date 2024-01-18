@@ -13,7 +13,7 @@ import {
 import config from '~/config';
 import ReviewSection, {
   ReviewItem,
-} from '~/components/clusters/CreateOSDPage/CreateOSDWizard/ReviewClusterScreen/ReviewSection';
+} from '~/components/clusters/wizards/common/ReviewCluster/ReviewSection';
 import { useFormState } from '~/components/clusters/wizards/hooks';
 import { hasSelectedSecurityGroups } from '~/common/securityGroupsHelpers';
 import {

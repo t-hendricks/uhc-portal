@@ -6,7 +6,7 @@ import { Modal, ModalVariant, Button } from '@patternfly/react-core';
 import { trackEvents, ocmResourceTypeByProduct } from '~/common/analytics';
 import { normalizedProducts } from '~/common/subscriptionTypes';
 import useAnalytics from '~/hooks/useAnalytics';
-import { ROSAWizardContext } from '~/components/clusters/CreateROSAPage/CreateROSAWizard/ROSAWizardContext';
+import { ROSAWizardContext } from '~/components/clusters/wizards/rosa_v1/ROSAWizardContext';
 
 function LeaveCreateClusterPrompt({ product }) {
   const history = useHistory();

@@ -5,7 +5,7 @@ import { useField } from 'formik';
 import { Cluster } from '~/types/clusters_mgmt.v1';
 import { getIncompatibleVersionReason } from '~/common/versionCompatibility';
 import { SupportedFeature } from '~/common/featureCompatibility';
-import { useAWSVPCFromCluster } from '~/components/clusters/CreateOSDPage/CreateOSDWizard/NetworkScreen/useAWSVPCFromCluster';
+import { useAWSVPCFromCluster } from '~/components/clusters/common/useAWSVPCFromCluster';
 import EditSecurityGroups from '~/components/clusters/ClusterDetails/components/SecurityGroups/EditSecurityGroups';
 import SecurityGroupsEmptyAlert from '~/components/clusters/ClusterDetails/components/SecurityGroups/SecurityGroupsEmptyAlert';
 import { EditMachinePoolValues } from '../hooks/useMachinePoolFormik';

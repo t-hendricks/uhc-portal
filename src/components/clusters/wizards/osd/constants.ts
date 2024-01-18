@@ -5,7 +5,7 @@ import {
   HOST_PREFIX_DEFAULT,
   MACHINE_CIDR_DEFAULT,
   SERVICE_CIDR_DEFAULT,
-} from '~/components/clusters/CreateOSDPage/CreateOSDForm/FormSections/NetworkingSection/networkingConstants';
+} from '~/components/clusters/common/networkingConstants';
 import {
   FieldId as CommonFieldId,
   CloudProviderType,

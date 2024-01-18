@@ -18,14 +18,11 @@ const vpc = {
   ],
 };
 
-jest.mock(
-  '~/components/clusters/CreateOSDPage/CreateOSDWizard/NetworkScreen/useAWSVPCFromCluster',
-  () => ({
-    useAWSVPCFromCluster: () => ({
-      clusterVpc: vpc,
-    }),
+jest.mock('~/components/clusters/common/useAWSVPCFromCluster', () => ({
+  useAWSVPCFromCluster: () => ({
+    clusterVpc: vpc,
   }),
-);
+}));
 jest.mock('~/components/clusters/common/MachineConfiguration/MachineConfiguration', () => ({
   MachineConfiguration: () => <div data-testid="machine-configuration">MachineConfiguration</div>,
 }));

@@ -4,7 +4,7 @@ import get from 'lodash/get';
 
 import { addNotification } from '@redhat-cloud-services/frontend-components-notifications/redux';
 import { featureGateSelector } from '~/hooks/useFeatureGate';
-import { clearListVpcs } from '~/components/clusters/CreateOSDPage/CreateOSDWizard/ccsInquiriesActions';
+import { clearListVpcs } from '~/redux/actions/ccsInquiriesActions';
 import { onClearFiltersAndFlags } from '~/redux/actions/viewOptionsActions';
 
 import { clusterAutoscalerActions } from '~/redux/actions/clusterAutoscalerActions';

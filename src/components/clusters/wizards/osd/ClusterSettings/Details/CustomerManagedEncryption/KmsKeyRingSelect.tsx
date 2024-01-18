@@ -6,11 +6,11 @@ import { Field } from 'formik';
 import { GridItem, Text } from '@patternfly/react-core';
 
 import { useGlobalState } from '~/redux/hooks/useGlobalState';
-import { getGCPKeyRings } from '~/components/clusters/CreateOSDPage/CreateOSDWizard/ccsInquiriesActions';
+import { getGCPKeyRings } from '~/redux/actions/ccsInquiriesActions';
 import DynamicSelect from '~/components/common/DynamicSelect';
 import { useFormState } from '~/components/clusters/wizards/hooks';
 import PopoverHint from '~/components/common/PopoverHint';
-import { constants } from '~/components/clusters/CreateOSDPage/CreateOSDForm/CreateOSDFormConstants';
+import { constants } from '~/components/clusters/common/CreateOSDFormConstants';
 import { CloudProviderType } from '~/components/clusters/wizards/common/constants';
 import { required } from '~/common/validators';
 import ExternalLink from '~/components/common/ExternalLink';
