@@ -1,6 +1,6 @@
 class LeaveCreateClusterPrompt {
   submit = () => {
-    cy.getByTestId('submit-button').click();
+    cy.getByTestId('leave-cluster-prompt-button').click();
   };
 
   cancel = () => {

@@ -1,6 +1,7 @@
 import Login from '../../pageobjects/login.page';
 import ClusterListPage from '../../pageobjects/ClusterList.page';
 import CreateRosaWizardPage from '../../pageobjects/CreateRosaWizard.page';
+import LeaveCreateClusterPrompt from '../../pageobjects/LeaveCreateClusterPrompt';
 
 const clusterFieldValidations = require('../../fixtures/rosa/RosaClusterClassicWizardValidation.json');
 
@@ -670,7 +671,7 @@ describe('Rosa Classic cluster wizard validations', { tags: ['smoke'] }, () => {
     cy.get('div')
       .contains(clusterFieldValidations.Networking.CIDRRanges.Common[2].Error)
       .should('be.visible');
-    CreateRosaWizardPage.podCIDRInput().clear().type('10.128.0.0/16');
+    CreateRosaWizardPage.podCIDRInput().clear().type('10.128.0.0/14');
     cy.get('div')
       .contains(clusterFieldValidations.Networking.CIDRRanges.Common[2].Error)
       .should('not.exist');
@@ -729,5 +730,7 @@ describe('Rosa Classic cluster wizard validations', { tags: ['smoke'] }, () => {
       .type('{selectAll}')
       .type('test-123-test');
     CreateRosaWizardPage.rosaNextButton().click();
+    CreateRosaWizardPage.rosaCancelButton().click();
+    LeaveCreateClusterPrompt.submit();
   });
 });
