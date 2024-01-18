@@ -5,10 +5,10 @@ import { Field } from 'redux-form';
 
 import VPCDropdown from '~/components/clusters/wizards/common/VPCDropdown/VPCDropdown';
 import WithTooltip from '~/components/common/WithTooltip';
-import ReduxVerticalFormGroup from '../../../../common/ReduxFormComponents/ReduxVerticalFormGroup';
 import AvailabilityZoneSelection, {
   PLACEHOLDER_VALUE,
 } from '~/components/clusters/wizards/common/NetworkingSection/AvailabilityZoneSelection';
+import ReduxVerticalFormGroup from '../../../../common/ReduxFormComponents/ReduxVerticalFormGroup';
 import {
   required,
   validateAWSSubnet,

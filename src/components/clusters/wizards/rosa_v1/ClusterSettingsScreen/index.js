@@ -1,9 +1,9 @@
 import { connect } from 'react-redux';
 import { formValueSelector, getFormSyncErrors, getFormAsyncErrors, touch } from 'redux-form';
 
+import wizardConnector from '~/components/clusters/wizards/common/WizardConnector';
 import createOSDInitialValues from '../../common/createOSDInitialValues';
 
-import wizardConnector from '~/components/clusters/wizards/common/WizardConnector';
 import ClusterSettingsScreen from './ClusterSettingsScreen';
 
 const mapStateToProps = (state, ownProps) => {

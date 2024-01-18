@@ -2,11 +2,11 @@ import React from 'react';
 
 import { CloudVPC } from '~/types/clusters_mgmt.v1';
 import { render, screen } from '~/testUtils';
-import VPCDropdown from './VPCDropdown';
 import {
   useAWSVPCInquiry,
   filterOutRedHatManagedVPCs,
 } from '~/components/clusters/common/useVPCInquiry';
+import VPCDropdown from './VPCDropdown';
 
 const defaultProps = {
   selectedVPC: { id: '', name: '' },

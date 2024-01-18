@@ -7,10 +7,6 @@ import { WizardContext as WizardContextDeprecated } from '@patternfly/react-core
 import { stringToArray } from '~/common/helpers';
 import { constants } from '~/components/clusters/common/CreateOSDFormConstants';
 import { validateUrl, validateCA, checkNoProxyDomains } from '~/common/validators';
-import ReduxVerticalFormGroup from '../../../../common/ReduxFormComponents/ReduxVerticalFormGroup';
-import ReduxFileUpload from '../../../../common/ReduxFormComponents/ReduxFileUpload';
-import ExternalLink from '../../../../common/ExternalLink';
-import links from '../../../../../common/installLinks.mjs';
 import { normalizedProducts } from '~/common/subscriptionTypes';
 import {
   HTTP_PROXY_PLACEHOLDER,
@@ -21,6 +17,10 @@ import {
   TRUST_BUNDLE_PLACEHOLDER,
   TRUST_BUNDLE_HELPER_TEXT,
 } from '~/components/clusters/common/networkingConstants';
+import ReduxVerticalFormGroup from '../../../../common/ReduxFormComponents/ReduxVerticalFormGroup';
+import ReduxFileUpload from '../../../../common/ReduxFormComponents/ReduxFileUpload';
+import ExternalLink from '../../../../common/ExternalLink';
+import links from '../../../../../common/installLinks.mjs';
 
 import {
   MAX_FILE_SIZE,

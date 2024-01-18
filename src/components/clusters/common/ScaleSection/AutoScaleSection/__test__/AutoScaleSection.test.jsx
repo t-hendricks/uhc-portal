@@ -2,8 +2,8 @@ import React from 'react';
 
 import { render, screen, checkAccessibility } from '~/testUtils';
 import wizardConnector from '~/components/clusters/wizards/common/WizardConnector';
-import AutoScaleSection from '../AutoScaleSection';
 import { normalizedProducts } from '~/common/subscriptionTypes';
+import AutoScaleSection from '../AutoScaleSection';
 
 describe('<AutoScaleSection />', () => {
   const mockChange = jest.fn();

@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import { GridItem } from '@patternfly/react-core';
 import { Field } from 'redux-form';
 import ReduxVerticalFormGroup from '~/components/common/ReduxFormComponents/ReduxVerticalFormGroup';
-import AvailabilityZoneSelection, { PLACEHOLDER_VALUE } from './AvailabilityZoneSelection';
 import { required, validateUniqueAZ, validateValueNotPlaceholder } from '~/common/validators';
+import AvailabilityZoneSelection, { PLACEHOLDER_VALUE } from './AvailabilityZoneSelection';
 
 import './SubnetFields.scss';
 

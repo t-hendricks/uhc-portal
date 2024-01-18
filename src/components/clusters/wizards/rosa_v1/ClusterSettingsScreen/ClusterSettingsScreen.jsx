@@ -6,6 +6,8 @@ import { Field } from 'redux-form';
 import ReduxCheckbox from '~/components/common/ReduxFormComponents/ReduxCheckbox';
 import { validateAWSKMSKeyARN } from '~/common/validators';
 import { isRestrictedEnv } from '~/restrictedEnv';
+import { constants } from '~/components/clusters/common/CreateOSDFormConstants';
+import { normalizedProducts } from '~/common/subscriptionTypes';
 import PopoverHint from '../../../../common/PopoverHint';
 import PersistentStorageDropdown from '../../../common/PersistentStorageDropdown';
 import LoadBalancersDropdown from '../../../common/LoadBalancersDropdown';
@@ -14,9 +16,7 @@ import CustomerManagedEncryptionSection from '../../common/EncryptionSection/Cus
 import UserWorkloadMonitoringSection from '../../../common/UserWorkloadMonitoringSection';
 import EtcdEncryptionSection from '../../common/EncryptionSection/EtcdEncryptionSection';
 
-import { constants } from '~/components/clusters/common/CreateOSDFormConstants';
 import BasicFieldsSection from './BasicFieldsSection';
-import { normalizedProducts } from '~/common/subscriptionTypes';
 
 function ClusterSettingsScreen({
   isByoc,

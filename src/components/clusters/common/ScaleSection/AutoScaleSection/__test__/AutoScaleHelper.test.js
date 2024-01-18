@@ -1,5 +1,5 @@
-import getMinNodesAllowed from '../AutoScaleHelper';
 import { normalizedProducts } from '~/common/subscriptionTypes';
+import getMinNodesAllowed from '../AutoScaleHelper';
 
 test('Autoscaling min nodes allowed', () => {
   const ccsMultiAZ = {

@@ -6,9 +6,15 @@ import { FormGroup, GridItem, Alert } from '@patternfly/react-core';
 import { SupportedFeature } from '~/common/featureCompatibility';
 import { getIncompatibleVersionReason } from '~/common/versionCompatibility';
 import { getDefaultSecurityGroupsSettings } from '~/common/securityGroupsHelpers';
-import CloudRegionComboBox from './CloudRegionComboBox';
 import { constants } from '~/components/clusters/common/CreateOSDFormConstants';
 import { noQuotaTooltip } from '~/common/helpers';
+import { PLACEHOLDER_VALUE as AVAILABILITY_ZONE_PLACEHOLDER } from '~/components/clusters/wizards/common/NetworkingSection/AvailabilityZoneSelection';
+import {
+  getNodesCount,
+  getMinReplicasCount,
+} from '~/components/clusters/common/ScaleSection/AutoScaleSection/AutoScaleHelper';
+import { normalizedProducts } from '~/common/subscriptionTypes';
+import CloudRegionComboBox from './CloudRegionComboBox';
 import PopoverHint from '../../../../../common/PopoverHint';
 import ReduxVerticalFormGroup from '../../../../../common/ReduxFormComponents/ReduxVerticalFormGroup';
 import ReduxRichInputField from '../../../../../common/ReduxFormComponents/ReduxRichInputField';
@@ -18,14 +24,8 @@ import validators, {
   createPessimisticValidator,
 } from '../../../../../../common/validators';
 import RadioButtons from '../../../../../common/ReduxFormComponents/RadioButtons';
-import { PLACEHOLDER_VALUE as AVAILABILITY_ZONE_PLACEHOLDER } from '~/components/clusters/wizards/common/NetworkingSection/AvailabilityZoneSelection';
 import VersionSelection from './VersionSelection';
-import {
-  getNodesCount,
-  getMinReplicasCount,
-} from '~/components/clusters/common/ScaleSection/AutoScaleSection/AutoScaleHelper';
-import { normalizedProducts } from '~/common/subscriptionTypes';
-import { createOperatorRolesHashPrefix } from '../../../../wizards/rosa_v1/ClusterRolesScreen/ClusterRolesScreen';
+import { createOperatorRolesHashPrefix } from "../../ClusterRolesScreen/ClusterRolesScreen";
 
 function BasicFieldsSection({
   pending,

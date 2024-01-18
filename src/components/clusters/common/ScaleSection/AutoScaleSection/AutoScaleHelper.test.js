@@ -1,5 +1,5 @@
-import { computeNodeHintText } from './AutoScaleHelper';
 import { constants } from '~/components/clusters/common/CreateOSDFormConstants';
+import { computeNodeHintText } from './AutoScaleHelper';
 
 describe('AutoScaleHelper.js', () => {
   describe('computeNodeHintText', () => {

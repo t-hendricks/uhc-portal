@@ -10,9 +10,9 @@ import {
 import { getWorkerNodeVolumeSizeMaxGiB } from '~/components/clusters/wizards/rosa/constants';
 import { openModal } from '~/components/common/Modal/ModalActions';
 import modals from '~/components/common/Modal/modals';
+import wizardConnector from '~/components/clusters/wizards/common/WizardConnector';
 import { canAutoScaleOnCreateSelector } from '../../../ClusterDetails/components/MachinePools/MachinePoolsSelectors';
 
-import wizardConnector from '~/components/clusters/wizards/common/WizardConnector';
 import MachinePoolScreen from './MachinePoolScreen';
 import createOSDInitialValues from '../../common/createOSDInitialValues';
 

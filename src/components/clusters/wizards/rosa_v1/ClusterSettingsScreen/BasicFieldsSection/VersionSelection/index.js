@@ -2,8 +2,8 @@ import { connect } from 'react-redux';
 import { formValueSelector } from 'redux-form';
 import get from 'lodash/get';
 
-import VersionSelection from './VersionSelection';
 import { clustersActions } from '~/redux/actions/clustersActions';
+import VersionSelection from './VersionSelection';
 
 const mapDispatchToProps = (dispatch) => ({
   getInstallableVersions: (isRosa, isHCP) =>

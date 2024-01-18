@@ -4,9 +4,9 @@ import { Title, GridItem, Alert } from '@patternfly/react-core';
 
 import SecurityGroupsSection from '~/components/clusters/wizards/rosa_v1/VPCScreen/SecurityGroupsSection';
 import links from '~/common/installLinks.mjs';
-import AWSSubnetFields from '../../rosa_v1/VPCScreen/AWSSubnetFields';
 import PopoverHint from '~/components/common/PopoverHint';
 import ExternalLink from '~/components/common/ExternalLink';
+import AWSSubnetFields from '../../rosa_v1/VPCScreen/AWSSubnetFields';
 import GCPNetworkConfigSection from './GCPNetworkConfigSection';
 import SharedVPCSection from './SharedVPCSection';
 

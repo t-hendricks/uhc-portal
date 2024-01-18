@@ -1,11 +1,11 @@
 import React from 'react';
 import { screen, render, checkAccessibility } from '~/testUtils';
 import wizardConnector from '~/components/clusters/wizards/common/WizardConnector';
-import AWSSubnetFields from './AWSSubnetFields';
 import {
   useAWSVPCInquiry,
   filterOutRedHatManagedVPCs,
 } from '~/components/clusters/common/useVPCInquiry';
+import AWSSubnetFields from './AWSSubnetFields';
 
 const vpcList = [
   {

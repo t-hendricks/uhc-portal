@@ -16,7 +16,6 @@ import { Field } from 'redux-form';
 import { FormGroupHelperText } from '~/components/common/FormGroupHelperText';
 import EditClusterAutoScalingDialog from '~/components/clusters/common/EditClusterAutoScalingDialog';
 import { MAX_NODES, MAX_NODES_HCP } from '~/components/clusters/common/machinePools/constants';
-import getMinNodesAllowed, { computeNodeHintText } from './AutoScaleHelper';
 import ReduxCheckbox from '~/components/common/ReduxFormComponents/ReduxCheckbox';
 import ExternalLink from '~/components/common/ExternalLink';
 import PopoverHint from '~/components/common/PopoverHint';
@@ -24,6 +23,7 @@ import links from '~/common/installLinks.mjs';
 import { validateNumericInput, required } from '~/common/validators';
 import { constants } from '~/components/clusters/common/CreateOSDFormConstants';
 import { normalizedProducts } from '~/common/subscriptionTypes';
+import getMinNodesAllowed, { computeNodeHintText } from './AutoScaleHelper';
 
 import './AutoScale.scss';
 

@@ -4,8 +4,6 @@ import { Field, Fields, FieldArray } from 'redux-form';
 import { GridItem, ExpandableSection, Title, Text, TextVariants } from '@patternfly/react-core';
 
 import { canSelectImds } from '~/components/clusters/wizards/rosa/constants';
-import MachineTypeSelection from './MachineTypeSelection';
-import ImdsSection from './ImdsSection';
 
 import { ReduxFormKeyValueList } from '~/components/common/ReduxFormComponents';
 import NodeCountInput from '~/components/clusters/common/NodeCountInput';
@@ -14,6 +12,8 @@ import { normalizedProducts, billingModels } from '~/common/subscriptionTypes';
 
 import { required } from '~/common/validators';
 import ExternalLink from '~/components/common/ExternalLink';
+import ImdsSection from './ImdsSection';
+import MachineTypeSelection from './MachineTypeSelection';
 import AutoScaleSection from './AutoScaleSection/AutoScaleSection';
 import WorkerNodeVolumeSizeSection from './WorkerNodeVolumeSizeSection/WorkerNodeVolumeSizeSection';
 import { computeNodeHintText } from './AutoScaleSection/AutoScaleHelper';

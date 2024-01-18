@@ -1,7 +1,6 @@
 import React from 'react';
 
 import { render, screen, waitFor, within, checkAccessibility } from '~/testUtils';
-import MachineTypeSelection from './MachineTypeSelection';
 
 import {
   rhQuotaList,
@@ -9,6 +8,7 @@ import {
   CCSOneNodeRemainingQuotaList,
 } from '~/components/clusters/common/__test__/quota.fixtures';
 import { mapMachineTypesById } from '~/redux/reducers/machineTypesReducer';
+import MachineTypeSelection from './MachineTypeSelection';
 
 const baseFlavoursState = {
   error: false,
