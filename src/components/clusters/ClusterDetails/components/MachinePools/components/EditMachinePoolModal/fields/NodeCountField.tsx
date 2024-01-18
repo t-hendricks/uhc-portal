@@ -33,7 +33,7 @@ const NodeCountField = ({
 }: NodeCountFieldProps) => {
   const [field] = useField<number>(fieldId);
   const onChange = useFormikOnChange(fieldId);
-  const isMultiPoolAz = isMPoolAz(cluster, mpAvailZones);
+  const isMultizoneMachinePool = isMPoolAz(cluster, mpAvailZones);
   const optionExists = options.includes(field.value);
 
   React.useEffect(() => {
@@ -56,7 +56,7 @@ const NodeCountField = ({
     >
       {options.map((option) => (
         <SelectOptionDeprecated key={option} value={`${option}`}>
-          {`${isMultiPoolAz ? option / 3 : option}`}
+          {`${isMultizoneMachinePool ? option / 3 : option}`}
         </SelectOptionDeprecated>
       ))}
     </SelectField>
@@ -65,7 +65,7 @@ const NodeCountField = ({
   return (
     <FormGroup
       fieldId={fieldId}
-      label={isMultiPoolAz ? 'Compute node count (per zone)' : 'Compute node count'}
+      label={isMultizoneMachinePool ? 'Compute node count (per zone)' : 'Compute node count'}
       isRequired
       labelIcon={
         <PopoverHint
@@ -93,7 +93,9 @@ const NodeCountField = ({
         selectField
       )}
 
-      <FormGroupHelperText>{isMultiPoolAz && `x 3 zones = ${field.value}`}</FormGroupHelperText>
+      <FormGroupHelperText>
+        {isMultizoneMachinePool && `x 3 zones = ${field.value}`}
+      </FormGroupHelperText>
     </FormGroup>
   );
 };
