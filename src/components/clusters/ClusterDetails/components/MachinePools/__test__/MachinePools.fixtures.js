@@ -1248,4 +1248,50 @@ const stateWithQuota = {
   userProfile: { organization: { fulfilled: true, quotaList: rhQuotaList } },
 };
 
-export { stateWithQuota, stateWithNoQuota };
+const machinePoolWithSubnet = {
+  subnet: ['subnet-abc', 'subnet-def'],
+};
+
+const machinePoolWithSubnets = {
+  subnets: ['subnets-abc', 'subnets-def'],
+};
+
+const machinePoolWithBothSubnetAndSubnets = {
+  subnet: ['subnet-abc', 'subnet-def'],
+  subnets: ['subnets-abc', 'subnets-def'],
+};
+
+const readOnlyCluster = {
+  status: { configuration_mode: 'read_only' },
+};
+
+const machinePoolsWithoutAutoscaling = [
+  {
+    id: 1,
+  },
+  {
+    id: 2,
+  },
+];
+
+const machinePoolsWithAutoscaling = [
+  {
+    id: 1,
+    autoscaling: true,
+  },
+  {
+    id: 2,
+    autoscaling: true,
+  },
+];
+
+export {
+  stateWithQuota,
+  stateWithNoQuota,
+  machinePoolWithSubnet,
+  machinePoolWithSubnets,
+  machinePoolWithBothSubnetAndSubnets,
+  readOnlyCluster,
+  machinePoolsWithoutAutoscaling,
+  machinePoolsWithAutoscaling,
+};
