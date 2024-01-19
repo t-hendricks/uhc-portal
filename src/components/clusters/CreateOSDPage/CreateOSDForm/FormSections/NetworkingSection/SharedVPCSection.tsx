@@ -41,7 +41,7 @@ const SharedVPCSection = ({
   return (
     <>
       <Title headingLevel="h3">AWS shared VPC</Title>
-      {!isRestrictedEnv && (
+      {!isRestrictedEnv() && (
         <Field
           component={ReduxCheckbox}
           name="shared_vpc.is_selected"
