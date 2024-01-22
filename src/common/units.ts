@@ -69,4 +69,12 @@ const humanizeValueWithUnitGiB = (bytes: number): ValueWithUnits => {
   return roundValueWithUnit(bytes / GiB, 'GiB');
 };
 
-export { parseValueWithUnit, humanizeValueWithUnit, roundValueWithUnit, humanizeValueWithUnitGiB };
+const humanizeValueWithoutUnit = (bytes: number): string => filesize(bytes);
+
+export {
+  parseValueWithUnit,
+  humanizeValueWithUnit,
+  roundValueWithUnit,
+  humanizeValueWithUnitGiB,
+  humanizeValueWithoutUnit,
+};
