@@ -11,6 +11,7 @@ import SharedVPCField from '~/components/clusters/CreateOSDPage/CreateOSDWizard/
 import links from '~/common/installLinks.mjs';
 
 import './SharedVPCSection.scss';
+import { isRestrictedEnv } from '~/restrictedEnv';
 
 const SharedVPCSection = ({
   hostedZoneDomainName,
@@ -40,18 +41,22 @@ const SharedVPCSection = ({
   return (
     <>
       <Title headingLevel="h3">AWS shared VPC</Title>
-      <Field
-        component={ReduxCheckbox}
-        name="shared_vpc.is_selected"
-        label="Install into AWS shared VPC"
-        extendedHelpText={
-          <>
-            Install into a non-default subnet shared by another account in your AWS organization.
-            <br />
-            <ExternalLink href={links.AWS_SHARED_VPC}>Learn more about AWS shared VPC</ExternalLink>
-          </>
-        }
-      />
+      {!isRestrictedEnv() && (
+        <Field
+          component={ReduxCheckbox}
+          name="shared_vpc.is_selected"
+          label="Install into AWS shared VPC"
+          extendedHelpText={
+            <>
+              Install into a non-default subnet shared by another account in your AWS organization.
+              <br />
+              <ExternalLink href={links.AWS_SHARED_VPC}>
+                Learn more about AWS shared VPC
+              </ExternalLink>
+            </>
+          }
+        />
+      )}
       {isSelected && (
         <section className="shared-vpc-instructions">
           <Alert
