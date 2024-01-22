@@ -6,9 +6,9 @@ import SecurityGroupsSection from '~/components/clusters/wizards/rosa_v1/VPCScre
 import links from '~/common/installLinks.mjs';
 import PopoverHint from '~/components/common/PopoverHint';
 import ExternalLink from '~/components/common/ExternalLink';
-import AWSSubnetFields from '../../rosa_v1/VPCScreen/AWSSubnetFields';
-import GCPNetworkConfigSection from './GCPNetworkConfigSection';
-import SharedVPCSection from './SharedVPCSection';
+import AWSSubnetFields from './AWSSubnetFields';
+import GCPNetworkConfigSection from '../../common/NetworkingSection/GCPNetworkConfigSection';
+import SharedVPCSection from '../../common/NetworkingSection/SharedVPCSection';
 
 function InstallToVPC({
   selectedRegion,

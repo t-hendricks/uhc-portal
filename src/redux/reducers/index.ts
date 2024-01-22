@@ -5,7 +5,7 @@ import { connectRouter } from 'connected-react-router';
 // TODO remove ignore statement once frontend-components-notifications has types
 // @ts-ignore
 import { notificationsReducer } from '@redhat-cloud-services/frontend-components-notifications/redux';
-import rosaReducer from '~/redux/reducers/rosaReducer';
+import rosaReducer from './rosaReducer';
 import { clustersReducer } from './clustersReducer';
 import { clusterLogReducer } from '../../components/clusters/ClusterDetails/components/ClusterLogs/clusterLogReducer';
 import { deleteClusterDialogReducer } from '../../components/clusters/common/DeleteClusterDialog/DeleteClusterDialogReducer';

@@ -21,11 +21,8 @@ import { useFeatureGate } from '~/hooks/useFeatureGate';
 import ReduxHiddenCheckbox from '~/components/common/ReduxFormComponents/ReduxHiddenCheckbox';
 import { canSelectImds } from '~/components/clusters/wizards/rosa/constants';
 import DebugClusterRequest from '../../common/DebugClusterRequest';
-import ReviewSection, {
-  ReviewItem,
-  ReviewRoleItem,
-} from '../../common/ReviewCluster/ReviewSection';
-
+import ReviewSection, { ReviewItem } from '../../common/ReviewCluster/ReviewSection';
+import ReviewRoleItem from './ReviewRoleItem';
 import './ReviewClusterScreen.scss';
 
 const ReviewClusterScreen = ({

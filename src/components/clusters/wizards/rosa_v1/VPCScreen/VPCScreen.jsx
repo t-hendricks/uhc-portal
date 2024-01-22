@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Form, Grid, GridItem, Title } from '@patternfly/react-core';
 
-import InstallToVPC from '../../common/NetworkingSection/InstallToVPC';
+import InstallToVPC from './InstallToVPC';
 
 function VPCScreen({
   cloudProviderID,

@@ -37,7 +37,7 @@ import Breadcrumbs from '../../../common/Breadcrumbs';
 import PageTitle from '../../../common/PageTitle';
 import Unavailable from '../../../common/Unavailable';
 import CreateClusterErrorModal from '../../common/CreateClusterErrorModal';
-import LeaveCreateClusterPrompt from '../../common/LeaveCreateClusterPrompt';
+import LeaveCreateClusterPrompt from '../common/LeaveCreateClusterPrompt';
 import AccountsRolesScreen from './AccountsRolesScreen';
 import { isUserRoleForSelectedAWSAccount } from './AccountsRolesScreen/AccountsRolesScreen';
 import ClusterRolesScreen from './ClusterRolesScreen';
