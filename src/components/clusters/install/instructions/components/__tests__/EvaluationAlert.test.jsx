@@ -1,11 +1,12 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { render, checkAccessibility } from '~/testUtils';
 
 import EvaluationAlert from '../EvaluationAlert';
 
-describe('EvaluationAlert', () => {
-  it('renders correctly', () => {
-    const wrapper = shallow(<EvaluationAlert />);
-    expect(wrapper).toMatchSnapshot();
+describe('<EvaluationAler />', () => {
+  it('is accessible', async () => {
+    const { container } = render(<EvaluationAlert />);
+
+    await checkAccessibility(container);
   });
 });

@@ -1,5 +1,5 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { render, screen, checkAccessibility, TestRouter } from '~/testUtils';
 import get from 'lodash/get';
 import OCPInstructions from '../OCPInstructions';
 import instructionsMapping from '../instructionsMapping';
@@ -43,13 +43,25 @@ Object.keys(instructionsMapping).forEach((value) => {
 });
 providers.sort();
 
-describe('Every OCP instruction page should render: ', () =>
-  test.each(providers)(
-    '%s',
-    (provider) => {
+describe('<OCPInstructions />', () => {
+  it.each(providers)(
+    'is accessible with %s',
+    async (provider) => {
       const option = ocpOptions[provider];
-      const wrapper = shallow(<OCPInstructions {...option} token={{}} />);
-      expect(wrapper).toMatchSnapshot();
+      const { container } = render(
+        <TestRouter>
+          <OCPInstructions {...option} token={{}} />
+        </TestRouter>,
+      );
+
+      expect(
+        await screen.findByText(
+          'Select the options that apply to your cluster in the dialog and save.',
+        ),
+      ).toBeInTheDocument();
+
+      await checkAccessibility(container);
     },
     20000,
-  ));
+  );
+});

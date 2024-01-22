@@ -60,7 +60,7 @@ const GetStarted = ({
               <Text component="p">
                 To quickly create a cluster with the default options, run the following command:
               </Text>
-              <ClipboardCopy id="copy-command" isReadOnly isCode>
+              <ClipboardCopy id="copy-command" data-testid="copy-command" isReadOnly isCode>
                 ./openshift-install create cluster
               </ClipboardCopy>
             </StackItem>
