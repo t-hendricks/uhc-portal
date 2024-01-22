@@ -3,6 +3,7 @@ import {
   parseValueWithUnit,
   roundValueWithUnit,
   humanizeValueWithUnitGiB,
+  humanizeValueWithoutUnit,
 } from '../units';
 
 test('Parse value with unit works', () => {
@@ -23,6 +24,20 @@ test('Humanizing rounds long fractions', () => {
 test('Humanize bytes to GiB works', () => {
   expect(humanizeValueWithUnitGiB(644245094400)).toEqual({ value: 600, unit: 'GiB' });
   expect(humanizeValueWithUnitGiB(827318075392)).toEqual({ value: 770.5, unit: 'GiB' });
+});
+
+describe('Humanize values without units', () => {
+  it.each([
+    [1, '1 B'],
+    [1024 ** 1, '1 KB'],
+    [1024 ** 2, '1 MB'],
+    [1024 ** 3, '1 GB'],
+    [1024 ** 4, '1 TB'],
+    [1024 ** 5, '1 PB'],
+    [1024 ** 6, '1 EB'],
+  ])('value %i is expected to be %s', (value, expected) =>
+    expect(humanizeValueWithoutUnit(value)).toEqual(expected),
+  );
 });
 
 test('Rounding rounds long fractions', () => {

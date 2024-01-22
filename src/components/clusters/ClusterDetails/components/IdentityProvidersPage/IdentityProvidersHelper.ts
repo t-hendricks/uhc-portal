@@ -1,5 +1,16 @@
+/* eslint-disable camelcase */
 import isEmpty from 'lodash/isEmpty';
-import { strToCleanArray, multiInputToCleanArray } from '../../../../../common/helpers';
+import {
+  GithubIdentityProvider,
+  IdentityProvider,
+  LDAPAttributes,
+  OpenIDClaims,
+} from '~/types/clusters_mgmt.v1';
+import { multiInputToCleanArray, strToCleanArray } from '../../../../../common/helpers';
+import { GitHubTeamsAndOrgsDataType } from './model/GitHubTeamsAndOrgsDataType';
+import { LdapAttributesType } from './model/LdapAttributesType';
+import { OpenIdClaimsType } from './model/OpenIdClaimsType';
+import { IDPFormDataType } from './model/IDPFormDataType';
 
 const IDPformValues = {
   GITHUB: 'GithubIdentityProvider',
@@ -16,33 +27,6 @@ const mappingMethodsformValues = {
   GENERATE: 'generate',
   ADD: 'add',
 };
-
-const IDPtypes = [
-  {
-    name: 'GitHub',
-    value: IDPformValues.GITHUB,
-  },
-  {
-    name: 'Google',
-    value: IDPformValues.GOOGLE,
-  },
-  {
-    name: 'OpenID',
-    value: IDPformValues.OPENID,
-  },
-  {
-    name: 'LDAP',
-    value: IDPformValues.LDAP,
-  },
-  {
-    name: 'GitLab',
-    value: IDPformValues.GITLAB,
-  },
-  {
-    name: 'HTPasswd',
-    value: IDPformValues.HTPASSWD,
-  },
-];
 
 const IDPTypeNames = {
   [IDPformValues.GITHUB]: 'GitHub',
@@ -90,7 +74,7 @@ const mappingMethods = [
   },
 ];
 
-const idpOauthNeedsPort = (IDPName) => IDPName === IDPTypeNames[IDPformValues.OPENID];
+const idpOauthNeedsPort = (IDPName: string) => IDPName === IDPTypeNames[IDPformValues.OPENID];
 
 /**
  * getOauthCallbackURL returns the OAuth callback URL for a given cluster base URL and IDP Name.
@@ -105,7 +89,11 @@ const idpOauthNeedsPort = (IDPName) => IDPName === IDPTypeNames[IDPformValues.OP
  * @param {Boolean} isHypershift indicates if it's a Hypershift cluster
  * @returns {String} The OAuth callback URL for this IDP.
  */
-const getOauthCallbackURL = (clusterUrls, IDPName, isHypershift) => {
+const getOauthCallbackURL = (
+  clusterUrls: { api: string; console: string },
+  IDPName: string,
+  isHypershift: boolean,
+) => {
   const clusterOauthBaseURL = isHypershift ? clusterUrls.api : clusterUrls.console;
   if (!IDPName || !clusterOauthBaseURL) {
     return '';
@@ -134,8 +122,8 @@ const getOauthCallbackURL = (clusterUrls, IDPName, isHypershift) => {
  * this function will need to be modified to account for it.
  * @param {String} IDPType the identity provider type
  */
-const IDPNeedsOAuthURL = (IDPType) =>
-  ![IDPformValues.LDAP, IDPformValues.HTPASSWD].includes(IDPType);
+const IDPNeedsOAuthURL = (IDPType?: string) =>
+  ![IDPformValues.LDAP, IDPformValues.HTPASSWD].includes(IDPType ?? '');
 
 /**
  * Generate a usable IDP name, based on the IDP Type and already-configured IDPs.
@@ -146,7 +134,7 @@ const IDPNeedsOAuthURL = (IDPType) =>
  * @param {String} IDPType An IDP Type name as defined in IDPTypeNames
  * @param {Array<Object>} IDPList An array of IDP objects returned from the server
  */
-const generateIDPName = (IDPType, IDPList) => {
+const generateIDPName = (IDPType: string, IDPList: IdentityProvider[]) => {
   const idpNameList = IDPList.map((idp) => idp.name);
   let idpNumber = 0;
 
@@ -163,17 +151,14 @@ const generateIDPName = (IDPType, IDPList) => {
   return idpName;
 };
 
-const getldapca = (formData) => {
+const getldapca = (formData: IDPFormDataType) => {
   if (formData.ldap_ca) {
-    if (!formData.ldap_insecure) {
-      return formData.ldap_ca.trim();
-    }
-    return '';
+    return !formData.ldap_insecure ? formData.ldap_ca.trim() : '';
   }
   return formData.ldap_ca;
 };
 
-const getCreateIDPRequestData = (formData) => {
+const getCreateIDPRequestData = (formData: IDPFormDataType) => {
   const githubData = () => ({
     client_id: formData.client_id.trim(),
     client_secret: formData.client_secret.trim(),
@@ -229,14 +214,14 @@ const getCreateIDPRequestData = (formData) => {
 
   const htpasswdData = () => ({
     users: {
-      items: formData.users.map((user) => ({
+      items: formData.users?.map((user) => ({
         username: user.username,
         password: user.password,
       })),
     },
   });
 
-  const IDPs = {
+  const IDPs: { [key: string]: { name: string; data: (...args: any) => any } } = {
     GithubIdentityProvider: { name: 'github', data: githubData },
     GoogleIdentityProvider: { name: 'google', data: googleData },
     OpenIDIdentityProvider: { name: 'open_id', data: openIdData },
@@ -249,10 +234,11 @@ const getCreateIDPRequestData = (formData) => {
     type: formData.type,
     name: formData.name,
     id: formData.idpId,
+    mapping_method: undefined,
   };
 
-  const selectedIDPData = IDPs[formData.type].data();
-  const selectedIDPName = IDPs[formData.type].name;
+  const selectedIDPData = IDPs[formData.type!!].data();
+  const selectedIDPName = IDPs[formData.type!!].name;
 
   if (selectedIDPName !== 'htpasswd') {
     basicData.mapping_method = formData.mappingMethod || mappingMethodsformValues.CLAIM;
@@ -275,124 +261,86 @@ const getCreateIDPRequestData = (formData) => {
   return requestData;
 };
 
-const getOpenIdClaims = (claims, type) => {
-  const openIdClaimsData = [];
-  if (claims && claims[type]) {
+const getOpenIdClaims = (
+  claims: OpenIDClaims | undefined,
+  type: keyof OpenIDClaims,
+): OpenIdClaimsType[] => {
+  const claimsToIterate = claims?.[type];
+  if (claimsToIterate?.length) {
     switch (type) {
-      case 'name': {
-        claims[type].forEach((openIDName, index) => {
-          const obj = {
-            id: index,
-            openid_name: openIDName,
-          };
-          openIdClaimsData.push(obj);
-        });
-        break;
-      }
-      case 'email': {
-        claims[type].forEach((openIDEmail, index) => {
-          const obj = {
-            id: index,
-            openid_email: openIDEmail,
-          };
-          openIdClaimsData.push(obj);
-        });
-        break;
-      }
-      case 'preferred_username': {
-        claims[type].forEach((openIDUserName, index) => {
-          const obj = {
-            id: index,
-            openid_preferred_username: openIDUserName,
-          };
-          openIdClaimsData.push(obj);
-        });
-        break;
-      }
+      case 'name':
+        return claimsToIterate.map((openid_name, id: number) => ({
+          id,
+          openid_name,
+        }));
+      case 'email':
+        return claimsToIterate.map((openid_email, id: number) => ({
+          id,
+          openid_email,
+        }));
+      case 'preferred_username':
+        return claimsToIterate.map((openid_preferred_username, id: number) => ({
+          id,
+          openid_preferred_username,
+        }));
       default: {
         break;
       }
     }
   }
 
-  return openIdClaimsData;
+  return [];
 };
 
-const getldapAttributes = (attributes, type) => {
-  const ldapAttributesData = [];
-  if (attributes && attributes[type]) {
+const getldapAttributes = (
+  attributes: LDAPAttributes,
+  type: keyof LDAPAttributes,
+): LdapAttributesType[] => {
+  const attributeType = attributes ? attributes[type] : undefined;
+  if (attributeType) {
     switch (type) {
-      case 'name': {
-        attributes[type].forEach((name, index) => {
-          const obj = {
-            id: index,
-            ldap_name: name,
-          };
-          ldapAttributesData.push(obj);
-        });
+      case 'name':
+        return attributeType.map((ldap_name, id: number) => ({
+          id,
+          ldap_name,
+        }));
+      case 'email':
+        return attributeType.map((ldap_email, id: number) => ({
+          id,
+          ldap_email,
+        }));
+      case 'preferred_username':
+        return attributeType.map((ldap_preferred_username, id: number) => ({
+          id,
+          ldap_preferred_username,
+        }));
+      case 'id':
+        return attributeType.map((ldap_id, id: number) => ({
+          id,
+          ldap_id,
+        }));
+      default:
         break;
-      }
-      case 'email': {
-        attributes[type].forEach((email, index) => {
-          const obj = {
-            id: index,
-            ldap_email: email,
-          };
-          ldapAttributesData.push(obj);
-        });
-        break;
-      }
-      case 'preferred_username': {
-        attributes[type].forEach((userName, index) => {
-          const obj = {
-            id: index,
-            ldap_preferred_username: userName,
-          };
-          ldapAttributesData.push(obj);
-        });
-        break;
-      }
-      case 'id': {
-        attributes[type].forEach((id, index) => {
-          const obj = {
-            id: index,
-            ldap_id: id,
-          };
-          ldapAttributesData.push(obj);
-        });
-        break;
-      }
-      default: {
-        break;
-      }
     }
   }
-
-  return ldapAttributesData;
+  return [];
 };
 
-const getGitHubTeamsAndOrgsData = (type) => {
-  const data = [];
-
-  if (type.teams) {
-    type.teams.forEach((name, index) => {
-      const obj = {
-        id: index,
-        teams: name,
-      };
-      data.push(obj);
-    });
-  } else if (type.organizations) {
-    type.organizations.forEach((name, index) => {
-      const obj = {
-        id: index,
-        organizations: name,
-      };
-      data.push(obj);
-    });
+const getGitHubTeamsAndOrgsData = (idP: GithubIdentityProvider): GitHubTeamsAndOrgsDataType[] => {
+  if (idP.teams) {
+    return idP.teams.map((teams, id) => ({
+      id,
+      teams,
+    }));
+  }
+  if (idP.organizations) {
+    return idP.organizations.map((organizations, id) => ({
+      id,
+      organizations,
+    }));
   }
 
-  return data;
+  return [];
 };
 
 /**
@@ -402,14 +350,15 @@ const getGitHubTeamsAndOrgsData = (type) => {
  * @param {String} key Field name of the `ReduxFieldArray`
  */
 
-const isEmptyReduxArray = (arr, key) =>
-  arr ? arr.map((currentValue) => isEmpty(currentValue[key])).every((item) => item) : false;
+const isEmptyReduxArray = (arr: any, key: string) =>
+  arr
+    ? arr.map((currentValue: any) => isEmpty(currentValue[key])).every((item: any) => item)
+    : false;
 
 export {
   getCreateIDPRequestData,
   getOauthCallbackURL,
   IDPNeedsOAuthURL,
-  IDPtypes,
   IDPTypeNames,
   singularFormIDP,
   mappingMethods,
@@ -421,4 +370,5 @@ export {
   getOpenIdClaims,
   getGitHubTeamsAndOrgsData,
   isEmptyReduxArray,
+  getldapca,
 };
