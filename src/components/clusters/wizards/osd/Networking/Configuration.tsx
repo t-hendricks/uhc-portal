@@ -5,8 +5,8 @@ import { Form, Grid, GridItem, Title, Text, FormGroup, Alert } from '@patternfly
 import { ocmResourceType, trackEvents, TrackEvent } from '~/common/analytics';
 import links from '~/common/installLinks.mjs';
 import { normalizedProducts } from '~/common/subscriptionTypes';
-import { constants } from '~/components/clusters/CreateOSDPage/CreateOSDForm/CreateOSDFormConstants';
-import { PLACEHOLDER_VALUE } from '~/components/clusters/CreateOSDPage/CreateOSDForm/FormSections/NetworkingSection/AvailabilityZoneSelection';
+import { constants } from '~/components/clusters/common/CreateOSDFormConstants';
+import { PLACEHOLDER_VALUE } from '~/components/clusters/wizards/common/NetworkingSection/AvailabilityZoneSelection';
 import ExternalLink from '~/components/common/ExternalLink';
 import useAnalytics from '~/hooks/useAnalytics';
 import {

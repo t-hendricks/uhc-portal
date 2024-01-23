@@ -15,7 +15,7 @@ import {
 import links from '~/common/installLinks.mjs';
 import { checkNoProxyDomains, validateCA, validateUrl } from '~/common/validators';
 import { stringToArray } from '~/common/helpers';
-import { constants } from '~/components/clusters/CreateOSDPage/CreateOSDForm/CreateOSDFormConstants';
+import { constants } from '~/components/clusters/common/CreateOSDFormConstants';
 import {
   DISABLED_NO_PROXY_PLACEHOLDER,
   HTTPS_PROXY_PLACEHOLDER,
@@ -23,7 +23,7 @@ import {
   NO_PROXY_HELPER_TEXT,
   NO_PROXY_PLACEHOLDER,
   TRUST_BUNDLE_PLACEHOLDER,
-} from '~/components/clusters/CreateOSDPage/CreateOSDForm/FormSections/NetworkingSection/networkingConstants';
+} from '~/components/clusters/common/networkingConstants';
 import ExternalLink from '~/components/common/ExternalLink';
 import { useFormState } from '~/components/clusters/wizards/hooks';
 import { FileUploadField, TextInputField } from '~/components/clusters/wizards/form';

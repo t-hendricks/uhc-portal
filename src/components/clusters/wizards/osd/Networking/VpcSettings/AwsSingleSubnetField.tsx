@@ -12,7 +12,7 @@ import {
 import WithTooltip from '~/components/common/WithTooltip';
 import AvailabilityZoneSelection, {
   PLACEHOLDER_VALUE,
-} from '~/components/clusters/CreateOSDPage/CreateOSDForm/FormSections/NetworkingSection/AvailabilityZoneSelection';
+} from '~/components/clusters/wizards/common/NetworkingSection/AvailabilityZoneSelection';
 import { useFormState } from '~/components/clusters/wizards/hooks';
 import { TextInputField } from '~/components/clusters/wizards/form';
 

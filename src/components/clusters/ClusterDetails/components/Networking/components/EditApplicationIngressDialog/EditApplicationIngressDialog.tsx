@@ -2,7 +2,7 @@ import React from 'react';
 import { SubmitHandler } from 'redux-form';
 import { Form, ModalVariant } from '@patternfly/react-core';
 
-import { DefaultIngressFields } from '~/components/clusters/CreateOSDPage/CreateOSDWizard/NetworkScreen/DefaultIngressFields';
+import { DefaultIngressFields } from '~/components/clusters/common/DefaultIngressFields';
 import Modal from '~/components/common/Modal/Modal';
 import { BaseRequestState } from '~/redux/types';
 import ErrorBox from '~/components/common/ErrorBox';

@@ -2,12 +2,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { GridItem, Title } from '@patternfly/react-core';
 import { Field } from 'redux-form';
+import { normalizedProducts } from '~/common/subscriptionTypes';
 import links from '../../../common/installLinks.mjs';
 import ReduxCheckbox from '../../common/ReduxFormComponents/ReduxCheckbox';
-import { constants } from '../CreateOSDPage/CreateOSDForm/CreateOSDFormConstants';
+import { constants } from './CreateOSDFormConstants';
 import ExternalLink from '../../common/ExternalLink';
-import { normalizedProducts } from '../../../common/subscriptionTypes';
-import '../CreateOSDPage/CreateOSDForm/CreateOSDForm.scss';
+import '~/components/clusters/common/CreateOSDForm.scss';
 
 function UserWorkloadMonitoringSection({ parent, disableUVM, planType }) {
   const title = <Title headingLevel="h4"> Monitoring </Title>;

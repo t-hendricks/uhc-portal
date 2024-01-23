@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
-import { setOfflineToken } from '~/components/clusters/CreateROSAPage/CreateROSAWizard/rosaActions';
+import { setOfflineToken } from '~/redux/actions/rosaActions';
 import { GlobalState } from '~/redux/store';
 import Tokens from './Tokens';
 

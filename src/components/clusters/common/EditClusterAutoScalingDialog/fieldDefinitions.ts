@@ -1,6 +1,6 @@
 import get from 'lodash/get';
 
-import { getDefaultClusterAutoScaling } from '~/components/clusters/CreateOSDPage/clusterAutoScalingValues';
+import { getDefaultClusterAutoScaling } from '~/components/clusters/common/clusterAutoScalingValues';
 
 export interface FieldDefinition {
   label: string;
