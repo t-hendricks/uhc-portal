@@ -25,7 +25,7 @@ describe('buildMachinePoolRequest', () => {
     it('adds basic fields', () => {
       const machinePool = buildMachinePoolRequest(defaultValues, {
         isEdit: false,
-        isMultiAz: false,
+        isMultiZoneMachinePool: false,
         isROSACluster: true,
       });
 
@@ -39,7 +39,7 @@ describe('buildMachinePoolRequest', () => {
     it('does not add diskSize for non-ROSA clusters', () => {
       const machinePool = buildMachinePoolRequest(defaultValues, {
         isEdit: false,
-        isMultiAz: false,
+        isMultiZoneMachinePool: false,
         isROSACluster: false,
       });
 
@@ -49,7 +49,7 @@ describe('buildMachinePoolRequest', () => {
     it('add diskSize for ROSA clusters', () => {
       const machinePool = buildMachinePoolRequest(defaultValues, {
         isEdit: false,
-        isMultiAz: false,
+        isMultiZoneMachinePool: false,
         isROSACluster: true,
       });
 
@@ -59,7 +59,7 @@ describe('buildMachinePoolRequest', () => {
     it('does not add specific Hypershift fields', () => {
       const machinePool = buildMachinePoolRequest(defaultValues, {
         isEdit: false,
-        isMultiAz: false,
+        isMultiZoneMachinePool: false,
         isROSACluster: true,
       });
 
@@ -74,7 +74,7 @@ describe('buildMachinePoolRequest', () => {
           ...defaultValues,
           useSpotInstances: false,
         },
-        { isEdit: false, isMultiAz: false, isROSACluster: true },
+        { isEdit: false, isMultiZoneMachinePool: false, isROSACluster: true },
       );
 
       expect(machinePool.aws?.spot_market_options).toBeUndefined();
@@ -85,7 +85,7 @@ describe('buildMachinePoolRequest', () => {
     it('adds basic fields', () => {
       const machinePool = buildMachinePoolRequest(defaultValues, {
         isEdit: true,
-        isMultiAz: false,
+        isMultiZoneMachinePool: false,
         isROSACluster: true,
       });
       expect(machinePool.id).toEqual('my-mp');
@@ -96,7 +96,7 @@ describe('buildMachinePoolRequest', () => {
     it('does not add values that can be only set at creation time', () => {
       const machinePool = buildMachinePoolRequest(defaultValues, {
         isEdit: true,
-        isMultiAz: false,
+        isMultiZoneMachinePool: false,
         isROSACluster: true,
       });
 
@@ -109,7 +109,7 @@ describe('buildMachinePoolRequest', () => {
     it('does not add specific Hypershift fields', () => {
       const machinePool = buildMachinePoolRequest(defaultValues, {
         isEdit: true,
-        isMultiAz: false,
+        isMultiZoneMachinePool: false,
         isROSACluster: true,
       });
 
@@ -123,7 +123,10 @@ describe('buildMachinePoolRequest', () => {
 describe('buildNodePoolRequest', () => {
   describe('when creating', () => {
     it('adds basic Hypershift fields', () => {
-      const nodePool = buildNodePoolRequest(defaultValues, { isEdit: false, isMultiAz: false });
+      const nodePool = buildNodePoolRequest(defaultValues, {
+        isEdit: false,
+        isMultiZoneMachinePool: false,
+      });
 
       expect(nodePool.id).toEqual('my-mp');
       expect(nodePool.labels).toEqual({});
@@ -133,7 +136,10 @@ describe('buildNodePoolRequest', () => {
     });
 
     it('does not add specific ROSA classic fields', () => {
-      const nodePool = buildNodePoolRequest(defaultValues, { isEdit: false, isMultiAz: false });
+      const nodePool = buildNodePoolRequest(defaultValues, {
+        isEdit: false,
+        isMultiZoneMachinePool: false,
+      });
 
       const badPool = nodePool as MachinePool;
       expect(badPool.root_volume).toBeUndefined();
@@ -142,7 +148,10 @@ describe('buildNodePoolRequest', () => {
   });
   describe('when editing', () => {
     it('adds basic Hypershift fields', () => {
-      const nodePool = buildNodePoolRequest(defaultValues, { isEdit: true, isMultiAz: false });
+      const nodePool = buildNodePoolRequest(defaultValues, {
+        isEdit: true,
+        isMultiZoneMachinePool: false,
+      });
 
       expect(nodePool.id).toEqual('my-mp');
       expect(nodePool.labels).toEqual({});
@@ -150,14 +159,20 @@ describe('buildNodePoolRequest', () => {
     });
 
     it('does not add Hypershift values that can be only set at creation time', () => {
-      const nodePool = buildNodePoolRequest(defaultValues, { isEdit: true, isMultiAz: false });
+      const nodePool = buildNodePoolRequest(defaultValues, {
+        isEdit: true,
+        isMultiZoneMachinePool: false,
+      });
 
       expect(nodePool.subnet).toBeUndefined();
       expect(nodePool.aws_node_pool?.instance_type).toBeUndefined();
     });
 
     it('does not add specific ROSA classic fields', () => {
-      const nodePool = buildNodePoolRequest(defaultValues, { isEdit: true, isMultiAz: false });
+      const nodePool = buildNodePoolRequest(defaultValues, {
+        isEdit: true,
+        isMultiZoneMachinePool: false,
+      });
 
       const badPool = nodePool as MachinePool;
       expect(badPool.root_volume).toBeFalsy();
