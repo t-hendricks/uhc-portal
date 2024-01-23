@@ -6,7 +6,7 @@ import { useDispatch } from 'react-redux';
 import isEqual from 'lodash/isEqual';
 import Modal from '~/components/common/Modal/Modal';
 import { clusterService } from '~/services';
-import { isMultiAZ } from '~/components/clusters/ClusterDetails/clusterDetailsHelper';
+import { isMPoolAz } from '~/components/clusters/ClusterDetails/clusterDetailsHelper';
 import ErrorBox from '~/components/common/ErrorBox';
 import { getErrorMessage } from '~/common/errors';
 import { Cluster, MachinePool } from '~/types/clusters_mgmt.v1';
@@ -41,22 +41,24 @@ const submitEdit = ({
   cluster,
   values,
   currentMPId,
+  currentMachinePool,
 }: {
   cluster: Cluster;
   values: EditMachinePoolValues;
   currentMPId?: string;
+  currentMachinePool: MachinePool | undefined;
 }) => {
   const isHypershift = isHypershiftCluster(cluster);
-  const isMultiAz = isMultiAZ(cluster);
+  const isMultiZoneMachinePool = isMPoolAz(cluster, currentMachinePool?.availability_zones?.length);
 
   const pool = isHypershift
     ? buildNodePoolRequest(values, {
         isEdit: !!currentMPId,
-        isMultiAz,
+        isMultiZoneMachinePool,
       })
     : buildMachinePoolRequest(values, {
         isEdit: !!currentMPId,
-        isMultiAz,
+        isMultiZoneMachinePool,
         isROSACluster: isROSA(cluster),
       });
 
@@ -145,6 +147,7 @@ const EditMachinePoolModal = ({
             cluster,
             values,
             currentMPId: currentMachinePool?.id,
+            currentMachinePool,
           });
           onSave?.();
           onClose();
