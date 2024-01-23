@@ -12,9 +12,11 @@ const getReplicas = (replicas: number | undefined, isMultiZone: boolean) => {
 const MachinePoolAutoScalingDetail = ({
   isMultiZoneCluster,
   autoscaling,
+  isMultiZoneMachinePool,
 }: {
   isMultiZoneCluster: boolean;
   autoscaling: MachinePoolAutoscaling;
+  isMultiZoneMachinePool: boolean;
 }) => (
   <>
     <Title headingLevel="h4" className="pf-v5-u-mb-sm pf-v5-u-mt-lg">
@@ -23,15 +25,15 @@ const MachinePoolAutoScalingDetail = ({
     <Split hasGutter>
       <SplitItem>
         <Title headingLevel="h4" className="autoscale__lim">{`Min nodes ${
-          isMultiZoneCluster ? 'per zone' : ''
+          isMultiZoneMachinePool ? 'per zone' : ''
         }`}</Title>
-        {getReplicas(autoscaling.min_replicas, isMultiZoneCluster)}
+        {getReplicas(autoscaling.min_replicas, isMultiZoneMachinePool)}
       </SplitItem>
       <SplitItem>
         <Title headingLevel="h4" className="autoscale__lim">{`Max nodes ${
-          isMultiZoneCluster ? 'per zone' : ''
+          isMultiZoneMachinePool ? 'per zone' : ''
         }`}</Title>
-        {getReplicas(autoscaling.max_replicas, isMultiZoneCluster)}
+        {getReplicas(autoscaling.max_replicas, isMultiZoneMachinePool)}
       </SplitItem>
     </Split>
   </>

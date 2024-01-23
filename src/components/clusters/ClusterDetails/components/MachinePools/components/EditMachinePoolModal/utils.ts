@@ -43,11 +43,11 @@ export const buildMachinePoolRequest = (
   values: EditMachinePoolValues,
   {
     isEdit,
-    isMultiAz,
+    isMultiZoneMachinePool,
     isROSACluster,
   }: {
     isEdit: boolean;
-    isMultiAz: boolean;
+    isMultiZoneMachinePool: boolean;
     isROSACluster: boolean;
   },
 ): MachinePool => {
@@ -55,7 +55,7 @@ export const buildMachinePoolRequest = (
     id: values.name,
     labels: getLabels(values.labels),
     taints: getTaints(values.taints),
-    ...getAutoscalingParams(values, isMultiAz, false),
+    ...getAutoscalingParams(values, isMultiZoneMachinePool, false),
   };
 
   if (!isEdit) {
@@ -94,17 +94,17 @@ export const buildNodePoolRequest = (
   values: EditMachinePoolValues,
   {
     isEdit,
-    isMultiAz,
+    isMultiZoneMachinePool,
   }: {
     isEdit: boolean;
-    isMultiAz: boolean;
+    isMultiZoneMachinePool: boolean;
   },
 ): NodePool => {
   const nodePool: NodePool = {
     id: values.name,
     labels: getLabels(values.labels),
     taints: getTaints(values.taints),
-    ...getAutoscalingParams(values, isMultiAz, true),
+    ...getAutoscalingParams(values, isMultiZoneMachinePool, true),
   };
 
   if (!isEdit) {
