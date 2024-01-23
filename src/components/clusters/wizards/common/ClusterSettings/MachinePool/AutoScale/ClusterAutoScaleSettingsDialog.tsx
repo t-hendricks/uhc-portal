@@ -19,7 +19,7 @@ import {
   resourceLimitsFields,
   scaleDownFields,
 } from '~/components/clusters/common/EditClusterAutoScalingDialog/fieldDefinitions';
-import { getDefaultClusterAutoScaling } from '~/components/clusters/CreateOSDPage/clusterAutoScalingValues';
+import { getDefaultClusterAutoScaling } from '~/components/clusters/common/clusterAutoScalingValues';
 import {
   AutoscalerIgnoredLabelsHelpText,
   AutoscalerIgnoredLabelsPopoverText,

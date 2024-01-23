@@ -21,7 +21,7 @@ import {
   DISABLED_NO_PROXY_PLACEHOLDER,
   NO_PROXY_PLACEHOLDER,
   NO_PROXY_HELPER_TEXT,
-} from '~/components/clusters/CreateOSDPage/CreateOSDForm/FormSections/NetworkingSection/networkingConstants';
+} from '~/components/clusters/common/networkingConstants';
 import { MAX_FILE_SIZE, ACCEPT } from '../../../IdentityProvidersPage/components/CAUpload';
 
 const validateUrlHttp = (value) => validateUrl(value, 'http');

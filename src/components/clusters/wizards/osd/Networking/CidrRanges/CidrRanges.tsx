@@ -15,13 +15,13 @@ import {
 
 import links from '~/common/installLinks.mjs';
 import validators, { required } from '~/common/validators';
-import { constants } from '~/components/clusters/CreateOSDPage/CreateOSDForm/CreateOSDFormConstants';
+import { constants } from '~/components/clusters/common/CreateOSDFormConstants';
 import {
   HOST_PREFIX_DEFAULT,
   MACHINE_CIDR_DEFAULT,
   POD_CIDR_DEFAULT,
   SERVICE_CIDR_DEFAULT,
-} from '~/components/clusters/CreateOSDPage/CreateOSDForm/FormSections/NetworkingSection/networkingConstants';
+} from '~/components/clusters/common/networkingConstants';
 import ExternalLink from '~/components/common/ExternalLink';
 import { CloudProviderType } from '~/components/clusters/wizards/common/constants';
 import { CheckboxField, TextInputField } from '~/components/clusters/wizards/form';

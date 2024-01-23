@@ -8,7 +8,7 @@ import {
 
 import { CloudVPC } from '~/types/clusters_mgmt.v1';
 import { truncateTextWithEllipsis } from '~/common/helpers';
-import { securityGroupsSort } from '~/components/clusters/CreateOSDPage/CreateOSDWizard/ccsInquiriesReducer';
+import { securityGroupsSort } from '~/redux/reducers/ccsInquiriesReducer';
 import { validateSecurityGroups } from '~/common/validators';
 
 import { FormGroupHelperText } from '~/components/common/FormGroupHelperText';

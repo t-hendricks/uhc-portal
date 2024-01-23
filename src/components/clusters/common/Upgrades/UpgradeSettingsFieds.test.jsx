@@ -1,6 +1,6 @@
 import React from 'react';
 import { screen, render } from '~/testUtils';
-import wizardConnector from '../../CreateOSDPage/CreateOSDWizard/WizardConnector';
+import wizardConnector from '~/components/clusters/wizards/common/WizardConnector';
 import UpgradeSettingsFields from './UpgradeSettingsFields';
 
 describe('<UpgradeSettingsFields />', () => {

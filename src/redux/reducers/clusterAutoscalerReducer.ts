@@ -16,7 +16,7 @@ limitations under the License.
 import produce from 'immer';
 import { ClusterAutoscaler } from '~/types/clusters_mgmt.v1';
 import { ClusterAutoscalerAction } from '~/redux/actions/clusterAutoscalerActions';
-import { getCompleteFormClusterAutoscaling } from '~/components/clusters/CreateOSDPage/clusterAutoScalingValues';
+import { getCompleteFormClusterAutoscaling } from '~/components/clusters/common/clusterAutoScalingValues';
 import { getErrorState } from '~/common/errors';
 import {
   REJECTED_ACTION,

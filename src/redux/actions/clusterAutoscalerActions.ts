@@ -3,7 +3,7 @@ import { ClusterAutoscaler } from '~/types/clusters_mgmt.v1';
 import {
   getClusterAutoScalingSubmitSettings,
   getDefaultClusterAutoScaling,
-} from '~/components/clusters/CreateOSDPage/clusterAutoScalingValues';
+} from '~/components/clusters/common/clusterAutoScalingValues';
 import { clusterAutoscalerConstants } from '../constants';
 import { clusterService } from '../../services';
 

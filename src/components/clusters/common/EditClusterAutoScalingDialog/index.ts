@@ -16,7 +16,7 @@ import {
   ClusterAutoScalingForm,
   getClusterAutoScalingSubmitSettings,
   getDefaultClusterAutoScaling,
-} from '~/components/clusters/CreateOSDPage/clusterAutoScalingValues';
+} from '~/components/clusters/common/clusterAutoScalingValues';
 import { clusterAutoscalerActions } from '~/redux/actions/clusterAutoscalerActions';
 import { ClusterAutoscaler } from '~/types/clusters_mgmt.v1';
 import { closeModal } from '../../../common/Modal/ModalActions';

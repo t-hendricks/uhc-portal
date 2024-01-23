@@ -9,8 +9,8 @@ import ExternalLink from '~/components/common/ExternalLink';
 import PopoverHint from '~/components/common/PopoverHint';
 import { Cluster } from '~/types/clusters_mgmt.v1';
 import { isHypershiftCluster } from '~/components/clusters/common/clusterStates';
-import { computeNodeHintText } from '~/components/clusters/CreateOSDPage/CreateOSDForm/FormSections/ScaleSection/AutoScaleSection/AutoScaleHelper';
 import { FormGroupHelperText } from '~/components/common/FormGroupHelperText';
+import { computeNodeHintText } from '~/components/clusters/common/ScaleSection/AutoScaleSection/AutoScaleHelper';
 import useFormikOnChange from '../hooks/useFormikOnChange';
 
 type AutoscaleMaxReplicasFieldProps = {
