@@ -107,12 +107,14 @@ export const SubnetSelectField = ({
   const onSelect = useCallback(
     (_: MouseEvent | ChangeEvent, selectedSubnetId: string | SelectOptionObjectDeprecated) => {
       const subnet = subnetList.find((subnet) => subnet.subnet_id === selectedSubnetId);
-      input.onChange(subnet);
-      setSelectedSubnet(subnet);
-      setIsExpanded(false);
+      if (subnet) {
+        input.onChange(subnet);
+        setSelectedSubnet(subnet);
+        setIsExpanded(false);
+      }
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [setSelectedSubnet, setIsExpanded],
+    [subnetList],
   );
 
   return (
