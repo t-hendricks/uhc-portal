@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, screen } from '~/testUtils';
+import { render, screen, checkAccessibility } from '~/testUtils';
 import { parseValueWithUnit } from '../../../../common/units';
 import SmallClusterChart from './SmallClusterChart';
 
@@ -28,14 +28,19 @@ describe('<SmallClusterChart />', () => {
     availableTitle: 'Available',
     usedTitle: 'Used',
   };
-  it('should render', async () => {
+
+  it.skip('is accessible', async () => {
+    const { container } = render(<SmallClusterChart {...defaultProps} />);
+
+    // This fails due to numerous accessibility issues
+    await checkAccessibility(container);
+  });
+
+  it('should render', () => {
     render(<SmallClusterChart {...defaultProps} />);
 
     expect(screen.getByText('Used: 15.41 GiB')).toBeInTheDocument();
     expect(screen.getByText('Available: 61.23 GiB')).toBeInTheDocument();
     expect(screen.getAllByRole('img')).toHaveLength(1);
-
-    // This fails due to numerous accessibility issues
-    // await checkAccessibility(container);
   });
 });

@@ -3,8 +3,8 @@ import { Alert, Spinner } from '@patternfly/react-core';
 import { useField } from 'formik';
 
 import { Cluster } from '~/types/clusters_mgmt.v1';
-import { SubnetSelectField } from '~/components/clusters/CreateOSDPage/CreateOSDWizard/NetworkScreen/SubnetSelectField';
-import { useAWSVPCFromCluster } from '~/components/clusters/CreateOSDPage/CreateOSDWizard/NetworkScreen/useAWSVPCFromCluster';
+import { SubnetSelectField } from '~/components/clusters/common/SubnetSelectField';
+import { useAWSVPCFromCluster } from '~/components/clusters/common/useAWSVPCFromCluster';
 import useFormikOnChange from '../hooks/useFormikOnChange';
 
 const fieldId = 'subnet';

@@ -13,6 +13,7 @@ import {
   SplitItem,
   Split,
   ExpandableSection,
+  Alert,
 } from '@patternfly/react-core';
 
 import { getCloudProviders } from '~/redux/actions/cloudProviderActions';
@@ -24,7 +25,7 @@ import links from '~/common/installLinks.mjs';
 import {
   getMinReplicasCount,
   getNodesCount,
-} from '~/components/clusters/CreateOSDPage/CreateOSDForm/FormSections/ScaleSection/AutoScaleSection/AutoScaleHelper';
+} from '~/components/clusters/common/ScaleSection/AutoScaleSection/AutoScaleHelper';
 import {
   asyncValidateClusterName,
   clusterNameAsyncValidation,
@@ -32,12 +33,12 @@ import {
   createPessimisticValidator,
   validateAWSKMSKeyARN,
 } from '~/common/validators';
-import { constants } from '~/components/clusters/CreateOSDPage/CreateOSDForm/CreateOSDFormConstants';
+import { constants } from '~/components/clusters/common/CreateOSDFormConstants';
 import { CloudProviderType } from '~/components/clusters/wizards/common/constants';
 import PopoverHint from '~/components/common/PopoverHint';
 import PersistentStorageDropdown from '~/components/clusters/common/PersistentStorageDropdown';
 import LoadBalancersDropdown from '~/components/clusters/common/LoadBalancersDropdown';
-import { PLACEHOLDER_VALUE as AvailabilityZonePlaceholder } from '~/components/clusters/CreateOSDPage/CreateOSDForm/FormSections/NetworkingSection/AvailabilityZoneSelection';
+import { PLACEHOLDER_VALUE as AvailabilityZonePlaceholder } from '~/components/clusters/wizards/common/NetworkingSection/AvailabilityZoneSelection';
 import {
   RadioGroupField,
   RadioGroupOption,
@@ -47,12 +48,13 @@ import { getIncompatibleVersionReason } from '~/common/versionCompatibility';
 import { SupportedFeature } from '~/common/featureCompatibility';
 import { useFormState } from '~/components/clusters/wizards/hooks';
 import { hasAvailableQuota, quotaParams } from '~/components/clusters/wizards/common/utils/quotas';
-import { FieldId } from '~/components/clusters/wizards/osd/constants';
+import { FieldId, MIN_SECURE_BOOT_VERSION } from '~/components/clusters/wizards/osd/constants';
 import { billingModels } from '~/common/subscriptionTypes';
 import { QuotaCostList } from '~/types/accounts_mgmt.v1';
 import { QuotaParams } from '~/components/clusters/common/quotaModel';
 import { GCP_SECURE_BOOT_UI } from '~/redux/constants/featureConstants';
 import { useFeatureGate } from '~/hooks/useFeatureGate';
+import { versionComparator } from '~/common/versionComparator';
 import { VersionSelectField } from './VersionSelectField';
 import CloudRegionSelectField from './CloudRegionSelectField';
 import { CustomerManagedEncryption } from './CustomerManagedEncryption';
@@ -71,6 +73,8 @@ export const Details = () => {
       [FieldId.KmsKeyArn]: kmsKeyArn,
       [FieldId.EtcdEncryption]: etcdEncryption,
       [FieldId.FipsCryptography]: fipsCryptography,
+      [FieldId.ClusterVersion]: selectedVersion,
+      [FieldId.SecureBoot]: secureBoot,
     },
     errors,
     isValidating,
@@ -79,6 +83,7 @@ export const Details = () => {
   } = useFormState();
 
   const [isExpanded, setIsExpanded] = React.useState(false);
+  const [showSecureBootAlert, setShowSecureBootAlert] = React.useState(false);
 
   const isByoc = byoc === 'true';
   const isMultiAz = multiAz === 'true';
@@ -100,6 +105,9 @@ export const Details = () => {
   const isGCPError =
     gcpKeyRings.error || keyRingError || keyNameError || kmsServiceAccountError || keyLocationError;
 
+  const isIncompatibleSecureBootVersion =
+    isGCP && versionComparator(selectedVersion?.raw_id, MIN_SECURE_BOOT_VERSION) === -1;
+
   React.useEffect(() => {
     dispatch(getCloudProviders());
   }, [dispatch]);
@@ -112,6 +120,17 @@ export const Details = () => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isValidating]);
+
+  React.useEffect(() => {
+    if (!secureBoot && !isIncompatibleSecureBootVersion) {
+      setShowSecureBootAlert(false);
+    }
+    if (secureBoot && isIncompatibleSecureBootVersion) {
+      setShowSecureBootAlert(true);
+      setFieldValue(FieldId.SecureBoot, false);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isIncompatibleSecureBootVersion]);
 
   const azQuotaParams = {
     product,
@@ -203,6 +222,16 @@ export const Details = () => {
   };
 
   const isSecureBootFeatureEnabled = useFeatureGate(GCP_SECURE_BOOT_UI);
+
+  const secureBootAlert = (
+    <div className="pf-v5-u-mt-sm">
+      <Alert
+        isInline
+        variant="danger"
+        title={`Secure Boot support requires OpenShift version ${MIN_SECURE_BOOT_VERSION} or above`}
+      />
+    </div>
+  );
 
   return (
     <Form>
@@ -325,12 +354,14 @@ export const Details = () => {
                     <CheckboxField
                       name={FieldId.SecureBoot}
                       label="Enable Secure Boot support for Shielded VMs"
+                      isDisabled={isIncompatibleSecureBootVersion}
                     />
                   </SplitItem>
                   <SplitItem>
                     <PopoverHint hint={constants.enableSecureBootHint} />
                   </SplitItem>
                 </Split>
+                {showSecureBootAlert && secureBootAlert}
               </FormGroup>
             </GridItem>
           )}

@@ -14,7 +14,7 @@ import { normalizedProducts } from '~/common/subscriptionTypes';
 import PageTitle from '~/components/common/PageTitle';
 import Breadcrumbs from '~/components/common/Breadcrumbs';
 import usePreventBrowserNav from '~/hooks/usePreventBrowserNav';
-import LeaveCreateClusterPrompt from '~/components/clusters/common/LeaveCreateClusterPrompt';
+import LeaveCreateClusterPrompt from '~/components/clusters/wizards/common/LeaveCreateClusterPrompt';
 import {
   ClusterUpdates,
   ClusterSettingsMachinePool,

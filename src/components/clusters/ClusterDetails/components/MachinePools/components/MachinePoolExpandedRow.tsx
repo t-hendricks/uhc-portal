@@ -5,10 +5,11 @@ import isEmpty from 'lodash/isEmpty';
 import { MachinePool } from '~/types/clusters_mgmt.v1/models/MachinePool';
 import { Cluster, SecurityGroup } from '~/types/clusters_mgmt.v1';
 import { truncateTextWithEllipsis } from '~/common/helpers';
-import { useAWSVPCFromCluster } from '~/components/clusters/CreateOSDPage/CreateOSDWizard/NetworkScreen/useAWSVPCFromCluster';
+import { useAWSVPCFromCluster } from '~/components/clusters/common/useAWSVPCFromCluster';
 
 import { hasSubnets, getSubnetIds } from '../machinePoolsHelper';
 import MachinePoolAutoScalingDetail from '../MachinePoolAutoscalingDetail';
+import { isMPoolAz } from '../../../clusterDetailsHelper';
 
 const LABEL_MAX_LENGTH = 50;
 
@@ -79,6 +80,7 @@ const MachinePoolExpandedRow = ({
   const { clusterVpc } = useAWSVPCFromCluster(cluster);
   const spotMarketOptions = machinePool?.aws?.spot_market_options;
   const securityGroupIds = machinePool.aws?.additional_security_group_ids || [];
+  const isMultiZoneMachinePool = isMPoolAz(cluster, machinePool.availability_zones?.length);
 
   return (
     <Grid hasGutter>
@@ -108,6 +110,7 @@ const MachinePoolExpandedRow = ({
       {machinePool.autoscaling && (
         <GridItem md={6}>
           <MachinePoolAutoScalingDetail
+            isMultiZoneMachinePool={isMultiZoneMachinePool}
             isMultiZoneCluster={isMultiZoneCluster}
             autoscaling={machinePool.autoscaling}
           />

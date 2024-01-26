@@ -5,7 +5,6 @@ import isEmpty from 'lodash/isEmpty';
 import get from 'lodash/get';
 
 import {
-  Button,
   ButtonVariant,
   Card,
   CardBody,
@@ -50,7 +49,7 @@ import {
 import ButtonWithTooltip from '../../../../common/ButtonWithTooltip';
 import ErrorBox from '../../../../common/ErrorBox';
 import modals from '../../../../common/Modal/modals';
-import {
+import clusterStates, {
   isHibernating,
   isHypershiftCluster,
   isROSA,
@@ -216,6 +215,10 @@ class MachinePools extends React.Component {
     const isAws = isAWS(cluster);
     const showMachineConfigurationAction =
       hasMachineConfiguration && ((isRosa && !isHypershift) || (isOsd && isCcs && isAws));
+    const isMachineConfigurationActionDisabled = cluster?.state !== clusterStates.READY;
+    const isMachineConfigurationActionDisabledReason =
+      isMachineConfigurationActionDisabled &&
+      `Machine configuration is only available when the cluster is ready.`;
 
     if (hasMachinePools && machinePoolsList.error) {
       return (
@@ -244,15 +247,15 @@ class MachinePools extends React.Component {
 
     const isReadOnly = cluster?.status?.configuration_mode === 'read_only';
     const readOnlyReason = isReadOnly && 'This operation is not available during maintenance';
+    const quotaReason = !hasMachinePoolsQuota && noQuotaTooltip;
     const hibernatingReason =
       isHibernating(cluster) && 'This operation is not available while cluster is hibernating';
-    const canNotCreateReason =
-      !machinePoolsActions.create &&
-      'You do not have permission to add a machine pool. Only cluster owners, cluster editors, machine pool editors and Organization Administrators can add machine pools.';
-    const quotaReason = !hasMachinePoolsQuota && noQuotaTooltip;
-    const canNotEditReason =
+    // Workaround until these are fixed, once fixed revert changes:
+    // https://issues.redhat.com/browse/OCMUI-1221
+    // https://issues.redhat.com/browse/OCM-5468
+    const canNotCreateOrEditReason =
       !machinePoolsActions.update &&
-      'You do not have permission to edit machine pools. Only cluster owners, cluster editors, machine pool editors and Organization Administrators can edit machine pools.';
+      'You do not have permission to add or edit machine pools. Only cluster owners, cluster editors, machine pool editors and Organization Administrators can edit machine pools.';
 
     const canNotEditAutoscalerReason =
       (!cluster?.canEditClusterAutoscaler &&
@@ -261,7 +264,11 @@ class MachinePools extends React.Component {
         !clusterAutoscalerResponse.getAutoscaler.data &&
         'The cluster autoscaler is loading.');
 
-    const tableActionsDisabled = !!(readOnlyReason || hibernatingReason || canNotEditReason);
+    const tableActionsDisabled = !!(
+      readOnlyReason ||
+      hibernatingReason ||
+      canNotCreateOrEditReason
+    );
 
     const getMachinePoolRow = (machinePool = {}, isExpandableRow) => {
       const cells = [
@@ -429,7 +436,10 @@ class MachinePools extends React.Component {
                     <ToolbarItem>
                       <ButtonWithTooltip
                         disableReason={
-                          readOnlyReason || hibernatingReason || canNotCreateReason || quotaReason
+                          readOnlyReason ||
+                          hibernatingReason ||
+                          canNotCreateOrEditReason ||
+                          quotaReason
                         }
                         id="add-machine-pool"
                         onClick={() =>
@@ -460,8 +470,8 @@ class MachinePools extends React.Component {
                     )}
                     {showMachineConfigurationAction && (
                       <ToolbarItem>
-                        <Button
-                          variant={ButtonVariant.secondary}
+                        <ButtonWithTooltip
+                          disableReason={isMachineConfigurationActionDisabledReason}
                           onClick={() =>
                             this.setState(
                               produce((draft) => {
@@ -469,9 +479,10 @@ class MachinePools extends React.Component {
                               }),
                             )
                           }
+                          variant={ButtonVariant.secondary}
                         >
                           Edit machine configuration
-                        </Button>
+                        </ButtonWithTooltip>
                       </ToolbarItem>
                     )}
                   </ToolbarContent>

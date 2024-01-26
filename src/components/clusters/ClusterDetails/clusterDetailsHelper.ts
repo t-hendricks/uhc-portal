@@ -27,6 +27,17 @@ const getSubscriptionLastReconciledDate = (subscription: Subscription) =>
 const isMultiAZ = (cluster: Cluster): boolean =>
   !isHypershiftCluster(cluster) && cluster.multi_az === true;
 
+const isMPoolAz = (cluster: Cluster, mpAvailZones: number | undefined): boolean => {
+  // Checks if it is multizone cluster and multi zone machinepool
+  if (
+    (isMultiAZ(cluster) && mpAvailZones && mpAvailZones > 1) ||
+    (isMultiAZ(cluster) && !mpAvailZones)
+  ) {
+    return true;
+  }
+  return false;
+};
+
 /**
  *
  * @param cluster something extending ClusterFromSubscription since components are using either Cluster or ClusterFromSubscription
@@ -84,6 +95,7 @@ export {
   getSubscriptionLastReconciledDate,
   isHypershiftCluster,
   isMultiAZ,
+  isMPoolAz,
   isArchivedSubscription,
   isReadyForRoleAccessActions,
   isReadyForAwsAccessActions,

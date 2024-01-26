@@ -6,7 +6,7 @@ import { PlusCircleIcon } from '@patternfly/react-icons/dist/esm/icons/plus-circ
 import { MinusCircleIcon } from '@patternfly/react-icons/dist/esm/icons/minus-circle-icon';
 
 import { validateMultipleMachinePoolsSubnets } from '~/common/validators';
-import { SubnetSelectField } from '~/components/clusters/CreateOSDPage/CreateOSDWizard/NetworkScreen/SubnetSelectField';
+import { SubnetSelectField } from '~/components/clusters/common/SubnetSelectField';
 
 import './ReduxFormMachinePoolSubnets.scss';
 

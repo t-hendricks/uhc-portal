@@ -302,6 +302,7 @@ class CreateRosaCluster extends Page {
 
   waitForARNList() {
     cy.get('span.pf-v5-c-button__progress', { timeout: 80000 }).should('not.exist');
+    cy.getByTestId('spinner-loading-arn-text', { timeout: 80000 }).should('not.exist');
   }
 
   selectInstallerRole(roleName) {

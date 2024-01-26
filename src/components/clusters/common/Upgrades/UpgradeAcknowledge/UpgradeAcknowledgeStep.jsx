@@ -49,13 +49,7 @@ const UpgradeAcknowledgeStep = (props) => {
             // eslint-disable-next-line react/no-array-index-key
             <li key={`ack-${index}`} data-testid="unmetAcknowledgement">
               {ack.description ? <p>{ack.description}</p> : null}
-              <Alert
-                id="upgrade-ack-alert"
-                isPlain
-                isInline
-                variant="warning"
-                title={ack.warning_message}
-              >
+              <Alert isPlain isInline variant="warning" title={ack.warning_message}>
                 {ack.documentation_url ? (
                   <ExternalLink href={ack.documentation_url}>Learn more</ExternalLink>
                 ) : null}

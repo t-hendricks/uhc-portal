@@ -187,5 +187,79 @@ describe('<EditMachinePoolModal />', () => {
       const { getByText: getByText2 } = within(screen.getByTestId('submit-btn'));
       expect(getByText2('Save')).toBeInTheDocument();
     });
+
+    describe('Singlezone and multizone machine pool in multizone cluster', () => {
+      it('Loaded state with single zone machinepool', async () => {
+        render(
+          <EditMachinePoolModal
+            cluster={{ multi_az: true }}
+            onClose={() => {}}
+            machinePoolsResponse={{
+              error: false,
+              fulfilled: true,
+              pending: false,
+              data: [
+                {
+                  availability_zones: ['us-east-1a'],
+                  href: '/api/clusters_mgmt/v1/clusters/282fg0gt74jjb9558ge1poe8m4dlvb07/machine_pools/daznauro-mp',
+                  id: 'fooId',
+                  instance_type: 'm5.xlarge',
+                  kind: 'MachinePool',
+                  replicas: 21,
+                  root_volume: { aws: { size: 300 } },
+                },
+              ],
+            }}
+            machineTypesResponse={{
+              error: false,
+              pending: false,
+              fulfilled: true,
+              types: {},
+              typesByID: {},
+            }}
+            machinePoolId="fooId"
+          />,
+        );
+
+        expect(await screen.findByText('Compute node count')).toBeInTheDocument();
+        expect(await screen.findByText('21')).toBeInTheDocument();
+      });
+
+      it('Loaded state with multi zone machinepool', async () => {
+        render(
+          <EditMachinePoolModal
+            cluster={{ multi_az: true }}
+            onClose={() => {}}
+            machinePoolsResponse={{
+              error: false,
+              fulfilled: true,
+              pending: false,
+              data: [
+                {
+                  availability_zones: ['us-east-1a', 'us-east-1b', 'us-east-1c'],
+                  href: '/api/clusters_mgmt/v1/clusters/282fg0gt74jjb9558ge1poe8m4dlvb07/machine_pools/daznauro-mp',
+                  id: 'fooId',
+                  instance_type: 'm5.xlarge',
+                  kind: 'MachinePool',
+                  replicas: 21,
+                  root_volume: { aws: { size: 300 } },
+                },
+              ],
+            }}
+            machineTypesResponse={{
+              error: false,
+              pending: false,
+              fulfilled: true,
+              types: {},
+              typesByID: {},
+            }}
+            machinePoolId="fooId"
+          />,
+        );
+
+        expect(await screen.findByText('Compute node count (per zone)')).toBeInTheDocument();
+        expect(await screen.findByText('7')).toBeInTheDocument();
+      });
+    });
   });
 });

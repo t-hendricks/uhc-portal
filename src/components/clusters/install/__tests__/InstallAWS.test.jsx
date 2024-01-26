@@ -1,11 +1,17 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { screen, checkAccessibility, TestRouter, render } from '~/testUtils';
 
 import InstallAWS from '../InstallAWS';
 
 describe('InstallAWS', () => {
-  it('renders correctly', () => {
-    const wrapper = shallow(<InstallAWS />);
-    expect(wrapper).toMatchSnapshot();
+  it('is accessible', async () => {
+    const { container } = render(
+      <TestRouter>
+        <InstallAWS />
+      </TestRouter>,
+    );
+
+    expect(await screen.findByText('Create an OpenShift Cluster: AWS')).toBeInTheDocument();
+    await checkAccessibility(container);
   });
 });

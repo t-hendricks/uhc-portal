@@ -1,11 +1,19 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { screen, checkAccessibility, TestRouter, render } from '~/testUtils';
 
 import InstallIBMZ from '../InstallIBMZ';
 
 describe('InstallIBMZ', () => {
-  it('renders correctly', () => {
-    const wrapper = shallow(<InstallIBMZ />);
-    expect(wrapper).toMatchSnapshot();
+  it('is accessible', async () => {
+    const { container } = render(
+      <TestRouter>
+        <InstallIBMZ />
+      </TestRouter>,
+    );
+
+    expect(
+      await screen.findByText('Create an OpenShift Cluster: IBM Z (s390x)'),
+    ).toBeInTheDocument();
+    await checkAccessibility(container);
   });
 });

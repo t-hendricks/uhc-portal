@@ -2,7 +2,7 @@ import { Checkbox, FormGroup } from '@patternfly/react-core';
 import { useField } from 'formik';
 import * as React from 'react';
 import links from '~/common/installLinks.mjs';
-import { constants } from '~/components/clusters/CreateOSDPage/CreateOSDForm/CreateOSDFormConstants';
+import { constants } from '~/components/clusters/common/CreateOSDFormConstants';
 import ExternalLink from '~/components/common/ExternalLink';
 import PopoverHint from '~/components/common/PopoverHint';
 import { Cluster } from '~/types/clusters_mgmt.v1';

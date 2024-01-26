@@ -7,7 +7,7 @@ import AWSLogo from '~/styles/images/AWSLogo';
 import GCPLogo from '~/styles/images/GCPLogo';
 import { useFormState } from '~/components/clusters/wizards/hooks';
 import { CloudProviderType } from '~/components/clusters/wizards/common/constants';
-import * as osdInitialValues from '~/components/clusters/CreateOSDPage/createOSDInitialValues';
+import * as osdInitialValues from '~/components/clusters/wizards/common/createOSDInitialValues';
 import { noQuotaTooltip } from '~/common/helpers';
 import { FieldId } from '~/components/clusters/wizards/osd/constants';
 import { useGetBillingQuotas } from '~/components/clusters/wizards/osd/BillingModel/useGetBillingQuotas';

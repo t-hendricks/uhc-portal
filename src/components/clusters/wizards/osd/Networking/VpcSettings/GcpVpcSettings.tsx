@@ -92,7 +92,7 @@ export const GcpVpcSettings = () => {
           <div className="pf-v5-u-mt-md  pf-v5-u-mb-lg">
             <CheckboxField
               name={FieldId.InstallToSharedVpc}
-              label="Install into GCP shared VPC"
+              label="Install into GCP Shared VPC"
               tooltip={
                 <>
                   <p>Install into a VPC shared by another account in your GCP organization.</p>

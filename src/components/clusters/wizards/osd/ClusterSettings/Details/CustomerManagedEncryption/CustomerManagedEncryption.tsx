@@ -4,7 +4,7 @@ import { Grid, GridItem, Alert, FormGroup } from '@patternfly/react-core';
 
 import { validateAWSKMSKeyARN } from '~/common/validators';
 import ExternalLink from '~/components/common/ExternalLink';
-import { constants } from '~/components/clusters/CreateOSDPage/CreateOSDForm/CreateOSDFormConstants';
+import { constants } from '~/components/clusters/common/CreateOSDFormConstants';
 import { CloudProviderType } from '~/components/clusters/wizards/common/constants';
 import {
   RadioGroupField,

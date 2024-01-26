@@ -3,7 +3,7 @@ import { Form, FormGroup, FormSection, Grid, GridItem, Switch, Text } from '@pat
 
 import { ClusterAutoscaler } from '~/types/clusters_mgmt.v1';
 import installLinks from '~/common/installLinks.mjs';
-import { getDefaultClusterAutoScaling } from '~/components/clusters/CreateOSDPage/clusterAutoScalingValues';
+import { getDefaultClusterAutoScaling } from '~/components/clusters/common/clusterAutoScalingValues';
 import ErrorBox from '~/components/common/ErrorBox';
 import { ErrorState } from '~/types/types';
 import { Field } from 'redux-form';

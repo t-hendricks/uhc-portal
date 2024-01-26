@@ -3,6 +3,7 @@ import { screen, render, checkAccessibility } from '~/testUtils';
 import { normalizedProducts } from '~/common/subscriptionTypes';
 import { baseRequestState } from '~/redux/reduxHelpers';
 import MachinePools from '../MachinePools';
+import clusterStates from '../../../../common/clusterStates';
 
 const vpc = {
   aws_security_groups: [
@@ -17,14 +18,11 @@ const vpc = {
   ],
 };
 
-jest.mock(
-  '~/components/clusters/CreateOSDPage/CreateOSDWizard/NetworkScreen/useAWSVPCFromCluster',
-  () => ({
-    useAWSVPCFromCluster: () => ({
-      clusterVpc: vpc,
-    }),
+jest.mock('~/components/clusters/common/useAWSVPCFromCluster', () => ({
+  useAWSVPCFromCluster: () => ({
+    clusterVpc: vpc,
   }),
-);
+}));
 jest.mock('~/components/clusters/common/MachineConfiguration/MachineConfiguration', () => ({
   MachineConfiguration: () => <div data-testid="machine-configuration">MachineConfiguration</div>,
 }));
@@ -63,6 +61,7 @@ const defaultCluster = {
   cloud_provider: {
     id: 'aws',
   },
+  state: clusterStates.READY,
 };
 
 const defaultProps = {
@@ -756,15 +755,29 @@ describe('<MachinePools />', () => {
   describe('Machine configuration', () => {
     const machineConfigLabel = 'Edit machine configuration';
 
+    const expectActionButton = ({ toBePresent, toBeEnabled = true }) => {
+      if (toBePresent) {
+        expect(screen.getByRole('button', { name: machineConfigLabel })).toBeInTheDocument();
+        expect(screen.getByRole('button', { name: machineConfigLabel })).toHaveAttribute(
+          'aria-disabled',
+          `${String(!toBeEnabled)}`,
+        );
+      } else {
+        expect(screen.queryByRole('button', { name: machineConfigLabel })).not.toBeInTheDocument();
+      }
+    };
+
     it('is not present if feature flag is disabled', () => {
       render(<MachinePools {...defaultProps} />);
-      expect(screen.queryByRole('button', { name: machineConfigLabel })).not.toBeInTheDocument();
+
+      expectActionButton({ toBePresent: false });
     });
 
     it('is present if feature flag is enabled and cluster is ROSA', () => {
       const props = { ...defaultProps, hasMachineConfiguration: true };
       render(<MachinePools {...props} />);
-      expect(screen.getByRole('button', { name: machineConfigLabel })).toBeInTheDocument();
+
+      expectActionButton({ toBePresent: true });
     });
 
     it('is present if feature flag is enabled and cluster is OSD with CCS on AWS', () => {
@@ -785,7 +798,22 @@ describe('<MachinePools />', () => {
         },
       };
       render(<MachinePools {...props} />);
-      expect(screen.getByRole('button', { name: machineConfigLabel })).toBeInTheDocument();
+
+      expectActionButton({ toBePresent: true });
+    });
+
+    it('is present but disabled if the cluster is not in "ready" state', () => {
+      const props = {
+        ...defaultProps,
+        hasMachineConfiguration: true,
+        cluster: {
+          ...defaultCluster,
+          state: clusterStates.HIBERNATING,
+        },
+      };
+      render(<MachinePools {...props} />);
+
+      expectActionButton({ toBePresent: true, toBeEnabled: false });
     });
 
     it('is absent if feature flag is enabled and cluster is OSD with CCS on GCP', () => {
@@ -806,7 +834,8 @@ describe('<MachinePools />', () => {
         },
       };
       render(<MachinePools {...props} />);
-      expect(screen.queryByRole('button', { name: machineConfigLabel })).not.toBeInTheDocument();
+
+      expectActionButton({ toBePresent: false });
     });
 
     it('is absent if feature flag is enabled and cluster is OSD without CCS', () => {
@@ -827,7 +856,8 @@ describe('<MachinePools />', () => {
         },
       };
       render(<MachinePools {...props} />);
-      expect(screen.queryByRole('button', { name: machineConfigLabel })).not.toBeInTheDocument();
+
+      expectActionButton({ toBePresent: false });
     });
 
     it('is absent if feature flag is enabled and cluster is Hypershift', () => {
@@ -842,7 +872,8 @@ describe('<MachinePools />', () => {
         },
       };
       render(<MachinePools {...props} />);
-      expect(screen.queryByRole('button', { name: machineConfigLabel })).not.toBeInTheDocument();
+
+      expectActionButton({ toBePresent: false });
     });
 
     it('shows the machine configuration when clicking on "Edit machine configuration"', async () => {
