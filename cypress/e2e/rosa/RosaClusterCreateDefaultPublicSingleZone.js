@@ -34,7 +34,7 @@ describe(
     it('Step - Control plane - Select control plane type', () => {
       CreateRosaWizardPage.isControlPlaneTypeScreen();
       CreateRosaWizardPage.selectStandaloneControlPlaneTypeOption();
-      cy.get(CreateRosaWizardPage.primaryButton).click({ force: true });
+      CreateRosaWizardPage.rosaNextButton().click();
     });
 
     it('Step - Accounts and roles - Select Account roles, ARN definitions', () => {
@@ -43,7 +43,7 @@ describe(
       CreateRosaWizardPage.refreshInfrastructureAWSAccountButton().click();
       CreateRosaWizardPage.waitForARNList();
       CreateRosaWizardPage.selectInstallerRole(installerARN);
-      cy.get('button').contains('Next').click();
+      CreateRosaWizardPage.rosaNextButton().click();
     });
 
     it('Step - Cluster Settings - Select Cluster name, version, regions', () => {
@@ -53,8 +53,7 @@ describe(
       CreateRosaWizardPage.selectClusterVersion(clusterPropertiesFile.Version);
       CreateRosaWizardPage.selectRegion(clusterPropertiesFile.Region);
       CreateRosaWizardPage.selectAvailabilityZone(clusterPropertiesFile.Availability);
-
-      cy.get('button').contains('Next').click();
+      CreateRosaWizardPage.rosaNextButton().click();
     });
 
     it('Step - Cluster Settings - Select machine pool node type and node count', () => {
@@ -65,13 +64,13 @@ describe(
       CreateRosaWizardPage.enableAutoScaling();
       CreateRosaWizardPage.disabledAutoScaling();
       CreateRosaWizardPage.selectComputeNodeCount(clusterPropertiesFile.MachinePools[0].NodeCount);
-      cy.get('button').contains('Next').click();
+      CreateRosaWizardPage.rosaNextButton().click();
     });
 
     it('Step - Cluster Settings - configuration - Select cluster privacy', () => {
       CreateRosaWizardPage.selectClusterPrivacy('private');
       CreateRosaWizardPage.selectClusterPrivacy(clusterPropertiesFile.ClusterPrivacy);
-      cy.get('button').contains('Next').click();
+      CreateRosaWizardPage.rosaNextButton().click();
     });
 
     it('Step - Cluster Settings - CIDR Ranges - CIDR default values', () => {
@@ -87,19 +86,19 @@ describe(
       );
       CreateRosaWizardPage.podCIDRInput().should('have.value', clusterPropertiesFile.PodCIDR);
       CreateRosaWizardPage.hostPrefixInput().should('have.value', clusterPropertiesFile.HostPrefix);
-      cy.get('button').contains('Next').click();
+      CreateRosaWizardPage.rosaNextButton().click();
     });
 
     it('Step - Cluster roles and policies - role provider mode and its definitions', () => {
       CreateRosaWizardPage.selectRoleProviderMode(clusterPropertiesFile.RoleProviderMode);
       CreateRosaWizardPage.customOperatorPrefixInput().should('be.visible');
       CreateRosaWizardPage.customOperatorPrefixInput().invoke('val').should('include', clusterName);
-      cy.get('button').contains('Next').click();
+      CreateRosaWizardPage.rosaNextButton().click();
     });
 
     it('Step - Cluster update - update strategies and its definitions', () => {
       CreateRosaWizardPage.selectUpdateStratergy(clusterPropertiesFile.UpdateStrategy);
-      cy.get('button').contains('Next').click();
+      CreateRosaWizardPage.rosaNextButton().click();
     });
 
     it('Step - Review and create : Accounts and roles definitions', () => {

@@ -1,11 +1,17 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { screen, checkAccessibility, TestRouter, render } from '~/testUtils';
 
 import InstallOSP from '../InstallOSP';
 
 describe('InstallOSP', () => {
-  it('renders correctly', () => {
-    const wrapper = shallow(<InstallOSP />);
-    expect(wrapper).toMatchSnapshot();
+  it('is accessible', async () => {
+    const { container } = render(
+      <TestRouter>
+        <InstallOSP />
+      </TestRouter>,
+    );
+
+    expect(await screen.findByText('Create an OpenShift Cluster: OpenStack')).toBeInTheDocument();
+    await checkAccessibility(container);
   });
 });

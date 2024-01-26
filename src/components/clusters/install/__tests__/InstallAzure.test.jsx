@@ -1,11 +1,17 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { screen, checkAccessibility, TestRouter, render } from '~/testUtils';
 
 import InstallAzure from '../InstallAzure';
 
 describe('InstallAzure', () => {
-  it('renders correctly', () => {
-    const wrapper = shallow(<InstallAzure />);
-    expect(wrapper).toMatchSnapshot();
+  it('is accessible', async () => {
+    const { container } = render(
+      <TestRouter>
+        <InstallAzure />
+      </TestRouter>,
+    );
+
+    expect(await screen.findByText('Create an OpenShift Cluster: Azure')).toBeInTheDocument();
+    await checkAccessibility(container);
   });
 });

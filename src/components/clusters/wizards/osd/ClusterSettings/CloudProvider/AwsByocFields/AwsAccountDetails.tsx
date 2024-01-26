@@ -8,7 +8,7 @@ import links from '~/common/installLinks.mjs';
 import {
   billingModelConstants,
   constants,
-} from '~/components/clusters/CreateOSDPage/CreateOSDForm/CreateOSDFormConstants';
+} from '~/components/clusters/common/CreateOSDFormConstants';
 import InstructionCommand from '~/components/common/InstructionCommand';
 import ExternalLink from '~/components/common/ExternalLink';
 import { TextInputField, CheckboxField } from '~/components/clusters/wizards/form';

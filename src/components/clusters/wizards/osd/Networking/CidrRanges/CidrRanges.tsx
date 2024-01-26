@@ -15,13 +15,13 @@ import {
 
 import links from '~/common/installLinks.mjs';
 import validators, { required } from '~/common/validators';
-import { constants } from '~/components/clusters/CreateOSDPage/CreateOSDForm/CreateOSDFormConstants';
+import { constants } from '~/components/clusters/common/CreateOSDFormConstants';
 import {
   HOST_PREFIX_DEFAULT,
   MACHINE_CIDR_DEFAULT,
-  podCidrDefaultValue,
+  POD_CIDR_DEFAULT,
   SERVICE_CIDR_DEFAULT,
-} from '~/components/clusters/CreateOSDPage/CreateOSDForm/FormSections/NetworkingSection/networkingConstants';
+} from '~/components/clusters/common/networkingConstants';
 import ExternalLink from '~/components/common/ExternalLink';
 import { CloudProviderType } from '~/components/clusters/wizards/common/constants';
 import { CheckboxField, TextInputField } from '~/components/clusters/wizards/form';
@@ -51,9 +51,9 @@ export const CidrRanges = () => {
 
   React.useEffect(() => {
     if (networkPodCidr === undefined) {
-      setFieldValue(FieldId.NetworkPodCidr, podCidrDefaultValue(cloudProvider));
+      setFieldValue(FieldId.NetworkPodCidr, POD_CIDR_DEFAULT);
     }
-  }, [cloudProvider, networkPodCidr, setFieldValue]);
+  }, [networkPodCidr, setFieldValue]);
 
   const awsMachineCIDRMax = isMultiAz
     ? validators.AWS_MACHINE_CIDR_MAX_MULTI_AZ
@@ -80,7 +80,7 @@ export const CidrRanges = () => {
     if (checked) {
       setFieldValue(FieldId.NetworkMachineCidr, MACHINE_CIDR_DEFAULT);
       setFieldValue(FieldId.NetworkServiceCidr, SERVICE_CIDR_DEFAULT);
-      setFieldValue(FieldId.NetworkPodCidr, podCidrDefaultValue(cloudProvider));
+      setFieldValue(FieldId.NetworkPodCidr, POD_CIDR_DEFAULT);
       setFieldValue(FieldId.NetworkHostPrefix, HOST_PREFIX_DEFAULT);
 
       // Untouch all fields after setting defaults to reset validation
@@ -211,7 +211,7 @@ export const CidrRanges = () => {
                   </Text>
                 </>
               }
-              input={{ placeholder: podCidrDefaultValue(cloudProvider) }}
+              input={{ placeholder: POD_CIDR_DEFAULT }}
             />
           </GridItem>
 

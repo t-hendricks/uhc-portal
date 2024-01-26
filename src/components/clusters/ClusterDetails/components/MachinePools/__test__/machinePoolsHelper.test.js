@@ -1,14 +1,31 @@
+import * as clusterStates from '~/components/clusters/common/clusterStates';
+import * as normalize from '~/common/normalize';
 import { normalizedProducts } from '../../../../../../common/subscriptionTypes';
 import {
   actionResolver,
-  parseLabels,
-  parseTags,
   normalizeNodePool,
-  normalizeMachinePool,
   isMinimumCountWithoutTaints,
-  minReplicasNeededText,
   isEnforcedDefaultMachinePool,
+  getSubnetIds,
+  hasSubnets,
+  getMinNodesRequired,
+  getMinNodesRequiredHypershift,
+  getNodeIncrementHypershift,
+  hasExplicitAutoscalingMachinePool,
+  hasDefaultOrExplicitAutoscalingMachinePool,
+  canUseSpotInstances,
+  getClusterMinNodes,
 } from '../machinePoolsHelper';
+import {
+  machinePoolWithBothSubnetAndSubnets,
+  machinePoolWithSubnet,
+  machinePoolWithSubnets,
+  machinePoolsWithAutoscaling,
+  machinePoolsWithoutAutoscaling,
+} from './MachinePools.fixtures';
+
+const isHypershiftClusterMock = jest.spyOn(clusterStates, 'isHypershiftCluster');
+const normalizeProductIDMock = jest.spyOn(normalize, 'normalizeProductID');
 
 describe('machine pools action resolver', () => {
   const onClickDelete = jest.fn();
@@ -209,7 +226,9 @@ describe('machine pools action resolver', () => {
     actions.forEach((action) => {
       if (action.title === 'Delete') {
         expect(action.isAriaDisabled).toBeTruthy();
-        expect(action.tooltip).toEqual(minReplicasNeededText);
+        expect(action.tooltip).toEqual(
+          'There needs to be at least 2 nodes without taints across all machine pools',
+        );
       }
       if (action.title === 'Edit') {
         expect(action.isAriaDisabled).toBeFalsy();
@@ -349,36 +368,6 @@ describe('isMinimumCountWithoutTaints ', () => {
   });
 });
 
-describe('parseLabels', () => {
-  it('should convert to array properly', () => {
-    const labels = { foo: 'bar', hello: 'world' };
-    const expected = ['foo=bar', 'hello=world'];
-    expect(parseLabels(labels)).toEqual(expected);
-  });
-
-  it('should return an empty array when there are no labels', () => {
-    expect(parseLabels({})).toEqual([]);
-  });
-});
-
-describe('parseTags', () => {
-  it('should convert to object properly', () => {
-    const tags = ['foo=bar', 'hello=world'];
-    const expected = { foo: 'bar', hello: 'world' };
-    expect(parseTags(tags)).toEqual(expected);
-  });
-
-  it('should omit invalid tags', () => {
-    const tags = ['foo=bar', 'hello_=world'];
-    const expected = { foo: 'bar' };
-    expect(parseTags(tags)).toEqual(expected);
-  });
-
-  it('should return an empty object when there are no tags', () => {
-    expect(parseTags([])).toEqual({});
-  });
-});
-
 describe('normalizeNodePool', () => {
   const nodePoolBase = {
     kind: 'NodePool',
@@ -427,54 +416,6 @@ describe('normalizeNodePool', () => {
       ...nodePoolWithoutAutoscaling,
       instance_type: nodePoolBase.aws_node_pool.instance_type,
     });
-  });
-});
-
-describe('normalizeMachinePool', () => {
-  const nodePoolBase = {
-    kind: 'NodePool',
-    href: '/api/clusters_mgmt/v1/clusters/21gitfhopbgmmfhlu65v93n4g4n3djde/node_pools/workers',
-    id: 'workers',
-    auto_repair: true,
-    aws_node_pool: {
-      instance_type: 'm5.xlarge',
-      instance_profile: 'staging-21gitfhopbgmmfhlu65v93n4g4n3djde-jknhystj27-worker',
-      tags: {
-        'api.openshift.com/environment': 'staging',
-      },
-    },
-    availability_zone: 'us-east-1b',
-    subnet: 'subnet-049f90721559000de',
-    status: {
-      current_replicas: 2,
-    },
-  };
-
-  it('normalizeMachinePool should keep same structure ', () => {
-    const nodePoolWithoutAutoscaling = {
-      ...nodePoolBase,
-      replicas: 2,
-    };
-    expect(normalizeMachinePool(nodePoolWithoutAutoscaling)).toEqual(nodePoolWithoutAutoscaling);
-  });
-
-  it('Changes plural (min|max)_replicas to singular (min|max)_replica', () => {
-    const nodePoolwithAutoScaling = {
-      ...nodePoolBase,
-      autoscaling: {
-        min_replica: 2,
-        max_replica: 5,
-      },
-    };
-
-    const normalizedNodePool = {
-      ...nodePoolBase,
-      autoscaling: {
-        min_replicas: 2,
-        max_replicas: 5,
-      },
-    };
-    expect(normalizeMachinePool(normalizedNodePool)).toEqual(nodePoolwithAutoScaling);
   });
 });
 
@@ -697,5 +638,223 @@ describe('isEnforcedDefaultMachinePool', () => {
     ];
     expect(isEnforcedDefaultMachinePool('bar', machinePools, machineTypes, cluster)).toBeTruthy();
     expect(isEnforcedDefaultMachinePool('foo', machinePools, machineTypes, cluster)).toBeFalsy();
+  });
+
+  describe('getSubnetIds', () => {
+    it.each([
+      ['empty object', {}, []],
+      ['with subnet', machinePoolWithSubnet, machinePoolWithSubnet.subnet],
+      ['with subnets without subnet', machinePoolWithSubnets, machinePoolWithSubnets.subnets],
+      [
+        'with both subnet and subnets',
+        machinePoolWithBothSubnetAndSubnets,
+        machinePoolWithBothSubnetAndSubnets.subnet,
+      ],
+    ])('%p', (title, machinePoolOrNodePool, expected) =>
+      expect(getSubnetIds(machinePoolOrNodePool)).toStrictEqual(expected),
+    );
+  });
+
+  describe('hasSubnets', () => {
+    it.each([
+      ['empty object', {}, false],
+      ['with subnet', machinePoolWithSubnet, true],
+      ['with subnets without subnet', machinePoolWithSubnets, true],
+      ['with both subnet and subnets', machinePoolWithBothSubnetAndSubnets, true],
+    ])('%p', (title, machinePoolOrNodePool, expected) =>
+      expect(hasSubnets(machinePoolOrNodePool)).toBe(expected),
+    );
+  });
+
+  describe('getMinNodesRequired', () => {
+    it.each([
+      ['all false', false, false, false, 0],
+      ['isDefaultMachinePool false', false, true, false, 0],
+      ['isDefaultMachinePool false', false, true, true, 0],
+      ['isDefaultMachinePool false', false, false, true, 0],
+      ['isDefaultMachinePool true, the rest false', true, false, false, 4],
+      ['isDefaultMachinePool and isMultiAz true, isByoc false', true, false, true, 9],
+      ['isDefaultMachinePool and isByoc true, isMultiAz false', true, true, false, 2],
+      ['all true', true, true, true, 3],
+    ])('%p', (title, isDefaultMachinePool, isByoc, isMultiAz, expected) =>
+      expect(getMinNodesRequired(isDefaultMachinePool, isByoc, isMultiAz)).toBe(expected),
+    );
+  });
+
+  describe('getClusterMinNodes', () => {
+    it.each([
+      ['empty cluster, the rest undefined', {}, undefined, undefined, undefined, undefined, 0],
+      [
+        'empty cluster, it is NOT hypershift the rest undefined',
+        {},
+        undefined,
+        undefined,
+        undefined,
+        false,
+        0,
+      ],
+      [
+        'empty cluster, it is hypershift the rest undefined',
+        {},
+        undefined,
+        undefined,
+        undefined,
+        true,
+        2,
+      ],
+    ])(
+      '%p',
+      (
+        title,
+        cluster,
+        machineTypesResponse,
+        machinePool,
+        machinePools,
+        isHypershiftClusterResult,
+        expected,
+      ) => {
+        isHypershiftClusterMock.mockReturnValue(isHypershiftClusterResult);
+        expect(
+          getClusterMinNodes({ cluster, machineTypesResponse, machinePool, machinePools }),
+        ).toBe(expected);
+      },
+    );
+  });
+
+  describe('getMinNodesRequiredHypershift', () => {
+    it.each([
+      ['numMachinePools undefined', undefined, 1],
+      ['numMachinePools 1', 1, 2],
+      ['numMachinePools any number', 100, 100],
+      ['numMachinePools NaN', NaN, 0],
+    ])('%p', (title, numMachinePools, expected) =>
+      expect(getMinNodesRequiredHypershift(numMachinePools)).toBe(expected),
+    );
+  });
+
+  describe('getNodeIncrementHypershift', () => {
+    it.each([
+      ['numMachinePools undefined', undefined, 1],
+      ['numMachinePools any number', 100, 100],
+      ['numMachinePools NaN', NaN, NaN],
+    ])('%p', (title, numMachinePools, expected) =>
+      expect(getNodeIncrementHypershift(numMachinePools)).toBe(expected),
+    );
+  });
+
+  describe('hasExplicitAutoscalingMachinePool', () => {
+    it.each([
+      ['both undefined', undefined, undefined, false],
+      ['machine pools empty and excludeId undefined', [], undefined, false],
+      [
+        'machine pools without autoscaling and matching excludeId',
+        machinePoolsWithoutAutoscaling,
+        1,
+        false,
+      ],
+      [
+        'machine pools with autoscaling and matching excludeId',
+        machinePoolsWithAutoscaling,
+        1,
+        true,
+      ],
+      [
+        'machine pools with autoscaling and not matching excludeId',
+        machinePoolsWithAutoscaling,
+        100,
+        true,
+      ],
+      [
+        'machine pools with autoscaling and excludeId undefined',
+        machinePoolsWithAutoscaling,
+        undefined,
+        true,
+      ],
+    ])('%p', (title, machinePools, excludeId, expected) =>
+      expect(hasExplicitAutoscalingMachinePool(machinePools, excludeId)).toBe(expected),
+    );
+  });
+
+  describe('hasDefaultOrExplicitAutoscalingMachinePool', () => {
+    it.each([
+      ['all undefined', undefined, undefined, undefined, false],
+      [
+        'cluster with autoscale_compute true and machine pools and excludeId undefined',
+        { nodes: { autoscale_compute: true } },
+        undefined,
+        undefined,
+        true,
+      ],
+      [
+        'cluster with autoscale_compute false and machine pools and excludeId undefined',
+        { nodes: { autoscale_compute: false } },
+        undefined,
+        undefined,
+        false,
+      ],
+      [
+        'undefined cluster and machine pools with autoscaling and excludeId undefined',
+        undefined,
+        machinePoolsWithAutoscaling,
+        undefined,
+        true,
+      ],
+    ])('%p', (title, cluster, machinePools, excludeId, expected) =>
+      expect(hasDefaultOrExplicitAutoscalingMachinePool(cluster, machinePools, excludeId)).toBe(
+        expected,
+      ),
+    );
+  });
+
+  describe('canUseSpotInstances', () => {
+    it.each([
+      ['empty cluster then false', {}, false, undefined, false],
+      [
+        'aws cloud provider, not hypershift and ROSA then true',
+        { cloud_provider: { id: 'aws' } },
+        false,
+        normalizedProducts.ROSA,
+        true,
+      ],
+      [
+        'aws cloud provider, not hypershift and OSD ccs undefined then undefined',
+        { cloud_provider: { id: 'aws' } },
+        false,
+        normalizedProducts.OSD,
+        undefined,
+      ],
+      [
+        'aws cloud provider, not hypershift and OSD ccs enabled then undefined',
+        { cloud_provider: { id: 'aws' }, ccs: { enabled: true } },
+        false,
+        normalizedProducts.OSD,
+        true,
+      ],
+      [
+        'aws cloud provider, not hypershift and OSD ccs not enabled then undefined',
+        { cloud_provider: { id: 'aws' }, ccs: { enabled: false } },
+        false,
+        normalizedProducts.OSD,
+        false,
+      ],
+      [
+        'aws cloud provider, hypershift and ROSA then false',
+        { cloud_provider: { id: 'aws' } },
+        true,
+        normalizedProducts.ROSA,
+        false,
+      ],
+      [
+        'gcp cloud provider, not hypershift and ROSA then false',
+        { cloud_provider: { id: 'gcp' } },
+        false,
+        normalizedProducts.ROSA,
+        false,
+      ],
+    ])('%p', (title, cluster, isHypershiftClusterResult, normalizeProductIDResult, expected) => {
+      normalizeProductIDMock.mockReturnValue(normalizeProductIDResult);
+      isHypershiftClusterMock.mockReturnValue(isHypershiftClusterResult);
+      expect(canUseSpotInstances(cluster)).toBe(expected);
+    });
   });
 });

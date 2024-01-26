@@ -5,7 +5,7 @@ import { clusterService } from '../../../../../services';
 const getAddOns = (clusterID) => (dispatch) =>
   dispatch({
     type: AddOnsConstants.GET_ADDONS,
-    payload: clusterService.getAddOns(clusterID).then((response) => {
+    payload: clusterService.getEnabledAddOns(clusterID).then((response) => {
       const items = get(response, 'data.items', []);
       return {
         items,

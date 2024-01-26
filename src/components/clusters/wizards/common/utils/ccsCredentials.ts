@@ -7,7 +7,7 @@ import {
   getAWSCloudProviderRegions,
   getGCPCloudProviderVPCs,
   VALIDATE_CLOUD_PROVIDER_CREDENTIALS,
-} from '~/components/clusters/CreateOSDPage/CreateOSDWizard/ccsInquiriesActions';
+} from '~/redux/actions/ccsInquiriesActions';
 import { CloudProviderType } from '~/components/clusters/wizards/common/constants';
 import { FieldId } from '~/components/clusters/wizards/osd/constants';
 import { AWSCredentials } from '~/types/types';

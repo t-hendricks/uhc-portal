@@ -44,6 +44,7 @@ const EditNodeCountSection = ({
     () =>
       getNodeOptions({
         cluster,
+        machinePool,
         machinePools,
         machineTypeId: values.instanceType,
         machineTypes,
@@ -53,12 +54,12 @@ const EditNodeCountSection = ({
       }),
     [
       cluster,
+      machinePool,
       machinePools,
       values.instanceType,
       machineTypes,
       organization.quotaList,
       minNodesRequired,
-      machinePool,
     ],
   );
 
@@ -75,10 +76,15 @@ const EditNodeCountSection = ({
           {values.autoscaling ? (
             <Grid hasGutter>
               <GridItem span={5}>
-                <AutoscaleMinReplicasField minNodes={minNodesRequired} cluster={cluster} />
+                <AutoscaleMinReplicasField
+                  minNodes={minNodesRequired}
+                  cluster={cluster}
+                  mpAvailZones={machinePool?.availability_zones?.length}
+                />
               </GridItem>
               <GridItem span={5}>
                 <AutoscaleMaxReplicasField
+                  mpAvailZones={machinePool?.availability_zones?.length}
                   minNodes={minNodesRequired}
                   cluster={cluster}
                   options={options}
@@ -87,6 +93,7 @@ const EditNodeCountSection = ({
             </Grid>
           ) : (
             <NodeCountField
+              mpAvailZones={machinePool?.availability_zones?.length}
               minNodesRequired={minNodesRequired}
               cluster={cluster}
               options={options}

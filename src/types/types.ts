@@ -22,7 +22,7 @@ export type ViewOptions = {
   sorting: {
     sortField: string;
     isAscending: boolean;
-    sortIndex?: number;
+    sortIndex: number;
   };
   flags: {
     [flag: string]: any;

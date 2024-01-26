@@ -69,7 +69,7 @@ const ValidationIconButton = ({ touched, isValid, hasFailures, isValidating, onC
     <Button
       variant="control"
       aria-label={label}
-      tabindex="-1"
+      tabIndex="-1"
       className={`${className} redux-rich-input-field-button`}
       onClick={onClick}
     >
@@ -288,7 +288,7 @@ const ReduxRichInputField = (props) => {
               validated={isValid ? 'default' : 'error'}
               isDisabled={disabled}
               type={type}
-              autocomplete="off"
+              autoComplete="off"
               aria-invalid={!isValid}
               onBlur={(e) => {
                 setIsFocused(false);

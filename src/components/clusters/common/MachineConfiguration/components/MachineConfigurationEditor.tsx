@@ -1,5 +1,5 @@
 /* eslint-disable camelcase */
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { FormEvent, useEffect, useMemo, useState } from 'react';
 import axios, { AxiosError } from 'axios';
 import { KubeletConfig } from '~/types/clusters_mgmt.v1';
 import { ActionGroup, Button, Form, Stack, StackItem } from '@patternfly/react-core';
@@ -64,6 +64,13 @@ const MachineConfigurationEditor: React.FC<MachineConfigurationEditorProps> = (p
     onSave(editingConfig);
   };
 
+  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    if (!isSaveDisabled) {
+      handleSave();
+    }
+  };
+
   const { isValid, isPIDsLimitUnsafe, validationMessage } = usePIDsLimitValidation(
     editingConfig?.pod_pids_limit,
     PIDsMinValue,
@@ -95,7 +102,7 @@ const MachineConfigurationEditor: React.FC<MachineConfigurationEditorProps> = (p
         </StackItem>
       )}
       <StackItem>
-        <Form>
+        <Form onSubmit={handleSubmit}>
           {!isReady ? (
             <MachineConfigurationSkeleton />
           ) : (

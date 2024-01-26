@@ -5,7 +5,7 @@ import {
   HOST_PREFIX_DEFAULT,
   MACHINE_CIDR_DEFAULT,
   SERVICE_CIDR_DEFAULT,
-} from '~/components/clusters/CreateOSDPage/CreateOSDForm/FormSections/NetworkingSection/networkingConstants';
+} from '~/components/clusters/common/networkingConstants';
 import {
   FieldId as CommonFieldId,
   CloudProviderType,
@@ -14,7 +14,7 @@ import {
 } from '~/components/clusters/wizards/common/constants';
 import { BreadcrumbPath } from '~/components/common/Breadcrumbs';
 import { getDefaultSecurityGroupsSettings } from '~/common/securityGroupsHelpers';
-import { getDefaultClusterAutoScaling } from '~/components/clusters/CreateOSDPage/clusterAutoScalingValues';
+import { getDefaultClusterAutoScaling } from '~/components/clusters/common/clusterAutoScalingValues';
 import { ApplicationIngressType, ClusterPrivacyType } from './Networking/constants';
 
 export enum OsdFieldId {
@@ -155,3 +155,4 @@ export const clusterNameHint =
 export const documentTitle =
   'Create an OpenShift Dedicated cluster | Red Hat OpenShift Cluster Manager';
 export const ariaLabel = 'Create OpenShift Dedicated cluster wizard';
+export const MIN_SECURE_BOOT_VERSION = '4.13.0';

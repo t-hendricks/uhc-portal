@@ -1515,7 +1515,10 @@ const validateHTPasswdPasswordConfirm = (
   return undefined;
 };
 
-const shouldSkipLabelKeyValidation = (allValues: Record<string, unknown>): boolean => {
+const shouldSkipLabelKeyValidation = (
+  allValues: Record<string, unknown>,
+  name?: string,
+): boolean => {
   const nodeLabels = (allValues?.node_labels as {
     key: string;
     value: string;
@@ -1523,7 +1526,15 @@ const shouldSkipLabelKeyValidation = (allValues: Record<string, unknown>): boole
   // filling the first and only label key/value pair is optional -it serves as a placeholder.
   // if empty, it won't be taken into account in the request payload.
   const [{ key: firstLabelKey, value: firstLabelValue }] = nodeLabels;
-  return nodeLabels.length === 1 && !firstLabelKey && !firstLabelValue;
+
+  // for deleted node labels, we need to skip validation by checking that the value does not exist in node_labels
+  // keyIndex gets the index of the label from the name prop. example: '2' from 'node_labels[2].key'
+  const keyIndex = name?.match(/\[([^[\]]*)\]/) ?? [];
+
+  return (
+    (nodeLabels.length === 1 && !firstLabelKey && !firstLabelValue) ||
+    !Object.keys(nodeLabels).includes(keyIndex[1])
+  );
 };
 
 const validateLabelKey = (
@@ -1532,7 +1543,7 @@ const validateLabelKey = (
   props?: any,
   name?: any,
 ): string | undefined => {
-  if (shouldSkipLabelKeyValidation(allValues)) {
+  if (shouldSkipLabelKeyValidation(allValues, name)) {
     return undefined;
   }
 

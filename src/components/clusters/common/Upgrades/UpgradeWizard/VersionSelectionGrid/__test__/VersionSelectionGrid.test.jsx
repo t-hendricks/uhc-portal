@@ -1,13 +1,11 @@
 import React from 'react';
-import { shallow } from 'enzyme';
-import { Divider } from '@patternfly/react-core';
+import { render, screen, checkAccessibility, within } from '~/testUtils';
 import VersionSelectionGrid from '../VersionSelectionGrid';
-import VersionCard from '../VersionCard';
 
 describe('<VersionSelectionGrid />', () => {
-  let wrapper;
-  let getVersion;
-  let onSelect;
+  const getVersion = jest.fn();
+  const onSelect = jest.fn();
+  const getUnMetClusterAcknowledgements = jest.fn().mockReturnValue([]);
 
   const cases = [
     {
@@ -46,77 +44,119 @@ describe('<VersionSelectionGrid />', () => {
     },
   ];
 
-  beforeEach(() => {
-    getVersion = jest.fn();
-    onSelect = jest.fn();
-    wrapper = shallow(
-      <VersionSelectionGrid
-        clusterVersion="4.5.20"
-        clusterChannel="stable"
-        getVersion={getVersion}
-        availableUpgrades={['4.5.21']}
-        onSelect={onSelect}
-        selected={undefined}
-        getUnMetClusterAcknowledgements={() => []}
-      />,
-    );
+  const defaultProps = {
+    clusterVersion: '4.5.20',
+    clusterChannel: 'stable',
+    getVersion,
+    availableUpgrades: ['4.5.21'],
+    onSelect,
+    selected: undefined,
+    getUnMetClusterAcknowledgements,
+  };
+
+  const getCards = (container) => container.querySelectorAll('.pf-v5-c-card');
+
+  afterEach(() => {
+    jest.clearAllMocks();
   });
 
-  it('should render correctly', () => {
-    expect(wrapper).toMatchSnapshot();
+  it('is accessible', async () => {
+    const { container } = render(<VersionSelectionGrid {...defaultProps} />);
+
+    await checkAccessibility(container);
   });
 
   it('should have recommended card for the latest version only and nothing more', () => {
-    wrapper.setProps({
+    const newProps = {
+      ...defaultProps,
       clusterVersion: cases[0].version,
       clusterChannel: cases[0].channelGroup,
       availableUpgrades: cases[0].availableUpgrades,
-    });
-    const versionCards = wrapper.find(VersionCard);
-    expect(versionCards.length).toEqual(1);
-    expect(versionCards.at(0).props().isRecommended).toEqual(true);
-    expect(versionCards.at(0).render().text()).toContain(
-      'Start taking advantage of the new features',
-    );
-    expect(wrapper.find(Divider).length).toEqual(0);
+    };
+    const { container } = render(<VersionSelectionGrid {...newProps} />);
+
+    const cards = getCards(container);
+    const firstCard = cards[0];
+    expect(cards).toHaveLength(1);
+    expect(within(firstCard).getByText('Recommended', { exact: false })).toBeInTheDocument();
+
+    expect(
+      within(firstCard).getByText('Start taking advantage of the new features', {
+        exact: false,
+      }),
+    ).toBeInTheDocument();
+
+    expect(screen.queryByRole('separator')).not.toBeInTheDocument();
   });
 
   it('should have recommended card for the latest version in minor and others unrecommended', () => {
-    wrapper.setProps({
+    const newProps = {
+      ...defaultProps,
       clusterVersion: cases[1].version,
       clusterChannel: cases[1].channelGroup,
       availableUpgrades: cases[1].availableUpgrades,
-    });
-    const versionCards = wrapper.find(VersionCard);
-    expect(versionCards.length).toEqual(4);
-    expect(versionCards.filter({ isRecommended: true }).length).toEqual(1);
-    expect(versionCards.filter({ isRecommended: true }).at(0).render().text()).toContain(
-      'The latest on your current minor version.',
-    );
-    expect(wrapper.find(Divider).length).toEqual(1);
+    };
+    const { container } = render(<VersionSelectionGrid {...newProps} />);
+
+    const cards = getCards(container);
+    expect(cards).toHaveLength(4);
+
+    expect(screen.getByText('Recommended', { exact: false })).toBeInTheDocument();
+
+    expect(
+      screen.getByText('The latest on your current minor version', {
+        exact: false,
+      }),
+    ).toBeInTheDocument();
+
+    expect(screen.getByRole('separator')).toBeInTheDocument();
   });
 
   it('should have both recommended cards and nothing more', () => {
-    wrapper.setProps({
+    const newProps = {
+      ...defaultProps,
       clusterVersion: cases[2].version,
       clusterChannel: cases[2].channelGroup,
       availableUpgrades: cases[2].availableUpgrades,
-    });
-    const versionCards = wrapper.find(VersionCard);
-    expect(versionCards.length).toEqual(9);
-    expect(versionCards.filter({ isRecommended: true }).length).toEqual(2);
-    expect(wrapper.find(Divider).length).toEqual(1);
+    };
+
+    const { container } = render(<VersionSelectionGrid {...newProps} />);
+
+    const cards = getCards(container);
+    expect(cards).toHaveLength(9);
+
+    expect(screen.getAllByText('Recommended', { exact: false })).toHaveLength(2);
+
+    expect(
+      screen.getByText('The latest on your current minor version', {
+        exact: false,
+      }),
+    ).toBeInTheDocument();
+
+    expect(screen.getByRole('separator')).toBeInTheDocument();
   });
 
   it('should have both recommended cards and others unrecommended', () => {
-    wrapper.setProps({
+    const newProps = {
+      ...defaultProps,
       clusterVersion: cases[3].version,
       clusterChannel: cases[3].channelGroup,
       availableUpgrades: cases[3].availableUpgrades,
-    });
-    const versionCards = wrapper.find(VersionCard);
-    expect(versionCards.length).toEqual(2);
-    expect(versionCards.filter({ isRecommended: true }).length).toEqual(2);
-    expect(wrapper.find(Divider).length).toEqual(0);
+    };
+
+    const { container } = render(<VersionSelectionGrid {...newProps} />);
+
+    const cards = getCards(container);
+    expect(cards).toHaveLength(2);
+
+    expect(screen.getAllByText('Recommended', { exact: false })).toHaveLength(2);
+
+    expect(
+      screen.getByText('The latest on your current minor version', {
+        exact: false,
+      }),
+    ).toBeInTheDocument();
+
+    expect(screen.queryByRole('separator')).not.toBeInTheDocument();
   });
 });

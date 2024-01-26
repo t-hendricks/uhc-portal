@@ -7,7 +7,7 @@ import '@testing-library/jest-dom';
 import { MemoryRouter } from 'react-router';
 import { toHaveNoViolations, axe } from 'jest-axe';
 import useChrome from '@redhat-cloud-services/frontend-components/useChrome';
-
+import * as featureGates from '~/hooks/useFeatureGate';
 import { createBrowserHistory } from 'history';
 
 import { GlobalState, store as globalStore } from './redux/store';
@@ -145,3 +145,13 @@ export const mockUseChrome = () => {
 export const TestRouter = ({ children }: { children: React.ReactNode }) => (
   <MemoryRouter>{children}</MemoryRouter>
 );
+
+// Mocking Feature Gates
+export type MockedGate = [string, boolean];
+
+export const mockUseFeatureGate = (mockedGates: MockedGate[]) => {
+  jest.spyOn(featureGates, 'useFeatureGate').mockImplementation((feature) => {
+    const gateToMock = mockedGates.find((gate) => gate[0] === feature);
+    return gateToMock ? gateToMock[1] : false;
+  });
+};

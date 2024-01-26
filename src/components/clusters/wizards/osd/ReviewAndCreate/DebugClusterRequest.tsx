@@ -6,7 +6,7 @@ import { Banner, ExpandableSection, GridItem } from '@patternfly/react-core';
 import {
   createClusterRequest,
   upgradeScheduleRequest,
-} from '~/components/clusters/CreateOSDPage/submitOSDRequest';
+} from '~/components/clusters/wizards/common/submitOSDRequest';
 
 interface DebugClusterRequestProps {
   cloudProvider: string;

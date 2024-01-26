@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, screen /* checkAccessibility */ } from '~/testUtils';
+import { render, screen, checkAccessibility } from '~/testUtils';
 import ResourceUsage from './ResourceUsage';
 import { metricsStatusMessages } from './ResourceUsage.consts';
 
@@ -35,11 +35,15 @@ describe('<ResourceUsage />', () => {
     metricsStatusMessage: metricsStatusMessages.default,
   };
 
-  it('should render no type', async () => {
-    render(<ResourceUsage {...defaultProps} />);
+  it.skip('is accessible', async () => {
+    const { container } = render(<ResourceUsage {...defaultProps} />);
 
     // This fails due to numerous accessibility issues
-    // await checkAccessibility(container);
+    await checkAccessibility(container);
+  });
+
+  it('should render no type', () => {
+    render(<ResourceUsage {...defaultProps} />);
 
     // Verify that something is rendering
     expect(screen.getByText('24.97%')).toBeInTheDocument();
