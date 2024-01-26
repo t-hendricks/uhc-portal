@@ -1,5 +1,3 @@
-import React from 'react';
-
 /**
  * This function is used by PF tables to determine which dropdown items are displayed
  * on each row of the table. It returns a list of objects, containing props for DropdownItem
@@ -8,28 +6,31 @@ import React from 'react';
  */
 function actionResolver(subscription) {
   const baseProps = {
-    component: 'button',
-  };
-  const consoleDisabledMessage = <span>Admin console is not yet available for this cluster</span>;
-  const getKey = (item) => `${subscription.id}.menu.${item}`;
-  const consoleURL = subscription.console_url;
-  const adminConsoleEnabled = {
     title: 'Open console',
-    to: consoleURL,
-    isExternalLink: true,
-    rel: 'noopener noreferrer',
-    key: getKey('adminconsole'),
+    key: `${subscription.id}.menu.adminconsole`,
   };
-  const adminConsoleDisabled = {
-    ...baseProps,
-    title: 'Open console',
-    isDisabled: true,
-    tooltip: consoleDisabledMessage,
-    key: getKey('adminconsole'),
-  };
-  const consoleItemProps = consoleURL ? adminConsoleEnabled : adminConsoleDisabled;
 
-  return [consoleItemProps];
+  const consoleURL = subscription.console_url;
+
+  let consoleActionProps;
+  if (consoleURL) {
+    consoleActionProps = {
+      ...baseProps,
+      to: consoleURL,
+      isExternalLink: true,
+      rel: 'noopener noreferrer',
+    };
+  } else {
+    consoleActionProps = {
+      ...baseProps,
+      component: 'button',
+      isAriaDisabled: true,
+      tooltipProps: {
+        content: 'Admin console is not yet available for this cluster',
+      },
+    };
+  }
+  return [consoleActionProps];
 }
 
 export { actionResolver };
