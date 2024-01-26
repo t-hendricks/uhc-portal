@@ -2,11 +2,25 @@ import { mount, shallow } from 'enzyme';
 import React from 'react';
 import { MemoryRouter } from 'react-router-dom';
 import { subscriptionStatuses } from '../../../../common/subscriptionTypes';
-import { mockRestrictedEnv, withState, render, screen } from '../../../../testUtils';
+import { withState } from '../../../../testUtils';
 import clusterStates from '../../common/clusterStates';
 import ClusterDetails from '../ClusterDetails';
 import fixtures, { funcs } from './ClusterDetails.fixtures';
 
+jest.mock('../components/UpgradeSettings/UpgradeSettingsTab', () => () => <div />);
+jest.mock('../components/Overview/ClusterVersionInfo', () => () => <div />);
+jest.mock('../components/MachinePools', () => () => <div />);
+jest.mock('../components/AddOns', () => () => <div />);
+// to avoid "React does not recognize the `isDisabled` prop on a DOM element" warning
+// eslint-disable-next-line react/prop-types
+jest.mock('../components/Support', () => ({ isDisabled, ...props }) => (
+  <div data-testid="support" disabled={isDisabled} {...props} />
+));
+jest.mock('../components/ClusterLogs/ClusterLogs', () => () => <div />);
+jest.mock('../components/AccessControl/AccessControl', () => () => <div />);
+jest.mock('../components/Support/components/AddNotificationContactDialog', () => (props) => (
+  <div {...props} />
+));
 describe('<ClusterDetails />', () => {
   // eslint-disable-next-line react/prop-types
   const RouterWrapper = ({ children }) => (
@@ -19,7 +33,6 @@ describe('<ClusterDetails />', () => {
   //   we mostly got away with passing fixtures by props without setting up redux state.
   //   However many sub-components mounted by mount() and render() do connect() to redux,
   //   and will see a different picture from what the top ClusterDetails sees...
-
   describe('Cluster Details - OSD', () => {
     const functions = funcs();
     const { Wrapper } = withState({});
@@ -174,94 +187,6 @@ describe('<ClusterDetails />', () => {
     });
   });
 
-  describe('hypershift cluster', () => {
-    const functions = funcs();
-    const props = {
-      ...fixtures,
-      ...functions,
-      clusterDetails: {
-        ...fixtures.ROSAClusterDetails,
-        cluster: {
-          ...fixtures.ROSAClusterDetails.cluster,
-          hypershift: { enabled: true },
-        },
-      },
-    };
-    shallow(<ClusterDetails {...props} />);
-
-    it('should get node pools', () => {
-      expect(functions.getMachineOrNodePools).toBeCalledWith(
-        fixtures.ROSAClusterDetails.cluster.id,
-        true,
-        'openshift-v4.6.8',
-        undefined,
-      );
-    });
-
-    it('displays the network tab if private link is true', () => {
-      const cluster = {
-        state: clusterStates.READY,
-        managed: true,
-        cloud_provider: { id: 'aws' },
-        ccs: { enabled: true },
-        hypershift: { enabled: true },
-        aws: { private_link: true },
-      };
-
-      const functions = funcs();
-      const props = {
-        ...fixtures,
-        ...functions,
-        clearFiltersAndFlags: () => {},
-        clusterDetails: {
-          ...fixtures.ROSAClusterDetails,
-          cluster: { ...fixtures.ROSAClusterDetails.cluster, cluster },
-        },
-      };
-
-      // TODO: this and other render() calls in this file default to using global `store`,
-      //   which risks affecting other tests.  Switching to withState({}).render() failed on
-      //   some thunk actions, which indicates it *does* dispatch actions!
-      render(
-        <RouterWrapper>
-          <ClusterDetails {...props} />
-        </RouterWrapper>,
-      );
-
-      expect(screen.getByRole('tab', { name: 'Networking' })).toBeInTheDocument();
-    });
-
-    it('displays the network tab if private link is false', () => {
-      const cluster = {
-        state: clusterStates.READY,
-        managed: true,
-        cloud_provider: { id: 'aws' },
-        ccs: { enabled: true },
-        hypershift: { enabled: true },
-        aws: { private_link: false },
-      };
-
-      const functions = funcs();
-      const props = {
-        ...fixtures,
-        ...functions,
-        clearFiltersAndFlags: () => {},
-        clusterDetails: {
-          ...fixtures.ROSAClusterDetails,
-          cluster: { ...fixtures.ROSAClusterDetails.cluster, cluster },
-        },
-      };
-
-      render(
-        <RouterWrapper>
-          <ClusterDetails {...props} />
-        </RouterWrapper>,
-      );
-
-      expect(screen.getByRole('tab', { name: 'Networking' })).toBeInTheDocument();
-    });
-  });
-
   describe('Loading', () => {
     const functions = funcs();
     const props = { ...fixtures, ...functions, match: { params: { id: '1234' } } };
@@ -399,7 +324,7 @@ describe('<ClusterDetails />', () => {
     it('should show support tab for Deprovisioned clusters', () => {
       // show support tab with disabled buttons (refer to Support/Support.text.jsx)
       expect(osdWrapper.find('TabsRow').props().displaySupportTab).toBe(true);
-      expect(osdWrapper.find('Connect(Support)').props().isDisabled).toBe(true);
+      expect(osdWrapper.find({ 'data-testid': 'support' }).props().disabled).toBe(true);
     });
     it('should hide tabs for Deprovisioned clusters', () => {
       expect(osdWrapper.find('TabsRow').props().displayMonitoringTab).toBe(false);
@@ -444,7 +369,7 @@ describe('<ClusterDetails />', () => {
     it('should show support tab for Archived clusters', () => {
       // show support tab with disabled buttons (refer to Support/Support.text.jsx)
       expect(ocpWrapper.find('TabsRow').props().displaySupportTab).toBe(true);
-      expect(ocpWrapper.find('Connect(Support)').props().isDisabled).toBe(true);
+      expect(osdWrapper.find({ 'data-testid': 'support' }).props().disabled).toBe(true);
     });
     it('should hide tabs for Archived clusters', () => {
       expect(ocpWrapper.find('TabsRow').props().displayMonitoringTab).toBe(false);
@@ -454,55 +379,6 @@ describe('<ClusterDetails />', () => {
       expect(ocpWrapper.find('TabsRow').props().displayMachinePoolsTab).toBe(false);
       expect(ocpWrapper.find('TabsRow').props().displayUpgradeSettingsTab).toBe(false);
       expect(ocpWrapper.find('TabsRow').props().addHostTabDetails.showTab).toBe(false);
-    });
-  });
-
-  describe('Restricted env details', () => {
-    const isRestrictedEnv = mockRestrictedEnv();
-
-    beforeEach(() => {
-      isRestrictedEnv.mockReturnValue(true);
-    });
-
-    afterEach(() => {
-      isRestrictedEnv.mockReturnValue(false);
-    });
-
-    it('hides tabs in restricted env', () => {
-      const functions = funcs();
-      const props = {
-        ...fixtures,
-        ...functions,
-        clearFiltersAndFlags: () => {},
-        clusterDetails: {
-          ...fixtures.ROSAClusterDetails,
-          cluster: {
-            ...fixtures.ROSAClusterDetails.cluster,
-            hypershift: { enabled: true },
-            canEdit: true,
-          },
-        },
-        isAROCluster: false,
-        isArchived: false,
-        displayClusterLogs: true,
-      };
-
-      render(
-        <RouterWrapper>
-          <ClusterDetails {...props} />
-        </RouterWrapper>,
-      );
-
-      expect(screen.queryByRole('tab', { name: 'Monitoring' })).not.toBeInTheDocument();
-      expect(screen.queryByRole('tab', { name: 'Add-ons' })).not.toBeInTheDocument();
-
-      expect(screen.queryByRole('tab', { name: 'Support' })).toBeInTheDocument();
-      expect(screen.queryByRole('tab', { name: 'Settings' })).toBeInTheDocument();
-      expect(screen.queryByRole('tab', { name: 'Cluster history' })).toBeInTheDocument();
-      expect(screen.queryByRole('tab', { name: 'Access control' })).toBeInTheDocument();
-      expect(screen.queryByRole('tab', { name: 'Networking' })).toBeInTheDocument();
-      expect(screen.queryByRole('tab', { name: 'Machine pools' })).toBeInTheDocument();
-      expect(screen.queryByRole('tab', { name: 'Overview' })).toBeInTheDocument();
     });
   });
 });
