@@ -44,6 +44,7 @@ const funcs = () => ({
   getUserAccess: jest.fn(),
   fetchUpgradeGates: jest.fn(),
   clearListVpcs: jest.fn(),
+  clearFiltersAndFlags: jest.fn(),
 });
 
 const clusterDetails = {
@@ -1061,11 +1062,13 @@ const fixtures = {
   AIClusterDetails,
   AROClusterDetails,
   cloudProviders,
+  gotRouters: false,
   clusterIdentityProviders,
   organization,
   clusterRouters,
   clusterLogsViewOptions: {},
   addOns: {},
+  hasNetworkOndemand: false,
   supportCases: {},
   notificationContacts: {},
   initTabOpen: '',
