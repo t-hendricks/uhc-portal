@@ -1,6 +1,7 @@
 import React from 'react';
 import { mount } from 'enzyme';
 import { MemoryRouter } from 'react-router-dom';
+import { CompatRouter } from 'react-router-dom-v5-compat';
 import { Provider } from 'react-redux';
 import * as useChromeHook from '@redhat-cloud-services/frontend-components/useChrome';
 import { mockRestrictedEnv } from '~/testUtils';
@@ -82,7 +83,9 @@ describe('Router', () => {
         const wrapper = mount(
           <Provider store={store}>
             <MemoryRouter keyLength={0} initialEntries={[{ pathname: path, key: 'testKey' }]}>
-              <Router />
+              <CompatRouter>
+                <Router />
+              </CompatRouter>
             </MemoryRouter>
           </Provider>,
         );

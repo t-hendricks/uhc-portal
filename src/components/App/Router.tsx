@@ -31,6 +31,7 @@ import {
   useLocation,
   withRouter,
 } from 'react-router-dom';
+import { CompatRoute } from 'react-router-dom-v5-compat';
 import apiRequest from '~/services/apiRequest';
 import { useFeatureGate } from '~/hooks/useFeatureGate';
 import { normalizedProducts } from '../../common/subscriptionTypes';
@@ -192,7 +193,7 @@ const Router: React.FC<RouterProps> = ({ history, planType, clusterId, externalC
             <Redirect from="/token/moa" to="/token/rosa" />
             <Redirect from="/insights" to="/dashboard" />
             <Redirect from="/subscriptions" to="/quota" />
-            <Route path="/downloads" component={DownloadsPage} />
+            <CompatRoute path="/downloads" component={DownloadsPage} />
 
             {/* Each token page has 2 routes with distinct paths, to remember that user wanted
                 to see it during page reload that may be needed for elevated auth. */}
@@ -216,105 +217,147 @@ const Router: React.FC<RouterProps> = ({ history, planType, clusterId, externalC
                 </AppPage>
               )}
             />
-            <Route path="/token/show" render={() => <Tokens show />} />
-            <Route path="/token" render={() => <Tokens show={false} showPath="/token/show" />} />
+            <CompatRoute path="/token/show" component={() => <Tokens show />} />
+            <CompatRoute
+              path="/token"
+              component={() => <Tokens show={false} showPath="/token/show" />}
+            />
 
-            <Route
+            <CompatRoute
               path="/install/alibaba/installer-provisioned"
               component={ConnectedInstallAlibaba}
             />
-            <Route path="/install/arm/installer-provisioned" component={InstallArmBMIPI} />
-            <Route path="/install/arm/user-provisioned" component={InstallArmBMUPI} />
-            <Route path="/install/arm/pre-release" component={ConnectedInstallArmPreRelease} />
-            <Route path="/install/arm" component={InstallArmBareMetal} />
-            <Route path="/install/aws/installer-provisioned" component={ConnectedInstallAWSIPI} />
-            <Route path="/install/aws/user-provisioned" component={ConnectedInstallAWSUPI} />
-            <Route
+            <CompatRoute path="/install/arm/installer-provisioned" component={InstallArmBMIPI} />
+            <CompatRoute path="/install/arm/user-provisioned" component={InstallArmBMUPI} />
+            <CompatRoute
+              path="/install/arm/pre-release"
+              component={ConnectedInstallArmPreRelease}
+            />
+            <CompatRoute path="/install/arm" component={InstallArmBareMetal} />
+            <CompatRoute
+              path="/install/aws/installer-provisioned"
+              component={ConnectedInstallAWSIPI}
+            />
+            <CompatRoute path="/install/aws/user-provisioned" component={ConnectedInstallAWSUPI} />
+            <CompatRoute
               path="/install/aws/arm/installer-provisioned"
               component={ConnectedInstallArmAWSIPI}
             />
-            <Route path="/install/aws/arm/user-provisioned" component={ConnectedInstallArmAWSUPI} />
-            <Route path="/install/aws/arm" component={InstallArmAWS} />
-            <Route
+            <CompatRoute
+              path="/install/aws/arm/user-provisioned"
+              component={ConnectedInstallArmAWSUPI}
+            />
+            <CompatRoute path="/install/aws/arm" component={InstallArmAWS} />
+            <CompatRoute
               path="/install/aws/multi/installer-provisioned"
               component={ConnectedInstallMultiAWSIPI}
             />
-            <Route path="/install/aws" component={InstallAWS} />
-            <Route path="/install/gcp/installer-provisioned" component={ConnectedInstallGCPIPI} />
-            <Route path="/install/gcp/user-provisioned" component={ConnectedInstallGCPUPI} />
-            <Route path="/install/gcp" component={InstallGCP} />
-            <Route path="/install/nutanix" exact component={InstallNutanix} />
-            <Route
+            <CompatRoute path="/install/aws" component={InstallAWS} />
+            <CompatRoute
+              path="/install/gcp/installer-provisioned"
+              component={ConnectedInstallGCPIPI}
+            />
+            <CompatRoute path="/install/gcp/user-provisioned" component={ConnectedInstallGCPUPI} />
+            <CompatRoute path="/install/gcp" component={InstallGCP} />
+            <CompatRoute path="/install/nutanix" exact component={InstallNutanix} />
+            <CompatRoute
               path="/install/nutanix/installer-provisioned"
               component={ConnectedInstallNutanixIPI}
             />
-            <Route
+            <CompatRoute
               path="/install/openstack/installer-provisioned"
               component={ConnectedInstallOSPIPI}
             />
-            <Route path="/install/openstack/user-provisioned" component={ConnectedInstallOSPUPI} />
-            <Route path="/install/openstack" component={InstallOSP} />
-            <Route
+            <CompatRoute
+              path="/install/openstack/user-provisioned"
+              component={ConnectedInstallOSPUPI}
+            />
+            <CompatRoute path="/install/openstack" component={InstallOSP} />
+            <CompatRoute
               path="/install/azure/arm/installer-provisioned"
               component={ConnectedInstallArmAzureIPI}
             />
-            <Route
+            <CompatRoute
               path="/install/azure/multi/installer-provisioned"
               component={ConnectedInstallMultiAzureIPI}
             />
-            <Route
+            <CompatRoute
               path="/install/azure/installer-provisioned"
               component={ConnectedInstallAzureIPI}
             />
-            <Route path="/install/azure/user-provisioned" component={ConnectedInstallAzureUPI} />
-            <Route path="/install/azure" exact component={InstallAzure} />
-            <Route
+            <CompatRoute
+              path="/install/azure/user-provisioned"
+              component={ConnectedInstallAzureUPI}
+            />
+            <CompatRoute path="/install/azure" exact component={InstallAzure} />
+            <CompatRoute
               path="/install/azure-stack-hub/installer-provisioned"
               exact
               component={ConnectedInstallASHIPI}
             />
-            <Route
+            <CompatRoute
               path="/install/azure-stack-hub/user-provisioned"
               exact
               component={ConnectedInstallASHUPI}
             />
-            <Route path="/install/azure-stack-hub" exact component={InstallASH} />
-            <Route path="/install/metal/user-provisioned" component={InstallBMUPI} />
-            <Route path="/install/metal/installer-provisioned" component={InstallBMIPI} />
-            <Route path="/install/metal/agent-based" component={InstallBMABI} />
-            <Route path="/install/metal/multi" component={InstallMultiBMUPI} />
-            <Route path="/install/metal" component={GatedMetalInstall} />
-            <Route path="/install/multi/pre-release" component={ConnectedInstallMultiPreRelease} />
-            <Route path="/install/vsphere" exact component={InstallVSphere} />
-            <Route path="/install/vsphere/agent-based" component={ConnectedInstallVSphereABI} />
-            <Route
+            <CompatRoute path="/install/azure-stack-hub" exact component={InstallASH} />
+            <CompatRoute path="/install/metal/user-provisioned" component={InstallBMUPI} />
+            <CompatRoute path="/install/metal/installer-provisioned" component={InstallBMIPI} />
+            <CompatRoute path="/install/metal/agent-based" component={InstallBMABI} />
+            <CompatRoute path="/install/metal/multi" component={InstallMultiBMUPI} />
+            <CompatRoute path="/install/metal" component={GatedMetalInstall} />
+            <CompatRoute
+              path="/install/multi/pre-release"
+              component={ConnectedInstallMultiPreRelease}
+            />
+            <CompatRoute path="/install/vsphere" exact component={InstallVSphere} />
+            <CompatRoute
+              path="/install/vsphere/agent-based"
+              component={ConnectedInstallVSphereABI}
+            />
+            <CompatRoute
               path="/install/vsphere/user-provisioned"
               component={ConnectedInstallVSphereUPI}
             />
-            <Route
+            <CompatRoute
               path="/install/vsphere/installer-provisioned"
               component={ConnectedInstallVSphereIPI}
             />
-            <Route path="/install/ibm-cloud" component={ConnectedInstallIBMCloud} />
-            <Route path="/install/ibmz/user-provisioned" component={ConnectedInstallIBMZUPI} />
-            <Route path="/install/ibmz/pre-release" component={ConnectedInstallIBMZPreRelease} />
-            <Route path="/install/ibmz" exact component={InstallIBMZ} />
-            <Route path="/install/power/user-provisioned" component={ConnectedInstallPowerUPI} />
-            <Route path="/install/power/pre-release" component={ConnectedInstallPowerPreRelease} />
-            <Route path="/install/power" exact component={InstallPower} />
-            <Route path="/install/powervs/installer-provisioned" component={InstallPowerVSIPI} />
-            <Route
+            <CompatRoute path="/install/ibm-cloud" component={ConnectedInstallIBMCloud} />
+            <CompatRoute
+              path="/install/ibmz/user-provisioned"
+              component={ConnectedInstallIBMZUPI}
+            />
+            <CompatRoute
+              path="/install/ibmz/pre-release"
+              component={ConnectedInstallIBMZPreRelease}
+            />
+            <CompatRoute path="/install/ibmz" exact component={InstallIBMZ} />
+            <CompatRoute
+              path="/install/power/user-provisioned"
+              component={ConnectedInstallPowerUPI}
+            />
+            <CompatRoute
+              path="/install/power/pre-release"
+              component={ConnectedInstallPowerPreRelease}
+            />
+            <CompatRoute path="/install/power" exact component={InstallPower} />
+            <CompatRoute
+              path="/install/powervs/installer-provisioned"
+              component={InstallPowerVSIPI}
+            />
+            <CompatRoute
               path="/install/platform-agnostic/agent-based"
               component={ConnectedInstallPlatformAgnosticABI}
             />
-            <Route
+            <CompatRoute
               path="/install/platform-agnostic/user-provisioned"
               component={ConnectedInstallPlatformAgnosticUPI}
             />
-            <Route path="/install/platform-agnostic" component={InstallPlatformAgnostic} />
-            <Route path="/install/pre-release" component={ConnectedInstallPreRelease} />
-            <Route path="/install/pull-secret" component={ConnectedInstallPullSecret} />
-            <Route
+            <CompatRoute path="/install/platform-agnostic" component={InstallPlatformAgnostic} />
+            <CompatRoute path="/install/pre-release" component={ConnectedInstallPreRelease} />
+            <CompatRoute path="/install/pull-secret" component={ConnectedInstallPullSecret} />
+            <CompatRoute
               path="/install/azure/aro-provisioned"
               component={ConnectedInstallPullSecretAzure}
             />
@@ -354,7 +397,7 @@ const Router: React.FC<RouterProps> = ({ history, planType, clusterId, externalC
               history={history}
               component={GetStartedWithROSA}
             />
-            <Route path="/create/rosa/govcloud" component={GovCloudPage} />
+            <CompatRoute path="/create/rosa/govcloud" component={GovCloudPage} />
 
             <TermsGuardedRoute
               path="/create/rosa/wizard"
@@ -362,33 +405,36 @@ const Router: React.FC<RouterProps> = ({ history, planType, clusterId, externalC
               component={CreateROSAWizard}
             />
 
-            <Route path="/create" component={CreateClusterPage} />
+            <CompatRoute path="/create" component={CreateClusterPage} />
 
-            <Route
+            <CompatRoute
               path="/details/s/:id/insights/:reportId/:errorKey"
               component={InsightsAdvisorRedirector}
             />
-            <Route path="/details/s/:id/add-idp/:idpTypeName" component={IdentityProvidersPage} />
+            <CompatRoute
+              path="/details/s/:id/add-idp/:idpTypeName"
+              component={IdentityProvidersPage}
+            />
             <Route
               path="/details/s/:id/edit-idp/:idpName"
               render={({ match }) => <IdentityProvidersPage isEditForm match={match} />}
             />
-            <Route path="/details/s/:id" component={ClusterDetailsSubscriptionId} />
-            <Route
+            <CompatRoute path="/details/s/:id" component={ClusterDetailsSubscriptionId} />
+            <CompatRoute
               path="/details/:id/insights/:reportId/:errorKey"
               component={InsightsAdvisorRedirector}
             />
-            <Route path="/details/:id" component={ClusterDetailsClusterOrExternalId} />
-            <Route path="/register" component={RegisterCluster} />
-            <Route path="/quota/resource-limits" render={() => <Quota marketplace />} />
-            <Route path="/quota" component={Quota} />
-            <Route path="/archived" component={ArchivedClusterList} />
-            <Route path="/dashboard" exact component={Dashboard} />
-            <Route path="/overview/rosa/hands-on" component={RosaHandsOnPage} />
-            <Route path="/overview/rosa" component={RosaServicePage} />
-            <Route path="/overview" exact component={Overview} />
-            <Route path="/releases" exact component={Releases} />
-            <Route path="/assisted-installer" component={GatedAssistedUiRouter} />
+            <CompatRoute path="/details/:id" component={ClusterDetailsClusterOrExternalId} />
+            <CompatRoute path="/register" component={RegisterCluster} />
+            <CompatRoute path="/quota/resource-limits" render={() => <Quota marketplace />} />
+            <CompatRoute path="/quota" component={Quota} />
+            <CompatRoute path="/archived" component={ArchivedClusterList} />
+            <CompatRoute path="/dashboard" exact component={Dashboard} />
+            <CompatRoute path="/overview/rosa/hands-on" component={RosaHandsOnPage} />
+            <CompatRoute path="/overview/rosa" component={RosaServicePage} />
+            <CompatRoute path="/overview" exact component={Overview} />
+            <CompatRoute path="/releases" exact component={Releases} />
+            <CompatRoute path="/assisted-installer" component={GatedAssistedUiRouter} />
 
             {/* TODO: remove these redirects once links from trials and demo system emails are updated */}
             <Route
@@ -402,8 +448,8 @@ const Router: React.FC<RouterProps> = ({ history, planType, clusterId, externalC
               render={(props) => <Redirect to={`/overview/rosa${props.location.search}`} />}
             />
 
-            <Route path="/" exact component={ClustersList} />
-            <Route component={NotFoundError} />
+            <CompatRoute path="/" exact component={ClustersList} />
+            <CompatRoute component={NotFoundError} />
           </Switch>
         </ApiError>
       </ConnectedRouter>
