@@ -27,7 +27,7 @@ class ClusterLogsToolbar extends React.PureComponent {
 
     return (
       <>
-        <Toolbar className="cluster-log__toolbar">
+        <Toolbar className="cluster-log__toolbar" data-testid="cluster-history-toolbar">
           <ToolbarContent>
             <ToolbarGroup variant="filter-group">
               <ClusterLogsDatePicker
