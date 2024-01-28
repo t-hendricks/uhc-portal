@@ -1,4 +1,5 @@
 import { action, ActionType } from 'typesafe-actions';
+import { SelfAccessReview } from '~/types/accounts_mgmt.v1';
 import {
   SET_FEATURE,
   ASSISTED_INSTALLER_FEATURE,
@@ -18,7 +19,6 @@ import {
   GCP_SECURE_BOOT_UI,
 } from '../constants/featureConstants';
 import authorizationsService from '../../services/authorizationsService';
-import { SelfAccessReview } from '../../types/authorizations.v1/models/SelfAccessReview';
 import type { AppThunk } from '../types';
 
 export const setFeatureAction = (feature: string, enabled: boolean) =>

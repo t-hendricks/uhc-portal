@@ -17,11 +17,11 @@ import { validate as isUuid } from 'uuid';
 import { action, ActionType } from 'typesafe-actions';
 import type { AxiosResponse } from 'axios';
 
+import { SelfResourceReviewRequest } from '~/types/accounts_mgmt.v1';
+import type { SubscriptionWithPermissionsList } from '~/types/types';
 import { subscriptionsConstants } from '../constants';
 import { accountsService, authorizationsService, clusterService } from '../../services';
 import { INVALIDATE_ACTION, buildPermissionDict } from '../reduxHelpers';
-import { SelfResourceReviewRequest } from '../../types/authorizations.v1/models/SelfResourceReviewRequest';
-import type { SubscriptionWithPermissionsList } from '../../types/types';
 
 const fetchAccount = () =>
   action(subscriptionsConstants.GET_ACCOUNT, accountsService.getCurrentAccount());

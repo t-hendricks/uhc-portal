@@ -21,6 +21,23 @@ import type { Cluster as AICluster } from '@openshift-assisted/types/assisted-in
 
 import { isHypershiftCluster } from '~/components/clusters/common/clusterStates';
 
+import type { Cluster, UpgradePolicy } from '~/types/clusters_mgmt.v1';
+import {
+  SelfResourceReview,
+  SelfAccessReview,
+  SelfResourceReviewRequest,
+} from '~/types/accounts_mgmt.v1';
+import type {
+  Subscription,
+  SubscriptionCreateRequest,
+  SubscriptionPatchRequest,
+} from '~/types/accounts_mgmt.v1';
+import type {
+  AugmentedCluster,
+  AugmentedClusterResponse,
+  ClusterWithPermissions,
+} from '~/types/types';
+import type { AppThunk, AppThunkDispatch } from '../types';
 import { techPreviewStatusSelector, dispatchTechPreviewStatus } from '../hooks/clusterHooks';
 import { clustersConstants } from '../constants';
 import {
@@ -43,24 +60,6 @@ import { postSchedule } from '../../components/clusters/common/Upgrades/clusterU
 import { editSubscriptionSettings } from './subscriptionSettingsActions';
 import isAssistedInstallSubscription from '../../common/isAssistedInstallerCluster';
 import { ASSISTED_INSTALLER_MERGE_LISTS_FEATURE } from '../constants/featureConstants';
-
-import type { Cluster, UpgradePolicy } from '../../types/clusters_mgmt.v1';
-import {
-  SelfResourceReview,
-  SelfAccessReview,
-  SelfResourceReviewRequest,
-} from '../../types/authorizations.v1';
-import type {
-  Subscription,
-  SubscriptionCreateRequest,
-  SubscriptionPatchRequest,
-} from '../../types/accounts_mgmt.v1';
-import type {
-  AugmentedCluster,
-  AugmentedClusterResponse,
-  ClusterWithPermissions,
-} from '../../types/types';
-import type { AppThunk, AppThunkDispatch } from '../types';
 
 const ROSA_PRODUCTS = [knownProducts.ROSA, knownProducts.ROSA_HyperShift];
 const OSD_PRODUCTS = [knownProducts.OSD, knownProducts.OSDTrial];

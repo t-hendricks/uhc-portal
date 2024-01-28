@@ -7,7 +7,7 @@ import type {
   SelfAccessReview,
   SelfResourceReviewRequest,
   SelfTermsReview,
-} from '../types/authorizations.v1';
+} from '~/types/accounts_mgmt.v1';
 
 const selfResourceReview = (params: SelfResourceReviewRequest) =>
   apiRequest.post<SelfResourceReview>('/api/authorizations/v1/self_resource_review', params);
