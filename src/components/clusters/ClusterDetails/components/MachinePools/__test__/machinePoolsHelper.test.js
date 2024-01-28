@@ -120,7 +120,7 @@ describe('machine pools action resolver', () => {
     const deleteDisabledAction = {
       ...deleteAction,
       isAriaDisabled: true,
-      tooltip: 'Default machine pool cannot be deleted',
+      tooltipProps: { content: 'Default machine pool cannot be deleted' },
     };
     const expected = [editAction, deleteDisabledAction];
     expect(
@@ -159,7 +159,7 @@ describe('machine pools action resolver', () => {
     const deleteDisabledAction = {
       ...deleteAction,
       isAriaDisabled: true,
-      tooltip: 'Default machine pool cannot be deleted',
+      tooltipProps: { content: 'Default machine pool cannot be deleted' },
     };
 
     const expected = [editAction, deleteDisabledAction];
@@ -226,7 +226,7 @@ describe('machine pools action resolver', () => {
     actions.forEach((action) => {
       if (action.title === 'Delete') {
         expect(action.isAriaDisabled).toBeTruthy();
-        expect(action.tooltip).toEqual(
+        expect(action.tooltipProps.content).toEqual(
           'There needs to be at least 2 nodes without taints across all machine pools',
         );
       }
