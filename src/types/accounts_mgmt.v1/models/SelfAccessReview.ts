@@ -26,6 +26,7 @@ export namespace SelfAccessReview {
     ACCOUNT = 'Account',
     ACCOUNT_POOL = 'AccountPool',
     CLUSTER = 'Cluster',
+    IDP = 'Idp',
     PLAN = 'Plan',
     SUBSCRIPTION = 'Subscription',
     ORGANIZATION = 'Organization',
@@ -48,6 +49,7 @@ export namespace SelfAccessReview {
     CLUSTER_LOG = 'ClusterLog',
     CLUSTER_CREDENTIAL = 'ClusterCredential',
     CLUSTER_METRIC = 'ClusterMetric',
+    CLUSTER_AUTOSCALER = 'ClusterAutoscaler',
     RESOURCE_QUOTA = 'ResourceQuota',
     RESERVED_RESOURCE = 'ReservedResource',
     DASHBOARD = 'Dashboard',
@@ -65,5 +67,6 @@ export namespace SelfAccessReview {
     CLUSTER_SELF_MANAGED_ADDON = 'ClusterSelfManagedAddon',
     CLUSTER_SELF_MANAGED_LABEL = 'ClusterSelfManagedLabel',
     CLUSTER_SELF_MANAGED_STATUS = 'ClusterSelfManagedStatus',
+    MACHINE_POOL = 'MachinePool',
   }
 }
