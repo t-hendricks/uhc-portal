@@ -84,7 +84,11 @@ const actionResolver = ({
     onClick: onClickDelete,
     className: 'hand-pointer',
     isAriaDisabled: !!deleteDisabledReason,
-    ...(!!deleteDisabledReason && { tooltip: deleteDisabledReason }),
+    ...(!!deleteDisabledReason && {
+      tooltipProps: {
+        content: deleteDisabledReason,
+      },
+    }),
   };
 
   const updateAction = {
