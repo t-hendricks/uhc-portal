@@ -234,7 +234,9 @@ export function OfferingCard(props: OfferingCardProps) {
           <SplitItem>{cardLogo}</SplitItem>
           <SplitItem isFilled />
           <SplitItem>
-            <Label color="blue">{offeringCardLabel}</Label>
+            <Label data-testtag="label" color="blue">
+              {offeringCardLabel}
+            </Label>
           </SplitItem>
         </Split>
       </CardHeader>
