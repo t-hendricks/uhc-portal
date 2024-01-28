@@ -1,0 +1,47 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": [
+    "config:recommended"
+  ],
+  "labels": ["dependency update"],
+  "packageRules": [
+    {
+      "groupName": "temporary disable all non-devDependencies",
+      "matchDepTypes": [
+        "dependencies",
+        "optionalDependencies",
+        "peerDependencies"
+      ],
+      "matchPackagePatterns": ["^i18next$", "^i18next-browser-languagedetector$", "^react-i18next$", "^react-monaco-editor$"],
+      "enabled": false
+    },
+    {
+      "groupName": "patch and minor dependencies",
+      "groupSlug": "all-patchminor",
+      "matchUpdateTypes": ["patch", "minor"],
+      "addLabels": ["minorDependencies"]
+    },
+    {
+      "groupName": "major dependencies",
+      "groupSlug": "all-major",
+      "matchUpdateTypes": ["major"],
+      "addLabels": ["majorDependencies"]
+    },
+    {
+      "groupName": "openshift-assisted dependencies",
+      "matchPackagePatterns": ["^@openshift-assisted"],
+      "enabled": false
+    },
+    {
+      "groupName": "patch and minor devDependencies",
+      "matchDepTypes": ["devDependencies"],
+      "matchUpdateTypes": ["patch", "minor"],
+      "addLabels": ["minorDependencies", "devDependencies"]
+    },
+    {
+      "groupName": "major devDependencies",
+      "matchDepTypes": ["devDependencies"],
+      "addLabels": ["majorDependencies", "devDependencies"]
+    }
+  ]
+}
