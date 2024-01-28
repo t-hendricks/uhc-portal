@@ -1,6 +1,6 @@
 import type { AxiosResponse } from 'axios';
 import type { ActionType } from 'redux-promise-middleware';
-import type { SelfResourceReview } from '../types/authorizations.v1/models/SelfResourceReview';
+import type { SelfResourceReview } from '~/types/accounts_mgmt.v1';
 import type { BaseRequestState } from './types';
 
 const INVALIDATE_ACTION = <T extends string>(base: T): `${T}_INVALIDATE` => `${base}_INVALIDATE`;
