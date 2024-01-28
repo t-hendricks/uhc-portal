@@ -122,8 +122,8 @@ const ClusterLogs = ({
       (!requestState.pending || (!hasChanged && (externalClusterID || clusterID)))
     ) {
       dispatch(clusterLogActions.getClusterHistory(externalClusterID, clusterID, viewOptions));
+      setPreviousViewOptions(viewOptions);
     }
-    setPreviousViewOptions(viewOptions);
   }, [
     dispatch,
     previousViewOptions,
