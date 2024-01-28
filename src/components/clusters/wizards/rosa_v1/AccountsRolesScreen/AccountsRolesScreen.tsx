@@ -1,5 +1,5 @@
 /* eslint-disable camelcase */
-import React, { useState, useCallback, useEffect, useRef, ReactElement } from 'react';
+import React, { useState, useCallback, useEffect, useRef } from 'react';
 import get from 'lodash/get';
 
 import {
@@ -79,8 +79,8 @@ function AccountsRolesScreen({
   isHypershiftSelected,
 }: AccountsRolesScreenProps) {
   const [AWSAccountIDs, setAWSAccountIDs] = useState<string[]>([]);
+  const [hasFinishedLoading, setHasFinishedLoading] = useState<boolean>(false);
   const [noUserForSelectedAWSAcct, setNoUserForSelectedAWSAcct] = useState(false);
-  const [awsIDsErrorBox, setAwsIDsErrorBox] = useState<ReactElement | null>(null);
   const [refreshButtonClicked, setRefreshButtonClicked] = useState(false);
   const openDrawerButtonRef = useRef(null);
   const hasAWSAccounts = AWSAccountIDs.length > 0;
@@ -144,22 +144,17 @@ function AccountsRolesScreen({
 
   useEffect(() => {
     if (getAWSAccountIDsResponse.pending) {
-      setAwsIDsErrorBox(null);
+      setHasFinishedLoading(false);
     } else if (getAWSAccountIDsResponse.fulfilled) {
       const awsIDs = get(getAWSAccountIDsResponse, 'data', []);
       setAWSAccountIDs(awsIDs);
-      if (!awsIDs.includes(selectedAWSAccountID)) {
+      // Reset a previous, invalid selection
+      if (selectedAWSAccountID && !awsIDs.includes(selectedAWSAccountID)) {
         change('associated_aws_id', '');
       }
-      setAwsIDsErrorBox(null);
+      setHasFinishedLoading(true);
     } else if (getAWSAccountIDsResponse.error) {
-      // display error
-      setAwsIDsErrorBox(
-        <ErrorBox
-          message="Error getting associated AWS account id(s)"
-          response={getAWSAccountIDsResponse}
-        />,
-      );
+      setHasFinishedLoading(true);
     } else {
       getAWSAccountIDs(organizationID);
     }
@@ -204,7 +199,12 @@ function AccountsRolesScreen({
         </GridItem>
         <GridItem span={4} />
         <GridItem sm={12} md={7}>
-          {awsIDsErrorBox}
+          {getAWSAccountIDsResponse.error ? (
+            <ErrorBox
+              message="Error getting associated AWS account id(s)"
+              response={getAWSAccountIDsResponse}
+            />
+          ) : null}
           <Field
             component={AWSAccountSelection}
             name="associated_aws_id"
@@ -216,7 +216,7 @@ function AccountsRolesScreen({
               },
               text: 'Refresh to view newly associated AWS accounts and account-roles.',
             }}
-            validate={!getAWSAccountIDsResponse.fulfilled ? undefined : required}
+            validate={hasFinishedLoading ? required : undefined}
             extendedHelpText={
               <>
                 A list of associated AWS infrastructure accounts. You must associate at least one
