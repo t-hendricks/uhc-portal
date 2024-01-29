@@ -19,7 +19,7 @@ const isDeleteDisabled = (
 ) => {
   const permissionsReason = !canDelete && 'You do not have permissions to delete machine pools';
   const lastNodePoolReason = machinePools.length === 1 && 'The last machine pool cannot be deleted';
-  const enforcedDefaultMPReason = isEnforcedDefaultMP && 'Default machine pool cannot be deleted';
+  const enforcedDefaultMPReason = isEnforcedDefaultMP && 'Machine pool ineligible for deletion';
   const minimumCountReason = !isMinimumCountWithoutTaints && minReplicasNeededText;
   return (
     permissionsReason ||
