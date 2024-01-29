@@ -120,7 +120,7 @@ describe('machine pools action resolver', () => {
     const deleteDisabledAction = {
       ...deleteAction,
       isAriaDisabled: true,
-      tooltipProps: { content: 'Default machine pool cannot be deleted' },
+      tooltipProps: { content: 'Machine pool ineligible for deletion' },
     };
     const expected = [editAction, deleteDisabledAction];
     expect(
@@ -159,7 +159,7 @@ describe('machine pools action resolver', () => {
     const deleteDisabledAction = {
       ...deleteAction,
       isAriaDisabled: true,
-      tooltipProps: { content: 'Default machine pool cannot be deleted' },
+      tooltipProps: { content: 'Machine pool ineligible for deletion' },
     };
 
     const expected = [editAction, deleteDisabledAction];
