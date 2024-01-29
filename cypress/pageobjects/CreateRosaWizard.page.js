@@ -234,7 +234,7 @@ class CreateRosaCluster extends Page {
   }
 
   selectInstallerRole(roleName) {
-    cy.get('.pf-c-form__label-text')
+    cy.get('.pf-v5-c-form__label-text')
       .contains('Installer role')
       .parent()
       .parent()
@@ -245,7 +245,7 @@ class CreateRosaCluster extends Page {
         if ($btn.is(':disabled')) {
           cy.log('Installer ARN button is disabled there is only one option. Continuing..');
         } else {
-          cy.get('.pf-c-form__label-text')
+          cy.get('.pf-v5-c-form__label-text')
             .contains('Installer role')
             .parent()
             .parent()
@@ -431,7 +431,7 @@ class CreateRosaCluster extends Page {
   }
 
   selectAvailabilityZoneRegion(avilabilityZoneRegion) {
-    cy.get(".pf-c-select__menu:contains('Select availability zone')").within(() => {
+    cy.get(".pf-v5-c-select__menu:contains('Select availability zone')").within(() => {
       cy.get('li').contains(avilabilityZoneRegion).click();
     });
   }
@@ -452,8 +452,16 @@ class CreateRosaCluster extends Page {
     cy.get('#etcd_encryption').check().should('be.enabled');
   }
 
+  isEtcEncryptionDisabled() {
+    cy.get('#etcd_encryption').should('be.disabled');
+  }
+
   enableFips() {
     cy.get('#fips').check().should('be.enabled');
+  }
+
+  isFipsDisabled() {
+    cy.get('#fips').should('be.disabled');
   }
 
   inputRootDiskSize(rootDiskSize) {
