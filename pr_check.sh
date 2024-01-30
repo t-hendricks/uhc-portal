@@ -43,8 +43,7 @@ export IMAGE="quay.io/app-sre/uhc-portal"
 # if running in jenkins, use the build's workspace
 export WORKSPACE=${WORKSPACE:-$APP_ROOT}
 export APP_ROOT=$(pwd)
-# 16 is the default Node version. change this to override it
-export NODE_BUILD_VERSION=16
+export NODE_BUILD_VERSION=20
 
 COMMON_BUILDER=https://raw.githubusercontent.com/RedHatInsights/insights-frontend-builder-common/master
 
