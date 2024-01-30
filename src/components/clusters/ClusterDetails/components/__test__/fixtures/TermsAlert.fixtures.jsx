@@ -1,8 +1,7 @@
+import { defaultSubscription } from '~/components/clusters/common/__test__/defaultClusterFromSubscription.fixtures';
 import { normalizedProducts } from '../../../../../../common/subscriptionTypes';
 
 const tncUrl = 'https://www.redhat.com/wapps/tnc/ackrequired?site=ocm&event=register';
-
-const selfTermsReview = jest.fn();
 
 const selfTermsReviewResult = {
   fulfilled: true,
@@ -14,9 +13,10 @@ const selfTermsReviewResult = {
 };
 
 const subscription = {
+  ...defaultSubscription,
   id: '1234567890',
   plan: { id: normalizedProducts.ROSA, type: normalizedProducts.ROSA },
   status: 'Active',
 };
 
-export { tncUrl, selfTermsReview, selfTermsReviewResult, subscription };
+export { tncUrl, selfTermsReviewResult, subscription };

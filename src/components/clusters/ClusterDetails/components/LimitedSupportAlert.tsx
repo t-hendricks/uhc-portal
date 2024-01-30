@@ -1,24 +1,29 @@
-import React from 'react';
-import PropTypes from 'prop-types';
 import {
   Alert,
   DescriptionList,
+  DescriptionListDescription,
   DescriptionListGroup,
   DescriptionListTerm,
-  DescriptionListDescription,
 } from '@patternfly/react-core';
+import React from 'react';
 import MarkdownParser from '~/common/MarkdownParser';
-import ExternalLink from '../../../common/ExternalLink';
 import links from '../../../../common/installLinks.mjs';
+import ExternalLink from '../../../common/ExternalLink';
 
-function LimitedSupportAlert({ limitedSupportReasons, isROSA, isOSD }) {
-  if (!limitedSupportReasons || limitedSupportReasons.length === 0) {
+type LimitedSupportAlertProps = {
+  limitedSupportReasons?: { id?: string; summary?: string; details?: string }[];
+  isROSA?: boolean;
+  isOSD?: boolean;
+};
+
+const LimitedSupportAlert = ({
+  limitedSupportReasons,
+  isROSA,
+  isOSD,
+}: LimitedSupportAlertProps) => {
+  if (!limitedSupportReasons?.length) {
     return null;
   }
-
-  const title = `This cluster has limited support${
-    limitedSupportReasons.length > 1 ? ' due to multiple reasons' : ''
-  }.`;
 
   return (
     <Alert
@@ -27,7 +32,9 @@ function LimitedSupportAlert({ limitedSupportReasons, isROSA, isOSD }) {
       className="pf-v5-u-mt-md"
       isInline
       isExpandable={limitedSupportReasons.length > 1}
-      title={title}
+      title={`This cluster has limited support${
+        limitedSupportReasons.length > 1 ? ' due to multiple reasons' : ''
+      }.`}
       actionLinks={
         isROSA || isOSD ? (
           <ExternalLink
@@ -55,18 +62,6 @@ function LimitedSupportAlert({ limitedSupportReasons, isROSA, isOSD }) {
       </DescriptionList>
     </Alert>
   );
-}
-
-LimitedSupportAlert.propTypes = {
-  limitedSupportReasons: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.string,
-      summary: PropTypes.string,
-      details: PropTypes.string,
-    }),
-  ),
-  isROSA: PropTypes.bool,
-  isOSD: PropTypes.bool,
 };
 
 export default LimitedSupportAlert;

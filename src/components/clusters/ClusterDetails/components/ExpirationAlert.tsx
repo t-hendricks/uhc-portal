@@ -1,23 +1,30 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import dayjs from 'dayjs';
-import { Alert, Button } from '@patternfly/react-core';
+import { Alert, AlertProps, Button } from '@patternfly/react-core';
+import { Cluster } from '~/types/clusters_mgmt.v1';
 import modals from '../../../common/Modal/modals';
 import ExternalLink from '../../../common/ExternalLink';
 
-function ExpirationAlert({
+type ExpirationAlertProps = {
+  expirationTimestamp: string;
+  trialExpiration?: boolean;
+  openModal?: (name: string, data?: unknown) => void;
+  cluster?: Cluster;
+  OSDRHMExpiration?: boolean;
+};
+
+const ExpirationAlert = ({
   expirationTimestamp,
   trialExpiration,
   openModal,
   cluster,
   OSDRHMExpiration,
-}) {
+}: ExpirationAlertProps) => {
   const now = dayjs.utc();
   const expirationTime = dayjs.utc(expirationTimestamp);
   const hours = expirationTime.diff(now, 'hour');
   const timeUntilExpiryString = now.to(expirationTime);
   const expirationTimeString = expirationTime.local().format('dddd, MMMM Do YYYY, h:mm a');
-  let variant;
 
   if (hours <= 0) {
     return (
@@ -27,6 +34,7 @@ function ExpirationAlert({
         variant="warning"
         isInline
         title="Cluster failed to delete"
+        data-testid="expiration-alert-passed"
       >
         <>
           {`This cluster should have been deleted ${timeUntilExpiryString} but is still running.`}{' '}
@@ -39,22 +47,21 @@ function ExpirationAlert({
     );
   }
 
-  if (hours >= 48) {
-    variant = 'info';
-  }
-  if (hours < 48 && hours >= 24) {
-    variant = 'warning';
-  }
-  if (hours < 24) {
-    variant = 'danger';
-  }
-
-  let contents = `This cluster is scheduled for deletion on ${expirationTimeString}`;
-
-  if (trialExpiration) {
-    contents = `Your free trial cluster will automatically be deleted on ${expirationTimeString}. Upgrade your cluster at any time to prevent deletion.`;
+  let variant: AlertProps['variant'];
+  switch (true) {
+    case hours < 24:
+      variant = 'danger';
+      break;
+    case hours < 48 && hours >= 24:
+      variant = 'warning';
+      break;
+    default:
+      variant = 'info';
   }
 
+  let contents:
+    | string
+    | React.ReactElement = `This cluster is scheduled for deletion on ${expirationTimeString}`;
   if (OSDRHMExpiration) {
     contents = (
       <>
@@ -68,13 +75,9 @@ function ExpirationAlert({
         before the expiration date.
       </>
     );
+  } else if (trialExpiration) {
+    contents = `Your free trial cluster will automatically be deleted on ${expirationTimeString}. Upgrade your cluster at any time to prevent deletion.`;
   }
-
-  const upgradeTrialProps = {
-    title: 'Upgrade cluster from Trial',
-    clusterID: cluster?.id,
-    cluster,
-  };
 
   return (
     <Alert
@@ -83,27 +86,27 @@ function ExpirationAlert({
       variant={variant}
       isInline
       title={`This cluster will be deleted ${timeUntilExpiryString}.`}
+      data-testid="expiration-alert-will-delete"
     >
       <p>{contents}</p>
       {trialExpiration && (
         <Button
           variant="secondary"
           className="pf-v5-u-mt-sm"
-          onClick={() => openModal(modals.UPGRADE_TRIAL_CLUSTER, upgradeTrialProps)}
+          data-testid="trial-button"
+          onClick={() =>
+            openModal?.(modals.UPGRADE_TRIAL_CLUSTER, {
+              title: 'Upgrade cluster from Trial',
+              clusterID: cluster?.id,
+              cluster,
+            })
+          }
         >
           Upgrade from trial
         </Button>
       )}
     </Alert>
   );
-}
-
-ExpirationAlert.propTypes = {
-  expirationTimestamp: PropTypes.string.isRequired,
-  trialExpiration: PropTypes.bool,
-  openModal: PropTypes.func,
-  cluster: PropTypes.shape({ id: PropTypes.string }),
-  OSDRHMExpiration: PropTypes.bool,
 };
 
 export default ExpirationAlert;
