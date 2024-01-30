@@ -1,68 +1,94 @@
 import React from 'react';
-import { shallow } from 'enzyme';
-import { Button, ClipboardCopy } from '@patternfly/react-core';
+import { render, screen, checkAccessibility, within } from '~/testUtils';
 
 import GetStarted from '../GetStarted';
-import ExternalLink from '../../../../../common/ExternalLink';
+
+const defaultProps = {
+  docURL: '',
+  cloudProviderID: '',
+};
 
 describe('<GetStarted />', () => {
   describe('GetStarted w/ customizations', () => {
-    const wrapper = shallow(
-      <GetStarted docURL="" cloudProviderID="" customizations="example.doc.link" />,
-    );
+    const customizationsProps = {
+      ...defaultProps,
+      customizations: 'example.doc.link',
+    };
 
-    it('should render', () => {
-      expect(wrapper).toMatchSnapshot();
+    it('is accessible', async () => {
+      const { container } = render(<GetStarted {...customizationsProps} />);
+      await checkAccessibility(container);
     });
-    it('should have a Get Started button', () => {
-      const getStartedButton = wrapper.find(Button);
-      expect(getStartedButton.length).toEqual(1);
+
+    it('should have a Get Started link', () => {
+      render(<GetStarted {...customizationsProps} />);
+      expect(screen.getByRole('link', { name: 'Get started' })).toBeInTheDocument();
     });
+
     it('should have a copybox', () => {
-      const copybox = wrapper.find(ClipboardCopy);
-      expect(copybox.length).toEqual(1);
-      expect(copybox.props().isReadOnly).toEqual(true);
+      render(<GetStarted {...customizationsProps} />);
+
+      const copyBox = screen.getByTestId('copy-command');
+      expect(copyBox).toBeInTheDocument();
+      expect(within(copyBox).getByRole('textbox')).toHaveAttribute('readonly');
     });
+
     it('should have a customizations link', () => {
-      const link = wrapper.find(ExternalLink);
-      expect(link.length).toEqual(1);
+      render(<GetStarted {...customizationsProps} />);
+
+      expect(screen.getByRole('link', { name: /install with customizations/ })).toHaveAttribute(
+        'href',
+        customizationsProps.customizations,
+      );
     });
   });
 
   describe('GetStarted w/o customizations', () => {
-    const wrapper = shallow(<GetStarted docURL="" cloudProviderID="" />);
+    it('is accessible', async () => {
+      const { container } = render(<GetStarted {...defaultProps} />);
+      await checkAccessibility(container);
+    });
 
-    it('should render', () => {
-      expect(wrapper).toMatchSnapshot();
+    it('should have a Get Started link', () => {
+      render(<GetStarted {...defaultProps} />);
+      expect(screen.getByRole('link', { name: 'Get started' })).toBeInTheDocument();
     });
-    it('should have a Get Started button', () => {
-      const getStartedButton = wrapper.find(Button);
-      expect(getStartedButton.length).toEqual(1);
-    });
+
     it('should have a copybox', () => {
-      const copybox = wrapper.find(ClipboardCopy);
-      expect(copybox.length).toEqual(1);
-      expect(copybox.props().isReadOnly).toEqual(true);
+      render(<GetStarted {...defaultProps} />);
+
+      const copyBox = screen.getByTestId('copy-command');
+      expect(copyBox).toBeInTheDocument();
+      expect(within(copyBox).getByRole('textbox')).toHaveAttribute('readonly');
     });
+
     it('should not have a customizations link', () => {
-      const link = wrapper.find('a');
-      expect(link.length).toEqual(0);
+      expect(
+        screen.queryByRole('link', { name: /install with customizations/ }),
+      ).not.toBeInTheDocument();
     });
   });
 
   describe('GetStarted for UPI', () => {
-    const wrapper = shallow(<GetStarted docURL="" cloudProviderID="" isUPI />);
+    const upiProps = {
+      ...defaultProps,
+      isUPI: true,
+    };
 
-    it('should render', () => {
-      expect(wrapper).toMatchSnapshot();
+    it('is accessible', async () => {
+      const { container } = render(<GetStarted {...upiProps} />);
+      await checkAccessibility(container);
     });
+
     it('should have a Get Started button', () => {
-      const getStartedButton = wrapper.find(Button);
-      expect(getStartedButton.length).toEqual(1);
+      render(<GetStarted {...upiProps} />);
+      expect(screen.getByRole('link', { name: 'Get started' })).toBeInTheDocument();
     });
+
     it('should not have a copybox', () => {
-      const copybox = wrapper.find(ClipboardCopy);
-      expect(copybox.length).toEqual(0);
+      render(<GetStarted {...upiProps} />);
+      const copyBox = screen.queryByTestId('copy-command');
+      expect(copyBox).not.toBeInTheDocument();
     });
   });
 });

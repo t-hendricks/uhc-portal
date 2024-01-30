@@ -116,7 +116,7 @@ class DynamicSelect extends React.Component<Props> {
         );
       } else {
         error = (
-          <Alert isInline variant="danger" title={emptyAlertTitle}>
+          <Alert isInline variant="danger" title={emptyAlertTitle} role="alert">
             <TextContent>
               {emptyAlertBody}
               {refreshButtonText && (
