@@ -1,6 +1,5 @@
+import { Bullseye, Card, CardBody, CardTitle, Icon, Title } from '@patternfly/react-core';
 import React from 'react';
-import PropTypes from 'prop-types';
-import { Card, CardTitle, CardBody, Bullseye, Title, Icon } from '@patternfly/react-core';
 
 import { ExclamationCircleIcon } from '@patternfly/react-icons/dist/esm/icons/exclamation-circle-icon';
 import { OkIcon } from '@patternfly/react-icons/dist/esm/icons/ok-icon';
@@ -14,10 +13,20 @@ import {
   global_success_color_100,
 } from '@patternfly/react-tokens/dist/esm/global_success_color_100';
 
-const ClustersWithIssuesCard = ({ totalUnhealthyClusters, totalConnectedClusters, isError }) => {
+type ClustersWithIssuesCardProps = {
+  totalConnectedClusters: number;
+  totalUnhealthyClusters: number;
+  isError: boolean;
+};
+
+const ClustersWithIssuesCard = ({
+  totalUnhealthyClusters,
+  totalConnectedClusters,
+  isError,
+}: ClustersWithIssuesCardProps) => {
   if (isError) {
     return (
-      <Card className="ocm-overview-clusters__card">
+      <Card className="ocm-overview-clusters__card" data-testid="cluster-with-issues-error">
         <CardTitle>Clusters with issues</CardTitle>
         <CardBody>
           <Bullseye>
@@ -33,7 +42,7 @@ const ClustersWithIssuesCard = ({ totalUnhealthyClusters, totalConnectedClusters
 
   if (!totalConnectedClusters) {
     return (
-      <Card className="ocm-overview-clusters__card">
+      <Card className="ocm-overview-clusters__card" data-testid="cluster-with-issues-no-data">
         <CardTitle>Clusters with issues</CardTitle>
         <CardBody>
           <Bullseye>
@@ -44,34 +53,24 @@ const ClustersWithIssuesCard = ({ totalUnhealthyClusters, totalConnectedClusters
     );
   }
 
-  const icon =
-    totalUnhealthyClusters === 0 ? (
-      <>
-        <Icon className="status-icon" size="sm">
-          <OkIcon color={global_success_color_100.value} />
-        </Icon>
-      </>
-    ) : (
-      <>
-        <Icon className="status-icon" size="sm">
-          <ExclamationCircleIcon color={global_danger_color_100.value} />
-        </Icon>
-      </>
-    );
-
-  const cardContent = (
-    <>
-      <span
-        className={
-          totalUnhealthyClusters > 0 ? 'clusters-with-issues-non-zero' : 'clusters-with-issues-zero'
-        }
-      >
-        {totalUnhealthyClusters}
-      </span>
-    </>
+  const icon = (
+    <Icon className="status-icon" size="sm">
+      {totalUnhealthyClusters === 0 ? (
+        <OkIcon color={global_success_color_100.value} data-testid="ok-icon" />
+      ) : (
+        <ExclamationCircleIcon
+          color={global_danger_color_100.value}
+          data-testid="exclamation-icon"
+        />
+      )}
+    </Icon>
   );
+
+  const className =
+    totalUnhealthyClusters > 0 ? 'clusters-with-issues-non-zero' : 'clusters-with-issues-zero';
+  const cardContent = <span className={className}>{totalUnhealthyClusters}</span>;
   return (
-    <Card className="ocm-overview-clusters__card">
+    <Card className="ocm-overview-clusters__card" data-testid="cluster-with-issues-unhealthy">
       <CardTitle>Clusters with issues</CardTitle>
       <CardBody>
         <Bullseye>
@@ -81,12 +80,6 @@ const ClustersWithIssuesCard = ({ totalUnhealthyClusters, totalConnectedClusters
       </CardBody>
     </Card>
   );
-};
-
-ClustersWithIssuesCard.propTypes = {
-  totalConnectedClusters: PropTypes.number.isRequired,
-  totalUnhealthyClusters: PropTypes.number.isRequired,
-  isError: PropTypes.bool.isRequired,
 };
 
 export default ClustersWithIssuesCard;

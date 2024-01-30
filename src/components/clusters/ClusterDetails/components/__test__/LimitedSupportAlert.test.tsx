@@ -1,10 +1,10 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import LimitedSupportAlert from '../components/LimitedSupportAlert';
+import LimitedSupportAlert from '../LimitedSupportAlert';
 
 // eslint-disable-next-line react/prop-types
-jest.mock('~/common/MarkdownParser', () => ({ children }) => (
+jest.mock('~/common/MarkdownParser', () => ({ children }: { children: React.ReactNode }) => (
   <div data-testid="markdownparser-link-mock">{children}</div>
 ));
 
@@ -111,14 +111,14 @@ describe('<LimitedSupportAlert />', () => {
 
   it('No link is shown if neither ROSA nor OSD', () => {
     const wrapper = shallow(<LimitedSupportAlert limitedSupportReasons={reasons} />);
-    expect(wrapper.find('Alert').props().actionLinks).toBeNull();
+    expect((wrapper.find('Alert').props() as any).actionLinks).toBeNull();
   });
 
   it('OSD link is shown for OSD cluster', () => {
     const wrapper = shallow(<LimitedSupportAlert limitedSupportReasons={reasons} />);
     wrapper.setProps({ isOSD: true });
-    expect(wrapper.find('Alert').props().actionLinks).not.toBeNull();
-    expect(wrapper.find('Alert').props().actionLinks.props.href).toEqual(
+    expect((wrapper.find('Alert').props() as any).actionLinks).not.toBeNull();
+    expect((wrapper.find('Alert').props() as any).actionLinks.props.href).toEqual(
       'https://docs.openshift.com/dedicated/osd_architecture/osd_policy/osd-service-definition.html#limited-support_osd-service-definition',
     );
   });
@@ -126,9 +126,59 @@ describe('<LimitedSupportAlert />', () => {
   it('ROSA link is shown for ROSA cluster', () => {
     const wrapper = shallow(<LimitedSupportAlert limitedSupportReasons={reasons} />);
     wrapper.setProps({ isROSA: true });
-    expect(wrapper.find('Alert').props().actionLinks).not.toBeNull();
-    expect(wrapper.find('Alert').props().actionLinks.props.href).toEqual(
+    expect((wrapper.find('Alert').props() as any).actionLinks).not.toBeNull();
+    expect((wrapper.find('Alert').props() as any).actionLinks.props.href).toEqual(
       'https://docs.openshift.com/rosa/rosa_architecture/rosa_policy_service_definition/rosa-service-definition.html#rosa-limited-support_rosa-service-definition',
     );
+  });
+
+  it('Reasons with no summary', () => {
+    const reasonsWithNoSummary = reasons.map((reason) => {
+      const { summary, ...rest } = reason;
+      return rest;
+    });
+    const wrapper = shallow(<LimitedSupportAlert limitedSupportReasons={reasonsWithNoSummary} />);
+    expect(wrapper.isEmptyRender()).toBeFalsy();
+
+    expect(wrapper.find('Alert').props().title).toEqual(
+      'This cluster has limited support due to multiple reasons.',
+    );
+
+    // Check for correct number of reasons
+    expect(wrapper.find('Alert DescriptionListGroup')).toHaveLength(reasons.length);
+
+    // Check for summary and details for each reason
+    wrapper.find('Alert DescriptionListGroup').forEach((item) => {
+      const summary = item.find('DescriptionListTerm');
+      const details = item.find('DescriptionListDescription');
+
+      expect(summary.children().length).toEqual(0);
+      expect(details.children().length).toEqual(1);
+    });
+  });
+
+  it('Reasons with no details', () => {
+    const reasonsWithNoDetails = reasons.map((reason) => {
+      const { details, ...rest } = reason;
+      return rest;
+    });
+    const wrapper = shallow(<LimitedSupportAlert limitedSupportReasons={reasonsWithNoDetails} />);
+    expect(wrapper.isEmptyRender()).toBeFalsy();
+
+    expect(wrapper.find('Alert').props().title).toEqual(
+      'This cluster has limited support due to multiple reasons.',
+    );
+
+    // Check for correct number of reasons
+    expect(wrapper.find('Alert DescriptionListGroup')).toHaveLength(reasons.length);
+
+    // Check for summary and details for each reason
+    wrapper.find('Alert DescriptionListGroup').forEach((item) => {
+      const summary = item.find('DescriptionListTerm');
+      const details = item.find('DescriptionListDescription');
+
+      expect(summary.children().length).toEqual(1);
+      expect(details.children().length).toEqual(0);
+    });
   });
 });
