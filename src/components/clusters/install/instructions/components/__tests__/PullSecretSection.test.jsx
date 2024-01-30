@@ -1,24 +1,54 @@
 import React from 'react';
-import { shallow } from 'enzyme';
-
+import { withState, screen, checkAccessibility, TestRouter } from '~/testUtils';
+import githubReleasesMock from '../../../githubReleases.mock';
 import PullSecretSection from '../PullSecretSection';
+
+jest.mock('~/redux/actions', () => ({
+  __esModule: true,
+  tollboothActions: {
+    createAuthToken: jest.fn().mockResolvedValue('foo'),
+  },
+  githubActions: {
+    getLatestRelease: jest.fn(),
+  },
+}));
 
 describe('<PullSecretSection />', () => {
   describe('with token', () => {
     const token = { auths: { foo: 'bar' } };
-    const wrapper = shallow(<PullSecretSection token={token} />);
 
-    it('should render', () => {
-      expect(wrapper).toMatchSnapshot();
+    it('is accessible ', async () => {
+      const { container } = withState(githubReleasesMock).render(
+        <TestRouter>
+          <PullSecretSection token={token} />
+        </TestRouter>,
+      );
+
+      expect(screen.getByRole('button', { name: 'Download pull secret' })).toHaveAttribute(
+        'aria-disabled',
+        'false',
+      );
+
+      await checkAccessibility(container);
     });
   });
 
   describe('with error', () => {
-    const token = { error: 'my error' };
-    const wrapper = shallow(<PullSecretSection token={token} />);
+    const badToken = { error: 'my error' };
 
-    it('should render', () => {
-      expect(wrapper).toMatchSnapshot();
+    it('is accessible', async () => {
+      const { container } = withState(githubReleasesMock).render(
+        <TestRouter>
+          <PullSecretSection token={badToken} />
+        </TestRouter>,
+      );
+
+      expect(screen.getByRole('button', { name: 'Download pull secret' })).toHaveAttribute(
+        'aria-disabled',
+        'true',
+      );
+
+      await checkAccessibility(container);
     });
   });
 });

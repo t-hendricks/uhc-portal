@@ -1,36 +1,84 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { screen, checkAccessibility, render } from '~/testUtils';
 
 import { InstructionsChooser } from '../InstructionsChooser';
 
-describe('InstructionsChooser', () => {
-  it('renders correctly with default settings', () => {
-    const wrapper = shallow(
+const mockHistoryPush = jest.fn();
+
+jest.mock('react-router-dom', () => ({
+  ...jest.requireActual('react-router-dom'),
+  useHistory: () => ({
+    push: mockHistoryPush,
+  }),
+}));
+
+const checkForCard = async (url, cardTitle, user) => {
+  const instructionCard = screen.getByRole('link', { name: cardTitle });
+  expect(instructionCard).toBeInTheDocument();
+  await user.click(instructionCard);
+  return expect(mockHistoryPush).lastCalledWith(url);
+};
+
+describe('<InstructionsChooser />', () => {
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
+
+  it('renders correctly with default settings', async () => {
+    const ipiPageLink = '/install/aws/installer-provisioned';
+    const upiPageLink = '/install/aws/user-provisioned';
+    const { container, user } = render(
+      <InstructionsChooser ipiPageLink={ipiPageLink} upiPageLink={upiPageLink} />,
+    );
+
+    await checkAccessibility(container);
+
+    await checkForCard(ipiPageLink, 'Automated CLI-based', user);
+    await checkForCard(upiPageLink, 'Full control CLI-based', user);
+
+    const aiLink = screen.queryByRole('link', { name: 'Interactive Recommended Web-based' });
+    expect(aiLink).not.toBeInTheDocument();
+  });
+
+  it('renders correctly with AI enabled', async () => {
+    const aiPageLink = '/assisted-installer/clusters/~new';
+    const ipiPageLink = '/install/metal/installer-provisioned';
+    const upiPageLink = '/install/metal/user-provisioned';
+
+    const { container, user } = render(
       <InstructionsChooser
-        ipiPageLink="/install/aws/installer-provisioned"
-        upiPageLink="/install/aws/user-provisioned"
+        aiPageLink={aiPageLink}
+        ipiPageLink={ipiPageLink}
+        upiPageLink={upiPageLink}
       />,
     );
-    expect(wrapper).toMatchSnapshot();
+    await checkAccessibility(container);
+
+    await checkForCard(ipiPageLink, 'Automated CLI-based', user);
+    await checkForCard(upiPageLink, 'Full control CLI-based', user);
+    await checkForCard(aiPageLink, 'Interactive Recommended Web-based', user);
   });
-  it('renders correctly with AI enabled', () => {
-    const wrapper = shallow(
+
+  it('renders correctly with AI and UPI', async () => {
+    const aiPageLink = '/assisted-installer/clusters/~new';
+    const ipiPageLink = '/install/metal/installer-provisioned';
+    const upiPageLink = '/install/metal/user-provisioned';
+
+    const { container, user } = render(
       <InstructionsChooser
-        aiPageLink="/assisted-installer/clusters/~new"
-        ipiPageLink="/install/metal/installer-provisioned"
-        upiPageLink="/install/metal/user-provisioned"
-      />,
-    );
-    expect(wrapper).toMatchSnapshot();
-  });
-  it('renders correctly with AI and UPI', () => {
-    const wrapper = shallow(
-      <InstructionsChooser
-        aiPageLink="/assisted-installer/clusters/~new"
+        aiPageLink={aiPageLink}
+        ipiPageLink={ipiPageLink}
+        upiPageLink={upiPageLink}
         hideIPI
-        upiPageLink="/install/arm/user-provisioned"
       />,
     );
-    expect(wrapper).toMatchSnapshot();
+
+    await checkAccessibility(container);
+
+    await checkForCard(upiPageLink, 'Full control CLI-based', user);
+    await checkForCard(aiPageLink, 'Interactive Recommended Web-based', user);
+
+    const ipiLink = screen.queryByRole('link', { name: 'Automated CLI-based' });
+    expect(ipiLink).not.toBeInTheDocument();
   });
 });
