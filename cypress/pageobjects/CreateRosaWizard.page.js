@@ -501,7 +501,7 @@ class CreateRosaCluster extends Page {
   }
 
   selectAvailabilityZoneRegion(avilabilityZoneRegion) {
-    cy.get(".pf-c-select__menu:contains('Select availability zone')").within(() => {
+    cy.get(".pf-v5-c-select__menu:contains('Select availability zone')").within(() => {
       cy.get('li').contains(avilabilityZoneRegion).click();
     });
   }
@@ -522,8 +522,16 @@ class CreateRosaCluster extends Page {
     cy.get('#etcd_encryption').check().should('be.enabled');
   }
 
+  isEtcEncryptionDisabled() {
+    cy.get('#etcd_encryption').should('be.disabled');
+  }
+
   enableFips() {
     cy.get('#fips').check().should('be.enabled');
+  }
+
+  isFipsDisabled() {
+    cy.get('#fips').should('be.disabled');
   }
 
   inputRootDiskSize(rootDiskSize) {
