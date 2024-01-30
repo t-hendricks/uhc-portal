@@ -1076,6 +1076,42 @@
         }
       }
     },
+    "/api/clusters_mgmt/v1/aws_inquiries/validate_credentials": {
+      "post": {
+        "description": "Manages aws creds validation.",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CloudProviderData"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Success.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CloudProviderData"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/clusters_mgmt/v1/aws_inquiries/vpcs": {
       "post": {
         "description": "Retrieves the list of available vpcs of the cloud provider for specific region.\nIMPORTANT: This collection doesn't currently support paging or searching, so the returned\n`page` will always be 1 and `size` and `total` will always be the total number of available vpcs\nof the provider.",
@@ -7303,12 +7339,28 @@
             "required": true
           },
           {
+            "name": "order",
+            "description": "Order criteria.\n\nThe syntax of this parameter is similar to the syntax of the _order by_ clause of\na SQL statement, but using the names of the attributes of the node pools instead of\nthe names of the columns of a table. For example, in order to sort the node pools\ndescending by identifier the value should be:\n\n```sql\nid desc\n```\n\nIf the parameter isn't provided, or if the value is empty, then the order of the\nresults is undefined.",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
             "name": "page",
             "description": "Index of the requested page, where one corresponds to the first page.",
             "in": "query",
             "schema": {
               "type": "integer",
               "format": "int32"
+            }
+          },
+          {
+            "name": "search",
+            "description": "Search criteria.\n\nThe syntax of this parameter is similar to the syntax of the _where_ clause of a\nSQL statement, but using the names of the attributes of the node pools instead of\nthe names of the columns of a table. For example, in order to retrieve all the\nnode pools with replicas of two the following is required:\n\n```sql\nreplicas = 2\n```\n\nIf the parameter isn't provided, or if the value is empty, then all the\nnode pools that the user has permission to see will be returned.",
+            "in": "query",
+            "schema": {
+              "type": "string"
             }
           },
           {
@@ -9834,6 +9886,86 @@
                     },
                     "total": {
                       "description": "Total number of items of the collection that match the search criteria,\nregardless of the size of the page. As this collection doesn't support paging or\nsearching the result will always be the total number of available key rings of the provider.",
+                      "type": "integer",
+                      "format": "int32"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/clusters_mgmt/v1/gcp_inquiries/machine_types": {
+      "post": {
+        "description": "Retrieves the list of machine types in the provided region.",
+        "parameters": [
+          {
+            "name": "page",
+            "description": "Index of the requested page, where one corresponds to the first page.",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "size",
+            "description": "Maximum number of items that will be contained in the returned page.",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CloudProviderData"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "items": {
+                      "description": "Retrieved list of machine types.",
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/MachineType"
+                      }
+                    },
+                    "page": {
+                      "description": "Index of the requested page, where one corresponds to the first page.",
+                      "type": "integer",
+                      "format": "int32"
+                    },
+                    "size": {
+                      "description": "Maximum number of items that will be contained in the returned page.",
+                      "type": "integer",
+                      "format": "int32"
+                    },
+                    "total": {
+                      "description": "Total number of items of the collection that match the search criteria,\nregardless of the size of the page.",
                       "type": "integer",
                       "format": "int32"
                     }
@@ -15366,6 +15498,10 @@
               "$ref": "#/components/schemas/SubnetNetworkVerification"
             }
           },
+          "platform": {
+            "description": "Platform needed to execute the network verification.",
+            "$ref": "#/components/schemas/Platform"
+          },
           "total": {
             "description": "Amount of network verifier executions started.",
             "type": "integer",
@@ -15787,6 +15923,17 @@
           }
         }
       },
+      "Platform": {
+        "description": "Representation of an platform type field.",
+        "type": "string",
+        "enum": [
+          "aws",
+          "aws-classic",
+          "aws-hosted-cp",
+          "gcp",
+          "hostedcluster"
+        ]
+      },
       "PrivateLinkClusterConfiguration": {
         "description": "Manages the configuration for the Private Links.",
         "properties": {
@@ -16164,6 +16311,10 @@
             "items": {
               "type": "string"
             }
+          },
+          "platform": {
+            "description": "Platform supplied to the network verifier for this subnet.",
+            "$ref": "#/components/schemas/Platform"
           },
           "state": {
             "description": "State of the subnet network verification.",

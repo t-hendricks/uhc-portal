@@ -143,6 +143,7 @@ export type { OpenIDIdentityProvider } from './models/OpenIDIdentityProvider';
 export type { OperatorIAMRole } from './models/OperatorIAMRole';
 export type { OrganizationLink } from './models/OrganizationLink';
 export type { PendingDeleteCluster } from './models/PendingDeleteCluster';
+export { Platform } from './models/Platform';
 export type { PrivateLinkClusterConfiguration } from './models/PrivateLinkClusterConfiguration';
 export type { PrivateLinkConfiguration } from './models/PrivateLinkConfiguration';
 export type { PrivateLinkPrincipal } from './models/PrivateLinkPrincipal';
