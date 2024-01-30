@@ -67,6 +67,7 @@ export namespace SelfAccessReview {
     CLUSTER_SELF_MANAGED_ADDON = 'ClusterSelfManagedAddon',
     CLUSTER_SELF_MANAGED_LABEL = 'ClusterSelfManagedLabel',
     CLUSTER_SELF_MANAGED_STATUS = 'ClusterSelfManagedStatus',
+    CLUSTER_KUBELET_CONFIG = 'ClusterKubeletConfig',
     MACHINE_POOL = 'MachinePool',
   }
 }

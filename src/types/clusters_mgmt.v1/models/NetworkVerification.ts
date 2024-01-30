@@ -3,6 +3,7 @@
 /* eslint-disable */
 
 import type { CloudProviderData } from './CloudProviderData';
+import type { Platform } from './Platform';
 import type { SubnetNetworkVerification } from './SubnetNetworkVerification';
 
 export type NetworkVerification = {
@@ -18,6 +19,10 @@ export type NetworkVerification = {
    * Details about each subnet network verification.
    */
   items?: Array<SubnetNetworkVerification>;
+  /**
+   * Platform needed to execute the network verification.
+   */
+  platform?: Platform;
   /**
    * Amount of network verifier executions started.
    */
