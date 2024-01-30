@@ -14,7 +14,7 @@ import {
   isReadyForRoleAccessActions,
 } from '../../clusterDetailsHelper';
 
-function AccessControl({ cluster, history, refreshEvent = null }) {
+function AccessControl({ cluster, refreshEvent = null }) {
   const [activeKey, setActiveKey] = React.useState(0);
 
   // class for whether display vertical tabs (wider screen)
@@ -92,7 +92,6 @@ function AccessControl({ cluster, history, refreshEvent = null }) {
             <IDPSection
               clusterID={get(cluster, 'id')}
               isHypershift={isHypershiftCluster(cluster)}
-              history={history}
               clusterUrls={clusterUrls}
               idpActions={cluster.idpActions}
               clusterHibernating={isHibernating(cluster)}
@@ -144,7 +143,6 @@ function AccessControl({ cluster, history, refreshEvent = null }) {
 
 AccessControl.propTypes = {
   cluster: PropTypes.object.isRequired,
-  history: PropTypes.object,
   refreshEvent: PropTypes.object,
 };
 
