@@ -44,6 +44,15 @@ class ButtonHelper {
           cy.contains(title, { timeout: 60000 });
         }
         cy.go('back');
+        cy.get('body').then(($body) => {
+          let leaveBtnArray;
+          if (
+            (leaveBtnArray = $body.find('[data-testid="leave-cluster-prompt-button"]')).length > 0
+          ) {
+            leaveBtnArray[0].click();
+          }
+          return true;
+        });
         return this;
       },
       get cyObj() {
