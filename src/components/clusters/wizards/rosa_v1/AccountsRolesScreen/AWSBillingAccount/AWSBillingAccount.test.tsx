@@ -362,7 +362,11 @@ describe('<AWSBillingAccount />', () => {
       [HCP_AWS_BILLING_SHOW, true],
       [HCP_AWS_BILLING_REQUIRED, false],
     ]);
-    withState(defaultState).render(<ConnectedAWSBillingAccount {...defaultProps} />);
+    withState(defaultState).render(
+      <ConnectedAWSBillingAccount
+        {...{ ...defaultProps, selectedAWSBillingAccountID: 'notValidChoice' }}
+      />,
+    );
 
     // Assert
     expect(screen.queryByText('Field is required')).not.toBeInTheDocument(); // With the PF 4 select,this is the only way to determine if an element is required
@@ -375,7 +379,11 @@ describe('<AWSBillingAccount />', () => {
       [HCP_AWS_BILLING_SHOW, true],
       [HCP_AWS_BILLING_REQUIRED, true],
     ]);
-    withState(defaultState).render(<ConnectedAWSBillingAccount {...defaultProps} />);
+    withState(defaultState).render(
+      <ConnectedAWSBillingAccount
+        {...{ ...defaultProps, selectedAWSBillingAccountID: 'notValidChoice' }}
+      />,
+    );
 
     // Assert
     expect(screen.getByText('Field is required')).toBeInTheDocument(); // With the PF 4 select,this is the only way to determine if an element is required
