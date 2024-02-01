@@ -74,7 +74,9 @@ const AWSBillingAccount = ({
       // if selected account is not on the list after refresh
       if (
         selectedAWSBillingAccountID &&
-        !getAWSBillingAccountsResponse.data.includes(selectedAWSBillingAccountID)
+        !getAWSBillingAccountsResponse.data.some(
+          (account: CloudAccount) => account.cloud_account_id === selectedAWSBillingAccountID,
+        )
       ) {
         // reset the field
         change('billing_account_id', '');
