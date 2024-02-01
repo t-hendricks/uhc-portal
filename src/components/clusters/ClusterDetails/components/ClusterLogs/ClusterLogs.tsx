@@ -11,7 +11,6 @@ import {
 } from '@patternfly/react-core';
 import SearchIcon from '@patternfly/react-icons/dist/esm/icons/search-icon';
 import isEmpty from 'lodash/isEmpty';
-import isEqual from 'lodash/isEqual';
 import size from 'lodash/size';
 import React from 'react';
 import { useHistory } from 'react-router';
@@ -21,8 +20,6 @@ import { viewActions } from '~/redux/actions/viewOptionsActions';
 import { useGlobalState } from '~/redux/hooks';
 import { ViewSorting } from '~/types/types';
 
-import LogTable from './LogTable';
-import ClusterLogsToolbar from './toolbar';
 import helpers from '../../../../../common/helpers';
 import {
   buildFilterURLParams,
@@ -33,8 +30,10 @@ import { viewConstants } from '../../../../../redux/constants';
 import ErrorBox from '../../../../common/ErrorBox';
 import LiveDateFormat from '../../../../common/LiveDateFormat/LiveDateFormat';
 import ViewPaginationRow from '../../../common/ViewPaginationRow/viewPaginationRow';
+import LogTable from './LogTable';
 import { clusterLogActions } from './clusterLogActions';
 import { LOG_TYPES, SEVERITY_TYPES } from './clusterLogConstants';
+import ClusterLogsToolbar from './toolbar';
 import {
   dateFormat,
   dateParse,
@@ -92,24 +91,30 @@ const ClusterLogs = ({
         ),
       );
     }
-  }, [dispatch, viewType]);
 
-  React.useEffect(() => {
+    let filter;
+
+    const loggedBy = getQueryParam('loggedBy') || '';
+    const description = getQueryParam('description') || '';
+    if (!isEmpty(description) || !isEmpty(description)) {
+      filter = { loggedBy, description };
+    }
+
     if (createdAt) {
       // Apply a timestamp filter by default
       const minDate = dateParse(createdAt);
       const { symbol, date } = onDateChangeFromFilter(dateFormat(getTimestampFrom(minDate)));
-      const filterObject = {
-        ...(viewOptions.filter as object),
+      filter = {
+        ...(filter ?? {}),
         timestampFrom: `${symbol} '${date}'`,
       };
-
-      if (!isEqual(filterObject, viewOptions.filter)) {
-        setHasChanged(true);
-        dispatch(viewActions.onListFilterSet(filterObject, viewType));
-      }
     }
-  }, [createdAt, viewOptions.filter, dispatch, viewType]);
+
+    if (filter) {
+      setHasChanged(true);
+      dispatch(viewActions.onListFilterSet(filter, viewType));
+    }
+  }, [createdAt, dispatch, viewType]);
 
   React.useEffect(() => {
     if (
@@ -117,8 +122,8 @@ const ClusterLogs = ({
       (!requestState.pending || (!hasChanged && (externalClusterID || clusterID)))
     ) {
       dispatch(clusterLogActions.getClusterHistory(externalClusterID, clusterID, viewOptions));
+      setPreviousViewOptions(viewOptions);
     }
-    setPreviousViewOptions(viewOptions);
   }, [
     dispatch,
     previousViewOptions,
@@ -145,12 +150,21 @@ const ClusterLogs = ({
 
   React.useEffect(() => {
     if (isVisible === true) {
+      const filters: {
+        [flag: string]: string[];
+      } = Object.entries(viewOptions.filter)
+        .filter((e) => ['description', 'loggedBy'].includes(e[0]) && e[1])
+        .reduce((acc, curr) => ({ ...acc, [`${curr[0]}`]: [curr[1]] }), {});
+
       history.push({
         ...history.location,
-        search: buildFilterURLParams(viewOptions.flags.conditionalFilterFlags || {}),
+        search: buildFilterURLParams({
+          ...filters,
+          ...(viewOptions.flags.conditionalFilterFlags || {}),
+        }),
       });
     }
-  }, [isVisible, viewOptions.flags.conditionalFilterFlags, history]);
+  }, [isVisible, viewOptions.flags.conditionalFilterFlags, viewOptions.filter, history]);
 
   return (
     <Card className="ocm-c-overview-cluster-history__card">

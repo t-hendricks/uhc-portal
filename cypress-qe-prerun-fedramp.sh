@@ -20,10 +20,10 @@ AWS_REGION=`echo "$config_json" | jq -r '.QE_AWS_REGION'`
 QE_ENV_PREFIX=`echo "$config_json" | jq -r '.QE_ENV_PREFIX'`
 VPC_NAME=`echo "$config_json" | jq -r '.VPC_NAME'`
 
-
-OCM_ROLE_PREFIX="cypress-ocm-role-${QE_ENV_PREFIX}"
-USER_ROLE_PREFIX="cypress-user-role-${QE_ENV_PREFIX}"
-ACOUNT_ROLE_PREFIX="cypress-account-roles-${QE_ENV_PREFIX}"
+# Prefix string has a length limit
+OCM_ROLE_PREFIX="qe-test-${QE_ENV_PREFIX}"
+USER_ROLE_PREFIX="qe-test-${QE_ENV_PREFIX}"
+ACOUNT_ROLE_PREFIX="qe-test-${QE_ENV_PREFIX}"
 
 # Executing ROSA commands for pre-config step.
 echo "Executing ROSA pre-config commands"
@@ -54,7 +54,6 @@ elif [[ $ENV_AUT == "staging" && $GOV_CLOUD == true ]]; then
   rosa login --govcloud --env=$ENV_AUT --token=$QE_ORGADMIN_OFFLINE_TOKEN
 fi
 
-
 linked_ocmrole=$(rosa list ocm-roles | awk '$3 == "Yes" { print $2 }')
 if [ ! -z $linked_ocmrole ];then
     rosa unlink ocm-role --role-arn $linked_ocmrole  -y && break
@@ -65,7 +64,7 @@ if [ ! -z $linked_userrole ];then
   rosa unlink user-role --role-arn $linked_userrole  -y
 fi
 ocmroles_success_msg=$(rosa create ocm-role --prefix $OCM_ROLE_PREFIX --mode auto --admin -y 2>&1)
-orphen_ocmroles=$(echo $ocmroles_success_msg |  grep "unlink" | sed -n -l4 "s/.*\(arn:aws:iam::${TEST_QE_AWS_ID}:.*[0-9]\).*/\1/p")
+orphen_ocmroles=$(echo $ocmroles_success_msg |  grep "unlink" | sed -n -l4 "s/.*\(${QE_AWS_ARN_PREFIX}::${TEST_QE_AWS_ID}:.*[0-9]\).*/\1/p")
 if [ ! -z $orphen_ocmroles ];then
   rosa unlink ocm-role --role-arn $orphen_ocmroles  -y
   ocmroles_success_msg=$(rosa create ocm-role --prefix $OCM_ROLE_PREFIX --mode auto --admin -y)
@@ -73,7 +72,7 @@ fi
 echo $ocmroles_success_msg
 
 userroles_success_msg=$(rosa create user-role --prefix $USER_ROLE_PREFIX --mode auto -y 2>&1)
-orphen_userroles=$(echo $userroles_success_msg |  grep "unlink" | sed -n "s/.*\(arn:aws:iam::${TEST_QE_AWS_ID}:.*[0-9]\).*/\1/p")
+orphen_userroles=$(echo $userroles_success_msg |  grep "unlink" | sed -n "s/.*\(${QE_AWS_ARN_PREFIX}::${TEST_QE_AWS_ID}:.*[0-9]\).*/\1/p")
 
 if [ ! -z $orphen_userroles ];then
   rosa unlink user-role --role-arn $orphen_userroles  -y
@@ -81,6 +80,5 @@ if [ ! -z $orphen_userroles ];then
 fi
 echo $userroles_success_msg
 rosa create account-roles --prefix $ACOUNT_ROLE_PREFIX --mode auto -y
-rosa create oidc-config --mode auto -y
 
 echo "Completed ROSA pre-config commands!"

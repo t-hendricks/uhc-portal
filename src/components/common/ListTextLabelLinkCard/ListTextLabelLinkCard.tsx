@@ -6,6 +6,7 @@ export type TextLabelLinkItem = {
   listItemText: string;
   listItemLabel: ReactNode;
   listItemLink: ReactNode;
+  dataTestId?: string;
 };
 
 export type ListTextLabelLinkCardProps = {
@@ -20,35 +21,37 @@ export function ListTextLabelLinkCard(props: ListTextLabelLinkCardProps) {
     <Card className={cardClassName}>
       <List isPlain isBordered>
         {textLabelLinkItems.length &&
-          textLabelLinkItems.map(({ listItemText, listItemLabel, listItemLink }, index) => {
-            let splitClassName = 'pf-v5-u-pt-md pf-v5-u-pr-md pf-v5-u-pb-md pf-v5-u-pl-md';
-            if (index === textLabelLinkItems.length - 1) {
-              splitClassName += ' pf-v5-u-pb-lg';
-            }
-            if (index === 0) {
-              splitClassName += ' pf-v5-u-pt-lg';
-            }
+          textLabelLinkItems.map(
+            ({ listItemText, listItemLabel, listItemLink, dataTestId }, index) => {
+              let splitClassName = 'pf-v5-u-pt-md pf-v5-u-pr-md pf-v5-u-pb-md pf-v5-u-pl-md';
+              if (index === textLabelLinkItems.length - 1) {
+                splitClassName += ' pf-v5-u-pb-lg';
+              }
+              if (index === 0) {
+                splitClassName += ' pf-v5-u-pt-lg';
+              }
 
-            return (
-              <ListItem key={listItemText}>
-                <Split className={splitClassName} hasGutter>
-                  <SplitItem style={{ width: '60%' }}>
-                    <Split>
-                      <SplitItem>{listItemText}</SplitItem>
-                      <SplitItem isFilled />
-                    </Split>
-                  </SplitItem>
-                  <SplitItem style={{ width: '40%' }}>
-                    <Split>
-                      <SplitItem>{listItemLabel}</SplitItem>
-                      <SplitItem isFilled />
-                      <SplitItem>{listItemLink}</SplitItem>
-                    </Split>
-                  </SplitItem>
-                </Split>
-              </ListItem>
-            );
-          })}
+              return (
+                <ListItem key={listItemText}>
+                  <Split className={splitClassName} hasGutter data-testid={dataTestId}>
+                    <SplitItem style={{ width: '60%' }}>
+                      <Split>
+                        <SplitItem>{listItemText}</SplitItem>
+                        <SplitItem isFilled />
+                      </Split>
+                    </SplitItem>
+                    <SplitItem style={{ width: '40%' }}>
+                      <Split>
+                        <SplitItem data-testtag="label">{listItemLabel}</SplitItem>
+                        <SplitItem isFilled />
+                        <SplitItem>{listItemLink}</SplitItem>
+                      </Split>
+                    </SplitItem>
+                  </Split>
+                </ListItem>
+              );
+            },
+          )}
       </List>
     </Card>
   );

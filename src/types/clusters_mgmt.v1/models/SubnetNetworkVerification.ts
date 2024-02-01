@@ -2,6 +2,8 @@
 /* tslint:disable */
 /* eslint-disable */
 
+import type { Platform } from './Platform';
+
 export type SubnetNetworkVerification = {
   /**
    * Indicates the type of this object. Will be 'SubnetNetworkVerification' if this is a complete object or 'SubnetNetworkVerificationLink' if it is just a link.
@@ -19,6 +21,10 @@ export type SubnetNetworkVerification = {
    * Slice of failures that happened during a subnet network verification.
    */
   details?: Array<string>;
+  /**
+   * Platform supplied to the network verifier for this subnet.
+   */
+  platform?: Platform;
   /**
    * State of the subnet network verification.
    */

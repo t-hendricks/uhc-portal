@@ -24,21 +24,25 @@ const linkTextLabelLinkCardContents: ListTextLabelLinkCardProps = {
       listItemLink: (
         <ExternalLink href={docLinks.OCM_DOCS_MANAGING_CLUSTERS}>Learn More</ExternalLink>
       ),
+      dataTestId: 'recommendedContent_OCM',
     },
     {
       listItemText: 'OpenShift Serverless overview',
       listItemLabel: <Label color="gold">Documentation</Label>,
       listItemLink: <ExternalLink href={docLinks.SERVERLESS_ABOUT}>Learn More</ExternalLink>,
+      dataTestId: 'recommendedContent_ServerLess',
     },
     {
       listItemText: 'Understanding Service Mesh',
       listItemLabel: <Label color="gold">Documentation</Label>,
       listItemLink: <ExternalLink href={docLinks.SERVICE_MESH_ABOUT}>Learn More</ExternalLink>,
+      dataTestId: 'recommendedContent_ServiceMesh',
     },
     {
       listItemText: 'About OpenShift Virtualization',
       listItemLabel: <Label color="gold">Documentation</Label>,
       listItemLink: <ExternalLink href={docLinks.VIRT_ABOUT}>Learn More</ExternalLink>,
+      dataTestId: 'recommendedContent_OVIRT',
     },
   ],
 };
@@ -57,6 +61,7 @@ const openshiftBannerContents: ProductBannerProps = {
       Develop, modernize, deploy, run, and manage your applications faster and easier.
     </>
   ),
+  dataTestId: 'OverviewHeader',
 };
 
 function OverviewEmptyState() {
@@ -69,28 +74,29 @@ function OverviewEmptyState() {
         learnMoreLink={openshiftBannerContents.learnMoreLink}
         title={openshiftBannerContents.title}
         text={openshiftBannerContents.text}
+        dataTestId={openshiftBannerContents.dataTestId}
       />
       <PageSection>
         <Title size="xl" headingLevel="h2" className="pf-v5-u-mt-lg">
           Featured OpenShift cluster types
         </Title>
         <Flex className="pf-v5-u-mb-lg">
-          <FlexItem className="pf-v5-u-pt-md">
+          <FlexItem className="pf-v5-u-pt-md" data-testid="offering-card_RHOSD">
             <OfferingCard offeringType="RHOSD" />
           </FlexItem>
-          <FlexItem className="pf-v5-u-pt-md">
+          <FlexItem className="pf-v5-u-pt-md" data-testid="offering-card_AWS">
             <OfferingCard offeringType="AWS" />
           </FlexItem>
-          <FlexItem className="pf-v5-u-pt-md">
+          <FlexItem className="pf-v5-u-pt-md" data-testid="offering-card_Azure">
             <OfferingCard offeringType="Azure" />
           </FlexItem>
-          <FlexItem className="pf-v5-u-pt-md">
+          <FlexItem className="pf-v5-u-pt-md" data-testid="offering-card_RHOCP">
             <OfferingCard offeringType="RHOCP" />
           </FlexItem>
-          <FlexItem className="pf-v5-u-pt-md">
+          <FlexItem className="pf-v5-u-pt-md" data-testid="offering-card_RHOIBM">
             <OfferingCard offeringType="RHOIBM" />
           </FlexItem>
-          <FlexItem className="pf-v5-u-pt-md">
+          <FlexItem className="pf-v5-u-pt-md" data-testid="offering-card_DEVSNBX">
             <OfferingCard offeringType="DEVSNBX" />
           </FlexItem>
         </Flex>
@@ -116,7 +122,10 @@ function OverviewEmptyState() {
           Recommended Content
         </Title>
         <ListTextLabelLinkCard {...linkTextLabelLinkCardContents} />
-        <ExternalLink href="/openshift/learning-resources">
+        <ExternalLink
+          data-testid="recommendedContentFooterLink"
+          href="/openshift/learning-resources"
+        >
           Browse all OpenShift learning resources
         </ExternalLink>
       </PageSection>

@@ -38,21 +38,17 @@ class ReduxFileUpload extends React.Component {
     onBlur(event);
   };
 
-  handleFileChange = (value, _, e) => {
+  handleFileChange = (_e, file) => {
     const { input } = this.props;
-    if (e.target.files) {
-      const file = e.target.files[0];
-      const reader = new FileReader();
-      reader.onload = () => {
-        this.setState({
-          filename: file.name,
-        });
-        input.onChange(reader.result);
-      };
-      reader.readAsText(file, 'UTF-8');
-    } else {
-      input.onChange(value);
-    }
+    this.setState({
+      filename: file.name,
+    });
+    input.onChange(file);
+  };
+
+  handleFileContentChange = (_e, file) => {
+    const { input } = this.props;
+    input.onChange(file);
   };
 
   handleFileRejected = (rejectedFiles, event) => {
@@ -68,6 +64,9 @@ class ReduxFileUpload extends React.Component {
   };
 
   handleClear = () => {
+    const { input } = this.props;
+    input.onChange('');
+
     this.setState({ filename: '' });
   };
 
@@ -102,6 +101,9 @@ class ReduxFileUpload extends React.Component {
           value={value}
           filename={filename}
           validated={(dirty || touched) && error ? 'error' : 'default'}
+          onFileInputChange={this.handleFileChange}
+          onDataChange={this.handleFileContentChange}
+          onTextChange={this.handleFileContentChange}
           onClearClick={this.handleClear}
           dropzoneProps={{
             ...dropzoneProps,

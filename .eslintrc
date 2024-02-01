@@ -57,6 +57,7 @@
           "**/*.spec.ts*",
           "webpack.config.js",
           "src/testUtils.tsx",
+          "deploy_info.mjs",
           "scripts/**/*"
         ]
       }

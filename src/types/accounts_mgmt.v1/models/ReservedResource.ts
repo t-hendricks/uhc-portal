@@ -14,6 +14,7 @@ export type ReservedResource = ObjectReference & {
   created_at?: string;
   resource_name?: string;
   resource_type?: ReservedResource.resource_type;
+  scope?: string;
   subscription?: ObjectReference;
   updated_at?: string;
 };

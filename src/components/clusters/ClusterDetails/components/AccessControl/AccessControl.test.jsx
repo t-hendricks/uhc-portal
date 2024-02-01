@@ -1,5 +1,6 @@
 import React from 'react';
 import { MemoryRouter } from 'react-router-dom';
+import { CompatRouter } from 'react-router-dom-v5-compat';
 import { render, screen } from '~/testUtils';
 import { normalizedProducts } from '~/common/subscriptionTypes';
 import clusterStates from '~/components/clusters/common/clusterStates';
@@ -26,7 +27,9 @@ const buildCluster = ({ clusterProps, subscriptionProps, consoleUrl, apiUrl }) =
 describe('<AccessControl />', () => {
   const buildComponent = (cluster) => (
     <MemoryRouter>
-      <AccessControl cluster={cluster || buildCluster({})} />
+      <CompatRouter>
+        <AccessControl cluster={cluster || buildCluster({})} />
+      </CompatRouter>
     </MemoryRouter>
   );
 

@@ -3,6 +3,7 @@
 /* eslint-disable */
 
 export type { cluster } from './models/cluster';
+export type { CostGroupsResponse } from './models/CostGroupsResponse';
 export { CostModel } from './models/CostModel';
 export type { CostModelOut } from './models/CostModelOut';
 export type { CostModelPagination } from './models/CostModelPagination';
