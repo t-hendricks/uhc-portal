@@ -1,21 +1,10 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+
+import { render, screen, checkAccessibility } from '~/testUtils';
+import * as useAnalyticsHook from '~/hooks/useAnalytics';
 
 import { tools, channels } from '../../../../../../common/installLinks.mjs';
 import DownloadAndOSSelection from './DownloadAndOSSelection';
-
-// only a subset of installLinks.tools are used with DownloadAndOSSelection
-const testtools = [
-  tools.OC,
-  tools.CRC,
-  tools.X86INSTALLER,
-  tools.IBMZINSTALLER,
-  tools.PPCINSTALLER,
-  tools.ARMINSTALLER,
-  tools.MULTIINSTALLER,
-  tools.OCM,
-  tools.ROSA,
-];
 
 const props = {
   channel: channels.STABLE,
@@ -34,20 +23,43 @@ const props = {
   getLatestRelease: () => {},
 };
 
-describe('DownloadAndOSSelection', () =>
-  test.each(testtools)('%s renders correctly', (tool) => {
-    const wrapper = shallow(<DownloadAndOSSelection tool={tool} {...props} />);
-    expect(wrapper).toMatchSnapshot();
-  }));
+describe('<DownloadAndOSSelection />', () => {
+  const useAnalytics = jest.fn();
+  jest.spyOn(useAnalyticsHook, 'default').mockImplementation(() => useAnalytics);
 
-describe('DownloadAndOSSelection', () => {
-  describe('with pendoId', () => {
-    const pendoId = 'some-id';
-    const wrapper = shallow(
-      <DownloadAndOSSelection pendoID={pendoId} tool={tools.X86INSTALLER} {...props} />,
-    );
-    it('should render', () => {
-      expect(wrapper).toMatchSnapshot();
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
+
+  it('is accessible', async () => {
+    const { container } = render(<DownloadAndOSSelection tool={tools.X86INSTALLER} {...props} />);
+
+    const osDropdown = screen.getByRole('combobox', { name: 'Select OS dropdown' });
+    expect(osDropdown).toBeInTheDocument();
+    expect(osDropdown).not.toBeDisabled();
+
+    const architectureDropdown = screen.getByRole('combobox', {
+      name: 'Select architecture dropdown',
     });
+    expect(architectureDropdown).toBeInTheDocument();
+    expect(architectureDropdown).toBeDisabled();
+
+    const downloadButton = screen.getByRole('link', { name: 'Download installer' });
+    expect(downloadButton).toBeInTheDocument();
+    expect(downloadButton).not.toBeDisabled();
+
+    await checkAccessibility(container);
+  });
+
+  it(' pendoID is sent to useAnalytics call', async () => {
+    const pendoId = 'myPendoId';
+    const { user } = render(
+      <DownloadAndOSSelection tool={tools.X86INSTALLER} {...props} pendoID={pendoId} />,
+    );
+    await user.click(screen.getByRole('link', { name: 'Download installer' }));
+
+    const useAnalyticsParams = useAnalytics.mock.calls[0];
+
+    expect(useAnalyticsParams[1].path).toEqual(pendoId);
   });
 });

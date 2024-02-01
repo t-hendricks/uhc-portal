@@ -62,9 +62,9 @@ EOF
 
 # Get token from UI
 npx cypress run --config baseUrl="${CYPRESS_BASE_URL}" --spec cypress/e2e/rosa/RosaGetTokenFedRamp.js
-source "${PWD}/rosa-login-token.sh"
+TOKEN=$(cat ${PWD}/rosa-login-token.sh)
 if [ ! -z "${TOKEN}" ]; then
-  jq ".QE_ORGADMIN_OFFLINE_TOKEN = \"$TOKEN\"" cypress.env.json > tmp.json && mv tmp.json cypress.env.json
+  jq ".QE_ORGADMIN_OFFLINE_TOKEN = $TOKEN" cypress.env.json > tmp.json && mv tmp.json cypress.env.json
 fi
 
 aws configure set aws_access_key_id "${TEST_QE_AWS_ACCESS_KEY_ID}"
@@ -163,10 +163,12 @@ podman run \
   --volume "${PWD}/cypress:/cypress" \
   --volume "${PWD}/node_modules:/node_modules" \
   --env NO_COLOR=1 \
-  --env "CYPRESS_grepTags=${TAGS}" \
+  --env "CYPRESS_grepTags=${CYPRESS_grepTags}" \
   --entrypoint=cypress \
   "${browser_image}" \
   run --browser ${BROWSER} \
+  --config baseUrl=${CYPRESS_BASE_URL} \
+  --spec cypress/e2e/rosa/RosaClusterCreationFedRamp.js
   > cypress-browser.log 2>&1 \
   &
 

@@ -6,6 +6,7 @@ const modals = {
   ARCHIVE_CLUSTER: 'archive-cluster',
   UNARCHIVE_CLUSTER: 'unarchive-cluster',
   SCALE_CLUSTER: 'edit-cluster',
+  EDIT_CLUSTER_WIDE_PROXY: 'EDIT_CLUSTER_WIDE_PROXY',
   EDIT_DISPLAY_NAME: 'edit-display-name',
   EDIT_CONSOLE_URL: 'edit-console-url',
   EDIT_CLUSTER_INGRESS: 'edit-cluster-ingress',

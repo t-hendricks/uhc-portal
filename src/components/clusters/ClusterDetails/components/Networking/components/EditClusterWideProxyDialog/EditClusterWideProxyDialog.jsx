@@ -27,6 +27,17 @@ import { MAX_FILE_SIZE, ACCEPT } from '../../../IdentityProvidersPage/components
 const validateUrlHttp = (value) => validateUrl(value, 'http');
 const validateUrlHttps = (value) => validateUrl(value, 'https');
 
+const validateAtLeastOne = (value, allValues) => {
+  if (
+    !allValues.http_proxy_url &&
+    !allValues.https_proxy_url &&
+    !allValues.additional_trust_bundle
+  ) {
+    return 'Configure at least one of the cluster-wide proxy fields.';
+  }
+  return undefined;
+};
+
 const EditClusterWideProxyDialog = (props) => {
   const {
     isOpen,
@@ -48,14 +59,6 @@ const EditClusterWideProxyDialog = (props) => {
   );
   // sets trust bundle file upload depending on whether or not a trust bundle is already uploaded
   const [openFileUpload, setOpenFileUpload] = useState(!additionalTrustBundle);
-
-  const validateAtLeastOne = useCallback((value, allValues) => {
-    if (!allValues.http_proxy_url && !allValues.https_proxy_url && !additionalTrustBundle) {
-      return 'Configure at least one of the cluster-wide proxy fields.';
-    }
-    return undefined;
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
   const handleClose = useCallback(() => {
     reset();

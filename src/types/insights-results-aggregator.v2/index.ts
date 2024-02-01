@@ -6,6 +6,7 @@ export type { clusterId } from './models/clusterId';
 export type { clusterList } from './models/clusterList';
 export type { clusterListResponse } from './models/clusterListResponse';
 export type { gatheringRequests } from './models/gatheringRequests';
+export type { namespaceId } from './models/namespaceId';
 export type { ratingSchema } from './models/ratingSchema';
 export type { recommendationList } from './models/recommendationList';
 export type { recommendationListResponse } from './models/recommendationListResponse';

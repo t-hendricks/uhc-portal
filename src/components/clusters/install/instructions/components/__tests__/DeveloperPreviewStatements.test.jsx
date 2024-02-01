@@ -1,11 +1,11 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { render, checkAccessibility } from '~/testUtils';
 
 import DeveloperPreviewStatements from '../DeveloperPreviewStatements';
 
-describe('DeveloperPreviewStatements', () => {
-  it('renders correctly', () => {
-    const wrapper = shallow(<DeveloperPreviewStatements />);
-    expect(wrapper).toMatchSnapshot();
+describe('<DeveloperPreviewStatements />', () => {
+  it('is accessible', async () => {
+    const { container } = render(<DeveloperPreviewStatements />);
+    await checkAccessibility(container);
   });
 });

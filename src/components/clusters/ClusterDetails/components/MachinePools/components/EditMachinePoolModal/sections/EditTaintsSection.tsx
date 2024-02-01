@@ -42,7 +42,7 @@ const EditTaintsSection = ({
 
   let taintsDisabledReason: string | undefined;
   if (isDefaultMP) {
-    taintsDisabledReason = 'Taints cannot be added to default machine pool.';
+    taintsDisabledReason = 'Machine pool ineligible for taints';
   } else if (!isMinReplicaCount) {
     taintsDisabledReason =
       'Taints cannot be added unless there are at least 2 nodes without taints across all machine pools.';

@@ -46,7 +46,6 @@ run/ocm-api-metamodel:
 openapi: run/ocm-api-model run/ocm-api-metamodel
 	# Download those we use. See openapi/README.md.
 	curl https://api.stage.openshift.com/api/accounts_mgmt/v1/openapi | jq . > openapi/accounts_mgmt.v1.json
-	curl https://api.stage.openshift.com/api/authorizations/v1/openapi | jq . > openapi/authorizations.v1.json
 	curl https://api.stage.openshift.com/api/service_logs/v1/openapi | jq . > openapi/service_logs.v1.json
 	curl https://api.stage.openshift.com/api/upgrades_info/v1/openapi | jq . > openapi/upgrades_info.v1.json
 	curl https://console.redhat.com/api/insights-results-aggregator/v1/openapi.json | jq . > openapi/insights-results-aggregator.v1.json

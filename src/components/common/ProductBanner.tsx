@@ -20,14 +20,16 @@ export type ProductBannerProps = {
   text?: string | React.ReactNode;
   iconCardBodyClassName?: string;
   breadcrumbs?: React.ReactNode;
+  dataTestId?: string;
 };
 
 export const ProductBanner = (props: ProductBannerProps) => {
-  const { icon, learnMoreLink, title, text, iconCardBodyClassName, breadcrumbs } = props;
+  const { icon, learnMoreLink, title, text, iconCardBodyClassName, breadcrumbs, dataTestId } =
+    props;
   return (
     <PageHeader>
       {breadcrumbs}
-      <Split>
+      <Split data-testid={dataTestId}>
         <SplitItem className="pf-v5-u-pr-md">
           <CardBody className={iconCardBodyClassName}>{icon}</CardBody>
         </SplitItem>

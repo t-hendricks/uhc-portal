@@ -16,7 +16,8 @@ const reduxFormConfig = {
   form: 'RegisterCluster',
 };
 
-const reduxFormRegisterCluster = reduxForm(reduxFormConfig)(RegisterCluster);
+// Exporting only for testing purposes
+export const reduxFormRegisterCluster = reduxForm(reduxFormConfig)(RegisterCluster);
 
 const mapStateToProps = (state) => {
   const canSubscribeOCP = hasOrgLevelsubscribeOCPCapability(state);
