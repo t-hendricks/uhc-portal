@@ -13,6 +13,7 @@ import SharedVPCSection from '../../common/NetworkingSection/SharedVPCSection';
 function InstallToVPC({
   selectedRegion,
   selectedVPC,
+  selectedAZs,
   openshiftVersion,
   isMultiAz,
   privateLinkSelected,
@@ -60,6 +61,7 @@ function InstallToVPC({
             isMultiAz={isMultiAz}
             selectedVPC={selectedVPC}
             selectedRegion={selectedRegion}
+            selectedAZs={selectedAZs}
             privateLinkSelected={privateLinkSelected}
           />
           <SecurityGroupsSection selectedVPC={selectedVPC} openshiftVersion={openshiftVersion} />
@@ -104,6 +106,7 @@ InstallToVPC.propTypes = {
   hostedZoneDomainName: PropTypes.string,
   selectedRegion: PropTypes.string,
   selectedVPC: PropTypes.object.isRequired,
+  selectedAZs: PropTypes.arrayOf(PropTypes.string).isRequired,
   openshiftVersion: PropTypes.string,
   isMultiAz: PropTypes.bool,
   privateLinkSelected: PropTypes.bool,

@@ -17,8 +17,6 @@ import { constants } from '../../../common/CreateOSDFormConstants';
 
 import ReduxVerticalFormGroup from '../../../../common/ReduxFormComponents/ReduxVerticalFormGroup';
 
-import '../../common/NetworkingSection/SubnetFields.scss';
-
 const machineDisjointSubnets = validators.disjointSubnets('network_machine_cidr');
 const serviceDisjointSubnets = validators.disjointSubnets('network_service_cidr');
 const podDisjointSubnets = validators.disjointSubnets('network_pod_cidr');

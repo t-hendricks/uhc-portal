@@ -5,20 +5,19 @@ import { useField } from 'formik';
 import { Cluster } from '~/types/clusters_mgmt.v1';
 import { SubnetSelectField } from '~/components/clusters/common/SubnetSelectField';
 import { useAWSVPCFromCluster } from '~/components/clusters/common/useAWSVPCFromCluster';
-import useFormikOnChange from '../hooks/useFormikOnChange';
 
-const fieldId = 'subnet';
+const fieldId = 'privateSubnetId';
 
 const SubnetField = ({ cluster }: { cluster: Cluster }) => {
-  const [inputField, metaField] = useField(fieldId);
-  const onChange = useFormikOnChange(fieldId);
-
+  const [inputField, metaField, { setValue }] = useField<string | undefined>(fieldId);
   const { clusterVpc, isLoading, hasError } = useAWSVPCFromCluster(cluster);
 
   const fieldProps = React.useMemo(
     () => ({
       input: {
-        onChange,
+        onChange: (subnetId: string | undefined) => {
+          setValue(subnetId);
+        },
         value: inputField.value,
         name: inputField.name,
       },
@@ -27,7 +26,7 @@ const SubnetField = ({ cluster }: { cluster: Cluster }) => {
         touched: metaField.touched,
       },
     }),
-    [inputField.value, inputField.name, metaField.error, metaField.touched, onChange],
+    [inputField.value, inputField.name, metaField.error, metaField.touched, setValue],
   );
 
   if (isLoading) {
@@ -48,7 +47,7 @@ const SubnetField = ({ cluster }: { cluster: Cluster }) => {
 
   return (
     <SubnetSelectField
-      name="subnet"
+      name={fieldId}
       privacy="private"
       label="Private subnet name"
       isRequired

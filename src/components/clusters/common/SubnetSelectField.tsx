@@ -3,8 +3,8 @@ import { Flex, FlexItem, FormGroup } from '@patternfly/react-core';
 import { SelectOptionObject as SelectOptionObjectDeprecated } from '@patternfly/react-core/deprecated';
 import { WrappedFieldInputProps, WrappedFieldMetaProps } from 'redux-form';
 
+import { isSubnetMatchingPrivacy } from '~/common/vpcHelpers';
 import { CloudVPC, Subnetwork } from '~/types/clusters_mgmt.v1';
-import { isSubnetMatchingPrivacy } from '~/components/clusters/common/useVPCInquiry';
 import FuzzySelect, { FuzzyDataType, FuzzyEntryType } from '~/components/common/FuzzySelect';
 import { FormGroupHelperText } from '~/components/common/FormGroupHelperText';
 
@@ -13,44 +13,39 @@ const TRUNCATE_THRESHOLD = 40;
 export interface SubnetSelectFieldProps {
   name: string;
   label: string;
-  input: Pick<WrappedFieldInputProps, 'value' | 'onChange' | 'name'>;
+  input: Pick<WrappedFieldInputProps, 'value' | 'name'> & {
+    onChange: (subnetId: string | undefined) => void;
+  };
   meta: Pick<WrappedFieldMetaProps, 'error' | 'touched'>;
-  isDisabled?: boolean;
   isRequired?: boolean;
   className?: string;
   privacy?: 'public' | 'private';
   selectedVPC: CloudVPC;
   withAutoSelect?: boolean;
-  allowedAZ?: string[];
+  allowedAZs?: string[];
 }
 
 export const SubnetSelectField = ({
   name,
   label,
   input,
-  meta: { error: inputError, touched: isInputTouched },
-  isDisabled,
+  meta,
   isRequired,
   className,
   privacy,
   withAutoSelect = true,
   selectedVPC,
-  allowedAZ,
+  allowedAZs,
 }: SubnetSelectFieldProps) => {
   const [isExpanded, setIsExpanded] = useState(false);
-  const [selectedSubnet, setSelectedSubnet] = useState(input.value);
 
-  const placeholder = (hasOptions: boolean, hasSubnetNames: boolean) =>
-    (!hasOptions && 'No data found.') ||
-    (hasOptions && hasSubnetNames && 'Subnet name') ||
-    (hasOptions && !hasSubnetNames && 'Subnet ID');
+  const selectedSubnetId = input.value as string;
+  const inputError = meta.touched && (meta.error || (isRequired && !selectedSubnetId));
 
-  // if subnets have the more descriptive name, use that
-  const { subnetsByAZ, subnetList, hasOptions, hasSubnetNames } = useMemo<{
+  const { subnetsByAZ, subnetList, hasOptions } = useMemo<{
     subnetsByAZ: FuzzyDataType;
     subnetList: Subnetwork[];
     hasOptions: boolean;
-    hasSubnetNames: boolean;
   }>(() => {
     const subnetList: Subnetwork[] = [];
     const subnetsByAZ: FuzzyDataType = {};
@@ -59,7 +54,7 @@ export const SubnetSelectField = ({
       const subnetAZ = subnet.availability_zone || '';
       if (
         isSubnetMatchingPrivacy(subnet, privacy) &&
-        (allowedAZ === undefined || allowedAZ.includes(subnetAZ))
+        (allowedAZs === undefined || allowedAZs.includes(subnetAZ))
       ) {
         const subnetId = subnet.subnet_id as string;
         const entry: FuzzyEntryType = {
@@ -76,46 +71,45 @@ export const SubnetSelectField = ({
       }
     });
     const hasOptions = subnetList.length > 0;
-    const hasSubnetNames = hasOptions && subnetList.every((subnet) => !!subnet.name);
-    return { subnetsByAZ, subnetList, hasOptions, hasSubnetNames };
-  }, [selectedVPC, allowedAZ, privacy]);
+    return { subnetsByAZ, subnetList, hasOptions };
+  }, [selectedVPC, allowedAZs, privacy]);
 
   useEffect(() => {
     const isValidCurrentSelection = subnetList.some(
-      (subnet) => subnet.subnet_id === selectedSubnet?.subnet_id,
+      (subnet) => subnet.subnet_id === selectedSubnetId,
     );
 
-    let newSelection;
+    let newSelectedSubnetId = null;
     if (withAutoSelect) {
       // When "autoSelect" is enabled, we will set the first subnet as the selected one
       if (!isValidCurrentSelection && hasOptions) {
-        [newSelection] = subnetList;
+        newSelectedSubnetId = subnetList[0].subnet_id;
       }
     } else if (!isValidCurrentSelection) {
       // When "autoSelect" is disabled, we only need to update the selection when the current one is now invalid.
       // For example, because "selectedVPC" has changed
-      newSelection = { subnet_id: '', availability_zone: '' };
+      newSelectedSubnetId = '';
     }
 
-    if (newSelection && newSelection.subnet_id !== selectedSubnet?.subnet_id) {
-      input.onChange(newSelection);
-      setSelectedSubnet(newSelection);
+    if (newSelectedSubnetId !== null && newSelectedSubnetId !== selectedSubnetId) {
+      input.onChange(newSelectedSubnetId);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [withAutoSelect, hasOptions, subnetList, selectedSubnet]);
+  }, [withAutoSelect, hasOptions, subnetList, selectedSubnetId]);
 
   const onSelect = useCallback(
     (_: MouseEvent | ChangeEvent, selectedSubnetId: string | SelectOptionObjectDeprecated) => {
-      const subnet = subnetList.find((subnet) => subnet.subnet_id === selectedSubnetId);
-      if (subnet) {
-        input.onChange(subnet);
-        setSelectedSubnet(subnet);
-        setIsExpanded(false);
-      }
+      input.onChange(selectedSubnetId as string);
+      setIsExpanded(false);
     },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [subnetList],
+    [input],
   );
+
+  let placeholderText = `Select ${privacy} subnet`;
+  if (selectedVPC?.id && !hasOptions && (allowedAZs === undefined || allowedAZs.length > 0)) {
+    // This message will not appear when we are filtering by AZ, but it has not been selected yet
+    placeholderText = `No ${privacy} subnets found.`;
+  }
 
   return (
     <FormGroup
@@ -133,10 +127,10 @@ export const SubnetSelectField = ({
             isOpen={isExpanded}
             onToggle={(_, isExpanded) => setIsExpanded(isExpanded)}
             onSelect={onSelect}
-            selectedEntryId={selectedSubnet?.subnet_id}
+            selectedEntryId={selectedSubnetId}
             selectionData={subnetsByAZ}
-            isDisabled={isDisabled || !hasOptions}
-            placeholderText={placeholder(hasOptions, hasSubnetNames)}
+            isDisabled={!selectedVPC?.id || !hasOptions}
+            placeholderText={placeholderText}
             truncation={TRUNCATE_THRESHOLD}
             inlineFilterPlaceholderText="Filter by subnet ID / name"
             validated={inputError ? 'error' : undefined}
@@ -144,7 +138,7 @@ export const SubnetSelectField = ({
         </FlexItem>
       </Flex>
 
-      <FormGroupHelperText touched={isInputTouched} error={inputError} />
+      <FormGroupHelperText touched={meta.touched} error={inputError} />
     </FormGroup>
   );
 };

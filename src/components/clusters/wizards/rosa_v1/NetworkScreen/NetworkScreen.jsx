@@ -14,12 +14,13 @@ import {
 import { Field } from 'redux-form';
 
 import { normalizedProducts } from '~/common/subscriptionTypes';
-import { validateRequiredMachinePoolsSubnet } from '~/common/validators';
+import { validateRequiredPublicSubnetId } from '~/common/validators';
 import useAnalytics from '~/hooks/useAnalytics';
 import { ocmResourceType, trackEvents } from '~/common/analytics';
 import { isRestrictedEnv } from '~/restrictedEnv';
 import { canConfigureDayOneManagedIngress } from '~/components/clusters/wizards/rosa/constants';
 import { isExactMajorMinor } from '~/common/versionHelpers';
+import { getSelectedAvailabilityZones } from '~/common/vpcHelpers';
 import { getDefaultSecurityGroupsSettings } from '~/common/securityGroupsHelpers';
 
 import { constants } from '~/components/clusters/common/CreateOSDFormConstants';
@@ -29,7 +30,6 @@ import { DefaultIngressFields } from '~/components/clusters/common/DefaultIngres
 import { ReduxCheckbox } from '../../../../common/ReduxFormComponents';
 import RadioButtons from '../../../../common/ReduxFormComponents/RadioButtons';
 import links from '../../../../../common/installLinks.mjs';
-import { PLACEHOLDER_VALUE } from '../../common/NetworkingSection/AvailabilityZoneSelection';
 
 function NetworkScreen(props) {
   const {
@@ -51,7 +51,7 @@ function NetworkScreen(props) {
   } = props;
   const { OSD, OSDTrial } = normalizedProducts;
   const isByocOSD = isByoc && [OSD, OSDTrial].includes(product);
-  const publicSubnetRef = React.useRef();
+  const publicSubnetIdRef = React.useRef();
 
   // show only if the product is ROSA with VPC or BYOC/CCS OSD with VPC
   // Do not need to check for VPC here, since checking the "Configure a cluster-wide proxy" checkbox
@@ -77,17 +77,12 @@ function NetworkScreen(props) {
     });
 
   const shouldUncheckInstallToVPC = () => {
-    const availabilityZones = [formValues.az_0, formValues.az_1, formValues.az_2];
-    const hasSubnets = Object.keys(formValues).some(
-      (formValue) =>
-        formValue.startsWith('public_subnet_id') || formValue.startsWith('private_subnet_id'),
+    const hasEmptyByoVpcInfo = formValues.machinePoolsSubnets.every(
+      (mpSubnet) =>
+        !mpSubnet.privateSubnetId && !mpSubnet.publicSubnetId && !mpSubnet.availabilityZone,
     );
 
-    const noAvailZones = availabilityZones.every(
-      (zone) => zone === undefined || zone === PLACEHOLDER_VALUE,
-    );
-
-    if (!hasSubnets && noAvailZones) {
+    if (hasEmptyByoVpcInfo) {
       change('install_to_vpc', false);
 
       // Clear also associated security groups when the wizard has this option
@@ -98,7 +93,7 @@ function NetworkScreen(props) {
   };
 
   const onClusterPrivacyChange = (_, value) => {
-    const { cluster_privacy_public_subnet: publicSubnet, cluster_privacy: clusterPrivacy } =
+    const { cluster_privacy_public_subnet_id: publicSubnetId, cluster_privacy: clusterPrivacy } =
       formValues;
     if (value === 'external') {
       change('use_privatelink', false);
@@ -109,12 +104,12 @@ function NetworkScreen(props) {
 
       // When toggling from Private to Public, if a previous public subnet ID was selected,
       // use that previous value to rehydrate the dropdown.
-      if (publicSubnetRef.current && clusterPrivacy === 'internal') {
-        change('cluster_privacy_public_subnet', publicSubnetRef.current);
+      if (publicSubnetIdRef.current && clusterPrivacy === 'internal') {
+        change('cluster_privacy_public_subnet_id', publicSubnetIdRef.current);
       }
     } else {
-      publicSubnetRef.current = publicSubnet;
-      change('cluster_privacy_public_subnet', { subnet_id: '', availability_zone: '' });
+      publicSubnetIdRef.current = publicSubnetId;
+      change('cluster_privacy_public_subnet_id', '');
     }
   };
 
@@ -229,21 +224,18 @@ function NetworkScreen(props) {
                   extraField: isHypershiftSelected && !privateClusterSelected && (
                     <Field
                       component={SubnetSelectField}
-                      name="cluster_privacy_public_subnet"
+                      name="cluster_privacy_public_subnet_id"
                       label="Public subnet name"
                       className="pf-v5-u-mt-md pf-v5-u-ml-lg"
                       isRequired
-                      validate={validateRequiredMachinePoolsSubnet}
+                      validate={validateRequiredPublicSubnetId}
                       withAutoSelect={false}
                       selectedVPC={formValues.selected_vpc}
                       privacy="public"
-                      allowedAZ={[
-                        ...new Set(
-                          formValues.machine_pools_subnets.map(
-                            (subnet) => subnet.availability_zone,
-                          ),
-                        ),
-                      ]}
+                      allowedAZs={getSelectedAvailabilityZones(
+                        formValues.selected_vpc,
+                        formValues.machinePoolsSubnets,
+                      )}
                     />
                   ),
                 },

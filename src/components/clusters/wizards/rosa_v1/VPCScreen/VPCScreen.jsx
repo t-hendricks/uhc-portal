@@ -9,6 +9,7 @@ function VPCScreen({
   isMultiAz,
   selectedRegion,
   selectedVPC,
+  selectedAZs,
   openshiftVersion,
   privateLinkSelected,
   isSharedVpcSelected,
@@ -18,22 +19,16 @@ function VPCScreen({
 }) {
   React.useEffect(() => {
     if (!selectedVPC.id) {
-      const azCount = isMultiAz ? 3 : 1;
+      const subnetReset = [{ availabilityZone: '', privateSubnetId: '', publicSubnetId: '' }];
 
-      let resetFields = [];
-      for (let i = 0; i < azCount; i += 1) {
-        resetFields = resetFields.concat([
-          `az_${i}`,
-          `private_subnet_id_${i}`,
-          `public_subnet_id_${i}`,
-        ]);
+      if (isMultiAz) {
+        subnetReset.push({ availabilityZone: '', privateSubnetId: '', publicSubnetId: '' });
+        subnetReset.push({ availabilityZone: '', privateSubnetId: '', publicSubnetId: '' });
       }
-      resetFields.forEach((field) => {
-        change(field, '');
-      });
+      change('machinePoolsSubnets', subnetReset);
 
       // Prevent the validation errors from showing - fields have been reset
-      untouch(...resetFields);
+      untouch('machinePoolsSubnets');
     }
   }, [change, untouch, isMultiAz, selectedVPC]);
 
@@ -54,6 +49,7 @@ function VPCScreen({
           isMultiAz={isMultiAz}
           selectedRegion={selectedRegion}
           selectedVPC={selectedVPC}
+          selectedAZs={selectedAZs}
           openshiftVersion={openshiftVersion}
           isSharedVpcSelected={isSharedVpcSelected}
           privateLinkSelected={privateLinkSelected}
@@ -71,6 +67,7 @@ VPCScreen.propTypes = {
   untouch: PropTypes.func,
   selectedRegion: PropTypes.string,
   selectedVPC: PropTypes.object,
+  selectedAZs: PropTypes.arrayOf(PropTypes.string),
   openshiftVersion: PropTypes.string,
   privateLinkSelected: PropTypes.bool,
   isSharedVpcSelected: PropTypes.bool,

@@ -11,6 +11,11 @@ import { FormGroupHelperText } from '~/components/common/FormGroupHelperText';
 
 const PLACEHOLDER_VALUE = 'Select availability zone';
 
+// AWS availability zones are comprised from the region name
+// followed by a single letter. For more information please see:
+// https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-regions-availability-zones.html#concepts-availability-zones
+const azLetters = ['a', 'b', 'c', 'd', 'e', 'f'];
+
 class AvailabilityZoneSelection extends React.Component {
   state = { isOpen: false };
 
@@ -29,12 +34,35 @@ class AvailabilityZoneSelection extends React.Component {
     const {
       input,
       isDisabled,
+      enabledAvailabilityZones,
       region,
       label,
       meta: { error, touched },
     } = this.props;
+
+    const availabilityZones = azLetters
+      .map((letter) => ({
+        zoneId: `${region}${letter}`,
+        isDisabled:
+          enabledAvailabilityZones && !enabledAvailabilityZones.includes(`${region}${letter}`),
+      }))
+      .sort((azA, azB) => {
+        if (azA.isDisabled && !azB.isDisabled) {
+          return 1;
+        }
+        if (azB.isDisabled && !azA.isDisabled) {
+          return -1;
+        }
+        return azA.zoneId.localeCompare(azB.zoneId);
+      });
+
     return (
-      <FormGroup {...input} label={label} className="ocm-c-create-osd-az-select" isRequired>
+      <FormGroup
+        fieldId={input.name}
+        label={label}
+        className="ocm-c-create-osd-az-select"
+        isRequired
+      >
         <SelectDeprecated
           isOpen={isOpen}
           selections={input.value || PLACEHOLDER_VALUE}
@@ -44,18 +72,16 @@ class AvailabilityZoneSelection extends React.Component {
           aria-label={label}
         >
           <SelectOptionDeprecated key={0} value={PLACEHOLDER_VALUE} isPlaceholder />
-          {['a', 'b', 'c', 'd', 'e', 'f'].map((letter) => {
-            // AWS availability zones are comprised from the region name
-            // followed by a single letter. For more information please see:
-            // https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-regions-availability-zones.html#concepts-availability-zones
-            const avalabilityZone = region + letter;
-            return (
-              <SelectOptionDeprecated
-                key={letter}
-                value={avalabilityZone}
-              >{`${avalabilityZone}`}</SelectOptionDeprecated>
-            );
-          })}
+          {availabilityZones.map(({ zoneId, isDisabled }) => (
+            <SelectOptionDeprecated
+              key={zoneId}
+              value={zoneId}
+              isDisabled={isDisabled}
+              description={isDisabled ? 'This zone does not have all required subnets' : undefined}
+            >
+              {zoneId}
+            </SelectOptionDeprecated>
+          ))}
         </SelectDeprecated>
 
         <FormGroupHelperText touched={touched} error={error} />
@@ -67,7 +93,9 @@ AvailabilityZoneSelection.propTypes = {
   isDisabled: PropTypes.bool,
   label: PropTypes.string,
   region: PropTypes.string,
+  enabledAvailabilityZones: PropTypes.arrayOf(PropTypes.string),
   input: PropTypes.shape({
+    name: PropTypes.string,
     value: PropTypes.string,
     onChange: PropTypes.func,
   }),
