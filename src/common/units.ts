@@ -1,7 +1,4 @@
-// @types/filesize does not support have the correct return type when `output: 'object'`
-// TODO update filesize to latest version which packages updated types
-// @ts-ignore
-import filesize from 'filesize';
+import { filesize } from 'filesize';
 import round from './math';
 
 type Unit = 'B' | 'KiB' | 'MiB' | 'GiB' | 'TiB' | 'PiB' | 'KB' | 'MB' | 'GB' | 'TB' | 'PB';
@@ -47,8 +44,8 @@ const humanizeValueWithUnit = (
 } => {
   const result = filesize(parseValueWithUnit(value, unit), { output: 'object', standard: 'iec' });
   return {
-    value: result.value,
-    unit: result.suffix,
+    value: +result.value,
+    unit: result.unit.trim() as Unit,
   };
 };
 
@@ -69,7 +66,8 @@ const humanizeValueWithUnitGiB = (bytes: number): ValueWithUnits => {
   return roundValueWithUnit(bytes / GiB, 'GiB');
 };
 
-const humanizeValueWithoutUnit = (bytes: number): string => filesize(bytes);
+const humanizeValueWithoutUnit = (bytes: number, base: 2 | 10 = 2): string =>
+  filesize(bytes, { base });
 
 export {
   parseValueWithUnit,
