@@ -223,7 +223,7 @@ describe('<ReviewClusterScreen />', () => {
     });
   });
 
-  describe('Selected VPC settings', () => {
+  describe('Hypershift VPC section', () => {
     const getPropsWithSelectedVpcSettings = ({
       isHypershiftSelected,
       isVPCNamePresent = true,
@@ -232,9 +232,10 @@ describe('<ReviewClusterScreen />', () => {
       isHypershiftSelected,
       formValues: {
         ...defaultProps.formValues,
-        ...(isVPCNamePresent
-          ? {}
-          : { selected_vpc: { id: defaultProps.formValues.selected_vpc.id } }),
+        selected_vpc: {
+          ...defaultProps.formValues.selected_vpc,
+          name: isVPCNamePresent ? 'actual-vpc-name' : undefined,
+        },
       },
     });
 
@@ -242,28 +243,11 @@ describe('<ReviewClusterScreen />', () => {
       const ConnectedReviewClusterScreen = wizardConnector(ReviewClusterScreen);
       const newProps = getPropsWithSelectedVpcSettings({
         isHypershiftSelected: true,
-        isVPCNamePresent: true,
       });
       render(<ConnectedReviewClusterScreen {...newProps} />);
 
       expect(screen.getByText('Install to selected VPC')).toBeInTheDocument();
-      // vpc name is displayed when available
-      expect(screen.getByText(sampleFormData.values.selected_vpc.name)).toBeInTheDocument();
-      expect(screen.queryByText(sampleFormData.values.selected_vpc.id)).not.toBeInTheDocument();
-    });
-
-    it('is shown for Hypershift clusters and fallbacks to the VPC id when the name is absent', () => {
-      const ConnectedReviewClusterScreen = wizardConnector(ReviewClusterScreen);
-      const newProps = getPropsWithSelectedVpcSettings({
-        isHypershiftSelected: true,
-        isVPCNamePresent: false,
-      });
-      render(<ConnectedReviewClusterScreen {...newProps} />);
-
-      expect(screen.getByText('Install to selected VPC')).toBeInTheDocument();
-      // vpc id displayed only if name is not available
-      expect(screen.getByText(sampleFormData.values.selected_vpc.id)).toBeInTheDocument();
-      expect(screen.queryByText(sampleFormData.values.selected_vpc.name)).not.toBeInTheDocument();
+      expect(screen.queryByText('Install into existing VPC')).not.toBeInTheDocument();
     });
 
     it('is not shown for non-Hypershift clusters', () => {
@@ -274,8 +258,82 @@ describe('<ReviewClusterScreen />', () => {
       render(<ConnectedReviewClusterScreen {...newProps} />);
 
       expect(screen.queryByText('Install to selected VPC')).not.toBeInTheDocument();
-      expect(screen.queryByText(sampleFormData.values.selected_vpc.name)).not.toBeInTheDocument();
+      expect(screen.getByText('Install into existing VPC')).toBeInTheDocument();
+    });
+
+    it('shows the VPC name if available', () => {
+      const ConnectedReviewClusterScreen = wizardConnector(ReviewClusterScreen);
+      const newProps = getPropsWithSelectedVpcSettings({
+        isHypershiftSelected: true,
+        isVPCNamePresent: true,
+      });
+      render(<ConnectedReviewClusterScreen {...newProps} />);
+
+      expect(screen.getByText('actual-vpc-name')).toBeInTheDocument();
       expect(screen.queryByText(sampleFormData.values.selected_vpc.id)).not.toBeInTheDocument();
+    });
+
+    it('shows the VPC ID if name is not available', () => {
+      const ConnectedReviewClusterScreen = wizardConnector(ReviewClusterScreen);
+      const newProps = getPropsWithSelectedVpcSettings({
+        isHypershiftSelected: true,
+        isVPCNamePresent: false,
+      });
+      render(<ConnectedReviewClusterScreen {...newProps} />);
+
+      expect(screen.getByText(sampleFormData.values.selected_vpc.id)).toBeInTheDocument();
+      expect(screen.queryByText('actual-vpc-name')).not.toBeInTheDocument();
+    });
+  });
+
+  describe('BYO VPC section', () => {
+    const getPropsWithByoVpcSettings = ({ isHypershiftSelected = false, byoVpc = true }) => ({
+      ...defaultProps,
+      isHypershiftSelected,
+      formValues: {
+        ...defaultProps.formValues,
+        install_to_vpc: byoVpc,
+      },
+    });
+
+    it('is shown for BYO VPC ROSA classic clusters', () => {
+      const ConnectedReviewClusterScreen = wizardConnector(ReviewClusterScreen);
+      const newProps = getPropsWithByoVpcSettings({});
+      render(<ConnectedReviewClusterScreen {...newProps} />);
+
+      expect(screen.getByText('Install into existing VPC')).toBeInTheDocument();
+      expect(screen.queryByText('Install to selected VPC')).not.toBeInTheDocument();
+    });
+
+    it('is not shown for Hypershift clusters', () => {
+      const ConnectedReviewClusterScreen = wizardConnector(ReviewClusterScreen);
+      const newProps = getPropsWithByoVpcSettings({
+        isHypershiftSelected: true,
+      });
+      render(<ConnectedReviewClusterScreen {...newProps} />);
+
+      expect(screen.queryByText('Install into existing VPC')).not.toBeInTheDocument();
+      expect(screen.getByText('Install to selected VPC')).toBeInTheDocument();
+    });
+
+    it('shows "Enabled" when it is a BYO VPC cluster', () => {
+      const ConnectedReviewClusterScreen = wizardConnector(ReviewClusterScreen);
+      const newProps = getPropsWithByoVpcSettings({});
+      render(<ConnectedReviewClusterScreen {...newProps} />);
+
+      expect(screen.getByText('Install into existing VPC').closest('div')).toHaveTextContent(
+        'Enabled',
+      );
+    });
+
+    it('shows "Disabled" when it is not a BYO VPC cluster', () => {
+      const ConnectedReviewClusterScreen = wizardConnector(ReviewClusterScreen);
+      const newProps = getPropsWithByoVpcSettings({ byoVpc: false });
+      render(<ConnectedReviewClusterScreen {...newProps} />);
+
+      expect(screen.getByText('Install into existing VPC').closest('div')).toHaveTextContent(
+        'Disabled',
+      );
     });
   });
 

@@ -84,8 +84,8 @@ export const createClusterRequest = ({ isWizard = true, cloudProviderID, product
 
     if (isHypershiftSelected) {
       clusterRequest.nodes.autoscale_compute = {
-        min_replicas: minNodes * formData.machine_pools_subnets.length,
-        max_replicas: maxNodes * formData.machine_pools_subnets.length,
+        min_replicas: minNodes * formData.machinePoolsSubnets.length,
+        max_replicas: maxNodes * formData.machinePoolsSubnets.length,
       };
     } else {
       clusterRequest.autoscaler = getClusterAutoScalingSubmitSettings(formData.cluster_autoscaling);
@@ -237,10 +237,12 @@ export const createClusterRequest = ({ isWizard = true, cloudProviderID, product
       clusterRequest.aws.subnet_ids = submitRequestHelpers.createClusterAwsSubnetIds({
         formData,
         isInstallExistingVPC,
+        actualProduct,
       });
       clusterRequest.nodes.availability_zones = submitRequestHelpers.createClusterAzs({
         formData,
         isInstallExistingVPC,
+        actualProduct,
       });
     } else if (actualCloudProviderID === 'gcp') {
       const parsed = JSON.parse(formData.gcp_service_account);

@@ -25,20 +25,12 @@ export default {
     network_configuration_toggle: 'basic',
     cluster_privacy: 'internal',
     install_to_vpc: true,
-    use_privatelink: true,
     configure_proxy: false,
     disable_scp_checks: false,
     billing_model: 'marketplace-aws',
     imds: 'optional',
     enable_user_workload_monitoring: 'true',
     region: 'us-west-2',
-    az_0: 'Select availability zone',
-    private_subnet_id_0: 'subnet-private-1',
-    public_subnet_id_0: 'subnet-public-1',
-    cluster_privacy_public_subnet: {
-      subnet_id: '',
-      availability_zone: '',
-    },
     customer_managed_key: 'false',
     cluster_version: {
       kind: 'Version',
@@ -56,16 +48,23 @@ export default {
     selected_vpc: {
       id: 'vpc-0cf6c1b4e2a234863',
       name: 'my-vpc',
+      aws_subnets: [
+        {
+          subnet_id: 'subnet-03e91a20f67277c7a',
+          availability_zone: 'us-west-2a',
+        },
+      ],
     },
     shared_vpc: { is_allowed: false },
-    machine_pools_subnets: [
+    use_privatelink: true, // only private subnet is specified
+    machinePoolsSubnets: [
       {
-        subnet_id: 'subnet-03e91a20f67277c7a',
-        name: 'Public subnet',
-        public: false,
-        availability_zone: 'us-west-2a',
+        privateSubnetId: 'subnet-03e91a20f67277c7a',
+        publicSubnetId: '',
+        availabilityZone: '',
       },
     ],
+    cluster_privacy_public_subnet_id: '',
     machine_type: 'm5.xlarge',
     cidr_default_values_toggle: true,
     network_machine_cidr: '10.0.0.0/16',

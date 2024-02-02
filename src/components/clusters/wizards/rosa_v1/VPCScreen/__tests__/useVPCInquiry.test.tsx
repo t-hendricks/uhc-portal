@@ -1,5 +1,3 @@
-import { CloudVPC } from '~/types/clusters_mgmt.v1';
-
 import { renderHook } from '@testing-library/react';
 import { VPCResponse } from '~/redux/reducers/ccsInquiriesReducer';
 import { vpcList } from '~/components/clusters/common/__test__/vpcs.fixtures';
@@ -38,49 +36,36 @@ jest.mock('~/components/clusters/wizards/hooks', () => ({
   }),
 }));
 
-describe('useVPCInquiry', () => {
-  describe('filterOutRedHatManagedVPCs', () => {
-    it('filters out VPCs which are managed by Red Hat', () => {
-      const filteredVPCs = vpcInquiries.filterOutRedHatManagedVPCs(vpcList);
-      expect(filteredVPCs).toHaveLength(4);
+describe('useAWSVPCInquiry', () => {
+  describe('when isOSD=false', () => {
+    it('builds the request from the redux-form (v1) state', () => {
+      const view = renderHook(() => vpcInquiries.useAWSVPCInquiry(false));
+      const { requestParams } = view.result.current as {
+        requestParams: { region: string };
+      };
+      expect(requestParams.region).toEqual('us-west-2-v1');
+    });
 
-      const remainingVPCNames = filteredVPCs.map((vpc: CloudVPC) => vpc.name);
-      expect(remainingVPCNames).not.toContain('jaosorior-8vns4-vpc');
-      expect(remainingVPCNames).toContain('lz-p2-318-z6fst-vpc');
+    it('returns the vpcsResponse from the redux store', () => {
+      const view = renderHook(() => vpcInquiries.useAWSVPCInquiry(false));
+      const { vpcs } = view.result.current as { vpcs: VPCResponse };
+      expect(vpcs.data.items[0].id).toEqual(vpcList[0].id);
     });
   });
 
-  describe('useAWSVPCInquiry', () => {
-    describe('when isOSD=false', () => {
-      it('builds the request from the redux-form (v1) state', () => {
-        const view = renderHook(() => vpcInquiries.useAWSVPCInquiry(false));
-        const { requestParams } = view.result.current as {
-          requestParams: { region: string };
-        };
-        expect(requestParams.region).toEqual('us-west-2-v1');
-      });
-
-      it('returns the vpcsResponse from the redux store', () => {
-        const view = renderHook(() => vpcInquiries.useAWSVPCInquiry(false));
-        const { vpcs } = view.result.current as { vpcs: VPCResponse };
-        expect(vpcs.data.items[0].id).toEqual(vpcList[0].id);
-      });
+  describe('when isOSD=true', () => {
+    it('builds the request from the Formik (v2) state', () => {
+      const view = renderHook(() => vpcInquiries.useAWSVPCInquiry(true));
+      const { requestParams } = view.result.current as {
+        requestParams: { region: string };
+      };
+      expect(requestParams.region).toEqual('us-west-2-v2');
     });
 
-    describe('when isOSD=true', () => {
-      it('builds the request from the Formik (v2) state', () => {
-        const view = renderHook(() => vpcInquiries.useAWSVPCInquiry(true));
-        const { requestParams } = view.result.current as {
-          requestParams: { region: string };
-        };
-        expect(requestParams.region).toEqual('us-west-2-v2');
-      });
-
-      it('returns the vpcsResponse from the redux store', () => {
-        const view = renderHook(() => vpcInquiries.useAWSVPCInquiry(true));
-        const { vpcs } = view.result.current as { vpcs: VPCResponse };
-        expect(vpcs.data.items[0].id).toEqual(vpcList[0].id);
-      });
+    it('returns the vpcsResponse from the redux store', () => {
+      const view = renderHook(() => vpcInquiries.useAWSVPCInquiry(true));
+      const { vpcs } = view.result.current as { vpcs: VPCResponse };
+      expect(vpcs.data.items[0].id).toEqual(vpcList[0].id);
     });
   });
 });

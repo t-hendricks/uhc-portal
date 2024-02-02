@@ -30,9 +30,11 @@ import validators, {
   clusterAutoScalingValidators,
   validateRoleARN,
   validatePrivateHostedZoneId,
-  validateRequiredMachinePoolsSubnet,
+  validateRequiredPublicSubnetId,
   validateAWSSubnet,
-  validateUniqueAZ,
+  validateOsdUniqueAZ,
+  validateRosaUniqueAZ,
+  validateMultipleMachinePoolsSubnets,
 } from '../validators';
 import fixtures from './validators.fixtures';
 import awsVPCs from '../../../mockdata/api/clusters_mgmt/v1/aws_inquiries/vpcs.json';
@@ -875,7 +877,7 @@ describe('GCP service account JSON', () => {
   });
 });
 
-describe('AWS Subnet', () => {
+describe('AWS Subnet OSD', () => {
   const goodValues = {
     selected_vpc: awsVPCs.items.find((vpc) => vpc.id === 'vpc-048a9cb4375326db1') as CloudVPC,
     az_0: 'us-east-1d',
@@ -889,7 +891,7 @@ describe('AWS Subnet', () => {
     public_subnet_id_2: 'subnet-0710c0d15361d308c',
   };
 
-  describe('validateAWSSubnet', () => {
+  describe('validateAWSSubnet (OSD)', () => {
     /* eslint-disable camelcase */
     type SubnetFieldName = keyof Partial<{
       private_subnet_id_0: string;
@@ -984,20 +986,64 @@ describe('AWS Subnet', () => {
       az_1: 'b',
       az_2: 'c',
     };
-    expect(validateUniqueAZ(allValues.az_0, allValues, null, 'az_0')).toBe(undefined);
+    expect(validateOsdUniqueAZ(allValues.az_0, allValues, null, 'az_0')).toBe(undefined);
     allValues.az_0 = 'b';
-    expect(validateUniqueAZ(allValues.az_0, allValues, null, 'az_0')).toBe(
+    expect(validateOsdUniqueAZ(allValues.az_0, allValues, null, 'az_0')).toBe(
       'Must select 3 different AZs.',
     );
-    expect(validateUniqueAZ(allValues.az_1, allValues, null, 'az_1')).toBe(
+    expect(validateOsdUniqueAZ(allValues.az_1, allValues, null, 'az_1')).toBe(
       'Must select 3 different AZs.',
     );
-    expect(validateUniqueAZ(allValues.az_2, allValues, null, 'az_2')).toBe(undefined);
+    expect(validateOsdUniqueAZ(allValues.az_2, allValues, null, 'az_2')).toBe(undefined);
     allValues.az_1 = 'd';
-    expect(validateUniqueAZ(allValues.az_0, allValues, null, 'az_0')).toBe(undefined);
+    expect(validateOsdUniqueAZ(allValues.az_0, allValues, null, 'az_0')).toBe(undefined);
     allValues.az_0 = 'd';
-    expect(validateUniqueAZ(allValues.az_0, allValues, null, 'az_0')).toBe(
+    expect(validateOsdUniqueAZ(allValues.az_0, allValues, null, 'az_0')).toBe(
       'Must select 3 different AZs.',
+    );
+  });
+});
+
+describe('AWS Subnet ROSA', () => {
+  describe('validateRosaUniqueAZ', () => {
+    const allValues = {
+      machinePoolsSubnets: [
+        { availabilityZone: 'us-west-2b', privateSubnetId: 'subnet-1', publicSubnetId: '' },
+        { availabilityZone: 'us-west-2b', privateSubnetId: 'subnet-2', publicSubnetId: '' },
+        { availabilityZone: 'us-west-2f', privateSubnetId: 'subnet-3', publicSubnetId: '' },
+      ],
+    };
+    it.each([
+      ['us-west-2a', undefined],
+      ['us-west-2f', undefined],
+      ['us-west-2b', 'Must select 3 different AZs.'],
+    ])('validates %s to be "%s"', (azId: string, expected: string | undefined) => {
+      expect(validateRosaUniqueAZ(azId, allValues)).toBe(expected);
+    });
+  });
+
+  describe('validateMultipleMachinePoolsSubnets', () => {
+    const allValues = {
+      machinePoolsSubnets: [
+        { availabilityZone: 'us-west-2f', privateSubnetId: 'subnet-3', publicSubnetId: '' },
+        { availabilityZone: 'us-west-2b', privateSubnetId: 'subnet-2', publicSubnetId: '' },
+        { availabilityZone: 'us-west-2b', privateSubnetId: 'subnet-2', publicSubnetId: '' },
+      ],
+    };
+    it.each([
+      ['', { pristine: true }, undefined],
+      ['', { pristine: false }, 'Subnet is required'],
+      [
+        'subnet-2',
+        { pristine: false },
+        'Every machine pool must be associated to a different subnet',
+      ],
+      ['subnet-3', { pristine: false }, undefined],
+    ])(
+      'validates %p, %p to be "%s"',
+      (subnetId: string, formProps: { pristine: boolean }, expected: string | undefined) => {
+        expect(validateMultipleMachinePoolsSubnets(subnetId, allValues, formProps)).toBe(expected);
+      },
     );
   });
 });
@@ -1224,20 +1270,17 @@ describe('validateAWSKMSKeyARN', () => {
   );
 });
 
-describe('validateRequiredMachinePoolsSubnet', () => {
-  it('returns undefined when form is pristine', () => {
-    const subnet = {};
-    expect(validateRequiredMachinePoolsSubnet(subnet, {}, { pristine: true })).toBe(undefined);
+describe('validateRequiredPublicSubnetId', () => {
+  it('returns undefined when field is pristine', () => {
+    expect(validateRequiredPublicSubnetId('', {}, { pristine: true })).toBeUndefined();
   });
 
-  it('returns an error message when pristine and a subnet is not selected', () => {
-    const subnet = {};
-    expect(validateRequiredMachinePoolsSubnet(subnet, {}, { pristine: false })).not.toBe(undefined);
+  it('returns undefined when field is touched and a subnet is selected', () => {
+    expect(validateRequiredPublicSubnetId('subnet-id', {}, { pristine: false })).toBeUndefined();
   });
 
-  it('returns an error message when pristine and a subnet id is not selected (rare)', () => {
-    const subnet = { subnet_id: undefined };
-    expect(validateRequiredMachinePoolsSubnet(subnet, {}, { pristine: false })).not.toBe(undefined);
+  it('returns an error message when field is touched and a subnet is not selected', () => {
+    expect(validateRequiredPublicSubnetId('', {}, { pristine: false })).toBe('Subnet is required');
   });
 });
 

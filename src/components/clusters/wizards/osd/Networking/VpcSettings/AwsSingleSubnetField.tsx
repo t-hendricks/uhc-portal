@@ -5,7 +5,7 @@ import { GridItem } from '@patternfly/react-core';
 
 import {
   required,
-  validateUniqueAZ,
+  validateOsdUniqueAZ,
   validateValueNotPlaceholder,
   validateAWSSubnet,
 } from '~/common/validators';
@@ -39,7 +39,7 @@ const AwsSingleSubnetField = ({
 
   const validateAvailabilityZone = (value: string) =>
     required(value) ||
-    (isMultiAz && validateUniqueAZ(value, values, null, azFieldName)) ||
+    (isMultiAz && validateOsdUniqueAZ(value, values, null, azFieldName)) ||
     validateValueNotPlaceholder(PLACEHOLDER_VALUE)(value);
 
   const validatePrivateSubnet = (value: string) =>

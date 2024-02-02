@@ -16,7 +16,7 @@ const defaultValues: EditMachinePoolValues = {
   maxPrice: 0.04,
   diskSize: 333,
   instanceType: 'some-instance-type',
-  subnet: { subnet_id: 'subnet-id' },
+  privateSubnetId: 'subnet-id',
   securityGroupIds: ['sg-1'],
 };
 

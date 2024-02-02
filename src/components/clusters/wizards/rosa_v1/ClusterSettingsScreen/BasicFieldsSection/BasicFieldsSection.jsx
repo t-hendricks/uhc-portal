@@ -8,7 +8,6 @@ import { getIncompatibleVersionReason } from '~/common/versionCompatibility';
 import { getDefaultSecurityGroupsSettings } from '~/common/securityGroupsHelpers';
 import { constants } from '~/components/clusters/common/CreateOSDFormConstants';
 import { noQuotaTooltip } from '~/common/helpers';
-import { PLACEHOLDER_VALUE as AVAILABILITY_ZONE_PLACEHOLDER } from '~/components/clusters/wizards/common/NetworkingSection/AvailabilityZoneSelection';
 import {
   getNodesCount,
   getMinReplicasCount,
@@ -49,17 +48,23 @@ function BasicFieldsSection({
   const handleCloudRegionChange = () => {
     // Clears fields related to the region: Availability zones, subnet IDs, VPCs
     const azCount = isMultiAz ? 3 : 1;
+    const mpSubnetsReset = [];
+
     for (let i = 0; i < azCount; i += 1) {
-      change(`az_${i}`, AVAILABILITY_ZONE_PLACEHOLDER);
-      change(`private_subnet_id_${i}`, '');
-      change(`public_subnet_id_${i}`, '');
+      mpSubnetsReset.push({
+        availabilityZone: '',
+        privateSubnetId: '',
+        publicSubnetId: '',
+      });
     }
+
+    change('machinePoolsSubnets', mpSubnetsReset);
     change('selected_vpc', { id: '', name: '' });
 
     // Reset the public subnet ID selection associated with cluster privacy on region change,
     // since the list of values there can change entirely based on the selected region.
     if (clusterPrivacy === 'external') {
-      change('cluster_privacy_public_subnet', { subnet_id: '', availability_zone: '' });
+      change('cluster_privacy_public_subnet_id', '');
     }
   };
 
@@ -69,6 +74,16 @@ function BasicFieldsSection({
     change('nodes_compute', getNodesCount(isBYOC, isValueMultiAz, true));
     change('min_replicas', getMinReplicasCount(isBYOC, isValueMultiAz, true, isHypershiftSelected));
     change('max_replicas', getMinReplicasCount(isBYOC, isValueMultiAz, true, isHypershiftSelected));
+
+    if (!isValueMultiAz) {
+      change('machinePoolsSubnets', [
+        {
+          availabilityZone: '',
+          privateSubnetId: '',
+          publicSubnetId: '',
+        },
+      ]);
+    }
   };
 
   const handleVersionChange = (clusterVersion) => {

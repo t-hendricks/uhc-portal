@@ -1,31 +1,60 @@
 import uniq from 'lodash/uniq';
 
-const createClusterAzs = ({ formData, isInstallExistingVPC }) => {
+// OSD and ROSA form data is different - will be the same when subnet dropdowns are added to OSD
+const createClusterAzs = ({ formData, isInstallExistingVPC, actualProduct }) => {
   let AZs = [];
   if (formData.hypershift === 'true') {
-    AZs = uniq(formData.machine_pools_subnets.map((subnet) => subnet.availability_zone));
+    const selectedVpc = formData.selected_vpc;
+    formData.machinePoolsSubnets.forEach((formSubnet) => {
+      const subnetInfo = selectedVpc.aws_subnets?.find(
+        (vpcSubnet) => vpcSubnet.subnet_id === formSubnet.privateSubnetId,
+      );
+      if (subnetInfo) {
+        AZs.push(subnetInfo.availability_zone);
+      }
+    });
+  } else if (actualProduct === 'ROSA' && isInstallExistingVPC) {
+    AZs = formData.machinePoolsSubnets.map((subnet) => subnet.availabilityZone);
   } else if (isInstallExistingVPC) {
+    // OSD
     AZs.push(formData.az_0);
     if (formData.multi_az === 'true') {
       AZs.push(formData.az_1, formData.az_2);
     }
-  } else {
-    // The backend does not admit an empty list of availability_zones
-    return undefined;
   }
-  return AZs;
+  // The backend does not accept an empty list of availability_zones
+  return AZs.length === 0 ? undefined : uniq(AZs);
 };
 
-const createClusterAwsSubnetIds = ({ formData, isInstallExistingVPC }) => {
+// OSD and ROSA form data is different - will be the same when subnet dropdowns are added to OSD
+const createClusterAwsSubnetIds = ({ formData, isInstallExistingVPC, actualProduct }) => {
   const subnetIds = [];
+
+  const { machinePoolsSubnets: mpSubnets } = formData;
 
   if (formData.hypershift === 'true') {
     if (formData.cluster_privacy === 'external') {
-      subnetIds.push(formData.cluster_privacy_public_subnet.subnet_id);
+      subnetIds.push(formData.cluster_privacy_public_subnet_id);
     }
-    const privateSubnetIds = formData.machine_pools_subnets.map((subnet) => subnet.subnet_id);
+    const privateSubnetIds = mpSubnets.map((subnet) => subnet.privateSubnetId);
     subnetIds.push(...privateSubnetIds);
+  } else if (actualProduct === 'ROSA' && isInstallExistingVPC) {
+    const hasPublicSubnets = !formData.use_privatelink;
+
+    subnetIds.push(mpSubnets[0].privateSubnetId);
+    if (hasPublicSubnets) {
+      subnetIds.push(mpSubnets[0].publicSubnetId);
+    }
+
+    const isMultiAz = formData.multi_az === 'true';
+    if (isMultiAz) {
+      subnetIds.push(mpSubnets[1].privateSubnetId, mpSubnets[2].privateSubnetId);
+      if (hasPublicSubnets) {
+        subnetIds.push(mpSubnets[1].publicSubnetId, mpSubnets[2].publicSubnetId);
+      }
+    }
   } else if (isInstallExistingVPC) {
+    // OSD
     const showPublicFields = !formData.use_privatelink;
 
     subnetIds.push(formData.private_subnet_id_0);

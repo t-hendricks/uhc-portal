@@ -7,11 +7,8 @@ import FuzzySelect, { FuzzyEntryType } from '~/components/common/FuzzySelect';
 import { VPCResponse } from '~/redux/reducers/ccsInquiriesReducer';
 import { CloudVPC } from '~/types/clusters_mgmt.v1';
 import { AWSCredentials, ErrorState } from '~/types/types';
-import {
-  vpcHasPrivateSubnets,
-  filterOutRedHatManagedVPCs,
-  useAWSVPCInquiry,
-} from '~/components/clusters/common/useVPCInquiry';
+import { useAWSVPCInquiry } from '~/components/clusters/common/useVPCInquiry';
+import { filterOutRedHatManagedVPCs, vpcHasPrivateSubnets } from '~/common/vpcHelpers';
 import { getAWSCloudProviderVPCs } from '~/redux/actions/ccsInquiriesActions';
 
 interface VCPDropdownProps {

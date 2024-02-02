@@ -4,71 +4,93 @@ import { GridItem } from '@patternfly/react-core';
 import { Field } from 'redux-form';
 
 import VPCDropdown from '~/components/clusters/wizards/common/VPCDropdown/VPCDropdown';
+import { SubnetSelectField } from '~/components/clusters/common/SubnetSelectField';
+import { getMatchingAvailabilityZones } from '~/common/vpcHelpers';
 import WithTooltip from '~/components/common/WithTooltip';
 import AvailabilityZoneSelection, {
   PLACEHOLDER_VALUE,
 } from '~/components/clusters/wizards/common/NetworkingSection/AvailabilityZoneSelection';
-import ReduxVerticalFormGroup from '../../../../common/ReduxFormComponents/ReduxVerticalFormGroup';
 import {
   required,
-  validateAWSSubnet,
   validateValueNotPlaceholder,
-  validateUniqueAZ,
+  validateRosaUniqueAZ,
 } from '../../../../../common/validators';
 
 const SingleSubnetFieldsRow = ({
   index,
+  selectedAZ,
   selectedRegion,
+  selectedVPC,
   isMultiAz,
-  isDisabled,
   privateLinkSelected,
 }) => {
   const azValidations = [
-    isMultiAz && validateUniqueAZ,
+    isMultiAz && validateRosaUniqueAZ,
     validateValueNotPlaceholder(PLACEHOLDER_VALUE),
     required,
   ].filter(Boolean);
 
   const showLabels = index === 0;
+  let disabledSubnetReason;
+  let disabledAzReason;
+  if (!selectedVPC?.id) {
+    disabledAzReason = 'Select a VPC first';
+    disabledSubnetReason = 'Select a VPC first';
+  } else if (!selectedAZ) {
+    disabledSubnetReason = 'Select the availability zone';
+  }
+
+  // We'll only allow users to select AZs that have all necessary subnets
+  const privacyList = privateLinkSelected ? ['private'] : ['private', 'public'];
+  const enabledAvailabilityZones = getMatchingAvailabilityZones(
+    selectedRegion,
+    selectedVPC,
+    privacyList,
+  );
 
   return (
     <>
       <GridItem md={4}>
-        <WithTooltip showTooltip={isDisabled} content="Select a VPC first">
+        <WithTooltip showTooltip={!!disabledAzReason} content={disabledAzReason}>
           <Field
             component={AvailabilityZoneSelection}
-            name={`az_${index}`}
+            name={`machinePoolsSubnets[${index}].availabilityZone`}
             label={showLabels ? 'Availability zone' : null}
+            enabledAvailabilityZones={enabledAvailabilityZones}
             validate={azValidations}
-            isDisabled={isDisabled}
+            isDisabled={!!disabledAzReason}
             region={selectedRegion}
           />
         </WithTooltip>
       </GridItem>
       <GridItem md={4}>
-        <WithTooltip showTooltip={isDisabled} content="Select a VPC first">
+        <WithTooltip showTooltip={!!disabledSubnetReason} content={disabledSubnetReason}>
           <Field
-            component={ReduxVerticalFormGroup}
-            name={`private_subnet_id_${index}`}
-            label={showLabels ? 'Private subnet ID' : null}
-            isDisabled={isDisabled}
-            type="text"
+            component={SubnetSelectField}
+            name={`machinePoolsSubnets[${index}].privateSubnetId`}
             isRequired
-            validate={[required, validateAWSSubnet]}
+            validate={required}
+            privacy="private"
+            label={showLabels ? 'Private subnet' : null}
+            selectedVPC={selectedVPC}
+            allowedAZs={selectedAZ ? [selectedAZ] : []}
+            withAutoSelect={false}
           />
         </WithTooltip>
       </GridItem>
       <GridItem md={4}>
         {!privateLinkSelected && (
-          <WithTooltip showTooltip={isDisabled} content="Select a VPC first">
+          <WithTooltip showTooltip={!!disabledSubnetReason} content={disabledSubnetReason}>
             <Field
-              component={ReduxVerticalFormGroup}
-              name={`public_subnet_id_${index}`}
-              label={showLabels ? 'Public subnet ID' : null}
-              type="text"
+              component={SubnetSelectField}
+              name={`machinePoolsSubnets[${index}].publicSubnetId`}
               isRequired
-              isDisabled={isDisabled}
-              validate={[required, validateAWSSubnet]}
+              validate={required}
+              privacy="public"
+              label={showLabels ? 'Public subnet' : null}
+              selectedVPC={selectedVPC}
+              allowedAZs={selectedAZ ? [selectedAZ] : []}
+              withAutoSelect={false}
             />
           </WithTooltip>
         )}
@@ -77,7 +99,13 @@ const SingleSubnetFieldsRow = ({
   );
 };
 
-const AWSSubnetFields = ({ selectedVPC, selectedRegion, isMultiAz, privateLinkSelected }) => (
+const AWSSubnetFields = ({
+  selectedVPC,
+  selectedRegion,
+  selectedAZs,
+  isMultiAz,
+  privateLinkSelected,
+}) => (
   <>
     <Field
       component={VPCDropdown}
@@ -90,24 +118,27 @@ const AWSSubnetFields = ({ selectedVPC, selectedRegion, isMultiAz, privateLinkSe
 
     <SingleSubnetFieldsRow
       index={0}
+      selectedAZ={selectedAZs[0]}
       selectedRegion={selectedRegion}
+      selectedVPC={selectedVPC}
       isMultiAz={isMultiAz}
-      isDisabled={!selectedVPC?.id}
       privateLinkSelected={privateLinkSelected}
     />
     {isMultiAz && (
       <>
         <SingleSubnetFieldsRow
           index={1}
+          selectedAZ={selectedAZs[1]}
           selectedRegion={selectedRegion}
-          isDisabled={!selectedVPC?.id}
+          selectedVPC={selectedVPC}
           isMultiAz={isMultiAz}
           privateLinkSelected={privateLinkSelected}
         />
         <SingleSubnetFieldsRow
           index={2}
+          selectedAZ={selectedAZs[2]}
           selectedRegion={selectedRegion}
-          isDisabled={!selectedVPC?.id}
+          selectedVPC={selectedVPC}
           isMultiAz={isMultiAz}
           privateLinkSelected={privateLinkSelected}
         />
@@ -118,8 +149,12 @@ const AWSSubnetFields = ({ selectedVPC, selectedRegion, isMultiAz, privateLinkSe
 
 SingleSubnetFieldsRow.propTypes = {
   selectedRegion: PropTypes.string,
+  selectedVPC: PropTypes.shape({
+    id: PropTypes.string,
+    name: PropTypes.string,
+  }),
+  selectedAZ: PropTypes.string,
   index: PropTypes.number,
-  isDisabled: PropTypes.bool,
   isMultiAz: PropTypes.bool,
   privateLinkSelected: PropTypes.bool,
 };
@@ -127,6 +162,7 @@ SingleSubnetFieldsRow.propTypes = {
 AWSSubnetFields.propTypes = {
   selectedVPC: PropTypes.object,
   selectedRegion: PropTypes.string,
+  selectedAZs: PropTypes.arrayOf(PropTypes.string),
   isMultiAz: PropTypes.bool,
   privateLinkSelected: PropTypes.bool,
 };

@@ -71,7 +71,7 @@ describe('createClusterRequest', () => {
     });
   };
 
-  const awsVPCData = {
+  const awsOsdVPCData = {
     install_to_vpc: true,
     az_0: 'us-east-1d',
     private_subnet_id_0: 'subnet-00b3753ab2dd892ac',
@@ -82,6 +82,62 @@ describe('createClusterRequest', () => {
     az_2: 'us-east-1f',
     private_subnet_id_2: 'subnet-00327948731118662',
     public_subnet_id_2: 'subnet-09ad4ef49f2e29996',
+  };
+
+  const awsRosaVPCData = {
+    install_to_vpc: true,
+    selected_vpc: {
+      id: 'vpc-id',
+      aws_subnets: [
+        {
+          availability_zone: 'us-east-1d',
+          subnet_id: 'subnet-00b3753ab2dd892ac',
+          public: false,
+        },
+        {
+          availability_zone: 'us-east-1d',
+          subnet_id: 'subnet-0703ec90283d1fd6b',
+          public: true,
+        },
+        {
+          availability_zone: 'us-east-1e',
+          subnet_id: 'subnet-0735da52d658da28b',
+          public: false,
+        },
+        {
+          availability_zone: 'us-east-1e',
+          subnet_id: 'subnet-09404f4fc139bd94e',
+          public: true,
+        },
+        {
+          availability_zone: 'us-east-1f',
+          subnet_id: 'subnet-00327948731118662',
+          public: false,
+        },
+        {
+          availability_zone: 'us-east-1f',
+          subnet_id: 'subnet-09ad4ef49f2e29996',
+          public: true,
+        },
+      ],
+    },
+    machinePoolsSubnets: [
+      {
+        availabilityZone: 'us-east-1d',
+        privateSubnetId: 'subnet-00b3753ab2dd892ac',
+        publicSubnetId: 'subnet-0703ec90283d1fd6b',
+      },
+      {
+        availabilityZone: 'us-east-1e',
+        privateSubnetId: 'subnet-0735da52d658da28b',
+        publicSubnetId: 'subnet-09404f4fc139bd94e',
+      },
+      {
+        availabilityZone: 'us-east-1f',
+        privateSubnetId: 'subnet-00327948731118662',
+        publicSubnetId: 'subnet-09ad4ef49f2e29996',
+      },
+    ],
   };
 
   const expectAWSVPC = (request) => {
@@ -184,7 +240,7 @@ describe('createClusterRequest', () => {
           product: normalizedProducts.OSDTrial,
           byoc: 'true', // forced by OSDTrial.
           network_configuration_toggle: 'advanced',
-          ...awsVPCData,
+          ...awsOsdVPCData,
         };
         const request = createClusterRequest(params, data);
         expect(request.billing_model).toEqual('standard');
@@ -257,7 +313,7 @@ describe('createClusterRequest', () => {
           byoc: 'true', // forced by OSDTrial.
           // CCS also lowers nodes_compute default, but not important for these tests.
           cloud_provider: 'aws',
-          ...awsVPCData,
+          ...awsOsdVPCData,
           ...CIDRData,
         };
         const request = createClusterRequest({}, data);
@@ -347,6 +403,18 @@ describe('createClusterRequest', () => {
     // (without registering them or connecting to an actual Field component).
 
     describe('ROSA button', () => {
+      const hcpSubnetDetails = {
+        selected_vpc: awsRosaVPCData,
+        cluster_privacy_public_subnet_id: 'subnet-0703ec90283d1fd6b',
+        machinePoolsSubnets: [
+          {
+            availabilityZone: '',
+            privateSubnetId: 'subnet-00b3753ab2dd892ac',
+            publicSubnetId: '',
+          },
+        ],
+      };
+
       it('defaults', () => {
         const data = {
           ...rosaFormData,
@@ -371,31 +439,14 @@ describe('createClusterRequest', () => {
           cloud_provider: 'aws',
           byoc: 'true',
           hypershift: 'true',
-          machine_pools_subnets: [
-            {
-              subnet_id: 'subnet1ID',
-              name: 'subnet1',
-              public: false,
-            },
-            {
-              subnet_id: 'subnet2ID',
-              name: 'subnet2',
-              public: false,
-            },
-          ],
           cluster_privacy: 'external',
-          cluster_privacy_public_subnet: {
-            subnet_id: 'publicSubnet1ID',
-            name: 'publicSubnet1',
-            public: true,
-          },
+          ...hcpSubnetDetails,
           ...CIDRData,
         };
         const request = createClusterRequest({}, data);
 
         expect(request.hypershift.enabled).toBeTruthy();
         expect(request.billing_model).toEqual('marketplace-aws');
-        expect(request.aws.subnet_ids).toEqual(['publicSubnet1ID', 'subnet1ID', 'subnet2ID']);
       });
 
       it('leaves out node_drain_grace_period if Hypershift', () => {
@@ -416,6 +467,26 @@ describe('createClusterRequest', () => {
         expect(request.node_drain_grace_period).toEqual({ unit: 'minutes', value: 60 });
       });
 
+      it.each([
+        ['external', ['subnet-0703ec90283d1fd6b', 'subnet-00b3753ab2dd892ac']],
+        ['internal', ['subnet-00b3753ab2dd892ac']],
+      ])(
+        'creates the subnet and availability zone fields correctly for privacy=%p clusters',
+        (clusterPrivacy, expectedSubnetIds) => {
+          const data = {
+            ...rosaFormData,
+            cloud_provider: 'aws',
+            byoc: 'true',
+            hypershift: 'true',
+            multi_az: 'false',
+            cluster_privacy: clusterPrivacy,
+            ...hcpSubnetDetails,
+          };
+          const request = createClusterRequest({}, data);
+          expect(request.aws.subnet_ids).toEqual(expectedSubnetIds);
+        },
+      );
+
       describe('AWS Security Groups', () => {
         const byoVpcData = {
           ...rosaFormData,
@@ -423,6 +494,14 @@ describe('createClusterRequest', () => {
           byoc: 'true',
           install_to_vpc: true,
           shared_vpc: { is_selected: false },
+          multi_az: 'false',
+          machinePoolsSubnets: [
+            {
+              availabilityZone: 'us-east-1d',
+              privateSubnetId: 'subnet-00b3753ab2dd892ac',
+              publicSubnetId: 'subnet-0703ec90283d1fd6b',
+            },
+          ],
         };
 
         it('are not sent if no groups have been selected', () => {

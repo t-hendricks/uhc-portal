@@ -30,12 +30,12 @@ const ReduxFormMachinePoolSubnets = ({ fields, selectedVPC, meta: { warning } })
       return (
         /* Adding index to fix issue when machine pool entries with same subnets are removed */
         // eslint-disable-next-line react/no-array-index-key
-        <React.Fragment key={`${fields.get(index).subnet_id}_${index}`}>
+        <React.Fragment key={`${fields.get(index).privateSubnetId}_${index}`}>
           <GridItem span={2}>Machine pool {index + 1}</GridItem>
           <GridItem span={4}>
             <Field
               component={SubnetSelectField}
-              name={`${fieldName}`}
+              name={`${fieldName}.privateSubnetId`}
               validate={validateMultipleMachinePoolsSubnets}
               isRequired
               privacy="private"
@@ -63,7 +63,9 @@ const ReduxFormMachinePoolSubnets = ({ fields, selectedVPC, meta: { warning } })
     })}
     <GridItem>
       <Button
-        onClick={() => fields.push({ subnet_id: '', availability_zone: '' })}
+        onClick={() =>
+          fields.push({ availabilityZone: '', privateSubnetId: '', publicSubnetId: '' })
+        }
         icon={<PlusCircleIcon />}
         variant="link"
         isInline
