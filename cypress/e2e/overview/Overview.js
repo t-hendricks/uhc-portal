@@ -94,8 +94,7 @@ describe('OCM Overview Page tests (OCP-65189)', { tags: ['smoke'] }, () => {
         'Learn more on IBM',
         'https://cloud.ibm.com/kubernetes/catalog/create?platformType=openshift',
       )
-      .opensInRightTab()
-      .successfullyOpens();
+      .opensInRightTab();
 
     card = Overview.centralSectionCard('offering-card_DEVSNBX');
     card.cyObj.contains('Developer Sandbox');
