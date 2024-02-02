@@ -491,11 +491,14 @@ class CreateROSAWizardInternal extends React.Component {
       { label: 'Clusters' },
       { label: 'Cluster Type', path: '/create' },
       { label: 'Set up ROSA', path: '/create/rosa/getstarted' },
-      { label: 'Create a ROSA Cluster' },
+      { label: '[V2] Create a ROSA Cluster' },
     ];
 
     const title = (
-      <PageTitle title="Create a ROSA Cluster" breadcrumbs={<Breadcrumbs path={breadcrumbs} />} />
+      <PageTitle
+        title="[V2] Create a ROSA Cluster"
+        breadcrumbs={<Breadcrumbs path={breadcrumbs} />}
+      />
     );
 
     if (anyRequestPending || (!organization.fulfilled && !organization.error)) {

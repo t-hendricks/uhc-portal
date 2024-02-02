@@ -1,0 +1,19 @@
+.controlPlaneScreenTile {
+  text-align: left !important;
+
+  .pf-v5-c-tile__body {
+    --pf-v5-c-tile__body--FontSize: var(--pf-v5-global--FontSize--md);
+  }
+
+  .pf-v5-c-tile__header {
+    align-items: flex-start;
+  }
+  .pf-v5-c-tile__title {
+    font-size: var(--pf-v5-global--FontSize--lg);
+    font-weight: var(--pf-v5-global--FontWeight--bold);
+  }
+
+  .pf-v5-c-alert {
+    --pf-v5-c-alert__FontSize: var(--pf-v5-global--FontSize--md);
+  }
+}
