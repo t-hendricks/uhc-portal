@@ -87,6 +87,7 @@ const TreeViewSelectTestWrapper = () => {
       searchPlaceholder="Find an instance size"
       switchLabelOnText="Show compatible instances only"
       switchLabelOffText="Show compatible instances only"
+      ariaLabel="TreeViewSelect"
     />
   );
 };
@@ -108,9 +109,8 @@ describe('TreeViewSelect ', () => {
     await user.click(screen.getByLabelText('TreeViewSelect toggle'));
     expect(container.querySelector('.pf-v5-c-tree-view')).toBeInTheDocument();
 
-    const input = await screen.findByLabelText('Search input');
+    const input = await screen.findByLabelText('TreeViewSelect search field');
     await user.type(input, machineTypeMapFiltered[0].children![0].id!);
-    await user.click(screen.getByText(machineTypeMapFiltered[0].category!));
     expect(screen.getByText(machineTypeMapFiltered[0].children![0].id!)).toBeInTheDocument();
     await checkAccessibility(container);
   });
@@ -124,10 +124,9 @@ describe('TreeViewSelect ', () => {
 
     await user.click(screen.getByTestId('display-switch'));
 
-    const input = await screen.findByLabelText('Search input');
+    const input = await screen.findByLabelText('TreeViewSelect search field');
     await user.type(input, machineTypeMap[1].category!);
     expect(screen.getByText(machineTypeMap[1].category!)).toBeInTheDocument();
-    expect(screen.queryAllByText(machineTypeMap[0].category!).length).toBeFalsy();
     await checkAccessibility(container);
   });
 
@@ -138,22 +137,21 @@ describe('TreeViewSelect ', () => {
     await user.click(screen.getByLabelText('TreeViewSelect toggle'));
     expect(container.querySelector('.pf-v5-c-tree-view')).toBeInTheDocument();
 
-    const input = await screen.findByLabelText('Search input');
+    const input = await screen.findByLabelText('TreeViewSelect search field');
     await user.type(input, 'c5a.Olarge');
-    await user.click(screen.getByText(machineTypeMapFiltered[0].category!));
     expect(screen.getByText(machineTypeMapFiltered[0].children![0].id!)).toBeInTheDocument();
     await checkAccessibility(container);
   });
 
-  it('search can filter does not include matches above one charcter ', async () => {
+  it('search can filter does not include distance non-perfect matches', async () => {
     const { container, user } = render(<TreeViewSelectTestWrapper />);
 
     expect(screen.getByText('Select instance type')).toBeInTheDocument();
     await user.click(screen.getByLabelText('TreeViewSelect toggle'));
     expect(container.querySelector('.pf-v5-c-tree-view')).toBeInTheDocument();
 
-    const input = await screen.findByLabelText('Search input');
-    await user.type(input, 'c5a.O0large');
+    const input = await screen.findByLabelText('TreeViewSelect search field');
+    await user.type(input, 'c5a.false');
     expect(screen.queryAllByText(machineTypeMapFiltered[0].category!).length).toBeFalsy();
     expect(screen.queryAllByText(machineTypeMapFiltered[0].children![0].id!).length).toBeFalsy();
     await checkAccessibility(container);

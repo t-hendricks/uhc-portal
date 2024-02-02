@@ -1,12 +1,17 @@
 import React from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { GlobalState } from '~/redux/store';
 import { Field } from 'formik';
 
 import { Form, Grid, GridItem, Title, Text, ExpandableSection } from '@patternfly/react-core';
 
 import { required } from '~/common/validators';
 import MachineTypeSelection from '~/components/clusters/common/ScaleSection/MachineTypeSelection';
-import { getMachineTypesByRegion, getMachineTypes } from '~/redux/actions/machineTypesActions';
+import {
+  getMachineTypesByRegion,
+  getMachineTypes,
+  clearMachineTypesByRegion,
+} from '~/redux/actions/machineTypesActions';
 import { CloudProviderType, FieldId } from '~/components/clusters/wizards/common/constants';
 import { useFormState } from '~/components/clusters/wizards/hooks';
 import ExternalLink from '~/components/common/ExternalLink';
@@ -53,6 +58,37 @@ export const MachinePool = () => {
   const [isNodeLabelsExpanded, setIsNodeLabelsExpanded] = React.useState(false);
   const awsCreds = React.useMemo<AWSCredentials>(() => getAwsCcsCredentials(values), [values]);
 
+  const [loadNewMachineTypes, setLoadNewMachineTypes] = React.useState(false);
+  const machineTypesByRegion = useSelector((state: GlobalState) => state.machineTypesByRegion);
+
+  React.useEffect(() => {
+    if (machineTypesByRegion.region) {
+      if (!isByoc || !isAWS || cloudProvider === CloudProviderType.Gcp || isRosa) {
+        // purge cache when related wizard context changes, i.e. provider/product/credentials
+        dispatch(clearMachineTypesByRegion());
+      }
+    }
+  }, [
+    cloudProvider,
+    isRosa,
+    machineTypesByRegion.region,
+    isByoc,
+    isAWS,
+    dispatch,
+    region,
+    setFieldValue,
+  ]);
+
+  React.useEffect(() => {
+    if (isAWS && isByoc) {
+      if (!machineTypesByRegion.region || machineTypesByRegion.region?.id !== region) {
+        setLoadNewMachineTypes(true);
+        setFieldValue(FieldId.MachineTypeForceChoice, false);
+      }
+      // no preiously loaded machineTypesByRegion in redux, load new machines
+    }
+  }, [machineTypesByRegion.region, isAWS, isByoc, region, setFieldValue]);
+
   // If no value has been set for compute nodes already,
   // set an initial value based on infrastructure and availability selections.
   React.useEffect(() => {
@@ -83,7 +119,13 @@ export const MachinePool = () => {
   }, [nodeLabels]);
 
   React.useEffect(() => {
-    if (awsCreds?.access_key_id && awsCreds?.account_id && awsCreds?.secret_access_key && region) {
+    if (
+      loadNewMachineTypes &&
+      awsCreds?.access_key_id &&
+      awsCreds?.account_id &&
+      awsCreds?.secret_access_key &&
+      region
+    ) {
       dispatch(
         getMachineTypesByRegion(
           awsCreds?.access_key_id as string,
@@ -92,9 +134,11 @@ export const MachinePool = () => {
           region,
         ),
       );
+      setLoadNewMachineTypes(false);
     }
   }, [
     dispatch,
+    loadNewMachineTypes,
     awsCreds?.access_key_id,
     awsCreds?.account_id,
     awsCreds?.secret_access_key,
@@ -126,7 +170,6 @@ export const MachinePool = () => {
       <GridItem md={4} />
     </>
   );
-
   return (
     <Form>
       <GridItem>

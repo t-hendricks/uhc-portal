@@ -1,8 +1,7 @@
 import './TreeViewSelect.scss';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import Fuse from 'fuse.js';
 import {
-  MenuToggle,
   Switch,
   Stack,
   StackItem,
@@ -15,7 +14,10 @@ import {
   TreeViewDataItem,
   TreeViewSearch,
 } from '@patternfly/react-core';
-import { Dropdown as DropdownDeprecated } from '@patternfly/react-core/deprecated';
+import {
+  Dropdown as DropdownDeprecated,
+  DropdownToggle as DropdownToggleDeprecated,
+} from '@patternfly/react-core/deprecated';
 
 export interface TreeViewData extends TreeViewDataItem {
   category?: string;
@@ -41,6 +43,8 @@ interface TreeViewSelectProps {
   switchLabelOnText?: string;
   switchLabelOffText?: string;
   searchPlaceholder?: string;
+  allExpanded?: boolean;
+  ariaLabel?: string;
 }
 
 export function TreeViewSelectMenuItem(props: { name: string; description: string }) {
@@ -73,16 +77,15 @@ export function TreeViewSelect(props: TreeViewSelectProps) {
     searchPlaceholder,
     switchLabelOnText,
     switchLabelOffText,
+    ariaLabel,
+    allExpanded = false,
   } = props;
   const [isOpen, setIsOpen] = useState(false);
   const [filteredItems, setFilteredItems] = useState(treeViewSelectionMap);
+  const [searchString, setSearchString] = useState('');
 
-  useEffect(() => {
-    setFilteredItems(treeViewSelectionMap);
-  }, [treeViewSelectionMap]);
-
-  const onSearch = (evt: React.ChangeEvent<HTMLInputElement>) => {
-    if (evt.target.value === '') {
+  const searchFn = useCallback(() => {
+    if (searchString === '') {
       setFilteredItems(treeViewSelectionMap);
     } else {
       const filtered = treeViewSelectionMap
@@ -92,13 +95,13 @@ export function TreeViewSelect(props: TreeViewSelectProps) {
               keys: ['id', 'category', 'descriptionLabel', 'nameLabel'],
               shouldSort: true,
               findAllMatches: true,
-              threshold: 0.1,
+              threshold: 0.3,
               ignoreLocation: true,
               distance: 100,
               minMatchCharLength: 1,
             });
             const filteredMachineCategory = fuse
-              .search(evt.target.value.trim())
+              .search(searchString.trim())
               .map(({ item }) => item);
             if (filteredMachineCategory.length > 0) {
               return {
@@ -112,7 +115,16 @@ export function TreeViewSelect(props: TreeViewSelectProps) {
         .filter(Boolean) as TreeViewData[];
       setFilteredItems(filtered);
     }
+  }, [searchString, treeViewSelectionMap]);
+
+  const onSearch = (evt: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchString(evt.target.value);
+    searchFn();
   };
+
+  useEffect(() => {
+    searchFn();
+  }, [treeViewSelectionMap, searchFn]);
 
   const toolbar = (
     <Toolbar style={{ padding: 0 }}>
@@ -123,7 +135,6 @@ export function TreeViewSelect(props: TreeViewSelectProps) {
             className="pf-u-pt-xs pf-u-pb-sm pf-u-pl-md pf-u-pr-sm"
           >
             <Switch
-              id="display-switch"
               data-testid="display-switch"
               label={switchLabelOnText}
               labelOff={switchLabelOffText}
@@ -140,39 +151,31 @@ export function TreeViewSelect(props: TreeViewSelectProps) {
             className="pf-u-pt-sm pf-u-pb-sm pf-u-pl-sm pf-u-pr-sm pf-u-w-inherit"
             placeholder={searchPlaceholder}
             onSearch={onSearch}
-            id="input-search"
-            name="search-input"
-            aria-label="Search input"
+            aria-label={ariaLabel && `${ariaLabel} search field`}
           />
         </ToolbarItem>
       </ToolbarContent>
     </Toolbar>
   );
-  // close dropdown only if mousedown occurs outside parent element
-  const dropdownElement = document.querySelector('#tree-view-dropdown') as Node;
-  document.addEventListener('mousedown', (event) => {
-    if (dropdownElement && !dropdownElement?.contains(event?.target as Node)) {
-      setIsOpen(false);
-    }
-  });
+
   // continue to use deprecated dropdown as menuAppendTo (deprecated) is being used elsewhere
   return (
     <DropdownDeprecated
-      id="tree-view-dropdown"
-      aria-label="Options menu"
+      aria-label={ariaLabel}
       menuAppendTo={menuAppendTo}
       placeholder={placeholder}
       className={inModal ? 'tree-view-select-in-modal' : 'tree-view-select'}
       toggle={
-        <MenuToggle
-          aria-label="TreeViewSelect toggle"
+        <DropdownToggleDeprecated
+          aria-label={ariaLabel && `${ariaLabel} toggle`}
           style={{ maxWidth: 'none', width: '100%' }}
-          onClick={(e) => {
+          onToggle={(e) => {
+            setSearchString('');
             setIsOpen(!isOpen);
           }}
         >
           {selected ? `${selected}` : `${placeholder}`}
-        </MenuToggle>
+        </DropdownToggleDeprecated>
       }
       isOpen={isOpen}
     >
@@ -185,6 +188,7 @@ export function TreeViewSelect(props: TreeViewSelectProps) {
           }
         }}
         hasSelectableNodes={false}
+        allExpanded={allExpanded || searchString !== ''}
         data={filteredItems}
         useMemo
       />

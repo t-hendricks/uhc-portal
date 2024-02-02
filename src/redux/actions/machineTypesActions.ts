@@ -40,10 +40,14 @@ const getMachineTypesByRegion = (
     clusterService
       .getMachineTypesByRegion(accessKeyId, accountId, secretAccessKey, region)
       .then((response) => groupByCloudProvider(response.data.items)),
+    { region: { id: region } },
   );
+
+const clearMachineTypesByRegion = () => action(machineTypesConstants.RESET_INITIAL_STATE);
 
 const machineTypesByRegionActions = {
   getMachineTypesByRegion,
+  clearMachineTypesByRegion,
 };
 
 type MachineTypesAction = ActionType<typeof machineTypesActions>;
@@ -54,6 +58,7 @@ export {
   machineTypesByRegionActions,
   getMachineTypesByRegion,
   getMachineTypes,
+  clearMachineTypesByRegion,
   groupByCloudProvider,
   MachineTypesAction,
   MachineTypesByRegionAction,

@@ -6,6 +6,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import { Alert, AlertVariant, FormGroup, Spinner } from '@patternfly/react-core';
+import { FormGroupHelperText } from '~/components/common/FormGroupHelperText';
+import { CloudProviderType } from '~/components/clusters/wizards/common/constants';
 import ErrorBox from '~/components/common/ErrorBox';
 import PopoverHint from '~/components/common/PopoverHint';
 import { humanizeValueWithUnit } from '~/common/units';
@@ -19,293 +21,7 @@ import { normalizedProducts, billingModels } from '~/common/subscriptionTypes';
 import { DEFAULT_FLAVOUR_ID } from '~/redux/actions/flavourActions';
 import { constants } from '~/components/clusters/common/CreateOSDFormConstants';
 import sortMachineTypes, { machineCategories } from './sortMachineTypes';
-import { TreeViewSelect, TreeViewSelectMenuItem } from './TreeViewSelect';
-
-// Default selection scenarios:
-// - First time, default is available => select it.
-// - First time, default is not listed (due to quota or ccs_only) => leave placeholder ''.
-// - Error fetching flavours (very unlikely) => no need to show error to user, leave placeholder.
-// - User selected a type manually, then changed CSS or multiAz, choice still listed.
-//   => keep it.
-// - User selected a type manually, then changed CSS or multiAz, choice no longer listed.
-//   => restore placeholder '' to force choice (even if have quota for default).
-//   - componentDidUpdate running in this situation (e.g. onToggle) should not select default.
-// - Something was selected (either automatically or manually), then changed cloud provider.
-//   CloudProviderSelectionField does `change('machine_type', '')` => same as first time.
-
-const MachineTypeSelection = ({
-  machine_type: machineType,
-  machine_type_force_choice: machineTypeForceChoice,
-  getDefaultFlavour,
-  flavours,
-  machineTypes,
-  machineTypesByRegion,
-  isMultiAz,
-  isBYOC,
-  isMachinePool,
-  inModal = false,
-  cloudProviderID,
-  product,
-  billingModel,
-  quota,
-  organization,
-  menuAppendTo,
-}) => {
-  const {
-    input,
-    meta: { error, touched },
-  } = machineType;
-  const { input: forceChoiceInput } = machineTypeForceChoice;
-  /** Checks whether required data arrived. */
-  const isDataReady = React.useCallback(
-    () =>
-      organization.fulfilled &&
-      machineTypes.fulfilled &&
-      // Tolerate flavours error gracefully.
-      (flavours.fulfilled || flavours.error),
-    [flavours.error, flavours.fulfilled, machineTypes.fulfilled, organization.fulfilled],
-  );
-
-  React.useEffect(() => {
-    getDefaultFlavour();
-  }, [getDefaultFlavour]);
-
-  React.useEffect(() => {
-    if (isDataReady()) {
-      if (!input.value) {
-        setDefaultValue();
-      }
-
-      // If user had made a choice, then some external param changed like CCS/MultiAz,
-      // (we can get here on mount after switching wizard steps)
-      // and selected type is no longer availble, force user to choose again.
-      if (input.value && !isTypeAvailable(input.value)) {
-        setInvalidValue();
-      }
-    }
-  }, [input.value, isDataReady, isTypeAvailable, setDefaultValue, setInvalidValue]);
-
-  const setDefaultValue = React.useCallback(() => {
-    // Select the type suggested by backend, if possible.
-    if (forceChoiceInput.value) {
-      return; // Keep untouched, wait for user to choose.
-    }
-
-    const defaultType =
-      flavours?.byID[DEFAULT_FLAVOUR_ID]?.[cloudProviderID]?.compute_instance_type;
-
-    if (defaultType && isTypeAvailable(defaultType)) {
-      input.onChange(defaultType);
-    }
-  }, [cloudProviderID, flavours?.byID, forceChoiceInput.value, input, isTypeAvailable]);
-
-  const setInvalidValue = React.useCallback(() => {
-    // Tell redux form the current value of this field is empty.
-    // This will cause it to not pass 'required' validation.
-    // Order might matter here!
-    // If we cleared to '' before force_choice, componentDidUpdate could select new value(?)
-    forceChoiceInput.onChange(true);
-    input.onChange('');
-  }, [forceChoiceInput, input]);
-
-  const [activeMachineTypes, setActiveMachineTypes] = React.useState(machineTypes);
-  const [isMachineTypeFilteredByRegion, setIsMachineTypeFilteredByRegion] = React.useState(true);
-
-  React.useEffect(() => {
-    if (machineTypesByRegion.fulfilled) {
-      setIsMachineTypeFilteredByRegion(true);
-    } else {
-      setIsMachineTypeFilteredByRegion(false);
-    }
-  }, [machineTypesByRegion.fulfilled, machineTypesByRegion.error, machineTypes]);
-  /**
-   * Checks whether type can be offered, based on quota and ccs_only.
-   * Returns false if necessary data not fulfilled yet.
-   */
-  const isTypeAvailable = React.useCallback(
-    (machineTypeID) => {
-      if (!isDataReady()) {
-        return false;
-      }
-
-      const machineType = activeMachineTypes.typesByID[machineTypeID];
-      if (!machineType) {
-        return false;
-      }
-      const resourceName = machineType.generic_name;
-
-      if (!isBYOC && machineType.ccs_only) {
-        return false;
-      }
-
-      const quotaParams = {
-        product,
-        cloudProviderID,
-        isBYOC,
-        isMultiAz,
-        resourceName,
-        billingModel,
-      };
-
-      const clustersAvailable = availableClustersFromQuota(quota, quotaParams);
-      const nodesAvailable = availableNodesFromQuota(quota, quotaParams);
-
-      if (isMachinePool) {
-        // TODO: backend does allow creating machine pool with 0 nodes!
-        // But in most cases you want a machine type you do have quota for,
-        // and if we allow >= 0, the highlight of available types becomes useless.
-        // Can we improve the experience without blocking 0-node pool creation?
-        return nodesAvailable >= 1;
-      }
-
-      if (isBYOC) {
-        const minimumNodes = isMultiAz ? 3 : 2;
-        return clustersAvailable > 0 && nodesAvailable >= minimumNodes;
-      }
-
-      return clustersAvailable >= 1;
-    },
-    [
-      billingModel,
-      cloudProviderID,
-      isBYOC,
-      isDataReady,
-      isMachinePool,
-      isMultiAz,
-      activeMachineTypes.typesByID,
-      product,
-      quota,
-    ],
-  );
-
-  React.useEffect(() => {
-    if (isDataReady()) {
-      if (!input.value) {
-        setDefaultValue();
-      }
-
-      // If user had made a choice, then some external param changed like CCS/MultiAz,
-      // (we can get here on mount after switching wizard steps)
-      // and selected type is no longer availble, force user to choose again.
-      if (input.value && !isTypeAvailable(input.value)) {
-        setInvalidValue();
-      }
-    }
-  }, [input.value, isDataReady, isTypeAvailable, setDefaultValue, setInvalidValue]);
-
-  const changeHandler = React.useCallback(
-    (_, value) => {
-      input.onChange(value);
-      forceChoiceInput.onChange(false);
-    },
-    [forceChoiceInput, input],
-  );
-
-  React.useEffect(() => {
-    if (isMachineTypeFilteredByRegion) {
-      setActiveMachineTypes(machineTypesByRegion);
-    } else {
-      setActiveMachineTypes(machineTypes);
-    }
-  }, [isMachineTypeFilteredByRegion, machineTypesByRegion, machineTypes]);
-
-  const sortedMachineTypes = React.useMemo(
-    () => sortMachineTypes(activeMachineTypes, cloudProviderID),
-    [cloudProviderID, activeMachineTypes],
-  );
-
-  const filteredMachineTypes = React.useMemo(
-    () => sortedMachineTypes.filter((type) => isTypeAvailable(type.id)),
-    [isTypeAvailable, sortedMachineTypes],
-  );
-
-  const machineTypeMap = React.useMemo(() => {
-    const machineGroups = groupedMachineTypes(filteredMachineTypes);
-    const selectGroups = machineGroups
-      .map(([categoryLabel, categoryMachines]) => {
-        if (categoryMachines.length > 0) {
-          return {
-            name: categoryLabel,
-            category: categoryLabel,
-            children: categoryMachines.map((machineType) => ({
-              name: (
-                <TreeViewSelectMenuItem
-                  name={machineTypeLabel(machineType)}
-                  description={machineTypeDescriptionLabel(machineType)}
-                />
-              ),
-              category: categoryLabel,
-              nameLabel: machineTypeLabel(machineType),
-              descriptionLabel: machineTypeDescriptionLabel(machineType),
-              id: machineType.id,
-            })),
-          };
-        }
-        return undefined;
-      })
-      .filter(Boolean);
-    return selectGroups;
-  }, [filteredMachineTypes]);
-
-  // In the dropdown we put the machine type id in separate description row,
-  // but the Select toggle doesn't support that, so combine both into one label.
-  const selection = React.useMemo(
-    () =>
-      machineTypeFullLabel(
-        filteredMachineTypes.find((machineType) => machineType.id === input.value) || null,
-      ),
-    [filteredMachineTypes, input.value],
-  );
-
-  if (isDataReady()) {
-    if (filteredMachineTypes.length === 0) {
-      return (
-        <Alert variant={AlertVariant.danger} isInline title={noMachineTypes} role="alert">
-          <ExternalLink href="https://cloud.redhat.com/products/dedicated/contact/">
-            Contact sales to purchase additional quota.
-          </ExternalLink>
-        </Alert>
-      );
-    }
-
-    return (
-      <FormGroup
-        label="Compute node instance type"
-        isRequired
-        fieldId="node_type"
-        labelIcon={<PopoverHint hint={constants.computeNodeInstanceTypeHint} />}
-      >
-        <TreeViewSelect
-          treeViewSelectionMap={machineTypeMap}
-          inModal={inModal}
-          menuAppendTo={menuAppendTo}
-          selected={selection}
-          setSelected={(event, selection) => {
-            changeHandler(event, selection.id);
-          }}
-          treeViewSwitchActive={isMachineTypeFilteredByRegion}
-          setTreeViewSwitchActive={setIsMachineTypeFilteredByRegion}
-          placeholder="Select instance type"
-          searchPlaceholder="Find an instance size"
-          includeFilterSwitch={machineTypesByRegion.fulfilled && !machineTypesByRegion.error}
-          switchLabelOnText="Show compatible instances only"
-          switchLabelOffText="Show compatible instances only"
-        />
-      </FormGroup>
-    );
-  }
-
-  return activeMachineTypes.error ? (
-    <ErrorBox message="Error loading node types" response={activeMachineTypes} />
-  ) : (
-    <>
-      <div className="spinner-fit-container">
-        <Spinner size="md" />
-      </div>
-      <div className="spinner-loading-text">Loading node types...</div>
-    </>
-  );
-};
+import { TreeViewSelect, TreeViewSelectMenuItem } from './TreeViewSelect/TreeViewSelect';
 
 /** Returns useful info about the machine type - CPUs, RAM, [GPUs]. */
 const machineTypeDescriptionLabel = (machineType) => {
@@ -363,6 +79,295 @@ const groupedMachineTypes = (machines) => {
   return machineGroups;
 };
 
+// Default selection scenarios:
+// - First time, default is available => select it.
+// - First time, default is not listed (due to quota or ccs_only) => leave placeholder ''.
+// - Error fetching flavours (very unlikely) => no need to show error to user, leave placeholder.
+// - User selected a type manually, then changed CSS or multiAz, choice still listed.
+//   => keep it.
+// - User selected a type manually, then changed CSS or multiAz, choice no longer listed.
+//   => restore placeholder '' to force choice (even if have quota for default).
+//   - componentDidUpdate running in this situation (e.g. onToggle) should not select default.
+// - Something was selected (either automatically or manually), then changed cloud provider.
+//   CloudProviderSelectionField does `change('machine_type', '')` => same as first time.
+
+const MachineTypeSelection = ({
+  machine_type: machineType,
+  machine_type_force_choice: machineTypeForceChoice,
+  getDefaultFlavour,
+  flavours,
+  machineTypes,
+  machineTypesByRegion,
+  isMultiAz,
+  isBYOC,
+  isMachinePool,
+  inModal = false,
+  cloudProviderID,
+  product,
+  billingModel,
+  quota,
+  organization,
+  menuAppendTo,
+  allExpanded,
+}) => {
+  const {
+    input,
+    meta: { error, touched },
+  } = machineType;
+  const { input: forceChoiceInput } = machineTypeForceChoice;
+  /** Checks whether required data arrived. */
+  const isDataReady =
+    organization.fulfilled &&
+    machineTypes.fulfilled &&
+    // Tolerate flavours error gracefully.
+    (flavours.fulfilled || flavours.error);
+
+  const isRegionSpecificDataReady =
+    machineTypesByRegion.fulfilled || (machineTypesByRegion.error && isDataReady);
+  const useRegionFilteredData =
+    isBYOC && cloudProviderID === CloudProviderType.Aws && product !== normalizedProducts.ROSA;
+  const [isMachineTypeFilteredByRegion, setIsMachineTypeFilteredByRegion] = React.useState(true);
+  const activeMachineTypes =
+    isRegionSpecificDataReady && useRegionFilteredData && isMachineTypeFilteredByRegion
+      ? machineTypesByRegion
+      : machineTypes;
+
+  /**
+   * Checks whether type can be offered, based on quota and ccs_only.
+   * Returns false if necessary data not fulfilled yet.
+   */
+  const isTypeAvailable = React.useCallback(
+    (machineTypeID) => {
+      if (
+        !isDataReady ||
+        (useRegionFilteredData && !isRegionSpecificDataReady) ||
+        !activeMachineTypes.typesByID
+      ) {
+        return false;
+      }
+
+      const machineType = activeMachineTypes?.typesByID[machineTypeID];
+      if (!machineType) {
+        return false;
+      }
+      const resourceName = machineType.generic_name;
+
+      if (!isBYOC && machineType.ccs_only) {
+        return false;
+      }
+
+      const quotaParams = {
+        product,
+        cloudProviderID,
+        isBYOC,
+        isMultiAz,
+        resourceName,
+        billingModel,
+      };
+
+      const clustersAvailable = availableClustersFromQuota(quota, quotaParams);
+      const nodesAvailable = availableNodesFromQuota(quota, quotaParams);
+
+      if (isMachinePool) {
+        // TODO: backend does allow creating machine pool with 0 nodes!
+        // But in most cases you want a machine type you do have quota for,
+        // and if we allow >= 0, the highlight of available types becomes useless.
+        // Can we improve the experience without blocking 0-node pool creation?
+        return nodesAvailable >= 1;
+      }
+
+      if (isBYOC) {
+        const minimumNodes = isMultiAz ? 3 : 2;
+        return clustersAvailable > 0 && nodesAvailable >= minimumNodes;
+      }
+
+      return clustersAvailable >= 1;
+    },
+    [
+      activeMachineTypes?.typesByID,
+      billingModel,
+      cloudProviderID,
+      isBYOC,
+      isDataReady,
+      isRegionSpecificDataReady,
+      useRegionFilteredData,
+      isMachinePool,
+      isMultiAz,
+      product,
+      quota,
+    ],
+  );
+
+  const setDefaultValue = React.useCallback(() => {
+    // Select the type suggested by backend, if possible.
+    if (forceChoiceInput.value) {
+      return; // Keep untouched, wait for user to choose.
+    }
+
+    const defaultType =
+      flavours?.byID[DEFAULT_FLAVOUR_ID]?.[cloudProviderID]?.compute_instance_type;
+
+    if (defaultType && isTypeAvailable(defaultType)) {
+      input.onChange(defaultType);
+    }
+  }, [cloudProviderID, flavours?.byID, forceChoiceInput.value, input, isTypeAvailable]);
+
+  const setInvalidValue = React.useCallback(() => {
+    // Tell redux form the current value of this field is empty.
+    // This will cause it to not pass 'required' validation.
+    // Order might matter here!
+    // If we cleared to '' before force_choice, componentDidUpdate could select new value(?)
+    forceChoiceInput.onChange(true);
+    input.onChange('');
+  }, [forceChoiceInput, input]);
+
+  React.useEffect(() => {
+    getDefaultFlavour();
+  }, [getDefaultFlavour]);
+
+  React.useEffect(() => {
+    if (
+      isDataReady &&
+      (!useRegionFilteredData || isRegionSpecificDataReady) &&
+      activeMachineTypes.typesByID
+    ) {
+      if (!input.value) {
+        setDefaultValue();
+      }
+
+      // If user had made a choice, then some external param changed like CCS/MultiAz,
+      // (we can get here on mount after switching wizard steps)
+      // and selected type is no longer availble, force user to choose again.
+      if (input.value && !isTypeAvailable(input.value)) {
+        setInvalidValue();
+      }
+    }
+  }, [
+    input.value,
+    isDataReady,
+    activeMachineTypes.typesByID,
+    useRegionFilteredData,
+    isRegionSpecificDataReady,
+    isTypeAvailable,
+    setDefaultValue,
+    setInvalidValue,
+  ]);
+
+  const changeHandler = React.useCallback(
+    (_, value) => {
+      input.onChange(value);
+      forceChoiceInput.onChange(false);
+    },
+    [forceChoiceInput, input],
+  );
+
+  const sortedMachineTypes = React.useMemo(
+    () => sortMachineTypes(activeMachineTypes, cloudProviderID),
+    [cloudProviderID, activeMachineTypes],
+  );
+
+  const filteredMachineTypes = React.useMemo(
+    () => sortedMachineTypes.filter((type) => isTypeAvailable(type.id)),
+    [isTypeAvailable, sortedMachineTypes],
+  );
+  const machineTypeMap = React.useMemo(() => {
+    const machineGroups = groupedMachineTypes(filteredMachineTypes);
+    const selectGroups = machineGroups
+      .map(([categoryLabel, categoryMachines]) => {
+        if (categoryMachines.length > 0) {
+          return {
+            name: categoryLabel,
+            category: categoryLabel,
+            children: categoryMachines.map((machineType) => ({
+              name: (
+                <TreeViewSelectMenuItem
+                  name={machineTypeLabel(machineType)}
+                  description={machineTypeDescriptionLabel(machineType)}
+                />
+              ),
+              category: categoryLabel,
+              nameLabel: machineTypeLabel(machineType),
+              descriptionLabel: machineTypeDescriptionLabel(machineType),
+              id: machineType.id,
+            })),
+          };
+        }
+        return undefined;
+      })
+      .filter(Boolean);
+    return selectGroups;
+  }, [filteredMachineTypes]);
+
+  // In the dropdown we put the machine type id in separate description row,
+  // but the Select toggle doesn't support that, so combine both into one label.
+  const selection = React.useMemo(
+    () =>
+      machineTypeFullLabel(
+        filteredMachineTypes.find((machineType) => machineType.id === input.value) || null,
+      ),
+    [filteredMachineTypes, input.value],
+  );
+
+  if (
+    isDataReady &&
+    (!useRegionFilteredData || isRegionSpecificDataReady) &&
+    !activeMachineTypes.error
+  ) {
+    if (filteredMachineTypes.length === 0) {
+      return (
+        <Alert variant={AlertVariant.danger} isInline title={noMachineTypes} role="alert">
+          <ExternalLink href="https://cloud.redhat.com/products/dedicated/contact/">
+            Contact sales to purchase additional quota.
+          </ExternalLink>
+        </Alert>
+      );
+    }
+
+    return (
+      <FormGroup
+        label="Compute node instance type"
+        isRequired
+        fieldId="node_type"
+        labelIcon={<PopoverHint hint={constants.computeNodeInstanceTypeHint} />}
+      >
+        <TreeViewSelect
+          treeViewSelectionMap={machineTypeMap}
+          inModal={inModal}
+          menuAppendTo={menuAppendTo}
+          selected={selection}
+          setSelected={(event, selection) => {
+            changeHandler(event, selection.id);
+          }}
+          treeViewSwitchActive={!isMachineTypeFilteredByRegion}
+          setTreeViewSwitchActive={(switchValue) => {
+            forceChoiceInput.onChange(false);
+            setIsMachineTypeFilteredByRegion(!switchValue);
+          }}
+          placeholder="Select instance type"
+          searchPlaceholder="Find an instance size"
+          includeFilterSwitch={useRegionFilteredData}
+          switchLabelOnText="Include types that might be unavailable to your account or region"
+          switchLabelOffText="Include types that might be unavailable to your account or region"
+          allExpanded={allExpanded}
+          ariaLabel="Machine type select"
+        />
+        <FormGroupHelperText touched={touched} error={error} />
+      </FormGroup>
+    );
+  }
+
+  return activeMachineTypes.error ? (
+    <ErrorBox message="Error loading node types" response={activeMachineTypes} />
+  ) : (
+    <>
+      <div className="spinner-fit-container">
+        <Spinner size="md" />
+      </div>
+      <div className="spinner-loading-text">Loading node types...</div>
+    </>
+  );
+};
+
 const inputMetaPropTypes = PropTypes.shape({
   input: PropTypes.shape({
     onChange: PropTypes.func.isRequired,
@@ -394,6 +399,7 @@ MachineTypeSelection.propTypes = {
   quota: PropTypes.object.isRequired,
   organization: PropTypes.object.isRequired,
   menuAppendTo: PropTypes.object,
+  allExpanded: PropTypes.bool,
 };
 
 export default MachineTypeSelection;

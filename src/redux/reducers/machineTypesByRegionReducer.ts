@@ -32,12 +32,14 @@ type State = PromiseReducerState<{
     [key: string]: MachineType[];
   };
   typesByID: { [id: string]: any };
+  region?: { [id: string]: any };
 }>;
 
 const initialState: State = {
   ...baseRequestState,
   types: {},
   typesByID: {},
+  region: undefined,
 };
 
 const mapMachineTypesById = (types: { [id: string]: MachineType[] }) =>
@@ -52,13 +54,14 @@ function machineTypesByRegionReducer(
       return {
         ...initialState,
         ...state,
+        region: action.meta.region,
         ...getErrorState(action),
       };
 
     case PENDING_ACTION(machineTypesConstants.GET_MACHINE_TYPES_BY_REGION):
       return {
         ...initialState,
-        ...state,
+        region: action.meta.region,
         pending: true,
       };
 
@@ -68,6 +71,16 @@ function machineTypesByRegionReducer(
         types: action.payload,
         typesByID: mapMachineTypesById(action.payload),
         fulfilled: true,
+        region: action.meta.region,
+      };
+
+    case machineTypesConstants.RESET_INITIAL_STATE:
+      return {
+        ...baseRequestState,
+        types: undefined,
+        typesByID: undefined,
+        fulfilled: false,
+        region: undefined,
       };
 
     default:
