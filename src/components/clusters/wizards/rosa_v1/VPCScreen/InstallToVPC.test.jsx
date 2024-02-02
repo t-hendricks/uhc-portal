@@ -13,6 +13,7 @@ const defaultProps = {
   isSharedVpcSelected: false,
   hostedZoneDomainName: 'cluster-name.base-domain-name.devshift.org',
   selectedVPC: { id: '', name: '' },
+  selectedAZs: [],
 };
 
 jest.mock('~/redux/hooks', () => ({
@@ -30,15 +31,15 @@ describe('<InstallToVPC> (AWS)', () => {
   });
 
   it('should have a Shared VPC section', () => {
-    const ConnectedReviewClusterScreen = wizardConnector(InstallToVPC);
-    render(<ConnectedReviewClusterScreen {...defaultProps} />);
+    const ConnectedInstallToVPC = wizardConnector(InstallToVPC);
+    render(<ConnectedInstallToVPC {...defaultProps} />);
 
     expect(screen.getByText('AWS shared VPC')).toBeInTheDocument();
   });
 
   it('should show a link to AWS VPC requirements', () => {
-    const ConnectedReviewClusterScreen = wizardConnector(InstallToVPC);
-    render(<ConnectedReviewClusterScreen {...defaultProps} />);
+    const ConnectedInstallToVPC = wizardConnector(InstallToVPC);
+    render(<ConnectedInstallToVPC {...defaultProps} />);
 
     expect(screen.getByRole('link', { name: /Learn more about VPC/ })).toHaveAttribute(
       'href',
@@ -49,9 +50,9 @@ describe('<InstallToVPC> (AWS)', () => {
 
 describe('<InstallToVPC> (GCP)', () => {
   it('should not have a Shared VPC section', () => {
-    const ConnectedReviewClusterScreen = wizardConnector(InstallToVPC);
+    const ConnectedInstallToVPC = wizardConnector(InstallToVPC);
     const newProps = { ...defaultProps, cloudProviderID: 'gcp' };
-    render(<ConnectedReviewClusterScreen {...newProps} />);
+    render(<ConnectedInstallToVPC {...newProps} />);
 
     expect(screen.queryByText('AWS shared VPC')).not.toBeInTheDocument();
   });

@@ -29,7 +29,7 @@ const mapStateToProps = (state, ownProps) => {
   const selectedVPC = valueSelector(state, 'selected_vpc') ?? { id: '', name: '' };
   const clusterVersionRawId = valueSelector(state, 'cluster_version.raw_id');
   const imds = valueSelector(state, 'imds');
-  const machinePoolsSubnets = valueSelector(state, 'machine_pools_subnets');
+  const machinePoolsSubnets = valueSelector(state, 'machinePoolsSubnets');
   const maxWorkerVolumeSizeGiB = getWorkerNodeVolumeSizeMaxGiB(clusterVersionRawId);
 
   return {

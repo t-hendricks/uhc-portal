@@ -67,11 +67,8 @@ const defaultProps: SubnetSelectFieldProps = {
   name: 'test',
   label: 'test',
   input: {
-    name: 'machine_pools_subnets[0]',
-    value: {
-      subnet_id: '',
-      availability_zone: '',
-    },
+    name: 'machinePoolsSubnets[0].privateSubnetId',
+    value: '',
     onChange: jest.fn(),
   },
   meta: {
@@ -98,8 +95,8 @@ describe('SubnetSelectField', () => {
     const { user } = render(<SubnetSelectField {...defaultProps} />);
 
     // click it open
-    const placeHolder = screen.getByText(/Subnet name/i);
-    user.click(placeHolder);
+    const selectDropdown = screen.getByRole('button', { name: 'Options menu' });
+    await user.click(selectDropdown);
 
     // Verify the number of options and that only private subnets are shown
     expect(await screen.findAllByRole('option')).toHaveLength(5);
@@ -122,8 +119,8 @@ describe('SubnetSelectField', () => {
     const { user } = render(<SubnetSelectField {...defaultProps} privacy="public" />);
 
     // click it open
-    const placeHolder = screen.getByText(/Subnet name/i);
-    user.click(placeHolder);
+    const selectDropdown = screen.getByRole('button', { name: 'Options menu' });
+    await user.click(selectDropdown);
 
     // Verify the number of options and that only private subnets are shown
     expect(await screen.findAllByRole('option')).toHaveLength(4);
@@ -146,9 +143,8 @@ describe('SubnetSelectField', () => {
     const { user } = render(<SubnetSelectField {...defaultProps} />);
 
     // click it open
-    const placeHolder = screen.getByText(/Subnet name/i);
-    user.click(placeHolder);
-    expect(await screen.findByPlaceholderText(/Filter by subnet/i)).toBeInTheDocument();
+    const selectDropdown = screen.getByRole('button', { name: 'Options menu' });
+    await user.click(selectDropdown);
 
     // type something matching into search
     const searchBox = screen.getByPlaceholderText(/Filter by subnet/i);

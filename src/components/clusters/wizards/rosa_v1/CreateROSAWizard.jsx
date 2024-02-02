@@ -203,9 +203,25 @@ class CreateROSAWizardInternal extends React.Component {
     const isCurrentStepValid = validatedSteps[currentStepId];
     const errorIds = Object.keys(formErrors);
 
+    // For nested array fields, we need to extract the errors of each individual field (1 level)
+    const nestedErrorIds = [];
+    errorIds.forEach((errorId) => {
+      const nestedField = formErrors[errorId];
+      if (Array.isArray(nestedField)) {
+        nestedField.forEach((nestedFieldError, index) => {
+          // We must skip the valid elements of the array
+          if (nestedFieldError) {
+            Object.keys(nestedFieldError).forEach((subField) => {
+              nestedErrorIds.push(`${errorId}[${index}].${subField}`);
+            });
+          }
+        });
+      }
+    });
+
     // When errors exist, touch the fields with those errors to trigger validation.
     if (errorIds?.length) {
-      touch(errorIds);
+      touch(errorIds.concat(nestedErrorIds));
       const hasScrolledTo = scrollToFirstField(errorIds);
       if (hasScrolledTo) {
         this.setState({ forceTouch: false }); // after scrolled to error, reset

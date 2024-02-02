@@ -240,10 +240,10 @@ const ReviewClusterScreen = ({
         }
       >
         {ReviewItem({ name: 'cluster_privacy', formValues })}
-        {formValues.cluster_privacy_public_subnet?.subnet_id &&
+        {formValues.cluster_privacy_public_subnet_id &&
           isHypershiftSelected &&
           ReviewItem({
-            name: 'cluster_privacy_public_subnet',
+            name: 'cluster_privacy_public_subnet_id',
             formValues,
           })}
         {showVPCCheckbox &&
