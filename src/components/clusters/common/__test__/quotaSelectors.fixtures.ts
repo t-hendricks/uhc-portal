@@ -1,3 +1,4 @@
+import { AxiosHeaders } from 'axios';
 import { ANY } from '~/common/matchUtils';
 import { QuotaCost, QuotaCostList, RelatedResource } from '~/types/accounts_mgmt.v1';
 import { ClusterFromSubscription } from '~/types/types';
@@ -82,7 +83,7 @@ export const mockQuotaList = userActions.processQuota({
   status: 0,
   statusText: '',
   headers: {},
-  config: {},
+  config: { headers: new AxiosHeaders() },
 }) as QuotaCostList;
 
 export const negativeQuotaList: QuotaCostList = {
@@ -184,7 +185,7 @@ export const ROSACCSQuotaList = userActions.processQuota({
   status: 0,
   statusText: '',
   headers: {},
-  config: {},
+  config: { headers: new AxiosHeaders() },
 }) as QuotaCostList;
 
 export const CCSROSAQuotaList = userActions.processQuota({
@@ -198,7 +199,7 @@ export const CCSROSAQuotaList = userActions.processQuota({
   status: 0,
   statusText: '',
   headers: {},
-  config: {},
+  config: { headers: new AxiosHeaders() },
 }) as QuotaCostList;
 
 export const queryBillingModel: QuotaQuery = {

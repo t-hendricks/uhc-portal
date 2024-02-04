@@ -1,7 +1,7 @@
-import axios from 'axios';
-import type { AxiosRequestConfig, AxiosInstance } from 'axios';
 import * as Sentry from '@sentry/browser';
-import { isRestrictedEnv, getRestrictedEnvApi } from '~/restrictedEnv';
+import type { AxiosInstance } from 'axios';
+import axios, { InternalAxiosRequestConfig, RawAxiosRequestConfig } from 'axios';
+import { getRestrictedEnvApi, isRestrictedEnv } from '~/restrictedEnv';
 
 import config from '../config';
 
@@ -17,7 +17,7 @@ export const authInterceptor = (client: AxiosInstance): AxiosInstance => {
     await insights.chrome.auth.getUser();
     const token = await insights.chrome.auth.getToken();
     const BASE_URL = getBaseUrl(cfg.baseURL);
-    const updatedCfg: AxiosRequestConfig = {
+    const updatedCfg: RawAxiosRequestConfig = {
       ...cfg,
       url: `${BASE_URL}${cfg.url}`,
     };
@@ -41,7 +41,7 @@ export const authInterceptor = (client: AxiosInstance): AxiosInstance => {
     }
     // @ts-ignore
     delete updatedCfg.customHost;
-    return updatedCfg;
+    return updatedCfg as InternalAxiosRequestConfig;
   });
   return client;
 };
