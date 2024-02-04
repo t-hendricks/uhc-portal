@@ -1,11 +1,11 @@
 import React from 'react';
+import { AxiosHeaders, AxiosResponse } from 'axios';
 import {
   MachineConfiguration,
   MachineConfigurationProps,
 } from '~/components/clusters/common/MachineConfiguration/MachineConfiguration';
 import { checkAccessibility, waitFor, render, screen } from '~/testUtils';
 import { KubeletConfig } from '~/types/clusters_mgmt.v1';
-import { AxiosResponse } from 'axios';
 
 describe('<MachineConfiguration />', () => {
   const errorMessage = 'Please enter a value between 4,096 - 16,384';
@@ -119,7 +119,7 @@ describe('<MachineConfiguration />', () => {
   });
 
   it('allows the user to change the PIDs limit value using increment buttons', async () => {
-    const initialLimitValue = existingConfigResponse.data.pod_pids_limit;
+    const initialLimitValue = existingConfigResponse.data.pod_pids_limit ?? 0;
     const props: MachineConfigurationProps = {
       ...defaultProps,
     };
@@ -372,14 +372,14 @@ const ResponseError404 = {
   },
 };
 
-const existingConfigResponse = {
+const existingConfigResponse: AxiosResponse<KubeletConfig> = {
   status: 200,
   statusText: '',
   headers: {},
-  config: {},
   data: {
     href: '/api/clusters_mgmt/v1/clusters/12345/kubelet_config',
     kind: 'KubeletConfig',
     pod_pids_limit: 6000,
   },
+  config: { headers: new AxiosHeaders() },
 };
