@@ -80,7 +80,7 @@
     "rehype-raw": "^5.1.0",
     "remark-gfm": "^1",
     "reselect": "^4.0.0",
-    "screenfull": "^5.2.0",
+    "screenfull": "^6.0.0",
     "semver": "^7.3.4",
     "swr": "^2.2.0",
     "typesafe-actions": "^5.1.0",
