@@ -20,12 +20,13 @@ const TitleComponent = ({ data, index, x, y, style }) => {
   const { name, count, tags } = entity;
 
   return (
-    <text x={x} y={y} style={style} dy={5}>
+    <text x={x} y={y} style={style} dy={5} data-testid="titleComponent">
       <tspan x={x} y={y}>
         {name}:{' '}
         <a
           href={`${advisorBaseName()}/recommendations?category=${categoryMapping[tags]}`}
           className="enabled-link"
+          data-testid={tags}
         >
           {count}
         </a>

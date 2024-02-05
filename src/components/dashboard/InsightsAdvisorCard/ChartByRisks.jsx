@@ -35,7 +35,11 @@ function ChartByRisks({ riskHits }) {
           })
             .reverse()
             .map(([riskNumber, count]) => (
-              <FlexItem className="ocm-insights--items__risk-item" key={riskNumber}>
+              <FlexItem
+                className="ocm-insights--items__risk-item"
+                data-testid="ocm-insights--items__risk-item"
+                key={riskNumber}
+              >
                 <Flex
                   direction={{ default: 'column' }}
                   alignItems={{ default: 'alignItemsCenter' }}

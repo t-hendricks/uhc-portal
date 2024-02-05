@@ -276,12 +276,16 @@ const ToolAndDescriptionRows = ({
       toolRefs={toolRefs}
       expandKey={tool}
       cells={[
-        <Td dataLabel="Name">
+        <Td dataLabel="Name" key="Name">
           <span>{name}</span>
         </Td>,
-        <Td dataLabel="OS">{chooser.osDropdown}</Td>,
-        <Td dataLabel="Architecture">{chooser.archDropdown}</Td>,
-        <Td dataLabel="">
+        <Td dataLabel="OS" key="OS">
+          {chooser.osDropdown}
+        </Td>,
+        <Td dataLabel="Architecture" key="Arch">
+          {chooser.archDropdown}
+        </Td>,
+        <Td dataLabel="" key="downloadBtn">
           <AlignRight>{chooser.downloadButton} </AlignRight>
         </Td>,
       ]}
@@ -835,8 +839,8 @@ const tokenRows = (expanded, setExpanded, toolRefs, token) => (
       toolRefs={toolRefs}
       expandKey={expandKeys.PULL_SECRET}
       cells={[
-        <Td>Pull secret</Td>,
-        <Td>
+        <Td key="pullSecret">Pull secret</Td>,
+        <Td key="download">
           <AlignRight>
             <Split hasGutter>
               <SplitItem>
@@ -874,8 +878,8 @@ const tokenRows = (expanded, setExpanded, toolRefs, token) => (
       toolRefs={toolRefs}
       expandKey={expandKeys.TOKEN_OCM}
       cells={[
-        <Td>OpenShift Cluster Manager API Token</Td>,
-        <Td>
+        <Td key="name">OpenShift Cluster Manager API Token</Td>,
+        <Td key="viewAPI">
           <AlignRight>
             <Link to="/token">
               <Button

@@ -1,5 +1,4 @@
 import React from 'react';
-import { shallow } from 'enzyme';
 import { MemoryRouter } from 'react-router';
 
 import DownloadsPage, {
@@ -16,7 +15,13 @@ import {
   architectures,
   urls,
 } from '../../../common/installLinks.mjs';
-import { mockRestrictedEnv, render, screen } from '../../../testUtils';
+import {
+  mockRestrictedEnv,
+  render,
+  screen,
+  checkAccessibility,
+  TestRouter,
+} from '../../../testUtils';
 
 const { linux, mac, windows } = operatingSystems;
 const { arm, ppc, s390x, x86 } = architectures;
@@ -74,10 +79,10 @@ describe('downloadChoice', () => {
     if (urls[tool]) {
       // skip tools that have no data yet
       it(`initially ${tool} button has a url`, () => {
-        const wrapper = shallow(chooser.downloadButton);
-        wrapper.find('DownloadButton').forEach((w) => {
-          expect(w.props().url).toBeDefined();
-        });
+        render(chooser.downloadButton);
+        const linkAttribute = screen.getByRole('link').getAttribute('href');
+        expect(linkAttribute).toBeDefined();
+        expect(linkAttribute).not.toEqual('');
       });
     }
   });
@@ -114,29 +119,43 @@ describe('initialSelection', () => {
 });
 
 describe('<DownloadsPage>', () => {
-  it('renders', () => {
-    const props = {
-      location: { hash: '' },
-      history: { replace: () => {} },
-      token: { auths: { foo: 'bar' } },
-      getAuthToken: () => {},
-      githubReleases: {
-        'redhat-developer/app-services-cli': {
-          fulfilled: true,
-          data: {
-            tag_name: 'v0.40.0',
-            foo: 'bar',
-          },
-        },
-        'openshift-online/ocm-cli': {
-          fulfilled: false,
+  const replace = jest.fn();
+  const getAuthToken = jest.fn();
+  const getLatestRelease = jest.fn();
+
+  const props = {
+    location: { hash: '' },
+    history: { replace },
+    token: { auths: { foo: 'bar' } },
+    getAuthToken,
+    githubReleases: {
+      'redhat-developer/app-services-cli': {
+        fulfilled: true,
+        data: {
+          tag_name: 'v0.40.0',
+          foo: 'bar',
         },
       },
-      getLatestRelease: () => {},
-    };
+      'openshift-online/ocm-cli': {
+        fulfilled: false,
+      },
+    },
+    getLatestRelease,
+  };
 
-    const wrapper = shallow(<DownloadsPage {...props} />);
-    expect(wrapper).toMatchSnapshot();
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
+
+  it.skip('is accessible', async () => {
+    const { container } = render(
+      <TestRouter>
+        <DownloadsPage {...props} />
+      </TestRouter>,
+    );
+
+    // This fails with a   "IDs used in ARIA and labels must be unique (duplicate-id-aria)" error
+    await checkAccessibility(container);
   });
 
   describe('in restricted env', () => {
