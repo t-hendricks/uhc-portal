@@ -52,6 +52,13 @@ const defaultCluster = {
     edit: true,
     list: true,
   },
+  kubeletConfigActions: {
+    create: true,
+    update: true,
+    get: true,
+    list: true,
+    delete: true,
+  },
   hypershift: {
     enabled: false,
   },
@@ -809,6 +816,25 @@ describe('<MachinePools />', () => {
         cluster: {
           ...defaultCluster,
           state: clusterStates.HIBERNATING,
+        },
+      };
+      render(<MachinePools {...props} />);
+
+      expectActionButton({ toBePresent: true, toBeEnabled: false });
+    });
+
+    it("is present but disabled if user doesn't have the proper rights", () => {
+      const props = {
+        ...defaultProps,
+        hasMachineConfiguration: true,
+        cluster: {
+          ...defaultCluster,
+          state: clusterStates.HIBERNATING,
+          kubeletConfigActions: {
+            ...defaultCluster.kubeletConfigActions,
+            create: false,
+            update: false,
+          },
         },
       };
       render(<MachinePools {...props} />);
