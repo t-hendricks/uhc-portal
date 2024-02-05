@@ -38,7 +38,6 @@ import { CloudProviderType } from '~/components/clusters/wizards/common/constant
 import PopoverHint from '~/components/common/PopoverHint';
 import PersistentStorageDropdown from '~/components/clusters/common/PersistentStorageDropdown';
 import LoadBalancersDropdown from '~/components/clusters/common/LoadBalancersDropdown';
-import { PLACEHOLDER_VALUE as AvailabilityZonePlaceholder } from '~/components/clusters/wizards/common/NetworkingSection/AvailabilityZoneSelection';
 import {
   RadioGroupField,
   RadioGroupOption,
@@ -153,7 +152,7 @@ export const Details = () => {
     // Clears fields related to the region: Availability zones, subnet IDs, VPCs
     const azCount = isMultiAz ? 3 : 1;
     for (let i = 0; i < azCount; i += 1) {
-      setFieldValue(`az_${i}`, AvailabilityZonePlaceholder);
+      setFieldValue(`az_${i}`, '');
       setFieldValue(`private_subnet_id_${i}`, '');
       setFieldValue(`public_subnet_id_${i}`, '');
     }
