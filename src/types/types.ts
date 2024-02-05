@@ -85,6 +85,9 @@ export type AugmentedCluster = ClusterWithPermissions & {
   machinePoolsActions?: {
     [action: string]: boolean;
   };
+  kubeletConfigActions?: {
+    [action: string]: boolean;
+  };
   upgradeGates?: VersionGateAgreement[];
   aiCluster?: AICluster;
   limitedSupportReasons?: LimitedSupportReason[];
