@@ -1,12 +1,12 @@
 import React from 'react';
 import { TextContent } from '@patternfly/react-core';
-import ReactMarkdown, { PluggableList } from 'react-markdown';
+import ReactMarkdown from 'react-markdown';
 import rehypeRaw from 'rehype-raw';
 import remarkGfm from 'remark-gfm';
 import ExternalLink from '~/components/common/ExternalLink';
 
 type MarkdownParserProps = {
-  rehypePlugins?: PluggableList | undefined;
+  rehypePlugins?: import('unified').PluggableList | undefined;
   children?: string;
 };
 
