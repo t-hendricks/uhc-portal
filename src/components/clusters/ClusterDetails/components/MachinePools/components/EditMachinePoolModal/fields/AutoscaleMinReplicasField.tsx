@@ -5,7 +5,7 @@ import { isMPoolAz } from '~/components/clusters/ClusterDetails/clusterDetailsHe
 import { MAX_NODES } from '~/components/clusters/common/machinePools/constants';
 import { FormGroupHelperText } from '~/components/common/FormGroupHelperText';
 import { Cluster } from '~/types/clusters_mgmt.v1';
-import useFormikOnChange from '../hooks/useFormikOnChange';
+import useFormikOnChange from '~/hooks/useFormikOnChange';
 
 type AutoscaleMinReplicasFieldProps = {
   cluster: Cluster;

@@ -11,7 +11,7 @@ import { Cluster } from '~/types/clusters_mgmt.v1';
 import { isHypershiftCluster } from '~/components/clusters/common/clusterStates';
 import { FormGroupHelperText } from '~/components/common/FormGroupHelperText';
 import { computeNodeHintText } from '~/components/clusters/common/ScaleSection/AutoScaleSection/AutoScaleHelper';
-import useFormikOnChange from '../hooks/useFormikOnChange';
+import useFormikOnChange from '~/hooks/useFormikOnChange';
 
 type AutoscaleMaxReplicasFieldProps = {
   minNodes: number;
