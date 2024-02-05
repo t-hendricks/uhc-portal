@@ -1320,9 +1320,6 @@ const validateUniqueNodeLabel = createUniqueFieldValidator(
       .map(([, fieldValue]) => fieldValue.key),
 );
 
-const validateValueNotPlaceholder = (placeholder: any) => (value: any) =>
-  value !== placeholder ? undefined : 'Field is required';
-
 const validateRequiredPublicSubnetId = (
   publicSubnetId: string,
   allValues: unknown,
@@ -1694,7 +1691,6 @@ export {
   checkLabels,
   validateOsdUniqueAZ,
   validateRosaUniqueAZ,
-  validateValueNotPlaceholder,
   validateAWSSubnet,
   validateGCPHostProjectId,
   validateRequiredPublicSubnetId,
