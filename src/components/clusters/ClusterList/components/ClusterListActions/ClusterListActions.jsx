@@ -131,9 +131,9 @@ const ClusterListActions = ({ className, isDashboardView }) => {
       <>
         <Split hasGutter>
           {toolbarItems.map((toolbarItem) => (
-            <SplitItem>{toolbarItem}</SplitItem>
+            <SplitItem key="toolbar">{toolbarItem}</SplitItem>
           ))}
-          <SplitItem>
+          <SplitItem key="dropdown">
             <DropdownDeprecated
               data-testid="cluster-list-extra-actions-dropdown"
               onSelect={() => onToggle(!isOpen)}

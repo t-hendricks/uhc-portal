@@ -1,13 +1,17 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { render, screen, checkAccessibility } from '~/testUtils';
+import wizardConnector from '~/components/clusters/wizards/common/WizardConnector';
 import ReduxFormKeyValueList from './ReduxFormKeyValueList';
 
-export default class MockFields extends Array {
+const push = jest.fn();
+const remove = jest.fn();
+
+class MockFields extends Array {
   constructor(...args) {
     super(...args);
-    this.push = jest.fn();
+    this.push = push;
     this.get = () => 'id';
-    this.remove = jest.fn();
+    this.remove = remove;
     this.getAll = jest.fn();
   }
 }
@@ -19,33 +23,72 @@ describe('<ReduxFormKeyValueList />', () => {
     { key: 'cc', value: 'dd' },
   );
 
-  let wrapper;
-  beforeEach(() => {
-    wrapper = shallow(
-      <ReduxFormKeyValueList fields={emptyListFields} meta={{ error: '', submitFailed: false }} />,
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
+
+  const ConnectedKeyValueList = wizardConnector(ReduxFormKeyValueList);
+
+  it.skip('is accessible', async () => {
+    const { container } = render(
+      <ConnectedKeyValueList fields={emptyListFields} meta={{ error: '', submitFailed: false }} />,
     );
+
+    // this fails because button elements do not have an accessible name/label
+    await checkAccessibility(container);
   });
 
-  it('should render when there is no input - initial reder', () => {
-    expect(wrapper).toMatchSnapshot();
+  it('displays one input set when no field items are passed', () => {
+    render(
+      <ConnectedKeyValueList fields={emptyListFields} meta={{ error: '', submitFailed: false }} />,
+    );
+    const keyFields = screen.getAllByLabelText('Key-value list key');
+    const valueFields = screen.getAllByLabelText('Key-value list value');
+
+    expect(keyFields).toHaveLength(1);
+    expect(valueFields).toHaveLength(1);
   });
 
-  it('should render with input', () => {
-    wrapper.setProps({ fields: listWithItemsFields });
-    expect(wrapper).toMatchSnapshot();
+  it('has same number of input sets as field items', () => {
+    render(
+      <ConnectedKeyValueList
+        fields={listWithItemsFields}
+        meta={{ error: '', submitFailed: false }}
+      />,
+    );
+
+    const keyFields = screen.getAllByLabelText('Key-value list key');
+    const valueFields = screen.getAllByLabelText('Key-value list value');
+
+    expect(keyFields).toHaveLength(listWithItemsFields.length);
+    expect(valueFields).toHaveLength(listWithItemsFields.length);
   });
 
-  it('should add a new item', () => {
-    wrapper.setProps({ fields: listWithItemsFields });
-    const addBtn = wrapper.find('.reduxFormKeyValueList-addBtn');
-    addBtn.at(0).simulate('click');
-    expect(listWithItemsFields.push).toBeCalled();
+  it('calls push function when adding a new item', async () => {
+    const { user } = render(
+      <ConnectedKeyValueList
+        fields={listWithItemsFields}
+        meta={{ error: '', submitFailed: false }}
+      />,
+    );
+    expect(push).not.toBeCalled();
+
+    await user.click(screen.getByRole('button', { name: 'Add additional label' }));
+
+    expect(push).toBeCalled();
   });
 
-  it('should remove an item', () => {
-    wrapper.setProps({ fields: listWithItemsFields });
-    const rmBtn = wrapper.find('Button[className="reduxFormKeyValueList-removeBtn"]');
-    rmBtn.at(1).simulate('click');
-    expect(listWithItemsFields.remove).toBeCalled();
+  it('calls remove function when removing an item', async () => {
+    const { user } = render(
+      <ConnectedKeyValueList
+        fields={listWithItemsFields}
+        meta={{ error: '', submitFailed: false }}
+      />,
+    );
+    expect(remove).not.toBeCalled();
+
+    await user.click(screen.getAllByRole('button', { name: 'Remove item' })[0]);
+
+    expect(remove).toBeCalled();
   });
 });
