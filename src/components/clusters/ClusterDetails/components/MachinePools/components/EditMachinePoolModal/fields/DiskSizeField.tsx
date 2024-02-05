@@ -13,7 +13,7 @@ import { normalizeProductID } from '~/common/normalize';
 import { normalizedProducts } from '~/common/subscriptionTypes';
 import { isHypershiftCluster } from '~/components/clusters/common/clusterStates';
 import { FormGroupHelperText } from '~/components/common/FormGroupHelperText';
-import useFormikOnChange from '../hooks/useFormikOnChange';
+import useFormikOnChange from '~/hooks/useFormikOnChange';
 
 import './DiskSizeField.scss';
 
