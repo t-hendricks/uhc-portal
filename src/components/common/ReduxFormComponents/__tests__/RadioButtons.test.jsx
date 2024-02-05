@@ -1,14 +1,16 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { screen, render, checkAccessibility } from '~/testUtils';
 import RadioButtons from '../RadioButtons';
 
 describe('<RadioButtons />', () => {
+  const onChangeCallback = jest.fn();
+  const onChange = jest.fn();
   const props = {
     defaultValue: 'test-default',
-    onChangeCallback: jest.fn(),
+    onChangeCallback,
     input: {
       name: 'test-radio-buttons',
-      onChange: jest.fn(),
+      onChange,
     },
     className: 'test-classname',
     options: [
@@ -23,30 +25,42 @@ describe('<RadioButtons />', () => {
     ],
   };
 
-  let wrapper;
-  beforeEach(() => {
-    wrapper = shallow(<RadioButtons {...props} />);
+  afterEach(() => {
+    jest.clearAllMocks();
   });
 
-  it('should render - basic', () => {
-    expect(wrapper).toMatchSnapshot();
-    expect(wrapper.find('Radio').length).toEqual(2);
+  it('is accessible - basic', async () => {
+    const { container } = render(<RadioButtons {...props} />);
+
+    expect(screen.getAllByRole('radio')).toHaveLength(2);
+    await checkAccessibility(container);
   });
 
-  it('should call onChange to change to default value', () => {
-    expect(props.input.onChange).toBeCalledWith('test-default');
+  it('calls onChange to change to default value on initial render', () => {
+    render(<RadioButtons {...props} />);
+    expect(onChange).toBeCalledWith('test-default');
   });
 
-  it('should call onChange properly when changed', () => {
-    const option = wrapper.find('Radio[value="option-1"]');
-    const mockEvent = { target: { value: option.props().value } };
+  it('calls onChange properly when user clicks on a radio button', async () => {
+    const { user } = render(<RadioButtons {...props} />);
+    expect(onChange).toBeCalledWith('test-default');
+    await user.click(screen.getByLabelText('Option 1'));
 
-    option.simulate('change', mockEvent);
-    expect(props.input.onChange).toHaveBeenLastCalledWith('option-1');
+    expect(onChange).toHaveBeenLastCalledWith('option-1');
   });
 
-  it('should revert to default when value is changed to empty string', () => {
-    wrapper.setProps({ input: { ...props.input, value: '' } });
-    expect(props.input.onChange).toHaveBeenLastCalledWith('test-default');
+  it('reverts to default when value is changed to empty string', () => {
+    const { rerender } = render(<RadioButtons {...props} />);
+    expect(onChange).toBeCalledTimes(1);
+
+    const newProps = {
+      ...props,
+      input: { ...props.input, value: '' },
+    };
+
+    rerender(<RadioButtons {...newProps} />);
+
+    expect(onChange).toBeCalledTimes(2);
+    expect(onChange).toHaveBeenLastCalledWith('test-default');
   });
 });

@@ -1,5 +1,5 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { render, screen, checkAccessibility, TestRouter } from '~/testUtils';
 import ClustersWithIssuesTableCard from './ClustersWithIssuesTableCard';
 import { clustersWithIssues } from '../Dashboard.fixtures';
 
@@ -24,23 +24,28 @@ const baseViewOptions = {
 };
 
 describe('<ClustersWithIssuesTableCard />', () => {
-  let setClusterDetails;
-  let getUnhealthyClusters;
-  let wrapper;
-  beforeEach(() => {
-    setClusterDetails = jest.fn();
-    getUnhealthyClusters = jest.fn();
-    wrapper = shallow(
-      <ClustersWithIssuesTableCard
-        getUnhealthyClusters={getUnhealthyClusters}
-        setClusterDetails={setClusterDetails}
-        viewOptions={baseViewOptions}
-        unhealthyClusters={unhealthyClusters}
-      />,
-    );
+  const setClusterDetails = jest.fn();
+  const getUnhealthyClusters = jest.fn();
+
+  const defaultProps = {
+    getUnhealthyClusters,
+    setClusterDetails,
+    viewOptions: baseViewOptions,
+    unhealthyClusters,
+  };
+
+  afterEach(() => {
+    jest.clearAllMocks();
   });
 
-  it('renders correctly', () => {
-    expect(wrapper).toMatchSnapshot();
+  it('is accessible', async () => {
+    const { container } = render(
+      <TestRouter>
+        <ClustersWithIssuesTableCard {...defaultProps} />
+      </TestRouter>,
+    );
+
+    expect(await screen.findByText('Clusters with issues')).toBeInTheDocument();
+    await checkAccessibility(container);
   });
 });

@@ -1,5 +1,5 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { screen, render, checkAccessibility, TestRouter } from '~/testUtils';
 import ExpiredTrialsCard from './ExpiredTrialsCard';
 import { expiredTrials } from '../Dashboard.fixtures';
 import { expiredTrialsFilter } from './expiredTrialsHelpers';
@@ -22,47 +22,57 @@ const baseViewOptions = {
 };
 
 describe('<ExpiredTrialsCard />', () => {
-  let getSubscriptions;
-  let wrapper;
+  const getSubscriptions = jest.fn();
   const openModal = jest.fn();
+
   describe('When the request was not fulfilled', () => {
-    beforeEach(() => {
-      getSubscriptions = jest.fn();
-      wrapper = shallow(
-        <ExpiredTrialsCard
-          openModal={openModal}
-          getSubscriptions={getSubscriptions}
-          viewOptions={baseViewOptions}
-          subscriptions={initialState}
-        />,
-      );
+    const initialProps = {
+      openModal,
+      getSubscriptions,
+      viewOptions: baseViewOptions,
+      subscriptions: initialState,
+    };
+
+    afterEach(() => {
+      jest.clearAllMocks();
     });
-    it('renders correctly', () => {
-      expect(wrapper).toMatchSnapshot();
+
+    it('return null', () => {
+      const { container } = render(<ExpiredTrialsCard {...initialProps} />);
+
+      expect(container).toBeEmptyDOMElement();
     });
+
     it('calls getSubscriptions on mount', () => {
+      expect(getSubscriptions).not.toBeCalled();
+      render(<ExpiredTrialsCard {...initialProps} />);
       expect(getSubscriptions).toBeCalled();
     });
   });
 
   describe('When data is available', () => {
-    beforeEach(() => {
-      getSubscriptions = jest.fn();
-      const subscriptions = {
+    const dataAvailableProps = {
+      openModal,
+      getSubscriptions,
+      viewOptions: baseViewOptions,
+      subscriptions: {
         ...initialState,
         items: expiredTrials,
-      };
-      wrapper = shallow(
-        <ExpiredTrialsCard
-          openModal={openModal}
-          getSubscriptions={getSubscriptions}
-          viewOptions={baseViewOptions}
-          subscriptions={subscriptions}
-        />,
-      );
+      },
+    };
+    afterEach(() => {
+      jest.clearAllMocks();
     });
-    it('renders correctly', () => {
-      expect(wrapper).toMatchSnapshot();
+
+    it('is accessible', async () => {
+      const { container } = render(
+        <TestRouter>
+          <ExpiredTrialsCard {...dataAvailableProps} />
+        </TestRouter>,
+      );
+      expect(await screen.findByText('Expired Trials')).toBeInTheDocument();
+      expect(await screen.findByRole('grid')).toBeInTheDocument();
+      await checkAccessibility(container);
     });
   });
 });

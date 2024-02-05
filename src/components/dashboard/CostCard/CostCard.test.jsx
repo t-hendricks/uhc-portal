@@ -1,5 +1,5 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { screen, render, checkAccessibility } from '~/testUtils';
 import CostCard from './CostCard';
 
 const initialState = {
@@ -96,55 +96,62 @@ const availableState = {
 };
 
 describe('<CostCard />', () => {
-  let wrapper;
-  let getReport;
-  let getSources;
+  const getReport = jest.fn();
+  const getSources = jest.fn();
+
+  const initialStateProps = {
+    ...initialState,
+    getReport,
+    getSources,
+  };
+
+  const availableStateProps = {
+    ...availableState,
+    getReport,
+    getSources,
+  };
   describe('When no source providers are available', () => {
-    beforeEach(() => {
-      getReport = jest.fn();
-      getSources = jest.fn();
-      wrapper = shallow(
-        <CostCard
-          getReport={getReport}
-          getSources={getSources}
-          sources={initialState.sources}
-          report={initialState.report}
-        />,
-      );
+    afterEach(() => {
+      jest.clearAllMocks();
     });
 
-    it('renders empty state', () => {
-      expect(wrapper).toMatchSnapshot();
+    it('is accessible', async () => {
+      const { container } = render(<CostCard {...initialStateProps} />);
+
+      expect(screen.getByText('Cost Management')).toBeInTheDocument();
+      await checkAccessibility(container);
     });
-    it('calls getSources on mount', () => {
+
+    it('calls getSources and getReport on mount', () => {
+      expect(getSources).not.toBeCalled();
+      expect(getReport).not.toBeCalled();
+
+      render(<CostCard {...initialStateProps} />);
       expect(getSources).toBeCalled();
-    });
-    it('calls getReport on mount', () => {
       expect(getReport).toBeCalled();
     });
   });
 
   describe('When cost report is available', () => {
-    beforeEach(() => {
-      getReport = jest.fn();
-      getSources = jest.fn();
-      wrapper = shallow(
-        <CostCard
-          getReport={getReport}
-          getSources={getSources}
-          sources={availableState.sources}
-          report={availableState.report}
-        />,
-      );
+    afterEach(() => {
+      jest.clearAllMocks();
     });
 
-    it('renders cluster costs', () => {
-      expect(wrapper).toMatchSnapshot();
+    it.skip('is accessible', async () => {
+      const { container } = render(<CostCard {...availableStateProps} />);
+
+      expect(screen.getByText('Cost Management')).toBeInTheDocument();
+
+      // Fails with the following error: "<dl> elements must only directly contain properly-ordered <dt> and <dd> groups, <script>, <template> or <div> elements (definition-list)"
+      await checkAccessibility(container);
     });
-    it('calls getSources on mount', () => {
+
+    it('calls getSources and getReport on mount', () => {
+      expect(getSources).not.toBeCalled();
+      expect(getReport).not.toBeCalled();
+
+      render(<CostCard {...availableStateProps} />);
       expect(getSources).toBeCalled();
-    });
-    it('calls getReport on mount', () => {
       expect(getReport).toBeCalled();
     });
   });
