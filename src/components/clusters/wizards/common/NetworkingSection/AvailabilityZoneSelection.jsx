@@ -9,8 +9,6 @@ import {
 } from '@patternfly/react-core/deprecated';
 import { FormGroupHelperText } from '~/components/common/FormGroupHelperText';
 
-const PLACEHOLDER_VALUE = 'Select availability zone';
-
 // AWS availability zones are comprised from the region name
 // followed by a single letter. For more information please see:
 // https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-regions-availability-zones.html#concepts-availability-zones
@@ -65,13 +63,13 @@ class AvailabilityZoneSelection extends React.Component {
       >
         <SelectDeprecated
           isOpen={isOpen}
-          selections={input.value || PLACEHOLDER_VALUE}
+          selections={input.value}
           onToggle={(_event, isOpen) => this.onToggle(isOpen)}
           onSelect={this.onSelect}
           isDisabled={isDisabled}
+          placeholderText="Select availability zone"
           aria-label={label}
         >
-          <SelectOptionDeprecated key={0} value={PLACEHOLDER_VALUE} isPlaceholder />
           {availabilityZones.map(({ zoneId, isDisabled }) => (
             <SelectOptionDeprecated
               key={zoneId}
@@ -104,7 +102,5 @@ AvailabilityZoneSelection.propTypes = {
     error: PropTypes.string,
   }),
 };
-
-export { PLACEHOLDER_VALUE };
 
 export default AvailabilityZoneSelection;

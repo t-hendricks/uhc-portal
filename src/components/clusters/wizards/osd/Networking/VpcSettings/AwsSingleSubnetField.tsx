@@ -3,16 +3,9 @@ import { Field } from 'formik';
 
 import { GridItem } from '@patternfly/react-core';
 
-import {
-  required,
-  validateOsdUniqueAZ,
-  validateValueNotPlaceholder,
-  validateAWSSubnet,
-} from '~/common/validators';
+import { required, validateOsdUniqueAZ, validateAWSSubnet } from '~/common/validators';
 import WithTooltip from '~/components/common/WithTooltip';
-import AvailabilityZoneSelection, {
-  PLACEHOLDER_VALUE,
-} from '~/components/clusters/wizards/common/NetworkingSection/AvailabilityZoneSelection';
+import AvailabilityZoneSelection from '~/components/clusters/wizards/common/NetworkingSection/AvailabilityZoneSelection';
 import { useFormState } from '~/components/clusters/wizards/hooks';
 import { TextInputField } from '~/components/clusters/wizards/form';
 
@@ -38,9 +31,7 @@ const AwsSingleSubnetField = ({
   const showLabels = index === 0;
 
   const validateAvailabilityZone = (value: string) =>
-    required(value) ||
-    (isMultiAz && validateOsdUniqueAZ(value, values, null, azFieldName)) ||
-    validateValueNotPlaceholder(PLACEHOLDER_VALUE)(value);
+    required(value) || (isMultiAz && validateOsdUniqueAZ(value, values, null, azFieldName));
 
   const validatePrivateSubnet = (value: string) =>
     validateAWSSubnet(value, values, {}, privateSubnetIdName);

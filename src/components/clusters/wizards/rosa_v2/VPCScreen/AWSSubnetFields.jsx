@@ -7,14 +7,8 @@ import VPCDropdown from '~/components/clusters/wizards/common/VPCDropdown/VPCDro
 import { SubnetSelectField } from '~/components/clusters/common/SubnetSelectField';
 import { getMatchingAvailabilityZones } from '~/common/vpcHelpers';
 import WithTooltip from '~/components/common/WithTooltip';
-import AvailabilityZoneSelection, {
-  PLACEHOLDER_VALUE,
-} from '~/components/clusters/wizards/common/NetworkingSection/AvailabilityZoneSelection';
-import {
-  required,
-  validateValueNotPlaceholder,
-  validateRosaUniqueAZ,
-} from '../../../../../common/validators';
+import AvailabilityZoneSelection from '~/components/clusters/wizards/common/NetworkingSection/AvailabilityZoneSelection';
+import { required, validateRosaUniqueAZ } from '../../../../../common/validators';
 
 const SingleSubnetFieldsRow = ({
   index,
@@ -24,11 +18,7 @@ const SingleSubnetFieldsRow = ({
   isMultiAz,
   privateLinkSelected,
 }) => {
-  const azValidations = [
-    isMultiAz && validateRosaUniqueAZ,
-    validateValueNotPlaceholder(PLACEHOLDER_VALUE),
-    required,
-  ].filter(Boolean);
+  const azValidations = [required, isMultiAz && validateRosaUniqueAZ].filter(Boolean);
 
   const showLabels = index === 0;
   let disabledSubnetReason;
