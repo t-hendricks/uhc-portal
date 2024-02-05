@@ -1,7 +1,9 @@
+import * as React from 'react';
 import { SelectOption as SelectOptionDeprecated } from '@patternfly/react-core/deprecated';
 import { useField } from 'formik';
-import * as React from 'react';
-import useFormikOnChange from '../hooks/useFormikOnChange';
+
+import useFormikOnChange from '~/hooks/useFormikOnChange';
+
 import SelectField from './SelectField';
 
 export type TaintEffect = 'NoSchedule' | 'NoExecute' | 'PreferNoSchedule';
