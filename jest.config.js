@@ -18,6 +18,7 @@ const config = {
     /* Map Assisted UI lib translations to a mock file too */
     '@openshift-assisted/locales/([a-z]{2,3}/translation.json)':
       '<rootDir>/__mocks__/assistedUiTranslationMock.json',
+    '^react-markdown$': '<rootDir>/node_modules/react-markdown/react-markdown.min.js',
     '^axios$': 'axios/dist/node/axios.cjs',
     '\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$':
       '<rootDir>/__mocks__/fileMock.js',
