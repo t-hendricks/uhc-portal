@@ -3,7 +3,7 @@ import { withRouter } from 'react-router-dom';
 import {
   isValid,
   isAsyncValidating,
-  reset,
+  destroy,
   formValueSelector,
   getFormValues,
   touch,
@@ -70,7 +70,7 @@ const mapDispatchToProps = (dispatch) => ({
       return submitOSDRequest(dispatch, params)(formData); // TODO: change to submitROSARequest(...
     }),
   resetResponse: () => dispatch(resetCreatedClusterResponse()),
-  resetForm: () => dispatch(reset('CreateCluster')),
+  destroyForm: () => dispatch(destroy('CreateCluster')),
   openModal: (modalName) => {
     dispatch(openModal(modalName));
   },
