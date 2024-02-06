@@ -1,16 +1,6 @@
-import Login from '../../pageobjects/login.page';
 import ClusterListPage from '../../pageobjects/ClusterList.page';
 
 describe('OCM Mainpage - cluster list page', () => {
-  before(() => {
-    cy.visit('/', { retryOnNetworkFailure: true });
-    Login.isLoginPageUrl();
-    Login.login();
-
-    ClusterListPage.isClusterListUrl();
-    ClusterListPage.waitForDataReady();
-    cy.getByTestId('create_cluster_btn').should('be.visible');
-  });
   describe(
     'Check all cluster lists page items presence and its actions (OCP-21339)',
     { tags: ['smoke'] },

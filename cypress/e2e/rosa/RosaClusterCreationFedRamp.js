@@ -40,23 +40,6 @@ export const workflowValidationTestTitles = [
 ];
 
 describe('Create ROSA Cluster in FedRamp (OCP-TBD)', { tags: ['fedramp'] }, () => {
-  before(() => {
-    if (Cypress.env('GOV_CLOUD')) {
-      cy.visit('');
-      Login.loginFedRamp(
-        Cypress.env('TEST_WITHQUOTA_USER'),
-        Cypress.env('TEST_WITHQUOTA_PASSWORD'),
-      );
-    } else {
-      Login.loginCommercial(
-        Cypress.env('TEST_WITHQUOTA_USER'),
-        Cypress.env('TEST_WITHQUOTA_PASSWORD'),
-      );
-    }
-    ClusterListPage.waitForDataReady();
-    ClusterListPage.isCreateClusterBtnVisible();
-  });
-
   after(() => {
     if (Cypress.env('TEARDOWN')) {
       cy.contains('a', Cypress.env('clusterName')).click();
