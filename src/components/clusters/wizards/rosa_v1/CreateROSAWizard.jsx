@@ -142,9 +142,9 @@ class CreateROSAWizardInternal extends React.Component {
   }
 
   componentWillUnmount() {
-    const { resetResponse, resetForm } = this.props;
+    const { resetResponse, destroyForm } = this.props;
     resetResponse();
-    resetForm();
+    destroyForm();
   }
 
   // triggered by all forms of navigation;
@@ -638,7 +638,7 @@ CreateROSAWizardInternal.propTypes = {
   getCloudProviders: PropTypes.func,
 
   resetResponse: PropTypes.func,
-  resetForm: PropTypes.func,
+  destroyForm: PropTypes.func,
   openModal: PropTypes.func,
   onSubmit: PropTypes.func,
   touch: PropTypes.func,
