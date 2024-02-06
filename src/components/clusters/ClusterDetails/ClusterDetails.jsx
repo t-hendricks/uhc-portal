@@ -23,7 +23,7 @@ import * as OCM from '@openshift-assisted/ui-lib/ocm';
 import { AppPage } from '~/components/App/AppPage';
 import { isRestrictedEnv } from '~/restrictedEnv';
 import ClusterDetailsTop from './components/ClusterDetailsTop';
-import TabsRow from './components/TabsRow';
+import TabsRow from './components/TabsRow/TabsRow';
 import Overview from './components/Overview/Overview';
 import Monitoring from './components/Monitoring';
 import Networking from './components/Networking';
@@ -294,7 +294,6 @@ class ClusterDetails extends Component {
       canHibernateCluster,
       anyModalOpen,
       hasIssues,
-      hasIssuesInsights,
       toggleSubscriptionReleased,
       initTabOpen,
       assistedInstallerEnabled,
@@ -441,28 +440,33 @@ class ClusterDetails extends Component {
             showPreviewLabel={isHypershift}
           >
             <TabsRow
-              displayMonitoringTab={displayMonitoringTab}
-              displayAccessControlTab={displayAccessControlTab}
-              displayAddOnsTab={displayAddOnsTab}
-              displayClusterHistoryTab={displayClusterLogs}
-              displayNetworkingTab={displayNetworkingTab}
-              displaySupportTab={displaySupportTab}
-              displayMachinePoolsTab={canViewMachinePoolTab(cluster)}
-              displayUpgradeSettingsTab={displayUpgradeSettingsTab}
-              addHostTabDetails={addHostsTabState}
-              overviewTabRef={this.overviewTabRef}
-              monitoringTabRef={this.monitoringTabRef}
-              accessControlTabRef={this.accessControlTabRef}
-              addOnsTabRef={this.addOnsTabRef}
-              clusterHistoryTabRef={this.clusterHistoryTabRef}
-              networkingTabRef={this.networkingTabRef}
-              insightsTabRef={this.insightsTabRef}
-              supportTabRef={this.supportTabRef}
-              machinePoolsTabRef={this.machinePoolsTabRef}
-              upgradeSettingsTabRef={this.upgradeSettingsTabRef}
-              addAssistedTabRef={this.addAssistedTabRef}
-              hasIssues={cluster.state !== clusterStates.INSTALLING && hasIssues}
-              hasIssuesInsights={hasIssuesInsights}
+              tabsInfo={{
+                overview: { ref: this.overviewTabRef, hasIssues: false },
+                monitoring: {
+                  ref: this.monitoringTabRef,
+                  show: displayMonitoringTab,
+                  hasIssues: cluster.state !== clusterStates.INSTALLING && hasIssues,
+                },
+                accessControl: { ref: this.accessControlTabRef, show: displayAccessControlTab },
+                addOns: { ref: this.addOnsTabRef, show: displayAddOnsTab },
+                clusterHistory: { ref: this.clusterHistoryTabRef, show: displayClusterLogs },
+                networking: { ref: this.networkingTabRef, show: displayNetworkingTab },
+                machinePools: {
+                  ref: this.machinePoolsTabRef,
+                  show: canViewMachinePoolTab(cluster),
+                },
+                support: { ref: this.supportTabRef, show: displaySupportTab },
+                upgradeSettings: {
+                  ref: this.upgradeSettingsTabRef,
+                  show: displayUpgradeSettingsTab,
+                },
+                addAssisted: {
+                  ref: this.addAssistedTabRef,
+                  show: addHostsTabState.showTab,
+                  isDisabled: addHostsTabState.isDisabled,
+                  tooltip: addHostsTabState.tabTooltip,
+                },
+              }}
               initTabOpen={initTabOpen}
               onTabSelected={onTabSelected}
             />
@@ -680,7 +684,6 @@ ClusterDetails.propTypes = {
   getClusterRouters: PropTypes.func.isRequired,
   anyModalOpen: PropTypes.bool,
   hasIssues: PropTypes.bool.isRequired,
-  hasIssuesInsights: PropTypes.bool.isRequired,
   toggleSubscriptionReleased: PropTypes.func.isRequired,
   initTabOpen: PropTypes.string.isRequired,
   notificationContacts: PropTypes.object.isRequired,
