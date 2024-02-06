@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { screen, render, checkAccessibility } from '~/testUtils';
-import LocalTab from '../LocalTab';
+import LocalTab from './LocalTab';
 
 describe('<LocalTab />', () => {
   it('is accessible', async () => {
