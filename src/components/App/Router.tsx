@@ -378,17 +378,17 @@ const Router: React.FC<RouterProps> = ({ history, planType, clusterId, externalC
               component={CreateOsdWizard}
               history={history}
             />
-            <Route
+            <CompatRoute
               path="/create/cloud"
-              render={(props) => <CreateClusterPage activeTab="cloud" {...props} />}
+              render={() => <CreateClusterPage activeTab="cloud" />}
             />
-            <Route
+            <CompatRoute
               path="/create/datacenter"
-              render={(props) => <CreateClusterPage activeTab="datacenter" {...props} />}
+              render={() => <CreateClusterPage activeTab="datacenter" />}
             />
-            <Route
+            <CompatRoute
               path="/create/local"
-              render={(props) => <CreateClusterPage activeTab="local" {...props} />}
+              render={() => <CreateClusterPage activeTab="local" />}
             />
 
             <Redirect from="/create/rosa/welcome" to="/create/rosa/getstarted" />
@@ -405,7 +405,7 @@ const Router: React.FC<RouterProps> = ({ history, planType, clusterId, externalC
               component={CreateROSAWizard}
             />
 
-            <CompatRoute path="/create" component={CreateClusterPage} />
+            <CompatRoute path="/create" component={() => <CreateClusterPage activeTab="" />} />
 
             <CompatRoute
               path="/details/s/:id/insights/:reportId/:errorKey"
@@ -449,7 +449,7 @@ const Router: React.FC<RouterProps> = ({ history, planType, clusterId, externalC
             />
 
             <CompatRoute path="/" exact component={ClustersList} />
-            <CompatRoute component={NotFoundError} />
+            <Route component={NotFoundError} />
           </Switch>
         </ApiError>
       </ConnectedRouter>
