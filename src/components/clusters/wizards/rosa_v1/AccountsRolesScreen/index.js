@@ -12,7 +12,6 @@ import {
   clearGetAWSAccountRolesARNsResponse,
   clearGetUserRoleResponse,
   getUserRole,
-  setOfflineToken,
 } from '../../../../../redux/actions/rosaActions';
 
 const mapDispatchToProps = (dispatch) => ({
@@ -23,16 +22,11 @@ const mapDispatchToProps = (dispatch) => ({
   clearGetAWSAccountRolesARNsResponse: () => dispatch(clearGetAWSAccountRolesARNsResponse()),
   clearGetUserRoleResponse: () => dispatch(clearGetUserRoleResponse()),
   getUserRole: () => dispatch(getUserRole()),
-  setOfflineToken: (token) => dispatch(setOfflineToken(token)),
 });
 
 const mapStateToProps = (state) => {
-  const {
-    getAWSAccountIDsResponse,
-    getAWSAccountRolesARNsResponse,
-    getUserRoleResponse,
-    offlineToken,
-  } = state.rosaReducer;
+  const { getAWSAccountIDsResponse, getAWSAccountRolesARNsResponse, getUserRoleResponse } =
+    state.rosaReducer;
   const valueSelector = formValueSelector('CreateCluster');
 
   return {
@@ -44,7 +38,6 @@ const mapStateToProps = (state) => {
     getAWSAccountIDsResponse,
     getAWSAccountRolesARNsResponse,
     getUserRoleResponse,
-    offlineToken,
   };
 };
 

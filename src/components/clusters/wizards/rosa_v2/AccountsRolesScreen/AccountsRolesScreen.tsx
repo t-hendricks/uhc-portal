@@ -18,7 +18,6 @@ import { normalizedProducts } from '~/common/subscriptionTypes';
 import { trackEvents } from '~/common/analytics';
 import useAnalytics from '~/hooks/useAnalytics';
 import ErrorBox from '~/components/common/ErrorBox';
-import { loadOfflineToken } from '~/components/tokens/TokenUtils';
 
 import { PrerequisitesInfoBox } from '~/components/clusters/wizards/rosa_v1/common/PrerequisitesInfoBox';
 import { WelcomeMessage } from '~/components/clusters/wizards/rosa_v1/common/WelcomeMessage';
@@ -51,8 +50,6 @@ export interface AccountsRolesScreenProps {
   clearGetUserRoleResponse: any;
   organizationID: string;
   rosaMaxOSVersion?: string;
-  offlineToken?: string;
-  setOfflineToken?: any;
   isHypershiftEnabled: boolean;
   isHypershiftSelected: boolean;
 }
@@ -73,8 +70,6 @@ function AccountsRolesScreen({
   clearGetAWSAccountRolesARNsResponse,
   clearGetAWSAccountIDsResponse,
   clearGetUserRoleResponse,
-  offlineToken,
-  setOfflineToken,
   isHypershiftEnabled,
   isHypershiftSelected,
 }: AccountsRolesScreenProps) {
@@ -106,18 +101,6 @@ function AccountsRolesScreen({
     change('product', normalizedProducts.ROSA);
     change('byoc', 'true');
     resetAWSAccountFields();
-
-    // Load token async as soon as this wizard step is opened (unless it's been loaded before, retrieve from redux store)
-    // Initially it will error out and call onTokenError
-    // This will call doOffline which creates an iframe that goes out to the token API and redirects back to this page
-    // Inside the iframe, this same wizard step is loaded, and the loadOfflineToken function is called again
-    // This time it will succeed, and the iframe child sends the token to the parent
-    // Once the parent receives the token, it executes a function callback to pass the token into local state
-    if (!offlineToken) {
-      loadOfflineToken((tokenOrError, errorReason) => {
-        setOfflineToken(errorReason || tokenOrError);
-      }, window.location.origin);
-    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
