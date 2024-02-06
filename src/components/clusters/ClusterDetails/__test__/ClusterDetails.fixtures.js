@@ -12,7 +12,6 @@ const funcs = () => ({
   },
   fetchDetails: jest.fn(),
   fetchClusterInsights: jest.fn(),
-  setOpenedTab: jest.fn(),
   getCloudProviders: jest.fn(),
   invalidateClusters: jest.fn(),
   getOrganizationAndQuota: jest.fn(),
@@ -1077,7 +1076,6 @@ const fixtures = {
   canHibernateCluster: true,
   canSubscribeOCP: false,
   hasIssues: false,
-  hasIssuesInsights: false,
   userAccess,
   upgradeGates: [],
 };

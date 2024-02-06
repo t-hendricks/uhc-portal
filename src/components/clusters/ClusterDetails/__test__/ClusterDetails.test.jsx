@@ -7,6 +7,12 @@ import clusterStates from '../../common/clusterStates';
 import ClusterDetails from '../ClusterDetails';
 import fixtures, { funcs } from './ClusterDetails.fixtures';
 
+jest.mock('../components/TabsRow/TabsRow', () => (props) => (
+  <div className="tabsrowclassname" {...props}>
+    TabsRow
+  </div>
+));
+
 jest.mock('../components/UpgradeSettings/UpgradeSettingsTab', () => () => <div />);
 jest.mock('../components/Overview/ClusterVersionInfo', () => () => <div />);
 jest.mock('../components/MachinePools', () => () => <div />);
@@ -113,7 +119,7 @@ describe('<ClusterDetails />', () => {
           </RouterWrapper>
         </Wrapper>,
       );
-      expect(wrapper.find('TabsRow').props().hasIssues).toBe(false);
+      expect(wrapper.find('.tabsrowclassname').props().tabsInfo.monitoring.hasIssues).toBe(false);
     });
   });
 
@@ -129,7 +135,7 @@ describe('<ClusterDetails />', () => {
           </RouterWrapper>
         </Wrapper>,
       );
-      expect(wrapper.find('TabsRow').props().displaySupportTab).toBe(true);
+      expect(wrapper.find('.tabsrowclassname').props().tabsInfo.support.show).toBe(true);
     });
 
     it('should be hidden when the (managed) cluster has not yet reported its cluster ID to AMS', () => {
@@ -156,7 +162,7 @@ describe('<ClusterDetails />', () => {
           </RouterWrapper>
         </Wrapper>,
       );
-      expect(wrapper.find('TabsRow').props().displaySupportTab).toBe(false);
+      expect(wrapper.find('.tabsrowclassname').props().tabsInfo.support.show).toBe(false);
     });
   });
 
@@ -183,7 +189,98 @@ describe('<ClusterDetails />', () => {
     });
 
     it('it should hide 1 tab', () => {
-      expect(wrapper.find('TabsRow').props().displayMonitoringTab).toBe(false);
+      expect(wrapper.find('.tabsrowclassname').props().tabsInfo.monitoring.show).toBe(false);
+    });
+  });
+
+  describe('hypershift cluster', () => {
+    const { Wrapper } = withState({});
+
+    const functions = funcs();
+    const props = {
+      ...fixtures,
+      ...functions,
+      clusterDetails: {
+        ...fixtures.ROSAClusterDetails,
+        cluster: {
+          ...fixtures.ROSAClusterDetails.cluster,
+          hypershift: { enabled: true },
+        },
+      },
+    };
+    shallow(<ClusterDetails {...props} />);
+
+    it('should get node pools', () => {
+      expect(functions.getMachineOrNodePools).toBeCalledWith(
+        fixtures.ROSAClusterDetails.cluster.id,
+        true,
+        'openshift-v4.6.8',
+        undefined,
+      );
+    });
+
+    it('displays the network tab if private link is true', () => {
+      const cluster = {
+        state: clusterStates.READY,
+        managed: true,
+        cloud_provider: { id: 'aws' },
+        ccs: { enabled: true },
+        hypershift: { enabled: true },
+        aws: { private_link: true },
+      };
+
+      const functions = funcs();
+      const props = {
+        ...fixtures,
+        ...functions,
+        clearFiltersAndFlags: () => {},
+        clusterDetails: {
+          ...fixtures.ROSAClusterDetails,
+          cluster: { ...fixtures.ROSAClusterDetails.cluster, cluster },
+        },
+      };
+
+      const wrapper = mount(
+        <Wrapper>
+          <RouterWrapper>
+            <ClusterDetails {...props} />
+          </RouterWrapper>
+        </Wrapper>,
+      );
+
+      expect(wrapper.find('.tabsrowclassname').props().tabsInfo.networking.show).toBe(true);
+    });
+
+    it('displays the network tab if private link is false', () => {
+      const cluster = {
+        state: clusterStates.READY,
+        managed: true,
+        cloud_provider: { id: 'aws' },
+        ccs: { enabled: true },
+        hypershift: { enabled: true },
+        aws: { private_link: false },
+      };
+
+      const functions = funcs();
+      const props = {
+        ...fixtures,
+        ...functions,
+        clearFiltersAndFlags: () => {},
+        clusterDetails: {
+          ...fixtures.ROSAClusterDetails,
+          cluster: { ...fixtures.ROSAClusterDetails.cluster, cluster },
+        },
+      };
+
+      const wrapper = mount(
+        <Wrapper>
+          <RouterWrapper>
+            <ClusterDetails {...props} />
+          </RouterWrapper>
+        </Wrapper>,
+      );
+
+      expect(wrapper.find('.tabsrowclassname').props().tabsInfo.networking.show).toBe(true);
     });
   });
 
@@ -291,7 +388,7 @@ describe('<ClusterDetails />', () => {
       </Wrapper>,
     );
     it('should hide the support tab for OSDTrial cluster', () => {
-      expect(wrapper.find('TabsRow').props().displaySupportTab).toBe(false);
+      expect(wrapper.find('.tabsrowclassname').props().tabsInfo.support.show).toBe(false);
     });
   });
 
@@ -323,17 +420,19 @@ describe('<ClusterDetails />', () => {
     );
     it('should show support tab for Deprovisioned clusters', () => {
       // show support tab with disabled buttons (refer to Support/Support.text.jsx)
-      expect(osdWrapper.find('TabsRow').props().displaySupportTab).toBe(true);
+      expect(osdWrapper.find('.tabsrowclassname').props().tabsInfo.support.show).toBe(true);
       expect(osdWrapper.find({ 'data-testid': 'support' }).props().disabled).toBe(true);
     });
     it('should hide tabs for Deprovisioned clusters', () => {
-      expect(osdWrapper.find('TabsRow').props().displayMonitoringTab).toBe(false);
-      expect(osdWrapper.find('TabsRow').props().displayAccessControlTab).toBe(false);
-      expect(osdWrapper.find('TabsRow').props().displayAddOnsTab).toBe(false);
-      expect(osdWrapper.find('TabsRow').props().displayNetworkingTab).toBe(false);
-      expect(osdWrapper.find('TabsRow').props().displayMachinePoolsTab).toBe(false);
-      expect(osdWrapper.find('TabsRow').props().displayUpgradeSettingsTab).toBe(false);
-      expect(ocpWrapper.find('TabsRow').props().addHostTabDetails.showTab).toBe(false);
+      expect(osdWrapper.find('.tabsrowclassname').props().tabsInfo.monitoring.show).toBe(false);
+      expect(osdWrapper.find('.tabsrowclassname').props().tabsInfo.accessControl.show).toBe(false);
+      expect(osdWrapper.find('.tabsrowclassname').props().tabsInfo.addOns.show).toBe(false);
+      expect(osdWrapper.find('.tabsrowclassname').props().tabsInfo.networking.show).toBe(false);
+      expect(osdWrapper.find('.tabsrowclassname').props().tabsInfo.machinePools.show).toBe(false);
+      expect(osdWrapper.find('.tabsrowclassname').props().tabsInfo.upgradeSettings.show).toBe(
+        false,
+      );
+      expect(osdWrapper.find('.tabsrowclassname').props().tabsInfo.addAssisted.show).toBe(false);
     });
 
     const ocpProps = {
@@ -368,17 +467,19 @@ describe('<ClusterDetails />', () => {
     );
     it('should show support tab for Archived clusters', () => {
       // show support tab with disabled buttons (refer to Support/Support.text.jsx)
-      expect(ocpWrapper.find('TabsRow').props().displaySupportTab).toBe(true);
+      expect(ocpWrapper.find('.tabsrowclassname').props().tabsInfo.support.show).toBe(true);
       expect(osdWrapper.find({ 'data-testid': 'support' }).props().disabled).toBe(true);
     });
     it('should hide tabs for Archived clusters', () => {
-      expect(ocpWrapper.find('TabsRow').props().displayMonitoringTab).toBe(false);
-      expect(ocpWrapper.find('TabsRow').props().displayAccessControlTab).toBe(false);
-      expect(ocpWrapper.find('TabsRow').props().displayAddOnsTab).toBe(false);
-      expect(ocpWrapper.find('TabsRow').props().displayNetworkingTab).toBe(false);
-      expect(ocpWrapper.find('TabsRow').props().displayMachinePoolsTab).toBe(false);
-      expect(ocpWrapper.find('TabsRow').props().displayUpgradeSettingsTab).toBe(false);
-      expect(ocpWrapper.find('TabsRow').props().addHostTabDetails.showTab).toBe(false);
+      expect(ocpWrapper.find('.tabsrowclassname').props().tabsInfo.monitoring.show).toBe(false);
+      expect(ocpWrapper.find('.tabsrowclassname').props().tabsInfo.accessControl.show).toBe(false);
+      expect(ocpWrapper.find('.tabsrowclassname').props().tabsInfo.addOns.show).toBe(false);
+      expect(ocpWrapper.find('.tabsrowclassname').props().tabsInfo.networking.show).toBe(false);
+      expect(ocpWrapper.find('.tabsrowclassname').props().tabsInfo.machinePools.show).toBe(false);
+      expect(ocpWrapper.find('.tabsrowclassname').props().tabsInfo.upgradeSettings.show).toBe(
+        false,
+      );
+      expect(ocpWrapper.find('.tabsrowclassname').props().tabsInfo.addAssisted.show).toBe(false);
     });
   });
 });
