@@ -1,5 +1,5 @@
 import React from 'react';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom-v5-compat';
 import {
   Card,
   CardTitle,
@@ -35,7 +35,16 @@ export const InstructionsChooserCard = ({
   footerLinkHref,
   footerLinkText,
 }: InstructionsChooserCardProps) => {
-  const history = useHistory();
+  const navigate = useNavigate();
+  const handleClick = () => {
+    navigate(href);
+  };
+  const handleEnterKeyPress = (event: React.KeyboardEvent<HTMLDivElement>) => {
+    if (event.key === 'Enter') {
+      navigate(href);
+    }
+  };
+
   return (
     <Card
       id={id}
@@ -44,8 +53,8 @@ export const InstructionsChooserCard = ({
       role="link"
       aria-labelledby={`${id}-title`}
       aria-describedby={`${id}-description`}
-      onClick={() => history.push(href)}
-      onKeyUp={(event) => event.key === 'Enter' && history.push(href)}
+      onClick={handleClick}
+      onKeyUp={handleEnterKeyPress}
     >
       <CardTitle id={`${id}-title`}>
         <Title headingLevel="h2">{title}</Title>
