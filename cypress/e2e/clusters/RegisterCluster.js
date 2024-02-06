@@ -1,5 +1,4 @@
 import { v4 } from 'uuid';
-import Login from '../../pageobjects/login.page';
 import ClusterListPage from '../../pageobjects/ClusterList.page';
 import RegisterClusterPage from '../../pageobjects/RegisterCluster.page';
 import ClusterDetailsPage from '../../pageobjects/ClusterDetails.page';
@@ -7,16 +6,6 @@ import ClusterDetailsPage from '../../pageobjects/ClusterDetails.page';
 describe('Register cluster flow', { tags: ['ci', 'smoke'] }, () => {
   const clusterID = v4();
   const displayName = `cypress-${clusterID}`;
-
-  before(() => {
-    cy.visit('/', { retryOnNetworkFailure: true });
-    Login.isLoginPageUrl();
-    Login.login();
-
-    ClusterListPage.isClusterListUrl();
-    ClusterListPage.waitForDataReady();
-    cy.getByTestId('create_cluster_btn').should('be.visible');
-  });
 
   it('navigate to register cluster', () => {
     ClusterListPage.registerCluster().should('be.visible').click();

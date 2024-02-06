@@ -14,16 +14,6 @@ const interceptAndReturnMockARNs = (mockFile) =>
   cy.intercept({ method: 'POST', url: ARNsSelector }, { fixture: mockFile }).as('getMockARNs');
 
 describe.skip('Rosa cluster tests', { tags: ['ci'] }, () => {
-  before(() => {
-    cy.visit('/', { retryOnNetworkFailure: true });
-    Login.isLoginPageUrl();
-    Login.login();
-
-    ClusterListPage.isClusterListUrl();
-    ClusterListPage.waitForDataReady();
-    cy.getByTestId('create_cluster_btn').should('be.visible');
-  });
-
   describe('Create Rosa cluster', () => {
     it('navigates to create Rosa cluster wizard', () => {
       cy.getByTestId('create_cluster_btn').click();

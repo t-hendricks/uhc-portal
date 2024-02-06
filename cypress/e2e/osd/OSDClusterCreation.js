@@ -1,4 +1,3 @@
-import Login from '../../pageobjects/login.page';
 import ClusterListPage from '../../pageobjects/ClusterList.page';
 import CreateClusterPage from '../../pageobjects/CreateCluster.page';
 import CreateOSDWizardPage from '../../pageobjects/CreateOSDWizard.page';
@@ -8,21 +7,6 @@ import LeaveCreateClusterPrompt from '../../pageobjects/LeaveCreateClusterPrompt
 const clusterName = `test-${Math.random().toString(36).substr(2, 10)}`;
 
 describe('OSD cluster tests', { tags: ['ci'] }, () => {
-  before(() => {
-    // visiting '/' will goto baseUrl defined in package.json
-    // baseUrl ends in '.../openshift/'.  To goto sub-pages you
-    // only need to specify relative path to baseUrl.
-    // Ex: cy.visit('/create/osd');
-    cy.visit('/', { retryOnNetworkFailure: true });
-    Login.isLoginPageUrl();
-    Login.login();
-
-    ClusterListPage.isClusterListUrl();
-    ClusterListPage.waitForDataReady();
-    // cy.getByTestId('foo') finds any elements with 'data-testid' attribute === 'foo',
-    cy.getByTestId('create_cluster_btn').should('be.visible');
-  });
-
   describe('Create OSD cluster on AWS flow', () => {
     it('navigates to create OSD cluster', () => {
       cy.getByTestId('create_cluster_btn').click();

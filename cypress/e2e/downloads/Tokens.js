@@ -1,17 +1,6 @@
-import Login from '../../pageobjects/login.page';
 import TokenPages from '../../pageobjects/Tokens.page';
-import ClusterListPage from '../../pageobjects/ClusterList.page';
 
 describe('Token pages', { tags: ['ci', 'smoke'] }, () => {
-  beforeEach(() => {
-    cy.visit('/', { retryOnNetworkFailure: true });
-    Login.isLoginPageUrl();
-    Login.login();
-
-    ClusterListPage.isClusterListUrl();
-    ClusterListPage.waitForDataReady();
-  });
-
   it('ocm-cli token page', () => {
     TokenPages.navigateToOCMToken();
     TokenPages.waitTokenPageIsLoaded();

@@ -1,5 +1,3 @@
-import Login from '../../pageobjects/login.page';
-import ClusterListPage from '../../pageobjects/ClusterList.page';
 import CreateRosaWizardPage from '../../pageobjects/CreateRosaWizard.page';
 import ClusterDetailsPage from '../../pageobjects/ClusterDetails.page';
 
@@ -13,16 +11,6 @@ describe(
   'Rosa cluster wizard advanced settings with cluster creation tests(OCP-36105)',
   { tags: ['smoke'] },
   () => {
-    before(() => {
-      cy.visit('/');
-      Login.isLoginPageUrl();
-      Login.login();
-
-      ClusterListPage.isClusterListUrl();
-      ClusterListPage.waitForDataReady();
-      cy.getByTestId('create_cluster_btn').should('be.visible');
-    });
-
     it('Open Rosa cluster wizard with advanced settings', () => {
       cy.getByTestId('create_cluster_btn').click();
       CreateRosaWizardPage.rosaCreateClusterButton().click();

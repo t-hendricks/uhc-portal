@@ -1,5 +1,3 @@
-import Login from '../../pageobjects/login.page';
-import ClusterListPage from '../../pageobjects/ClusterList.page';
 import CreateRosaWizardPage from '../../pageobjects/CreateRosaWizard.page';
 import ClusterDetailsPage from '../../pageobjects/ClusterDetails.page';
 const clusterPropertiesFile = require('../../fixtures/rosa/RosaClusterDefaultPublicMultiZoneProperties.json');
@@ -13,16 +11,6 @@ describe(
   'Rosa cluster Creation-multizone-public-default settings',
   { tags: ['day1', 'rosa', 'public', 'multi-zone', 'default'] },
   () => {
-    before(() => {
-      cy.visit('/');
-      Login.isLoginPageUrl();
-      Login.login();
-
-      ClusterListPage.isClusterListUrl();
-      ClusterListPage.waitForDataReady();
-      cy.getByTestId('create_cluster_btn').should('be.visible');
-    });
-
     it('Open Rosa cluster wizard', () => {
       cy.getByTestId('create_cluster_btn').click();
       CreateRosaWizardPage.rosaCreateClusterButton().click();
