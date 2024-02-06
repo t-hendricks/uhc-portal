@@ -9,23 +9,6 @@ Cypress.config({
 });
 
 describe('Write ROSA Login cmd to file', { tags: ['fedramp'] }, () => {
-  before(() => {
-    if (Cypress.env('GOV_CLOUD')) {
-      cy.visit('');
-      Login.loginFedRamp(
-        Cypress.env('TEST_WITHQUOTA_USER'),
-        Cypress.env('TEST_WITHQUOTA_PASSWORD'),
-      );
-    } else {
-      Login.loginCommercial(
-        Cypress.env('TEST_WITHQUOTA_USER'),
-        Cypress.env('TEST_WITHQUOTA_PASSWORD'),
-      );
-    }
-    ClusterListPage.waitForDataReady();
-    ClusterListPage.isCreateClusterBtnVisible();
-  });
-
   it('Writes ROSA Login cmd to file', () => {
     cy.visit('/create/rosa/getstarted');
     cy.get('[role="status"]').should('not.exist');

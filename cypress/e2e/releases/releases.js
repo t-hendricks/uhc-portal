@@ -1,15 +1,8 @@
-import Login from '../../pageobjects/login.page';
 import Releases from '../../pageobjects/Releases.page';
 import Docs from '../../pageobjects/Docs.page';
 
 var current_version;
 describe('Releases pages tests', () => {
-  before(() => {
-    cy.visit('/', { retryOnNetworkFailure: true });
-    Login.isLoginPageUrl();
-    Login.login();
-  });
-
   it('Check latest openshift release versions(OCP-41253)', { tags: ['smoke'] }, () => {
     cy.intercept('/product-life-cycles/api/v1/products?name=Openshift*').as('getProductsLifecycle');
     cy.visit('/releases', { retryOnNetworkFailure: true });
