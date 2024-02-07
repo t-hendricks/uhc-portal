@@ -26,8 +26,8 @@
     "@redhat-cloud-services/frontend-components-notifications": "^4.1.0",
     "@redhat-cloud-services/rbac-client": "^1.2.12",
     "@reduxjs/toolkit": "^1.9.1",
-    "@sentry/browser": "^5.19.1",
-    "@sentry/integrations": "^5.19.1",
+    "@sentry/browser": "^7.77.0",
+    "@sentry/integrations": "^7.77.0",
     "@types/file-saver": "^2.0.5",
     "@types/humanize-duration": "^3.27.1",
     "@wojtekmaj/enzyme-adapter-react-17": "^0.8.0",
@@ -104,6 +104,7 @@
     "@cypress/code-coverage": "^3.10.4",
     "@cypress/grep": "^4",
     "@redhat-cloud-services/types": "^1.0.6",
+    "@sentry/cli": "^2.21.2",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^14.0.0",
     "@testing-library/user-event": "^14.0.4",
@@ -211,7 +212,9 @@
     "cypress-ui": "cypress open",
     "cypress-headless": "cypress run --browser chrome",
     "code-coverage": "nyc report --reporter=text-summary",
-    "analyze": "rm -rf dist && BUNDLE_ANALYZER=true webpack $(run/progress-flag-if-tty.sh) --mode=production"
+    "analyze": "rm -rf dist && BUNDLE_ANALYZER=true webpack $(run/progress-flag-if-tty.sh) --mode=production",
+    "sentry:sourcemaps": "sentry-cli sourcemaps inject ./dist/",
+    "sentry:release": "sentry-cli --url https://glitchtip.devshift.net/ releases --org ocm"
   },
   "insights": {
     "appname": "openshift"

@@ -26,7 +26,7 @@ const sentryMiddleware: Middleware = () => (next) => (action: AnyAction) => {
     category: 'redux',
     message: `Dispatching ${action.type}`,
     data,
-    level: Sentry?.Severity?.Info || 'info', // Handle when Sentry in updated to v7
+    level: 'info',
   });
   return next(action);
 };
