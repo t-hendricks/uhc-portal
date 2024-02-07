@@ -19,33 +19,28 @@ interface AwsVpcTableProps {
 }
 
 const AwsVpcTable = ({ vpc, machinePoolsSubnets, hasPublicSubnets }: AwsVpcTableProps) => {
-  const colSize = hasPublicSubnets ? 3 : 6;
+  const azColumns = hasPublicSubnets ? 2 : 3;
+  const subnetColumns = hasPublicSubnets ? 5 : 9;
 
   return (
     <Grid>
-      <GridItem md={colSize}>
+      <GridItem md={azColumns}>
         <strong>Availability zone</strong>
       </GridItem>
-      <GridItem md={colSize}>
+      <GridItem md={subnetColumns}>
         <strong>Private subnet</strong>
       </GridItem>
       {hasPublicSubnets && (
-        <>
-          <GridItem md={colSize}>
-            <strong>Public subnet</strong>
-          </GridItem>
-          <GridItem md={colSize} />
-        </>
+        <GridItem md={subnetColumns}>
+          <strong>Public subnet</strong>
+        </GridItem>
       )}
       {machinePoolsSubnets.map((mpSubnet) => (
         <React.Fragment key={mpSubnet.privateSubnetId}>
-          <GridItem md={colSize}>{mpSubnet.availabilityZone}</GridItem>
-          <GridItem md={colSize}>{getSubnetName(vpc, mpSubnet.privateSubnetId)}</GridItem>
+          <GridItem md={azColumns}>{mpSubnet.availabilityZone}</GridItem>
+          <GridItem md={subnetColumns}>{getSubnetName(vpc, mpSubnet.privateSubnetId)}</GridItem>
           {hasPublicSubnets && (
-            <>
-              <GridItem md={colSize}>{getSubnetName(vpc, mpSubnet.publicSubnetId)}</GridItem>
-              <GridItem md={colSize} />
-            </>
+            <GridItem md={subnetColumns}>{getSubnetName(vpc, mpSubnet.publicSubnetId)}</GridItem>
           )}
         </React.Fragment>
       ))}
