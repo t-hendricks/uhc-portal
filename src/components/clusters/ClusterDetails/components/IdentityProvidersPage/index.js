@@ -1,17 +1,15 @@
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import { reduxForm, reset, formValueSelector, getFormSyncErrors } from 'redux-form';
+import React from 'react';
+import PropTypes from 'prop-types';
+import { useDispatch } from 'react-redux';
+import { useGlobalState } from '~/redux/hooks';
+import { reduxForm, formValueSelector, getFormSyncErrors } from 'redux-form';
+import { useParams } from 'react-router-dom-v5-compat';
 import get from 'lodash/get';
 import IdentityProvidersPage from './IdentityProvidersPage';
 import {
   createClusterIdentityProvider,
-  resetCreatedClusterIDPResponse,
-  getClusterIdentityProviders,
   editClusterIdentityProvider,
 } from './IdentityProvidersActions';
-import { clearGlobalError, setGlobalError } from '../../../../../redux/actions/globalErrorActions';
-import { fetchClusterDetails } from '../../../../../redux/actions/clustersActions';
-
 import {
   getCreateIDPRequestData,
   generateIDPName,
@@ -28,7 +26,8 @@ export const reduxFormConfig = {
   enableReinitialize: true,
   onSubmitFail: scrollToFirstField,
 };
-const reduxFormCreateClusterIDP = reduxForm(reduxFormConfig)(IdentityProvidersPage);
+const ReduxFormCreateClusterIDP = reduxForm(reduxFormConfig)(IdentityProvidersPage);
+
 const CLIENT_SECRET = 'CLIENT_SECRET'; // Predefined value
 const initialValuesForEditing = (idpEdited, editedType) => {
   if (!editedType) {
@@ -73,85 +72,96 @@ const initialValuesForEditing = (idpEdited, editedType) => {
   };
 };
 
-const mapStateToProps = (state, ownProps) => {
+const ReduxFormCreateClusterIDPWrapper = (props) => {
+  const params = useParams();
+  const dispatch = useDispatch();
+  const state = useGlobalState((state) => state);
+
+  const { isEditForm } = props;
+
+  const valueSelector = formValueSelector('CreateIdentityProvider');
+  const errorSelector = getFormSyncErrors('CreateIdentityProvider');
+
+  const clusterID = useGlobalState((state) => state.clusters.details.cluster.id);
+  const clusterDetails = useGlobalState((state) => state.clusters.details);
+  const editClusterIDP = useGlobalState((state) => state.identityProviders.editClusterIDP);
+  const createdClusterIDP = useGlobalState((state) => state.identityProviders.createdClusterIDP);
+
+  const clusterIDPs = useGlobalState((state) => state.identityProviders.clusterIdentityProviders);
+  const submitIDPResponse = isEditForm ? editClusterIDP : createdClusterIDP;
+
   let idpEdited = {};
   let editedType = '';
   let selectedIDP = '';
-  const valueSelector = formValueSelector('CreateIdentityProvider');
-  const errorSelector = getFormSyncErrors('CreateIdentityProvider');
-  const clusterIDPs = state.identityProviders.clusterIdentityProviders;
+
   const clusterIDPList = clusterIDPs.clusterIDPList || [];
   const defaultIDP = IDPformValues.GITHUB;
 
-  const { match, isEditForm } = ownProps;
   if (isEditForm) {
     if (clusterIDPs.fulfilled) {
-      idpEdited = clusterIDPList.find((idp) => idp.name === match.params.idpName) || {};
+      idpEdited = clusterIDPList.find((idp) => idp.name === params.idpName) || {};
       editedType = get(IDPObjectNames, idpEdited.type, '');
       selectedIDP = idpEdited.type;
     }
-  } else {
-    selectedIDP = get(IDPformValues, match.params.idpTypeName.toUpperCase(), false);
+  } else if (!isEditForm && params.idpTypeName) {
+    selectedIDP = get(IDPformValues, params.idpTypeName.toUpperCase(), false);
   }
 
-  return {
-    clusterDetails: state.clusters.details,
-    clusterID: state.clusters.details.cluster.id,
-    selectedIDP,
-    submitIDPResponse: isEditForm
-      ? state.identityProviders.editClusterIDP
-      : state.identityProviders.createdClusterIDP,
-    idpEdited,
-    editedType,
-    isEditForm,
-    initialValues: isEditForm
-      ? initialValuesForEditing(idpEdited, editedType)
-      : {
-          idpId: null,
-          type: selectedIDP || defaultIDP,
-          name: generateIDPName(selectedIDP || defaultIDP, clusterIDPList),
-          client_id: '',
-          client_secret: '',
-          mappingMethod: 'claim',
-          selectedIDP: selectedIDP || defaultIDP,
-          // ldap
-          ldap_id: [{ ldap_id: 'dn', id: 'default' }],
-          ldap_preferred_username: [{ ldap_preferred_username: 'uid', id: 'default' }],
-          ldap_name: [{ ldap_name: 'cn', id: 'default' }],
-        },
-    selectedMappingMethod: valueSelector(state, 'mappingMethod'),
-    clusterIDPs,
-    IDPList: clusterIDPList,
-    HTPasswdErrors: get(errorSelector(state), 'users'),
-  };
-};
+  // initialValues are for redux-form initialization and has to be passed through the component
+  // eslint-disable-next-line no-unused-vars
+  const initialValues = isEditForm
+    ? initialValuesForEditing(idpEdited, editedType)
+    : {
+        idpId: null,
+        type: selectedIDP || defaultIDP,
+        name: generateIDPName(selectedIDP || defaultIDP, clusterIDPList),
+        client_id: '',
+        client_secret: '',
+        mappingMethod: 'claim',
+        selectedIDP: selectedIDP || defaultIDP,
+        // ldap
+        ldap_id: [{ ldap_id: 'dn', id: 'default' }],
+        ldap_preferred_username: [{ ldap_preferred_username: 'uid', id: 'default' }],
+        ldap_name: [{ ldap_name: 'cn', id: 'default' }],
+      };
 
-const mapDispatchToProps = (dispatch) => ({
-  fetchDetails: (clusterId) => dispatch(fetchClusterDetails(clusterId)),
-  ...bindActionCreators({ clearGlobalError, setGlobalError }, dispatch),
-  onSubmit: (formData, clusterID) => {
+  // redux-form passthrough props
+  // eslint-disable-next-line no-unused-vars
+  const selectedMappingMethod = valueSelector(state, 'mappingMethod');
+  const HTPasswdErrors = get(errorSelector(state), 'users');
+
+  const onSubmit = (formData) => {
     const createIdentityProviderRequest = getCreateIDPRequestData(formData);
     if (createIdentityProviderRequest.id) {
       dispatch(editClusterIdentityProvider(clusterID, createIdentityProviderRequest));
     } else {
       dispatch(createClusterIdentityProvider(clusterID, createIdentityProviderRequest));
     }
-  },
-  resetResponse: () => dispatch(resetCreatedClusterIDPResponse()),
-  resetForm: () => dispatch(reset('CreateIdentityProvider')),
-  getClusterIDPs: (clusterID) => dispatch(getClusterIdentityProviders(clusterID)),
-});
+  };
 
-const mergeProps = (stateProps, dispatchProps, ownProps) => {
-  const onSubmit = (formData) => {
-    dispatchProps.onSubmit(formData, stateProps.clusterID);
-  };
-  return {
-    ...ownProps,
-    ...stateProps,
-    ...dispatchProps,
-    onSubmit,
-  };
+  return (
+    <ReduxFormCreateClusterIDP
+      clusterID={clusterID}
+      IDPList={clusterIDPList}
+      HTPasswdErrors={HTPasswdErrors}
+      clusterIDPs={clusterIDPs}
+      clusterIDPList={clusterIDPList}
+      isEditForm={isEditForm}
+      idpEdited={idpEdited}
+      editedType={editedType}
+      selectedIDP={selectedIDP}
+      initialValues={initialValues}
+      selectedMappingMethod={selectedMappingMethod}
+      onSubmit={onSubmit}
+      submitIDPResponse={submitIDPResponse}
+      clusterDetails={clusterDetails}
+      {...props}
+    />
+  );
 };
 
-export default connect(mapStateToProps, mapDispatchToProps, mergeProps)(reduxFormCreateClusterIDP);
+ReduxFormCreateClusterIDPWrapper.propTypes = {
+  isEditForm: PropTypes.bool,
+};
+
+export default ReduxFormCreateClusterIDPWrapper;
