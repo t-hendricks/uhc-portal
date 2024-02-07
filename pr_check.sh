@@ -33,6 +33,10 @@ if ! git diff --exit-code --stat mockdata/api/clusters_mgmt/v1/clusters.json moc
 fi
 
 
+echo 'System node version not used here, but will be used by build_deploy.sh:'
+node --version
+
+
 # build app & push to image repository
 # ------------------------------------
 
