@@ -289,6 +289,7 @@ class ClusterDetails extends Component {
       setGlobalError,
       displayClusterLogs,
       insightsData,
+      logs,
       canSubscribeOCP,
       canTransferClusterOwnership,
       canHibernateCluster,
@@ -439,6 +440,7 @@ class ClusterDetails extends Component {
             autoRefreshEnabled={!anyModalOpen}
             toggleSubscriptionReleased={toggleSubscriptionReleased}
             showPreviewLabel={isHypershift}
+            logs={logs}
           >
             <TabsRow
               displayMonitoringTab={displayMonitoringTab}
@@ -653,6 +655,12 @@ ClusterDetails.propTypes = {
   resetClusterHistory: PropTypes.func.isRequired,
   getClusterIdentityProviders: PropTypes.func.isRequired,
   insightsData: PropTypes.object,
+  logs: PropTypes.arrayOf(
+    PropTypes.shape({
+      summary: PropTypes.string,
+      description: PropTypes.string,
+    }),
+  ),
   clusterIdentityProviders: PropTypes.object.isRequired,
   organization: PropTypes.object.isRequired,
   clusterDetails: PropTypes.shape({
