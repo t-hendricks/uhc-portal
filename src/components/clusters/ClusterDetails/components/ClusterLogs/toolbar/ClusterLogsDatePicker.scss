@@ -3,4 +3,7 @@
         inline-size: 180px;
         overflow-wrap: break-word;
     }
+    .pf-v5-c-toolbar__item {
+        flex-direction: column;
+    }
 }
