@@ -19,6 +19,7 @@ import {
   NoPermissionsError as AINoPermissionsError,
 } from '@openshift-assisted/ui-lib/ocm';
 import useChrome from '@redhat-cloud-services/frontend-components/useChrome';
+import { CompatRoute } from 'react-router-dom-v5-compat';
 import { ConnectedRouter } from 'connected-react-router';
 import get from 'lodash/get';
 import React, { useEffect } from 'react';
@@ -31,7 +32,6 @@ import {
   useLocation,
   withRouter,
 } from 'react-router-dom';
-import { CompatRoute } from 'react-router-dom-v5-compat';
 import apiRequest from '~/services/apiRequest';
 import { useFeatureGate } from '~/hooks/useFeatureGate';
 import config from '~/config';
@@ -423,9 +423,9 @@ const Router: React.FC<RouterProps> = ({ history, planType, clusterId, externalC
               path="/details/s/:id/add-idp/:idpTypeName"
               component={IdentityProvidersPage}
             />
-            <Route
+            <CompatRoute
               path="/details/s/:id/edit-idp/:idpName"
-              render={({ match }) => <IdentityProvidersPage isEditForm match={match} />}
+              component={() => <IdentityProvidersPage isEditForm />}
             />
             <CompatRoute path="/details/s/:id" component={ClusterDetailsSubscriptionId} />
             <CompatRoute
