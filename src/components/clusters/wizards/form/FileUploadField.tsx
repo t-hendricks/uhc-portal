@@ -26,6 +26,9 @@ interface FileUploadFieldProps {
   input?: Partial<FileUploadProps>;
 }
 
+const isHtmlInputElement = (element: EventTarget): element is HTMLInputElement =>
+  (element as HTMLInputElement).files !== undefined;
+
 export const FileUploadField = ({
   name,
   label,
@@ -101,7 +104,3 @@ export const FileUploadField = ({
     </Field>
   );
 };
-
-function isHtmlInputElement(element: EventTarget): element is HTMLInputElement {
-  return (element as HTMLInputElement).files !== undefined;
-}

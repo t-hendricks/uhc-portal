@@ -14,6 +14,14 @@ function LeaveCreateClusterPrompt({ product, forceLeaveWizard }) {
   const [isOpen, setIsOpen] = useState(false);
   const [destinationLocation, setDestinationLocation] = useState('');
 
+  const onLeave = useCallback(() => {
+    track(trackEvents.WizardLeave, {
+      resourceType: ocmResourceTypeByProduct[product],
+    });
+    history.push(destinationLocation);
+    setIsOpen(false);
+  }, [product, destinationLocation, history, track]);
+
   useEffect(() => {
     let unblock;
 
@@ -44,14 +52,6 @@ function LeaveCreateClusterPrompt({ product, forceLeaveWizard }) {
       onLeave();
     }
   }, [forceLeaveWizard, onLeave]);
-
-  const onLeave = useCallback(() => {
-    track(trackEvents.WizardLeave, {
-      resourceType: ocmResourceTypeByProduct[product],
-    });
-    history.push(destinationLocation);
-    setIsOpen(false);
-  }, [product, destinationLocation, history, track]);
 
   return isOpen && !forceLeaveWizard ? (
     <Modal
