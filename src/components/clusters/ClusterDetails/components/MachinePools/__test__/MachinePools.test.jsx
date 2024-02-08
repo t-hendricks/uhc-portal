@@ -23,7 +23,7 @@ jest.mock('~/components/clusters/common/useAWSVPCFromCluster', () => ({
     clusterVpc: vpc,
   }),
 }));
-jest.mock('~/components/clusters/common/MachineConfiguration/MachineConfiguration', () => ({
+jest.mock('~/components/clusters/common/MachineConfiguration', () => ({
   MachineConfiguration: () => <div data-testid="machine-configuration">MachineConfiguration</div>,
 }));
 

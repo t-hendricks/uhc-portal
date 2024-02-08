@@ -110,67 +110,6 @@ const getPartnerScope = (pathname: string) => {
 };
 
 /**
- * Tries to load the offline token
- *
- * @param {function(string):void} onError
- * Callback after token load encountered an error.
- * The callback gets the failure reason string as a parameter.
- */
-export const loadOfflineToken = (
-  callback: (tokenOrError: string, errorReason?: string) => void,
-  targetOrigin: string,
-) => {
-  insights.chrome.auth
-    .getOfflineToken()
-    .then((response: any) => {
-      // eslint-disable-next-line no-console
-      console.log('Tokens: getOfflineToken succeeded => scope', response.data.scope);
-      if (window.parent) {
-        // We are inside an iframe, pass the token up to the parent
-        window.parent.postMessage(
-          {
-            tokenOrError: response.data.refresh_token,
-          },
-          targetOrigin,
-        );
-      }
-    })
-    .catch((reason: string | AxiosError) => {
-      const tokenOrError = axios.isAxiosError(reason) ? reason.toString() : reason;
-      const errorReason = axios.isAxiosError(reason)
-        ? (
-            reason as AxiosError<
-              any,
-              {
-                error: string;
-                ['error_description']: string;
-              }
-            >
-          ).response?.data?.error
-        : '';
-      // First time this method is called it will error out
-      if (reason === 'not available') {
-        // eslint-disable-next-line no-console
-        console.log('Tokens: getOfflineToken failed => "not available", running doOffline()');
-        doOffline(callback);
-      } else if (window.self !== window.parent) {
-        // We are inside an iframe, pass the token up to the parent
-        window.parent?.postMessage(
-          {
-            tokenOrError,
-            errorReason,
-          },
-          targetOrigin,
-        );
-      } else {
-        // eslint-disable-next-line no-console
-        console.log('Tokens: getOfflineToken failed =>', reason);
-        callback(tokenOrError, errorReason);
-      }
-    });
-};
-
-/**
  * Creates an iframe that goes out to the token API and redirects back.
  * Once the iframe fetches the token, it sends a message to the parent
  * document (message listener created in this function),
@@ -236,4 +175,65 @@ export const doOffline = (onDone: (tokenOrError: string, errorReason?: string) =
 
     window.addEventListener('message', messageCallback);
   });
+};
+
+/**
+ * Tries to load the offline token
+ *
+ * @param {function(string):void} onError
+ * Callback after token load encountered an error.
+ * The callback gets the failure reason string as a parameter.
+ */
+export const loadOfflineToken = (
+  callback: (tokenOrError: string, errorReason?: string) => void,
+  targetOrigin: string,
+) => {
+  insights.chrome.auth
+    .getOfflineToken()
+    .then((response: any) => {
+      // eslint-disable-next-line no-console
+      console.log('Tokens: getOfflineToken succeeded => scope', response.data.scope);
+      if (window.parent) {
+        // We are inside an iframe, pass the token up to the parent
+        window.parent.postMessage(
+          {
+            tokenOrError: response.data.refresh_token,
+          },
+          targetOrigin,
+        );
+      }
+    })
+    .catch((reason: string | AxiosError) => {
+      const tokenOrError = axios.isAxiosError(reason) ? reason.toString() : reason;
+      const errorReason = axios.isAxiosError(reason)
+        ? (
+            reason as AxiosError<
+              any,
+              {
+                error: string;
+                ['error_description']: string;
+              }
+            >
+          ).response?.data?.error
+        : '';
+      // First time this method is called it will error out
+      if (reason === 'not available') {
+        // eslint-disable-next-line no-console
+        console.log('Tokens: getOfflineToken failed => "not available", running doOffline()');
+        doOffline(callback);
+      } else if (window.self !== window.parent) {
+        // We are inside an iframe, pass the token up to the parent
+        window.parent?.postMessage(
+          {
+            tokenOrError,
+            errorReason,
+          },
+          targetOrigin,
+        );
+      } else {
+        // eslint-disable-next-line no-console
+        console.log('Tokens: getOfflineToken failed =>', reason);
+        callback(tokenOrError, errorReason);
+      }
+    });
 };

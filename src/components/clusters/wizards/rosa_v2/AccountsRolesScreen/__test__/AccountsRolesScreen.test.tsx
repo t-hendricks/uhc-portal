@@ -6,7 +6,7 @@ import { normalizeSTSUsersByAWSAccounts } from '~/redux/actions/rosaActions';
 import AccountsRolesScreen, {
   AccountsRolesScreenProps,
   isUserRoleForSelectedAWSAccount,
-} from './AccountsRolesScreen';
+} from '../AccountsRolesScreen';
 
 const useAnalyticsMock = jest.fn();
 jest.mock('~/hooks/useAnalytics', () => jest.fn(() => useAnalyticsMock));

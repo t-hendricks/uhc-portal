@@ -32,6 +32,11 @@ import { RosaCliCommand } from '~/components/clusters/wizards/rosa_v2/AccountsRo
 import InstructionCommand from '../../../../../../common/InstructionCommand';
 import ErrorBox from '../../../../../../common/ErrorBox';
 
+const SupportStatusType = {
+  Full: 'Full Support',
+  Maintenance: 'Maintenance Support',
+};
+
 function VersionSelection({
   isRosa,
   rosaMaxOSVersion,
@@ -367,11 +372,6 @@ function VersionSelection({
     </>
   );
 }
-
-const SupportStatusType = {
-  Full: 'Full Support',
-  Maintenance: 'Maintenance Support',
-};
 
 VersionSelection.propTypes = {
   isDisabled: PropTypes.bool,

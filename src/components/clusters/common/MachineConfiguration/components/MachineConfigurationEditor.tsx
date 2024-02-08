@@ -24,6 +24,15 @@ interface MachineConfigurationEditorProps {
   savingError?: unknown;
 }
 
+const getErrorProperties = (error: unknown) => {
+  const errorData = axios.isAxiosError(error) ? (error.response?.data as any) : undefined;
+  return {
+    errorDetails: errorData?.details ?? [],
+    errorMessage: getErrorMessage({ payload: error as AxiosError }),
+    operationID: errorData?.operation_id,
+  };
+};
+
 const MachineConfigurationEditor: React.FC<MachineConfigurationEditorProps> = (props) => {
   const {
     config,
@@ -64,13 +73,6 @@ const MachineConfigurationEditor: React.FC<MachineConfigurationEditorProps> = (p
     onSave(editingConfig);
   };
 
-  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    if (!isSaveDisabled) {
-      handleSave();
-    }
-  };
-
   const { isValid, isPIDsLimitUnsafe, validationMessage } = usePIDsLimitValidation(
     editingConfig?.pod_pids_limit,
     PIDsMinValue,
@@ -90,6 +92,13 @@ const MachineConfigurationEditor: React.FC<MachineConfigurationEditorProps> = (p
     () => !isReady || isLoading || isSaving || !isValid || !isChanged,
     [isReady, isLoading, isSaving, isValid, isChanged],
   );
+
+  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    if (!isSaveDisabled) {
+      handleSave();
+    }
+  };
 
   return (
     <Stack hasGutter>
@@ -137,12 +146,3 @@ const MachineConfigurationEditor: React.FC<MachineConfigurationEditorProps> = (p
 };
 
 export { MachineConfigurationEditor };
-
-const getErrorProperties = (error: unknown) => {
-  const errorData = axios.isAxiosError(error) ? (error.response?.data as any) : undefined;
-  return {
-    errorDetails: errorData?.details ?? [],
-    errorMessage: getErrorMessage({ payload: error as AxiosError }),
-    operationID: errorData?.operation_id,
-  };
-};

@@ -3,7 +3,7 @@ import { render, screen, checkAccessibility, mockUseFeatureGate } from '~/testUt
 import wizardConnector from '~/components/clusters/wizards/common/WizardConnector';
 import { HCP_USE_UNMANAGED } from '~/redux/constants/featureConstants';
 import { ROSA_HOSTED_CLI_MIN_VERSION } from '~/components/clusters/wizards/rosa_v1/rosaConstants';
-import AccountRolesARNsSection from './AccountRolesARNsSection';
+import AccountRolesARNsSection from '../AccountRolesARNsSection';
 
 const latestOCPVersion = '4.13.3';
 const latestVersionLoaded = '4.13.5';

@@ -30,6 +30,13 @@ const getStateDescription = (state?: clusterStates): string => {
 };
 
 /**
+ *
+ * @param cluster something extending ClusterFromSubscription since components are using either Cluster or ClusterFromSubscription
+ */
+const isClusterUpgrading = <E extends ClusterFromSubscription>(cluster?: E) =>
+  cluster?.metrics.upgrade.state === 'running';
+
+/**
  * This function is not meant to return status of uninstalled OCP-AssistedInstall clusters.
  * To display the status for those, use the component <AIClusterStatus />
  *
@@ -117,6 +124,14 @@ const hasInflightEgressErrors = <E extends ClusterFromSubscription>(cluster: E):
   });
 
 /**
+ * Indicates that this is an OSD cluster
+ *
+ * @param cluster something extending ClusterFromSubscription since components are using either Cluster or ClusterFromSubscription
+ */
+const isOSD = <E extends ClusterFromSubscription>(cluster: E): boolean =>
+  [normalizedProducts.OSD, normalizedProducts.OSDTrial].includes(cluster.product?.id!);
+
+/**
  *
  * @param cluster something extending ClusterFromSubscription since components are using either Cluster or ClusterFromSubscription
  */
@@ -143,14 +158,6 @@ const isOSDGCPPendingOnHostProject = <E extends ClusterFromSubscription>(cluster
  */
 const isROSA = <E extends ClusterFromSubscription | Cluster>(cluster?: E): boolean =>
   cluster?.product?.id === normalizedProducts.ROSA;
-
-/**
- * Indicates that this is an OSD cluster
- *
- * @param cluster something extending ClusterFromSubscription since components are using either Cluster or ClusterFromSubscription
- */
-const isOSD = <E extends ClusterFromSubscription>(cluster: E): boolean =>
-  [normalizedProducts.OSD, normalizedProducts.OSDTrial].includes(cluster.product?.id!);
 
 const isCCS = <E extends ClusterFromSubscription>(cluster: E): boolean =>
   cluster.ccs?.enabled ?? false;
@@ -197,13 +204,6 @@ const isOffline = <E extends ClusterFromSubscription>(cluster: E): boolean =>
 const getClusterAIPermissions = (cluster: ClusterWithPermissions) => ({
   canEdit: cluster.canEdit,
 });
-
-/**
- *
- * @param cluster something extending ClusterFromSubscription since components are using either Cluster or ClusterFromSubscription
- */
-const isClusterUpgrading = <E extends ClusterFromSubscription>(cluster?: E) =>
-  cluster?.metrics.upgrade.state === 'running';
 
 /**
  * Indicates cluster is in a state to show the Machine Pool tab

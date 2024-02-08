@@ -7,9 +7,7 @@
     "plugin:react-hooks/recommended",
     "plugin:testing-library/react"
   ],
-  "plugins": [
-    "@typescript-eslint"
-  ],
+  "plugins": ["@typescript-eslint"],
   "env": {
     "browser": true,
     "jest": true
@@ -74,6 +72,7 @@
       { "props": true, "ignorePropertyModificationsFor": ["draft", "response", "acc"] }
     ],
     "no-use-before-define": "off",
+    "@typescript-eslint/no-use-before-define": "error",
     "import/prefer-default-export": 0,
     "no-shadow": "off",
     "react/jsx-wrap-multilines": "off",
