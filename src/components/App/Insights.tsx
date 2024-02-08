@@ -7,6 +7,11 @@ const Insights = () => {
   const history = useHistory();
 
   const ocmListeners = React.useRef<{ [event: string]: (() => void)[] }>({ APP_REFRESH: [] });
+
+  const dispatchOcmEvent = (event: string) => {
+    ocmListeners.current[event].forEach((callback) => callback());
+  };
+
   React.useEffect(() => {
     const navigateToApp = (event: any) => {
       const { location } = history;
@@ -33,10 +38,6 @@ const Insights = () => {
         cleanupFn = () => listeners.splice(idx, 1);
       }
       return cleanupFn;
-    };
-
-    const dispatchOcmEvent = (event: string) => {
-      ocmListeners.current[event].forEach((callback) => callback());
     };
 
     const cleanupInsightsListener = insights.chrome.on('APP_NAVIGATION', navigateToApp);

@@ -27,6 +27,62 @@ import { DEFAULT_FLAVOUR_ID } from '~/redux/actions/flavourActions';
 import { constants } from '~/components/clusters/common/CreateOSDFormConstants';
 import sortMachineTypes, { machineCategories } from './sortMachineTypes';
 
+/** Returns useful info about the machine type - CPUs, RAM, [GPUs]. */
+const machineTypeLabel = (machineType) => {
+  if (!machineType) {
+    return '';
+  }
+  const humanizedMemory = humanizeValueWithUnit(machineType.memory.value, machineType.memory.unit);
+  let label = `${machineType.cpu.value} ${machineType.cpu.unit} ${humanizedMemory.value} ${humanizedMemory.unit} RAM`;
+  if (machineType.category === 'accelerated_computing') {
+    const numGPUsStr = machineType.name.match(/\d+ GPU[s]?/g);
+    if (numGPUsStr) {
+      label += ` (${numGPUsStr})`;
+    }
+  }
+  return label;
+};
+
+/** Returns exact id used by cloud provider. */
+const machineTypeDescription = (machineType) => {
+  if (!machineType) {
+    return '';
+  }
+  return machineType.id;
+};
+
+/** Returns useful info plus exact id used by the cloud provider. */
+const machineTypeFullLabel = (machineType) => {
+  if (!machineType) {
+    return '';
+  }
+  return `${machineTypeDescription(machineType)} - ${machineTypeLabel(machineType)}`;
+};
+
+/**
+ * Partitions machine types by categories. Keeps relative order within each category.
+ * @param machines - Array of machine_types API items.
+ * @returns Array of [categoryLabel, categoryMachines] pairs.
+ *   Some may contain 0 machines.
+ */
+const groupedMachineTypes = (machines) => {
+  const machineGroups = [];
+  const byCategoryName = {};
+  machineCategories.forEach(({ name, label }) => {
+    const categoryMachines = [];
+    byCategoryName[name] = categoryMachines;
+    machineGroups.push([label, categoryMachines]);
+  });
+
+  machines.forEach((machineType) => {
+    if (byCategoryName[machineType.category]) {
+      byCategoryName[machineType.category].push(machineType);
+    }
+  });
+
+  return machineGroups;
+};
+
 // Default selection scenarios:
 // - First time, default is available => select it.
 // - First time, default is not listed (due to quota or ccs_only) => leave placeholder ''.
@@ -74,10 +130,6 @@ const MachineTypeSelection = ({
       (flavours.fulfilled || flavours.error),
     [flavours.error, flavours.fulfilled, machineTypes.fulfilled, organization.fulfilled],
   );
-
-  React.useEffect(() => {
-    getDefaultFlavour();
-  }, [getDefaultFlavour]);
 
   /**
    * Checks whether type can be offered, based on quota and ccs_only.
@@ -139,21 +191,6 @@ const MachineTypeSelection = ({
     ],
   );
 
-  React.useEffect(() => {
-    if (isDataReady()) {
-      if (!input.value) {
-        setDefaultValue();
-      }
-
-      // If user had made a choice, then some external param changed like CCS/MultiAz,
-      // (we can get here on mount after switching wizard steps)
-      // and selected type is no longer availble, force user to choose again.
-      if (input.value && !isTypeAvailable(input.value)) {
-        setInvalidValue();
-      }
-    }
-  }, [input.value, isDataReady, isTypeAvailable, setDefaultValue, setInvalidValue]);
-
   const setDefaultValue = React.useCallback(() => {
     // Select the type suggested by backend, if possible.
     if (forceChoiceInput.value) {
@@ -176,6 +213,25 @@ const MachineTypeSelection = ({
     forceChoiceInput.onChange(true);
     input.onChange('');
   }, [forceChoiceInput, input]);
+
+  React.useEffect(() => {
+    getDefaultFlavour();
+  }, [getDefaultFlavour]);
+
+  React.useEffect(() => {
+    if (isDataReady()) {
+      if (!input.value) {
+        setDefaultValue();
+      }
+
+      // If user had made a choice, then some external param changed like CCS/MultiAz,
+      // (we can get here on mount after switching wizard steps)
+      // and selected type is no longer availble, force user to choose again.
+      if (input.value && !isTypeAvailable(input.value)) {
+        setInvalidValue();
+      }
+    }
+  }, [input.value, isDataReady, isTypeAvailable, setDefaultValue, setInvalidValue]);
 
   const changeHandler = React.useCallback(
     (_, value) => {
@@ -284,62 +340,6 @@ const MachineTypeSelection = ({
       <div className="spinner-loading-text">Loading node types...</div>
     </>
   );
-};
-
-/** Returns useful info about the machine type - CPUs, RAM, [GPUs]. */
-const machineTypeLabel = (machineType) => {
-  if (!machineType) {
-    return '';
-  }
-  const humanizedMemory = humanizeValueWithUnit(machineType.memory.value, machineType.memory.unit);
-  let label = `${machineType.cpu.value} ${machineType.cpu.unit} ${humanizedMemory.value} ${humanizedMemory.unit} RAM`;
-  if (machineType.category === 'accelerated_computing') {
-    const numGPUsStr = machineType.name.match(/\d+ GPU[s]?/g);
-    if (numGPUsStr) {
-      label += ` (${numGPUsStr})`;
-    }
-  }
-  return label;
-};
-
-/** Returns exact id used by cloud provider. */
-const machineTypeDescription = (machineType) => {
-  if (!machineType) {
-    return '';
-  }
-  return machineType.id;
-};
-
-/** Returns useful info plus exact id used by the cloud provider. */
-const machineTypeFullLabel = (machineType) => {
-  if (!machineType) {
-    return '';
-  }
-  return `${machineTypeDescription(machineType)} - ${machineTypeLabel(machineType)}`;
-};
-
-/**
- * Partitions machine types by categories. Keeps relative order within each category.
- * @param machines - Array of machine_types API items.
- * @returns Array of [categoryLabel, categoryMachines] pairs.
- *   Some may contain 0 machines.
- */
-const groupedMachineTypes = (machines) => {
-  const machineGroups = [];
-  const byCategoryName = {};
-  machineCategories.forEach(({ name, label }) => {
-    const categoryMachines = [];
-    byCategoryName[name] = categoryMachines;
-    machineGroups.push([label, categoryMachines]);
-  });
-
-  machines.forEach((machineType) => {
-    if (byCategoryName[machineType.category]) {
-      byCategoryName[machineType.category].push(machineType);
-    }
-  });
-
-  return machineGroups;
 };
 
 const inputMetaPropTypes = PropTypes.shape({

@@ -30,6 +30,98 @@ const isDeleteDisabled = (
   );
 };
 
+/**
+ * Used to determine the minimum nodes allowed during cluster creation,
+ * and after when adding new machine pools or editing cluster counts.
+ *
+ * @param {boolean} isDefaultMachinePool True if it's the default MP
+ * @param {boolean} isByoc True if BYOC/CCS cluster, true for ROSA clusters
+ * @param {boolean} isMultiAz True if multi-zone
+ * @returns number | undefined
+ */
+const getMinNodesRequired = (
+  isDefaultMachinePool: boolean,
+  isByoc: boolean,
+  isMultiAz: boolean,
+) => {
+  if (isDefaultMachinePool) {
+    // Default machine pool
+    if (isByoc) {
+      return isMultiAz ? 3 : 2;
+    }
+    return isMultiAz ? 9 : 4;
+  }
+
+  // Custom machine pool
+  return 0;
+};
+
+const isEnforcedDefaultMachinePool = (
+  currentMachinePoolId: string | undefined,
+  machinePools: MachinePool[],
+  machineTypes: GlobalState['machineTypes'],
+  cluster: Cluster,
+) => {
+  if (isHypershiftCluster(cluster)) {
+    return false;
+  }
+
+  if (!cluster.ccs?.enabled) {
+    return currentMachinePoolId === NON_CCS_DEFAULT_POOL;
+  }
+  const minimalMachineType = machineTypes.types?.aws?.find((mt) => mt.id === 'm5.xlarge');
+  const minReplicas = getMinNodesRequired(true, cluster?.ccs?.enabled, isMultiAZ(cluster));
+
+  const providerMachineTypes =
+    cluster.cloud_provider?.id === 'aws' ? machineTypes.types?.aws : machineTypes.types?.gcp;
+
+  return !machinePools
+    .filter((mp) => mp.id !== currentMachinePoolId)
+    .some((mp: NodePool | MachinePool) => {
+      const instanceType =
+        mp.kind === 'NodePool'
+          ? (mp as NodePool).aws_node_pool?.instance_type
+          : (mp as MachinePool).instance_type;
+
+      const machineType = providerMachineTypes?.find((mt) => mt.id === instanceType);
+
+      return (
+        machineType &&
+        !mp.taints &&
+        ((mp.replicas && mp.replicas >= minReplicas) ||
+          ((mp as any).autoscaling?.min_replicas &&
+            (mp as any).autoscaling?.min_replicas >= minReplicas)) &&
+        (machineType?.cpu?.value ?? 0) >= (minimalMachineType?.cpu?.value ?? 0) &&
+        (machineType?.memory?.value ?? 0) >= (minimalMachineType?.memory?.value ?? 0)
+      );
+    });
+};
+
+const isMinimumCountWithoutTaints = ({
+  currentMachinePoolId,
+  machinePools,
+  cluster,
+}: {
+  currentMachinePoolId?: string;
+  machinePools: MachinePool[];
+  cluster: Cluster;
+}) => {
+  if (!isHypershiftCluster(cluster)) {
+    return true; // This only applies to HCP clusters
+  }
+
+  const numberReplicas = machinePools?.reduce((count, pool) => {
+    if (pool.id !== currentMachinePoolId) {
+      if (!pool.taints?.length) {
+        return count + (pool.autoscaling?.min_replicas ?? pool.replicas ?? 0);
+      }
+    }
+    return count;
+  }, 0);
+
+  return numberReplicas >= 2;
+};
+
 const actionResolver = ({
   rowData,
   onClickEdit,
@@ -126,32 +218,6 @@ const getSubnetIds = (machinePoolOrNodePool: MachinePool | NodePool) => {
 const hasSubnets = (machinePoolOrNodePool: MachinePool | NodePool) =>
   getSubnetIds(machinePoolOrNodePool).length > 0;
 
-/**
- * Used to determine the minimum nodes allowed during cluster creation,
- * and after when adding new machine pools or editing cluster counts.
- *
- * @param {boolean} isDefaultMachinePool True if it's the default MP
- * @param {boolean} isByoc True if BYOC/CCS cluster, true for ROSA clusters
- * @param {boolean} isMultiAz True if multi-zone
- * @returns number | undefined
- */
-const getMinNodesRequired = (
-  isDefaultMachinePool: boolean,
-  isByoc: boolean,
-  isMultiAz: boolean,
-) => {
-  if (isDefaultMachinePool) {
-    // Default machine pool
-    if (isByoc) {
-      return isMultiAz ? 3 : 2;
-    }
-    return isMultiAz ? 9 : 4;
-  }
-
-  // Custom machine pool
-  return 0;
-};
-
 const getClusterMinNodes = ({
   cluster,
   machineTypesResponse,
@@ -222,72 +288,6 @@ const hasDefaultOrExplicitAutoscalingMachinePool = (
   cluster?.nodes?.autoscale_compute
     ? true
     : hasExplicitAutoscalingMachinePool(machinePools, excludeId);
-
-const isEnforcedDefaultMachinePool = (
-  currentMachinePoolId: string | undefined,
-  machinePools: MachinePool[],
-  machineTypes: GlobalState['machineTypes'],
-  cluster: Cluster,
-) => {
-  if (isHypershiftCluster(cluster)) {
-    return false;
-  }
-
-  if (!cluster.ccs?.enabled) {
-    return currentMachinePoolId === NON_CCS_DEFAULT_POOL;
-  }
-  const minimalMachineType = machineTypes.types?.aws?.find((mt) => mt.id === 'm5.xlarge');
-  const minReplicas = getMinNodesRequired(true, cluster?.ccs?.enabled, isMultiAZ(cluster));
-
-  const providerMachineTypes =
-    cluster.cloud_provider?.id === 'aws' ? machineTypes.types?.aws : machineTypes.types?.gcp;
-
-  return !machinePools
-    .filter((mp) => mp.id !== currentMachinePoolId)
-    .some((mp: NodePool | MachinePool) => {
-      const instanceType =
-        mp.kind === 'NodePool'
-          ? (mp as NodePool).aws_node_pool?.instance_type
-          : (mp as MachinePool).instance_type;
-
-      const machineType = providerMachineTypes?.find((mt) => mt.id === instanceType);
-
-      return (
-        machineType &&
-        !mp.taints &&
-        ((mp.replicas && mp.replicas >= minReplicas) ||
-          ((mp as any).autoscaling?.min_replicas &&
-            (mp as any).autoscaling?.min_replicas >= minReplicas)) &&
-        (machineType?.cpu?.value ?? 0) >= (minimalMachineType?.cpu?.value ?? 0) &&
-        (machineType?.memory?.value ?? 0) >= (minimalMachineType?.memory?.value ?? 0)
-      );
-    });
-};
-
-const isMinimumCountWithoutTaints = ({
-  currentMachinePoolId,
-  machinePools,
-  cluster,
-}: {
-  currentMachinePoolId?: string;
-  machinePools: MachinePool[];
-  cluster: Cluster;
-}) => {
-  if (!isHypershiftCluster(cluster)) {
-    return true; // This only applies to HCP clusters
-  }
-
-  const numberReplicas = machinePools?.reduce((count, pool) => {
-    if (pool.id !== currentMachinePoolId) {
-      if (!pool.taints?.length) {
-        return count + (pool.autoscaling?.min_replicas ?? pool.replicas ?? 0);
-      }
-    }
-    return count;
-  }, 0);
-
-  return numberReplicas >= 2;
-};
 
 const canUseSpotInstances = (cluster: Cluster) => {
   const cloudProviderID = cluster.cloud_provider?.id;

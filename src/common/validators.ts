@@ -240,18 +240,6 @@ const checkMachinePoolName = (value: string) =>
 
 const checkNodePoolName = (value: string) =>
   checkObjectName(value, 'Machine pool', MAX_NODE_POOL_NAME_LENGTH);
-/**
- * executes cluster-name async validations.
- * to be used at the form level hook (asyncValidate).
- *
- * @see asyncValidate in the wizard's redux-form config.
- * @param value the value to be validated
- * @returns {Promise<void>} a promise which resolves quietly, or rejects with a form errors map.
- */
-const asyncValidateClusterName = async (value: string) => {
-  const evaluatedAsyncValidation = await evaluateClusterNameAsyncValidation(value);
-  return findFirstFailureMessage(evaluatedAsyncValidation);
-};
 
 const createAsyncValidationEvaluator =
   (
@@ -271,6 +259,26 @@ const createAsyncValidationEvaluator =
       validated: validationResults[i],
     }));
   };
+
+const evaluateClusterNameAsyncValidation = createAsyncValidationEvaluator(
+  clusterNameAsyncValidation,
+);
+
+const findFirstFailureMessage = (populatedValidation: Validations | undefined) =>
+  populatedValidation?.find((validation) => validation.validated === false)?.text;
+
+/**
+ * executes cluster-name async validations.
+ * to be used at the form level hook (asyncValidate).
+ *
+ * @see asyncValidate in the wizard's redux-form config.
+ * @param value the value to be validated
+ * @returns {Promise<void>} a promise which resolves quietly, or rejects with a form errors map.
+ */
+const asyncValidateClusterName = async (value: string) => {
+  const evaluatedAsyncValidation = await evaluateClusterNameAsyncValidation(value);
+  return findFirstFailureMessage(evaluatedAsyncValidation);
+};
 
 const k8sGpuParameter = (gpuParam: string): string | undefined => {
   if (!gpuParam) {
@@ -385,10 +393,6 @@ const clusterAutoScalingValidators = {
   k8sLogVerbosityParameter,
 };
 
-const evaluateClusterNameAsyncValidation = createAsyncValidationEvaluator(
-  clusterNameAsyncValidation,
-);
-
 /**
  * creates a validator function that exits on first failure (and returns its error message),
  * using the validation provider output collection as its input.
@@ -411,9 +415,6 @@ const createPessimisticValidator =
   ) =>
   (value: V, allValues?: any, props?: any, name?: any) =>
     findFirstFailureMessage(validationProvider(value, allValues, props, name));
-
-const findFirstFailureMessage = (populatedValidation: Validations | undefined) =>
-  populatedValidation?.find((validation) => validation.validated === false)?.text;
 
 const checkCustomOperatorRolesPrefix = (value: string): string | undefined => {
   const label = 'Custom operator roles prefix';

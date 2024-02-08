@@ -158,6 +158,14 @@ const RenderArrayFields = (props) => {
   const [touched, setTouched] = React.useState(false);
   const [areFieldsFilled, setAreFieldsFilled] = React.useState([]);
 
+  const addNewField = () => {
+    fields.insert(0, { id: getRandomID() });
+    setAreFieldsFilled((areFieldsFilled) => {
+      const newFilledStatus = [false, ...areFieldsFilled];
+      return newFilledStatus;
+    });
+  };
+
   React.useEffect(() => {
     if (submitFailed) {
       setTouched(true);
@@ -197,14 +205,6 @@ const RenderArrayFields = (props) => {
     setAreFieldsFilled((areFieldsFilled) => {
       const newFilledStatus = [...areFieldsFilled];
       pullAt(newFilledStatus, index);
-      return newFilledStatus;
-    });
-  };
-
-  const addNewField = () => {
-    fields.insert(0, { id: getRandomID() });
-    setAreFieldsFilled((areFieldsFilled) => {
-      const newFilledStatus = [false, ...areFieldsFilled];
       return newFilledStatus;
     });
   };

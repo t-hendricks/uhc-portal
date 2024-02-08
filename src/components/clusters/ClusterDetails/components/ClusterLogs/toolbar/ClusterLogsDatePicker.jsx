@@ -12,8 +12,35 @@ import {
   SelectOption as SelectOptionDeprecated,
 } from '@patternfly/react-core/deprecated';
 import './ClusterLogsDatePicker.scss';
+
+const splitDateStr = (dateStr) =>
+  dateStr
+    .replace(/T.*/, '')
+    .split('-')
+    .filter((part) => part !== '' && Number.parseInt(part, 10) !== 0);
+
 // Local timezone UTC offset
 const offset = new Date().getTimezoneOffset() * 60000;
+
+/**
+ * Parses a date string that is in ISO format YYYY-MM-DD
+ */
+export const dateParse = (dateStr, asDate = true) => {
+  const split = splitDateStr(dateStr);
+  if (split.length !== 3) {
+    return asDate ? new Date() : '';
+  }
+  const year = split[0];
+  const month = split[1];
+  const day = split[2];
+  const paddedDateStr = `${year.padStart(4, '0')}-${month.padStart(2, '0')}-${day.padStart(
+    2,
+    '0',
+  )}`;
+  return asDate
+    ? new Date(Date.UTC(year, Number.parseInt(month, 10) - 1, day) + offset)
+    : paddedDateStr;
+};
 
 let defaultTimestamps;
 const getDefaultTimestamps = (refresh = false) => {
@@ -65,32 +92,6 @@ export const dateFormat = (date) => {
   const month = date.getMonth() + 1;
   const day = date.getDate();
   return `${year}-${month.toString().padStart(2, '0')}-${day.toString().padStart(2, '0')}`;
-};
-
-const splitDateStr = (dateStr) =>
-  dateStr
-    .replace(/T.*/, '')
-    .split('-')
-    .filter((part) => part !== '' && Number.parseInt(part, 10) !== 0);
-
-/**
- * Parses a date string that is in ISO format YYYY-MM-DD
- */
-export const dateParse = (dateStr, asDate = true) => {
-  const split = splitDateStr(dateStr);
-  if (split.length !== 3) {
-    return asDate ? new Date() : '';
-  }
-  const year = split[0];
-  const month = split[1];
-  const day = split[2];
-  const paddedDateStr = `${year.padStart(4, '0')}-${month.padStart(2, '0')}-${day.padStart(
-    2,
-    '0',
-  )}`;
-  return asDate
-    ? new Date(Date.UTC(year, Number.parseInt(month, 10) - 1, day) + offset)
-    : paddedDateStr;
 };
 
 export const onDateChangeFromFilter = (dateStr) => ({

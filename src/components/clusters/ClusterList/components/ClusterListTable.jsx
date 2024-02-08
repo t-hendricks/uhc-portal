@@ -90,6 +90,22 @@ function ClusterListTable(props) {
     Created: 'created_at',
   };
 
+  const hiddenOnMdOrSmaller = classNames(
+    Visibility.visibleOnLg,
+    Visibility.hiddenOnMd,
+    Visibility.hiddenOnSm,
+  );
+
+  const columns = [
+    { title: 'Name', transforms: [sortable, cellWidth(30)] },
+    { title: 'Status', transforms: [cellWidth(15)] },
+    { title: 'Type', transforms: [cellWidth(10)] },
+    { title: 'Created', transforms: [sortable], columnTransforms: [hiddenOnMdOrSmaller] },
+    { title: 'Version', columnTransforms: [hiddenOnMdOrSmaller] },
+    { title: 'Provider (Region)', columnTransforms: [hiddenOnMdOrSmaller] },
+    '',
+  ];
+
   const onSortToggle = (_event, index, direction) => {
     const sorting = { ...viewOptions.sorting };
     sorting.isAscending = direction === SortByDirection.asc;
@@ -238,22 +254,6 @@ function ClusterListTable(props) {
       cluster,
     };
   };
-
-  const hiddenOnMdOrSmaller = classNames(
-    Visibility.visibleOnLg,
-    Visibility.hiddenOnMd,
-    Visibility.hiddenOnSm,
-  );
-
-  const columns = [
-    { title: 'Name', transforms: [sortable, cellWidth(30)] },
-    { title: 'Status', transforms: [cellWidth(15)] },
-    { title: 'Type', transforms: [cellWidth(10)] },
-    { title: 'Created', transforms: [sortable], columnTransforms: [hiddenOnMdOrSmaller] },
-    { title: 'Version', columnTransforms: [hiddenOnMdOrSmaller] },
-    { title: 'Provider (Region)', columnTransforms: [hiddenOnMdOrSmaller] },
-    '',
-  ];
 
   const rows = isPending ? skeletonRows() : clusters.map((cluster) => clusterRow(cluster));
   const resolver = isPending
