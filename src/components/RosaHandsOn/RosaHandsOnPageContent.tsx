@@ -16,9 +16,13 @@ import RosaHandsOnGetStartedCard from './RosaHandsOnGetStartedCard';
 import RosaHandsOnRecommendedContentTable from './RosaHandsOnRecommendedContentTable';
 
 import RosaHandsOnErrorPage from './RosaHandsOnErrorPage';
-import RosaHandsOnContactSupport from './RosaHandsOnContactSupport';
+import {
+  RosaHandsOnContactSupport,
+  RosaHandsOnRequestAuthorization,
+} from './RosaHandsOnIntercomButtons';
 import { AugmentedDemoExperience } from './augmentedModelTypes';
 import { DemoExperienceStatusEnum } from './DemoExperienceModels';
+import { UNAUTHORIZED } from './constants';
 
 const getErrorMessage = (error: unknown): string => {
   if (error instanceof Error) {
@@ -85,22 +89,22 @@ const StatusAlert = ({ demoExperience }: { demoExperience: AugmentedDemoExperien
         />
       );
       break;
-    case DemoExperienceStatusEnum.Unavailable:
-      alert = (
-        <Alert
-          title={
-            <>
-              The demo system is currently unavailable. If this issue persists, you can{' '}
-              <RosaHandsOnContactSupport />.
-            </>
-          }
-          variant="danger"
-          isInline
-        >
-          {demoExperience.unavailable_reason}
-        </Alert>
-      );
+    case DemoExperienceStatusEnum.Unavailable: {
+      const alertTitle =
+        demoExperience.unavailable_reason === UNAUTHORIZED ? (
+          <>
+            Let&apos;s get you access to the Hands-on Experience. To continue, we need some{' '}
+            <RosaHandsOnRequestAuthorization />.
+          </>
+        ) : (
+          <>
+            The demo system is currently unavailable. If this issue persists, you can{' '}
+            <RosaHandsOnContactSupport />.
+          </>
+        );
+      alert = <Alert title={alertTitle} variant="danger" isInline />;
       break;
+    }
     case DemoExperienceStatusEnum.Available:
       alert =
         demoExperience.quota.current > 0 ? (

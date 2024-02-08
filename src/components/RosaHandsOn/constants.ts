@@ -4,4 +4,6 @@ export const rosaHandsOnLinks = {
   getStarted: '/create/rosa/getstarted',
 };
 
+export const UNAUTHORIZED = 'unauthorized';
+
 export const MAX_DURATION = 8;
