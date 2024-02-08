@@ -7,6 +7,9 @@
     "url": "git://github.com/openshift/cloud.openshift.com"
   },
   "license": "Apache-2.0",
+  "engines": {
+    "node": ">=18.12.0"
+  },
   "dependencies": {
     "@babel/eslint-parser": "^7.22.5",
     "@openshift-assisted/locales": "2.30.0",
