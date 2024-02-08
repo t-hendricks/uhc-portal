@@ -38,7 +38,7 @@ const defaultSortFn = (a: FuzzyEntryType, b: FuzzyEntryType): number =>
 // because Patternfly expects to find the props in entry (value, etc.) on the direct children of Select/SelectGroup
 const entryToSelectOption = (entry: FuzzyEntryType, displayLabel: React.ReactElement) => (
   <SelectOptionDeprecated
-    className="pf-v5-c-dropdown__menu-item"
+    className="pf-v5-c-dropdown__menu-item pf-v5-u-text-wrap"
     key={entry.entryId}
     value={entry.entryId}
     description={entry.description}
