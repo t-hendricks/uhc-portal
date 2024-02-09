@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import isEmpty from 'lodash/isEmpty';
 import { Title } from '@patternfly/react-core';
+import { useSelector } from 'react-redux';
 
 import config from '~/config';
 import {
@@ -10,29 +11,24 @@ import {
 } from '~/redux/constants/featureConstants';
 import { normalizedProducts } from '~/common/subscriptionTypes';
 import { hasSelectedSecurityGroups } from '~/common/securityGroupsHelpers';
-import { getUserRoleForSelectedAWSAccount } from '~/components/clusters/wizards/rosa_v1/AccountsRolesScreen/AccountsRolesScreen';
+import { getUserRoleForSelectedAWSAccount } from '~/components/clusters/wizards/rosa_v2/AccountsRolesScreen/AccountsRolesScreen';
 import { stepId, stepNameById } from '~/components/clusters/wizards/common/osdWizardConstants';
 import {
   stepId as rosaStepId,
   stepNameById as rosaStepNameById,
-} from '~/components/clusters/wizards/rosa_v1/rosaWizardConstants';
+} from '~/components/clusters/wizards/rosa_v2/rosaWizardConstants';
 import { useFeatureGate } from '~/hooks/useFeatureGate';
-
-import ReduxHiddenCheckbox from '~/components/common/ReduxFormComponents/ReduxHiddenCheckbox';
+import { useFormState } from '~/components/clusters/wizards/hooks';
+import { canAutoScaleOnCreateSelector } from '~/components/clusters/ClusterDetails/components/MachinePools/MachinePoolsSelectors';
+import HiddenCheckbox from '~/components/common/FormikFormComponents/HiddenCheckbox';
 import { canSelectImds } from '~/components/clusters/wizards/rosa/constants';
-import DebugClusterRequest from '../../common/DebugClusterRequest';
+import { DebugClusterRequest } from '../../common/DebugClusterRequest';
 import ReviewSection, { ReviewItem } from '../../common/ReviewCluster/ReviewSection';
 import ReviewRoleItem from './ReviewRoleItem';
+import { FieldId } from '../constants';
 import './ReviewClusterScreen.scss';
 
 const ReviewClusterScreen = ({
-  change,
-  clusterRequestParams,
-  formValues,
-  canAutoScale,
-  autoscalingEnabled,
-  installToVPCSelected,
-  configureProxySelected,
   getUserRole,
   getOCMRole,
   getUserRoleResponse,
@@ -40,8 +36,24 @@ const ReviewClusterScreen = ({
   clearGetUserRoleResponse,
   clearGetOcmRoleResponse,
   goToStepById,
-  isHypershiftSelected,
 }) => {
+  const {
+    values: {
+      [FieldId.Product]: product,
+      [FieldId.InstallToVpc]: installToVPCSelected,
+      [FieldId.ConfigureProxy]: configureProxySelected,
+      [FieldId.Hypershift]: hypershiftValue,
+      [FieldId.AutoscalingEnabled]: autoscalingEnabledValue,
+      [FieldId.CloudProvider]: cloudProvider,
+    },
+    values: formValues,
+    setFieldValue,
+  } = useFormState();
+
+  const canAutoScale = useSelector((state) => canAutoScaleOnCreateSelector(state, product));
+  const autoscalingEnabled = canAutoScale && !!autoscalingEnabledValue;
+  const isHypershiftSelected = hypershiftValue === 'true';
+
   const isByoc = formValues.byoc === 'true';
   const isAWS = formValues.cloud_provider === 'aws';
   const isGCP = formValues.cloud_provider === 'gcp';
@@ -50,7 +62,7 @@ const ReviewClusterScreen = ({
   const hasCustomKeyARN = isByoc && formValues.kms_key_arn;
   const showVPCCheckbox = isROSA || isByoc;
   const hasAWSVPCSettings = showVPCCheckbox && formValues.install_to_vpc && isAWS;
-  const clusterVersionRawId = formValues.cluster_version.raw_id;
+  const clusterVersionRawId = formValues.cluster_version?.raw_id;
 
   const hasSecurityGroups = isByoc && hasSelectedSecurityGroups(formValues.securityGroups);
 
@@ -73,6 +85,7 @@ const ReviewClusterScreen = ({
 
   const [userRole, setUserRole] = useState('');
   const [ocmRole, setOcmRole] = useState('');
+  const [errorWithAWSAccountRoles, setErrorWithAWSAccountRoles] = useState(false);
   const isHypershiftEnabled = useFeatureGate(HYPERSHIFT_WIZARD_FEATURE);
   const viewAWSBillingAcct = useFeatureGate(HCP_AWS_BILLING_SHOW);
 
@@ -80,7 +93,7 @@ const ReviewClusterScreen = ({
     clearGetUserRoleResponse();
     clearGetOcmRoleResponse();
     // reset hidden form field to false
-    change('detected_ocm_and_user_roles', false);
+    setFieldValue('detected_ocm_and_user_roles', false);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -118,10 +131,16 @@ const ReviewClusterScreen = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [getOCMRoleResponse]);
 
-  const errorWithAWSAccountRoles =
-    getUserRoleResponse?.error || !userRole || getOCMRoleResponse?.error || !ocmRole;
-  // setting hidden form field for field level validation
-  change('detected_ocm_and_user_roles', !errorWithAWSAccountRoles);
+  useEffect(() => {
+    const hasError =
+      getUserRoleResponse?.error || !userRole || getOCMRoleResponse?.error || !ocmRole;
+    if (hasError !== errorWithAWSAccountRoles) {
+      setErrorWithAWSAccountRoles(hasError);
+      // setting hidden form field for field level validation
+      setFieldValue('detected_ocm_and_user_roles', !hasError);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [getUserRoleResponse, getOCMRoleResponse, userRole, ocmRole, errorWithAWSAccountRoles]);
 
   const getStepId = (stepKey) => {
     let step = stepKey;
@@ -153,7 +172,7 @@ const ReviewClusterScreen = ({
       </Title>
       {isROSA && (
         <>
-          <ReduxHiddenCheckbox name="detected_ocm_and_user_roles" />
+          <HiddenCheckbox name="detected_ocm_and_user_roles" />
           {isHypershiftEnabled && (
             <ReviewSection
               title={getStepName('CONTROL_PLANE')}
@@ -223,7 +242,7 @@ const ReviewClusterScreen = ({
             name: 'aws_hosted_machine_pools',
             formValues,
           })}
-        {!(formValues.node_labels.length === 1 && isEmpty(formValues.node_labels[0])) &&
+        {!(formValues.node_labels?.length === 1 && isEmpty(formValues.node_labels?.[0])) &&
           ReviewItem({ name: 'node_labels', formValues })}
         {isAWS &&
           !isHypershiftSelected &&
@@ -263,7 +282,7 @@ const ReviewClusterScreen = ({
             name: 'securityGroups',
             formValues,
           })}
-        {formValues.shared_vpc.is_selected &&
+        {formValues.shared_vpc?.is_selected &&
           !isHypershiftSelected &&
           ReviewItem({
             name: 'shared_vpc',
@@ -327,21 +346,18 @@ const ReviewClusterScreen = ({
         {!isHypershiftSelected && ReviewItem({ name: 'node_drain_grace_period', formValues })}
       </ReviewSection>
 
-      {config.fakeOSD && <DebugClusterRequest {...clusterRequestParams} />}
+      {config.fakeOSD && (
+        <DebugClusterRequest
+          cloudProvider={cloudProvider}
+          product={product}
+          formValues={formValues}
+        />
+      )}
     </div>
   );
 };
 
 ReviewClusterScreen.propTypes = {
-  change: PropTypes.func,
-  clusterRequestParams: PropTypes.object.isRequired,
-  formValues: PropTypes.objectOf(
-    PropTypes.oneOfType([PropTypes.string, PropTypes.number, PropTypes.bool]),
-  ),
-  canAutoScale: PropTypes.bool,
-  autoscalingEnabled: PropTypes.bool,
-  installToVPCSelected: PropTypes.bool,
-  configureProxySelected: PropTypes.bool,
   getUserRole: PropTypes.func.isRequired,
   getOCMRole: PropTypes.func.isRequired,
   getOCMRoleResponse: PropTypes.func.isRequired,
@@ -349,7 +365,6 @@ ReviewClusterScreen.propTypes = {
   clearGetUserRoleResponse: PropTypes.func.isRequired,
   clearGetOcmRoleResponse: PropTypes.func.isRequired,
   goToStepById: PropTypes.func.isRequired,
-  isHypershiftSelected: PropTypes.bool,
 };
 
 export default ReviewClusterScreen;

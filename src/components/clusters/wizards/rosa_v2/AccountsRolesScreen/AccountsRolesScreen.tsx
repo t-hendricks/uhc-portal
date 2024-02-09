@@ -19,8 +19,8 @@ import { trackEvents } from '~/common/analytics';
 import useAnalytics from '~/hooks/useAnalytics';
 import ErrorBox from '~/components/common/ErrorBox';
 
-import { PrerequisitesInfoBox } from '~/components/clusters/wizards/rosa_v1/common/PrerequisitesInfoBox';
-import { WelcomeMessage } from '~/components/clusters/wizards/rosa_v1/common/WelcomeMessage';
+import { PrerequisitesInfoBox } from '~/components/clusters/wizards/rosa_v2/common/PrerequisitesInfoBox';
+import { WelcomeMessage } from '~/components/clusters/wizards/rosa_v2/common/WelcomeMessage';
 import { AWS_ACCOUNT_ROSA_LOCALSTORAGE_KEY } from '~/common/localStorageConstants';
 import AccountRolesARNsSection from './AccountRolesARNsSection';
 import { AwsRoleErrorAlert } from './AwsRoleErrorAlert';

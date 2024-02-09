@@ -34,7 +34,6 @@ function ClusterSettingsScreen({
   isHypershiftSelected,
   formErrors,
   touch,
-  forceTouch,
 }) {
   const [isExpanded, setIsExpanded] = useState(false);
 
@@ -79,7 +78,7 @@ function ClusterSettingsScreen({
       setIsExpanded(true);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [customerManagedEncryptionSelected, isGCP, gcpError, kmsKeyArn, selectedRegion, forceTouch]);
+  }, [customerManagedEncryptionSelected, isGCP, gcpError, kmsKeyArn, selectedRegion]);
 
   React.useEffect(() => {
     if (!isEtcdEncryptionSelected && !!etcdKeyArn) {
@@ -220,7 +219,6 @@ ClusterSettingsScreen.propTypes = {
   isHypershiftSelected: PropTypes.bool,
   formErrors: PropTypes.object,
   touch: PropTypes.func,
-  forceTouch: PropTypes.bool,
 };
 
 export default ClusterSettingsScreen;

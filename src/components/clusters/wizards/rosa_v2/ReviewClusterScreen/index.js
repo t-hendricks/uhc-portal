@@ -1,5 +1,4 @@
 import { connect } from 'react-redux';
-import { formValueSelector, getFormValues } from 'redux-form';
 
 import {
   clearGetUserRoleResponse,
@@ -7,29 +6,14 @@ import {
   getOCMRole,
   clearGetOcmRoleResponse,
 } from '~/redux/actions/rosaActions';
-import wizardConnector from '~/components/clusters/wizards/common/WizardConnector';
 import ReviewClusterScreen from './ReviewClusterScreen';
-import { canAutoScaleOnCreateSelector } from '../../../ClusterDetails/components/MachinePools/MachinePoolsSelectors';
 
 const mapStateToProps = (state) => {
-  const valueSelector = formValueSelector('CreateCluster');
-  const product = valueSelector(state, 'product');
-  const canAutoScale = canAutoScaleOnCreateSelector(state, product);
-  const autoscalingEnabled = canAutoScale && !!valueSelector(state, 'autoscalingEnabled');
-  const installToVPCSelected = valueSelector(state, 'install_to_vpc');
-  const configureProxySelected = valueSelector(state, 'configure_proxy');
   const { getUserRoleResponse, getOCMRoleResponse } = state.rosaReducer;
-  const isHypershiftSelected = valueSelector(state, 'hypershift') === 'true';
 
   return {
-    formValues: getFormValues('CreateCluster')(state),
-    canAutoScale,
-    autoscalingEnabled,
-    installToVPCSelected,
-    configureProxySelected,
     getUserRoleResponse,
     getOCMRoleResponse,
-    isHypershiftSelected,
   };
 };
 
@@ -39,4 +23,4 @@ const mapDispatchToProps = (dispatch) => ({
   clearGetUserRoleResponse: () => dispatch(clearGetUserRoleResponse()),
   clearGetOcmRoleResponse: () => dispatch(clearGetOcmRoleResponse()),
 });
-export default connect(mapStateToProps, mapDispatchToProps)(wizardConnector(ReviewClusterScreen));
+export default connect(mapStateToProps, mapDispatchToProps)(ReviewClusterScreen);
