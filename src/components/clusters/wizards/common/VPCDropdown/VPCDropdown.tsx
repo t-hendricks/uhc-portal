@@ -143,7 +143,6 @@ const VPCDropdown = ({
            This is likely to be removed when dropping deprecated Select component used by FuzzySelect */}
           <FlexItem flex={{ default: 'flex_1' }} style={{ minWidth: 0 }}>
             <FuzzySelect
-              {...inputProps}
               label="Select a VPC"
               aria-label="select VPC"
               isOpen={isOpen}
