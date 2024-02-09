@@ -208,6 +208,12 @@ describe('Field is valid Machine CIDR for AWS', () => {
     ['192.168.0.0/16', { multi_az: 'true' }, undefined],
     ['192.168.0.0/24', { multi_az: 'true' }, undefined],
     ['192.168.0.0/25', { multi_az: 'true' }, "The subnet mask can't be smaller than '/24'."],
+    [
+      '192.168.0.0/25',
+      { multi_az: 'false', hypershift: 'true' },
+      "The subnet mask can't be smaller than '/24'.",
+    ],
+    ['192.168.0.0/24', { multi_az: 'false', hypershift: 'true' }, undefined],
   ])(
     'value %p and formData %o to be %p',
     (
