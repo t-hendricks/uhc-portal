@@ -784,7 +784,10 @@ const awsMachineCidr = (value?: string, formData?: Record<string, string>): stri
       return `The subnet mask can't be larger than '/${AWS_MACHINE_CIDR_MIN}'.`;
     }
 
-    if (isMultiAz && prefixLength > AWS_MACHINE_CIDR_MAX_MULTI_AZ) {
+    if (
+      (isMultiAz || formData?.hypershift === 'true') &&
+      prefixLength > AWS_MACHINE_CIDR_MAX_MULTI_AZ
+    ) {
       return `The subnet mask can't be smaller than '/${AWS_MACHINE_CIDR_MAX_MULTI_AZ}'.`;
     }
 
