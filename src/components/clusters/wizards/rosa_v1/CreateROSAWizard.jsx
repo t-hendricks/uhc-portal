@@ -42,6 +42,7 @@ import AccountsRolesScreen from './AccountsRolesScreen';
 import { isUserRoleForSelectedAWSAccount } from './AccountsRolesScreen/AccountsRolesScreen';
 import ClusterRolesScreen from './ClusterRolesScreen';
 import { ROSAWizardContext } from './ROSAWizardContext';
+import { ValuesPanel } from './ValuesPanel';
 
 import CreateRosaWizardFooter from './CreateRosaWizardFooter';
 
@@ -176,6 +177,9 @@ class CreateROSAWizardInternal extends React.Component {
   };
 
   canJumpTo = (id) => {
+    if (config.fakeOSD) {
+      return true;
+    }
     const { stepIdReached, currentStepId, accountAndRolesStepId, validatedSteps } = this.state;
     const { selectedAWSAccountID } = this.props;
 
@@ -536,10 +540,10 @@ class CreateROSAWizardInternal extends React.Component {
           {config.fakeOSD && ( // TODO Is ?fake=true supported for ROSA clusters?
             <Banner variant="gold">On submit, a fake ROSA cluster will be created.</Banner>
           )}
-          <div className="ocm-page">
+          <div className="ocm-page pf-v5-u-display-flex">
             {isErrorModalOpen && <CreateClusterErrorModal />}
             <WizardDeprecated
-              className="rosa-wizard"
+              className="rosa-wizard pf-v5-u-flex-1"
               navAriaLabel={`${ariaTitle} steps`}
               mainAriaLabel={`${ariaTitle} content`}
               steps={steps}
@@ -565,6 +569,7 @@ class CreateROSAWizardInternal extends React.Component {
                 )
               }
             />
+            {config.fakeOSD && <ValuesPanel />}
           </div>
         </PageSection>
       </>

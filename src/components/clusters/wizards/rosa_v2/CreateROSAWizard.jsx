@@ -8,9 +8,11 @@ import {
   Wizard as WizardDeprecated,
   WizardContext as WizardContextDeprecated,
 } from '@patternfly/react-core/deprecated';
+import { Formik } from 'formik';
 
+import { useFormState } from '~/components/clusters/wizards/hooks';
 import { ocmResourceType, trackEvents } from '~/common/analytics';
-import { scrollToFirstField, shouldRefetchQuota } from '~/common/helpers';
+import { shouldRefetchQuota } from '~/common/helpers';
 import { normalizedProducts } from '~/common/subscriptionTypes';
 import config from '~/config';
 import withAnalytics from '~/hoc/withAnalytics';
@@ -21,6 +23,7 @@ import { AppPage } from '~/components/App/AppPage';
 import { AppDrawerContext } from '~/components/App/AppDrawer';
 import { isRestrictedEnv } from '~/restrictedEnv';
 import { getAccountAndRolesStepId, stepId, stepNameById } from './rosaWizardConstants';
+import { initialValues, initialTouched, FieldId } from './constants';
 
 import CIDRScreen from './CIDRScreen';
 import ClusterProxyScreen from './ClusterProxyScreen';
@@ -39,13 +42,22 @@ import Unavailable from '../../../common/Unavailable';
 import CreateClusterErrorModal from '../../common/CreateClusterErrorModal';
 import LeaveCreateClusterPrompt from '../common/LeaveCreateClusterPrompt';
 import AccountsRolesScreen from './AccountsRolesScreen';
-import { isUserRoleForSelectedAWSAccount } from './AccountsRolesScreen/AccountsRolesScreen';
 import ClusterRolesScreen from './ClusterRolesScreen';
 import { ROSAWizardContext } from './ROSAWizardContext';
+import { ValuesPanel } from './ValuesPanel';
 
 import CreateRosaWizardFooter from './CreateRosaWizardFooter';
 
 import './createROSAWizard.scss';
+
+const trackWizardNavigation = (track, event, currentStepId = '') => {
+  track(event, {
+    resourceType: ocmResourceType.MOA,
+    customProperties: {
+      step_name: stepNameById[currentStepId],
+    },
+  });
+};
 
 class CreateROSAWizardInternal extends React.Component {
   state = {
@@ -55,7 +67,6 @@ class CreateROSAWizardInternal extends React.Component {
     // Dictionary of step IDs; { [stepId: number]: boolean },
     // where entry values indicate the latest form validation state for those respective steps.
     validatedSteps: {},
-    forceTouch: false,
   };
 
   componentDidMount() {
@@ -101,14 +112,14 @@ class CreateROSAWizardInternal extends React.Component {
       openModal,
       formValues,
       isValid,
-      isAsyncValidating,
+      isValidating,
       installToVPCSelected,
       configureProxySelected,
     } = this.props;
-    const { currentStepId, deferredNext } = this.state;
+    const { currentStepId } = this.state;
 
     // Track validity of individual steps by id
-    if (isValid !== prevProps.isValid && !isAsyncValidating) {
+    if (isValid !== prevProps.isValid && !isValidating) {
       // eslint-disable-next-line react/no-did-update-set-state
       this.setState(() => ({
         validatedSteps: {
@@ -128,23 +139,15 @@ class CreateROSAWizardInternal extends React.Component {
       this.setState({ stepIdReached: currentStepId });
     }
 
-    const isAsyncValidationDone =
-      isAsyncValidating !== prevProps.isAsyncValidating && isAsyncValidating === false;
-    if (isAsyncValidationDone && deferredNext) {
-      this.onBeforeNext(deferredNext);
-      // eslint-disable-next-line react/no-did-update-set-state
-      this.setState({ deferredNext: null });
-    }
-
     if (createClusterResponse.error && !isErrorModalOpen) {
       openModal('osd-create-error');
     }
   }
 
   componentWillUnmount() {
-    const { resetResponse, destroyForm } = this.props;
+    const { resetResponse, resetForm } = this.props;
     resetResponse();
-    destroyForm();
+    resetForm();
   }
 
   // triggered by all forms of navigation;
@@ -156,26 +159,29 @@ class CreateROSAWizardInternal extends React.Component {
   };
 
   onNext = ({ id }, { prevId }) => {
+    const { track } = this.props;
     const { stepIdReached } = this.state;
     if (id && stepIdReached < id) {
       this.setState({ stepIdReached: id });
     }
-
-    // Reset
-    this.setState({ forceTouch: false });
-    this.trackWizardNavigation(trackEvents.WizardNext, prevId);
+    trackWizardNavigation(track, trackEvents.WizardNext, prevId);
   };
 
   // only triggered by the wizard nav-links
   onGoToStep = ({ id }) => {
-    this.trackWizardNavigation(trackEvents.WizardLinkNav, id);
+    const { track } = this.props;
+    trackWizardNavigation(track, trackEvents.WizardLinkNav, id);
   };
 
   onBack = ({ id }) => {
-    this.trackWizardNavigation(trackEvents.WizardBack, id);
+    const { track } = this.props;
+    trackWizardNavigation(track, trackEvents.WizardBack, id);
   };
 
   canJumpTo = (id) => {
+    if (config.fakeOSD) {
+      return true;
+    }
     const { stepIdReached, currentStepId, accountAndRolesStepId, validatedSteps } = this.state;
     const { selectedAWSAccountID } = this.props;
 
@@ -197,91 +203,8 @@ class CreateROSAWizardInternal extends React.Component {
     return getUserRole();
   };
 
-  scrolledToFirstError = () => {
-    const { touch, formErrors } = this.props;
-    const { validatedSteps, currentStepId } = this.state;
-    const isCurrentStepValid = validatedSteps[currentStepId];
-    const errorIds = Object.keys(formErrors);
-
-    // For nested array fields, we need to extract the errors of each individual field (1 level)
-    const nestedErrorIds = [];
-    errorIds.forEach((errorId) => {
-      const nestedField = formErrors[errorId];
-      if (Array.isArray(nestedField)) {
-        nestedField.forEach((nestedFieldError, index) => {
-          // We must skip the valid elements of the array
-          if (nestedFieldError) {
-            Object.keys(nestedFieldError).forEach((subField) => {
-              nestedErrorIds.push(`${errorId}[${index}].${subField}`);
-            });
-          }
-        });
-      }
-    });
-
-    // When errors exist, touch the fields with those errors to trigger validation.
-    if (errorIds?.length) {
-      touch(errorIds.concat(nestedErrorIds));
-      const hasScrolledTo = scrollToFirstField(errorIds);
-      if (hasScrolledTo) {
-        this.setState({ forceTouch: false }); // after scrolled to error, reset
-      }
-      // return `true` if errors were registered to the validatedSteps cache, or if the field
-      // was successfully scrolled-to (i.e. found in the current DOM), and `false` otherwise.
-      return !isCurrentStepValid || hasScrolledTo;
-    }
-    return false;
-  };
-
-  onBeforeSubmit = (onSubmit) => {
-    this.trackWizardNavigation(trackEvents.WizardSubmit);
-    if (this.scrolledToFirstError()) {
-      return;
-    }
-    onSubmit();
-  };
-
-  onBeforeNext = async (onNext) => {
-    const { isAsyncValidating, getUserRoleResponse, selectedAWSAccountID } = this.props;
-    const { currentStepId, accountAndRolesStepId, deferredNext } = this.state;
-
-    this.setState({ forceTouch: true });
-
-    if (isAsyncValidating) {
-      if (!deferredNext) {
-        this.setState({ deferredNext: onNext });
-      }
-      return;
-    }
-
-    if (this.scrolledToFirstError()) {
-      return;
-    }
-    // when navigating back to step 1 from link in no user-role error messages on review screen.
-    if (currentStepId === accountAndRolesStepId && !getUserRoleResponse?.fulfilled) {
-      const data = await this.getUserRoleInfo();
-      const gotoNextStep = isUserRoleForSelectedAWSAccount(data.value, selectedAWSAccountID);
-      if (!gotoNextStep) {
-        return;
-      }
-    }
-    onNext();
-  };
-
-  trackWizardNavigation = (event, currentStepId = '') => {
-    const { track } = this.props;
-
-    track(event, {
-      resourceType: ocmResourceType.MOA,
-      customProperties: {
-        step_name: stepNameById[currentStepId],
-      },
-    });
-  };
-
   render() {
     const {
-      onSubmit,
       cloudProviderID,
       installToVPCSelected,
       createClusterResponse,
@@ -294,8 +217,9 @@ class CreateROSAWizardInternal extends React.Component {
       configureProxySelected,
       isHypershiftEnabled,
       isHypershiftSelected,
+      getUserRoleResponse,
     } = this.props;
-    const { accountAndRolesStepId, deferredNext, forceTouch, currentStepId } = this.state;
+    const { accountAndRolesStepId, currentStepId } = this.state;
 
     const steps = [
       isHypershiftEnabled && {
@@ -331,7 +255,7 @@ class CreateROSAWizardInternal extends React.Component {
             name: stepNameById[stepId.CLUSTER_SETTINGS__DETAILS],
             component: (
               <ErrorBoundary>
-                <ClusterSettingsScreen forceTouch={forceTouch} />
+                <ClusterSettingsScreen />
               </ErrorBoundary>
             ),
             canJumpTo: this.canJumpTo(stepId.CLUSTER_SETTINGS__DETAILS),
@@ -430,10 +354,7 @@ class CreateROSAWizardInternal extends React.Component {
             <WizardContextDeprecated.Consumer>
               {({ goToStepById }) =>
                 !createClusterResponse.pending ? (
-                  <ReviewClusterScreen
-                    clusterRequestParams={{ isWizard: true }}
-                    goToStepById={goToStepById}
-                  />
+                  <ReviewClusterScreen goToStepById={goToStepById} />
                 ) : (
                   <Bullseye>
                     <Stack>
@@ -539,10 +460,10 @@ class CreateROSAWizardInternal extends React.Component {
           {config.fakeOSD && ( // TODO Is ?fake=true supported for ROSA clusters?
             <Banner variant="gold">On submit, a fake ROSA cluster will be created.</Banner>
           )}
-          <div className="ocm-page">
+          <div className="ocm-page pf-v5-u-display-flex">
             {isErrorModalOpen && <CreateClusterErrorModal />}
             <WizardDeprecated
-              className="rosa-wizard"
+              className="rosa-wizard pf-v5-u-flex-1"
               navAriaLabel={`${ariaTitle} steps`}
               mainAriaLabel={`${ariaTitle} content`}
               steps={steps}
@@ -556,18 +477,18 @@ class CreateROSAWizardInternal extends React.Component {
                 !createClusterResponse.pending ? (
                   <CreateRosaWizardFooter
                     firstStepId={steps[0].id}
-                    onSubmit={onSubmit}
-                    onBeforeNext={this.onBeforeNext}
-                    onBeforeSubmit={this.onBeforeSubmit}
-                    isNextDisabled={!!deferredNext}
                     isHypershiftSelected={isHypershiftSelected}
                     currentStepId={currentStepId}
+                    accountAndRolesStepId={accountAndRolesStepId}
+                    getUserRoleResponse={getUserRoleResponse}
+                    getUserRoleInfo={this.getUserRoleInfo}
                   />
                 ) : (
                   <></>
                 )
               }
             />
+            {config.fakeOSD && <ValuesPanel />}
           </div>
         </PageSection>
       </>
@@ -577,6 +498,28 @@ class CreateROSAWizardInternal extends React.Component {
 
 function CreateROSAWizard(props) {
   usePreventBrowserNav();
+  const {
+    values: {
+      [FieldId.InstallToVpc]: installToVPCSelected,
+      [FieldId.UsePrivatelink]: privateLinkSelected,
+      [FieldId.ConfigureProxy]: configureProxySelected,
+      [FieldId.AssociatedAwsId]: selectedAWSAccountID,
+      [FieldId.Hypershift]: hypershiftValue,
+    },
+    values,
+    isValidating,
+    isValid,
+    resetForm,
+  } = useFormState();
+  const isHypershiftSelected = hypershiftValue === 'true';
+  const combinedProps = {
+    ...props,
+    installToVPCSelected,
+    privateLinkSelected,
+    configureProxySelected,
+    selectedAWSAccountID,
+    isHypershiftSelected,
+  };
   const isHypershiftEnabled = useFeatureGate(HYPERSHIFT_WIZARD_FEATURE) && !isRestrictedEnv();
   const [forceLeaveWizard, setForceLeaveWizard] = useState(false);
   const contextValue = { forceLeaveWizard, setForceLeaveWizard };
@@ -586,9 +529,13 @@ function CreateROSAWizard(props) {
         <AppDrawerContext.Consumer>
           {({ closeDrawer }) => (
             <CreateROSAWizardInternal
-              {...props}
+              {...combinedProps}
               closeDrawer={closeDrawer}
               isHypershiftEnabled={isHypershiftEnabled}
+              formValues={values}
+              isValidating={isValidating}
+              isValid={isValid}
+              resetForm={resetForm}
             />
           )}
         </AppDrawerContext.Consumer>
@@ -608,8 +555,11 @@ const requestStatePropTypes = PropTypes.shape({
 });
 
 CreateROSAWizardInternal.propTypes = {
-  isValid: PropTypes.bool,
-  isAsyncValidating: PropTypes.bool,
+  // formik props
+  isValidating: PropTypes.bool.isRequired,
+  isValid: PropTypes.bool.isRequired,
+  resetForm: PropTypes.func.isRequired,
+
   cloudProviderID: PropTypes.string,
   installToVPCSelected: PropTypes.bool,
   privateLinkSelected: PropTypes.bool,
@@ -641,11 +591,7 @@ CreateROSAWizardInternal.propTypes = {
   getCloudProviders: PropTypes.func,
 
   resetResponse: PropTypes.func,
-  destroyForm: PropTypes.func,
   openModal: PropTypes.func,
-  onSubmit: PropTypes.func,
-  touch: PropTypes.func,
-  formErrors: PropTypes.object,
   getUserRoleResponse: PropTypes.object,
   selectedAWSAccountID: PropTypes.string,
   formValues: PropTypes.object,
@@ -662,6 +608,23 @@ CreateROSAWizardInternal.propTypes = {
   closeDrawer: PropTypes.func,
 };
 
-CreateROSAWizard.propTypes = { ...CreateROSAWizardInternal.propTypes };
+const CreateROSAWizardFormik = (props) => {
+  const { onSubmit, track } = props;
+  return (
+    <Formik
+      initialValues={initialValues}
+      initialTouched={initialTouched}
+      validateOnChange
+      onSubmit={(formikValues) => {
+        trackWizardNavigation(track, trackEvents.WizardSubmit);
+        onSubmit(formikValues);
+      }}
+    >
+      <CreateROSAWizard {...props} />
+    </Formik>
+  );
+};
 
-export default withAnalytics(CreateROSAWizard);
+CreateROSAWizardFormik.propTypes = { ...CreateROSAWizardInternal.propTypes };
+
+export default withAnalytics(CreateROSAWizardFormik);
