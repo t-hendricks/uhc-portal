@@ -44,7 +44,7 @@ export const createClusterRequest = ({ isWizard = true, cloudProviderID, product
     },
     managed: true,
     product: {
-      id: actualProduct.toLowerCase(),
+      id: actualProduct?.toLowerCase(),
     },
     cloud_provider: {
       id: actualCloudProviderID,

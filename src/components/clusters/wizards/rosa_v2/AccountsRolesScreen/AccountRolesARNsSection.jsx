@@ -34,7 +34,7 @@ import ReduxVerticalFormGroup from '~/components/common/ReduxFormComponents/Redu
 import {
   MIN_MANAGED_POLICY_VERSION,
   ROSA_HOSTED_CLI_MIN_VERSION,
-} from '~/components/clusters/wizards/rosa_v1/rosaConstants';
+} from '~/components/clusters/wizards/rosa_v2/rosaConstants';
 import { AwsRoleErrorAlert } from './AwsRoleErrorAlert';
 import { RosaCliCommand } from './constants/cliCommands';
 

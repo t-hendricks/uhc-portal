@@ -20,7 +20,7 @@ import { useFeatureGate } from '~/hooks/useFeatureGate';
 
 import ReduxHiddenCheckbox from '~/components/common/ReduxFormComponents/ReduxHiddenCheckbox';
 import { canSelectImds } from '~/components/clusters/wizards/rosa/constants';
-import DebugClusterRequest from '../../common/DebugClusterRequest';
+import DebugClusterRequest from '../DebugClusterRequest';
 import ReviewSection, { ReviewItem } from '../../common/ReviewCluster/ReviewSection';
 import ReviewRoleItem from './ReviewRoleItem';
 import './ReviewClusterScreen.scss';
@@ -50,7 +50,7 @@ const ReviewClusterScreen = ({
   const hasCustomKeyARN = isByoc && formValues.kms_key_arn;
   const showVPCCheckbox = isROSA || isByoc;
   const hasAWSVPCSettings = showVPCCheckbox && formValues.install_to_vpc && isAWS;
-  const clusterVersionRawId = formValues.cluster_version.raw_id;
+  const clusterVersionRawId = formValues.cluster_version?.raw_id;
 
   const hasSecurityGroups = isByoc && hasSelectedSecurityGroups(formValues.securityGroups);
 
@@ -223,7 +223,7 @@ const ReviewClusterScreen = ({
             name: 'aws_hosted_machine_pools',
             formValues,
           })}
-        {!(formValues.node_labels.length === 1 && isEmpty(formValues.node_labels[0])) &&
+        {!(formValues.node_labels?.length === 1 && isEmpty(formValues.node_labels?.[0])) &&
           ReviewItem({ name: 'node_labels', formValues })}
         {isAWS &&
           !isHypershiftSelected &&
@@ -263,7 +263,7 @@ const ReviewClusterScreen = ({
             name: 'securityGroups',
             formValues,
           })}
-        {formValues.shared_vpc.is_selected &&
+        {formValues.shared_vpc?.is_selected &&
           !isHypershiftSelected &&
           ReviewItem({
             name: 'shared_vpc',

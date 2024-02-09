@@ -24,7 +24,7 @@ import { FieldId, StepId } from '~/components/clusters/wizards/osd/constants';
 import useCanClusterAutoscale from '~/components/clusters/ClusterDetails/components/MachinePools/components/EditMachinePoolModal/hooks/useCanClusterAutoscale';
 import { GCP_SECURE_BOOT_UI } from '~/redux/constants/featureConstants';
 import { useFeatureGate } from '~/hooks/useFeatureGate';
-import { DebugClusterRequest } from './DebugClusterRequest';
+import { DebugClusterRequest } from '~/components/clusters/wizards/common/DebugClusterRequest';
 import { canSelectImds } from '../../rosa/constants';
 
 interface ReviewAndCreateContentProps {

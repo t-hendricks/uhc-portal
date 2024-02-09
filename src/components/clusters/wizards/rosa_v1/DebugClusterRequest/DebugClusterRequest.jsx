@@ -2,7 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Banner, ExpandableSection, GridItem } from '@patternfly/react-core';
 
-import { createClusterRequest, upgradeScheduleRequest } from '../submitOSDRequest';
+import {
+  createClusterRequest,
+  upgradeScheduleRequest,
+} from '~/components/clusters/wizards/common/submitOSDRequest';
 
 /** Displays the to-be-sent requests - to be shown only in debug mode */
 const DebugClusterRequest = ({ formValues, isWizard, cloudProviderID, product }) => {
