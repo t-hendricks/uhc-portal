@@ -80,9 +80,10 @@ function CIDRFields({
     podDisjointSubnets(value, formValues) ||
     undefined;
 
-  const awsMachineCIDRMax = isMultiAz
-    ? validators.AWS_MACHINE_CIDR_MAX_MULTI_AZ
-    : validators.AWS_MACHINE_CIDR_MAX_SINGLE_AZ;
+  const awsMachineCIDRMax =
+    isMultiAz || formValues.hypershift === 'true'
+      ? validators.AWS_MACHINE_CIDR_MAX_MULTI_AZ
+      : validators.AWS_MACHINE_CIDR_MAX_SINGLE_AZ;
 
   const privateRangesHint =
     cloudProviderID === 'gcp' ? (
