@@ -8,7 +8,7 @@ import { SubnetSelectField } from '~/components/clusters/common/SubnetSelectFiel
 import { getMatchingAvailabilityZones } from '~/common/vpcHelpers';
 import WithTooltip from '~/components/common/WithTooltip';
 import AvailabilityZoneSelection from '~/components/clusters/wizards/common/NetworkingSection/AvailabilityZoneSelection';
-import { required, validateRosaUniqueAZ } from '../../../../../common/validators';
+import { required, validateUniqueAZ } from '../../../../../common/validators';
 
 const SingleSubnetFieldsRow = ({
   index,
@@ -18,7 +18,7 @@ const SingleSubnetFieldsRow = ({
   isMultiAz,
   privateLinkSelected,
 }) => {
-  const azValidations = [required, isMultiAz && validateRosaUniqueAZ].filter(Boolean);
+  const azValidations = [required, isMultiAz && validateUniqueAZ].filter(Boolean);
 
   const showLabels = index === 0;
   let disabledSubnetReason;

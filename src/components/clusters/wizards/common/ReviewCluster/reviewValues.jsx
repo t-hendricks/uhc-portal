@@ -285,43 +285,7 @@ const reviewValues = {
       </Grid>
     ),
   },
-  // For OSD wizard
-  aws_standalone_vpc_osd: {
-    title: 'VPC subnet settings',
-    valueTransform: (value, allValues) => {
-      let machinePoolsSubnets = [
-        {
-          availabilityZone: allValues.az_0,
-          privateSubnetId: allValues.private_subnet_id_0,
-          publicSubnetId: allValues.public_subnet_id_0,
-        },
-      ];
-      if (allValues.multi_az === 'true') {
-        machinePoolsSubnets = [
-          ...machinePoolsSubnets,
-          {
-            availabilityZone: allValues.az_1,
-            privateSubnetId: allValues.private_subnet_id_1,
-            publicSubnetId: allValues.public_subnet_id_1,
-          },
-          {
-            availabilityZone: allValues.az_2,
-            privateSubnetId: allValues.private_subnet_id_2,
-            publicSubnetId: allValues.public_subnet_id_2,
-          },
-        ];
-      }
-
-      return (
-        <AwsVpcTable
-          vpc={allValues.selected_vpc}
-          machinePoolsSubnets={machinePoolsSubnets}
-          hasPublicSubnets={!allValues.use_privatelink}
-        />
-      );
-    },
-  },
-  // For ROSA wizard
+  // For ROSA and OSD wizards
   aws_standalone_vpc: {
     title: 'VPC subnet settings',
     valueTransform: (value, allValues) => (

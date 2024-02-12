@@ -11,8 +11,9 @@ import ExternalLink from '~/components/common/ExternalLink';
 import AWSLogo from '~/styles/images/AWS.png';
 import RedHat from '~/styles/images/Logo-Red_Hat-B-Standard-RGB.png';
 import { ApplicationIngressType } from '~/components/clusters/wizards/osd/Networking/constants';
-import { PrerequisitesInfoBox } from '~/components/clusters/wizards/rosa_v2/common/PrerequisitesInfoBox';
-import { WelcomeMessage } from '~/components/clusters/wizards/rosa_v2/common/WelcomeMessage';
+import { PrerequisitesInfoBox } from '~/components/clusters/wizards/rosa_v1/common/PrerequisitesInfoBox';
+import { WelcomeMessage } from '~/components/clusters/wizards/rosa_v1/common/WelcomeMessage';
+import { emptyAWSSubnet } from '~/components/clusters/wizards/common/createOSDInitialValues';
 import StandAloneTile from './StandAloneTile';
 import HostedTile from './HostedTile';
 import { hypershiftValue } from './ControlPlaneCommon';
@@ -58,13 +59,7 @@ const ControlPlaneField = ({
     setFieldValue('configure_proxy', false);
 
     // Reset VPC settings in case they were configured and then came back to the Control plane step
-    setFieldValue('machinePoolsSubnets', [
-      {
-        availabilityZone: '',
-        privateSubnetId: '',
-        publicSubnetId: '',
-      },
-    ]);
+    setFieldValue('machinePoolsSubnets', [emptyAWSSubnet()]);
 
     if (isHypershift === 'true') {
       if (formValues.multi_az === 'true') {
