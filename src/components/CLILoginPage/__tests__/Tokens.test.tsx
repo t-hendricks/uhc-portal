@@ -26,7 +26,7 @@ import {
   mockUseChrome,
 } from '~/testUtils';
 import { CompatRouter } from 'react-router-dom-v5-compat';
-import Tokens from '../Tokens';
+import Tokens from '../Instructions';
 
 const mockGetToken = jest
   .fn()
@@ -52,7 +52,7 @@ describe('<Tokens />', () => {
     const { container } = render(
       <TestRouter>
         <CompatRouter>
-          <Tokens show={false} showPath="/token/show" setOfflineToken={() => {}} />
+          <Tokens show={false} isRosa={false} SSOLogin={false} showPath="/token/show" />
         </CompatRouter>
       </TestRouter>,
     );
@@ -66,12 +66,7 @@ describe('<Tokens />', () => {
     const { container } = render(
       <TestRouter>
         <CompatRouter>
-          <Tokens
-            show={false}
-            showPath="/token/show"
-            offlineToken="test-token"
-            setOfflineToken={() => {}}
-          />
+          <Tokens show showPath="/token/show" isRosa={false} SSOLogin={false} />
         </CompatRouter>
       </TestRouter>,
     );
@@ -84,7 +79,7 @@ describe('<Tokens />', () => {
     const { container } = render(
       <TestRouter>
         <CompatRouter>
-          <Tokens show setOfflineToken={() => {}} />
+          <Tokens show isRosa={false} SSOLogin={false} />
         </CompatRouter>
       </TestRouter>,
     );
@@ -101,7 +96,7 @@ describe('<Tokens />', () => {
     render(
       <TestRouter>
         <CompatRouter>
-          <Tokens show setOfflineToken={() => {}} />
+          <Tokens show isRosa={false} SSOLogin={false} />
         </CompatRouter>
       </TestRouter>,
     );
@@ -121,7 +116,7 @@ describe('<Tokens />', () => {
       render(
         <TestRouter>
           <CompatRouter>
-            <Tokens offlineToken="refresh-token" setOfflineToken={() => {}} showPath="myshowpath" />
+            <Tokens show isRosa={false} SSOLogin={false} showPath="myshowpath" />
           </CompatRouter>
         </TestRouter>,
       );

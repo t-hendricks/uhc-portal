@@ -830,7 +830,7 @@ const TokensHeadings = () => (
   </Thead>
 );
 
-const tokenRows = (expanded, setExpanded, toolRefs, token) => (
+const tokenRows = (expanded, setExpanded, toolRefs, token, restrictOfflineToken) => (
   <>
     <ExpandableRowPair
       expanded={expanded}
@@ -871,38 +871,46 @@ const tokenRows = (expanded, setExpanded, toolRefs, token) => (
       }
     />
 
-    <ExpandableRowPair
-      expanded={expanded}
-      setExpanded={setExpanded}
-      toolRefs={toolRefs}
-      expandKey={expandKeys.TOKEN_OCM}
-      cells={[
-        <Td key="name">OpenShift Cluster Manager API Token</Td>,
-        <Td key="viewAPI">
-          <AlignRight>
-            <Link to="/token">
-              <Button
-                variant="secondary"
-                icon={<ArrowRightIcon />}
-                data-testid="view-api-token-btn"
-                iconPosition="right"
-              >
-                View API token
-              </Button>
-            </Link>
-          </AlignRight>
-        </Td>,
-      ]}
-      description={
-        <Text>
-          Use your API token to authenticate against your OpenShift Cluster Manager account.
-        </Text>
-      }
-    />
+    {!restrictOfflineToken && (
+      <ExpandableRowPair
+        expanded={expanded}
+        setExpanded={setExpanded}
+        toolRefs={toolRefs}
+        expandKey={expandKeys.TOKEN_OCM}
+        cells={[
+          <Td key="name">OpenShift Cluster Manager API Token</Td>,
+          <Td key="viewAPI">
+            <AlignRight>
+              <Link to="/token">
+                <Button
+                  variant="secondary"
+                  icon={<ArrowRightIcon />}
+                  data-testid="view-api-token-btn"
+                  iconPosition="right"
+                >
+                  View API token
+                </Button>
+              </Link>
+            </AlignRight>
+          </Td>,
+        ]}
+        description={
+          <Text>
+            Use your API token to authenticate against your OpenShift Cluster Manager account.
+          </Text>
+        }
+      />
+    )}
   </>
 );
 
-const DownloadsPage = ({ token, githubReleases, getLatestRelease, getAuthToken }) => {
+const DownloadsPage = ({
+  token,
+  githubReleases,
+  getLatestRelease,
+  getAuthToken,
+  restrictOfflineToken,
+}) => {
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -1177,7 +1185,7 @@ const DownloadsPage = ({ token, githubReleases, getLatestRelease, getAuthToken }
           <DownloadsSection category="TOKENS" selectedCategory={selectedCategory}>
             <TableDeprecated aria-label="Tokens table">
               <TokensHeadings />
-              {tokenRows(expanded, setExpandedState, toolRefs, token)}
+              {tokenRows(expanded, setExpandedState, toolRefs, token, restrictOfflineToken)}
             </TableDeprecated>
           </DownloadsSection>
         </PageSection>
@@ -1191,6 +1199,7 @@ DownloadsPage.propTypes = {
   getAuthToken: PropTypes.func.isRequired,
   githubReleases: PropTypes.object.isRequired,
   getLatestRelease: PropTypes.func.isRequired,
+  restrictOfflineToken: PropTypes.bool.isRequired,
 };
 
 export default DownloadsPage;
