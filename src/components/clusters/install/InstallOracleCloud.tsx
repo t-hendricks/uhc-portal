@@ -28,7 +28,7 @@ const nonTestedPlatformsLink = (
 );
 
 const InstallOracleCloud = () => (
-  <AppPage title="Install OpenShift 4 | Red Hat OpenShift Cluster Manager | x86_64 User-Provisioned Infrastructure">
+  <AppPage title="Install OpenShift 4 | Red Hat OpenShift Cluster Manager | Oracle Cloud Infrastructure (virtual machines)">
     <InstructionsChooserPageTitle
       cloudName="Oracle Cloud Infrastructure (virtual machines)"
       breadcrumbs={breadcrumbs}
@@ -38,7 +38,9 @@ const InstallOracleCloud = () => (
         aiPageLink="/assisted-installer/clusters/~new"
         aiLearnMoreLink={links.INSTALL_ASSISTED_LEARN_MORE}
         hideIPI
+        ipiPageLink=""
         hideUPI
+        upiPageLink=""
         agentBasedPageLink="/install/platform-agnostic/agent-based"
         agentBasedLearnMoreLink={links.INSTALL_AGENT_LEARN_MORE}
         providerSpecificFeatures={{
