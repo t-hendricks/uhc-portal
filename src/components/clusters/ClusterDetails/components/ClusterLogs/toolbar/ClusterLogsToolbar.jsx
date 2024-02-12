@@ -22,6 +22,7 @@ class ClusterLogsToolbar extends React.PureComponent {
       isPendingNoData,
       createdAt,
       clusterID,
+      logs,
     } = this.props;
 
     return (
@@ -52,6 +53,7 @@ class ClusterLogsToolbar extends React.PureComponent {
                 externalClusterID={externalClusterID}
                 clusterID={clusterID}
                 viewOptions={viewOptions}
+                logs={logs}
               />
             </ToolbarItem>
             <ToolbarItem align={{ default: 'alignRight' }} variant="pagination">
@@ -102,6 +104,7 @@ ClusterLogsToolbar.propTypes = {
   isPendingNoData: PropTypes.bool.isRequired,
   createdAt: PropTypes.string.isRequired,
   clusterID: PropTypes.string.isRequired,
+  logs: PropTypes.number.isRequired,
 };
 
 export default ClusterLogsToolbar;
