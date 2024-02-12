@@ -5,7 +5,7 @@ import {
   SubnetPrivacy,
   filterOutRedHatManagedVPCs,
   isSubnetMatchingPrivacy,
-  vpcHasPrivateSubnets,
+  vpcHasRequiredSubnets,
   getMatchingAvailabilityZones,
   getSelectedAvailabilityZones,
 } from './vpcHelpers';

@@ -33,6 +33,7 @@ const AwsSubnetFields = () => {
             selectedVPC={selectedVPC}
             showRefresh
             isHypershift={false}
+            usePrivateLink={usePrivateLink}
           />
         </GridItem>
         <GridItem md={6} />
