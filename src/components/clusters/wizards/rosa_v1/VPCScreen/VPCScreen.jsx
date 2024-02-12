@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import { Form, Grid, GridItem, Title } from '@patternfly/react-core';
 import { getAllSubnetFieldNames } from '~/common/vpcHelpers';
 
+import { emptyAWSSubnet } from '~/components/clusters/wizards/common/createOSDInitialValues';
+
 import InstallToVPC from './InstallToVPC';
 
 function VPCScreen({
@@ -20,11 +22,11 @@ function VPCScreen({
 }) {
   React.useEffect(() => {
     if (!selectedVPC.id) {
-      const subnetReset = [{ availabilityZone: '', privateSubnetId: '', publicSubnetId: '' }];
+      const subnetReset = [emptyAWSSubnet()];
 
       if (isMultiAz) {
-        subnetReset.push({ availabilityZone: '', privateSubnetId: '', publicSubnetId: '' });
-        subnetReset.push({ availabilityZone: '', privateSubnetId: '', publicSubnetId: '' });
+        subnetReset.push(emptyAWSSubnet());
+        subnetReset.push(emptyAWSSubnet());
       }
       change('machinePoolsSubnets', subnetReset);
 

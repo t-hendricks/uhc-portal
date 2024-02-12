@@ -237,12 +237,10 @@ export const createClusterRequest = ({ isWizard = true, cloudProviderID, product
       clusterRequest.aws.subnet_ids = submitRequestHelpers.createClusterAwsSubnetIds({
         formData,
         isInstallExistingVPC,
-        actualProduct,
       });
       clusterRequest.nodes.availability_zones = submitRequestHelpers.createClusterAzs({
         formData,
         isInstallExistingVPC,
-        actualProduct,
       });
     } else if (actualCloudProviderID === 'gcp') {
       const parsed = JSON.parse(formData.gcp_service_account);

@@ -7,6 +7,8 @@ import ExternalLink from '~/components/common/ExternalLink';
 import links from '~/common/installLinks.mjs';
 import { FieldId } from '~/components/clusters/wizards/osd/constants';
 import { useFormState } from '~/components/clusters/wizards/hooks';
+import { emptyAWSSubnet } from '~/components/clusters/wizards/common/createOSDInitialValues';
+
 import AwsSubnetFields from './AwsSubnetFields';
 import SecurityGroupsSection from './SecurityGroupsSection';
 
@@ -24,16 +26,16 @@ export const AwsVpcSettings = () => {
   const isMultiAz = multiAz === 'true';
 
   React.useEffect(() => {
-    if (!selectedVPC.id) {
-      const azCount = isMultiAz ? 3 : 1;
-      for (let i = 0; i < azCount; i += 1) {
-        [`az_${i}`, `private_subnet_id_${i}`, `public_subnet_id_${i}`].forEach((field) => {
-          setFieldValue(field, '');
-          setFieldTouched(field, false);
-        });
-      }
+    const azCount = isMultiAz ? 3 : 1;
+    const mpSubnetsReset = [];
+
+    for (let i = 0; i < azCount; i += 1) {
+      mpSubnetsReset.push(emptyAWSSubnet());
     }
-  }, [setFieldValue, setFieldTouched, isMultiAz, selectedVPC]);
+    setFieldValue(FieldId.MachinePoolsSubnets, mpSubnetsReset);
+    setFieldTouched(FieldId.MachinePoolsSubnets, false);
+    // "isMultiAz" is needed for the effect, but it can't change while in this step
+  }, [setFieldValue, setFieldTouched, isMultiAz, selectedVPC.id]);
 
   return (
     <>
