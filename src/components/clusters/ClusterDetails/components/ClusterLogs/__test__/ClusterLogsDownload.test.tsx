@@ -21,6 +21,7 @@ const mockProps = {
   externalClusterID: fixtures[0].cluster_uuid,
   clusterID: fixtures[0].cluster_id,
   viewOptions: { sorting: { sortField: '' } } as ViewOptions,
+  logs: 1,
 };
 
 (window as any).URL = {

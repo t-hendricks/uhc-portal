@@ -204,6 +204,7 @@ const ClusterLogs = ({
           externalClusterID={externalClusterID}
           isPendingNoData={isPendingNoData}
           clusterID={clusterID}
+          logs={logs?.length}
         />
         {requestState.error && !size(logs) && ignoreErrors ? (
           <>
