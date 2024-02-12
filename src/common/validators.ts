@@ -7,7 +7,7 @@ import {
   maxAdditionalSecurityGroups,
   workerNodeVolumeSizeMinGiB,
 } from '~/components/clusters/wizards/rosa/constants';
-import type { CloudVPC, GCP, Taint } from '../types/clusters_mgmt.v1';
+import type { GCP, Taint } from '../types/clusters_mgmt.v1';
 import { sqlString } from './queryHelpers';
 
 type Networks = Parameters<typeof cidrTools['overlap']>[0];
@@ -1290,16 +1290,8 @@ const validateSecurityGroups = (securityGroups: string[]) =>
     ? `A maximum of ${maxAdditionalSecurityGroups} security groups can be selected.`
     : undefined;
 
-const validateOsdUniqueAZ = createUniqueFieldValidator(
-  'Must select 3 different AZs.',
-  (currentFieldName: string, allValues: { [key: string]: unknown }) =>
-    Object.entries(allValues)
-      .filter(([fieldKey]) => fieldKey.startsWith('az_') && fieldKey !== currentFieldName)
-      .map(([, fieldValue]) => fieldValue),
-);
-
-const validateRosaUniqueAZ = (
-  currentAZ: string,
+const validateUniqueAZ = (
+  currentAZ: string | undefined,
   allValues: { machinePoolsSubnets: FormSubnet[] },
 ) => {
   const sameAZs = (allValues.machinePoolsSubnets || [])
@@ -1330,7 +1322,7 @@ const validateRequiredPublicSubnetId = (
   props: { pristine: boolean },
 ) => (!props.pristine && !publicSubnetId ? 'Subnet is required' : undefined);
 
-type FormSubnet = {
+export type FormSubnet = {
   availabilityZone: string;
   privateSubnetId: string;
   publicSubnetId: string;
@@ -1351,41 +1343,6 @@ const validateMultipleMachinePoolsSubnets = (
       .length > 1;
   return hasRepeatedSubnets
     ? 'Every machine pool must be associated to a different subnet'
-    : undefined;
-};
-
-// Validations for AWS subnets in OSD wizard (where a subnetId is typed)
-const validateAWSSubnet = (
-  value: string,
-  allValues: Partial<{ selected_vpc: CloudVPC; az_0: string; az_1: string; az_2: string }>,
-  formProps: object,
-  name: string,
-) => {
-  const selectedVpc = allValues.selected_vpc;
-  if (!selectedVpc?.id && value) {
-    return 'You must select the VPC first';
-  }
-  if (selectedVpc?.id && !value) {
-    return 'Field is required';
-  }
-
-  const subnet = selectedVpc?.aws_subnets?.find((subnet) => subnet.subnet_id === value);
-  if (!subnet) {
-    return 'No such subnet exists in the selected VPC';
-  }
-  const mpIndex = Number(name.split('_').pop()) as 0 | 1 | 2;
-  const selectedAZ = allValues[`az_${mpIndex}`];
-  if (!!selectedAZ && subnet.availability_zone !== selectedAZ) {
-    return `Provided subnet is from different AZ ${subnet.availability_zone}.`;
-  }
-
-  if (subnet.public) {
-    return name.startsWith('private_subnet')
-      ? 'Provided subnet is public, should be private.'
-      : undefined;
-  }
-  return name.startsWith('public_subnet')
-    ? 'Provided subnet is private, should be public.'
     : undefined;
 };
 
@@ -1693,9 +1650,7 @@ export {
   checkNodePoolName,
   checkCustomOperatorRolesPrefix,
   checkLabels,
-  validateOsdUniqueAZ,
-  validateRosaUniqueAZ,
-  validateAWSSubnet,
+  validateUniqueAZ,
   validateGCPHostProjectId,
   validateRequiredPublicSubnetId,
   validateMultipleMachinePoolsSubnets,

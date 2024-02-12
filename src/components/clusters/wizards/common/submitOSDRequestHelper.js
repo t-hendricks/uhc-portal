@@ -1,7 +1,6 @@
 import uniq from 'lodash/uniq';
 
-// OSD and ROSA form data is different - will be the same when subnet dropdowns are added to OSD
-const createClusterAzs = ({ formData, isInstallExistingVPC, actualProduct }) => {
+const createClusterAzs = ({ formData, isInstallExistingVPC }) => {
   let AZs = [];
   if (formData.hypershift === 'true') {
     const selectedVpc = formData.selected_vpc;
@@ -13,21 +12,14 @@ const createClusterAzs = ({ formData, isInstallExistingVPC, actualProduct }) => 
         AZs.push(subnetInfo.availability_zone);
       }
     });
-  } else if (actualProduct === 'ROSA' && isInstallExistingVPC) {
-    AZs = formData.machinePoolsSubnets.map((subnet) => subnet.availabilityZone);
   } else if (isInstallExistingVPC) {
-    // OSD
-    AZs.push(formData.az_0);
-    if (formData.multi_az === 'true') {
-      AZs.push(formData.az_1, formData.az_2);
-    }
+    AZs = formData.machinePoolsSubnets.map((subnet) => subnet.availabilityZone);
   }
   // The backend does not accept an empty list of availability_zones
   return AZs.length === 0 ? undefined : uniq(AZs);
 };
 
-// OSD and ROSA form data is different - will be the same when subnet dropdowns are added to OSD
-const createClusterAwsSubnetIds = ({ formData, isInstallExistingVPC, actualProduct }) => {
+const createClusterAwsSubnetIds = ({ formData, isInstallExistingVPC }) => {
   const subnetIds = [];
 
   const { machinePoolsSubnets: mpSubnets } = formData;
@@ -38,7 +30,7 @@ const createClusterAwsSubnetIds = ({ formData, isInstallExistingVPC, actualProdu
     }
     const privateSubnetIds = mpSubnets.map((subnet) => subnet.privateSubnetId);
     subnetIds.push(...privateSubnetIds);
-  } else if (actualProduct === 'ROSA' && isInstallExistingVPC) {
+  } else if (isInstallExistingVPC) {
     const hasPublicSubnets = !formData.use_privatelink;
 
     subnetIds.push(mpSubnets[0].privateSubnetId);
@@ -51,22 +43,6 @@ const createClusterAwsSubnetIds = ({ formData, isInstallExistingVPC, actualProdu
       subnetIds.push(mpSubnets[1].privateSubnetId, mpSubnets[2].privateSubnetId);
       if (hasPublicSubnets) {
         subnetIds.push(mpSubnets[1].publicSubnetId, mpSubnets[2].publicSubnetId);
-      }
-    }
-  } else if (isInstallExistingVPC) {
-    // OSD
-    const showPublicFields = !formData.use_privatelink;
-
-    subnetIds.push(formData.private_subnet_id_0);
-    if (showPublicFields) {
-      subnetIds.push(formData.public_subnet_id_0);
-    }
-
-    const isMultiAz = formData.multi_az === 'true';
-    if (isMultiAz) {
-      subnetIds.push(formData.private_subnet_id_1, formData.private_subnet_id_2);
-      if (showPublicFields) {
-        subnetIds.push(formData.public_subnet_id_1, formData.public_subnet_id_2);
       }
     }
   }

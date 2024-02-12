@@ -144,7 +144,7 @@ export const ReviewAndCreateContent = ({ isPending }: ReviewAndCreateContentProp
           <ReviewItem name={FieldId.SharedHostProjectID} formValues={formValues} />
         )}
         {isByoc && installToVpc && (
-          <ReviewItem name={isAWS ? 'aws_standalone_vpc_osd' : 'gpc_vpc'} formValues={formValues} />
+          <ReviewItem name={isAWS ? 'aws_standalone_vpc' : 'gpc_vpc'} formValues={formValues} />
         )}
         {isByoc && installToVpc && hasSecurityGroups && (
           <ReviewItem name="securityGroups" formValues={formValues} />

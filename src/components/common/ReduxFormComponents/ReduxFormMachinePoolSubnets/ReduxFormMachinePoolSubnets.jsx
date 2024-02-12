@@ -7,6 +7,7 @@ import { MinusCircleIcon } from '@patternfly/react-icons/dist/esm/icons/minus-ci
 
 import { validateMultipleMachinePoolsSubnets } from '~/common/validators';
 import { SubnetSelectField } from '~/components/clusters/common/SubnetSelectField';
+import { emptyAWSSubnet } from '~/components/clusters/wizards/common/createOSDInitialValues';
 
 import './ReduxFormMachinePoolSubnets.scss';
 
@@ -63,9 +64,7 @@ const ReduxFormMachinePoolSubnets = ({ fields, selectedVPC, meta: { warning } })
     })}
     <GridItem>
       <Button
-        onClick={() =>
-          fields.push({ availabilityZone: '', privateSubnetId: '', publicSubnetId: '' })
-        }
+        onClick={() => fields.push(emptyAWSSubnet())}
         icon={<PlusCircleIcon />}
         variant="link"
         isInline

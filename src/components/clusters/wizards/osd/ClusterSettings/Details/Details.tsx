@@ -48,6 +48,7 @@ import { SupportedFeature } from '~/common/featureCompatibility';
 import { useFormState } from '~/components/clusters/wizards/hooks';
 import { hasAvailableQuota, quotaParams } from '~/components/clusters/wizards/common/utils/quotas';
 import { FieldId, MIN_SECURE_BOOT_VERSION } from '~/components/clusters/wizards/osd/constants';
+import { emptyAWSSubnet } from '~/components/clusters/wizards/common/createOSDInitialValues';
 import { billingModels } from '~/common/subscriptionTypes';
 import { QuotaCostList } from '~/types/accounts_mgmt.v1';
 import { QuotaParams } from '~/components/clusters/common/quotaModel';
@@ -74,6 +75,7 @@ export const Details = () => {
       [FieldId.FipsCryptography]: fipsCryptography,
       [FieldId.ClusterVersion]: selectedVersion,
       [FieldId.SecureBoot]: secureBoot,
+      [FieldId.MachinePoolsSubnets]: machinePoolsSubnets,
     },
     errors,
     isValidating,
@@ -149,13 +151,15 @@ export const Details = () => {
   });
 
   const handleCloudRegionChange = () => {
-    // Clears fields related to the region: Availability zones, subnet IDs, VPCs
+    // Clears fields related to the region: VPC and machinePoolsSubnets
     const azCount = isMultiAz ? 3 : 1;
+    const mpSubnetsReset = [];
+
     for (let i = 0; i < azCount; i += 1) {
-      setFieldValue(`az_${i}`, '');
-      setFieldValue(`private_subnet_id_${i}`, '');
-      setFieldValue(`public_subnet_id_${i}`, '');
+      mpSubnetsReset.push(emptyAWSSubnet());
     }
+
+    setFieldValue(FieldId.MachinePoolsSubnets, mpSubnetsReset);
     setFieldValue(FieldId.SelectedVpc, '');
   };
 
@@ -166,6 +170,15 @@ export const Details = () => {
     setFieldValue(FieldId.NodesCompute, getNodesCount(isByoc, isMultiAz, true));
     setFieldValue(FieldId.MinReplicas, getMinReplicasCount(isByoc, isMultiAz, true));
     setFieldValue(FieldId.MaxReplicas, '');
+    setFieldValue(FieldId.MaxReplicas, '');
+
+    // Make "machinePoolsSubnets" of the correct length
+    const mpSubnetsReset = [machinePoolsSubnets[0]];
+    if (isMultiAz) {
+      mpSubnetsReset.push(emptyAWSSubnet());
+      mpSubnetsReset.push(emptyAWSSubnet());
+    }
+    setFieldValue(FieldId.MachinePoolsSubnets, mpSubnetsReset);
   };
 
   const handleVersionChange = (clusterVersion: Version) => {

@@ -71,20 +71,7 @@ describe('createClusterRequest', () => {
     });
   };
 
-  const awsOsdVPCData = {
-    install_to_vpc: true,
-    az_0: 'us-east-1d',
-    private_subnet_id_0: 'subnet-00b3753ab2dd892ac',
-    public_subnet_id_0: 'subnet-0703ec90283d1fd6b',
-    az_1: 'us-east-1e',
-    private_subnet_id_1: 'subnet-0735da52d658da28b',
-    public_subnet_id_1: 'subnet-09404f4fc139bd94e',
-    az_2: 'us-east-1f',
-    private_subnet_id_2: 'subnet-00327948731118662',
-    public_subnet_id_2: 'subnet-09ad4ef49f2e29996',
-  };
-
-  const awsRosaVPCData = {
+  const awsRosaOsdVPCData = {
     install_to_vpc: true,
     selected_vpc: {
       id: 'vpc-id',
@@ -240,7 +227,7 @@ describe('createClusterRequest', () => {
           product: normalizedProducts.OSDTrial,
           byoc: 'true', // forced by OSDTrial.
           network_configuration_toggle: 'advanced',
-          ...awsOsdVPCData,
+          ...awsRosaOsdVPCData,
         };
         const request = createClusterRequest(params, data);
         expect(request.billing_model).toEqual('standard');
@@ -313,7 +300,7 @@ describe('createClusterRequest', () => {
           byoc: 'true', // forced by OSDTrial.
           // CCS also lowers nodes_compute default, but not important for these tests.
           cloud_provider: 'aws',
-          ...awsOsdVPCData,
+          ...awsRosaOsdVPCData,
           ...CIDRData,
         };
         const request = createClusterRequest({}, data);
@@ -404,7 +391,7 @@ describe('createClusterRequest', () => {
 
     describe('ROSA button', () => {
       const hcpSubnetDetails = {
-        selected_vpc: awsRosaVPCData,
+        selected_vpc: awsRosaOsdVPCData,
         cluster_privacy_public_subnet_id: 'subnet-0703ec90283d1fd6b',
         machinePoolsSubnets: [
           {
