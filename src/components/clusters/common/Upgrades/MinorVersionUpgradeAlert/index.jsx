@@ -27,6 +27,7 @@ const mapStateToProps = (state) => {
     isNextMinorVersionAvailable: isNextMinorVersionAvailable(state),
     isRosa: isRosa(state),
     isHypershift,
+    isSTSEnabled: cluster?.aws?.sts?.enabled,
   };
 };
 
