@@ -89,7 +89,9 @@ describe('<TermsAlert />', () => {
     });
 
     afterAll(() => {
-      window.location = locationSave;
+      (window.location as any).configurable = (locationSave as any).configurable;
+      (window.location as any).enumerable = (locationSave as any).enumerable;
+      (window.location as any).value = (locationSave as any).value;
     });
 
     it('is accessible', async () => {

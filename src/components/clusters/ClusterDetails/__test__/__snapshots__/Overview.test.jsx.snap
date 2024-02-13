@@ -13,7 +13,7 @@ exports[`<Overview /> for an AI cluster should render 1`] = `
       <Connect(Component)
         aiClusterId="1i4counta3holamvo1g5tp6n8p3a03bq"
         permissions={
-          Object {
+          {
             "canEdit": false,
           }
         }
@@ -40,21 +40,21 @@ exports[`<Overview /> for an AI cluster should render 1`] = `
             >
               <DetailsLeft
                 cloudProviders={
-                  Object {
+                  {
                     "error": false,
                     "errorMessage": "",
                     "fulfilled": true,
                     "pending": false,
-                    "providers": Object {
-                      "aws": Object {
+                    "providers": {
+                      "aws": {
                         "display_name": "Amazon Web Services",
                         "href": "/api/clusters_mgmt/v1/cloud_providers/aws",
                         "id": "aws",
                         "kind": "CloudProvider",
                         "name": "aws",
-                        "regions": Object {
-                          "ap-northeast-1": Object {
-                            "cloud_provider": Object {
+                        "regions": {
+                          "ap-northeast-1": {
+                            "cloud_provider": {
                               "href": "/api/clusters_mgmt/v1/cloud_providers/aws",
                               "id": "aws",
                               "kind": "CloudProviderLink",
@@ -64,8 +64,8 @@ exports[`<Overview /> for an AI cluster should render 1`] = `
                             "id": "ap-northeast-1",
                             "kind": "CloudRegion",
                           },
-                          "ap-northeast-2": Object {
-                            "cloud_provider": Object {
+                          "ap-northeast-2": {
+                            "cloud_provider": {
                               "href": "/api/clusters_mgmt/v1/cloud_providers/aws",
                               "id": "aws",
                               "kind": "CloudProviderLink",
@@ -75,8 +75,8 @@ exports[`<Overview /> for an AI cluster should render 1`] = `
                             "id": "ap-northeast-2",
                             "kind": "CloudRegion",
                           },
-                          "ap-south-1": Object {
-                            "cloud_provider": Object {
+                          "ap-south-1": {
+                            "cloud_provider": {
                               "href": "/api/clusters_mgmt/v1/cloud_providers/aws",
                               "id": "aws",
                               "kind": "CloudProviderLink",
@@ -86,8 +86,8 @@ exports[`<Overview /> for an AI cluster should render 1`] = `
                             "id": "ap-south-1",
                             "kind": "CloudRegion",
                           },
-                          "ap-southeast-1": Object {
-                            "cloud_provider": Object {
+                          "ap-southeast-1": {
+                            "cloud_provider": {
                               "href": "/api/clusters_mgmt/v1/cloud_providers/aws",
                               "id": "aws",
                               "kind": "CloudProviderLink",
@@ -97,8 +97,8 @@ exports[`<Overview /> for an AI cluster should render 1`] = `
                             "id": "ap-southeast-1",
                             "kind": "CloudRegion",
                           },
-                          "ap-southeast-2": Object {
-                            "cloud_provider": Object {
+                          "ap-southeast-2": {
+                            "cloud_provider": {
                               "href": "/api/clusters_mgmt/v1/cloud_providers/aws",
                               "id": "aws",
                               "kind": "CloudProviderLink",
@@ -108,8 +108,8 @@ exports[`<Overview /> for an AI cluster should render 1`] = `
                             "id": "ap-southeast-2",
                             "kind": "CloudRegion",
                           },
-                          "ca-central-1": Object {
-                            "cloud_provider": Object {
+                          "ca-central-1": {
+                            "cloud_provider": {
                               "href": "/api/clusters_mgmt/v1/cloud_providers/aws",
                               "id": "aws",
                               "kind": "CloudProviderLink",
@@ -119,8 +119,8 @@ exports[`<Overview /> for an AI cluster should render 1`] = `
                             "id": "ca-central-1",
                             "kind": "CloudRegion",
                           },
-                          "eu-central-1": Object {
-                            "cloud_provider": Object {
+                          "eu-central-1": {
+                            "cloud_provider": {
                               "href": "/api/clusters_mgmt/v1/cloud_providers/aws",
                               "id": "aws",
                               "kind": "CloudProviderLink",
@@ -130,8 +130,8 @@ exports[`<Overview /> for an AI cluster should render 1`] = `
                             "id": "eu-central-1",
                             "kind": "CloudRegion",
                           },
-                          "eu-west-1": Object {
-                            "cloud_provider": Object {
+                          "eu-west-1": {
+                            "cloud_provider": {
                               "href": "/api/clusters_mgmt/v1/cloud_providers/aws",
                               "id": "aws",
                               "kind": "CloudProviderLink",
@@ -141,8 +141,8 @@ exports[`<Overview /> for an AI cluster should render 1`] = `
                             "id": "eu-west-1",
                             "kind": "CloudRegion",
                           },
-                          "eu-west-2": Object {
-                            "cloud_provider": Object {
+                          "eu-west-2": {
+                            "cloud_provider": {
                               "href": "/api/clusters_mgmt/v1/cloud_providers/aws",
                               "id": "aws",
                               "kind": "CloudProviderLink",
@@ -152,8 +152,8 @@ exports[`<Overview /> for an AI cluster should render 1`] = `
                             "id": "eu-west-2",
                             "kind": "CloudRegion",
                           },
-                          "eu-west-3": Object {
-                            "cloud_provider": Object {
+                          "eu-west-3": {
+                            "cloud_provider": {
                               "href": "/api/clusters_mgmt/v1/cloud_providers/aws",
                               "id": "aws",
                               "kind": "CloudProviderLink",
@@ -163,8 +163,8 @@ exports[`<Overview /> for an AI cluster should render 1`] = `
                             "id": "eu-west-3",
                             "kind": "CloudRegion",
                           },
-                          "sa-east-1": Object {
-                            "cloud_provider": Object {
+                          "sa-east-1": {
+                            "cloud_provider": {
                               "href": "/api/clusters_mgmt/v1/cloud_providers/aws",
                               "id": "aws",
                               "kind": "CloudProviderLink",
@@ -174,8 +174,8 @@ exports[`<Overview /> for an AI cluster should render 1`] = `
                             "id": "sa-east-1",
                             "kind": "CloudRegion",
                           },
-                          "us-east-1": Object {
-                            "cloud_provider": Object {
+                          "us-east-1": {
+                            "cloud_provider": {
                               "href": "/api/clusters_mgmt/v1/cloud_providers/aws",
                               "id": "aws",
                               "kind": "CloudProviderLink",
@@ -185,8 +185,8 @@ exports[`<Overview /> for an AI cluster should render 1`] = `
                             "id": "us-east-1",
                             "kind": "CloudRegion",
                           },
-                          "us-east-2": Object {
-                            "cloud_provider": Object {
+                          "us-east-2": {
+                            "cloud_provider": {
                               "href": "/api/clusters_mgmt/v1/cloud_providers/aws",
                               "id": "aws",
                               "kind": "CloudProviderLink",
@@ -196,8 +196,8 @@ exports[`<Overview /> for an AI cluster should render 1`] = `
                             "id": "us-east-2",
                             "kind": "CloudRegion",
                           },
-                          "us-west-1": Object {
-                            "cloud_provider": Object {
+                          "us-west-1": {
+                            "cloud_provider": {
                               "href": "/api/clusters_mgmt/v1/cloud_providers/aws",
                               "id": "aws",
                               "kind": "CloudProviderLink",
@@ -207,8 +207,8 @@ exports[`<Overview /> for an AI cluster should render 1`] = `
                             "id": "us-west-1",
                             "kind": "CloudRegion",
                           },
-                          "us-west-2": Object {
-                            "cloud_provider": Object {
+                          "us-west-2": {
+                            "cloud_provider": {
                               "href": "/api/clusters_mgmt/v1/cloud_providers/aws",
                               "id": "aws",
                               "kind": "CloudProviderLink",
@@ -224,155 +224,155 @@ exports[`<Overview /> for an AI cluster should render 1`] = `
                   }
                 }
                 cluster={
-                  Object {
+                  {
                     "activity_timestamp": "2021-01-11T11:55:29Z",
-                    "addons": Object {
+                    "addons": {
                       "href": "/api/clusters_mgmt/v1/clusters/1i4counta3holamvo1g5tp6n8p3a03bq/addons",
                       "kind": "AddOnInstallationListLink",
                     },
-                    "aiCluster": Object {
+                    "aiCluster": {
                       "id": "1i4counta3holamvo1g5tp6n8p3a03bq",
                     },
-                    "api": Object {
+                    "api": {
                       "listening": "external",
                       "url": "https://api.test-liza.wiex.s1.devshift.org:6443",
                     },
-                    "aws_infrastructure_access_role_grants": Object {
+                    "aws_infrastructure_access_role_grants": {
                       "href": "/api/clusters_mgmt/v1/clusters/1i4counta3holamvo1g5tp6n8p3a03bq/aws_infrastructure_access_role_grants",
                       "items": null,
                       "kind": "AWSInfrastructureAccessRoleGrantLink",
                     },
                     "billing_model": "standard",
                     "canEdit": false,
-                    "ccs": Object {
+                    "ccs": {
                       "disable_scp_checks": false,
                       "enabled": true,
                     },
-                    "cloud_provider": Object {
+                    "cloud_provider": {
                       "href": "/api/clusters_mgmt/v1/cloud_providers/aws",
                       "id": "aws",
                       "kind": "CloudProviderLink",
                     },
-                    "console": Object {
+                    "console": {
                       "url": "https://console-openshift-console.apps.test-liza.wiex.s1.devshift.org",
                     },
                     "creation_timestamp": "2021-01-10T15:17:16.278663Z",
                     "display_name": "test-liza",
-                    "dns": Object {
+                    "dns": {
                       "base_domain": "wiex.s1.devshift.org",
                     },
                     "etcd_encryption": false,
                     "expiration_timestamp": "",
-                    "external_configuration": Object {
+                    "external_configuration": {
                       "href": "/api/clusters_mgmt/v1/clusters/1i4counta3holamvo1g5tp6n8p3a03bq/external_configuration",
                       "kind": "ExternalConfiguration",
-                      "labels": Object {
+                      "labels": {
                         "href": "/api/clusters_mgmt/v1/clusters/1i4counta3holamvo1g5tp6n8p3a03bq/external_configuration/labels",
                         "kind": "LabelListLink",
                       },
-                      "syncsets": Object {
+                      "syncsets": {
                         "href": "/api/clusters_mgmt/v1/clusters/1i4counta3holamvo1g5tp6n8p3a03bq/external_configuration/syncsets",
                         "kind": "SyncsetListLink",
                       },
                     },
                     "external_id": "bae5b227-2472-4e71-be4d-a18fc60bb48a",
-                    "flavour": Object {
+                    "flavour": {
                       "href": "/api/clusters_mgmt/v1/flavours/osd-4",
                       "id": "osd-4",
                       "kind": "FlavourLink",
                     },
-                    "groups": Object {
+                    "groups": {
                       "href": "/api/clusters_mgmt/v1/clusters/1i4counta3holamvo1g5tp6n8p3a03bq/groups",
                       "kind": "GroupListLink",
                     },
                     "health_state": "healthy",
                     "href": "/api/clusters_mgmt/v1/clusters/1i4counta3holamvo1g5tp6n8p3a03bq",
                     "id": "1i4counta3holamvo1g5tp6n8p3a03bq",
-                    "identity_providers": Object {
+                    "identity_providers": {
                       "href": "/api/clusters_mgmt/v1/clusters/1i4counta3holamvo1g5tp6n8p3a03bq/identity_providers",
                       "kind": "IdentityProviderListLink",
                     },
                     "infra_id": "test-liza-d7vkd",
-                    "ingresses": Object {
+                    "ingresses": {
                       "href": "/api/clusters_mgmt/v1/clusters/1i4counta3holamvo1g5tp6n8p3a03bq/ingresses",
                       "id": "1i4counta3holamvo1g5tp6n8p3a03bq",
                       "kind": "IngressListLink",
                     },
                     "kind": "Cluster",
                     "load_balancer_quota": 0,
-                    "machine_pools": Object {
+                    "machine_pools": {
                       "href": "/api/clusters_mgmt/v1/clusters/1i4counta3holamvo1g5tp6n8p3a03bq/machine_pools",
                       "kind": "MachinePoolListLink",
                     },
                     "managed": true,
-                    "metrics": Object {
-                      "compute_nodes_cpu": Object {
-                        "total": Object {
+                    "metrics": {
+                      "compute_nodes_cpu": {
+                        "total": {
                           "unit": "",
                           "value": 16,
                         },
                       },
-                      "compute_nodes_memory": Object {
-                        "total": Object {
+                      "compute_nodes_memory": {
+                        "total": {
                           "unit": "B",
                           "value": 65835802624,
                         },
                       },
-                      "compute_nodes_sockets": Object {
-                        "total": Object {
+                      "compute_nodes_sockets": {
+                        "total": {
                           "unit": "",
                           "value": 0,
                         },
                       },
-                      "cpu": Object {
-                        "total": Object {
+                      "cpu": {
+                        "total": {
                           "unit": "",
                           "value": 36,
                         },
                         "updated_timestamp": "2021-01-11T11:55:29Z",
-                        "used": Object {
+                        "used": {
                           "unit": "",
                           "value": 3.8904761904758463,
                         },
                       },
-                      "memory": Object {
-                        "total": Object {
+                      "memory": {
+                        "total": {
                           "unit": "B",
                           "value": 147469647872,
                         },
                         "updated_timestamp": "2021-01-11T11:55:29Z",
-                        "used": Object {
+                        "used": {
                           "unit": "B",
                           "value": 28802600960,
                         },
                       },
-                      "nodes": Object {
+                      "nodes": {
                         "compute": 4,
                         "infra": 2,
                         "master": 3,
                         "total": 9,
                       },
-                      "sockets": Object {
-                        "total": Object {
+                      "sockets": {
+                        "total": {
                           "unit": "",
                           "value": 0,
                         },
-                        "used": Object {
+                        "used": {
                           "unit": "",
                           "value": 0,
                         },
                       },
-                      "storage": Object {
-                        "total": Object {
+                      "storage": {
+                        "total": {
                           "unit": "B",
                           "value": 0,
                         },
-                        "used": Object {
+                        "used": {
                           "unit": "B",
                           "value": 0,
                         },
                       },
-                      "upgrade": Object {
+                      "upgrade": {
                         "available": false,
                         "updated_timestamp": "2021-01-11T11:55:29Z",
                       },
@@ -380,62 +380,62 @@ exports[`<Overview /> for an AI cluster should render 1`] = `
                     },
                     "multi_az": false,
                     "name": "test-liza",
-                    "network": Object {
+                    "network": {
                       "host_prefix": 23,
                       "machine_cidr": "10.0.0.0/16",
                       "pod_cidr": "10.128.0.0/14",
                       "service_cidr": "172.30.0.0/16",
                     },
-                    "node_drain_grace_period": Object {
+                    "node_drain_grace_period": {
                       "unit": "minutes",
                       "value": 60,
                     },
-                    "nodes": Object {
-                      "availability_zones": Array [
+                    "nodes": {
+                      "availability_zones": [
                         "us-east-1a",
                       ],
                       "compute": 4,
-                      "compute_machine_type": Object {
+                      "compute_machine_type": {
                         "href": "/api/clusters_mgmt/v1/machine_types/m5.xlarge",
                         "id": "m5.xlarge",
                         "kind": "MachineTypeLink",
                       },
                       "infra": 2,
                       "master": 3,
-                      "master_machine_type": Object {
+                      "master_machine_type": {
                         "href": "/api/clusters_mgmt/v1/machine_types/m5.xlarge",
                         "id": "m5.xlarge",
                         "kind": "MachineTypeLink",
                       },
                     },
                     "openshift_version": "4.6.8",
-                    "product": Object {
+                    "product": {
                       "id": "OSD",
                     },
-                    "region": Object {
+                    "region": {
                       "href": "/api/clusters_mgmt/v1/cloud_providers/aws/regions/us-east-1",
                       "id": "us-east-1",
                       "kind": "CloudRegionLink",
                     },
                     "state": "ready",
-                    "status": Object {
+                    "status": {
                       "dns_ready": true,
                       "provision_error_code": "",
                       "provision_error_message": "",
                       "state": "ready",
                     },
-                    "storage_quota": Object {
+                    "storage_quota": {
                       "unit": "B",
                       "value": 107374182400,
                     },
-                    "subscription": Object {
-                      "capabilities": Array [
-                        Object {
+                    "subscription": {
+                      "capabilities": [
+                        {
                           "inherited": true,
                           "name": "capability.cluster.subscribed_ocp",
                           "value": "true",
                         },
-                        Object {
+                        {
                           "inherited": true,
                           "name": "capability.cluster.manage_cluster_admin",
                           "value": "true",
@@ -446,7 +446,7 @@ exports[`<Overview /> for an AI cluster should render 1`] = `
                       "console_url": "https://console-openshift-console.apps.test-liza.wiex.s1.devshift.org",
                       "cpu_total": 8,
                       "created_at": "2021-01-10T15:17:15.19112Z",
-                      "creator": Object {
+                      "creator": {
                         "email": "***REMOVED***",
                         "href": "/api/accounts_mgmt/v1/accounts/1MRilA9vHlOUX9ui3lx6IohSsaS",
                         "id": "1MRilA9vHlOUX9ui3lx6IohSsaS",
@@ -463,68 +463,68 @@ exports[`<Overview /> for an AI cluster should render 1`] = `
                       "last_released_at": "0001-01-01T00:00:00Z",
                       "last_telemetry_date": "2021-01-11T03:59:48.224585Z",
                       "managed": true,
-                      "metrics": Array [
-                        Object {
+                      "metrics": [
+                        {
                           "HealthState": "healthy",
                           "cloud_provider": "aws",
-                          "compute_nodes_cpu": Object {
-                            "total": Object {
+                          "compute_nodes_cpu": {
+                            "total": {
                               "unit": "",
                               "value": 24,
                             },
                             "updated_timestamp": "1970-01-01T00:00:00Z",
-                            "used": Object {
+                            "used": {
                               "unit": "",
                               "value": 0,
                             },
                           },
-                          "compute_nodes_memory": Object {
-                            "total": Object {
+                          "compute_nodes_memory": {
+                            "total": {
                               "unit": "B",
                               "value": 98489344000,
                             },
                             "updated_timestamp": "1970-01-01T00:00:00Z",
-                            "used": Object {
+                            "used": {
                               "unit": "B",
                               "value": 0,
                             },
                           },
-                          "compute_nodes_sockets": Object {
-                            "total": Object {
+                          "compute_nodes_sockets": {
+                            "total": {
                               "unit": "",
                               "value": 0,
                             },
                             "updated_timestamp": "1970-01-01T00:00:00Z",
-                            "used": Object {
+                            "used": {
                               "unit": "",
                               "value": 0,
                             },
                           },
                           "console_url": "https://console-openshift-console.apps.test-liza.wiex.s1.devshift.org",
-                          "cpu": Object {
-                            "total": Object {
+                          "cpu": {
+                            "total": {
                               "unit": "",
                               "value": 36,
                             },
                             "updated_timestamp": "2021-01-11T11:55:10.517Z",
-                            "used": Object {
+                            "used": {
                               "unit": "",
                               "value": 3.8904761904758463,
                             },
                           },
                           "critical_alerts_firing": 0,
-                          "memory": Object {
-                            "total": Object {
+                          "memory": {
+                            "total": {
                               "unit": "B",
                               "value": 147469647872,
                             },
                             "updated_timestamp": "2021-01-11T11:55:10.448Z",
-                            "used": Object {
+                            "used": {
                               "unit": "B",
                               "value": 28802600960,
                             },
                           },
-                          "nodes": Object {
+                          "nodes": {
                             "compute": 4,
                             "infra": 2,
                             "master": 3,
@@ -534,39 +534,39 @@ exports[`<Overview /> for an AI cluster should render 1`] = `
                           "operating_system": "",
                           "operators_condition_failing": 0,
                           "region": "us-east-1",
-                          "sockets": Object {
-                            "total": Object {
+                          "sockets": {
+                            "total": {
                               "unit": "",
                               "value": 0,
                             },
                             "updated_timestamp": "1970-01-01T00:00:00Z",
-                            "used": Object {
+                            "used": {
                               "unit": "",
                               "value": 0,
                             },
                           },
                           "state": "ready",
                           "state_description": "",
-                          "storage": Object {
-                            "total": Object {
+                          "storage": {
+                            "total": {
                               "unit": "B",
                               "value": 0,
                             },
                             "updated_timestamp": "1970-01-01T00:00:00Z",
-                            "used": Object {
+                            "used": {
                               "unit": "B",
                               "value": 0,
                             },
                           },
                           "subscription_cpu_total": 8,
                           "subscription_socket_total": 4,
-                          "upgrade": Object {
+                          "upgrade": {
                             "updated_timestamp": "2021-01-11T11:55:10.206Z",
                           },
                         },
                       ],
                       "organization_id": "1MKVU4otCIuogoLtgtyU6wajxjW",
-                      "plan": Object {
+                      "plan": {
                         "id": "OCP-AssistedInstall",
                         "type": "OCP",
                       },
@@ -578,7 +578,7 @@ exports[`<Overview /> for an AI cluster should render 1`] = `
                       "updated_at": "2021-01-11T03:59:48.224622Z",
                     },
                     "upgrade_channel_group": "stable",
-                    "version": Object {
+                    "version": {
                       "channel_group": "stable",
                       "href": "/api/clusters_mgmt/v1/versions/openshift-v4.6.8",
                       "id": "openshift-v4.6.8",
@@ -594,155 +594,155 @@ exports[`<Overview /> for an AI cluster should render 1`] = `
             >
               <Connect(DetailsRight)
                 cluster={
-                  Object {
+                  {
                     "activity_timestamp": "2021-01-11T11:55:29Z",
-                    "addons": Object {
+                    "addons": {
                       "href": "/api/clusters_mgmt/v1/clusters/1i4counta3holamvo1g5tp6n8p3a03bq/addons",
                       "kind": "AddOnInstallationListLink",
                     },
-                    "aiCluster": Object {
+                    "aiCluster": {
                       "id": "1i4counta3holamvo1g5tp6n8p3a03bq",
                     },
-                    "api": Object {
+                    "api": {
                       "listening": "external",
                       "url": "https://api.test-liza.wiex.s1.devshift.org:6443",
                     },
-                    "aws_infrastructure_access_role_grants": Object {
+                    "aws_infrastructure_access_role_grants": {
                       "href": "/api/clusters_mgmt/v1/clusters/1i4counta3holamvo1g5tp6n8p3a03bq/aws_infrastructure_access_role_grants",
                       "items": null,
                       "kind": "AWSInfrastructureAccessRoleGrantLink",
                     },
                     "billing_model": "standard",
                     "canEdit": false,
-                    "ccs": Object {
+                    "ccs": {
                       "disable_scp_checks": false,
                       "enabled": true,
                     },
-                    "cloud_provider": Object {
+                    "cloud_provider": {
                       "href": "/api/clusters_mgmt/v1/cloud_providers/aws",
                       "id": "aws",
                       "kind": "CloudProviderLink",
                     },
-                    "console": Object {
+                    "console": {
                       "url": "https://console-openshift-console.apps.test-liza.wiex.s1.devshift.org",
                     },
                     "creation_timestamp": "2021-01-10T15:17:16.278663Z",
                     "display_name": "test-liza",
-                    "dns": Object {
+                    "dns": {
                       "base_domain": "wiex.s1.devshift.org",
                     },
                     "etcd_encryption": false,
                     "expiration_timestamp": "",
-                    "external_configuration": Object {
+                    "external_configuration": {
                       "href": "/api/clusters_mgmt/v1/clusters/1i4counta3holamvo1g5tp6n8p3a03bq/external_configuration",
                       "kind": "ExternalConfiguration",
-                      "labels": Object {
+                      "labels": {
                         "href": "/api/clusters_mgmt/v1/clusters/1i4counta3holamvo1g5tp6n8p3a03bq/external_configuration/labels",
                         "kind": "LabelListLink",
                       },
-                      "syncsets": Object {
+                      "syncsets": {
                         "href": "/api/clusters_mgmt/v1/clusters/1i4counta3holamvo1g5tp6n8p3a03bq/external_configuration/syncsets",
                         "kind": "SyncsetListLink",
                       },
                     },
                     "external_id": "bae5b227-2472-4e71-be4d-a18fc60bb48a",
-                    "flavour": Object {
+                    "flavour": {
                       "href": "/api/clusters_mgmt/v1/flavours/osd-4",
                       "id": "osd-4",
                       "kind": "FlavourLink",
                     },
-                    "groups": Object {
+                    "groups": {
                       "href": "/api/clusters_mgmt/v1/clusters/1i4counta3holamvo1g5tp6n8p3a03bq/groups",
                       "kind": "GroupListLink",
                     },
                     "health_state": "healthy",
                     "href": "/api/clusters_mgmt/v1/clusters/1i4counta3holamvo1g5tp6n8p3a03bq",
                     "id": "1i4counta3holamvo1g5tp6n8p3a03bq",
-                    "identity_providers": Object {
+                    "identity_providers": {
                       "href": "/api/clusters_mgmt/v1/clusters/1i4counta3holamvo1g5tp6n8p3a03bq/identity_providers",
                       "kind": "IdentityProviderListLink",
                     },
                     "infra_id": "test-liza-d7vkd",
-                    "ingresses": Object {
+                    "ingresses": {
                       "href": "/api/clusters_mgmt/v1/clusters/1i4counta3holamvo1g5tp6n8p3a03bq/ingresses",
                       "id": "1i4counta3holamvo1g5tp6n8p3a03bq",
                       "kind": "IngressListLink",
                     },
                     "kind": "Cluster",
                     "load_balancer_quota": 0,
-                    "machine_pools": Object {
+                    "machine_pools": {
                       "href": "/api/clusters_mgmt/v1/clusters/1i4counta3holamvo1g5tp6n8p3a03bq/machine_pools",
                       "kind": "MachinePoolListLink",
                     },
                     "managed": true,
-                    "metrics": Object {
-                      "compute_nodes_cpu": Object {
-                        "total": Object {
+                    "metrics": {
+                      "compute_nodes_cpu": {
+                        "total": {
                           "unit": "",
                           "value": 16,
                         },
                       },
-                      "compute_nodes_memory": Object {
-                        "total": Object {
+                      "compute_nodes_memory": {
+                        "total": {
                           "unit": "B",
                           "value": 65835802624,
                         },
                       },
-                      "compute_nodes_sockets": Object {
-                        "total": Object {
+                      "compute_nodes_sockets": {
+                        "total": {
                           "unit": "",
                           "value": 0,
                         },
                       },
-                      "cpu": Object {
-                        "total": Object {
+                      "cpu": {
+                        "total": {
                           "unit": "",
                           "value": 36,
                         },
                         "updated_timestamp": "2021-01-11T11:55:29Z",
-                        "used": Object {
+                        "used": {
                           "unit": "",
                           "value": 3.8904761904758463,
                         },
                       },
-                      "memory": Object {
-                        "total": Object {
+                      "memory": {
+                        "total": {
                           "unit": "B",
                           "value": 147469647872,
                         },
                         "updated_timestamp": "2021-01-11T11:55:29Z",
-                        "used": Object {
+                        "used": {
                           "unit": "B",
                           "value": 28802600960,
                         },
                       },
-                      "nodes": Object {
+                      "nodes": {
                         "compute": 4,
                         "infra": 2,
                         "master": 3,
                         "total": 9,
                       },
-                      "sockets": Object {
-                        "total": Object {
+                      "sockets": {
+                        "total": {
                           "unit": "",
                           "value": 0,
                         },
-                        "used": Object {
+                        "used": {
                           "unit": "",
                           "value": 0,
                         },
                       },
-                      "storage": Object {
-                        "total": Object {
+                      "storage": {
+                        "total": {
                           "unit": "B",
                           "value": 0,
                         },
-                        "used": Object {
+                        "used": {
                           "unit": "B",
                           "value": 0,
                         },
                       },
-                      "upgrade": Object {
+                      "upgrade": {
                         "available": false,
                         "updated_timestamp": "2021-01-11T11:55:29Z",
                       },
@@ -750,62 +750,62 @@ exports[`<Overview /> for an AI cluster should render 1`] = `
                     },
                     "multi_az": false,
                     "name": "test-liza",
-                    "network": Object {
+                    "network": {
                       "host_prefix": 23,
                       "machine_cidr": "10.0.0.0/16",
                       "pod_cidr": "10.128.0.0/14",
                       "service_cidr": "172.30.0.0/16",
                     },
-                    "node_drain_grace_period": Object {
+                    "node_drain_grace_period": {
                       "unit": "minutes",
                       "value": 60,
                     },
-                    "nodes": Object {
-                      "availability_zones": Array [
+                    "nodes": {
+                      "availability_zones": [
                         "us-east-1a",
                       ],
                       "compute": 4,
-                      "compute_machine_type": Object {
+                      "compute_machine_type": {
                         "href": "/api/clusters_mgmt/v1/machine_types/m5.xlarge",
                         "id": "m5.xlarge",
                         "kind": "MachineTypeLink",
                       },
                       "infra": 2,
                       "master": 3,
-                      "master_machine_type": Object {
+                      "master_machine_type": {
                         "href": "/api/clusters_mgmt/v1/machine_types/m5.xlarge",
                         "id": "m5.xlarge",
                         "kind": "MachineTypeLink",
                       },
                     },
                     "openshift_version": "4.6.8",
-                    "product": Object {
+                    "product": {
                       "id": "OSD",
                     },
-                    "region": Object {
+                    "region": {
                       "href": "/api/clusters_mgmt/v1/cloud_providers/aws/regions/us-east-1",
                       "id": "us-east-1",
                       "kind": "CloudRegionLink",
                     },
                     "state": "ready",
-                    "status": Object {
+                    "status": {
                       "dns_ready": true,
                       "provision_error_code": "",
                       "provision_error_message": "",
                       "state": "ready",
                     },
-                    "storage_quota": Object {
+                    "storage_quota": {
                       "unit": "B",
                       "value": 107374182400,
                     },
-                    "subscription": Object {
-                      "capabilities": Array [
-                        Object {
+                    "subscription": {
+                      "capabilities": [
+                        {
                           "inherited": true,
                           "name": "capability.cluster.subscribed_ocp",
                           "value": "true",
                         },
-                        Object {
+                        {
                           "inherited": true,
                           "name": "capability.cluster.manage_cluster_admin",
                           "value": "true",
@@ -816,7 +816,7 @@ exports[`<Overview /> for an AI cluster should render 1`] = `
                       "console_url": "https://console-openshift-console.apps.test-liza.wiex.s1.devshift.org",
                       "cpu_total": 8,
                       "created_at": "2021-01-10T15:17:15.19112Z",
-                      "creator": Object {
+                      "creator": {
                         "email": "***REMOVED***",
                         "href": "/api/accounts_mgmt/v1/accounts/1MRilA9vHlOUX9ui3lx6IohSsaS",
                         "id": "1MRilA9vHlOUX9ui3lx6IohSsaS",
@@ -833,68 +833,68 @@ exports[`<Overview /> for an AI cluster should render 1`] = `
                       "last_released_at": "0001-01-01T00:00:00Z",
                       "last_telemetry_date": "2021-01-11T03:59:48.224585Z",
                       "managed": true,
-                      "metrics": Array [
-                        Object {
+                      "metrics": [
+                        {
                           "HealthState": "healthy",
                           "cloud_provider": "aws",
-                          "compute_nodes_cpu": Object {
-                            "total": Object {
+                          "compute_nodes_cpu": {
+                            "total": {
                               "unit": "",
                               "value": 24,
                             },
                             "updated_timestamp": "1970-01-01T00:00:00Z",
-                            "used": Object {
+                            "used": {
                               "unit": "",
                               "value": 0,
                             },
                           },
-                          "compute_nodes_memory": Object {
-                            "total": Object {
+                          "compute_nodes_memory": {
+                            "total": {
                               "unit": "B",
                               "value": 98489344000,
                             },
                             "updated_timestamp": "1970-01-01T00:00:00Z",
-                            "used": Object {
+                            "used": {
                               "unit": "B",
                               "value": 0,
                             },
                           },
-                          "compute_nodes_sockets": Object {
-                            "total": Object {
+                          "compute_nodes_sockets": {
+                            "total": {
                               "unit": "",
                               "value": 0,
                             },
                             "updated_timestamp": "1970-01-01T00:00:00Z",
-                            "used": Object {
+                            "used": {
                               "unit": "",
                               "value": 0,
                             },
                           },
                           "console_url": "https://console-openshift-console.apps.test-liza.wiex.s1.devshift.org",
-                          "cpu": Object {
-                            "total": Object {
+                          "cpu": {
+                            "total": {
                               "unit": "",
                               "value": 36,
                             },
                             "updated_timestamp": "2021-01-11T11:55:10.517Z",
-                            "used": Object {
+                            "used": {
                               "unit": "",
                               "value": 3.8904761904758463,
                             },
                           },
                           "critical_alerts_firing": 0,
-                          "memory": Object {
-                            "total": Object {
+                          "memory": {
+                            "total": {
                               "unit": "B",
                               "value": 147469647872,
                             },
                             "updated_timestamp": "2021-01-11T11:55:10.448Z",
-                            "used": Object {
+                            "used": {
                               "unit": "B",
                               "value": 28802600960,
                             },
                           },
-                          "nodes": Object {
+                          "nodes": {
                             "compute": 4,
                             "infra": 2,
                             "master": 3,
@@ -904,39 +904,39 @@ exports[`<Overview /> for an AI cluster should render 1`] = `
                           "operating_system": "",
                           "operators_condition_failing": 0,
                           "region": "us-east-1",
-                          "sockets": Object {
-                            "total": Object {
+                          "sockets": {
+                            "total": {
                               "unit": "",
                               "value": 0,
                             },
                             "updated_timestamp": "1970-01-01T00:00:00Z",
-                            "used": Object {
+                            "used": {
                               "unit": "",
                               "value": 0,
                             },
                           },
                           "state": "ready",
                           "state_description": "",
-                          "storage": Object {
-                            "total": Object {
+                          "storage": {
+                            "total": {
                               "unit": "B",
                               "value": 0,
                             },
                             "updated_timestamp": "1970-01-01T00:00:00Z",
-                            "used": Object {
+                            "used": {
                               "unit": "B",
                               "value": 0,
                             },
                           },
                           "subscription_cpu_total": 8,
                           "subscription_socket_total": 4,
-                          "upgrade": Object {
+                          "upgrade": {
                             "updated_timestamp": "2021-01-11T11:55:10.206Z",
                           },
                         },
                       ],
                       "organization_id": "1MKVU4otCIuogoLtgtyU6wajxjW",
-                      "plan": Object {
+                      "plan": {
                         "id": "OCP-AssistedInstall",
                         "type": "OCP",
                       },
@@ -948,7 +948,7 @@ exports[`<Overview /> for an AI cluster should render 1`] = `
                       "updated_at": "2021-01-11T03:59:48.224622Z",
                     },
                     "upgrade_channel_group": "stable",
-                    "version": Object {
+                    "version": {
                       "channel_group": "stable",
                       "href": "/api/clusters_mgmt/v1/versions/openshift-v4.6.8",
                       "id": "openshift-v4.6.8",
@@ -1001,21 +1001,21 @@ exports[`<Overview /> for an ARO cluster should render 1`] = `
             >
               <DetailsLeft
                 cloudProviders={
-                  Object {
+                  {
                     "error": false,
                     "errorMessage": "",
                     "fulfilled": true,
                     "pending": false,
-                    "providers": Object {
-                      "aws": Object {
+                    "providers": {
+                      "aws": {
                         "display_name": "Amazon Web Services",
                         "href": "/api/clusters_mgmt/v1/cloud_providers/aws",
                         "id": "aws",
                         "kind": "CloudProvider",
                         "name": "aws",
-                        "regions": Object {
-                          "ap-northeast-1": Object {
-                            "cloud_provider": Object {
+                        "regions": {
+                          "ap-northeast-1": {
+                            "cloud_provider": {
                               "href": "/api/clusters_mgmt/v1/cloud_providers/aws",
                               "id": "aws",
                               "kind": "CloudProviderLink",
@@ -1025,8 +1025,8 @@ exports[`<Overview /> for an ARO cluster should render 1`] = `
                             "id": "ap-northeast-1",
                             "kind": "CloudRegion",
                           },
-                          "ap-northeast-2": Object {
-                            "cloud_provider": Object {
+                          "ap-northeast-2": {
+                            "cloud_provider": {
                               "href": "/api/clusters_mgmt/v1/cloud_providers/aws",
                               "id": "aws",
                               "kind": "CloudProviderLink",
@@ -1036,8 +1036,8 @@ exports[`<Overview /> for an ARO cluster should render 1`] = `
                             "id": "ap-northeast-2",
                             "kind": "CloudRegion",
                           },
-                          "ap-south-1": Object {
-                            "cloud_provider": Object {
+                          "ap-south-1": {
+                            "cloud_provider": {
                               "href": "/api/clusters_mgmt/v1/cloud_providers/aws",
                               "id": "aws",
                               "kind": "CloudProviderLink",
@@ -1047,8 +1047,8 @@ exports[`<Overview /> for an ARO cluster should render 1`] = `
                             "id": "ap-south-1",
                             "kind": "CloudRegion",
                           },
-                          "ap-southeast-1": Object {
-                            "cloud_provider": Object {
+                          "ap-southeast-1": {
+                            "cloud_provider": {
                               "href": "/api/clusters_mgmt/v1/cloud_providers/aws",
                               "id": "aws",
                               "kind": "CloudProviderLink",
@@ -1058,8 +1058,8 @@ exports[`<Overview /> for an ARO cluster should render 1`] = `
                             "id": "ap-southeast-1",
                             "kind": "CloudRegion",
                           },
-                          "ap-southeast-2": Object {
-                            "cloud_provider": Object {
+                          "ap-southeast-2": {
+                            "cloud_provider": {
                               "href": "/api/clusters_mgmt/v1/cloud_providers/aws",
                               "id": "aws",
                               "kind": "CloudProviderLink",
@@ -1069,8 +1069,8 @@ exports[`<Overview /> for an ARO cluster should render 1`] = `
                             "id": "ap-southeast-2",
                             "kind": "CloudRegion",
                           },
-                          "ca-central-1": Object {
-                            "cloud_provider": Object {
+                          "ca-central-1": {
+                            "cloud_provider": {
                               "href": "/api/clusters_mgmt/v1/cloud_providers/aws",
                               "id": "aws",
                               "kind": "CloudProviderLink",
@@ -1080,8 +1080,8 @@ exports[`<Overview /> for an ARO cluster should render 1`] = `
                             "id": "ca-central-1",
                             "kind": "CloudRegion",
                           },
-                          "eu-central-1": Object {
-                            "cloud_provider": Object {
+                          "eu-central-1": {
+                            "cloud_provider": {
                               "href": "/api/clusters_mgmt/v1/cloud_providers/aws",
                               "id": "aws",
                               "kind": "CloudProviderLink",
@@ -1091,8 +1091,8 @@ exports[`<Overview /> for an ARO cluster should render 1`] = `
                             "id": "eu-central-1",
                             "kind": "CloudRegion",
                           },
-                          "eu-west-1": Object {
-                            "cloud_provider": Object {
+                          "eu-west-1": {
+                            "cloud_provider": {
                               "href": "/api/clusters_mgmt/v1/cloud_providers/aws",
                               "id": "aws",
                               "kind": "CloudProviderLink",
@@ -1102,8 +1102,8 @@ exports[`<Overview /> for an ARO cluster should render 1`] = `
                             "id": "eu-west-1",
                             "kind": "CloudRegion",
                           },
-                          "eu-west-2": Object {
-                            "cloud_provider": Object {
+                          "eu-west-2": {
+                            "cloud_provider": {
                               "href": "/api/clusters_mgmt/v1/cloud_providers/aws",
                               "id": "aws",
                               "kind": "CloudProviderLink",
@@ -1113,8 +1113,8 @@ exports[`<Overview /> for an ARO cluster should render 1`] = `
                             "id": "eu-west-2",
                             "kind": "CloudRegion",
                           },
-                          "eu-west-3": Object {
-                            "cloud_provider": Object {
+                          "eu-west-3": {
+                            "cloud_provider": {
                               "href": "/api/clusters_mgmt/v1/cloud_providers/aws",
                               "id": "aws",
                               "kind": "CloudProviderLink",
@@ -1124,8 +1124,8 @@ exports[`<Overview /> for an ARO cluster should render 1`] = `
                             "id": "eu-west-3",
                             "kind": "CloudRegion",
                           },
-                          "sa-east-1": Object {
-                            "cloud_provider": Object {
+                          "sa-east-1": {
+                            "cloud_provider": {
                               "href": "/api/clusters_mgmt/v1/cloud_providers/aws",
                               "id": "aws",
                               "kind": "CloudProviderLink",
@@ -1135,8 +1135,8 @@ exports[`<Overview /> for an ARO cluster should render 1`] = `
                             "id": "sa-east-1",
                             "kind": "CloudRegion",
                           },
-                          "us-east-1": Object {
-                            "cloud_provider": Object {
+                          "us-east-1": {
+                            "cloud_provider": {
                               "href": "/api/clusters_mgmt/v1/cloud_providers/aws",
                               "id": "aws",
                               "kind": "CloudProviderLink",
@@ -1146,8 +1146,8 @@ exports[`<Overview /> for an ARO cluster should render 1`] = `
                             "id": "us-east-1",
                             "kind": "CloudRegion",
                           },
-                          "us-east-2": Object {
-                            "cloud_provider": Object {
+                          "us-east-2": {
+                            "cloud_provider": {
                               "href": "/api/clusters_mgmt/v1/cloud_providers/aws",
                               "id": "aws",
                               "kind": "CloudProviderLink",
@@ -1157,8 +1157,8 @@ exports[`<Overview /> for an ARO cluster should render 1`] = `
                             "id": "us-east-2",
                             "kind": "CloudRegion",
                           },
-                          "us-west-1": Object {
-                            "cloud_provider": Object {
+                          "us-west-1": {
+                            "cloud_provider": {
                               "href": "/api/clusters_mgmt/v1/cloud_providers/aws",
                               "id": "aws",
                               "kind": "CloudProviderLink",
@@ -1168,8 +1168,8 @@ exports[`<Overview /> for an ARO cluster should render 1`] = `
                             "id": "us-west-1",
                             "kind": "CloudRegion",
                           },
-                          "us-west-2": Object {
-                            "cloud_provider": Object {
+                          "us-west-2": {
+                            "cloud_provider": {
                               "href": "/api/clusters_mgmt/v1/cloud_providers/aws",
                               "id": "aws",
                               "kind": "CloudProviderLink",
@@ -1185,28 +1185,28 @@ exports[`<Overview /> for an ARO cluster should render 1`] = `
                   }
                 }
                 cluster={
-                  Object {
-                    "api": Object {
+                  {
+                    "api": {
                       "url": "https://api.test-aro.sdev.devshift.net:6443",
                     },
                     "canDelete": true,
                     "canEdit": true,
-                    "cloud_provider": Object {
+                    "cloud_provider": {
                       "href": "/api/clusters_mgmt/v1/cloud_providers/azure",
                       "id": "azure",
                       "kind": "CloudProviderLink",
                     },
                     "cluster_admin_enabled": false,
-                    "console": Object {
+                    "console": {
                       "url": "https://console-openshift-console.apps.test-aro.sdev.devshift.net",
                     },
                     "creation_timestamp": "2021-03-15T15:20:21.061111Z",
                     "display_name": "test-aro",
-                    "dns": Object {
+                    "dns": {
                       "base_domain": "sdev.devshift.net",
                     },
                     "external_id": "9f50940b-fba8-4c59-9c6c-d64284a2beef",
-                    "flavour": Object {
+                    "flavour": {
                       "href": "/api/clusters_mgmt/v1/flavours/ocp-4",
                       "id": "ocp-4",
                       "kind": "FlavourLink",
@@ -1215,93 +1215,93 @@ exports[`<Overview /> for an ARO cluster should render 1`] = `
                     "kind": "Cluster",
                     "load_balancer_quota": 0,
                     "managed": false,
-                    "metrics": Object {
-                      "cpu": Object {
-                        "total": Object {
+                    "metrics": {
+                      "cpu": {
+                        "total": {
                           "unit": "",
                           "value": 16,
                         },
                         "updated_timestamp": "2021-03-15T15:20:20Z",
-                        "used": Object {
+                        "used": {
                           "unit": "",
                           "value": 3.995410922987096,
                         },
                       },
-                      "memory": Object {
-                        "total": Object {
+                      "memory": {
+                        "total": {
                           "unit": "B",
                           "value": 82293346304,
                         },
                         "updated_timestamp": "2021-03-15T15:20:20Z",
-                        "used": Object {
+                        "used": {
                           "unit": "B",
                           "value": 16546058240,
                         },
                       },
-                      "nodes": Object {
+                      "nodes": {
                         "compute": 4,
                         "master": 3,
                         "total": 7,
                       },
-                      "sockets": Object {
-                        "total": Object {
+                      "sockets": {
+                        "total": {
                           "unit": "",
                           "value": 0,
                         },
                         "updated_timestamp": "2021-03-15T15:20:20Z",
-                        "used": Object {
+                        "used": {
                           "unit": "",
                           "value": 0,
                         },
                       },
-                      "storage": Object {
-                        "total": Object {
+                      "storage": {
+                        "total": {
                           "unit": "B",
                           "value": 0,
                         },
                         "updated_timestamp": "2021-03-15T15:20:20Z",
-                        "used": Object {
+                        "used": {
                           "unit": "B",
                           "value": 0,
                         },
                       },
-                      "upgrade": Object {},
+                      "upgrade": {},
                     },
                     "multi_az": false,
                     "name": "test-aro",
-                    "network": Object {
+                    "network": {
                       "machine_cidr": "10.0.0.0/16",
                       "pod_cidr": "10.128.0.0/14",
-                      "router_shards": Object {
+                      "router_shards": {
                         "href": "/api/clusters_mgmt/v1/clusters/1IztzhAGrbjtKkMbiPewHjImARo/router_shards",
                         "id": "1IztzhAGrbjtKkMbiPewHjImARo",
                         "kind": "RouterShardListLink",
                       },
                       "service_cidr": "172.30.0.0/16",
                     },
-                    "nodes": Object {
+                    "nodes": {
                       "compute": 6,
                       "master": 3,
                       "total": 9,
                     },
-                    "product": Object {
+                    "product": {
                       "id": "ARO",
                     },
-                    "region": Object {
+                    "region": {
                       "href": "/api/clusters_mgmt/v1/cloud_providers/azure/regions/eastus2",
                       "id": "eastus2",
                       "kind": "CloudRegionLink",
                     },
                     "state": "ready",
-                    "status": Object {
+                    "status": {
                       "dns_ready": true,
                       "state": "ready",
                     },
-                    "storage_quota": Object {
+                    "storage_quota": {
                       "unit": "B",
                       "value": 100000000,
                     },
-                    "subscription": Object {
+                    "subscription": {
                       "cluster_id": "1IztzhAGrbjtKkMbiPewHjImARo",
                       "created_at": "2021-03-10T15:20:20Z",
                       "external_cluster_id": "test-aro",
@@ -1309,20 +1309,20 @@ exports[`<Overview /> for an ARO cluster should render 1`] = `
                       "id": "1msoogsgTLQ4PePjrTOt3UqvMzX",
                       "kind": "Subscription",
                       "last_telemetry_date": "2021-03-15T15:20:20Z",
-                      "plan": Object {
+                      "plan": {
                         "href": "/api/accounts_mgmt/v1/plans/ARO",
                         "id": "ARO",
                         "kind": "Plan",
                         "type": "ARO",
                       },
-                      "registry_credential": Object {
+                      "registry_credential": {
                         "href": "/api/accounts_mgmt/v1/registry_credentials/1EaZd2cDHH6ibIb1FFqav2Maro6",
                         "id": "1EaZd2cDHH6ibIb1FFqav2Mles6",
                         "kind": "RegistryCredential",
                       },
                       "updated_at": "2021-03-15T15:20:20Z",
                     },
-                    "version": Object {
+                    "version": {
                       "href": "/api/clusters_mgmt/v1/versions/openshift-v4.0-latest",
                       "id": "openshift-v4.0-latest",
                       "kind": "VersionLink",
@@ -1337,28 +1337,28 @@ exports[`<Overview /> for an ARO cluster should render 1`] = `
             >
               <Connect(DetailsRight)
                 cluster={
-                  Object {
-                    "api": Object {
+                  {
+                    "api": {
                       "url": "https://api.test-aro.sdev.devshift.net:6443",
                     },
                     "canDelete": true,
                     "canEdit": true,
-                    "cloud_provider": Object {
+                    "cloud_provider": {
                       "href": "/api/clusters_mgmt/v1/cloud_providers/azure",
                       "id": "azure",
                       "kind": "CloudProviderLink",
                     },
                     "cluster_admin_enabled": false,
-                    "console": Object {
+                    "console": {
                       "url": "https://console-openshift-console.apps.test-aro.sdev.devshift.net",
                     },
                     "creation_timestamp": "2021-03-15T15:20:21.061111Z",
                     "display_name": "test-aro",
-                    "dns": Object {
+                    "dns": {
                       "base_domain": "sdev.devshift.net",
                     },
                     "external_id": "9f50940b-fba8-4c59-9c6c-d64284a2beef",
-                    "flavour": Object {
+                    "flavour": {
                       "href": "/api/clusters_mgmt/v1/flavours/ocp-4",
                       "id": "ocp-4",
                       "kind": "FlavourLink",
@@ -1367,93 +1367,93 @@ exports[`<Overview /> for an ARO cluster should render 1`] = `
                     "kind": "Cluster",
                     "load_balancer_quota": 0,
                     "managed": false,
-                    "metrics": Object {
-                      "cpu": Object {
-                        "total": Object {
+                    "metrics": {
+                      "cpu": {
+                        "total": {
                           "unit": "",
                           "value": 16,
                         },
                         "updated_timestamp": "2021-03-15T15:20:20Z",
-                        "used": Object {
+                        "used": {
                           "unit": "",
                           "value": 3.995410922987096,
                         },
                       },
-                      "memory": Object {
-                        "total": Object {
+                      "memory": {
+                        "total": {
                           "unit": "B",
                           "value": 82293346304,
                         },
                         "updated_timestamp": "2021-03-15T15:20:20Z",
-                        "used": Object {
+                        "used": {
                           "unit": "B",
                           "value": 16546058240,
                         },
                       },
-                      "nodes": Object {
+                      "nodes": {
                         "compute": 4,
                         "master": 3,
                         "total": 7,
                       },
-                      "sockets": Object {
-                        "total": Object {
+                      "sockets": {
+                        "total": {
                           "unit": "",
                           "value": 0,
                         },
                         "updated_timestamp": "2021-03-15T15:20:20Z",
-                        "used": Object {
+                        "used": {
                           "unit": "",
                           "value": 0,
                         },
                       },
-                      "storage": Object {
-                        "total": Object {
+                      "storage": {
+                        "total": {
                           "unit": "B",
                           "value": 0,
                         },
                         "updated_timestamp": "2021-03-15T15:20:20Z",
-                        "used": Object {
+                        "used": {
                           "unit": "B",
                           "value": 0,
                         },
                       },
-                      "upgrade": Object {},
+                      "upgrade": {},
                     },
                     "multi_az": false,
                     "name": "test-aro",
-                    "network": Object {
+                    "network": {
                       "machine_cidr": "10.0.0.0/16",
                       "pod_cidr": "10.128.0.0/14",
-                      "router_shards": Object {
+                      "router_shards": {
                         "href": "/api/clusters_mgmt/v1/clusters/1IztzhAGrbjtKkMbiPewHjImARo/router_shards",
                         "id": "1IztzhAGrbjtKkMbiPewHjImARo",
                         "kind": "RouterShardListLink",
                       },
                       "service_cidr": "172.30.0.0/16",
                     },
-                    "nodes": Object {
+                    "nodes": {
                       "compute": 6,
                       "master": 3,
                       "total": 9,
                     },
-                    "product": Object {
+                    "product": {
                       "id": "ARO",
                     },
-                    "region": Object {
+                    "region": {
                       "href": "/api/clusters_mgmt/v1/cloud_providers/azure/regions/eastus2",
                       "id": "eastus2",
                       "kind": "CloudRegionLink",
                     },
                     "state": "ready",
-                    "status": Object {
+                    "status": {
                       "dns_ready": true,
                       "state": "ready",
                     },
-                    "storage_quota": Object {
+                    "storage_quota": {
                       "unit": "B",
                       "value": 100000000,
                     },
-                    "subscription": Object {
+                    "subscription": {
                       "cluster_id": "1IztzhAGrbjtKkMbiPewHjImARo",
                       "created_at": "2021-03-10T15:20:20Z",
                       "external_cluster_id": "test-aro",
@@ -1461,20 +1461,20 @@ exports[`<Overview /> for an ARO cluster should render 1`] = `
                       "id": "1msoogsgTLQ4PePjrTOt3UqvMzX",
                       "kind": "Subscription",
                       "last_telemetry_date": "2021-03-15T15:20:20Z",
-                      "plan": Object {
+                      "plan": {
                         "href": "/api/accounts_mgmt/v1/plans/ARO",
                         "id": "ARO",
                         "kind": "Plan",
                         "type": "ARO",
                       },
-                      "registry_credential": Object {
+                      "registry_credential": {
                         "href": "/api/accounts_mgmt/v1/registry_credentials/1EaZd2cDHH6ibIb1FFqav2Maro6",
                         "id": "1EaZd2cDHH6ibIb1FFqav2Mles6",
                         "kind": "RegistryCredential",
                       },
                       "updated_at": "2021-03-15T15:20:20Z",
                     },
-                    "version": Object {
+                    "version": {
                       "href": "/api/clusters_mgmt/v1/versions/openshift-v4.0-latest",
                       "id": "openshift-v4.0-latest",
                       "kind": "VersionLink",
@@ -1519,24 +1519,24 @@ exports[`<Overview /> for an ARO cluster should render 1`] = `
           >
             <ResourceUsage
               cpu={
-                Object {
-                  "total": Object {
+                {
+                  "total": {
                     "unit": "",
                     "value": 16,
                   },
-                  "used": Object {
+                  "used": {
                     "unit": "",
                     "value": 3.995410922987096,
                   },
                 }
               }
               memory={
-                Object {
-                  "total": Object {
+                {
+                  "total": {
                     "unit": "B",
                     "value": 82293346304,
                   },
-                  "used": Object {
+                  "used": {
                     "unit": "B",
                     "value": 16546058240,
                   },
@@ -1594,21 +1594,21 @@ exports[`<Overview /> for an OCP cluster should render 1`] = `
             >
               <DetailsLeft
                 cloudProviders={
-                  Object {
+                  {
                     "error": false,
                     "errorMessage": "",
                     "fulfilled": true,
                     "pending": false,
-                    "providers": Object {
-                      "aws": Object {
+                    "providers": {
+                      "aws": {
                         "display_name": "Amazon Web Services",
                         "href": "/api/clusters_mgmt/v1/cloud_providers/aws",
                         "id": "aws",
                         "kind": "CloudProvider",
                         "name": "aws",
-                        "regions": Object {
-                          "ap-northeast-1": Object {
-                            "cloud_provider": Object {
+                        "regions": {
+                          "ap-northeast-1": {
+                            "cloud_provider": {
                               "href": "/api/clusters_mgmt/v1/cloud_providers/aws",
                               "id": "aws",
                               "kind": "CloudProviderLink",
@@ -1618,8 +1618,8 @@ exports[`<Overview /> for an OCP cluster should render 1`] = `
                             "id": "ap-northeast-1",
                             "kind": "CloudRegion",
                           },
-                          "ap-northeast-2": Object {
-                            "cloud_provider": Object {
+                          "ap-northeast-2": {
+                            "cloud_provider": {
                               "href": "/api/clusters_mgmt/v1/cloud_providers/aws",
                               "id": "aws",
                               "kind": "CloudProviderLink",
@@ -1629,8 +1629,8 @@ exports[`<Overview /> for an OCP cluster should render 1`] = `
                             "id": "ap-northeast-2",
                             "kind": "CloudRegion",
                           },
-                          "ap-south-1": Object {
-                            "cloud_provider": Object {
+                          "ap-south-1": {
+                            "cloud_provider": {
                               "href": "/api/clusters_mgmt/v1/cloud_providers/aws",
                               "id": "aws",
                               "kind": "CloudProviderLink",
@@ -1640,8 +1640,8 @@ exports[`<Overview /> for an OCP cluster should render 1`] = `
                             "id": "ap-south-1",
                             "kind": "CloudRegion",
                           },
-                          "ap-southeast-1": Object {
-                            "cloud_provider": Object {
+                          "ap-southeast-1": {
+                            "cloud_provider": {
                               "href": "/api/clusters_mgmt/v1/cloud_providers/aws",
                               "id": "aws",
                               "kind": "CloudProviderLink",
@@ -1651,8 +1651,8 @@ exports[`<Overview /> for an OCP cluster should render 1`] = `
                             "id": "ap-southeast-1",
                             "kind": "CloudRegion",
                           },
-                          "ap-southeast-2": Object {
-                            "cloud_provider": Object {
+                          "ap-southeast-2": {
+                            "cloud_provider": {
                               "href": "/api/clusters_mgmt/v1/cloud_providers/aws",
                               "id": "aws",
                               "kind": "CloudProviderLink",
@@ -1662,8 +1662,8 @@ exports[`<Overview /> for an OCP cluster should render 1`] = `
                             "id": "ap-southeast-2",
                             "kind": "CloudRegion",
                           },
-                          "ca-central-1": Object {
-                            "cloud_provider": Object {
+                          "ca-central-1": {
+                            "cloud_provider": {
                               "href": "/api/clusters_mgmt/v1/cloud_providers/aws",
                               "id": "aws",
                               "kind": "CloudProviderLink",
@@ -1673,8 +1673,8 @@ exports[`<Overview /> for an OCP cluster should render 1`] = `
                             "id": "ca-central-1",
                             "kind": "CloudRegion",
                           },
-                          "eu-central-1": Object {
-                            "cloud_provider": Object {
+                          "eu-central-1": {
+                            "cloud_provider": {
                               "href": "/api/clusters_mgmt/v1/cloud_providers/aws",
                               "id": "aws",
                               "kind": "CloudProviderLink",
@@ -1684,8 +1684,8 @@ exports[`<Overview /> for an OCP cluster should render 1`] = `
                             "id": "eu-central-1",
                             "kind": "CloudRegion",
                           },
-                          "eu-west-1": Object {
-                            "cloud_provider": Object {
+                          "eu-west-1": {
+                            "cloud_provider": {
                               "href": "/api/clusters_mgmt/v1/cloud_providers/aws",
                               "id": "aws",
                               "kind": "CloudProviderLink",
@@ -1695,8 +1695,8 @@ exports[`<Overview /> for an OCP cluster should render 1`] = `
                             "id": "eu-west-1",
                             "kind": "CloudRegion",
                           },
-                          "eu-west-2": Object {
-                            "cloud_provider": Object {
+                          "eu-west-2": {
+                            "cloud_provider": {
                               "href": "/api/clusters_mgmt/v1/cloud_providers/aws",
                               "id": "aws",
                               "kind": "CloudProviderLink",
@@ -1706,8 +1706,8 @@ exports[`<Overview /> for an OCP cluster should render 1`] = `
                             "id": "eu-west-2",
                             "kind": "CloudRegion",
                           },
-                          "eu-west-3": Object {
-                            "cloud_provider": Object {
+                          "eu-west-3": {
+                            "cloud_provider": {
                               "href": "/api/clusters_mgmt/v1/cloud_providers/aws",
                               "id": "aws",
                               "kind": "CloudProviderLink",
@@ -1717,8 +1717,8 @@ exports[`<Overview /> for an OCP cluster should render 1`] = `
                             "id": "eu-west-3",
                             "kind": "CloudRegion",
                           },
-                          "sa-east-1": Object {
-                            "cloud_provider": Object {
+                          "sa-east-1": {
+                            "cloud_provider": {
                               "href": "/api/clusters_mgmt/v1/cloud_providers/aws",
                               "id": "aws",
                               "kind": "CloudProviderLink",
@@ -1728,8 +1728,8 @@ exports[`<Overview /> for an OCP cluster should render 1`] = `
                             "id": "sa-east-1",
                             "kind": "CloudRegion",
                           },
-                          "us-east-1": Object {
-                            "cloud_provider": Object {
+                          "us-east-1": {
+                            "cloud_provider": {
                               "href": "/api/clusters_mgmt/v1/cloud_providers/aws",
                               "id": "aws",
                               "kind": "CloudProviderLink",
@@ -1739,8 +1739,8 @@ exports[`<Overview /> for an OCP cluster should render 1`] = `
                             "id": "us-east-1",
                             "kind": "CloudRegion",
                           },
-                          "us-east-2": Object {
-                            "cloud_provider": Object {
+                          "us-east-2": {
+                            "cloud_provider": {
                               "href": "/api/clusters_mgmt/v1/cloud_providers/aws",
                               "id": "aws",
                               "kind": "CloudProviderLink",
@@ -1750,8 +1750,8 @@ exports[`<Overview /> for an OCP cluster should render 1`] = `
                             "id": "us-east-2",
                             "kind": "CloudRegion",
                           },
-                          "us-west-1": Object {
-                            "cloud_provider": Object {
+                          "us-west-1": {
+                            "cloud_provider": {
                               "href": "/api/clusters_mgmt/v1/cloud_providers/aws",
                               "id": "aws",
                               "kind": "CloudProviderLink",
@@ -1761,8 +1761,8 @@ exports[`<Overview /> for an OCP cluster should render 1`] = `
                             "id": "us-west-1",
                             "kind": "CloudRegion",
                           },
-                          "us-west-2": Object {
-                            "cloud_provider": Object {
+                          "us-west-2": {
+                            "cloud_provider": {
                               "href": "/api/clusters_mgmt/v1/cloud_providers/aws",
                               "id": "aws",
                               "kind": "CloudProviderLink",
@@ -1778,28 +1778,28 @@ exports[`<Overview /> for an OCP cluster should render 1`] = `
                   }
                 }
                 cluster={
-                  Object {
-                    "api": Object {
+                  {
+                    "api": {
                       "url": "https://api.test-liza.sdev.devshift.net:6443",
                     },
                     "canDelete": true,
                     "canEdit": true,
-                    "cloud_provider": Object {
+                    "cloud_provider": {
                       "href": "/api/clusters_mgmt/v1/cloud_providers/aws",
                       "id": "aws",
                       "kind": "CloudProviderLink",
                     },
                     "cluster_admin_enabled": false,
-                    "console": Object {
+                    "console": {
                       "url": "https://console-openshift-console.apps.test-liza.sdev.devshift.net",
                     },
                     "creation_timestamp": "2019-03-26T15:18:39.06783Z",
                     "display_name": "test-liza",
-                    "dns": Object {
+                    "dns": {
                       "base_domain": "sdev.devshift.net",
                     },
                     "external_id": "9f50940b-fba8-4c59-9c6c-d64284b2026d",
-                    "flavour": Object {
+                    "flavour": {
                       "href": "/api/clusters_mgmt/v1/flavours/ocp-4",
                       "id": "ocp-4",
                       "kind": "FlavourLink",
@@ -1809,93 +1809,93 @@ exports[`<Overview /> for an OCP cluster should render 1`] = `
                     "kind": "Cluster",
                     "load_balancer_quota": 0,
                     "managed": false,
-                    "metrics": Object {
-                      "cpu": Object {
-                        "total": Object {
+                    "metrics": {
+                      "cpu": {
+                        "total": {
                           "unit": "",
                           "value": 16,
                         },
                         "updated_timestamp": "2019-04-28T14:23:18Z",
-                        "used": Object {
+                        "used": {
                           "unit": "",
                           "value": 3.995410922987096,
                         },
                       },
-                      "memory": Object {
-                        "total": Object {
+                      "memory": {
+                        "total": {
                           "unit": "B",
                           "value": 82293346304,
                         },
                         "updated_timestamp": "2019-04-28T14:23:19Z",
-                        "used": Object {
+                        "used": {
                           "unit": "B",
                           "value": 16546058240,
                         },
                       },
-                      "nodes": Object {
+                      "nodes": {
                         "compute": 4,
                         "master": 3,
                         "total": 7,
                       },
-                      "sockets": Object {
-                        "total": Object {
+                      "sockets": {
+                        "total": {
                           "unit": "",
                           "value": 0,
                         },
                         "updated_timestamp": "0001-01-01T00:00:00Z",
-                        "used": Object {
+                        "used": {
                           "unit": "",
                           "value": 0,
                         },
                       },
-                      "storage": Object {
-                        "total": Object {
+                      "storage": {
+                        "total": {
                           "unit": "B",
                           "value": 0,
                         },
                         "updated_timestamp": "0001-01-01T00:00:00Z",
-                        "used": Object {
+                        "used": {
                           "unit": "B",
                           "value": 0,
                         },
                       },
-                      "upgrade": Object {},
+                      "upgrade": {},
                     },
                     "multi_az": false,
                     "name": "test-liza",
-                    "network": Object {
+                    "network": {
                       "machine_cidr": "10.0.0.0/16",
                       "pod_cidr": "10.128.0.0/14",
-                      "router_shards": Object {
+                      "router_shards": {
                         "href": "/api/clusters_mgmt/v1/clusters/1IztzhAGrbjtKkMbiPewJanhTXk/router_shards",
                         "id": "1IztzhAGrbjtKkMbiPewJanhTXk",
                         "kind": "RouterShardListLink",
                       },
                       "service_cidr": "172.30.0.0/16",
                     },
-                    "nodes": Object {
+                    "nodes": {
                       "compute": 2,
                       "master": 3,
                       "total": 5,
                     },
-                    "product": Object {
+                    "product": {
                       "id": "OCP",
                     },
-                    "region": Object {
+                    "region": {
                       "href": "/api/clusters_mgmt/v1/cloud_providers/aws/regions/us-east-1",
                       "id": "us-east-1",
                       "kind": "CloudRegionLink",
                     },
                     "state": "ready",
-                    "status": Object {
+                    "status": {
                       "dns_ready": true,
                       "state": "ready",
                     },
-                    "storage_quota": Object {
+                    "storage_quota": {
                       "unit": "B",
                       "value": 107374182400,
                     },
-                    "subscription": Object {
+                    "subscription": {
                       "cluster_id": "1IztzhAGrbjtKkMbiPewJanhTXk",
                       "created_at": "2019-01-02T18:28:14.851121Z",
                       "external_cluster_id": "test-liza",
@@ -1903,20 +1903,20 @@ exports[`<Overview /> for an OCP cluster should render 1`] = `
                       "id": "1msoogsgTLQ4PePjrTOt3UqvMzX",
                       "kind": "Subscription",
                       "last_telemetry_date": "0001-01-01T00:00:00Z",
-                      "plan": Object {
+                      "plan": {
                         "href": "/api/accounts_mgmt/v1/plans/OCP",
                         "id": "OCP",
                         "kind": "Plan",
                         "type": "OCP",
                       },
-                      "registry_credential": Object {
+                      "registry_credential": {
                         "href": "/api/accounts_mgmt/v1/registry_credentials/1EaZd2cDHH6ibIb1FFqav2Mles6",
                         "id": "1EaZd2cDHH6ibIb1FFqav2Mles6",
                         "kind": "RegistryCredential",
                       },
                       "updated_at": "2019-01-02T18:28:14.851121Z",
                     },
-                    "version": Object {
+                    "version": {
                       "href": "/api/clusters_mgmt/v1/versions/openshift-v4.0-latest",
                       "id": "openshift-v4.0-latest",
                       "kind": "VersionLink",
@@ -1931,28 +1931,28 @@ exports[`<Overview /> for an OCP cluster should render 1`] = `
             >
               <Connect(DetailsRight)
                 cluster={
-                  Object {
-                    "api": Object {
+                  {
+                    "api": {
                       "url": "https://api.test-liza.sdev.devshift.net:6443",
                     },
                     "canDelete": true,
                     "canEdit": true,
-                    "cloud_provider": Object {
+                    "cloud_provider": {
                       "href": "/api/clusters_mgmt/v1/cloud_providers/aws",
                       "id": "aws",
                       "kind": "CloudProviderLink",
                     },
                     "cluster_admin_enabled": false,
-                    "console": Object {
+                    "console": {
                       "url": "https://console-openshift-console.apps.test-liza.sdev.devshift.net",
                     },
                     "creation_timestamp": "2019-03-26T15:18:39.06783Z",
                     "display_name": "test-liza",
-                    "dns": Object {
+                    "dns": {
                       "base_domain": "sdev.devshift.net",
                     },
                     "external_id": "9f50940b-fba8-4c59-9c6c-d64284b2026d",
-                    "flavour": Object {
+                    "flavour": {
                       "href": "/api/clusters_mgmt/v1/flavours/ocp-4",
                       "id": "ocp-4",
                       "kind": "FlavourLink",
@@ -1962,93 +1962,93 @@ exports[`<Overview /> for an OCP cluster should render 1`] = `
                     "kind": "Cluster",
                     "load_balancer_quota": 0,
                     "managed": false,
-                    "metrics": Object {
-                      "cpu": Object {
-                        "total": Object {
+                    "metrics": {
+                      "cpu": {
+                        "total": {
                           "unit": "",
                           "value": 16,
                         },
                         "updated_timestamp": "2019-04-28T14:23:18Z",
-                        "used": Object {
+                        "used": {
                           "unit": "",
                           "value": 3.995410922987096,
                         },
                       },
-                      "memory": Object {
-                        "total": Object {
+                      "memory": {
+                        "total": {
                           "unit": "B",
                           "value": 82293346304,
                         },
                         "updated_timestamp": "2019-04-28T14:23:19Z",
-                        "used": Object {
+                        "used": {
                           "unit": "B",
                           "value": 16546058240,
                         },
                       },
-                      "nodes": Object {
+                      "nodes": {
                         "compute": 4,
                         "master": 3,
                         "total": 7,
                       },
-                      "sockets": Object {
-                        "total": Object {
+                      "sockets": {
+                        "total": {
                           "unit": "",
                           "value": 0,
                         },
                         "updated_timestamp": "0001-01-01T00:00:00Z",
-                        "used": Object {
+                        "used": {
                           "unit": "",
                           "value": 0,
                         },
                       },
-                      "storage": Object {
-                        "total": Object {
+                      "storage": {
+                        "total": {
                           "unit": "B",
                           "value": 0,
                         },
                         "updated_timestamp": "0001-01-01T00:00:00Z",
-                        "used": Object {
+                        "used": {
                           "unit": "B",
                           "value": 0,
                         },
                       },
-                      "upgrade": Object {},
+                      "upgrade": {},
                     },
                     "multi_az": false,
                     "name": "test-liza",
-                    "network": Object {
+                    "network": {
                       "machine_cidr": "10.0.0.0/16",
                       "pod_cidr": "10.128.0.0/14",
-                      "router_shards": Object {
+                      "router_shards": {
                         "href": "/api/clusters_mgmt/v1/clusters/1IztzhAGrbjtKkMbiPewJanhTXk/router_shards",
                         "id": "1IztzhAGrbjtKkMbiPewJanhTXk",
                         "kind": "RouterShardListLink",
                       },
                       "service_cidr": "172.30.0.0/16",
                     },
-                    "nodes": Object {
+                    "nodes": {
                       "compute": 2,
                       "master": 3,
                       "total": 5,
                     },
-                    "product": Object {
+                    "product": {
                       "id": "OCP",
                     },
-                    "region": Object {
+                    "region": {
                       "href": "/api/clusters_mgmt/v1/cloud_providers/aws/regions/us-east-1",
                       "id": "us-east-1",
                       "kind": "CloudRegionLink",
                     },
                     "state": "ready",
-                    "status": Object {
+                    "status": {
                       "dns_ready": true,
                       "state": "ready",
                     },
-                    "storage_quota": Object {
+                    "storage_quota": {
                       "unit": "B",
                       "value": 107374182400,
                     },
-                    "subscription": Object {
+                    "subscription": {
                       "cluster_id": "1IztzhAGrbjtKkMbiPewJanhTXk",
                       "created_at": "2019-01-02T18:28:14.851121Z",
                       "external_cluster_id": "test-liza",
@@ -2056,20 +2056,20 @@ exports[`<Overview /> for an OCP cluster should render 1`] = `
                       "id": "1msoogsgTLQ4PePjrTOt3UqvMzX",
                       "kind": "Subscription",
                       "last_telemetry_date": "0001-01-01T00:00:00Z",
-                      "plan": Object {
+                      "plan": {
                         "href": "/api/accounts_mgmt/v1/plans/OCP",
                         "id": "OCP",
                         "kind": "Plan",
                         "type": "OCP",
                       },
-                      "registry_credential": Object {
+                      "registry_credential": {
                         "href": "/api/accounts_mgmt/v1/registry_credentials/1EaZd2cDHH6ibIb1FFqav2Mles6",
                         "id": "1EaZd2cDHH6ibIb1FFqav2Mles6",
                         "kind": "RegistryCredential",
                       },
                       "updated_at": "2019-01-02T18:28:14.851121Z",
                     },
-                    "version": Object {
+                    "version": {
                       "href": "/api/clusters_mgmt/v1/versions/openshift-v4.0-latest",
                       "id": "openshift-v4.0-latest",
                       "kind": "VersionLink",
@@ -2114,24 +2114,24 @@ exports[`<Overview /> for an OCP cluster should render 1`] = `
           >
             <ResourceUsage
               cpu={
-                Object {
-                  "total": Object {
+                {
+                  "total": {
                     "unit": "",
                     "value": 16,
                   },
-                  "used": Object {
+                  "used": {
                     "unit": "",
                     "value": 3.995410922987096,
                   },
                 }
               }
               memory={
-                Object {
-                  "total": Object {
+                {
+                  "total": {
                     "unit": "B",
                     "value": 82293346304,
                   },
-                  "used": Object {
+                  "used": {
                     "unit": "B",
                     "value": 16546058240,
                   },
@@ -2157,25 +2157,25 @@ exports[`<Overview /> for an OCP cluster should render 1`] = `
             <InsightsAdvisor
               externalId="9f50940b-fba8-4c59-9c6c-d64284b2026d"
               insightsData={
-                Object {
-                  "data": Array [
-                    Object {
+                {
+                  "data": [
+                    {
                       "created_at": "2020-02-03T08:25:00Z",
                       "description": "Some rule description",
                       "details": "Minimum resource requirements...
 
 [Knowledgebase Article](https://docs.openshift.com/container-platform/4.1/installing/installing_bare_metal/installing-bare-metal.html?test=qwerty#minimum-resource-requirements_installing-bare-metal). Anything else here... [Knowledgebase Article](https://docs.openshift.com/container-platform/4.1/installing/installing_bare_metal/installing-bare-metal.html?test=42), [Knowledge Article](https://access.redhat.com/solutions/4972291?test=qwerty#amazing), [not doc link](https://google.com/test)",
-                      "extra_data": Object {
+                      "extra_data": {
                         "error_key": "NODES_MINIMUM_REQUIREMENTS_NOT_MET",
                         "link": "",
-                        "nodes": Array [
-                          Object {
+                        "nodes": [
+                          {
                             "memory": 15.95,
                             "memory_req": 16,
                             "name": "ip-10-0-131-206.eu-west-2.compute.internal",
                             "role": "master",
                           },
-                          Object {
+                          {
                             "memory": 15.95,
                             "memory_req": 16,
                             "name": "ip-10-0-175-135.eu-west-2.compute.internal",
@@ -2188,14 +2188,14 @@ exports[`<Overview /> for an OCP cluster should render 1`] = `
                       "resolution": "",
                       "resolution_risk": 0,
                       "rule_id": "ccx_rules_ocp.external.rules.nodes_kubelet_version_check.report",
-                      "tags": Array [
+                      "tags": [
                         "tag1",
                       ],
                       "total_risk": 3,
                       "user_vote": 0,
                     },
                   ],
-                  "meta": Object {
+                  "meta": {
                     "count": 1,
                     "last_checked_at": "2020-01-23T16:15:59.478901889Z",
                   },
@@ -2248,24 +2248,24 @@ exports[`<Overview /> for an OSD cluster should render 1`] = `
         >
           <ResourceUsage
             cpu={
-              Object {
-                "total": Object {
+              {
+                "total": {
                   "unit": "",
                   "value": 36,
                 },
-                "used": Object {
+                "used": {
                   "unit": "",
                   "value": 3.8904761904758463,
                 },
               }
             }
             memory={
-              Object {
-                "total": Object {
+              {
+                "total": {
                   "unit": "B",
                   "value": 147469647872,
                 },
-                "used": Object {
+                "used": {
                   "unit": "B",
                   "value": 28802600960,
                 },
@@ -2299,21 +2299,21 @@ exports[`<Overview /> for an OSD cluster should render 1`] = `
             >
               <DetailsLeft
                 cloudProviders={
-                  Object {
+                  {
                     "error": false,
                     "errorMessage": "",
                     "fulfilled": true,
                     "pending": false,
-                    "providers": Object {
-                      "aws": Object {
+                    "providers": {
+                      "aws": {
                         "display_name": "Amazon Web Services",
                         "href": "/api/clusters_mgmt/v1/cloud_providers/aws",
                         "id": "aws",
                         "kind": "CloudProvider",
                         "name": "aws",
-                        "regions": Object {
-                          "ap-northeast-1": Object {
-                            "cloud_provider": Object {
+                        "regions": {
+                          "ap-northeast-1": {
+                            "cloud_provider": {
                               "href": "/api/clusters_mgmt/v1/cloud_providers/aws",
                               "id": "aws",
                               "kind": "CloudProviderLink",
@@ -2323,8 +2323,8 @@ exports[`<Overview /> for an OSD cluster should render 1`] = `
                             "id": "ap-northeast-1",
                             "kind": "CloudRegion",
                           },
-                          "ap-northeast-2": Object {
-                            "cloud_provider": Object {
+                          "ap-northeast-2": {
+                            "cloud_provider": {
                               "href": "/api/clusters_mgmt/v1/cloud_providers/aws",
                               "id": "aws",
                               "kind": "CloudProviderLink",
@@ -2334,8 +2334,8 @@ exports[`<Overview /> for an OSD cluster should render 1`] = `
                             "id": "ap-northeast-2",
                             "kind": "CloudRegion",
                           },
-                          "ap-south-1": Object {
-                            "cloud_provider": Object {
+                          "ap-south-1": {
+                            "cloud_provider": {
                               "href": "/api/clusters_mgmt/v1/cloud_providers/aws",
                               "id": "aws",
                               "kind": "CloudProviderLink",
@@ -2345,8 +2345,8 @@ exports[`<Overview /> for an OSD cluster should render 1`] = `
                             "id": "ap-south-1",
                             "kind": "CloudRegion",
                           },
-                          "ap-southeast-1": Object {
-                            "cloud_provider": Object {
+                          "ap-southeast-1": {
+                            "cloud_provider": {
                               "href": "/api/clusters_mgmt/v1/cloud_providers/aws",
                               "id": "aws",
                               "kind": "CloudProviderLink",
@@ -2356,8 +2356,8 @@ exports[`<Overview /> for an OSD cluster should render 1`] = `
                             "id": "ap-southeast-1",
                             "kind": "CloudRegion",
                           },
-                          "ap-southeast-2": Object {
-                            "cloud_provider": Object {
+                          "ap-southeast-2": {
+                            "cloud_provider": {
                               "href": "/api/clusters_mgmt/v1/cloud_providers/aws",
                               "id": "aws",
                               "kind": "CloudProviderLink",
@@ -2367,8 +2367,8 @@ exports[`<Overview /> for an OSD cluster should render 1`] = `
                             "id": "ap-southeast-2",
                             "kind": "CloudRegion",
                           },
-                          "ca-central-1": Object {
-                            "cloud_provider": Object {
+                          "ca-central-1": {
+                            "cloud_provider": {
                               "href": "/api/clusters_mgmt/v1/cloud_providers/aws",
                               "id": "aws",
                               "kind": "CloudProviderLink",
@@ -2378,8 +2378,8 @@ exports[`<Overview /> for an OSD cluster should render 1`] = `
                             "id": "ca-central-1",
                             "kind": "CloudRegion",
                           },
-                          "eu-central-1": Object {
-                            "cloud_provider": Object {
+                          "eu-central-1": {
+                            "cloud_provider": {
                               "href": "/api/clusters_mgmt/v1/cloud_providers/aws",
                               "id": "aws",
                               "kind": "CloudProviderLink",
@@ -2389,8 +2389,8 @@ exports[`<Overview /> for an OSD cluster should render 1`] = `
                             "id": "eu-central-1",
                             "kind": "CloudRegion",
                           },
-                          "eu-west-1": Object {
-                            "cloud_provider": Object {
+                          "eu-west-1": {
+                            "cloud_provider": {
                               "href": "/api/clusters_mgmt/v1/cloud_providers/aws",
                               "id": "aws",
                               "kind": "CloudProviderLink",
@@ -2400,8 +2400,8 @@ exports[`<Overview /> for an OSD cluster should render 1`] = `
                             "id": "eu-west-1",
                             "kind": "CloudRegion",
                           },
-                          "eu-west-2": Object {
-                            "cloud_provider": Object {
+                          "eu-west-2": {
+                            "cloud_provider": {
                               "href": "/api/clusters_mgmt/v1/cloud_providers/aws",
                               "id": "aws",
                               "kind": "CloudProviderLink",
@@ -2411,8 +2411,8 @@ exports[`<Overview /> for an OSD cluster should render 1`] = `
                             "id": "eu-west-2",
                             "kind": "CloudRegion",
                           },
-                          "eu-west-3": Object {
-                            "cloud_provider": Object {
+                          "eu-west-3": {
+                            "cloud_provider": {
                               "href": "/api/clusters_mgmt/v1/cloud_providers/aws",
                               "id": "aws",
                               "kind": "CloudProviderLink",
@@ -2422,8 +2422,8 @@ exports[`<Overview /> for an OSD cluster should render 1`] = `
                             "id": "eu-west-3",
                             "kind": "CloudRegion",
                           },
-                          "sa-east-1": Object {
-                            "cloud_provider": Object {
+                          "sa-east-1": {
+                            "cloud_provider": {
                               "href": "/api/clusters_mgmt/v1/cloud_providers/aws",
                               "id": "aws",
                               "kind": "CloudProviderLink",
@@ -2433,8 +2433,8 @@ exports[`<Overview /> for an OSD cluster should render 1`] = `
                             "id": "sa-east-1",
                             "kind": "CloudRegion",
                           },
-                          "us-east-1": Object {
-                            "cloud_provider": Object {
+                          "us-east-1": {
+                            "cloud_provider": {
                               "href": "/api/clusters_mgmt/v1/cloud_providers/aws",
                               "id": "aws",
                               "kind": "CloudProviderLink",
@@ -2444,8 +2444,8 @@ exports[`<Overview /> for an OSD cluster should render 1`] = `
                             "id": "us-east-1",
                             "kind": "CloudRegion",
                           },
-                          "us-east-2": Object {
-                            "cloud_provider": Object {
+                          "us-east-2": {
+                            "cloud_provider": {
                               "href": "/api/clusters_mgmt/v1/cloud_providers/aws",
                               "id": "aws",
                               "kind": "CloudProviderLink",
@@ -2455,8 +2455,8 @@ exports[`<Overview /> for an OSD cluster should render 1`] = `
                             "id": "us-east-2",
                             "kind": "CloudRegion",
                           },
-                          "us-west-1": Object {
-                            "cloud_provider": Object {
+                          "us-west-1": {
+                            "cloud_provider": {
                               "href": "/api/clusters_mgmt/v1/cloud_providers/aws",
                               "id": "aws",
                               "kind": "CloudProviderLink",
@@ -2466,8 +2466,8 @@ exports[`<Overview /> for an OSD cluster should render 1`] = `
                             "id": "us-west-1",
                             "kind": "CloudRegion",
                           },
-                          "us-west-2": Object {
-                            "cloud_provider": Object {
+                          "us-west-2": {
+                            "cloud_provider": {
                               "href": "/api/clusters_mgmt/v1/cloud_providers/aws",
                               "id": "aws",
                               "kind": "CloudProviderLink",
@@ -2483,151 +2483,151 @@ exports[`<Overview /> for an OSD cluster should render 1`] = `
                   }
                 }
                 cluster={
-                  Object {
+                  {
                     "activity_timestamp": "2021-01-11T11:55:29Z",
-                    "addons": Object {
+                    "addons": {
                       "href": "/api/clusters_mgmt/v1/clusters/1i4counta3holamvo1g5tp6n8p3a03bq/addons",
                       "kind": "AddOnInstallationListLink",
                     },
-                    "api": Object {
+                    "api": {
                       "listening": "external",
                       "url": "https://api.test-liza.wiex.s1.devshift.org:6443",
                     },
-                    "aws_infrastructure_access_role_grants": Object {
+                    "aws_infrastructure_access_role_grants": {
                       "href": "/api/clusters_mgmt/v1/clusters/1i4counta3holamvo1g5tp6n8p3a03bq/aws_infrastructure_access_role_grants",
                       "items": null,
                       "kind": "AWSInfrastructureAccessRoleGrantLink",
                     },
                     "billing_model": "standard",
-                    "ccs": Object {
+                    "ccs": {
                       "disable_scp_checks": false,
                       "enabled": false,
                     },
-                    "cloud_provider": Object {
+                    "cloud_provider": {
                       "href": "/api/clusters_mgmt/v1/cloud_providers/aws",
                       "id": "aws",
                       "kind": "CloudProviderLink",
                     },
-                    "console": Object {
+                    "console": {
                       "url": "https://console-openshift-console.apps.test-liza.wiex.s1.devshift.org",
                     },
                     "creation_timestamp": "2021-01-10T15:17:16.278663Z",
                     "display_name": "test-liza",
-                    "dns": Object {
+                    "dns": {
                       "base_domain": "wiex.s1.devshift.org",
                     },
                     "etcd_encryption": false,
                     "expiration_timestamp": "",
-                    "external_configuration": Object {
+                    "external_configuration": {
                       "href": "/api/clusters_mgmt/v1/clusters/1i4counta3holamvo1g5tp6n8p3a03bq/external_configuration",
                       "kind": "ExternalConfiguration",
-                      "labels": Object {
+                      "labels": {
                         "href": "/api/clusters_mgmt/v1/clusters/1i4counta3holamvo1g5tp6n8p3a03bq/external_configuration/labels",
                         "kind": "LabelListLink",
                       },
-                      "syncsets": Object {
+                      "syncsets": {
                         "href": "/api/clusters_mgmt/v1/clusters/1i4counta3holamvo1g5tp6n8p3a03bq/external_configuration/syncsets",
                         "kind": "SyncsetListLink",
                       },
                     },
                     "external_id": "bae5b227-2472-4e71-be4d-a18fc60bb48a",
-                    "flavour": Object {
+                    "flavour": {
                       "href": "/api/clusters_mgmt/v1/flavours/osd-4",
                       "id": "osd-4",
                       "kind": "FlavourLink",
                     },
-                    "groups": Object {
+                    "groups": {
                       "href": "/api/clusters_mgmt/v1/clusters/1i4counta3holamvo1g5tp6n8p3a03bq/groups",
                       "kind": "GroupListLink",
                     },
                     "health_state": "healthy",
                     "href": "/api/clusters_mgmt/v1/clusters/1i4counta3holamvo1g5tp6n8p3a03bq",
                     "id": "1i4counta3holamvo1g5tp6n8p3a03bq",
-                    "identity_providers": Object {
+                    "identity_providers": {
                       "href": "/api/clusters_mgmt/v1/clusters/1i4counta3holamvo1g5tp6n8p3a03bq/identity_providers",
                       "kind": "IdentityProviderListLink",
                     },
                     "infra_id": "test-liza-d7vkd",
-                    "ingresses": Object {
+                    "ingresses": {
                       "href": "/api/clusters_mgmt/v1/clusters/1i4counta3holamvo1g5tp6n8p3a03bq/ingresses",
                       "id": "1i4counta3holamvo1g5tp6n8p3a03bq",
                       "kind": "IngressListLink",
                     },
                     "kind": "Cluster",
                     "load_balancer_quota": 0,
-                    "machine_pools": Object {
+                    "machine_pools": {
                       "href": "/api/clusters_mgmt/v1/clusters/1i4counta3holamvo1g5tp6n8p3a03bq/machine_pools",
                       "kind": "MachinePoolListLink",
                     },
                     "managed": true,
-                    "metrics": Object {
-                      "compute_nodes_cpu": Object {
-                        "total": Object {
+                    "metrics": {
+                      "compute_nodes_cpu": {
+                        "total": {
                           "unit": "",
                           "value": 16,
                         },
                       },
-                      "compute_nodes_memory": Object {
-                        "total": Object {
+                      "compute_nodes_memory": {
+                        "total": {
                           "unit": "B",
                           "value": 65835802624,
                         },
                       },
-                      "compute_nodes_sockets": Object {
-                        "total": Object {
+                      "compute_nodes_sockets": {
+                        "total": {
                           "unit": "",
                           "value": 0,
                         },
                       },
-                      "cpu": Object {
-                        "total": Object {
+                      "cpu": {
+                        "total": {
                           "unit": "",
                           "value": 36,
                         },
                         "updated_timestamp": "2021-01-11T11:55:29Z",
-                        "used": Object {
+                        "used": {
                           "unit": "",
                           "value": 3.8904761904758463,
                         },
                       },
-                      "memory": Object {
-                        "total": Object {
+                      "memory": {
+                        "total": {
                           "unit": "B",
                           "value": 147469647872,
                         },
                         "updated_timestamp": "2021-01-11T11:55:29Z",
-                        "used": Object {
+                        "used": {
                           "unit": "B",
                           "value": 28802600960,
                         },
                       },
-                      "nodes": Object {
+                      "nodes": {
                         "compute": 4,
                         "infra": 2,
                         "master": 3,
                         "total": 9,
                       },
-                      "sockets": Object {
-                        "total": Object {
+                      "sockets": {
+                        "total": {
                           "unit": "",
                           "value": 0,
                         },
-                        "used": Object {
+                        "used": {
                           "unit": "",
                           "value": 0,
                         },
                       },
-                      "storage": Object {
-                        "total": Object {
+                      "storage": {
+                        "total": {
                           "unit": "B",
                           "value": 0,
                         },
-                        "used": Object {
+                        "used": {
                           "unit": "B",
                           "value": 0,
                         },
                       },
-                      "upgrade": Object {
+                      "upgrade": {
                         "available": false,
                         "updated_timestamp": "2021-01-11T11:55:29Z",
                       },
@@ -2635,62 +2635,62 @@ exports[`<Overview /> for an OSD cluster should render 1`] = `
                     },
                     "multi_az": false,
                     "name": "test-liza",
-                    "network": Object {
+                    "network": {
                       "host_prefix": 23,
                       "machine_cidr": "10.0.0.0/16",
                       "pod_cidr": "10.128.0.0/14",
                       "service_cidr": "172.30.0.0/16",
                     },
-                    "node_drain_grace_period": Object {
+                    "node_drain_grace_period": {
                       "unit": "minutes",
                       "value": 60,
                     },
-                    "nodes": Object {
-                      "availability_zones": Array [
+                    "nodes": {
+                      "availability_zones": [
                         "us-east-1a",
                       ],
                       "compute": 4,
-                      "compute_machine_type": Object {
+                      "compute_machine_type": {
                         "href": "/api/clusters_mgmt/v1/machine_types/m5.xlarge",
                         "id": "m5.xlarge",
                         "kind": "MachineTypeLink",
                       },
                       "infra": 2,
                       "master": 3,
-                      "master_machine_type": Object {
+                      "master_machine_type": {
                         "href": "/api/clusters_mgmt/v1/machine_types/m5.xlarge",
                         "id": "m5.xlarge",
                         "kind": "MachineTypeLink",
                       },
                     },
                     "openshift_version": "4.6.8",
-                    "product": Object {
+                    "product": {
                       "id": "OSD",
                     },
-                    "region": Object {
+                    "region": {
                       "href": "/api/clusters_mgmt/v1/cloud_providers/aws/regions/us-east-1",
                       "id": "us-east-1",
                       "kind": "CloudRegionLink",
                     },
                     "state": "ready",
-                    "status": Object {
+                    "status": {
                       "dns_ready": true,
                       "provision_error_code": "",
                       "provision_error_message": "",
                       "state": "ready",
                     },
-                    "storage_quota": Object {
+                    "storage_quota": {
                       "unit": "B",
                       "value": 107374182400,
                     },
-                    "subscription": Object {
-                      "capabilities": Array [
-                        Object {
+                    "subscription": {
+                      "capabilities": [
+                        {
                           "inherited": true,
                           "name": "capability.cluster.subscribed_ocp",
                           "value": "true",
                         },
-                        Object {
+                        {
                           "inherited": true,
                           "name": "capability.cluster.manage_cluster_admin",
                           "value": "true",
@@ -2701,7 +2701,7 @@ exports[`<Overview /> for an OSD cluster should render 1`] = `
                       "console_url": "https://console-openshift-console.apps.test-liza.wiex.s1.devshift.org",
                       "cpu_total": 8,
                       "created_at": "2021-01-10T15:17:15.19112Z",
-                      "creator": Object {
+                      "creator": {
                         "email": "***REMOVED***",
                         "href": "/api/accounts_mgmt/v1/accounts/1MRilA9vHlOUX9ui3lx6IohSsaS",
                         "id": "1MRilA9vHlOUX9ui3lx6IohSsaS",
@@ -2718,68 +2718,68 @@ exports[`<Overview /> for an OSD cluster should render 1`] = `
                       "last_released_at": "0001-01-01T00:00:00Z",
                       "last_telemetry_date": "2021-01-11T03:59:48.224585Z",
                       "managed": true,
-                      "metrics": Array [
-                        Object {
+                      "metrics": [
+                        {
                           "HealthState": "healthy",
                           "cloud_provider": "aws",
-                          "compute_nodes_cpu": Object {
-                            "total": Object {
+                          "compute_nodes_cpu": {
+                            "total": {
                               "unit": "",
                               "value": 24,
                             },
                             "updated_timestamp": "1970-01-01T00:00:00Z",
-                            "used": Object {
+                            "used": {
                               "unit": "",
                               "value": 0,
                             },
                           },
-                          "compute_nodes_memory": Object {
-                            "total": Object {
+                          "compute_nodes_memory": {
+                            "total": {
                               "unit": "B",
                               "value": 98489344000,
                             },
                             "updated_timestamp": "1970-01-01T00:00:00Z",
-                            "used": Object {
+                            "used": {
                               "unit": "B",
                               "value": 0,
                             },
                           },
-                          "compute_nodes_sockets": Object {
-                            "total": Object {
+                          "compute_nodes_sockets": {
+                            "total": {
                               "unit": "",
                               "value": 0,
                             },
                             "updated_timestamp": "1970-01-01T00:00:00Z",
-                            "used": Object {
+                            "used": {
                               "unit": "",
                               "value": 0,
                             },
                           },
                           "console_url": "https://console-openshift-console.apps.test-liza.wiex.s1.devshift.org",
-                          "cpu": Object {
-                            "total": Object {
+                          "cpu": {
+                            "total": {
                               "unit": "",
                               "value": 36,
                             },
                             "updated_timestamp": "2021-01-11T11:55:10.517Z",
-                            "used": Object {
+                            "used": {
                               "unit": "",
                               "value": 3.8904761904758463,
                             },
                           },
                           "critical_alerts_firing": 0,
-                          "memory": Object {
-                            "total": Object {
+                          "memory": {
+                            "total": {
                               "unit": "B",
                               "value": 147469647872,
                             },
                             "updated_timestamp": "2021-01-11T11:55:10.448Z",
-                            "used": Object {
+                            "used": {
                               "unit": "B",
                               "value": 28802600960,
                             },
                           },
-                          "nodes": Object {
+                          "nodes": {
                             "compute": 4,
                             "infra": 2,
                             "master": 3,
@@ -2789,39 +2789,39 @@ exports[`<Overview /> for an OSD cluster should render 1`] = `
                           "operating_system": "",
                           "operators_condition_failing": 0,
                           "region": "us-east-1",
-                          "sockets": Object {
-                            "total": Object {
+                          "sockets": {
+                            "total": {
                               "unit": "",
                               "value": 0,
                             },
                             "updated_timestamp": "1970-01-01T00:00:00Z",
-                            "used": Object {
+                            "used": {
                               "unit": "",
                               "value": 0,
                             },
                           },
                           "state": "ready",
                           "state_description": "",
-                          "storage": Object {
-                            "total": Object {
+                          "storage": {
+                            "total": {
                               "unit": "B",
                               "value": 0,
                             },
                             "updated_timestamp": "1970-01-01T00:00:00Z",
-                            "used": Object {
+                            "used": {
                               "unit": "B",
                               "value": 0,
                             },
                           },
                           "subscription_cpu_total": 8,
                           "subscription_socket_total": 4,
-                          "upgrade": Object {
+                          "upgrade": {
                             "updated_timestamp": "2021-01-11T11:55:10.206Z",
                           },
                         },
                       ],
                       "organization_id": "1MKVU4otCIuogoLtgtyU6wajxjW",
-                      "plan": Object {
+                      "plan": {
                         "href": "/api/accounts_mgmt/v1/plans/OSD",
                         "id": "OSD",
                         "kind": "Plan",
@@ -2835,7 +2835,7 @@ exports[`<Overview /> for an OSD cluster should render 1`] = `
                       "updated_at": "2021-01-11T03:59:48.224622Z",
                     },
                     "upgrade_channel_group": "stable",
-                    "version": Object {
+                    "version": {
                       "channel_group": "stable",
                       "href": "/api/clusters_mgmt/v1/versions/openshift-v4.6.8",
                       "id": "openshift-v4.6.8",
@@ -2851,151 +2851,151 @@ exports[`<Overview /> for an OSD cluster should render 1`] = `
             >
               <Connect(DetailsRight)
                 cluster={
-                  Object {
+                  {
                     "activity_timestamp": "2021-01-11T11:55:29Z",
-                    "addons": Object {
+                    "addons": {
                       "href": "/api/clusters_mgmt/v1/clusters/1i4counta3holamvo1g5tp6n8p3a03bq/addons",
                       "kind": "AddOnInstallationListLink",
                     },
-                    "api": Object {
+                    "api": {
                       "listening": "external",
                       "url": "https://api.test-liza.wiex.s1.devshift.org:6443",
                     },
-                    "aws_infrastructure_access_role_grants": Object {
+                    "aws_infrastructure_access_role_grants": {
                       "href": "/api/clusters_mgmt/v1/clusters/1i4counta3holamvo1g5tp6n8p3a03bq/aws_infrastructure_access_role_grants",
                       "items": null,
                       "kind": "AWSInfrastructureAccessRoleGrantLink",
                     },
                     "billing_model": "standard",
-                    "ccs": Object {
+                    "ccs": {
                       "disable_scp_checks": false,
                       "enabled": false,
                     },
-                    "cloud_provider": Object {
+                    "cloud_provider": {
                       "href": "/api/clusters_mgmt/v1/cloud_providers/aws",
                       "id": "aws",
                       "kind": "CloudProviderLink",
                     },
-                    "console": Object {
+                    "console": {
                       "url": "https://console-openshift-console.apps.test-liza.wiex.s1.devshift.org",
                     },
                     "creation_timestamp": "2021-01-10T15:17:16.278663Z",
                     "display_name": "test-liza",
-                    "dns": Object {
+                    "dns": {
                       "base_domain": "wiex.s1.devshift.org",
                     },
                     "etcd_encryption": false,
                     "expiration_timestamp": "",
-                    "external_configuration": Object {
+                    "external_configuration": {
                       "href": "/api/clusters_mgmt/v1/clusters/1i4counta3holamvo1g5tp6n8p3a03bq/external_configuration",
                       "kind": "ExternalConfiguration",
-                      "labels": Object {
+                      "labels": {
                         "href": "/api/clusters_mgmt/v1/clusters/1i4counta3holamvo1g5tp6n8p3a03bq/external_configuration/labels",
                         "kind": "LabelListLink",
                       },
-                      "syncsets": Object {
+                      "syncsets": {
                         "href": "/api/clusters_mgmt/v1/clusters/1i4counta3holamvo1g5tp6n8p3a03bq/external_configuration/syncsets",
                         "kind": "SyncsetListLink",
                       },
                     },
                     "external_id": "bae5b227-2472-4e71-be4d-a18fc60bb48a",
-                    "flavour": Object {
+                    "flavour": {
                       "href": "/api/clusters_mgmt/v1/flavours/osd-4",
                       "id": "osd-4",
                       "kind": "FlavourLink",
                     },
-                    "groups": Object {
+                    "groups": {
                       "href": "/api/clusters_mgmt/v1/clusters/1i4counta3holamvo1g5tp6n8p3a03bq/groups",
                       "kind": "GroupListLink",
                     },
                     "health_state": "healthy",
                     "href": "/api/clusters_mgmt/v1/clusters/1i4counta3holamvo1g5tp6n8p3a03bq",
                     "id": "1i4counta3holamvo1g5tp6n8p3a03bq",
-                    "identity_providers": Object {
+                    "identity_providers": {
                       "href": "/api/clusters_mgmt/v1/clusters/1i4counta3holamvo1g5tp6n8p3a03bq/identity_providers",
                       "kind": "IdentityProviderListLink",
                     },
                     "infra_id": "test-liza-d7vkd",
-                    "ingresses": Object {
+                    "ingresses": {
                       "href": "/api/clusters_mgmt/v1/clusters/1i4counta3holamvo1g5tp6n8p3a03bq/ingresses",
                       "id": "1i4counta3holamvo1g5tp6n8p3a03bq",
                       "kind": "IngressListLink",
                     },
                     "kind": "Cluster",
                     "load_balancer_quota": 0,
-                    "machine_pools": Object {
+                    "machine_pools": {
                       "href": "/api/clusters_mgmt/v1/clusters/1i4counta3holamvo1g5tp6n8p3a03bq/machine_pools",
                       "kind": "MachinePoolListLink",
                     },
                     "managed": true,
-                    "metrics": Object {
-                      "compute_nodes_cpu": Object {
-                        "total": Object {
+                    "metrics": {
+                      "compute_nodes_cpu": {
+                        "total": {
                           "unit": "",
                           "value": 16,
                         },
                       },
-                      "compute_nodes_memory": Object {
-                        "total": Object {
+                      "compute_nodes_memory": {
+                        "total": {
                           "unit": "B",
                           "value": 65835802624,
                         },
                       },
-                      "compute_nodes_sockets": Object {
-                        "total": Object {
+                      "compute_nodes_sockets": {
+                        "total": {
                           "unit": "",
                           "value": 0,
                         },
                       },
-                      "cpu": Object {
-                        "total": Object {
+                      "cpu": {
+                        "total": {
                           "unit": "",
                           "value": 36,
                         },
                         "updated_timestamp": "2021-01-11T11:55:29Z",
-                        "used": Object {
+                        "used": {
                           "unit": "",
                           "value": 3.8904761904758463,
                         },
                       },
-                      "memory": Object {
-                        "total": Object {
+                      "memory": {
+                        "total": {
                           "unit": "B",
                           "value": 147469647872,
                         },
                         "updated_timestamp": "2021-01-11T11:55:29Z",
-                        "used": Object {
+                        "used": {
                           "unit": "B",
                           "value": 28802600960,
                         },
                       },
-                      "nodes": Object {
+                      "nodes": {
                         "compute": 4,
                         "infra": 2,
                         "master": 3,
                         "total": 9,
                       },
-                      "sockets": Object {
-                        "total": Object {
+                      "sockets": {
+                        "total": {
                           "unit": "",
                           "value": 0,
                         },
-                        "used": Object {
+                        "used": {
                           "unit": "",
                           "value": 0,
                         },
                       },
-                      "storage": Object {
-                        "total": Object {
+                      "storage": {
+                        "total": {
                           "unit": "B",
                           "value": 0,
                         },
-                        "used": Object {
+                        "used": {
                           "unit": "B",
                           "value": 0,
                         },
                       },
-                      "upgrade": Object {
+                      "upgrade": {
                         "available": false,
                         "updated_timestamp": "2021-01-11T11:55:29Z",
                       },
@@ -3003,62 +3003,62 @@ exports[`<Overview /> for an OSD cluster should render 1`] = `
                     },
                     "multi_az": false,
                     "name": "test-liza",
-                    "network": Object {
+                    "network": {
                       "host_prefix": 23,
                       "machine_cidr": "10.0.0.0/16",
                       "pod_cidr": "10.128.0.0/14",
                       "service_cidr": "172.30.0.0/16",
                     },
-                    "node_drain_grace_period": Object {
+                    "node_drain_grace_period": {
                       "unit": "minutes",
                       "value": 60,
                     },
-                    "nodes": Object {
-                      "availability_zones": Array [
+                    "nodes": {
+                      "availability_zones": [
                         "us-east-1a",
                       ],
                       "compute": 4,
-                      "compute_machine_type": Object {
+                      "compute_machine_type": {
                         "href": "/api/clusters_mgmt/v1/machine_types/m5.xlarge",
                         "id": "m5.xlarge",
                         "kind": "MachineTypeLink",
                       },
                       "infra": 2,
                       "master": 3,
-                      "master_machine_type": Object {
+                      "master_machine_type": {
                         "href": "/api/clusters_mgmt/v1/machine_types/m5.xlarge",
                         "id": "m5.xlarge",
                         "kind": "MachineTypeLink",
                       },
                     },
                     "openshift_version": "4.6.8",
-                    "product": Object {
+                    "product": {
                       "id": "OSD",
                     },
-                    "region": Object {
+                    "region": {
                       "href": "/api/clusters_mgmt/v1/cloud_providers/aws/regions/us-east-1",
                       "id": "us-east-1",
                       "kind": "CloudRegionLink",
                     },
                     "state": "ready",
-                    "status": Object {
+                    "status": {
                       "dns_ready": true,
                       "provision_error_code": "",
                       "provision_error_message": "",
                       "state": "ready",
                     },
-                    "storage_quota": Object {
+                    "storage_quota": {
                       "unit": "B",
                       "value": 107374182400,
                     },
-                    "subscription": Object {
-                      "capabilities": Array [
-                        Object {
+                    "subscription": {
+                      "capabilities": [
+                        {
                           "inherited": true,
                           "name": "capability.cluster.subscribed_ocp",
                           "value": "true",
                         },
-                        Object {
+                        {
                           "inherited": true,
                           "name": "capability.cluster.manage_cluster_admin",
                           "value": "true",
@@ -3069,7 +3069,7 @@ exports[`<Overview /> for an OSD cluster should render 1`] = `
                       "console_url": "https://console-openshift-console.apps.test-liza.wiex.s1.devshift.org",
                       "cpu_total": 8,
                       "created_at": "2021-01-10T15:17:15.19112Z",
-                      "creator": Object {
+                      "creator": {
                         "email": "***REMOVED***",
                         "href": "/api/accounts_mgmt/v1/accounts/1MRilA9vHlOUX9ui3lx6IohSsaS",
                         "id": "1MRilA9vHlOUX9ui3lx6IohSsaS",
@@ -3086,68 +3086,68 @@ exports[`<Overview /> for an OSD cluster should render 1`] = `
                       "last_released_at": "0001-01-01T00:00:00Z",
                       "last_telemetry_date": "2021-01-11T03:59:48.224585Z",
                       "managed": true,
-                      "metrics": Array [
-                        Object {
+                      "metrics": [
+                        {
                           "HealthState": "healthy",
                           "cloud_provider": "aws",
-                          "compute_nodes_cpu": Object {
-                            "total": Object {
+                          "compute_nodes_cpu": {
+                            "total": {
                               "unit": "",
                               "value": 24,
                             },
                             "updated_timestamp": "1970-01-01T00:00:00Z",
-                            "used": Object {
+                            "used": {
                               "unit": "",
                               "value": 0,
                             },
                           },
-                          "compute_nodes_memory": Object {
-                            "total": Object {
+                          "compute_nodes_memory": {
+                            "total": {
                               "unit": "B",
                               "value": 98489344000,
                             },
                             "updated_timestamp": "1970-01-01T00:00:00Z",
-                            "used": Object {
+                            "used": {
                               "unit": "B",
                               "value": 0,
                             },
                           },
-                          "compute_nodes_sockets": Object {
-                            "total": Object {
+                          "compute_nodes_sockets": {
+                            "total": {
                               "unit": "",
                               "value": 0,
                             },
                             "updated_timestamp": "1970-01-01T00:00:00Z",
-                            "used": Object {
+                            "used": {
                               "unit": "",
                               "value": 0,
                             },
                           },
                           "console_url": "https://console-openshift-console.apps.test-liza.wiex.s1.devshift.org",
-                          "cpu": Object {
-                            "total": Object {
+                          "cpu": {
+                            "total": {
                               "unit": "",
                               "value": 36,
                             },
                             "updated_timestamp": "2021-01-11T11:55:10.517Z",
-                            "used": Object {
+                            "used": {
                               "unit": "",
                               "value": 3.8904761904758463,
                             },
                           },
                           "critical_alerts_firing": 0,
-                          "memory": Object {
-                            "total": Object {
+                          "memory": {
+                            "total": {
                               "unit": "B",
                               "value": 147469647872,
                             },
                             "updated_timestamp": "2021-01-11T11:55:10.448Z",
-                            "used": Object {
+                            "used": {
                               "unit": "B",
                               "value": 28802600960,
                             },
                           },
-                          "nodes": Object {
+                          "nodes": {
                             "compute": 4,
                             "infra": 2,
                             "master": 3,
@@ -3157,39 +3157,39 @@ exports[`<Overview /> for an OSD cluster should render 1`] = `
                           "operating_system": "",
                           "operators_condition_failing": 0,
                           "region": "us-east-1",
-                          "sockets": Object {
-                            "total": Object {
+                          "sockets": {
+                            "total": {
                               "unit": "",
                               "value": 0,
                             },
                             "updated_timestamp": "1970-01-01T00:00:00Z",
-                            "used": Object {
+                            "used": {
                               "unit": "",
                               "value": 0,
                             },
                           },
                           "state": "ready",
                           "state_description": "",
-                          "storage": Object {
-                            "total": Object {
+                          "storage": {
+                            "total": {
                               "unit": "B",
                               "value": 0,
                             },
                             "updated_timestamp": "1970-01-01T00:00:00Z",
-                            "used": Object {
+                            "used": {
                               "unit": "B",
                               "value": 0,
                             },
                           },
                           "subscription_cpu_total": 8,
                           "subscription_socket_total": 4,
-                          "upgrade": Object {
+                          "upgrade": {
                             "updated_timestamp": "2021-01-11T11:55:10.206Z",
                           },
                         },
                       ],
                       "organization_id": "1MKVU4otCIuogoLtgtyU6wajxjW",
-                      "plan": Object {
+                      "plan": {
                         "href": "/api/accounts_mgmt/v1/plans/OSD",
                         "id": "OSD",
                         "kind": "Plan",
@@ -3203,7 +3203,7 @@ exports[`<Overview /> for an OSD cluster should render 1`] = `
                       "updated_at": "2021-01-11T03:59:48.224622Z",
                     },
                     "upgrade_channel_group": "stable",
-                    "version": Object {
+                    "version": {
                       "channel_group": "stable",
                       "href": "/api/clusters_mgmt/v1/versions/openshift-v4.6.8",
                       "id": "openshift-v4.6.8",

@@ -73,7 +73,7 @@ describe('Router', () => {
     }));
     mockRestrictedEnv();
   });
-  describe('Every route should render: ', async () =>
+  describe('Every route should render: ', () =>
     test.each(routes)(
       '%s',
       async (route) => {

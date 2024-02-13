@@ -5,7 +5,7 @@ import LiveDateFormat from './LiveDateFormat';
 
 describe('<LiveDateFormat />', () => {
   beforeAll(() => {
-    jest.useFakeTimers('modern');
+    jest.useFakeTimers();
     jest.setSystemTime(new Date('1 Jan 2021 00:00:00 GMT').getTime());
   });
 
