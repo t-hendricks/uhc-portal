@@ -5,7 +5,9 @@ import { screen, render, checkAccessibility } from '~/testUtils';
 
 import NetworkSelfServiceSection from '../NetworkSelfServiceSection';
 
-jest.useFakeTimers();
+jest.useFakeTimers({
+  legacyFakeTimers: true, // TODO 'modern'
+});
 
 const baseResponse = {
   fulfilled: false,

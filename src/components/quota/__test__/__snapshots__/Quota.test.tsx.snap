@@ -92,43 +92,43 @@ exports[`<Quota /> OSDSubscriptionCard should render 1`] = `
       >
         <OSDSubscriptionTable
           rows={
-            Array [
-              Array [
+            [
+              [
                 "cluster",
                 "standard-4",
-                Object {
+                {
                   "title": "multi-zone",
                 },
                 "Standard",
                 "OSD",
                 "0 of 17",
-                Object {
+                {
                   "title": <OutlinedCircleIcon />,
                 },
               ],
-              Array [
+              [
                 "compute.node",
                 "standard-4",
-                Object {
+                {
                   "title": "N/A",
                 },
                 "Standard",
                 "OSD",
                 "4 of 27",
-                Object {
+                {
                   "title": <ResourcesAlmostEmptyIcon />,
                 },
               ],
-              Array [
+              [
                 "add-on",
                 "addon-dba-operator",
-                Object {
+                {
                   "title": "N/A",
                 },
                 "Any",
                 "ANY",
                 "0 of 15",
-                Object {
+                {
                   "title": <OutlinedCircleIcon />,
                 },
               ],
@@ -151,19 +151,19 @@ exports[`<Quota /> OSDSubscriptionTable should render 1`] = `
     canSelectAll={true}
     canSortFavorites={true}
     cells={
-      Array [
+      [
         "Resource type",
         "Resource name",
         "Availability",
-        Object {
+        {
           "title": "Plan type",
-          "transforms": Array [
+          "transforms": [
             [Function],
           ],
         },
         "Cluster type",
-        Object {
-          "props": Object {
+        {
+          "props": {
             "className": "quota-table-used",
           },
           "title": "Used",
@@ -185,7 +185,7 @@ exports[`<Quota /> OSDSubscriptionTable should render 1`] = `
     ouiaSafe={true}
     role="grid"
     rowLabeledBy="simple-node"
-    rows={Array []}
+    rows={[]}
     selectVariant="checkbox"
     variant={null}
   >

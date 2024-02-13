@@ -6,6 +6,7 @@ import userEvent from '@testing-library/user-event';
 import '@testing-library/jest-dom';
 import { MemoryRouter } from 'react-router';
 import { toHaveNoViolations, axe } from 'jest-axe';
+
 import useChrome from '@redhat-cloud-services/frontend-components/useChrome';
 import * as featureGates from '~/hooks/useFeatureGate';
 import { createBrowserHistory } from 'history';
@@ -100,8 +101,8 @@ export { withState, renderWithState as render };
 /* ***** Items outside of React Test Library ************ */
 expect.extend(toHaveNoViolations);
 
-export const checkAccessibility = async (container: HTMLElement | string) => {
-  const results = await axe(container);
+export const checkAccessibility = async (container: HTMLElement | string, options?: any) => {
+  const results = await axe(container, options);
   expect(results).toHaveNoViolations();
 };
 

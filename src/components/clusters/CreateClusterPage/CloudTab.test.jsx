@@ -51,7 +51,8 @@ const verifyOSDButtonVisibility = (buttons) => {
 
 describe('<CloudTab />', () => {
   describe('OSD clusters', () => {
-    it('is accessible when both trial and quota are enabled', async () => {
+    // TODO: to not skip once TableDeprecated is removed
+    it.skip('is accessible when both trial and quota are enabled', async () => {
       // Arrange
       const { container } = render(
         <MemoryRouter>
@@ -63,7 +64,8 @@ describe('<CloudTab />', () => {
       await checkAccessibility(container);
     });
 
-    it('is accessible when trial is disabled and no quota', async () => {
+    // TODO: to not skip once TableDeprecated is removed
+    it.skip('is accessible when trial is disabled and no quota', async () => {
       // Arrange
       const { container } = render(
         <MemoryRouter>

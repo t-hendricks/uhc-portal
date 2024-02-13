@@ -70,7 +70,7 @@ const ArchivedClusterListTable = ({
     { title: 'Type' },
     { title: 'Status', transforms: [sortable] },
     { title: 'Provider (Location)', columnTransforms: [hiddenOnMdOrSmaller] },
-    '',
+    '', // TODO: to avoid TypeError: headerData[(cellIndex + additionalColsIndexShift)] is undefined from openshift-assisted_ui-lib
   ];
 
   const sortBy = {

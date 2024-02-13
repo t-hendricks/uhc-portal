@@ -3,7 +3,9 @@ import { render, screen, checkAccessibility, act } from '~/testUtils';
 
 import RefreshButton from './RefreshButton';
 
-jest.useFakeTimers();
+jest.useFakeTimers({
+  legacyFakeTimers: true, // TODO 'modern'
+});
 jest.spyOn(global, 'clearInterval');
 jest.spyOn(global, 'setInterval');
 
