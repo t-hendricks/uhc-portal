@@ -101,7 +101,7 @@ function AWSAccountSelection({
   }, [isOpen, hasAWSAccounts]);
 
   const onToggle = useCallback(
-    (_, toggleOpenValue: boolean | ((prevState: boolean) => boolean)) => {
+    (_: any, toggleOpenValue: boolean | ((prevState: boolean) => boolean)) => {
       setIsOpen(toggleOpenValue);
     },
     [setIsOpen],

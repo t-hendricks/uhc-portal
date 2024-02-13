@@ -2,7 +2,7 @@ import React, { PropsWithChildren } from 'react';
 import { ExpandableSection, Title } from '@patternfly/react-core';
 
 const AWSAccountRoles = ['ocm', 'user', 'account'] as const;
-export type AWSAccountRole = typeof AWSAccountRoles[number];
+export type AWSAccountRole = (typeof AWSAccountRoles)[number];
 
 export type AssociateAWSAccountStepProps = {
   title: string;

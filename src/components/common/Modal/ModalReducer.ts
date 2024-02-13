@@ -1,4 +1,4 @@
-import produce from 'immer';
+import { produce } from 'immer';
 import { ModalActions } from './ModalActions';
 
 import { OPEN_MODAL, CLOSE_MODAL } from './ModalConstants';

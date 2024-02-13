@@ -88,14 +88,13 @@ class CostBreakdownSummary extends Component {
   // Override legend label layout
   getLegendLabel =
     () =>
-    ({ values, ...props }) =>
-      (
-        <ChartLabel
-          {...props}
-          style={[{ fontWeight: 600 }, {}]}
-          text={[values[props.index], props.text]}
-        />
-      );
+    ({ values, ...props }) => (
+      <ChartLabel
+        {...props}
+        style={[{ fontWeight: 600 }, {}]}
+        text={[values[props.index], props.text]}
+      />
+    );
 
   getLegend = (values) => {
     const LegendLabel = this.getLegendLabel();

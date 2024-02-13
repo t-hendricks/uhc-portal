@@ -41,7 +41,7 @@ const Insights = () => {
     };
 
     const cleanupInsightsListener = insights.chrome.on('APP_NAVIGATION', navigateToApp);
-    const cleanupRouteListener = history.listen((location) => {
+    const cleanupRouteListener = history.listen((location: Location) => {
       insights.chrome.appNavClick(getNavClickParams(location.pathname));
     });
 
