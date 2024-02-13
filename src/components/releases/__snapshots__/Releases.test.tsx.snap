@@ -145,7 +145,7 @@ exports[`<Releases /> should render 1`] = `
                                                           distance={25}
                                                           enableFlip={true}
                                                           flipBehavior={
-                                                            Array [
+                                                            [
                                                               "top",
                                                               "bottom",
                                                               "left",
@@ -183,13 +183,13 @@ exports[`<Releases /> should render 1`] = `
                                                               aria-modal="true"
                                                               className="pf-v5-c-popover"
                                                               focusTrapOptions={
-                                                                Object {
+                                                                {
                                                                   "checkCanFocusTrap": [Function],
                                                                   "clickOutsideDeactivates": true,
                                                                   "fallbackFocus": [Function],
                                                                   "initialFocus": undefined,
                                                                   "returnFocusOnDeactivate": true,
-                                                                  "tabbableOptions": Object {
+                                                                  "tabbableOptions": {
                                                                     "displayCheck": "none",
                                                                   },
                                                                 }
@@ -198,7 +198,7 @@ exports[`<Releases /> should render 1`] = `
                                                               preventScrollOnDeactivate={true}
                                                               role="dialog"
                                                               style={
-                                                                Object {
+                                                                {
                                                                   "maxWidth": null,
                                                                   "minWidth": null,
                                                                 }
@@ -237,12 +237,12 @@ exports[`<Releases /> should render 1`] = `
                                                             </FocusTrap>
                                                           }
                                                           popperRef={
-                                                            Object {
+                                                            {
                                                               "current": null,
                                                             }
                                                           }
                                                           positionModifiers={
-                                                            Object {
+                                                            {
                                                               "bottom": "pf-m-bottom",
                                                               "bottom-end": "pf-m-bottom-right",
                                                               "bottom-start": "pf-m-bottom-left",
@@ -271,7 +271,7 @@ exports[`<Releases /> should render 1`] = `
                                                         >
                                                           <div
                                                             style={
-                                                              Object {
+                                                              {
                                                                 "display": "contents",
                                                               }
                                                             }
@@ -325,12 +325,12 @@ exports[`<Releases /> should render 1`] = `
                                                   <Gallery
                                                     hasGutter={true}
                                                     maxWidths={
-                                                      Object {
+                                                      {
                                                         "default": "340px",
                                                       }
                                                     }
                                                     minWidths={
-                                                      Object {
+                                                      {
                                                         "sm": "340px",
                                                       }
                                                     }
@@ -338,7 +338,7 @@ exports[`<Releases /> should render 1`] = `
                                                     <div
                                                       className="pf-v5-l-gallery pf-m-gutter"
                                                       style={
-                                                        Object {
+                                                        {
                                                           "--pf-v5-l-gallery--GridTemplateColumns--max": "340px",
                                                           "--pf-v5-l-gallery--GridTemplateColumns--min-on-sm": "340px",
                                                         }

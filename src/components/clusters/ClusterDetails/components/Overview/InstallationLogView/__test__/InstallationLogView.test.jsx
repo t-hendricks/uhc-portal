@@ -5,7 +5,9 @@ import InstallationLogView from '../InstallationLogView';
 import fixtures from '../../../../__test__/ClusterDetails.fixtures';
 import clusterStates from '../../../../../common/clusterStates';
 
-jest.useFakeTimers('legacy'); // TODO 'modern'
+jest.useFakeTimers({
+  legacyFakeTimers: true, // TODO 'modern'
+});
 
 const clearLogs = jest.fn();
 const getLogs = jest.fn();

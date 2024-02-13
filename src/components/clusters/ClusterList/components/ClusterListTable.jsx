@@ -103,7 +103,7 @@ function ClusterListTable(props) {
     { title: 'Created', transforms: [sortable], columnTransforms: [hiddenOnMdOrSmaller] },
     { title: 'Version', columnTransforms: [hiddenOnMdOrSmaller] },
     { title: 'Provider (Region)', columnTransforms: [hiddenOnMdOrSmaller] },
-    '',
+    '', // TODO: to avoid TypeError: headerData[(cellIndex + additionalColsIndexShift)] is undefined from penshift-assisted_ui-lib
   ];
 
   const onSortToggle = (_event, index, direction) => {

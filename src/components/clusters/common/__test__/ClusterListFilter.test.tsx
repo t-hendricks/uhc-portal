@@ -10,7 +10,9 @@ jest.mock('react-redux', () => ({
 }));
 jest.mock('~/redux/actions/viewOptionsActions');
 
-jest.useFakeTimers('legacy'); // TODO 'modern'
+jest.useFakeTimers({
+  legacyFakeTimers: true, // TODO 'modern'
+});
 
 const dispatchMock = jest.fn();
 

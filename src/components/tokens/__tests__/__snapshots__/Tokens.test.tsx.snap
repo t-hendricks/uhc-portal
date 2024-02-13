@@ -9,12 +9,12 @@ exports[`<Tokens /> Renders loading screen 1`] = `
   >
     <Breadcrumbs
       path={
-        Array [
-          Object {
+        [
+          {
             "label": "Downloads",
             "path": "/downloads",
           },
-          Object {
+          {
             "label": "OpenShift Cluster Manager API Token",
           },
         ]
@@ -168,12 +168,12 @@ exports[`<Tokens /> Renders screen with button 1`] = `
   >
     <Breadcrumbs
       path={
-        Array [
-          Object {
+        [
+          {
             "label": "Downloads",
             "path": "/downloads",
           },
-          Object {
+          {
             "label": "OpenShift Cluster Manager API Token",
           },
         ]
@@ -265,12 +265,12 @@ exports[`<Tokens /> Renders screen with token 1`] = `
   >
     <Breadcrumbs
       path={
-        Array [
-          Object {
+        [
+          {
             "label": "Downloads",
             "path": "/downloads",
           },
-          Object {
+          {
             "label": "OpenShift Cluster Manager API Token",
           },
         ]
@@ -362,12 +362,12 @@ exports[`<Tokens /> Renders token 1`] = `
   >
     <Breadcrumbs
       path={
-        Array [
-          Object {
+        [
+          {
             "label": "Downloads",
             "path": "/downloads",
           },
-          Object {
+          {
             "label": "OpenShift Cluster Manager API Token",
           },
         ]

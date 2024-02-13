@@ -121,7 +121,7 @@ describe('<ClusterAutoScaleSettingsDialog />', () => {
 
       // Act - first get the component in an error state and fix it
       await updateTestInputValue(user, { typeValue: '11', clearBefore: true });
-      expect(getModalActionButton('Close')).toBeDisabled();
+      await waitFor(() => expect(getModalActionButton('Close')).toBeDisabled());
       await updateTestInputValue(user, { typeValue: '0.33', clearBefore: true });
 
       // Assert

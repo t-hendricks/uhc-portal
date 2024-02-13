@@ -23,26 +23,26 @@ exports[`<Support /> should render with notification contacts 1`] = `
         openModal={[MockFunction]}
       />
       <Connect(NotificationContactsCard)
-        addContactResponse={Object {}}
+        addContactResponse={{}}
         addNotificationToaster={[MockFunction]}
         clearDeleteNotificationContacts={[MockFunction]}
         clearNotificationContacts={[MockFunction]}
-        deleteContactResponse={Object {}}
+        deleteContactResponse={{}}
         deleteNotificationContact={[MockFunction]}
         getNotificationContacts={[MockFunction]}
         hasContacts={false}
         isDisabled={false}
         notificationContacts={
-          Object {
-            "contacts": Array [
-              Object {
+          {
+            "contacts": [
+              {
                 "email": "***REMOVED***",
                 "firstName": "Liran",
                 "lastName": "Roitman",
                 "userID": "1VW00yfnFuhoybNRBqF86RyS2h6",
                 "username": "lroitman.openshift",
               },
-              Object {
+              {
                 "email": "***REMOVED***",
                 "firstName": "Timothy",
                 "lastName": "Williams",
@@ -74,8 +74,8 @@ exports[`<Support /> should render with notification contacts 1`] = `
         isDisabled={false}
         subscriptionID="1iGW3xYbKZAEdZLi207rcA1l0ob"
         supportCases={
-          Object {
-            "cases": Array [],
+          {
+            "cases": [],
             "pending": false,
             "subscriptionID": "1iGW3xYbKZAEdZLi207rcA1l0ob",
           }
@@ -109,18 +109,18 @@ exports[`<Support /> should render without notification contacts 1`] = `
         openModal={[MockFunction]}
       />
       <Connect(NotificationContactsCard)
-        addContactResponse={Object {}}
+        addContactResponse={{}}
         addNotificationToaster={[MockFunction]}
         clearDeleteNotificationContacts={[MockFunction]}
         clearNotificationContacts={[MockFunction]}
-        deleteContactResponse={Object {}}
+        deleteContactResponse={{}}
         deleteNotificationContact={[MockFunction]}
         getNotificationContacts={[MockFunction]}
         hasContacts={false}
         isDisabled={false}
         notificationContacts={
-          Object {
-            "contacts": Array [],
+          {
+            "contacts": [],
             "pending": false,
             "subscriptionID": "1iGW3xYbKZAEdZLi207rcA1l0ob",
           }
@@ -145,8 +145,8 @@ exports[`<Support /> should render without notification contacts 1`] = `
         isDisabled={false}
         subscriptionID="1iGW3xYbKZAEdZLi207rcA1l0ob"
         supportCases={
-          Object {
-            "cases": Array [],
+          {
+            "cases": [],
             "pending": false,
             "subscriptionID": "1iGW3xYbKZAEdZLi207rcA1l0ob",
           }

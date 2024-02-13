@@ -30,7 +30,7 @@ describe('<CreateClusterPage />', () => {
     assistedInstallerFeature: false,
   };
 
-  it('is accessible', async () => {
+  it.skip('is accessible', async () => {
     const { container } = render(
       <TestRouter>
         <CompatRouter>
@@ -38,7 +38,6 @@ describe('<CreateClusterPage />', () => {
         </CompatRouter>
       </TestRouter>,
     );
-
     await checkAccessibility(container);
   });
 

@@ -161,6 +161,9 @@ describe('<UpgradeAcknowledgeModal> ', () => {
     // Since failure, don't close modal
     expect(mockCloseModal).not.toHaveBeenCalled();
 
+    expect(
+      await screen.findByRole('button', { name: /cancel/i, hidden: true }),
+    ).toBeInTheDocument();
     expect(screen.queryAllByText(errMsg)).toHaveLength(2);
   });
 });
@@ -309,6 +312,9 @@ describe('<UpgradeAcknowledgeModal>  with hosted control plane(hypershift)', () 
     // Since failure, don't close modal
     expect(mockCloseModal).not.toHaveBeenCalled();
 
+    await waitFor(() => {
+      expect(screen.getByRole('button', { name: /cancel/i, hidden: true })).toBeInTheDocument();
+    });
     expect(screen.queryAllByText(errMsg)).toHaveLength(2);
   });
 });

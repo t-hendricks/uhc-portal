@@ -3,8 +3,9 @@ import { render, screen, within } from '~/testUtils';
 import ClusterStatusMonitor from './ClusterStatusMonitor';
 import fixtures from '../../../__test__/ClusterDetails.fixtures';
 
-jest.useFakeTimers('legacy'); // TODO 'modern'
-
+jest.useFakeTimers({
+  legacyFakeTimers: true, // TODO 'modern'
+});
 const { clusterDetails } = fixtures;
 
 const status = {

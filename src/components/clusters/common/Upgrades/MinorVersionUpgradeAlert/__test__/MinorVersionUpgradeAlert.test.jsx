@@ -10,7 +10,9 @@ const disableLinkText = 'Disallow this minor version update';
 const enableTitleForKnownMinor = 'New minor version available';
 const disableTitleForKnownMinor = 'Next minor version update allowed';
 
-jest.useFakeTimers();
+jest.useFakeTimers({
+  legacyFakeTimers: true, // TODO 'modern'
+});
 
 describe('<MinorVersionUpgradeAlert >', () => {
   const setUpgradePolicy = jest.fn();

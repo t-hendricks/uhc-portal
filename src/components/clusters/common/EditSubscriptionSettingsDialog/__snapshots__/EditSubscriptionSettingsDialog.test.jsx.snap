@@ -6,7 +6,7 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly 1`] = `
   isOpen={true}
   onClose={[MockFunction]}
   requestState={
-    Object {
+    {
       "error": false,
       "fulfilled": false,
       "pending": false,
@@ -14,9 +14,9 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly 1`] = `
   }
   submit={[MockFunction]}
   subscription={
-    Object {
-      "capabilities": Array [
-        Object {
+    {
+      "capabilities": [
+        {
           "name": "capability.cluster.subscribed_ocp",
           "value": "true",
         },
@@ -44,7 +44,7 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly 1`] = `
   >
     <Modal
       actions={
-        Array [
+        [
           <Button
             data-testid="btn-primary"
             isDisabled={false}
@@ -768,7 +768,7 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly 1`] = `
       >
         <ModalContent
           actions={
-            Array [
+            [
               <Button
                 data-testid="btn-primary"
                 isDisabled={false}
@@ -818,10 +818,10 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly 1`] = `
                 active={true}
                 className="pf-v5-l-bullseye"
                 focusTrapOptions={
-                  Object {
+                  {
                     "clickOutsideDeactivates": true,
                     "initialFocus": undefined,
-                    "tabbableOptions": Object {
+                    "tabbableOptions": {
                       "displayCheck": "none",
                     },
                   }
@@ -841,7 +841,7 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly 1`] = `
                     id="pf-modal-part-0"
                     position="default"
                     style={
-                      Object {
+                      {
                         "--pf-v5-c-modal-box--Width": "810px",
                       }
                     }
@@ -859,7 +859,7 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly 1`] = `
                       id="pf-modal-part-0"
                       role="dialog"
                       style={
-                        Object {
+                        {
                           "--pf-v5-c-modal-box--Width": "810px",
                         }
                       }
@@ -952,7 +952,7 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly 1`] = `
                           <EditSubscriptionSettingsRequestState
                             onFulfilled={[Function]}
                             requestState={
-                              Object {
+                              {
                                 "error": false,
                                 "fulfilled": false,
                                 "pending": false,
@@ -996,9 +996,9 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly 1`] = `
                                   canSubscribeMarketplaceOCP={false}
                                   canSubscribeStandardOCP={true}
                                   initialSettings={
-                                    Object {
-                                      "capabilities": Array [
-                                        Object {
+                                    {
+                                      "capabilities": [
+                                        {
                                           "name": "capability.cluster.subscribed_ocp",
                                           "value": "true",
                                         },
@@ -1113,17 +1113,17 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly 1`] = `
                                     fieldId="support_level"
                                     isDisabled={false}
                                     items={
-                                      Array [
-                                        Object {
+                                      [
+                                        {
                                           "label": "Premium",
                                           "value": "Premium",
                                         },
-                                        Object {
+                                        {
                                           "isChecked": true,
                                           "label": "Standard",
                                           "value": "Standard",
                                         },
-                                        Object {
+                                        {
                                           "label": "Self-Support",
                                           "value": "Self-Support",
                                         },
@@ -1275,7 +1275,7 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly 1`] = `
                                                       distance={25}
                                                       enableFlip={true}
                                                       flipBehavior={
-                                                        Array [
+                                                        [
                                                           "top",
                                                           "bottom",
                                                           "left",
@@ -1313,13 +1313,13 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly 1`] = `
                                                           aria-modal="true"
                                                           className="pf-v5-c-popover pf-m-width-auto"
                                                           focusTrapOptions={
-                                                            Object {
+                                                            {
                                                               "checkCanFocusTrap": [Function],
                                                               "clickOutsideDeactivates": true,
                                                               "fallbackFocus": [Function],
                                                               "initialFocus": undefined,
                                                               "returnFocusOnDeactivate": true,
-                                                              "tabbableOptions": Object {
+                                                              "tabbableOptions": {
                                                                 "displayCheck": "none",
                                                               },
                                                             }
@@ -1328,7 +1328,7 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly 1`] = `
                                                           preventScrollOnDeactivate={true}
                                                           role="dialog"
                                                           style={
-                                                            Object {
+                                                            {
                                                               "maxWidth": "30.0rem",
                                                               "minWidth": null,
                                                             }
@@ -1372,12 +1372,12 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly 1`] = `
                                                         </FocusTrap>
                                                       }
                                                       popperRef={
-                                                        Object {
+                                                        {
                                                           "current": null,
                                                         }
                                                       }
                                                       positionModifiers={
-                                                        Object {
+                                                        {
                                                           "bottom": "pf-m-bottom",
                                                           "bottom-end": "pf-m-bottom-right",
                                                           "bottom-start": "pf-m-bottom-left",
@@ -1409,7 +1409,7 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly 1`] = `
                                                     >
                                                       <div
                                                         style={
-                                                          Object {
+                                                          {
                                                             "display": "contents",
                                                           }
                                                         }
@@ -1591,14 +1591,14 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly 1`] = `
                                     fieldId="service_level"
                                     isDisabled={false}
                                     items={
-                                      Array [
-                                        Object {
+                                      [
+                                        {
                                           "isChecked": true,
                                           "isDefault": true,
                                           "label": "Red Hat support (L1-L3)",
                                           "value": "L1-L3",
                                         },
-                                        Object {
+                                        {
                                           "label": "Partner support (L3)",
                                           "value": "L3-only",
                                         },
@@ -1706,7 +1706,7 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly 1`] = `
                                                       distance={25}
                                                       enableFlip={true}
                                                       flipBehavior={
-                                                        Array [
+                                                        [
                                                           "top",
                                                           "bottom",
                                                           "left",
@@ -1744,13 +1744,13 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly 1`] = `
                                                           aria-modal="true"
                                                           className="pf-v5-c-popover"
                                                           focusTrapOptions={
-                                                            Object {
+                                                            {
                                                               "checkCanFocusTrap": [Function],
                                                               "clickOutsideDeactivates": true,
                                                               "fallbackFocus": [Function],
                                                               "initialFocus": undefined,
                                                               "returnFocusOnDeactivate": true,
-                                                              "tabbableOptions": Object {
+                                                              "tabbableOptions": {
                                                                 "displayCheck": "none",
                                                               },
                                                             }
@@ -1759,7 +1759,7 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly 1`] = `
                                                           preventScrollOnDeactivate={true}
                                                           role="dialog"
                                                           style={
-                                                            Object {
+                                                            {
                                                               "maxWidth": null,
                                                               "minWidth": null,
                                                             }
@@ -1794,12 +1794,12 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly 1`] = `
                                                         </FocusTrap>
                                                       }
                                                       popperRef={
-                                                        Object {
+                                                        {
                                                           "current": null,
                                                         }
                                                       }
                                                       positionModifiers={
-                                                        Object {
+                                                        {
                                                           "bottom": "pf-m-bottom",
                                                           "bottom-end": "pf-m-bottom-right",
                                                           "bottom-start": "pf-m-bottom-left",
@@ -1831,7 +1831,7 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly 1`] = `
                                                     >
                                                       <div
                                                         style={
-                                                          Object {
+                                                          {
                                                             "display": "contents",
                                                           }
                                                         }
@@ -1976,18 +1976,18 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly 1`] = `
                                     fieldId="usage"
                                     isDisabled={false}
                                     items={
-                                      Array [
-                                        Object {
+                                      [
+                                        {
                                           "isChecked": true,
                                           "isDefault": true,
                                           "label": "Production",
                                           "value": "Production",
                                         },
-                                        Object {
+                                        {
                                           "label": "Development/Test",
                                           "value": "Development/Test",
                                         },
-                                        Object {
+                                        {
                                           "label": "Disaster Recovery",
                                           "value": "Disaster Recovery",
                                         },
@@ -2095,7 +2095,7 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly 1`] = `
                                                       distance={25}
                                                       enableFlip={true}
                                                       flipBehavior={
-                                                        Array [
+                                                        [
                                                           "top",
                                                           "bottom",
                                                           "left",
@@ -2133,13 +2133,13 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly 1`] = `
                                                           aria-modal="true"
                                                           className="pf-v5-c-popover"
                                                           focusTrapOptions={
-                                                            Object {
+                                                            {
                                                               "checkCanFocusTrap": [Function],
                                                               "clickOutsideDeactivates": true,
                                                               "fallbackFocus": [Function],
                                                               "initialFocus": undefined,
                                                               "returnFocusOnDeactivate": true,
-                                                              "tabbableOptions": Object {
+                                                              "tabbableOptions": {
                                                                 "displayCheck": "none",
                                                               },
                                                             }
@@ -2148,7 +2148,7 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly 1`] = `
                                                           preventScrollOnDeactivate={true}
                                                           role="dialog"
                                                           style={
-                                                            Object {
+                                                            {
                                                               "maxWidth": null,
                                                               "minWidth": null,
                                                             }
@@ -2183,12 +2183,12 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly 1`] = `
                                                         </FocusTrap>
                                                       }
                                                       popperRef={
-                                                        Object {
+                                                        {
                                                           "current": null,
                                                         }
                                                       }
                                                       positionModifiers={
-                                                        Object {
+                                                        {
                                                           "bottom": "pf-m-bottom",
                                                           "bottom-end": "pf-m-bottom-right",
                                                           "bottom-start": "pf-m-bottom-left",
@@ -2220,7 +2220,7 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly 1`] = `
                                                     >
                                                       <div
                                                         style={
-                                                          Object {
+                                                          {
                                                             "display": "contents",
                                                           }
                                                         }
@@ -2403,14 +2403,14 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly 1`] = `
                                     isDisabled={false}
                                     isInline={true}
                                     items={
-                                      Array [
-                                        Object {
+                                      [
+                                        {
                                           "isChecked": true,
                                           "isDefault": true,
                                           "label": "Cores or vCPUs",
                                           "value": "Cores/vCPU",
                                         },
-                                        Object {
+                                        {
                                           "label": "Sockets",
                                           "value": "Sockets",
                                         },
@@ -2519,7 +2519,7 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly 1`] = `
                                                       distance={25}
                                                       enableFlip={true}
                                                       flipBehavior={
-                                                        Array [
+                                                        [
                                                           "top",
                                                           "bottom",
                                                           "left",
@@ -2557,13 +2557,13 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly 1`] = `
                                                           aria-modal="true"
                                                           className="pf-v5-c-popover"
                                                           focusTrapOptions={
-                                                            Object {
+                                                            {
                                                               "checkCanFocusTrap": [Function],
                                                               "clickOutsideDeactivates": true,
                                                               "fallbackFocus": [Function],
                                                               "initialFocus": undefined,
                                                               "returnFocusOnDeactivate": true,
-                                                              "tabbableOptions": Object {
+                                                              "tabbableOptions": {
                                                                 "displayCheck": "none",
                                                               },
                                                             }
@@ -2572,7 +2572,7 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly 1`] = `
                                                           preventScrollOnDeactivate={true}
                                                           role="dialog"
                                                           style={
-                                                            Object {
+                                                            {
                                                               "maxWidth": null,
                                                               "minWidth": null,
                                                             }
@@ -2607,12 +2607,12 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly 1`] = `
                                                         </FocusTrap>
                                                       }
                                                       popperRef={
-                                                        Object {
+                                                        {
                                                           "current": null,
                                                         }
                                                       }
                                                       positionModifiers={
-                                                        Object {
+                                                        {
                                                           "bottom": "pf-m-bottom",
                                                           "bottom-end": "pf-m-bottom-right",
                                                           "bottom-start": "pf-m-bottom-left",
@@ -2644,7 +2644,7 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly 1`] = `
                                                     >
                                                       <div
                                                         style={
-                                                          Object {
+                                                          {
                                                             "display": "contents",
                                                           }
                                                         }
@@ -2836,7 +2836,7 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly 1`] = `
                                                 distance={25}
                                                 enableFlip={true}
                                                 flipBehavior={
-                                                  Array [
+                                                  [
                                                     "top",
                                                     "bottom",
                                                     "left",
@@ -2874,13 +2874,13 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly 1`] = `
                                                     aria-modal="true"
                                                     className="pf-v5-c-popover pf-m-width-auto"
                                                     focusTrapOptions={
-                                                      Object {
+                                                      {
                                                         "checkCanFocusTrap": [Function],
                                                         "clickOutsideDeactivates": true,
                                                         "fallbackFocus": [Function],
                                                         "initialFocus": undefined,
                                                         "returnFocusOnDeactivate": true,
-                                                        "tabbableOptions": Object {
+                                                        "tabbableOptions": {
                                                           "displayCheck": "none",
                                                         },
                                                       }
@@ -2889,7 +2889,7 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly 1`] = `
                                                     preventScrollOnDeactivate={true}
                                                     role="dialog"
                                                     style={
-                                                      Object {
+                                                      {
                                                         "maxWidth": "30.0rem",
                                                         "minWidth": null,
                                                       }
@@ -2910,12 +2910,12 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly 1`] = `
                                                   </FocusTrap>
                                                 }
                                                 popperRef={
-                                                  Object {
+                                                  {
                                                     "current": null,
                                                   }
                                                 }
                                                 positionModifiers={
-                                                  Object {
+                                                  {
                                                     "bottom": "pf-m-bottom",
                                                     "bottom-end": "pf-m-bottom-right",
                                                     "bottom-start": "pf-m-bottom-left",
@@ -2947,7 +2947,7 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly 1`] = `
                                               >
                                                 <div
                                                   style={
-                                                    Object {
+                                                    {
                                                       "display": "contents",
                                                     }
                                                   }
@@ -3102,16 +3102,16 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly when an erorr occu
   isOpen={true}
   onClose={[MockFunction]}
   requestState={
-    Object {
+    {
       "error": true,
       "errorMessage": "this is an error",
     }
   }
   submit={[MockFunction]}
   subscription={
-    Object {
-      "capabilities": Array [
-        Object {
+    {
+      "capabilities": [
+        {
           "name": "capability.cluster.subscribed_ocp",
           "value": "true",
         },
@@ -3139,7 +3139,7 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly when an erorr occu
   >
     <Modal
       actions={
-        Array [
+        [
           <Button
             data-testid="btn-primary"
             isDisabled={false}
@@ -3910,7 +3910,7 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly when an erorr occu
       >
         <ModalContent
           actions={
-            Array [
+            [
               <Button
                 data-testid="btn-primary"
                 isDisabled={false}
@@ -3960,10 +3960,10 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly when an erorr occu
                 active={true}
                 className="pf-v5-l-bullseye"
                 focusTrapOptions={
-                  Object {
+                  {
                     "clickOutsideDeactivates": true,
                     "initialFocus": undefined,
-                    "tabbableOptions": Object {
+                    "tabbableOptions": {
                       "displayCheck": "none",
                     },
                   }
@@ -3983,7 +3983,7 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly when an erorr occu
                     id="pf-modal-part-7"
                     position="default"
                     style={
-                      Object {
+                      {
                         "--pf-v5-c-modal-box--Width": "810px",
                       }
                     }
@@ -4001,7 +4001,7 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly when an erorr occu
                       id="pf-modal-part-7"
                       role="dialog"
                       style={
-                        Object {
+                        {
                           "--pf-v5-c-modal-box--Width": "810px",
                         }
                       }
@@ -4094,7 +4094,7 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly when an erorr occu
                           <EditSubscriptionSettingsRequestState
                             onFulfilled={[Function]}
                             requestState={
-                              Object {
+                              {
                                 "error": true,
                                 "errorMessage": "this is an error",
                               }
@@ -4103,7 +4103,7 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly when an erorr occu
                             <ErrorBox
                               message="Error updating subscription settings"
                               response={
-                                Object {
+                                {
                                   "error": true,
                                   "errorMessage": "this is an error",
                                 }
@@ -4213,9 +4213,9 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly when an erorr occu
                                   canSubscribeMarketplaceOCP={false}
                                   canSubscribeStandardOCP={true}
                                   initialSettings={
-                                    Object {
-                                      "capabilities": Array [
-                                        Object {
+                                    {
+                                      "capabilities": [
+                                        {
                                           "name": "capability.cluster.subscribed_ocp",
                                           "value": "true",
                                         },
@@ -4330,17 +4330,17 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly when an erorr occu
                                     fieldId="support_level"
                                     isDisabled={false}
                                     items={
-                                      Array [
-                                        Object {
+                                      [
+                                        {
                                           "label": "Premium",
                                           "value": "Premium",
                                         },
-                                        Object {
+                                        {
                                           "isChecked": true,
                                           "label": "Standard",
                                           "value": "Standard",
                                         },
-                                        Object {
+                                        {
                                           "label": "Self-Support",
                                           "value": "Self-Support",
                                         },
@@ -4492,7 +4492,7 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly when an erorr occu
                                                       distance={25}
                                                       enableFlip={true}
                                                       flipBehavior={
-                                                        Array [
+                                                        [
                                                           "top",
                                                           "bottom",
                                                           "left",
@@ -4530,13 +4530,13 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly when an erorr occu
                                                           aria-modal="true"
                                                           className="pf-v5-c-popover pf-m-width-auto"
                                                           focusTrapOptions={
-                                                            Object {
+                                                            {
                                                               "checkCanFocusTrap": [Function],
                                                               "clickOutsideDeactivates": true,
                                                               "fallbackFocus": [Function],
                                                               "initialFocus": undefined,
                                                               "returnFocusOnDeactivate": true,
-                                                              "tabbableOptions": Object {
+                                                              "tabbableOptions": {
                                                                 "displayCheck": "none",
                                                               },
                                                             }
@@ -4545,7 +4545,7 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly when an erorr occu
                                                           preventScrollOnDeactivate={true}
                                                           role="dialog"
                                                           style={
-                                                            Object {
+                                                            {
                                                               "maxWidth": "30.0rem",
                                                               "minWidth": null,
                                                             }
@@ -4589,12 +4589,12 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly when an erorr occu
                                                         </FocusTrap>
                                                       }
                                                       popperRef={
-                                                        Object {
+                                                        {
                                                           "current": null,
                                                         }
                                                       }
                                                       positionModifiers={
-                                                        Object {
+                                                        {
                                                           "bottom": "pf-m-bottom",
                                                           "bottom-end": "pf-m-bottom-right",
                                                           "bottom-start": "pf-m-bottom-left",
@@ -4626,7 +4626,7 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly when an erorr occu
                                                     >
                                                       <div
                                                         style={
-                                                          Object {
+                                                          {
                                                             "display": "contents",
                                                           }
                                                         }
@@ -4808,14 +4808,14 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly when an erorr occu
                                     fieldId="service_level"
                                     isDisabled={false}
                                     items={
-                                      Array [
-                                        Object {
+                                      [
+                                        {
                                           "isChecked": true,
                                           "isDefault": true,
                                           "label": "Red Hat support (L1-L3)",
                                           "value": "L1-L3",
                                         },
-                                        Object {
+                                        {
                                           "label": "Partner support (L3)",
                                           "value": "L3-only",
                                         },
@@ -4923,7 +4923,7 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly when an erorr occu
                                                       distance={25}
                                                       enableFlip={true}
                                                       flipBehavior={
-                                                        Array [
+                                                        [
                                                           "top",
                                                           "bottom",
                                                           "left",
@@ -4961,13 +4961,13 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly when an erorr occu
                                                           aria-modal="true"
                                                           className="pf-v5-c-popover"
                                                           focusTrapOptions={
-                                                            Object {
+                                                            {
                                                               "checkCanFocusTrap": [Function],
                                                               "clickOutsideDeactivates": true,
                                                               "fallbackFocus": [Function],
                                                               "initialFocus": undefined,
                                                               "returnFocusOnDeactivate": true,
-                                                              "tabbableOptions": Object {
+                                                              "tabbableOptions": {
                                                                 "displayCheck": "none",
                                                               },
                                                             }
@@ -4976,7 +4976,7 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly when an erorr occu
                                                           preventScrollOnDeactivate={true}
                                                           role="dialog"
                                                           style={
-                                                            Object {
+                                                            {
                                                               "maxWidth": null,
                                                               "minWidth": null,
                                                             }
@@ -5011,12 +5011,12 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly when an erorr occu
                                                         </FocusTrap>
                                                       }
                                                       popperRef={
-                                                        Object {
+                                                        {
                                                           "current": null,
                                                         }
                                                       }
                                                       positionModifiers={
-                                                        Object {
+                                                        {
                                                           "bottom": "pf-m-bottom",
                                                           "bottom-end": "pf-m-bottom-right",
                                                           "bottom-start": "pf-m-bottom-left",
@@ -5048,7 +5048,7 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly when an erorr occu
                                                     >
                                                       <div
                                                         style={
-                                                          Object {
+                                                          {
                                                             "display": "contents",
                                                           }
                                                         }
@@ -5193,18 +5193,18 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly when an erorr occu
                                     fieldId="usage"
                                     isDisabled={false}
                                     items={
-                                      Array [
-                                        Object {
+                                      [
+                                        {
                                           "isChecked": true,
                                           "isDefault": true,
                                           "label": "Production",
                                           "value": "Production",
                                         },
-                                        Object {
+                                        {
                                           "label": "Development/Test",
                                           "value": "Development/Test",
                                         },
-                                        Object {
+                                        {
                                           "label": "Disaster Recovery",
                                           "value": "Disaster Recovery",
                                         },
@@ -5312,7 +5312,7 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly when an erorr occu
                                                       distance={25}
                                                       enableFlip={true}
                                                       flipBehavior={
-                                                        Array [
+                                                        [
                                                           "top",
                                                           "bottom",
                                                           "left",
@@ -5350,13 +5350,13 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly when an erorr occu
                                                           aria-modal="true"
                                                           className="pf-v5-c-popover"
                                                           focusTrapOptions={
-                                                            Object {
+                                                            {
                                                               "checkCanFocusTrap": [Function],
                                                               "clickOutsideDeactivates": true,
                                                               "fallbackFocus": [Function],
                                                               "initialFocus": undefined,
                                                               "returnFocusOnDeactivate": true,
-                                                              "tabbableOptions": Object {
+                                                              "tabbableOptions": {
                                                                 "displayCheck": "none",
                                                               },
                                                             }
@@ -5365,7 +5365,7 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly when an erorr occu
                                                           preventScrollOnDeactivate={true}
                                                           role="dialog"
                                                           style={
-                                                            Object {
+                                                            {
                                                               "maxWidth": null,
                                                               "minWidth": null,
                                                             }
@@ -5400,12 +5400,12 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly when an erorr occu
                                                         </FocusTrap>
                                                       }
                                                       popperRef={
-                                                        Object {
+                                                        {
                                                           "current": null,
                                                         }
                                                       }
                                                       positionModifiers={
-                                                        Object {
+                                                        {
                                                           "bottom": "pf-m-bottom",
                                                           "bottom-end": "pf-m-bottom-right",
                                                           "bottom-start": "pf-m-bottom-left",
@@ -5437,7 +5437,7 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly when an erorr occu
                                                     >
                                                       <div
                                                         style={
-                                                          Object {
+                                                          {
                                                             "display": "contents",
                                                           }
                                                         }
@@ -5620,14 +5620,14 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly when an erorr occu
                                     isDisabled={false}
                                     isInline={true}
                                     items={
-                                      Array [
-                                        Object {
+                                      [
+                                        {
                                           "isChecked": true,
                                           "isDefault": true,
                                           "label": "Cores or vCPUs",
                                           "value": "Cores/vCPU",
                                         },
-                                        Object {
+                                        {
                                           "label": "Sockets",
                                           "value": "Sockets",
                                         },
@@ -5736,7 +5736,7 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly when an erorr occu
                                                       distance={25}
                                                       enableFlip={true}
                                                       flipBehavior={
-                                                        Array [
+                                                        [
                                                           "top",
                                                           "bottom",
                                                           "left",
@@ -5774,13 +5774,13 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly when an erorr occu
                                                           aria-modal="true"
                                                           className="pf-v5-c-popover"
                                                           focusTrapOptions={
-                                                            Object {
+                                                            {
                                                               "checkCanFocusTrap": [Function],
                                                               "clickOutsideDeactivates": true,
                                                               "fallbackFocus": [Function],
                                                               "initialFocus": undefined,
                                                               "returnFocusOnDeactivate": true,
-                                                              "tabbableOptions": Object {
+                                                              "tabbableOptions": {
                                                                 "displayCheck": "none",
                                                               },
                                                             }
@@ -5789,7 +5789,7 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly when an erorr occu
                                                           preventScrollOnDeactivate={true}
                                                           role="dialog"
                                                           style={
-                                                            Object {
+                                                            {
                                                               "maxWidth": null,
                                                               "minWidth": null,
                                                             }
@@ -5824,12 +5824,12 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly when an erorr occu
                                                         </FocusTrap>
                                                       }
                                                       popperRef={
-                                                        Object {
+                                                        {
                                                           "current": null,
                                                         }
                                                       }
                                                       positionModifiers={
-                                                        Object {
+                                                        {
                                                           "bottom": "pf-m-bottom",
                                                           "bottom-end": "pf-m-bottom-right",
                                                           "bottom-start": "pf-m-bottom-left",
@@ -5861,7 +5861,7 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly when an erorr occu
                                                     >
                                                       <div
                                                         style={
-                                                          Object {
+                                                          {
                                                             "display": "contents",
                                                           }
                                                         }
@@ -6053,7 +6053,7 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly when an erorr occu
                                                 distance={25}
                                                 enableFlip={true}
                                                 flipBehavior={
-                                                  Array [
+                                                  [
                                                     "top",
                                                     "bottom",
                                                     "left",
@@ -6091,13 +6091,13 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly when an erorr occu
                                                     aria-modal="true"
                                                     className="pf-v5-c-popover pf-m-width-auto"
                                                     focusTrapOptions={
-                                                      Object {
+                                                      {
                                                         "checkCanFocusTrap": [Function],
                                                         "clickOutsideDeactivates": true,
                                                         "fallbackFocus": [Function],
                                                         "initialFocus": undefined,
                                                         "returnFocusOnDeactivate": true,
-                                                        "tabbableOptions": Object {
+                                                        "tabbableOptions": {
                                                           "displayCheck": "none",
                                                         },
                                                       }
@@ -6106,7 +6106,7 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly when an erorr occu
                                                     preventScrollOnDeactivate={true}
                                                     role="dialog"
                                                     style={
-                                                      Object {
+                                                      {
                                                         "maxWidth": "30.0rem",
                                                         "minWidth": null,
                                                       }
@@ -6127,12 +6127,12 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly when an erorr occu
                                                   </FocusTrap>
                                                 }
                                                 popperRef={
-                                                  Object {
+                                                  {
                                                     "current": null,
                                                   }
                                                 }
                                                 positionModifiers={
-                                                  Object {
+                                                  {
                                                     "bottom": "pf-m-bottom",
                                                     "bottom-end": "pf-m-bottom-right",
                                                     "bottom-start": "pf-m-bottom-left",
@@ -6164,7 +6164,7 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly when an erorr occu
                                               >
                                                 <div
                                                   style={
-                                                    Object {
+                                                    {
                                                       "display": "contents",
                                                     }
                                                   }
@@ -6319,7 +6319,7 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly with billing_model
   isOpen={true}
   onClose={[MockFunction]}
   requestState={
-    Object {
+    {
       "error": false,
       "fulfilled": false,
       "pending": false,
@@ -6327,13 +6327,13 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly with billing_model
   }
   submit={[MockFunction]}
   subscription={
-    Object {
-      "capabilities": Array [
-        Object {
+    {
+      "capabilities": [
+        {
           "name": "capability.cluster.subscribed_ocp",
           "value": "true",
         },
-        Object {
+        {
           "name": "capability.cluster.subscribed_ocp_marketplace",
           "value": "true",
         },
@@ -6361,7 +6361,7 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly with billing_model
   >
     <Modal
       actions={
-        Array [
+        [
           <Button
             data-testid="btn-primary"
             isDisabled={true}
@@ -7187,7 +7187,7 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly with billing_model
       >
         <ModalContent
           actions={
-            Array [
+            [
               <Button
                 data-testid="btn-primary"
                 isDisabled={true}
@@ -7237,10 +7237,10 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly with billing_model
                 active={true}
                 className="pf-v5-l-bullseye"
                 focusTrapOptions={
-                  Object {
+                  {
                     "clickOutsideDeactivates": true,
                     "initialFocus": undefined,
-                    "tabbableOptions": Object {
+                    "tabbableOptions": {
                       "displayCheck": "none",
                     },
                   }
@@ -7260,7 +7260,7 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly with billing_model
                     id="pf-modal-part-4"
                     position="default"
                     style={
-                      Object {
+                      {
                         "--pf-v5-c-modal-box--Width": "810px",
                       }
                     }
@@ -7278,7 +7278,7 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly with billing_model
                       id="pf-modal-part-4"
                       role="dialog"
                       style={
-                        Object {
+                        {
                           "--pf-v5-c-modal-box--Width": "810px",
                         }
                       }
@@ -7371,7 +7371,7 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly with billing_model
                           <EditSubscriptionSettingsRequestState
                             onFulfilled={[Function]}
                             requestState={
-                              Object {
+                              {
                                 "error": false,
                                 "fulfilled": false,
                                 "pending": false,
@@ -7415,13 +7415,13 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly with billing_model
                                   canSubscribeMarketplaceOCP={true}
                                   canSubscribeStandardOCP={true}
                                   initialSettings={
-                                    Object {
-                                      "capabilities": Array [
-                                        Object {
+                                    {
+                                      "capabilities": [
+                                        {
                                           "name": "capability.cluster.subscribed_ocp",
                                           "value": "true",
                                         },
-                                        Object {
+                                        {
                                           "name": "capability.cluster.subscribed_ocp_marketplace",
                                           "value": "true",
                                         },
@@ -7442,14 +7442,14 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly with billing_model
                                     fieldId="cluster_billing_model"
                                     isRequired={true}
                                     items={
-                                      Array [
-                                        Object {
+                                      [
+                                        {
                                           "isChecked": true,
                                           "isDefault": true,
                                           "label": "Annual: Fixed capacity subscription from Red Hat",
                                           "value": "standard",
                                         },
-                                        Object {
+                                        {
                                           "label": "On-Demand (Hourly): Flexible usage billed through Red Hat Marketplace",
                                           "value": "marketplace",
                                         },
@@ -7674,20 +7674,20 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly with billing_model
                                     fieldId="support_level"
                                     isDisabled={false}
                                     items={
-                                      Array [
-                                        Object {
+                                      [
+                                        {
                                           "label": "Premium",
                                           "value": "Premium",
                                         },
-                                        Object {
+                                        {
                                           "label": "Standard",
                                           "value": "Standard",
                                         },
-                                        Object {
+                                        {
                                           "label": "Self-Support",
                                           "value": "Self-Support",
                                         },
-                                        Object {
+                                        {
                                           "isChecked": true,
                                           "label": "Self-Support 60-day evaluation",
                                           "value": "Eval",
@@ -7840,7 +7840,7 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly with billing_model
                                                       distance={25}
                                                       enableFlip={true}
                                                       flipBehavior={
-                                                        Array [
+                                                        [
                                                           "top",
                                                           "bottom",
                                                           "left",
@@ -7878,13 +7878,13 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly with billing_model
                                                           aria-modal="true"
                                                           className="pf-v5-c-popover pf-m-width-auto"
                                                           focusTrapOptions={
-                                                            Object {
+                                                            {
                                                               "checkCanFocusTrap": [Function],
                                                               "clickOutsideDeactivates": true,
                                                               "fallbackFocus": [Function],
                                                               "initialFocus": undefined,
                                                               "returnFocusOnDeactivate": true,
-                                                              "tabbableOptions": Object {
+                                                              "tabbableOptions": {
                                                                 "displayCheck": "none",
                                                               },
                                                             }
@@ -7893,7 +7893,7 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly with billing_model
                                                           preventScrollOnDeactivate={true}
                                                           role="dialog"
                                                           style={
-                                                            Object {
+                                                            {
                                                               "maxWidth": "30.0rem",
                                                               "minWidth": null,
                                                             }
@@ -7937,12 +7937,12 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly with billing_model
                                                         </FocusTrap>
                                                       }
                                                       popperRef={
-                                                        Object {
+                                                        {
                                                           "current": null,
                                                         }
                                                       }
                                                       positionModifiers={
-                                                        Object {
+                                                        {
                                                           "bottom": "pf-m-bottom",
                                                           "bottom-end": "pf-m-bottom-right",
                                                           "bottom-start": "pf-m-bottom-left",
@@ -7974,7 +7974,7 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly with billing_model
                                                     >
                                                       <div
                                                         style={
-                                                          Object {
+                                                          {
                                                             "display": "contents",
                                                           }
                                                         }
@@ -8193,14 +8193,14 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly with billing_model
                                     fieldId="service_level"
                                     isDisabled={true}
                                     items={
-                                      Array [
-                                        Object {
+                                      [
+                                        {
                                           "isChecked": true,
                                           "isDefault": true,
                                           "label": "Red Hat support (L1-L3)",
                                           "value": "L1-L3",
                                         },
-                                        Object {
+                                        {
                                           "label": "Partner support (L3)",
                                           "value": "L3-only",
                                         },
@@ -8308,7 +8308,7 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly with billing_model
                                                       distance={25}
                                                       enableFlip={true}
                                                       flipBehavior={
-                                                        Array [
+                                                        [
                                                           "top",
                                                           "bottom",
                                                           "left",
@@ -8346,13 +8346,13 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly with billing_model
                                                           aria-modal="true"
                                                           className="pf-v5-c-popover"
                                                           focusTrapOptions={
-                                                            Object {
+                                                            {
                                                               "checkCanFocusTrap": [Function],
                                                               "clickOutsideDeactivates": true,
                                                               "fallbackFocus": [Function],
                                                               "initialFocus": undefined,
                                                               "returnFocusOnDeactivate": true,
-                                                              "tabbableOptions": Object {
+                                                              "tabbableOptions": {
                                                                 "displayCheck": "none",
                                                               },
                                                             }
@@ -8361,7 +8361,7 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly with billing_model
                                                           preventScrollOnDeactivate={true}
                                                           role="dialog"
                                                           style={
-                                                            Object {
+                                                            {
                                                               "maxWidth": null,
                                                               "minWidth": null,
                                                             }
@@ -8396,12 +8396,12 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly with billing_model
                                                         </FocusTrap>
                                                       }
                                                       popperRef={
-                                                        Object {
+                                                        {
                                                           "current": null,
                                                         }
                                                       }
                                                       positionModifiers={
-                                                        Object {
+                                                        {
                                                           "bottom": "pf-m-bottom",
                                                           "bottom-end": "pf-m-bottom-right",
                                                           "bottom-start": "pf-m-bottom-left",
@@ -8433,7 +8433,7 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly with billing_model
                                                     >
                                                       <div
                                                         style={
-                                                          Object {
+                                                          {
                                                             "display": "contents",
                                                           }
                                                         }
@@ -8578,18 +8578,18 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly with billing_model
                                     fieldId="usage"
                                     isDisabled={true}
                                     items={
-                                      Array [
-                                        Object {
+                                      [
+                                        {
                                           "isChecked": true,
                                           "isDefault": true,
                                           "label": "Production",
                                           "value": "Production",
                                         },
-                                        Object {
+                                        {
                                           "label": "Development/Test",
                                           "value": "Development/Test",
                                         },
-                                        Object {
+                                        {
                                           "label": "Disaster Recovery",
                                           "value": "Disaster Recovery",
                                         },
@@ -8697,7 +8697,7 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly with billing_model
                                                       distance={25}
                                                       enableFlip={true}
                                                       flipBehavior={
-                                                        Array [
+                                                        [
                                                           "top",
                                                           "bottom",
                                                           "left",
@@ -8735,13 +8735,13 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly with billing_model
                                                           aria-modal="true"
                                                           className="pf-v5-c-popover"
                                                           focusTrapOptions={
-                                                            Object {
+                                                            {
                                                               "checkCanFocusTrap": [Function],
                                                               "clickOutsideDeactivates": true,
                                                               "fallbackFocus": [Function],
                                                               "initialFocus": undefined,
                                                               "returnFocusOnDeactivate": true,
-                                                              "tabbableOptions": Object {
+                                                              "tabbableOptions": {
                                                                 "displayCheck": "none",
                                                               },
                                                             }
@@ -8750,7 +8750,7 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly with billing_model
                                                           preventScrollOnDeactivate={true}
                                                           role="dialog"
                                                           style={
-                                                            Object {
+                                                            {
                                                               "maxWidth": null,
                                                               "minWidth": null,
                                                             }
@@ -8785,12 +8785,12 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly with billing_model
                                                         </FocusTrap>
                                                       }
                                                       popperRef={
-                                                        Object {
+                                                        {
                                                           "current": null,
                                                         }
                                                       }
                                                       positionModifiers={
-                                                        Object {
+                                                        {
                                                           "bottom": "pf-m-bottom",
                                                           "bottom-end": "pf-m-bottom-right",
                                                           "bottom-start": "pf-m-bottom-left",
@@ -8822,7 +8822,7 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly with billing_model
                                                     >
                                                       <div
                                                         style={
-                                                          Object {
+                                                          {
                                                             "display": "contents",
                                                           }
                                                         }
@@ -9005,14 +9005,14 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly with billing_model
                                     isDisabled={true}
                                     isInline={true}
                                     items={
-                                      Array [
-                                        Object {
+                                      [
+                                        {
                                           "isChecked": true,
                                           "isDefault": true,
                                           "label": "Cores or vCPUs",
                                           "value": "Cores/vCPU",
                                         },
-                                        Object {
+                                        {
                                           "label": "Sockets",
                                           "value": "Sockets",
                                         },
@@ -9121,7 +9121,7 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly with billing_model
                                                       distance={25}
                                                       enableFlip={true}
                                                       flipBehavior={
-                                                        Array [
+                                                        [
                                                           "top",
                                                           "bottom",
                                                           "left",
@@ -9159,13 +9159,13 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly with billing_model
                                                           aria-modal="true"
                                                           className="pf-v5-c-popover"
                                                           focusTrapOptions={
-                                                            Object {
+                                                            {
                                                               "checkCanFocusTrap": [Function],
                                                               "clickOutsideDeactivates": true,
                                                               "fallbackFocus": [Function],
                                                               "initialFocus": undefined,
                                                               "returnFocusOnDeactivate": true,
-                                                              "tabbableOptions": Object {
+                                                              "tabbableOptions": {
                                                                 "displayCheck": "none",
                                                               },
                                                             }
@@ -9174,7 +9174,7 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly with billing_model
                                                           preventScrollOnDeactivate={true}
                                                           role="dialog"
                                                           style={
-                                                            Object {
+                                                            {
                                                               "maxWidth": null,
                                                               "minWidth": null,
                                                             }
@@ -9209,12 +9209,12 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly with billing_model
                                                         </FocusTrap>
                                                       }
                                                       popperRef={
-                                                        Object {
+                                                        {
                                                           "current": null,
                                                         }
                                                       }
                                                       positionModifiers={
-                                                        Object {
+                                                        {
                                                           "bottom": "pf-m-bottom",
                                                           "bottom-end": "pf-m-bottom-right",
                                                           "bottom-start": "pf-m-bottom-left",
@@ -9246,7 +9246,7 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly with billing_model
                                                     >
                                                       <div
                                                         style={
-                                                          Object {
+                                                          {
                                                             "display": "contents",
                                                           }
                                                         }
@@ -9438,7 +9438,7 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly with billing_model
                                                 distance={25}
                                                 enableFlip={true}
                                                 flipBehavior={
-                                                  Array [
+                                                  [
                                                     "top",
                                                     "bottom",
                                                     "left",
@@ -9476,13 +9476,13 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly with billing_model
                                                     aria-modal="true"
                                                     className="pf-v5-c-popover pf-m-width-auto"
                                                     focusTrapOptions={
-                                                      Object {
+                                                      {
                                                         "checkCanFocusTrap": [Function],
                                                         "clickOutsideDeactivates": true,
                                                         "fallbackFocus": [Function],
                                                         "initialFocus": undefined,
                                                         "returnFocusOnDeactivate": true,
-                                                        "tabbableOptions": Object {
+                                                        "tabbableOptions": {
                                                           "displayCheck": "none",
                                                         },
                                                       }
@@ -9491,7 +9491,7 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly with billing_model
                                                     preventScrollOnDeactivate={true}
                                                     role="dialog"
                                                     style={
-                                                      Object {
+                                                      {
                                                         "maxWidth": "30.0rem",
                                                         "minWidth": null,
                                                       }
@@ -9512,12 +9512,12 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly with billing_model
                                                   </FocusTrap>
                                                 }
                                                 popperRef={
-                                                  Object {
+                                                  {
                                                     "current": null,
                                                   }
                                                 }
                                                 positionModifiers={
-                                                  Object {
+                                                  {
                                                     "bottom": "pf-m-bottom",
                                                     "bottom-end": "pf-m-bottom-right",
                                                     "bottom-start": "pf-m-bottom-left",
@@ -9549,7 +9549,7 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly with billing_model
                                               >
                                                 <div
                                                   style={
-                                                    Object {
+                                                    {
                                                       "display": "contents",
                                                     }
                                                   }
@@ -9705,7 +9705,7 @@ exports[`<EditSubscriptionSettingsDialog /> renders eval support correctly 1`] =
   isOpen={true}
   onClose={[MockFunction]}
   requestState={
-    Object {
+    {
       "error": false,
       "fulfilled": false,
       "pending": false,
@@ -9713,9 +9713,9 @@ exports[`<EditSubscriptionSettingsDialog /> renders eval support correctly 1`] =
   }
   submit={[MockFunction]}
   subscription={
-    Object {
-      "capabilities": Array [
-        Object {
+    {
+      "capabilities": [
+        {
           "name": "capability.cluster.subscribed_ocp",
           "value": "true",
         },
@@ -9743,7 +9743,7 @@ exports[`<EditSubscriptionSettingsDialog /> renders eval support correctly 1`] =
   >
     <Modal
       actions={
-        Array [
+        [
           <Button
             data-testid="btn-primary"
             isDisabled={true}
@@ -10496,7 +10496,7 @@ exports[`<EditSubscriptionSettingsDialog /> renders eval support correctly 1`] =
       >
         <ModalContent
           actions={
-            Array [
+            [
               <Button
                 data-testid="btn-primary"
                 isDisabled={true}
@@ -10546,10 +10546,10 @@ exports[`<EditSubscriptionSettingsDialog /> renders eval support correctly 1`] =
                 active={true}
                 className="pf-v5-l-bullseye"
                 focusTrapOptions={
-                  Object {
+                  {
                     "clickOutsideDeactivates": true,
                     "initialFocus": undefined,
-                    "tabbableOptions": Object {
+                    "tabbableOptions": {
                       "displayCheck": "none",
                     },
                   }
@@ -10569,7 +10569,7 @@ exports[`<EditSubscriptionSettingsDialog /> renders eval support correctly 1`] =
                     id="pf-modal-part-1"
                     position="default"
                     style={
-                      Object {
+                      {
                         "--pf-v5-c-modal-box--Width": "810px",
                       }
                     }
@@ -10587,7 +10587,7 @@ exports[`<EditSubscriptionSettingsDialog /> renders eval support correctly 1`] =
                       id="pf-modal-part-1"
                       role="dialog"
                       style={
-                        Object {
+                        {
                           "--pf-v5-c-modal-box--Width": "810px",
                         }
                       }
@@ -10680,7 +10680,7 @@ exports[`<EditSubscriptionSettingsDialog /> renders eval support correctly 1`] =
                           <EditSubscriptionSettingsRequestState
                             onFulfilled={[Function]}
                             requestState={
-                              Object {
+                              {
                                 "error": false,
                                 "fulfilled": false,
                                 "pending": false,
@@ -10724,9 +10724,9 @@ exports[`<EditSubscriptionSettingsDialog /> renders eval support correctly 1`] =
                                   canSubscribeMarketplaceOCP={false}
                                   canSubscribeStandardOCP={true}
                                   initialSettings={
-                                    Object {
-                                      "capabilities": Array [
-                                        Object {
+                                    {
+                                      "capabilities": [
+                                        {
                                           "name": "capability.cluster.subscribed_ocp",
                                           "value": "true",
                                         },
@@ -10841,20 +10841,20 @@ exports[`<EditSubscriptionSettingsDialog /> renders eval support correctly 1`] =
                                     fieldId="support_level"
                                     isDisabled={false}
                                     items={
-                                      Array [
-                                        Object {
+                                      [
+                                        {
                                           "label": "Premium",
                                           "value": "Premium",
                                         },
-                                        Object {
+                                        {
                                           "label": "Standard",
                                           "value": "Standard",
                                         },
-                                        Object {
+                                        {
                                           "label": "Self-Support",
                                           "value": "Self-Support",
                                         },
-                                        Object {
+                                        {
                                           "isChecked": true,
                                           "label": "Self-Support 60-day evaluation",
                                           "value": "Eval",
@@ -11007,7 +11007,7 @@ exports[`<EditSubscriptionSettingsDialog /> renders eval support correctly 1`] =
                                                       distance={25}
                                                       enableFlip={true}
                                                       flipBehavior={
-                                                        Array [
+                                                        [
                                                           "top",
                                                           "bottom",
                                                           "left",
@@ -11045,13 +11045,13 @@ exports[`<EditSubscriptionSettingsDialog /> renders eval support correctly 1`] =
                                                           aria-modal="true"
                                                           className="pf-v5-c-popover pf-m-width-auto"
                                                           focusTrapOptions={
-                                                            Object {
+                                                            {
                                                               "checkCanFocusTrap": [Function],
                                                               "clickOutsideDeactivates": true,
                                                               "fallbackFocus": [Function],
                                                               "initialFocus": undefined,
                                                               "returnFocusOnDeactivate": true,
-                                                              "tabbableOptions": Object {
+                                                              "tabbableOptions": {
                                                                 "displayCheck": "none",
                                                               },
                                                             }
@@ -11060,7 +11060,7 @@ exports[`<EditSubscriptionSettingsDialog /> renders eval support correctly 1`] =
                                                           preventScrollOnDeactivate={true}
                                                           role="dialog"
                                                           style={
-                                                            Object {
+                                                            {
                                                               "maxWidth": "30.0rem",
                                                               "minWidth": null,
                                                             }
@@ -11104,12 +11104,12 @@ exports[`<EditSubscriptionSettingsDialog /> renders eval support correctly 1`] =
                                                         </FocusTrap>
                                                       }
                                                       popperRef={
-                                                        Object {
+                                                        {
                                                           "current": null,
                                                         }
                                                       }
                                                       positionModifiers={
-                                                        Object {
+                                                        {
                                                           "bottom": "pf-m-bottom",
                                                           "bottom-end": "pf-m-bottom-right",
                                                           "bottom-start": "pf-m-bottom-left",
@@ -11141,7 +11141,7 @@ exports[`<EditSubscriptionSettingsDialog /> renders eval support correctly 1`] =
                                                     >
                                                       <div
                                                         style={
-                                                          Object {
+                                                          {
                                                             "display": "contents",
                                                           }
                                                         }
@@ -11360,14 +11360,14 @@ exports[`<EditSubscriptionSettingsDialog /> renders eval support correctly 1`] =
                                     fieldId="service_level"
                                     isDisabled={true}
                                     items={
-                                      Array [
-                                        Object {
+                                      [
+                                        {
                                           "isChecked": true,
                                           "isDefault": true,
                                           "label": "Red Hat support (L1-L3)",
                                           "value": "L1-L3",
                                         },
-                                        Object {
+                                        {
                                           "label": "Partner support (L3)",
                                           "value": "L3-only",
                                         },
@@ -11475,7 +11475,7 @@ exports[`<EditSubscriptionSettingsDialog /> renders eval support correctly 1`] =
                                                       distance={25}
                                                       enableFlip={true}
                                                       flipBehavior={
-                                                        Array [
+                                                        [
                                                           "top",
                                                           "bottom",
                                                           "left",
@@ -11513,13 +11513,13 @@ exports[`<EditSubscriptionSettingsDialog /> renders eval support correctly 1`] =
                                                           aria-modal="true"
                                                           className="pf-v5-c-popover"
                                                           focusTrapOptions={
-                                                            Object {
+                                                            {
                                                               "checkCanFocusTrap": [Function],
                                                               "clickOutsideDeactivates": true,
                                                               "fallbackFocus": [Function],
                                                               "initialFocus": undefined,
                                                               "returnFocusOnDeactivate": true,
-                                                              "tabbableOptions": Object {
+                                                              "tabbableOptions": {
                                                                 "displayCheck": "none",
                                                               },
                                                             }
@@ -11528,7 +11528,7 @@ exports[`<EditSubscriptionSettingsDialog /> renders eval support correctly 1`] =
                                                           preventScrollOnDeactivate={true}
                                                           role="dialog"
                                                           style={
-                                                            Object {
+                                                            {
                                                               "maxWidth": null,
                                                               "minWidth": null,
                                                             }
@@ -11563,12 +11563,12 @@ exports[`<EditSubscriptionSettingsDialog /> renders eval support correctly 1`] =
                                                         </FocusTrap>
                                                       }
                                                       popperRef={
-                                                        Object {
+                                                        {
                                                           "current": null,
                                                         }
                                                       }
                                                       positionModifiers={
-                                                        Object {
+                                                        {
                                                           "bottom": "pf-m-bottom",
                                                           "bottom-end": "pf-m-bottom-right",
                                                           "bottom-start": "pf-m-bottom-left",
@@ -11600,7 +11600,7 @@ exports[`<EditSubscriptionSettingsDialog /> renders eval support correctly 1`] =
                                                     >
                                                       <div
                                                         style={
-                                                          Object {
+                                                          {
                                                             "display": "contents",
                                                           }
                                                         }
@@ -11745,18 +11745,18 @@ exports[`<EditSubscriptionSettingsDialog /> renders eval support correctly 1`] =
                                     fieldId="usage"
                                     isDisabled={true}
                                     items={
-                                      Array [
-                                        Object {
+                                      [
+                                        {
                                           "isChecked": true,
                                           "isDefault": true,
                                           "label": "Production",
                                           "value": "Production",
                                         },
-                                        Object {
+                                        {
                                           "label": "Development/Test",
                                           "value": "Development/Test",
                                         },
-                                        Object {
+                                        {
                                           "label": "Disaster Recovery",
                                           "value": "Disaster Recovery",
                                         },
@@ -11864,7 +11864,7 @@ exports[`<EditSubscriptionSettingsDialog /> renders eval support correctly 1`] =
                                                       distance={25}
                                                       enableFlip={true}
                                                       flipBehavior={
-                                                        Array [
+                                                        [
                                                           "top",
                                                           "bottom",
                                                           "left",
@@ -11902,13 +11902,13 @@ exports[`<EditSubscriptionSettingsDialog /> renders eval support correctly 1`] =
                                                           aria-modal="true"
                                                           className="pf-v5-c-popover"
                                                           focusTrapOptions={
-                                                            Object {
+                                                            {
                                                               "checkCanFocusTrap": [Function],
                                                               "clickOutsideDeactivates": true,
                                                               "fallbackFocus": [Function],
                                                               "initialFocus": undefined,
                                                               "returnFocusOnDeactivate": true,
-                                                              "tabbableOptions": Object {
+                                                              "tabbableOptions": {
                                                                 "displayCheck": "none",
                                                               },
                                                             }
@@ -11917,7 +11917,7 @@ exports[`<EditSubscriptionSettingsDialog /> renders eval support correctly 1`] =
                                                           preventScrollOnDeactivate={true}
                                                           role="dialog"
                                                           style={
-                                                            Object {
+                                                            {
                                                               "maxWidth": null,
                                                               "minWidth": null,
                                                             }
@@ -11952,12 +11952,12 @@ exports[`<EditSubscriptionSettingsDialog /> renders eval support correctly 1`] =
                                                         </FocusTrap>
                                                       }
                                                       popperRef={
-                                                        Object {
+                                                        {
                                                           "current": null,
                                                         }
                                                       }
                                                       positionModifiers={
-                                                        Object {
+                                                        {
                                                           "bottom": "pf-m-bottom",
                                                           "bottom-end": "pf-m-bottom-right",
                                                           "bottom-start": "pf-m-bottom-left",
@@ -11989,7 +11989,7 @@ exports[`<EditSubscriptionSettingsDialog /> renders eval support correctly 1`] =
                                                     >
                                                       <div
                                                         style={
-                                                          Object {
+                                                          {
                                                             "display": "contents",
                                                           }
                                                         }
@@ -12172,13 +12172,13 @@ exports[`<EditSubscriptionSettingsDialog /> renders eval support correctly 1`] =
                                     isDisabled={true}
                                     isInline={true}
                                     items={
-                                      Array [
-                                        Object {
+                                      [
+                                        {
                                           "isDefault": true,
                                           "label": "Cores or vCPUs",
                                           "value": "Cores/vCPU",
                                         },
-                                        Object {
+                                        {
                                           "isChecked": true,
                                           "label": "Sockets",
                                           "value": "Sockets",
@@ -12288,7 +12288,7 @@ exports[`<EditSubscriptionSettingsDialog /> renders eval support correctly 1`] =
                                                       distance={25}
                                                       enableFlip={true}
                                                       flipBehavior={
-                                                        Array [
+                                                        [
                                                           "top",
                                                           "bottom",
                                                           "left",
@@ -12326,13 +12326,13 @@ exports[`<EditSubscriptionSettingsDialog /> renders eval support correctly 1`] =
                                                           aria-modal="true"
                                                           className="pf-v5-c-popover"
                                                           focusTrapOptions={
-                                                            Object {
+                                                            {
                                                               "checkCanFocusTrap": [Function],
                                                               "clickOutsideDeactivates": true,
                                                               "fallbackFocus": [Function],
                                                               "initialFocus": undefined,
                                                               "returnFocusOnDeactivate": true,
-                                                              "tabbableOptions": Object {
+                                                              "tabbableOptions": {
                                                                 "displayCheck": "none",
                                                               },
                                                             }
@@ -12341,7 +12341,7 @@ exports[`<EditSubscriptionSettingsDialog /> renders eval support correctly 1`] =
                                                           preventScrollOnDeactivate={true}
                                                           role="dialog"
                                                           style={
-                                                            Object {
+                                                            {
                                                               "maxWidth": null,
                                                               "minWidth": null,
                                                             }
@@ -12376,12 +12376,12 @@ exports[`<EditSubscriptionSettingsDialog /> renders eval support correctly 1`] =
                                                         </FocusTrap>
                                                       }
                                                       popperRef={
-                                                        Object {
+                                                        {
                                                           "current": null,
                                                         }
                                                       }
                                                       positionModifiers={
-                                                        Object {
+                                                        {
                                                           "bottom": "pf-m-bottom",
                                                           "bottom-end": "pf-m-bottom-right",
                                                           "bottom-start": "pf-m-bottom-left",
@@ -12413,7 +12413,7 @@ exports[`<EditSubscriptionSettingsDialog /> renders eval support correctly 1`] =
                                                     >
                                                       <div
                                                         style={
-                                                          Object {
+                                                          {
                                                             "display": "contents",
                                                           }
                                                         }
@@ -12605,7 +12605,7 @@ exports[`<EditSubscriptionSettingsDialog /> renders eval support correctly 1`] =
                                                 distance={25}
                                                 enableFlip={true}
                                                 flipBehavior={
-                                                  Array [
+                                                  [
                                                     "top",
                                                     "bottom",
                                                     "left",
@@ -12643,13 +12643,13 @@ exports[`<EditSubscriptionSettingsDialog /> renders eval support correctly 1`] =
                                                     aria-modal="true"
                                                     className="pf-v5-c-popover pf-m-width-auto"
                                                     focusTrapOptions={
-                                                      Object {
+                                                      {
                                                         "checkCanFocusTrap": [Function],
                                                         "clickOutsideDeactivates": true,
                                                         "fallbackFocus": [Function],
                                                         "initialFocus": undefined,
                                                         "returnFocusOnDeactivate": true,
-                                                        "tabbableOptions": Object {
+                                                        "tabbableOptions": {
                                                           "displayCheck": "none",
                                                         },
                                                       }
@@ -12658,7 +12658,7 @@ exports[`<EditSubscriptionSettingsDialog /> renders eval support correctly 1`] =
                                                     preventScrollOnDeactivate={true}
                                                     role="dialog"
                                                     style={
-                                                      Object {
+                                                      {
                                                         "maxWidth": "30.0rem",
                                                         "minWidth": null,
                                                       }
@@ -12679,12 +12679,12 @@ exports[`<EditSubscriptionSettingsDialog /> renders eval support correctly 1`] =
                                                   </FocusTrap>
                                                 }
                                                 popperRef={
-                                                  Object {
+                                                  {
                                                     "current": null,
                                                   }
                                                 }
                                                 positionModifiers={
-                                                  Object {
+                                                  {
                                                     "bottom": "pf-m-bottom",
                                                     "bottom-end": "pf-m-bottom-right",
                                                     "bottom-start": "pf-m-bottom-left",
@@ -12716,7 +12716,7 @@ exports[`<EditSubscriptionSettingsDialog /> renders eval support correctly 1`] =
                                               >
                                                 <div
                                                   style={
-                                                    Object {
+                                                    {
                                                       "display": "contents",
                                                     }
                                                   }
