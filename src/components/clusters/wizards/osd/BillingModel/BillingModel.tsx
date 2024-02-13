@@ -15,7 +15,7 @@ import OutlinedQuestionCircleIcon from '@patternfly/react-icons/dist/esm/icons/o
 import CreateOSDWizardIntro from '~/styles/images/CreateOSDWizard-intro.png';
 import { OSD_GOOGLE_MARKETPLACE_FEATURE } from '~/redux/constants/featureConstants';
 import { billingModels, normalizedProducts } from '~/common/subscriptionTypes';
-import { getQueryParam } from '~/common/queryHelpers';
+import { deleteQueryParam, getQueryParam } from '~/common/queryHelpers';
 import ExternalLink from '~/components/common/ExternalLink';
 import {
   getMinReplicasCount,
@@ -247,6 +247,7 @@ export const BillingModel = () => {
       setFieldValue(FieldId.BillingModel, billingModels.MARKETPLACE_GCP, false);
       setFieldValue(FieldId.Byoc, 'true', false);
       setFieldValue(FieldId.Product, normalizedProducts.OSD, false);
+      deleteQueryParam('source');
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [sourceIsGCP]);
