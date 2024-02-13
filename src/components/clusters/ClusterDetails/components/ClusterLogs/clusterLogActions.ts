@@ -26,5 +26,7 @@ const clusterLogActions = {
   resetClusterHistory,
 } as const;
 
-export type ClusterLogAction = ActionType<typeof clusterLogActions[keyof typeof clusterLogActions]>;
+export type ClusterLogAction = ActionType<
+  (typeof clusterLogActions)[keyof typeof clusterLogActions]
+>;
 export { clusterLogActions };

@@ -1,4 +1,4 @@
-import produce from 'immer';
+import { produce } from 'immer';
 import dayjs from 'dayjs';
 import { defaultMetric } from '~/components/clusters/common/__test__/clusterStates.fixtures';
 import {

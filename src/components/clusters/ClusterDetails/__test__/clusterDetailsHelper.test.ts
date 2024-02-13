@@ -24,7 +24,7 @@ const isHypershiftClusterMock = isHypershiftCluster as jest.Mock;
 const isHibernatingMock = isHibernating as jest.Mock;
 
 describe('clusterDetailsHelper', () => {
-  type SubscriptionStatusesType = typeof subscriptionStatuses[keyof typeof subscriptionStatuses];
+  type SubscriptionStatusesType = (typeof subscriptionStatuses)[keyof typeof subscriptionStatuses];
 
   describe('hasCpuAndMemory', () => {
     const defaultCPU = defaultMetric.cpu;

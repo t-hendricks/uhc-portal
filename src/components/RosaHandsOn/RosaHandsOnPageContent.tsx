@@ -149,11 +149,11 @@ const RosaHandsOnPageContent = ({
     <ErrorBoundary>
       <RosaHandsOnPageHeader />
       <StatusAlert demoExperience={demoExperience} />
-      {requestError && (
+      {requestError ? (
         <Alert title="Failed to request an experience" variant="danger" isInline>
           {getErrorMessage(error)}
         </Alert>
-      )}
+      ) : null}
       <>
         <PageSection>
           {loading ? (

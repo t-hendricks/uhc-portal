@@ -10,7 +10,8 @@ type WithAnalyticsProps = ReturnType<typeof useAnalytics>;
  */
 const withAnalytics =
   <Props extends WithAnalyticsProps>(AnalyticsContext: React.ComponentType<Props>) =>
-  (props: Omit<Props, 'track'>) =>
-    <AnalyticsContext {...(props as Props)} track={useAnalytics()} />;
+  (props: Omit<Props, 'track'>) => (
+    <AnalyticsContext {...(props as Props)} track={useAnalytics()} />
+  );
 
 export default withAnalytics;

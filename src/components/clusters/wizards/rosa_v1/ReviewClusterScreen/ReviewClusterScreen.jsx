@@ -295,14 +295,17 @@ const ReviewClusterScreen = ({
           !isHypershiftSelected &&
           isByoc &&
           ReviewItem({ name: 'applicationIngress', formValues })}
-        {formValues.applicationIngress !== 'default' && isAWS && !isHypershiftSelected && isByoc && (
-          <>
-            {ReviewItem({ name: 'defaultRouterSelectors', formValues })}
-            {ReviewItem({ name: 'defaultRouterExcludedNamespacesFlag', formValues })}
-            {ReviewItem({ name: 'isDefaultRouterWildcardPolicyAllowed', formValues })}
-            {ReviewItem({ name: 'isDefaultRouterNamespaceOwnershipPolicyStrict', formValues })}
-          </>
-        )}
+        {formValues.applicationIngress !== 'default' &&
+          isAWS &&
+          !isHypershiftSelected &&
+          isByoc && (
+            <>
+              {ReviewItem({ name: 'defaultRouterSelectors', formValues })}
+              {ReviewItem({ name: 'defaultRouterExcludedNamespacesFlag', formValues })}
+              {ReviewItem({ name: 'isDefaultRouterWildcardPolicyAllowed', formValues })}
+              {ReviewItem({ name: 'isDefaultRouterNamespaceOwnershipPolicyStrict', formValues })}
+            </>
+          )}
       </ReviewSection>
       {isROSA && (
         <ReviewSection

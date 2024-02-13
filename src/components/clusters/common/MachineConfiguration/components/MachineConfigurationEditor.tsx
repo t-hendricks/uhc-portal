@@ -102,14 +102,14 @@ const MachineConfigurationEditor: React.FC<MachineConfigurationEditorProps> = (p
 
   return (
     <Stack hasGutter>
-      {savingError && (
+      {savingError ? (
         <StackItem>
           <ErrorBox
             message="There was an error saving the machine configuration"
             response={getErrorProperties(savingError)}
           />
         </StackItem>
-      )}
+      ) : null}
       <StackItem>
         <Form onSubmit={handleSubmit}>
           {!isReady ? (

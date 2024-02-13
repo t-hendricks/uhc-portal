@@ -1,5 +1,5 @@
 import get from 'lodash/get';
-import produce from 'immer';
+import { produce } from 'immer';
 import {
   REJECTED_ACTION,
   PENDING_ACTION,

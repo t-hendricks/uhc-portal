@@ -18,7 +18,7 @@ import { ArrowRightIcon } from '@patternfly/react-icons/dist/esm/icons/arrow-rig
 import { Link } from 'react-router-dom';
 import * as OCM from '@openshift-assisted/ui-lib/ocm';
 
-import produce from 'immer';
+import { produce } from 'immer';
 import { has, get } from 'lodash';
 import { AppPage } from '~/components/App/AppPage';
 import { isRestrictedEnv } from '~/restrictedEnv';
