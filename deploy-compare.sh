@@ -45,10 +45,12 @@ fi
 echo "Creating live branches"
 ./deploy_info.mjs --set-git-branches
 
+upstream="$(run/upstream-name.mjs)"
+
 # write out remotes/origin/master git "Merge branch..." commits (commitHash, commitDate, commitSummary) 'after' and/or 'before' date specified
-git log --grep='^Merge branch.*into '\''master'\''' --after="$after" ${before:+--before="\"$before\""} --pretty=format:"%h %cd %s" --date=short live_consoledev_master | awk '{ printf "%s,%s,%s\n", substr($0, 1, 9), substr($0, 11, 10), substr($0, 22) }' > masterBranch.txt
+git log --grep='^Merge branch.*into '\''master'\''' --after="$after" ${before:+--before="\"$before\""} --pretty=format:"%h %cd %s" --date=short "$upstream/master" | awk '{ printf "%s,%s,%s\n", substr($0, 1, 9), substr($0, 11, 10), substr($0, 22) }' > masterBranch.txt
 
 # write out remotes/origin/candidate git commits (commitHash, commitDate, commitSummary, commitDescription) 'after' and/or 'before' date specified
-git log --after="$after" ${before:+--before="\"$before\""} --pretty=format:"%h %cd %s%n%B" --date=short live_candidate > candidateBranch.txt
+git log --after="$after" ${before:+--before="\"$before\""} --pretty=format:"%h %cd %s%n%B" --date=short "$upstream/candidate" > candidateBranch.txt
 
 ./run/deploy-report.sh --jira-token="$jira_token" < masterBranch.txt
