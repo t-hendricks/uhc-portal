@@ -10,7 +10,7 @@ import {
 import type { GCP, Taint } from '../types/clusters_mgmt.v1';
 import { sqlString } from './queryHelpers';
 
-type Networks = Parameters<typeof cidrTools['overlap']>[0];
+type Networks = Parameters<(typeof cidrTools)['overlap']>[0];
 
 // Valid RFC-1035 labels must consist of lower case alphanumeric characters or '-', start with an
 // alphabetic character, and end with an alphanumeric character (e.g. 'my-name',  or 'abc-123').
