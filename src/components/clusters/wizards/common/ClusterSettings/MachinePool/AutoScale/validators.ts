@@ -34,7 +34,7 @@ const utilizationThresholdValidator = (num: number | string) => {
   if (numError) {
     return numError;
   }
-  if (num < 0 || num > 1) {
+  if (+num < 0 || +num > 1) {
     return 'Value must be between 0 and 1.';
   }
   return undefined;

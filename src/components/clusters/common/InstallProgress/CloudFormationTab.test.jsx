@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, checkAccessibility } from '~/testUtils';
-import produce from 'immer';
+import { produce } from 'immer';
 import CloudFormationTab, { getAccountRolePrefix } from './CloudFormationTab';
 import fixtures from '../../ClusterDetails/__test__/ClusterDetails.fixtures';
 

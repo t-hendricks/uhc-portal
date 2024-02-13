@@ -20,7 +20,7 @@ export type DownloadButtonProps = {
   url: string;
   disabled?: boolean;
   download?: boolean;
-  tool?: typeof tools[keyof typeof tools];
+  tool?: (typeof tools)[keyof typeof tools];
   text?: string;
   name?: string;
   pendoID?: string;

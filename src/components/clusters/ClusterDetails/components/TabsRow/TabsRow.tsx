@@ -1,7 +1,7 @@
-import { Tab, TabTitleText, Tabs } from '@patternfly/react-core';
 import React from 'react';
+import { Tab, TabTitleText, Tabs } from '@patternfly/react-core';
+import { Update } from 'history';
 import { useHistory } from 'react-router';
-import { UnregisterCallback } from 'history';
 import { getInitTab, getTabs } from './TabsRow.helper';
 import { TabsRowInfoType, TabsRowTabType } from './TabsRow.model';
 
@@ -56,9 +56,9 @@ const TabsRow = ({ tabsInfo, onTabSelected, initTabOpen }: TabsRowProps) => {
   }, [initTabOpen]); // TODO: tabsInfo should be added as soon as ClusterDetails is refactored
 
   React.useEffect(() => {
-    let unlisten: UnregisterCallback | undefined;
+    let unlisten: (() => void) | undefined;
     if (tabs?.length) {
-      unlisten = history.listen((location, action) => {
+      unlisten = history.listen(({ action, location }: Update) => {
         // listen to browser back/forward and manual URL changes
         if (['PUSH', 'POP'].includes(action)) {
           const targetTab = tabs.find((tab) => `#${tab.id}` === location.hash);

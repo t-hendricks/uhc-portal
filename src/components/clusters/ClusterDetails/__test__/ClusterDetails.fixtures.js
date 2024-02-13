@@ -1,4 +1,4 @@
-import produce from 'immer';
+import { produce } from 'immer';
 import clusterStates from '../../common/clusterStates';
 import { normalizedProducts, billingModels } from '../../../../common/subscriptionTypes';
 

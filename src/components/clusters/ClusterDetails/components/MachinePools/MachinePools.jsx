@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import produce from 'immer';
+import { produce } from 'immer';
 import isEmpty from 'lodash/isEmpty';
 import get from 'lodash/get';
 

@@ -1,4 +1,4 @@
-import produce, { Draft } from 'immer';
+import { produce, Draft } from 'immer';
 import * as OCM from '@openshift-assisted/ui-lib/ocm';
 import type { Cluster as AICluster } from '@openshift-assisted/types/assisted-installer-service';
 import type { AxiosResponse } from 'axios';

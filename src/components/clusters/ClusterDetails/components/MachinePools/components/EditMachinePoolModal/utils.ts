@@ -4,10 +4,13 @@ import { EditMachinePoolValues } from './hooks/useMachinePoolFormik';
 const getLabels = (labels: EditMachinePoolValues['labels']) =>
   labels.length === 1 && !labels[0].key
     ? {}
-    : labels.reduce((acc, { key, value }) => {
-        acc[key] = value;
-        return acc;
-      }, {} as Record<string, string>);
+    : labels.reduce(
+        (acc, { key, value }) => {
+          acc[key] = value;
+          return acc;
+        },
+        {} as Record<string, string>,
+      );
 
 const getTaints = (taints: EditMachinePoolValues['taints']) =>
   taints.length === 1 && !taints[0].key ? [] : taints;
