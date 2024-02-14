@@ -80,9 +80,6 @@ exports[`<Tokens /> Renders loading screen 1`] = `
                   </code>
                    command-line tool:
                    
-                  <SupportLevelBadge
-                    type="DEV_PREVIEW"
-                  />
                   <Text
                     component="p"
                   />
@@ -433,9 +430,6 @@ exports[`<Tokens /> Renders token 1`] = `
                   </code>
                    command-line tool:
                    
-                  <SupportLevelBadge
-                    type="DEV_PREVIEW"
-                  />
                   <Text
                     component="p"
                   />
