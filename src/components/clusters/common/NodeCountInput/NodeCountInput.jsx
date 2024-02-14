@@ -56,9 +56,32 @@ class NodeCountInput extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
-    const { input, isEditingCluster, minNodes, isHypershiftWizard, poolNumber } = this.props;
+    const {
+      input,
+      isEditingCluster,
+      minNodes,
+      isHypershiftWizard,
+      poolNumber,
+      currentNodeCount,
+      isMultiAz,
+      increment,
+      isMachinePool,
+    } = this.props;
 
     const available = this.getAvailableQuota();
+    const included = getIncludedNodes({ isMultiAz, isHypershift: !isMachinePool });
+    const optionValueIncrement =
+      increment || incrementValue({ isHypershiftWizard, poolNumber, isMultiAz });
+    const options = buildOptions({
+      included,
+      available,
+      isEditingCluster,
+      currentNodeCount,
+      minNodes,
+      optionValueIncrement,
+      isHypershift: isHypershiftWizard,
+    });
+
     if (isHypershiftWizard && poolNumber !== prevProps.poolNumber) {
       // Keep value the user sees (nodes per pool) unless the number of total nodes
       // is less than the minimum total nodes
@@ -73,6 +96,11 @@ class NodeCountInput extends React.Component {
       // set input value to minimum if we don't have quota for it (and will be disabled)
       // this can happen if the user set a value, then switched to a machine type
       // where they have less quota than that value.
+      input.onChange(minNodes);
+    }
+
+    if (!options.includes(Number(input.value))) {
+      // if the value isn't an option, then just set to minNode (the value the user sees as the setting )
       input.onChange(minNodes);
     }
   }
