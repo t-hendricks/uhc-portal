@@ -69,6 +69,13 @@
     "react/sort-comp": "off",
     "react-hooks/exhaustive-deps": "error",
     "react/state-in-constructor": [2, "never"],
+    "react/function-component-definition": [
+      2,
+      {
+        "namedComponents": ["function-declaration", "arrow-function"],
+        "unnamedComponents": ["function-expression", "arrow-function"]
+      }
+    ],
     "no-param-reassign": [
       "error",
       { "props": true, "ignorePropertyModificationsFor": ["draft", "response", "acc"] }

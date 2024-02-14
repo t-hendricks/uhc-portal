@@ -202,15 +202,13 @@ class NetworkSelfServiceSection extends React.Component {
         },
         {
           title: (
-            <>
-              <ClipboardCopyLinkButton
-                className="access-control-tables-copy"
-                text={grant.console_url}
-                isDisabled={!grant.console_url}
-              >
-                Copy URL to clipboard
-              </ClipboardCopyLinkButton>
-            </>
+            <ClipboardCopyLinkButton
+              className="access-control-tables-copy"
+              text={grant.console_url}
+              isDisabled={!grant.console_url}
+            >
+              Copy URL to clipboard
+            </ClipboardCopyLinkButton>
           ),
         },
       ],
@@ -274,37 +272,35 @@ class NetworkSelfServiceSection extends React.Component {
         </CardFooter>
       </Card>
     ) : (
-      <>
-        <Card id="networkSelfService">
-          <CardBody>
-            {deleteGrantResponse.error && (
-              <ErrorBox message="Error deleting grant" response={deleteGrantResponse} />
-            )}
-            <Title size="lg" className="card-title" headingLevel="h3">
-              AWS infrastructure access
-            </Title>
-            <p>
-              Grant permission to view or manage the AWS infrastructure of the cluster to IAM users
-              defined in your AWS account. {loginAWSLink}
-              <ExternalLinkAltIcon color="#0066cc" size="sm" />
-            </p>
-            {hasGrants && (
-              <TableDeprecated
-                aria-label="Grants"
-                actions={actions}
-                variant={TableVariant.compact}
-                cells={columns}
-                rows={rows}
-                areActionsDisabled={(rowData) => rowData.state === 'deleting' || !!disableReason}
-              >
-                <TableHeaderDeprecated />
-                <TableBodyDeprecated />
-              </TableDeprecated>
-            )}
-            {addGrantBtn}
-          </CardBody>
-        </Card>
-      </>
+      <Card id="networkSelfService">
+        <CardBody>
+          {deleteGrantResponse.error && (
+            <ErrorBox message="Error deleting grant" response={deleteGrantResponse} />
+          )}
+          <Title size="lg" className="card-title" headingLevel="h3">
+            AWS infrastructure access
+          </Title>
+          <p>
+            Grant permission to view or manage the AWS infrastructure of the cluster to IAM users
+            defined in your AWS account. {loginAWSLink}
+            <ExternalLinkAltIcon color="#0066cc" size="sm" />
+          </p>
+          {hasGrants && (
+            <TableDeprecated
+              aria-label="Grants"
+              actions={actions}
+              variant={TableVariant.compact}
+              cells={columns}
+              rows={rows}
+              areActionsDisabled={(rowData) => rowData.state === 'deleting' || !!disableReason}
+            >
+              <TableHeaderDeprecated />
+              <TableBodyDeprecated />
+            </TableDeprecated>
+          )}
+          {addGrantBtn}
+        </CardBody>
+      </Card>
     );
   }
 }

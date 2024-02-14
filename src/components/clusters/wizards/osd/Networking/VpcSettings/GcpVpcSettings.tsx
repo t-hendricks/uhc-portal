@@ -51,11 +51,9 @@ export const GcpVpcSettings = () => {
                 isInline
                 title="You must use OpenShift version 4.13.15 or above."
                 actionLinks={
-                  <>
-                    <AlertActionLink onClick={() => goToStepById(StepId.ClusterSettingsDetails)}>
-                      Change version
-                    </AlertActionLink>
-                  </>
+                  <AlertActionLink onClick={() => goToStepById(StepId.ClusterSettingsDetails)}>
+                    Change version
+                  </AlertActionLink>
                 }
               />
             </div>

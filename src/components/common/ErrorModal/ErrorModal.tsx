@@ -1,8 +1,7 @@
 import React from 'react';
 import { Title } from '@patternfly/react-core';
 import { ExclamationCircleIcon } from '@patternfly/react-icons/dist/esm/icons/exclamation-circle-icon';
-// eslint-disable-next-line camelcase
-import { global_danger_color_100 } from '@patternfly/react-tokens/dist/esm/global_danger_color_100';
+import { global_danger_color_100 as dangerColor } from '@patternfly/react-tokens/dist/esm/global_danger_color_100';
 import { ErrorState } from '~/types/types';
 import { formatErrorDetails } from '../../../common/errors';
 import Modal from '../Modal/Modal';
@@ -26,7 +25,7 @@ const ErrorModal = ({ title, errorResponse, resetResponse, closeModal }: Props) 
     <Modal
       header={
         <Title headingLevel="h2" size="2xl">
-          <ExclamationCircleIcon color={global_danger_color_100.value} /> {title}
+          <ExclamationCircleIcon color={dangerColor.value} /> {title}
         </Title>
       }
       primaryText="Close"

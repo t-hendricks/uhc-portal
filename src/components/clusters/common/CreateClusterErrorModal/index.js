@@ -1,1 +1,3 @@
-export { default } from './CreateClusterErrorModal';
+import CreateClusterErrorModal from './CreateClusterErrorModal';
+
+export default CreateClusterErrorModal;

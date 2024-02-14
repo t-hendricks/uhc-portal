@@ -23,8 +23,7 @@ import { Link } from 'react-router-dom';
 
 import { CheckIcon } from '@patternfly/react-icons/dist/esm/icons/check-icon';
 import { HelpIcon } from '@patternfly/react-icons/dist/esm/icons/help-icon';
-// eslint-disable-next-line camelcase
-import { global_link_Color_dark } from '@patternfly/react-tokens/dist/esm/global_link_Color_dark';
+import { global_link_Color_dark as darkColor } from '@patternfly/react-tokens/dist/esm/global_link_Color_dark';
 import RosaHandsOnIcon from './RosaHandsOnIcons/RosaHandsOnIcon';
 import ExternalLink from '../common/ExternalLink';
 import { MAX_DURATION, rosaHandsOnLinks } from './constants';
@@ -46,7 +45,7 @@ const CheckListItem = ({
   <ListItem
     icon={
       <Icon size="md">
-        <CheckIcon color={global_link_Color_dark.value} />
+        <CheckIcon color={darkColor.value} />
       </Icon>
     }
     style={{ alignItems: 'baseline' }}
@@ -106,6 +105,8 @@ const DefaultCardBody = ({ demoExperience }: { demoExperience: AugmentedDemoExpe
   </List>
 );
 
+const CreateRosaClusterLink = (props: any) => <Link {...props} to={rosaHandsOnLinks.getStarted} />;
+
 const RosaHandsOnGetStartedCard = ({
   demoExperience,
   onRequestCluster,
@@ -149,7 +150,7 @@ const RosaHandsOnGetStartedCard = ({
         <Button
           variant="primary"
           href={rosaHandsOnLinks.getStarted}
-          component={(props) => <Link {...props} to={rosaHandsOnLinks.getStarted} />}
+          component={CreateRosaClusterLink}
         >
           Create a ROSA cluster
         </Button>

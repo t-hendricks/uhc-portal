@@ -9,8 +9,24 @@ import './CostBreakdownCard.scss';
 const CHART_HEIGHT = 185;
 const CHART_WIDTH = 350;
 
+const LegendLabel = ({ values, ...props }) => (
+  <ChartLabel
+    {...props}
+    style={[{ fontWeight: 600 }, {}]}
+    text={[values[props.index], props.text]}
+  />
+);
+
+LegendLabel.propTypes = {
+  values: PropTypes.array,
+  index: PropTypes.any,
+  text: PropTypes.any,
+};
+
+const getLegendLabel = () => LegendLabel;
+
 class CostBreakdownSummary extends Component {
-  formatCurrency = (value = 0, units = 'USD') =>
+  static formatCurrency = (value = 0, units = 'USD') =>
     value.toLocaleString('en', {
       style: 'currency',
       currency: units,
@@ -18,9 +34,7 @@ class CostBreakdownSummary extends Component {
       maximumFractionDigits: 2,
     });
 
-  getChart = () => {
-    const { report } = this.props;
-
+  static getChart = (report) => {
     const hasCost = report && report.meta && report.meta.total && report.meta.total.cost;
     const hasMarkup = hasCost && report.meta.total.cost.markup;
     const hasRaw = hasCost && report.meta.total.cost.raw;
@@ -34,12 +48,15 @@ class CostBreakdownSummary extends Component {
     const rawValue = hasRaw ? report.meta.total.cost.raw.value : 0;
     const usageValue = hasUsage ? report.meta.total.cost.usage.value : 0;
 
-    const markup = this.formatCurrency(
+    const markup = CostBreakdownSummary.formatCurrency(
       hasMarkup ? report.meta.total.cost.markup.value : 0,
       markupUnits,
     );
-    const raw = this.formatCurrency(hasRaw ? report.meta.total.cost.raw.value : 0, rawUnits);
-    const usage = this.formatCurrency(
+    const raw = CostBreakdownSummary.formatCurrency(
+      hasRaw ? report.meta.total.cost.raw.value : 0,
+      rawUnits,
+    );
+    const usage = CostBreakdownSummary.formatCurrency(
       hasUsage ? report.meta.total.cost.usage.value : 0,
       usageUnits,
     );
@@ -58,8 +75,10 @@ class CostBreakdownSummary extends Component {
           { x: usageLabel, y: usageValue, units: usageUnits },
         ]}
         height={CHART_HEIGHT}
-        labels={({ datum }) => `${datum.x}: ${this.formatCurrency(datum.y, datum.units)}`}
-        legendComponent={this.getLegend([raw, markup, usage])}
+        labels={({ datum }) =>
+          `${datum.x}: ${CostBreakdownSummary.formatCurrency(datum.y, datum.units)}`
+        }
+        legendComponent={CostBreakdownSummary.getLegend([raw, markup, usage])}
         legendData={[
           {
             name: rawLabel,
@@ -85,20 +104,8 @@ class CostBreakdownSummary extends Component {
     );
   };
 
-  // Override legend label layout
-  getLegendLabel =
-    () =>
-    ({ values, ...props }) =>
-      (
-        <ChartLabel
-          {...props}
-          style={[{ fontWeight: 600 }, {}]}
-          text={[values[props.index], props.text]}
-        />
-      );
-
-  getLegend = (values) => {
-    const LegendLabel = this.getLegendLabel();
+  static getLegend = (values) => {
+    const LegendLabel = getLegendLabel();
     return (
       <ChartLegend
         gutter={25}
@@ -109,9 +116,7 @@ class CostBreakdownSummary extends Component {
     );
   };
 
-  getTotal = () => {
-    const { report } = this.props;
-
+  static getTotal = (report) => {
     const hasTotal =
       report &&
       report.meta &&
@@ -121,23 +126,23 @@ class CostBreakdownSummary extends Component {
     const total = hasTotal ? report.meta.total.cost.total.value : 0;
     const units = hasTotal ? report.meta.total.cost.total.units : 'USD';
 
-    return this.formatCurrency(total, units);
+    return CostBreakdownSummary.formatCurrency(total, units);
   };
 
   render() {
     const { report } = this.props;
 
-    if (!report.fulfilled) {
-      return <Skeleton size="md" />;
-    }
-
-    return (
+    return !report.fulfilled ? (
+      <Skeleton size="md" />
+    ) : (
       <>
         <Title className="ocm--cost-title" size="md" headingLevel="h2">
           Total cost
-          <span className="ocm--cost-total"> {this.getTotal()}</span>
+          <span className="ocm--cost-total"> {CostBreakdownSummary.getTotal(report)}</span>
         </Title>
-        <div style={{ maxHeight: CHART_HEIGHT, maxWidth: CHART_WIDTH }}>{this.getChart()}</div>
+        <div style={{ maxHeight: CHART_HEIGHT, maxWidth: CHART_WIDTH }}>
+          {CostBreakdownSummary.getChart(report)}
+        </div>
       </>
     );
   }
@@ -150,7 +155,6 @@ CostBreakdownSummary.propTypes = {
     pending: PropTypes.bool,
     fulfilled: PropTypes.bool,
   }).isRequired,
-  values: PropTypes.array,
 };
 
 export default CostBreakdownSummary;

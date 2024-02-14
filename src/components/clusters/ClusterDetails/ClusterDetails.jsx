@@ -78,7 +78,6 @@ class ClusterDetails extends Component {
     this.refreshIDP = this.refreshIDP.bind(this);
 
     this.overviewTabRef = React.createRef();
-    this.insightsTabRef = React.createRef();
     this.monitoringTabRef = React.createRef();
     this.accessControlTabRef = React.createRef();
     this.addOnsTabRef = React.createRef();

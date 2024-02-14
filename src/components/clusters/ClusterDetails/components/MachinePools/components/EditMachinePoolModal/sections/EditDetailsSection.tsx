@@ -23,26 +23,23 @@ const EditDetailsSection = ({
   machinePools,
   setCurrentMPId,
   currentMPId,
-}: EditDetailsSectionProps) => (
-  <>
-    {isEdit ? (
-      <FormGroup fieldId="machine-pool" label="Machine pool">
-        <SelectField fieldId="machine-pool" onSelect={setCurrentMPId} value={currentMPId}>
-          {machinePools.map((mp) => (
-            <SelectOptionDeprecated key={mp.id} value={mp.id}>
-              {mp.id || ''}
-            </SelectOptionDeprecated>
-          ))}
-        </SelectField>
-      </FormGroup>
-    ) : (
-      <>
-        <TextField fieldId="name" label="Machine pool name" isRequired />
-        {isHypershiftCluster(cluster) && <SubnetField cluster={cluster} />}
-        <InstanceTypeField cluster={cluster} />
-      </>
-    )}
-  </>
-);
+}: EditDetailsSectionProps) =>
+  isEdit ? (
+    <FormGroup fieldId="machine-pool" label="Machine pool">
+      <SelectField fieldId="machine-pool" onSelect={setCurrentMPId} value={currentMPId}>
+        {machinePools.map((mp) => (
+          <SelectOptionDeprecated key={mp.id} value={mp.id}>
+            {mp.id || ''}
+          </SelectOptionDeprecated>
+        ))}
+      </SelectField>
+    </FormGroup>
+  ) : (
+    <>
+      <TextField fieldId="name" label="Machine pool name" isRequired />
+      {isHypershiftCluster(cluster) && <SubnetField cluster={cluster} />}
+      <InstanceTypeField cluster={cluster} />
+    </>
+  );
 
 export default EditDetailsSection;

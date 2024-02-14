@@ -93,7 +93,7 @@ function OCMRolesDialog({ onSubmit, row, productId }: OCMRolesDialogProps) {
   }, [grantOCMRoleResponse]);
 
   if (!isOpen) {
-    return <></>;
+    return null;
   }
 
   const validateUsername = (val?: string): val is string => {

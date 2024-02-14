@@ -11,7 +11,7 @@ import DatePicker from 'react-datepicker';
 class UpgradeTimeSelection extends React.Component {
   state = { timeSelectionOpen: false };
 
-  getDefaultTimestamp = () => {
+  static getDefaultTimestamp = () => {
     const HOUR_IN_MS = 60 * 60 * 1000;
     const atLeastOneHourFromNow = new Date(new Date().getTime() + HOUR_IN_MS);
     if (atLeastOneHourFromNow.getMinutes() > 5) {
@@ -54,8 +54,6 @@ class UpgradeTimeSelection extends React.Component {
     onSet({ type: 'time', timestamp: date.toISOString() });
     this.setState({ timeSelectionOpen: false });
   };
-
-  onSelectToggle = () => {};
 
   render() {
     const { type, timestamp } = this.props;

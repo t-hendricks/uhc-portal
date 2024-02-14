@@ -16,16 +16,14 @@ const MachinePoolNodesSummary = ({
   const autoScaleNodesText = `Min: ${machinePool.autoscaling.min_replicas}, Max: ${machinePool.autoscaling.max_replicas}`;
   if (isMultiZoneCluster) {
     return (
-      <>
-        <Popover
-          bodyContent="Minimum and maximum node totals are calculated based on the number of zones."
-          aria-label="help"
-        >
-          <Button className="nodes-count" variant="link">
-            {autoScaleNodesText}
-          </Button>
-        </Popover>
-      </>
+      <Popover
+        bodyContent="Minimum and maximum node totals are calculated based on the number of zones."
+        aria-label="help"
+      >
+        <Button className="nodes-count" variant="link">
+          {autoScaleNodesText}
+        </Button>
+      </Popover>
     );
   }
   return autoScaleNodesText;

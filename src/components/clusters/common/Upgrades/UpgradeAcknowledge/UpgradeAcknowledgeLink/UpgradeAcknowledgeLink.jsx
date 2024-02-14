@@ -3,8 +3,7 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { Icon } from '@patternfly/react-core';
 import { ExclamationTriangleIcon } from '@patternfly/react-icons/dist/esm/icons/exclamation-triangle-icon';
-// eslint-disable-next-line camelcase
-import { global_warning_color_100 } from '@patternfly/react-tokens/dist/esm/global_warning_color_100';
+import { global_warning_color_100 as warningColor } from '@patternfly/react-tokens/dist/esm/global_warning_color_100';
 import './UpgradeAcknowledgeWarningLink.scss';
 
 const UpgradeAcknowledgeLink = (props) => {
@@ -16,7 +15,7 @@ const UpgradeAcknowledgeLink = (props) => {
       className="ocm-upgrade-approval__required-link"
     >
       <Icon>
-        <ExclamationTriangleIcon color={global_warning_color_100.value} />
+        <ExclamationTriangleIcon color={warningColor.value} />
       </Icon>
       <span className="pf-v5-u-screen-reader">Warning</span> Approval required
     </Link>

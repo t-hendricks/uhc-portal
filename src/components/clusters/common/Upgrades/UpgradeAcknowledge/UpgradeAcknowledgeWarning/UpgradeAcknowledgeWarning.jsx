@@ -66,11 +66,9 @@ const UpgradeAcknowledgeWarning = (props) => {
             className={isPlain ? '' : 'automatic-cluster-updates-alert'}
             actionLinks={
               !isPlain ? (
-                <>
-                  <AlertActionLink onClick={() => handleButtonClick()}>
-                    Provide approval
-                  </AlertActionLink>
-                </>
+                <AlertActionLink onClick={() => handleButtonClick()}>
+                  Provide approval
+                </AlertActionLink>
               ) : null
             }
           />

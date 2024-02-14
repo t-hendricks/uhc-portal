@@ -33,6 +33,7 @@ class OCMRolesRow implements IRow {
 
   private cellsData: IRow['cells'];
 
+  // eslint-disable-next-line default-param-last
   constructor(data: any = null, rowIdx: string) {
     this.data = data;
     this.id = get(this.data, 'id', '');

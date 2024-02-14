@@ -245,7 +245,7 @@ class AutoScaleSection extends React.Component {
     return validateNumericInput(val, { min: minNodesAllowed, allowZero: true });
   };
 
-  validateMaxLessMinNodes = (val, allValues) => {
+  static validateMaxLessMinNodes = (val, allValues) => {
     if (parseInt(val, 10) < parseInt(allValues.min_replicas, 10)) {
       return 'Max nodes cannot be less than min nodes.';
     }
@@ -297,7 +297,7 @@ class AutoScaleSection extends React.Component {
         ariaLabel="Maximum nodes"
         validate={[
           this.validateMinNodes,
-          this.validateMaxLessMinNodes,
+          AutoScaleSection.validateMaxLessMinNodes,
           this.validateMaxNodes,
           required,
         ]}
@@ -351,119 +351,115 @@ class AutoScaleSection extends React.Component {
     };
 
     const azFormGroups = (
-      <>
-        <Split hasGutter className="autoscaling__container">
-          <SplitItem>
-            <FormGroup
-              label={minNodesLabel()}
-              isRequired
-              fieldId="nodes_min"
-              className="autoscaling__nodes-formGroup"
-            >
-              {minField}
-
-              <FormGroupHelperText>
-                <HelperText>
-                  {!minErrorMessage
-                    ? nodesHelpText(autoScaleMinNodesValue)
-                    : errorText(minErrorMessage)}
-                </HelperText>
-              </FormGroupHelperText>
-            </FormGroup>
-          </SplitItem>
-          <SplitItem>
-            <FormGroup
-              label={maxNodesLabel()}
-              isRequired
-              fieldId="nodes_max"
-              className="autoscaling__nodes-formGroup"
-              labelIcon={
-                <PopoverHint
-                  buttonAriaLabel="Compute node count information"
-                  hint={
-                    <>
-                      {computeNodeHintText(isHypershiftWizard, isHypershiftMachinePool)}
-                      <br />
-                      {isRosa ? (
-                        <>
-                          <ExternalLink href={links.ROSA_WORKER_NODE_COUNT}>
-                            Learn more about worker/compute node count
-                          </ExternalLink>
-                          <br />
-                        </>
-                      ) : null}
-                    </>
-                  }
-                />
-              }
-            >
-              {maxField}
-
-              <FormGroupHelperText>
-                <HelperText>
-                  {!maxErrorMessage
-                    ? nodesHelpText(autoScaleMaxNodesValue)
-                    : errorText(maxErrorMessage)}
-                </HelperText>
-              </FormGroupHelperText>
-            </FormGroup>
-          </SplitItem>
-        </Split>
-      </>
-    );
-
-    return (
-      <>
-        <GridItem id="autoscaling">
+      <Split hasGutter className="autoscaling__container">
+        <SplitItem>
           <FormGroup
-            fieldId="autoscaling"
-            label="Autoscaling"
+            label={minNodesLabel()}
+            isRequired
+            fieldId="nodes_min"
+            className="autoscaling__nodes-formGroup"
+          >
+            {minField}
+
+            <FormGroupHelperText>
+              <HelperText>
+                {!minErrorMessage
+                  ? nodesHelpText(autoScaleMinNodesValue)
+                  : errorText(minErrorMessage)}
+              </HelperText>
+            </FormGroupHelperText>
+          </FormGroup>
+        </SplitItem>
+        <SplitItem>
+          <FormGroup
+            label={maxNodesLabel()}
+            isRequired
+            fieldId="nodes_max"
+            className="autoscaling__nodes-formGroup"
             labelIcon={
               <PopoverHint
+                buttonAriaLabel="Compute node count information"
                 hint={
                   <>
-                    {constants.autoscaleHint}{' '}
-                    <ExternalLink href={autoScalingUrl}>
-                      Learn more about autoscaling
-                      {isRosa ? ' with ROSA' : ''}
-                    </ExternalLink>
+                    {computeNodeHintText(isHypershiftWizard, isHypershiftMachinePool)}
+                    <br />
+                    {isRosa ? (
+                      <>
+                        <ExternalLink href={links.ROSA_WORKER_NODE_COUNT}>
+                          Learn more about worker/compute node count
+                        </ExternalLink>
+                        <br />
+                      </>
+                    ) : null}
                   </>
                 }
               />
             }
-          />
-          <Field
-            component={ReduxCheckbox}
-            name="autoscalingEnabled"
-            label="Enable autoscaling"
-            helpText={
-              openEditClusterAutoScalingModal
-                ? 'The cluster autoscaler uses declarative, Kubernetes-style arguments to adjust the size of the cluster to meet its deployment needs.'
-                : 'Autoscaling automatically adds and removes compute nodes from the cluster based on resource requirements.'
-            }
-            onChange={onChange}
-          />
+          >
+            {maxField}
 
-          {openEditClusterAutoScalingModal && (
-            <>
-              <GridItem md={3}>
-                <Button
-                  data-testid="set-cluster-autoscaling-btn"
-                  variant="secondary"
-                  className="pf-v5-u-mt-md"
-                  onClick={openEditClusterAutoScalingModal}
-                  isDisabled={!autoscalingEnabled}
-                >
-                  Edit cluster autoscaling settings
-                </Button>
-              </GridItem>
-              <EditClusterAutoScalingDialog isWizard change={change} isRosa={isRosa} />
-            </>
-          )}
+            <FormGroupHelperText>
+              <HelperText>
+                {!maxErrorMessage
+                  ? nodesHelpText(autoScaleMaxNodesValue)
+                  : errorText(maxErrorMessage)}
+              </HelperText>
+            </FormGroupHelperText>
+          </FormGroup>
+        </SplitItem>
+      </Split>
+    );
 
-          {autoscalingEnabled && azFormGroups}
-        </GridItem>
-      </>
+    return (
+      <GridItem id="autoscaling">
+        <FormGroup
+          fieldId="autoscaling"
+          label="Autoscaling"
+          labelIcon={
+            <PopoverHint
+              hint={
+                <>
+                  {constants.autoscaleHint}{' '}
+                  <ExternalLink href={autoScalingUrl}>
+                    Learn more about autoscaling
+                    {isRosa ? ' with ROSA' : ''}
+                  </ExternalLink>
+                </>
+              }
+            />
+          }
+        />
+        <Field
+          component={ReduxCheckbox}
+          name="autoscalingEnabled"
+          label="Enable autoscaling"
+          helpText={
+            openEditClusterAutoScalingModal
+              ? 'The cluster autoscaler uses declarative, Kubernetes-style arguments to adjust the size of the cluster to meet its deployment needs.'
+              : 'Autoscaling automatically adds and removes compute nodes from the cluster based on resource requirements.'
+          }
+          onChange={onChange}
+        />
+
+        {openEditClusterAutoScalingModal && (
+          <>
+            <GridItem md={3}>
+              <Button
+                data-testid="set-cluster-autoscaling-btn"
+                variant="secondary"
+                className="pf-v5-u-mt-md"
+                onClick={openEditClusterAutoScalingModal}
+                isDisabled={!autoscalingEnabled}
+              >
+                Edit cluster autoscaling settings
+              </Button>
+            </GridItem>
+            <EditClusterAutoScalingDialog isWizard change={change} isRosa={isRosa} />
+          </>
+        )}
+
+        {autoscalingEnabled && azFormGroups}
+      </GridItem>
     );
   }
 }

@@ -84,13 +84,11 @@ const MinorVersionUpgradeAlert = ({
           : 'New minor version available'
       }
       actionLinks={
-        <>
-          {loading ? (
-            <Spinner size="sm" aria-label="Setting minor version update status" />
-          ) : (
-            actionLink(onChangeAcknowledge, isMinorVersionUpgradesEnabled)
-          )}
-        </>
+        loading ? (
+          <Spinner size="sm" aria-label="Setting minor version update status" />
+        ) : (
+          actionLink(onChangeAcknowledge, isMinorVersionUpgradesEnabled)
+        )
       }
       data-testid="alert-success"
     >

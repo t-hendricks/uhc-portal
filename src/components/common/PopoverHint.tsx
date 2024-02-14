@@ -25,25 +25,23 @@ const PopoverHint = ({
   isError,
   ...popoverProps
 }: PopoverHintProps) => (
-  <>
-    <Popover
-      headerContent={title}
-      footerContent={footer}
-      aria-label="help"
-      bodyContent={bodyContent ?? hint}
-      {...popoverProps}
+  <Popover
+    headerContent={title}
+    footerContent={footer}
+    aria-label="help"
+    bodyContent={bodyContent ?? hint}
+    {...popoverProps}
+  >
+    <Button
+      className="popover-hint-button"
+      aria-label={buttonAriaLabel || (isError ? 'Error' : 'More information')}
+      variant="plain"
     >
-      <Button
-        className="popover-hint-button"
-        aria-label={buttonAriaLabel || (isError ? 'Error' : 'More information')}
-        variant="plain"
-      >
-        <span className={iconClassName}>
-          {isError ? <ExclamationCircleIcon className="danger" /> : <OutlinedQuestionCircleIcon />}
-        </span>
-      </Button>
-    </Popover>
-  </>
+      <span className={iconClassName}>
+        {isError ? <ExclamationCircleIcon className="danger" /> : <OutlinedQuestionCircleIcon />}
+      </span>
+    </Button>
+  </Popover>
 );
 
 export default PopoverHint;

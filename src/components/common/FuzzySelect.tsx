@@ -125,6 +125,7 @@ function FuzzySelect(props: FuzzySelectProps) {
       const sortedItems = selectionData.sort(sortFn);
       return sortedItems.map((entry) => {
         const entryLabel = truncateTextWithEllipsis(entry.label, truncation);
+        // eslint-disable-next-line react/jsx-no-useless-fragment
         return entryToSelectOption(entry, <>{entryLabel}</>);
       });
     }
@@ -132,6 +133,7 @@ function FuzzySelect(props: FuzzySelectProps) {
       <SelectGroupDeprecated label={groupKey} key={groupKey}>
         {groupEntries.map((groupEntry) => {
           const entryLabel = truncateTextWithEllipsis(groupEntry.label, truncation);
+          // eslint-disable-next-line react/jsx-no-useless-fragment
           return entryToSelectOption(groupEntry, <>{entryLabel}</>);
         })}
       </SelectGroupDeprecated>

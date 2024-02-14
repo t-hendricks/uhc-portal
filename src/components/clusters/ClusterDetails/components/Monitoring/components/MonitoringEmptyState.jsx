@@ -22,7 +22,7 @@ function MonitoringEmptyState({
   return (
     <EmptyState>
       {!hideIcon && <EmptyStateIcon icon={ExclamationTriangleIcon} />}
-      <EmptyStateHeader titleText={<>{title}</>} headingLevel="h5" />
+      <EmptyStateHeader titleText={title} headingLevel="h5" />
       <EmptyStateBody>
         {children}
         {!hideLastCheckIn && (

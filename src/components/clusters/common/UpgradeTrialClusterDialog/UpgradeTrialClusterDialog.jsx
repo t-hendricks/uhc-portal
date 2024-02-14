@@ -32,7 +32,7 @@ class UpgradeTrialClusterDialog extends Component {
     }
   }
 
-  buttonLinkClick = (link) => {
+  static buttonLinkClick = (link) => {
     window.open(link, '_blank');
   };
 
