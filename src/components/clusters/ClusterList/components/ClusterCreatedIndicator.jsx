@@ -6,10 +6,8 @@ import { Popover, PopoverPosition, Button, Icon } from '@patternfly/react-core';
 import { ExclamationTriangleIcon } from '@patternfly/react-icons/dist/esm/icons/exclamation-triangle-icon';
 import { ExclamationCircleIcon } from '@patternfly/react-icons/dist/esm/icons/exclamation-circle-icon';
 import { DateFormat } from '@redhat-cloud-services/frontend-components/DateFormat';
-// eslint-disable-next-line camelcase
-import { global_warning_color_100 } from '@patternfly/react-tokens/dist/esm/global_warning_color_100';
-// eslint-disable-next-line camelcase
-import { global_danger_color_100 } from '@patternfly/react-tokens/dist/esm/global_danger_color_100';
+import { global_warning_color_100 as warningColor } from '@patternfly/react-tokens/dist/esm/global_warning_color_100';
+import { global_danger_color_100 as dangerColor } from '@patternfly/react-tokens/dist/esm/global_danger_color_100';
 import ExternalLink from '../../../common/ExternalLink';
 import {
   subscriptionSupportLevels,
@@ -50,7 +48,7 @@ function ClusterCreatedIndicator({ cluster }) {
           isInline
           icon={
             <Icon>
-              <ExclamationTriangleIcon color={global_warning_color_100.value} />
+              <ExclamationTriangleIcon color={warningColor.value} />
             </Icon>
           }
         >
@@ -86,7 +84,7 @@ function ClusterCreatedIndicator({ cluster }) {
           isInline
           icon={
             <Icon>
-              <ExclamationCircleIcon color={global_danger_color_100.value} />
+              <ExclamationCircleIcon color={dangerColor.value} />
             </Icon>
           }
         >
@@ -140,7 +138,7 @@ function ClusterCreatedIndicator({ cluster }) {
         isInline
         icon={
           <Icon>
-            <ExclamationTriangleIcon color={global_warning_color_100.value} />
+            <ExclamationTriangleIcon color={warningColor.value} />
           </Icon>
         }
       >

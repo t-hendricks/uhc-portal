@@ -111,7 +111,7 @@ const AWSBillingAccount = ({
   const selectedContract = selectedAccount ? getContract(selectedAccount) : null;
 
   if (!isVisible) {
-    return <></>;
+    return null;
   }
 
   return (

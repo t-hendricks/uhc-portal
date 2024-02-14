@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 import React from 'react';
-import ReactDOM from 'react-dom';
+import { createRoot } from 'react-dom/client';
 import fromEntries from 'object.fromentries';
 import AppEntry from './chrome-main';
 
@@ -23,7 +23,8 @@ if (!Object.fromEntries) {
 }
 
 const renderDevEnvError = () => {
-  ReactDOM.render(
+  const body = createRoot(document.body as HTMLElement);
+  body.render(
     <div style={{ margin: '25px' }}>
       <h1>Development environment error</h1>
       <h2>You&apos;re accessing the webpack dev server directly</h2>
@@ -37,19 +38,18 @@ const renderDevEnvError = () => {
         and README-tldr.md
       </p>
     </div>,
-    document.body,
   );
 };
 
 const renderUnsupportedEnvError = () => {
-  ReactDOM.render(
+  const root = createRoot(document.getElementById('root') as HTMLElement);
+  root.render(
     <div style={{ margin: '25px' }}>
       <h1>Unsupported environment</h1>
       <h2>OCM does not support this environment</h2>
       <p>Please use one of our supported environments.</p>
       <p>OCM is only being deployed to this environment to ensure navigation keeps working.</p>
     </div>,
-    document.getElementById('root'),
   );
 };
 
@@ -61,5 +61,6 @@ if (!window.insights && APP_DEV_SERVER) {
   // This is a build for an environment we don't support. render an error.
   renderUnsupportedEnvError();
 } else {
-  ReactDOM.render(<AppEntry />, document.getElementById('root'));
+  const root = createRoot(document.getElementById('root') as HTMLElement);
+  root.render(<AppEntry />);
 }

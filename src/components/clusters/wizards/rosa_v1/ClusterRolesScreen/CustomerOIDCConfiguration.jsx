@@ -116,120 +116,118 @@ function CustomerOIDCConfiguration({
   );
 
   return (
-    <>
-      <Instructions wide>
-        <Instruction simple>
-          <TextContent className="pf-v5-u-pb-md">
-            <Text component={TextVariants.p}>
-              Select your existing OIDC config id or <CreateOIDCProviderInstructions />.
-            </Text>
-          </TextContent>
+    <Instructions wide>
+      <Instruction simple>
+        <TextContent className="pf-v5-u-pb-md">
+          <Text component={TextVariants.p}>
+            Select your existing OIDC config id or <CreateOIDCProviderInstructions />.
+          </Text>
+        </TextContent>
 
-          <FormGroup
-            label="Config ID"
-            labelIcon={
-              <PopoverHint
-                hint={
-                  <span>
-                    The OIDC configuration ID created by running the command{' '}
-                    <pre>rosa create oidc-config</pre>
-                  </span>
+        <FormGroup
+          label="Config ID"
+          labelIcon={
+            <PopoverHint
+              hint={
+                <span>
+                  The OIDC configuration ID created by running the command{' '}
+                  <pre>rosa create oidc-config</pre>
+                </span>
+              }
+            />
+          }
+          isRequired
+        >
+          <Flex>
+            <FlexItem grow={{ default: 'grow' }}>
+              <FuzzySelect
+                {...inputProps}
+                label="Config ID"
+                aria-label="Config ID"
+                isOpen={isDropdownOpen}
+                onToggle={(_ev, isOpen) => setIsDropdownOpen(isOpen)}
+                onSelect={onSelect}
+                selectedEntryId={byoOidcConfigID}
+                selectionData={selectionData}
+                isDisabled={oidcConfigs.length === 0 || isLoading}
+                placeholderText={
+                  oidcConfigs.length > 0 ? 'Select a config id' : 'No OIDC configurations found'
                 }
+                inlineFilterPlaceholderText="Filter by config ID"
               />
-            }
-            isRequired
-          >
-            <Flex>
-              <FlexItem grow={{ default: 'grow' }}>
-                <FuzzySelect
-                  {...inputProps}
-                  label="Config ID"
-                  aria-label="Config ID"
-                  isOpen={isDropdownOpen}
-                  onToggle={(_ev, isOpen) => setIsDropdownOpen(isOpen)}
-                  onSelect={onSelect}
-                  selectedEntryId={byoOidcConfigID}
-                  selectionData={selectionData}
-                  isDisabled={oidcConfigs.length === 0 || isLoading}
-                  placeholderText={
-                    oidcConfigs.length > 0 ? 'Select a config id' : 'No OIDC configurations found'
-                  }
-                  inlineFilterPlaceholderText="Filter by config ID"
-                />
-              </FlexItem>
-              <FlexItem>
-                <Button
-                  variant="secondary"
-                  className="pf-v5-u-mt-md"
-                  onClick={refreshOidcConfigs}
-                  isLoading={isLoading}
-                  isDisabled={isLoading}
-                >
-                  Refresh
-                </Button>
-              </FlexItem>
-            </Flex>
-
-            <FormGroupHelperText touched={touched} error={error} />
-          </FormGroup>
-        </Instruction>
-
-        <Instruction simple>
-          <TextContent className="pf-v5-u-pb-md">
-            <Text component={TextVariants.p}>Enter an Operator role prefix.</Text>
-          </TextContent>
-
-          <Field
-            component={ReduxVerticalFormGroup}
-            name="custom_operator_roles_prefix"
-            label="Operator roles prefix"
-            type="text"
-            isRequired
-            // eslint-disable-next-line import/no-named-as-default-member
-            validate={validators.checkCustomOperatorRolesPrefix}
-            helpText={`Maximum ${validators.MAX_CUSTOM_OPERATOR_ROLES_PREFIX_LENGTH} characters.  Changing the cluster name will regenerate this value.`}
-            extendedHelpText={
-              <TextContent>
-                <Text component={TextVariants.p}>
-                  You can specify a custom prefix for the cluster-specific Operator IAM roles to
-                  use. <br />
-                  See examples in{' '}
-                  <ExternalLink href={links.ROSA_AWS_OPERATOR_ROLE_PREFIX}>
-                    Defining a custom Operator IAM role prefix
-                  </ExternalLink>
-                </Text>
-              </TextContent>
-            }
-            showHelpTextOnError={false}
-            disabled={!byoOidcConfigID}
-          />
-        </Instruction>
-
-        <Instruction simple>
-          <TextContent className="pf-v5-u-pb-md">
-            <Text component={TextVariants.p}>Run the command to create a new Operator Roles.</Text>
-          </TextContent>
-          {operatorRolesCliCommand ? (
-            <>
-              <ClipboardCopy
-                textAriaLabel="Copyable ROSA create operator-roles"
-                // variant={ClipboardCopyVariant.expansion} // temporarily disabled due to  https://github.com/patternfly/patternfly-react/issues/9962
-                isReadOnly
+            </FlexItem>
+            <FlexItem>
+              <Button
+                variant="secondary"
+                className="pf-v5-u-mt-md"
+                onClick={refreshOidcConfigs}
+                isLoading={isLoading}
+                isDisabled={isLoading}
               >
+                Refresh
+              </Button>
+            </FlexItem>
+          </Flex>
+
+          <FormGroupHelperText touched={touched} error={error} />
+        </FormGroup>
+      </Instruction>
+
+      <Instruction simple>
+        <TextContent className="pf-v5-u-pb-md">
+          <Text component={TextVariants.p}>Enter an Operator role prefix.</Text>
+        </TextContent>
+
+        <Field
+          component={ReduxVerticalFormGroup}
+          name="custom_operator_roles_prefix"
+          label="Operator roles prefix"
+          type="text"
+          isRequired
+          // eslint-disable-next-line import/no-named-as-default-member
+          validate={validators.checkCustomOperatorRolesPrefix}
+          helpText={`Maximum ${validators.MAX_CUSTOM_OPERATOR_ROLES_PREFIX_LENGTH} characters.  Changing the cluster name will regenerate this value.`}
+          extendedHelpText={
+            <TextContent>
+              <Text component={TextVariants.p}>
+                You can specify a custom prefix for the cluster-specific Operator IAM roles to use.{' '}
+                <br />
+                See examples in{' '}
+                <ExternalLink href={links.ROSA_AWS_OPERATOR_ROLE_PREFIX}>
+                  Defining a custom Operator IAM role prefix
+                </ExternalLink>
+              </Text>
+            </TextContent>
+          }
+          showHelpTextOnError={false}
+          disabled={!byoOidcConfigID}
+        />
+      </Instruction>
+
+      <Instruction simple>
+        <TextContent className="pf-v5-u-pb-md">
+          <Text component={TextVariants.p}>Run the command to create a new Operator Roles.</Text>
+        </TextContent>
+        {operatorRolesCliCommand ? (
+          <>
+            <ClipboardCopy
+              textAriaLabel="Copyable ROSA create operator-roles"
+              // variant={ClipboardCopyVariant.expansion} // temporarily disabled due to  https://github.com/patternfly/patternfly-react/issues/9962
+              isReadOnly
+            >
+              {operatorRolesCliCommand}
+            </ClipboardCopy>
+            <div className="pf-v5-c-clipboard-copy">
+              <div className="pf-v5-c-clipboard-copy__expandable-content">
                 {operatorRolesCliCommand}
-              </ClipboardCopy>
-              <div className="pf-v5-c-clipboard-copy">
-                <div className="pf-v5-c-clipboard-copy__expandable-content">
-                  {operatorRolesCliCommand}
-                </div>
               </div>
-            </>
-          ) : (
-            <Skeleton fontSize="md" />
-          )}
-        </Instruction>
-      </Instructions>
-    </>
+            </div>
+          </>
+        ) : (
+          <Skeleton fontSize="md" />
+        )}
+      </Instruction>
+    </Instructions>
   );
 }
 

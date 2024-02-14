@@ -78,7 +78,7 @@ class IDPForm extends React.Component {
     return undefined;
   };
 
-  checkIfExpandable = (selectedIDP, idpEdited) => {
+  static checkIfExpandable = (selectedIDP, idpEdited) => {
     if (selectedIDP === IDPformValues.OPENID) {
       if (idpEdited.open_id.openid_extra_scopes !== '' || idpEdited.open_id.openid_ca !== '') {
         return true;

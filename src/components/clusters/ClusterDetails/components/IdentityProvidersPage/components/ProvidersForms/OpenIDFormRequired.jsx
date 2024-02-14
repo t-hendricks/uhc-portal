@@ -15,7 +15,7 @@ class OpenIDFormRequired extends React.Component {
     isGroupError: false,
   };
 
-  validate = (_, allValues) => {
+  static validate = (_, allValues) => {
     if (
       isEmptyReduxArray(allValues.openid_preferred_username, 'openid_preferred_username') &&
       isEmptyReduxArray(allValues.openid_name, 'openid_name') &&

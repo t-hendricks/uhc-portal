@@ -5,7 +5,7 @@ import { Button, Icon, Title } from '@patternfly/react-core';
 import { WizardContext as WizardContextDeprecated } from '@patternfly/react-core/deprecated';
 
 import { ExclamationCircleIcon } from '@patternfly/react-icons/dist/esm/icons/exclamation-circle-icon';
-import { global_danger_color_100 as ExclamationCircleColor } from '@patternfly/react-tokens/dist/esm/global_danger_color_100';
+import { global_danger_color_100 as dangerColor } from '@patternfly/react-tokens/dist/esm/global_danger_color_100';
 
 import Modal from '../../common/Modal/Modal';
 import { closeModal } from '../../common/Modal/ModalActions';
@@ -39,7 +39,7 @@ const MissingPrereqErrorModal = ({
       header={
         <Title headingLevel="h2" size="2xl">
           <Icon className="pf-v5-u-mr-sm">
-            <ExclamationCircleIcon color={ExclamationCircleColor.value} />
+            <ExclamationCircleIcon color={dangerColor.value} />
           </Icon>
           {title}
         </Title>

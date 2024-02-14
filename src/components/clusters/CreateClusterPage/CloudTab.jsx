@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-no-useless-fragment */
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import {
@@ -446,6 +447,8 @@ const runItYourself = () => {
   );
 };
 
+const QuotaLink = (props) => <Link {...props} to="/quota" />;
+
 const CloudTab = ({ hasOSDQuota, trialEnabled }) => (
   <>
     <PageSection>
@@ -457,11 +460,7 @@ const CloudTab = ({ hasOSDQuota, trialEnabled }) => (
           Create clusters in the cloud using a managed service.
           <ManagedServices hasQuota={hasOSDQuota} trialEnabled={trialEnabled} />
           {!isRestrictedEnv() && (
-            <Button
-              variant={ButtonVariant.link}
-              id="subscriptions"
-              component={(props) => <Link {...props} to="/quota" />}
-            >
+            <Button variant={ButtonVariant.link} id="subscriptions" component={QuotaLink}>
               View your available OpenShift Dedicated quota <ArrowRightIcon />
             </Button>
           )}

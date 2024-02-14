@@ -49,4 +49,5 @@ export type GlobalState = Omit<ReturnType<typeof store.getState>, 'rosaReducer'>
   };
 };
 
-export { store as default, store, history };
+export { store, history };
+export default store;

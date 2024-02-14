@@ -6,6 +6,7 @@ type State = AxiosResponse | null;
 
 const initialState: State = null;
 
+// eslint-disable-next-line default-param-last
 const apiErrorReducer = (state = initialState, action: ApiErrorAction): State => {
   switch (action.type) {
     case SHOW_API_ERROR:

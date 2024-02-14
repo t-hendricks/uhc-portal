@@ -26,6 +26,7 @@ const initialState: State = {
 };
 
 const clusterLogReducer = (
+  // eslint-disable-next-line default-param-last
   state: State = initialState,
   action: PromiseActionType<ClusterLogAction | ViewOptionsAction>,
 ) =>

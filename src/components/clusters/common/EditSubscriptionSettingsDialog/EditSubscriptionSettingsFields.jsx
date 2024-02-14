@@ -89,7 +89,7 @@ class EditSubscriptionSettingsFields extends Component {
   doInit = (initialSettings) => {
     const newState = this.resetOptions(initialSettings);
     // disconnected cluster additonally requires cpu_total/socket_total
-    if (this.isDisconnected(initialSettings)) {
+    if (EditSubscriptionSettingsFields.isDisconnected(initialSettings)) {
       newState[CPU_TOTAL] = get(initialSettings, CPU_TOTAL, 1);
       newState[SOCKET_TOTAL] = get(initialSettings, SOCKET_TOTAL, 1);
     }
@@ -239,7 +239,7 @@ class EditSubscriptionSettingsFields extends Component {
       isValid = false;
     }
     // system_units must be valid for disconnected clusters
-    if (isValid && this.isDisconnected(initialSettings)) {
+    if (isValid && EditSubscriptionSettingsFields.isDisconnected(initialSettings)) {
       isValid = this.validateSystemUnitsNumericField().isValid;
     }
     const { onSettingsChange } = this.props;
@@ -288,7 +288,7 @@ class EditSubscriptionSettingsFields extends Component {
     return handler;
   };
 
-  isDisconnected = (settings) =>
+  static isDisconnected = (settings) =>
     get(settings, 'status') === DISCONNECTED || !get(settings, 'id', false);
 
   render() {
@@ -322,7 +322,7 @@ class EditSubscriptionSettingsFields extends Component {
         billingModelAlertText = `Cluster subscription type is ${standardBillingModelLabel}`;
       } else if (billingModel === MARKETPLACE_BILLING_MODEL || canSubscribeMarketplaceOCP) {
         billingModelAlertText = `Cluster subscription type is ${marketplaceBillingModelLabel}`;
-      } else if (this.isDisconnected(initialSettings)) {
+      } else if (EditSubscriptionSettingsFields.isDisconnected(initialSettings)) {
         billingModelAlertText = `Disconnected clusters subscription type is ${standardBillingModelLabel}`;
       } else {
         billingModelAlertText = `Cluster subscription type is ${standardBillingModelLabel}`;
@@ -373,11 +373,12 @@ class EditSubscriptionSettingsFields extends Component {
           }}
         />
       ));
+      // eslint-disable-next-line react/jsx-no-useless-fragment
       tooltips = <>{radioGroupComponents}</>;
     }
 
     // show validation error on system_units numeric input for disconnected clusters
-    const isDisconnectedSub = this.isDisconnected(initialSettings);
+    const isDisconnectedSub = EditSubscriptionSettingsFields.isDisconnected(initialSettings);
     let systemUnitsNumericErrorMsg = '';
     if (isDisconnectedSub) {
       const validationResult = this.validateSystemUnitsNumericField();

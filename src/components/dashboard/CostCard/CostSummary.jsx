@@ -15,7 +15,7 @@ import {
 import './CostCard.scss';
 
 class CostSummary extends Component {
-  formatCurrency = (value = 0, units = 'USD') =>
+  static formatCurrency = (value = 0, units = 'USD') =>
     value.toLocaleString('en', {
       style: 'currency',
       currency: units,
@@ -23,7 +23,7 @@ class CostSummary extends Component {
       maximumFractionDigits: 2,
     });
 
-  formatPercentage = (value = 0) =>
+  static formatPercentage = (value = 0) =>
     value.toLocaleString('en', {
       style: 'percent',
       minimumFractionDigits: 0,
@@ -55,7 +55,7 @@ class CostSummary extends Component {
             const cost = value.cost && value.cost.total ? value.cost.total.value : 0;
             const units = value.cost && value.cost.total ? value.cost.total.units : 'USD';
             const percentage = total > 0 ? cost / total : 0;
-            const val = `${this.formatCurrency(cost, units)} (${this.formatPercentage(
+            const val = `${CostSummary.formatCurrency(cost, units)} (${this.formatPercentage(
               percentage,
             )})`;
 
@@ -83,7 +83,7 @@ class CostSummary extends Component {
     const total = hasTotal ? report.meta.total.cost.total.value : 0;
     const units = hasTotal ? report.meta.total.cost.total.units : 'USD';
 
-    return this.formatCurrency(total, units);
+    return CostSummary.formatCurrency(total, units);
   };
 
   render() {

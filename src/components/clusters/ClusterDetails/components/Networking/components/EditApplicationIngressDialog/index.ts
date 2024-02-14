@@ -38,7 +38,7 @@ type TDispatchProps = {
 const reduxFormEditIngress = reduxForm(reduxFormConfig)(EditApplicationIngressDialog);
 
 const mapStateToProps = (state: GlobalState) => {
-  const { cluster } = state.clusters?.details;
+  const { cluster } = state.clusters?.details ?? {};
 
   const provider = cluster?.cloud_provider?.id;
   const isAWS = provider === CloudProviderType.Aws;

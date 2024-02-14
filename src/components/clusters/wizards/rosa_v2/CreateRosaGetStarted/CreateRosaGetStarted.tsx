@@ -148,11 +148,9 @@ const CreateRosaGetStarted = () => {
                 className="rosa-get-started"
                 actions={{
                   actions: (
-                    <>
-                      <ExternalLink href={links.ROSA_GET_STARTED}>
-                        More information on ROSA cluster creation
-                      </ExternalLink>
-                    </>
+                    <ExternalLink href={links.ROSA_GET_STARTED}>
+                      More information on ROSA cluster creation
+                    </ExternalLink>
                   ),
                   hasNoOffset: false,
                 }}

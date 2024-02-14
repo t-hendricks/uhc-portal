@@ -62,9 +62,7 @@ export const CreateOsdWizardFooter = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isValidating, isNextDeferred]);
 
-  return isSubmitting ? (
-    <></>
-  ) : (
+  return isSubmitting ? null : (
     <WizardFooterWrapper>
       {activeStep.id === StepId.Review ? (
         <Button

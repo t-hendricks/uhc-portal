@@ -275,7 +275,7 @@ class MachinePools extends React.Component {
       canNotCreateOrEditReason
     );
 
-    const getMachinePoolRow = (machinePool = {}, isExpandableRow) => {
+    const getMachinePoolRow = (isExpandableRow, machinePool = {}) => {
       const cells = [
         machinePool.id,
         {
@@ -346,7 +346,7 @@ class MachinePools extends React.Component {
     // set all other machine pools rows
     machinePoolsList.data.forEach((machinePool) => {
       const isExpandableRow = isExpandable(machinePool);
-      const machinePoolRow = getMachinePoolRow(machinePool, isExpandableRow);
+      const machinePoolRow = getMachinePoolRow(isExpandableRow, machinePool);
 
       rows.push(machinePoolRow);
 

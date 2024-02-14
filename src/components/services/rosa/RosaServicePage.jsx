@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import PropTypes from 'prop-types';
 import {
   Button,
@@ -49,6 +49,8 @@ const rosaBannerContents = {
 const TryRosaCard = () => {
   const track = useAnalytics();
   const rosaHandsOnURL = '/overview/rosa/hands-on';
+  const LinkComponent = useCallback((props) => <Link {...props} to={rosaHandsOnURL} />, []);
+
   return (
     <Card style={{ height: '100%' }}>
       <CardHeader>
@@ -66,7 +68,7 @@ const TryRosaCard = () => {
               path: window.location.pathname,
             });
           }}
-          component={(props) => <Link {...props} to={rosaHandsOnURL} />}
+          component={LinkComponent}
           size="lg"
         >
           Try it
@@ -180,6 +182,23 @@ function RosaServicePage() {
   const track = useAnalytics();
   const createRosaClusterURL = '/create/rosa/getstarted';
 
+  const LinkComponent = useCallback(
+    (props) => (
+      <Link
+        {...props}
+        data-testid="register-cluster"
+        to={createRosaClusterURL}
+        onClick={() => {
+          track(trackEvents.CreateClusterROSA, {
+            url: createRosaClusterURL,
+            path: window.location.pathname,
+          });
+        }}
+      />
+    ),
+    [track],
+  );
+
   return (
     <AppPage>
       <ProductBanner
@@ -225,23 +244,7 @@ function RosaServicePage() {
                   <CardFooter>
                     <Flex>
                       <FlexItem>
-                        <Button
-                          variant="primary"
-                          component={(props) => (
-                            <Link
-                              {...props}
-                              data-testid="register-cluster"
-                              to={createRosaClusterURL}
-                              onClick={() => {
-                                track(trackEvents.CreateClusterROSA, {
-                                  url: createRosaClusterURL,
-                                  path: window.location.pathname,
-                                });
-                              }}
-                            />
-                          )}
-                          size="lg"
-                        >
+                        <Button variant="primary" component={LinkComponent} size="lg">
                           Begin setup
                         </Button>
                       </FlexItem>

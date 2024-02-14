@@ -13,6 +13,7 @@ const initialState: State = {
   data: {},
 };
 
+// eslint-disable-next-line default-param-last
 function modalReducer(state = initialState, action: ModalActions) {
   return produce(state, (draft) => {
     // eslint-disable-next-line default-case

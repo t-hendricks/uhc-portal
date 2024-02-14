@@ -125,15 +125,13 @@ function ClusterRolesScreen({
     } else if (getOCMRoleResponse.error) {
       // display error
       setGetOCMRoleErrorBox(
-        <>
-          <ErrorBox
-            message="ocm-role is no longer linked to your Red Hat organization"
-            response={getOCMRoleResponse}
-            isExpandable
-          >
-            <BackToAssociateAwsAccountLink />
-          </ErrorBox>
-        </>,
+        <ErrorBox
+          message="ocm-role is no longer linked to your Red Hat organization"
+          response={getOCMRoleResponse}
+          isExpandable
+        >
+          <BackToAssociateAwsAccountLink />
+        </ErrorBox>,
       );
     } else {
       getOCMRole(awsAccountID);

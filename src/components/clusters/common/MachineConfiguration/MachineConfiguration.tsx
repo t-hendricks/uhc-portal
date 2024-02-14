@@ -70,21 +70,19 @@ const MachineConfiguration: React.FC<MachineConfigurationProps> = (props) => {
 
   return (
     <MachineConfigurationModal onClose={onClose}>
-      <>
-        {loadingError ? (
-          <MachineConfigurationLoadingError onClose={onClose} />
-        ) : (
-          <MachineConfigurationEditor
-            config={kubeletConfig}
-            canBypassPIDsLimit={canBypassPIDsLimit}
-            onCancel={onClose}
-            onSave={handleSave}
-            isLoading={isLoading}
-            isSaving={isSaving}
-            savingError={savingError}
-          />
-        )}
-      </>
+      {loadingError ? (
+        <MachineConfigurationLoadingError onClose={onClose} />
+      ) : (
+        <MachineConfigurationEditor
+          config={kubeletConfig}
+          canBypassPIDsLimit={canBypassPIDsLimit}
+          onCancel={onClose}
+          onSave={handleSave}
+          isLoading={isLoading}
+          isSaving={isSaving}
+          savingError={savingError}
+        />
+      )}
     </MachineConfigurationModal>
   );
 };

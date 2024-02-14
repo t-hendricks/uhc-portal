@@ -1,5 +1,5 @@
 import './OfferingCard.scss';
-import React from 'react';
+import React, { useCallback } from 'react';
 import {
   Button,
   ButtonVariant,
@@ -35,14 +35,33 @@ type OfferingCardProps = {
   offeringType?: 'AWS' | 'Azure' | 'RHOSD' | 'RHOCP' | 'RHOIBM' | 'DEVSNBX';
 };
 
+const createRosaClusterURL = '/create/rosa/getstarted';
+const rosaServicePageURL = '/overview/rosa';
+const createOSDClusterURL = '/create/osd';
+const createClusterURL = '/create';
+const registerClusterURL = '/register';
+
+const CreateRosaClusterLink = (props: any) => (
+  <Link {...props} data-testid="create-cluster" to={createRosaClusterURL} />
+);
+
+const CreateOSDCluterLink = (props: any) => (
+  <Link {...props} data-testid="create-cluster" to={createOSDClusterURL} />
+);
+
+const CreateRHOCPCluterLink = (props: any) => (
+  <Link {...props} data-testid="create-cluster" to={createClusterURL} />
+);
+
+const DEVSNBXOfferingCardDocLinkComponent = () => (
+  <ExternalLink noTarget noIcon href="/openshift/sandbox">
+    View details
+  </ExternalLink>
+);
+
 export function OfferingCard(props: OfferingCardProps) {
   const track = useAnalytics();
   const { offeringType } = props;
-  const createRosaClusterURL = '/create/rosa/getstarted';
-  const rosaServicePageURL = '/overview/rosa';
-  const createOSDClusterURL = '/create/osd';
-  const createClusterURL = '/create';
-  const registerClusterURL = '/register';
 
   let offeringCardTitle: string | undefined;
   let offeringCardLabel: string = 'Managed service';
@@ -53,6 +72,40 @@ export function OfferingCard(props: OfferingCardProps) {
   let offeringCardDocLink: React.ReactNode | undefined;
   let offeringCardCreationLink: React.ReactNode | undefined;
   let cardLogo: React.ReactNode | undefined;
+
+  const RHOCPOfferingCardDocLinkComponent = useCallback(
+    (props) => (
+      <Link
+        onClick={() => {
+          track(trackEvents.RegisterCluster, {
+            url: registerClusterURL,
+            path: window.location.pathname,
+          });
+        }}
+        to={registerClusterURL}
+      >
+        Register cluster
+      </Link>
+    ),
+    [track],
+  );
+
+  const AWSOfferingCardDocLinkComponent = useCallback(
+    (props) => (
+      <Link
+        onClick={() => {
+          track(trackEvents.RosaOverview, {
+            url: rosaServicePageURL,
+            path: window.location.pathname,
+          });
+        }}
+        to={rosaServicePageURL}
+      >
+        View details
+      </Link>
+    ),
+    [track],
+  );
 
   switch (offeringType) {
     case 'AWS':
@@ -74,30 +127,13 @@ export function OfferingCard(props: OfferingCardProps) {
               path: window.location.pathname,
             });
           }}
-          component={(props) => (
-            <Link {...props} data-testid="create-cluster" to={createRosaClusterURL} />
-          )}
+          component={CreateRosaClusterLink}
         >
           Create cluster
         </Button>
       );
       offeringCardDocLink = (
-        <Button
-          variant={ButtonVariant.link}
-          component={() => (
-            <Link
-              onClick={() => {
-                track(trackEvents.RosaOverview, {
-                  url: rosaServicePageURL,
-                  path: window.location.pathname,
-                });
-              }}
-              to={rosaServicePageURL}
-            >
-              View details
-            </Link>
-          )}
-        />
+        <Button variant={ButtonVariant.link} component={AWSOfferingCardDocLinkComponent} />
       );
       cardLogo = <AWSLogo className="offering-logo" />;
       break;
@@ -130,9 +166,7 @@ export function OfferingCard(props: OfferingCardProps) {
               path: window.location.pathname,
             });
           }}
-          component={(props) => (
-            <Link {...props} data-testid="create-cluster" to={createOSDClusterURL} />
-          )}
+          component={CreateOSDCluterLink}
         >
           Create cluster
         </Button>
@@ -160,30 +194,13 @@ export function OfferingCard(props: OfferingCardProps) {
               path: window.location.pathname,
             });
           }}
-          component={(props) => (
-            <Link {...props} data-testid="create-cluster" to={createClusterURL} />
-          )}
+          component={CreateRHOCPCluterLink}
         >
           Create cluster
         </Button>
       );
       offeringCardDocLink = (
-        <Button
-          variant={ButtonVariant.link}
-          component={() => (
-            <Link
-              onClick={() => {
-                track(trackEvents.RegisterCluster, {
-                  url: registerClusterURL,
-                  path: window.location.pathname,
-                });
-              }}
-              to={registerClusterURL}
-            >
-              Register cluster
-            </Link>
-          )}
-        />
+        <Button variant={ButtonVariant.link} component={RHOCPOfferingCardDocLinkComponent} />
       );
       cardLogo = (
         <img className="offering-logo" src={OpenShiftProductIcon} alt="OpenShift product logo" />
@@ -210,14 +227,7 @@ export function OfferingCard(props: OfferingCardProps) {
       offeringCardTextBody =
         'Instant free access to your own minimal, preconfigured environment for development and testing.';
       offeringCardDocLink = (
-        <Button
-          variant={ButtonVariant.link}
-          component={() => (
-            <ExternalLink noTarget noIcon href="/openshift/sandbox">
-              View details
-            </ExternalLink>
-          )}
-        >
+        <Button variant={ButtonVariant.link} component={DEVSNBXOfferingCardDocLinkComponent}>
           View details
         </Button>
       );

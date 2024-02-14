@@ -35,7 +35,7 @@ const SubscriptionNotFulfilled = ({ data, refresh, marketplace }: Props) => {
   ) => (
     <PageSection className="subscriptions-empty-state">
       <EmptyState>
-        <EmptyStateHeader titleText={<>{title}</>} headingLevel="h4" />
+        <EmptyStateHeader titleText={title} headingLevel="h4" />
         <EmptyStateBody>{text}</EmptyStateBody>
         <EmptyStateFooter>{button}</EmptyStateFooter>
       </EmptyState>

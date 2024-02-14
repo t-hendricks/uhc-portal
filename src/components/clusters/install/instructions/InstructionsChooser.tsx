@@ -76,11 +76,7 @@ export const InstructionsChooser = ({
         id="select-agent-based"
         href={agentBasedPageLink}
         title="Local Agent-based"
-        labels={
-          <>
-            <Label color="purple">CLI-based</Label>
-          </>
-        }
+        labels={<Label color="purple">CLI-based</Label>}
         body="Runs Assisted Installer securely and locally to create your cluster."
         featureListItems={[
           'Installable ISO',

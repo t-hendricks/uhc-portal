@@ -106,57 +106,55 @@ export const PIDsLimitInput: React.FC<PIDsLimitInputProps> = (props) => {
   }, [pidsLimit, value]);
 
   return (
-    <>
-      <FormGroup
-        required
-        label="Pod process IDs limit (PIDs)"
-        labelIcon={
-          <PopoverHint
-            title="Pod process IDs limit (PIDs)"
-            hint={
-              <div>
-                Process IDs (PIDs) are a fundamental resource on nodes. Openshift allows you to
-                limit the number of processes running in a POD.
-              </div>
-            }
-            buttonAriaLabel="More info for PIDs limit field"
-          />
-        }
-        isRequired
-        fieldId="pids-limit"
-      >
-        <TextContent className="pf-v5-u-mb-md">
-          <Text component={TextVariants.p}>
-            Adjusting the PIDs limit will result in all nodes that are not control plane nodes to
-            reboot, potentially impacting workload downtime.
-          </Text>
-        </TextContent>
-        <NumberInput
-          id="pids-limit"
-          name="pids-limit"
-          aria-describedby="pids-limit-helper-text"
-          value={pidsLimit}
-          min={minValue}
-          max={maxValue}
-          onMinus={onMinus}
-          onChange={handleChange}
-          onBlur={onBlur}
-          onPlus={onPlus}
-          widthChars={12}
-          inputName="pids-limit"
-          inputAriaLabel="PIDs limit"
-          minusBtnAriaLabel="minus"
-          plusBtnAriaLabel="plus"
-          validated={validation.status}
+    <FormGroup
+      required
+      label="Pod process IDs limit (PIDs)"
+      labelIcon={
+        <PopoverHint
+          title="Pod process IDs limit (PIDs)"
+          hint={
+            <div>
+              Process IDs (PIDs) are a fundamental resource on nodes. Openshift allows you to limit
+              the number of processes running in a POD.
+            </div>
+          }
+          buttonAriaLabel="More info for PIDs limit field"
         />
-        <FormGroupHelperText
-          id="pids-limit-helper-text"
-          variant={validation.status}
-          icon={validation.icon}
-        >
-          {validation.helperText}
-        </FormGroupHelperText>
-      </FormGroup>
-    </>
+      }
+      isRequired
+      fieldId="pids-limit"
+    >
+      <TextContent className="pf-v5-u-mb-md">
+        <Text component={TextVariants.p}>
+          Adjusting the PIDs limit will result in all nodes that are not control plane nodes to
+          reboot, potentially impacting workload downtime.
+        </Text>
+      </TextContent>
+      <NumberInput
+        id="pids-limit"
+        name="pids-limit"
+        aria-describedby="pids-limit-helper-text"
+        value={pidsLimit}
+        min={minValue}
+        max={maxValue}
+        onMinus={onMinus}
+        onChange={handleChange}
+        onBlur={onBlur}
+        onPlus={onPlus}
+        widthChars={12}
+        inputName="pids-limit"
+        inputAriaLabel="PIDs limit"
+        minusBtnAriaLabel="minus"
+        plusBtnAriaLabel="plus"
+        validated={validation.status}
+      />
+      <FormGroupHelperText
+        id="pids-limit-helper-text"
+        variant={validation.status}
+        icon={validation.icon}
+      >
+        {validation.helperText}
+      </FormGroupHelperText>
+    </FormGroup>
   );
 };

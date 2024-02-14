@@ -128,25 +128,23 @@ const ClusterListActions = ({ className, isDashboardView }) => {
   const [dropdownItems, toolbarItems] = useItems(isDashboardView);
   if (isDashboardView) {
     return (
-      <>
-        <Split hasGutter>
-          {toolbarItems.map((toolbarItem) => (
-            <SplitItem key="toolbar">{toolbarItem}</SplitItem>
-          ))}
-          <SplitItem key="dropdown">
-            <DropdownDeprecated
-              data-testid="cluster-list-extra-actions-dropdown"
-              onSelect={() => onToggle(!isOpen)}
-              toggle={<KebabToggleDeprecated onToggle={(_event, value) => onToggle(value)} />}
-              isOpen={isOpen}
-              isPlain
-              dropdownItems={dropdownItems}
-              className={className}
-              position={DropdownPositionDeprecated.right}
-            />
-          </SplitItem>
-        </Split>
-      </>
+      <Split hasGutter>
+        {toolbarItems.map((toolbarItem) => (
+          <SplitItem key="toolbar">{toolbarItem}</SplitItem>
+        ))}
+        <SplitItem key="dropdown">
+          <DropdownDeprecated
+            data-testid="cluster-list-extra-actions-dropdown"
+            onSelect={() => onToggle(!isOpen)}
+            toggle={<KebabToggleDeprecated onToggle={(_event, value) => onToggle(value)} />}
+            isOpen={isOpen}
+            isPlain
+            dropdownItems={dropdownItems}
+            className={className}
+            position={DropdownPositionDeprecated.right}
+          />
+        </SplitItem>
+      </Split>
     );
   }
   return (
