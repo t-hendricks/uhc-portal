@@ -207,17 +207,15 @@ const ClusterLogs = ({
           logs={logs?.length}
         />
         {requestState.error && !size(logs) && ignoreErrors ? (
-          <>
-            <PageSection>
-              <EmptyState>
-                <EmptyStateHeader
-                  titleText="No cluster log entries found"
-                  icon={<EmptyStateIcon icon={SearchIcon} />}
-                  headingLevel="h4"
-                />
-              </EmptyState>
-            </PageSection>
-          </>
+          <PageSection>
+            <EmptyState>
+              <EmptyStateHeader
+                titleText="No cluster log entries found"
+                icon={<EmptyStateIcon icon={SearchIcon} />}
+                headingLevel="h4"
+              />
+            </EmptyState>
+          </PageSection>
         ) : (
           <>
             <LogTable

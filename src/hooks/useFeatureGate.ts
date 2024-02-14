@@ -12,4 +12,5 @@ const useFeatureGate = (feature: string) => {
 const featureGateSelector = (state: GlobalState, feature: string) =>
   isFeatureEnabled(state.features, feature);
 
-export { useFeatureGate as default, useFeatureGate, featureGateSelector };
+export { useFeatureGate, featureGateSelector };
+export default useFeatureGate;

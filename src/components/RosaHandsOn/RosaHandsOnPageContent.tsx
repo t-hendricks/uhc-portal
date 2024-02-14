@@ -123,7 +123,7 @@ const StatusAlert = ({ demoExperience }: { demoExperience: AugmentedDemoExperien
     default:
       alert = null;
   }
-  return <>{alert}</>;
+  return alert;
 };
 
 export type RosaHandsOnPageContentProps = {
@@ -163,12 +163,10 @@ const RosaHandsOnPageContent = ({
               </CardBody>
             </Card>
           ) : (
-            <>
-              <RosaHandsOnGetStartedCard
-                onRequestCluster={onRequestCluster}
-                demoExperience={demoExperience}
-              />
-            </>
+            <RosaHandsOnGetStartedCard
+              onRequestCluster={onRequestCluster}
+              demoExperience={demoExperience}
+            />
           )}
         </PageSection>
         <PageSection style={{ paddingTop: 'unset' }}>

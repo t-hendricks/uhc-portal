@@ -172,49 +172,43 @@ function BasicFieldsSection({
       <GridItem md={6} />
 
       {/* Availability */}
-      {showAvailability && (
+      {showAvailability && isHypershiftSelected ? (
+        <Alert
+          isInline
+          variant="info"
+          title="The hosted control plane uses multiple availability zones."
+        />
+      ) : (
         <>
-          {isHypershiftSelected ? (
-            <>
-              <Alert
-                isInline
-                variant="info"
-                title="The hosted control plane uses multiple availability zones."
+          <GridItem md={6}>
+            <FormGroup label="Availability" isRequired isInline fieldId="availability-toggle">
+              <Field
+                component={RadioButtons}
+                name="multi_az"
+                disabled={pending}
+                onChange={handleMultiAZChange}
+                options={[
+                  {
+                    value: 'false',
+                    label: 'Single zone',
+                    disabled: !hasSingleAzQuota,
+                    tooltipText: singleAzTooltip,
+                    extendedHelpText: constants.availabilityHintSingleZone,
+                  },
+                  {
+                    value: 'true',
+                    label: 'Multi-zone',
+                    disabled: !hasMultiAzQuota,
+                    tooltipText: multiAzTooltip,
+                    extendedHelpText: constants.availabilityHintMultiZone,
+                  },
+                ]}
+                defaultValue={hasSingleAzQuota ? 'false' : 'true'}
+                disableDefaultValueHandling={isWizard}
               />
-            </>
-          ) : (
-            <>
-              <GridItem md={6}>
-                <FormGroup label="Availability" isRequired isInline fieldId="availability-toggle">
-                  <Field
-                    component={RadioButtons}
-                    name="multi_az"
-                    disabled={pending}
-                    onChange={handleMultiAZChange}
-                    options={[
-                      {
-                        value: 'false',
-                        label: 'Single zone',
-                        disabled: !hasSingleAzQuota,
-                        tooltipText: singleAzTooltip,
-                        extendedHelpText: constants.availabilityHintSingleZone,
-                      },
-                      {
-                        value: 'true',
-                        label: 'Multi-zone',
-                        disabled: !hasMultiAzQuota,
-                        tooltipText: multiAzTooltip,
-                        extendedHelpText: constants.availabilityHintMultiZone,
-                      },
-                    ]}
-                    defaultValue={hasSingleAzQuota ? 'false' : 'true'}
-                    disableDefaultValueHandling={isWizard}
-                  />
-                </FormGroup>
-              </GridItem>
-              <GridItem md={6} />
-            </>
-          )}
+            </FormGroup>
+          </GridItem>
+          <GridItem md={6} />
         </>
       )}
     </>

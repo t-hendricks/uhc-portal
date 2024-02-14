@@ -9,7 +9,7 @@ import './AddOnsCard.scss';
 
 class AddOnsCard extends Component {
   // reduce card description to 60 chars for uniform cards
-  reduceCardDescription = (addOn) => {
+  static reduceCardDescription = (addOn) => {
     const descriptionLength = 60;
     return addOn.description.length > descriptionLength
       ? `${addOn.description.substring(0, descriptionLength - 3)}...`
@@ -33,7 +33,7 @@ class AddOnsCard extends Component {
         </CardHeader>
         <CardTitle>{addOn.name}</CardTitle>
         <CardBody className="ocm-c-addons__card--body">
-          {this.reduceCardDescription(addOn)}
+          {AddOnsCard.reduceCardDescription(addOn)}
         </CardBody>
         <CardFooter>
           <AddOnStateLabel

@@ -41,15 +41,13 @@ export const UpdatePoolButton = ({ machinePool }: { machinePool: NodePoolWithUpg
 
   if (canBeUpdated) {
     return (
-      <>
-        <Button
-          variant={ButtonVariant.link}
-          isInline
-          onClick={() => dispatch(modalActions.openModal(updateModalId, { machinePool }))}
-        >
-          Update <OutlinedArrowAltCircleUpIcon />
-        </Button>
-      </>
+      <Button
+        variant={ButtonVariant.link}
+        isInline
+        onClick={() => dispatch(modalActions.openModal(updateModalId, { machinePool }))}
+      >
+        Update <OutlinedArrowAltCircleUpIcon />
+      </Button>
     );
   }
 

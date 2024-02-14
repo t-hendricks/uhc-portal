@@ -56,6 +56,7 @@ type Action =
       value: boolean;
     };
 
+// eslint-disable-next-line default-param-last
 const validationReducer = (state = validationInitialState, action: Action): State => {
   switch (action.type) {
     case 'set-sync-validation':
@@ -261,20 +262,18 @@ export const RichInputField = ({
           }
         }}
         bodyContent={
-          <>
-            <HelperText component="ul" id={`rich-input-popover-${inputName}`}>
-              {evaluatedValidation.map((item) => (
-                <ValidationItem
-                  key={item.text}
-                  touched={touched}
-                  text={item.text}
-                  isValid={!!item.validated}
-                  isValidating={!!item.validating}
-                  isInitialized={typeof item.validated !== 'undefined'}
-                />
-              ))}
-            </HelperText>
-          </>
+          <HelperText component="ul" id={`rich-input-popover-${inputName}`}>
+            {evaluatedValidation.map((item) => (
+              <ValidationItem
+                key={item.text}
+                touched={touched}
+                text={item.text}
+                isValid={!!item.validated}
+                isValidating={!!item.validating}
+                isInitialized={typeof item.validated !== 'undefined'}
+              />
+            ))}
+          </HelperText>
         }
         footerContent={helpExample}
       >

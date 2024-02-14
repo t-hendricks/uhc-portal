@@ -42,7 +42,6 @@ const initialState: State = {
     redirect_url: '',
   },
 };
-
 const userProfile = (state = initialState, action: PromiseActionType<UserAction>): State =>
   produce(state, (draft) => {
     // eslint-disable-next-line default-case

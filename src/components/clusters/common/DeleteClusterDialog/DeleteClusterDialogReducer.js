@@ -28,6 +28,7 @@ const initialState = {
   cluster: null,
 };
 
+// eslint-disable-next-line default-param-last
 function deleteClusterDialogReducer(state = initialState, action) {
   // eslint-disable-next-line consistent-return
   return produce(state, (draft) => {

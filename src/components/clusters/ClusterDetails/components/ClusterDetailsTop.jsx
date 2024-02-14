@@ -34,6 +34,28 @@ import ButtonWithTooltip from '../../../common/ButtonWithTooltip';
 import { goZeroTime2Null } from '../../../../common/helpers';
 import GcpOrgPolicyAlert from './GcpOrgPolicyAlert';
 
+const IdentityProvidersHint = () => (
+  <Alert
+    id="idpHint"
+    className="pf-v5-u-mt-md"
+    variant="warning"
+    isInline
+    title="Missing identity providers"
+  >
+    Identity providers determine how users log into the cluster.{' '}
+    <Button
+      variant="link"
+      isInline
+      onClick={() => {
+        window.location.hash = 'accessControl';
+      }}
+    >
+      Add OAuth configuration
+    </Button>{' '}
+    to allow others to log in.
+  </Alert>
+);
+
 function ClusterDetailsTop(props) {
   const {
     cluster,
@@ -86,28 +108,6 @@ function ClusterDetailsTop(props) {
         cluster,
       }
     : {};
-
-  const IdentityProvidersHint = () => (
-    <Alert
-      id="idpHint"
-      className="pf-v5-u-mt-md"
-      variant="warning"
-      isInline
-      title="Missing identity providers"
-    >
-      Identity providers determine how users log into the cluster.{' '}
-      <Button
-        variant="link"
-        isInline
-        onClick={() => {
-          window.location.hash = 'accessControl';
-        }}
-      >
-        Add OAuth configuration
-      </Button>{' '}
-      to allow others to log in.
-    </Alert>
-  );
 
   let launchConsole;
   if (consoleURL && !isOffline(cluster)) {
@@ -240,7 +240,7 @@ function ClusterDetailsTop(props) {
                 {actions}
               </>
             ) : (
-              !isDeprovisioned && <>{unarchiveBtn}</>
+              !isDeprovisioned && unarchiveBtn
             )}
             {!isDeprovisioned && !isArchived && (
               <RefreshButton

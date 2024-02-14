@@ -17,10 +17,7 @@ import {
 } from '@patternfly/react-table/deprecated';
 import { Link } from 'react-router-dom';
 import { CheckCircleIcon } from '@patternfly/react-icons/dist/esm/icons/check-circle-icon';
-import {
-  // eslint-disable-next-line camelcase
-  global_success_color_100,
-} from '@patternfly/react-tokens/dist/esm/global_success_color_100';
+import { global_success_color_100 as successColor } from '@patternfly/react-tokens/dist/esm/global_success_color_100';
 import getClusterName from '../../../common/getClusterName';
 import { getIssuesCount } from '../overviewHelpers';
 import { actionResolver } from './ClustersWithIssuesActionResolver';
@@ -46,9 +43,7 @@ class ClustersWithIssuesTableCard extends React.Component {
           <CardBody>
             <EmptyState>
               <EmptyStateHeader
-                icon={
-                  <EmptyStateIcon icon={CheckCircleIcon} color={global_success_color_100.value} />
-                }
+                icon={<EmptyStateIcon icon={CheckCircleIcon} color={successColor.value} />}
               />
               <EmptyStateBody>No issues detected</EmptyStateBody>
             </EmptyState>

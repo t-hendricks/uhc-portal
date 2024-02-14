@@ -89,9 +89,9 @@ function ClusterUtilizationChart(props) {
 
   switch (type) {
     case 'legend':
-      return <>{donutChartWithLegend}</>;
+      return donutChartWithLegend;
     default:
-      return <>{donutChartWithThreshold}</>;
+      return donutChartWithThreshold;
   }
 }
 

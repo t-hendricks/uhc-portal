@@ -1,36 +1,22 @@
 // a redux-form Field-compatible component for selecting a cluster version
 
-import React, { useState, useEffect } from 'react';
-import classNames from 'classnames';
-import PropTypes from 'prop-types';
-import {
-  FormGroup,
-  TextList,
-  TextListVariants,
-  TextListItem,
-  Text,
-  TextVariants,
-  Alert,
-  Switch,
-  Popover,
-  Button,
-  Grid,
-  GridItem,
-} from '@patternfly/react-core';
+import { Button, FormGroup, Grid, GridItem, Popover, Switch } from '@patternfly/react-core';
 import {
   Select as SelectDeprecated,
-  SelectOption as SelectOptionDeprecated,
   SelectGroup as SelectGroupDeprecated,
+  SelectOption as SelectOptionDeprecated,
 } from '@patternfly/react-core/deprecated';
-import { Spinner } from '@redhat-cloud-services/frontend-components/Spinner';
 import { OutlinedQuestionCircleIcon } from '@patternfly/react-icons/dist/esm/icons/outlined-question-circle-icon';
+import { Spinner } from '@redhat-cloud-services/frontend-components/Spinner';
+import classNames from 'classnames';
+import PropTypes from 'prop-types';
+import React, { useEffect, useState } from 'react';
 import { isSupportedMinorVersion } from '~/common/helpers';
-import { useOCPLifeCycleStatusData } from '~/components/releases/hooks';
-import { FormGroupHelperText } from '~/components/common/FormGroupHelperText';
 import { MIN_MANAGED_POLICY_VERSION } from '~/components/clusters/wizards/rosa_v1/rosaConstants';
-import { RosaCliCommand } from '~/components/clusters/wizards/rosa_v1/AccountsRolesScreen/constants/cliCommands';
-import InstructionCommand from '../../../../../../common/InstructionCommand';
+import { FormGroupHelperText } from '~/components/common/FormGroupHelperText';
+import { useOCPLifeCycleStatusData } from '~/components/releases/hooks';
 import ErrorBox from '../../../../../../common/ErrorBox';
+import RosaVersionErrorAlert from './RosaVersionErrorAlert';
 
 const SupportStatusType = {
   Full: 'Full Support',
@@ -81,34 +67,6 @@ function VersionSelection({
     ev.stopPropagation();
     setShowOnlyCompatibleVersions(showCompatible);
   };
-
-  const RosaVersionErrorAlert = () => (
-    <Alert
-      className="pf-v5-u-ml-lg"
-      variant="danger"
-      isInline
-      role="alert"
-      title="There is no version compatible with the selected ARNs in previous step"
-    >
-      <TextList component={TextListVariants.ol} className="ocm-c-wizard-alert-steps">
-        <TextListItem className="pf-v5-u-mb-sm">
-          <Text component={TextVariants.p} className="pf-v5-u-mb-sm">
-            Please select different ARNs or create new account roles using the following command in
-            the ROSA CLI
-          </Text>
-        </TextListItem>
-        <TextListItem className="pf-v5-u-mb-sm">
-          <Text component={TextVariants.p} className="pf-v5-u-mb-sm">
-            <InstructionCommand textAriaLabel="Copyable ROSA create account-roles command">
-              {isHypershiftSelected
-                ? RosaCliCommand.CreateAccountRolesHCP
-                : RosaCliCommand.CreateAccountRoles}
-            </InstructionCommand>
-          </Text>
-        </TextListItem>
-      </TextList>
-    </Alert>
-  );
 
   const versionName = (version) => parseFloat(version.raw_id);
 
@@ -292,84 +250,82 @@ function VersionSelection({
   ]);
 
   return (
-    <>
-      <FormGroup {...input} label={label} isRequired>
-        {getInstallableVersionsResponse.error && (
-          <ErrorBox
-            message="Error getting cluster versions"
-            response={getInstallableVersionsResponse}
-          />
-        )}
-        {rosaVersionError && <RosaVersionErrorAlert />}
-        {getInstallableVersionsResponse.pending && (
-          <>
-            <div className="spinner-fit-container">
-              <Spinner />
-            </div>
-          </>
-        )}
-        {getInstallableVersionsResponse.fulfilled && !rosaVersionError && (
-          <Grid>
-            <GridItem>
-              <SelectDeprecated
-                label={label}
-                aria-label={label}
-                isOpen={isOpen}
-                selections={selectedClusterVersion?.raw_id || getSelection()}
-                onToggle={onToggle}
-                onSelect={onSelect}
-                isDisabled={isDisabled}
-                onBlur={(event) => event.stopPropagation()}
-              >
-                {isRosa && selectOptions.hasIncompatibleVersions ? (
-                  <Switch
-                    className="pf-v5-u-align-items-center pf-v5-u-mx-md pf-v5-u-mb-sm pf-v5-u-font-size-sm"
-                    id="view-only-compatible-versions"
-                    aria-label="View only compatible versions"
-                    key={`compatible-switch-${showOnlyCompatibleVersions}`}
-                    label={
-                      <>
-                        <span>View only compatible versions</span>
-                        <Popover
-                          bodyContent={
-                            isHypershiftSelected
-                              ? 'View only versions that are compatible with a Hosted control plane'
-                              : 'View only versions that are compatible with the selected ARNs in previous step'
-                          }
-                          enableFlip={false}
-                        >
-                          <Button variant="plain" className="pf-v5-u-p-0 pf-v5-u-ml-md">
-                            <OutlinedQuestionCircleIcon />
-                          </Button>
-                        </Popover>
-                      </>
-                    }
-                    hasCheckIcon
-                    isChecked={showOnlyCompatibleVersions}
-                    onChange={toggleCompatibleVersions}
-                  />
-                ) : (
-                  <span className="pf-v5-u-display-none">&nbsp;</span>
+    <FormGroup {...input} label={label} isRequired>
+      {getInstallableVersionsResponse.error && (
+        <ErrorBox
+          message="Error getting cluster versions"
+          response={getInstallableVersionsResponse}
+        />
+      )}
+      {rosaVersionError ? (
+        <RosaVersionErrorAlert isHypershiftSelected={isHypershiftSelected} />
+      ) : null}
+      {getInstallableVersionsResponse.pending && (
+        <div className="spinner-fit-container">
+          <Spinner />
+        </div>
+      )}
+      {getInstallableVersionsResponse.fulfilled && !rosaVersionError && (
+        <Grid>
+          <GridItem>
+            <SelectDeprecated
+              label={label}
+              aria-label={label}
+              isOpen={isOpen}
+              selections={selectedClusterVersion?.raw_id || getSelection()}
+              onToggle={onToggle}
+              onSelect={onSelect}
+              isDisabled={isDisabled}
+              onBlur={(event) => event.stopPropagation()}
+            >
+              {isRosa && selectOptions.hasIncompatibleVersions ? (
+                <Switch
+                  className="pf-v5-u-align-items-center pf-v5-u-mx-md pf-v5-u-mb-sm pf-v5-u-font-size-sm"
+                  id="view-only-compatible-versions"
+                  aria-label="View only compatible versions"
+                  key={`compatible-switch-${showOnlyCompatibleVersions}`}
+                  label={
+                    <>
+                      <span>View only compatible versions</span>
+                      <Popover
+                        bodyContent={
+                          isHypershiftSelected
+                            ? 'View only versions that are compatible with a Hosted control plane'
+                            : 'View only versions that are compatible with the selected ARNs in previous step'
+                        }
+                        enableFlip={false}
+                      >
+                        <Button variant="plain" className="pf-v5-u-p-0 pf-v5-u-ml-md">
+                          <OutlinedQuestionCircleIcon />
+                        </Button>
+                      </Popover>
+                    </>
+                  }
+                  hasCheckIcon
+                  isChecked={showOnlyCompatibleVersions}
+                  onChange={toggleCompatibleVersions}
+                />
+              ) : (
+                <span className="pf-v5-u-display-none">&nbsp;</span>
+              )}
+              <SelectGroupDeprecated label="Full support">
+                {selectOptions.fullSupport}
+              </SelectGroupDeprecated>
+              <SelectGroupDeprecated
+                label="Maintenance support"
+                className={classNames(
+                  !selectOptions.maintenanceSupport?.length && 'pf-v5-u-hidden',
                 )}
-                <SelectGroupDeprecated label="Full support">
-                  {selectOptions.fullSupport}
-                </SelectGroupDeprecated>
-                <SelectGroupDeprecated
-                  label="Maintenance support"
-                  className={classNames(
-                    !selectOptions.maintenanceSupport?.length && 'pf-v5-u-hidden',
-                  )}
-                >
-                  {selectOptions.maintenanceSupport}
-                </SelectGroupDeprecated>
-              </SelectDeprecated>
-            </GridItem>
-          </Grid>
-        )}
+              >
+                {selectOptions.maintenanceSupport}
+              </SelectGroupDeprecated>
+            </SelectDeprecated>
+          </GridItem>
+        </Grid>
+      )}
 
-        <FormGroupHelperText touched={touched} error={error} />
-      </FormGroup>
-    </>
+      <FormGroupHelperText touched={touched} error={error} />
+    </FormGroup>
   );
 }
 

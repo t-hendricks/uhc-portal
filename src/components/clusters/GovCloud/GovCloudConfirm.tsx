@@ -9,19 +9,17 @@ import * as React from 'react';
 import { global_palette_green_500 as okColor } from '@patternfly/react-tokens/dist/esm/global_palette_green_500';
 import { CheckCircleIcon } from '@patternfly/react-icons/dist/esm/icons/check-circle-icon';
 
+const EmptyIcon = (props: any) => (
+  <Icon {...props}>
+    <CheckCircleIcon color={okColor.value} />
+  </Icon>
+);
+
 const GovCloudConfirm = () => (
   <EmptyState>
     <EmptyStateHeader
       titleText="Submission confirmation"
-      icon={
-        <EmptyStateIcon
-          icon={(props) => (
-            <Icon {...props}>
-              <CheckCircleIcon color={okColor.value} />
-            </Icon>
-          )}
-        />
-      }
+      icon={<EmptyStateIcon icon={EmptyIcon} />}
       headingLevel="h4"
     />
     <EmptyStateBody>

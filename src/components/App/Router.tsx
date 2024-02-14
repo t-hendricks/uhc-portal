@@ -149,6 +149,11 @@ interface RouterProps extends RouteComponentProps {
   externalClusterId: string;
 }
 
+const TokenShowComponent = () => <Tokens show />;
+const TokenNotShowComponent = () => <Tokens show={false} showPath="/token/show" />;
+const IdentityProvidersPageEditFormComponent = () => <IdentityProvidersPage isEditForm />;
+const CreateClusterPageEmptyTabComponent = () => <CreateClusterPage activeTab="" />;
+
 const Router: React.FC<RouterProps> = ({ history, planType, clusterId, externalClusterId }) => {
   const { pathname } = useLocation();
 
@@ -223,11 +228,8 @@ const Router: React.FC<RouterProps> = ({ history, planType, clusterId, externalC
                 </AppPage>
               )}
             />
-            <CompatRoute path="/token/show" component={() => <Tokens show />} />
-            <CompatRoute
-              path="/token"
-              component={() => <Tokens show={false} showPath="/token/show" />}
-            />
+            <CompatRoute path="/token/show" component={TokenShowComponent} />
+            <CompatRoute path="/token" component={TokenNotShowComponent} />
 
             <CompatRoute
               path="/install/alibaba/installer-provisioned"
@@ -413,7 +415,7 @@ const Router: React.FC<RouterProps> = ({ history, planType, clusterId, externalC
               }
             />
 
-            <CompatRoute path="/create" component={() => <CreateClusterPage activeTab="" />} />
+            <CompatRoute path="/create" component={CreateClusterPageEmptyTabComponent} />
 
             <CompatRoute
               path="/details/s/:id/insights/:reportId/:errorKey"
@@ -425,7 +427,7 @@ const Router: React.FC<RouterProps> = ({ history, planType, clusterId, externalC
             />
             <CompatRoute
               path="/details/s/:id/edit-idp/:idpName"
-              component={() => <IdentityProvidersPage isEditForm />}
+              component={IdentityProvidersPageEditFormComponent}
             />
             <CompatRoute path="/details/s/:id" component={ClusterDetailsSubscriptionId} />
             <CompatRoute

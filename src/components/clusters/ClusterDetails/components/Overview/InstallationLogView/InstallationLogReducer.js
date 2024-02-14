@@ -31,6 +31,7 @@ const initialState = {
   logType: undefined,
 };
 
+// eslint-disable-next-line default-param-last
 function InstallationLogReducer(state = initialState, action) {
   // eslint-disable-next-line consistent-return
   return produce(state, (draft) => {

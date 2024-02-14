@@ -131,55 +131,53 @@ const VPCDropdown = ({
   };
 
   return (
-    <>
-      <FormGroup
-        label={`Select a VPC to install your ${
-          isHypershift ? 'machine pools' : 'cluster'
-        } into your selected region: ${requestParams.region || ''}`}
-        isRequired
-      >
-        <Flex>
-          {/* The min-width property is necessary to allow PF Select to truncate overflowing text. See OCMUI-796 for more details.
+    <FormGroup
+      label={`Select a VPC to install your ${
+        isHypershift ? 'machine pools' : 'cluster'
+      } into your selected region: ${requestParams.region || ''}`}
+      isRequired
+    >
+      <Flex>
+        {/* The min-width property is necessary to allow PF Select to truncate overflowing text. See OCMUI-796 for more details.
            This is likely to be removed when dropping deprecated Select component used by FuzzySelect */}
-          <FlexItem flex={{ default: 'flex_1' }} style={{ minWidth: 0 }}>
-            <FuzzySelect
-              label="Select a VPC"
-              aria-label="select VPC"
-              isOpen={isOpen}
-              onToggle={onToggle}
-              onSelect={onSelect}
-              sortFn={sortVPCOptions}
-              selectedEntryId={selectedVPC?.id}
-              selectionData={selectData.options}
-              isDisabled={vpcResponse.pending || selectData.options.length === 0}
-              placeholderText={selectData.placeholder}
-              inlineFilterPlaceholderText="Filter by VPC ID / name"
-              validated={touched && error ? 'error' : 'default'}
-            />
+        <FlexItem flex={{ default: 'flex_1' }} style={{ minWidth: 0 }}>
+          <FuzzySelect
+            label="Select a VPC"
+            aria-label="select VPC"
+            isOpen={isOpen}
+            onToggle={onToggle}
+            onSelect={onSelect}
+            sortFn={sortVPCOptions}
+            selectedEntryId={selectedVPC?.id}
+            selectionData={selectData.options}
+            isDisabled={vpcResponse.pending || selectData.options.length === 0}
+            placeholderText={selectData.placeholder}
+            inlineFilterPlaceholderText="Filter by VPC ID / name"
+            validated={touched && error ? 'error' : 'default'}
+          />
+        </FlexItem>
+        {showRefresh && (
+          <FlexItem>
+            <Tooltip content={<p>Refresh</p>}>
+              <Button
+                data-testid="refresh-vpcs"
+                isLoading={vpcResponse.pending}
+                isDisabled={vpcResponse.pending}
+                isInline
+                size="sm"
+                variant="secondary"
+                onClick={refreshVPCs}
+              >
+                Refresh
+              </Button>
+            </Tooltip>
           </FlexItem>
-          {showRefresh && (
-            <FlexItem>
-              <Tooltip content={<p>Refresh</p>}>
-                <Button
-                  data-testid="refresh-vpcs"
-                  isLoading={vpcResponse.pending}
-                  isDisabled={vpcResponse.pending}
-                  isInline
-                  size="sm"
-                  variant="secondary"
-                  onClick={refreshVPCs}
-                >
-                  Refresh
-                </Button>
-              </Tooltip>
-            </FlexItem>
-          )}
-          {vpcResponse.error && (
-            <ErrorBox message="Error retrieving VPCs" response={vpcResponse as ErrorState} />
-          )}
-        </Flex>
-      </FormGroup>
-    </>
+        )}
+        {vpcResponse.error && (
+          <ErrorBox message="Error retrieving VPCs" response={vpcResponse as ErrorState} />
+        )}
+      </Flex>
+    </FormGroup>
   );
 };
 

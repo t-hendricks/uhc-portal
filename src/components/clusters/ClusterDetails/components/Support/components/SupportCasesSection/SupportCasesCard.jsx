@@ -58,11 +58,9 @@ class SupportCasesCard extends React.Component {
     const supportCaseRow = (supportCase) => {
       const caseIdURL = `https://access.redhat.com/support/cases/#/case/${supportCase.caseID}`;
       const caseID = (
-        <>
-          <a href={caseIdURL} target="_blank" rel="noopener noreferrer">
-            {supportCase.caseID}
-          </a>
-        </>
+        <a href={caseIdURL} target="_blank" rel="noopener noreferrer">
+          {supportCase.caseID}
+        </a>
       );
 
       const lastModifiedDate = dayjs.utc(supportCase.lastModifiedDate).format('D MMM YYYY');
