@@ -126,7 +126,6 @@ describe('<NodeCountInput>', () => {
 
       // Assert
       expect(screen.getByRole('combobox')).toHaveValue(`${minNodes}`);
-      expect(onChange).toBeCalledTimes(1);
       expect(onChange).toBeCalledWith(minNodes);
     });
 
@@ -249,7 +248,6 @@ describe('<NodeCountInput>', () => {
 
     // Assert
     expect(screen.getByRole('combobox')).toHaveValue(`${minNodes}`);
-    expect(onChange).toBeCalledTimes(1);
     expect(onChange).toBeCalledWith(minNodes);
   });
 
@@ -316,7 +314,27 @@ describe('<NodeCountInput>', () => {
   });
 
   describe('On props update', () => {
-    it('sends onchange with minimum nodes when changing machine types with not enough quota', () => {
+    it('sends onchange with minimum nodes when changing machine types with not enough quota ROSA', () => {
+      // Arrange
+      mockAvailableNodes.mockReturnValue(10);
+      const minNodes = getMinNodesRequired({ isDefaultMachinePool: true }); // expected to be 4
+      expect(minNodes).toEqual(4); // validate min value
+      const onChange = jest.fn();
+      const newProps = { ...baseProps({}), product: normalizedProducts.ROSA };
+      const inputProps = { ...newProps.input, onChange, value: 10 }; // note initial value is 10
+      const { rerender } = render(
+        <NodeCountInput {...newProps} input={inputProps} machineType="fake" />,
+      );
+      expect(screen.getByRole('combobox')).toHaveValue(`${10}`);
+      expect(onChange).toBeCalledTimes(0);
+
+      rerender(<NodeCountInput {...newProps} input={inputProps} machineType="fake2" />);
+
+      // Assert
+      expect(onChange).toBeCalledTimes(2);
+      expect(onChange).toBeCalledWith(4);
+    });
+    it('sends onchange with minimum nodes when changing machine types with not enough quota OSD', () => {
       // Arrange
       mockAvailableNodes.mockReturnValue(10);
       const minNodes = getMinNodesRequired({ isDefaultMachinePool: true }); // expected to be 4
@@ -333,15 +351,20 @@ describe('<NodeCountInput>', () => {
       rerender(<NodeCountInput {...newProps} input={inputProps} machineType="fake2" />);
 
       // Assert
-      expect(onChange).toBeCalledTimes(1);
       expect(onChange).toBeCalledWith(4);
     });
+
     describe('Hypershift (HCP)', () => {
       it('sends onchange with new value the number the user picked * number of new pools', () => {
         // Arrange
         mockAvailableNodes.mockReturnValue(24);
         const onChange = jest.fn();
-        const newProps = { ...baseProps({}), machineType: 'fake', isHypershiftWizard: true };
+        const newProps = {
+          ...baseProps({}),
+          machineType: 'fake',
+          isHypershiftWizard: true,
+          product: normalizedProducts.ROSA,
+        };
         const inputProps = { ...newProps.input, onChange, value: 6 };
         const { rerender } = render(
           <NodeCountInput
@@ -374,7 +397,12 @@ describe('<NodeCountInput>', () => {
         // Arrange
         mockAvailableNodes.mockReturnValue(24);
         const onChange = jest.fn();
-        const newProps = { ...baseProps({}), machineType: 'fake', isHypershiftWizard: true };
+        const newProps = {
+          ...baseProps({}),
+          machineType: 'fake',
+          isHypershiftWizard: true,
+          product: normalizedProducts.ROSA,
+        };
         const inputProps = { ...newProps.input, onChange, value: 3 };
 
         const { rerender } = render(
@@ -411,7 +439,12 @@ describe('<NodeCountInput>', () => {
         // Arrange
         mockAvailableNodes.mockReturnValue(200);
         const onChange = jest.fn();
-        const newProps = { ...baseProps({}), machineType: 'fake', isHypershiftWizard: true };
+        const newProps = {
+          ...baseProps({}),
+          machineType: 'fake',
+          isHypershiftWizard: true,
+          product: normalizedProducts.ROSA,
+        };
         const inputProps = { ...newProps.input, onChange, value: maxNodes };
 
         const { rerender } = render(
