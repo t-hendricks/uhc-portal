@@ -87,7 +87,7 @@ export const InstructionsChooser = ({
         footerLinkText="Learn more about local agent-based"
       />
     )}
-    {!hideIPI && (
+    {!hideIPI && ipiPageLink && (
       <InstructionsChooserCard
         id="select-automated"
         href={ipiPageLink}
@@ -111,7 +111,7 @@ export const InstructionsChooser = ({
         footerLinkText="Learn more about automated"
       />
     )}
-    {!hideUPI && (
+    {!hideUPI && upiPageLink && (
       <InstructionsChooserCard
         id="select-full-control"
         href={upiPageLink}

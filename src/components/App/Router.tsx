@@ -123,6 +123,7 @@ import NotFoundError from './NotFoundError';
 import TermsGuardedRoute from './TermsGuardedRoute';
 import { is404, metadataByRoute } from './routeMetadata';
 import RosaHandsOnPage from '../RosaHandsOn/RosaHandsOnPage';
+import InstallOracleCloud from '../clusters/install/InstallOracleCloud';
 
 const AssistedUiRouterPage: typeof AssistedInstallerRoutes = (props) => (
   <AppPage>
@@ -369,6 +370,7 @@ const Router: React.FC<RouterProps> = ({ history, planType, clusterId, externalC
               path="/install/azure/aro-provisioned"
               component={ConnectedInstallPullSecretAzure}
             />
+            <CompatRoute path="/install/oracle-cloud" component={InstallOracleCloud} />
             <Redirect from="/install" to="/create" />
             <Redirect from="/create/osd/aws" to="/create/osd" />
             <Redirect from="/create/osd/gcp" to="/create/osd" />
