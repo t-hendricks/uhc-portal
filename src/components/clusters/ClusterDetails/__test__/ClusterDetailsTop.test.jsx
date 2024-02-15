@@ -1,16 +1,20 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-
 // TODO: Remove this import when PF team fixes the issue causing tests to break without it
 import { Button } from '@patternfly/react-core';
 
-import { render, checkAccessibility, TestRouter, screen } from '~/testUtils';
+import { render, checkAccessibility, TestRouter, screen, mockUseFeatureGate } from '~/testUtils';
+import { GCP_SECURE_BOOT_ENHANCEMENTS } from '~/redux/constants/featureConstants';
 import ClusterDetailsTop from '../components/ClusterDetailsTop';
 import fixtures, { funcs } from './ClusterDetails.fixtures';
 import clusterStates from '../../common/clusterStates';
 import ButtonWithTooltip from '../../../common/ButtonWithTooltip';
 
 describe('<ClusterDetailsTop />', () => {
+  afterAll(() => {
+    jest.resetAllMocks();
+  });
+
   let wrapper;
   const functions = funcs();
 
@@ -31,6 +35,8 @@ describe('<ClusterDetailsTop />', () => {
   beforeEach(() => {
     wrapper = shallow(<ClusterDetailsTop {...props} />);
   });
+
+  mockUseFeatureGate([[GCP_SECURE_BOOT_ENHANCEMENTS, false]]);
 
   it('is accessible', async () => {
     const { container } = render(

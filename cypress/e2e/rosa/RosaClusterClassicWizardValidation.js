@@ -1,5 +1,3 @@
-import Login from '../../pageobjects/login.page';
-import ClusterListPage from '../../pageobjects/ClusterList.page';
 import CreateRosaWizardPage from '../../pageobjects/CreateRosaWizard.page';
 import LeaveCreateClusterPrompt from '../../pageobjects/LeaveCreateClusterPrompt';
 
@@ -12,16 +10,6 @@ const installerARN = 'arn:aws:iam::' + awsAccountID + ':role/' + rolePrefix + '-
 const clusterName = `smkrosa-` + (Math.random() + 1).toString(36).substring(7);
 
 describe('Rosa Classic cluster wizard validations', { tags: ['smoke'] }, () => {
-  before(() => {
-    cy.visit('/');
-    Login.isLoginPageUrl();
-    Login.login();
-
-    ClusterListPage.isClusterListUrl();
-    ClusterListPage.waitForDataReady();
-    cy.getByTestId('create_cluster_btn').should('be.visible');
-  });
-
   it('Open Rosa cluster wizard', () => {
     cy.getByTestId('create_cluster_btn').click();
     CreateRosaWizardPage.rosaCreateClusterButton().click();

@@ -56,6 +56,7 @@ const mapStateToProps = (state, { location }) => {
   const { clusterIdentityProviders } = state.identityProviders;
   const { organization } = state.userProfile;
   const { insightsData } = state.insightsData;
+  const { logs } = state.clusterLogs;
   const {
     notificationContacts = {
       pending: false,
@@ -76,6 +77,7 @@ const mapStateToProps = (state, { location }) => {
     displayClusterLogs: !!externalId || !!details?.cluster?.id,
     clusterLogsViewOptions: state.viewOptions[viewConstants.CLUSTER_LOGS_VIEW],
     insightsData,
+    logs,
     canSubscribeOCP: canSubscribeOCPSelector(state),
     canTransferClusterOwnership: canTransferClusterOwnershipSelector(state),
     canHibernateCluster: userCanHibernateClustersSelector(state),

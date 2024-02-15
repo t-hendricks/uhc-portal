@@ -17,6 +17,7 @@ module.exports = defineConfig({
       return config;
     },
     specPattern: 'cypress/e2e/**/*.{js,jsx,ts,tsx}',
+    testIsolation: false,
   },
   retries: {
     // Configure retry attempts for CI `cypress run`

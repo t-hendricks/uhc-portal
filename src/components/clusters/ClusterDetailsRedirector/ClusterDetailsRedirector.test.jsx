@@ -2,13 +2,13 @@ import React from 'react';
 import { screen, render } from '~/testUtils';
 import ClusterDetailsRedirector from './ClusterDetailsRedirector';
 
-jest.mock('react-router-dom', () => ({
-  Redirect: jest.fn(({ to }) => `Redirected to "${to}"`),
+jest.mock('react-router-dom-v5-compat', () => ({
+  Navigate: jest.fn(({ to }) => `Redirected to "${to}"`),
 }));
 
 describe('<ClusterDetailsRedirector />', () => {
   afterAll(() => {
-    jest.unmock('react-router-dom');
+    jest.unmock('react-router-dom-v5-compat');
   });
 
   const clearSubscriptionIDForCluster = jest.fn();
@@ -19,7 +19,7 @@ describe('<ClusterDetailsRedirector />', () => {
     fetchSubscriptionIDForCluster,
     setGlobalError,
     clearSubscriptionIDForCluster,
-    match: { params: { id: 'foo' } },
+    params: { id: 'foo' },
     location: { hash: '#bar' },
     subscriptionIDResponse: {
       fulfilled: false,

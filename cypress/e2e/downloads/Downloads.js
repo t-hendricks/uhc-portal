@@ -1,7 +1,5 @@
-import Login from '../../pageobjects/login.page';
 import GlobalNav from '../../pageobjects/GlobalNav.page';
 import Downloads from '../../pageobjects/Downloads.page';
-import ClusterListPage from '../../pageobjects/ClusterList.page';
 
 const ROSARowTitle = 'Manage your Red Hat OpenShift Service on AWS';
 const OCRowTitle =
@@ -11,13 +9,6 @@ const OSLocalTitle = 'Download and open the OpenShift Local';
 
 describe('Downloads page', { tags: ['ci', 'smoke'] }, () => {
   before(() => {
-    cy.visit('/', { retryOnNetworkFailure: true });
-    Login.isLoginPageUrl();
-    Login.login();
-
-    ClusterListPage.isClusterListUrl();
-    ClusterListPage.waitForDataReady();
-
     GlobalNav.downloadsNavigation().click();
     Downloads.isDownloadsPage();
   });

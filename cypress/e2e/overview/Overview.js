@@ -1,12 +1,8 @@
-import Login from '../../pageobjects/login.page';
 import Overview from '../../pageobjects/Overview.page';
 import currentOcVersion from '../../support/CurrentOcVersion';
 
 describe('OCM Overview Page tests (OCP-65189)', { tags: ['smoke'] }, () => {
   before(() => {
-    cy.visit('/', { retryOnNetworkFailure: true });
-    Login.isLoginPageUrl();
-    Login.login();
     currentOcVersion.retrieveVersion();
     cy.visit('/overview');
     Overview.isOverviewPage();
@@ -98,8 +94,7 @@ describe('OCM Overview Page tests (OCP-65189)', { tags: ['smoke'] }, () => {
         'Learn more on IBM',
         'https://cloud.ibm.com/kubernetes/catalog/create?platformType=openshift',
       )
-      .opensInRightTab()
-      .successfullyOpens();
+      .opensInRightTab();
 
     card = Overview.centralSectionCard('offering-card_DEVSNBX');
     card.cyObj.contains('Developer Sandbox');

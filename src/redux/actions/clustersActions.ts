@@ -471,6 +471,10 @@ const fetchSingleClusterAndPermissions = async (
     buildPermissionsByActionObj,
     {} as Record<SelfAccessReview.action, boolean>,
   );
+  const kubeletConfigActions = actions.reduce(
+    buildPermissionsByActionObj,
+    {} as Record<SelfAccessReview.action, boolean>,
+  );
 
   const subscription = await accountsService.getSubscription(subscriptionID);
   subscription.data = normalizeSubscription(subscription.data);
@@ -538,6 +542,18 @@ const fetchSingleClusterAndPermissions = async (
           machinePoolsActions[action] = response.data.allowed;
         });
     });
+
+    actions.map(async (action) => {
+      await authorizationsService
+        .selfAccessReview({
+          action,
+          resource_type: SelfAccessReview.resource_type.CLUSTER_KUBELET_CONFIG,
+          subscription_id: subscriptionID,
+        })
+        .then((response) => {
+          kubeletConfigActions[action] = response.data.allowed;
+        });
+    });
   }
 
   if (
@@ -589,6 +605,7 @@ const fetchSingleClusterAndPermissions = async (
     cluster.data.canViewOCMRoles = canViewOCMRoles;
     cluster.data.canEditClusterAutoscaler = canEditClusterAutoscaler;
     cluster.data.machinePoolsActions = machinePoolsActions;
+    cluster.data.kubeletConfigActions = kubeletConfigActions;
     cluster.data.canDelete = !!canDeleteAccessReviewResponse?.data?.allowed;
 
     return cluster;

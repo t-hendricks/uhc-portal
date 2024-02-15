@@ -3,9 +3,9 @@ import { render, screen, within } from '~/testUtils';
 import InsightsAdvisorRedirector, { composeRuleId } from '../InsightsAdvisorRedirector';
 
 // Instead of mocking window.location, mocking  whole components
-jest.mock('react-router-dom', () => ({
-  ...jest.requireActual('react-router-dom'),
-  Redirect: jest.fn(({ to }) => `Redirected to "${to}"`),
+jest.mock('react-router-dom-v5-compat', () => ({
+  ...jest.requireActual('react-router-dom-v5-compat'),
+  Navigate: jest.fn(({ to }) => `Redirected to "${to}"`),
 }));
 
 jest.mock('../ExternalRedirect', () => ({
@@ -17,7 +17,7 @@ describe('<InsightsAdvisorRedirector />', () => {
   const setGlobalError = jest.fn();
   const fetchClusterDetails = jest.fn();
   const defaultProps = {
-    match: { params: { id: '5d5892d3-1f74-4ccf-91af-548dfc9767aa' } },
+    params: { id: '5d5892d3-1f74-4ccf-91af-548dfc9767aa' },
     location: {
       pathname: '/details/5d5892d3-1f74-4ccf-91af-548dfc9767aa',
       hash: '#insights',
@@ -58,13 +58,12 @@ describe('<InsightsAdvisorRedirector />', () => {
   describe('redirection to Advisor recommendation page: with the external ID', () => {
     const redirectionProps = {
       ...defaultProps,
-      match: {
-        params: {
-          id: '5d5892d3-1f74-4ccf-91af-548dfc9767aa',
-          reportId: 'ccx_rules_ocp|external|rules|master_defined_as_machinesets|report',
-          errorKey: 'MASTER_DEFINED_AS_MACHINESETS',
-        },
+      params: {
+        id: '5d5892d3-1f74-4ccf-91af-548dfc9767aa',
+        reportId: 'ccx_rules_ocp|external|rules|master_defined_as_machinesets|report',
+        errorKey: 'MASTER_DEFINED_AS_MACHINESETS',
       },
+
       location: {
         pathname:
           '/details/5d5892d3-1f74-4ccf-91af-548dfc9767aa/insights/ccx_rules_ocp|external|rules|master_defined_as_machinesets|report/MASTER_DEFINED_AS_MACHINESETS',
@@ -90,7 +89,7 @@ describe('<InsightsAdvisorRedirector />', () => {
   describe('redirection to Advisor cluster page: with the subscription ID', () => {
     const redirectionProps = {
       ...defaultProps,
-      match: { params: { id: '1ZyOzuBzgnXcKa92ZE2E4olYmQa' } },
+      params: { id: '1ZyOzuBzgnXcKa92ZE2E4olYmQa' },
       location: {
         pathname: '/details/s/1ZyOzuBzgnXcKa92ZE2E4olYmQa',
         hash: '#insights',
@@ -136,12 +135,10 @@ describe('<InsightsAdvisorRedirector />', () => {
   describe('redirection to Advisor recommendation page: with the subscription ID', () => {
     const redirectionProps = {
       ...defaultProps,
-      match: {
-        params: {
-          id: '1ZyOzuBzgnXcKa92ZE2E4olYmQa',
-          reportId: 'ccx_rules_ocp|external|rules|master_defined_as_machinesets|report',
-          errorKey: 'MASTER_DEFINED_AS_MACHINESETS',
-        },
+      params: {
+        id: '1ZyOzuBzgnXcKa92ZE2E4olYmQa',
+        reportId: 'ccx_rules_ocp|external|rules|master_defined_as_machinesets|report',
+        errorKey: 'MASTER_DEFINED_AS_MACHINESETS',
       },
       location: {
         pathname:
@@ -193,10 +190,8 @@ describe('<InsightsAdvisorRedirector />', () => {
         errorMessage: 'error message',
         fulfilled: false,
       },
-      match: {
-        params: {
-          id: '1ZyOzuBzgnXcKa92ZE2E4olYmQa',
-        },
+      params: {
+        id: '1ZyOzuBzgnXcKa92ZE2E4olYmQa',
       },
       location: {
         pathname: '/details/s/1ZyOzuBzgnXcKa92ZE2E4olYmQa',
@@ -219,10 +214,8 @@ describe('<InsightsAdvisorRedirector />', () => {
   describe('no external ID available', () => {
     const noExternalIdProps = {
       ...defaultProps,
-      match: {
-        params: {
-          id: '1ZyOzuBzgnXcKa92ZE2E4olYmQa',
-        },
+      params: {
+        id: '1ZyOzuBzgnXcKa92ZE2E4olYmQa',
       },
       location: {
         pathname: '/details/s/1ZyOzuBzgnXcKa92ZE2E4olYmQa',

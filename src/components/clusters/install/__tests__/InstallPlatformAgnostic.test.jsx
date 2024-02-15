@@ -1,4 +1,5 @@
 import React from 'react';
+import { CompatRouter } from 'react-router-dom-v5-compat';
 import { screen, checkAccessibility, TestRouter, render } from '~/testUtils';
 
 import InstallPlatformAgnostic from '../InstallPlatformAgnostic';
@@ -7,7 +8,9 @@ describe('Platform agnostic install', () => {
   it('is accessible', async () => {
     const { container } = render(
       <TestRouter>
-        <InstallPlatformAgnostic />
+        <CompatRouter>
+          <InstallPlatformAgnostic />
+        </CompatRouter>
       </TestRouter>,
     );
 

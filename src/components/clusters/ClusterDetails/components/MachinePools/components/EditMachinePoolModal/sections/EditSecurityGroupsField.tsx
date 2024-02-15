@@ -8,8 +8,9 @@ import { SupportedFeature } from '~/common/featureCompatibility';
 import { useAWSVPCFromCluster } from '~/components/clusters/common/useAWSVPCFromCluster';
 import EditSecurityGroups from '~/components/clusters/ClusterDetails/components/SecurityGroups/EditSecurityGroups';
 import SecurityGroupsEmptyAlert from '~/components/clusters/ClusterDetails/components/SecurityGroups/SecurityGroupsEmptyAlert';
+import useFormikOnChange from '~/hooks/useFormikOnChange';
+
 import { EditMachinePoolValues } from '../hooks/useMachinePoolFormik';
-import useFormikOnChange from '../hooks/useFormikOnChange';
 
 const fieldId = 'securityGroupIds';
 

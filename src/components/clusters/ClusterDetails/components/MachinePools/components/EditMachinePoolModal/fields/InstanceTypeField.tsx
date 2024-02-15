@@ -6,7 +6,7 @@ import { billingModels } from '~/common/subscriptionTypes';
 import { isMultiAZ } from '~/components/clusters/ClusterDetails/clusterDetailsHelper';
 import MachineTypeSelection from '~/components/clusters/common/ScaleSection/MachineTypeSelection';
 import { Cluster } from '~/types/clusters_mgmt.v1';
-import useFormikOnChange from '../hooks/useFormikOnChange';
+import useFormikOnChange from '~/hooks/useFormikOnChange';
 
 const fieldId = 'instanceType';
 

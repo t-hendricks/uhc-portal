@@ -1,22 +1,21 @@
 import React from 'react';
-import { screen, checkAccessibility, render } from '~/testUtils';
+import { CompatRouter } from 'react-router-dom-v5-compat';
+import { screen, checkAccessibility, render, TestRouter } from '~/testUtils';
 
 import { InstructionsChooser } from '../InstructionsChooser';
 
-const mockHistoryPush = jest.fn();
+const mockNavigate = jest.fn();
 
-jest.mock('react-router-dom', () => ({
-  ...jest.requireActual('react-router-dom'),
-  useHistory: () => ({
-    push: mockHistoryPush,
-  }),
+jest.mock('react-router-dom-v5-compat', () => ({
+  ...jest.requireActual('react-router-dom-v5-compat'),
+  useNavigate: () => mockNavigate,
 }));
 
 const checkForCard = async (url, cardTitle, user) => {
   const instructionCard = screen.getByRole('link', { name: cardTitle });
   expect(instructionCard).toBeInTheDocument();
   await user.click(instructionCard);
-  return expect(mockHistoryPush).lastCalledWith(url);
+  return expect(mockNavigate).lastCalledWith(url);
 };
 
 describe('<InstructionsChooser />', () => {
@@ -28,7 +27,11 @@ describe('<InstructionsChooser />', () => {
     const ipiPageLink = '/install/aws/installer-provisioned';
     const upiPageLink = '/install/aws/user-provisioned';
     const { container, user } = render(
-      <InstructionsChooser ipiPageLink={ipiPageLink} upiPageLink={upiPageLink} />,
+      <TestRouter>
+        <CompatRouter>
+          <InstructionsChooser ipiPageLink={ipiPageLink} upiPageLink={upiPageLink} />
+        </CompatRouter>
+      </TestRouter>,
     );
 
     await checkAccessibility(container);
@@ -46,11 +49,15 @@ describe('<InstructionsChooser />', () => {
     const upiPageLink = '/install/metal/user-provisioned';
 
     const { container, user } = render(
-      <InstructionsChooser
-        aiPageLink={aiPageLink}
-        ipiPageLink={ipiPageLink}
-        upiPageLink={upiPageLink}
-      />,
+      <TestRouter>
+        <CompatRouter>
+          <InstructionsChooser
+            aiPageLink={aiPageLink}
+            ipiPageLink={ipiPageLink}
+            upiPageLink={upiPageLink}
+          />
+        </CompatRouter>
+      </TestRouter>,
     );
     await checkAccessibility(container);
 
@@ -65,12 +72,16 @@ describe('<InstructionsChooser />', () => {
     const upiPageLink = '/install/metal/user-provisioned';
 
     const { container, user } = render(
-      <InstructionsChooser
-        aiPageLink={aiPageLink}
-        ipiPageLink={ipiPageLink}
-        upiPageLink={upiPageLink}
-        hideIPI
-      />,
+      <TestRouter>
+        <CompatRouter>
+          <InstructionsChooser
+            aiPageLink={aiPageLink}
+            ipiPageLink={ipiPageLink}
+            upiPageLink={upiPageLink}
+            hideIPI
+          />
+        </CompatRouter>
+      </TestRouter>,
     );
 
     await checkAccessibility(container);

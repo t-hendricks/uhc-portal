@@ -1,4 +1,5 @@
 import React from 'react';
+import { CompatRouter } from 'react-router-dom-v5-compat';
 import { screen, checkAccessibility, TestRouter, render } from '~/testUtils';
 
 import InstallIBMZ from '../InstallIBMZ';
@@ -7,7 +8,9 @@ describe('InstallIBMZ', () => {
   it('is accessible', async () => {
     const { container } = render(
       <TestRouter>
-        <InstallIBMZ />
+        <CompatRouter>
+          <InstallIBMZ />
+        </CompatRouter>
       </TestRouter>,
     );
 

@@ -67,6 +67,7 @@ cleanup_secrets
 printenv PUSH_KEY | base64 --decode > key
 chmod u=r,g=,o= key
 
+node --version
 git --version
 ssh -V
 # The version of `git` in the Jenkins node didn't support the

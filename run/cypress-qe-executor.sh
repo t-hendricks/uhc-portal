@@ -84,7 +84,7 @@ fi
 rosacli_container_name="rosacli-${build_number}";
 
 # Cypress images with browser for containerized runs
-browser_image="quay.io/openshifttest/cypress-included:10.9.0"
+browser_image="quay.io/openshifttest/cypress-included:13.6.4"
 rosacli_image="registry.ci.openshift.org/ci/rosa-aws-cli:latest"
 
 mkdir -p "${PWD}/cypress/videos"
@@ -105,11 +105,11 @@ function cypress_container_run(){
       --name "${browser_container_name}" \
       --shm-size "2g" \
       --security-opt label="disable" \
-      --volume "${PWD}/cypress.config.js:/cypress.config.js" \
-      --volume "${PWD}/tsconfig.json:/tsconfig.json" \
-      --volume "${PWD}/cypress.env.json:/cypress.env.json" \
-      --volume "${PWD}/cypress:/cypress" \
-      --volume "${PWD}/node_modules:/node_modules" \
+      --volume "${PWD}/cypress.config.js:/e2e/cypress.config.js" \
+      --volume "${PWD}/tsconfig.json:/e2e/tsconfig.json" \
+      --volume "${PWD}/cypress.env.json:/e2e/cypress.env.json" \
+      --volume "${PWD}/cypress:/e2e/cypress" \
+      --volume "${PWD}/node_modules:/e2e/node_modules" \
       --env "CYPRESS_BASE_URL=https://${ENVIRONMENT}/openshift/" \
       --env NO_COLOR=1 \
       --env "CYPRESS_grepTags=${tags}" \
@@ -122,14 +122,14 @@ function cypress_container_run(){
 }
 
 function collect_logs(){
-  browser_container_name =$1
+  browser_container_name=$1
     if [ ! -z "${browser_container_name}" ]; then
       echo "Starting log collection from ${browser_container_name}"
       podman logs "${browser_container_name}"
       podman logs "${browser_container_name}" &> "${browser_container_name}-browser.log"
       echo "copying cypress screenshots & videos to /run/output/embedded_files/..."
-      podman cp "${browser_container_name}:/cypress/screenshots/" ${PWD}"/run/output/embedded_files/"
-      podman cp "${browser_container_name}:/cypress/videos/" "${PWD}/run/output/embedded_files/"
+      podman cp "${browser_container_name}:/e2e/cypress/screenshots/" ${PWD}"/run/output/embedded_files/"
+      podman cp "${browser_container_name}:/e2e/cypress/videos/" "${PWD}/run/output/embedded_files/"
       echo "Completed log collection from ${browser_container_name}"
     fi
 }
