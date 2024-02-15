@@ -14,11 +14,6 @@ const mapStateToProps = (state) => {
       pending: false,
       subscriptionID: '',
     },
-    supportCases = {
-      cases: [],
-      pending: false,
-      subscriptionID: '',
-    },
     deleteContactResponse,
     addContactResponse,
   } = state.clusterSupport;
@@ -32,7 +27,7 @@ const mapStateToProps = (state) => {
     addContactResponse,
     deleteContactResponse,
     isAddNotificationContactModalOpen: shouldShowModal(state, 'add-notification-contact'),
-    supportCases,
+    product: cluster.subscription?.plan?.type,
   };
 };
 
@@ -47,7 +42,6 @@ const mapDispatchToProps = (dispatch) => ({
   addNotificationContact: (subscriptionID, username) =>
     dispatch(supportActions.addNotificationContact(subscriptionID, username)),
   addNotificationToaster: (data) => dispatch(addNotification(data)),
-  getSupportCases: (subscriptionID) => dispatch(supportActions.getSupportCases(subscriptionID)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Support);
