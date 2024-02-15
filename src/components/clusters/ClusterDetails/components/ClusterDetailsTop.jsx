@@ -6,6 +6,8 @@ import { Spinner } from '@redhat-cloud-services/frontend-components/Spinner';
 import { Button, Alert, Split, SplitItem, Title, Flex } from '@patternfly/react-core';
 
 import { PreviewLabel } from '~/components/clusters/common/PreviewLabel';
+import { GCP_SECURE_BOOT_ENHANCEMENTS } from '~/redux/constants/featureConstants';
+import { useFeatureGate } from '~/hooks/useFeatureGate';
 import clusterStates, { isOffline } from '../../common/clusterStates';
 import modals from '../../../common/Modal/modals';
 import ClusterActionsDropdown from '../../common/ClusterActionsDropdown';
@@ -30,6 +32,7 @@ import TransferClusterOwnershipInfo from './TransferClusterOwnershipInfo';
 import TermsAlert from './TermsAlert';
 import ButtonWithTooltip from '../../../common/ButtonWithTooltip';
 import { goZeroTime2Null } from '../../../../common/helpers';
+import GcpOrgPolicyAlert from './GcpOrgPolicyAlert';
 
 function ClusterDetailsTop(props) {
   const {
@@ -49,6 +52,7 @@ function ClusterDetailsTop(props) {
     autoRefreshEnabled,
     toggleSubscriptionReleased,
     showPreviewLabel,
+    logs,
   } = props;
 
   const isProductOSDTrial =
@@ -187,6 +191,21 @@ function ClusterDetailsTop(props) {
       Unarchive
     </ButtonWithTooltip>
   );
+
+  const orgPolicyWarning = logs?.find(
+    (obj) =>
+      obj.summary?.includes('Please enable the Org Policy API for the GCP project') ||
+      obj.summary?.includes('GCP Organization Policy Service'),
+  );
+
+  const isSecureBootEnhancementsEnabled = useFeatureGate(GCP_SECURE_BOOT_ENHANCEMENTS);
+  const showGcpOrgPolicyWarning =
+    isSecureBootEnhancementsEnabled &&
+    orgPolicyWarning &&
+    !isDeprovisioned &&
+    cluster.state !== clusterStates.READY &&
+    cluster.state !== clusterStates.UNINSTALLING;
+
   return (
     <div id="cl-details-top" className="top-row">
       <Split>
@@ -258,6 +277,8 @@ function ClusterDetailsTop(props) {
       {OSDRHMEndDate && !isDeprovisioned && (
         <ExpirationAlert expirationTimestamp={OSDRHMEndDate} OSDRHMExpiration />
       )}
+      {showGcpOrgPolicyWarning && <GcpOrgPolicyAlert summary={orgPolicyWarning?.summary} />}
+
       <SubscriptionCompliancy
         cluster={cluster}
         openModal={openModal}
@@ -290,6 +311,12 @@ ClusterDetailsTop.propTypes = {
   autoRefreshEnabled: PropTypes.bool,
   toggleSubscriptionReleased: PropTypes.func.isRequired,
   showPreviewLabel: PropTypes.bool.isRequired,
+  logs: PropTypes.arrayOf(
+    PropTypes.shape({
+      summary: PropTypes.string,
+      description: PropTypes.string,
+    }),
+  ),
 };
 
 export default ClusterDetailsTop;

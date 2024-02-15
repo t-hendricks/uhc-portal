@@ -34,7 +34,7 @@ const ReduxFormTaints = ({
       const isRemoveDisabled = !isEditing && index === 0 && fields.length === 1;
 
       return (
-        <React.Fragment key={`${fields.get(index).id}`}>
+        <React.Fragment key={`${fields.get(index).id}-${label.key}`}>
           <GridItem span={3}>
             <Field
               name={`${label}.key`}
@@ -70,6 +70,7 @@ const ReduxFormTaints = ({
           <GridItem span={3}>
             <Button
               onClick={() => fields.remove(index)}
+              aria-label="Remove item"
               icon={<MinusCircleIcon />}
               variant="link"
               isDisabled={isRemoveDisabled}

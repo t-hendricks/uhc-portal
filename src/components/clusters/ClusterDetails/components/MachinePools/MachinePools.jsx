@@ -209,16 +209,21 @@ class MachinePools extends React.Component {
       machinePoolsList?.data,
     );
     const isHypershift = isHypershiftCluster(cluster);
+    const kubeletConfigActions = cluster?.kubeletConfigActions || {}; // Data not defined on the cluster list response
     const isRosa = isROSA(cluster);
     const isOsd = isOSD(cluster);
     const isCcs = isCCS(cluster);
     const isAws = isAWS(cluster);
     const showMachineConfigurationAction =
       hasMachineConfiguration && ((isRosa && !isHypershift) || (isOsd && isCcs && isAws));
-    const isMachineConfigurationActionDisabled = cluster?.state !== clusterStates.READY;
+    const canEditMachineConfiguration = kubeletConfigActions.create && kubeletConfigActions.update;
+    const isMachineConfigurationActionDisabled =
+      cluster?.state !== clusterStates.READY || !canEditMachineConfiguration;
     const isMachineConfigurationActionDisabledReason =
       isMachineConfigurationActionDisabled &&
-      `Machine configuration is only available when the cluster is ready.`;
+      (!canEditMachineConfiguration
+        ? 'You do not have permission to edit the machine configuration. Only cluster owners and cluster editors can edit machine configuration.'
+        : 'Machine configuration is only available when the cluster is ready.');
 
     if (hasMachinePools && machinePoolsList.error) {
       return (

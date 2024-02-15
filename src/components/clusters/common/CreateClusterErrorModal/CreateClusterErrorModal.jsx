@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 import { resetCreatedClusterResponse } from '../../../../redux/actions/clustersActions';
 import ErrorModal from '../../../common/ErrorModal';
 import MissingPrereqErrorModal from '../MissingPrereqErrorModal';
+import ShieldedVmErrorModal from '../ShieldedVmErrorModal';
 
 const ErrorKey = {
   AwsCredsNotOsdCcsAdmin: 'AWSCredsNotOSDCCSAdmin',
@@ -17,20 +18,30 @@ const CreateClusterErrorModal = ({ onRetry }) => {
   const { error: createClusterError } = createClusterResponse;
 
   if (createClusterError) {
-    const errorResponseDetails = createClusterResponse.errorDetails?.[0];
+    const errorDetailsKey = createClusterResponse.errorDetails?.[0]?.Error_Key;
+    const isAwsCredsAdminError = errorDetailsKey === ErrorKey.AwsCredsNotOsdCcsAdmin;
 
-    switch (errorResponseDetails?.Error_Key) {
-      case ErrorKey.AwsCredsNotOsdCcsAdmin:
-        return <MissingPrereqErrorModal onRetry={onRetry} onClose={resetResponse} />;
-      default:
-        return (
-          <ErrorModal
-            title="Error creating cluster"
-            errorResponse={createClusterResponse}
-            resetResponse={resetResponse}
-          />
-        );
+    if (isAwsCredsAdminError) {
+      return <MissingPrereqErrorModal onRetry={onRetry} onClose={resetResponse} />;
     }
+
+    if (createClusterResponse?.errorMessage.includes('SecureBoot feature')) {
+      return (
+        <ShieldedVmErrorModal
+          title="Error creating cluster"
+          errorResponse={createClusterResponse}
+          onClose={resetResponse}
+        />
+      );
+    }
+
+    return (
+      <ErrorModal
+        title="Error creating cluster"
+        errorResponse={createClusterResponse}
+        resetResponse={resetResponse}
+      />
+    );
   }
 
   return null;

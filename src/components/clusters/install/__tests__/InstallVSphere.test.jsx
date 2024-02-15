@@ -1,4 +1,5 @@
 import React from 'react';
+import { CompatRouter } from 'react-router-dom-v5-compat';
 import { screen, render, checkAccessibility, TestRouter } from '~/testUtils';
 
 import InstallVSphere from '../InstallVSphere';
@@ -7,7 +8,9 @@ describe('<InstallVSphere />', () => {
   it('is accessible', async () => {
     const { container } = render(
       <TestRouter>
-        <InstallVSphere />
+        <CompatRouter>
+          <InstallVSphere />
+        </CompatRouter>
       </TestRouter>,
     );
 

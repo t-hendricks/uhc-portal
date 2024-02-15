@@ -16,6 +16,7 @@ import { Thead, Tbody, Tr, Th, Td, ExpandableRowContent } from '@patternfly/reac
 import { Table as TableDeprecated } from '@patternfly/react-table/deprecated';
 import { ArrowRightIcon } from '@patternfly/react-icons/dist/esm/icons/arrow-right-icon';
 import { Link } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom-v5-compat';
 import * as OCM from '@openshift-assisted/ui-lib/ocm';
 
 import produce from 'immer';
@@ -276,12 +277,16 @@ const ToolAndDescriptionRows = ({
       toolRefs={toolRefs}
       expandKey={tool}
       cells={[
-        <Td dataLabel="Name">
+        <Td dataLabel="Name" key="Name">
           <span>{name}</span>
         </Td>,
-        <Td dataLabel="OS">{chooser.osDropdown}</Td>,
-        <Td dataLabel="Architecture">{chooser.archDropdown}</Td>,
-        <Td dataLabel="">
+        <Td dataLabel="OS" key="OS">
+          {chooser.osDropdown}
+        </Td>,
+        <Td dataLabel="Architecture" key="Arch">
+          {chooser.archDropdown}
+        </Td>,
+        <Td dataLabel="" key="downloadBtn">
           <AlignRight>{chooser.downloadButton} </AlignRight>
         </Td>,
       ]}
@@ -835,8 +840,8 @@ const tokenRows = (expanded, setExpanded, toolRefs, token) => (
       toolRefs={toolRefs}
       expandKey={expandKeys.PULL_SECRET}
       cells={[
-        <Td>Pull secret</Td>,
-        <Td>
+        <Td key="pullSecret">Pull secret</Td>,
+        <Td key="download">
           <AlignRight>
             <Split hasGutter>
               <SplitItem>
@@ -874,8 +879,8 @@ const tokenRows = (expanded, setExpanded, toolRefs, token) => (
       toolRefs={toolRefs}
       expandKey={expandKeys.TOKEN_OCM}
       cells={[
-        <Td>OpenShift Cluster Manager API Token</Td>,
-        <Td>
+        <Td key="name">OpenShift Cluster Manager API Token</Td>,
+        <Td key="viewAPI">
           <AlignRight>
             <Link to="/token">
               <Button
@@ -899,71 +904,37 @@ const tokenRows = (expanded, setExpanded, toolRefs, token) => (
   </>
 );
 
-class DownloadsPage extends React.Component {
-  static initialExpanded() {
+const DownloadsPage = ({ token, githubReleases, getLatestRelease, getAuthToken }) => {
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  const initialExpanded = () => {
     const initial = {};
     Object.values(expandKeys).forEach((key) => {
       initial[key] = false;
     });
     return initial;
-  }
+  };
 
-  static makeRefs() {
+  const makeRefs = () => {
     const toolRefs = {};
     Object.values(expandKeys).forEach((key) => {
       toolRefs[key] = React.createRef();
     });
     return toolRefs;
-  }
-
-  state = {
-    selectedCategory: 'ALL', // one of `downloadsCategories` key
-    expanded: DownloadsPage.initialExpanded(), // { [tool]: isOpen }
-    selections: {}, // { [tool]: {OS, architecture} }
   };
 
-  toolRefs = DownloadsPage.makeRefs(); // { [tool]: ref }
-
-  componentDidMount() {
-    const { getAuthToken, githubReleases, getLatestRelease } = this.props;
-    getAuthToken();
-    githubReleasesToFetch.forEach((repo) => {
-      if (!githubReleases[repo].fulfilled) {
-        getLatestRelease(repo);
-      }
-    });
-
-    this.focusRowByHash();
-    window.addEventListener('hashchange', this.focusRowByHash);
-  }
-
-  componentWillUnmount() {
-    window.removeEventListener('hashchange', this.focusRowByHash);
-  }
-
-  setCategory = (_event, selectedCategory) => {
-    const { expanded } = this.state;
-    this.setState({ selectedCategory });
-    this.updateURL(selectedCategory, expanded);
-  };
-
-  setExpanded = (expanded) => {
-    const { selectedCategory } = this.state;
-    this.setState({ expanded });
-    this.updateURL(selectedCategory, expanded);
-  };
-
-  setSelections = (selections) => {
-    this.setState({ selections });
-  };
+  const [selectedCategory, setSelectedCategory] = React.useState('ALL');
+  const [expanded, setExpanded] = React.useState(initialExpanded());
+  const [selections, setSelections] = React.useState({});
 
   /** "Advertise" link targets by setting #tool-foo URL.
    *
-   * Takes new state as params because this.state is unreliable after setState().
+   * Takes new state as params because state is unreliable after useState().
    * @param selectedCategory string - current/new category.
    * @param expanded - { key: bool } current/new expanded.
    */
-  updateURL = (selectedCategory, expanded) => {
+  const updateURL = (selectedCategory, expanded) => {
     let lastExpanded = null;
     const shownKeys = downloadsCategories.find((c) => c.key === selectedCategory)?.tools;
     shownKeys.forEach((key) => {
@@ -973,24 +944,26 @@ class DownloadsPage extends React.Component {
     });
 
     const hash = lastExpanded ? `#${rowId(lastExpanded)}` : '';
-    const { location, history } = this.props;
     if (hash !== location.hash) {
-      // pushState/replaceState API never trigger `hashchange` event,
-      // avoiding undesired effects like scrolling.
-      history.replace({ ...location, hash });
+      navigate({ ...location, hash });
     }
   };
 
-  focusRowByHash = () => {
-    const { location } = this.props;
+  const setExpandedState = (expanded) => {
+    setExpanded(expanded);
+    updateURL(selectedCategory, expanded);
+  };
+
+  const toolRefs = makeRefs();
+
+  const focusRowByHash = () => {
     const hash = location.hash.replace('#', '');
     const key = Object.values(expandKeys).find((k) => rowId(k) === hash);
     if (key) {
       // Expand to draw attention.  setState() directly to bypass updateHash().
-      const { expanded } = this.state;
-      this.setState({ expanded: { ...expanded, [key]: true } });
+      setExpandedState({ ...expanded, [key]: true });
 
-      const row = this.toolRefs[key]?.current;
+      const row = toolRefs[key]?.current;
       if (row) {
         row.scrollIntoView({ block: 'start', behavior: 'smooth' });
 
@@ -999,203 +972,223 @@ class DownloadsPage extends React.Component {
         // The row expand toggle happens to be a button.
         const elem = row.querySelector('button, select');
         if (elem) {
-          elem.focus({ preventScroll: true }); // don't interfere with smooth scroll.
+          elem.focus({ preventScroll: true });
         }
       }
     }
   };
 
-  render() {
-    const { token, githubReleases } = this.props;
-    const { selectedCategory, expanded, selections } = this.state;
+  React.useEffect(() => {
+    getAuthToken();
+    githubReleasesToFetch.forEach((repo) => {
+      if (!githubReleases[repo].fulfilled) {
+        getLatestRelease(repo);
+      }
+    });
+    focusRowByHash();
 
-    const urls = urlsSelector(githubReleases);
+    window.addEventListener('hashchange', focusRowByHash);
 
-    // Expand if at least one collapsed, collapse if all expanded.
-    const shownKeys = downloadsCategories.find((c) => c.key === selectedCategory)?.tools;
-    const allExpanded = shownKeys?.every((key) => expanded[key]);
-    const willExpandAll = !allExpanded;
-
-    const expandCollapseAll = () => {
-      this.setExpanded(
-        produce(expanded, (draft) => {
-          shownKeys.forEach((key) => {
-            draft[key] = willExpandAll;
-          });
-        }),
-      );
+    return () => {
+      window.removeEventListener('hashchange', focusRowByHash);
     };
+    // should be disabled -> causes infinite loop (former componentDidMount)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
-    return (
-      <AppPage title="Downloads | Red Hat OpenShift Cluster Manager">
-        <PageHeader className="downloads-page-header">
-          <Split>
-            <SplitItem isFilled>
-              <PageHeaderTitle className="ocm-page-title" title="Downloads" />
-            </SplitItem>
-          </Split>
-          <Split className="subheader">
-            <SplitItem>
-              <DownloadsCategoryDropdown
-                selectedCategory={selectedCategory}
-                setCategory={this.setCategory}
-              />
-            </SplitItem>
-            <SplitItem>
-              <ExpandableSectionToggle
-                className="expand-collapse-all"
-                isExpanded={!willExpandAll}
-                onToggle={expandCollapseAll}
-              >
-                {willExpandAll ? 'Expand all' : 'Collapse all'}
-              </ExpandableSectionToggle>
-            </SplitItem>
-          </Split>
-        </PageHeader>
+  const setCategory = (_event, selectedCategory) => {
+    setSelectedCategory(selectedCategory);
+    updateURL(selectedCategory, expanded);
+  };
 
-        <PageSection className="downloads-page-body">
-          <PageSection
-            variant="light"
-            padding={{ default: 'noPadding' }}
-            className="downloads-page-body"
-          >
-            <DownloadsSection
-              selectedCategory={selectedCategory}
-              category="CLI"
-              description={
-                <Text>
-                  Download command line tools to manage and work with OpenShift from your terminal.
-                </Text>
-              }
-            >
-              <TableDeprecated aria-label="CLI tools table">
-                <ColumnHeadings />
-                {cliToolRows(
-                  expanded,
-                  this.setExpanded,
-                  selections,
-                  this.setSelections,
-                  this.toolRefs,
-                  urls,
-                )}
-              </TableDeprecated>
-            </DownloadsSection>
+  const setSelectionsState = (selections) => {
+    setSelections(selections);
+  };
 
-            {!isRestrictedEnv() && (
-              <>
-                <DownloadsSection
-                  selectedCategory={selectedCategory}
-                  category="DEV"
-                  description={
-                    <Text>
-                      Access all the powers of Kubernetes through a simplified workflow with Red
-                      Hat’s developer tools.{' '}
-                      <ExternalLink href="https://developers.redhat.com/topics/developer-tools">
-                        Learn more
-                      </ExternalLink>
-                    </Text>
-                  }
-                >
-                  <TableDeprecated aria-label="Developer tools table">
-                    <ColumnHeadings />
-                    {devToolRows(
-                      expanded,
-                      this.setExpanded,
-                      selections,
-                      this.setSelections,
-                      this.toolRefs,
-                      urls,
-                    )}
-                  </TableDeprecated>
-                </DownloadsSection>
-                <DownloadsSection
-                  selectedCategory={selectedCategory}
-                  category="INSTALLATION"
-                  description={
-                    <Text>
-                      Install OpenShift based on your infrastructure. For the installer matching
-                      your infrastructure type, select the operating system and architecture on
-                      which you wish to run the installer. Then follow the steps provided within
-                      your infrastructure&apos;s tab on the <Link to="/create">create cluster</Link>{' '}
-                      page to install an OpenShift cluster.
-                    </Text>
-                  }
-                >
-                  <TableDeprecated aria-label="OpenShift installation table">
-                    <ColumnHeadings />
-                    {installationRows(
-                      expanded,
-                      this.setExpanded,
-                      selections,
-                      this.setSelections,
-                      this.toolRefs,
-                      urls,
-                    )}
-                  </TableDeprecated>
-                </DownloadsSection>
+  const urls = urlsSelector(githubReleases);
 
-                <DownloadsSection
-                  selectedCategory={selectedCategory}
-                  category="DISCONNECTED_INSTALLATION"
-                  description={
-                    <Text>
-                      Utilities to simplify preparation of disconnected cluster installations.
-                    </Text>
-                  }
-                >
-                  <TableDeprecated aria-label="OpenShift disconnected installation tools table">
-                    <ColumnHeadings />
-                    {disconnectedInstallationRows(
-                      expanded,
-                      this.setExpanded,
-                      selections,
-                      this.setSelections,
-                      this.toolRefs,
-                      urls,
-                    )}
-                  </TableDeprecated>
-                </DownloadsSection>
+  const shownKeys = downloadsCategories.find((c) => c.key === selectedCategory)?.tools;
+  const allExpanded = shownKeys?.every((key) => expanded[key]);
+  const willExpandAll = !allExpanded;
 
-                <DownloadsSection
-                  selectedCategory={selectedCategory}
-                  category="CUSTOM_INSTALLATION"
-                  description={
-                    <Text>
-                      Customize OpenShift and Red Hat Enterprise Linux CoreOS (RHCOS) installation
-                      with these tools.
-                    </Text>
-                  }
-                >
-                  <TableDeprecated aria-label="OpenShift installation customization downloads table">
-                    <ColumnHeadings />
-                    {customInstallationRows(
-                      expanded,
-                      this.setExpanded,
-                      selections,
-                      this.setSelections,
-                      this.toolRefs,
-                      urls,
-                    )}
-                  </TableDeprecated>
-                </DownloadsSection>
-              </>
-            )}
-
-            <DownloadsSection category="TOKENS" selectedCategory={selectedCategory}>
-              <TableDeprecated aria-label="Tokens table">
-                <TokensHeadings />
-                {tokenRows(expanded, this.setExpanded, this.toolRefs, token)}
-              </TableDeprecated>
-            </DownloadsSection>
-          </PageSection>
-        </PageSection>
-      </AppPage>
+  const expandCollapseAll = () => {
+    setExpandedState(
+      produce(expanded, (draft) => {
+        shownKeys.forEach((key) => {
+          draft[key] = willExpandAll;
+        });
+      }),
     );
-  }
-}
+  };
+
+  return (
+    <AppPage title="Downloads | Red Hat OpenShift Cluster Manager">
+      <PageHeader className="downloads-page-header">
+        <Split>
+          <SplitItem isFilled>
+            <PageHeaderTitle className="ocm-page-title" title="Downloads" />
+          </SplitItem>
+        </Split>
+        <Split className="subheader">
+          <SplitItem>
+            <DownloadsCategoryDropdown
+              selectedCategory={selectedCategory}
+              setCategory={setCategory}
+            />
+          </SplitItem>
+          <SplitItem>
+            <ExpandableSectionToggle
+              className="expand-collapse-all"
+              isExpanded={!willExpandAll}
+              onToggle={expandCollapseAll}
+            >
+              {willExpandAll ? 'Expand all' : 'Collapse all'}
+            </ExpandableSectionToggle>
+          </SplitItem>
+        </Split>
+      </PageHeader>
+
+      <PageSection className="downloads-page-body">
+        <PageSection
+          variant="light"
+          padding={{ default: 'noPadding' }}
+          className="downloads-page-body"
+        >
+          <DownloadsSection
+            selectedCategory={selectedCategory}
+            category="CLI"
+            description={
+              <Text>
+                Download command line tools to manage and work with OpenShift from your terminal.
+              </Text>
+            }
+          >
+            <TableDeprecated aria-label="CLI tools table">
+              <ColumnHeadings />
+              {cliToolRows(
+                expanded,
+                setExpandedState,
+                selections,
+                setSelectionsState,
+                toolRefs,
+                urls,
+              )}
+            </TableDeprecated>
+          </DownloadsSection>
+
+          {!isRestrictedEnv() && (
+            <>
+              <DownloadsSection
+                selectedCategory={selectedCategory}
+                category="DEV"
+                description={
+                  <Text>
+                    Access all the powers of Kubernetes through a simplified workflow with Red Hat’s
+                    developer tools.{' '}
+                    <ExternalLink href="https://developers.redhat.com/topics/developer-tools">
+                      Learn more
+                    </ExternalLink>
+                  </Text>
+                }
+              >
+                <TableDeprecated aria-label="Developer tools table">
+                  <ColumnHeadings />
+                  {devToolRows(
+                    expanded,
+                    setExpandedState,
+                    selections,
+                    setSelectionsState,
+                    toolRefs,
+                    urls,
+                  )}
+                </TableDeprecated>
+              </DownloadsSection>
+              <DownloadsSection
+                selectedCategory={selectedCategory}
+                category="INSTALLATION"
+                description={
+                  <Text>
+                    Install OpenShift based on your infrastructure. For the installer matching your
+                    infrastructure type, select the operating system and architecture on which you
+                    wish to run the installer. Then follow the steps provided within your
+                    infrastructure&apos;s tab on the <Link to="/create">create cluster</Link> page
+                    to install an OpenShift cluster.
+                  </Text>
+                }
+              >
+                <TableDeprecated aria-label="OpenShift installation table">
+                  <ColumnHeadings />
+                  {installationRows(
+                    expanded,
+                    setExpandedState,
+                    selections,
+                    setSelectionsState,
+                    toolRefs,
+                    urls,
+                  )}
+                </TableDeprecated>
+              </DownloadsSection>
+
+              <DownloadsSection
+                selectedCategory={selectedCategory}
+                category="DISCONNECTED_INSTALLATION"
+                description={
+                  <Text>
+                    Utilities to simplify preparation of disconnected cluster installations.
+                  </Text>
+                }
+              >
+                <TableDeprecated aria-label="OpenShift disconnected installation tools table">
+                  <ColumnHeadings />
+                  {disconnectedInstallationRows(
+                    expanded,
+                    setExpandedState,
+                    selections,
+                    setSelectionsState,
+                    toolRefs,
+                    urls,
+                  )}
+                </TableDeprecated>
+              </DownloadsSection>
+
+              <DownloadsSection
+                selectedCategory={selectedCategory}
+                category="CUSTOM_INSTALLATION"
+                description={
+                  <Text>
+                    Customize OpenShift and Red Hat Enterprise Linux CoreOS (RHCOS) installation
+                    with these tools.
+                  </Text>
+                }
+              >
+                <TableDeprecated aria-label="OpenShift installation customization downloads table">
+                  <ColumnHeadings />
+                  {customInstallationRows(
+                    expanded,
+                    setExpandedState,
+                    selections,
+                    setSelectionsState,
+                    toolRefs,
+                    urls,
+                  )}
+                </TableDeprecated>
+              </DownloadsSection>
+            </>
+          )}
+
+          <DownloadsSection category="TOKENS" selectedCategory={selectedCategory}>
+            <TableDeprecated aria-label="Tokens table">
+              <TokensHeadings />
+              {tokenRows(expanded, setExpandedState, toolRefs, token)}
+            </TableDeprecated>
+          </DownloadsSection>
+        </PageSection>
+      </PageSection>
+    </AppPage>
+  );
+};
+
 DownloadsPage.propTypes = {
-  location: PropTypes.object.isRequired,
-  history: PropTypes.object.isRequired,
   token: PropTypes.object.isRequired,
   getAuthToken: PropTypes.func.isRequired,
   githubReleases: PropTypes.object.isRequired,

@@ -72,7 +72,7 @@ const ReduxFormKeyValueList = ({ fields, forceTouch }) => (
       const isRemoveDisabled = index === 0 && fields.length === 1;
 
       return (
-        <React.Fragment key={`${fields.get(index).id}`}>
+        <React.Fragment key={`${fields.get(index).id}-${label.key}`}>
           <GridItem span={4}>
             <Field
               name={`${label}.key`}
@@ -101,6 +101,7 @@ const ReduxFormKeyValueList = ({ fields, forceTouch }) => (
               icon={<MinusCircleIcon />}
               variant="link"
               isDisabled={isRemoveDisabled}
+              aria-label="Remove item"
               className={
                 isRemoveDisabled
                   ? 'reduxFormKeyValueList-removeBtn-disabled'

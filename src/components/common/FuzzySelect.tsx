@@ -34,6 +34,36 @@ export interface FuzzySelectProps extends Omit<SelectPropsDeprecated, 'isGrouped
 const defaultSortFn = (a: FuzzyEntryType, b: FuzzyEntryType): number =>
   a.label.localeCompare(b.label);
 
+// We cannot convert this function to a React component such as <FuzzySelectOption entry={entry} />,
+// because Patternfly expects to find the props in entry (value, etc.) on the direct children of Select/SelectGroup
+const entryToSelectOption = (entry: FuzzyEntryType, displayLabel: React.ReactElement) => (
+  <SelectOptionDeprecated
+    className="pf-v5-c-dropdown__menu-item pf-v5-u-text-wrap"
+    key={entry.entryId}
+    value={entry.entryId}
+    description={entry.description}
+    isDisabled={entry.disabled}
+  >
+    {displayLabel}
+  </SelectOptionDeprecated>
+);
+
+/**
+ * Creates the display label of a FuzzyEntry that matches the filter text
+ * It splits the label in several parts, with the parts that match the filter text bolded.
+ * @param props { entry, filterText} fuzzy select entry and filter text
+ */
+const FuzzyMatchName = ({ entry, filterText }: { entry: FuzzyEntryType; filterText: string }) => (
+  <>
+    {getIdSlices(entry.label, filterText).map((idSplit, index) => (
+      // eslint-disable-next-line react/no-array-index-key
+      <span key={`slice-${index}`} className={idSplit.isBold ? 'pf-u-font-weight-bold' : ''}>
+        {idSplit.text}
+      </span>
+    ))}
+  </>
+);
+
 function FuzzySelect(props: FuzzySelectProps) {
   const {
     fuzziness,
@@ -229,35 +259,5 @@ function FuzzySelect(props: FuzzySelectProps) {
     </div>
   );
 }
-
-/**
- * Creates the display label of a FuzzyEntry that matches the filter text
- * It splits the label in several parts, with the parts that match the filter text bolded.
- * @param props { entry, filterText} fuzzy select entry and filter text
- */
-const FuzzyMatchName = ({ entry, filterText }: { entry: FuzzyEntryType; filterText: string }) => (
-  <>
-    {getIdSlices(entry.label, filterText).map((idSplit, index) => (
-      // eslint-disable-next-line react/no-array-index-key
-      <span key={`slice-${index}`} className={idSplit.isBold ? 'pf-u-font-weight-bold' : ''}>
-        {idSplit.text}
-      </span>
-    ))}
-  </>
-);
-
-// We cannot convert this function to a React component such as <FuzzySelectOption entry={entry} />,
-// because Patternfly expects to find the props in entry (value, etc.) on the direct children of Select/SelectGroup
-const entryToSelectOption = (entry: FuzzyEntryType, displayLabel: React.ReactElement) => (
-  <SelectOptionDeprecated
-    className="pf-v5-c-dropdown__menu-item"
-    key={entry.entryId}
-    value={entry.entryId}
-    description={entry.description}
-    isDisabled={entry.disabled}
-  >
-    {displayLabel}
-  </SelectOptionDeprecated>
-);
 
 export default FuzzySelect;

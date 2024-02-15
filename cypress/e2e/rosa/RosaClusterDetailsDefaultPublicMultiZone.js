@@ -9,14 +9,6 @@ describe(
   { tags: ['rosa', 'day2', 'default', 'multizone'] },
   () => {
     before(() => {
-      cy.visit('/');
-      Login.isLoginPageUrl();
-      Login.login();
-
-      ClusterListPage.isClusterListUrl();
-      ClusterListPage.waitForDataReady();
-      cy.getByTestId('create_cluster_btn').should('be.visible');
-      ClusterListPage.isClusterListScreen();
       ClusterListPage.filterTxtField().should('be.visible').click();
       ClusterListPage.filterTxtField().clear().type(clusterPropertiesFile.ClusterName);
       ClusterListPage.waitForDataReady();

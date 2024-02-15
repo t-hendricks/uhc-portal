@@ -10,12 +10,14 @@ type ClusterLogsDownloadProps = {
   externalClusterID: Cluster['external_id'];
   clusterID: Cluster['id'];
   viewOptions: ViewOptions;
+  logs: number;
 };
 
 const ClusterLogsDownload = ({
   externalClusterID,
   clusterID,
   viewOptions,
+  logs,
 }: ClusterLogsDownloadProps) => {
   const [isOpen, setIsOpen] = React.useState(false);
   const [format, setFormat] = React.useState<'json' | 'csv'>('json');
@@ -71,7 +73,12 @@ const ClusterLogsDownload = ({
 
   return (
     <>
-      <Button variant="primary" onClick={() => setIsOpen(true)} data-testid="download-btn">
+      <Button
+        isDisabled={!logs}
+        variant="primary"
+        onClick={() => setIsOpen(true)}
+        data-testid="download-btn"
+      >
         Download history
       </Button>
       {isOpen && (

@@ -5,7 +5,7 @@ import { useField } from 'formik';
 import { Cluster } from '~/types/clusters_mgmt.v1';
 import { SubnetSelectField } from '~/components/clusters/common/SubnetSelectField';
 import { useAWSVPCFromCluster } from '~/components/clusters/common/useAWSVPCFromCluster';
-import useFormikOnChange from '../hooks/useFormikOnChange';
+import useFormikOnChange from '~/hooks/useFormikOnChange';
 
 const fieldId = 'subnet';
 

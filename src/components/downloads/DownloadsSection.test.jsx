@@ -1,54 +1,47 @@
 import React from 'react';
-import { shallow } from 'enzyme';
-import { Button } from '@patternfly/react-core';
+import { screen, render, checkAccessibility } from '~/testUtils';
 
 import DownloadsSection from './DownloadsSection';
 
 describe('<DownloadsSection />', () => {
   describe('with same category selected', () => {
-    const wrapper = shallow(
-      <DownloadsSection selectedCategory="DEV" category="DEV">
-        <Button>placeholder for test</Button>
-      </DownloadsSection>,
-    );
+    it('displays title & children', async () => {
+      const { container } = render(
+        <DownloadsSection selectedCategory="DEV" category="DEV">
+          <button type="button">placeholder for test</button>
+        </DownloadsSection>,
+      );
 
-    it('should render', () => {
-      expect(wrapper).toMatchSnapshot();
-    });
+      expect(screen.getByText('Developer tools')).toBeInTheDocument();
+      expect(screen.getByRole('button', { name: 'placeholder for test' })).toBeInTheDocument();
 
-    it('should contain title & children', () => {
-      expect(wrapper.html()).toContain('Developer tools');
-      expect(wrapper.find(Button).length).toEqual(1);
+      await checkAccessibility(container);
     });
   });
 
   describe('with ALL category selected', () => {
-    const wrapper = shallow(
-      <DownloadsSection selectedCategory="ALL" category="DEV">
-        <Button>placeholder for test</Button>
-      </DownloadsSection>,
-    );
+    it('displays title & children', async () => {
+      const { container } = render(
+        <DownloadsSection selectedCategory="ALL" category="DEV">
+          <button type="button">placeholder for test</button>
+        </DownloadsSection>,
+      );
 
-    it('should render', () => {
-      expect(wrapper).toMatchSnapshot();
-    });
+      expect(screen.getByText('Developer tools')).toBeInTheDocument();
+      expect(screen.getByRole('button', { name: 'placeholder for test' })).toBeInTheDocument();
 
-    it('should contain title & children', () => {
-      expect(wrapper.html()).toContain('Developer tools');
-      expect(wrapper.find(Button).length).toEqual(1);
+      await checkAccessibility(container);
     });
   });
 
   describe('with different category selected', () => {
-    const wrapper = shallow(
-      <DownloadsSection selectedCategory="CLI" category="DEV">
-        <Button>placeholder for test</Button>
-      </DownloadsSection>,
-    );
-
     it('should render as empty', () => {
-      expect(wrapper).toMatchSnapshot();
-      expect(wrapper.text()).toEqual('');
+      const { container } = render(
+        <DownloadsSection selectedCategory="CLI" category="DEV">
+          <button type="button">placeholder for test</button>
+        </DownloadsSection>,
+      );
+      expect(container).toBeEmptyDOMElement();
     });
   });
 });

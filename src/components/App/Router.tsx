@@ -19,6 +19,7 @@ import {
   NoPermissionsError as AINoPermissionsError,
 } from '@openshift-assisted/ui-lib/ocm';
 import useChrome from '@redhat-cloud-services/frontend-components/useChrome';
+import { CompatRoute } from 'react-router-dom-v5-compat';
 import { ConnectedRouter } from 'connected-react-router';
 import get from 'lodash/get';
 import React, { useEffect } from 'react';
@@ -31,7 +32,6 @@ import {
   useLocation,
   withRouter,
 } from 'react-router-dom';
-import { CompatRoute } from 'react-router-dom-v5-compat';
 import apiRequest from '~/services/apiRequest';
 import { useFeatureGate } from '~/hooks/useFeatureGate';
 import { normalizedProducts } from '../../common/subscriptionTypes';
@@ -378,17 +378,17 @@ const Router: React.FC<RouterProps> = ({ history, planType, clusterId, externalC
               component={CreateOsdWizard}
               history={history}
             />
-            <Route
+            <CompatRoute
               path="/create/cloud"
-              render={(props) => <CreateClusterPage activeTab="cloud" {...props} />}
+              render={() => <CreateClusterPage activeTab="cloud" />}
             />
-            <Route
+            <CompatRoute
               path="/create/datacenter"
-              render={(props) => <CreateClusterPage activeTab="datacenter" {...props} />}
+              render={() => <CreateClusterPage activeTab="datacenter" />}
             />
-            <Route
+            <CompatRoute
               path="/create/local"
-              render={(props) => <CreateClusterPage activeTab="local" {...props} />}
+              render={() => <CreateClusterPage activeTab="local" />}
             />
 
             <Redirect from="/create/rosa/welcome" to="/create/rosa/getstarted" />
@@ -405,7 +405,7 @@ const Router: React.FC<RouterProps> = ({ history, planType, clusterId, externalC
               component={CreateROSAWizard}
             />
 
-            <CompatRoute path="/create" component={CreateClusterPage} />
+            <CompatRoute path="/create" component={() => <CreateClusterPage activeTab="" />} />
 
             <CompatRoute
               path="/details/s/:id/insights/:reportId/:errorKey"
@@ -415,9 +415,9 @@ const Router: React.FC<RouterProps> = ({ history, planType, clusterId, externalC
               path="/details/s/:id/add-idp/:idpTypeName"
               component={IdentityProvidersPage}
             />
-            <Route
+            <CompatRoute
               path="/details/s/:id/edit-idp/:idpName"
-              render={({ match }) => <IdentityProvidersPage isEditForm match={match} />}
+              component={() => <IdentityProvidersPage isEditForm />}
             />
             <CompatRoute path="/details/s/:id" component={ClusterDetailsSubscriptionId} />
             <CompatRoute
@@ -449,7 +449,7 @@ const Router: React.FC<RouterProps> = ({ history, planType, clusterId, externalC
             />
 
             <CompatRoute path="/" exact component={ClustersList} />
-            <CompatRoute component={NotFoundError} />
+            <Route component={NotFoundError} />
           </Switch>
         </ApiError>
       </ConnectedRouter>

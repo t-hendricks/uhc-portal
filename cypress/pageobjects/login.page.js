@@ -30,12 +30,26 @@ class Login extends Page {
     });
 
     const { username, password } = getAuthConfig();
-    cy.get(this.inputUsername).first().type(username, { force: true }); // there are 2 hidden username fields?!
-    this.clickNextBtn();
-    this.isPasswordScreen();
-    cy.get(this.inputPassword).type(password, { force: true });
-    this.clickSubmitBtn();
-    this.closePendoIfShowing();
+
+    if (Cypress.env('GOV_CLOUD')) {
+      cy.visit('', { retryOnNetworkFailure: true });
+
+      this.loginFedRamp(username, password);
+    } else {
+      // visiting '/' will goto baseUrl defined in package.json
+      // baseUrl ends in '.../openshift/'.  To goto sub-pages you
+      // only need to specify relative path to baseUrl.
+      // Ex: cy.visit('/create/osd');
+      cy.visit('/', { retryOnNetworkFailure: true });
+      this.isLoginPageUrl();
+
+      cy.get(this.inputUsername).first().type(username, { force: true }); // there are 2 hidden username fields?!
+      this.clickNextBtn();
+      this.isPasswordScreen();
+      cy.get(this.inputPassword).type(password, { force: true });
+      this.clickSubmitBtn();
+      this.closePendoIfShowing();
+    }
   }
 
   loginFedRamp(username, password) {

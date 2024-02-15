@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { matchPath, Redirect } from 'react-router-dom';
+import { matchPath } from 'react-router-dom';
+import { Navigate } from 'react-router-dom-v5-compat';
 import { Spinner } from '@redhat-cloud-services/frontend-components/Spinner';
 import { Bullseye } from '@patternfly/react-core';
 import { validate as isUuid } from 'uuid';
@@ -15,95 +16,87 @@ export const composeRuleId = (pluginName, errorKey) =>
     )}`,
   );
 
-class InsightsAdvisorRedirector extends React.Component {
-  componentDidMount() {
-    const { match, clusterDetails, fetchClusterDetails } = this.props;
-    if (!clusterDetails.fulfilled && match.params.id && !isUuid(match.params.id)) {
-      fetchClusterDetails(match.params.id);
+const InsightsAdvisorRedirector = (props) => {
+  const { params, clusterDetails, fetchClusterDetails, location, setGlobalError } = props;
+  React.useEffect(() => {
+    if (!clusterDetails.fulfilled && params.id && !isUuid(params.id)) {
+      fetchClusterDetails(params.id);
+    }
+  }, [clusterDetails, fetchClusterDetails, params]);
+
+  const externalId =
+    params?.id && isUuid(params.id) ? params.id : clusterDetails?.cluster?.external_id;
+  const path = location.pathname;
+
+  if (externalId) {
+    if (
+      matchPath(path, {
+        path: '/details/:clusterId',
+        exact: true,
+      }) ||
+      matchPath(path, {
+        path: '/details/s/:id',
+        exact: true,
+      })
+    ) {
+      return <ExternalRedirect url={`${advisorBaseName()}/clusters/${externalId}`} />;
+    }
+    if (
+      matchPath(path, {
+        path: '/details/:id/insights/:reportId/:errorKey',
+        exact: true,
+      }) ||
+      matchPath(path, {
+        path: '/details/s/:id/insights/:reportId/:errorKey',
+        exact: true,
+        strict: true,
+      })
+    ) {
+      const { reportId, errorKey } = params;
+      const ruleId = composeRuleId(reportId, errorKey);
+      return (
+        <ExternalRedirect url={`${advisorBaseName()}/clusters/${externalId}?first=${ruleId}`} />
+      );
     }
   }
 
-  render() {
-    const { clusterDetails, match, location, setGlobalError } = this.props;
-    const externalId =
-      match.params?.id && isUuid(match.params.id)
-        ? match.params.id
-        : clusterDetails?.cluster?.external_id;
-    const path = location.pathname;
-
-    if (externalId) {
-      if (
-        matchPath(path, {
-          path: '/details/:clusterId',
-          exact: true,
-        }) ||
-        matchPath(path, {
-          path: '/details/s/:id',
-          exact: true,
-        })
-      ) {
-        return <ExternalRedirect url={`${advisorBaseName()}/clusters/${externalId}`} />;
-      }
-      if (
-        matchPath(path, {
-          path: '/details/:id/insights/:reportId/:errorKey',
-          exact: true,
-        }) ||
-        matchPath(path, {
-          path: '/details/s/:id/insights/:reportId/:errorKey',
-          exact: true,
-          strict: true,
-        })
-      ) {
-        const { reportId, errorKey } = match.params;
-        const ruleId = composeRuleId(reportId, errorKey);
-        return (
-          <ExternalRedirect url={`${advisorBaseName()}/clusters/${externalId}?first=${ruleId}`} />
-        );
-      }
-    }
-
-    if (clusterDetails.error) {
-      // Cluster not found or no permission to see it - redirect to cluster list with error on top
-      setGlobalError(
-        <>
-          Cluster with the subscription ID <b>{match.params?.id}</b> was not found, it might have
-          been deleted or you don&apos;t have permission to see it.
-        </>,
-        'clusterDetails',
-        clusterDetails?.errorMessage,
-      );
-      return <Redirect to="/" />;
-    }
-
-    if (clusterDetails.fulfilled && !externalId) {
-      // Could not find external id for the given cluster
-      setGlobalError(
-        <>
-          There is no external ID for the cluster with the <b>{match.params?.id}</b> subscription
-          ID.
-        </>,
-        'clusterDetails',
-        clusterDetails?.errorMessage,
-      );
-      return <Redirect to="/" />;
-    }
-
-    return (
-      <Bullseye>
-        <Spinner size="lg" centered />
-      </Bullseye>
+  if (clusterDetails.error) {
+    // Cluster not found or no permission to see it - redirect to cluster list with error on top
+    setGlobalError(
+      <>
+        Cluster with the subscription ID <b>{params?.id}</b> was not found, it might have been
+        deleted or you don&apos;t have permission to see it.
+      </>,
+      'clusterDetails',
+      clusterDetails?.errorMessage,
     );
+    return <Navigate to="/" />;
   }
-}
+
+  if (clusterDetails.fulfilled && !externalId) {
+    // Could not find external id for the given cluster
+    setGlobalError(
+      <>
+        There is no external ID for the cluster with the <b>{params?.id}</b> subscription ID.
+      </>,
+      'clusterDetails',
+      clusterDetails?.errorMessage,
+    );
+    return <Navigate to="/" />;
+  }
+
+  return (
+    <Bullseye>
+      <Spinner size="lg" centered />
+    </Bullseye>
+  );
+};
 
 InsightsAdvisorRedirector.propTypes = {
-  match: PropTypes.shape({
-    params: PropTypes.shape({
-      id: PropTypes.string,
-      reportId: PropTypes.string,
-      errorKey: PropTypes.string,
-    }).isRequired,
+  params: PropTypes.shape({
+    id: PropTypes.string,
+    reportId: PropTypes.string,
+    errorKey: PropTypes.string,
   }).isRequired,
   location: PropTypes.shape({
     pathname: PropTypes.string.isRequired,
