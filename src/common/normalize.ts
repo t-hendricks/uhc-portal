@@ -49,6 +49,7 @@ const normalizeProductID = (id: string | undefined): string => {
     RHOSAKTRIAL: normalizedProducts.RHOSAKTrial,
     RHOSE: normalizedProducts.RHOSE,
     RHOSETRIAL: normalizedProducts.RHOSETrial,
+    RHOIC: normalizedProducts.RHOIC,
     ANY: normalizedProducts.ANY, // used by account-manager in quota_cost
   };
 

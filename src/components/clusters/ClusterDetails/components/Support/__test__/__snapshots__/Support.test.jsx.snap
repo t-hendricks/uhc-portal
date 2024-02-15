@@ -70,16 +70,8 @@ exports[`<Support /> should render with notification contacts 1`] = `
       className="ocm-c-support-support-cases__card--body"
     >
       <Connect(SupportCasesCard)
-        getSupportCases={[MockFunction]}
         isDisabled={false}
         subscriptionID="1iGW3xYbKZAEdZLi207rcA1l0ob"
-        supportCases={
-          {
-            "cases": [],
-            "pending": false,
-            "subscriptionID": "1iGW3xYbKZAEdZLi207rcA1l0ob",
-          }
-        }
       />
     </CardBody>
   </Card>
@@ -141,16 +133,8 @@ exports[`<Support /> should render without notification contacts 1`] = `
       className="ocm-c-support-support-cases__card--body"
     >
       <Connect(SupportCasesCard)
-        getSupportCases={[MockFunction]}
         isDisabled={false}
         subscriptionID="1iGW3xYbKZAEdZLi207rcA1l0ob"
-        supportCases={
-          {
-            "cases": [],
-            "pending": false,
-            "subscriptionID": "1iGW3xYbKZAEdZLi207rcA1l0ob",
-          }
-        }
       />
     </CardBody>
   </Card>

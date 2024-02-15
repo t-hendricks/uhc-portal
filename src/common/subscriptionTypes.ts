@@ -23,6 +23,7 @@ const subscriptionSupportLevels = {
   STANDARD: 'Standard',
   PREMIUM: 'Premium',
   SELF_SUPPORT: 'Self-Support',
+  SUPPORT_BY_IBM: 'Supported by IBM',
   NONE: 'None',
 };
 
@@ -99,6 +100,7 @@ const knownProducts = {
   RHOSAKTrial: 'RHOSAKTrial',
   RHOSE: 'RHOSE',
   RHOSETrial: 'RHOSETrial',
+  RHOIC: 'RHOIC',
 };
 
 const omittedProducts = [
@@ -153,6 +155,7 @@ const productFilterOptions = [
     plansToQuery: ['MOA', 'ROSA', 'MOA-HostedControlPlane'],
   },
   { key: normalizedProducts.ARO, label: 'ARO', plansToQuery: ['ARO'] },
+  { key: normalizedProducts.RHOIC, label: 'RHOIC', plansToQuery: ['RHOIC'] },
 ];
 
 /**

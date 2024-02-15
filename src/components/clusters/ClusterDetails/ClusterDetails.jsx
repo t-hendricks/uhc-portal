@@ -254,23 +254,13 @@ class ClusterDetails extends Component {
   }
 
   fetchSupportData() {
-    const {
-      clusterDetails,
-      getNotificationContacts,
-      getSupportCases,
-      supportCases,
-      notificationContacts,
-    } = this.props;
+    const { clusterDetails, getNotificationContacts, notificationContacts } = this.props;
 
     const subscriptionID = clusterDetails.cluster?.subscription?.id;
 
     if (isValid(subscriptionID)) {
       if (!notificationContacts.pending) {
         getNotificationContacts(subscriptionID);
-      }
-
-      if (!supportCases.pending) {
-        getSupportCases(subscriptionID);
       }
     }
   }
@@ -365,6 +355,8 @@ class ClusterDetails extends Component {
       get(cluster, 'subscription.status', false) === subscriptionStatuses.DEPROVISIONED;
     const isAROCluster = get(cluster, 'subscription.plan.type', '') === knownProducts.ARO;
     const isOSDTrial = get(cluster, 'subscription.plan.type', '') === knownProducts.OSDTrial;
+    const isRHOIC = get(cluster, 'subscription.plan.type', '') === knownProducts.RHOIC;
+
     const isManaged = cluster.managed;
     const isHypershift = isHypershiftCluster(cluster);
     const isClusterWaiting = cluster.state === clusterStates.WAITING;
@@ -391,6 +383,7 @@ class ClusterDetails extends Component {
       !isArchived &&
       !cluster.managed &&
       !isAROCluster &&
+      !isRHOIC &&
       !isUninstalledAICluster(cluster) &&
       !isRestrictedEnv();
     const displayAccessControlTab = !isArchived;
@@ -695,9 +688,7 @@ ClusterDetails.propTypes = {
   initTabOpen: PropTypes.string.isRequired,
   notificationContacts: PropTypes.object.isRequired,
   getNotificationContacts: PropTypes.func.isRequired,
-  getSupportCases: PropTypes.func.isRequired,
   hasNetworkOndemand: PropTypes.bool.isRequired,
-  supportCases: PropTypes.object.isRequired,
   assistedInstallerEnabled: PropTypes.bool,
   getSchedules: PropTypes.func,
   getUserAccess: PropTypes.func.isRequired,
