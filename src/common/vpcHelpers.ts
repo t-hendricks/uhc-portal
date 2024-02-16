@@ -72,10 +72,33 @@ const vpcHasPrivateSubnets = (vpc: CloudVPC) =>
 const filterOutRedHatManagedVPCs = (vpcs: CloudVPC[]) =>
   vpcs.filter((vpcItem) => !vpcItem.red_hat_managed);
 
+/**
+ * Returns all the individual field names for "machinePoolsSubnets"
+ * @param isMultiAz is cluster multi zone
+ */
+const getAllSubnetFieldNames = (isMultiAz: boolean): string[] => {
+  const mpSubnetFields = ['machinePoolsSubnets[0]'];
+
+  if (isMultiAz) {
+    mpSubnetFields.push('machinePoolsSubnets[1]');
+    mpSubnetFields.push('machinePoolsSubnets[2]');
+  }
+
+  const allFieldNames: string[] = [];
+  return mpSubnetFields.reduce((acc, field) => {
+    const allFields = [...acc];
+    allFields.push(`${field}.availabilityZone`);
+    allFields.push(`${field}.privateSubnetId`);
+    allFields.push(`${field}.publicSubnetId`);
+    return allFields;
+  }, allFieldNames);
+};
+
 export {
   vpcHasPrivateSubnets,
   filterOutRedHatManagedVPCs,
   getMatchingAvailabilityZones,
   getSelectedAvailabilityZones,
   isSubnetMatchingPrivacy,
+  getAllSubnetFieldNames,
 };
