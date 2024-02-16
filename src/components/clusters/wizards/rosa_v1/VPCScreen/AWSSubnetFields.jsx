@@ -47,6 +47,7 @@ const SingleSubnetFieldsRow = ({
             name={`machinePoolsSubnets[${index}].availabilityZone`}
             label={showLabels ? 'Availability zone' : null}
             enabledAvailabilityZones={enabledAvailabilityZones}
+            vpcId={selectedVPC?.id}
             validate={azValidations}
             isDisabled={!!disabledAzReason}
             region={selectedRegion}
