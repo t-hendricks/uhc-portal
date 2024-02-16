@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Form, Grid, GridItem, Title } from '@patternfly/react-core';
+import { getAllSubnetFieldNames } from '~/common/vpcHelpers';
 
 import InstallToVPC from './InstallToVPC';
 
@@ -28,7 +29,8 @@ function VPCScreen({
       change('machinePoolsSubnets', subnetReset);
 
       // Prevent the validation errors from showing - fields have been reset
-      untouch('machinePoolsSubnets');
+      const untouchFields = getAllSubnetFieldNames(isMultiAz);
+      untouch(...untouchFields); // Fails sometimes if we only touch the main "machinePoolsSubnets"
     }
   }, [change, untouch, isMultiAz, selectedVPC]);
 
