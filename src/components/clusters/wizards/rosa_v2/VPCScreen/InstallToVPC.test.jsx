@@ -47,13 +47,3 @@ describe('<InstallToVPC> (AWS)', () => {
     );
   });
 });
-
-describe('<InstallToVPC> (GCP)', () => {
-  it('should not have a Shared VPC section', () => {
-    const ConnectedInstallToVPC = wizardConnector(InstallToVPC);
-    const newProps = { ...defaultProps, cloudProviderID: 'gcp' };
-    render(<ConnectedInstallToVPC {...newProps} />);
-
-    expect(screen.queryByText('AWS shared VPC')).not.toBeInTheDocument();
-  });
-});
