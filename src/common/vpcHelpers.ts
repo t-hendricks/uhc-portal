@@ -60,8 +60,23 @@ const getSelectedAvailabilityZones = (
   return azs;
 };
 
-const vpcHasPrivateSubnets = (vpc: CloudVPC) =>
-  (vpc.aws_subnets || []).some((subnet) => isSubnetMatchingPrivacy(subnet, 'private'));
+/**
+ * Determines if the VPC has all the required subnets
+ * @param vpc Cloud VPC
+ * @param usePrivateLink if the cluster has private visibility
+ */
+const vpcHasRequiredSubnets = (vpc: CloudVPC, usePrivateLink?: boolean) => {
+  const subnets = vpc.aws_subnets || [];
+  const hasPrivateSubnets = subnets.some((subnet) => isSubnetMatchingPrivacy(subnet, 'private'));
+  if (!hasPrivateSubnets) {
+    return false;
+  }
+  // Only apply the filter for public subnets if explicitly passing "usePrivateLink=false"
+  if (usePrivateLink === false) {
+    return subnets.some((subnet) => isSubnetMatchingPrivacy(subnet, 'public'));
+  }
+  return true;
+};
 
 /**
  * Returns only the VPCs that are not managed by Red Hat
@@ -95,7 +110,7 @@ const getAllSubnetFieldNames = (isMultiAz: boolean): string[] => {
 };
 
 export {
-  vpcHasPrivateSubnets,
+  vpcHasRequiredSubnets,
   filterOutRedHatManagedVPCs,
   getMatchingAvailabilityZones,
   getSelectedAvailabilityZones,
