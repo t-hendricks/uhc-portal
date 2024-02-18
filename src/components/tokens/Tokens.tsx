@@ -109,7 +109,7 @@ const Tokens = (props: Props) => {
     // after that we want the token to show, but we just loaded.
     if (!blockedByTerms && show && !offlineToken) {
       // eslint-disable-next-line no-console
-      console.log('Tokens: componentDidMount, props =', props);
+      // console.log('Tokens: componentDidMount, props =', props);
       loadOfflineToken((tokenOrError, errorReason) => {
         setOfflineToken(errorReason || tokenOrError);
       }, window.location.origin);
