@@ -2,12 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Title, GridItem, Alert } from '@patternfly/react-core';
 
-import SecurityGroupsSection from '~/components/clusters/wizards/rosa_v2/VPCScreen/SecurityGroupsSection';
+import SecurityGroupsSection from '~/components/clusters/wizards/rosa_v1/VPCScreen/SecurityGroupsSection';
 import links from '~/common/installLinks.mjs';
 import PopoverHint from '~/components/common/PopoverHint';
 import ExternalLink from '~/components/common/ExternalLink';
 import AWSSubnetFields from './AWSSubnetFields';
-import GCPNetworkConfigSection from '../../common/NetworkingSection/GCPNetworkConfigSection';
 import SharedVPCSection from '../../common/NetworkingSection/SharedVPCSection';
 
 function InstallToVPC({
@@ -70,32 +69,6 @@ function InstallToVPC({
             isSelected={isSharedVpcSelected}
             openshiftVersion={openshiftVersion}
           />
-        </>
-      )}
-      {cloudProviderID === 'gcp' && (
-        <>
-          <GridItem>
-            <Title headingLevel="h4" size="md">
-              Existing VPC
-              <PopoverHint
-                iconClassName="pf-v5-u-ml-sm"
-                hint={
-                  <>
-                    {
-                      'Your VPC must have control plane and compute subnets. The control plane subnet is where you deploy your control plane machines to. The compute subnet is where you deploy your compute machines to. '
-                    }{' '}
-                    <ExternalLink href={links.INSTALL_GCP_VPC}>
-                      Learn more about installing into an existing VPC
-                    </ExternalLink>
-                  </>
-                }
-              />
-            </Title>
-            To install into an existing VPC, you need to ensure that your VPC is configured with a
-            control plane subnet and compute subnet.
-          </GridItem>
-
-          <GCPNetworkConfigSection />
         </>
       )}
     </>
