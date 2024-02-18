@@ -11,7 +11,11 @@ import AwsSingleSubnetField from './AwsSingleSubnetField';
 const AwsSubnetFields = () => {
   const { values, dirty, getFieldProps, getFieldMeta, setFieldValue } = useFormState();
 
-  const { [FieldId.MultiAz]: multiAz, [FieldId.SelectedVpc]: selectedVPC } = values;
+  const {
+    [FieldId.MultiAz]: multiAz,
+    [FieldId.SelectedVpc]: selectedVPC,
+    [FieldId.UsePrivateLink]: usePrivateLink,
+  } = values;
 
   const isMultiAz = multiAz === 'true';
   const vpcMeta = getFieldMeta(FieldId.SelectedVpc);
@@ -33,6 +37,7 @@ const AwsSubnetFields = () => {
             selectedVPC={selectedVPC}
             showRefresh
             isHypershift={false}
+            usePrivateLink={usePrivateLink}
           />
         </GridItem>
         <GridItem md={6} />

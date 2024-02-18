@@ -25,7 +25,7 @@ export const vpcList = [
     aws_subnets: [
       {
         subnet_id: 'subnet-0fcc28e72f90f0ac4',
-        name: 'caa-e2e-test-subnet',
+        name: 'caa-e2e-test-private-subnet',
         red_hat_managed: false,
         public: false,
         availability_zone: 'us-east-1d',
@@ -33,9 +33,17 @@ export const vpcList = [
       },
       {
         subnet_id: 'subnet-04f5c843f1753f29d',
-        name: 'caa-e2e-test-subnet-2',
+        name: 'caa-e2e-test-private-subnet-2',
         red_hat_managed: false,
         public: false,
+        availability_zone: 'us-east-1a',
+        cidr_block: '10.0.0.128/25',
+      },
+      {
+        subnet_id: 'subnet-071863ea8dfeb4786',
+        name: 'caa-e2e-test-public-subnet-2',
+        red_hat_managed: false,
+        public: true,
         availability_zone: 'us-east-1a',
         cidr_block: '10.0.0.128/25',
       },

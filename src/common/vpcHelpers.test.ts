@@ -5,7 +5,7 @@ import {
   SubnetPrivacy,
   filterOutRedHatManagedVPCs,
   isSubnetMatchingPrivacy,
-  vpcHasPrivateSubnets,
+  vpcHasRequiredSubnets,
   getMatchingAvailabilityZones,
   getSelectedAvailabilityZones,
 } from './vpcHelpers';
@@ -24,20 +24,50 @@ describe('filterOutRedHatManagedVPCs', () => {
   });
 });
 
-describe('vpcHasPrivateSubnets', () => {
-  it('returns true for a VPC that has at least 1 private subnet', () => {
-    const vpcWithPrivateSubnets = vpcList.find(
-      (vpc) => vpc.name === 'caa-e2e-test-vpc',
-    ) as CloudVPC;
-    expect(vpcHasPrivateSubnets(vpcWithPrivateSubnets)).toEqual(true);
-  });
+describe('vpcHasRequiredSubnets', () => {
+  const privateSubnetId1 = 'subnet-0fcc28e72f90f0ac4';
+  const privateSubnetId2 = 'subnet-04f5c843f1753f29d';
+  const publicSubnetId = 'subnet-071863ea8dfeb4786';
 
-  it('returns false for a VPC that has no private subnets', () => {
-    const vpcWithNoPrivateSubnets = vpcList.find(
-      (vpc) => vpc.name === 'jaosorior-8vns4-vpc',
-    ) as CloudVPC;
-    expect(vpcHasPrivateSubnets(vpcWithNoPrivateSubnets)).toEqual(false);
-  });
+  const getVpcWithSelectedSubnets = (subnetIds: string[]) => {
+    const testVpc = vpcList.find((vpc) => vpc.name === 'caa-e2e-test-vpc') as CloudVPC;
+
+    return {
+      ...testVpc,
+      aws_subnets: (testVpc.aws_subnets || []).filter((subnet) =>
+        subnetIds.includes(subnet.subnet_id || ''),
+      ),
+    };
+  };
+
+  it.each([
+    // usePrivateLink=true
+    [true, true, 'at least 1 private subnet', [privateSubnetId1]],
+    [false, true, 'no private subnets', [publicSubnetId]],
+    // usePrivateLink=false
+    [
+      true,
+      false,
+      'at least 1 private subnet and 1 public subnet',
+      [publicSubnetId, privateSubnetId1],
+    ],
+    [false, false, 'only private subnets', [privateSubnetId2, privateSubnetId1]],
+    [false, false, 'only public subnets', [publicSubnetId]],
+    // usePrivateLink=undefined (for HCP, we need to show the VPCs, but we don't know yet if they will use public subnets too)
+    [true, undefined, 'at least 1 private subnet', [privateSubnetId1]],
+    [false, undefined, 'no private subnets', [publicSubnetId]],
+  ])(
+    'returns %p for a VPC that has %s and privateLink=%p',
+    (
+      result: boolean,
+      usePrivateLink: boolean | undefined,
+      _vpcType: string,
+      subnetIds: string[],
+    ) => {
+      const testVpc = getVpcWithSelectedSubnets(subnetIds);
+      expect(vpcHasRequiredSubnets(testVpc, usePrivateLink)).toEqual(result);
+    },
+  );
 });
 
 describe('isSubnetMatchingPrivacy', () => {
