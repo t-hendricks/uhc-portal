@@ -21,57 +21,54 @@ function InstallToVPC({
   hostedZoneDomainName,
 }) {
   return (
-    <>
-      {cloudProviderID === 'aws' && (
-        <>
-          <GridItem>
-            <Title headingLevel="h4" size="md">
-              Install into an existing VPC
-              <PopoverHint
-                iconClassName="pf-v5-u-ml-sm"
-                hint={
-                  <>
-                    Your VPC must have public and private subnets. Public subnets are associated
-                    with appropriate Ingress rules. Private subnets need appropriate routes and
-                    tables.{' '}
-                    <ExternalLink href={links.INSTALL_AWS_VPC}>
-                      Learn more about installing into an existing VPC
-                    </ExternalLink>
-                  </>
-                }
-              />
-            </Title>
-            {`To install into an existing VPC, you need to ensure that your VPC is configured with ${
-              !privateLinkSelected ? 'a public and' : ''
-            }
+    cloudProviderID === 'aws' && (
+      <>
+        <GridItem>
+          <Title headingLevel="h4" size="md">
+            Install into an existing VPC
+            <PopoverHint
+              iconClassName="pf-v5-u-ml-sm"
+              hint={
+                <>
+                  Your VPC must have public and private subnets. Public subnets are associated with
+                  appropriate Ingress rules. Private subnets need appropriate routes and tables.{' '}
+                  <ExternalLink href={links.INSTALL_AWS_VPC}>
+                    Learn more about installing into an existing VPC
+                  </ExternalLink>
+                </>
+              }
+            />
+          </Title>
+          {`To install into an existing VPC, you need to ensure that your VPC is configured with ${
+            !privateLinkSelected ? 'a public and' : ''
+          }
             a private subnet for each availability zone that you want the cluster
             installed into`}
-            .
-            <ExternalLink href={links.INSTALL_AWS_CUSTOM_VPC_REQUIREMENTS}>
-              Learn more about VPC
-            </ExternalLink>
-          </GridItem>
-          <Alert
-            variant="info"
-            isInline
-            title="You'll need to match these VPC subnets when you define the CIDR ranges."
-          />
-          <AWSSubnetFields
-            isMultiAz={isMultiAz}
-            selectedVPC={selectedVPC}
-            selectedRegion={selectedRegion}
-            selectedAZs={selectedAZs}
-            privateLinkSelected={privateLinkSelected}
-          />
-          <SecurityGroupsSection selectedVPC={selectedVPC} openshiftVersion={openshiftVersion} />
-          <SharedVPCSection
-            hostedZoneDomainName={hostedZoneDomainName}
-            isSelected={isSharedVpcSelected}
-            openshiftVersion={openshiftVersion}
-          />
-        </>
-      )}
-    </>
+          .
+          <ExternalLink href={links.INSTALL_AWS_CUSTOM_VPC_REQUIREMENTS}>
+            Learn more about VPC
+          </ExternalLink>
+        </GridItem>
+        <Alert
+          variant="info"
+          isInline
+          title="You'll need to match these VPC subnets when you define the CIDR ranges."
+        />
+        <AWSSubnetFields
+          isMultiAz={isMultiAz}
+          selectedVPC={selectedVPC}
+          selectedRegion={selectedRegion}
+          selectedAZs={selectedAZs}
+          privateLinkSelected={privateLinkSelected}
+        />
+        <SecurityGroupsSection selectedVPC={selectedVPC} openshiftVersion={openshiftVersion} />
+        <SharedVPCSection
+          hostedZoneDomainName={hostedZoneDomainName}
+          isSelected={isSharedVpcSelected}
+          openshiftVersion={openshiftVersion}
+        />
+      </>
+    )
   );
 }
 
