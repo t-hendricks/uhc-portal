@@ -19,7 +19,7 @@ import {
   Title,
   Icon,
 } from '@patternfly/react-core';
-import { Link } from 'react-router-dom';
+import { Link } from 'react-router-dom-v5-compat';
 
 import { CheckIcon } from '@patternfly/react-icons/dist/esm/icons/check-icon';
 import { HelpIcon } from '@patternfly/react-icons/dist/esm/icons/help-icon';

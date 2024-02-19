@@ -1,4 +1,5 @@
 import React from 'react';
+import { CompatRouter } from 'react-router-dom-v5-compat';
 import { screen, checkAccessibility, TestRouter, withState } from '~/testUtils';
 
 import { InstallMultiAzureIPI } from '../InstallMultiAzureIPI';
@@ -25,7 +26,9 @@ describe('InstallMultiAzureIPI', () => {
   it('is accessible', async () => {
     const { container } = withState(githubReleases).render(
       <TestRouter>
-        <InstallMultiAzureIPI token={{}} dispatch={dispatch} />
+        <CompatRouter>
+          <InstallMultiAzureIPI token={{}} dispatch={dispatch} />
+        </CompatRouter>
       </TestRouter>,
     );
 

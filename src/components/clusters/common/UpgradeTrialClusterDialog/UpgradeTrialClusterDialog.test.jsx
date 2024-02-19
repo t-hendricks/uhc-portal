@@ -1,6 +1,6 @@
 import React from 'react';
 import { MemoryRouter } from 'react-router';
-
+import { CompatRouter } from 'react-router-dom-v5-compat';
 import fixtures from '../../ClusterDetails/__test__/ClusterDetails.fixtures';
 import { emptyQuotaList, mockQuotaList } from '../__test__/quota.fixtures';
 import UpgradeTrialClusterDialog from './UpgradeTrialClusterDialog';
@@ -39,20 +39,22 @@ describe('<UpgradeTrialClusterDialog />', () => {
   it('renders no-quota alert when there is no quota', () => {
     render(
       <MemoryRouter>
-        <UpgradeTrialClusterDialog
-          isOpen
-          closeModal={closeModal}
-          onClose={onClose}
-          submit={submit}
-          resetResponse={resetResponse}
-          organization={organizationState}
-          getOrganizationAndQuota={getOrganizationAndQuota}
-          clusterID="some-cluster-id"
-          cluster={cluster}
-          machineTypesByID={machineTypesByID}
-          upgradeTrialClusterResponse={{ errorMessage: '', error: false, fulfilled: false }}
-          machinePools={machinePools}
-        />
+        <CompatRouter>
+          <UpgradeTrialClusterDialog
+            isOpen
+            closeModal={closeModal}
+            onClose={onClose}
+            submit={submit}
+            resetResponse={resetResponse}
+            organization={organizationState}
+            getOrganizationAndQuota={getOrganizationAndQuota}
+            clusterID="some-cluster-id"
+            cluster={cluster}
+            machineTypesByID={machineTypesByID}
+            upgradeTrialClusterResponse={{ errorMessage: '', error: false, fulfilled: false }}
+            machinePools={machinePools}
+          />
+        </CompatRouter>
       </MemoryRouter>,
     );
     expect(screen.getByTestId('no-quota-alert')).toBeInTheDocument();
@@ -67,25 +69,27 @@ describe('<UpgradeTrialClusterDialog />', () => {
     };
     render(
       <MemoryRouter>
-        <UpgradeTrialClusterDialog
-          isOpen
-          closeModal={closeModal}
-          onClose={onClose}
-          submit={submit}
-          resetResponse={resetResponse}
-          organization={orgState}
-          getOrganizationAndQuota={getOrganizationAndQuota}
-          clusterID="some-cluster-id"
-          cluster={cluster}
-          machineTypesByID={machineTypesByID}
-          upgradeTrialClusterResponse={{ errorMessage: '', error: false, fulfilled: false }}
-          machinePools={[
-            {
-              instance_type: 'm5.xlarge',
-              replicas: 140,
-            },
-          ]}
-        />
+        <CompatRouter>
+          <UpgradeTrialClusterDialog
+            isOpen
+            closeModal={closeModal}
+            onClose={onClose}
+            submit={submit}
+            resetResponse={resetResponse}
+            organization={orgState}
+            getOrganizationAndQuota={getOrganizationAndQuota}
+            clusterID="some-cluster-id"
+            cluster={cluster}
+            machineTypesByID={machineTypesByID}
+            upgradeTrialClusterResponse={{ errorMessage: '', error: false, fulfilled: false }}
+            machinePools={[
+              {
+                instance_type: 'm5.xlarge',
+                replicas: 140,
+              },
+            ]}
+          />
+        </CompatRouter>
       </MemoryRouter>,
     );
 
@@ -102,25 +106,27 @@ describe('<UpgradeTrialClusterDialog />', () => {
     };
     render(
       <MemoryRouter>
-        <UpgradeTrialClusterDialog
-          isOpen
-          closeModal={closeModal}
-          onClose={onClose}
-          submit={submit}
-          resetResponse={resetResponse}
-          organization={orgState}
-          getOrganizationAndQuota={getOrganizationAndQuota}
-          clusterID="some-cluster-id"
-          cluster={cluster}
-          machineTypesByID={machineTypesByID}
-          upgradeTrialClusterResponse={{ errorMessage: '', error: false, fulfilled: false }}
-          machinePools={[
-            {
-              instance_type: 'm5.xlarge',
-              replicas: 130,
-            },
-          ]}
-        />
+        <CompatRouter>
+          <UpgradeTrialClusterDialog
+            isOpen
+            closeModal={closeModal}
+            onClose={onClose}
+            submit={submit}
+            resetResponse={resetResponse}
+            organization={orgState}
+            getOrganizationAndQuota={getOrganizationAndQuota}
+            clusterID="some-cluster-id"
+            cluster={cluster}
+            machineTypesByID={machineTypesByID}
+            upgradeTrialClusterResponse={{ errorMessage: '', error: false, fulfilled: false }}
+            machinePools={[
+              {
+                instance_type: 'm5.xlarge',
+                replicas: 130,
+              },
+            ]}
+          />
+        </CompatRouter>
       </MemoryRouter>,
     );
     expect(screen.queryByTestId('no-quota-alert')).not.toBeInTheDocument();
@@ -131,20 +137,22 @@ describe('<UpgradeTrialClusterDialog />', () => {
   it('renders error box when an erorr occurs', () => {
     render(
       <MemoryRouter>
-        <UpgradeTrialClusterDialog
-          isOpen
-          closeModal={closeModal}
-          onClose={onClose}
-          submit={submit}
-          resetResponse={resetResponse}
-          organization={organizationState}
-          getOrganizationAndQuota={getOrganizationAndQuota}
-          clusterID="some-cluster-id"
-          cluster={cluster}
-          machineTypesByID={machineTypesByID}
-          upgradeTrialClusterResponse={{ error: true, errorMessage: 'this is an error' }}
-          machinePools={machinePools}
-        />
+        <CompatRouter>
+          <UpgradeTrialClusterDialog
+            isOpen
+            closeModal={closeModal}
+            onClose={onClose}
+            submit={submit}
+            resetResponse={resetResponse}
+            organization={organizationState}
+            getOrganizationAndQuota={getOrganizationAndQuota}
+            clusterID="some-cluster-id"
+            cluster={cluster}
+            machineTypesByID={machineTypesByID}
+            upgradeTrialClusterResponse={{ error: true, errorMessage: 'this is an error' }}
+            machinePools={machinePools}
+          />
+        </CompatRouter>
       </MemoryRouter>,
     );
 

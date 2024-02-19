@@ -1,4 +1,5 @@
 import React from 'react';
+import { CompatRouter } from 'react-router-dom-v5-compat';
 import { screen, checkAccessibility, TestRouter, withState } from '~/testUtils';
 
 import { InstallBareMetalIPI } from '../InstallBareMetalIPI';
@@ -26,7 +27,9 @@ describe('InstallBareMetalIPI', () => {
     // While this tests passes, it throws a warning: <p> cannot appear as a descendant of <p>
     const { container } = withState(githubReleases).render(
       <TestRouter>
-        <InstallBareMetalIPI token={{}} dispatch={dispatch} />
+        <CompatRouter>
+          <InstallBareMetalIPI token={{}} dispatch={dispatch} />
+        </CompatRouter>
       </TestRouter>,
     );
 

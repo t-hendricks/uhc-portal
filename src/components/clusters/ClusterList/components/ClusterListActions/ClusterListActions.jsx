@@ -22,7 +22,7 @@ import {
   DropdownPosition as DropdownPositionDeprecated,
   KebabToggle as KebabToggleDeprecated,
 } from '@patternfly/react-core/deprecated';
-import { Link } from 'react-router-dom';
+import { Link } from 'react-router-dom-v5-compat';
 import PropTypes from 'prop-types';
 import { isRestrictedEnv } from '~/restrictedEnv';
 

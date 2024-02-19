@@ -1,4 +1,5 @@
 import React from 'react';
+import { CompatRouter } from 'react-router-dom-v5-compat';
 import { screen, checkAccessibility, TestRouter, withState } from '~/testUtils';
 
 import { InstallVSphereIPI } from '../InstallVSphereIPI';
@@ -25,7 +26,9 @@ describe('<InstallVSphereIPI />', () => {
   it('is accessible', async () => {
     const { container } = withState(githubReleases).render(
       <TestRouter>
-        <InstallVSphereIPI token={{}} dispatch={dispatch} />
+        <CompatRouter>
+          <InstallVSphereIPI token={{}} dispatch={dispatch} />
+        </CompatRouter>
       </TestRouter>,
     );
 

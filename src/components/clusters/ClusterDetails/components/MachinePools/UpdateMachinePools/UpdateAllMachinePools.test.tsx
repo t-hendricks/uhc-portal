@@ -1,10 +1,18 @@
 import React from 'react';
 import * as reactRedux from 'react-redux';
 import { MemoryRouter } from 'react-router-dom';
+import { CompatRouter } from 'react-router-dom-v5-compat';
 import type axios from 'axios';
 import semver from 'semver';
 import apiRequest from '~/services/apiRequest';
-import { withState, screen, checkAccessibility, within, insightsMock } from '~/testUtils';
+import {
+  withState,
+  screen,
+  checkAccessibility,
+  within,
+  insightsMock,
+  TestRouter,
+} from '~/testUtils';
 
 import { NodePoolUpgradePolicy } from '~/types/clusters_mgmt.v1';
 import { UpdateAllMachinePools } from './index';
@@ -103,7 +111,13 @@ describe('<UpdateAllMachinePools />', () => {
         },
       };
 
-      const { container } = withState(newState).render(<UpdateAllMachinePools />);
+      const { container } = withState(newState).render(
+        <TestRouter>
+          <CompatRouter>
+            <UpdateAllMachinePools />
+          </CompatRouter>
+        </TestRouter>,
+      );
 
       expectUpdateButtonAbsence(container);
     });
@@ -120,7 +134,13 @@ describe('<UpdateAllMachinePools />', () => {
         clusters: { details: { cluster: { ...defaultCluster, hypershift: { enabled: false } } } },
       };
 
-      const { container } = withState(newState).render(<UpdateAllMachinePools />);
+      const { container } = withState(newState).render(
+        <TestRouter>
+          <CompatRouter>
+            <UpdateAllMachinePools />
+          </CompatRouter>
+        </TestRouter>,
+      );
 
       expectUpdateButtonAbsence(container);
     });
@@ -136,7 +156,13 @@ describe('<UpdateAllMachinePools />', () => {
         machinePools: { getMachinePools: machinePools },
       };
 
-      const { container } = withState(newState).render(<UpdateAllMachinePools />);
+      const { container } = withState(newState).render(
+        <TestRouter>
+          <CompatRouter>
+            <UpdateAllMachinePools />
+          </CompatRouter>
+        </TestRouter>,
+      );
 
       expectUpdateButtonAbsence(container);
     });
@@ -152,7 +178,13 @@ describe('<UpdateAllMachinePools />', () => {
         machinePools: { getMachinePools: machinePools },
       };
 
-      const { container } = withState(newState).render(<UpdateAllMachinePools />);
+      const { container } = withState(newState).render(
+        <TestRouter>
+          <CompatRouter>
+            <UpdateAllMachinePools />
+          </CompatRouter>
+        </TestRouter>,
+      );
 
       expectUpdateButtonAbsence(container);
     });
@@ -170,7 +202,13 @@ describe('<UpdateAllMachinePools />', () => {
         clusters: { details: { cluster: { ...defaultCluster, version: { id: undefined } } } },
       };
 
-      const { container } = withState(newState).render(<UpdateAllMachinePools />);
+      const { container } = withState(newState).render(
+        <TestRouter>
+          <CompatRouter>
+            <UpdateAllMachinePools />
+          </CompatRouter>
+        </TestRouter>,
+      );
 
       expectUpdateButtonAbsence(container);
     });
@@ -182,7 +220,13 @@ describe('<UpdateAllMachinePools />', () => {
         machinePools: { getMachinePools: { ...defaultMachinePools, data: [] } },
       };
 
-      const { container } = withState(newState).render(<UpdateAllMachinePools />);
+      const { container } = withState(newState).render(
+        <TestRouter>
+          <CompatRouter>
+            <UpdateAllMachinePools />
+          </CompatRouter>
+        </TestRouter>,
+      );
 
       expectUpdateButtonAbsence(container);
     });
@@ -199,7 +243,13 @@ describe('<UpdateAllMachinePools />', () => {
         },
       };
 
-      const { container } = withState(newState).render(<UpdateAllMachinePools />);
+      const { container } = withState(newState).render(
+        <TestRouter>
+          <CompatRouter>
+            <UpdateAllMachinePools />
+          </CompatRouter>
+        </TestRouter>,
+      );
 
       expectUpdateButtonAbsence(container);
     });
@@ -234,7 +284,13 @@ describe('<UpdateAllMachinePools />', () => {
         newState.machinePools.getMachinePools.data[0].version.available_upgrades,
       ).not.toContain(rawControlPlaneVersion?.version);
 
-      const { container } = withState(newState).render(<UpdateAllMachinePools />);
+      const { container } = withState(newState).render(
+        <TestRouter>
+          <CompatRouter>
+            <UpdateAllMachinePools />
+          </CompatRouter>
+        </TestRouter>,
+      );
 
       expectUpdateButtonAbsence(container);
     });
@@ -270,7 +326,13 @@ describe('<UpdateAllMachinePools />', () => {
         rawControlPlaneVersion?.version,
       );
 
-      const { container } = withState(newState).render(<UpdateAllMachinePools />);
+      const { container } = withState(newState).render(
+        <TestRouter>
+          <CompatRouter>
+            <UpdateAllMachinePools />
+          </CompatRouter>
+        </TestRouter>,
+      );
 
       expectUpdateButtonAbsence(container);
     });
@@ -306,7 +368,13 @@ describe('<UpdateAllMachinePools />', () => {
         rawControlPlaneVersion?.version,
       );
 
-      const { container } = withState(newState).render(<UpdateAllMachinePools />);
+      const { container } = withState(newState).render(
+        <TestRouter>
+          <CompatRouter>
+            <UpdateAllMachinePools />
+          </CompatRouter>
+        </TestRouter>,
+      );
 
       expectUpdateButtonAbsence(container);
     });
@@ -328,7 +396,13 @@ describe('<UpdateAllMachinePools />', () => {
           },
         };
 
-        const { container } = withState(newState).render(<UpdateAllMachinePools />);
+        const { container } = withState(newState).render(
+          <TestRouter>
+            <CompatRouter>
+              <UpdateAllMachinePools />
+            </CompatRouter>
+          </TestRouter>,
+        );
 
         expectUpdateButtonAbsence(container);
       });
@@ -345,7 +419,13 @@ describe('<UpdateAllMachinePools />', () => {
           },
         };
 
-        const { container } = withState(newState).render(<UpdateAllMachinePools />);
+        const { container } = withState(newState).render(
+          <TestRouter>
+            <CompatRouter>
+              <UpdateAllMachinePools />
+            </CompatRouter>
+          </TestRouter>,
+        );
 
         expectUpdateButtonAbsence(container);
       });
@@ -362,7 +442,13 @@ describe('<UpdateAllMachinePools />', () => {
           },
         };
 
-        const { container } = withState(newState).render(<UpdateAllMachinePools />);
+        const { container } = withState(newState).render(
+          <TestRouter>
+            <CompatRouter>
+              <UpdateAllMachinePools />
+            </CompatRouter>
+          </TestRouter>,
+        );
 
         expectUpdateButtonAbsence(container);
       });
@@ -379,7 +465,13 @@ describe('<UpdateAllMachinePools />', () => {
           },
         };
 
-        const { container } = withState(newState).render(<UpdateAllMachinePools />);
+        const { container } = withState(newState).render(
+          <TestRouter>
+            <CompatRouter>
+              <UpdateAllMachinePools />
+            </CompatRouter>
+          </TestRouter>,
+        );
 
         expectUpdateButtonAbsence(container);
       });
@@ -396,7 +488,13 @@ describe('<UpdateAllMachinePools />', () => {
           },
         };
 
-        const { container } = withState(newState).render(<UpdateAllMachinePools />);
+        const { container } = withState(newState).render(
+          <TestRouter>
+            <CompatRouter>
+              <UpdateAllMachinePools />
+            </CompatRouter>
+          </TestRouter>,
+        );
 
         expectUpdateButtonAbsence(container);
       });
@@ -414,7 +512,13 @@ describe('<UpdateAllMachinePools />', () => {
           },
         },
       };
-      const { container } = withState(newState).render(<UpdateAllMachinePools />);
+      const { container } = withState(newState).render(
+        <TestRouter>
+          <CompatRouter>
+            <UpdateAllMachinePools />
+          </CompatRouter>
+        </TestRouter>,
+      );
 
       expectUpdateButtonPresence();
       await checkAccessibility(container);
@@ -433,7 +537,13 @@ describe('<UpdateAllMachinePools />', () => {
         },
       };
 
-      const { user } = withState(newState).render(<UpdateAllMachinePools />);
+      const { user } = withState(newState).render(
+        <TestRouter>
+          <CompatRouter>
+            <UpdateAllMachinePools />
+          </CompatRouter>
+        </TestRouter>,
+      );
       expectUpdateButtonPresence();
 
       // Act
@@ -470,7 +580,13 @@ describe('<UpdateAllMachinePools />', () => {
         features: { HCP_USE_NODE_UPGRADE_POLICIES: true },
       };
 
-      const { user } = withState(newState).render(<UpdateAllMachinePools />);
+      const { user } = withState(newState).render(
+        <TestRouter>
+          <CompatRouter>
+            <UpdateAllMachinePools />
+          </CompatRouter>
+        </TestRouter>,
+      );
       expectUpdateButtonPresence();
 
       // Act
@@ -507,7 +623,13 @@ describe('<UpdateAllMachinePools />', () => {
         features: { HCP_USE_NODE_UPGRADE_POLICIES: true },
       };
 
-      const { user } = withState(newState).render(<UpdateAllMachinePools />);
+      const { user } = withState(newState).render(
+        <TestRouter>
+          <CompatRouter>
+            <UpdateAllMachinePools />
+          </CompatRouter>
+        </TestRouter>,
+      );
       expectUpdateButtonPresence();
 
       // Act
@@ -547,7 +669,13 @@ describe('<UpdateAllMachinePools />', () => {
         },
       };
 
-      const { user } = withState(newState).render(<UpdateAllMachinePools />);
+      const { user } = withState(newState).render(
+        <TestRouter>
+          <CompatRouter>
+            <UpdateAllMachinePools />
+          </CompatRouter>
+        </TestRouter>,
+      );
 
       expect(apiRequestMock.patch).not.toHaveBeenCalled();
       expect(dummyDispatch).toHaveBeenCalledTimes(0);
@@ -595,7 +723,13 @@ describe('<UpdateAllMachinePools />', () => {
         features: { HCP_USE_NODE_UPGRADE_POLICIES: true },
       };
 
-      const { user } = withState(newState).render(<UpdateAllMachinePools />);
+      const { user } = withState(newState).render(
+        <TestRouter>
+          <CompatRouter>
+            <UpdateAllMachinePools />
+          </CompatRouter>
+        </TestRouter>,
+      );
 
       expect(apiRequestMock.post).not.toHaveBeenCalled();
       expect(dummyDispatch).toHaveBeenCalledTimes(0);
@@ -648,7 +782,13 @@ describe('<UpdateAllMachinePools />', () => {
         },
       };
 
-      const { container, user } = withState(newState).render(<UpdateAllMachinePools />);
+      const { container, user } = withState(newState).render(
+        <TestRouter>
+          <CompatRouter>
+            <UpdateAllMachinePools />
+          </CompatRouter>
+        </TestRouter>,
+      );
 
       expect(apiRequestMock.patch).not.toHaveBeenCalled();
       expect(dummyDispatch).not.toHaveBeenCalled();
@@ -740,7 +880,13 @@ describe('<UpdateAllMachinePools />', () => {
           },
         },
       };
-      const { user } = withState(newState).render(<UpdateAllMachinePools />);
+      const { user } = withState(newState).render(
+        <TestRouter>
+          <CompatRouter>
+            <UpdateAllMachinePools />
+          </CompatRouter>
+        </TestRouter>,
+      );
       expectUpdateButtonPresence();
 
       // ACT
@@ -764,9 +910,11 @@ describe('<UpdateAllMachinePools />', () => {
         },
       };
       withState(newState).render(
-        <MemoryRouter>
-          <UpdateAllMachinePools goToMachinePoolTab />
-        </MemoryRouter>,
+        <TestRouter>
+          <CompatRouter>
+            <UpdateAllMachinePools goToMachinePoolTab />
+          </CompatRouter>
+        </TestRouter>,
       );
 
       expectUpdateButtonAbsence();

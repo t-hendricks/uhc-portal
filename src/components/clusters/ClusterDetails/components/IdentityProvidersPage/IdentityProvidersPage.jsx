@@ -1,10 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import get from 'lodash/get';
-import { Link } from 'react-router-dom';
+import { useParams, Navigate, Link } from 'react-router-dom-v5-compat';
 import { useDispatch } from 'react-redux';
 import { reset } from 'redux-form';
-import { useParams, Navigate } from 'react-router-dom-v5-compat';
 import {
   PageSection,
   Card,

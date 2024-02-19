@@ -1,6 +1,6 @@
 import React, { useContext, useCallback } from 'react';
 import { Hint, HintBody, HintTitle } from '@patternfly/react-core';
-import { Link } from 'react-router-dom';
+import { Link } from 'react-router-dom-v5-compat';
 import { productName } from '~/components/clusters/wizards/rosa_v1/CreateRosaGetStarted/CreateRosaGetStarted';
 import { ROSA_HOSTED_CLI_MIN_VERSION } from '~/components/clusters/wizards/rosa_v1/rosaConstants';
 import { ROSAWizardContext } from '~/components/clusters/wizards/rosa_v1/ROSAWizardContext';

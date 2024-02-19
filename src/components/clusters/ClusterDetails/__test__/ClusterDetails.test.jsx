@@ -1,6 +1,7 @@
 import { mount, shallow } from 'enzyme';
 import React from 'react';
 import { MemoryRouter } from 'react-router-dom';
+import { CompatRouter } from 'react-router-dom-v5-compat';
 import { subscriptionStatuses } from '../../../../common/subscriptionTypes';
 import { withState } from '../../../../testUtils';
 import clusterStates from '../../common/clusterStates';
@@ -45,7 +46,9 @@ describe('<ClusterDetails />', () => {
     mount(
       <Wrapper>
         <RouterWrapper>
-          <ClusterDetails {...fixtures} {...functions} hasIssues />
+          <CompatRouter>
+            <ClusterDetails {...fixtures} {...functions} hasIssues />
+          </CompatRouter>
         </RouterWrapper>
       </Wrapper>,
     );
@@ -110,12 +113,14 @@ describe('<ClusterDetails />', () => {
       const wrapper = mount(
         <Wrapper>
           <RouterWrapper>
-            <ClusterDetails
-              {...fixtures}
-              {...functions}
-              hasIssues
-              {...installingClusterWithIssuesProps}
-            />
+            <CompatRouter>
+              <ClusterDetails
+                {...fixtures}
+                {...functions}
+                hasIssues
+                {...installingClusterWithIssuesProps}
+              />
+            </CompatRouter>
           </RouterWrapper>
         </Wrapper>,
       );
@@ -131,7 +136,9 @@ describe('<ClusterDetails />', () => {
       const wrapper = mount(
         <Wrapper>
           <RouterWrapper>
-            <ClusterDetails {...fixtures} {...functions} />
+            <CompatRouter>
+              <ClusterDetails {...fixtures} {...functions} />
+            </CompatRouter>
           </RouterWrapper>
         </Wrapper>,
       );
@@ -158,7 +165,9 @@ describe('<ClusterDetails />', () => {
       const wrapper = mount(
         <Wrapper>
           <RouterWrapper>
-            <ClusterDetails {...props} />
+            <CompatRouter>
+              <ClusterDetails {...props} />
+            </CompatRouter>
           </RouterWrapper>
         </Wrapper>,
       );
@@ -177,7 +186,9 @@ describe('<ClusterDetails />', () => {
     const wrapper = mount(
       <Wrapper>
         <RouterWrapper>
-          <ClusterDetails {...props} />
+          <CompatRouter>
+            <ClusterDetails {...props} />
+          </CompatRouter>
         </RouterWrapper>
       </Wrapper>,
     );
@@ -243,7 +254,9 @@ describe('<ClusterDetails />', () => {
       const wrapper = mount(
         <Wrapper>
           <RouterWrapper>
-            <ClusterDetails {...props} />
+            <CompatRouter>
+              <ClusterDetails {...props} />
+            </CompatRouter>
           </RouterWrapper>
         </Wrapper>,
       );
@@ -275,7 +288,9 @@ describe('<ClusterDetails />', () => {
       const wrapper = mount(
         <Wrapper>
           <RouterWrapper>
-            <ClusterDetails {...props} />
+            <CompatRouter>
+              <ClusterDetails {...props} />
+            </CompatRouter>
           </RouterWrapper>
         </Wrapper>,
       );
@@ -383,7 +398,9 @@ describe('<ClusterDetails />', () => {
     const wrapper = mount(
       <Wrapper>
         <RouterWrapper>
-          <ClusterDetails {...props} />
+          <CompatRouter>
+            <ClusterDetails {...props} />
+          </CompatRouter>
         </RouterWrapper>
       </Wrapper>,
     );
@@ -414,7 +431,9 @@ describe('<ClusterDetails />', () => {
     const osdWrapper = mount(
       <Wrapper>
         <RouterWrapper>
-          <ClusterDetails {...osdProps} />
+          <CompatRouter>
+            <ClusterDetails {...osdProps} />
+          </CompatRouter>
         </RouterWrapper>
       </Wrapper>,
     );
@@ -461,7 +480,9 @@ describe('<ClusterDetails />', () => {
     const ocpWrapper = mount(
       <Wrapper>
         <RouterWrapper>
-          <ClusterDetails {...ocpProps} />
+          <CompatRouter>
+            <ClusterDetails {...ocpProps} />
+          </CompatRouter>
         </RouterWrapper>
       </Wrapper>,
     );
