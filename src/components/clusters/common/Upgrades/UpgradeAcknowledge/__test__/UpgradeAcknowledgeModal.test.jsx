@@ -166,6 +166,39 @@ describe('<UpgradeAcknowledgeModal> ', () => {
     ).toBeInTheDocument();
     expect(screen.queryAllByText(errMsg)).toHaveLength(2);
   });
+
+  it('does not set enable_minor_version flag if isSTS', async () => {
+    const apiReturnValue = { data: {} };
+    apiRequest.patch.mockResolvedValue(apiReturnValue);
+    apiRequest.post.mockResolvedValue(apiReturnValue);
+
+    const { user } = render(<UpgradeAcknowledgeModal {...defaultProps} isSTSEnabled />);
+
+    await clickSubmitButton(user);
+
+    expect(apiRequest.patch).not.toHaveBeenCalled();
+    expect(apiRequest.post).toHaveBeenNthCalledWith(
+      1,
+      '/api/clusters_mgmt/v1/clusters/myClusterId/gate_agreements',
+      { version_gate: { id: 'unMetAck1' } },
+    );
+    expect(apiRequest.post).toHaveBeenNthCalledWith(
+      2,
+      '/api/clusters_mgmt/v1/clusters/myClusterId/gate_agreements',
+      { version_gate: { id: 'unMetAck2' } },
+    );
+    // Verify updatePolicy (y-stream) action was not called
+    expect(mockSetUpgradePolicy.mock.calls).toHaveLength(0);
+
+    // Call updateGate action
+    expect(mockSetGate.mock.calls).toHaveLength(2);
+    expect(mockSetGate.mock.calls[0][0]).toEqual('unMetAck1');
+    expect(mockSetGate.mock.calls[1][0]).toEqual('unMetAck2');
+
+    // Since success, close modal
+    expect(mockCloseModal.mock.calls).toHaveLength(1);
+    expect(screen.queryByRole('alert', { name: 'Danger Alert' })).not.toBeInTheDocument();
+  });
 });
 
 describe('<UpgradeAcknowledgeModal>  with hosted control plane(hypershift)', () => {

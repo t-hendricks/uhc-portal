@@ -81,6 +81,16 @@ describe('<MinorVersionUpgradeAlert >', () => {
     expect(container).toBeEmptyDOMElement();
   });
 
+  it('Alert is not shown for STS cluster', () => {
+    const newProps = {
+      ...defaultProps,
+      isSTSEnabled: true,
+    };
+    const { container } = render(<MinorVersionUpgradeAlert {...newProps} />);
+
+    expect(container).toBeEmptyDOMElement();
+  });
+
   it('Correct data is shown for unapproved minor upgrade when minor upgrade is available', async () => {
     const newProps = {
       ...defaultProps,
