@@ -50,7 +50,9 @@ const SubscriptionNotFulfilled = ({ data, refresh, marketplace }: Props) => {
         overrideErrorMessage(payload)
       ) : (
         <>
-          <p>An error has occured! Try again or contact support by including this error message:</p>
+          <p>
+            An error has occurred! Try again or contact support by including this error message:
+          </p>
           <q>{errorMessage}</q>
           <p>{`Operation ID: ${operationID || 'N/A'}`}</p>
         </>
