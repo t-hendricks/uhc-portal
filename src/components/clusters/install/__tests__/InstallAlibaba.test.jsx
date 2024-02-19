@@ -1,5 +1,5 @@
 import React from 'react';
-
+import { CompatRouter } from 'react-router-dom-v5-compat';
 import { screen, checkAccessibility, TestRouter, withState } from '~/testUtils';
 import { InstallAlibaba } from '../InstallAlibaba';
 import githubReleases from '../githubReleases.mock';
@@ -23,7 +23,9 @@ describe('InstallAlibaba', () => {
   it('is accessible', async () => {
     const { container } = withState(githubReleases).render(
       <TestRouter>
-        <InstallAlibaba token={{}} dispatch={dispatch} />
+        <CompatRouter>
+          <InstallAlibaba token={{}} dispatch={dispatch} />
+        </CompatRouter>
       </TestRouter>,
     );
 

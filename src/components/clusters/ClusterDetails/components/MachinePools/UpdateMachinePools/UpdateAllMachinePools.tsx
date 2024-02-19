@@ -1,7 +1,7 @@
 import React from 'react';
 import { Alert, AlertActionLink, AlertVariant, Spinner } from '@patternfly/react-core';
 import { useSelector, useDispatch } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link } from 'react-router-dom-v5-compat';
 import semver from 'semver';
 import { GlobalState } from '~/redux/store';
 import ExternalLink from '~/components/common/ExternalLink';

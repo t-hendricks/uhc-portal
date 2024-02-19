@@ -1,5 +1,6 @@
 import React from 'react';
 import { MemoryRouter } from 'react-router-dom';
+import { CompatRouter } from 'react-router-dom-v5-compat';
 
 import { render, screen, checkAccessibility, mockRestrictedEnv } from '~/testUtils';
 
@@ -56,7 +57,9 @@ describe('<CloudTab />', () => {
       // Arrange
       const { container } = render(
         <MemoryRouter>
-          <CloudTab hasOSDQuota trialEnabled />
+          <CompatRouter>
+            <CloudTab hasOSDQuota trialEnabled />
+          </CompatRouter>
         </MemoryRouter>,
       );
 
@@ -69,7 +72,9 @@ describe('<CloudTab />', () => {
       // Arrange
       const { container } = render(
         <MemoryRouter>
-          <CloudTab hasOSDQuota={false} trialEnabled={false} />
+          <CompatRouter>
+            <CloudTab hasOSDQuota={false} trialEnabled={false} />
+          </CompatRouter>
         </MemoryRouter>,
       );
 
@@ -81,7 +86,9 @@ describe('<CloudTab />', () => {
       // Arrange
       render(
         <MemoryRouter>
-          <CloudTab hasOSDQuota trialEnabled={false} />
+          <CompatRouter>
+            <CloudTab hasOSDQuota trialEnabled={false} />
+          </CompatRouter>
         </MemoryRouter>,
       );
 
@@ -103,7 +110,9 @@ describe('<CloudTab />', () => {
       // Arrange
       render(
         <MemoryRouter>
-          <CloudTab hasOSDQuota={false} trialEnabled={false} />
+          <CompatRouter>
+            <CloudTab hasOSDQuota={false} trialEnabled={false} />
+          </CompatRouter>
         </MemoryRouter>,
       );
 
@@ -125,7 +134,9 @@ describe('<CloudTab />', () => {
       // Arrange
       render(
         <MemoryRouter>
-          <CloudTab hasOSDQuota={false} trialEnabled />
+          <CompatRouter>
+            <CloudTab hasOSDQuota={false} trialEnabled />
+          </CompatRouter>
         </MemoryRouter>,
       );
 
@@ -147,7 +158,9 @@ describe('<CloudTab />', () => {
       // Arrange
       render(
         <MemoryRouter>
-          <CloudTab hasOSDQuota trialEnabled />
+          <CompatRouter>
+            <CloudTab hasOSDQuota trialEnabled />
+          </CompatRouter>
         </MemoryRouter>,
       );
 
@@ -176,7 +189,9 @@ describe('<CloudTab />', () => {
       isRestrictedEnv.mockReturnValue(true);
       render(
         <MemoryRouter>
-          <CloudTab />
+          <CompatRouter>
+            <CloudTab />
+          </CompatRouter>
         </MemoryRouter>,
       );
 

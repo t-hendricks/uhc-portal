@@ -1,5 +1,6 @@
 import React from 'react';
 import { checkAccessibility, render, screen, within } from '~/testUtils';
+import { CompatRouter } from 'react-router-dom-v5-compat';
 import { MemoryRouter } from 'react-router-dom';
 import { ROSA_HOSTED_CLI_MIN_VERSION } from '~/components/clusters/wizards/rosa_v1/rosaConstants';
 import { PrerequisitesInfoBox } from './PrerequisitesInfoBox';
@@ -12,7 +13,9 @@ describe('<PrerequisitesInfoBox} />', () => {
   it('is accessible', async () => {
     const { container } = render(
       <MemoryRouter>
-        <PrerequisitesInfoBox />
+        <CompatRouter>
+          <PrerequisitesInfoBox />
+        </CompatRouter>
       </MemoryRouter>,
     );
     await checkAccessibility(container);
@@ -21,7 +24,9 @@ describe('<PrerequisitesInfoBox} />', () => {
   it('provides info and link to ROSA prerequisites page', () => {
     render(
       <MemoryRouter>
-        <PrerequisitesInfoBox />
+        <CompatRouter>
+          <PrerequisitesInfoBox />
+        </CompatRouter>
       </MemoryRouter>,
     );
 
@@ -33,7 +38,9 @@ describe('<PrerequisitesInfoBox} />', () => {
   it('shows the ROSA CLI version message by default', () => {
     render(
       <MemoryRouter>
-        <PrerequisitesInfoBox />
+        <CompatRouter>
+          <PrerequisitesInfoBox />
+        </CompatRouter>
       </MemoryRouter>,
     );
 
@@ -43,7 +50,9 @@ describe('<PrerequisitesInfoBox} />', () => {
   it('does not show the ROSA CLI version message when "showRosaCliRequirement" is false', () => {
     render(
       <MemoryRouter>
-        <PrerequisitesInfoBox showRosaCliRequirement={false} />
+        <CompatRouter>
+          <PrerequisitesInfoBox showRosaCliRequirement={false} />
+        </CompatRouter>
       </MemoryRouter>,
     );
 

@@ -1,4 +1,5 @@
 import React from 'react';
+import { CompatRouter } from 'react-router-dom-v5-compat';
 import { screen, checkAccessibility, TestRouter, withState } from '~/testUtils';
 import githubReleases from '../githubReleases.mock';
 
@@ -24,7 +25,9 @@ describe('InstallArmAWSUPI', () => {
   it('is accessible', async () => {
     const { container } = withState(githubReleases).render(
       <TestRouter>
-        <InstallArmAWSUPI token={{}} dispatch={dispatch} />
+        <CompatRouter>
+          <InstallArmAWSUPI token={{}} dispatch={dispatch} />
+        </CompatRouter>
       </TestRouter>,
     );
 

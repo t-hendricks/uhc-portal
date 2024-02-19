@@ -21,7 +21,7 @@ import React, { Component } from 'react';
 
 import { PageHeader, PageHeaderTitle } from '@redhat-cloud-services/frontend-components/PageHeader';
 import Spinner from '@redhat-cloud-services/frontend-components/Spinner';
-import { Link } from 'react-router-dom';
+import { Link } from 'react-router-dom-v5-compat';
 
 import { Card, Toolbar, ToolbarItem, ToolbarContent, PageSection } from '@patternfly/react-core';
 

@@ -1,4 +1,5 @@
 import React from 'react';
+import { CompatRouter } from 'react-router-dom-v5-compat';
 import { render, screen, checkAccessibility, TestRouter } from '~/testUtils';
 import { defaultSubscription } from '~/components/clusters/common/__test__/clusterStates.fixtures';
 import TransferClusterOwnershipInfo from '../TransferClusterOwnershipInfo';
@@ -16,7 +17,13 @@ describe('<TransferClusterOwnershipInfo />', () => {
   ])('%p', async (title, subscription) => {
     // Act
     const { container } = render(
-      <TransferClusterOwnershipInfo subscription={{ ...defaultSubscription, ...subscription }} />,
+      <TestRouter>
+        <CompatRouter>
+          <TransferClusterOwnershipInfo
+            subscription={{ ...defaultSubscription, ...subscription }}
+          />
+        </CompatRouter>
+      </TestRouter>,
     );
 
     // Assert
@@ -30,7 +37,13 @@ describe('<TransferClusterOwnershipInfo />', () => {
 
     // Act
     const { container } = render(
-      <TransferClusterOwnershipInfo subscription={{ ...defaultSubscription, ...subscription }} />,
+      <TestRouter>
+        <CompatRouter>
+          <TransferClusterOwnershipInfo
+            subscription={{ ...defaultSubscription, ...subscription }}
+          />
+        </CompatRouter>
+      </TestRouter>,
     );
 
     // Assert
@@ -52,7 +65,11 @@ describe('<TransferClusterOwnershipInfo />', () => {
     // Act
     const { container } = render(
       <TestRouter>
-        <TransferClusterOwnershipInfo subscription={{ ...defaultSubscription, ...subscription }} />
+        <CompatRouter>
+          <TransferClusterOwnershipInfo
+            subscription={{ ...defaultSubscription, ...subscription }}
+          />
+        </CompatRouter>
       </TestRouter>,
     );
 

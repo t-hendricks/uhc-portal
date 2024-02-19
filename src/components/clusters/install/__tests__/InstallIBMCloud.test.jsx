@@ -1,4 +1,5 @@
 import React from 'react';
+import { CompatRouter } from 'react-router-dom-v5-compat';
 import { screen, checkAccessibility, TestRouter, withState } from '~/testUtils';
 
 import { InstallIBMCloud } from '../InstallIBMCloud';
@@ -25,7 +26,9 @@ describe('InstallIBMCloud', () => {
   it('is accessible', async () => {
     const { container } = withState(githubReleases).render(
       <TestRouter>
-        <InstallIBMCloud token={{}} dispatch={dispatch} />
+        <CompatRouter>
+          <InstallIBMCloud token={{}} dispatch={dispatch} />
+        </CompatRouter>
       </TestRouter>,
     );
 
