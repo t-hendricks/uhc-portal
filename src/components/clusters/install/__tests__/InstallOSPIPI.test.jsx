@@ -1,4 +1,5 @@
 import React from 'react';
+import { CompatRouter } from 'react-router-dom-v5-compat';
 import { screen, checkAccessibility, TestRouter, withState } from '~/testUtils';
 
 import { InstallOSPIPI } from '../InstallOSPIPI';
@@ -25,7 +26,9 @@ describe('InstallOSPIPI', () => {
   it('is accessible', async () => {
     const { container } = withState(githubReleases).render(
       <TestRouter>
-        <InstallOSPIPI token={{}} dispatch={dispatch} />
+        <CompatRouter>
+          <InstallOSPIPI token={{}} dispatch={dispatch} />
+        </CompatRouter>
       </TestRouter>,
     );
 

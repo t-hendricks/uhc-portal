@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Form, Alert, Button } from '@patternfly/react-core';
-import { Link } from 'react-router-dom';
+import { Link } from 'react-router-dom-v5-compat';
 import get from 'lodash/get';
 import MechTraining from '../../../../styles/images/RH_BRAND_7764_01_MECH_Training.svg';
 

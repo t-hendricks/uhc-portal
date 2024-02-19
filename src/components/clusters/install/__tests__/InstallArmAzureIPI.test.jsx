@@ -1,4 +1,5 @@
 import React from 'react';
+import { CompatRouter } from 'react-router-dom-v5-compat';
 import { screen, checkAccessibility, TestRouter, withState } from '~/testUtils';
 
 import { InstallArmAzureIPI } from '../InstallArmAzureIPI';
@@ -25,7 +26,9 @@ describe('InstallArmAzureIPI', () => {
   it('is accessible', async () => {
     const { container } = withState(githubReleases).render(
       <TestRouter>
-        <InstallArmAzureIPI token={{}} dispatch={dispatch} />
+        <CompatRouter>
+          <InstallArmAzureIPI token={{}} dispatch={dispatch} />
+        </CompatRouter>
       </TestRouter>,
     );
 

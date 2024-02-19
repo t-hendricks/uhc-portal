@@ -1,4 +1,5 @@
 import React from 'react';
+import { CompatRouter } from 'react-router-dom-v5-compat';
 import { screen, checkAccessibility, TestRouter, withState } from '~/testUtils';
 
 import { InstallNutanixIPI } from '../InstallNutanixIPI';
@@ -25,7 +26,9 @@ describe('InstallNutanixIPI', () => {
   it('is accessible', async () => {
     const { container } = withState(githubReleases).render(
       <TestRouter>
-        <InstallNutanixIPI token={{}} dispatch={dispatch} />
+        <CompatRouter>
+          <InstallNutanixIPI token={{}} dispatch={dispatch} />
+        </CompatRouter>
       </TestRouter>,
     );
 

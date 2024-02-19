@@ -15,7 +15,7 @@ import {
   TableHeader as TableHeaderDeprecated,
   TableBody as TableBodyDeprecated,
 } from '@patternfly/react-table/deprecated';
-import { Link } from 'react-router-dom';
+import { Link } from 'react-router-dom-v5-compat';
 import OutlinedQuestionCircleIcon from '@patternfly/react-icons/dist/esm/icons/outlined-question-circle-icon';
 
 const ocpTableColumns = ['Infrastructure provider', 'Installation options'];

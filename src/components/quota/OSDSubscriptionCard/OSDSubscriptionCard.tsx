@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link } from 'react-router-dom-v5-compat';
 import get from 'lodash/get';
 import startCase from 'lodash/startCase';
 import { Card, CardBody, CardTitle, Stack, StackItem } from '@patternfly/react-core';

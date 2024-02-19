@@ -23,7 +23,7 @@ import {
   Icon,
 } from '@patternfly/react-core';
 import { CubeIcon } from '@patternfly/react-icons/dist/esm/icons/cube-icon';
-import { Link } from 'react-router-dom';
+import { Link } from 'react-router-dom-v5-compat';
 import ExternalLink from '~/components/common/ExternalLink';
 import useAnalytics from '~/hooks/useAnalytics';
 import { trackEvents } from '~/common/analytics';

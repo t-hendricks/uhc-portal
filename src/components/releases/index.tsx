@@ -14,7 +14,7 @@ import {
   StackItem,
 } from '@patternfly/react-core';
 import { OutlinedQuestionCircleIcon } from '@patternfly/react-icons/dist/esm/icons/outlined-question-circle-icon';
-import { Link } from 'react-router-dom';
+import { Link } from 'react-router-dom-v5-compat';
 import semver from 'semver';
 
 import { isRestrictedEnv } from '~/restrictedEnv';

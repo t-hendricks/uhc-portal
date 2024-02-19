@@ -1,5 +1,5 @@
 import React from 'react';
-
+import { CompatRouter } from 'react-router-dom-v5-compat';
 import { render, checkAccessibility, TestRouter, screen, userEvent } from '~/testUtils';
 import { clusters, openModal, setSorting } from './ArchivedClusterListTable.fixtures';
 import ArchivedClusterListTable from '../ArchivedClusterListTable';
@@ -10,24 +10,26 @@ describe('<ArchivedClusterListTable />', () => {
       // TODO: due to empty column needed by openshift-assisted_ui-lib/PF4
       const { container } = render(
         <TestRouter>
-          <ArchivedClusterListTable
-            viewOptions={{
-              currentPage: 1,
-              totalPages: 5,
-              pageSize: 10,
-              totalCount: 50,
-              filter: {},
-              flags: {},
-              sorting: {
-                sortIndex: 0,
-                isAscending: true,
-                sortField: 'name',
-              },
-            }}
-            clusters={clusters}
-            openModal={openModal}
-            setSorting={setSorting}
-          />
+          <CompatRouter>
+            <ArchivedClusterListTable
+              viewOptions={{
+                currentPage: 1,
+                totalPages: 5,
+                pageSize: 10,
+                totalCount: 50,
+                filter: {},
+                flags: {},
+                sorting: {
+                  sortIndex: 0,
+                  isAscending: true,
+                  sortField: 'name',
+                },
+              }}
+              clusters={clusters}
+              openModal={openModal}
+              setSorting={setSorting}
+            />
+          </CompatRouter>
         </TestRouter>,
       );
       expect(await screen.findByRole('grid')).toBeInTheDocument();
@@ -36,24 +38,26 @@ describe('<ArchivedClusterListTable />', () => {
     it('toggle sorting', async () => {
       render(
         <TestRouter>
-          <ArchivedClusterListTable
-            viewOptions={{
-              currentPage: 1,
-              totalPages: 5,
-              pageSize: 10,
-              totalCount: 50,
-              filter: {},
-              flags: {},
-              sorting: {
-                sortIndex: 0,
-                isAscending: true,
-                sortField: 'name',
-              },
-            }}
-            clusters={clusters}
-            setSorting={setSorting}
-            openModal={openModal}
-          />
+          <CompatRouter>
+            <ArchivedClusterListTable
+              viewOptions={{
+                currentPage: 1,
+                totalPages: 5,
+                pageSize: 10,
+                totalCount: 50,
+                filter: {},
+                flags: {},
+                sorting: {
+                  sortIndex: 0,
+                  isAscending: true,
+                  sortField: 'name',
+                },
+              }}
+              clusters={clusters}
+              setSorting={setSorting}
+              openModal={openModal}
+            />
+          </CompatRouter>
         </TestRouter>,
       );
 
@@ -67,24 +71,26 @@ describe('<ArchivedClusterListTable />', () => {
     it('no clusters found', async () => {
       render(
         <TestRouter>
-          <ArchivedClusterListTable
-            viewOptions={{
-              currentPage: 1,
-              totalPages: 5,
-              pageSize: 10,
-              totalCount: 50,
-              filter: {},
-              flags: {},
-              sorting: {
-                sortIndex: 0,
-                isAscending: true,
-                sortField: 'name',
-              },
-            }}
-            clusters={[]}
-            setSorting={setSorting}
-            openModal={openModal}
-          />
+          <CompatRouter>
+            <ArchivedClusterListTable
+              viewOptions={{
+                currentPage: 1,
+                totalPages: 5,
+                pageSize: 10,
+                totalCount: 50,
+                filter: {},
+                flags: {},
+                sorting: {
+                  sortIndex: 0,
+                  isAscending: true,
+                  sortField: 'name',
+                },
+              }}
+              clusters={[]}
+              setSorting={setSorting}
+              openModal={openModal}
+            />
+          </CompatRouter>
         </TestRouter>,
       );
 
@@ -94,24 +100,26 @@ describe('<ArchivedClusterListTable />', () => {
     it('unarchive modal', async () => {
       render(
         <TestRouter>
-          <ArchivedClusterListTable
-            viewOptions={{
-              currentPage: 1,
-              totalPages: 5,
-              pageSize: 10,
-              totalCount: 50,
-              filter: {},
-              flags: {},
-              sorting: {
-                sortIndex: 0,
-                isAscending: true,
-                sortField: 'name',
-              },
-            }}
-            clusters={clusters}
-            setSorting={setSorting}
-            openModal={openModal}
-          />
+          <CompatRouter>
+            <ArchivedClusterListTable
+              viewOptions={{
+                currentPage: 1,
+                totalPages: 5,
+                pageSize: 10,
+                totalCount: 50,
+                filter: {},
+                flags: {},
+                sorting: {
+                  sortIndex: 0,
+                  isAscending: true,
+                  sortField: 'name',
+                },
+              }}
+              clusters={clusters}
+              setSorting={setSorting}
+              openModal={openModal}
+            />
+          </CompatRouter>
         </TestRouter>,
       );
       const unarchiveBtn = screen.getByText('Unarchive');

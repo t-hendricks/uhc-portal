@@ -1,4 +1,5 @@
 import React from 'react';
+import { CompatRouter } from 'react-router-dom-v5-compat';
 import { withState, screen, checkAccessibility, TestRouter } from '~/testUtils';
 import githubReleasesMock from '../../../githubReleases.mock';
 
@@ -26,7 +27,9 @@ describe('<DownloadsAndPullSecretSection />', () => {
     it('is accessible', async () => {
       const { container } = withState(githubReleasesMock).render(
         <TestRouter>
-          <DownloadsAndPullSecretSection {...defaultProps} token={token} />
+          <CompatRouter>
+            <DownloadsAndPullSecretSection {...defaultProps} token={token} />
+          </CompatRouter>
         </TestRouter>,
       );
 
@@ -45,7 +48,9 @@ describe('<DownloadsAndPullSecretSection />', () => {
     it('is accessible', async () => {
       const { container } = withState(githubReleasesMock).render(
         <TestRouter>
-          <DownloadsAndPullSecretSection {...defaultProps} token={badToken} />
+          <CompatRouter>
+            <DownloadsAndPullSecretSection {...defaultProps} token={badToken} />
+          </CompatRouter>
         </TestRouter>,
       );
 

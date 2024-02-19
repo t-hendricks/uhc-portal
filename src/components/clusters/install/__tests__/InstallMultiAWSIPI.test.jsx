@@ -1,4 +1,5 @@
 import React from 'react';
+import { CompatRouter } from 'react-router-dom-v5-compat';
 import { screen, checkAccessibility, TestRouter, withState } from '~/testUtils';
 
 import { InstallMultiAWSIPI } from '../InstallMultiAWSIPI';
@@ -25,7 +26,9 @@ describe('InstallMultiAWSIPI', () => {
   it('is accessible', async () => {
     const { container } = withState(githubReleases).render(
       <TestRouter>
-        <InstallMultiAWSIPI token={{}} dispatch={dispatch} />
+        <CompatRouter>
+          <InstallMultiAWSIPI token={{}} dispatch={dispatch} />
+        </CompatRouter>
       </TestRouter>,
     );
 

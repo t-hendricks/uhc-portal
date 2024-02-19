@@ -1,6 +1,6 @@
 import React from 'react';
 import { MemoryRouter } from 'react-router';
-
+import { CompatRouter } from 'react-router-dom-v5-compat';
 import ClusterList from './ClusterList';
 import fixtures from '../ClusterDetails/__test__/ClusterDetails.fixtures';
 import { normalizedProducts } from '../../../common/subscriptionTypes';
@@ -52,7 +52,9 @@ describe('<ClusterList />', () => {
     it('does not render filtering', () => {
       const { rerender } = render(
         <MemoryRouter>
-          <ClusterList {...props} />
+          <CompatRouter>
+            <ClusterList {...props} />
+          </CompatRouter>
         </MemoryRouter>,
       );
       expect(screen.queryByTestId('cluster-list-filter-dropdown')).toBeInTheDocument();
@@ -60,7 +62,9 @@ describe('<ClusterList />', () => {
       isRestrictedEnv.mockReturnValue(true);
       rerender(
         <MemoryRouter>
-          <ClusterList {...props} />
+          <CompatRouter>
+            <ClusterList {...props} />
+          </CompatRouter>
         </MemoryRouter>,
       );
       expect(screen.queryByTestId('cluster-list-filter-dropdown')).not.toBeInTheDocument();

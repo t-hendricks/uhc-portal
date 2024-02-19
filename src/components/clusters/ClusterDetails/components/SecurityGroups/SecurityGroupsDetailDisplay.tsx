@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link } from 'react-router-dom-v5-compat';
 import { SecurityGroup, MachinePool } from '~/types/clusters_mgmt.v1';
 import {
   MachinePoolItemList,

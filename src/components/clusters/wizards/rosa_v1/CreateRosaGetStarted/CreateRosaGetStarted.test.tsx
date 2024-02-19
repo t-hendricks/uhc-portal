@@ -1,6 +1,6 @@
 import React from 'react';
 import { MemoryRouter } from 'react-router-dom';
-
+import { CompatRouter } from 'react-router-dom-v5-compat';
 import {
   render,
   checkAccessibility,
@@ -38,7 +38,9 @@ describe('<CreateRosaGetStarted />', () => {
 
     render(
       <MemoryRouter>
-        <CreateRosaGetStarted />
+        <CompatRouter>
+          <CreateRosaGetStarted />
+        </CompatRouter>
       </MemoryRouter>,
     );
     // Assert
@@ -52,7 +54,9 @@ describe('<CreateRosaGetStarted />', () => {
 
     render(
       <MemoryRouter>
-        <CreateRosaGetStarted />
+        <CompatRouter>
+          <CreateRosaGetStarted />
+        </CompatRouter>
       </MemoryRouter>,
     );
     // Assert
@@ -63,7 +67,9 @@ describe('<CreateRosaGetStarted />', () => {
   it('navigated to quick start from aws setup', () => {
     render(
       <MemoryRouter initialEntries={[{ search: '?source=aws' }]}>
-        <CreateRosaGetStarted />
+        <CompatRouter>
+          <CreateRosaGetStarted />
+        </CompatRouter>
       </MemoryRouter>,
     );
     expect(
@@ -74,7 +80,9 @@ describe('<CreateRosaGetStarted />', () => {
   it('navigated to quick start from other site', () => {
     render(
       <MemoryRouter>
-        <CreateRosaGetStarted />
+        <CompatRouter>
+          <CreateRosaGetStarted />
+        </CompatRouter>
       </MemoryRouter>,
     );
     expect(
@@ -93,7 +101,9 @@ describe('<CreateRosaGetStarted />', () => {
       mockUseFeatureGate([[HCP_ROSA_GETTING_STARTED_PAGE, true]]);
       const { rerender } = render(
         <MemoryRouter>
-          <CreateRosaGetStarted />
+          <CompatRouter>
+            <CreateRosaGetStarted />
+          </CompatRouter>
         </MemoryRouter>,
       );
 
@@ -102,7 +112,9 @@ describe('<CreateRosaGetStarted />', () => {
       isRestrictedEnv.mockReturnValue(true);
       rerender(
         <MemoryRouter>
-          <CreateRosaGetStarted />
+          <CompatRouter>
+            <CreateRosaGetStarted />
+          </CompatRouter>
         </MemoryRouter>,
       );
 

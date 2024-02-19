@@ -1,4 +1,5 @@
 import React from 'react';
+import { CompatRouter } from 'react-router-dom-v5-compat';
 import { screen, checkAccessibility, TestRouter, withState } from '~/testUtils';
 
 import { InstallBareMetalUPI } from '../InstallBareMetalUPI';
@@ -25,7 +26,9 @@ describe('BareMetal UPI install', () => {
   it('is accessible', async () => {
     const { container } = withState(githubReleases).render(
       <TestRouter>
-        <InstallBareMetalUPI token={{}} dispatch={dispatch} />
+        <CompatRouter>
+          <InstallBareMetalUPI token={{}} dispatch={dispatch} />
+        </CompatRouter>
       </TestRouter>,
     );
 

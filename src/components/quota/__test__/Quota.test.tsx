@@ -3,6 +3,7 @@ import { mount, shallow, ShallowWrapper } from 'enzyme';
 import { Button } from '@patternfly/react-core';
 import { Spinner } from '@redhat-cloud-services/frontend-components';
 import { Provider } from 'react-redux';
+import { CompatRouter } from 'react-router-dom-v5-compat';
 import { BrowserRouter } from 'react-router-dom';
 
 import * as Fixtures from './Quota.fixtures';
@@ -27,7 +28,9 @@ describe('<Quota />', () => {
       mount(<Quota {...Fixtures} />, {
         wrappingComponent: ({ children }) => (
           <Provider store={store}>
-            <BrowserRouter>{children}</BrowserRouter>
+            <BrowserRouter>
+              <CompatRouter>{children}</CompatRouter>
+            </BrowserRouter>
           </Provider>
         ),
       });
@@ -48,13 +51,18 @@ describe('<Quota />', () => {
       expect(wrapper).toMatchSnapshot();
     });
     it('should call fetch method', () => {
-      mount(<OSDSubscriptionCard {...Fixtures} />, {
-        wrappingComponent: ({ children }) => (
-          <Provider store={store}>
-            <BrowserRouter>{children}</BrowserRouter>
-          </Provider>
-        ),
-      });
+      mount(
+        <CompatRouter>
+          <OSDSubscriptionCard {...Fixtures} />
+        </CompatRouter>,
+        {
+          wrappingComponent: ({ children }) => (
+            <Provider store={store}>
+              <BrowserRouter>{children}</BrowserRouter>
+            </Provider>
+          ),
+        },
+      );
       expect(Fixtures.fetchQuotaCost).toBeCalled();
     });
     it('should have OSDSubscriptionTable', () => {

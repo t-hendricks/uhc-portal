@@ -16,10 +16,11 @@ limitations under the License.
 
 import React from 'react';
 import { mount, shallow } from 'enzyme';
+import { CompatRouter } from 'react-router-dom-v5-compat';
 import { BrowserRouter, MemoryRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 
-import { mockRestrictedEnv, mockRefreshToken, render, screen } from '~/testUtils';
+import { mockRestrictedEnv, mockRefreshToken, render, screen, TestRouter } from '~/testUtils';
 
 import { store } from '../../../redux/store';
 import Tokens from '../Tokens';
@@ -46,25 +47,39 @@ describe('<Tokens />', () => {
 
   it('Renders screen with button', () => {
     const component = shallow(
-      <Tokens show={false} showPath="/token/show" setOfflineToken={() => {}} />,
+      <TestRouter>
+        <CompatRouter>
+          <Tokens show={false} showPath="/token/show" setOfflineToken={() => {}} />
+        </CompatRouter>
+      </TestRouter>,
     );
     expect(component).toMatchSnapshot();
   });
 
   it('Renders screen with token', () => {
     const component = shallow(
-      <Tokens
-        show={false}
-        showPath="/token/show"
-        offlineToken="test-token"
-        setOfflineToken={() => {}}
-      />,
+      <TestRouter>
+        <CompatRouter>
+          <Tokens
+            show={false}
+            showPath="/token/show"
+            offlineToken="test-token"
+            setOfflineToken={() => {}}
+          />
+        </CompatRouter>
+      </TestRouter>,
     );
     expect(component).toMatchSnapshot();
   });
 
   it('Renders loading screen', () => {
-    const loadingcomponent = shallow(<Tokens show setOfflineToken={() => {}} />);
+    const loadingcomponent = shallow(
+      <TestRouter>
+        <CompatRouter>
+          <Tokens show setOfflineToken={() => {}} />
+        </CompatRouter>
+      </TestRouter>,
+    );
     expect(loadingcomponent).toMatchSnapshot();
   });
 
@@ -72,7 +87,9 @@ describe('<Tokens />', () => {
     mount(<Tokens show setOfflineToken={() => {}} />, {
       wrappingComponent: ({ children }) => (
         <Provider store={store}>
-          <BrowserRouter>{children}</BrowserRouter>
+          <BrowserRouter>
+            <CompatRouter>{children}</CompatRouter>
+          </BrowserRouter>
         </Provider>
       ),
     });
@@ -80,7 +97,13 @@ describe('<Tokens />', () => {
   });
 
   it('Renders token', () => {
-    const component = shallow(<Tokens show setOfflineToken={() => {}} />);
+    const component = shallow(
+      <TestRouter>
+        <CompatRouter>
+          <Tokens show setOfflineToken={() => {}} />
+        </CompatRouter>
+      </TestRouter>,
+    );
     expect(component).toMatchSnapshot();
   });
 
@@ -94,7 +117,9 @@ describe('<Tokens />', () => {
 
       render(
         <MemoryRouter>
-          <Tokens offlineToken="refresh-token" setOfflineToken={() => {}} />
+          <CompatRouter>
+            <Tokens offlineToken="refresh-token" setOfflineToken={() => {}} />
+          </CompatRouter>
         </MemoryRouter>,
       );
       expect(screen.getByText('Connect with refresh tokens')).toBeInTheDocument();

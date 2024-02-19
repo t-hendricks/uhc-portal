@@ -19,7 +19,7 @@ import {
   TableBody as TableBodyDeprecated,
 } from '@patternfly/react-table/deprecated';
 import SearchIcon from '@patternfly/react-icons/dist/esm/icons/search-icon';
-import { Link } from 'react-router-dom';
+import { Link } from 'react-router-dom-v5-compat';
 import { ClusterWithPermissions, ViewOptions, ViewSorting } from '~/types/types';
 import ButtonWithTooltip from '../../../../common/ButtonWithTooltip';
 import ClusterLocationLabel from '../../../common/ClusterLocationLabel';
