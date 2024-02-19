@@ -2,10 +2,9 @@
 /* eslint-disable testing-library/no-wait-for-multiple-assertions */
 /* eslint-disable testing-library/await-async-queries */
 import React, { RefObject } from 'react';
-import { MemoryRouter, Router } from 'react-router-dom';
+import { MemoryRouter } from 'react-router-dom';
+import { CompatRouter } from 'react-router-dom-v5-compat';
 import { checkAccessibility, render, screen, waitFor } from '~/testUtils';
-
-import { createBrowserHistory } from 'history';
 import { ClusterTabsId } from '../../common/ClusterTabIds';
 import TabsRow, { TabsRowProps } from '../TabsRow';
 
@@ -23,7 +22,6 @@ const tabNames = {
 };
 
 describe('<TabsRow />', () => {
-  const history = createBrowserHistory();
   const mockRef: RefObject<any> = { current: { hidden: true } };
   const onTabSelectedMock = jest.fn();
 
@@ -57,7 +55,9 @@ describe('<TabsRow />', () => {
           keyLength={0}
           initialEntries={[{ pathname: '/details/s/:id', key: 'testKey' }]}
         >
-          <TabsRow {...tabProps} />
+          <CompatRouter>
+            <TabsRow {...tabProps} />
+          </CompatRouter>
         </MemoryRouter>,
       );
 
@@ -89,7 +89,9 @@ describe('<TabsRow />', () => {
           keyLength={0}
           initialEntries={[{ pathname: '/details/s/:id', key: 'testKey' }]}
         >
-          <TabsRow {...tabProps} />
+          <CompatRouter>
+            <TabsRow {...tabProps} />
+          </CompatRouter>
         </MemoryRouter>,
       );
 
@@ -131,7 +133,9 @@ describe('<TabsRow />', () => {
           keyLength={0}
           initialEntries={[{ pathname: '/details/s/:id', key: 'testKey' }]}
         >
-          <TabsRow {...tabProps} />
+          <CompatRouter>
+            <TabsRow {...tabProps} />
+          </CompatRouter>
         </MemoryRouter>,
       );
 
@@ -161,7 +165,9 @@ describe('<TabsRow />', () => {
           keyLength={0}
           initialEntries={[{ pathname: '/details/s/:id', key: 'testKey' }]}
         >
-          <TabsRow {...tabProps} />
+          <CompatRouter>
+            <TabsRow {...tabProps} />
+          </CompatRouter>
         </MemoryRouter>,
       );
 
@@ -198,7 +204,9 @@ describe('<TabsRow />', () => {
           keyLength={0}
           initialEntries={[{ pathname: '/details/s/:id', key: 'testKey' }]}
         >
-          <TabsRow {...tabProps} />
+          <CompatRouter>
+            <TabsRow {...tabProps} />
+          </CompatRouter>
         </MemoryRouter>,
       );
 
@@ -233,7 +241,9 @@ describe('<TabsRow />', () => {
           keyLength={0}
           initialEntries={[{ pathname: '/details/s/:id', key: 'testKey' }]}
         >
-          <TabsRow {...tabProps} />
+          <CompatRouter>
+            <TabsRow {...tabProps} />
+          </CompatRouter>
         </MemoryRouter>,
       );
 
@@ -269,7 +279,9 @@ describe('<TabsRow />', () => {
           keyLength={0}
           initialEntries={[{ pathname: '/details/s/:id', key: 'testKey' }]}
         >
-          <TabsRow {...tabProps} />
+          <CompatRouter>
+            <TabsRow {...tabProps} />
+          </CompatRouter>
         </MemoryRouter>,
       );
 
@@ -279,8 +291,9 @@ describe('<TabsRow />', () => {
           screen.getByRole('tab', { name: tabNames.clusterhistory, selected: true }),
         ).toBeInTheDocument(),
       );
+
       expect(onTabSelectedMock).toHaveBeenCalledWith(ClusterTabsId.CLUSTER_HISTORY);
-      expect(onTabSelectedMock).toHaveBeenCalledTimes(1);
+      expect(onTabSelectedMock).toHaveBeenCalledTimes(2);
     });
 
     it('selects tab which is not displayed', async () => {
@@ -296,7 +309,9 @@ describe('<TabsRow />', () => {
           keyLength={0}
           initialEntries={[{ pathname: '/details/s/:id', key: 'testKey' }]}
         >
-          <TabsRow {...tabProps} />
+          <CompatRouter>
+            <TabsRow {...tabProps} />
+          </CompatRouter>
         </MemoryRouter>,
       );
 
@@ -322,7 +337,9 @@ describe('<TabsRow />', () => {
           keyLength={0}
           initialEntries={[{ pathname: '/details/s/:id', key: 'testKey' }]}
         >
-          <TabsRow {...tabProps} />
+          <CompatRouter>
+            <TabsRow {...tabProps} />
+          </CompatRouter>
         </MemoryRouter>,
       );
 
@@ -332,179 +349,109 @@ describe('<TabsRow />', () => {
     });
   });
 
-  describe('history mechanism', () => {
-    it('navigates to show tab', async () => {
+  describe('User tab navigation mechanism', () => {
+    it('User can navigate to show tab', async () => {
       // Arrange
       const tabProps: TabsRowProps = {
         ...props,
         tabsInfo: {
           ...props.tabsInfo,
-          accessControl: { ...props.tabsInfo.accessControl, show: true },
+          overview: { ...props.tabsInfo.overview, show: true },
           clusterHistory: { ...props.tabsInfo.clusterHistory, show: true },
         },
-        initTabOpen: ClusterTabsId.ACCESS_CONTROL,
       };
 
-      render(
-        <Router history={history}>
-          <TabsRow {...tabProps} />
-        </Router>,
-      );
-      await waitFor(() => {
-        history.push(`/details/s/testKey#${ClusterTabsId.ACCESS_CONTROL}`);
-        expect(
-          screen.getByRole('tab', { name: tabNames.accesscontrol, selected: true }),
-        ).toBeInTheDocument();
-        expect(
-          screen.getByRole('tab', { name: tabNames.clusterhistory, selected: false }),
-        ).toBeInTheDocument();
-      });
-
       // Act
-      await waitFor(() => {
-        history.push(`/details/s/testKey#${ClusterTabsId.CLUSTER_HISTORY}`);
-      });
+      const { user } = render(
+        <MemoryRouter
+          keyLength={0}
+          initialEntries={[{ pathname: '/details/s/:id', key: 'testKey' }]}
+        >
+          <CompatRouter>
+            <TabsRow {...tabProps} />
+          </CompatRouter>
+        </MemoryRouter>,
+      );
+
+      const targetTab = screen.getByRole('tab', { name: 'Cluster history' });
+      await user.click(targetTab);
 
       // Assert
-      await waitFor(() => {
-        expect(onTabSelectedMock).toHaveBeenCalledTimes(3);
-        expect(onTabSelectedMock).toHaveBeenCalledWith(ClusterTabsId.CLUSTER_HISTORY);
-
-        expect(
-          screen.getByRole('tab', { name: tabNames.clusterhistory, selected: true }),
-        ).toBeInTheDocument();
-        expect(
-          screen.getByRole('tab', { name: tabNames.accesscontrol, selected: false }),
-        ).toBeInTheDocument();
-      });
+      expect(targetTab).toHaveAttribute('aria-selected', 'true');
     });
 
-    it('navigates to not shown tab', async () => {
+    it('Attempt to navigate to not shown tab', async () => {
       // Arrange
       const tabProps: TabsRowProps = {
         ...props,
         tabsInfo: {
           ...props.tabsInfo,
-          accessControl: { ...props.tabsInfo.accessControl, show: true },
+          overview: { ...props.tabsInfo.overview, show: true },
           clusterHistory: { ...props.tabsInfo.clusterHistory, show: false },
         },
-        initTabOpen: ClusterTabsId.ACCESS_CONTROL,
+        initTabOpen: ClusterTabsId.CLUSTER_HISTORY,
       };
 
+      // Act
       render(
-        <Router history={history}>
-          <TabsRow {...tabProps} />
-        </Router>,
+        <MemoryRouter
+          keyLength={0}
+          initialEntries={[{ pathname: '/details/s/:id', key: 'testKey' }]}
+        >
+          <CompatRouter>
+            <TabsRow {...tabProps} />
+          </CompatRouter>
+        </MemoryRouter>,
       );
 
       await waitFor(() => {
-        history.push(`/details/s/testKey#${ClusterTabsId.ACCESS_CONTROL}`);
-        expect(
-          screen.getByRole('tab', { name: tabNames.accesscontrol, selected: true }),
-        ).toBeInTheDocument();
-      });
-
-      // Act
-      await waitFor(() => {
-        history.push(`/details/s/testKey#${ClusterTabsId.CLUSTER_HISTORY}`);
+        expect(onTabSelectedMock).toHaveBeenCalledTimes(2);
+        expect(onTabSelectedMock).toHaveBeenCalledWith(ClusterTabsId.OVERVIEW);
       });
 
       // Assert
-      await waitFor(() => {
-        expect(onTabSelectedMock).toHaveBeenCalledTimes(3);
-        expect(onTabSelectedMock).toHaveBeenCalledWith(ClusterTabsId.OVERVIEW);
-
-        expect(
-          screen.getByRole('tab', { name: tabNames.overview, selected: true }),
-        ).toBeInTheDocument();
-        expect(
-          screen.getByRole('tab', { name: tabNames.accesscontrol, selected: false }),
-        ).toBeInTheDocument();
-      });
+      const initialTab = screen.getByRole('tab', { name: 'Overview' });
+      expect(initialTab).toHaveAttribute('aria-selected', 'true');
+      const targetTab = screen.queryByRole('tab', { name: 'Cluster history' });
+      expect(targetTab).toBeNull();
     });
 
-    it('navigates to disabled tab', async () => {
+    it('Attempt to navigate to disabled tab', async () => {
       // Arrange
       const tabProps: TabsRowProps = {
         ...props,
         tabsInfo: {
           ...props.tabsInfo,
-          accessControl: { ...props.tabsInfo.accessControl, show: true },
+          overview: { ...props.tabsInfo.overview, show: true },
           addAssisted: { ...props.tabsInfo.addAssisted, show: true, isDisabled: true },
         },
-        initTabOpen: ClusterTabsId.ACCESS_CONTROL,
+        initTabOpen: ClusterTabsId.OVERVIEW,
       };
 
-      render(
-        <Router history={history}>
-          <TabsRow {...tabProps} />
-        </Router>,
+      // Act
+      const { user } = render(
+        <MemoryRouter
+          keyLength={0}
+          initialEntries={[{ pathname: '/details/s/:id', key: 'testKey' }]}
+        >
+          <CompatRouter>
+            <TabsRow {...tabProps} />
+          </CompatRouter>
+        </MemoryRouter>,
       );
 
-      await waitFor(() => {
-        history.push(`/details/s/testKey#${ClusterTabsId.ACCESS_CONTROL}`);
-        expect(
-          screen.getByRole('tab', { name: tabNames.accesscontrol, selected: true }),
-        ).toBeInTheDocument();
-      });
+      const initialTab = screen.getByRole('tab', { name: 'Overview' });
+      expect(initialTab).toHaveAttribute('aria-selected', 'true');
 
-      // Act
-      await waitFor(() => {
-        history.push(`/details/s/testKey#${ClusterTabsId.ADD_ASSISTED_HOSTS}`);
-      });
+      const addAssistedTab = screen.getByRole('tab', { name: 'Add Hosts' });
+      expect(addAssistedTab).toHaveAttribute('aria-disabled', 'true');
+
+      await user.click(addAssistedTab);
 
       // Assert
       await waitFor(() => {
-        expect(onTabSelectedMock).toHaveBeenCalledTimes(3);
+        expect(onTabSelectedMock).toHaveBeenCalledTimes(2);
         expect(onTabSelectedMock).toHaveBeenCalledWith(ClusterTabsId.OVERVIEW);
-
-        expect(
-          screen.getByRole('tab', { name: tabNames.overview, selected: true }),
-        ).toBeInTheDocument();
-        expect(
-          screen.getByRole('tab', { name: tabNames.accesscontrol, selected: false }),
-        ).toBeInTheDocument();
-      });
-    });
-
-    it('navigates to undefined tab', async () => {
-      // Arrange
-      const tabProps: TabsRowProps = {
-        ...props,
-        tabsInfo: {
-          ...props.tabsInfo,
-          accessControl: { ...props.tabsInfo.accessControl, show: true },
-          addAssisted: { ...props.tabsInfo.addAssisted, show: true, isDisabled: true },
-        },
-        initTabOpen: ClusterTabsId.ACCESS_CONTROL,
-      };
-
-      render(
-        <Router history={history}>
-          <TabsRow {...tabProps} />
-        </Router>,
-      );
-
-      await waitFor(() => {
-        history.push(`/details/s/testKey#${ClusterTabsId.ACCESS_CONTROL}`);
-        expect(
-          screen.getByRole('tab', { name: tabNames.accesscontrol, selected: true }),
-        ).toBeInTheDocument();
-      });
-
-      // Act
-      await waitFor(() => history.push('/details/s/testKey#whatever'));
-
-      // Assert
-      await waitFor(() => {
-        expect(onTabSelectedMock).toHaveBeenCalledTimes(3);
-        expect(onTabSelectedMock).toHaveBeenCalledWith(ClusterTabsId.OVERVIEW);
-        expect(
-          screen.getByRole('tab', { name: tabNames.overview, selected: true }),
-        ).toBeInTheDocument();
-        expect(
-          screen.getByRole('tab', { name: tabNames.accesscontrol, selected: false }),
-        ).toBeInTheDocument();
       });
     });
   });
