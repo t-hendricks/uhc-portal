@@ -27,6 +27,7 @@ const UpgradeAcknowledgeModal = (props) => {
     automaticUpgradePolicyId,
     setUpgradePolicy,
     isHypershift,
+    isSTSEnabled,
   } = props;
 
   useEffect(() => {
@@ -47,7 +48,7 @@ const UpgradeAcknowledgeModal = (props) => {
     setErrors([]);
 
     const foundErrors = [];
-    if (automaticUpgradePolicyId) {
+    if (automaticUpgradePolicyId && !isSTSEnabled) {
       try {
         const requestPatch = isHypershift ? patchControlPlaneUpgradeSchedule : patchUpgradeSchedule;
         const patchUpgradeScheduleResponse = await requestPatch(
@@ -142,6 +143,7 @@ UpgradeAcknowledgeModal.propTypes = {
   setGate: PropTypes.func,
   setUpgradePolicy: PropTypes.func,
   isHypershift: PropTypes.bool,
+  isSTSEnabled: PropTypes.bool,
 };
 
 UpgradeAcknowledgeModal.defaultProps = {};
