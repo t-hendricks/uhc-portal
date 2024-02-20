@@ -41,7 +41,13 @@ describe('<ClusterList />', () => {
 
     it('should call onListFlagsSet with ROSA filter', () => {
       isRestrictedEnv.mockReturnValue(true);
-      render(<ClusterList {...props} />);
+      render(
+        <MemoryRouter>
+          <CompatRouter>
+            <ClusterList {...props} />
+          </CompatRouter>
+        </MemoryRouter>,
+      );
       expect(onListFlagsSet).toHaveBeenCalled();
       const args = onListFlagsSet.mock.calls[0];
       expect(args[0]).toBe('subscriptionFilter');

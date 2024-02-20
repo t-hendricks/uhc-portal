@@ -1,15 +1,14 @@
 import React from 'react';
-import { render, screen, checkAccessibility } from '~/testUtils';
+import { render, screen, checkAccessibility, TestRouter } from '~/testUtils';
+import { CompatRouter } from 'react-router-dom-v5-compat';
 import ClusterListFilterDropdown from './ClusterListFilterDropdown';
 
 describe('<ClusterListFilterDropdown />', () => {
   const setFilter = jest.fn();
-  const push = jest.fn();
 
   const defaultProps = {
     setFilter,
     currentFilters: {},
-    history: { location: 'my-url', push },
   };
 
   afterEach(() => {
@@ -18,7 +17,13 @@ describe('<ClusterListFilterDropdown />', () => {
 
   it.skip('is accessible', async () => {
     // TODO: once DropdownDeprecated is not used anymore
-    const { container, user } = render(<ClusterListFilterDropdown {...defaultProps} />);
+    const { container, user } = render(
+      <TestRouter>
+        <CompatRouter>
+          <ClusterListFilterDropdown {...defaultProps} />
+        </CompatRouter>
+      </TestRouter>,
+    );
 
     await user.click(screen.getByRole('button'));
     expect(await screen.findByRole('menu')).toBeInTheDocument();
