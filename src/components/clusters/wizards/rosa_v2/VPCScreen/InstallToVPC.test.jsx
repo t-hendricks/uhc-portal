@@ -1,7 +1,7 @@
 import wizardConnector from '~/components/clusters/wizards/common/WizardConnector';
 import { render, screen } from '~/testUtils';
 import React from 'react';
-import InstallToVPC from '~/components/clusters/wizards/rosa_v1/VPCScreen/InstallToVPC';
+import InstallToVPC from '~/components/clusters/wizards/rosa_v2/VPCScreen/InstallToVPC';
 import links from '~/common/installLinks.mjs';
 import { useGlobalState } from '~/redux/hooks';
 

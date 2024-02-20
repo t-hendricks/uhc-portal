@@ -1,9 +1,10 @@
 import React from 'react';
-import { render, screen, checkAccessibility, mockUseFeatureGate } from '~/testUtils';
-import wizardConnector from '~/components/clusters/wizards/common/WizardConnector';
+import { Formik } from 'formik';
+import { render, screen, checkAccessibility, mockUseFeatureGate, act } from '~/testUtils';
 import { HCP_USE_UNMANAGED } from '~/redux/constants/featureConstants';
-import { ROSA_HOSTED_CLI_MIN_VERSION } from '~/components/clusters/wizards/rosa_v1/rosaConstants';
+import { ROSA_HOSTED_CLI_MIN_VERSION } from '~/components/clusters/wizards/rosa_v2/rosaConstants';
 import AccountRolesARNsSection from '../AccountRolesARNsSection';
+import { initialValues } from '../../constants';
 
 const latestOCPVersion = '4.13.3';
 const latestVersionLoaded = '4.13.5';
@@ -12,6 +13,18 @@ jest.mock('~/hooks/useAnalytics', () => jest.fn(() => jest.fn()));
 jest.mock('~/components/releases/hooks', () => ({
   useOCPLatestVersion: () => [latestOCPVersion, latestVersionLoaded],
 }));
+
+const buildTestComponent = (children, formValues = {}) => (
+  <Formik
+    initialValues={{
+      ...initialValues,
+      ...formValues,
+    }}
+    onSubmit={() => {}}
+  >
+    {children}
+  </Formik>
+);
 
 const accountRolesList = [
   {
@@ -63,8 +76,6 @@ describe('<AccountRolesARNsSection />', () => {
     jest.resetAllMocks();
   });
   const props = {
-    touch: jest.fn(),
-    change: jest.fn(),
     selectedAWSAccountID: '',
     selectedInstallerRoleARN: '',
     rosaMaxOSVersion: '4.13.1',
@@ -80,16 +91,16 @@ describe('<AccountRolesARNsSection />', () => {
     onAccountChanged: jest.fn(),
   };
 
-  const ConnectedAccountRolesARNsSection = wizardConnector(AccountRolesARNsSection);
-
   it('is accessible', async () => {
-    const { container } = render(<ConnectedAccountRolesARNsSection {...props} />);
+    const { container } = render(buildTestComponent(<AccountRolesARNsSection {...props} />));
+    await act(() => Promise.resolve());
     await checkAccessibility(container);
   });
 
   it('Shows only unmanaged policy roles for non hypershift cluster', async () => {
     const newProps = { ...props, isHypershiftSelected: false };
-    const { user } = render(<ConnectedAccountRolesARNsSection {...newProps} />);
+    const { user } = render(buildTestComponent(<AccountRolesARNsSection {...newProps} />));
+    await act(() => Promise.resolve());
 
     // expand installer drop-down
     await user.click(screen.getByRole('button', { name: 'Options menu' }));
@@ -123,7 +134,8 @@ describe('<AccountRolesARNsSection />', () => {
     mockUseFeatureGate([[HCP_USE_UNMANAGED, false]]);
 
     const newProps = { ...props, isHypershiftSelected: true };
-    const { user } = render(<ConnectedAccountRolesARNsSection {...newProps} />);
+    const { user } = render(buildTestComponent(<AccountRolesARNsSection {...newProps} />));
+    await act(() => Promise.resolve());
 
     // expand installer drop-down
     await user.click(screen.getByRole('button', { name: 'Options menu' }));
@@ -156,7 +168,8 @@ describe('<AccountRolesARNsSection />', () => {
   it('Shows only both managed and unmanaged policy roles for hypershift cluster and feature flag is true', async () => {
     mockUseFeatureGate([[HCP_USE_UNMANAGED, true]]);
     const newProps = { ...props, isHypershiftSelected: true };
-    const { user } = render(<ConnectedAccountRolesARNsSection {...newProps} />);
+    const { user } = render(buildTestComponent(<AccountRolesARNsSection {...newProps} />));
+    await act(() => Promise.resolve());
 
     // expand installer drop-down
     await user.click(screen.getByRole('button', { name: 'Options menu' }));
@@ -257,7 +270,7 @@ describe('<AccountRolesARNsSection />', () => {
 
     // Note: These tests work because on mount, the Installer arn drop down only shows the selected version
 
-    it('defaults to IAM role with prefix -ManagedOpenShift', () => {
+    it('defaults to IAM role with prefix -ManagedOpenShift', async () => {
       mockUseFeatureGate([[HCP_USE_UNMANAGED, true]]);
 
       const roleList = [
@@ -276,11 +289,13 @@ describe('<AccountRolesARNsSection />', () => {
           data: roleList,
         },
       };
-      render(<ConnectedAccountRolesARNsSection {...newProps} />);
+      render(buildTestComponent(<AccountRolesARNsSection {...newProps} />));
+      await act(() => Promise.resolve());
+
       expect(screen.getByText(ManagedOpenShiftInstallerRole.Installer)).toBeInTheDocument();
     });
 
-    it('defaults to first managed policy role if no -ManagedOpenShift prefixed role exists', () => {
+    it('defaults to first managed policy role if no -ManagedOpenShift prefixed role exists', async () => {
       mockUseFeatureGate([[HCP_USE_UNMANAGED, true]]);
 
       const roleList = [
@@ -298,11 +313,13 @@ describe('<AccountRolesARNsSection />', () => {
           data: roleList,
         },
       };
-      render(<ConnectedAccountRolesARNsSection {...newProps} />);
+      render(buildTestComponent(<AccountRolesARNsSection {...newProps} />));
+      await act(() => Promise.resolve());
+
       expect(screen.getByText(testManagedInstallerRole.Installer)).toBeInTheDocument();
     });
 
-    it('defaults to first complete role set if no -ManagedOpenShift prefix or managed policy role exists', () => {
+    it('defaults to first complete role set if no -ManagedOpenShift prefix or managed policy role exists', async () => {
       mockUseFeatureGate([[HCP_USE_UNMANAGED, true]]);
 
       const roleList = [
@@ -320,11 +337,13 @@ describe('<AccountRolesARNsSection />', () => {
           data: roleList,
         },
       };
-      render(<ConnectedAccountRolesARNsSection {...newProps} />);
+      render(buildTestComponent(<AccountRolesARNsSection {...newProps} />));
+      await act(() => Promise.resolve());
+
       expect(screen.getByText(nonManagedCompleteInstallerRole.Installer)).toBeInTheDocument();
     });
 
-    it('defaults to first incomplete role set if no -ManagedOpenshift prefix, managed policy, or complete role set exists', () => {
+    it('defaults to first incomplete role set if no -ManagedOpenshift prefix, managed policy, or complete role set exists', async () => {
       mockUseFeatureGate([[HCP_USE_UNMANAGED, true]]);
 
       const roleList = [
@@ -341,7 +360,9 @@ describe('<AccountRolesARNsSection />', () => {
           data: roleList,
         },
       };
-      render(<ConnectedAccountRolesARNsSection {...newProps} />);
+      render(buildTestComponent(<AccountRolesARNsSection {...newProps} />));
+      await act(() => Promise.resolve());
+
       expect(screen.getByText(incompleteNonManagedInstallerRole.Installer)).toBeInTheDocument();
     });
   });
@@ -357,7 +378,7 @@ describe('<AccountRolesARNsSection />', () => {
         return compatibleRoleSets.includes(role.prefix) ? { ...role, Support: undefined } : role;
       });
 
-    it('is shown when not all ARNs are detected and Hypershift has been selected', () => {
+    it('is shown when not all ARNs are detected and Hypershift has been selected', async () => {
       const testProps = {
         ...props,
         getAWSAccountRolesARNsResponse: {
@@ -367,12 +388,13 @@ describe('<AccountRolesARNsSection />', () => {
           data: getIncompleteRoleSets({ isHypershift: true }),
         },
       };
-      render(<ConnectedAccountRolesARNsSection {...testProps} />);
+      render(buildTestComponent(<AccountRolesARNsSection {...testProps} />));
+      await act(() => Promise.resolve());
 
       expect(screen.getByText(rosaCLIMessage)).toBeInTheDocument();
     });
 
-    it('is not shown when not all ARNs are detected and ROSA classic has been selected', () => {
+    it('is not shown when not all ARNs are detected and ROSA classic has been selected', async () => {
       const newProps = {
         ...props,
         getAWSAccountRolesARNsResponse: {
@@ -383,7 +405,8 @@ describe('<AccountRolesARNsSection />', () => {
         },
         isHypershiftSelected: false,
       };
-      render(<ConnectedAccountRolesARNsSection {...newProps} />);
+      render(buildTestComponent(<AccountRolesARNsSection {...newProps} />));
+      await act(() => Promise.resolve());
 
       expect(screen.queryByText(rosaCLIMessage)).not.toBeInTheDocument();
       expect(screen.getByText('Some account roles ARNs were not detected')).toBeInTheDocument();

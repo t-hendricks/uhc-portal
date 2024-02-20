@@ -12,7 +12,7 @@ import {
 } from '@patternfly/react-core';
 import React, { useCallback, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { Field } from 'redux-form';
+import { Field } from 'formik';
 
 import { OutlinedQuestionCircleIcon } from '@patternfly/react-icons/dist/esm/icons/outlined-question-circle-icon';
 
@@ -23,6 +23,7 @@ import { useGlobalState } from '~/redux/hooks/useGlobalState';
 import { CloudAccount } from '~/types/accounts_mgmt.v1/models/CloudAccount';
 import { useFeatureGate } from '~/hooks/useFeatureGate';
 import { HCP_AWS_BILLING_SHOW, HCP_AWS_BILLING_REQUIRED } from '~/redux/constants/featureConstants';
+import { useFormState } from '~/components/clusters/wizards/hooks';
 import { required } from '../../../../../../common/validators';
 import ErrorBox from '../../../../../common/ErrorBox';
 import ExternalLink from '../../../../../common/ExternalLink';
@@ -30,18 +31,18 @@ import { getAWSBillingAccountIDs } from '../../../../../../redux/actions/rosaAct
 import AWSAccountSelection from '../AWSAccountSelection';
 import ContractInfo from './ContractInfo';
 import { getContract } from './awsBillingAccountHelper';
+import { FieldId } from '../../constants';
 
 interface AWSBillingAccountProps {
-  change: (field: string, value: string) => void;
   selectedAWSBillingAccountID: string;
   selectedAWSAccountID: string;
 }
 
 const AWSBillingAccount = ({
-  change,
   selectedAWSBillingAccountID,
   selectedAWSAccountID,
 }: AWSBillingAccountProps) => {
+  const { setFieldValue, getFieldProps, getFieldMeta, setFieldTouched } = useFormState();
   const dispatch = useDispatch();
   const isVisible = useFeatureGate(HCP_AWS_BILLING_SHOW);
   const isRequired = useFeatureGate(HCP_AWS_BILLING_REQUIRED);
@@ -79,7 +80,8 @@ const AWSBillingAccount = ({
         )
       ) {
         // reset the field
-        change('billing_account_id', '');
+        setFieldValue(FieldId.BillingAccountId, '');
+        setFieldTouched(FieldId.BillingAccountId);
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -88,7 +90,7 @@ const AWSBillingAccount = ({
   // if there's only one account, select it by default
   useEffect(() => {
     if (cloudAccounts?.length === 1 && !selectedAWSBillingAccountID) {
-      change('billing_account_id', cloudAccounts[0].cloud_account_id || '');
+      setFieldValue(FieldId.BillingAccountId, cloudAccounts[0].cloud_account_id || '');
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [cloudAccounts, selectedAWSBillingAccountID]);
@@ -134,7 +136,13 @@ const AWSBillingAccount = ({
         )}
         <Field
           component={AWSAccountSelection}
-          name="billing_account_id"
+          name={FieldId.BillingAccountId}
+          input={{
+            // name, value, onBlur, onChange
+            ...getFieldProps(FieldId.BillingAccountId),
+            onChange: (value: string) => setFieldValue(FieldId.BillingAccountId, value),
+          }}
+          meta={getFieldMeta(FieldId.BillingAccountId)}
           label="AWS billing account"
           validate={isRequired ? required : undefined}
           required={isRequired}
