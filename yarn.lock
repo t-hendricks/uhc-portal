@@ -5318,20 +5318,7 @@ cidr-regex@^3.1.1:
   dependencies:
     ip-regex "^4.1.0"
 
-cidr-tools@^3.0.0:
-  version "3.0.5"
-  resolved "https://registry.npmjs.org/cidr-tools/-/cidr-tools-3.0.5.tgz"
-  integrity sha512-HJq4eo/cQS4kNjm3fri/HVVT+/0HjsTTEOW/hSG9LXQMZso4SGMOLh6WdC/wfwafXxr+niJCCO9xNU0PuYlt2w==
-  dependencies:
-    ip-address "^7.1.0"
-    ip-cidr "^2.1.2"
-    ipv6-normalize "^1.0.1"
-    is-cidr "^4.0.2"
-    is-ip "^3.1.0"
-    jsbn "^1.1.0"
-    string-natural-compare "^3.0.1"
-
-cidr-tools@^4.3.0:
+cidr-tools@4.3.0, cidr-tools@^4.3.0:
   version "4.3.0"
   resolved "https://registry.npmjs.org/cidr-tools/-/cidr-tools-4.3.0.tgz"
   integrity sha512-Conidfn8svry8txRhW63SkaRMYJWJSvCT5kRCovIzlD0A3wzaV3gVFNxmAFJo5rxx3KHeYnJxCe7bUKFr1wxHA==
@@ -8724,19 +8711,6 @@ invariant@^2.2.2, invariant@^2.2.4:
   dependencies:
     loose-envify "^1.0.0"
 
-ip-address@^6.3.0:
-  version "6.4.0"
-  resolved "https://registry.npmjs.org/ip-address/-/ip-address-6.4.0.tgz"
-  integrity sha512-c5uxc2WUTuRBVHT/6r4m7HIr/DfV0bF6DvLH3iZGSK8wp8iMwwZSgIq2do0asFf8q9ECug0SE+6+1ACMe4sorA==
-  dependencies:
-    jsbn "1.1.0"
-    lodash.find "4.6.0"
-    lodash.max "4.0.1"
-    lodash.merge "4.6.2"
-    lodash.padstart "4.6.1"
-    lodash.repeat "4.1.0"
-    sprintf-js "1.1.2"
-
 ip-address@^7.1.0:
   version "7.1.0"
   resolved "https://registry.npmjs.org/ip-address/-/ip-address-7.1.0.tgz"
@@ -8753,12 +8727,12 @@ ip-address@^8.1.0:
     jsbn "1.1.0"
     sprintf-js "1.1.2"
 
-ip-cidr@^2.1.2:
-  version "2.1.4"
-  resolved "https://registry.npmjs.org/ip-cidr/-/ip-cidr-2.1.4.tgz"
-  integrity sha512-dre+OGDYAYHMCm6nNoqXHwGByqMDHArVpxslJVtSxk47spvyjoiKNe7X+HV+AtBN+LxboCVuY0ARXpzibizNMg==
+ip-cidr@3.1.0:
+  version "3.1.0"
+  resolved "https://registry.yarnpkg.com/ip-cidr/-/ip-cidr-3.1.0.tgz#db284bbd2bdac0b137a2cd4fe1ba9a6cca2f8b04"
+  integrity sha512-HUCn4snshEX1P8cja/IyU3qk8FVDW8T5zZcegDFbu4w7NojmAhk5NcOgj3M8+0fmumo1afJTPDtJlzsxLdOjtg==
   dependencies:
-    ip-address "^6.3.0"
+    ip-address "^7.1.0"
     jsbn "^1.1.0"
 
 ip-cidr@^3.0.4:
@@ -10504,11 +10478,6 @@ lodash.escape@^4.0.1:
   resolved "https://registry.npmjs.org/lodash.escape/-/lodash.escape-4.0.1.tgz"
   integrity sha1-yQRGkMIeBClL6qUXcS/e0fqI3pg=
 
-lodash.find@4.6.0:
-  version "4.6.0"
-  resolved "https://registry.npmjs.org/lodash.find/-/lodash.find-4.6.0.tgz"
-  integrity sha1-ywcE1Hq3F4n/oN6Ll92Sb7iLE7E=
-
 lodash.flattendeep@^4.4.0:
   version "4.4.0"
   resolved "https://registry.npmjs.org/lodash.flattendeep/-/lodash.flattendeep-4.4.0.tgz"
@@ -10529,11 +10498,6 @@ lodash.isplainobject@^4.0.6:
   resolved "https://registry.yarnpkg.com/lodash.isplainobject/-/lodash.isplainobject-4.0.6.tgz#7c526a52d89b45c45cc690b88163be0497f550cb"
   integrity sha512-oSXzaWypCMHkPC3NvBEaPHf0KsA5mvPrOPgQWDsbg8n7orZ290M0BmC/jgRZ4vcJ6DTAhjrsSYgdsW/F+MFOBA==
 
-lodash.max@4.0.1:
-  version "4.0.1"
-  resolved "https://registry.npmjs.org/lodash.max/-/lodash.max-4.0.1.tgz"
-  integrity sha1-hzVWbGGLNan3YFILSHrnllivE2o=
-
 lodash.memoize@4.x:
   version "4.1.2"
   resolved "https://registry.yarnpkg.com/lodash.memoize/-/lodash.memoize-4.1.2.tgz#bcc6c49a42a2840ed997f323eada5ecd182e0bfe"
@@ -10548,16 +10512,6 @@ lodash.once@^4.1.1:
   version "4.1.1"
   resolved "https://registry.yarnpkg.com/lodash.once/-/lodash.once-4.1.1.tgz#0dd3971213c7c56df880977d504c88fb471a97ac"
   integrity sha512-Sb487aTOCr9drQVL8pIxOzVhafOjZN9UU54hiN8PU3uAiSV7lx1yYNpbNmex2PK6dSJoNTSJUUswT651yww3Mg==
-
-lodash.padstart@4.6.1:
-  version "4.6.1"
-  resolved "https://registry.npmjs.org/lodash.padstart/-/lodash.padstart-4.6.1.tgz"
-  integrity sha1-0uPuv/DZ05rVD1y9G1KnvOa7YRs=
-
-lodash.repeat@4.1.0:
-  version "4.1.0"
-  resolved "https://registry.npmjs.org/lodash.repeat/-/lodash.repeat-4.1.0.tgz"
-  integrity sha1-/H3oEx2MisB+S0n3T/6CnR8r7EQ=
 
 lodash@^4.17.0, lodash@^4.17.14, lodash@^4.17.15, lodash@^4.17.19, lodash@^4.17.20, lodash@^4.17.21, lodash@^4.17.4:
   version "4.17.21"

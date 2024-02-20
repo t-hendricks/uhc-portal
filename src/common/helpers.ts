@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 import isEmpty from 'lodash/isEmpty';
 import semver from 'semver';
 
@@ -284,6 +285,58 @@ const truncateTextWithEllipsis = (text?: string, maxLength?: number) => {
   return text;
 };
 
+type Subnet = {
+  cidr_block: string;
+  name: string;
+  subnet_id: string;
+};
+
+const constructSelectedSubnets = (formValues?: Record<string, any>) => {
+  type MachinePoolSubnet = {
+    availability_zone: string;
+    privateSubnetId: string;
+    publicSubnetId: string;
+  };
+  const isHypershift = formValues?.hypershift === 'true';
+  const usePrivateLink = formValues?.use_privatelink;
+
+  let privateSubnets: Subnet[] = [];
+  let publicSubnets: Subnet[] = [];
+  let selectedSubnets: Subnet[] = [];
+
+  if (formValues?.install_to_vpc) {
+    let publicSubnetIds: string[] = [];
+
+    const privateSubnetIds = formValues?.machinePoolsSubnets
+      .map((obj: MachinePoolSubnet) => obj.privateSubnetId)
+      .filter((id: string) => id !== undefined && id !== '');
+
+    if (isHypershift) {
+      publicSubnetIds = formValues?.cluster_privacy_public_subnet_id;
+    } else {
+      publicSubnetIds = formValues?.machinePoolsSubnets
+        .map((obj: MachinePoolSubnet) => obj.publicSubnetId)
+        .filter((id: string) => id !== undefined && id !== '');
+    }
+
+    privateSubnets = formValues?.selected_vpc?.aws_subnets.filter((obj: Subnet) =>
+      privateSubnetIds.includes(obj.subnet_id),
+    );
+
+    publicSubnets = formValues?.selected_vpc?.aws_subnets.filter((obj: Subnet) =>
+      publicSubnetIds.includes(obj.subnet_id),
+    );
+
+    if (usePrivateLink) {
+      selectedSubnets = privateSubnets;
+    } else {
+      selectedSubnets = privateSubnets.concat(publicSubnets);
+    }
+  }
+
+  return selectedSubnets;
+};
+
 export {
   noop,
   isValid,
@@ -309,6 +362,8 @@ export {
   formatMinorVersion,
   strToKeyValueObject,
   stringToArrayTrimmed,
+  constructSelectedSubnets,
+  Subnet,
 };
 
 export default helpers;
