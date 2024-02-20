@@ -1,26 +1,27 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import isEmpty from 'lodash/isEmpty';
-
+import { useNavigate } from 'react-router-dom-v5-compat';
 import { Chip, ChipGroup, Button, Split, SplitItem } from '@patternfly/react-core';
 
 import { productFilterOptions } from '../../../../../common/subscriptionTypes';
 import helpers from '../../../../../common/helpers';
 import { buildFilterURLParams } from '../../../../../common/queryHelpers';
 
-function ClusterListFilterChipGroup({ currentFilters, setFilter, history }) {
+function ClusterListFilterChipGroup({ currentFilters, setFilter }) {
+  const navigate = useNavigate();
   if (helpers.nestedIsEmpty(currentFilters)) {
     return null;
   }
 
   // TODO extract this to an action.
   const setFilterAndQueryParams = (filter) => {
-    if (history !== undefined) {
-      history.push({
-        ...history.location,
+    navigate(
+      {
         search: buildFilterURLParams(filter),
-      });
-    }
+      },
+      { replace: true },
+    );
     setFilter(filter);
   };
 
@@ -76,10 +77,6 @@ function ClusterListFilterChipGroup({ currentFilters, setFilter, history }) {
 ClusterListFilterChipGroup.propTypes = {
   setFilter: PropTypes.func.isRequired,
   currentFilters: PropTypes.objectOf(PropTypes.arrayOf(PropTypes.string)),
-  history: PropTypes.shape({
-    location: PropTypes.string.isRequired,
-    push: PropTypes.func.isRequired,
-  }),
 };
 
 export default ClusterListFilterChipGroup;
