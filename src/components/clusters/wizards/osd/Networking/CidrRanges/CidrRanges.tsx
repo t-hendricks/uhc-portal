@@ -27,6 +27,7 @@ import { CloudProviderType } from '~/components/clusters/wizards/common/constant
 import { CheckboxField, TextInputField } from '~/components/clusters/wizards/form';
 import { useFormState } from '~/components/clusters/wizards/hooks';
 import { FieldId } from '~/components/clusters/wizards/osd/constants';
+import { constructSelectedSubnets } from '~/common/helpers';
 import {
   formatHostPrefix,
   validateMachineCidr,
@@ -91,6 +92,8 @@ export const CidrRanges = () => {
     }
   };
 
+  const selectedSubnets = constructSelectedSubnets(values);
+
   return (
     <Form>
       <Grid hasGutter>
@@ -134,7 +137,7 @@ export const CidrRanges = () => {
             <TextInputField
               name={FieldId.NetworkMachineCidr}
               label="Machine CIDR"
-              validate={(value: string) => validateMachineCidr(value)(values)}
+              validate={(value: string) => validateMachineCidr(value)(values, selectedSubnets)}
               isDisabled={isDefaultValuesChecked}
               helperText={
                 <div className="pf-v5-c-form__helper-text">
@@ -169,7 +172,7 @@ export const CidrRanges = () => {
             <TextInputField
               name={FieldId.NetworkServiceCidr}
               label="Service CIDR"
-              validate={(value) => validateServiceCidr(value)(values)}
+              validate={(value) => validateServiceCidr(value)(values, selectedSubnets)}
               isDisabled={isDefaultValuesChecked}
               helperText={
                 cloudProvider === CloudProviderType.Aws
@@ -194,7 +197,7 @@ export const CidrRanges = () => {
             <TextInputField
               name={FieldId.NetworkPodCidr}
               label="Pod CIDR"
-              validate={(value) => validatePodrCidr(value)(values)}
+              validate={(value) => validatePodrCidr(value)(values, selectedSubnets)}
               isDisabled={isDefaultValuesChecked}
               helperText={
                 cloudProvider === CloudProviderType.Aws

@@ -1,8 +1,12 @@
 /* eslint-disable camelcase */
 import { get, indexOf, inRange } from 'lodash';
 import cidrTools from 'cidr-tools';
+/* eslint-disable-next-line import/no-extraneous-dependencies */
+import IPCIDR from 'ip-cidr';
 import { ValidationError, Validator } from 'jsonschema';
 import { clusterService } from '~/services';
+import { Subnet } from '~/common/helpers';
+import { FieldId } from '~/components/clusters/wizards/osd/constants';
 import {
   maxAdditionalSecurityGroups,
   workerNodeVolumeSizeMinGiB,
@@ -770,6 +774,76 @@ const getCIDRSubnetLength = (value?: string): number | undefined => {
   }
 
   return parseInt(value.split('/').pop() ?? '', 10);
+};
+
+const subnetCidrs = (
+  value?: string,
+  formData?: Record<string, string>,
+  fieldName?: string,
+  selectedSubnets?: Subnet[],
+): string | undefined => {
+  if (!value || selectedSubnets?.length === 0) {
+    return undefined;
+  }
+
+  const erroredSubnets: Subnet[] = [];
+
+  const startingIP = (cidr: string) => {
+    const ip = new IPCIDR(cidr);
+    return ip.start().toString();
+  };
+
+  const compareCidrs = (shouldContain: boolean) => {
+    if (shouldContain) {
+      selectedSubnets?.forEach((subnet: Subnet) => {
+        if (
+          CIDR_REGEXP.test(subnet.cidr_block) &&
+          !cidrTools.contains(value, startingIP(subnet.cidr_block))
+        ) {
+          erroredSubnets.push(subnet);
+        }
+      });
+    } else {
+      selectedSubnets?.forEach((subnet: Subnet) => {
+        if (
+          CIDR_REGEXP.test(subnet.cidr_block) &&
+          cidrTools.contains(value, startingIP(subnet.cidr_block))
+        ) {
+          erroredSubnets.push(subnet);
+        }
+      });
+    }
+  };
+
+  const subnetName = () =>
+    formData?.hypershift === 'true' ? erroredSubnets[0]?.name : erroredSubnets[0]?.subnet_id;
+
+  if (fieldName === FieldId.NetworkMachineCidr) {
+    compareCidrs(true);
+    if (erroredSubnets.length > 0) {
+      return `The Machine CIDR does not include the starting IP (${startingIP(
+        erroredSubnets[0].cidr_block,
+      )}) of ${subnetName()}`;
+    }
+  }
+  if (fieldName === FieldId.NetworkServiceCidr) {
+    compareCidrs(false);
+    if (erroredSubnets.length > 0) {
+      return `The Service CIDR includes the starting IP (${startingIP(
+        erroredSubnets[0].cidr_block,
+      )}) of ${subnetName()}`;
+    }
+  }
+  if (fieldName === FieldId.NetworkPodCidr) {
+    compareCidrs(false);
+    if (erroredSubnets.length > 0) {
+      return `The Pod CIDR includes the starting IP (${startingIP(
+        erroredSubnets[0].cidr_block,
+      )}) of ${subnetName()}`;
+    }
+  }
+
+  return undefined;
 };
 
 const awsMachineCidr = (value?: string, formData?: Record<string, string>): string | undefined => {
@@ -1579,6 +1653,7 @@ const validators = {
   validateRHITUsername,
   checkBaseDNSDomain,
   cidr,
+  subnetCidrs,
   awsMachineCidr,
   // gcpMachineCidr, https://issues.redhat.com/browse/HAC-2118
   serviceCidr,
