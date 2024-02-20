@@ -1,12 +1,13 @@
 import React from 'react';
-import { withState, checkAccessibility, insightsMock, screen, TestRouter } from '~/testUtils';
+import { Formik } from 'formik';
+import { withState, checkAccessibility, insightsMock, screen, act, TestRouter } from '~/testUtils';
 import { CompatRouter } from 'react-router-dom-v5-compat';
-import wizardConnector from '~/components/clusters/wizards/common/WizardConnector';
 import { normalizeSTSUsersByAWSAccounts } from '~/redux/actions/rosaActions';
 import AccountsRolesScreen, {
   AccountsRolesScreenProps,
   isUserRoleForSelectedAWSAccount,
 } from '../AccountsRolesScreen';
+import { initialValues } from '../../constants';
 
 const useAnalyticsMock = jest.fn();
 jest.mock('~/hooks/useAnalytics', () => jest.fn(() => useAnalyticsMock));
@@ -26,28 +27,44 @@ const accountRolesScreenProps: AccountsRolesScreenProps = {
   isHypershiftSelected: false,
 };
 
-describe('<AccountsRolesScreen />', () => {
-  const ConnectedAccountsRolesScreen = wizardConnector(AccountsRolesScreen);
+const buildTestComponent = (children: React.ReactNode, formValues = {}) => (
+  <Formik
+    initialValues={{
+      ...initialValues,
+      ...formValues,
+    }}
+    onSubmit={() => {}}
+  >
+    {children}
+  </Formik>
+);
 
+describe('<AccountsRolesScreen />', () => {
   it('is accessible', async () => {
     const { container } = withState({}).render(
-      <TestRouter>
-        <CompatRouter>
-          <ConnectedAccountsRolesScreen {...accountRolesScreenProps} />
-        </CompatRouter>
-      </TestRouter>,
+      buildTestComponent(
+        <TestRouter>
+          <CompatRouter>
+            <AccountsRolesScreen {...accountRolesScreenProps} />
+          </CompatRouter>
+        </TestRouter>,
+      ),
     );
+    await act(() => Promise.resolve());
     await checkAccessibility(container);
   });
 
-  it('does not show the welcome and prerequisites sections for users with HyperShift enabled', () => {
+  it('does not show the welcome and prerequisites sections for users with HyperShift enabled', async () => {
     withState({}).render(
-      <TestRouter>
-        <CompatRouter>
-          <ConnectedAccountsRolesScreen {...accountRolesScreenProps} />
-        </CompatRouter>
-      </TestRouter>,
+      buildTestComponent(
+        <TestRouter>
+          <CompatRouter>
+            <AccountsRolesScreen {...accountRolesScreenProps} />
+          </CompatRouter>
+        </TestRouter>,
+      ),
     );
+    await act(() => Promise.resolve());
 
     expect(
       screen.queryByText('Welcome to Red Hat OpenShift Service on AWS (ROSA)'),
@@ -55,15 +72,18 @@ describe('<AccountsRolesScreen />', () => {
     expect(screen.queryByText('Did you complete your prerequisites?')).not.toBeInTheDocument();
   });
 
-  it('shows the welcome and prerequisites sections for users with HyperShift disabled without the CLI warning', () => {
+  it('shows the welcome and prerequisites sections for users with HyperShift disabled without the CLI warning', async () => {
     const props = { ...accountRolesScreenProps, isHypershiftEnabled: false };
     withState({}).render(
-      <TestRouter>
-        <CompatRouter>
-          <ConnectedAccountsRolesScreen {...props} />
-        </CompatRouter>
-      </TestRouter>,
+      buildTestComponent(
+        <TestRouter>
+          <CompatRouter>
+            <AccountsRolesScreen {...props} />
+          </CompatRouter>
+        </TestRouter>,
+      ),
     );
+    await act(() => Promise.resolve());
 
     expect(
       screen.getByText('Welcome to Red Hat OpenShift Service on AWS (ROSA)'),

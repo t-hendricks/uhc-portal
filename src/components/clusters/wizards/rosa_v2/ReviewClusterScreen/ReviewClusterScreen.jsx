@@ -172,7 +172,7 @@ const ReviewClusterScreen = ({
       </Title>
       {isROSA && (
         <>
-          <HiddenCheckbox name="detected_ocm_and_user_roles" />
+          <HiddenCheckbox name={FieldId.DetectedOcmAndUserRoles} />
           {isHypershiftEnabled && (
             <ReviewSection
               title={getStepName('CONTROL_PLANE')}
@@ -186,10 +186,10 @@ const ReviewClusterScreen = ({
             onGoToStep={() => goToStepById(getStepId(accountStepId))}
             initiallyExpanded={errorWithAWSAccountRoles}
           >
-            {ReviewItem({ name: 'associated_aws_id', formValues })}
+            {ReviewItem({ name: FieldId.AssociatedAwsId, formValues })}
             {isHypershiftSelected &&
               viewAWSBillingAcct &&
-              ReviewItem({ name: 'billing_account_id', formValues })}
+              ReviewItem({ name: FieldId.BillingAccountId, formValues })}
             {ReviewRoleItem({
               name: 'ocm-role',
               getRoleResponse: getOCMRoleResponse,
@@ -200,10 +200,10 @@ const ReviewClusterScreen = ({
               getRoleResponse: getUserRoleResponse,
               content: userRole,
             })}
-            {ReviewItem({ name: 'installer_role_arn', formValues })}
-            {ReviewItem({ name: 'support_role_arn', formValues })}
-            {!isHypershiftSelected && ReviewItem({ name: 'control_plane_role_arn', formValues })}
-            {ReviewItem({ name: 'worker_role_arn', formValues })}
+            {ReviewItem({ name: FieldId.InstallerRoleArn, formValues })}
+            {ReviewItem({ name: FieldId.SupportRoleArn, formValues })}
+            {!isHypershiftSelected && ReviewItem({ name: FieldId.ControlPlaneRoleArn, formValues })}
+            {ReviewItem({ name: FieldId.WorkerRoleArn, formValues })}
           </ReviewSection>
         </>
       )}
@@ -212,8 +212,8 @@ const ReviewClusterScreen = ({
           title={getStepName('BILLING_MODEL')}
           onGoToStep={() => goToStepById(getStepId('BILLING_MODEL'))}
         >
-          {ReviewItem({ name: 'billing_model', formValues })}
-          {ReviewItem({ name: 'byoc', formValues })}
+          {ReviewItem({ name: FieldId.BillingModel, formValues })}
+          {ReviewItem({ name: FieldId.Byoc, formValues })}
         </ReviewSection>
       )}
       <ReviewSection
