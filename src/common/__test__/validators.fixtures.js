@@ -149,5 +149,48 @@ const GCPServiceAccounts = [
   },
 ];
 
-const fixtures = { GCPServiceAccounts };
+const selectedSubnets = [
+  {
+    cidr_block: '10.0.0.0/20',
+    name: 'test-subnet-private-1',
+    subnet_id: 'subnet-04e923b04ba921c7d',
+  },
+  {
+    cidr_block: '10.0.16.0/20',
+    name: 'test-subnet-private-2',
+    subnet_id: 'subnet-03da14b7d2c7d73f0',
+  },
+  {
+    cidr_block: '10.0.32.0/20',
+    name: 'test-subnet-private-3',
+    subnet_id: 'subnet-0fd96dead0c244673',
+  },
+  {
+    cidr_block: '10.0.48.0/20',
+    name: 'test-subnet-private-4',
+    subnet_id: 'subnet-0d7e4b5ad15f8967b',
+  },
+  {
+    cidr_block: '10.0.128.0/20',
+    name: 'test-subnet-public-1',
+    subnet_id: 'subnet-0ff6fbcf60020b712',
+  },
+  {
+    cidr_block: '10.0.144.0/20',
+    name: 'test-subnet-public-2',
+    subnet_id: 'subnet-02442291e9f6c946c',
+  },
+  {
+    cidr_block: '10.0.160.0/20',
+    name: 'test-subnet-public-3',
+    subnet_id: 'subnet-021c83eb7b7fcdbf8',
+  },
+  {
+    cidr_block: '10.0.176.0/20',
+    name: 'test-subnet-public-4',
+    subnet_id: 'subnet-0a6130121fbb2077a',
+  },
+];
+
+const fixtures = { GCPServiceAccounts, selectedSubnets };
 export default fixtures;

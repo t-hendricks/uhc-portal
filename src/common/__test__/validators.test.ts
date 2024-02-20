@@ -333,6 +333,109 @@ describe('Field does not share subnets with other fields', () => {
   );
 });
 
+describe('Subnet cidrs are valid against machine, network and pod cidr ranges', () => {
+  const { selectedSubnets } = fixtures;
+  // machine cidr
+  it.each([
+    [
+      '10.0.0.0/16',
+      { network_service_cidr: '172.30.0.0/16', network_pod_cidr: '10.128.0.0/16' },
+      'undefined',
+    ],
+    [
+      '10.32.0.0/16',
+      { network_service_cidr: '172.30.0.0/16', network_pod_cidr: '10.128.0.0/16' },
+      'string',
+    ],
+    [
+      '172.30.0.0/16',
+      { network_service_cidr: undefined, network_pod_cidr: '10.128.0.0/16' },
+      'string',
+    ],
+    [
+      '10.0.0.0/19',
+      { network_service_cidr: '172.30.0.0/16', network_pod_cidr: '10.128.0.0/16' },
+      'string',
+    ],
+    [
+      '10.0.192.0/18',
+      { network_service_cidr: '172.30.0.0/16', network_pod_cidr: '10.128.0.0/16' },
+      'string',
+    ],
+  ])(
+    'value %p and formData %p to be %p',
+    (
+      value: string | undefined,
+      formData: { [name: string]: any },
+      expected: string | undefined,
+    ) => {
+      expect(
+        typeof validators.subnetCidrs(value, formData, 'network_machine_cidr', selectedSubnets),
+      ).toBe(expected);
+    },
+  );
+
+  // service cidr
+  it.each([
+    [
+      '172.30.0.0/16',
+      { network_machine_cidr: '10.0.0.0/16', network_pod_cidr: '10.128.0.0/16' },
+      'undefined',
+    ],
+    [
+      '10.0.0.0/16',
+      { network_machine_cidr: '10.32.0.0/16', network_pod_cidr: '10.128.0.0/16' },
+      'string',
+    ],
+    [
+      '10.0.0.0/19',
+      { network_machine_cidr: '10.0.0.0/16', network_pod_cidr: '10.128.0.0/16' },
+      'string',
+    ],
+  ])(
+    'value %p and formData %p to be %p',
+    (
+      value: string | undefined,
+      formData: { [name: string]: any },
+      expected: string | undefined,
+    ) => {
+      expect(
+        typeof validators.subnetCidrs(value, formData, 'network_service_cidr', selectedSubnets),
+      ).toBe(expected);
+    },
+  );
+
+  // pod cidr
+  it.each([
+    [
+      '10.128.0.0/16',
+      { network_machine_cidr: '10.0.0.0/16', network_service_cidr: '172.30.0.0/16' },
+      'undefined',
+    ],
+    [
+      '10.32.0.0/16',
+      { network_machine_cidr: '10.0.0.0/16', network_service_cidr: '172.30.0.0/16' },
+      'undefined',
+    ],
+    [
+      '10.0.0.0/16',
+      { network_machine_cidr: '10.32.0.0/16', network_service_cidr: '172.30.0.0/16' },
+      'string',
+    ],
+  ])(
+    'value %p and formData %p to be %p',
+    (
+      value: string | undefined,
+      formData: { [name: string]: any },
+      expected: string | undefined,
+    ) => {
+      expect(
+        typeof validators.subnetCidrs(value, formData, 'network_pod_cidr', selectedSubnets),
+      ).toBe(expected);
+    },
+  );
+});
+
 describe('Field is an IP address with subnet mask between 16-28', () => {
   it.each([
     ['network_machine_cidr_single_az', undefined, undefined],

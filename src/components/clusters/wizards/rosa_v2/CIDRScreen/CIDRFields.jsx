@@ -7,6 +7,8 @@ import links from '~/common/installLinks.mjs';
 import ExternalLink from '~/components/common/ExternalLink';
 import { ReduxCheckbox } from '~/components/common/ReduxFormComponents';
 import validators, { required } from '~/common/validators';
+import { FieldId } from '~/components/clusters/wizards/osd/constants';
+import { constructSelectedSubnets } from '~/common/helpers';
 import {
   MACHINE_CIDR_DEFAULT,
   SERVICE_CIDR_DEFAULT,
@@ -50,6 +52,8 @@ function CIDRFields({
     return value;
   };
 
+  const selectedSubnets = constructSelectedSubnets(formValues);
+
   const cidrValidators = (value) =>
     required(value) ||
     validators.cidr(value) ||
@@ -65,6 +69,8 @@ function CIDRFields({
     machineDisjointSubnets(value, formValues) ||
     (cloudProviderID === 'aws' && !isMultiAz && awsMachineSingleAZSubnetMask(value)) ||
     (cloudProviderID === 'aws' && isMultiAz && awsMachineMultiAZSubnetMask(value)) ||
+    (cloudProviderID === 'aws' &&
+      validators.subnetCidrs(value, formValues, FieldId.NetworkMachineCidr, selectedSubnets)) ||
     undefined;
 
   const serviceCidrValidators = (value) =>
@@ -72,12 +78,16 @@ function CIDRFields({
     validators.serviceCidr(value) ||
     serviceDisjointSubnets(value, formValues) ||
     (cloudProviderID === 'aws' && awsServiceSubnetMask(value)) ||
+    (cloudProviderID === 'aws' &&
+      validators.subnetCidrs(value, formValues, FieldId.NetworkServiceCidr, selectedSubnets)) ||
     undefined;
 
   const podCidrValidators = (value) =>
     cidrValidators(value) ||
     validators.podCidr(value, formValues) ||
     podDisjointSubnets(value, formValues) ||
+    (cloudProviderID === 'aws' &&
+      validators.subnetCidrs(value, formValues, FieldId.NetworkPodCidr, selectedSubnets)) ||
     undefined;
 
   const awsMachineCIDRMax =
