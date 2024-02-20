@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import { formValueSelector, getFormSyncErrors, getFormAsyncErrors, touch } from 'redux-form';
+import { formValueSelector, touch } from 'redux-form';
 
 import wizardConnector from '~/components/clusters/wizards/common/WizardConnector';
 import createOSDInitialValues from '~/components/clusters/wizards/common/createOSDInitialValues';
@@ -23,10 +23,6 @@ const mapStateToProps = (state, ownProps) => {
   const machinePoolsSubnets = valueSelector(state, 'machinePoolsSubnets');
 
   const isHypershiftSelected = valueSelector(state, 'hypershift') === 'true';
-  const formErrors = {
-    ...getFormSyncErrors('CreateCluster')(state),
-    ...getFormAsyncErrors('CreateCluster')(state),
-  };
 
   return {
     cloudProviderID,
@@ -41,7 +37,6 @@ const mapStateToProps = (state, ownProps) => {
     isEtcdEncryptionSelected,
     isFipsCryptoSelected,
     isHypershiftSelected,
-    formErrors,
     touch: (fieldNames) => touch('CreateCluster', ...fieldNames),
     initialValues: createOSDInitialValues({
       cloudProviderID,
