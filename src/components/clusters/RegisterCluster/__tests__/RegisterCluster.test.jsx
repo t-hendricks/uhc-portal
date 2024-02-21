@@ -5,9 +5,9 @@ import { render, screen, checkAccessibility, TestRouter } from '~/testUtils';
 // eslint-disable-next-line import/extensions
 import { reduxFormRegisterCluster as ReduxFormRegisterCluster } from '../index.js';
 
-jest.mock('react-router-dom', () => ({
-  ...jest.requireActual('react-router-dom'),
-  Redirect: jest.fn(({ to }) => `Redirected to "${to}"`),
+jest.mock('react-router-dom-v5-compat', () => ({
+  ...jest.requireActual('react-router-dom-v5-compat'),
+  Navigate: jest.fn(({ to }) => `Redirected to "${to}"`),
 }));
 
 describe('<RegisterCluster />', () => {

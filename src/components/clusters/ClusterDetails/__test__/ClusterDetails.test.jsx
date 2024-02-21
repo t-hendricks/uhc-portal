@@ -341,7 +341,7 @@ describe('<ClusterDetails />', () => {
       const wrapper404 = shallow(<ClusterDetails {...props404} />);
 
       expect(functions.setGlobalError).toBeCalled();
-      expect(wrapper404.find('Redirect').length).toEqual(1);
+      expect(wrapper404.find('Navigate').length).toEqual(1);
     });
   });
 
