@@ -4,7 +4,7 @@ import { AnyAction, createStore } from 'redux';
 import { act, render, RenderOptions } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import '@testing-library/jest-dom';
-import { MemoryRouter } from 'react-router';
+import { MemoryRouter } from 'react-router-dom';
 import { toHaveNoViolations, axe } from 'jest-axe';
 
 import useChrome from '@redhat-cloud-services/frontend-components/useChrome';
