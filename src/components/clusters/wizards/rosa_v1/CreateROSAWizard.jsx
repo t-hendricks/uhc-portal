@@ -2,7 +2,7 @@ import { Spinner } from '@redhat-cloud-services/frontend-components';
 import { isMatch } from 'lodash';
 import PropTypes from 'prop-types';
 import React, { useMemo, useState } from 'react';
-import { Redirect } from 'react-router-dom';
+import { Navigate } from 'react-router-dom-v5-compat';
 import { Banner, Bullseye, PageSection, Stack, StackItem } from '@patternfly/react-core';
 import {
   Wizard as WizardDeprecated,
@@ -472,11 +472,13 @@ class CreateROSAWizardInternal extends React.Component {
       // unblock history in order to not show a confirmation prompt.
       history.block(() => {});
 
-      return <Redirect to={`/details/s/${createClusterResponse.cluster.subscription.id}`} />;
+      return (
+        <Navigate replace to={`/details/s/${createClusterResponse.cluster.subscription.id}`} />
+      );
     }
 
     if (orgWasFetched && !hasProductQuota) {
-      return <Redirect to="/create" />;
+      return <Navigate replace to="/create" />;
     }
 
     const requests = [

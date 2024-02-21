@@ -13,7 +13,7 @@ limitations under the License.
 
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Redirect } from 'react-router-dom';
+import { Navigate } from 'react-router-dom-v5-compat';
 import get from 'lodash/get';
 
 import { PageSection, TabContent } from '@patternfly/react-core';
@@ -340,7 +340,7 @@ class ClusterDetails extends Component {
           'clusterDetails',
           clusterDetails.errorMessage,
         );
-        return <Redirect to="/" />;
+        return <Navigate replace to="/" />;
       }
       return errorState();
     }

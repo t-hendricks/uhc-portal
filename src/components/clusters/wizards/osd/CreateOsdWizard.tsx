@@ -171,11 +171,11 @@ const CreateOsdWizardInternal = () => {
     // history in order to not show a confirmation prompt.
     // TODO: Should be removed upon migrating to React Router v6
     history.block(() => {});
-    return <Navigate to={`/details/s/${createClusterResponse.cluster.subscription?.id}`} />;
+    return <Navigate replace to={`/details/s/${createClusterResponse.cluster.subscription?.id}`} />;
   }
 
   if (organization.fulfilled && !hasProductQuota) {
-    return <Navigate to="/create" />;
+    return <Navigate replace to="/create" />;
   }
 
   if (requestErrors.length > 0) {
