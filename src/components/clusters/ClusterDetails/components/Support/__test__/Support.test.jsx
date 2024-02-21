@@ -1,46 +1,88 @@
 import React from 'react';
-import { shallow } from 'enzyme';
-
+import { screen, checkAccessibility, withState } from '~/testUtils';
 import Support from '../Support';
-import NotificationContactsCard from '../components/NotificationContactsSection/NotificationContactsCard';
-import SupportCasesCard from '../components/SupportCasesSection/SupportCasesCard';
 import { notificationContactsWithContacts, baseProps } from './Support.fixtures';
 
-describe('<Support /> should render', () => {
-  it('without notification contacts', () => {
-    const wrapper = shallow(<Support {...baseProps} />);
+jest.mock('~/components/clusters/ClusterDetails/components/Support/SupportActions', () => {
+  const originalModule = jest.requireActual(
+    '~/components/clusters/ClusterDetails/components/Support/SupportActions',
+  );
 
-    expect(wrapper).toMatchSnapshot();
-  });
+  return {
+    __esModule: true,
+    ...originalModule,
+    default: {
+      ...originalModule.default,
+      getSupportCases: jest.fn(() => ({ type: 'foo' })),
+      clearNotificationContacts: jest.fn(() => ({ type: 'foo' })),
+      clearDeleteNotificationContacts: jest.fn(() => ({ type: 'foo' })),
+      getNotificationContacts: jest.fn(() => ({ type: 'foo' })),
+      deleteNotificationContact: jest.fn(() => ({ type: 'foo' })),
+      addNotification: jest.fn(() => ({ type: 'foo' })),
+    },
+  };
+});
 
-  it('with notification contacts', () => {
-    const wrapper = shallow(
-      <Support {...baseProps} notificationContacts={notificationContactsWithContacts} />,
+const baseState = {
+  clusters: {
+    details: {
+      cluster: {
+        subscription: { id: 'mySubId', plan: { type: 'ROSA' } },
+        external_id: 'myClusterUUID',
+        openshift_version: '4.14.4',
+      },
+    },
+  },
+};
+
+const withNotificationsState = {
+  ...baseState,
+  clusterSupport: {
+    notificationContacts: notificationContactsWithContacts,
+    deleteContactResponse: {},
+    addContactResponse: {},
+  },
+};
+
+describe('<Support /> ', () => {
+  it('is accessible without notification contacts', async () => {
+    const { container } = withState(baseState).render(<Support {...baseProps} />);
+    expect(await screen.findByText('Support cases')).toBeInTheDocument();
+
+    expect(screen.getByRole('button', { name: 'Open support case' })).not.toHaveAttribute(
+      'aria-disabled',
+      'true',
+    );
+    expect(screen.getByRole('button', { name: 'Add notification contact' })).not.toHaveAttribute(
+      'aria-disabled',
+      'true',
     );
 
-    expect(wrapper).toMatchSnapshot();
+    await checkAccessibility(container);
   });
-});
 
-describe('<Support isDisabled/>', () => {
-  it('should have the components disabled', () => {
-    const wrapper = shallow(<Support {...baseProps} isDisabled />);
-    expect(wrapper.find('AddNotificationContactButton').length).toEqual(0);
-    expect(wrapper.find('Connect(NotificationContactsCard)').props().isDisabled).toBe(true);
-    expect(wrapper.find('Connect(SupportCasesCard)').props().isDisabled).toBe(true);
+  it('is accessible with notification contacts', async () => {
+    const { container } = withState(withNotificationsState).render(<Support {...baseProps} />);
+    expect(await screen.findByText('Support cases')).toBeInTheDocument();
+    expect(screen.getByText('***REMOVED***')).toBeInTheDocument();
+
+    const tableRowActions = screen.getAllByRole('button', { name: 'Kebab toggle' });
+    tableRowActions.forEach((tableRowAction) => expect(tableRowAction).not.toBeDisabled());
+
+    await checkAccessibility(container);
   });
-});
 
-describe('<NotificationContactsCard isDisabled/>', () => {
-  it('should have the components disabled', () => {
-    const wrapper = shallow(<NotificationContactsCard {...baseProps} hasContacts isDisabled />);
-    expect(wrapper.find('Table').props().areActionsDisabled()).toBe(true);
-  });
-});
+  it('is disabled', async () => {
+    withState(withNotificationsState).render(<Support {...baseProps} isDisabled />);
+    expect(await screen.findByText('Support cases')).toBeInTheDocument();
 
-describe('<SupportCasesCard isDisabled/>', () => {
-  it('should have the components disabled', () => {
-    const wrapper = shallow(<SupportCasesCard {...baseProps} isDisabled />);
-    expect(wrapper.find('Button').length).toEqual(0);
+    expect(screen.queryByRole('button', { name: 'Open support case' })).not.toBeInTheDocument();
+    expect(
+      screen.queryByRole('button', { name: 'Add notification contact' }),
+    ).not.toBeInTheDocument();
+
+    const tableRowActions = screen.getAllByRole('button', { name: 'Kebab toggle' });
+
+    tableRowActions.forEach((tableRowAction) => expect(tableRowAction).toBeDisabled());
   });
 });

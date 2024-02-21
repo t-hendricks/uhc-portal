@@ -129,7 +129,7 @@ SupportCasesCard.propTypes = {
   subscriptionID: PropTypes.string.isRequired,
   clusterUUID: PropTypes.string.isRequired,
   product: PropTypes.string.isRequired,
-  version: PropTypes.object.isRequired,
+  version: PropTypes.string.isRequired,
   supportCases: PropTypes.object.isRequired,
   getSupportCases: PropTypes.func.isRequired,
   isDisabled: PropTypes.bool,
