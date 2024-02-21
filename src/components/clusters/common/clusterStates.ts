@@ -234,6 +234,9 @@ const canViewMachinePoolTab = (cluster: ClusterFromSubscription): boolean => {
   );
 };
 
+const isAWSPrivateCluster = (cluster: ClusterFromSubscription): boolean =>
+  (cluster?.aws && cluster?.ccs?.enabled && cluster?.aws?.private_link) ?? false;
+
 export {
   getClusterStateAndDescription,
   isHibernating,
@@ -256,6 +259,7 @@ export {
   isErrorSharedGCPVPCValues,
   isClusterUpgrading,
   canViewMachinePoolTab,
+  isAWSPrivateCluster,
 };
 
 export default clusterStates;
