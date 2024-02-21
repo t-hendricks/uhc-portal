@@ -1,14 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { GridItem } from '@patternfly/react-core';
-import { Field } from 'redux-form';
-
+import { Field } from 'formik';
+import { useFormState } from '~/components/clusters/wizards/hooks';
 import VPCDropdown from '~/components/clusters/wizards/common/VPCDropdown/VPCDropdown';
 import { SubnetSelectField } from '~/components/clusters/common/SubnetSelectField';
 import { getMatchingAvailabilityZones } from '~/common/vpcHelpers';
 import WithTooltip from '~/components/common/WithTooltip';
 import AvailabilityZoneSelection from '~/components/clusters/wizards/common/NetworkingSection/AvailabilityZoneSelection';
 import { required, validateUniqueAZ } from '../../../../../common/validators';
+import { FieldId } from '../constants';
 
 const SingleSubnetFieldsRow = ({
   index,
@@ -18,7 +19,18 @@ const SingleSubnetFieldsRow = ({
   isMultiAz,
   privateLinkSelected,
 }) => {
-  const azValidations = [required, isMultiAz && validateUniqueAZ].filter(Boolean);
+  const {
+    setFieldValue,
+    getFieldProps,
+    getFieldMeta,
+    values: { [FieldId.MachinePoolsSubnets]: machinePoolsSubnets },
+  } = useFormState();
+  const azFieldName = `${FieldId.MachinePoolsSubnets}[${index}].availabilityZone`;
+  const privateSubnetIdName = `${FieldId.MachinePoolsSubnets}[${index}].privateSubnetId`;
+  const publicSubnetIdName = `${FieldId.MachinePoolsSubnets}[${index}].publicSubnetId`;
+
+  const azValidations = (value) =>
+    required(value) || (isMultiAz && validateUniqueAZ(value, machinePoolsSubnets));
 
   const showLabels = index === 0;
   let disabledSubnetReason;
@@ -44,12 +56,17 @@ const SingleSubnetFieldsRow = ({
         <WithTooltip showTooltip={!!disabledAzReason} content={disabledAzReason}>
           <Field
             component={AvailabilityZoneSelection}
-            name={`machinePoolsSubnets[${index}].availabilityZone`}
+            name={azFieldName}
             label={showLabels ? 'Availability zone' : null}
             enabledAvailabilityZones={enabledAvailabilityZones}
             validate={azValidations}
             isDisabled={!!disabledAzReason}
             region={selectedRegion}
+            input={{
+              ...getFieldProps(azFieldName),
+              onChange: (value) => setFieldValue(azFieldName, value),
+            }}
+            meta={getFieldMeta(azFieldName)}
           />
         </WithTooltip>
       </GridItem>
@@ -57,7 +74,7 @@ const SingleSubnetFieldsRow = ({
         <WithTooltip showTooltip={!!disabledSubnetReason} content={disabledSubnetReason}>
           <Field
             component={SubnetSelectField}
-            name={`machinePoolsSubnets[${index}].privateSubnetId`}
+            name={privateSubnetIdName}
             isRequired
             validate={required}
             privacy="private"
@@ -65,6 +82,11 @@ const SingleSubnetFieldsRow = ({
             selectedVPC={selectedVPC}
             allowedAZs={selectedAZ ? [selectedAZ] : []}
             withAutoSelect={false}
+            input={{
+              ...getFieldProps(privateSubnetIdName),
+              onChange: (value) => setFieldValue(privateSubnetIdName, value),
+            }}
+            meta={getFieldMeta(privateSubnetIdName)}
           />
         </WithTooltip>
       </GridItem>
@@ -73,7 +95,7 @@ const SingleSubnetFieldsRow = ({
           <WithTooltip showTooltip={!!disabledSubnetReason} content={disabledSubnetReason}>
             <Field
               component={SubnetSelectField}
-              name={`machinePoolsSubnets[${index}].publicSubnetId`}
+              name={publicSubnetIdName}
               isRequired
               validate={required}
               privacy="public"
@@ -81,6 +103,11 @@ const SingleSubnetFieldsRow = ({
               selectedVPC={selectedVPC}
               allowedAZs={selectedAZ ? [selectedAZ] : []}
               withAutoSelect={false}
+              input={{
+                ...getFieldProps(publicSubnetIdName),
+                onChange: (value) => setFieldValue(publicSubnetIdName, value),
+              }}
+              meta={getFieldMeta(publicSubnetIdName)}
             />
           </WithTooltip>
         )}
@@ -95,48 +122,57 @@ const AWSSubnetFields = ({
   selectedAZs,
   isMultiAz,
   privateLinkSelected,
-}) => (
-  <>
-    <Field
-      component={VPCDropdown}
-      name="selected_vpc"
-      validate={(value) => (value?.id?.length > 0 || value?.name?.length > 0 ? undefined : 'error')}
-      selectedVPC={selectedVPC}
-      showRefresh
-      isHypershift={false}
-      usePrivateLink={privateLinkSelected}
-    />
+}) => {
+  const { setFieldValue, getFieldProps, getFieldMeta } = useFormState();
+  return (
+    <>
+      <Field
+        component={VPCDropdown}
+        name={FieldId.SelectedVpc}
+        validate={(value) => (!value?.id || !value?.name ? 'error' : undefined)}
+        selectedVPC={selectedVPC}
+        showRefresh
+        isHypershift={false}
+        isRosaV1={false}
+        usePrivateLink={privateLinkSelected}
+        input={{
+          ...getFieldProps(FieldId.SelectedVpc),
+          onChange: (value) => setFieldValue(FieldId.SelectedVpc, value),
+        }}
+        meta={getFieldMeta(FieldId.SelectedVpc)}
+      />
 
-    <SingleSubnetFieldsRow
-      index={0}
-      selectedAZ={selectedAZs[0]}
-      selectedRegion={selectedRegion}
-      selectedVPC={selectedVPC}
-      isMultiAz={isMultiAz}
-      privateLinkSelected={privateLinkSelected}
-    />
-    {isMultiAz && (
-      <>
-        <SingleSubnetFieldsRow
-          index={1}
-          selectedAZ={selectedAZs[1]}
-          selectedRegion={selectedRegion}
-          selectedVPC={selectedVPC}
-          isMultiAz={isMultiAz}
-          privateLinkSelected={privateLinkSelected}
-        />
-        <SingleSubnetFieldsRow
-          index={2}
-          selectedAZ={selectedAZs[2]}
-          selectedRegion={selectedRegion}
-          selectedVPC={selectedVPC}
-          isMultiAz={isMultiAz}
-          privateLinkSelected={privateLinkSelected}
-        />
-      </>
-    )}
-  </>
-);
+      <SingleSubnetFieldsRow
+        index={0}
+        selectedAZ={selectedAZs[0]}
+        selectedRegion={selectedRegion}
+        selectedVPC={selectedVPC}
+        isMultiAz={isMultiAz}
+        privateLinkSelected={privateLinkSelected}
+      />
+      {isMultiAz && (
+        <>
+          <SingleSubnetFieldsRow
+            index={1}
+            selectedAZ={selectedAZs[1]}
+            selectedRegion={selectedRegion}
+            selectedVPC={selectedVPC}
+            isMultiAz={isMultiAz}
+            privateLinkSelected={privateLinkSelected}
+          />
+          <SingleSubnetFieldsRow
+            index={2}
+            selectedAZ={selectedAZs[2]}
+            selectedRegion={selectedRegion}
+            selectedVPC={selectedVPC}
+            isMultiAz={isMultiAz}
+            privateLinkSelected={privateLinkSelected}
+          />
+        </>
+      )}
+    </>
+  );
+};
 
 SingleSubnetFieldsRow.propTypes = {
   selectedRegion: PropTypes.string,

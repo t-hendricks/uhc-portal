@@ -104,6 +104,7 @@ const AWSSubnetFields = ({
       selectedVPC={selectedVPC}
       showRefresh
       isHypershift={false}
+      isRosaV1
       usePrivateLink={privateLinkSelected}
     />
 

@@ -9,8 +9,8 @@ import Instruction from '~/components/common/Instruction';
 import ExternalLink from '~/components/common/ExternalLink';
 import links from '~/common/installLinks.mjs';
 import { ReduxVerticalFormGroup } from '~/components/common/ReduxFormComponents';
-import SharedVPCDomainSelect from '~/components/clusters/wizards/common/NetworkingSection/SharedVPCDomainSelect';
 import { required, validatePrivateHostedZoneId, validateRoleARN } from '~/common/validators';
+import SharedVPCDomainSelect from './SharedVPCDomainSelect';
 
 function HostedZoneHelpText({ domainName }: { domainName: string }) {
   return (
