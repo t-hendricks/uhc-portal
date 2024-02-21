@@ -2,12 +2,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Title, GridItem, Alert } from '@patternfly/react-core';
 
-import SecurityGroupsSection from '~/components/clusters/wizards/rosa_v1/VPCScreen/SecurityGroupsSection';
+import SecurityGroupsSection from '~/components/clusters/wizards/rosa_v2/VPCScreen/SecurityGroupsSection';
 import links from '~/common/installLinks.mjs';
 import PopoverHint from '~/components/common/PopoverHint';
 import ExternalLink from '~/components/common/ExternalLink';
 import AWSSubnetFields from './AWSSubnetFields';
-import SharedVPCSection from '../../common/NetworkingSection/SharedVPCSection';
+import SharedVPCSection from '../NetworkingSection/SharedVPCSection';
 
 function InstallToVPC({
   selectedRegion,

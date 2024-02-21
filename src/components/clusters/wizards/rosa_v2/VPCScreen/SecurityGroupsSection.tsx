@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { ExpandableSection } from '@patternfly/react-core';
-import { Field, formValueSelector } from 'redux-form';
-
+import { Field } from 'formik';
 import { CloudVPC } from '~/types/clusters_mgmt.v1';
 import { useFeatureGate } from '~/hooks/useFeatureGate';
 import { SupportedFeature } from '~/common/featureCompatibility';
@@ -11,18 +10,14 @@ import { validateSecurityGroups } from '~/common/validators';
 import { SECURITY_GROUPS_FEATURE_DAY1 } from '~/redux/constants/featureConstants';
 import EditSecurityGroups from '~/components/clusters/ClusterDetails/components/SecurityGroups/EditSecurityGroups';
 import SecurityGroupsEmptyAlert from '~/components/clusters/ClusterDetails/components/SecurityGroups/SecurityGroupsEmptyAlert';
-import { useGlobalState } from '~/redux/hooks';
+import { useFormState } from '~/components/clusters/wizards/hooks';
+import { FieldId } from '../constants';
 
 type SecurityGroupFieldProps = {
   selectedVPC: CloudVPC;
   label?: string;
   input: { onChange: (selectedGroupIds: string[]) => void; value: string[] };
 };
-
-const CREATE_FORM = 'CreateCluster';
-const fieldId = 'securityGroups';
-
-const valueSelector = formValueSelector(CREATE_FORM);
 
 const SecurityGroupField = ({
   input: { onChange, value: selectedGroupIds },
@@ -45,8 +40,18 @@ const SecurityGroupsSection = ({
   openshiftVersion: string;
   selectedVPC: CloudVPC;
 }) => {
+  const {
+    setFieldValue,
+    getFieldProps,
+    getFieldMeta,
+    values: { [FieldId.SecurityGroups]: securityGroups },
+  } = useFormState();
+  const applyAllFieldName = `${FieldId.SecurityGroups}.applyControlPlaneToAll`;
+  const controlPlaneFieldName = `${FieldId.SecurityGroups}.controlPlane`;
+  const infraFieldName = `${FieldId.SecurityGroups}.infra`;
+  const workerFieldName = `${FieldId.SecurityGroups}.worker`;
+
   const hasFeatureGate = useFeatureGate(SECURITY_GROUPS_FEATURE_DAY1);
-  const securityGroups = useGlobalState((state) => valueSelector(state, fieldId));
   const selectedGroups = securityGroups.applyControlPlaneToAll
     ? securityGroups.controlPlane
     : securityGroups.controlPlane.concat(securityGroups.infra).concat(securityGroups.worker);
@@ -81,32 +86,53 @@ const SecurityGroupsSection = ({
         <>
           <Field
             component={ReduxCheckbox}
-            name={`${fieldId}.applyControlPlaneToAll`}
+            name={applyAllFieldName}
             label="Apply the same security groups to all node types (control plane, infrastructure, worker)"
+            input={{
+              ...getFieldProps(applyAllFieldName),
+              onChange: (_: React.FormEvent<HTMLInputElement>, value: boolean) =>
+                setFieldValue(applyAllFieldName, value),
+            }}
+            meta={getFieldMeta(applyAllFieldName)}
           />
 
           <Field
             component={SecurityGroupField}
-            name={`${fieldId}.controlPlane`}
+            name={controlPlaneFieldName}
             label={securityGroups.applyControlPlaneToAll ? '' : 'Control plane nodes'}
             selectedVPC={selectedVPC}
             validate={validateSecurityGroups}
+            input={{
+              ...getFieldProps(controlPlaneFieldName),
+              onChange: (value: string[]) => setFieldValue(controlPlaneFieldName, value),
+            }}
+            meta={getFieldMeta(controlPlaneFieldName)}
           />
           {!securityGroups.applyControlPlaneToAll && (
             <>
               <Field
                 component={SecurityGroupField}
-                name={`${fieldId}.infra`}
+                name={infraFieldName}
                 label="Infrastructure nodes"
                 selectedVPC={selectedVPC}
                 validate={validateSecurityGroups}
+                input={{
+                  ...getFieldProps(infraFieldName),
+                  onChange: (value: string[]) => setFieldValue(infraFieldName, value),
+                }}
+                meta={getFieldMeta(infraFieldName)}
               />
               <Field
                 component={SecurityGroupField}
-                name={`${fieldId}.worker`}
+                name={workerFieldName}
                 label="Worker nodes"
                 selectedVPC={selectedVPC}
                 validate={validateSecurityGroups}
+                input={{
+                  ...getFieldProps(workerFieldName),
+                  onChange: (value: string[]) => setFieldValue(workerFieldName, value),
+                }}
+                meta={getFieldMeta(workerFieldName)}
               />
             </>
           )}

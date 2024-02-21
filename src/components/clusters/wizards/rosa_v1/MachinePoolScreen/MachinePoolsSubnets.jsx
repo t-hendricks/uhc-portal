@@ -39,6 +39,7 @@ function MachinePoolsSubnets({ selectedVPC }) {
           selectedVPC={selectedVPC}
           showRefresh
           isHypershift
+          isRosaV1
         />
       </GridItem>
       {(selectedVPC?.id || selectedVPC?.name) && (

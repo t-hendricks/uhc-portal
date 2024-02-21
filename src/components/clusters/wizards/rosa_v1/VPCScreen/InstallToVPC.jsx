@@ -7,7 +7,7 @@ import links from '~/common/installLinks.mjs';
 import PopoverHint from '~/components/common/PopoverHint';
 import ExternalLink from '~/components/common/ExternalLink';
 import AWSSubnetFields from './AWSSubnetFields';
-import SharedVPCSection from '../../common/NetworkingSection/SharedVPCSection';
+import SharedVPCSection from '../NetworkingSection/SharedVPCSection';
 
 function InstallToVPC({
   selectedRegion,

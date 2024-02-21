@@ -1,25 +1,37 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Form, Grid, GridItem, Title } from '@patternfly/react-core';
+import { useFormState } from '~/components/clusters/wizards/hooks';
 import { getAllSubnetFieldNames } from '~/common/vpcHelpers';
 
 import { emptyAWSSubnet } from '~/components/clusters/wizards/common/createOSDInitialValues';
+import { FieldId } from '../constants';
 
 import InstallToVPC from './InstallToVPC';
 
-function VPCScreen({
-  cloudProviderID,
-  isMultiAz,
-  selectedRegion,
-  selectedVPC,
-  selectedAZs,
-  openshiftVersion,
-  privateLinkSelected,
-  isSharedVpcSelected,
-  hostedZoneDomainName,
-  change,
-  untouch,
-}) {
+function VPCScreen({ privateLinkSelected }) {
+  const {
+    setFieldValue,
+    setFieldTouched,
+    values: {
+      [FieldId.ClusterName]: clusterName,
+      [FieldId.ClusterVersion]: version,
+      [FieldId.SharedVpc]: sharedVpcSettings,
+      [FieldId.SelectedVpc]: selectedVPC,
+      [FieldId.MachinePoolsSubnets]: machinePoolsSubnets,
+      [FieldId.MultiAz]: multiAzField,
+      [FieldId.Region]: selectedRegion,
+      [FieldId.CloudProvider]: cloudProviderID,
+    },
+  } = useFormState();
+  const isSharedVpcSelected = sharedVpcSettings?.is_selected || false;
+  const hostedZoneDomainName = isSharedVpcSelected
+    ? `${clusterName}.${sharedVpcSettings.base_dns_domain || '<selected-base-domain>'}`
+    : undefined;
+  const selectedAZs = machinePoolsSubnets?.map((subnet) => subnet.availabilityZone);
+  const isMultiAz = multiAzField === 'true';
+  const openshiftVersion = version.raw_id;
+
   React.useEffect(() => {
     if (!selectedVPC.id) {
       const subnetReset = [emptyAWSSubnet()];
@@ -28,13 +40,16 @@ function VPCScreen({
         subnetReset.push(emptyAWSSubnet());
         subnetReset.push(emptyAWSSubnet());
       }
-      change('machinePoolsSubnets', subnetReset);
+      setFieldValue('machinePoolsSubnets', subnetReset);
 
       // Prevent the validation errors from showing - fields have been reset
       const untouchFields = getAllSubnetFieldNames(isMultiAz);
-      untouch(...untouchFields); // Fails sometimes if we only touch the main "machinePoolsSubnets"
+      // Fails sometimes if we only touch the main "machinePoolsSubnets"
+      untouchFields.forEach((field) => {
+        setFieldTouched(field, false);
+      });
     }
-  }, [change, untouch, isMultiAz, selectedVPC]);
+  }, [setFieldValue, setFieldTouched, isMultiAz, selectedVPC]);
 
   return (
     <Form
@@ -49,7 +64,6 @@ function VPCScreen({
         </GridItem>
 
         <InstallToVPC
-          cloudProviderID={cloudProviderID}
           isMultiAz={isMultiAz}
           selectedRegion={selectedRegion}
           selectedVPC={selectedVPC}
@@ -58,6 +72,7 @@ function VPCScreen({
           isSharedVpcSelected={isSharedVpcSelected}
           privateLinkSelected={privateLinkSelected}
           hostedZoneDomainName={hostedZoneDomainName}
+          cloudProviderID={cloudProviderID}
         />
       </Grid>
     </Form>
@@ -65,17 +80,7 @@ function VPCScreen({
 }
 
 VPCScreen.propTypes = {
-  cloudProviderID: PropTypes.string,
-  isMultiAz: PropTypes.bool,
-  change: PropTypes.func,
-  untouch: PropTypes.func,
-  selectedRegion: PropTypes.string,
-  selectedVPC: PropTypes.object,
-  selectedAZs: PropTypes.arrayOf(PropTypes.string),
-  openshiftVersion: PropTypes.string,
   privateLinkSelected: PropTypes.bool,
-  isSharedVpcSelected: PropTypes.bool,
-  hostedZoneDomainName: PropTypes.string,
 };
 
 export default VPCScreen;
