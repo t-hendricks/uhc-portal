@@ -19,19 +19,12 @@ import {
   NoPermissionsError as AINoPermissionsError,
 } from '@openshift-assisted/ui-lib/ocm';
 import useChrome from '@redhat-cloud-services/frontend-components/useChrome';
-import { CompatRoute } from 'react-router-dom-v5-compat';
+import { CompatRoute, Navigate, useLocation } from 'react-router-dom-v5-compat';
 import { ConnectedRouter } from 'connected-react-router';
 import get from 'lodash/get';
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
-import {
-  Redirect,
-  Route,
-  RouteComponentProps,
-  Switch,
-  useLocation,
-  withRouter,
-} from 'react-router-dom';
+import { Route, RouteComponentProps, Switch, withRouter } from 'react-router-dom';
 import apiRequest from '~/services/apiRequest';
 import { useFeatureGate } from '~/hooks/useFeatureGate';
 import config from '~/config';
@@ -156,7 +149,7 @@ const IdentityProvidersPageEditFormComponent = () => <IdentityProvidersPage isEd
 const CreateClusterPageEmptyTabComponent = () => <CreateClusterPage activeTab="" />;
 
 const Router: React.FC<RouterProps> = ({ history, planType, clusterId, externalClusterId }) => {
-  const { pathname } = useLocation();
+  const { pathname, search } = useLocation();
 
   const {
     segment: { setPageMetadata },
@@ -197,14 +190,28 @@ const Router: React.FC<RouterProps> = ({ history, planType, clusterId, externalC
 
               When adding new top-level entries to left navigation, see also getNavClickParams.js.
             */}
-            <Redirect
-              from="/install/osp/installer-provisioned"
-              to="/install/openstack/installer-provisioned"
+            <CompatRoute
+              end
+              path="/install/osp/installer-provisioned"
+              render={() => <Navigate replace to="/install/openstack/installer-provisioned" />}
             />
-            <Redirect from="/install/crc/installer-provisioned" to="/create/local" />
-            <Redirect from="/token/moa" to="/token/rosa" />
-            <Redirect from="/insights" to="/dashboard" />
-            <Redirect from="/subscriptions" to="/quota" />
+            <CompatRoute
+              end
+              path="/install/crc/installer-provisioned"
+              render={() => <Navigate replace to="/create/local" />}
+            />
+            <CompatRoute
+              end
+              path="/token/moa"
+              render={() => <Navigate replace to="/token/rosa" />}
+            />
+            <CompatRoute end path="/insights" render={() => <Navigate replace to="/dashboard" />} />
+            <CompatRoute
+              end
+              path="/subscriptions"
+              render={() => <Navigate replace to="/quota" />}
+            />
+
             <CompatRoute path="/downloads" component={DownloadsPage} />
 
             {/* Each token page has 2 routes with distinct paths, to remember that user wanted
@@ -369,11 +376,27 @@ const Router: React.FC<RouterProps> = ({ history, planType, clusterId, externalC
               component={ConnectedInstallPullSecretAzure}
             />
             <CompatRoute path="/install/oracle-cloud" component={InstallOracleCloud} />
-            <Redirect from="/install" to="/create" />
-            <Redirect from="/create/osd/aws" to="/create/osd" />
-            <Redirect from="/create/osd/gcp" to="/create/osd" />
-            <Redirect from="/create/osdtrial/aws" to="/create/osdtrial" />
-            <Redirect from="/create/osdtrial/gcp" to="/create/osdtrial" />
+            <CompatRoute end path="/install" render={() => <Navigate replace to="/create" />} />
+            <CompatRoute
+              end
+              path="/create/osd/aws"
+              render={() => <Navigate replace to="/create/osd" />}
+            />
+            <CompatRoute
+              end
+              path="/create/osd/gcp"
+              render={() => <Navigate replace to="/create/osd" />}
+            />
+            <CompatRoute
+              end
+              path="/create/osdtrial/aws"
+              render={() => <Navigate replace to="/create/osdtrial" />}
+            />
+            <CompatRoute
+              end
+              path="/create/osdtrial/gcp"
+              render={() => <Navigate replace to="/create/osdtrial" />}
+            />
             <TermsGuardedRoute
               path="/create/osdtrial"
               gobackPath="/create"
@@ -397,8 +420,13 @@ const Router: React.FC<RouterProps> = ({ history, planType, clusterId, externalC
               render={() => <CreateClusterPage activeTab="local" />}
             />
 
-            <Redirect from="/create/rosa/welcome" to="/create/rosa/getstarted" />
+            <CompatRoute
+              end
+              path="/create/rosa/welcome"
+              render={() => <Navigate replace to="/create/rosa/getstarted" />}
+            />
             <TermsGuardedRoute path="/create/rosa/getstarted" component={GetStartedWithROSA} />
+
             <CompatRoute path="/create/rosa/govcloud" component={GovCloudPage} />
 
             <TermsGuardedRoute
@@ -440,15 +468,13 @@ const Router: React.FC<RouterProps> = ({ history, planType, clusterId, externalC
             <CompatRoute path="/assisted-installer" component={GatedAssistedUiRouter} />
 
             {/* TODO: remove these redirects once links from trials and demo system emails are updated */}
-            <Route
+            <CompatRoute
               path="/services/rosa/demo"
-              render={(props) => (
-                <Redirect to={`/overview/rosa/hands-on/${props.location.search}`} />
-              )}
+              render={() => <Navigate replace to={`/overview/rosa/hands-on/${search}`} />}
             />
-            <Route
+            <CompatRoute
               path="/services/rosa"
-              render={(props) => <Redirect to={`/overview/rosa${props.location.search}`} />}
+              render={() => <Navigate replace to={`/overview/rosa${search}`} />}
             />
 
             <CompatRoute path="/" exact component={ClustersList} />

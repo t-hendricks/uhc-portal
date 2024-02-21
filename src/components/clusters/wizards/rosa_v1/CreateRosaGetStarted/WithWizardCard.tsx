@@ -15,7 +15,7 @@ import { DesktopIcon } from '@patternfly/react-icons/dist/esm/icons/desktop-icon
 import { Link } from 'react-router-dom-v5-compat';
 
 const WithWizard = () => {
-  const LinkComponent = useCallback((props) => <Link {...props} to="wizard" />, []);
+  const LinkComponent = useCallback((props) => <Link {...props} to="/create/rosa/wizard" />, []);
 
   return (
     <Card isFlat isFullHeight>

@@ -109,7 +109,7 @@ const IdentityProvidersPage = (props) => {
   }, [dispatch, params.id, clusterDetails]);
 
   if (submitIDPResponse.fulfilled) {
-    return <Navigate to={`/details/s/${cluster.subscription.id}#accessControl`} />;
+    return <Navigate replace to={`/details/s/${cluster.subscription.id}#accessControl`} />;
   }
 
   const requestedSubscriptionID = params.id;
@@ -175,7 +175,7 @@ const IdentityProvidersPage = (props) => {
     (!isEditForm && !selectedIDP && !params.idpTypeName) ||
     (isEditForm && clusterIDPs.fulfilled && !editedType)
   ) {
-    return <Navigate to={`/details/s/${cluster.subscription.id}#accessControl`} />;
+    return <Navigate replace to={`/details/s/${cluster.subscription.id}#accessControl`} />;
   }
   const idpTypeName = IDPTypeNames[selectedIDP];
   const title = isEditForm
