@@ -32,7 +32,6 @@ function ClusterSettingsScreen({
   isEtcdEncryptionSelected,
   isFipsCryptoSelected,
   isHypershiftSelected,
-  formErrors,
   touch,
 }) {
   const [isExpanded, setIsExpanded] = useState(false);
@@ -42,27 +41,15 @@ function ClusterSettingsScreen({
   };
 
   const isRosa = product === normalizedProducts.ROSA;
-  const isGCP = cloudProviderID === 'gcp';
-
-  const {
-    key_ring: keyRingError,
-    key_name: keyNameError,
-    kms_service_account: kmsServiceAccountError,
-    key_location: keyLocationError,
-  } = formErrors;
-
-  const gcpError = keyRingError || keyNameError || kmsServiceAccountError || keyLocationError;
 
   React.useEffect(() => {
     let isAdvancedEncryptionExpanded = false;
-    if (customerManagedEncryptionSelected === 'true') {
-      if (isGCP && gcpError) {
-        isAdvancedEncryptionExpanded = true;
-      }
-      if (!isGCP && validateAWSKMSKeyARN(kmsKeyArn, selectedRegion)) {
-        isAdvancedEncryptionExpanded = true;
-        touch('CreateCluster', 'kms_key_arn');
-      }
+    if (
+      customerManagedEncryptionSelected === 'true' &&
+      validateAWSKMSKeyARN(kmsKeyArn, selectedRegion)
+    ) {
+      isAdvancedEncryptionExpanded = true;
+      touch('CreateCluster', 'kms_key_arn');
     }
 
     if (
@@ -78,7 +65,7 @@ function ClusterSettingsScreen({
       setIsExpanded(true);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [customerManagedEncryptionSelected, isGCP, gcpError, kmsKeyArn, selectedRegion]);
+  }, [customerManagedEncryptionSelected, kmsKeyArn, selectedRegion]);
 
   React.useEffect(() => {
     if (!isEtcdEncryptionSelected && !!etcdKeyArn) {
@@ -217,7 +204,6 @@ ClusterSettingsScreen.propTypes = {
   isEtcdEncryptionSelected: PropTypes.bool,
   isFipsCryptoSelected: PropTypes.bool,
   isHypershiftSelected: PropTypes.bool,
-  formErrors: PropTypes.object,
   touch: PropTypes.func,
 };
 
