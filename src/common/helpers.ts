@@ -319,13 +319,15 @@ const constructSelectedSubnets = (formValues?: Record<string, any>) => {
         .filter((id: string) => id !== undefined && id !== '');
     }
 
-    privateSubnets = formValues?.selected_vpc?.aws_subnets.filter((obj: Subnet) =>
-      privateSubnetIds.includes(obj.subnet_id),
-    );
+    if (formValues?.selected_vpc?.aws_subnets) {
+      privateSubnets = formValues?.selected_vpc?.aws_subnets.filter((obj: Subnet) =>
+        privateSubnetIds.includes(obj.subnet_id),
+      );
 
-    publicSubnets = formValues?.selected_vpc?.aws_subnets.filter((obj: Subnet) =>
-      publicSubnetIds.includes(obj.subnet_id),
-    );
+      publicSubnets = formValues?.selected_vpc?.aws_subnets.filter((obj: Subnet) =>
+        publicSubnetIds.includes(obj.subnet_id),
+      );
+    }
 
     if (usePrivateLink) {
       selectedSubnets = privateSubnets;
