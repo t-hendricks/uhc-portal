@@ -211,7 +211,6 @@ const Router: React.FC<RouterProps> = ({ history, planType, clusterId, externalC
                 to see it during page reload that may be needed for elevated auth. */}
             <TermsGuardedRoute
               path="/token/rosa/show"
-              history={history}
               render={() => (
                 <AppPage>
                   <TokensROSA show />
@@ -221,7 +220,6 @@ const Router: React.FC<RouterProps> = ({ history, planType, clusterId, externalC
             />
             <TermsGuardedRoute
               path="/token/rosa"
-              history={history}
               render={() => (
                 <AppPage>
                   <TokensROSA show={false} showPath="/token/rosa/show" />
@@ -380,13 +378,11 @@ const Router: React.FC<RouterProps> = ({ history, planType, clusterId, externalC
               path="/create/osdtrial"
               gobackPath="/create"
               render={() => <CreateOsdWizard product={normalizedProducts.OSDTrial} />}
-              history={history}
             />
             <TermsGuardedRoute
               path="/create/osd"
               gobackPath="/create"
               component={CreateOsdWizard}
-              history={history}
             />
             <CompatRoute
               path="/create/cloud"
@@ -402,16 +398,11 @@ const Router: React.FC<RouterProps> = ({ history, planType, clusterId, externalC
             />
 
             <Redirect from="/create/rosa/welcome" to="/create/rosa/getstarted" />
-            <TermsGuardedRoute
-              path="/create/rosa/getstarted"
-              history={history}
-              component={GetStartedWithROSA}
-            />
+            <TermsGuardedRoute path="/create/rosa/getstarted" component={GetStartedWithROSA} />
             <CompatRoute path="/create/rosa/govcloud" component={GovCloudPage} />
 
             <TermsGuardedRoute
               path="/create/rosa/wizard"
-              history={history}
               component={
                 config.rosaV2 && isRosaV2WizardEnabled ? CreateROSAWizardV2 : CreateROSAWizard
               }
