@@ -23,7 +23,11 @@ import { AppPage } from '~/components/App/AppPage';
 import { AppDrawerContext } from '~/components/App/AppDrawer';
 import { isRestrictedEnv } from '~/restrictedEnv';
 import { getAccountAndRolesStepId, stepId, stepNameById } from './rosaWizardConstants';
-import { initialValues, initialTouched, FieldId } from './constants';
+import {
+  /* testInitialValuesVpcScreen as */ initialValues,
+  initialTouched,
+  FieldId,
+} from './constants';
 
 import CIDRScreen from './CIDRScreen';
 import ClusterProxyScreen from './ClusterProxyScreen';
@@ -32,7 +36,7 @@ import MachinePoolScreen from './MachinePoolScreen';
 import NetworkScreen from './NetworkScreen';
 import ReviewClusterScreen from './ReviewClusterScreen';
 import UpdatesScreen from './UpdatesScreen';
-import VPCScreen from './VPCScreen';
+import VPCScreen from './VPCScreen/VPCScreen';
 import ControlPlaneScreen from './ControlPlaneScreen';
 
 import ErrorBoundary from '../../../App/ErrorBoundary';

@@ -1,17 +1,17 @@
 import React from 'react';
 import { Alert, Title, Text } from '@patternfly/react-core';
-import { Field } from 'redux-form';
-
+import { Field } from 'formik';
+import { useFormState } from '~/components/clusters/wizards/hooks';
 import { getIncompatibleVersionReason } from '~/common/versionCompatibility';
 import { SupportedFeature } from '~/common/featureCompatibility';
 import { ReduxCheckbox } from '~/components/common/ReduxFormComponents';
 import ExternalLink from '~/components/common/ExternalLink';
-import SharedVPCField from '~/components/clusters/wizards/common/SharedVPCField';
 
 import links from '~/common/installLinks.mjs';
 
 import './SharedVPCSection.scss';
 import { isRestrictedEnv } from '~/restrictedEnv';
+import SharedVPCField from './SharedVPCField';
 
 const SharedVPCSection = ({
   hostedZoneDomainName,
@@ -22,6 +22,7 @@ const SharedVPCSection = ({
   isSelected: boolean;
   openshiftVersion: string;
 }) => {
+  const { getFieldProps, getFieldMeta } = useFormState();
   const incompatibleReason = getIncompatibleVersionReason(
     SupportedFeature.AWS_SHARED_VPC,
     openshiftVersion,
@@ -55,6 +56,8 @@ const SharedVPCSection = ({
               </ExternalLink>
             </>
           }
+          input={getFieldProps('shared_vpc.is_selected')}
+          meta={getFieldMeta('shared_vpc.is_selected')}
         />
       )}
       {isSelected && (
@@ -76,11 +79,7 @@ const SharedVPCSection = ({
               View instructions on configuring shared VPC for ROSA clusters
             </ExternalLink>
           </Alert>
-          <Field
-            component={SharedVPCField}
-            name="shared_vpc"
-            hostedZoneDomainName={hostedZoneDomainName}
-          />
+          <SharedVPCField hostedZoneDomainName={hostedZoneDomainName} />
         </section>
       )}
     </>

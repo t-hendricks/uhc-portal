@@ -20,25 +20,14 @@ import { ApplicationIngressType, ClusterPrivacyType } from './Networking/constan
 
 export enum OsdFieldId {
   // TODO: many fields here should move to common/constants.
-  AccountId = 'account_id',
-  AccessKeyId = 'access_key_id',
-  SecretAccessKey = 'secret_access_key',
-  InstallerRoleArn = 'installer_role_arn',
-  GcpServiceAccount = 'gcp_service_account',
-  Region = 'region',
   CustomerManagedKey = 'customer_managed_key',
   CustomerOperatorRolesPrefix = 'custom_operator_roles_prefix',
-  ClusterVersion = 'cluster_version',
   PersistentStorage = 'persistent_storage',
-  ClusterName = 'name',
   LoadBalancers = 'load_balancers',
   SecureBoot = 'secure_boot',
   EnableUserWorkloadMonitoring = 'enable_user_workload_monitoring',
   EtcdEncryption = 'etcd_encryption',
   ClusterPrivacy = 'cluster_privacy',
-  ConfigureProxy = 'configure_proxy',
-  InstallToVpc = 'install_to_vpc',
-  UsePrivateLink = 'use_privatelink',
   InstallToSharedVpc = 'install_to_shared_vpc',
   SharedHostProjectID = 'shared_host_project_id',
   KeyLocation = 'key_location',
@@ -46,12 +35,6 @@ export enum OsdFieldId {
   KeyName = 'key_name',
   KmsKeyArn = 'kms_key_arn',
   KmsServiceAccount = 'kms_service_account',
-  SelectedVpc = 'selected_vpc', // OSD AWS / ROSA classic
-  MachinePoolsSubnets = 'machinePoolsSubnets', // OSD AWS / ROSA classic
-  VpcName = 'vpc_name', // OSD GCP (shared VPC)
-  ComputeSubnet = 'compute_subnet',
-  ControlPlaneSubnet = 'control_plane_subnet',
-  SecurityGroups = 'securityGroups',
   HttpProxyUrl = 'http_proxy_url',
   HttpsProxyUrl = 'https_proxy_url',
   AdditionalTrustBundle = 'additional_trust_bundle',

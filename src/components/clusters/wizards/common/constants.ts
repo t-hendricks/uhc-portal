@@ -30,6 +30,23 @@ export enum FieldId {
   IsDefaultRouterNamespaceOwnershipPolicyStrict = 'isDefaultRouterNamespaceOwnershipPolicyStrict',
   IsDefaultRouterWildcardPolicyAllowed = 'isDefaultRouterWildcardPolicyAllowed',
   SecurityGroupIds = 'securityGroupIds',
+  ComputeSubnet = 'compute_subnet',
+  ControlPlaneSubnet = 'control_plane_subnet',
+  MachinePoolsSubnets = 'machinePoolsSubnets', // OSD AWS / ROSA classic
+  Region = 'region',
+  VpcName = 'vpc_name', // OSD GCP (shared VPC)
+  SelectedVpc = 'selected_vpc', // OSD AWS / ROSA classic
+  ClusterName = 'name',
+  ClusterVersion = 'cluster_version',
+  ConfigureProxy = 'configure_proxy',
+  UsePrivateLink = 'use_privatelink',
+  InstallerRoleArn = 'installer_role_arn',
+  InstallToVpc = 'install_to_vpc',
+  GcpServiceAccount = 'gcp_service_account',
+  AccountId = 'account_id',
+  AccessKeyId = 'access_key_id',
+  SecretAccessKey = 'secret_access_key',
+  SecurityGroups = 'securityGroups',
 }
 
 export const initialValues: FormikValues = {
