@@ -41,7 +41,7 @@
     "core-js": "^3.6.1",
     "dayjs": "^1.11.10",
     "file-saver": "^2.0.5",
-    "filesize": "^3.6.1",
+    "filesize": "^10.0.0",
     "formik": "^2.2.9",
     "fuse.js": "^6.4.6",
     "history": "^4.7.2",
