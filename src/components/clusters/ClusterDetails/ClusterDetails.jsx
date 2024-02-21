@@ -365,8 +365,6 @@ class ClusterDetails extends Component {
     const isClusterReady = cluster.state === clusterStates.READY;
     const isClusterUpdating = cluster.state === clusterStates.UPDATING;
     const isReadOnly = cluster?.status?.configuration_mode === 'read_only';
-    const isPrivateCluster =
-      cluster.aws && get(cluster, 'ccs.enabled') && get(cluster, 'aws.private_link');
     const canCreateGCPNonCCSCluster = hasCapability(
       organization.details,
       subscriptionCapabilities.CREATE_GCP_NON_CCS_CLUSTER,
@@ -392,7 +390,7 @@ class ClusterDetails extends Component {
       (isClusterReady || isClusterUpdating || clusterHibernating) &&
       cluster.managed &&
       !!get(cluster, 'api.url') &&
-      ((cloudProvider === 'aws' && (!isPrivateCluster || isHypershift || isRestrictedEnv())) ||
+      ((cloudProvider === 'aws' && (cluster?.ccs?.enabled || isHypershift || isRestrictedEnv())) ||
         (cloudProvider === 'gcp' &&
           (get(cluster, 'ccs.enabled') || (gotRouters && canCreateGCPNonCCSCluster)))) &&
       !isArchived;
