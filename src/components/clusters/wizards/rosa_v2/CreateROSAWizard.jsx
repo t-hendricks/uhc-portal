@@ -33,7 +33,7 @@ import CIDRScreen from './CIDRScreen';
 import ClusterProxyScreen from './ClusterProxyScreen';
 import ClusterSettingsScreen from './ClusterSettingsScreen';
 import MachinePoolScreen from './MachinePoolScreen';
-import NetworkScreen from './NetworkScreen';
+import NetworkScreen from './NetworkScreen/NetworkScreen';
 import ReviewClusterScreen from './ReviewClusterScreen';
 import UpdatesScreen from './UpdatesScreen';
 import VPCScreen from './VPCScreen/VPCScreen';
@@ -209,7 +209,6 @@ class CreateROSAWizardInternal extends React.Component {
 
   render() {
     const {
-      cloudProviderID,
       installToVPCSelected,
       createClusterResponse,
       machineTypes,
@@ -286,7 +285,6 @@ class CreateROSAWizardInternal extends React.Component {
             component: (
               <ErrorBoundary>
                 <NetworkScreen
-                  cloudProviderID={cloudProviderID}
                   showClusterPrivacy
                   showVPCCheckbox
                   showClusterWideProxyCheckbox
@@ -565,7 +563,6 @@ CreateROSAWizardInternal.propTypes = {
   isValid: PropTypes.bool.isRequired,
   resetForm: PropTypes.func.isRequired,
 
-  cloudProviderID: PropTypes.string,
   installToVPCSelected: PropTypes.bool,
   privateLinkSelected: PropTypes.bool,
   configureProxySelected: PropTypes.bool,
