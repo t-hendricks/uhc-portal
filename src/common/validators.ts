@@ -1,7 +1,6 @@
 /* eslint-disable camelcase */
 import { get, indexOf, inRange } from 'lodash';
-import cidrTools from 'cidr-tools';
-/* eslint-disable-next-line import/no-extraneous-dependencies */
+import { overlapCidr, containsCidr } from 'cidr-tools';
 import IPCIDR from 'ip-cidr';
 import { ValidationError, Validator } from 'jsonschema';
 import { clusterService } from '~/services';
@@ -11,10 +10,10 @@ import {
   maxAdditionalSecurityGroups,
   workerNodeVolumeSizeMinGiB,
 } from '~/components/clusters/wizards/rosa/constants';
-import type { GCP, Taint } from '../types/clusters_mgmt.v1';
+import type { GCP, Taint } from '~/types/clusters_mgmt.v1';
 import { sqlString } from './queryHelpers';
 
-type Networks = Parameters<(typeof cidrTools)['overlap']>[0];
+type Networks = Parameters<typeof overlapCidr>[0];
 
 // Valid RFC-1035 labels must consist of lower case alphanumeric characters or '-', start with an
 // alphabetic character, and end with an alphanumeric character (e.g. 'my-name',  or 'abc-123').
@@ -798,7 +797,7 @@ const subnetCidrs = (
       selectedSubnets?.forEach((subnet: Subnet) => {
         if (
           CIDR_REGEXP.test(subnet.cidr_block) &&
-          !cidrTools.contains(value, startingIP(subnet.cidr_block))
+          !containsCidr(value, startingIP(subnet.cidr_block))
         ) {
           erroredSubnets.push(subnet);
         }
@@ -807,7 +806,7 @@ const subnetCidrs = (
       selectedSubnets?.forEach((subnet: Subnet) => {
         if (
           CIDR_REGEXP.test(subnet.cidr_block) &&
-          cidrTools.contains(value, startingIP(subnet.cidr_block))
+          containsCidr(value, startingIP(subnet.cidr_block))
         ) {
           erroredSubnets.push(subnet);
         }
@@ -978,7 +977,7 @@ const disjointSubnets =
     try {
       Object.keys(networkingFields).forEach((name) => {
         const fieldValue = get(formData, name, null);
-        if (fieldValue && cidrTools.overlap(value, fieldValue)) {
+        if (fieldValue && overlapCidr(value, fieldValue)) {
           overlappingFields.push(networkingFields[name]);
         }
       });
