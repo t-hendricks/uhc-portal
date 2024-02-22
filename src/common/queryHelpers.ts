@@ -218,6 +218,12 @@ const getQueryParam = (param: string): string | undefined => {
   return ret;
 };
 
+const deleteQueryParam = (param: string): void => {
+  const url = new URL(window.location.href);
+  url.searchParams.delete(param);
+  window.history.replaceState({}, '', url.toString());
+};
+
 export {
   buildFilterURLParams,
   buildUrlParams,
@@ -227,4 +233,5 @@ export {
   viewPropsChanged,
   sqlString,
   getQueryParam,
+  deleteQueryParam,
 };
