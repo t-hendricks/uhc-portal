@@ -1,23 +1,19 @@
 import React from 'react';
 import PageHeader, { PageHeaderTitle } from '@redhat-cloud-services/frontend-components/PageHeader';
 import { PageSection } from '@patternfly/react-core';
-// import { Capability } from '~/types/accounts_mgmt.v1';
-import { useGlobalState } from '~/redux/hooks';
-import { GlobalState } from '~/redux/store';
+import { Capability } from '~/types/accounts_mgmt.v1';
+import useAccount from './useAccount';
 import InstructionsOCM from './Instructions';
 import InstructionsROSA from './InstructionsROSA';
 import Breadcrumbs from '../common/Breadcrumbs';
 import { AppPage } from '../App/AppPage';
 
-export const hasRestrictTokensCapability = (state: GlobalState) => {
-  // const capabilities = state?.userProfile?.organization?.details?.capabilities ?? [];
-  // return capabilities.some(
-  //   (capability: Capability) =>
-  //     capability.name === 'capability.account.restrict_new_offline_tokens' &&
-  //     capability.value === 'true',
-  // );
-  return true;
-};
+export const hasRestrictTokensCapability = (capabilities: Array<Capability>) =>
+  capabilities?.some(
+    (capability) =>
+      capability.name === 'capability.account.restrict_new_offline_tokens' &&
+      capability.value === 'true',
+  );
 
 type CLILoginPageProps = {
   showToken?: boolean;
@@ -26,7 +22,12 @@ type CLILoginPageProps = {
 };
 
 const CLILoginPage = ({ showToken = false, showPath, isRosa = false }: CLILoginPageProps) => {
-  const restrictTokens = hasRestrictTokensCapability(useGlobalState((state) => state));
+  const { userAccount, isLoading, hasError } = useAccount();
+  let restrictTokens = false;
+  if (!!userAccount?.capabilities) {
+    restrictTokens =
+      !isLoading && !hasError && hasRestrictTokensCapability(userAccount.capabilities);
+  }
   const Instructions = isRosa ? InstructionsROSA : InstructionsOCM;
   const pageTitle = `OpenShift Cluster Manager ${restrictTokens ? 'SSO login' : 'API Token'}`;
   return (

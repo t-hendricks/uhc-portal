@@ -224,6 +224,11 @@ const getCredentialRequests = () =>
     total?: number;
   }>('/api/clusters_mgmt/v1/aws_inquiries/sts_credential_requests');
 
+const getAccount = (accountId: string) =>
+  apiRequest.get<Account>(`/api/accounts_mgmt/v1/accounts/${accountId}`, {
+    params: { fetchCapabilities: true },
+  });
+
 const accountsService = {
   getCurrentAccount,
   getOrganization,
@@ -249,6 +254,7 @@ const accountsService = {
   getUserRole,
   getPolicies,
   getCredentialRequests,
+  getAccount,
 };
 
 export default accountsService;
