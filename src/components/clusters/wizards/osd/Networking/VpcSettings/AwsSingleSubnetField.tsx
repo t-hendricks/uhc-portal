@@ -75,6 +75,7 @@ const AwsSingleSubnetField = ({ index }: { index: number }) => {
             label={showLabels ? 'Availability zone' : undefined}
             validate={validateAvailabilityZone}
             enabledAvailabilityZones={enabledAvailabilityZones}
+            vpcId={selectedVPC?.id}
             isDisabled={isDisabled}
             region={selectedRegion}
             input={{
