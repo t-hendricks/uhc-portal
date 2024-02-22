@@ -17,6 +17,14 @@ const azLetters = ['a', 'b', 'c', 'd', 'e', 'f'];
 class AvailabilityZoneSelection extends React.Component {
   state = { isOpen: false };
 
+  componentDidUpdate(prevProps) {
+    // When the VPC changes, clear the existing selection
+    const { input, vpcId: newVpcId } = this.props;
+    if (prevProps.vpcId !== newVpcId && input.value) {
+      input.onChange('');
+    }
+  }
+
   onToggle = (isOpen) => {
     this.setState({ isOpen });
   };
@@ -92,6 +100,7 @@ AvailabilityZoneSelection.propTypes = {
   label: PropTypes.string,
   region: PropTypes.string,
   enabledAvailabilityZones: PropTypes.arrayOf(PropTypes.string),
+  vpcId: PropTypes.string,
   input: PropTypes.shape({
     name: PropTypes.string,
     value: PropTypes.string,

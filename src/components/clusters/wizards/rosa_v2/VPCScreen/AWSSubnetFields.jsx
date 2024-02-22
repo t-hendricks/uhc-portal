@@ -59,6 +59,7 @@ const SingleSubnetFieldsRow = ({
             name={azFieldName}
             label={showLabels ? 'Availability zone' : null}
             enabledAvailabilityZones={enabledAvailabilityZones}
+            vpcId={selectedVPC?.id}
             validate={azValidations}
             isDisabled={!!disabledAzReason}
             region={selectedRegion}

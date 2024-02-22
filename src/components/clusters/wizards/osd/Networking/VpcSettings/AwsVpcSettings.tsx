@@ -26,13 +26,15 @@ export const AwsVpcSettings = () => {
   const isMultiAz = multiAz === 'true';
 
   React.useEffect(() => {
-    const azCount = isMultiAz ? 3 : 1;
-    const mpSubnetsReset = [];
+    if (!selectedVPC.id) {
+      const azCount = isMultiAz ? 3 : 1;
+      const mpSubnetsReset = [];
 
-    for (let i = 0; i < azCount; i += 1) {
-      mpSubnetsReset.push(emptyAWSSubnet());
+      for (let i = 0; i < azCount; i += 1) {
+        mpSubnetsReset.push(emptyAWSSubnet());
+      }
+      setFieldValue(FieldId.MachinePoolsSubnets, mpSubnetsReset);
     }
-    setFieldValue(FieldId.MachinePoolsSubnets, mpSubnetsReset);
     setFieldTouched(FieldId.MachinePoolsSubnets, false);
     // "isMultiAz" is needed for the effect, but it can't change while in this step
   }, [setFieldValue, setFieldTouched, isMultiAz, selectedVPC.id]);
