@@ -22,7 +22,6 @@ const mapStateToProps = (state) => {
 
   return {
     isErrorModalOpen: shouldShowModal(state, 'osd-create-error'), // TODO: change 'osd' to 'rosa'
-    cloudProviderID: 'aws',
     createClusterResponse: state.clusters.createdCluster,
     machineTypes: state.machineTypes,
     organization,
