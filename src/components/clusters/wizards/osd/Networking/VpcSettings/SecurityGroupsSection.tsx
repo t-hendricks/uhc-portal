@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ExpandableSection } from '@patternfly/react-core';
+import { Alert, AlertActionLink, ExpandableSection } from '@patternfly/react-core';
 import { Field } from 'formik';
 
 import { CloudVPC } from '~/types/clusters_mgmt.v1';
@@ -13,6 +13,7 @@ import SecurityGroupsEmptyAlert from '~/components/clusters/ClusterDetails/compo
 import { CheckboxField } from '~/components/clusters/wizards/form';
 import { useFormState } from '~/components/clusters/wizards/hooks';
 import { FieldId } from '~/components/clusters/wizards/osd/constants';
+import links from '~/common/installLinks.mjs';
 
 type SecurityGroupFieldProps = {
   selectedVPC: CloudVPC;
@@ -81,6 +82,21 @@ const SecurityGroupsSection = () => {
       {showEmptyAlert && <SecurityGroupsEmptyAlert />}
       {!incompatibleReason && !showEmptyAlert && (
         <>
+          <Alert
+            variant="info"
+            isInline
+            title="You cannot add or edit security groups to the machine pools created by default after you create the cluster."
+            actionLinks={
+              <AlertActionLink
+                component="a"
+                href={links.AWS_CONSOLE_SECURITY_GROUPS}
+                target="_blank"
+              >
+                AWS security groups console
+              </AlertActionLink>
+            }
+          />
+          <br />
           <Field
             component={CheckboxField}
             name={`${fieldId}.applyControlPlaneToAll`}
