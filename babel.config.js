@@ -8,10 +8,9 @@ module.exports = {
       '@babel/preset-env',
       {
         targets: {
-          browsers: '> 0.25%, not dead',
-          // As of Nov 2021, we have Node 12 in CI.  Most people have newer (14-16) locally,
-          // could use 'current' but prefer testing exactly same code locally as on CI.
-          node: '12',
+          browsers: ['chrome >= 67', 'edge >= 79', 'firefox >= 68', 'opera >= 54', 'safari >= 14'],
+          // We have Node 18 in the CI. Could use 'current' but prefer testing exactly same code locally as on CI.
+          node: '18',
         },
       },
     ],

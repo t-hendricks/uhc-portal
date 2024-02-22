@@ -12,7 +12,7 @@ const config = {
     '^.+\\.(js|jsx|mjs)$': 'babel-jest',
   },
   transformIgnorePatterns: [
-    '<rootDir>/node_modules/(?!(@patternfly|react-monaco-editor|monaco-editor|lodash-es|screenfull|uuid|@openshift/dynamic-plugin-sdk)/)',
+    '<rootDir>/node_modules/(?!(@patternfly|react-monaco-editor|monaco-editor|lodash-es|screenfull|uuid|@openshift/dynamic-plugin-sdk|cidr-tools|ip-bigint)/)',
   ],
   testPathIgnorePatterns: ['<rootDir>/cache/Cypress/'],
   moduleNameMapper: {
