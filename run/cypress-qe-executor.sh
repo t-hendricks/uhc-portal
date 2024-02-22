@@ -8,15 +8,15 @@ EXECUTION_EXIT_STATUS=0
 if [ $1 ]
 then
   if [ $1 = 'staging' ]; then
-    ENVIRONMENT="qaprodauth.console.redhat.com"
-  elif [ $1 = 'staging-new' ]; then
     ENVIRONMENT="console.dev.redhat.com"
+  elif [ $1 = 'staging-old' ]; then
+    ENVIRONMENT="qaprodauth.console.redhat.com"
   elif [ $1 = 'production' ]; then
     ENVIRONMENT="console.redhat.com"
   elif [ $1 = 'production-preview' ]; then
     ENVIRONMENT="console.redhat.com/preview"
   else
-    ENVIRONMENT="qaprodauth.console.redhat.com/preview"
+    ENVIRONMENT="console.dev.redhat.com/preview"
   fi
 fi
 if [ $2 ]; then BROWSER="$2"; fi

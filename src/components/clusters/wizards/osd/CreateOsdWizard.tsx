@@ -1,6 +1,7 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
-import { Redirect, useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router';
+import { Navigate, useNavigate } from 'react-router-dom-v5-compat';
 import { Formik, FormikValues } from 'formik';
 import omit from 'lodash/omit';
 
@@ -141,6 +142,7 @@ export const CreateOsdWizard = ({ product }: CreateOsdWizardProps) => {
 
 const CreateOsdWizardInternal = () => {
   const track = useAnalytics();
+  const navigate = useNavigate();
   const history = useHistory();
   const {
     values: {
@@ -195,7 +197,7 @@ const CreateOsdWizardInternal = () => {
       }),
     });
 
-  const onClose = () => history.push(UrlPath.CreateCloud);
+  const onClose = () => navigate(UrlPath.CreateCloud);
 
   const onStepChange = (
     _event: React.MouseEvent<HTMLButtonElement>,
@@ -235,12 +237,13 @@ const CreateOsdWizardInternal = () => {
   if (createClusterResponse.fulfilled) {
     // When a cluster is successfully created, unblock
     // history in order to not show a confirmation prompt.
+    // TODO: Should be removed upon migrating to React Router v6
     history.block(() => {});
-    return <Redirect to={`/details/s/${createClusterResponse.cluster.subscription?.id}`} />;
+    return <Navigate to={`/details/s/${createClusterResponse.cluster.subscription?.id}`} />;
   }
 
   if (organization.fulfilled && !hasProductQuota) {
-    return <Redirect to="/create" />;
+    return <Navigate to="/create" />;
   }
 
   if (requestErrors.length > 0) {

@@ -35,7 +35,7 @@ export const AwsAccountDetails = () => {
                 </p>
                 <br />
                 <InstructionCommand textAriaLabel="Copyable AWS account ID command">
-                  $ aws sts get-caller-identity
+                  aws sts get-caller-identity
                 </InstructionCommand>
                 <br />
                 <ExternalLink href={links.FINDING_AWS_ACCOUNT_IDENTIFIERS}>

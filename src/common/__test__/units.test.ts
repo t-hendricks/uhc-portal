@@ -29,17 +29,43 @@ test('Humanize bytes to GiB works', () => {
 describe('Humanize values without units', () => {
   it.each([
     [1, '1 B'],
-    [1024 ** 1, '1 KB'],
-    [1024 ** 2, '1 MB'],
-    [1024 ** 3, '1 GB'],
-    [1024 ** 4, '1 TB'],
-    [1024 ** 5, '1 PB'],
-    [1024 ** 6, '1 EB'],
+    [1024 ** 1, '1 KiB'],
+    [1024 ** 2, '1 MiB'],
+    [1024 ** 3, '1 GiB'],
+    [1024 ** 4, '1 TiB'],
+    [1024 ** 5, '1 PiB'],
+    [1024 ** 6, '1 EiB'],
   ])('value %i is expected to be %s', (value, expected) =>
     expect(humanizeValueWithoutUnit(value)).toEqual(expected),
+  );
+
+  it.each([
+    [1, 2, '1 B'],
+    [1024 ** 1, 2, '1 KiB'],
+    [1024 ** 2, 2, '1 MiB'],
+    [1024 ** 3, 2, '1 GiB'],
+    [1024 ** 4, 2, '1 TiB'],
+    [1024 ** 5, 2, '1 PiB'],
+    [1024 ** 6, 2, '1 EiB'],
+    [1, undefined, '1 B'],
+    [1024 ** 1, undefined, '1 KiB'],
+    [1024 ** 2, undefined, '1 MiB'],
+    [1024 ** 3, undefined, '1 GiB'],
+    [1024 ** 4, undefined, '1 TiB'],
+    [1024 ** 5, undefined, '1 PiB'],
+    [1024 ** 6, undefined, '1 EiB'],
+    [1, 10, '1 B'],
+    [1024 ** 1, 10, '1.02 kB'],
+    [1024 ** 2, 10, '1.05 MB'],
+    [1024 ** 3, 10, '1.07 GB'],
+    [1024 ** 4, 10, '1.1 TB'],
+    [1024 ** 5, 10, '1.13 PB'],
+    [1024 ** 6, 10, '1.15 EB'],
+  ])('with base. value %i is expected to be %s', (value, base: number | undefined, expected) =>
+    expect(humanizeValueWithoutUnit(value, base as 2 | 10 | undefined)).toEqual(expected),
   );
 });
 
 test('Rounding rounds long fractions', () => {
-  expect(roundValueWithUnit(1234.56789, 'Cores')).toEqual({ value: 1234.57, unit: 'Cores' });
+  expect(roundValueWithUnit(1234.56789, 'B')).toEqual({ value: 1234.57, unit: 'B' });
 });

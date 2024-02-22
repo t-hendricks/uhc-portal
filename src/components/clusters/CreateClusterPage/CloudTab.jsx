@@ -432,6 +432,13 @@ const runItYourself = () => {
       </>,
       'Pre-existing infrastructure',
     ],
+    [
+      <>
+        <Link to="/install/oracle-cloud">Oracle Cloud Infrastructure (virtual machines)</Link>
+        <TechnologyPreview position={PreviewBadgePosition.inline} />
+      </>,
+      'Pre-existing infrastructure',
+    ],
   ];
   return (
     <TableDeprecated

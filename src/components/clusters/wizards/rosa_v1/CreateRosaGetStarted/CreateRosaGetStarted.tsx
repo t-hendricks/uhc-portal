@@ -68,8 +68,6 @@ const CreateRosaGetStarted = () => {
       <PageTitle breadcrumbs={breadcrumbs} title={title(productName)}>
         <TextContent className="pf-v5-u-mt-md">
           <Text component={TextVariants.p}>
-            ROSA allows you to deploy fully operational and managed Red Hat OpenShift clusters while
-            leveraging the full breadth and depth of AWS.{' '}
             <ExternalLink href={links.WHAT_IS_ROSA}>Learn more about ROSA</ExternalLink> or{' '}
             <ExternalLink href={links.ROSA_COMMUNITY_SLACK}>Slack us</ExternalLink>
           </Text>
@@ -100,9 +98,9 @@ const CreateRosaGetStarted = () => {
                   <TextContent className="pf-v5-u-mt-md">
                     <Title headingLevel="h2">Have you prepared your AWS account?</Title>
                     <Text component={TextVariants.p}>
-                      You will need to enable AWS, configure Elastic Load Balancer (ELB), and verify
-                      your quotas on AWS console. If you have already prepared your AWS console, you
-                      can continue to complete ROSA prerequisites below.
+                      You will need to enable ROSA on AWS, configure Elastic Load Balancer (ELB),
+                      and verify your quotas on AWS console. If you have already prepared your AWS
+                      account, you can continue to complete ROSA prerequisites.
                     </Text>
                     <ExternalLink
                       href={links.AWS_CONSOLE_ROSA_HOME_GET_STARTED}
