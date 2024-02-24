@@ -6,6 +6,7 @@ import MachineTypeSelection from './MachineTypeSelection';
 const mapStateToProps = (state) => ({
   flavours: state.flavours,
   machineTypes: state.machineTypes,
+  machineTypesByRegion: state.machineTypesByRegion,
   organization: state.userProfile.organization,
   quota: state.userProfile.organization.quotaList,
 });

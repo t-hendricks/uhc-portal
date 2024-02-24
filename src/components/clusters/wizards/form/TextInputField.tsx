@@ -20,6 +20,7 @@ interface TextInputFieldProps {
   input?: TextInputProps;
   type?: TextInputProps['type'];
   showHelpTextOnError?: boolean;
+  onChange?: (event: React.FormEvent<HTMLInputElement>) => void;
 }
 
 interface HelperTextInvalidProps {
@@ -74,6 +75,7 @@ export const TextInputField = ({
   formGroup,
   input,
   type,
+  onChange: propOnChange,
 }: TextInputFieldProps) => (
   <Field name={name} validate={validate} {...field}>
     {({ field, form, meta }: FieldProps) => (
@@ -91,7 +93,10 @@ export const TextInputField = ({
           isDisabled={isDisabled}
           validated={meta.touched && meta.error ? 'error' : 'default'}
           onBlur={() => form.setFieldTouched(name, true)}
-          onChange={(event, _) => field.onChange(event)}
+          onChange={(event, _) => {
+            if (propOnChange) propOnChange(event);
+            field.onChange(event);
+          }}
           value={field.value || (type === 'number' ? 0 : '')}
           type={type}
           {...input}

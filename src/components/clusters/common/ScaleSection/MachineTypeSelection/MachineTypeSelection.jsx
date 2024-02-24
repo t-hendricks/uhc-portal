@@ -6,13 +6,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import { Alert, AlertVariant, FormGroup, Spinner } from '@patternfly/react-core';
-import {
-  Select as SelectDeprecated,
-  SelectGroup as SelectGroupDeprecated,
-  SelectOption as SelectOptionDeprecated,
-} from '@patternfly/react-core/deprecated';
-
 import { FormGroupHelperText } from '~/components/common/FormGroupHelperText';
+import { CloudProviderType } from '~/components/clusters/wizards/common/constants';
 import ErrorBox from '~/components/common/ErrorBox';
 import PopoverHint from '~/components/common/PopoverHint';
 import { humanizeValueWithUnit } from '~/common/units';
@@ -26,9 +21,10 @@ import { normalizedProducts, billingModels } from '~/common/subscriptionTypes';
 import { DEFAULT_FLAVOUR_ID } from '~/redux/actions/flavourActions';
 import { constants } from '~/components/clusters/common/CreateOSDFormConstants';
 import sortMachineTypes, { machineCategories } from './sortMachineTypes';
+import { TreeViewSelect, TreeViewSelectMenuItem } from './TreeViewSelect/TreeViewSelect';
 
 /** Returns useful info about the machine type - CPUs, RAM, [GPUs]. */
-const machineTypeLabel = (machineType) => {
+const machineTypeDescriptionLabel = (machineType) => {
   if (!machineType) {
     return '';
   }
@@ -44,7 +40,7 @@ const machineTypeLabel = (machineType) => {
 };
 
 /** Returns exact id used by cloud provider. */
-const machineTypeDescription = (machineType) => {
+const machineTypeLabel = (machineType) => {
   if (!machineType) {
     return '';
   }
@@ -56,7 +52,7 @@ const machineTypeFullLabel = (machineType) => {
   if (!machineType) {
     return '';
   }
-  return `${machineTypeDescription(machineType)} - ${machineTypeLabel(machineType)}`;
+  return `${machineTypeLabel(machineType)} - ${machineTypeDescriptionLabel(machineType)}`;
 };
 
 /**
@@ -100,8 +96,8 @@ const MachineTypeSelection = ({
   machine_type_force_choice: machineTypeForceChoice,
   getDefaultFlavour,
   flavours,
-  getMachineTypes,
   machineTypes,
+  machineTypesByRegion,
   isMultiAz,
   isBYOC,
   isMachinePool,
@@ -112,24 +108,29 @@ const MachineTypeSelection = ({
   quota,
   organization,
   menuAppendTo,
-  ...extraProps
+  allExpanded,
 }) => {
-  const [isOpen, setIsOpen] = React.useState(false);
   const {
     input,
     meta: { error, touched },
   } = machineType;
   const { input: forceChoiceInput } = machineTypeForceChoice;
-
   /** Checks whether required data arrived. */
-  const isDataReady = React.useCallback(
-    () =>
-      organization.fulfilled &&
-      machineTypes.fulfilled &&
-      // Tolerate flavours error gracefully.
-      (flavours.fulfilled || flavours.error),
-    [flavours.error, flavours.fulfilled, machineTypes.fulfilled, organization.fulfilled],
-  );
+  const isDataReady =
+    organization.fulfilled &&
+    machineTypes.fulfilled &&
+    // Tolerate flavours error gracefully.
+    (flavours.fulfilled || flavours.error);
+
+  const isRegionSpecificDataReady =
+    machineTypesByRegion.fulfilled || (machineTypesByRegion.error && isDataReady);
+  const useRegionFilteredData =
+    isBYOC && cloudProviderID === CloudProviderType.Aws && product !== normalizedProducts.ROSA;
+  const [isMachineTypeFilteredByRegion, setIsMachineTypeFilteredByRegion] = React.useState(true);
+  const activeMachineTypes =
+    isRegionSpecificDataReady && useRegionFilteredData && isMachineTypeFilteredByRegion
+      ? machineTypesByRegion
+      : machineTypes;
 
   /**
    * Checks whether type can be offered, based on quota and ccs_only.
@@ -137,11 +138,15 @@ const MachineTypeSelection = ({
    */
   const isTypeAvailable = React.useCallback(
     (machineTypeID) => {
-      if (!isDataReady()) {
+      if (
+        !isDataReady ||
+        (useRegionFilteredData && !isRegionSpecificDataReady) ||
+        !activeMachineTypes.typesByID
+      ) {
         return false;
       }
 
-      const machineType = machineTypes.typesByID[machineTypeID];
+      const machineType = activeMachineTypes?.typesByID[machineTypeID];
       if (!machineType) {
         return false;
       }
@@ -179,13 +184,15 @@ const MachineTypeSelection = ({
       return clustersAvailable >= 1;
     },
     [
+      activeMachineTypes?.typesByID,
       billingModel,
       cloudProviderID,
       isBYOC,
       isDataReady,
+      isRegionSpecificDataReady,
+      useRegionFilteredData,
       isMachinePool,
       isMultiAz,
-      machineTypes.typesByID,
       product,
       quota,
     ],
@@ -219,7 +226,11 @@ const MachineTypeSelection = ({
   }, [getDefaultFlavour]);
 
   React.useEffect(() => {
-    if (isDataReady()) {
+    if (
+      isDataReady &&
+      (!useRegionFilteredData || isRegionSpecificDataReady) &&
+      activeMachineTypes.typesByID
+    ) {
       if (!input.value) {
         setDefaultValue();
       }
@@ -231,58 +242,61 @@ const MachineTypeSelection = ({
         setInvalidValue();
       }
     }
-  }, [input.value, isDataReady, isTypeAvailable, setDefaultValue, setInvalidValue]);
+  }, [
+    input.value,
+    isDataReady,
+    activeMachineTypes.typesByID,
+    useRegionFilteredData,
+    isRegionSpecificDataReady,
+    isTypeAvailable,
+    setDefaultValue,
+    setInvalidValue,
+  ]);
 
   const changeHandler = React.useCallback(
     (_, value) => {
       input.onChange(value);
       forceChoiceInput.onChange(false);
-      setIsOpen(false);
     },
     [forceChoiceInput, input],
   );
 
   const sortedMachineTypes = React.useMemo(
-    () => sortMachineTypes(machineTypes, cloudProviderID),
-    [cloudProviderID, machineTypes],
+    () => sortMachineTypes(activeMachineTypes, cloudProviderID),
+    [cloudProviderID, activeMachineTypes],
   );
 
   const filteredMachineTypes = React.useMemo(
     () => sortedMachineTypes.filter((type) => isTypeAvailable(type.id)),
     [isTypeAvailable, sortedMachineTypes],
   );
-
-  const options = React.useMemo(() => {
+  const machineTypeMap = React.useMemo(() => {
     const machineGroups = groupedMachineTypes(filteredMachineTypes);
-    const hasQuota = isTypeAvailable(machineType.id);
-
     const selectGroups = machineGroups
       .map(([categoryLabel, categoryMachines]) => {
         if (categoryMachines.length > 0) {
-          return (
-            <SelectGroupDeprecated label={categoryLabel} key={categoryLabel}>
-              {categoryMachines.map((machineType) => (
-                <SelectOptionDeprecated
-                  {...extraProps}
-                  key={machineType.id}
-                  id={`machineType.${machineType.id}`}
-                  value={machineType.id}
-                  description={machineTypeDescription(machineType)}
-                  isSelected={hasQuota && input.value === machineType.id}
-                  formValue={machineType.id}
-                >
-                  {machineTypeLabel(machineType)}
-                </SelectOptionDeprecated>
-              ))}
-            </SelectGroupDeprecated>
-          );
+          return {
+            name: categoryLabel,
+            category: categoryLabel,
+            children: categoryMachines.map((machineType) => ({
+              name: (
+                <TreeViewSelectMenuItem
+                  name={machineTypeLabel(machineType)}
+                  description={machineTypeDescriptionLabel(machineType)}
+                />
+              ),
+              category: categoryLabel,
+              nameLabel: machineTypeLabel(machineType),
+              descriptionLabel: machineTypeDescriptionLabel(machineType),
+              id: machineType.id,
+            })),
+          };
         }
-        return null;
+        return undefined;
       })
       .filter(Boolean);
-
     return selectGroups;
-  }, [extraProps, filteredMachineTypes, input.value, isTypeAvailable, machineType.id]);
+  }, [filteredMachineTypes]);
 
   // In the dropdown we put the machine type id in separate description row,
   // but the Select toggle doesn't support that, so combine both into one label.
@@ -294,7 +308,11 @@ const MachineTypeSelection = ({
     [filteredMachineTypes, input.value],
   );
 
-  if (isDataReady()) {
+  if (
+    isDataReady &&
+    (!useRegionFilteredData || isRegionSpecificDataReady) &&
+    !activeMachineTypes.error
+  ) {
     if (filteredMachineTypes.length === 0) {
       return (
         <Alert variant={AlertVariant.danger} isInline title={noMachineTypes} role="alert">
@@ -312,26 +330,34 @@ const MachineTypeSelection = ({
         fieldId="node_type"
         labelIcon={<PopoverHint hint={constants.computeNodeInstanceTypeHint} />}
       >
-        <SelectDeprecated
-          variant="single"
-          selections={selection}
-          isOpen={isOpen}
-          placeholderText="Select instance type"
-          onToggle={(_event, isExpanded) => setIsOpen(isExpanded)}
-          onSelect={changeHandler}
-          maxHeight={inModal ? 300 : 600}
+        <TreeViewSelect
+          treeViewSelectionMap={machineTypeMap}
+          inModal={inModal}
           menuAppendTo={menuAppendTo}
-        >
-          {options}
-        </SelectDeprecated>
-
+          selected={selection}
+          setSelected={(event, selection) => {
+            changeHandler(event, selection.id);
+          }}
+          treeViewSwitchActive={!isMachineTypeFilteredByRegion}
+          setTreeViewSwitchActive={(switchValue) => {
+            forceChoiceInput.onChange(false);
+            setIsMachineTypeFilteredByRegion(!switchValue);
+          }}
+          placeholder="Select instance type"
+          searchPlaceholder="Find an instance size"
+          includeFilterSwitch={useRegionFilteredData}
+          switchLabelOnText="Include types that might be unavailable to your account or region"
+          switchLabelOffText="Include types that might be unavailable to your account or region"
+          allExpanded={allExpanded}
+          ariaLabel="Machine type select"
+        />
         <FormGroupHelperText touched={touched} error={error} />
       </FormGroup>
     );
   }
 
-  return machineTypes.error ? (
-    <ErrorBox message="Error loading node types" response={machineTypes} />
+  return activeMachineTypes.error ? (
+    <ErrorBox message="Error loading node types" response={activeMachineTypes} />
   ) : (
     <>
       <div className="spinner-fit-container">
@@ -350,27 +376,30 @@ const inputMetaPropTypes = PropTypes.shape({
   meta: PropTypes.shape({
     error: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
     touched: PropTypes.bool,
-  }).isRequired,
+  }),
+  id: PropTypes.string,
+  ccs_only: PropTypes.bool,
+  generic_name: PropTypes.string,
 });
 
 MachineTypeSelection.propTypes = {
-  machine_type: inputMetaPropTypes.isRequired,
-  machine_type_force_choice: inputMetaPropTypes.isRequired,
+  machine_type: inputMetaPropTypes,
+  machine_type_force_choice: inputMetaPropTypes,
   getDefaultFlavour: PropTypes.func.isRequired,
   flavours: PropTypes.object.isRequired,
-  getMachineTypes: PropTypes.func.isRequired,
   machineTypes: PropTypes.object.isRequired,
+  machineTypesByRegion: PropTypes.object.isRequired,
   isMultiAz: PropTypes.bool.isRequired,
   isBYOC: PropTypes.bool.isRequired,
   isMachinePool: PropTypes.bool.isRequired,
   inModal: PropTypes.bool,
-  cloudProviderID: PropTypes.string.isRequired,
+  cloudProviderID: PropTypes.string,
   product: PropTypes.oneOf(Object.keys(normalizedProducts)).isRequired,
   billingModel: PropTypes.oneOf(Object.values(billingModels)).isRequired,
   quota: PropTypes.object.isRequired,
   organization: PropTypes.object.isRequired,
   menuAppendTo: PropTypes.object,
-  // Plus extraprops passed by redux Field
+  allExpanded: PropTypes.bool,
 };
 
 export default MachineTypeSelection;
