@@ -242,6 +242,7 @@ describe('MachineTypeSelection', () => {
   const defaultProps = {
     flavours: baseFlavoursState,
     machineTypes: baseState,
+    machineTypesByRegion: baseState,
     machine_type: field,
     machine_type_force_choice: forceChoiceField,
     isMultiAz: false,
@@ -254,6 +255,7 @@ describe('MachineTypeSelection', () => {
     isMachinePool: false,
     product: 'OSD',
     billingModel: 'standard',
+    allExpanded: true,
   };
 
   afterEach(() => {
@@ -322,6 +324,7 @@ describe('MachineTypeSelection', () => {
         ...defaultProps,
         flavours: errorFlavoursState,
         machineTypes: fulfilledMachineState,
+        machineTypesByRegion: fulfilledMachineState,
       };
 
       it('displays an error', async () => {
@@ -349,6 +352,7 @@ describe('MachineTypeSelection', () => {
         ...defaultProps,
         flavours: fulfilledFlavoursState,
         machineTypes: fulfilledMachineState,
+        machineTypesByRegion: fulfilledMachineState,
         quota,
         isMultiAz: true,
       };
@@ -362,14 +366,12 @@ describe('MachineTypeSelection', () => {
       it('does not display ccs_only machine types, only machines with quota', async () => {
         const { user } = render(<MachineTypeSelection {...quotaAvailableProps} />);
 
-        const optionsMenu = screen.getByLabelText('Options menu');
+        const optionsMenu = screen.getByLabelText('Machine type select toggle');
         await user.click(optionsMenu);
 
         const options = screen
-          .getAllByRole('option')
-          .map(
-            (option) => option.querySelector('.pf-v5-c-select__menu-item-description').textContent,
-          );
+          .getAllByRole('treeitem')
+          .map((option) => option.querySelector('.pf-v5-l-stack__item').textContent);
 
         expect(options).not.toContain('m5.12xlarge');
         expect(options).not.toContain('g4dn.2xlarge');
@@ -384,8 +386,8 @@ describe('MachineTypeSelection', () => {
         ...defaultProps,
         flavours: fulfilledFlavoursState,
         machineTypes: fulfilledMachineState,
+        machineTypesByRegion: fulfilledMachineState,
         machine_type: field,
-
         quota,
         isMultiAz: true,
       };
@@ -404,7 +406,7 @@ describe('MachineTypeSelection', () => {
         const { user } = render(<MachineTypeSelection {...previousSelectionProps} />);
         expect(screen.queryByText('m5.xlarge', { exact: false })).not.toBeInTheDocument();
 
-        await user.click(screen.getByRole('button', { name: 'Options menu' }));
+        await user.click(screen.getByLabelText('Machine type select toggle'));
 
         expect(screen.getByText('m5.xlarge')).toBeInTheDocument();
         expect(screen.getByText('m5.4xlarge')).toBeInTheDocument();
@@ -420,6 +422,7 @@ describe('MachineTypeSelection', () => {
         ...defaultProps,
         flavours: fulfilledFlavoursState,
         machineTypes: fulfilledMachineState,
+        machineTypesByRegion: fulfilledMachineState,
         machine_type: field,
         quota,
         isMultiAz: true,
@@ -436,14 +439,12 @@ describe('MachineTypeSelection', () => {
       it('does not display ccs_only machine types, only machines with quota', async () => {
         const { user } = render(<MachineTypeSelection {...previousSelectionProps} />);
 
-        const optionsMenu = screen.getByLabelText('Options menu');
+        const optionsMenu = screen.getByLabelText('Machine type select toggle');
         await user.click(optionsMenu);
 
         const options = screen
-          .getAllByRole('option')
-          .map(
-            (option) => option.querySelector('.pf-v5-c-select__menu-item-description').textContent,
-          );
+          .getAllByRole('treeitem')
+          .map((option) => option.querySelector('.pf-v5-l-stack__item').textContent);
 
         expect(options).not.toContain('m5.12xlarge');
         expect(options).not.toContain('g4dn.2xlarge');
@@ -457,6 +458,7 @@ describe('MachineTypeSelection', () => {
         ...defaultProps,
         flavours: fulfilledFlavoursState,
         machineTypes: fulfilledMachineState,
+        machineTypesByRegion: fulfilledMachineState,
         quota,
         isMultiAz: true,
         isBYOC: true,
@@ -471,7 +473,7 @@ describe('MachineTypeSelection', () => {
       it('displays only machine types with quota', async () => {
         const { user } = render(<MachineTypeSelection {...byocProps} />);
 
-        const optionsMenu = screen.getByLabelText('Options menu');
+        const optionsMenu = screen.getByLabelText('Machine type select toggle');
         user.click(optionsMenu);
 
         expect(await screen.findByText('m5.xlarge', { exact: false })).toBeInTheDocument();
@@ -485,6 +487,7 @@ describe('MachineTypeSelection', () => {
         ...defaultProps,
         flavours: fulfilledFlavoursState,
         machineTypes: fulfilledMachineState,
+        machineTypesByRegion: fulfilledMachineState,
         quota,
         isMultiAz: true,
         isBYOC: true,
@@ -523,6 +526,7 @@ describe('MachineTypeSelection', () => {
     const unknownCategoryProps = {
       ...defaultProps,
       machineTypes: state,
+      machineTypesByRegion: state,
       flavours: fulfilledFlavoursState,
       isMultiAz: true,
       isBYOC: true,
@@ -539,14 +543,12 @@ describe('MachineTypeSelection', () => {
       it('displays only machine types with quota from known categories', async () => {
         const { user } = render(<MachineTypeSelection {...unknownCategoryProps} />);
 
-        const optionsMenu = screen.getByLabelText('Options menu');
+        const optionsMenu = screen.getByLabelText('Machine type select toggle');
         await user.click(optionsMenu);
 
         const options = screen
-          .getAllByRole('option')
-          .map(
-            (option) => option.querySelector('.pf-v5-c-select__menu-item-description').textContent,
-          );
+          .getAllByRole('treeitem')
+          .map((option) => option.querySelector('.pf-v5-l-stack__item').textContent);
 
         expect(options).toContain('m5.xlarge');
         expect(options).not.toContain('foo.2xbar');

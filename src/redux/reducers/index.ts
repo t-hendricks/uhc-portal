@@ -26,6 +26,7 @@ import addOnsReducer from '../../components/clusters/ClusterDetails/components/A
 import globalErrorReducer from './globalErrorReducer';
 import flavoursReducer from './flavoursReducer';
 import machineTypesReducer from './machineTypesReducer';
+import machineTypesByRegionReducer from './machineTypesByRegionReducer';
 import dnsDomainsReducer from './dnsDomainsReducer';
 import insightsReducer from '../../components/clusters/ClusterDetails/components/Insights/InsightsReducer';
 import { clusterAutoscalerReducer } from './clusterAutoscalerReducer';
@@ -65,6 +66,7 @@ const reducers = {
   globalError: globalErrorReducer,
   flavours: flavoursReducer,
   machineTypes: machineTypesReducer,
+  machineTypesByRegion: machineTypesByRegionReducer,
   monitoring: MonitoringReducer,
   subscriptions: subscriptionsReducer,
   persistentStorageValues: persistentStorageReducer,

@@ -6,6 +6,7 @@ export enum FieldId {
   // we still set them to fixed values, to reuse code that depends on them.
   Byoc = 'byoc',
   Product = 'product',
+  Region = 'region',
   CloudProvider = 'cloud_provider',
   BillingModel = 'billing_model',
   AcknowledgePrereq = 'acknowledge_prerequisites',
@@ -30,6 +31,9 @@ export enum FieldId {
   MachineTypeForceChoice = 'machine_type_force_choice',
   FipsCryptography = 'fips',
   IMDS = 'imds',
+  AccountId = 'accountId',
+  AccessKeyId = 'accessKeyId',
+  SecretAccessKey = 'secretAccessKey',
   ApplicationIngress = 'applicationIngress',
   DefaultRouterSelectors = 'defaultRouterSelectors',
   DefaultRouterExcludedNamespacesFlag = 'defaultRouterExcludedNamespacesFlag',
