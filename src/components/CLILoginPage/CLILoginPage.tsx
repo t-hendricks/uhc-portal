@@ -1,15 +1,38 @@
 import React from 'react';
 import PageHeader, { PageHeaderTitle } from '@redhat-cloud-services/frontend-components/PageHeader';
-import { PageSection } from '@patternfly/react-core';
-import { Capability } from '~/types/accounts_mgmt.v1';
+import { Spinner } from '@redhat-cloud-services/frontend-components/Spinner';
+import useChrome from '@redhat-cloud-services/frontend-components/useChrome';
+import type { ChromeAPI } from '@redhat-cloud-services/types';
+import { PageSection, Alert, Card, CardBody, CardTitle, Title } from '@patternfly/react-core';
+import { Capability, Error } from '~/types/accounts_mgmt.v1';
+import { isRestrictedEnv } from '~/restrictedEnv';
 import useAccount from './useAccount';
 import InstructionsOCM from './Instructions';
 import InstructionsROSA from './InstructionsROSA';
 import Breadcrumbs from '../common/Breadcrumbs';
 import { AppPage } from '../App/AppPage';
 
+const defaultToOfflineTokens = true;
+
+const ErrorOrLoadingWrapper = ({ children }: { children: React.ReactElement }) => (
+  <AppPage title="Openshift Cluster Manager">
+    <PageHeader className="pf-v5-u-mb-md">
+      <PageHeaderTitle title="Openshift Cluster Manager" />
+    </PageHeader>
+    <PageSection>
+      <Card>
+        <CardTitle>
+          <Title headingLevel="h2">CLI login</Title>
+        </CardTitle>
+        <CardBody>{children}</CardBody>
+      </Card>
+    </PageSection>
+  </AppPage>
+);
+
 export const hasRestrictTokensCapability = (capabilities: Array<Capability>) =>
-  capabilities?.some(
+  !!capabilities?.length &&
+  capabilities.some(
     (capability) =>
       capability.name === 'capability.account.restrict_new_offline_tokens' &&
       capability.value === 'true',
@@ -22,14 +45,49 @@ type CLILoginPageProps = {
 };
 
 const CLILoginPage = ({ showToken = false, showPath, isRosa = false }: CLILoginPageProps) => {
-  const { userAccount, isLoading, hasError } = useAccount();
+  const chrome = useChrome();
+  const { userAccount, isLoading, error } = useAccount();
+  const restrictedEnv = isRestrictedEnv(chrome as unknown as ChromeAPI);
+
   let restrictTokens = false;
-  if (!!userAccount?.capabilities) {
-    restrictTokens =
-      !isLoading && !hasError && hasRestrictTokensCapability(userAccount.capabilities);
-  }
-  const Instructions = isRosa ? InstructionsROSA : InstructionsOCM;
   const pageTitle = `OpenShift Cluster Manager ${restrictTokens ? 'SSO login' : 'API Token'}`;
+  const Instructions = isRosa ? InstructionsROSA : InstructionsOCM;
+
+  if (!restrictedEnv) {
+    const errorData = error as Error;
+
+    if (isLoading) {
+      return (
+        <ErrorOrLoadingWrapper>
+          <Spinner />
+        </ErrorOrLoadingWrapper>
+      );
+    }
+
+    if (error) {
+      if (!defaultToOfflineTokens) {
+        return (
+          <ErrorOrLoadingWrapper>
+            <Alert
+              variant="danger"
+              isInline
+              title="Error retrieving user account"
+              role="alert"
+              className="error-box"
+              data-testid="alert-error"
+            >
+              <span>{errorData.reason}</span>
+              <span>{`Operation ID: ${errorData.operation_id || 'N/A'}`}</span>
+            </Alert>
+          </ErrorOrLoadingWrapper>
+        );
+      }
+    } else {
+      restrictTokens =
+        !!userAccount?.capabilities && hasRestrictTokensCapability(userAccount.capabilities);
+    }
+  }
+
   return (
     <AppPage title={`${restrictTokens ? 'SSO Login' : 'API Token'} | OpenShift Cluster Manager`}>
       <PageHeader className="pf-v5-u-mb-md">
