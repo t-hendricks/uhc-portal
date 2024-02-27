@@ -52,6 +52,10 @@ export enum FieldId {
   AccessKeyId = 'access_key_id',
   SecretAccessKey = 'secret_access_key',
   SecurityGroups = 'securityGroups',
+  HttpProxyUrl = 'http_proxy_url',
+  HttpsProxyUrl = 'https_proxy_url',
+  AdditionalTrustBundle = 'additional_trust_bundle',
+  NoProxyDomains = 'no_proxy_domains',
 }
 
 export const initialValues: FormikValues = {

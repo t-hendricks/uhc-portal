@@ -46,9 +46,9 @@ class ReduxFileUpload extends React.Component {
     input.onChange(file);
   };
 
-  handleFileContentChange = (_e, file) => {
+  handleFileContentChange = (_e, value) => {
     const { input } = this.props;
-    input.onChange(file);
+    input.onChange(value);
   };
 
   handleFileRejected = (rejectedFiles, event) => {

@@ -1,12 +1,16 @@
 import React, { useEffect } from 'react';
-import PropTypes from 'prop-types';
-import { Field } from 'redux-form';
+import { Field } from 'formik';
 import { Form, Grid, GridItem, Title, Text, Alert, AlertActionLink } from '@patternfly/react-core';
 import { WizardContext as WizardContextDeprecated } from '@patternfly/react-core/deprecated';
 
 import { stringToArray } from '~/common/helpers';
 import { constants } from '~/components/clusters/common/CreateOSDFormConstants';
-import { validateUrl, validateCA, checkNoProxyDomains } from '~/common/validators';
+import {
+  validateUrl,
+  validateCA,
+  checkNoProxyDomains,
+  composeValidators,
+} from '~/common/validators';
 import { normalizedProducts } from '~/common/subscriptionTypes';
 import {
   HTTP_PROXY_PLACEHOLDER,
@@ -17,24 +21,29 @@ import {
   TRUST_BUNDLE_PLACEHOLDER,
   TRUST_BUNDLE_HELPER_TEXT,
 } from '~/components/clusters/common/networkingConstants';
-import ReduxVerticalFormGroup from '../../../../common/ReduxFormComponents/ReduxVerticalFormGroup';
-import ReduxFileUpload from '../../../../common/ReduxFormComponents/ReduxFileUpload';
-import ExternalLink from '../../../../common/ExternalLink';
-import links from '../../../../../common/installLinks.mjs';
-
+import { FieldId } from '~/components/clusters/wizards/rosa_v2/constants';
+import { useFormState } from '~/components/clusters/wizards/hooks';
+import ReduxVerticalFormGroup from '~/components/common/ReduxFormComponents/ReduxVerticalFormGroup';
+import ReduxFileUpload from '~/components/common/ReduxFormComponents/ReduxFileUpload';
+import ExternalLink from '~/components/common/ExternalLink';
+import links from '~/common/installLinks.mjs';
 import {
   MAX_FILE_SIZE,
   ACCEPT,
-} from '../../../ClusterDetails/components/IdentityProvidersPage/components/CAUpload';
+} from '~/components/clusters/ClusterDetails/components/IdentityProvidersPage/components/CAUpload';
 
-function ClusterProxyScreen({
-  product,
-  httpProxyUrl,
-  httpsProxyUrl,
-  additionalTrustBundle,
-  sendError,
-  change,
-}) {
+function ClusterProxyScreen() {
+  const {
+    setFieldValue, // Set value of form field directly
+    getFieldProps, // Access: name, value, onBlur, onChange for a <Field>, useful for mapping to a field that expects the redux-form props
+    getFieldMeta, // Access: error, touched for a <Field>, useful for mapping to a field that expects the redux-form props
+    values: {
+      [FieldId.Product]: product,
+      [FieldId.HttpProxyUrl]: httpProxyUrl,
+      [FieldId.HttpsProxyUrl]: httpsProxyUrl,
+      [FieldId.AdditionalTrustBundle]: additionalTrustBundle,
+    },
+  } = useFormState();
   const [anyTouched, setAnyTouched] = React.useState(false);
   const configureProxyUrl =
     product === normalizedProducts.ROSA
@@ -51,12 +60,8 @@ function ClusterProxyScreen({
   const noValues = () => noUrlValues && !additionalTrustBundle;
   const validateUrlHttp = (value) => validateUrl(value, 'http');
   const validateUrlHttps = (value) => validateUrl(value, ['http', 'https']);
-  const validateAtLeastOne = (value, allValues) => {
-    if (
-      !allValues.http_proxy_url &&
-      !allValues.https_proxy_url &&
-      !allValues.additional_trust_bundle
-    ) {
+  const validateAtLeastOne = () => {
+    if (!httpProxyUrl && !httpsProxyUrl && !additionalTrustBundle) {
       return 'Configure at least one of the cluster-wide proxy fields.';
     }
     return undefined;
@@ -90,15 +95,21 @@ function ClusterProxyScreen({
   );
 
   const onFileRejected = () => {
-    sendError();
+    // 'Invalid file' is a magic string that triggers a validation error
+    // in src/common/validators.js validateCA function
+    setFieldValue(FieldId.AdditionalTrustBundle, 'Invalid file');
   };
 
   useEffect(() => {
     if (noUrlValues) {
-      change('no_proxy_domains', '');
+      setFieldValue(FieldId.NoProxyDomains, '');
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [noUrlValues]);
+
+  const httpProxyUrlFieldProps = getFieldProps(FieldId.HttpProxyUrl);
+  const httpsProxyUrlFieldProps = getFieldProps(FieldId.HttpsProxyUrl);
+  const additionalTrustBundleFieldProps = getFieldProps(FieldId.AdditionalTrustBundle);
 
   return (
     <Form
@@ -130,62 +141,93 @@ function ClusterProxyScreen({
         <GridItem sm={12} md={10} xl2={8}>
           <Field
             component={ReduxVerticalFormGroup}
-            name="http_proxy_url"
+            name={FieldId.HttpProxyUrl}
             label="HTTP proxy URL"
             placeholder={HTTP_PROXY_PLACEHOLDER}
             type="text"
-            validate={[validateUrlHttp, validateAtLeastOne]}
+            validate={composeValidators(validateUrlHttp, validateAtLeastOne)}
             helpText="Specify a proxy URL to use for HTTP connections outside the cluster."
             showHelpTextOnError={false}
-            onBlur={onTouched}
+            input={{
+              ...httpProxyUrlFieldProps,
+              onChange: (_, value) => setFieldValue(FieldId.HttpProxyUrl, value),
+              onBlur: (event) => {
+                const { onBlur } = httpProxyUrlFieldProps;
+                onTouched();
+                onBlur(event);
+              },
+            }}
+            meta={getFieldMeta(FieldId.HttpProxyUrl)}
           />
         </GridItem>
         <GridItem sm={0} md={2} xl2={4} />
         <GridItem sm={12} md={10} xl2={8}>
           <Field
             component={ReduxVerticalFormGroup}
-            name="https_proxy_url"
+            name={FieldId.HttpsProxyUrl}
             label="HTTPS proxy URL"
             placeholder={HTTPS_PROXY_PLACEHOLDER}
             type="text"
-            validate={[validateUrlHttps, validateAtLeastOne]}
+            validate={composeValidators(validateUrlHttps, validateAtLeastOne)}
             helpText="Specify a proxy URL to use for HTTPS connections outside the cluster."
             showHelpTextOnError={false}
-            onBlur={onTouched}
+            input={{
+              ...httpsProxyUrlFieldProps,
+              onChange: (_, value) => setFieldValue(FieldId.HttpsProxyUrl, value),
+              onBlur: (event) => {
+                const { onBlur } = httpsProxyUrlFieldProps;
+                onTouched();
+                onBlur(event);
+              },
+            }}
+            meta={getFieldMeta(FieldId.HttpsProxyUrl)}
           />
         </GridItem>
         <GridItem sm={0} md={2} xl2={4} />
         <GridItem sm={12} md={10} xl2={8}>
           <Field
             component={ReduxVerticalFormGroup}
-            name="no_proxy_domains"
+            name={FieldId.NoProxyDomains}
             label="No Proxy domains"
             placeholder={noUrlValues ? DISABLED_NO_PROXY_PLACEHOLDER : NO_PROXY_PLACEHOLDER}
             type="text"
             validate={checkNoProxyDomains}
             helpText={NO_PROXY_HELPER_TEXT}
             showHelpTextOnError={false}
-            normalize={(value) => stringToArray(value)}
             isDisabled={noUrlValues}
+            input={{
+              ...getFieldProps(FieldId.NoProxyDomains),
+              onChange: (_, value) => setFieldValue(FieldId.NoProxyDomains, stringToArray(value)),
+            }}
+            meta={getFieldMeta(FieldId.NoProxyDomains)}
           />
         </GridItem>
         <GridItem sm={0} md={2} xl2={4} />
         <GridItem sm={12} md={10} xl2={8}>
           <Field
             component={ReduxFileUpload}
-            name="additional_trust_bundle"
+            name={FieldId.AdditionalTrustBundle}
             label="Additional trust bundle"
             placeholder={TRUST_BUNDLE_PLACEHOLDER}
             extendedHelpTitle="Additional trust bundle"
             extendedHelpText={TRUST_BUNDLE_HELPER_TEXT}
-            validate={[validateCA, validateAtLeastOne]}
-            onBlur={onTouched}
+            validate={composeValidators(validateCA, validateAtLeastOne)}
             dropzoneProps={{
               accept: ACCEPT,
               maxSize: MAX_FILE_SIZE,
               onDropRejected: onFileRejected,
             }}
             helpText="Upload or paste a PEM encoded X.509 certificate."
+            input={{
+              ...additionalTrustBundleFieldProps,
+              onChange: (value) => setFieldValue(FieldId.AdditionalTrustBundle, value),
+              onBlur: (event) => {
+                const { onBlur } = additionalTrustBundleFieldProps;
+                onTouched();
+                onBlur(event);
+              },
+            }}
+            meta={getFieldMeta(FieldId.AdditionalTrustBundle)}
           />
         </GridItem>
         <GridItem sm={0} md={2} xl2={4} />
@@ -195,13 +237,6 @@ function ClusterProxyScreen({
   );
 }
 
-ClusterProxyScreen.propTypes = {
-  product: PropTypes.string,
-  httpProxyUrl: PropTypes.string,
-  httpsProxyUrl: PropTypes.string,
-  additionalTrustBundle: PropTypes.string,
-  sendError: PropTypes.func,
-  change: PropTypes.func,
-};
+ClusterProxyScreen.propTypes = {};
 
 export default ClusterProxyScreen;
