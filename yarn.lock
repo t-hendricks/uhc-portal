@@ -7024,6 +7024,11 @@ eslint-plugin-jsx-a11y@^6.8.0:
     object.entries "^1.1.7"
     object.fromentries "^2.0.7"
 
+eslint-plugin-no-snapshot-testing@^1.0.61:
+  version "1.0.61"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-no-snapshot-testing/-/eslint-plugin-no-snapshot-testing-1.0.61.tgz#e9b941146b1858ed77ccb2dc28799809e14995d4"
+  integrity sha512-/O1sNPoJ+nPo4TemMkmdjCcNMLQy/HtXcG3bOlQLxcRbRk8xV3uE+1l3ltLTmz1d9KV8UI546YtrJKfjGsG7yg==
+
 eslint-plugin-node@^11.1.0:
   version "11.1.0"
   resolved "https://registry.yarnpkg.com/eslint-plugin-node/-/eslint-plugin-node-11.1.0.tgz#c95544416ee4ada26740a30474eefc5402dc671d"
