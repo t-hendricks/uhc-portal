@@ -23,7 +23,7 @@ import { CheckCircleIcon } from '@patternfly/react-icons/dist/esm/icons/check-ci
 import { WarningTriangleIcon } from '@patternfly/react-icons/dist/esm/icons/warning-triangle-icon';
 import React from 'react';
 
-import { useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router-dom-v5-compat';
 import links from '~/common/installLinks.mjs';
 import Breadcrumbs from '~/components/common/Breadcrumbs';
 import ExternalLink from '~/components/common/ExternalLink';

@@ -25,7 +25,9 @@ describe('<CreateRosaGetStarted />', () => {
   it('is accessible', async () => {
     const { container } = render(
       <MemoryRouter>
-        <CreateRosaGetStarted />
+        <CompatRouter>
+          <CreateRosaGetStarted />
+        </CompatRouter>
       </MemoryRouter>,
     );
 
