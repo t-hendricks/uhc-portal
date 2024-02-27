@@ -1642,6 +1642,21 @@ const validateWorkerVolumeSize = (
     : 'Decimals are not allowed for the worker root disk size. Enter a whole number.';
 };
 
+const composeValidators =
+  (...args: Array<(value: any) => string | undefined>) =>
+  (value: any) => {
+    for (let i = 0; i < args.length; i += 1) {
+      const validator = args[i];
+      const error = validator(value);
+
+      if (error) {
+        return error;
+      }
+    }
+
+    return undefined;
+  };
+
 const validators = {
   required,
   acknowledgePrerequisites,
@@ -1753,6 +1768,7 @@ export {
   validateTlsSecretName,
   validateTlsHostname,
   validateNamespacesList,
+  composeValidators,
 };
 
 export default validators;
