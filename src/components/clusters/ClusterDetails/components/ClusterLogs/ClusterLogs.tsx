@@ -13,7 +13,7 @@ import SearchIcon from '@patternfly/react-icons/dist/esm/icons/search-icon';
 import isEmpty from 'lodash/isEmpty';
 import size from 'lodash/size';
 import React from 'react';
-import { useHistory } from 'react-router';
+import { useHistory } from 'react-router-dom';
 
 import { useDispatch } from 'react-redux';
 import { viewActions } from '~/redux/actions/viewOptionsActions';

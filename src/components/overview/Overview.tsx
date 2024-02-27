@@ -1,7 +1,7 @@
 import './Overview.scss';
 import React, { useCallback } from 'react';
 import { Button, Title, Label, Flex, FlexItem, PageSection } from '@patternfly/react-core';
-import { Link } from 'react-router-dom';
+import { Link } from 'react-router-dom-v5-compat';
 import ExternalLink from '~/components/common/ExternalLink';
 import useAnalytics from '~/hooks/useAnalytics';
 import { trackEvents } from '~/common/analytics';

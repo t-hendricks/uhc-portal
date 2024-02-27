@@ -1,8 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import get from 'lodash/get';
-import { Link } from 'react-router-dom';
-import { useNavigate } from 'react-router-dom-v5-compat';
+import { useNavigate, Link } from 'react-router-dom-v5-compat';
 
 import {
   Card,

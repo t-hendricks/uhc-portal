@@ -1,5 +1,5 @@
 import React from 'react';
-import { useLocation, useParams } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom-v5-compat';
 import InsightsAdvisorRedirector from '../InsightsAdvisorRedirector';
 import ClusterDetailsRedirector from '../ClusterDetailsRedirector';
 
