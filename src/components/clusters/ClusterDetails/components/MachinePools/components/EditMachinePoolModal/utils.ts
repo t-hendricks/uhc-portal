@@ -108,7 +108,7 @@ export const buildNodePoolRequest = (
   };
 
   if (!isEdit) {
-    nodePool.subnet = values.subnet?.subnet_id;
+    nodePool.subnet = values.privateSubnetId;
     nodePool.aws_node_pool = {
       instance_type: values.instanceType,
     };

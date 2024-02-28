@@ -285,34 +285,82 @@ const reviewValues = {
       </Grid>
     ),
   },
-  aws_standalone_vpc: {
+  // For OSD wizard
+  aws_standalone_vpc_osd: {
     title: 'VPC subnet settings',
     valueTransform: (value, allValues) => {
-      let vpcs = [
+      let machinePoolsSubnets = [
         {
-          az: allValues.az_0,
-          privateSubnet: allValues.private_subnet_id_0,
-          publicSubnet: allValues.public_subnet_id_0,
+          availabilityZone: allValues.az_0,
+          privateSubnetId: allValues.private_subnet_id_0,
+          publicSubnetId: allValues.public_subnet_id_0,
         },
       ];
       if (allValues.multi_az === 'true') {
-        vpcs = [
-          ...vpcs,
+        machinePoolsSubnets = [
+          ...machinePoolsSubnets,
           {
-            az: allValues.az_1,
-            privateSubnet: allValues.private_subnet_id_1,
-            publicSubnet: allValues.public_subnet_id_1,
+            availabilityZone: allValues.az_1,
+            privateSubnetId: allValues.private_subnet_id_1,
+            publicSubnetId: allValues.public_subnet_id_1,
           },
           {
-            az: allValues.az_2,
-            privateSubnet: allValues.private_subnet_id_2,
-            publicSubnet: allValues.public_subnet_id_2,
+            availabilityZone: allValues.az_2,
+            privateSubnetId: allValues.private_subnet_id_2,
+            publicSubnetId: allValues.public_subnet_id_2,
           },
         ];
       }
 
-      const showPublicFields = !allValues.use_privatelink;
-      return <AwsVpcTable vpcs={vpcs} showPublicFields={showPublicFields} />;
+      return (
+        <AwsVpcTable
+          vpc={allValues.selected_vpc}
+          machinePoolsSubnets={machinePoolsSubnets}
+          hasPublicSubnets={!allValues.use_privatelink}
+        />
+      );
+    },
+  },
+  // For ROSA wizard
+  aws_standalone_vpc: {
+    title: 'VPC subnet settings',
+    valueTransform: (value, allValues) => (
+      <AwsVpcTable
+        vpc={allValues.selected_vpc}
+        machinePoolsSubnets={allValues.machinePoolsSubnets}
+        hasPublicSubnets={!allValues.use_privatelink}
+      />
+    ),
+  },
+  aws_hosted_machine_pools: {
+    title: 'Machine pools',
+    valueTransform: (value, allValues) => {
+      const fullMpSubnets = allValues.machinePoolsSubnets.map((mpSubnet) => {
+        const privateSubnetInfo = allValues.selected_vpc.aws_subnets?.find(
+          (vpcSubnet) => vpcSubnet.subnet_id === mpSubnet.privateSubnetId,
+        );
+        return {
+          availabilityZone: privateSubnetInfo.availability_zone,
+          privateSubnetId: privateSubnetInfo.subnet_id,
+          publicSubnetId: '',
+        };
+      });
+      return (
+        <AwsVpcTable
+          vpc={allValues.selected_vpc}
+          machinePoolsSubnets={fullMpSubnets}
+          hasPublicSubnets={false}
+        />
+      );
+    },
+  },
+  cluster_privacy_public_subnet_id: {
+    title: 'Public subnet',
+    valueTransform: (publicSubnetId, allValues) => {
+      const subnetInfo = allValues.selected_vpc.aws_subnets?.find(
+        (vpcSubnet) => vpcSubnet.subnet_id === publicSubnetId,
+      );
+      return subnetInfo?.name || publicSubnetId;
     },
   },
   securityGroups: {
@@ -323,17 +371,6 @@ const reviewValues = {
         formGroups={formGroups}
       />
     ),
-  },
-  aws_hosted_machine_pools: {
-    title: 'Machine pools',
-    valueTransform: (value, allValues) => {
-      const vpcs = allValues.machine_pools_subnets.map((machinePool) => ({
-        publicSubnet: '',
-        privateSubnet: machinePool.name || machinePool.subnet_id,
-        az: machinePool.availability_zone,
-      }));
-      return <AwsVpcTable vpcs={vpcs} showPublicFields={false} />;
-    },
   },
   applicationIngress: {
     title: 'Application ingress',
@@ -435,10 +472,6 @@ const reviewValues = {
       internal: 'Private',
       undefined: 'Public',
     },
-  },
-  cluster_privacy_public_subnet: {
-    title: 'Public subnet',
-    valueTransform: (subnet) => subnet.name || subnet.subnet_id,
   },
   associated_aws_id: {
     title: 'AWS infrastructure account ID',

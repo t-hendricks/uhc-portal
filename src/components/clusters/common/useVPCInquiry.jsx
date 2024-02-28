@@ -10,9 +10,6 @@ import {
 } from '~/components/clusters/common/v1VpcSelectors';
 import { clearListVpcs, getAWSCloudProviderVPCs } from '~/redux/actions/ccsInquiriesActions';
 
-export const isSubnetMatchingPrivacy = (subnet, privacy) =>
-  !privacy || (privacy === 'public' && subnet.public) || (privacy === 'private' && !subnet.public);
-
 export const lastVpcRequestIsInEffect = (vpcs, newRequest) => {
   if (!vpcs.fulfilled) {
     return false;
@@ -20,22 +17,10 @@ export const lastVpcRequestIsInEffect = (vpcs, newRequest) => {
 
   return (
     vpcs.cloudProvider === newRequest.cloudProviderID &&
-    isEqual(vpcs.credentials, newRequest.credentials) &&
-    vpcs.region === newRequest.region
+    vpcs.region === newRequest.region &&
+    isEqual(vpcs.credentials, newRequest.credentials) // make the more expensive comparison last
   );
 };
-
-export const vpcHasPrivateSubnets = (vpc) =>
-  (vpc.aws_subnets || []).some((subnet) => isSubnetMatchingPrivacy(subnet, 'private'));
-
-/**
- * Returns only the VPCs that are not managed by Red Hat
-
- * @param vpcs list of VPC items
- * @returns {*} copy of the VPC list
- */
-export const filterOutRedHatManagedVPCs = (vpcs) =>
-  vpcs.filter((vpcItem) => !vpcItem.red_hat_managed);
 
 /**
  * Generates the request parameters to obtain the customer's VPC.

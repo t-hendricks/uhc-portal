@@ -34,10 +34,12 @@ import {
 } from 'react-router-dom';
 import apiRequest from '~/services/apiRequest';
 import { useFeatureGate } from '~/hooks/useFeatureGate';
+import config from '~/config';
 import { normalizedProducts } from '../../common/subscriptionTypes';
 import {
   ASSISTED_INSTALLER_FEATURE,
   HYPERSHIFT_WIZARD_FEATURE,
+  ROSA_WIZARD_V2_ENABLED,
 } from '../../redux/constants/featureConstants';
 import ArchivedClusterList from '../clusters/ArchivedClusterList';
 import ClusterDetailsClusterOrExternalId from '../clusters/ClusterDetails/ClusterDetailsClusterOrExternalId';
@@ -46,6 +48,7 @@ import IdentityProvidersPage from '../clusters/ClusterDetails/components/Identit
 import ClustersList from '../clusters/ClusterList';
 import CreateClusterPage from '../clusters/CreateClusterPage';
 import CreateROSAWizard from '../clusters/wizards/rosa_v1';
+import CreateROSAWizardV2 from '../clusters/wizards/rosa_v2';
 import GetStartedWithROSA from '../clusters/wizards/rosa_v1/CreateRosaGetStarted';
 import InsightsAdvisorRedirector from '../clusters/InsightsAdvisorRedirector';
 import RegisterCluster from '../clusters/RegisterCluster';
@@ -156,6 +159,9 @@ const Router: React.FC<RouterProps> = ({ history, planType, clusterId, externalC
 
   const isHypershiftWizardEnabled = useFeatureGate(HYPERSHIFT_WIZARD_FEATURE);
 
+  // ROSA_WIZARD_V2_ENABLED enabled in staging, disabled in production (via Unleashed)
+  const isRosaV2WizardEnabled = useFeatureGate(ROSA_WIZARD_V2_ENABLED);
+
   // For testing purposes, show which major features are enabled/disabled
   React.useEffect(() => {
     // eslint-disable-next-line no-console
@@ -200,7 +206,6 @@ const Router: React.FC<RouterProps> = ({ history, planType, clusterId, externalC
                 to see it during page reload that may be needed for elevated auth. */}
             <TermsGuardedRoute
               path="/token/rosa/show"
-              history={history}
               render={() => (
                 <AppPage>
                   <TokensROSA show />
@@ -210,7 +215,6 @@ const Router: React.FC<RouterProps> = ({ history, planType, clusterId, externalC
             />
             <TermsGuardedRoute
               path="/token/rosa"
-              history={history}
               render={() => (
                 <AppPage>
                   <TokensROSA show={false} showPath="/token/rosa/show" />
@@ -372,13 +376,11 @@ const Router: React.FC<RouterProps> = ({ history, planType, clusterId, externalC
               path="/create/osdtrial"
               gobackPath="/create"
               render={() => <CreateOsdWizard product={normalizedProducts.OSDTrial} />}
-              history={history}
             />
             <TermsGuardedRoute
               path="/create/osd"
               gobackPath="/create"
               component={CreateOsdWizard}
-              history={history}
             />
             <CompatRoute
               path="/create/cloud"
@@ -394,17 +396,14 @@ const Router: React.FC<RouterProps> = ({ history, planType, clusterId, externalC
             />
 
             <Redirect from="/create/rosa/welcome" to="/create/rosa/getstarted" />
-            <TermsGuardedRoute
-              path="/create/rosa/getstarted"
-              history={history}
-              component={GetStartedWithROSA}
-            />
+            <TermsGuardedRoute path="/create/rosa/getstarted" component={GetStartedWithROSA} />
             <CompatRoute path="/create/rosa/govcloud" component={GovCloudPage} />
 
             <TermsGuardedRoute
               path="/create/rosa/wizard"
-              history={history}
-              component={CreateROSAWizard}
+              component={
+                config.rosaV2 && isRosaV2WizardEnabled ? CreateROSAWizardV2 : CreateROSAWizard
+              }
             />
 
             <CompatRoute path="/create" component={() => <CreateClusterPage activeTab="" />} />

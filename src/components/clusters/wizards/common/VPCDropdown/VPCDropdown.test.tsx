@@ -1,11 +1,7 @@
 import React from 'react';
 
-import { CloudVPC } from '~/types/clusters_mgmt.v1';
 import { render, screen } from '~/testUtils';
-import {
-  useAWSVPCInquiry,
-  filterOutRedHatManagedVPCs,
-} from '~/components/clusters/common/useVPCInquiry';
+import { useAWSVPCInquiry } from '~/components/clusters/common/useVPCInquiry';
 import VPCDropdown from './VPCDropdown';
 
 const defaultProps = {
@@ -128,8 +124,6 @@ describe('<VPCDropdown />', () => {
         },
         requestParams,
       }));
-      // Dummy implementation for the filtering. We only care that it's called, and that it returns vpcs
-      (filterOutRedHatManagedVPCs as jest.Mock).mockImplementation((vpcs: CloudVPC[]) => vpcs);
     });
 
     afterEach(() => {
@@ -159,12 +153,17 @@ describe('<VPCDropdown />', () => {
       ).toBeInTheDocument();
     });
 
-    it('applies the filtering for the VPCs that are not managed by Red Hat', () => {
-      expect(filterOutRedHatManagedVPCs).not.toHaveBeenCalled();
+    it('lists only the VPCs that are not managed by Red Hat', async () => {
+      const { user } = render(<VPCDropdown {...defaultProps} />);
+      expect(await screen.findByText(/^select a vpc$/i)).toBeInTheDocument();
 
-      render(<VPCDropdown {...defaultProps} />);
+      const selectDropdown = screen.getByRole('button', { name: 'Options menu' });
+      await user.click(selectDropdown);
 
-      expect(filterOutRedHatManagedVPCs).toHaveBeenCalledTimes(1);
+      // Assert
+      expect(screen.getByText('jaosorior-8vns4-vpc')).toBeInTheDocument();
+      expect(screen.getByText('zac-east-vpc')).toBeInTheDocument();
+      expect(screen.queryByText('caa-e2e-test-vpc')).not.toBeInTheDocument();
     });
   });
 

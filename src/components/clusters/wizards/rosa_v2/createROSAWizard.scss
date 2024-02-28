@@ -1,0 +1,84 @@
+@import '~@patternfly/patternfly/sass-utilities/_all';
+
+.ocm-c-wizard-get-started--card-icon {
+  display: block;
+  color: var(--pf-v5-global--palette--blue-400);
+  margin-bottom: 10px;
+}
+
+.ocm-instructions__list-item-contents {
+  .pf-v5-c-alert.pf-m-inline {
+    .pf-v5-c-alert__title {
+      margin-top: 0;
+    }
+  }
+}
+
+.pf-v5-c-wizard.rosa-wizard {
+  min-height: 60vh;
+  .pf-v5-c-wizard__footer {
+    z-index: 0;
+  }
+  .ocm-c-wizard-intro-image-container {
+    position: absolute;
+    right: 45px;
+    top: 45px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 24px;
+
+    .ocm-c-wizard-intro-image-top {
+      width: 60px;
+    }
+    .ocm-c-wizard-intro-image-bottom {
+      width: 50px;
+    }
+  }
+  #node-labels-alert {
+    margin-top: var(--pf-v5-global--spacer--md);
+  }
+  .pf-v5-c-form__field-group {
+    border-top: 0;
+  }
+  .pf-v5-c-content {
+    .pf-v5-c-alert {
+      --pf-v5-c-content--h4--MarginTop: 0;
+      --pf-v5-c-content--h4--FontSize: var(--pf-v5-c-alert__title--FontSize);
+      --pf-v5-c-content--h4--FontWeight: var(--pf-v5-c-alert__title--FontWeight);
+    }
+  }
+}
+
+.ocm-c-wizard-alert-steps {
+  list-style: none;
+}
+
+.ocm-wizard-or-container {
+  display: flex;
+  justify-content: center;
+  p {
+    align-self: flex-end;
+  }
+  @media only screen and (max-width: $pf-v5-global--breakpoint--md) {
+    justify-content: start;
+    margin-top: var(--pf-v5-global--spacer--md);
+    margin-bottom: var(--pf-v5-global--spacer--sm);
+  }
+}
+
+.ocm-instruction-block {
+  border-inline-start: var(--pf-v5-global--BorderWidth--lg) solid var(--pf-v5-global--BorderColor--100);
+  padding: var(--pf-v5-global--spacer--lg);
+  .ocm-instruction-block_alert {
+    margin-top: var(--pf-v5-global--spacer--lg);
+  }
+}
+
+// TODO: Should not be needed once https://github.com/patternfly/patternfly-react/issues/9884 is fixed
+.rosa-get-started {
+  .pf-v5-c-card__header-main {
+    flex-basis: auto;
+  }
+}

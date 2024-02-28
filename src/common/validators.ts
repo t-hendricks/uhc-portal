@@ -7,7 +7,7 @@ import {
   maxAdditionalSecurityGroups,
   workerNodeVolumeSizeMinGiB,
 } from '~/components/clusters/wizards/rosa/constants';
-import type { CloudVPC, GCP, Subnetwork, Taint } from '../types/clusters_mgmt.v1';
+import type { CloudVPC, GCP, Taint } from '../types/clusters_mgmt.v1';
 import { sqlString } from './queryHelpers';
 
 type Networks = Parameters<typeof cidrTools['overlap']>[0];
@@ -784,7 +784,10 @@ const awsMachineCidr = (value?: string, formData?: Record<string, string>): stri
       return `The subnet mask can't be larger than '/${AWS_MACHINE_CIDR_MIN}'.`;
     }
 
-    if (isMultiAz && prefixLength > AWS_MACHINE_CIDR_MAX_MULTI_AZ) {
+    if (
+      (isMultiAz || formData?.hypershift === 'true') &&
+      prefixLength > AWS_MACHINE_CIDR_MAX_MULTI_AZ
+    ) {
       return `The subnet mask can't be smaller than '/${AWS_MACHINE_CIDR_MAX_MULTI_AZ}'.`;
     }
 
@@ -1286,13 +1289,23 @@ const validateSecurityGroups = (securityGroups: string[]) =>
     ? `A maximum of ${maxAdditionalSecurityGroups} security groups can be selected.`
     : undefined;
 
-const validateUniqueAZ = createUniqueFieldValidator(
+const validateOsdUniqueAZ = createUniqueFieldValidator(
   'Must select 3 different AZs.',
   (currentFieldName: string, allValues: { [key: string]: unknown }) =>
     Object.entries(allValues)
       .filter(([fieldKey]) => fieldKey.startsWith('az_') && fieldKey !== currentFieldName)
       .map(([, fieldValue]) => fieldValue),
 );
+
+const validateRosaUniqueAZ = (
+  currentAZ: string,
+  allValues: { machinePoolsSubnets: FormSubnet[] },
+) => {
+  const sameAZs = (allValues.machinePoolsSubnets || [])
+    .map((item) => item.availabilityZone)
+    .filter((az: string) => !!currentAZ && az === currentAZ);
+  return sameAZs.length > 1 ? 'Must select 3 different AZs.' : undefined;
+};
 
 const validateUniqueNodeLabel = createUniqueFieldValidator(
   'Each label must have a different key.',
@@ -1310,38 +1323,37 @@ const validateUniqueNodeLabel = createUniqueFieldValidator(
       .map(([, fieldValue]) => fieldValue.key),
 );
 
-const validateValueNotPlaceholder = (placeholder: any) => (value: any) =>
-  value !== placeholder ? undefined : 'Field is required';
-
-const validateRequiredMachinePoolsSubnet = (
-  subnet: Subnetwork,
+const validateRequiredPublicSubnetId = (
+  publicSubnetId: string,
   allValues: unknown,
   props: { pristine: boolean },
-) => (!props.pristine && !subnet?.subnet_id ? 'Subnet is required' : undefined);
+) => (!props.pristine && !publicSubnetId ? 'Subnet is required' : undefined);
+
+type FormSubnet = {
+  availabilityZone: string;
+  privateSubnetId: string;
+  publicSubnetId: string;
+};
 
 const validateMultipleMachinePoolsSubnets = (
-  subnet: Subnetwork,
-  allValues: { machine_pools_subnets: Subnetwork[] },
+  subnetId: string,
+  allValues: { machinePoolsSubnets: FormSubnet[] },
   props: { pristine: boolean },
 ) => {
-  if (!subnet) {
-    // Happens when a subnet is deleted, no extra checks are needed
-    return undefined;
-  }
-  if (!props.pristine && subnet.subnet_id === '') {
-    return 'Subnet is required';
+  if (subnetId === '') {
+    return props.pristine ? undefined : 'Subnet is required';
   }
 
   // Validating multiple MPs
   const hasRepeatedSubnets =
-    allValues.machine_pools_subnets.filter((mpSubnet) => mpSubnet.subnet_id === subnet.subnet_id)
+    allValues.machinePoolsSubnets.filter((mpSubnet) => mpSubnet.privateSubnetId === subnetId)
       .length > 1;
   return hasRepeatedSubnets
     ? 'Every machine pool must be associated to a different subnet'
     : undefined;
 };
 
-// Shared validation across ROSA and OSD wizards
+// Validations for AWS subnets in OSD wizard (where a subnetId is typed)
 const validateAWSSubnet = (
   value: string,
   allValues: Partial<{ selected_vpc: CloudVPC; az_0: string; az_1: string; az_2: string }>,
@@ -1680,11 +1692,11 @@ export {
   checkNodePoolName,
   checkCustomOperatorRolesPrefix,
   checkLabels,
-  validateUniqueAZ,
-  validateValueNotPlaceholder,
+  validateOsdUniqueAZ,
+  validateRosaUniqueAZ,
   validateAWSSubnet,
   validateGCPHostProjectId,
-  validateRequiredMachinePoolsSubnet,
+  validateRequiredPublicSubnetId,
   validateMultipleMachinePoolsSubnets,
   validateGCPSubnet,
   validateGCPKMSServiceAccount,

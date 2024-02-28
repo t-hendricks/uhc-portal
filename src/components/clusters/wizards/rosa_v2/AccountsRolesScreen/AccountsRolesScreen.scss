@@ -1,0 +1,11 @@
+.no-associated-aws-accounts_empty-state {
+  padding: 0px 0px 16px;
+}
+
+.aws-account-selection .pf-v5-c-form__group-control .pf-v5-c-select {
+  padding-right: var(--pf-v5-global--spacer--md);
+}
+
+#contract-info.pf-v5-c-description-list {
+  --pf-v5-c-description-list--RowGap: var(--pf-v5-global--gutter--sm);
+}

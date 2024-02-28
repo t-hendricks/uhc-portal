@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext, useCallback } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useHistory } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { Modal, ModalVariant, Button } from '@patternfly/react-core';
@@ -6,15 +6,13 @@ import { Modal, ModalVariant, Button } from '@patternfly/react-core';
 import { trackEvents, ocmResourceTypeByProduct } from '~/common/analytics';
 import { normalizedProducts } from '~/common/subscriptionTypes';
 import useAnalytics from '~/hooks/useAnalytics';
-import { ROSAWizardContext } from '~/components/clusters/wizards/rosa_v1/ROSAWizardContext';
 
-function LeaveCreateClusterPrompt({ product }) {
+function LeaveCreateClusterPrompt({ product, forceLeaveWizard }) {
   const history = useHistory();
   const track = useAnalytics();
 
   const [isOpen, setIsOpen] = useState(false);
   const [destinationLocation, setDestinationLocation] = useState('');
-  const { forceLeaveWizard } = useContext(ROSAWizardContext);
 
   useEffect(() => {
     let unblock;
@@ -89,6 +87,7 @@ function LeaveCreateClusterPrompt({ product }) {
 
 LeaveCreateClusterPrompt.propTypes = {
   product: PropTypes.oneOf(Object.values(normalizedProducts)),
+  forceLeaveWizard: PropTypes.bool,
 };
 
 export default LeaveCreateClusterPrompt;
