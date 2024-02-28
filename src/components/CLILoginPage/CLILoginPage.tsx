@@ -6,7 +6,7 @@ import type { ChromeAPI } from '@redhat-cloud-services/types';
 import { PageSection, Alert, Card, CardBody, CardTitle, Title } from '@patternfly/react-core';
 import { Capability, Error } from '~/types/accounts_mgmt.v1';
 import { isRestrictedEnv } from '~/restrictedEnv';
-import useAccount from './useAccount';
+import useOrganization from './useOrganization';
 import InstructionsOCM from './Instructions';
 import InstructionsROSA from './InstructionsROSA';
 import Breadcrumbs from '../common/Breadcrumbs';
@@ -34,7 +34,7 @@ export const hasRestrictTokensCapability = (capabilities: Array<Capability>) =>
   !!capabilities?.length &&
   capabilities.some(
     (capability) =>
-      capability.name === 'capability.account.restrict_new_offline_tokens' &&
+      capability.name === 'capability.organization.restrict_new_offline_tokens' &&
       capability.value === 'true',
   );
 
@@ -46,7 +46,7 @@ type CLILoginPageProps = {
 
 const CLILoginPage = ({ showToken = false, showPath, isRosa = false }: CLILoginPageProps) => {
   const chrome = useChrome();
-  const { userAccount, isLoading, error } = useAccount();
+  const { organization, isLoading, error } = useOrganization();
   const restrictedEnv = isRestrictedEnv(chrome as unknown as ChromeAPI);
 
   let restrictTokens = false;
@@ -84,7 +84,7 @@ const CLILoginPage = ({ showToken = false, showPath, isRosa = false }: CLILoginP
       }
     } else {
       restrictTokens =
-        !!userAccount?.capabilities && hasRestrictTokensCapability(userAccount.capabilities);
+        !!organization?.capabilities && hasRestrictTokensCapability(organization.capabilities);
     }
   }
 

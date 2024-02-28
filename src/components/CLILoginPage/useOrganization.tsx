@@ -1,22 +1,22 @@
 import React from 'react';
 import { AxiosError } from 'axios';
 import accountsService from '~/services/accountsService';
-import { Account } from '~/types/accounts_mgmt.v1';
+import { Organization } from '~/types/accounts_mgmt.v1';
 
-const useAccount = () => {
-  const [userAccount, setUserAccount] = React.useState<Account | undefined>();
+const useOrganization = () => {
+  const [organization, setOrganization] = React.useState<Organization | undefined>();
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
   const [error, setError] = React.useState<unknown>();
 
-  const manageFetchAccount = async () => {
+  const manageFetchOrganization = async () => {
     setError(undefined);
     setIsLoading(true);
-    let account;
+    let organization;
     try {
       const currentAccount = await accountsService.getCurrentAccount();
-      if (currentAccount.data.id) {
-        account = await accountsService.getAccount(currentAccount.data.id);
-        setUserAccount(account.data);
+      if (currentAccount.data.organization?.id) {
+        organization = await accountsService.getOrganization(currentAccount.data.organization.id);
+        setOrganization(organization.data);
       }
     } catch (error) {
       const axiosError = error as AxiosError;
@@ -27,10 +27,10 @@ const useAccount = () => {
   };
 
   React.useEffect(() => {
-    manageFetchAccount();
+    manageFetchOrganization();
   }, []);
 
-  return { userAccount, isLoading, error };
+  return { organization, isLoading, error };
 };
 
-export default useAccount;
+export default useOrganization;
