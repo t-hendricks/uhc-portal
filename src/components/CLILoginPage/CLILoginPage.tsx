@@ -76,8 +76,8 @@ const CLILoginPage = ({ showToken = false, showPath, isRosa = false }: CLILoginP
               className="error-box"
               data-testid="alert-error"
             >
-              <span>{errorData.reason}</span>
-              <span>{`Operation ID: ${errorData.operation_id || 'N/A'}`}</span>
+              <p>{errorData.reason}</p>
+              <p>{`Operation ID: ${errorData.operation_id || 'N/A'}`}</p>
             </Alert>
           </ErrorOrLoadingWrapper>
         );
