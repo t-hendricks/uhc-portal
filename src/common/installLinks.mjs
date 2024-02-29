@@ -717,7 +717,7 @@ const urls = {
     [channels.STABLE]: {
       [architectures.x86]: {
         [operatingSystems.linux]: `${MIRROR_KN_LATEST}/kn-linux-amd64.tar.gz`,
-        [operatingSystems.mac]: `${MIRROR_KN_LATEST}/kn-macos-amd64.tar.gz`,
+        [operatingSystems.mac]: `${MIRROR_KN_LATEST}/kn-darwin-amd64.tar.gz`,
         [operatingSystems.windows]: `${MIRROR_KN_LATEST}/kn-windows-amd64.zip`,
       },
       [architectures.s390x]: {
