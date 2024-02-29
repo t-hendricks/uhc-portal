@@ -121,17 +121,19 @@ const Instructions = (props: Props) => {
     <Stack hasGutter>
       <StackItem>
         <Card className="ocm-c-api-token__card">
-          <CardTitle>
-            <Alert
-              className="pf-v5-u-mt-md"
-              variant="warning"
-              isInline
-              title="Logging in with offline tokens is deprecated"
-            >
-              Logging in using offline tokens has been deprecated and is no longer getting
-              maintained or enhanced. You can now log in using your Red Hat SSO credentials.
-            </Alert>
-          </CardTitle>
+          {!restrictedEnv && (
+            <CardTitle>
+              <Alert
+                className="pf-v5-u-mt-md"
+                variant="warning"
+                isInline
+                title="Logging in with offline tokens is deprecated"
+              >
+                Logging in using offline tokens has been deprecated and is no longer getting
+                maintained or enhanced. You can now log in using your Red Hat SSO credentials.
+              </Alert>
+            </CardTitle>
+          )}
           <CardTitle>
             <Title headingLevel="h2">
               {`Connect with ${restrictedEnv ? 'refresh' : 'offline'} tokens`}

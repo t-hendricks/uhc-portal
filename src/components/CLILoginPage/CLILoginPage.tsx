@@ -15,9 +15,9 @@ import { AppPage } from '../App/AppPage';
 const defaultToOfflineTokens = true;
 
 const ErrorOrLoadingWrapper = ({ children }: { children: React.ReactElement }) => (
-  <AppPage title="Openshift Cluster Manager">
+  <AppPage title="OpenShift Cluster Manager">
     <PageHeader className="pf-v5-u-mb-md">
-      <PageHeaderTitle title="Openshift Cluster Manager" />
+      <PageHeaderTitle title="OpenShift Cluster Manager" />
     </PageHeader>
     <PageSection>
       <Card>
@@ -47,11 +47,9 @@ type CLILoginPageProps = {
 const CLILoginPage = ({ showToken = false, showPath, isRosa = false }: CLILoginPageProps) => {
   const chrome = useChrome();
   const { organization, isLoading, error } = useOrganization();
-  const restrictedEnv = isRestrictedEnv(chrome as unknown as ChromeAPI);
 
+  const restrictedEnv = isRestrictedEnv(chrome as unknown as ChromeAPI);
   let restrictTokens = false;
-  const pageTitle = `OpenShift Cluster Manager ${restrictTokens ? 'SSO login' : 'API Token'}`;
-  const Instructions = isRosa ? InstructionsROSA : InstructionsOCM;
 
   if (!restrictedEnv) {
     const errorData = error as Error;
@@ -81,10 +79,13 @@ const CLILoginPage = ({ showToken = false, showPath, isRosa = false }: CLILoginP
         </ErrorOrLoadingWrapper>
       );
     }
+
+    restrictTokens =
+      !!organization?.capabilities && hasRestrictTokensCapability(organization.capabilities);
   }
 
-  restrictTokens =
-    !!organization?.capabilities && hasRestrictTokensCapability(organization.capabilities);
+  const pageTitle = `OpenShift Cluster Manager ${restrictTokens ? 'SSO login' : 'API Token'}`;
+  const Instructions = isRosa ? InstructionsROSA : InstructionsOCM;
 
   return (
     <AppPage title={`${restrictTokens ? 'SSO Login' : 'API Token'} | OpenShift Cluster Manager`}>
