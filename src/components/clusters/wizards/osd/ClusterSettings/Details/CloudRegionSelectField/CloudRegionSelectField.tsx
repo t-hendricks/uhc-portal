@@ -6,6 +6,10 @@ import { Spinner } from '@redhat-cloud-services/frontend-components/Spinner';
 
 import { CloudRegion } from '~/types/clusters_mgmt.v1';
 import { GlobalState } from '~/redux/store';
+import {
+  AWS_DEFAULT_REGION,
+  GCP_DEFAULT_REGION,
+} from '~/components/clusters/wizards/common/createOSDInitialValues';
 import ErrorBox from '~/components/common/ErrorBox';
 import { useFormState } from '~/components/clusters/wizards/hooks';
 
@@ -35,7 +39,10 @@ export const CloudRegionSelectField = ({
       cloudProviders?.providers?.[cloudProviderID]?.regions?.[field.value?.toString()];
 
     if (!selectedRegionData?.supports_multi_az) {
-      setFieldValue(field.name, cloudProviderID === 'aws' ? 'us-east-1' : 'us-east1');
+      setFieldValue(
+        field.name,
+        cloudProviderID === 'aws' ? AWS_DEFAULT_REGION : GCP_DEFAULT_REGION,
+      );
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isMultiAz, cloudProviders, setFieldValue, field.name, cloudProviderID]);

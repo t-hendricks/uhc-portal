@@ -1,9 +1,7 @@
 import React from 'react';
-import { mount } from 'enzyme';
-
+import { screen, render, waitFor, within } from '~/testUtils';
 import EditSubscriptionSettingsDialog from './EditSubscriptionSettingsDialog';
-import { ReduxFormRadioGroup } from '../../../common/ReduxFormComponents';
-import ErrorBox from '../../../common/ErrorBox';
+
 import {
   subscriptionSettings,
   subscriptionSupportLevels,
@@ -22,7 +20,7 @@ const {
   SERVICE_LEVEL,
   PRODUCT_BUNDLE,
   SYSTEM_UNITS,
-  CLUSTER_BILLING_MODEL,
+  // CLUSTER_BILLING_MODEL,
   CPU_TOTAL,
 } = subscriptionSettings;
 
@@ -41,17 +39,47 @@ const { ACTIVE, DISCONNECTED } = subscriptionStatuses;
 const { SUBSCRIBED_OCP, SUBSCRIBED_OCP_MARKETPLACE } = subscriptionCapabilities;
 
 describe('<EditSubscriptionSettingsDialog />', () => {
-  const radioSelector = (name) => `ReduxFormRadioGroup[name="${name}"] Radio`;
-  const disabledGroupSelector = (name) => `ReduxFormRadioGroup[name="${name}"][isDisabled=true]`;
-  const numberInputSelector = (name) => `NumberInput[inputName="${name}"]`;
-  const cpuSocketNumberText = 'span[id="cpu-socket-value"]';
-  const buttonSelector = (variant) => `Button[variant="${variant}"]`;
-  const disabledButtonSelector = (variant) => `Button[variant="${variant}"][isDisabled=true]`;
-  const billingModelInfoSelector = 'Alert[id="subscription-settings-cluster-billing-model-alert"]';
+  const billingModelInfoAlert = () => screen.getByText('Info alert:');
 
-  const newOCPSubscription = (supportLeve, systemUnits, status) => ({
+  const supportPremiumRadio = () => screen.getByRole('radio', { name: 'Premium' });
+  const supportStandardRadio = () => screen.getByRole('radio', { name: 'Standard' });
+  const supportSelfSupport = () => screen.getByRole('radio', { name: 'Self-Support' });
+
+  const usageProductionRadio = () => screen.getByRole('radio', { name: 'Production' });
+  const usageDevelopmentRadio = () => screen.getByRole('radio', { name: 'Development/Test' });
+  const usageDisasterRadio = () => screen.getByRole('radio', { name: 'Disaster Recovery' });
+
+  const serviceLevelL1Radio = () => screen.getByRole('radio', { name: 'Red Hat support (L1-L3)' });
+  const serviceLevelL3Radio = () => screen.getByRole('radio', { name: 'Partner support (L3)' });
+
+  const systemUnitsCoresRadio = () => screen.getByRole('radio', { name: 'Cores or vCPUs' });
+  const systemUnitsSocketsRadio = () => screen.getByRole('radio', { name: 'Sockets' });
+
+  const cpuSocketNumberText = () => screen.getByText('0 Cores or vCPUs');
+
+  const saveButton = () => screen.getByRole('button', { name: 'Save' });
+  const cancelButton = () => screen.getByRole('button', { name: 'Cancel' });
+
+  const closeModal = jest.fn();
+  const onClose = jest.fn();
+  const submit = jest.fn();
+  const requestState = {
+    fulfilled: false,
+    error: false,
+    pending: false,
+  };
+
+  const baseProps = {
+    isOpen: true,
+    closeModal,
+    onClose,
+    submit,
+    requestState,
+  };
+
+  const newOCPSubscription = (supportLevel, systemUnits, status) => ({
     id: '0',
-    [SUPPORT_LEVEL]: supportLeve,
+    [SUPPORT_LEVEL]: supportLevel,
     [USAGE]: PRODUCTION,
     [SERVICE_LEVEL]: L1_L3,
     [PRODUCT_BUNDLE]: OPENSHIFT,
@@ -70,169 +98,216 @@ describe('<EditSubscriptionSettingsDialog />', () => {
     return sub;
   };
 
-  const getTestContext = (subscription) => {
-    const closeModal = jest.fn();
-    const onClose = jest.fn();
-    const submit = jest.fn();
-    const requestState = {
-      fulfilled: false,
-      error: false,
-      pending: false,
-    };
-    const wrapper = mount(
-      <EditSubscriptionSettingsDialog
-        isOpen
-        closeModal={closeModal}
-        onClose={onClose}
-        submit={submit}
-        subscription={subscription}
-        requestState={requestState}
-      />,
-    );
-    return {
-      wrapper,
-      submit,
-      closeModal,
-      onClose,
-    };
-  };
-
-  it('renders correctly', () => {
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
+  it.only('renders correctly', () => {
     const subscription = withStandardSub(newOCPSubscription(STANDARD, CORES_VCPU, ACTIVE));
-    const { wrapper } = getTestContext(subscription);
-    expect(wrapper).toMatchSnapshot();
-    expect(wrapper.find(ReduxFormRadioGroup).length).toEqual(4);
-    expect(wrapper.find(billingModelInfoSelector).length).toEqual(1);
-    expect(wrapper.find(disabledGroupSelector(CLUSTER_BILLING_MODEL)).length).toEqual(0);
-    expect(wrapper.find(radioSelector(CLUSTER_BILLING_MODEL)).length).toEqual(0);
-    expect(wrapper.find(disabledGroupSelector(SUPPORT_LEVEL)).length).toEqual(0);
-    expect(wrapper.find(radioSelector(SUPPORT_LEVEL)).length).toEqual(3);
-    expect(wrapper.find(disabledGroupSelector(USAGE)).length).toEqual(0);
-    expect(wrapper.find(radioSelector(USAGE)).length).toEqual(3);
-    expect(wrapper.find(disabledGroupSelector(SERVICE_LEVEL)).length).toEqual(0);
-    expect(wrapper.find(radioSelector(SERVICE_LEVEL)).length).toEqual(2);
-    expect(wrapper.find(disabledGroupSelector(SYSTEM_UNITS)).length).toEqual(0);
-    expect(wrapper.find(radioSelector(SYSTEM_UNITS)).length).toEqual(2);
-    expect(wrapper.find(cpuSocketNumberText).length).toEqual(1);
-    expect(wrapper.find(buttonSelector('primary')).length).toEqual(1);
-    expect(wrapper.find(buttonSelector('secondary')).length).toEqual(1);
-    expect(wrapper.find(disabledButtonSelector('primary')).length).toEqual(0);
+
+    render(<EditSubscriptionSettingsDialog {...baseProps} subscription={subscription} />);
+
+    expect(billingModelInfoAlert()).toBeInTheDocument();
+
+    expect(supportPremiumRadio()).toBeEnabled();
+    expect(supportStandardRadio()).toBeEnabled();
+    expect(supportSelfSupport()).toBeEnabled();
+
+    expect(usageProductionRadio()).toBeEnabled();
+    expect(usageDevelopmentRadio()).toBeEnabled();
+    expect(usageDisasterRadio()).toBeEnabled();
+
+    expect(serviceLevelL1Radio()).toBeEnabled();
+    expect(serviceLevelL3Radio()).toBeEnabled();
+
+    expect(systemUnitsCoresRadio()).toBeEnabled();
+    expect(systemUnitsSocketsRadio()).toBeEnabled();
+
+    expect(cpuSocketNumberText()).toBeInTheDocument();
+
+    expect(saveButton()).toBeEnabled();
+    expect(cancelButton()).toBeEnabled();
   });
 
-  it('renders eval support correctly', () => {
+  it.only('renders eval support correctly', () => {
     const subscription = withStandardSub(newOCPSubscription(EVAL, SOCKETS, ACTIVE));
-    const { wrapper } = getTestContext(subscription);
-    expect(wrapper).toMatchSnapshot();
-    expect(wrapper.find(ReduxFormRadioGroup).length).toEqual(4);
-    expect(wrapper.find(billingModelInfoSelector).length).toEqual(1);
-    expect(wrapper.find(disabledGroupSelector(CLUSTER_BILLING_MODEL)).length).toEqual(0);
-    expect(wrapper.find(radioSelector(CLUSTER_BILLING_MODEL)).length).toEqual(0);
-    expect(wrapper.find(disabledGroupSelector(SUPPORT_LEVEL)).length).toEqual(0);
-    expect(wrapper.find(radioSelector(SUPPORT_LEVEL)).length).toEqual(4);
-    expect(wrapper.find(disabledGroupSelector(USAGE)).length).toEqual(1);
-    expect(wrapper.find(radioSelector(USAGE)).length).toEqual(3);
-    expect(wrapper.find(disabledGroupSelector(SERVICE_LEVEL)).length).toEqual(1);
-    expect(wrapper.find(radioSelector(SERVICE_LEVEL)).length).toEqual(2);
-    expect(wrapper.find(disabledGroupSelector(SYSTEM_UNITS)).length).toEqual(1);
-    expect(wrapper.find(radioSelector(SYSTEM_UNITS)).length).toEqual(2);
-    expect(wrapper.find(cpuSocketNumberText).length).toEqual(1);
-    expect(wrapper.find(buttonSelector('primary')).length).toEqual(1);
-    expect(wrapper.find(buttonSelector('secondary')).length).toEqual(1);
-    expect(wrapper.find(disabledButtonSelector('primary')).length).toEqual(1);
+    render(<EditSubscriptionSettingsDialog {...baseProps} subscription={subscription} />);
+
+    expect(billingModelInfoAlert()).toBeInTheDocument();
+
+    expect(supportPremiumRadio()).toBeEnabled();
+    expect(supportStandardRadio()).toBeEnabled();
+    expect(supportSelfSupport()).toBeEnabled();
+    expect(screen.getByRole('radio', { name: 'Self-Support 60-day evaluation' })).toBeEnabled();
+
+    expect(usageProductionRadio()).toBeDisabled();
+    expect(usageDevelopmentRadio()).toBeDisabled();
+    expect(usageDisasterRadio()).toBeDisabled();
+
+    expect(serviceLevelL1Radio()).toBeDisabled();
+    expect(serviceLevelL3Radio()).toBeDisabled();
+
+    expect(systemUnitsCoresRadio()).toBeDisabled();
+    expect(systemUnitsSocketsRadio()).toBeDisabled();
+
+    expect(screen.getByText('0 Sockets')).toBeInTheDocument();
+
+    expect(saveButton()).toBeDisabled();
+    expect(cancelButton()).toBeEnabled();
   });
 
-  it('renders none support correctly', () => {
+  it.only('renders none support correctly', () => {
     const subscription = withStandardSub(newOCPSubscription(NONE, CPU_TOTAL, DISCONNECTED));
-    const { wrapper } = getTestContext(subscription);
-    expect(wrapper.find(ReduxFormRadioGroup).length).toEqual(4);
-    expect(wrapper.find(billingModelInfoSelector).length).toEqual(1);
-    expect(wrapper.find(disabledGroupSelector(CLUSTER_BILLING_MODEL)).length).toEqual(0);
-    expect(wrapper.find(radioSelector(CLUSTER_BILLING_MODEL)).length).toEqual(0);
-    expect(wrapper.find(disabledGroupSelector(SUPPORT_LEVEL)).length).toEqual(0);
-    expect(wrapper.find(radioSelector(SUPPORT_LEVEL)).length).toEqual(4);
-    expect(wrapper.find(disabledGroupSelector(USAGE)).length).toEqual(1);
-    expect(wrapper.find(radioSelector(USAGE)).length).toEqual(3);
-    expect(wrapper.find(disabledGroupSelector(SERVICE_LEVEL)).length).toEqual(1);
-    expect(wrapper.find(radioSelector(SERVICE_LEVEL)).length).toEqual(2);
-    expect(wrapper.find(disabledGroupSelector(SYSTEM_UNITS)).length).toEqual(1);
-    expect(wrapper.find(radioSelector(SYSTEM_UNITS)).length).toEqual(2);
-    expect(wrapper.find(numberInputSelector(CPU_TOTAL)).length).toEqual(1);
-    expect(wrapper.find(buttonSelector('primary')).length).toEqual(1);
-    expect(wrapper.find(buttonSelector('secondary')).length).toEqual(1);
-    expect(wrapper.find(disabledButtonSelector('primary')).length).toEqual(1);
+    render(<EditSubscriptionSettingsDialog {...baseProps} subscription={subscription} />);
+
+    expect(billingModelInfoAlert()).toBeInTheDocument();
+
+    expect(supportPremiumRadio()).toBeEnabled();
+    expect(supportStandardRadio()).toBeEnabled();
+    expect(supportSelfSupport()).toBeEnabled();
+    expect(screen.getByText('Expired evaluation')).toBeInTheDocument();
+
+    expect(usageProductionRadio()).toBeDisabled();
+    expect(usageDevelopmentRadio()).toBeDisabled();
+    expect(usageDisasterRadio()).toBeDisabled();
+
+    expect(serviceLevelL1Radio()).toBeDisabled();
+    expect(serviceLevelL3Radio()).toBeDisabled();
+
+    expect(systemUnitsCoresRadio()).toBeDisabled();
+    expect(systemUnitsSocketsRadio()).toBeDisabled();
+
+    expect(
+      screen.getByRole('spinbutton', {
+        name: 'Number of compute cores (excluding control plane nodes)',
+      }),
+    ).toBeDisabled();
+
+    expect(saveButton()).toBeDisabled();
+    expect(cancelButton()).toBeInTheDocument();
   });
 
-  it('renders correctly with billing_model: marketplace', () => {
+  it.only('renders correctly with billing_model: marketplace', () => {
     const subscription = withMarketplaceSub(newOCPSubscription(STANDARD, CORES_VCPU, ACTIVE));
-    const { wrapper } = getTestContext(subscription);
-    expect(wrapper.find(ReduxFormRadioGroup).length).toEqual(4);
-    expect(wrapper.find(billingModelInfoSelector).length).toEqual(1);
-    expect(wrapper.find(disabledGroupSelector(CLUSTER_BILLING_MODEL)).length).toEqual(0);
-    expect(wrapper.find(radioSelector(CLUSTER_BILLING_MODEL)).length).toEqual(0);
-    expect(wrapper.find(disabledGroupSelector(SUPPORT_LEVEL)).length).toEqual(1);
-    expect(wrapper.find(radioSelector(SUPPORT_LEVEL)).length).toEqual(3);
-    expect(wrapper.find(disabledGroupSelector(USAGE)).length).toEqual(1);
-    expect(wrapper.find(radioSelector(USAGE)).length).toEqual(3);
-    expect(wrapper.find(disabledGroupSelector(SERVICE_LEVEL)).length).toEqual(1);
-    expect(wrapper.find(radioSelector(SERVICE_LEVEL)).length).toEqual(2);
-    expect(wrapper.find(disabledGroupSelector(SYSTEM_UNITS)).length).toEqual(1);
-    expect(wrapper.find(radioSelector(SYSTEM_UNITS)).length).toEqual(2);
-    expect(wrapper.find(cpuSocketNumberText).length).toEqual(1);
-    // all are disabled due to pre-set, but the button should still be enabled.
-    expect(wrapper.find(buttonSelector('primary')).length).toEqual(1);
-    expect(wrapper.find(buttonSelector('secondary')).length).toEqual(1);
-    expect(wrapper.find(disabledButtonSelector('primary')).length).toEqual(0);
+    render(<EditSubscriptionSettingsDialog {...baseProps} subscription={subscription} />);
+
+    expect(billingModelInfoAlert()).toBeInTheDocument();
+
+    expect(supportPremiumRadio()).toBeDisabled();
+    expect(supportStandardRadio()).toBeDisabled();
+    expect(supportSelfSupport()).toBeDisabled();
+
+    expect(usageDevelopmentRadio()).toBeDisabled();
+    expect(usageDisasterRadio()).toBeDisabled();
+    expect(usageProductionRadio()).toBeDisabled();
+
+    expect(serviceLevelL1Radio()).toBeDisabled();
+    expect(serviceLevelL3Radio()).toBeDisabled();
+
+    expect(systemUnitsCoresRadio()).toBeDisabled();
+    expect(systemUnitsSocketsRadio()).toBeDisabled();
+
+    expect(cpuSocketNumberText()).toBeInTheDocument();
+
+    expect(saveButton()).toBeEnabled();
+    expect(cancelButton()).toBeInTheDocument();
   });
 
-  it('renders correctly with billing_model: 1st time standard + marketplace', () => {
+  it.only('renders correctly with billing_model: 1st time standard + marketplace', () => {
     const subscription = withMarketplaceSub(
       withStandardSub(newOCPSubscription(EVAL, CORES_VCPU, ACTIVE)),
     );
-    const { wrapper } = getTestContext(subscription);
-    expect(wrapper).toMatchSnapshot();
-    expect(wrapper.find(ReduxFormRadioGroup).length).toEqual(5);
-    expect(wrapper.find(billingModelInfoSelector).length).toEqual(1);
-    expect(wrapper.find(disabledGroupSelector(CLUSTER_BILLING_MODEL)).length).toEqual(0);
-    expect(wrapper.find(radioSelector(CLUSTER_BILLING_MODEL)).length).toEqual(2);
-    expect(wrapper.find(disabledGroupSelector(SUPPORT_LEVEL)).length).toEqual(0);
-    expect(wrapper.find(radioSelector(SUPPORT_LEVEL)).length).toEqual(4);
-    expect(wrapper.find(disabledGroupSelector(USAGE)).length).toEqual(1);
-    expect(wrapper.find(radioSelector(USAGE)).length).toEqual(3);
-    expect(wrapper.find(disabledGroupSelector(SERVICE_LEVEL)).length).toEqual(1);
-    expect(wrapper.find(radioSelector(SERVICE_LEVEL)).length).toEqual(2);
-    expect(wrapper.find(disabledGroupSelector(SYSTEM_UNITS)).length).toEqual(1);
-    expect(wrapper.find(radioSelector(SYSTEM_UNITS)).length).toEqual(2);
-    expect(wrapper.find(cpuSocketNumberText).length).toEqual(1);
-    expect(wrapper.find(buttonSelector('primary')).length).toEqual(1);
-    expect(wrapper.find(buttonSelector('secondary')).length).toEqual(1);
-    expect(wrapper.find(disabledButtonSelector('primary')).length).toEqual(1);
+
+    render(<EditSubscriptionSettingsDialog {...baseProps} subscription={subscription} />);
+
+    expect(billingModelInfoAlert()).toBeInTheDocument();
+
+    expect(
+      screen.getByRole('radio', { name: 'Annual: Fixed capacity subscription from Red Hat' }),
+    ).toBeEnabled();
+    expect(
+      screen.getByRole('radio', {
+        name: 'On-Demand (Hourly): Flexible usage billed through Red Hat Marketplace',
+      }),
+    ).toBeEnabled();
+
+    expect(supportPremiumRadio()).toBeEnabled();
+    expect(supportStandardRadio()).toBeEnabled();
+    expect(supportSelfSupport()).toBeEnabled();
+    expect(screen.getByRole('radio', { name: 'Self-Support 60-day evaluation' })).toBeEnabled();
+
+    expect(usageProductionRadio()).toBeDisabled();
+    expect(usageDevelopmentRadio()).toBeDisabled();
+    expect(usageDisasterRadio()).toBeDisabled();
+
+    expect(serviceLevelL1Radio()).toBeDisabled();
+    expect(serviceLevelL3Radio()).toBeDisabled();
+
+    expect(systemUnitsCoresRadio()).toBeDisabled();
+    expect(systemUnitsSocketsRadio()).toBeDisabled();
+
+    expect(cpuSocketNumberText()).toBeInTheDocument();
+
+    expect(saveButton()).toBeDisabled();
+    expect(cancelButton()).toBeEnabled();
   });
 
-  it('when cancelled, calls closeModal but not onClose ', () => {
+  it.only('when cancelled, calls closeModal but not onClose ', async () => {
     const subscription = withStandardSub(newOCPSubscription(STANDARD, CORES_VCPU, ACTIVE));
-    const { wrapper, closeModal, onClose } = getTestContext(subscription);
-    wrapper.find(buttonSelector('secondary')).at(0).simulate('click');
-    expect(closeModal).toBeCalled();
-    expect(onClose).not.toBeCalled();
+    const { user } = render(
+      <EditSubscriptionSettingsDialog {...baseProps} subscription={subscription} />,
+    );
+    expect(closeModal).not.toHaveBeenCalled();
+
+    await user.click(screen.getByRole('button', { name: 'Cancel' }));
+
+    expect(closeModal).toHaveBeenCalled();
+    expect(onClose).not.toHaveBeenCalled();
   });
 
-  it('submits correctly', () => {
+  it.only('submits correctly', async () => {
     const subscription = withStandardSub(newOCPSubscription(STANDARD, CORES_VCPU, ACTIVE));
-    const { wrapper, submit, closeModal, onClose } = getTestContext(subscription);
-    wrapper.find(buttonSelector('primary')).at(0).simulate('click');
-    expect(submit).toBeCalled();
-    wrapper.setProps({ requestState: { fulfilled: true } });
-    setTimeout(() => {
-      expect(closeModal).toBeCalled();
-      expect(onClose).toBeCalled();
-    }, 0);
+
+    const { user, rerender } = render(
+      <EditSubscriptionSettingsDialog {...baseProps} subscription={subscription} />,
+    );
+    expect(submit).not.toHaveBeenCalled();
+    await user.click(screen.getByRole('button', { name: 'Save' }));
+
+    expect(submit).toHaveBeenCalled();
+
+    const fulfilledProps = {
+      ...baseProps,
+      requestState: {
+        fulfilled: true,
+        error: false,
+        pending: false,
+      },
+    };
+    expect(closeModal).not.toHaveBeenCalled();
+    expect(onClose).not.toHaveBeenCalled();
+
+    rerender(<EditSubscriptionSettingsDialog {...fulfilledProps} subscription={subscription} />);
+
+    await waitFor(() => {
+      expect(closeModal).toHaveBeenCalled();
+    });
+    expect(onClose).toHaveBeenCalled();
   });
 
-  it('renders correctly when an erorr occurs', () => {
+  it.only('renders correctly when an erorr occurs', () => {
     const subscription = withStandardSub(newOCPSubscription(STANDARD, CORES_VCPU, ACTIVE));
-    const { wrapper } = getTestContext(subscription);
-    wrapper.setProps({ requestState: { error: true, errorMessage: 'this is an error' } });
-    expect(wrapper).toMatchSnapshot();
-    expect(wrapper.find(ErrorBox).length).toEqual(1);
+
+    const errorProps = {
+      ...baseProps,
+      requestState: {
+        fulfilled: true,
+        error: true,
+        errorMessage: 'this is an error',
+        pending: false,
+      },
+    };
+
+    render(<EditSubscriptionSettingsDialog {...errorProps} subscription={subscription} />);
+    expect(within(screen.getByRole('alert')).getByText('this is an error')).toBeInTheDocument();
   });
 });

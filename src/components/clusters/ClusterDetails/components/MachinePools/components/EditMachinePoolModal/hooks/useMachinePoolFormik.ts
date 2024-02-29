@@ -1,6 +1,6 @@
 import * as React from 'react';
 import * as Yup from 'yup';
-import { Cluster, MachinePool, NodePool, Subnetwork } from '~/types/clusters_mgmt.v1';
+import { Cluster, MachinePool, NodePool } from '~/types/clusters_mgmt.v1';
 import { isMPoolAz } from '~/components/clusters/ClusterDetails/clusterDetailsHelper';
 import {
   checkLabelKey,
@@ -38,7 +38,7 @@ export type EditMachinePoolValues = {
   maxPrice: number;
   diskSize: number;
   instanceType: string | undefined;
-  subnet: Subnetwork | undefined;
+  privateSubnetId: string | undefined;
   securityGroupIds: string[];
 };
 
@@ -55,8 +55,6 @@ const isMachinePool = (pool?: MachinePool | NodePool): pool is MachinePool =>
   pool?.kind === 'MachinePool';
 
 const noDecimalTest = (value: number) => value === Math.floor(value);
-const requiredSubnet = (subnet: Subnetwork | undefined) =>
-  subnet === undefined || !!subnet.subnet_id;
 
 const useMachinePoolFormik = ({
   machinePool,
@@ -121,7 +119,7 @@ const useMachinePoolFormik = ({
       maxPrice: maxPrice || SPOT_MIN_PRICE,
       diskSize: diskSize || defaultWorkerNodeVolumeSizeGiB,
       instanceType,
-      subnet: undefined,
+      privateSubnetId: undefined,
       securityGroupIds: machinePool?.aws?.additional_security_group_ids || [],
     };
   }, [machinePool, isMachinePoolMz, minNodesRequired]);
@@ -279,10 +277,10 @@ const useMachinePoolFormik = ({
             : Yup.string(),
           replicas: Yup.number(),
           useSpotInstances: Yup.boolean(),
-          subnet:
+          privateSubnetId:
             !hasMachinePool && isHypershift
-              ? Yup.object().test('subnet-is-required', 'Please select a subnet', requiredSubnet)
-              : Yup.mixed(),
+              ? Yup.string().required('Please select a subnet.')
+              : Yup.string(),
           securityGroupIds: isHypershift
             ? Yup.mixed()
             : Yup.array()

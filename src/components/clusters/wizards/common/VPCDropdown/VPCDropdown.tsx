@@ -7,11 +7,8 @@ import FuzzySelect, { FuzzyEntryType } from '~/components/common/FuzzySelect';
 import { VPCResponse } from '~/redux/reducers/ccsInquiriesReducer';
 import { CloudVPC } from '~/types/clusters_mgmt.v1';
 import { AWSCredentials, ErrorState } from '~/types/types';
-import {
-  vpcHasPrivateSubnets,
-  filterOutRedHatManagedVPCs,
-  useAWSVPCInquiry,
-} from '~/components/clusters/common/useVPCInquiry';
+import { useAWSVPCInquiry } from '~/components/clusters/common/useVPCInquiry';
+import { filterOutRedHatManagedVPCs, vpcHasPrivateSubnets } from '~/common/vpcHelpers';
 import { getAWSCloudProviderVPCs } from '~/redux/actions/ccsInquiriesActions';
 
 interface VCPDropdownProps {
@@ -146,7 +143,6 @@ const VPCDropdown = ({
            This is likely to be removed when dropping deprecated Select component used by FuzzySelect */}
           <FlexItem flex={{ default: 'flex_1' }} style={{ minWidth: 0 }}>
             <FuzzySelect
-              {...inputProps}
               label="Select a VPC"
               aria-label="select VPC"
               isOpen={isOpen}

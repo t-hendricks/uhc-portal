@@ -350,13 +350,9 @@ class CreateRosaCluster extends Page {
   }
 
   selectComputeNodeType(computeNodeType) {
-    cy.get('label[for="node_type"]')
-      .parent()
-      .siblings()
-      .find('div')
-      .find('button.pf-v5-c-select__toggle')
-      .click();
-    cy.get('li').contains(computeNodeType).click();
+    cy.get('button[aria-label="Machine type select toggle"]').click();
+    cy.get('input[aria-label="Machine type select search field"]').clear().type(computeNodeType);
+    cy.get('div').contains(computeNodeType).click();
   }
 
   selectGracePeriod(gracePeriod) {

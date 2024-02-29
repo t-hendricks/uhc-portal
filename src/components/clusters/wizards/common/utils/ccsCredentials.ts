@@ -12,6 +12,7 @@ import { CloudProviderType } from '~/components/clusters/wizards/common/constant
 import { FieldId } from '~/components/clusters/wizards/osd/constants';
 import { AWSCredentials } from '~/types/types';
 import { normalizedProducts } from '~/common/subscriptionTypes';
+import { GCP_DEFAULT_REGION } from '../createOSDInitialValues';
 
 /**
  * Gets AWS CCS credentials from form state, in form suitable for actions.
@@ -58,7 +59,7 @@ export const getCloudProverInfo = (values: FormikValues, dispatch: Dispatch) => 
       getGCPCloudProviderVPCs(
         VALIDATE_CLOUD_PROVIDER_CREDENTIALS,
         getGcpCcsCredentials(values),
-        'us-east1',
+        GCP_DEFAULT_REGION,
       ),
     );
   }

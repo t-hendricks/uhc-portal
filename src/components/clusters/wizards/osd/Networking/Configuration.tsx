@@ -6,7 +6,6 @@ import { ocmResourceType, trackEvents, TrackEvent } from '~/common/analytics';
 import links from '~/common/installLinks.mjs';
 import { normalizedProducts } from '~/common/subscriptionTypes';
 import { constants } from '~/components/clusters/common/CreateOSDFormConstants';
-import { PLACEHOLDER_VALUE } from '~/components/clusters/wizards/common/NetworkingSection/AvailabilityZoneSelection';
 import ExternalLink from '~/components/common/ExternalLink';
 import useAnalytics from '~/hooks/useAnalytics';
 import {
@@ -81,11 +80,9 @@ export const Configuration = () => {
           formValue.startsWith(FieldId.PublicSubnetId) ||
           formValue.startsWith(FieldId.PrivateSubnetId),
       );
-      const noAvailZones = availabilityZones.every(
-        (zone) => zone === undefined || zone === PLACEHOLDER_VALUE,
-      );
+      const hasAvailZones = availabilityZones.some((zone) => !!zone);
 
-      if (!hasSubnets && noAvailZones) {
+      if (!hasSubnets && !hasAvailZones) {
         setFieldValue(FieldId.InstallToVpc, false);
         clearSecurityGroups();
 

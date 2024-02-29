@@ -58,16 +58,15 @@ const ControlPlaneField = ({
       hosted_zone_role_arn: '',
     });
     change('configure_proxy', false);
+
     // Reset VPC settings in case they were configured and then came back to the Control plane step
-    Object.keys(formValues).forEach((formValue) => {
-      if (
-        formValue.startsWith('public_subnet_id_') ||
-        formValue.startsWith('private_subnet_id_') ||
-        formValue.startsWith('az_')
-      ) {
-        change(formValue, '');
-      }
-    });
+    change('machinePoolsSubnets', [
+      {
+        availabilityZone: '',
+        privateSubnetId: '',
+        publicSubnetId: '',
+      },
+    ]);
 
     if (isHypershift === 'true') {
       if (formValues.multi_az === 'true') {
@@ -79,8 +78,8 @@ const ControlPlaneField = ({
     }
 
     // Reset the cluster privacy public subnet when Standalone is chosen.
-    if (isHypershift === 'false' && formValues.cluster_privacy_public_subnet?.subnet_id) {
-      change('cluster_privacy_public_subnet', { subnet_id: '', availability_zone: '' });
+    if (isHypershift === 'false' && formValues.cluster_privacy_public_subnet_id) {
+      change('cluster_privacy_public_subnet_id', '');
     }
   };
 
