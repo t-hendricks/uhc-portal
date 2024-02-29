@@ -22,7 +22,7 @@ const ErrorOrLoadingWrapper = ({ children }: { children: React.ReactElement }) =
     <PageSection>
       <Card>
         <CardTitle>
-          <Title headingLevel="h2">CLI login</Title>
+          <Title headingLevel="h2">OpenShift Cluster Manager CLI login</Title>
         </CardTitle>
         <CardBody>{children}</CardBody>
       </Card>
@@ -64,29 +64,27 @@ const CLILoginPage = ({ showToken = false, showPath, isRosa = false }: CLILoginP
       );
     }
 
-    if (error) {
-      if (!defaultToOfflineTokens) {
-        return (
-          <ErrorOrLoadingWrapper>
-            <Alert
-              variant="danger"
-              isInline
-              title="Error retrieving user account"
-              role="alert"
-              className="error-box"
-              data-testid="alert-error"
-            >
-              <p>{errorData.reason}</p>
-              <p>{`Operation ID: ${errorData.operation_id || 'N/A'}`}</p>
-            </Alert>
-          </ErrorOrLoadingWrapper>
-        );
-      }
-    } else {
-      restrictTokens =
-        !!organization?.capabilities && hasRestrictTokensCapability(organization.capabilities);
+    if (error && !defaultToOfflineTokens) {
+      return (
+        <ErrorOrLoadingWrapper>
+          <Alert
+            variant="danger"
+            isInline
+            title="Error retrieving user account"
+            role="alert"
+            className="error-box"
+            data-testid="alert-error"
+          >
+            <p>{errorData.reason}</p>
+            <p>{`Operation ID: ${errorData.operation_id || 'N/A'}`}</p>
+          </Alert>
+        </ErrorOrLoadingWrapper>
+      );
     }
   }
+
+  restrictTokens =
+    !!organization?.capabilities && hasRestrictTokensCapability(organization.capabilities);
 
   return (
     <AppPage title={`${restrictTokens ? 'SSO Login' : 'API Token'} | OpenShift Cluster Manager`}>

@@ -142,11 +142,6 @@ interface RouterProps extends RouteComponentProps {
   externalClusterId: string;
 }
 
-const CLILoginShowTokenComponent = () => <CLILoginPage showToken />;
-const CLILoginNotShowTokenComponent = () => (
-  <CLILoginPage showToken={false} showPath="/token/show" />
-);
-
 const IdentityProvidersPageEditFormComponent = () => <IdentityProvidersPage isEditForm />;
 const CreateClusterPageEmptyTabComponent = () => <CreateClusterPage activeTab="" />;
 
@@ -236,8 +231,11 @@ const Router: React.FC<RouterProps> = ({ history, planType, clusterId, externalC
                 </AppPage>
               )}
             />
-            <CompatRoute path="/token/show" component={CLILoginShowTokenComponent} />
-            <CompatRoute path="/token" component={CLILoginNotShowTokenComponent} />
+            <CompatRoute path="/token/show" render={() => <CLILoginPage showToken />} />
+            <CompatRoute
+              path="/token"
+              render={() => <CLILoginPage showToken={false} showPath="/token/show" />}
+            />
             <CompatRoute
               path="/install/alibaba/installer-provisioned"
               component={ConnectedInstallAlibaba}

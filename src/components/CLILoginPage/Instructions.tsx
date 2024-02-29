@@ -45,9 +45,9 @@ import TokenBox from './TokenBox';
 import LeadingInfo from './LeadingInfo';
 import RevokeTokensInstructions from './RevokeTokensInstructions';
 import links, { tools, channels } from '../../common/installLinks.mjs';
-import InstructionCommand from '../common/InstructionCommand';
 import ExternalLink from '../common/ExternalLink';
 import DownloadAndOSSelection from '../clusters/install/instructions/components/DownloadAndOSSelection';
+import SSOLoginInstructions from './SSOLogin';
 import './Instructions.scss';
 
 const defaultDocsLink = (
@@ -113,62 +113,7 @@ const Instructions = (props: Props) => {
 
   if (SSOLogin) {
     return (
-      <Stack hasGutter>
-        <StackItem>
-          <Card className="ocm-c-api-token__card">
-            <CardTitle>
-              <Title headingLevel="h2">SSO Login</Title>
-            </CardTitle>
-            <CardBody className="ocm-c-api-token__card--body">
-              <TextContent>
-                <LeadingInfo isRosa={isRosa} SSOLogin />
-              </TextContent>
-              <TextContent className="pf-v5-u-mt-lg">
-                <List component="ol">
-                  <ListItem>
-                    Download and install the <code>{commandName}</code> command-line tool:{' '}
-                    <Text component="p" />
-                    <DownloadAndOSSelection tool={commandTool} channel={channels.STABLE} />
-                    <Text component="p" />
-                  </ListItem>
-                  <ListItem>
-                    To authenticate, run this command:
-                    <Text component="p" />
-                    <InstructionCommand
-                      className="ocm-c-api-token-limit-width"
-                      outerClassName="pf-v5-u-mt-md"
-                    >
-                      rosa login --use-auth-code
-                    </InstructionCommand>
-                  </ListItem>
-                  <ListItem>
-                    Enter your Red Hat login credentials via SSO in the browser window.
-                  </ListItem>
-                </List>
-              </TextContent>
-            </CardBody>
-          </Card>
-        </StackItem>
-        <StackItem>
-          <Card>
-            <CardTitle>
-              <Title headingLevel="h2">Additional resources:</Title>
-            </CardTitle>
-            <CardBody>
-              <TextContent>
-                You can find documentation for these related products and services here:
-                <List>
-                  <ListItem>
-                    <ExternalLink href={links.OCM_CLI_DOCS} noIcon>
-                      OpenShift Cluster Manager documentation
-                    </ExternalLink>
-                  </ListItem>
-                </List>
-              </TextContent>
-            </CardBody>
-          </Card>
-        </StackItem>
-      </Stack>
+      <SSOLoginInstructions isRosa={isRosa} commandName={commandName} commandTool={commandTool} />
     );
   }
 
