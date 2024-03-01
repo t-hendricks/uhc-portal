@@ -50,7 +50,7 @@ class IDPForm extends React.Component {
     const { selectedIDP, isEditForm, idpEdited, idpName } = this.props;
     this.setState({ IDPName: idpName });
     if (isEditForm) {
-      this.setState({ isExpanded: this.checkIfExpandable(selectedIDP, idpEdited) });
+      this.setState({ isExpanded: IDPForm.checkIfExpandable(selectedIDP, idpEdited) });
     }
   }
 
