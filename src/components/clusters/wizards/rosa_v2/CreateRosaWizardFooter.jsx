@@ -30,6 +30,7 @@ const CreateRosaWizardFooter = ({
   accountAndRolesStepId,
   getUserRoleResponse,
   getUserRoleInfo,
+  isSubmitting = false,
 }) => {
   const { values, validateForm, setTouched, isValidating, submitForm } = useFormState();
   // used to determine the actions' disabled state.
@@ -100,7 +101,7 @@ const CreateRosaWizardFooter = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isValidating, isNextDeferred]);
 
-  return (
+  return isSubmitting ? null : (
     <WizardFooterDeprecated>
       <WizardContextDeprecated.Consumer>
         {({ activeStep, onNext, onBack, onClose }) => (
@@ -151,6 +152,7 @@ CreateRosaWizardFooter.propTypes = {
   accountAndRolesStepId: PropTypes.string.isRequired,
   getUserRoleResponse: PropTypes.object.isRequired,
   getUserRoleInfo: PropTypes.func.isRequired,
+  isSubmitting: PropTypes.bool,
 };
 
 export default CreateRosaWizardFooter;
