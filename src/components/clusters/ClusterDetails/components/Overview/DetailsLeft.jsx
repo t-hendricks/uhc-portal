@@ -153,11 +153,13 @@ function DetailsLeft({ cluster, cloudProviders, showAssistedId }) {
         <>
           <DescriptionListGroup>
             <DescriptionListTerm>Subscription billing model</DescriptionListTerm>
-            <DescriptionListDescription>{getBillingModelLabel(cluster)}</DescriptionListDescription>
+            <DescriptionListDescription data-testid="subscription-billing-model">
+              {getBillingModelLabel(cluster)}
+            </DescriptionListDescription>
           </DescriptionListGroup>
           <DescriptionListGroup>
             <DescriptionListTerm>Infrastructure billing model</DescriptionListTerm>
-            <DescriptionListDescription>
+            <DescriptionListDescription data-testid="infrastructure-billing-model">
               <InfrastructureModelLabel cluster={cluster} />
             </DescriptionListDescription>
           </DescriptionListGroup>
