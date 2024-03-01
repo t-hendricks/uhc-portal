@@ -554,17 +554,16 @@ class CreateROSAWizardInternal extends React.Component {
               onCurrentStepChanged={this.onCurrentStepChanged}
               onClose={() => history.push('/')}
               footer={
-                !createClusterResponse.pending ? (
-                  <CreateRosaWizardFooter
-                    firstStepId={steps[0].id}
-                    onSubmit={onSubmit}
-                    onBeforeNext={this.onBeforeNext}
-                    onBeforeSubmit={this.onBeforeSubmit}
-                    isNextDisabled={!!deferredNext}
-                    isHypershiftSelected={isHypershiftSelected}
-                    currentStepId={currentStepId}
-                  />
-                ) : null
+                <CreateRosaWizardFooter
+                  firstStepId={steps[0].id}
+                  onSubmit={onSubmit}
+                  onBeforeNext={this.onBeforeNext}
+                  onBeforeSubmit={this.onBeforeSubmit}
+                  isNextDisabled={!!deferredNext}
+                  isHypershiftSelected={isHypershiftSelected}
+                  currentStepId={currentStepId}
+                  isSubmitting={createClusterResponse.pending}
+                />
               }
             />
             {config.fakeOSD && <ValuesPanel />}
