@@ -3,36 +3,37 @@ shopt -s nocasematch
 
 # An array to store the jiraKeys in a commit
 jiraKeys=()
-# An array of master commits whose message strings where found in live_candidate log file
+# An array of master commits whose message strings where found in candidate log file
 found=()
-# master commits whose message strings where NOT found in live_candidate log file
+# master commits whose message strings where NOT found in candidate log file
 # ...and whose associated jira tickets were not all closed; most likely still in 'Review'
 notClosed=()
 notClosedDueToDependencies=()
 doNotPromote=()
-# master commits ready to promote to live_candidate
+# master commits ready to promote to candidate
 readyToPromote=()
 readyToPromoteSHAs=()
 
 releaseNotes=()
 
 jira_token="${1#--jira-token=}"
+upstream="$(run/upstream-name.mjs)"
 
 # Read each line from stdin (piped CSV data) and convert it to JSON
 while IFS=',' read -r commitHash commitDate commitMessage; do
-  echo "------------------------------------------------"
-  echo "|           live_consoledev_master             |"
-  echo "|  commitHash  |  commitDate  |  commitMessage |"
-  echo "------------------------------------------------"
+  printf '%s\n' '-------------------------------------------'
+  printf '|%27s%14s|\n' "$upstream/master" ''  # approximately centered
+  printf '%s\n' '| commitHash | commitDate | commitMessage |'
+  printf '%s\n' '-------------------------------------------'
   masterLogLine="$commitHash $commitDate $commitMessage"
   echo "$masterLogLine"
 
   if [[ $(grep -cF "$commitMessage" "./candidateBranch.txt") -gt 0 ]]; then
-    echo "--> FOUND string \"$commitMessage\" in live_candidate"
+    echo "--> FOUND string \"$commitMessage\" in $upstream/candidate"
     found+=("$masterLogLine")
     continue
   else
-    echo "DID NOT FIND string \"$commitMessage\" in live_candidate"
+    echo "DID NOT FIND string \"$commitMessage\" in $upstream/candidate"
 
     commitDescription=$(git log --format=%b -n 1 $commitHash)
     commitDescription="${commitDescription//\"/\\\"}"
@@ -186,7 +187,7 @@ done
 
 # Create a temporary branch with the desired commits
 tempBranch="candidate-$(date +"%B-%d-%Y")"
-echo "git checkout -b $tempBranch live_candidate"
+echo "git checkout -b $tempBranch $upstream/candidate"
 echo " "
 echo "To cherry-pick all commits at once, execute: "
 echo " "
