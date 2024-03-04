@@ -43,12 +43,12 @@ describe('<InstallVSphere />', () => {
 
     expect(screen.getByRole('link', { name: /Learn more about automated/ })).toHaveAttribute(
       'href',
-      `https://docs.openshift.com/container-platform/${version}/installing/installing_vsphere/installing-vsphere-installer-provisioned.html`,
+      `https://docs.openshift.com/container-platform/${version}/installing/installing_vsphere/ipi/installing-vsphere-installer-provisioned.html`,
     );
 
     expect(screen.getByRole('link', { name: /Learn more about full control/ })).toHaveAttribute(
       'href',
-      `https://docs.openshift.com/container-platform/${version}/installing/installing_vsphere/installing-vsphere.html`,
+      `https://docs.openshift.com/container-platform/${version}/installing/installing_vsphere/upi/installing-vsphere.html`,
     );
   });
 });
