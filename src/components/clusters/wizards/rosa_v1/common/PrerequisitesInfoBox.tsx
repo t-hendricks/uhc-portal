@@ -25,7 +25,7 @@ export const PrerequisitesInfoBox: React.FC<PrerequisitesInfoBoxProps> = (props)
         <p>
           To create a {productName} (ROSA) cluster via the web interface, you must complete the
           prerequisite steps on the{' '}
-          <Link to="getstarted" onClick={onClick}>
+          <Link to="/create/rosa/getstarted" onClick={onClick}>
             Set up ROSA page
           </Link>
           .
