@@ -31,7 +31,7 @@ import ClusterSettingsScreen from './ClusterSettingsScreen';
 import MachinePoolScreen from './MachinePoolScreen';
 import NetworkScreen from './NetworkScreen/NetworkScreen';
 import ReviewClusterScreen from './ReviewClusterScreen';
-import UpdatesScreen from './UpdatesScreen';
+import UpdatesScreen from './UpdatesScreen/UpdatesScreen';
 import VPCScreen from './VPCScreen/VPCScreen';
 import ControlPlaneScreen from './ControlPlaneScreen';
 
