@@ -80,8 +80,7 @@ class ClusterVersionInfo extends React.Component {
                       <UpgradeStatus
                         clusterID={cluster.id}
                         canEdit={cluster.canEdit}
-                        clusterVersion={cluster.openshift_version}
-                        clusterVersionRawID={cluster.version?.raw_id}
+                        clusterVersion={clusterVersion}
                         scheduledUpgrade={scheduledUpdate}
                         openModal={openModal}
                         // eslint-disable-next-line camelcase
