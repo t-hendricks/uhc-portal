@@ -32,7 +32,7 @@ describe('<PrerequisitesInfoBox} />', () => {
 
     expect(screen.getByText('Did you complete your prerequisites?')).toBeInTheDocument();
     expect(within(screen.getByRole('link')).getByText(/Set up ROSA page/)).toBeInTheDocument();
-    expect(screen.getByRole('link').getAttribute('href')).toEqual('/getstarted');
+    expect(screen.getByRole('link').getAttribute('href')).toEqual('/create/rosa/getstarted');
   });
 
   it('shows the ROSA CLI version message by default', () => {
