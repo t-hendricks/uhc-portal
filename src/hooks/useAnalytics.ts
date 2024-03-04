@@ -1,4 +1,5 @@
 import useChrome from '@redhat-cloud-services/frontend-components/useChrome';
+import { useCallback } from 'react';
 import { getTrackEvent, TrackEvent, TrackEventOptions } from '~/common/analytics';
 
 /** a convenience function that composes the track event parsing and the actual tracking. */
@@ -13,15 +14,18 @@ interface Track {
 const useAnalytics = (): Track => {
   const { analytics } = useChrome();
 
-  const track: Track = (event, properties) => {
-    if (typeof event === 'string') {
-      analytics.track(event, typeof properties === 'string' ? { type: properties } : properties);
-    } else {
-      const eventObj = getTrackEvent(event, properties as TrackEventOptions);
-      // https://segment.com/docs/connections/spec/track/
-      analytics.track(eventObj.event, eventObj.properties);
-    }
-  };
+  const track: Track = useCallback(
+    (event, properties) => {
+      if (typeof event === 'string') {
+        analytics.track(event, typeof properties === 'string' ? { type: properties } : properties);
+      } else {
+        const eventObj = getTrackEvent(event, properties as TrackEventOptions);
+        // https://segment.com/docs/connections/spec/track/
+        analytics.track(eventObj.event, eventObj.properties);
+      }
+    },
+    [analytics],
+  );
 
   return track;
 };
