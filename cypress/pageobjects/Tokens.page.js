@@ -21,7 +21,7 @@ class TokenPages extends Page {
     cy.get('.pf-v5-c-spinner', { timeout: 30000 }).should('not.exist');
     cy.get('h1', { timeout: 30000 })
       .scrollIntoView()
-      .contains('OpenShift Cluster Manager API Token')
+      .contains('OpenShift Cluster Manager')
       .should('be.visible');
   }
 

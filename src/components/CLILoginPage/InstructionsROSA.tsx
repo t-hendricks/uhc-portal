@@ -18,9 +18,8 @@ limitations under the License.
 // they can copy it and use it with the rosa command line utitility.
 
 import React from 'react';
-import { Text, Title } from '@patternfly/react-core';
 import ExternalLink from '../common/ExternalLink';
-import Tokens from './index';
+import Tokens from './Instructions';
 import links, { tools } from '../../common/installLinks.mjs';
 
 type Props = Omit<
@@ -28,24 +27,11 @@ type Props = Omit<
   'commandName' | 'commandTool' | 'leadingInfo' | 'docsLink'
 >;
 
-const TokensROSA = (props: Props) => (
+const InstructionsROSA = (props: Props) => (
   <Tokens
     {...props}
     commandName="rosa"
     commandTool={tools.ROSA}
-    leadingInfo={
-      <>
-        <Text component="p">
-          Red Hat OpenShift Service on AWS is a managed service that makes it easy for you to use
-          OpenShift on AWS without needing to install, operate or upgrade your own OpenShift
-          (Kubernetes) cluster.
-        </Text>
-        <Title headingLevel="h3">Your API token</Title>
-        <Text component="p">
-          Use this API token to authenticate against your Red Hat OpenShift Service on AWS account.
-        </Text>
-      </>
-    }
     docsLink={
       <ExternalLink href={links.ROSA_CLI_DOCS} noIcon>
         read more about setting up the rosa CLI
@@ -54,4 +40,4 @@ const TokensROSA = (props: Props) => (
   />
 );
 
-export default TokensROSA;
+export default InstructionsROSA;

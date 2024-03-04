@@ -1,8 +1,8 @@
 import React from 'react';
 import { Alert, Title, List, ListItem, ListComponent, OrderType } from '@patternfly/react-core';
-import TokenBox from '~/components/tokens/TokenBox';
+import TokenBox from '~/components/CLILoginPage/TokenBox';
 import { trackEvents } from '~/common/analytics';
-import { loadOfflineToken } from '~/components/tokens/TokenUtils';
+import { loadOfflineToken } from '~/components/CLILoginPage/TokenUtils';
 import InstructionCommand from '~/components/common/InstructionCommand';
 import ExternalLink from '~/components/common/ExternalLink';
 import links from '~/common/installLinks.mjs';

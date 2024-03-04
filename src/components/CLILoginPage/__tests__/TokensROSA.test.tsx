@@ -17,7 +17,7 @@ limitations under the License.
 import React from 'react';
 import { CompatRouter } from 'react-router-dom-v5-compat';
 import { screen, render, checkAccessibility, mockUseChrome, TestRouter } from '~/testUtils';
-import TokensROSA from '../TokensROSA';
+import TokensROSA from '../InstructionsROSA';
 
 describe('<TokensROSA />', () => {
   mockUseChrome();
@@ -25,7 +25,7 @@ describe('<TokensROSA />', () => {
     const { container } = render(
       <TestRouter>
         <CompatRouter>
-          <TokensROSA show={false} showPath="/token/show" />
+          <TokensROSA isRosa SSOLogin={false} show={false} showPath="/token/show" />
         </CompatRouter>
       </TestRouter>,
     );
@@ -48,7 +48,7 @@ describe('<TokensROSA />', () => {
     render(
       <TestRouter>
         <CompatRouter>
-          <TokensROSA show />
+          <TokensROSA isRosa SSOLogin={false} show />
         </CompatRouter>
       </TestRouter>,
     );
