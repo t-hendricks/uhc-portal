@@ -25,6 +25,7 @@ export interface TreeViewData extends TreeViewDataItem {
   nameLabel?: string;
   id?: string;
   children?: TreeViewData[];
+  sortingScore?: number;
 }
 
 interface TreeViewSelectProps {
@@ -91,28 +92,42 @@ export function TreeViewSelect(props: TreeViewSelectProps) {
       const filtered = treeViewSelectionMap
         .map((categoryObject) => {
           if (categoryObject.children) {
+            let lowestScore = 1;
             const fuse = new Fuse<TreeViewData>(categoryObject.children, {
               keys: ['id', 'category', 'descriptionLabel', 'nameLabel'],
               shouldSort: true,
-              findAllMatches: true,
               threshold: 0.3,
+              includeScore: true,
               ignoreLocation: true,
-              distance: 100,
               minMatchCharLength: 1,
             });
+
             const filteredMachineCategory = fuse
               .search(searchString.trim())
-              .map(({ item }) => item);
+              .map(({ item, score }) => {
+                score && score < lowestScore && (lowestScore = score);
+                return item;
+              });
             if (filteredMachineCategory.length > 0) {
               return {
                 ...categoryObject,
                 children: filteredMachineCategory,
+                sortingScore: lowestScore,
               };
             }
           }
           return undefined;
         })
         .filter(Boolean) as TreeViewData[];
+      filtered.sort((TreeViewNodeA, TreeViewNodeB) => {
+        if (!TreeViewNodeA.sortingScore) {
+          return 1;
+        }
+        if (!TreeViewNodeB.sortingScore) {
+          return -1;
+        }
+        return TreeViewNodeA.sortingScore - TreeViewNodeB.sortingScore;
+      });
       setFilteredItems(filtered);
     }
   }, [searchString, treeViewSelectionMap]);
