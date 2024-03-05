@@ -124,8 +124,14 @@ const MachineTypeSelection = ({
 
   const isRegionSpecificDataReady =
     machineTypesByRegion.fulfilled || (machineTypesByRegion.error && isDataReady);
+
+  // use region data switch, wait for region data to be ready
   const useRegionFilteredData =
-    isBYOC && cloudProviderID === CloudProviderType.Aws && product !== normalizedProducts.ROSA;
+    isBYOC &&
+    cloudProviderID === CloudProviderType.Aws &&
+    product !== normalizedProducts.ROSA &&
+    !inModal;
+
   const [isMachineTypeFilteredByRegion, setIsMachineTypeFilteredByRegion] = React.useState(true);
   const activeMachineTypes =
     isRegionSpecificDataReady && useRegionFilteredData && isMachineTypeFilteredByRegion
