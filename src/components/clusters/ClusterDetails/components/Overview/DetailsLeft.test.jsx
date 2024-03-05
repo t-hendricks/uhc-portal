@@ -159,6 +159,40 @@ describe('<DetailsLeft />', () => {
       // Assert
       checkForValue(componentText.REGION.label, componentText.REGION.NA);
     });
+
+    describe('in RHOIC cluster', () => {
+      it('shows region if known', () => {
+        const OSDClusterFixture = fixtures.clusterDetails.cluster;
+
+        const fakedRHOICCluster = {
+          ...OSDClusterFixture,
+          region: { id: 'us-east' },
+          subscription: { plan: { type: 'RHOIC' } },
+        };
+
+        const props = { ...defaultProps, cluster: fakedRHOICCluster };
+
+        render(<DetailsLeft {...props} />);
+
+        checkForValue(componentText.REGION.label, 'us-east');
+      });
+
+      it('hides region label if region is not known', () => {
+        const OSDClusterFixture = fixtures.clusterDetails.cluster;
+
+        const fakedRHOICCluster = {
+          ...OSDClusterFixture,
+          region: {},
+          subscription: { plan: { type: 'RHOIC' } },
+        };
+
+        const props = { ...defaultProps, cluster: fakedRHOICCluster };
+
+        render(<DetailsLeft {...props} />);
+
+        checkForValueAbsence(componentText.REGION.label);
+      });
+    });
   });
 
   describe('Cloud provider', () => {
