@@ -5,8 +5,8 @@ import { withState, screen, fireEvent } from '~/testUtils';
 import { Version } from '~/types/clusters_mgmt.v1';
 import clusterService from '~/services/clusterService';
 import { billingModels } from '~/common/subscriptionTypes';
-import { FieldId, initialValues } from '../../constants';
-import { VersionSelectField } from './VersionSelectField';
+import { FieldId, initialValues } from '~/components/clusters/wizards/osd/constants';
+import { VersionSelectField } from '~/components/clusters/wizards/common/ClusterSettings/Details/VersionSelectField';
 
 const getInstallableVersionsSpy = jest.spyOn(clusterService, 'getInstallableVersions');
 

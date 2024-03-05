@@ -55,9 +55,9 @@ import { QuotaParams } from '~/components/clusters/common/quotaModel';
 import { GCP_SECURE_BOOT_UI } from '~/redux/constants/featureConstants';
 import { useFeatureGate } from '~/hooks/useFeatureGate';
 import { versionComparator } from '~/common/versionComparator';
-import { VersionSelectField } from './VersionSelectField';
-import CloudRegionSelectField from './CloudRegionSelectField';
-import { CustomerManagedEncryption } from './CustomerManagedEncryption';
+import { VersionSelectField } from '~/components/clusters/wizards/common/ClusterSettings/Details/VersionSelectField';
+import CloudRegionSelectField from '~/components/clusters/wizards/common/ClusterSettings/Details/CloudRegionSelectField';
+import { CustomerManagedEncryption } from '~/components/clusters/wizards/osd/ClusterSettings/Details/CustomerManagedEncryption';
 
 export const Details = () => {
   const dispatch = useDispatch();
@@ -402,6 +402,7 @@ export const Details = () => {
           <div className="pf-v5-u-font-size-sm pf-v5-u-color-200 pf-v5-u-ml-lg pf-v5-u-mt-xs">
             {constants.enableUserWorkloadMonitoringHint}
           </div>
+
           <ExpandableSection
             toggleText="Advanced Encryption"
             onToggle={onToggle}
