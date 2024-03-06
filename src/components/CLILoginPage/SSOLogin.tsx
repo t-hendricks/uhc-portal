@@ -52,7 +52,7 @@ const SSOLogin = ({
                   className="ocm-c-api-token-limit-width"
                   outerClassName="pf-v5-u-mt-md"
                 >
-                  rosa login --use-auth-code
+                  {`${commandName} login --use-auth-code`}
                 </InstructionCommand>
               </ListItem>
               <ListItem>

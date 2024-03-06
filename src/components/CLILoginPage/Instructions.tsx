@@ -39,7 +39,9 @@ import {
 import useChrome from '@redhat-cloud-services/frontend-components/useChrome';
 import type { ChromeAPI } from '@redhat-cloud-services/types';
 import { isRestrictedEnv, getRefreshToken } from '~/restrictedEnv';
+import { useFeatureGate } from '~/hooks/useFeatureGate';
 import { setOfflineToken } from '~/redux/actions/rosaActions';
+import { CLI_SSO_AUTHORIZATION } from '~/redux/constants/featureConstants';
 import { loadOfflineToken } from './TokenUtils';
 import TokenBox from './TokenBox';
 import LeadingInfo from './LeadingInfo';
@@ -80,6 +82,7 @@ const Instructions = (props: Props) => {
   } = props;
   const offlineToken = useGlobalState((state) => state.rosaReducer.offlineToken);
   const dispatch = useDispatch();
+  const showDeprecationMessage = useFeatureGate(CLI_SSO_AUTHORIZATION);
   const chrome = useChrome();
   const restrictedEnv = isRestrictedEnv(chrome as unknown as ChromeAPI);
   const [token, setToken] = React.useState<string>('');
@@ -121,7 +124,7 @@ const Instructions = (props: Props) => {
     <Stack hasGutter>
       <StackItem>
         <Card className="ocm-c-api-token__card">
-          {!restrictedEnv && (
+          {!restrictedEnv && showDeprecationMessage ? (
             <CardTitle>
               <Alert
                 className="pf-v5-u-mt-md"
@@ -133,7 +136,7 @@ const Instructions = (props: Props) => {
                 maintained or enhanced. You can now log in using your Red Hat SSO credentials.
               </Alert>
             </CardTitle>
-          )}
+          ) : null}
           <CardTitle>
             <Title headingLevel="h2">
               {`Connect with ${restrictedEnv ? 'refresh' : 'offline'} tokens`}
