@@ -19,6 +19,7 @@ import {
   ENABLE_MACHINE_CONFIGURATION,
   GCP_SECURE_BOOT_UI,
   GCP_SECURE_BOOT_ENHANCEMENTS,
+  CLI_SSO_AUTHORIZATION,
 } from '../constants/featureConstants';
 import authorizationsService from '../../services/authorizationsService';
 import type { AppThunk } from '../types';
@@ -52,6 +53,7 @@ export const features = [
   getSimpleUnleashFeature('enable-machine-configuration', ENABLE_MACHINE_CONFIGURATION),
   getSimpleUnleashFeature('gcp-secure-boot-ui', GCP_SECURE_BOOT_UI),
   getSimpleUnleashFeature('gcp-secure-boot-enhancements', GCP_SECURE_BOOT_ENHANCEMENTS),
+  getSimpleUnleashFeature('cli-sso-authorization', CLI_SSO_AUTHORIZATION),
   {
     name: ASSISTED_INSTALLER_FEATURE,
     action: () =>
