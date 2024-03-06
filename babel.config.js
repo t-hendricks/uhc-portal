@@ -17,14 +17,11 @@ module.exports = {
     '@babel/preset-react',
   ],
   plugins: [
-    '@babel/plugin-proposal-class-properties',
-    '@babel/plugin-syntax-dynamic-import',
-    '@babel/plugin-proposal-object-rest-spread',
+    '@babel/plugin-transform-class-properties',
+    '@babel/plugin-transform-object-rest-spread',
     '@babel/plugin-transform-object-assign',
-    '@babel/plugin-proposal-optional-chaining',
+    '@babel/plugin-transform-optional-chaining',
     '@babel/plugin-transform-modules-commonjs',
-    'transform-class-properties',
-    ['istanbul', {}, 'istanbul-unique'],
     [
       'transform-imports',
       {
