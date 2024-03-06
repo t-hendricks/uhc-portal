@@ -8,3 +8,7 @@
 .cluster-log__resources {
   padding-top: var(--pf-v5-global--spacer--sm);
 }
+
+.cluster-log {
+  overflow-wrap: anywhere !important;
+}
