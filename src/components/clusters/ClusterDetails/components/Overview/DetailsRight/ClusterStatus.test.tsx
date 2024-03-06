@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { render, screen, checkAccessibility } from '~/testUtils';
-import { defaultClusterFromSubscription } from '~/components/clusters/common/__test__/defaultClusterFromSubscription.fixtures';
+import { defaultClusterFromSubscription } from '~/components/clusters/common/__tests__/defaultClusterFromSubscription.fixtures';
 import { ClusterFromSubscription } from '~/types/types';
 import { ClusterState } from '~/types/clusters_mgmt.v1';
 import { ClusterStatus } from './ClusterStatus';

@@ -1,8 +1,8 @@
 import React from 'react';
 import { render, screen, checkAccessibility, within } from '~/testUtils';
 import PersistentStorageDropdown from './PersistentStorageDropdown';
-import fixtures from '../../ClusterDetails/__test__/ClusterDetails.fixtures';
-import { storageQuotaList } from '../__test__/quota.fixtures';
+import fixtures from '../../ClusterDetails/__tests__/ClusterDetails.fixtures';
+import { storageQuotaList } from '../__tests__/quota.fixtures';
 
 const baseState = {
   error: false,
