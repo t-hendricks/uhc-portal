@@ -28,7 +28,7 @@ import { initialValues, initialValuesRestrictedEnv, initialTouched, FieldId } fr
 
 import CIDRScreen from './CIDRScreen/CIDRScreen';
 import ClusterProxyScreen from './ClusterProxyScreen';
-import ClusterSettingsScreen from './ClusterSettingsScreen';
+import Details from './ClusterSettings/Details/Details';
 import MachinePoolScreen from './MachinePoolScreen';
 import NetworkScreen from './NetworkScreen/NetworkScreen';
 import ReviewClusterScreen from './ReviewClusterScreen';
@@ -255,7 +255,7 @@ class CreateROSAWizardInternal extends React.Component {
             name: stepNameById[stepId.CLUSTER_SETTINGS__DETAILS],
             component: (
               <ErrorBoundary>
-                <ClusterSettingsScreen />
+                <Details />
               </ErrorBoundary>
             ),
             canJumpTo: this.canJumpTo(stepId.CLUSTER_SETTINGS__DETAILS),

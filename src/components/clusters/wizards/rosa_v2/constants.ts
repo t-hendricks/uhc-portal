@@ -64,6 +64,7 @@ const hypershiftDefaultSelected = true;
 export const initialValues: FormikValues = {
   [FieldId.Hypershift]: `${hypershiftDefaultSelected}`,
   [FieldId.MultiAz]: 'false',
+  [FieldId.EnableUserWorkloadMonitoring]: true,
   [FieldId.CustomerManagedKey]: 'false',
   [FieldId.KmsKeyArn]: '',
   [FieldId.EtcdEncryption]: false,
