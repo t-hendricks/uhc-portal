@@ -1,1 +1,1 @@
-export { default, MachineConfiguration, MachineConfigurationProps } from './MachineConfiguration';
+export { MachineConfiguration, MachineConfigurationProps } from './MachineConfiguration';
