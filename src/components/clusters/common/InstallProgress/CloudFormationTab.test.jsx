@@ -2,7 +2,7 @@ import React from 'react';
 import { render, checkAccessibility } from '~/testUtils';
 import { produce } from 'immer';
 import CloudFormationTab, { getAccountRolePrefix } from './CloudFormationTab';
-import fixtures from '../../ClusterDetails/__test__/ClusterDetails.fixtures';
+import fixtures from '../../ClusterDetails/__tests__/ClusterDetails.fixtures';
 
 describe('<CloudFormationTab />', () => {
   it('should return the correct account role prefix', () => {

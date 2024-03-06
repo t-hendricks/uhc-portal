@@ -3,7 +3,7 @@ import { render, screen, checkAccessibility } from '~/testUtils';
 import clusterService from '~/services/clusterService';
 import accountsService from '~/services/accountsService';
 import AWSCLITab from './AWSCLITab';
-import fixtures from '../../ClusterDetails/__test__/ClusterDetails.fixtures';
+import fixtures from '../../ClusterDetails/__tests__/ClusterDetails.fixtures';
 
 jest.mock('~/services/clusterService');
 clusterService.getOperatorRoleCommands = jest.fn();

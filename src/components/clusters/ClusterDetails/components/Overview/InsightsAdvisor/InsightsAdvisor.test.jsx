@@ -1,6 +1,6 @@
 import React from 'react';
 import { screen, render, checkAccessibility } from '~/testUtils';
-import fixtures from '../../../__test__/ClusterDetails.fixtures';
+import fixtures from '../../../__tests__/ClusterDetails.fixtures';
 
 import InsightsAdvisor from './InsightsAdvisor';
 import Chart from './Chart';
