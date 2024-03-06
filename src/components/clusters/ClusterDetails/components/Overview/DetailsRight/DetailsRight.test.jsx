@@ -9,7 +9,7 @@ import {
   mockRestrictedEnv,
 } from '~/testUtils';
 import { subscriptionStatuses } from '~/common/subscriptionTypes';
-import fixtures from '../../../__test__/ClusterDetails.fixtures';
+import fixtures from '../../../__tests__/ClusterDetails.fixtures';
 import DetailsRight from './DetailsRight';
 
 const defaultProps = {

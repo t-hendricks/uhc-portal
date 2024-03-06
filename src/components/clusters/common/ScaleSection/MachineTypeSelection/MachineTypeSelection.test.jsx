@@ -6,7 +6,7 @@ import {
   rhQuotaList,
   CCSQuotaList,
   CCSOneNodeRemainingQuotaList,
-} from '~/components/clusters/common/__test__/quota.fixtures';
+} from '~/components/clusters/common/__tests__/quota.fixtures';
 import { mapMachineTypesById } from '~/redux/reducers/machineTypesReducer';
 import MachineTypeSelection from './MachineTypeSelection';
 

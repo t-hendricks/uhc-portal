@@ -12,9 +12,9 @@ import {
   paramsRhInfra,
   paramsTrial,
   quotaWithAccountsExpected,
-} from './__test__/quota.fixtures';
+} from './__tests__/quota.fixtures';
 
-import { defaultClusterFromSubscription } from './__test__/defaultClusterFromSubscription.fixtures';
+import { defaultClusterFromSubscription } from './__tests__/defaultClusterFromSubscription.fixtures';
 import {
   CCSQuotaList,
   CCSROSAQuotaList,
@@ -40,7 +40,7 @@ import {
   quotaWithoutAccounts,
   rhQuotaList,
   simpleQuery,
-} from './__test__/quotaSelectors.fixtures';
+} from './__tests__/quotaSelectors.fixtures';
 import { QuotaParams, QuotaQuery } from './quotaModel';
 import {
   addOnBillingQuota,

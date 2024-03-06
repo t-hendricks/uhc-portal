@@ -5,7 +5,7 @@ import {
   defaultClusterFromSubscription,
   defaultMetric,
   defaultSubscription,
-} from './__test__/clusterStates.fixtures';
+} from './__tests__/clusterStates.fixtures';
 import clusterStates, {
   getClusterStateAndDescription,
   getInflightChecks,

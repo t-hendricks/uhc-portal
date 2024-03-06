@@ -3,7 +3,7 @@ import { render, checkAccessibility, screen } from '~/testUtils';
 import clusterService from '~/services/clusterService';
 import accountsService from '~/services/accountsService';
 import ActionRequiredModal from './ActionRequiredModal';
-import fixtures from '../../ClusterDetails/__test__/ClusterDetails.fixtures';
+import fixtures from '../../ClusterDetails/__tests__/ClusterDetails.fixtures';
 
 // Service mocks are needed for child components
 jest.mock('~/services/clusterService');
