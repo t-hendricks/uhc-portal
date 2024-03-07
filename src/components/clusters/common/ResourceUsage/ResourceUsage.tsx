@@ -1,16 +1,31 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 
+import { ClusterResource } from '~/types/accounts_mgmt.v1';
+import { Unit, parseValueWithUnit } from '../../../../common/units';
 import ClusterUtilizationChart from './ClusterUtilizationChart';
-import { parseValueWithUnit } from '../../../../common/units';
 
-function ResourceUsage({ cpu, memory, metricsStatusMessage, metricsAvailable, type }) {
+type ResourceUsageProps = {
+  cpu: ClusterResource;
+  memory: ClusterResource;
+  metricsStatusMessage?: string;
+  metricsAvailable: boolean;
+  type: string;
+};
+
+const ResourceUsage = ({
+  cpu,
+  memory,
+  metricsStatusMessage,
+  metricsAvailable,
+  type,
+}: ResourceUsageProps) => {
   // Why parse memory but not cpu?
   // In theory both are `ValueWithUnit` but openapi only documents units for the case of bytes,
   // and we only implemented parseValueWithUnit() for "B", "KB", "KiB" etc.
   // In practice server doesn't humanize at all, always sends "B"!
   // TODO: make up our minds...
-  const getValue = ({ value, unit }) => parseValueWithUnit(value, unit);
+  const getValue = ({ value, unit }: { value: number; unit: string }) =>
+    parseValueWithUnit(value, unit as Unit);
 
   return metricsAvailable ? (
     <>
@@ -36,14 +51,6 @@ function ResourceUsage({ cpu, memory, metricsStatusMessage, metricsAvailable, ty
   ) : (
     <p>{metricsStatusMessage}</p>
   );
-}
-
-ResourceUsage.propTypes = {
-  cpu: PropTypes.object.isRequired,
-  memory: PropTypes.object.isRequired,
-  metricsStatusMessage: PropTypes.string,
-  metricsAvailable: PropTypes.bool.isRequired,
-  type: PropTypes.string.isRequired,
 };
 
 export default ResourceUsage;

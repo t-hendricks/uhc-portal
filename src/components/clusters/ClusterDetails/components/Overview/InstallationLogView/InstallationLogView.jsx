@@ -5,7 +5,7 @@ import { Button, ExpandableSection } from '@patternfly/react-core';
 import { ExpandIcon } from '@patternfly/react-icons/dist/esm/icons/expand-icon';
 import cx from 'classnames';
 import screenfull from 'screenfull';
-import { metricsStatusMessages } from '../../../../common/ResourceUsage/ResourceUsage.consts';
+import { metricsStatusMessages } from '../../../../common/ResourceUsage/constants';
 import clusterStates from '../../../../common/clusterStates';
 
 const AUTOSCROLL_THRESHOLD = 20;
