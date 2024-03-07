@@ -25,7 +25,7 @@ import isAssistedInstallSubscription, {
 import withFeatureGate from '../../../../features/with-feature-gate';
 import HibernatingClusterCard from '../../../common/HibernatingClusterCard/HibernatingClusterCard';
 import ResourceUsage from '../../../common/ResourceUsage/ResourceUsage';
-import { metricsStatusMessages } from '../../../common/ResourceUsage/ResourceUsage.consts';
+import { metricsStatusMessages } from '../../../common/ResourceUsage/constants';
 import clusterStates, {
   getClusterAIPermissions,
   hasInflightEgressErrors,

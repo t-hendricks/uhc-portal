@@ -1,18 +1,22 @@
 import React from 'react';
 import { render, screen, checkAccessibility } from '~/testUtils';
-import ResourceUsage from './ResourceUsage';
-import { metricsStatusMessages } from './ResourceUsage.consts';
+import { ClusterResource } from '~/types/accounts_mgmt.v1';
+import ResourceUsage from '../ResourceUsage';
+import { metricsStatusMessages } from '../constants';
 
-const cpu = {
+const cpu: ClusterResource = {
   used: {
     value: 3.995410922987096,
+    unit: 'B',
   },
   total: {
     value: 16,
+    unit: 'B',
   },
+  updated_timestamp: '',
 };
 
-const memory = {
+const memory: ClusterResource = {
   used: {
     value: 16546058240,
     unit: 'B',
@@ -21,6 +25,7 @@ const memory = {
     value: 82293346304,
     unit: 'B',
   },
+  updated_timestamp: '',
 };
 
 // TODO: This component is not fully testable because a large portion of the data is only displayed in SVGs
