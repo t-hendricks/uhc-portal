@@ -10,7 +10,7 @@ import NodesTable from './NodesTable';
 import ClusterOperators from './ClusterOperators';
 import ResourceUsage from '../../../../common/ResourceUsage/ResourceUsage';
 import MonitoringEmptyState from './MonitoringEmptyState';
-import { metricsStatusMessages } from '../../../../common/ResourceUsage/ResourceUsage.consts';
+import { metricsStatusMessages } from '../../../../common/ResourceUsage/constants';
 import { hasResourceUsageMetrics } from '../monitoringHelper';
 import { subscriptionStatuses } from '../../../../../../common/subscriptionTypes';
 
