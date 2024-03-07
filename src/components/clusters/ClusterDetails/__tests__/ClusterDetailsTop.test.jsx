@@ -3,8 +3,7 @@ import { shallow } from 'enzyme';
 // TODO: Remove this import when PF team fixes the issue causing tests to break without it
 import { Button } from '@patternfly/react-core';
 import { CompatRouter } from 'react-router-dom-v5-compat';
-import { render, checkAccessibility, TestRouter, screen, mockUseFeatureGate } from '~/testUtils';
-import { GCP_SECURE_BOOT_ENHANCEMENTS } from '~/redux/constants/featureConstants';
+import { render, checkAccessibility, TestRouter, screen } from '~/testUtils';
 import ClusterDetailsTop from '../components/ClusterDetailsTop';
 import fixtures, { funcs } from './ClusterDetails.fixtures';
 import clusterStates from '../../common/clusterStates';
@@ -35,8 +34,6 @@ describe('<ClusterDetailsTop />', () => {
   beforeEach(() => {
     wrapper = shallow(<ClusterDetailsTop {...props} />);
   });
-
-  mockUseFeatureGate([[GCP_SECURE_BOOT_ENHANCEMENTS, false]]);
 
   it('is accessible', async () => {
     const { container } = render(
