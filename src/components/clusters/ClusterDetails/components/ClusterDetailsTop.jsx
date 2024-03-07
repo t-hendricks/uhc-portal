@@ -6,8 +6,6 @@ import { Spinner } from '@redhat-cloud-services/frontend-components/Spinner';
 import { Button, Alert, Split, SplitItem, Title, Flex } from '@patternfly/react-core';
 
 import { PreviewLabel } from '~/components/clusters/common/PreviewLabel';
-import { GCP_SECURE_BOOT_ENHANCEMENTS } from '~/redux/constants/featureConstants';
-import { useFeatureGate } from '~/hooks/useFeatureGate';
 import clusterStates, { isOffline } from '../../common/clusterStates';
 import modals from '../../../common/Modal/modals';
 import ClusterActionsDropdown from '../../common/ClusterActionsDropdown';
@@ -198,9 +196,7 @@ function ClusterDetailsTop(props) {
       obj.summary?.includes('GCP Organization Policy Service'),
   );
 
-  const isSecureBootEnhancementsEnabled = useFeatureGate(GCP_SECURE_BOOT_ENHANCEMENTS);
   const showGcpOrgPolicyWarning =
-    isSecureBootEnhancementsEnabled &&
     orgPolicyWarning &&
     !isDeprovisioned &&
     cluster.state !== clusterStates.READY &&
