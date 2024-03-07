@@ -15,8 +15,7 @@ describe('<ClusterListFilterDropdown />', () => {
     jest.clearAllMocks();
   });
 
-  it.skip('is accessible', async () => {
-    // TODO: once DropdownDeprecated is not used anymore
+  it('is accessible', async () => {
     const { container, user } = render(
       <TestRouter>
         <CompatRouter>
@@ -28,7 +27,7 @@ describe('<ClusterListFilterDropdown />', () => {
     await user.click(screen.getByRole('button'));
     expect(await screen.findByRole('menu')).toBeInTheDocument();
     await checkAccessibility(container);
-    ['OCP', 'OSD', 'ROSA', 'ARO'].forEach((clusterType) => {
+    ['OCP', 'OSD', 'ROSA', 'ARO', 'RHOIC'].forEach((clusterType) => {
       expect(screen.getByText(clusterType)).toBeInTheDocument();
     });
   });
