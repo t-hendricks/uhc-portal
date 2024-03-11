@@ -40,6 +40,24 @@ describe('<ClusterLogsToolbar />', () => {
     await checkAccessibility(container);
   });
 
+  it('displays and removes invalid format message', async () => {
+    render(<ClusterLogsToolbar {...defaultProps} />);
+
+    const datePicker = screen.getAllByLabelText('Date picker');
+
+    await userEvent.clear(datePicker[0]);
+    await userEvent.type(datePicker[0], '2024-qq');
+    await userEvent.type(datePicker[0], '{enter}');
+
+    expect(screen.getByText('Invalid: YYYY-MM-DD')).toBeInTheDocument();
+
+    await userEvent.clear(datePicker[0]);
+    await userEvent.type(datePicker[0], '2024-01-12');
+    await userEvent.type(datePicker[0], '{enter}');
+
+    expect(screen.queryByText('Invalid: YYYY-MM-DD')).toBe(null);
+  });
+
   it.each([
     ['2021-01-01', '2024-01-12', 'The start date cannot be before the cluster creation date.'],
     ['2024-01-10', '2025-01-10', 'The end date cannot be in the future.'],
