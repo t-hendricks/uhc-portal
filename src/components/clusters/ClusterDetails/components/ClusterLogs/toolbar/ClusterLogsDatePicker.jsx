@@ -28,7 +28,7 @@ const offset = new Date().getTimezoneOffset() * 60000;
 export const dateParse = (dateStr, asDate = true) => {
   const split = splitDateStr(dateStr);
   if (split.length !== 3) {
-    return asDate ? new Date() : '';
+    return '';
   }
   const year = split[0];
   const month = split[1];
@@ -127,7 +127,6 @@ const ClusterLogsDatePicker = ({ setFilter, currentFilter, createdAt }) => {
   const startDateObject = dateParse(startDateStr);
 
   let invalidDateError;
-
   if (
     startDateObject > endDateObject &&
     startDateObject <= now &&
@@ -182,7 +181,7 @@ const ClusterLogsDatePicker = ({ setFilter, currentFilter, createdAt }) => {
     if (split.length !== 3) {
       return;
     }
-    if (!date || rangeFromValidators.some((validator) => validator(date) !== '')) {
+    if (!date) {
       // invalid date
       return;
     }
@@ -198,7 +197,7 @@ const ClusterLogsDatePicker = ({ setFilter, currentFilter, createdAt }) => {
     if (split.length !== 3) {
       return;
     }
-    if (!date || rangeToValidators.some((validator) => validator(date) !== '')) {
+    if (!date) {
       // invalid date
       return;
     }
