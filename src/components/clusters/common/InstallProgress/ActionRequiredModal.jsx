@@ -11,6 +11,8 @@ import {
   Tabs,
   TextContent,
   Text,
+  TextList,
+  TextListItem,
   TextVariants,
   ClipboardCopy,
   ClipboardCopyVariant,
@@ -18,6 +20,7 @@ import {
 import {
   isHypershiftCluster,
   isWaitingROSAManualMode,
+  isErrorSharedGCPVPCValues,
   isWaitingForOIDCProviderOrOperatorRolesMode,
 } from '../clusterStates';
 // import CloudFormationTab from './CloudFormationTab';
@@ -32,6 +35,7 @@ function ActionRequiredModal({ cluster, isOpen, onClose }) {
   const isHCPCluster = isHypershiftCluster(cluster);
   const isWaitingForOIDCProviderOrOperatorRoles =
     isWaitingForOIDCProviderOrOperatorRolesMode(cluster);
+  const isBadSharedGCPVPCValues = isErrorSharedGCPVPCValues(cluster);
   const [activeTab, setActiveTab] = React.useState(ROSA_CLI_TAB_INDEX);
 
   const createByOIDCId = (cluster) => {
@@ -147,6 +151,28 @@ function ActionRequiredModal({ cluster, isOpen, onClose }) {
     </Stack>
   );
 
+  const showGCPVPCSharedError = (
+    <Stack hasGutter>
+      <StackItem>
+        <TextContent className="pf-v5-u-pb-md">
+          <Text component={TextVariants.p}>{cluster?.status?.description}</Text>
+          <Text component={TextVariants.p}>You entered these values:</Text>
+        </TextContent>
+        <TextContent>
+          <TextList>
+            <TextListItem>{`Existing VPC name: ${cluster.gcp_network?.vpc_name}`}</TextListItem>
+            <TextListItem>
+              {`Control plane subnet name: ${cluster.gcp_network?.control_plane_subnet}`}
+            </TextListItem>
+            <TextListItem>
+              {`Compute subnet name: ${cluster.gcp_network?.compute_subnet}`}
+            </TextListItem>
+          </TextList>
+        </TextContent>
+      </StackItem>
+    </Stack>
+  );
+
   return (
     <Modal
       title="Action required to continue installation"
@@ -156,6 +182,7 @@ function ActionRequiredModal({ cluster, isOpen, onClose }) {
     >
       {isWaitingAndROSAManual && createInteractively}
       {isWaitingForOIDCProviderOrOperatorRoles && createByOIDCId(cluster)}
+      {isBadSharedGCPVPCValues && showGCPVPCSharedError}
     </Modal>
   );
 }
