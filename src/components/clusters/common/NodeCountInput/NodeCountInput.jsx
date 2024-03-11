@@ -210,13 +210,17 @@ class NodeCountInput extends React.Component {
     const showTotalNodes = () => {
       if (isHypershiftWizard) {
         return (
-          <span>
+          <span data-testid="compute-node-hcp-multizone-details">
             x {poolNumber} machine pools = {input.value} compute nodes
           </span>
         );
       }
       if (isMultiAz) {
-        return <span>× 3 zones = {input.value} compute nodes</span>;
+        return (
+          <span data-testid="compute-node-multizone-details">
+            × 3 zones = {input.value} compute nodes
+          </span>
+        );
       }
       return null;
     };

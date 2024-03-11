@@ -189,7 +189,7 @@ function DetailsRight({
           </DescriptionListGroup>
           <DescriptionListGroup>
             <DescriptionListTerm>Persistent storage</DescriptionListTerm>
-            <DescriptionListDescription>
+            <DescriptionListDescription data-testid="persistent-storage">
               {humanizedPersistentStorage
                 ? `${humanizedPersistentStorage.value}  ${humanizedPersistentStorage.unit}`
                 : 'N/A'}
@@ -360,7 +360,9 @@ function DetailsRight({
         <DescriptionListGroup>
           <DescriptionListTerm>Secure Boot support for Shielded VMs</DescriptionListTerm>
           <DescriptionListDescription>
-            <span>{secureBoot ? 'Enabled' : 'Disabled'}</span>
+            <span data-testid="secureBootSupportForShieldedVMs">
+              {secureBoot ? 'Enabled' : 'Disabled'}
+            </span>
           </DescriptionListDescription>
         </DescriptionListGroup>
       )}

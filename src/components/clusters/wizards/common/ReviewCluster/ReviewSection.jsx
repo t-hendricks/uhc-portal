@@ -60,7 +60,9 @@ export const ReviewItem = ({ name, formValues }) => {
   return (
     <DescriptionListGroup key={name}>
       <DescriptionListTerm>{reviewValue.title}</DescriptionListTerm>
-      <DescriptionListDescription>{description}</DescriptionListDescription>
+      <DescriptionListDescription data-testid={reviewValue.title.replace(/ /g, '-')}>
+        {description}
+      </DescriptionListDescription>
     </DescriptionListGroup>
   );
 };
