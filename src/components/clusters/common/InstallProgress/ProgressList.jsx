@@ -191,6 +191,7 @@ function ProgressList({ cluster, actionRequiredInitialOpen, hasNetworkOndemand }
         isCurrent={progressData.awsAccountSetup.isCurrent}
         description={progressData.awsAccountSetup.text}
         id="awsAccountSetup"
+        data-testid="account-setup-title"
         titleId="awsAccountSetup-title"
       >
         Account setup

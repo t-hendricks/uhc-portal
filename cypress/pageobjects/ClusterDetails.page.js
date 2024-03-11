@@ -88,6 +88,21 @@ class ClusterDetails extends Page {
 
   clusterMachinePoolTable = () => cy.get('table[aria-label="Machine pools"]');
 
+  clusterInfrastructureBillingModelValue = () =>
+    cy.getByTestId('infrastructure-billing-model').find('div');
+
+  clusterSubscriptionBillingModelValue = () =>
+    cy.getByTestId('subscription-billing-model').find('div');
+
+  clusterSecureBootSupportForShieldedVMsValue = () =>
+    cy.getByTestId('secureBootSupportForShieldedVMs');
+
+  clusterInstallationHeader = () => cy.getByTestId('installation-header');
+
+  clusterInstallationExpectedText = () => cy.getByTestId('expected-cluster-installation-msg');
+
+  downloadOcCliLink = () => cy.getByTestId('download-oc-cli');
+
   waitForEditUrlModalToLoad = () => {
     cy.getByTestId('edit-console-url-dialog', { timeout: 30000 }).should('be.visible');
     cy.get('input[id="edit-console-url-input"]', { timeout: 30000 }).should('be.visible');
