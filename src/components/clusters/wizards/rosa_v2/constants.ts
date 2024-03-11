@@ -78,6 +78,12 @@ export const initialValues: FormikValues = {
   [FieldId.MachinePoolsSubnets]: [emptyAWSSubnet()],
 };
 
+export const initialValuesRestrictedEnv: FormikValues = {
+  ...initialValues,
+  [FieldId.EtcdEncryption]: true,
+  [FieldId.FipsCryptography]: true,
+};
+
 export const initialTouched: FormikTouched<FormikValues> = {
   [FieldId.Hypershift]: hypershiftDefaultSelected,
 };
