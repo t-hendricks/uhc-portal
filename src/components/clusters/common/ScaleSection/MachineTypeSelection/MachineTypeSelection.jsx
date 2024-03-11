@@ -108,7 +108,7 @@ const MachineTypeSelection = ({
   quota,
   organization,
   menuAppendTo,
-  allExpanded,
+  allExpanded = true,
 }) => {
   const {
     input,

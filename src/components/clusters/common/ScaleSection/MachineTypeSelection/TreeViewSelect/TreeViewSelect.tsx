@@ -105,7 +105,7 @@ export function TreeViewSelect(props: TreeViewSelectProps) {
             const filteredMachineCategory = fuse
               .search(searchString.trim())
               .map(({ item, score }) => {
-                score && score < lowestScore && (lowestScore = score);
+                if (score && score < lowestScore) lowestScore = score;
                 return item;
               });
             if (filteredMachineCategory.length > 0) {
