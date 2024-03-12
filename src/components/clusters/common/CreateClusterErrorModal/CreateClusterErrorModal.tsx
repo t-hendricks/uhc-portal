@@ -1,31 +1,36 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import PropTypes from 'prop-types';
 
+import { GlobalState } from '~/redux/store';
 import { resetCreatedClusterResponse } from '../../../../redux/actions/clustersActions';
 import ErrorModal from '../../../common/ErrorModal';
 import MissingPrereqErrorModal from '../MissingPrereqErrorModal';
 import ShieldedVmErrorModal from '../ShieldedVmErrorModal';
 
-const ErrorKey = {
-  AwsCredsNotOsdCcsAdmin: 'AWSCredsNotOSDCCSAdmin',
+type CreateClusterErrorModalProps = {
+  onRetry: () => Promise<void>;
 };
 
-const CreateClusterErrorModal = ({ onRetry }) => {
+const CreateClusterErrorModal = ({ onRetry }: CreateClusterErrorModalProps) => {
   const dispatch = useDispatch();
-  const createClusterResponse = useSelector((state) => state.clusters.createdCluster);
+  const createClusterResponse = useSelector((state: GlobalState) => state.clusters.createdCluster);
   const resetResponse = () => dispatch(resetCreatedClusterResponse());
+
   const { error: createClusterError } = createClusterResponse;
 
   if (createClusterError) {
-    const errorDetailsKey = createClusterResponse.errorDetails?.[0]?.Error_Key;
-    const isAwsCredsAdminError = errorDetailsKey === ErrorKey.AwsCredsNotOsdCcsAdmin;
+    const errorDetailsKey = (createClusterResponse.errorDetails?.[0] as any)?.Error_Key;
+    const isAwsCredsAdminError = errorDetailsKey === 'AWSCredsNotOSDCCSAdmin';
 
     if (isAwsCredsAdminError) {
       return <MissingPrereqErrorModal onRetry={onRetry} onClose={resetResponse} />;
     }
 
-    if (createClusterResponse?.errorMessage.includes('SecureBoot feature')) {
+    if (
+      createClusterResponse?.errorMessage &&
+      typeof createClusterResponse?.errorMessage === 'string' &&
+      createClusterResponse?.errorMessage.includes('SecureBoot feature')
+    ) {
       return (
         <ShieldedVmErrorModal
           title="Error creating cluster"
@@ -45,10 +50,6 @@ const CreateClusterErrorModal = ({ onRetry }) => {
   }
 
   return null;
-};
-
-CreateClusterErrorModal.propTypes = {
-  onRetry: PropTypes.func,
 };
 
 export default CreateClusterErrorModal;

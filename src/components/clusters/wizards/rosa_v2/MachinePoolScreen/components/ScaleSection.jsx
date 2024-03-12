@@ -3,7 +3,6 @@ import React, { useCallback, useMemo, useState } from 'react';
 import { Field, FieldArray } from 'formik';
 
 import { ExpandableSection, GridItem, Text, TextVariants, Title } from '@patternfly/react-core';
-import { canAutoScaleOnCreateSelector } from '~/components/clusters/ClusterDetails/components/MachinePools/MachinePoolsSelectors';
 import {
   getMinNodesRequired,
   getNodeIncrement,
@@ -27,6 +26,7 @@ import { FieldId } from '~/components/clusters/wizards/rosa_v2/constants';
 import ExternalLink from '~/components/common/ExternalLink';
 import FormKeyValueList from '~/components/common/FormikFormComponents/FormKeyValueList';
 import MachineTypeSelection from '~/components/clusters/common/ScaleSection/MachineTypeSelection';
+import { canAutoScaleOnCreateSelector } from '~/components/clusters/ClusterDetails/components/MachinePools/machinePoolsSelectors';
 
 import ImdsSection from './ImdsSection';
 import WorkerNodeVolumeSizeSection from './WorkerNodeVolumeSizeSection/WorkerNodeVolumeSizeSection';

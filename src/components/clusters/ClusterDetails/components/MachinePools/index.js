@@ -20,7 +20,7 @@ import { canMachinePoolBeUpgradedSelector } from './UpdateMachinePools/updateMac
 import {
   hasOrgLevelBypassPIDsLimitCapability,
   hasMachinePoolsQuotaSelector,
-} from './MachinePoolsSelectors';
+} from './machinePoolsSelectors';
 import { normalizeNodePool } from './machinePoolsHelper';
 
 import { getOrganizationAndQuota } from '../../../../../redux/actions/userActions';
@@ -31,14 +31,20 @@ import shouldShowModal from '../../../../common/Modal/ModalSelectors';
 
 const mapStateToProps = (state) => {
   const cluster = get(state, 'clusters.details.cluster', {});
-  const canBypassPIDsLimit = hasOrgLevelBypassPIDsLimitCapability(state);
+  const canBypassPIDsLimit = hasOrgLevelBypassPIDsLimitCapability(
+    state.userProfile.organization?.details,
+  );
 
   const props = {
     isDeleteMachinePoolModalOpen: shouldShowModal(state, modals.DELETE_MACHINE_POOL),
     isClusterAutoscalingModalOpen: shouldShowModal(state, modals.EDIT_CLUSTER_AUTOSCALING_V1),
     machinePoolsList: state.machinePools.getMachinePools,
     deleteMachinePoolResponse: state.machinePools.deleteMachinePoolResponse,
-    hasMachinePoolsQuota: hasMachinePoolsQuotaSelector(state),
+    hasMachinePoolsQuota: hasMachinePoolsQuotaSelector(
+      state.userProfile.organization,
+      state.clusters.details,
+      state.machineTypes.types,
+    ),
     machineTypes: state.machineTypes,
     organization: state.userProfile.organization,
     canMachinePoolBeUpdated: (machinePool) => canMachinePoolBeUpgradedSelector(state, machinePool),
