@@ -19,9 +19,9 @@ import {
 } from '~/components/clusters/wizards/rosa_v2/rosaWizardConstants';
 import { useFeatureGate } from '~/hooks/useFeatureGate';
 import { useFormState } from '~/components/clusters/wizards/hooks';
-import { canAutoScaleOnCreateSelector } from '~/components/clusters/ClusterDetails/components/MachinePools/MachinePoolsSelectors';
 import HiddenCheckbox from '~/components/common/FormikFormComponents/HiddenCheckbox';
 import { canSelectImds } from '~/components/clusters/wizards/rosa/constants';
+import { canAutoScaleOnCreateSelector } from '~/components/clusters/ClusterDetails/components/MachinePools/machinePoolsSelectors';
 import { DebugClusterRequest } from '../../common/DebugClusterRequest';
 import ReviewSection, { ReviewItem } from '../../common/ReviewCluster/ReviewSection';
 import ReviewRoleItem from './ReviewRoleItem';
