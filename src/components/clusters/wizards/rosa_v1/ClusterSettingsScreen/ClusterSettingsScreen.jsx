@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Title, Grid, GridItem, FormGroup, Form, ExpandableSection } from '@patternfly/react-core';
 import { Field } from 'redux-form';
+import { useDispatch, useSelector } from 'react-redux';
+import { getMachineTypesByRegionARN } from '~/redux/actions/machineTypesActions';
 
 import ReduxCheckbox from '~/components/common/ReduxFormComponents/ReduxCheckbox';
 import { validateAWSKMSKeyARN } from '~/common/validators';
@@ -24,6 +26,7 @@ function ClusterSettingsScreen({
   customerManagedEncryptionSelected,
   selectedRegion,
   cloudProviderID,
+  formValues,
   product,
   billingModel,
   change,
@@ -36,12 +39,24 @@ function ClusterSettingsScreen({
   forceTouch,
 }) {
   const [isExpanded, setIsExpanded] = useState(false);
-
+  const machineTypesByRegion = useSelector((state) => state.machineTypesByRegion);
+  const dispatch = useDispatch();
   const onToggle = () => {
     setIsExpanded(!isExpanded);
   };
 
   const isRosa = product === normalizedProducts.ROSA;
+
+  React.useEffect(() => {
+    // if machineTypeByRegion.region cache does not exist or if the region is new, load new machines
+    if (
+      selectedRegion &&
+      (!machineTypesByRegion.region ||
+        (machineTypesByRegion.region && machineTypesByRegion.region.id !== selectedRegion))
+    ) {
+      dispatch(getMachineTypesByRegionARN(formValues.installer_role_arn, selectedRegion));
+    }
+  }, [selectedRegion, formValues.installer_role_arn, machineTypesByRegion.region, dispatch]);
 
   React.useEffect(() => {
     let isAdvancedEncryptionExpanded = false;
@@ -195,6 +210,9 @@ ClusterSettingsScreen.propTypes = {
   isByoc: PropTypes.bool,
   cloudProviderID: PropTypes.string,
   isMultiAz: PropTypes.bool,
+  formValues: PropTypes.objectOf(
+    PropTypes.oneOfType([PropTypes.string, PropTypes.number, PropTypes.bool]),
+  ),
   customerManagedEncryptionSelected: PropTypes.string,
   product: PropTypes.string,
   billingModel: PropTypes.string,

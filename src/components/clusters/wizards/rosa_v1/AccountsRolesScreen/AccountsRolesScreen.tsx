@@ -1,6 +1,8 @@
 /* eslint-disable camelcase */
 import React, { useState, useCallback, useEffect, useRef, useMemo } from 'react';
 import get from 'lodash/get';
+import { useDispatch, useSelector } from 'react-redux';
+import { GlobalState } from '~/redux/store';
 
 import {
   Button,
@@ -12,6 +14,8 @@ import {
   TextVariants,
 } from '@patternfly/react-core';
 import { Field } from 'redux-form';
+
+import { clearMachineTypesByRegion } from '~/redux/actions/machineTypesActions';
 
 import { required } from '~/common/validators';
 import { normalizedProducts } from '~/common/subscriptionTypes';
@@ -86,6 +90,15 @@ function AccountsRolesScreen({
   const hasAWSAccounts = AWSAccountIDs.length > 0;
   const track = useAnalytics();
   const { openDrawer } = useAssociateAWSAccountDrawer(isHypershiftSelected);
+  const machineTypesByRegion = useSelector((state: GlobalState) => state.machineTypesByRegion);
+  const dispatch = useDispatch();
+
+  // clear machineTypeByRegion cache when credentials change
+  React.useEffect(() => {
+    if (machineTypesByRegion.region) {
+      dispatch(clearMachineTypesByRegion());
+    }
+  });
 
   const resetAWSAccountFields = () => {
     // clear certain responses; causes refetch of AWS acct info.
