@@ -1,19 +1,34 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import {
-  Title,
-  CardBody,
-  Card,
   Bullseye,
-  GridItem,
-  EmptyStateBody,
-  EmptyState,
+  Card,
+  CardBody,
   CardTitle,
+  EmptyState,
+  EmptyStateBody,
   EmptyStateHeader,
+  GridItem,
+  Title,
 } from '@patternfly/react-core';
 import { Link } from 'react-router-dom-v5-compat';
-import ResourceUsage from '../../clusters/common/ResourceUsage/ResourceUsage';
-import ClustersWithIssuesCard from '../ClustersWithIssuesCard';
+import ResourceUsage from '../clusters/common/ResourceUsage/ResourceUsage';
+import ClustersWithIssuesCard from './ClustersWithIssuesCard';
+
+type UnitValue = {
+  unit: string;
+  value: number;
+};
+
+type TopOverviewSectionProps = {
+  totalClusters: number;
+  totalUnhealthyClusters: number;
+  totalConnectedClusters: number;
+  totalCPU: UnitValue;
+  usedCPU: UnitValue;
+  totalMem: UnitValue;
+  usedMem: UnitValue;
+  isError: boolean;
+};
 
 const TopOverviewSection = ({
   totalClusters,
@@ -24,7 +39,7 @@ const TopOverviewSection = ({
   totalMem,
   usedMem,
   isError,
-}) => {
+}: TopOverviewSectionProps) => {
   const errorBody = (
     <CardBody>
       <EmptyState>
@@ -62,7 +77,7 @@ const TopOverviewSection = ({
     );
   }
 
-  const dataAvailable = totalConnectedClusters > 0 && (totalCPU > 0 || totalMem.value > 0);
+  const dataAvailable = totalConnectedClusters > 0 && (totalCPU?.value > 0 || totalMem.value > 0);
 
   const resourceUsageBody = dataAvailable ? (
     <CardBody>
@@ -70,6 +85,7 @@ const TopOverviewSection = ({
         cpu={{
           total: totalCPU,
           used: usedCPU,
+          updated_timestamp: '',
         }}
         memory={{
           total: {
@@ -80,6 +96,7 @@ const TopOverviewSection = ({
             value: usedMem.value,
             unit: 'B',
           },
+          updated_timestamp: '',
         }}
         metricsAvailable
         type="legend"
@@ -128,17 +145,6 @@ const TopOverviewSection = ({
       </GridItem>
     </>
   );
-};
-
-TopOverviewSection.propTypes = {
-  totalClusters: PropTypes.number.isRequired,
-  totalUnhealthyClusters: PropTypes.number.isRequired,
-  totalConnectedClusters: PropTypes.number.isRequired,
-  totalCPU: PropTypes.object.isRequired,
-  usedCPU: PropTypes.object.isRequired,
-  totalMem: PropTypes.object.isRequired,
-  usedMem: PropTypes.object.isRequired,
-  isError: PropTypes.bool.isRequired,
 };
 
 export default TopOverviewSection;

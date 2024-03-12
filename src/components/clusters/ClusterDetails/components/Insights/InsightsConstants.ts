@@ -1,6 +1,12 @@
 export const GET_CLUSTER_INSIGHTS = 'GET_CLUSTER_INSIGHTS';
 export const GET_ORGANIZATION_INSIGHTS = 'GET_ORGANIZATION_INSIGHTS';
-export const INSIGHTS_RULE_CATEGORIES = [
+
+export type InsightsRuleCategories = {
+  title: string;
+  tags: string[];
+};
+
+export const INSIGHTS_RULE_CATEGORIES: InsightsRuleCategories[] = [
   {
     title: 'Performance',
     tags: ['performance'], // tags appear in the OCP Insights rule contents

@@ -10,7 +10,7 @@ import { getWorkerNodeVolumeSizeMaxGiB } from '~/components/clusters/wizards/ros
 import { openModal } from '~/components/common/Modal/ModalActions';
 import modals from '~/components/common/Modal/modals';
 import wizardConnector from '~/components/clusters/wizards/common/WizardConnector';
-import { canAutoScaleOnCreateSelector } from '../../../ClusterDetails/components/MachinePools/MachinePoolsSelectors';
+import { canAutoScaleOnCreateSelector } from '../../../ClusterDetails/components/MachinePools/machinePoolsSelectors';
 
 import MachinePoolScreen from './MachinePoolScreen';
 import createOSDInitialValues from '../../common/createOSDInitialValues';
@@ -52,7 +52,7 @@ const mapStateToProps = (state, ownProps) => {
       : getNodeIncrement(isMultiAz),
     isHypershiftCluster: isHypershiftSelected,
     maxWorkerVolumeSizeGiB,
-    canAutoScale: canAutoScaleOnCreateSelector(state, product),
+    canAutoScale: canAutoScaleOnCreateSelector(state.userProfile.organization?.details, product),
     autoscalingEnabled: !!valueSelector(state, 'autoscalingEnabled'),
     autoScaleMinNodesValue: valueSelector(state, 'min_replicas'),
     autoScaleMaxNodesValue: valueSelector(state, 'max_replicas'),

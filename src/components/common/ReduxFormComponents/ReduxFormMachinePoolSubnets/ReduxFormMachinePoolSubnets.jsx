@@ -11,11 +11,11 @@ import { emptyAWSSubnet } from '~/components/clusters/wizards/common/createOSDIn
 
 import './ReduxFormMachinePoolSubnets.scss';
 
-const ReduxFormMachinePoolSubnets = ({ fields, selectedVPC, meta: { warning } }) => (
+const ReduxFormMachinePoolSubnets = ({ fields, selectedVPC, meta }) => (
   <Grid hasGutter>
-    {warning && (
+    {meta?.warning && (
       <GridItem>
-        <Alert variant="warning" isPlain isInline title={warning} />
+        <Alert variant="warning" isPlain isInline title={meta?.warning} />
       </GridItem>
     )}
     <GridItem span={2} className="pf-v5-c-form__label pf-v5-c-form__label-text">
@@ -80,9 +80,7 @@ const ReduxFormMachinePoolSubnets = ({ fields, selectedVPC, meta: { warning } })
 ReduxFormMachinePoolSubnets.propTypes = {
   fields: PropTypes.array.isRequired,
   selectedVPC: PropTypes.object,
-  meta: PropTypes.shape({
-    warning: PropTypes.string,
-  }),
+  meta: PropTypes.object.isRequired,
 };
 
 export default ReduxFormMachinePoolSubnets;

@@ -49,6 +49,7 @@ export type FakeCluster = // AICluster &
     | 'aws'
     | 'gcp_network'
     | 'status'
+    | 'multi_az'
   > & {
     metrics: OneMetric;
     state?: string | ClusterState;
