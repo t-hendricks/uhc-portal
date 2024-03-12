@@ -169,7 +169,6 @@ export const Details = () => {
     setFieldValue(FieldId.NodesCompute, getNodesCount(isByoc, isMultiAz, true));
     setFieldValue(FieldId.MinReplicas, getMinReplicasCount(isByoc, isMultiAz, true));
     setFieldValue(FieldId.MaxReplicas, '');
-    setFieldValue(FieldId.MaxReplicas, '');
 
     // Make "machinePoolsSubnets" of the correct length
     const mpSubnetsReset = [machinePoolsSubnets[0]];
