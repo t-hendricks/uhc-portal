@@ -22,8 +22,6 @@ import {
 } from '~/components/clusters/wizards/common/constants';
 import { FieldId, StepId } from '~/components/clusters/wizards/osd/constants';
 import useCanClusterAutoscale from '~/components/clusters/ClusterDetails/components/MachinePools/components/EditMachinePoolModal/hooks/useCanClusterAutoscale';
-import { GCP_SECURE_BOOT_UI } from '~/redux/constants/featureConstants';
-import { useFeatureGate } from '~/hooks/useFeatureGate';
 import { DebugClusterRequest } from '~/components/clusters/wizards/common/DebugClusterRequest';
 import { canSelectImds } from '../../rosa/constants';
 
@@ -57,7 +55,6 @@ export const ReviewAndCreateContent = ({ isPending }: ReviewAndCreateContentProp
   const isGCP = cloudProvider === CloudProviderType.Gcp;
 
   const hasSecurityGroups = isByoc && hasSelectedSecurityGroups(securityGroups);
-  const isSecureBootFeatureEnabled = useFeatureGate(GCP_SECURE_BOOT_UI);
 
   const clusterSettingsFields = [
     FieldId.CloudProvider,
@@ -65,7 +62,7 @@ export const ReviewAndCreateContent = ({ isPending }: ReviewAndCreateContentProp
     FieldId.ClusterVersion,
     FieldId.Region,
     FieldId.MultiAz,
-    ...(isGCP && isSecureBootFeatureEnabled ? [FieldId.SecureBoot] : []),
+    ...(isGCP ? [FieldId.SecureBoot] : []),
     FieldId.EnableUserWorkloadMonitoring,
     ...(isByoc ? [FieldId.CustomerManagedKey] : [FieldId.PersistentStorage]),
     ...(isByoc && isAWS ? [FieldId.DisableScpChecks] : []),
