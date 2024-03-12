@@ -64,6 +64,7 @@ const ControlPlaneField = ({
     change('machinePoolsSubnets', [emptyAWSSubnet()]);
 
     if (isHypershift === 'true') {
+      change('node_labels', [{}]);
       if (formValues.multi_az === 'true') {
         change('multi_az', 'false');
       }
