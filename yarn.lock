@@ -12534,10 +12534,10 @@ sockjs@^0.3.24:
     uuid "^8.3.2"
     websocket-driver "^0.7.4"
 
-sol-sc-explorer@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/sol-sc-explorer/-/sol-sc-explorer-1.0.0.tgz#a957ee97b8428d483a799be9b485bda9839088e1"
-  integrity sha512-OvzGLsy+lOJRoVQo+1mhYn+TkYRdsxggQKF7k/CJzysRerEquRJE7vywllut8qf0SCJ1udKE8X3c+zwQg4YKJg==
+sol-sc-explorer@^1.1.1:
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/sol-sc-explorer/-/sol-sc-explorer-1.1.1.tgz#105d885867168a9684a367e07547a1ae4490c1fc"
+  integrity sha512-gSzd7ki2DCrzv1Un72cosrKBmDIMzOPVUq+21GkTWeByiWOPCzFzjVig0kiLPKfCjAjzv6Bh4o378sSc/bXB0w==
 
 "source-map-js@>=0.6.2 <2.0.0", source-map-js@^1.0.2:
   version "1.0.2"

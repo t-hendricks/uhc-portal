@@ -173,7 +173,7 @@
     "shell-quote": "^1.7.3",
     "showdown": "^1.8.6",
     "simple-git": "3.22.0",
-    "sol-sc-explorer": "^1.0.0",
+    "sol-sc-explorer": "^1.1.1",
     "sprintf-js": "^1.1.2",
     "transform-class-properties": "^1.0.0-beta",
     "ts-jest": "^29.1.2",
