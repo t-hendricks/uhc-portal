@@ -66,11 +66,11 @@ function CIDRFields({
     (cloudProviderID === 'aws' && validators.awsMachineCidr(value, formValues)) ||
     // cloudProviderID === 'gcp' && validators.gcpMachineCidr, https://issues.redhat.com/browse/HAC-2118
     validators.validateRange(value) ||
+    (cloudProviderID === 'aws' &&
+      validators.subnetCidrs(value, formValues, FieldId.NetworkMachineCidr, selectedSubnets)) ||
     machineDisjointSubnets(value, formValues) ||
     (cloudProviderID === 'aws' && !isMultiAz && awsMachineSingleAZSubnetMask(value)) ||
     (cloudProviderID === 'aws' && isMultiAz && awsMachineMultiAZSubnetMask(value)) ||
-    (cloudProviderID === 'aws' &&
-      validators.subnetCidrs(value, formValues, FieldId.NetworkMachineCidr, selectedSubnets)) ||
     undefined;
 
   const serviceCidrValidators = (value) =>

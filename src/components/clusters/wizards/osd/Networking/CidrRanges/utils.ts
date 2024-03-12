@@ -28,6 +28,8 @@ export const validateMachineCidr =
       validateCidr(value)(cloudProvider) ||
       (cloudProvider === CloudProviderType.Aws && validators.awsMachineCidr(value, values)) ||
       validators.validateRange(value) ||
+      (cloudProvider === CloudProviderType.Aws &&
+        validators.subnetCidrs(value, values, FieldId.NetworkMachineCidr, selectedSubnets)) ||
       machineDisjointSubnets(value, values) ||
       (cloudProvider === CloudProviderType.Aws &&
         !isMultiAz &&
@@ -35,8 +37,6 @@ export const validateMachineCidr =
       (cloudProvider === CloudProviderType.Aws &&
         isMultiAz &&
         awsMachineMultiAZSubnetMask(value)) ||
-      (cloudProvider === CloudProviderType.Aws &&
-        validators.subnetCidrs(value, values, FieldId.NetworkMachineCidr, selectedSubnets)) ||
       undefined
     );
   };
