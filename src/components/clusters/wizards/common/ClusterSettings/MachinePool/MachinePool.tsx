@@ -214,7 +214,7 @@ export const MachinePool = () => {
         {canAutoScale && (
           <>
             <GridItem>
-              <AutoScale isDefaultMachinePool />
+              <AutoScale />
             </GridItem>
             {autoscalingEnabled && imdsSection}
             {autoscalingEnabled && nodeLabelsExpandableSection}
@@ -253,7 +253,11 @@ export const MachinePool = () => {
                   ...getFieldProps(FieldId.NodesCompute),
                   onChange: (value: string) => setFieldValue(FieldId.NodesCompute, value),
                 }}
-                minNodes={getMinNodesRequired(true, isByoc, isMultiAz)}
+                minNodes={getMinNodesRequired(
+                  false,
+                  {},
+                  { isDefaultMachinePool: true, isByoc, isMultiAz },
+                )}
               />
             </GridItem>
             {imdsSection}

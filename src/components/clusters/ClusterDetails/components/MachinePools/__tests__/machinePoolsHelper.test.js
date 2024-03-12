@@ -9,7 +9,6 @@ import {
   getSubnetIds,
   hasSubnets,
   getMinNodesRequired,
-  getMinNodesRequiredHypershift,
   getNodeIncrementHypershift,
   hasExplicitAutoscalingMachinePool,
   hasDefaultOrExplicitAutoscalingMachinePool,
@@ -677,7 +676,9 @@ describe('isEnforcedDefaultMachinePool', () => {
       ['isDefaultMachinePool and isByoc true, isMultiAz false', true, true, false, 2],
       ['all true', true, true, true, 3],
     ])('%p', (title, isDefaultMachinePool, isByoc, isMultiAz, expected) =>
-      expect(getMinNodesRequired(isDefaultMachinePool, isByoc, isMultiAz)).toBe(expected),
+      expect(
+        getMinNodesRequired(false, undefined, { isDefaultMachinePool, isByoc, isMultiAz }),
+      ).toBe(expected),
     );
   });
 
@@ -728,7 +729,7 @@ describe('isEnforcedDefaultMachinePool', () => {
       ['numMachinePools any number', 100, 100],
       ['numMachinePools NaN', NaN, 0],
     ])('%p', (title, numMachinePools, expected) =>
-      expect(getMinNodesRequiredHypershift(numMachinePools)).toBe(expected),
+      expect(getMinNodesRequired(true, { numMachinePools })).toBe(expected),
     );
   });
 

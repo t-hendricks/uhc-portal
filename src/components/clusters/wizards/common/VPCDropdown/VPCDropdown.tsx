@@ -180,10 +180,14 @@ const VPCDropdown = ({
             </Tooltip>
           </FlexItem>
         )}
-        {vpcResponse.error && (
-          <ErrorBox message="Error retrieving VPCs" response={vpcResponse as ErrorState} />
-        )}
       </Flex>
+      {vpcResponse.error && (
+        <Flex>
+          <FlexItem flex={{ default: 'flex_1' }} style={{ minWidth: 0, marginTop: 10 }}>
+            <ErrorBox message="Error retrieving VPCs" response={vpcResponse as ErrorState} />
+          </FlexItem>
+        </Flex>
+      )}
     </FormGroup>
   );
 };
