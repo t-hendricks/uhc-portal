@@ -67,11 +67,11 @@ function CIDRFields({
     cidrValidators(value) ||
     (cloudProviderID === 'aws' && validators.awsMachineCidr(value, formValues)) ||
     validators.validateRange(value) ||
+    (cloudProviderID === 'aws' &&
+      validators.subnetCidrs(value, formValues, FieldId.NetworkMachineCidr, selectedSubnets)) ||
     machineDisjointSubnets(value, formValues) ||
     (cloudProviderID === 'aws' && !isMultiAz && awsMachineSingleAZSubnetMask(value)) ||
     (cloudProviderID === 'aws' && isMultiAz && awsMachineMultiAZSubnetMask(value)) ||
-    (cloudProviderID === 'aws' &&
-      validators.subnetCidrs(value, formValues, FieldId.NetworkMachineCidr, selectedSubnets)) ||
     undefined;
 
   const serviceCidrValidators = (value) =>
