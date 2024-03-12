@@ -1,0 +1,252 @@
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import { Flex, FormGroup, HelperTextItem } from '@patternfly/react-core';
+import { Field } from 'formik';
+
+import links from '~/common/installLinks.mjs';
+import { normalizedProducts } from '~/common/subscriptionTypes';
+import { required, validateNumericInput } from '~/common/validators';
+import { getMinNodesRequired } from '~/components/clusters/ClusterDetails/components/MachinePools/machinePoolsHelper';
+import { constants } from '~/components/clusters/common/CreateOSDFormConstants';
+import getMinNodesAllowed from '~/components/clusters/common/ScaleSection/AutoScaleSection/AutoScaleHelper';
+import { MAX_NODES } from '~/components/clusters/common/machinePools/constants';
+import { useFormState } from '~/components/clusters/wizards/hooks';
+import { FieldId } from '~/components/clusters/wizards/rosa_v2/constants';
+import ExternalLink from '~/components/common/ExternalLink';
+import { FormGroupHelperText } from '~/components/common/FormGroupHelperText';
+import PopoverHint from '~/components/common/PopoverHint';
+import { NodesInput } from './NodesInput';
+
+export const AutoScaleEnabledInputs = () => {
+  const {
+    setFieldValue,
+    setFieldTouched,
+    getFieldProps,
+    getFieldMeta,
+    values: {
+      [FieldId.Hypershift]: hypershiftValue,
+      [FieldId.AutoscalingEnabled]: autoscalingEnabled,
+      [FieldId.MachinePoolsSubnets]: machinePoolsSubnets,
+      [FieldId.MultiAz]: multiAz,
+      [FieldId.MinReplicas]: minReplicas,
+      [FieldId.MaxReplicas]: maxReplicas,
+      [FieldId.Product]: product,
+      [FieldId.Byoc]: byoc,
+    },
+  } = useFormState();
+
+  const poolsLength = useMemo(
+    () => machinePoolsSubnets?.length ?? 1,
+    [machinePoolsSubnets?.length],
+  );
+  const [minErrorMessage, setMinErrorMessage] = useState<string>();
+  const [maxErrorMessage, setMaxErrorMessage] = useState<string>();
+  const isMultiAz = multiAz === 'true';
+  const isHypershiftSelected = hypershiftValue === 'true';
+  const isByoc = byoc === 'true';
+  const isRosa = product === normalizedProducts.ROSA;
+
+  const minNodesLabel = useMemo(() => {
+    if (isHypershiftSelected) {
+      return 'Minimum nodes per machine pool';
+    }
+    return isMultiAz ? 'Minimum nodes per zone' : 'Minimum node count';
+  }, [isHypershiftSelected, isMultiAz]);
+
+  const maxNodesLabel = useMemo(() => {
+    if (isHypershiftSelected) {
+      return 'Maximum nodes per machine pool';
+    }
+    return isMultiAz ? 'Maximum nodes per zone' : 'Maximum node count';
+  }, [isHypershiftSelected, isMultiAz]);
+
+  const minNodesRequired = useMemo(
+    () =>
+      getMinNodesRequired(
+        isHypershiftSelected,
+        { numMachinePools: poolsLength },
+        { isDefaultMachinePool: !isHypershiftSelected, isByoc, isMultiAz },
+      ),
+    [poolsLength, isHypershiftSelected, isByoc, isMultiAz],
+  );
+
+  const defaultMinAllowed = useMemo(() => {
+    if (isHypershiftSelected) {
+      return poolsLength > 1 ? 1 : 2;
+    }
+    return minNodesRequired;
+  }, [isHypershiftSelected, minNodesRequired, poolsLength]);
+
+  const helperText = (
+    message: React.ReactNode,
+    variant: 'default' | 'indeterminate' | 'warning' | 'success' | 'error' = 'default',
+    hasIcon = false,
+  ) => (
+    <FormGroupHelperText touched variant={variant} hasIcon={hasIcon}>
+      {message}
+    </FormGroupHelperText>
+  );
+
+  const nodesHelpText = useCallback(
+    (nodes = '0') => {
+      if (isHypershiftSelected) {
+        return helperText(`x ${poolsLength} machine pools = ${parseInt(nodes, 10) * poolsLength}`);
+      }
+      return isMultiAz ? helperText(`x 3 zones = ${parseInt(nodes, 10) * 3}`) : null;
+    },
+    [isHypershiftSelected, isMultiAz, poolsLength],
+  );
+
+  const validationMessage = (validationErrorMessage: string | undefined) =>
+    validationErrorMessage ? (
+      <HelperTextItem variant="error" hasIcon>
+        {validationErrorMessage}
+      </HelperTextItem>
+    ) : null;
+
+  const minNodes = useMemo(() => {
+    const minNodesAllowed = getMinNodesAllowed({
+      isDefaultMachinePool: !isHypershiftSelected,
+      product,
+      isBYOC: isByoc,
+      isMultiAz,
+      autoScaleMinNodesValue: undefined,
+      defaultMinAllowed,
+      isHypershiftWizard: isHypershiftSelected,
+    });
+
+    if (minNodesAllowed) {
+      return minNodesAllowed / (isMultiAz && !isHypershiftSelected ? 3 : 1);
+    }
+    return undefined;
+  }, [product, isByoc, isMultiAz, defaultMinAllowed, isHypershiftSelected]);
+
+  useEffect(() => {
+    if (autoscalingEnabled && minNodes) {
+      const minAutoscaleValue = minReplicas ? parseInt(minReplicas, 10) : 0;
+      const min = minAutoscaleValue < minNodes ? minNodes : minAutoscaleValue;
+      if (min) {
+        setFieldValue(FieldId.MinReplicas, min);
+      }
+      if (!maxReplicas) {
+        setFieldValue(FieldId.MaxReplicas, min);
+      }
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [autoscalingEnabled, isMultiAz, minNodes, setFieldValue]);
+
+  useEffect(() => {
+    if (maxReplicas) {
+      // to trigger MaxReplicas field validation
+      setFieldValue(FieldId.MaxReplicas, maxReplicas, true);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [minReplicas]);
+
+  const validateNodes = (value: number) => {
+    const stringValue = value?.toString();
+    const requiredError = required(stringValue);
+    const minNodesError = validateNumericInput(stringValue, {
+      min: minNodes,
+      allowZero: true,
+    });
+    const maxNodesError = validateNumericInput(stringValue, {
+      max: isMultiAz ? MAX_NODES / 3 : MAX_NODES,
+      allowZero: true,
+    });
+    return requiredError || minNodesError || maxNodesError || undefined;
+  };
+
+  const validateMaxNodes = (value: number): string | undefined => {
+    const nodesError = validateNodes(value);
+    if (nodesError) {
+      return nodesError;
+    }
+    return minReplicas && value < minReplicas
+      ? 'Max nodes cannot be less than min nodes.'
+      : undefined;
+  };
+
+  return (
+    <Flex
+      flexWrap={{ default: 'nowrap' }}
+      spaceItems={{ default: 'spaceItemsMd' }}
+      className="pf-v5-u-mt-md"
+    >
+      <FormGroup
+        label={minNodesLabel}
+        isRequired
+        fieldId="nodes_min"
+        className="autoscaling__nodes-formGroup"
+      >
+        <Field
+          component={NodesInput}
+          name={FieldId.MinReplicas}
+          type="text"
+          ariaLabel="Minimum nodes"
+          validate={(value: number) => validationMessage(validateNodes(value))}
+          displayError={(_: string, error: string) => setMinErrorMessage(error)}
+          hideError={() => setMinErrorMessage(undefined)}
+          limit="min"
+          min={minNodes}
+          max={isMultiAz ? MAX_NODES / 3 : MAX_NODES}
+          input={{
+            ...getFieldProps(FieldId.MinReplicas),
+            onChange: (value: number) => {
+              setFieldValue(FieldId.MinReplicas, value, true);
+              setFieldTouched(FieldId.MinReplicas, true, false);
+            },
+          }}
+          meta={getFieldMeta(FieldId.MinReplicas)}
+        />
+
+        {!minErrorMessage ? nodesHelpText(minReplicas) : helperText(minErrorMessage, 'error', true)}
+      </FormGroup>
+      <FormGroup
+        label={maxNodesLabel}
+        isRequired
+        fieldId="nodes_max"
+        className="autoscaling__nodes-formGroup"
+        labelIcon={
+          <PopoverHint
+            hint={
+              <>
+                {constants.computeNodeCountHint}
+                <br />
+                {isRosa ? (
+                  <>
+                    <ExternalLink href={links.ROSA_WORKER_NODE_COUNT}>
+                      Learn more about worker/compute node count
+                    </ExternalLink>
+                    <br />
+                  </>
+                ) : null}
+              </>
+            }
+          />
+        }
+      >
+        <Field
+          component={NodesInput}
+          name={FieldId.MaxReplicas}
+          type="text"
+          ariaLabel="Maximum nodes"
+          validate={(value: number) => validationMessage(validateMaxNodes(value))}
+          displayError={(_: string, error: string) => setMaxErrorMessage(error)}
+          hideError={() => setMaxErrorMessage(undefined)}
+          limit="max"
+          min={minNodes}
+          max={isMultiAz ? MAX_NODES / 3 : MAX_NODES}
+          input={{
+            ...getFieldProps(FieldId.MaxReplicas),
+            onChange: (value: number) => {
+              setFieldValue(FieldId.MaxReplicas, value, true);
+              setFieldTouched(FieldId.MaxReplicas, true, false);
+            },
+          }}
+          meta={getFieldMeta(FieldId.MaxReplicas)}
+        />
+        {!maxErrorMessage ? nodesHelpText(maxReplicas) : helperText(maxErrorMessage, 'error')}
+      </FormGroup>
+    </Flex>
+  );
+};

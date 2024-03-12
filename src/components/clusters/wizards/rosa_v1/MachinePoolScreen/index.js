@@ -4,7 +4,6 @@ import { formValueSelector } from 'redux-form';
 import {
   getMinNodesRequired,
   getNodeIncrement,
-  getMinNodesRequiredHypershift,
   getNodeIncrementHypershift,
 } from '~/components/clusters/ClusterDetails/components/MachinePools/machinePoolsHelper';
 import { getWorkerNodeVolumeSizeMaxGiB } from '~/components/clusters/wizards/rosa/constants';
@@ -43,9 +42,11 @@ const mapStateToProps = (state, ownProps) => {
     selectedVPC,
     imds,
     clusterVersionRawId,
-    minNodesRequired: isHypershiftSelected
-      ? getMinNodesRequiredHypershift(machinePoolsSubnets?.length)
-      : getMinNodesRequired(true, isByoc, isMultiAz),
+    minNodesRequired: getMinNodesRequired(
+      isHypershiftSelected,
+      { numMachinePools: machinePoolsSubnets?.length },
+      { isDefaultMachinePool: true, isByoc, isMultiAz },
+    ),
     nodeIncrement: isHypershiftSelected
       ? getNodeIncrementHypershift(machinePoolsSubnets?.length)
       : getNodeIncrement(isMultiAz),

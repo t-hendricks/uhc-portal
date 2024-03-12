@@ -10,7 +10,7 @@ interface Props extends NumberInputProps {
   helperTextInvalid: string | undefined;
 }
 
-const ReduxFormNumberInput = ({ meta, input, ...restProps }: Props) => {
+const FormNumberInput = ({ meta, input, ...restProps }: Props) => {
   const onChange = (e: React.FormEvent<HTMLInputElement>) => {
     input.onChange(e.currentTarget.value);
   };
@@ -54,4 +54,4 @@ const ReduxFormNumberInput = ({ meta, input, ...restProps }: Props) => {
   );
 };
 
-export default ReduxFormNumberInput;
+export default FormNumberInput;

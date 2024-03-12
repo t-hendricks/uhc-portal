@@ -15,14 +15,14 @@ export enum RosaFieldId {
   WorkerRoleArn = 'worker_role_arn',
   ControlPlaneRoleArn = 'control_plane_role_arn',
   RosaMaxOsVersion = 'rosa_max_os_version',
+  UsePrivatelink = 'use_privatelink',
   SharedVpc = 'shared_vpc',
   DetectedOcmAndUserRoles = 'detected_ocm_and_user_roles',
+  CloudProviderId = 'cloud_provider',
+  Imds = 'imds',
   ClusterPrivacy = 'cluster_privacy',
-  Region = 'region',
-  MachinePoolsSubnets = 'machinePoolsSubnets',
-  SecurityGroups = 'securityGroups',
   ClusterPrivacyPublicSubnetId = 'cluster_privacy_public_subnet_id',
-  SelectedVPC = 'selected_vpc',
+  WorkerVolumeSizeGib = 'worker_volume_size_gib',
 }
 
 export const FieldId = { ...CommonFieldId, ...RosaFieldId };
@@ -57,8 +57,10 @@ export enum StepId {
   Review = 'review',
 }
 
+const hypershiftDefaultSelected = true;
+
 export const initialValues: FormikValues = {
-  [FieldId.Hypershift]: 'true',
+  [FieldId.Hypershift]: `${hypershiftDefaultSelected}`,
   // CIDR SECTION FOLLOWS
   [FieldId.CidrDefaultValuesToggle]: true,
   [FieldId.NetworkMachineCidr]: MACHINE_CIDR_DEFAULT,
@@ -68,7 +70,7 @@ export const initialValues: FormikValues = {
 };
 
 export const initialTouched: FormikTouched<FormikValues> = {
-  [FieldId.Hypershift]: true,
+  [FieldId.Hypershift]: hypershiftDefaultSelected,
 };
 
 export const testCIDRInitialValues = {
