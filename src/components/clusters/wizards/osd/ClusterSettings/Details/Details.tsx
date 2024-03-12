@@ -52,8 +52,6 @@ import { emptyAWSSubnet } from '~/components/clusters/wizards/common/createOSDIn
 import { billingModels } from '~/common/subscriptionTypes';
 import { QuotaCostList } from '~/types/accounts_mgmt.v1';
 import { QuotaParams } from '~/components/clusters/common/quotaModel';
-import { GCP_SECURE_BOOT_UI } from '~/redux/constants/featureConstants';
-import { useFeatureGate } from '~/hooks/useFeatureGate';
 import { versionComparator } from '~/common/versionComparator';
 import { VersionSelectField } from '~/components/clusters/wizards/common/ClusterSettings/Details/VersionSelectField';
 import CloudRegionSelectField from '~/components/clusters/wizards/common/ClusterSettings/Details/CloudRegionSelectField';
@@ -231,8 +229,6 @@ export const Details = () => {
     setIsExpanded(!isExpanded);
   };
 
-  const isSecureBootFeatureEnabled = useFeatureGate(GCP_SECURE_BOOT_UI);
-
   const secureBootAlert = (
     <div className="pf-v5-u-mt-sm">
       <Alert
@@ -356,7 +352,7 @@ export const Details = () => {
               </GridItem>
             </>
           )}
-          {isGCP && isSecureBootFeatureEnabled && (
+          {isGCP && (
             <GridItem>
               <FormGroup label="Shielded VM" fieldId={FieldId.SecureBoot}>
                 <Split hasGutter className="pf-u-mb-0">

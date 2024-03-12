@@ -19,8 +19,6 @@ import { isRestrictedEnv } from '~/restrictedEnv';
 import { hasSecurityGroupIds } from '~/common/securityGroupsHelpers';
 import { useAWSVPCFromCluster } from '~/components/clusters/common/useAWSVPCFromCluster';
 
-import { GCP_SECURE_BOOT_UI } from '~/redux/constants/featureConstants';
-import { useFeatureGate } from '~/hooks/useFeatureGate';
 import { getQueryParam } from '~/common/queryHelpers';
 import Timestamp from '../../../../../common/Timestamp';
 import links from '../../../../../../common/installLinks.mjs';
@@ -92,8 +90,7 @@ function DetailsRight({
   const oidcConfig = cluster.aws?.sts?.oidc_config;
   const imdsConfig = cluster.aws?.ec2_metadata_http_tokens || IMDSType.V1AndV2;
 
-  const isSecureBootFeatureEnabled = useFeatureGate(GCP_SECURE_BOOT_UI);
-  const showSecureBoot = isGCP && isSecureBootFeatureEnabled && !isDeprovisioned;
+  const showSecureBoot = isGCP && !isDeprovisioned;
   const secureBoot = isGCP && cluster.gcp?.security?.secure_boot;
 
   return (
