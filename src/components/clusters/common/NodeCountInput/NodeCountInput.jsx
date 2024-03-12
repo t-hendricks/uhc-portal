@@ -215,14 +215,11 @@ class NodeCountInput extends React.Component {
           </span>
         );
       }
-      if (isMultiAz) {
-        return (
-          <span data-testid="compute-node-multizone-details">
-            × 3 zones = {input.value} compute nodes
-          </span>
-        );
-      }
-      return null;
+      return isMultiAz ? (
+        <span data-testid="compute-node-multizone-details">
+          × 3 zones = {input.value} compute nodes
+        </span>
+      ) : null;
     };
 
     return (

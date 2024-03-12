@@ -61,7 +61,7 @@ function NetworkScreen(props) {
       [FieldId.ClusterPrivacyPublicSubnetId]: publicSubnetId,
       [FieldId.InstallToVpc]: installToVPC,
       [FieldId.SharedVpc]: sharedVPC,
-      [FieldId.SelectedVPC]: selectedVPC,
+      [FieldId.SelectedVpc]: selectedVPC,
     },
   } = useFormState();
 

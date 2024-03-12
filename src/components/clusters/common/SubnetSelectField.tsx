@@ -1,5 +1,5 @@
 import React, { ChangeEvent, MouseEvent, useCallback, useEffect, useMemo, useState } from 'react';
-import { Flex, FlexItem, FormGroup } from '@patternfly/react-core';
+import { Flex, FlexItem, FormGroup, FormSelectProps } from '@patternfly/react-core';
 import { SelectOptionObject as SelectOptionObjectDeprecated } from '@patternfly/react-core/deprecated';
 import { WrappedFieldInputProps, WrappedFieldMetaProps } from 'redux-form';
 
@@ -7,16 +7,19 @@ import { isSubnetMatchingPrivacy } from '~/common/vpcHelpers';
 import { CloudVPC, Subnetwork } from '~/types/clusters_mgmt.v1';
 import FuzzySelect, { FuzzyDataType, FuzzyEntryType } from '~/components/common/FuzzySelect';
 import { FormGroupHelperText } from '~/components/common/FormGroupHelperText';
+import { FieldInputProps, FieldMetaProps } from 'formik';
 
 const TRUNCATE_THRESHOLD = 40;
 
 export interface SubnetSelectFieldProps {
   name: string;
   label: string;
-  input: Pick<WrappedFieldInputProps, 'value' | 'name'> & {
-    onChange: (subnetId: string | undefined) => void;
-  };
-  meta: Pick<WrappedFieldMetaProps, 'error' | 'touched'>;
+  input:
+    | (Pick<WrappedFieldInputProps, 'value' | 'name'> & {
+        onChange: (subnetId: string | undefined) => void;
+      })
+    | FieldInputProps<FormSelectProps>;
+  meta: Pick<WrappedFieldMetaProps, 'error' | 'touched'> | FieldMetaProps<FormSelectProps>;
   isRequired?: boolean;
   className?: string;
   privacy?: 'public' | 'private';
