@@ -73,12 +73,12 @@ const GovCloudForm = ({
           <StackItem>
             <TextContent>
               <Text component={TextVariants.p}>
-                Red Hat OpenShift Service on AWS (ROSA) in the GovCloud Region has been authorized
-                (agency) under the Federal Risk Assessment and Management Program (FedRAMP) High and
-                DoD Cloud Computing Security Requirements Guide (SRG).
+                Red Hat OpenShift Service on AWS (ROSA) and Red Hat Insights in the GovCloud Region
+                have been authorized (agency) under the Federal Risk Assessment and Management
+                Program (FedRAMP) High and DoD Cloud Computing Security Requirements Guide (SRG).
               </Text>
               <Text component={TextVariants.p}>
-                Federal and government agencies can be granted access to the ROSA environment
+                Federal and government agencies can be granted access to the FedRAMP environment
                 without further verification. However, commercial organizations and FISMA R&D
                 universities will need to provide documentation to show that they are supporting a
                 government contract/grant or in the process of bidding on a government

@@ -61,13 +61,13 @@ const dropdownRegisterCluster = (
 );
 const toolbarViewArchivedClusters = (
   <ToolbarItem key="archived" alignSelf="center">
-    <Link to="archived">View cluster archives</Link>
+    <Link to="/archived">View cluster archives</Link>
   </ToolbarItem>
 );
 const dropdownArchived = (
   <DropdownItemDeprecated component="button" key="archived">
     <div>
-      <Link to="archived" className="pf-v5-c-dropdown__menu-item">
+      <Link to="/archived" className="pf-v5-c-dropdown__menu-item">
         View cluster archives
       </Link>
     </div>

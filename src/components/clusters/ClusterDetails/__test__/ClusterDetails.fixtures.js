@@ -12,7 +12,6 @@ const funcs = () => ({
   },
   fetchDetails: jest.fn(),
   fetchClusterInsights: jest.fn(),
-  setOpenedTab: jest.fn(),
   getCloudProviders: jest.fn(),
   invalidateClusters: jest.fn(),
   getOrganizationAndQuota: jest.fn(),
@@ -44,6 +43,7 @@ const funcs = () => ({
   getUserAccess: jest.fn(),
   fetchUpgradeGates: jest.fn(),
   clearListVpcs: jest.fn(),
+  clearFiltersAndFlags: jest.fn(),
 });
 
 const clusterDetails = {
@@ -1061,11 +1061,13 @@ const fixtures = {
   AIClusterDetails,
   AROClusterDetails,
   cloudProviders,
+  gotRouters: false,
   clusterIdentityProviders,
   organization,
   clusterRouters,
   clusterLogsViewOptions: {},
   addOns: {},
+  hasNetworkOndemand: false,
   supportCases: {},
   notificationContacts: {},
   initTabOpen: '',
@@ -1074,7 +1076,6 @@ const fixtures = {
   canHibernateCluster: true,
   canSubscribeOCP: false,
   hasIssues: false,
-  hasIssuesInsights: false,
   userAccess,
   upgradeGates: [],
 };

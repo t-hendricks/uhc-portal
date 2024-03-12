@@ -12,6 +12,8 @@ import { simpleGit } from 'simple-git';
 import ora from 'ora';
 import yargs from 'yargs';
 
+import { getUpstreamRemoteName } from './upstream-name.mjs';
+
 const since = '"2 month ago"';
 const upstream = '.*gitlab\\.cee\\.redhat\\.com[:/]service/uhc-portal.*';
 const assistedInstallerRegex =
@@ -49,7 +51,7 @@ async function startSniffing(jiraToken, verbose) {
 
   console.log('\nFetching commits from git...');
   const git = simpleGit(process.cwd());
-  const upstreamName = await getUpstreamRepoName(git);
+  const upstreamName = await getUpstreamRemoteName(git);
   try {
     await git.fetch([upstreamName]);
   } catch (e) {
@@ -785,24 +787,3 @@ function getJiraKeysFromComment(comment) {
   return Array.from(set).sort();
 }
 
-async function getUpstreamRepoName(git) {
-  const str = (await git.remote(['-v'])) || '';
-  const lines = str.trim().split(os.EOL);
-  const remotes = {};
-  for (let i = 0; i < lines.length; i += 1) {
-    const line = lines[i];
-    const match = /([^(]+)\((push|fetch)\)/.exec(line);
-    if (match) {
-      const segs = match[1].trim().split('\t');
-      // eslint-disable-next-line prefer-destructuring
-      remotes[segs[0]] = segs[1];
-    }
-  }
-  // eslint-disable-next-line no-restricted-syntax
-  for (const remoteName of Object.keys(remotes)) {
-    if (remotes[remoteName].match(upstream)) {
-      return remoteName;
-    }
-  }
-  return 'upstream';
-}

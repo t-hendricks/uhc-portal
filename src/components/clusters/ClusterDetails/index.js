@@ -40,7 +40,6 @@ import {
 import canSubscribeOCPSelector from '../common/EditSubscriptionSettingsDialog/CanSubscribeOCPSelector';
 import { canTransferClusterOwnershipSelector } from '../common/TransferClusterOwnershipDialog/TransferClusterOwnershipDialogSelectors';
 import { issuesAndWarningsSelector } from './components/Monitoring/MonitoringSelectors';
-import issuesCountSelector from './components/Insights/InsightsSelectors';
 import { userCanHibernateClustersSelector } from '../common/HibernateClusterModal/HibernateClusterModalSelectors';
 import { toggleSubscriptionReleased } from '../common/TransferClusterOwnershipDialog/subscriptionReleasedActions';
 import supportActions from './components/Support/SupportActions';
@@ -66,7 +65,6 @@ const mapStateToProps = (state, { location }) => {
     },
   } = state.clusterSupport;
   const externalId = get(details, 'cluster.external_id');
-  const insightsIssuesCount = issuesCountSelector(state, externalId);
 
   return {
     cloudProviders,
@@ -83,8 +81,6 @@ const mapStateToProps = (state, { location }) => {
     canHibernateCluster: userCanHibernateClustersSelector(state),
     anyModalOpen: !!state.modal.modalName,
     hasIssues: issuesAndWarningsSelector(state).issues.totalCount > 0,
-    // check whether there are Critical (4) or Important (3) issues
-    hasIssuesInsights: !!(insightsIssuesCount[4] || insightsIssuesCount[3]),
     initTabOpen: location.hash.replace('#', ''),
     notificationContacts,
     supportCases,

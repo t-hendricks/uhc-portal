@@ -22,7 +22,7 @@ const TokenBox = ({
   showCommandOnError = false,
   showInstructionsOnError = true,
   textAriaLabel = 'Copyable token',
-  className = 'ocm-c-api-token-limit-width',
+  className = '',
   ...props
 }: Props) => {
   if (!token) {

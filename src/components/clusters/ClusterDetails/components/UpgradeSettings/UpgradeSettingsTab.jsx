@@ -14,6 +14,7 @@ import {
   Modal,
   Alert,
 } from '@patternfly/react-core';
+import getClusterVersion from '~/components/clusters/common/getClusterVersion';
 import UpgradeStatus from '../../../common/Upgrades/UpgradeStatus';
 import getClusterName from '../../../../../common/getClusterName';
 import UpgradeSettingsFields from '../../../common/Upgrades/UpgradeSettingsFields';
@@ -96,6 +97,7 @@ class UpgradeSettingsTab extends React.Component {
     const pristineReason = pristine && 'No changes to save';
     const formDisableReason = readOnlyReason || hibernatingReason;
     const isHypershift = isHypershiftCluster(cluster);
+    const clusterVersion = getClusterVersion(cluster);
 
     const scheduledManualUpgrade = schedules.items.find(
       (schedule) =>
@@ -242,8 +244,7 @@ class UpgradeSettingsTab extends React.Component {
               <UpgradeStatus
                 clusterID={cluster.id}
                 canEdit={cluster.canEdit}
-                clusterVersion={cluster.openshift_version || cluster?.version?.id}
-                clusterVersionRawID={cluster?.version?.raw_id}
+                clusterVersion={clusterVersion}
                 scheduledUpgrade={scheduledUpgrade}
                 availableUpgrades={availableUpgrades}
                 openModal={openModal}
