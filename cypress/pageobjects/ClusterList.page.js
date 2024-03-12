@@ -8,7 +8,7 @@ class ClusterList extends Page {
     super.assertUrlIncludes('/openshift/');
   }
 
-  filterTxtField = () => cy.get('input[aria-label="Filter"]', { timeout: 15000 });
+  filterTxtField = () => cy.getByTestId('filterInputClusterList', { timeout: 15000 });
   viewOnlyMyCluster = () => cy.get('label > input[id="view-only-my-clusters"]');
   viewOnlyMyClusterHelp = () => cy.get('label[for="view-only-my-clusters"]').find('button').first();
   tooltipviewOnlyMyCluster = () => cy.get('div.pf-v5-c-popover__body');
@@ -49,11 +49,11 @@ class ClusterList extends Page {
   }
 
   clickClusterTypeFilters() {
-    cy.get('button > span').contains(' Cluster type').click({ force: true });
+    cy.getByTestId('cluster-list-filter-dropdown').click();
   }
 
   clickClusterTypes(type) {
-    cy.get('div > label', { timeout: 10000 }).contains(type).click({ force: true });
+    cy.getByTestId(`cluster-type-${type}`).click();
   }
 
   // Checks if the selected filters are populated filter rule string in cluster/archives list.

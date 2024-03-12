@@ -65,6 +65,7 @@ const ClusterListFilterDropdown = (props: {
                     hasCheckbox
                     itemId={option.key}
                     isSelected={selected[option.key]}
+                    data-testid={'cluster-type-'.concat(option.label)}
                     onClick={() => {
                       setFilterAndQueryParams({
                         ...currentFilters,

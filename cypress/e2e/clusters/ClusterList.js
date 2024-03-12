@@ -16,10 +16,12 @@ describe('OCM Mainpage - cluster list page', () => {
         ClusterListPage.clickClusterTypes('OSD');
         ClusterListPage.clickClusterTypes('ROSA');
         ClusterListPage.clickClusterTypes('ARO');
+        ClusterListPage.clickClusterTypes('RHOIC');
         ClusterListPage.clickClusterTypes('OCP');
         ClusterListPage.clickClusterTypes('OSD');
         ClusterListPage.clickClusterTypes('ROSA');
         ClusterListPage.clickClusterTypes('ARO');
+        ClusterListPage.clickClusterTypes('RHOIC');
       });
       it('Cluster list page : extra options & its actions', () => {
         ClusterListPage.viewClusterArchives().click();
