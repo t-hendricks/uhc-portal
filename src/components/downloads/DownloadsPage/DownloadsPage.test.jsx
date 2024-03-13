@@ -1,7 +1,8 @@
 import React from 'react';
 import { MemoryRouter } from 'react-router-dom';
 import { CompatRouter } from 'react-router-dom-v5-compat';
-import { mockRestrictedEnv, render, screen, checkAccessibility } from '~/testUtils';
+import { mockRestrictedEnv, render, screen, checkAccessibility, waitFor } from '~/testUtils';
+import accountsService from '~/services/accountsService';
 import DownloadsPage, {
   allArchitecturesForTool,
   allOperatingSystemsForTool,
@@ -19,6 +20,8 @@ import {
 
 const { linux, mac, windows } = operatingSystems;
 const { arm, ppc, s390x, x86 } = architectures;
+
+jest.mock('~/services/accountsService');
 
 // These tests depend on installLinks.mjs data.
 describe('allOperatingSystemsForTool', () => {
@@ -167,6 +170,55 @@ describe('<DownloadsPage>', () => {
     const expandButtons = screen.getAllByRole('button', { name: /details/i });
     expandButtons.forEach((button) => {
       expect(button).toHaveAttribute('aria-expanded', 'true');
+    });
+  });
+
+  it('Fetches organization data', async () => {
+    render(
+      <MemoryRouter>
+        <CompatRouter>
+          <DownloadsPage {...props} />
+        </CompatRouter>
+      </MemoryRouter>,
+    );
+    expect(await accountsService.getCurrentAccount).toHaveBeenCalled();
+    expect(accountsService.getOrganization).toHaveBeenCalled();
+  });
+
+  it('Hides api token section if using offline tokens is restricted', async () => {
+    accountsService.getOrganization.mockResolvedValue({
+      data: {
+        organization: {
+          capabilities: [
+            {
+              inherited: false,
+              name: 'capability.organization.enable_data_sovereign_regions',
+              value: 'true',
+            },
+            {
+              inherited: false,
+              name: 'capability.account.restrict_new_offline_tokens',
+              value: 'true',
+            },
+            {
+              inherited: false,
+              name: 'capability.cluster.subscribed_ocp',
+              value: 'true',
+            },
+          ],
+        },
+      },
+    });
+    render(
+      <MemoryRouter>
+        <CompatRouter>
+          <DownloadsPage {...props} />
+        </CompatRouter>
+      </MemoryRouter>,
+    );
+
+    await waitFor(() => {
+      expect(screen.queryByText('OpenShift Cluster Manager API Token')).not.toBeInTheDocument();
     });
   });
 
