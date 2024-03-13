@@ -1,5 +1,5 @@
 import React from 'react';
-import { MemoryRouter } from 'react-router-dom';
+import { MemoryRouter } from 'react-router';
 import { CompatRouter } from 'react-router-dom-v5-compat';
 import fixtures from '../../ClusterDetails/__tests__/ClusterDetails.fixtures';
 import { emptyQuotaList, mockQuotaList } from '../__tests__/quota.fixtures';
