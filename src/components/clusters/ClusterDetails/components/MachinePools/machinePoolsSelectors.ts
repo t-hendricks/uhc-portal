@@ -30,11 +30,11 @@ const hasNodesQuotaForType = <E extends ClusterFromSubscription>(
 };
 
 const hasMachinePoolsQuotaSelector = <E extends ClusterFromSubscription>(
-  organization: PromiseReducerState<OrganizationState>,
+  organizationState: PromiseReducerState<OrganizationState>,
   cluster: E | undefined,
   machineTypes: { [id: string]: MachineType[] } | undefined,
 ) => {
-  if (!organization?.fulfilled) {
+  if (!organizationState?.fulfilled) {
     return false;
   }
 
@@ -44,7 +44,7 @@ const hasMachinePoolsQuotaSelector = <E extends ClusterFromSubscription>(
   if (cloudProviderID && machineTypes) {
     const types: MachineType[] = get(machineTypes, cloudProviderID, []);
     return types.some((type) =>
-      hasNodesQuotaForType(type, cluster, cloudProviderID, billingModel, organization),
+      hasNodesQuotaForType(type, cluster, cloudProviderID, billingModel, organizationState),
     );
   }
   return false;
