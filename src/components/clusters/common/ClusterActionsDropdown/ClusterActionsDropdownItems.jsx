@@ -313,7 +313,11 @@ function actionResolver(
   const product = get(cluster, 'subscription.plan.type', '');
   const showEditSubscriptionSettings =
     product === normalizedProducts.OCP && cluster.canEdit && canSubscribeOCP;
-  const isAllowedProducts = [normalizedProducts.OCP, normalizedProducts.ARO].includes(product);
+  const isAllowedProducts = [
+    normalizedProducts.OCP,
+    normalizedProducts.ARO,
+    normalizedProducts.RHOIC,
+  ].includes(product);
   const showTransferClusterOwnership =
     cluster.canEdit &&
     canTransferClusterOwnership &&

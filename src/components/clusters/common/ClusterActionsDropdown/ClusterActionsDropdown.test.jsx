@@ -86,4 +86,16 @@ describe('<ClusterActionsDropdown />', () => {
       expect(screen.getByRole('menuitem', { name: 'Open console' })).toBeEnabled();
     });
   });
+
+  describe('rhoic cluster', () => {
+    it('shows expected options (rhoic)', async () => {
+      const { user } = render(
+        <ClusterActionsDropdown {...Fixtures.rhoicCluster} canTransferClusterOwnership />,
+      );
+      await user.click(screen.getByRole('button'));
+      expect(await screen.findByRole('menu')).toBeInTheDocument();
+
+      expect(screen.getByRole('menuitem', { name: 'Transfer cluster ownership' })).toBeEnabled();
+    });
+  });
 });
