@@ -166,18 +166,18 @@ yarn install
 
 if [ "$1" == "staging" ] || [ "$1" == "beta" ]; then
     echo "running staging push"
-    echo "staging branch is available on https://qaprodauth.console.redhat.com/openshift"
     rm -rf dist
     yarn build --mode=production --env api-env=staging sentry-version="$SENTRY_STAGE_VERSION"
     yarn sentry:sourcemaps
     yarn sentry:release --auth-token $GLITCHTIP_TOKEN --project="$SENTRY_STAGE_PROJECT" files "$SENTRY_STAGE_VERSION" upload-sourcemaps dist/
     push_build "qa-stable"
+    echo "staging branch is available on https://console.dev.redhat.com/openshift"
 
     echo "running staging (qa-beta) push"
-    echo "staging branch is available on https://qaprodauth.console.redhat.com/preview/openshift"
     rm -rf dist
     yarn build --mode=production --env api-env=staging beta="true"
     push_build "qa-beta"
+    echo "staging branch is available on https://console.dev.redhat.com/preview/openshift"
 
     echo "running push to secondary environment - ci-beta (not supported)"
     rm -rf dist
