@@ -42,7 +42,7 @@ const mapStateToProps = (state) => {
     deleteMachinePoolResponse: state.machinePools.deleteMachinePoolResponse,
     hasMachinePoolsQuota: hasMachinePoolsQuotaSelector(
       state.userProfile.organization,
-      state.clusters.details,
+      state.clusters.details.cluster,
       state.machineTypes.types,
     ),
     machineTypes: state.machineTypes,
