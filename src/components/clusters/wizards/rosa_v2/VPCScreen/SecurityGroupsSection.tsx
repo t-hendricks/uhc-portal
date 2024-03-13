@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import { ExpandableSection } from '@patternfly/react-core';
+import { Alert, AlertActionLink, ExpandableSection } from '@patternfly/react-core';
 import { Field } from 'formik';
+
 import { CloudVPC } from '~/types/clusters_mgmt.v1';
 import { useFeatureGate } from '~/hooks/useFeatureGate';
 import { SupportedFeature } from '~/common/featureCompatibility';
@@ -11,6 +12,7 @@ import { SECURITY_GROUPS_FEATURE_DAY1 } from '~/redux/constants/featureConstants
 import EditSecurityGroups from '~/components/clusters/ClusterDetails/components/SecurityGroups/EditSecurityGroups';
 import SecurityGroupsEmptyAlert from '~/components/clusters/ClusterDetails/components/SecurityGroups/SecurityGroupsEmptyAlert';
 import { useFormState } from '~/components/clusters/wizards/hooks';
+import links from '~/common/installLinks.mjs';
 import { FieldId } from '../constants';
 
 type SecurityGroupFieldProps = {
@@ -84,6 +86,26 @@ const SecurityGroupsSection = ({
       {showEmptyAlert && <SecurityGroupsEmptyAlert />}
       {!incompatibleReason && !showEmptyAlert && (
         <>
+          <Alert
+            variant="info"
+            isInline
+            title="You cannot add or edit security groups to the machine pools created by default after you create the cluster."
+            actionLinks={
+              <>
+                <AlertActionLink component="a" href={links.ROSA_SECURITY_GROUPS} target="_blank">
+                  View more information
+                </AlertActionLink>
+                <AlertActionLink
+                  component="a"
+                  href={links.AWS_CONSOLE_SECURITY_GROUPS}
+                  target="_blank"
+                >
+                  AWS security groups console
+                </AlertActionLink>
+              </>
+            }
+          />
+          <br />
           <Field
             component={ReduxCheckbox}
             name={applyAllFieldName}
