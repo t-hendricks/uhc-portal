@@ -47,129 +47,123 @@ function DetailsLeft({ cluster, cloudProviders, showAssistedId }) {
   const sharedVpcZoneId = get(cluster, 'aws.private_hosted_zone_id', false);
 
   return (
-    <>
-      <DescriptionList>
+    <DescriptionList>
+      <DescriptionListGroup>
+        <DescriptionListTerm>{idLabel}</DescriptionListTerm>
+        <DescriptionListDescription>
+          <span data-testid="clusterID">{id}</span>
+        </DescriptionListDescription>
+      </DescriptionListGroup>
+      <DescriptionListGroup>
+        <DescriptionListTerm>Type</DescriptionListTerm>
+        <DescriptionListDescription>
+          <ClusterTypeLabel cluster={cluster} />
+        </DescriptionListDescription>
+      </DescriptionListGroup>
+      {isHypershift && (
         <DescriptionListGroup>
-          <DescriptionListTerm>{idLabel}</DescriptionListTerm>
-          <DescriptionListDescription>
-            <span data-testid="clusterID">{id}</span>
+          <DescriptionListTerm>Control plane type</DescriptionListTerm>
+          <DescriptionListDescription data-testid="controlType">
+            <span data-testid="controlPlaneType">{controlPlaneType}</span>
           </DescriptionListDescription>
         </DescriptionListGroup>
+      )}
+      <DescriptionListGroup>
+        <DescriptionListTerm>Region</DescriptionListTerm>
+        <DescriptionListDescription>
+          <span data-testid="region">{region}</span>
+        </DescriptionListDescription>
+      </DescriptionListGroup>
+      {!isROSA && (
         <DescriptionListGroup>
-          <DescriptionListTerm>Type</DescriptionListTerm>
+          <DescriptionListTerm>Provider</DescriptionListTerm>
           <DescriptionListDescription>
-            <ClusterTypeLabel cluster={cluster} />
+            <span data-testid="provider">{cloudProvider}</span>
           </DescriptionListDescription>
         </DescriptionListGroup>
-        {isHypershift && (
+      )}
+      {cluster.managed && (
+        <DescriptionListGroup>
+          <DescriptionListTerm>Availability</DescriptionListTerm>
+          <DescriptionListDescription>
+            <span data-testid="availability">
+              {cluster.multi_az ? 'Multi-zone' : 'Single zone'}
+            </span>
+          </DescriptionListDescription>
+        </DescriptionListGroup>
+      )}
+      <DescriptionListGroup>
+        <DescriptionListTerm>
+          Version
+          {isHypershift && (
+            <PopoverHint
+              iconClassName="pf-v5-u-ml-sm"
+              hint="This version is only for the control plane. Worker nodes may have a different version."
+            />
+          )}
+        </DescriptionListTerm>
+        <DescriptionListDescription>
+          <ClusterVersionInfo cluster={cluster} />
+        </DescriptionListDescription>
+      </DescriptionListGroup>
+      {!!sharedVpcZoneId && (
+        <DescriptionListGroup>
+          <DescriptionListTerm>Shared VPC hosted zone ID</DescriptionListTerm>
+          <DescriptionListDescription>
+            <span>{sharedVpcZoneId}</span>
+          </DescriptionListDescription>
+        </DescriptionListGroup>
+      )}
+      {!isHypershift && cluster.fips && (
+        <DescriptionListGroup>
+          <DescriptionListTerm>Encryption level</DescriptionListTerm>
+          <DescriptionListDescription>
+            <dl className="pf-v5-l-stack">
+              <dt data-testid="fipsCryptographyStatus">FIPS Cryptography enabled</dt>
+            </dl>
+          </DescriptionListDescription>
+        </DescriptionListGroup>
+      )}
+      {cluster?.aws?.kms_key_arn ? (
+        <>
           <DescriptionListGroup>
-            <DescriptionListTerm>Control plane type</DescriptionListTerm>
-            <DescriptionListDescription data-testid="controlType">
-              <span data-testid="controlPlaneType">{controlPlaneType}</span>
-            </DescriptionListDescription>
+            <DescriptionListTerm>Encrypt volumes with custom keys</DescriptionListTerm>
+            <DescriptionListDescription>Enabled</DescriptionListDescription>
           </DescriptionListGroup>
-        )}
-        <DescriptionListGroup>
-          <DescriptionListTerm>Region</DescriptionListTerm>
-          <DescriptionListDescription>
-            <span data-testid="region">{region}</span>
-          </DescriptionListDescription>
-        </DescriptionListGroup>
-        {!isROSA && (
           <DescriptionListGroup>
-            <DescriptionListTerm>Provider</DescriptionListTerm>
+            <DescriptionListTerm>Custom KMS key ARN</DescriptionListTerm>
+            <DescriptionListDescription>{cluster.aws.kms_key_arn}</DescriptionListDescription>
+          </DescriptionListGroup>
+        </>
+      ) : null}
+      <DescriptionListGroup>
+        <DescriptionListTerm>Created at</DescriptionListTerm>
+        <DescriptionListDescription>
+          <Timestamp value={get(cluster, 'creation_timestamp', 'N/A')} />
+        </DescriptionListDescription>
+      </DescriptionListGroup>
+      <DescriptionListGroup>
+        <DescriptionListTerm>Owner</DescriptionListTerm>
+        <DescriptionListDescription>
+          {get(cluster, 'subscription.creator.name') ||
+            get(cluster, 'subscription.creator.username', 'N/A')}
+        </DescriptionListDescription>
+      </DescriptionListGroup>
+      {cluster.managed && !isROSA && (
+        <>
+          <DescriptionListGroup>
+            <DescriptionListTerm>Subscription billing model</DescriptionListTerm>
+            <DescriptionListDescription>{getBillingModelLabel(cluster)}</DescriptionListDescription>
+          </DescriptionListGroup>
+          <DescriptionListGroup>
+            <DescriptionListTerm>Infrastructure billing model</DescriptionListTerm>
             <DescriptionListDescription>
-              <span data-testid="provider">{cloudProvider}</span>
+              <InfrastructureModelLabel cluster={cluster} />
             </DescriptionListDescription>
           </DescriptionListGroup>
-        )}
-        {cluster.managed && (
-          <>
-            <DescriptionListGroup>
-              <DescriptionListTerm>Availability</DescriptionListTerm>
-              <DescriptionListDescription>
-                <span data-testid="availability">
-                  {cluster.multi_az ? 'Multi-zone' : 'Single zone'}
-                </span>
-              </DescriptionListDescription>
-            </DescriptionListGroup>
-          </>
-        )}
-        <DescriptionListGroup>
-          <DescriptionListTerm>
-            Version
-            {isHypershift && (
-              <PopoverHint
-                iconClassName="pf-v5-u-ml-sm"
-                hint="This version is only for the control plane. Worker nodes may have a different version."
-              />
-            )}
-          </DescriptionListTerm>
-          <DescriptionListDescription>
-            <ClusterVersionInfo cluster={cluster} />
-          </DescriptionListDescription>
-        </DescriptionListGroup>
-        {!!sharedVpcZoneId && (
-          <DescriptionListGroup>
-            <DescriptionListTerm>Shared VPC hosted zone ID</DescriptionListTerm>
-            <DescriptionListDescription>
-              <span>{sharedVpcZoneId}</span>
-            </DescriptionListDescription>
-          </DescriptionListGroup>
-        )}
-        {!isHypershift && cluster.fips && (
-          <DescriptionListGroup>
-            <DescriptionListTerm>Encryption level</DescriptionListTerm>
-            <DescriptionListDescription>
-              <dl className="pf-v5-l-stack">
-                <dt data-testid="fipsCryptographyStatus">FIPS Cryptography enabled</dt>
-              </dl>
-            </DescriptionListDescription>
-          </DescriptionListGroup>
-        )}
-        {cluster?.aws?.kms_key_arn ? (
-          <>
-            <DescriptionListGroup>
-              <DescriptionListTerm>Encrypt volumes with custom keys</DescriptionListTerm>
-              <DescriptionListDescription>Enabled</DescriptionListDescription>
-            </DescriptionListGroup>
-            <DescriptionListGroup>
-              <DescriptionListTerm>Custom KMS key ARN</DescriptionListTerm>
-              <DescriptionListDescription>{cluster.aws.kms_key_arn}</DescriptionListDescription>
-            </DescriptionListGroup>
-          </>
-        ) : null}
-        <DescriptionListGroup>
-          <DescriptionListTerm>Created at</DescriptionListTerm>
-          <DescriptionListDescription>
-            <Timestamp value={get(cluster, 'creation_timestamp', 'N/A')} />
-          </DescriptionListDescription>
-        </DescriptionListGroup>
-        <DescriptionListGroup>
-          <DescriptionListTerm>Owner</DescriptionListTerm>
-          <DescriptionListDescription>
-            {get(cluster, 'subscription.creator.name') ||
-              get(cluster, 'subscription.creator.username', 'N/A')}
-          </DescriptionListDescription>
-        </DescriptionListGroup>
-        {cluster.managed && !isROSA && (
-          <>
-            <DescriptionListGroup>
-              <DescriptionListTerm>Subscription billing model</DescriptionListTerm>
-              <DescriptionListDescription>
-                {getBillingModelLabel(cluster)}
-              </DescriptionListDescription>
-            </DescriptionListGroup>
-            <DescriptionListGroup>
-              <DescriptionListTerm>Infrastructure billing model</DescriptionListTerm>
-              <DescriptionListDescription>
-                <InfrastructureModelLabel cluster={cluster} />
-              </DescriptionListDescription>
-            </DescriptionListGroup>
-          </>
-        )}
-      </DescriptionList>
-    </>
+        </>
+      )}
+    </DescriptionList>
   );
 }
 

@@ -62,12 +62,6 @@ class UpgradeSettingsTab extends React.Component {
     this.setState({ confirmationModalOpen: false });
   };
 
-  closeConfirmationModalAndReset = () => {
-    const { reset } = this.props;
-    this.closeConfirmationModal();
-    reset();
-  };
-
   render() {
     const {
       isAutomatic,

@@ -27,6 +27,7 @@ const MinorVersionUpgradeAlert = ({
   isNextMinorVersionAvailable,
   isRosa,
   isHypershift,
+  isSTSEnabled,
 }) => {
   const [loading, setLoading] = React.useState(false);
   const [error, setError] = React.useState(null);
@@ -36,7 +37,8 @@ const MinorVersionUpgradeAlert = ({
     hasUnmetUpgradeAcknowledge ||
     !automaticUpgradePolicyId ||
     !clusterId ||
-    !isNextMinorVersionAvailable
+    !isNextMinorVersionAvailable ||
+    isSTSEnabled
   ) {
     return null;
   }
@@ -82,13 +84,11 @@ const MinorVersionUpgradeAlert = ({
           : 'New minor version available'
       }
       actionLinks={
-        <>
-          {loading ? (
-            <Spinner size="sm" aria-label="Setting minor version update status" />
-          ) : (
-            actionLink(onChangeAcknowledge, isMinorVersionUpgradesEnabled)
-          )}
-        </>
+        loading ? (
+          <Spinner size="sm" aria-label="Setting minor version update status" />
+        ) : (
+          actionLink(onChangeAcknowledge, isMinorVersionUpgradesEnabled)
+        )
       }
       data-testid="alert-success"
     >
@@ -120,6 +120,7 @@ MinorVersionUpgradeAlert.propTypes = {
   isNextMinorVersionAvailable: PropTypes.bool,
   isRosa: PropTypes.bool,
   isHypershift: PropTypes.bool,
+  isSTSEnabled: PropTypes.bool,
 };
 MinorVersionUpgradeAlert.defaultProps = {
   isMinorVersionUpgradesEnabled: false,

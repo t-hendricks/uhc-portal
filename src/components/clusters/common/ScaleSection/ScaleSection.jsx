@@ -135,26 +135,24 @@ function ScaleSection({
       <GridItem md={6} />
       {/* Cluster and default machine pool autoScaling (they use the same form prop) */}
       {canAutoScale && (
-        <>
-          <GridItem md={12}>
-            <AutoScaleSection
-              openEditClusterAutoScalingModal={
-                isRosaClassicOrOsdCcs ? openEditClusterAutoScalingModal : undefined
-              }
-              autoscalingEnabled={autoscalingEnabled}
-              isMultiAz={isMultiAz}
-              change={change}
-              autoScaleMinNodesValue={autoScaleMinNodesValue}
-              autoScaleMaxNodesValue={autoScaleMaxNodesValue}
-              product={product}
-              isBYOC={isBYOC}
-              isDefaultMachinePool={!isHypershift}
-              minNodesRequired={minNodesRequired}
-              isHypershiftWizard={isHypershift}
-              numPools={nodeIncrement}
-            />
-          </GridItem>
-        </>
+        <GridItem md={12}>
+          <AutoScaleSection
+            openEditClusterAutoScalingModal={
+              isRosaClassicOrOsdCcs ? openEditClusterAutoScalingModal : undefined
+            }
+            autoscalingEnabled={autoscalingEnabled}
+            isMultiAz={isMultiAz}
+            change={change}
+            autoScaleMinNodesValue={autoScaleMinNodesValue}
+            autoScaleMaxNodesValue={autoScaleMaxNodesValue}
+            product={product}
+            isBYOC={isBYOC}
+            isDefaultMachinePool={!isHypershift}
+            minNodesRequired={minNodesRequired}
+            isHypershiftWizard={isHypershift}
+            numPools={nodeIncrement}
+          />
+        </GridItem>
       )}
       {/* Worker nodes */}
       {!autoscalingEnabled && (

@@ -43,15 +43,13 @@ class TransferClusterOwnershipDialog extends Component {
     const changePullSecretUrl = 'https://access.redhat.com/solutions/4902871';
     const descriptionText =
       subscription?.status === subscriptionStatuses.DISCONNECTED ? (
-        <>
-          <TextList component={TextListVariants.ol}>
-            <TextListItem>Initiate transfer</TextListItem>
-            <TextListItem>
-              <ExternalLink href={`${ocmBaseName()}/register`}>Register the cluster</ExternalLink>{' '}
-              within 5 days
-            </TextListItem>
-          </TextList>
-        </>
+        <TextList component={TextListVariants.ol}>
+          <TextListItem>Initiate transfer</TextListItem>
+          <TextListItem>
+            <ExternalLink href={`${ocmBaseName()}/register`}>Register the cluster</ExternalLink>{' '}
+            within 5 days
+          </TextListItem>
+        </TextList>
       ) : (
         <>
           <TextList component={TextListVariants.ol}>

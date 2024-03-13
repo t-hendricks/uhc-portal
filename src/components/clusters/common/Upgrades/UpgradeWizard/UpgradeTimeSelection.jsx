@@ -11,7 +11,7 @@ import DatePicker from 'react-datepicker';
 class UpgradeTimeSelection extends React.Component {
   state = { timeSelectionOpen: false };
 
-  getDefaultTimestamp = () => {
+  static getDefaultTimestamp = () => {
     const HOUR_IN_MS = 60 * 60 * 1000;
     const atLeastOneHourFromNow = new Date(new Date().getTime() + HOUR_IN_MS);
     if (atLeastOneHourFromNow.getMinutes() > 5) {
@@ -29,14 +29,15 @@ class UpgradeTimeSelection extends React.Component {
     if (event.target.value === 'now') {
       onSet({ type: 'now' }); // empty timestamp = now
     } else {
-      const defaultTimeStamp = timestamp || this.getDefaultTimestamp().toISOString();
+      const defaultTimeStamp =
+        timestamp || UpgradeTimeSelection.getDefaultTimestamp().toISOString();
       onSet({ type: 'time', timestamp: defaultTimeStamp });
     }
   };
 
   setDate = (selectedDate) => {
     const { onSet } = this.props;
-    const minimum = this.getDefaultTimestamp();
+    const minimum = UpgradeTimeSelection.getDefaultTimestamp();
     /* set the selected date. If the date + time is lower tha minimum,
       set it to the minimum instead */
     const selected = selectedDate < minimum ? minimum : selectedDate;
@@ -53,8 +54,6 @@ class UpgradeTimeSelection extends React.Component {
     onSet({ type: 'time', timestamp: date.toISOString() });
     this.setState({ timeSelectionOpen: false });
   };
-
-  onSelectToggle = () => {};
 
   render() {
     const { type, timestamp } = this.props;
@@ -84,7 +83,7 @@ class UpgradeTimeSelection extends React.Component {
           <SelectOptionDeprecated
             value={value}
             key={value}
-            isDisabled={this.getDefaultTimestamp() > date}
+            isDisabled={UpgradeTimeSelection.getDefaultTimestamp() > date}
           >
             {value}
           </SelectOptionDeprecated>,

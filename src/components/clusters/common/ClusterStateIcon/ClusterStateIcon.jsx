@@ -12,10 +12,8 @@ import { FolderOpenIcon } from '@patternfly/react-icons/dist/esm/icons/folder-op
 import { AsleepIcon } from '@patternfly/react-icons/dist/esm/icons/asleep-icon';
 import { NotStartedIcon } from '@patternfly/react-icons/dist/esm/icons/not-started-icon';
 
-// eslint-disable-next-line camelcase
-import { global_danger_color_100 } from '@patternfly/react-tokens/dist/esm/global_danger_color_100';
-// eslint-disable-next-line camelcase
-import { global_success_color_100 } from '@patternfly/react-tokens/dist/esm/global_success_color_100';
+import { global_danger_color_100 as dangerColor } from '@patternfly/react-tokens/dist/esm/global_danger_color_100';
+import { global_success_color_100 as successColor } from '@patternfly/react-tokens/dist/esm/global_success_color_100';
 import { Spinner, spinnerSize, Icon } from '@patternfly/react-core';
 import clusterStates from '../clusterStates';
 
@@ -30,7 +28,7 @@ function ClusterStateIcon(props) {
   if (limitedSupport && clusterState !== clusterStates.ERROR) {
     return (
       <Icon {...iconProps}>
-        <ExclamationCircleIcon color={global_danger_color_100.value} />
+        <ExclamationCircleIcon color={dangerColor.value} />
       </Icon>
     );
   }
@@ -60,7 +58,7 @@ function ClusterStateIcon(props) {
     case clusterStates.READY:
       return (
         <Icon {...iconProps}>
-          <CheckCircleIcon color={global_success_color_100.value} data-icon-type="check" />
+          <CheckCircleIcon color={successColor.value} data-icon-type="check" />
         </Icon>
       );
     case clusterStates.UNINSTALLING:
@@ -75,10 +73,7 @@ function ClusterStateIcon(props) {
     case clusterStates.ERROR:
       return (
         <Icon {...iconProps}>
-          <ExclamationCircleIcon
-            color={global_danger_color_100.value}
-            data-icon-type="exclamation"
-          />
+          <ExclamationCircleIcon color={dangerColor.value} data-icon-type="exclamation" />
         </Icon>
       );
     case clusterStates.DEPROVISIONED:

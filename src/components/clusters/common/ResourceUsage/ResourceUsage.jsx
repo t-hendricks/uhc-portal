@@ -12,33 +12,29 @@ function ResourceUsage({ cpu, memory, metricsStatusMessage, metricsAvailable, ty
   // TODO: make up our minds...
   const getValue = ({ value, unit }) => parseValueWithUnit(value, unit);
 
-  return (
+  return metricsAvailable ? (
     <>
-      {metricsAvailable ? (
-        <>
-          <ClusterUtilizationChart
-            title="vCPU"
-            total={cpu.total.value}
-            used={cpu.used.value}
-            unit="Cores"
-            humanize={false}
-            donutId="cpu_donut"
-            type={type}
-          />
-          <ClusterUtilizationChart
-            title="Memory"
-            total={getValue(memory.total)}
-            used={getValue(memory.used)}
-            unit="B"
-            humanize
-            donutId="memory_donut"
-            type={type}
-          />
-        </>
-      ) : (
-        <p>{metricsStatusMessage}</p>
-      )}
+      <ClusterUtilizationChart
+        title="vCPU"
+        total={cpu.total.value}
+        used={cpu.used.value}
+        unit="Cores"
+        humanize={false}
+        donutId="cpu_donut"
+        type={type}
+      />
+      <ClusterUtilizationChart
+        title="Memory"
+        total={getValue(memory.total)}
+        used={getValue(memory.used)}
+        unit="B"
+        humanize
+        donutId="memory_donut"
+        type={type}
+      />
     </>
+  ) : (
+    <p>{metricsStatusMessage}</p>
   );
 }
 

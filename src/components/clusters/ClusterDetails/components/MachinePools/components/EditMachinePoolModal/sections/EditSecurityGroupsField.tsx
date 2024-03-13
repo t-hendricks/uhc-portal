@@ -45,10 +45,9 @@ const EditSecurityGroupsField = ({ cluster, isReadOnly }: EditSecurityGroupsFiel
     cluster.openshift_version,
     { day2: true },
   );
-  if (incompatibleReason) {
-    return <>{incompatibleReason}</>;
-  }
-  return (
+  return incompatibleReason ? (
+    <>incompatibleReason</>
+  ) : (
     <EditSecurityGroups
       selectedVPC={clusterVpc}
       isReadOnly={isReadOnly}

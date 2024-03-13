@@ -42,6 +42,7 @@ const AssociateAWSAccountStep: React.FC<PropsWithChildren<AssociateAWSAccountSte
       {children}
     </ExpandableSection>
   ) : (
+    // eslint-disable-next-line react/jsx-no-useless-fragment
     <>{children}</>
   );
 };

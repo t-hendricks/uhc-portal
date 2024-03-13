@@ -45,6 +45,7 @@ const initialState: MachinePoolsState = {
   },
 };
 
+// eslint-disable-next-line default-param-last
 function MachinePoolsReducer(state = initialState, action: any) {
   return produce(state, (draft) => {
     switch (action.type) {

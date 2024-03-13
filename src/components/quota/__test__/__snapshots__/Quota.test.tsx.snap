@@ -7,11 +7,7 @@ exports[`<Quota /> OSDSubscriptionCard Empty should render empty OSD quota summa
   <EmptyState>
     <EmptyStateHeader
       headingLevel="h4"
-      titleText={
-        <React.Fragment>
-          You do not have any quota
-        </React.Fragment>
-      }
+      titleText="You do not have any quota"
     />
     <EmptyStateBody>
       <p>
@@ -38,11 +34,7 @@ exports[`<Quota /> OSDSubscriptionCard Error should render error OSD quota summa
   <EmptyState>
     <EmptyStateHeader
       headingLevel="h4"
-      titleText={
-        <React.Fragment>
-          Unable to retrieve quota information
-        </React.Fragment>
-      }
+      titleText="Unable to retrieve quota information"
     />
     <EmptyStateBody>
       <p>

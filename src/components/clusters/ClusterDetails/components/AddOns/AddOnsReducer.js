@@ -51,6 +51,7 @@ const initialState = {
   },
 };
 
+// eslint-disable-next-line default-param-last
 function AddOnsReducer(state = initialState, action) {
   // eslint-disable-next-line consistent-return
   return produce(state, (draft) => {

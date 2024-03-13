@@ -1,7 +1,7 @@
 import { Spinner } from '@redhat-cloud-services/frontend-components';
 import { isMatch } from 'lodash';
 import PropTypes from 'prop-types';
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { Redirect } from 'react-router-dom';
 import { Banner, Bullseye, PageSection, Stack, StackItem } from '@patternfly/react-core';
 import {
@@ -513,19 +513,17 @@ class CreateROSAWizardInternal extends React.Component {
 
     if (anyErrors) {
       return (
-        <>
-          <PageSection>
-            <Unavailable
-              errors={requests
-                .filter((request) => request.data.error)
-                .map((request) => ({
-                  key: request.name,
-                  message: `Error while loading required form data (${request.name})`,
-                  response: request.data,
-                }))}
-            />
-          </PageSection>
-        </>
+        <PageSection>
+          <Unavailable
+            errors={requests
+              .filter((request) => request.data.error)
+              .map((request) => ({
+                key: request.name,
+                message: `Error while loading required form data (${request.name})`,
+                response: request.data,
+              }))}
+          />
+        </PageSection>
       );
     }
 
@@ -560,9 +558,7 @@ class CreateROSAWizardInternal extends React.Component {
                     isHypershiftSelected={isHypershiftSelected}
                     currentStepId={currentStepId}
                   />
-                ) : (
-                  <></>
-                )
+                ) : null
               }
             />
           </div>
@@ -576,7 +572,11 @@ function CreateROSAWizard(props) {
   usePreventBrowserNav();
   const isHypershiftEnabled = useFeatureGate(HYPERSHIFT_WIZARD_FEATURE) && !isRestrictedEnv();
   const [forceLeaveWizard, setForceLeaveWizard] = useState(false);
-  const contextValue = { forceLeaveWizard, setForceLeaveWizard };
+  const contextValue = useMemo(
+    () => ({ forceLeaveWizard, setForceLeaveWizard }),
+    [forceLeaveWizard, setForceLeaveWizard],
+  );
+
   return (
     <ROSAWizardContext.Provider value={contextValue}>
       <AppPage title="Create OpenShift ROSA Cluster">
