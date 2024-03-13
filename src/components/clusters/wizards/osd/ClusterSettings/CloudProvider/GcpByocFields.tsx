@@ -90,22 +90,37 @@ export const GcpByocFields = () => {
                   <ul>
                     <li>
                       <Text component={TextVariants.p} className="ocm-secondary-text">
+                        Compute Admin
+                      </Text>
+                    </li>
+                    <li>
+                      <Text component={TextVariants.p} className="ocm-secondary-text">
                         DNS Administrator
                       </Text>
                     </li>
                     <li>
                       <Text component={TextVariants.p} className="ocm-secondary-text">
+                        Security Admin
+                      </Text>
+                    </li>
+                    <li>
+                      <Text component={TextVariants.p} className="ocm-secondary-text">
+                        Service Account Admin
+                      </Text>
+                    </li>
+                    <li>
+                      <Text component={TextVariants.p} className="ocm-secondary-text">
+                        Service Account Key Admin
+                      </Text>
+                    </li>
+                    <li>
+                      <Text component={TextVariants.p} className="ocm-secondary-text">
+                        Service Account User
+                      </Text>
+                    </li>
+                    <li>
+                      <Text component={TextVariants.p} className="ocm-secondary-text">
                         Organization Policy Viewer
-                      </Text>
-                    </li>
-                    <li>
-                      <Text component={TextVariants.p} className="ocm-secondary-text">
-                        Owner
-                      </Text>
-                    </li>
-                    <li>
-                      <Text component={TextVariants.p} className="ocm-secondary-text">
-                        Project IAM Admin
                       </Text>
                     </li>
                     <li>
@@ -121,6 +136,21 @@ export const GcpByocFields = () => {
                     <li>
                       <Text component={TextVariants.p} className="ocm-secondary-text">
                         Storage Admin
+                      </Text>
+                    </li>
+                    <li>
+                      <Text component={TextVariants.p} className="ocm-secondary-text">
+                        Compute Load Balancer Admin
+                      </Text>
+                    </li>
+                    <li>
+                      <Text component={TextVariants.p} className="ocm-secondary-text">
+                        Role Viewer
+                      </Text>
+                    </li>
+                    <li>
+                      <Text component={TextVariants.p} className="ocm-secondary-text">
+                        Role Administrator
                       </Text>
                     </li>
                   </ul>
