@@ -4,6 +4,7 @@ import { Grid, GridItem, Alert, FormGroup } from '@patternfly/react-core';
 
 import { validateAWSKMSKeyARN } from '~/common/validators';
 import ExternalLink from '~/components/common/ExternalLink';
+import links from '~/common/installLinks.mjs';
 import { constants } from '~/components/clusters/common/CreateOSDFormConstants';
 import { CloudProviderType } from '~/components/clusters/wizards/common/constants';
 import {
@@ -95,7 +96,7 @@ export const CustomerManagedEncryption = ({
               tooltip={
                 <>
                   <p className="pf-v5-u-mb-sm">{constants.awsKeyARN}</p>
-                  <ExternalLink href="https://docs.aws.amazon.com/kms/latest/developerguide/find-cmk-id-arn.html">
+                  <ExternalLink href={links.AWS_FINDING_KEY_ARN}>
                     Finding the key ID and ARN
                   </ExternalLink>
                 </>

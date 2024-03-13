@@ -1,12 +1,12 @@
 import * as React from 'react';
-import { Formik } from 'formik';
+import { Formik, FormikValues } from 'formik';
 
 import { withState, screen, fireEvent } from '~/testUtils';
 import { Version } from '~/types/clusters_mgmt.v1';
 import clusterService from '~/services/clusterService';
 import { billingModels } from '~/common/subscriptionTypes';
-import { FieldId, initialValues } from '../../constants';
-import { VersionSelectField } from './VersionSelectField';
+import { FieldId } from '~/components/clusters/wizards/common/constants';
+import { VersionSelectField } from '~/components/clusters/wizards/common/ClusterSettings/Details/VersionSelectField';
 
 const getInstallableVersionsSpy = jest.spyOn(clusterService, 'getInstallableVersions');
 
@@ -49,6 +49,13 @@ const data: Version[] = [
   },
 ];
 
+const standardValues: FormikValues = {
+  [FieldId.BillingModel]: billingModels.STANDARD,
+};
+const marketplaceGcpValues = {
+  [FieldId.BillingModel]: billingModels.MARKETPLACE_GCP,
+};
+
 describe('<VersionSelectField />', () => {
   const notLoaded = {
     fulfilled: false,
@@ -76,13 +83,10 @@ describe('<VersionSelectField />', () => {
     isDisabled: false,
     onChange: jest.fn(),
   };
-  const defaultValues = {
-    ...initialValues,
-  };
 
   it('to call clusterService.getInstallableVersions with: isRosa false, isMarketplaceGcp false', async () => {
     withState(notLoadedState).render(
-      <Formik initialValues={defaultValues} onSubmit={() => {}}>
+      <Formik initialValues={standardValues} onSubmit={() => {}}>
         <VersionSelectField {...defaultProps} />
       </Formik>,
     );
@@ -91,10 +95,6 @@ describe('<VersionSelectField />', () => {
   });
 
   it('to call clusterService.getInstallableVersions with: isRosa false, isMarketplaceGcp true', async () => {
-    const marketplaceGcpValues = {
-      ...initialValues,
-      [FieldId.BillingModel]: billingModels.MARKETPLACE_GCP,
-    };
     withState(notLoadedState).render(
       <Formik initialValues={marketplaceGcpValues} onSubmit={() => {}}>
         <VersionSelectField {...defaultProps} />
@@ -106,7 +106,7 @@ describe('<VersionSelectField />', () => {
 
   it('to shows the right default version', async () => {
     withState(loadedState).render(
-      <Formik initialValues={defaultValues} onSubmit={() => {}}>
+      <Formik initialValues={standardValues} onSubmit={() => {}}>
         <VersionSelectField {...defaultProps} />
       </Formik>,
     );
@@ -116,7 +116,7 @@ describe('<VersionSelectField />', () => {
 
   it('to open the toggle', async () => {
     const { container } = withState(loadedState).render(
-      <Formik initialValues={defaultValues} onSubmit={() => {}}>
+      <Formik initialValues={standardValues} onSubmit={() => {}}>
         <VersionSelectField {...defaultProps} />
       </Formik>,
     );

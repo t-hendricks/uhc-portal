@@ -43,6 +43,9 @@ export enum FieldId {
   SelectedVpc = 'selected_vpc', // OSD AWS / ROSA classic
   ClusterName = 'name',
   ClusterVersion = 'cluster_version',
+  CustomerManagedKey = 'customer_managed_key',
+  KmsKeyArn = 'kms_key_arn',
+  EtcdEncryption = 'etcd_encryption',
   ConfigureProxy = 'configure_proxy',
   UsePrivateLink = 'use_privatelink',
   InstallerRoleArn = 'installer_role_arn',
@@ -56,6 +59,7 @@ export enum FieldId {
   HttpsProxyUrl = 'https_proxy_url',
   AdditionalTrustBundle = 'additional_trust_bundle',
   NoProxyDomains = 'no_proxy_domains',
+  CustomerOperatorRolesPrefix = 'custom_operator_roles_prefix',
 }
 
 export const initialValues: FormikValues = {

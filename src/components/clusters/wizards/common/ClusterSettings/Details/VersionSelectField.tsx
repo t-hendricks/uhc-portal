@@ -12,7 +12,7 @@ import { useFormState } from '~/components/clusters/wizards/hooks';
 import { clustersActions } from '~/redux/actions';
 import { useGlobalState } from '~/redux/hooks';
 import { Version } from '~/types/clusters_mgmt.v1';
-import { FieldId } from '~/components/clusters/wizards/osd/constants';
+import { FieldId } from '~/components/clusters/wizards/common/constants';
 import { billingModels } from '~/common/subscriptionTypes';
 import FuzzySelect, { FuzzyEntryType } from '~/components/common/FuzzySelect';
 import { FormGroupHelperText } from '~/components/common/FormGroupHelperText';

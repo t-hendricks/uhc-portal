@@ -6,6 +6,7 @@ import {
   POD_CIDR_DEFAULT,
   SERVICE_CIDR_DEFAULT,
 } from '~/components/clusters/common/networkingConstants';
+import { emptyAWSSubnet } from '../common/createOSDInitialValues';
 
 export enum RosaFieldId {
   Hypershift = 'hypershift',
@@ -18,6 +19,7 @@ export enum RosaFieldId {
   UsePrivatelink = 'use_privatelink',
   SharedVpc = 'shared_vpc',
   DetectedOcmAndUserRoles = 'detected_ocm_and_user_roles',
+  EtcdKeyArn = 'etcd_key_arn',
   CloudProviderId = 'cloud_provider',
   Imds = 'imds',
   ClusterPrivacy = 'cluster_privacy',
@@ -61,12 +63,19 @@ const hypershiftDefaultSelected = true;
 
 export const initialValues: FormikValues = {
   [FieldId.Hypershift]: `${hypershiftDefaultSelected}`,
+  [FieldId.MultiAz]: 'false',
+  [FieldId.CustomerManagedKey]: 'false',
+  [FieldId.KmsKeyArn]: '',
+  [FieldId.EtcdEncryption]: false,
+  [FieldId.EtcdKeyArn]: '',
+  [FieldId.FipsCryptography]: false,
   // CIDR SECTION FOLLOWS
   [FieldId.CidrDefaultValuesToggle]: true,
   [FieldId.NetworkMachineCidr]: MACHINE_CIDR_DEFAULT,
   [FieldId.NetworkServiceCidr]: SERVICE_CIDR_DEFAULT,
   [FieldId.NetworkPodCidr]: POD_CIDR_DEFAULT,
   [FieldId.NetworkHostPrefix]: HOST_PREFIX_DEFAULT,
+  [FieldId.MachinePoolsSubnets]: [emptyAWSSubnet()],
 };
 
 export const initialTouched: FormikTouched<FormikValues> = {
