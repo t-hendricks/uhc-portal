@@ -1,7 +1,11 @@
-import './TreeViewSelect.scss';
 import React, { useState, useEffect, useCallback } from 'react';
 import Fuse from 'fuse.js';
 import {
+  MenuToggle,
+  MenuContainer,
+  Panel,
+  PanelMain,
+  PanelMainBody,
   Switch,
   Stack,
   StackItem,
@@ -14,10 +18,6 @@ import {
   TreeViewDataItem,
   TreeViewSearch,
 } from '@patternfly/react-core';
-import {
-  Dropdown as DropdownDeprecated,
-  DropdownToggle as DropdownToggleDeprecated,
-} from '@patternfly/react-core/deprecated';
 
 export interface TreeViewData extends TreeViewDataItem {
   category?: string;
@@ -34,8 +34,6 @@ interface TreeViewSelectProps {
   setTreeViewSwitchActive: React.Dispatch<React.SetStateAction<boolean>>;
   includeFilterSwitch?: boolean;
   selected: string;
-  inModal?: boolean;
-  menuAppendTo?: HTMLElement | (() => HTMLElement) | 'inline' | 'parent';
   setSelected: (
     event: React.MouseEvent<Element, MouseEvent>,
     selection: TreeViewData | TreeViewDataItem,
@@ -73,8 +71,6 @@ export function TreeViewSelect(props: TreeViewSelectProps) {
     treeViewSwitchActive,
     setTreeViewSwitchActive,
     placeholder,
-    menuAppendTo,
-    inModal,
     searchPlaceholder,
     switchLabelOnText,
     switchLabelOffText,
@@ -84,6 +80,8 @@ export function TreeViewSelect(props: TreeViewSelectProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [filteredItems, setFilteredItems] = useState(treeViewSelectionMap);
   const [searchString, setSearchString] = useState('');
+  const toggleRef = React.useRef<HTMLButtonElement>(null);
+  const menuRef = React.useRef<HTMLDivElement>(null);
 
   const searchFn = useCallback(() => {
     if (searchString === '') {
@@ -119,15 +117,10 @@ export function TreeViewSelect(props: TreeViewSelectProps) {
           return undefined;
         })
         .filter(Boolean) as TreeViewData[];
-      filtered.sort((TreeViewNodeA, TreeViewNodeB) => {
-        if (!TreeViewNodeA.sortingScore) {
-          return 1;
-        }
-        if (!TreeViewNodeB.sortingScore) {
-          return -1;
-        }
-        return TreeViewNodeA.sortingScore - TreeViewNodeB.sortingScore;
-      });
+      filtered.sort(
+        (TreeViewNodeA, TreeViewNodeB) =>
+          (TreeViewNodeA.sortingScore || Infinity) - (TreeViewNodeB.sortingScore || Infinity),
+      );
       setFilteredItems(filtered);
     }
   }, [searchString, treeViewSelectionMap]);
@@ -173,40 +166,65 @@ export function TreeViewSelect(props: TreeViewSelectProps) {
     </Toolbar>
   );
 
-  // continue to use deprecated dropdown as menuAppendTo (deprecated) is being used elsewhere
-  return (
-    <DropdownDeprecated
-      aria-label={ariaLabel}
-      menuAppendTo={menuAppendTo}
-      placeholder={placeholder}
-      className={inModal ? 'tree-view-select-in-modal' : 'tree-view-select'}
-      toggle={
-        <DropdownToggleDeprecated
-          aria-label={ariaLabel && `${ariaLabel} toggle`}
-          style={{ maxWidth: 'none', width: '100%' }}
-          onToggle={(e) => {
-            setSearchString('');
-            setIsOpen(!isOpen);
-          }}
-        >
-          {selected ? `${selected}` : `${placeholder}`}
-        </DropdownToggleDeprecated>
-      }
-      isOpen={isOpen}
+  const toggle = (
+    <MenuToggle
+      ref={toggleRef}
+      aria-label={ariaLabel && `${ariaLabel} toggle`}
+      style={{ maxWidth: 'none', width: '100%' }}
+      onClick={(e) => {
+        setSearchString('');
+        setIsOpen(!isOpen);
+      }}
+      isExpanded={isOpen}
     >
-      {toolbar}
-      <TreeView
-        onSelect={(event, newItem) => {
-          if (newItem.id && !newItem?.children) {
-            setSelected(event, newItem);
-            setIsOpen(false);
-          }
+      {selected ? `${selected}` : `${placeholder}`}
+    </MenuToggle>
+  );
+
+  const menu = (
+    <Panel
+      ref={menuRef}
+      isScrollable
+      variant="raised"
+      style={{
+        height: '60%',
+      }}
+    >
+      <PanelMain
+        style={{
+          height: '100%',
         }}
-        hasSelectableNodes={false}
-        allExpanded={allExpanded || searchString !== ''}
-        data={filteredItems}
-        useMemo
-      />
-    </DropdownDeprecated>
+      >
+        <section>
+          <PanelMainBody style={{ padding: 0 }}>
+            <TreeView
+              onSelect={(event, newItem) => {
+                if (newItem.id && !newItem?.children) {
+                  setSelected(event, newItem);
+                  setIsOpen(false);
+                }
+              }}
+              toolbar={toolbar}
+              hasSelectableNodes={false}
+              allExpanded={allExpanded || searchString !== ''}
+              data={filteredItems}
+              useMemo
+            />
+          </PanelMainBody>
+        </section>
+      </PanelMain>
+    </Panel>
+  );
+
+  return (
+    <MenuContainer
+      isOpen={isOpen}
+      onOpenChange={(isOpen) => setIsOpen(isOpen)}
+      onOpenChangeKeys={['Escape']}
+      menu={menu}
+      menuRef={menuRef}
+      toggle={toggle}
+      toggleRef={toggleRef}
+    />
   );
 }
