@@ -101,6 +101,7 @@ async function reportOrder(jiraToken, verbose) {
       commit.mrID = match[0];
     }
   });
+  await setTrueAuthors(git, combinedCommits);
   const allCommits = combinedCommits;
 
   // /////////////////////////////////////////////////////////////
@@ -148,6 +149,7 @@ async function reportOrder(jiraToken, verbose) {
         jira.issuetype = issuetype.name;
         jira.qacontact = customfield_12315948?.emailAddress || 'unassigned';
 
+        commit.noQE = labels.includes('no-qe');
         const doNotPromoteFlag = labels.includes('do-not-promote');
         const behindFeatureFlag = labels.includes('behind-feature-flag');
         if (behindFeatureFlag && !doNotPromoteFlag && !qeApproved.includes(status.name)) {
@@ -158,7 +160,7 @@ async function reportOrder(jiraToken, verbose) {
               ? chalk.yellowBright('BEHIND FEATURE FLAG')
               : chalk.yellowBright(jiraKey),
           );
-        } else if (!qeApproved.includes(status.name)) {
+        } else if (!qeApproved.includes(status.name) && !commit.noQE) {
           commit.jira.relatedJiraStatuses.push(
             chalk.redBright(
               `${
@@ -198,7 +200,7 @@ async function reportOrder(jiraToken, verbose) {
             }
           });
 
-          if (isClosed) {
+          if (isClosed && !commit.noQE) {
             commit.jira.relatedJiraStatuses.push(
               relatedJiraKeys.length === 1
                 ? chalk.greenBright(status.name.toUpperCase())
@@ -214,6 +216,9 @@ async function reportOrder(jiraToken, verbose) {
       commit.jira.relatedJiraStatuses.push(
         chalk.redBright(chalk.yellowBright('JIRA TICKET NOT FOUND')),
       );
+    } else if (commit.noQE) {
+      commit.jira.qeNotRequested = true;
+      commit.jira.relatedJiraStatuses.push(chalk.redBright(chalk.greenBright('QE NOT REQUIRED')));
     } else if (jira.allJirasClosed && jira.allDependentJirasClosed && !jira.hasDoNotPromoteLabel) {
       commit.jira.qeReady = true;
       commit.jira.relatedJiraStatuses = [chalk.greenBright(`QE READY`)];
@@ -443,9 +448,12 @@ async function reportOrder(jiraToken, verbose) {
   const qeNotReady = [];
   const qeOnRequiredNotReady = [];
   const AICommits = [];
-  masterCommits.forEach((commit) => {
+  const allBlockingCommits = {};
+  let conflictFixes = [];
+  masterCommits.forEach((commit, inx) => {
+    commit.inx = inx;
     markRequiredCommits(masterCommits, commit);
-    commit.blockingCommits = getBlockingCommits(masterCommits, commit);
+    commit.blockingCommits = getBlockingCommits(masterCommits, commit, allBlockingCommits);
   });
   masterCommits.forEach((commit, inx) => {
     const { jira, date, sash, blockingCommits, isAIPromotion } = commit;
@@ -481,13 +489,15 @@ async function reportOrder(jiraToken, verbose) {
       releaseNotes.push(note);
       if (commit.prepickedConflict) {
         conflicted = chalk.red('*');
+        const fixes = Array.from(commit.prepickedConflictFixes);
         allHashes.push(
           `${sash}   ${chalk.red(
             '* will cause a conflict when picked, because it depends on a commit that was picked into candidate first',
           )}\n${chalk.white(
             'Try fixing this conflict with the original commit files:',
-          )}\n${chalk.blue(Array.from(commit.prepickedConflictFixes).join('\n'))}\n`,
+          )}\n${chalk.blue(fixes.join('\n'))}\n`,
         );
+        conflictFixes = [...conflictFixes, ...fixes];
       } else if (requiredInxs.some((inx) => masterCommits[inx - 1].isAIPromotion)) {
         conflicted = chalk.red('*');
         allHashes.push(
@@ -520,6 +530,8 @@ async function reportOrder(jiraToken, verbose) {
         verbose ? ` ${getDaysAgo(date)} ` : ''
       }${qeStatus} ${issuetype === 'Bug' ? 'Bug' : ''}  ${description}`,
     );
+
+    commit.logLine = `${lineNum} ${chalk.white(commit.mrID)} ${chalk.green(commit.author_email)} ${qeStatus} ${chalk.white(`${commit.description.slice(0, 100)}`)}`;
   });
 
   if (masterCommits.length) {
@@ -608,6 +620,15 @@ async function reportOrder(jiraToken, verbose) {
       console.log('| --- | --- | --- | --- | --- |');
       heldBackNotes.reverse().forEach((note) => console.log(note));
     }
+    console.log('\n\n=============================BLOCKERS=================================');
+    if (Object.keys(allBlockingCommits).length) {
+      console.log('\nThese commit approvals are holding back these commits.\n');
+      Object.entries(allBlockingCommits).forEach(([key, set]) => {
+        console.log(`${masterCommits[key].logLine}`);
+        console.log(`         ${Array.from(set).join(' ')}`);
+        console.log('\n');
+      });
+    }
 
     // /////////////////////////////////////////////////////////////
     //    ____ _                                      _      _      _ _     _
@@ -622,9 +643,9 @@ async function reportOrder(jiraToken, verbose) {
     console.log(
       `\nTo start, use this: ${chalk.blueBright(`git checkout -b ${branchName} ${condidateSha}`)}`,
     );
-    console.log(`To restart, use this: ${chalk.blueBright(`git reset --hard ${condidateSha}`)}`);
     console.log(`\nTo cherry-pick all ${ready.length} ready commits at once, execute:`);
     let arr = [];
+    const quickLog = [];
     for (let i = 0; i < allHashes.length; i += 1) {
       const sash = allHashes[i];
       const conflictPick = sash.indexOf('*') !== -1;
@@ -632,13 +653,15 @@ async function reportOrder(jiraToken, verbose) {
         arr.push(sash);
       }
       if (arr.length && (i === allHashes.length - 1 || conflictPick)) {
-        console.log(chalk.blue(`git cherry-pick -x -m 1 ${arr.join('  ')}`));
+        quickLog.push(chalk.blue(`git cherry-pick -x -m 1 ${arr.join('  ')}`));
         arr = [];
       }
       if (conflictPick) {
-        console.log(chalk.blue(`git cherry-pick -x -m 1 ${sash}`));
+        quickLog.push(chalk.blue(`git cherry-pick -x -m 1 ${sash}`));
       }
     }
+    quickLog.forEach((pick) => console.log(pick));
+
     console.log(
       `\nTo cherry-pick ${ready.length} ready commits one commit at a time BUT in this order, execute:`,
     );
@@ -649,6 +672,80 @@ async function reportOrder(jiraToken, verbose) {
     );
     console.log('To open Jira issue: https://issues.redhat.com/browse/OCMxxx');
     console.log('\n');
+    // /////////////////////////////////////////////////////////////
+    //     ____  _
+    //  / ___|| |_ ___ _ __  ___
+    //  \___ \| __/ _ \ '_ \/ __|
+    //   ___) | ||  __/ |_) \__ \
+    //  |____/ \__\___| .__/|___/
+    //                |_|
+    // /////////////////////////////////////////////////////////////
+
+    console.log('\n=============================STEPS=================================');
+    console.log(`\nSuggested steps:`);
+
+    console.log(`\n${chalk.white('1.')} Create a new CANDIDATE branch with:`);
+    console.log(`${chalk.blueBright(`git checkout -b ${branchName} ${condidateSha}`)}\n`);
+
+    console.log(`\n${chalk.white('2.')} Cherry-pick these commits into that branch:`);
+    quickLog.forEach((pick) => console.log(pick));
+
+    console.log(`\n${chalk.white('3.')} If you encounter a conflict:`);
+    if (conflictFixes.length) {
+      console.log(
+        `   ${chalk.white('a.')} Some conflicts can be fixed by using the version of the file in CANDIDATE`,
+      );
+      conflictFixes.forEach((fix) => {
+        console.log(
+          `        For this file:${chalk.blue(fix.split('>')[1])}, try using this: ${chalk.blue(fix)}`,
+        );
+      });
+    }
+    console.log(
+      `   ${chalk.white('b.')} If commit is a simple addition or deletion of lines, resolve with our/your version.`,
+    );
+    console.log(
+      `   ${chalk.white('c.')} When done, commit changes (don't push) and continue with: ${chalk.blue('git cherry-pick --continue')}`,
+    );
+    console.log(
+      `   ${chalk.white('d.')} If you make a mistake, restart with: ${chalk.blueBright(`git cherry-pick --abort`)}`,
+    );
+
+    console.log(`\n${chalk.white('4.')} When done, push this branch to your fork.\n`);
+
+    console.log(
+      `\n${chalk.white('5.')} In GITLAB create an MR between your fork and the CANDIDATE branch.`,
+    );
+    console.log(
+      `   ${chalk.white('a.')} For template dropdown choose: ${chalk.blue('release-candidate')}`,
+    );
+    console.log(`   ${chalk.white('b.')} Do not SQUASH`);
+
+    console.log(`   ${chalk.white('c.')} Pander for approvers`);
+    console.log(`   ${chalk.white('d.')} Merge into CANDIDATE`);
+
+    console.log(
+      `\n${chalk.white('6.')} In GITLAB MR tab, click 'New merge request' in upper right.`,
+    );
+    console.log(`   ${chalk.white('a.')} Source branch = ${chalk.blue('candidate')}`);
+    console.log(`   ${chalk.white('b.')} Target branch = ${chalk.blue('stable')}`);
+    console.log(`   ${chalk.white('c.')} Click ${chalk.blue('Compare branches and continue')}`);
+    console.log(
+      `   ${chalk.white('d.')} For template dropdown choose: ${chalk.blue('GA-release')}`,
+    );
+    console.log(`   ${chalk.white('e.')} Wait for build to be successful then merge, no SQUASHING`);
+
+    console.log(`\n${chalk.white('7.')} Update two tables:`);
+    console.log(`   ${chalk.white('a.')} Copy Release notes from above and paste into:`);
+    console.log(
+      `        ${chalk.blue('https://gitlab.cee.redhat.com/service/uhc-portal/-/wikis/Release-Notes')}`,
+    );
+    console.log(`   ${chalk.white('b.')} Copy Held back from above and paste into:`);
+    console.log(
+      `        ${chalk.blue('https://gitlab.cee.redhat.com/service/uhc-portal/-/wikis/Held-Back-Notes')}`,
+    );
+    console.log(`   ${chalk.white('c.')} Announce the release on: ${chalk.blue(' #ocm-osd-ui')}`);
+    console.log('\n\n');
   } else {
     console.log(chalk.grey('\n\n\n~~no squirrels~~'));
   }
@@ -708,7 +805,7 @@ function getCommitChanges(diffs) {
 
 // does this commit depend on cherry picking another commit
 // but that other commit doesn't have qe approval yet?
-function getBlockingCommits(masterCommits, theCommit) {
+function getBlockingCommits(masterCommits, theCommit, allBlockingCommits) {
   const { jira } = theCommit;
   const { qeReady, qeNotRequested } = jira;
   const set = new Set();
@@ -722,8 +819,16 @@ function getBlockingCommits(masterCommits, theCommit) {
         if (!from.jira.qeReady && !from.jira.qeNotRequested) {
           from.isBlocking = true;
           set.add(from.mrID);
+
+          // keep track of how many commits this commit blocks
+          let aset = allBlockingCommits[from.inx];
+          if (!aset) {
+            // eslint-disable-next-line no-multi-assign
+            aset = allBlockingCommits[from.inx] = new Set();
+          }
+          aset.add(theCommit.inx + 1);
         }
-        // does this commit in turn depend on code changes
+        // does this commit in turn depend on other code changes
         addBlockingCommits(from);
       });
     };
@@ -754,11 +859,7 @@ function getCodeDependencies(commit) {
 
 async function gitLog(git, sha, xtra = []) {
   const log = await git.raw([
-    ...[
-      'log',
-      // `--since=${lsince}`,
-      '--pretty=format:òòòòòò %H ò %ai ò %s ò %D ò %B ò %aN ò %aE ò %ci ò %P ò òò',
-    ],
+    ...['log', '--pretty=format:òòòòòò %H ò %ai ò %s ò %D ò %B ò %aN ò %aE ò %ci ò %P ò òò'],
     ...xtra,
     ...[sha],
   ]);
@@ -778,6 +879,7 @@ async function gitLog(git, sha, xtra = []) {
         author_name: details[5],
         author_email: details[6].split(' ')[0],
       };
+      // get hash of commit which was the source to this cherry-pick
       const match = cherrypickRegex.exec(ret.body);
       if (match) {
         // eslint-disable-next-line prefer-destructuring
@@ -785,6 +887,28 @@ async function gitLog(git, sha, xtra = []) {
       }
       return ret;
     });
+}
+
+async function setTrueAuthors(git, commits) {
+  // we have the author of who clicked the merge button
+  // but not the author who wrote the original commit
+  for (let i = 0; i < commits.length; i += 1) {
+    const commit = commits[i];
+    if (commit.parents.length > 1) {
+      const parent = await git.raw([
+        ...['log', '--pretty=format:òòòòòò %aN ò %aE ò òò'],
+        ...['-n 1'],
+        ...[commit.parents[1]],
+      ]);
+      const parentAuthor = parent.replace('òòòòòò ', '').split(' ò ');
+      if (!parentAuthor[0].includes('RENOVATE_TOKEN')) {
+        // eslint-disable-next-line prefer-destructuring
+        commit.author_name = parentAuthor[0];
+        // eslint-disable-next-line prefer-destructuring
+        commit.author_email = parentAuthor[1];
+      }
+    }
+  }
 }
 
 function getDaysAgo(date) {
