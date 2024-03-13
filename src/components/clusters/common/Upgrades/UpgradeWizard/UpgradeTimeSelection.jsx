@@ -29,14 +29,15 @@ class UpgradeTimeSelection extends React.Component {
     if (event.target.value === 'now') {
       onSet({ type: 'now' }); // empty timestamp = now
     } else {
-      const defaultTimeStamp = timestamp || this.getDefaultTimestamp().toISOString();
+      const defaultTimeStamp =
+        timestamp || UpgradeTimeSelection.getDefaultTimestamp().toISOString();
       onSet({ type: 'time', timestamp: defaultTimeStamp });
     }
   };
 
   setDate = (selectedDate) => {
     const { onSet } = this.props;
-    const minimum = this.getDefaultTimestamp();
+    const minimum = UpgradeTimeSelection.getDefaultTimestamp();
     /* set the selected date. If the date + time is lower tha minimum,
       set it to the minimum instead */
     const selected = selectedDate < minimum ? minimum : selectedDate;
@@ -82,7 +83,7 @@ class UpgradeTimeSelection extends React.Component {
           <SelectOptionDeprecated
             value={value}
             key={value}
-            isDisabled={this.getDefaultTimestamp() > date}
+            isDisabled={UpgradeTimeSelection.getDefaultTimestamp() > date}
           >
             {value}
           </SelectOptionDeprecated>,
