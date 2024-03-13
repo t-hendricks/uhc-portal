@@ -50,10 +50,8 @@ module.exports = async (_env, argv) => {
   // eslint-disable-next-line no-console
   console.log(`Building with apiEnv=${apiEnv}, beta=${betaMode}, isDevServer=${isDevServer}`);
 
-  // While user-visible URLs are moving /beta/openshift -> /preview/openshift,
-  // the compiled assets will remain at /beta/apps/openshift.
-  // (Well, in qaprodauth /beta/apps was hacked as a redirect -> /preview/apps
-  //  but that's implementation detail; browser always requests /beta/apps.)
+  // On "beta" name: user-visible URLs moved /beta/openshift -> /preview/openshift,
+  // however the compiled assets remained at /beta/apps/openshift.
   const appDeployment = betaMode ? 'beta/apps' : 'apps';
   const publicPath = `/${appDeployment}/${insights.appname}/`;
 
