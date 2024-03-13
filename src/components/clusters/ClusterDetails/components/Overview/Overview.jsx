@@ -82,7 +82,6 @@ class Overview extends React.Component {
     const {
       cluster,
       cloudProviders,
-      history,
       refresh,
       openModal,
       insightsData,
@@ -202,9 +201,7 @@ class Overview extends React.Component {
                 }
               />
             )}
-            {shouldMonitorStatus && (
-              <ClusterStatusMonitor refresh={refresh} cluster={cluster} history={history} />
-            )}
+            {shouldMonitorStatus && <ClusterStatusMonitor refresh={refresh} cluster={cluster} />}
             {topCard}
             {showAssistedInstallerDetailCard && (
               <GatedAIDetailCard
@@ -280,7 +277,6 @@ class Overview extends React.Component {
 Overview.propTypes = {
   cluster: PropTypes.object,
   cloudProviders: PropTypes.object.isRequired,
-  history: PropTypes.object.isRequired,
   refresh: PropTypes.func,
   hasNetworkOndemand: PropTypes.bool,
   openModal: PropTypes.func.isRequired,

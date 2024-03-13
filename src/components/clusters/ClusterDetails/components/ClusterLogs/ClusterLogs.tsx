@@ -13,7 +13,7 @@ import SearchIcon from '@patternfly/react-icons/dist/esm/icons/search-icon';
 import isEmpty from 'lodash/isEmpty';
 import size from 'lodash/size';
 import React from 'react';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom-v5-compat';
 
 import { useDispatch } from 'react-redux';
 import { viewActions } from '~/redux/actions/viewOptionsActions';
@@ -59,7 +59,7 @@ const ClusterLogs = ({
   refreshEvent,
   isVisible,
 }: ClusterLogsProps) => {
-  const history = useHistory();
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const viewType = viewConstants.CLUSTER_LOGS_VIEW;
 
@@ -155,16 +155,18 @@ const ClusterLogs = ({
       } = Object.entries(viewOptions.filter)
         .filter((e) => ['description', 'loggedBy'].includes(e[0]) && e[1])
         .reduce((acc, curr) => ({ ...acc, [`${curr[0]}`]: [curr[1]] }), {});
-
-      history.push({
-        ...history.location,
-        search: buildFilterURLParams({
-          ...filters,
-          ...(viewOptions.flags.conditionalFilterFlags || {}),
-        }),
-      });
+      navigate(
+        {
+          hash: '#clusterHistory',
+          search: buildFilterURLParams({
+            ...filters,
+            ...(viewOptions.flags.conditionalFilterFlags || {}),
+          }),
+        },
+        { replace: true },
+      );
     }
-  }, [isVisible, viewOptions.flags.conditionalFilterFlags, viewOptions.filter, history]);
+  }, [isVisible, viewOptions.flags.conditionalFilterFlags, viewOptions.filter, navigate]);
 
   return (
     <Card className="ocm-c-overview-cluster-history__card">
@@ -200,7 +202,6 @@ const ClusterLogs = ({
         )}
         <ClusterLogsToolbar
           view={viewType}
-          history={history}
           externalClusterID={externalClusterID}
           isPendingNoData={isPendingNoData}
           clusterID={clusterID}

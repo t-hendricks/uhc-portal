@@ -1,150 +1,150 @@
-import React, { Component } from 'react';
+import React from 'react';
 import ConditionalFilter from '@redhat-cloud-services/frontend-components/ConditionalFilter';
 import { conditionalFilterType } from '@redhat-cloud-services/frontend-components/ConditionalFilter/conditionalFilterConstants';
 import PropTypes from 'prop-types';
+import { useNavigate, useLocation } from 'react-router-dom-v5-compat';
+import { usePreviousProps } from '~/hooks/usePreviousProps';
 import { SEVERITY_TYPES, LOG_TYPES } from '../clusterLogConstants';
 import { buildFilterURLParams } from '../../../../../../common/queryHelpers';
 
-class ClusterLogsConditionalFilter extends Component {
-  constructor(props) {
-    super(props);
-    this.updateFilter = this.updateFilter.bind(this);
-    this.updateFlags = this.updateFlags.bind(this);
-    this.inputTimeoutID = null;
-  }
+const ClusterLogsConditionalFilter = (props) => {
+  const { currentFilter, currentFlags, setFilter, setFlags } = props;
 
-  state = {
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const [inputTimeoutID, setInputTimeoutID] = React.useState(null);
+
+  const [filterState, setFilterState] = React.useState({
     // The current input value is in the local state, while the currently
     // set filter is in the redux state.
     // This is done to allow some delay between the user's input and
     // the actual filtering, to give them time to finish typing.
     description: '',
+    loggedBy: '',
+  });
 
+  const [filterFlagsState, setFilterFlagsState] = React.useState({
     // flags
     severityTypes: [],
     logTypes: [],
+  });
 
-    loggedBy: '',
-  };
+  const filterStateRef = usePreviousProps(filterState);
+  const filterFlagsStateRef = usePreviousProps(filterFlagsState);
 
-  componentDidMount() {
-    const { currentFilter, currentFlags } = this.props;
+  React.useEffect(() => {
     if (currentFilter) {
-      this.setState({ ...currentFilter });
+      setFilterState({ ...currentFilter });
     }
     if (currentFlags) {
-      this.setState({ severityTypes: currentFlags.severityTypes, logTypes: currentFlags.logTypes });
-    }
-  }
-
-  // eslint-disable-next-line camelcase
-  UNSAFE_componentWillReceiveProps(nextProps) {
-    const { currentFilter, currentFlags } = this.props;
-    if (nextProps.currentFilter !== currentFilter) {
-      this.setState({ ...nextProps.currentFilter });
-    }
-    if (nextProps.currentFlags !== currentFlags) {
-      this.setState({
-        severityTypes: nextProps.currentFlags.severityTypes,
-        logTypes: nextProps.currentFlags.logTypes,
+      setFilterFlagsState({
+        severityTypes: currentFlags.severityTypes,
+        logTypes: currentFlags.logTypes,
       });
     }
-  }
+    // Should run once on mount
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [currentFlags, currentFilter]);
 
-  updateFilter() {
-    const { currentFilter, setFilter } = this.props;
-    const { description, loggedBy } = this.state;
-
+  const updateFilter = () => {
     setFilter({
       ...currentFilter,
-      description,
-      loggedBy,
+      ...filterStateRef.current,
     });
-  }
+  };
 
-  updateFlags(value, field) {
-    const {
-      setFlags,
-      history: { location, push },
-    } = this.props;
-    this.setState({ [field]: value }, () => {
-      const { severityTypes, logTypes } = this.state;
-      setFlags({ severityTypes, logTypes });
-      push({
+  const updateCurrentValue = (value, field) => {
+    if (inputTimeoutID !== null) {
+      clearTimeout(inputTimeoutID);
+    }
+    setFilterState({ [field]: value });
+    const updatedInputTimeoutID = setTimeout(updateFilter, 300);
+    setInputTimeoutID(updatedInputTimeoutID);
+  };
+
+  const updateFlagsRedux = () => {
+    const { severityTypes, logTypes } = filterFlagsStateRef.current;
+    setFlags({ severityTypes, logTypes });
+    navigate(
+      {
         ...location,
         search: buildFilterURLParams({ logTypes, severityTypes }),
-      });
-    });
-  }
-
-  updateCurrentValue(value, field) {
-    if (this.inputTimeoutID !== null) {
-      clearTimeout(this.inputTimeoutID);
-    }
-    this.setState({ [field]: value });
-    this.inputTimeoutID = setTimeout(this.updateFilter, 300);
-  }
-
-  render() {
-    const { description, severityTypes, logTypes, loggedBy } = this.state;
-
-    const descriptionFilter = {
-      type: conditionalFilterType.text,
-      value: 'Description',
-      label: 'Description',
-      filterValues: {
-        'aria-label': 'Description Filter Input',
-        onChange: (event, value) => this.updateCurrentValue(value, 'description'),
-        value: description,
       },
-    };
-
-    const severityTypesCheckbox = {
-      type: conditionalFilterType.checkbox,
-      label: 'Severity',
-      value: 'Severity',
-      filterValues: {
-        onChange: (event, value) => this.updateFlags(value, 'severityTypes'),
-        items: SEVERITY_TYPES.map((key) => ({
-          label: key,
-          value: key,
-        })),
-        value: severityTypes,
-      },
-    };
-
-    const logTypesCheckbox = {
-      type: conditionalFilterType.checkbox,
-      label: 'Type',
-      value: 'Type',
-      filterValues: {
-        onChange: (event, value) => this.updateFlags(value, 'logTypes'),
-        items: LOG_TYPES.map((key) => ({
-          label: key,
-          value: key,
-        })),
-        value: logTypes,
-      },
-    };
-
-    const loggedByFilter = {
-      type: conditionalFilterType.text,
-      value: 'Logged by',
-      label: 'Logged by',
-      filterValues: {
-        'aria-label': 'Logged by Filter Input',
-        onChange: (event, value) => this.updateCurrentValue(value, 'loggedBy'),
-        value: loggedBy,
-      },
-    };
-
-    return (
-      <ConditionalFilter
-        items={[descriptionFilter, severityTypesCheckbox, logTypesCheckbox, loggedByFilter]}
-      />
+      { replace: true },
     );
-  }
-}
+  };
+
+  const updateFlags = (value, field) => {
+    if (inputTimeoutID !== null) {
+      clearTimeout(inputTimeoutID);
+    }
+    setFilterFlagsState({
+      [field]: value,
+    });
+    const updatedInputTimeoutID = setTimeout(updateFlagsRedux, 300);
+    setInputTimeoutID(updatedInputTimeoutID);
+  };
+
+  const { description, loggedBy } = filterState;
+  const { severityTypes, logTypes } = filterFlagsState;
+
+  const descriptionFilter = {
+    type: conditionalFilterType.text,
+    value: 'Description',
+    label: 'Description',
+    filterValues: {
+      'aria-label': 'Description Filter Input',
+      onChange: (event, value) => updateCurrentValue(value, 'description'),
+      value: description,
+    },
+  };
+
+  const severityTypesCheckbox = {
+    type: conditionalFilterType.checkbox,
+    label: 'Severity',
+    value: 'Severity',
+    filterValues: {
+      onChange: (event, value) => updateFlags(value, 'severityTypes'),
+      items: SEVERITY_TYPES.map((key) => ({
+        label: key,
+        value: key,
+      })),
+      value: severityTypes,
+    },
+  };
+
+  const logTypesCheckbox = {
+    type: conditionalFilterType.checkbox,
+    label: 'Type',
+    value: 'Type',
+    filterValues: {
+      onChange: (event, value) => updateFlags(value, 'logTypes'),
+      items: LOG_TYPES.map((key) => ({
+        label: key,
+        value: key,
+      })),
+      value: logTypes,
+    },
+  };
+
+  const loggedByFilter = {
+    type: conditionalFilterType.text,
+    value: 'Logged by',
+    label: 'Logged by',
+    filterValues: {
+      'aria-label': 'Logged by Filter Input',
+      onChange: (event, value) => updateCurrentValue(value, 'loggedBy'),
+      value: loggedBy,
+    },
+  };
+
+  return (
+    <ConditionalFilter
+      items={[descriptionFilter, severityTypesCheckbox, logTypesCheckbox, loggedByFilter]}
+    />
+  );
+};
 
 ClusterLogsConditionalFilter.propTypes = {
   currentFilter: PropTypes.shape({
@@ -159,10 +159,6 @@ ClusterLogsConditionalFilter.propTypes = {
   }).isRequired,
   setFilter: PropTypes.func.isRequired,
   setFlags: PropTypes.func.isRequired,
-  history: PropTypes.shape({
-    location: PropTypes.string.isRequired,
-    push: PropTypes.func.isRequired,
-  }).isRequired,
 };
 
 export default ClusterLogsConditionalFilter;

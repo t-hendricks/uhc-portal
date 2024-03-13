@@ -1,19 +1,23 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import isEmpty from 'lodash/isEmpty';
-
+import { useLocation, useNavigate } from 'react-router-dom-v5-compat';
 import { Button, Chip, ChipGroup, Split, SplitItem } from '@patternfly/react-core';
 
 import { SEVERITY_TYPES, LOG_TYPES } from '../clusterLogConstants';
 import { buildFilterURLParams } from '../../../../../../common/queryHelpers';
 import helpers from '../../../../../../common/helpers';
 
-const mapFilterGroup = (group, currentFilter, setFilter, history) => {
+const mapFilterGroup = (group, currentFilter, setFilter, navigate, location) => {
   const setFilterAndQueryParams = (key, value) => {
-    history.push({
-      ...history.location,
-      search: buildFilterURLParams({ [key]: [value] }),
-    });
+    navigate(
+      {
+        pathname: location.path,
+        hash: location.hash,
+        search: buildFilterURLParams({ [key]: [value] }),
+      },
+      { replace: true },
+    );
     setFilter(value);
   };
 
@@ -37,12 +41,16 @@ const mapFilterGroup = (group, currentFilter, setFilter, history) => {
   );
 };
 
-const mapFlagsGroup = (group, currentFlags, setFlags, history) => {
+const mapFlagsGroup = (group, currentFlags, setFlags, navigate, location) => {
   const setFilterAndQueryParams = (flags) => {
-    history.push({
-      ...history.location,
-      search: buildFilterURLParams(flags),
-    });
+    navigate(
+      {
+        pathname: location.path,
+        hash: location.hash,
+        search: buildFilterURLParams(flags),
+      },
+      { replace: true },
+    );
     setFlags(flags);
   };
 
@@ -70,11 +78,14 @@ const mapFlagsGroup = (group, currentFlags, setFlags, history) => {
   );
 };
 
-const clearFilters = (history, clearFiltersAndFlags) => {
-  history.push({
-    ...history.location,
-    search: '',
-  });
+const clearFilters = (navigate, clearFiltersAndFlags, location) => {
+  navigate(
+    {
+      hash: location.hash,
+      search: '',
+    },
+    { replace: true },
+  );
   clearFiltersAndFlags();
 };
 
@@ -105,7 +116,6 @@ function ClusterLogsFilterChipGroup({
   currentFlags,
   setFlags,
   clearFiltersAndFlags,
-  history,
 }) {
   const groupFilters = [
     {
@@ -118,6 +128,9 @@ function ClusterLogsFilterChipGroup({
     },
   ];
 
+  const location = useLocation();
+  const navigate = useNavigate();
+
   // Do not count the timestamps filters
   const { timestampFrom, timestampTo, ...currentFilterNoTimestamps } = currentFilter;
   if (helpers.nestedIsEmpty(currentFilterNoTimestamps) && helpers.nestedIsEmpty(currentFlags)) {
@@ -129,18 +142,21 @@ function ClusterLogsFilterChipGroup({
         {/* Filters */}
         <ChipGroup>
           {groupFilters
-            .map((group) => mapFilterGroup(group, currentFilter, setFilter, history))
+            .map((group) => mapFilterGroup(group, currentFilter, setFilter, navigate, location))
             .filter(Boolean)}
         </ChipGroup>
         {/* Flags */}
         <ChipGroup>
           {groupFlags
-            .map((group) => mapFlagsGroup(group, currentFlags, setFlags, history))
+            .map((group) => mapFlagsGroup(group, currentFlags, setFlags, navigate, location))
             .filter(Boolean)}
         </ChipGroup>
       </SplitItem>
       <SplitItem>
-        <Button variant="link" onClick={() => clearFilters(history, clearFiltersAndFlags)}>
+        <Button
+          variant="link"
+          onClick={() => clearFilters(navigate, clearFiltersAndFlags, location)}
+        >
           Clear filters
         </Button>
       </SplitItem>
@@ -162,9 +178,6 @@ ClusterLogsFilterChipGroup.propTypes = {
     logTypes: PropTypes.arrayOf(PropTypes.string),
   }).isRequired,
   clearFiltersAndFlags: PropTypes.func.isRequired,
-  history: PropTypes.shape({
-    push: PropTypes.func.isRequired,
-  }).isRequired,
 };
 
 export default ClusterLogsFilterChipGroup;

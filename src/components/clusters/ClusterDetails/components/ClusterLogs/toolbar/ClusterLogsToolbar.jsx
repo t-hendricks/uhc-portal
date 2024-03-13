@@ -71,7 +71,6 @@ class ClusterLogsToolbar extends React.PureComponent {
         </Toolbar>
         <ClusterLogsFilterChipGroup
           view={viewConstants.CLUSTER_LOGS_VIEW}
-          history={history}
           currentFilter={currentFilter}
           currentFlags={currentFlags}
           setFilter={setFilter}
