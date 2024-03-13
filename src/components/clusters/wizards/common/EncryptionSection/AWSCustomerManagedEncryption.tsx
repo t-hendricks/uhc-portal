@@ -3,6 +3,7 @@ import { GridItem, Alert } from '@patternfly/react-core';
 import { Field } from 'redux-form';
 import ReduxVerticalFormGroup from '~/components/common/ReduxFormComponents/ReduxVerticalFormGroup';
 import ExternalLink from '~/components/common/ExternalLink';
+import links from '~/common/installLinks.mjs';
 import { validateAWSKMSKeyARN } from '~/common/validators';
 import { constants } from '~/components/clusters/common/CreateOSDFormConstants';
 
@@ -27,9 +28,7 @@ const AWSCustomerManagedEncryption = ({ fieldName, region, keyArn }: Props) => (
         extendedHelpText={
           <>
             <p className="pf-v5-u-mb-sm">{constants.awsKeyARN}</p>
-            <ExternalLink href="https://docs.aws.amazon.com/kms/latest/developerguide/find-cmk-id-arn.html">
-              Finding the key ID and ARN
-            </ExternalLink>
+            <ExternalLink href={links.AWS_FINDING_KEY_ARN}>Finding the key ID and ARN</ExternalLink>
           </>
         }
         showHelpTextOnError={false}

@@ -20,20 +20,16 @@ import { ApplicationIngressType, ClusterPrivacyType } from './Networking/constan
 
 export enum OsdFieldId {
   // TODO: many fields here should move to common/constants.
-  CustomerManagedKey = 'customer_managed_key',
-  CustomerOperatorRolesPrefix = 'custom_operator_roles_prefix',
   PersistentStorage = 'persistent_storage',
   LoadBalancers = 'load_balancers',
   SecureBoot = 'secure_boot',
   EnableUserWorkloadMonitoring = 'enable_user_workload_monitoring',
-  EtcdEncryption = 'etcd_encryption',
   ClusterPrivacy = 'cluster_privacy',
   InstallToSharedVpc = 'install_to_shared_vpc',
   SharedHostProjectID = 'shared_host_project_id',
   KeyLocation = 'key_location',
   KeyRing = 'key_ring',
   KeyName = 'key_name',
-  KmsKeyArn = 'kms_key_arn',
   KmsServiceAccount = 'kms_service_account',
   DisableScpChecks = 'disable_scp_checks',
   NetworkMachineCidr = 'network_machine_cidr',

@@ -8,8 +8,7 @@ import {
   getGCPCloudProviderVPCs,
   VALIDATE_CLOUD_PROVIDER_CREDENTIALS,
 } from '~/redux/actions/ccsInquiriesActions';
-import { CloudProviderType } from '~/components/clusters/wizards/common/constants';
-import { FieldId } from '~/components/clusters/wizards/osd/constants';
+import { FieldId, CloudProviderType } from '~/components/clusters/wizards/common/constants';
 import { AWSCredentials } from '~/types/types';
 import { normalizedProducts } from '~/common/subscriptionTypes';
 import { GCP_DEFAULT_REGION } from '../createOSDInitialValues';
