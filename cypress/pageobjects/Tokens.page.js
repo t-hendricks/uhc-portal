@@ -4,7 +4,8 @@ import GlobalNav from './GlobalNav.page';
 class TokenPages extends Page {
   navigateToOCMToken() {
     GlobalNav.downloadsNavigation().click();
-    cy.getByTestId('view-api-token-btn').scrollIntoView().click();
+    cy.getByTestId('view-api-token-btn').scrollIntoView();
+    cy.getByTestId('view-api-token-btn').click();
   }
 
   isOCMTokenPage() {

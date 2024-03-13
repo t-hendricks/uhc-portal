@@ -4,15 +4,14 @@ import { Spinner } from '@redhat-cloud-services/frontend-components/Spinner';
 import useChrome from '@redhat-cloud-services/frontend-components/useChrome';
 import type { ChromeAPI } from '@redhat-cloud-services/types';
 import { PageSection, Alert, Card, CardBody, CardTitle, Title } from '@patternfly/react-core';
-import { Capability, Error } from '~/types/accounts_mgmt.v1';
+import { Error } from '~/types/accounts_mgmt.v1';
 import { isRestrictedEnv } from '~/restrictedEnv';
+import { hasRestrictTokensCapability, defaultToOfflineTokens } from '~/common/restrictTokensHelper';
 import useOrganization from './useOrganization';
 import InstructionsOCM from './Instructions';
 import InstructionsROSA from './InstructionsROSA';
 import Breadcrumbs from '../common/Breadcrumbs';
 import { AppPage } from '../App/AppPage';
-
-const defaultToOfflineTokens = true;
 
 const ErrorOrLoadingWrapper = ({ children }: { children: React.ReactElement }) => (
   <AppPage title="OpenShift Cluster Manager">
@@ -29,14 +28,6 @@ const ErrorOrLoadingWrapper = ({ children }: { children: React.ReactElement }) =
     </PageSection>
   </AppPage>
 );
-
-export const hasRestrictTokensCapability = (capabilities: Array<Capability>) =>
-  !!capabilities?.length &&
-  capabilities.some(
-    (capability) =>
-      capability.name === 'capability.account.restrict_new_offline_tokens' &&
-      capability.value === 'true',
-  );
 
 type CLILoginPageProps = {
   showToken?: boolean;
