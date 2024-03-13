@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Field } from 'redux-form';
-import { Navigate, Link } from 'react-router-dom-v5-compat';
+import { Link, Navigate } from 'react-router-dom-v5-compat';
 import {
   Card,
   CardFooter,

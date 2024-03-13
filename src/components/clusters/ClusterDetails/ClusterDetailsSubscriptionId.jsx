@@ -12,7 +12,7 @@ const ClusterDetailsSubscriptionId = (props) => {
   return location.hash === '#insights' ? (
     <InsightsAdvisorRedirector params={params} location={location} {...props} />
   ) : (
-    <ClusterDetails params={params} location={location} {...props} />
+    <ClusterDetails location={location} {...props} />
   );
 };
 
