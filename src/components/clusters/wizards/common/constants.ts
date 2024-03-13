@@ -59,7 +59,12 @@ export enum FieldId {
   HttpsProxyUrl = 'https_proxy_url',
   AdditionalTrustBundle = 'additional_trust_bundle',
   NoProxyDomains = 'no_proxy_domains',
-  CustomerOperatorRolesPrefix = 'custom_operator_roles_prefix',
+  CustomOperatorRolesPrefix = 'custom_operator_roles_prefix',
+  RosaRolesProviderCreationMode = 'rosa_roles_provider_creation_mode',
+  ByoOidcConfigId = 'byo_oidc_config_id',
+  ByoOidcConfigIdManaged = 'byo_oidc_config_id_managed',
+  DetectedOcmRole = 'detected_ocm_role',
+  RosaCreatorArn = 'rosa_creator_arn',
 }
 
 export const initialValues: FormikValues = {
