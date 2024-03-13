@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useMemo } from 'react';
 import PropTypes from 'prop-types';
-import { Field } from 'redux-form';
+import { Field } from 'formik';
 import {
   Button,
   ClipboardCopy,
@@ -19,6 +19,8 @@ import Instruction from '~/components/common/Instruction';
 import Instructions from '~/components/common/Instructions';
 import FuzzySelect from '~/components/common/FuzzySelect';
 import { FormGroupHelperText } from '~/components/common/FormGroupHelperText';
+import { useFormState } from '~/components/clusters/wizards/hooks';
+import { FieldId } from '~/components/clusters/wizards/rosa_v2/constants';
 import validators from '../../../../../common/validators';
 import links from '../../../../../common/installLinks.mjs';
 import ReduxVerticalFormGroup from '../../../../common/ReduxFormComponents/ReduxVerticalFormGroup';
@@ -53,16 +55,12 @@ function CustomerOIDCConfiguration({
   byoOidcConfigID,
   operatorRolesCliCommand,
   onSelect: onParentSelect,
-  input: {
-    // Redux Form's onBlur interferes with Patternfly's Select footer onClick handlers.
-    onBlur: _onBlur,
-    ...inputProps
-  },
-  meta: { error, touched },
 }) {
+  const { getFieldProps, getFieldMeta } = useFormState();
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [oidcConfigs, setOidcConfigs] = useState([]);
+  const { error, touched } = getFieldMeta(FieldId.ByoOidcConfigId);
 
   const refreshOidcConfigs = React.useCallback(() => {
     setIsLoading(true);
@@ -141,7 +139,6 @@ function CustomerOIDCConfiguration({
           <Flex>
             <FlexItem grow={{ default: 'grow' }}>
               <FuzzySelect
-                {...inputProps}
                 label="Config ID"
                 aria-label="Config ID"
                 isOpen={isDropdownOpen}
@@ -180,7 +177,7 @@ function CustomerOIDCConfiguration({
 
         <Field
           component={ReduxVerticalFormGroup}
-          name="custom_operator_roles_prefix"
+          name={FieldId.CustomOperatorRolesPrefix}
           label="Operator roles prefix"
           type="text"
           isRequired
@@ -201,6 +198,8 @@ function CustomerOIDCConfiguration({
           }
           showHelpTextOnError={false}
           disabled={!byoOidcConfigID}
+          input={getFieldProps(FieldId.CustomOperatorRolesPrefix)}
+          meta={getFieldMeta(FieldId.CustomOperatorRolesPrefix)}
         />
       </Instruction>
 
@@ -237,14 +236,6 @@ CustomerOIDCConfiguration.propTypes = {
   byoOidcConfigID: PropTypes.string,
   operatorRolesCliCommand: PropTypes.string,
   onSelect: PropTypes.func,
-  input: PropTypes.shape({
-    value: PropTypes.string,
-    onBlur: PropTypes.func,
-  }),
-  meta: PropTypes.shape({
-    touched: PropTypes.bool,
-    error: PropTypes.string,
-  }),
 };
 
 export default CustomerOIDCConfiguration;
