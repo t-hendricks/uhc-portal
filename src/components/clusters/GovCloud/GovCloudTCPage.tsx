@@ -11,19 +11,17 @@ import { global_danger_color_100 as dangerColor } from '@patternfly/react-tokens
 import { ExclamationCircleIcon } from '@patternfly/react-icons/dist/esm/icons/exclamation-circle-icon';
 import { ExternalLinkAltIcon } from '@patternfly/react-icons/dist/esm/icons/external-link-alt-icon';
 
+const EmptyIcon = (props: any) => (
+  <Icon>
+    <ExclamationCircleIcon {...props} color={dangerColor.value} />
+  </Icon>
+);
+
 const GovCloudTCPage = ({ redirectURL }: { redirectURL: string }) => (
   <EmptyState>
     <EmptyStateHeader
       titleText="Signed agreement not detected"
-      icon={
-        <EmptyStateIcon
-          icon={(props) => (
-            <Icon>
-              <ExclamationCircleIcon {...props} color={dangerColor.value} />
-            </Icon>
-          )}
-        />
-      }
+      icon={<EmptyStateIcon icon={EmptyIcon} />}
       headingLevel="h4"
     />
     <EmptyStateBody>

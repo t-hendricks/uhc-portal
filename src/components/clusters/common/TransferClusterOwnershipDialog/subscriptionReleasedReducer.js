@@ -18,6 +18,7 @@ const initialState = {
   data: {},
 };
 
+// eslint-disable-next-line default-param-last
 function subscriptionReleasedReducer(state = initialState, action) {
   // eslint-disable-next-line consistent-return
   return produce(state, (draft) => {

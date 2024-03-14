@@ -17,6 +17,8 @@ interface CreateClusterDropDownProps {
 
 const getStartedPath = '/create/rosa/getstarted';
 
+const CreateButtonLink = (props: any) => <Link {...props} to={getStartedPath} />;
+
 const CreateClusterDropDown = ({ toggleId }: CreateClusterDropDownProps) => {
   const [isOpen, setOpen] = React.useState(false);
   const dropDownRef = React.useRef<HTMLButtonElement>(null);
@@ -86,11 +88,7 @@ const CreateClusterDropDown = ({ toggleId }: CreateClusterDropDownProps) => {
         data-testid="rosa-create-cluster-button"
       />
       <br />
-      <Button
-        variant="link"
-        className="create-button"
-        component={(props: any) => <Link {...props} to={getStartedPath} />}
-      >
+      <Button variant="link" className="create-button" component={CreateButtonLink}>
         Prerequisites
       </Button>
     </>

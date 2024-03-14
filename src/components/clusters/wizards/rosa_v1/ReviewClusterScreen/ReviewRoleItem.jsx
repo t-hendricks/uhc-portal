@@ -27,19 +27,17 @@ const ReviewRoleItem = ({ name, getRoleResponse, content }) => (
           isErrorHint
           title={`${name} could not be detected`}
           bodyContent={
-            <>
-              <TextContent>
-                <Text component={TextVariants.p}>
-                  <span className="danger">
-                    <ExclamationCircleIcon className="status-icon danger" />
-                    <strong>{`${name} is no longer linked to your Red Hat organization.`}</strong>
-                  </span>
-                </Text>
-                <Text component={TextVariants.p}>
-                  <p>Follow the AWS account association instructions and try again</p>
-                </Text>
-              </TextContent>
-            </>
+            <TextContent>
+              <Text component={TextVariants.p}>
+                <span className="danger">
+                  <ExclamationCircleIcon className="status-icon danger" />
+                  <strong>{`${name} is no longer linked to your Red Hat organization.`}</strong>
+                </span>
+              </Text>
+              <Text component={TextVariants.p}>
+                <p>Follow the AWS account association instructions and try again</p>
+              </Text>
+            </TextContent>
           }
           footer={<BackToAssociateAwsAccountLink />}
           iconClassName="hand-pointer"

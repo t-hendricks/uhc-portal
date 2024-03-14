@@ -76,6 +76,7 @@ class AppEntry extends React.Component {
         if (!config.envOverride && config.configData.sentryDSN) {
           Sentry.init({
             dsn: config.configData.sentryDSN,
+            ...(APP_SENTRY_RELEASE_VERSION ? { release: APP_SENTRY_RELEASE_VERSION } : {}),
             integrations: [
               new SessionTiming(),
               new Sentry.Integrations.GlobalHandlers({

@@ -11,8 +11,7 @@ import {
   EmptyStateFooter,
 } from '@patternfly/react-core';
 import { ExclamationCircleIcon } from '@patternfly/react-icons/dist/esm/icons/exclamation-circle-icon';
-// eslint-disable-next-line camelcase
-import { global_danger_color_100 } from '@patternfly/react-tokens/dist/esm/global_danger_color_100';
+import { global_danger_color_100 as dangerColor } from '@patternfly/react-tokens/dist/esm/global_danger_color_100';
 
 import getTermsAppLink from '../../../common/getTermsAppLink';
 import { ViewTermsButton } from './ViewTermsButton';
@@ -31,7 +30,7 @@ const TermsError = ({ error, restore }: Props) => {
     <EmptyState variant={EmptyStateVariant.lg}>
       <EmptyStateHeader
         titleText="This action is blocked."
-        icon={<EmptyStateIcon icon={ExclamationCircleIcon} color={global_danger_color_100.value} />}
+        icon={<EmptyStateIcon icon={ExclamationCircleIcon} color={dangerColor.value} />}
         headingLevel="h4"
       />
       <EmptyStateBody>

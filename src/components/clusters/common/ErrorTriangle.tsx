@@ -2,8 +2,7 @@ import { ExclamationTriangleIcon } from '@patternfly/react-icons/dist/esm/icons/
 import { ReactElementLike, ReactNodeLike } from 'prop-types';
 import React from 'react';
 import { Tooltip, Icon } from '@patternfly/react-core';
-// eslint-disable-next-line camelcase
-import { global_warning_color_100 } from '@patternfly/react-tokens/dist/esm/global_warning_color_100';
+import { global_warning_color_100 as warningColor } from '@patternfly/react-tokens/dist/esm/global_warning_color_100';
 
 type ErrorTriangleProps = {
   item?: string;
@@ -16,7 +15,7 @@ const ErrorTriangle = ({ item = 'clusters', errorMessage }: ErrorTriangleProps) 
     data-testid="error-triangle"
   >
     <Icon size="lg" className="cluster-error-triangle">
-      <ExclamationTriangleIcon color={global_warning_color_100.value} />
+      <ExclamationTriangleIcon color={warningColor.value} />
     </Icon>
   </Tooltip>
 );

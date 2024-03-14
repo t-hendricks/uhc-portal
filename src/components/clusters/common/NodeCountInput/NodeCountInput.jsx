@@ -85,7 +85,7 @@ class NodeCountInput extends React.Component {
     if (isHypershiftWizard && poolNumber !== prevProps.poolNumber) {
       // Keep value the user sees (nodes per pool) unless the number of total nodes
       // is less than the minimum total nodes
-      const prevSelected = prevProps.input?.value / prevProps.poolNumber || minNodes;
+      const prevSelected = (prevProps.input?.value ?? 0) / prevProps.poolNumber || minNodes;
       const newValue = prevSelected * poolNumber;
       if (newValue > minNodes && newValue <= MAX_NODES_HCP) {
         input.onChange(newValue);

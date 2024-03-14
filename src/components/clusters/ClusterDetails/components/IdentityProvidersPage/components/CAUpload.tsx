@@ -140,15 +140,13 @@ const CAUpload = ({
           />
         </>
       ) : (
-        <>
-          <Button
-            variant="link"
-            onClick={() => revealValue(true)}
-            isDisabled={certValueState === '' || isDisabled}
-          >
-            Reveal
-          </Button>
-        </>
+        <Button
+          variant="link"
+          onClick={() => revealValue(true)}
+          isDisabled={certValueState === '' || isDisabled}
+        >
+          Reveal
+        </Button>
       )}
 
       <FormGroupHelperText touched error={errorMessage}>

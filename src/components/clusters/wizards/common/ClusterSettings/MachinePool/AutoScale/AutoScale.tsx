@@ -214,42 +214,40 @@ export const AutoScale = ({ isDefaultMachinePool }: AutoScaleProps) => {
   );
 
   return (
-    <>
-      <GridItem id="autoscaling">
-        <FormGroup
-          fieldId="autoscaling"
-          label="Autoscaling"
-          labelIcon={
-            <PopoverHint
-              hint={
-                <>
-                  {constants.autoscaleHint}{' '}
-                  <ExternalLink href={autoScalingUrl}>
-                    Learn more about autoscaling
-                    {isRosa ? ' with ROSA' : ''}
-                  </ExternalLink>
-                </>
-              }
-            />
-          }
-        />
+    <GridItem id="autoscaling">
+      <FormGroup
+        fieldId="autoscaling"
+        label="Autoscaling"
+        labelIcon={
+          <PopoverHint
+            hint={
+              <>
+                {constants.autoscaleHint}{' '}
+                <ExternalLink href={autoScalingUrl}>
+                  Learn more about autoscaling
+                  {isRosa ? ' with ROSA' : ''}
+                </ExternalLink>
+              </>
+            }
+          />
+        }
+      />
 
-        <CheckboxField name={FieldId.AutoscalingEnabled} label="Enable autoscaling" />
+      <CheckboxField name={FieldId.AutoscalingEnabled} label="Enable autoscaling" />
 
-        <GridItem md={3}>
-          <Button
-            data-testid="set-cluster-autoscaling-btn"
-            variant="secondary"
-            className="pf-v5-u-mt-md"
-            onClick={openEditClusterAutoScalingModal}
-            isDisabled={!autoscalingEnabled}
-          >
-            Edit cluster autoscaling settings
-          </Button>
-        </GridItem>
-        <ClusterAutoScaleSettingsDialog isWizard isRosa={isRosa} />
-        {autoscalingEnabled && azFormGroups}
+      <GridItem md={3}>
+        <Button
+          data-testid="set-cluster-autoscaling-btn"
+          variant="secondary"
+          className="pf-v5-u-mt-md"
+          onClick={openEditClusterAutoScalingModal}
+          isDisabled={!autoscalingEnabled}
+        >
+          Edit cluster autoscaling settings
+        </Button>
       </GridItem>
-    </>
+      <ClusterAutoScaleSettingsDialog isWizard isRosa={isRosa} />
+      {autoscalingEnabled && azFormGroups}
+    </GridItem>
   );
 };

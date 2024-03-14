@@ -117,7 +117,9 @@ class UsersSection extends React.Component {
               bodyContent={
                 <p>
                   Groups are mapped to role bindings on the cluster. For more information check the{' '}
-                  <a href={links.UNDERSTANDING_AUTHENTICATION}>OpenShift 4 documentation</a>.
+                  <ExternalLink href={links.UNDERSTANDING_AUTHENTICATION}>
+                    OpenShift 4 documentation
+                  </ExternalLink>
                 </p>
               }
             >

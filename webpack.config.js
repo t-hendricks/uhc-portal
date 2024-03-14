@@ -37,6 +37,7 @@ const outDir = path.resolve(__dirname, 'dist', insights.appname);
 module.exports = async (_env, argv) => {
   const devMode = argv.mode !== 'production';
   const betaMode = argv.env.beta === 'true';
+  const sentryReleaseVersion = argv.env['sentry-version'];
   const isDevServer = process.argv.includes('serve');
 
   // Select default API env based on argument if specified.
@@ -114,6 +115,7 @@ module.exports = async (_env, argv) => {
         APP_BETA: betaMode,
         APP_DEVMODE: devMode,
         APP_DEV_SERVER: isDevServer,
+        APP_SENTRY_RELEASE_VERSION: JSON.stringify(sentryReleaseVersion),
         APP_API_ENV: JSON.stringify(apiEnv),
         process: { env: {} },
       }),

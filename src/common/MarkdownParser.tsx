@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { TextContent } from '@patternfly/react-core';
 import ReactMarkdown, { PluggableList } from 'react-markdown';
 import rehypeRaw from 'rehype-raw';
@@ -10,26 +10,30 @@ type MarkdownParserProps = {
   children?: string;
 };
 
-const MarkdownParser = ({ children, rehypePlugins }: MarkdownParserProps) =>
-  children ? (
+const MarkdownParser = ({ children, rehypePlugins }: MarkdownParserProps) => {
+  const LinkComponent = useCallback(
+    (props) => (
+      <ExternalLink {...props} href={props.href ?? ''}>
+        {props.children}
+      </ExternalLink>
+    ),
+    [],
+  );
+
+  return children ? (
     <TextContent>
       <ReactMarkdown
         className="markdown"
         rehypePlugins={rehypePlugins ?? [remarkGfm, rehypeRaw]}
         components={{
           // map a link to ExternalLink
-          a: (props) => (
-            <ExternalLink {...props} href={props.href ?? ''}>
-              {props.children}
-            </ExternalLink>
-          ),
+          a: LinkComponent,
         }}
       >
         {children}
       </ReactMarkdown>
     </TextContent>
-  ) : (
-    <></>
-  );
+  ) : null;
+};
 
 export default MarkdownParser;

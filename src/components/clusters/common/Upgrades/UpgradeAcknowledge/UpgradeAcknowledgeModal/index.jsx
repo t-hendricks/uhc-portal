@@ -16,6 +16,7 @@ const mapStateToProps = (state) => {
     modalData: getModalDataFromState(state),
     automaticUpgradePolicyId: getAutomaticUpgradePolicyId(state),
     isHypershift,
+    isSTSEnabled: cluster?.aws?.sts?.enabled,
   };
 };
 

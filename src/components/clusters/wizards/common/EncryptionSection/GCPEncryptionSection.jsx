@@ -107,6 +107,7 @@ function GCPCustomerManagedEncryption({ selectedRegion }) {
           validate={validateGCPKMSServiceAccount}
           isRequired
           helpText="GCP Service account will be used for compute scaling."
+          // eslint-disable-next-line react/jsx-no-useless-fragment
           extendedHelpText={<>{constants.kmsserviceAccount}</>}
           showHelpTextOnError={false}
         />
