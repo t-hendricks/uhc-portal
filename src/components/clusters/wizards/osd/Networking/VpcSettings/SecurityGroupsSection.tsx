@@ -87,13 +87,18 @@ const SecurityGroupsSection = () => {
             isInline
             title="You cannot add or edit security groups to the machine pools created by default after you create the cluster."
             actionLinks={
-              <AlertActionLink
-                component="a"
-                href={links.AWS_CONSOLE_SECURITY_GROUPS}
-                target="_blank"
-              >
-                AWS security groups console
-              </AlertActionLink>
+              <>
+                <AlertActionLink component="a" href={links.OSD_SECURITY_GROUPS} target="_blank">
+                  View more information
+                </AlertActionLink>
+                <AlertActionLink
+                  component="a"
+                  href={links.AWS_CONSOLE_SECURITY_GROUPS}
+                  target="_blank"
+                >
+                  AWS security groups console
+                </AlertActionLink>
+              </>
             }
           />
           <br />
