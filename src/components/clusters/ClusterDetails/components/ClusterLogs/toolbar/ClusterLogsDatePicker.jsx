@@ -19,9 +19,6 @@ const splitDateStr = (dateStr) =>
     .split('-')
     .filter((part) => part !== '' && Number.parseInt(part, 10) !== 0);
 
-// Local timezone UTC offset
-const offset = new Date().getTimezoneOffset() * 60000;
-
 /**
  * Parses a date string that is in ISO format YYYY-MM-DD
  */
@@ -37,9 +34,7 @@ export const dateParse = (dateStr, asDate = true) => {
     2,
     '0',
   )}`;
-  return asDate
-    ? new Date(Date.UTC(year, Number.parseInt(month, 10) - 1, day) + offset)
-    : paddedDateStr;
+  return asDate ? new Date(year, Number.parseInt(month, 10) - 1, day) : paddedDateStr;
 };
 
 let defaultTimestamps;
@@ -109,7 +104,6 @@ const onDateChangeToFilter = (dateStr) => ({
 const ClusterLogsDatePicker = ({ setFilter, currentFilter, createdAt }) => {
   const { now, lastMonthStart, lastWeekStart, last72HoursStart } = getDefaultTimestamps();
   const minDate = dateParse(createdAt);
-
   const options = [
     { value: optionValues.LastMonth },
     { value: optionValues.LastWeek },
@@ -119,13 +113,14 @@ const ClusterLogsDatePicker = ({ setFilter, currentFilter, createdAt }) => {
 
   const [startDateStr, setStartDateStr] = useState(dateFormat(getTimestampFrom(minDate)));
   const [endDateStr, setEndDateStr] = useState(dateFormat(now));
+  const [invalidDateFormatFrom, setInvalidDateFormatFrom] = useState(false);
+  const [invalidDateFormatTo, setInvalidDateFormatTo] = useState(false);
   const [selectorOpen, setSelectorOpen] = useState(false);
   const [selected, setSelected] = useState(options[0].value);
   // used to force re-render due to bug https://github.com/patternfly/patternfly-react/issues/7818
   const [counter, setCounter] = useState(0);
   const endDateObject = dateParse(endDateStr);
   const startDateObject = dateParse(startDateStr);
-
   let invalidDateError;
   if (
     startDateObject > endDateObject &&
@@ -164,18 +159,25 @@ const ClusterLogsDatePicker = ({ setFilter, currentFilter, createdAt }) => {
    */
 
   const rangeFromValidators = [
-    (date) => (date < minDate ? 'The start date cannot be before the cluster creation date.' : ''),
+    (date) =>
+      date < minDate && !invalidDateFormatFrom
+        ? 'The start date cannot be before the cluster creation date.'
+        : '',
     (date) => (date > now ? 'The start date cannot be in the future.' : ''),
   ];
 
   const rangeToValidators = [
-    (date) => (date < minDate ? 'The end date cannot be before the cluster creation date.' : ''),
+    (date) =>
+      date < minDate && !invalidDateFormatTo
+        ? 'The end date cannot be before the cluster creation date.'
+        : '',
     (date) => (date > now ? 'The end date cannot be in the future.' : ''),
   ];
 
   const isValid = (dateStr) => isValidDate(new Date(dateStr));
 
   const inputOnChangeFrom = (dateStr, date) => {
+    setInvalidDateFormatFrom(false);
     setSelected(optionValues.Custom);
     const split = splitDateStr(dateStr);
     if (split.length !== 3) {
@@ -186,12 +188,14 @@ const ClusterLogsDatePicker = ({ setFilter, currentFilter, createdAt }) => {
       return;
     }
     if (!isValid(dateStr)) {
+      setInvalidDateFormatFrom(true);
       return;
     }
     onDateChangeFrom(dateStr, date);
   };
 
   const inputOnChangeTo = (dateStr, date) => {
+    setInvalidDateFormatTo(false);
     setSelected(optionValues.Custom);
     const split = splitDateStr(dateStr);
     if (split.length !== 3) {
@@ -202,6 +206,7 @@ const ClusterLogsDatePicker = ({ setFilter, currentFilter, createdAt }) => {
       return;
     }
     if (!isValid(dateStr)) {
+      setInvalidDateFormatTo(true);
       return;
     }
     onDateChangeTo(dateStr, date);
@@ -298,12 +303,24 @@ const ClusterLogsDatePicker = ({ setFilter, currentFilter, createdAt }) => {
   return (
     <>
       <ToolbarItem>{dateSelector}</ToolbarItem>
-      <ToolbarItem>{pickerFrom}</ToolbarItem>
+      <ToolbarItem>
+        {pickerFrom}{' '}
+        {invalidDateFormatFrom ? (
+          <HelperText>
+            <HelperTextItem variant="error">{`Invalid: ${placeholder}`}</HelperTextItem>
+          </HelperText>
+        ) : undefined}
+      </ToolbarItem>
       <ToolbarItem>
         {pickerTo}{' '}
         {invalidDateError ? (
           <HelperText>
             <HelperTextItem variant="error">{invalidDateError}</HelperTextItem>
+          </HelperText>
+        ) : undefined}
+        {invalidDateFormatTo ? (
+          <HelperText>
+            <HelperTextItem variant="error">{`Invalid: ${placeholder}`}</HelperTextItem>
           </HelperText>
         ) : undefined}
       </ToolbarItem>
