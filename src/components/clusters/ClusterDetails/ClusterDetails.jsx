@@ -343,8 +343,6 @@ const ClusterDetails = (props) => {
   const isClusterReady = cluster.state === clusterStates.READY;
   const isClusterUpdating = cluster.state === clusterStates.UPDATING;
   const isReadOnly = cluster?.status?.configuration_mode === 'read_only';
-  const isPrivateCluster =
-    cluster.aws && get(cluster, 'ccs.enabled') && get(cluster, 'aws.private_link');
   const canCreateGCPNonCCSCluster = hasCapability(
     organization.details,
     subscriptionCapabilities.CREATE_GCP_NON_CCS_CLUSTER,
@@ -370,7 +368,7 @@ const ClusterDetails = (props) => {
     (isClusterReady || isClusterUpdating || clusterHibernating) &&
     cluster.managed &&
     !!get(cluster, 'api.url') &&
-    ((cloudProvider === 'aws' && (!isPrivateCluster || isHypershift || isRestrictedEnv())) ||
+    (cloudProvider === 'aws' ||
       (cloudProvider === 'gcp' &&
         (get(cluster, 'ccs.enabled') || (gotRouters && canCreateGCPNonCCSCluster)))) &&
     !isArchived;
