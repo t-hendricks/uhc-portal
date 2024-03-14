@@ -3,7 +3,6 @@ import ConditionalFilter from '@redhat-cloud-services/frontend-components/Condit
 import { conditionalFilterType } from '@redhat-cloud-services/frontend-components/ConditionalFilter/conditionalFilterConstants';
 import PropTypes from 'prop-types';
 import { useNavigate, useLocation } from 'react-router-dom-v5-compat';
-import { usePreviousProps } from '~/hooks/usePreviousProps';
 import { SEVERITY_TYPES, LOG_TYPES } from '../clusterLogConstants';
 import { buildFilterURLParams } from '../../../../../../common/queryHelpers';
 
@@ -30,8 +29,15 @@ const ClusterLogsConditionalFilter = (props) => {
     logTypes: [],
   });
 
-  const filterStateRef = usePreviousProps(filterState);
-  const filterFlagsStateRef = usePreviousProps(filterFlagsState);
+  const filterStateRef = React.useRef(filterState);
+  const filterFlagsStateRef = React.useRef(filterFlagsState);
+
+  /** Required to get latest state of filters, 
+      debouncing causes it to put prevState in redux */
+  React.useEffect(() => {
+    filterStateRef.current = filterState;
+    filterFlagsStateRef.current = filterFlagsState;
+  }, [filterState, filterFlagsState]);
 
   React.useEffect(() => {
     if (currentFilter) {
