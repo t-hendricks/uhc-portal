@@ -86,6 +86,7 @@ const ClusterLogsConditionalFilter = (props) => {
       clearTimeout(inputTimeoutID);
     }
     setFilterFlagsState({
+      ...filterFlagsState,
       [field]: value,
     });
     const updatedInputTimeoutID = setTimeout(updateFlagsRedux, 300);
