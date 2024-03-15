@@ -58,7 +58,7 @@ class OpenIDFormRequired extends React.Component {
           placeholderText="e.g. email"
           disabled={isPending}
           helpText="The list of attributes whose values should be used as the email address."
-          validate={this.validate}
+          validate={OpenIDFormRequired.validate}
           isGroupError={isGroupError}
           onFormChange={this.onValueChange}
           isRequired
@@ -69,7 +69,7 @@ class OpenIDFormRequired extends React.Component {
           type="text"
           placeholderText="e.g. name"
           disabled={isPending}
-          validate={this.validate}
+          validate={OpenIDFormRequired.validate}
           isGroupError={isGroupError}
           onFormChange={this.onValueChange}
           helpText="The end user's full name including all name parts, ordered according to the end user's locale and preferences."
@@ -81,7 +81,7 @@ class OpenIDFormRequired extends React.Component {
           type="text"
           placeholderText="e.g. preferred_username"
           disabled={isPending}
-          validate={this.validate}
+          validate={OpenIDFormRequired.validate}
           isGroupError={isGroupError}
           onFormChange={this.onValueChange}
           helpText="Shorthand name by which the end user wishes to be referred to at the RP, such as janedone or j.doe."
