@@ -55,7 +55,7 @@ class CostSummary extends Component {
             const cost = value.cost && value.cost.total ? value.cost.total.value : 0;
             const units = value.cost && value.cost.total ? value.cost.total.units : 'USD';
             const percentage = total > 0 ? cost / total : 0;
-            const val = `${CostSummary.formatCurrency(cost, units)} (${this.formatPercentage(
+            const val = `${CostSummary.formatCurrency(cost, units)} (${CostSummary.formatPercentage(
               percentage,
             )})`;
 
